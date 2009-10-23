@@ -1,93 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Any way to "flatten" a series of changes in git
-Date: Thu, 22 Oct 2009 23:16:24 -0700
-Message-ID: <7v4opqeitj.fsf@alter.siamese.dyndns.org>
-References: <26ae428a0910221303n493fb7s701269d694110685@mail.gmail.com>
- <m3hbtrdu1r.fsf@localhost.localdomain>
- <26ae428a0910221411l73aa7cbak5c060925ccdf4cea@mail.gmail.com>
- <4AE143BC.7040507@viscovery.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [bug][bisected] git-svn with root branches
+Date: Thu, 22 Oct 2009 23:38:15 -0700
+Message-ID: <20091023063815.GA15445@dcvr.yhbt.net>
+References: <20091021144113.GA7440@cumin> <20091022063036.GA8081@dcvr.yhbt.net> <c376da900910220824g2948dc2sa1156bda59b49405@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Howard Miller <howard@e-learndesign.co.uk>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Oct 23 08:16:46 2009
+Cc: Daniel Cordero <theappleman@gmail.com>, git@vger.kernel.org
+To: Adam Brewster <adambrewster@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 23 08:41:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1DSA-0004UQ-BR
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 08:16:46 +0200
+	id 1N1Dpz-0003gp-IC
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 08:41:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547AbZJWGQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Oct 2009 02:16:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751414AbZJWGQb
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 02:16:31 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46119 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751262AbZJWGQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Oct 2009 02:16:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B42F7638CD;
-	Fri, 23 Oct 2009 02:16:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VuEcrPqhsqPlrenklk2kI0ocxRc=; b=LUe+qs
-	2JGPKFr5/ZSpfjWeY6azXeYqm3dNs9RaXr+xoEwVWR5lZcTWSrNcJ8z/8x/EetYk
-	zGYITTxnINujlojaBrloEebUTXKJY0JgrNsjrtM0RsMzLKzoWvb4HUlMYAwQ9KG+
-	fQ6PhaadfoDIv/Ew4RFFVbzGcWmVg1SD2o17w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tnpr1DmrbxcccNWNEO/jsrgiZdvKPXyP
-	6wrm8ew+ycWOFxLOvaOHyPcer7ZsZ6hxzgOYr3yLlNzdyu7fTyzSxQIP2d9MGR2u
-	dRgWaAycS7X2DU7qAbJpYLl8s5KuMQBv3Yh+R4IUyei0HKRibd12KKtH0HnGxJCt
-	JpYOPU6cdLE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7535E638CA;
-	Fri, 23 Oct 2009 02:16:30 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA36E638C9; Fri, 23 Oct
- 2009 02:16:25 -0400 (EDT)
-In-Reply-To: <4AE143BC.7040507@viscovery.net> (Johannes Sixt's message of
- "Fri\, 23 Oct 2009 07\:48\:44 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9ABBAE9C-BF9B-11DE-B3C5-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751916AbZJWGiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2009 02:38:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751914AbZJWGiM
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 02:38:12 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:34108 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751901AbZJWGiL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2009 02:38:11 -0400
+Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 31E831F7A1;
+	Fri, 23 Oct 2009 06:38:16 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <c376da900910220824g2948dc2sa1156bda59b49405@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131092>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Adam Brewster <adambrewster@gmail.com> wrote:
+> > I'm not sure why Adam decided the leading slash needed to be removed for
+> > the git refspec.  That said, the globbing/branching code still makes me
+> > want to hide under a rock and I'm generally afraid to touch it.
+> > I'll wait for Adam to chime in since he's braver than I am :)
+> >
+> How's this for brave:  I'm not sure why I did that either.
+> 
+> Looking at it again it seems correct for the leading / to be ignored because
+> it has no meaning.  What's the difference between the above config and
+> "branches = *:refs/remotes/*" (besides the fact that one works and one
+> doesn't)?  In both cases I think I've asked for all of the top-level
+> directories to be branches.  But that has nothing to do with the rest of the
+> patch, so it shouldn't have been included.
 
-> The easiest way (IMHO) to achieve this is certainly:
->
->   # start a new branch at the tip of the series
->   $ git checkout -b all-in-one the-series
->
->   # squash 17 commits
->   $ git reset --soft HEAD~17
->   $ git commit
->
-> Now you have a new branch 'all-in-one' that has the same contents as the
-> original series 'the-series', but with only one commit:
->
->   $ git diff the-series..all-in-one  # must show no differences
+<snip>
 
-I think --squash "*merge*" is conceptually simpler to explain *and*
-has an added advantage that it helps preparing the consolidated log
-message.
+> That is, continue disregard the / on the actual input because it means
+> nothing, and add a / in places where the code will crash if it's not there.
+> Even better would be to find out _why_ $path and $local_ref need a leading /
+> and fix it that way, but that's more work that I don't have time for right
+> now.
 
-    # start from the last customer dump
-    $ git checkout -b customer-update last-release
-    # give the customer the greatness in the series, content-wise
-    $ git merge --squash the-series
-    $ git commit
+Actually, SVN 1.5+ does not like the leading "/" and trips on an
+assertion failure on all cases except a standalone "/".  That is, "/*"
+continues to work since we send "/" to SVN::Ra::get_log().
 
-This will start the "customer-update" branch starting from the
-last dump you gave to the customer, merge in the changes made
-in the series without history, and when you make a commit, you
-will have access to all the individual log messages in the
-series to look at as reference, so that you can cut and paste
-from them to summarized message instead of typing everything anew.
+-- 
+Eric Wong
