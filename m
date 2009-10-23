@@ -1,83 +1,88 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: ks/precompute-completion
-Date: Fri, 23 Oct 2009 14:16:59 -0500
-Message-ID: <fabb9a1e0910231216j2a024ac5mf5b5ccb5322722f8@mail.gmail.com>
-References: <7veiovly35.fsf@alter.siamese.dyndns.org> <4AE0190E.8020803@gmail.com> 
-	<fabb9a1e0910221011r957246dx3162cd675ff16800@mail.gmail.com> 
-	<4AE0DAB3.1030103@gmail.com> <fabb9a1e0910221555k287b45ebwb15ac97851b845f9@mail.gmail.com> 
-	<fabb9a1e0910221556s694a344ag8e5ae07c35351ee4@mail.gmail.com> 
-	<4AE0E542.8010501@gmail.com> <fabb9a1e0910231127i3ab469qebdc17168a58f22a@mail.gmail.com> 
-	<7vd44eaqc5.fsf@alter.siamese.dyndns.org>
+From: Sebastian Pipping <sping@gentoo.org>
+Subject: Re: requesting info page (and pdf) doc releases
+Date: Fri, 23 Oct 2009 21:22:12 +0200
+Message-ID: <4AE20264.2060207@gentoo.org>
+References: <4AE0C362.3030900@gentoo.org> <f46c52560910221513w1cb19949lfa05ef964987d809@mail.gmail.com> <7vtyxqaqg5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitzilla@gmail.com, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Kirill Smelkov <kirr@mns.spb.ru>,
-	Stephen Boyd <bebarino@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Rustom Mody <rustompmody@gmail.com>, git@vger.kernel.org,
+	"Robin H. Johnson" <robbat2@gentoo.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 23 21:17:40 2009
+X-From: git-owner@vger.kernel.org Fri Oct 23 21:22:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1Pdm-0000Yi-Sg
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 21:17:35 +0200
+	id 1N1PiR-0002Xu-5h
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 21:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752977AbZJWTRQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Oct 2009 15:17:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752834AbZJWTRQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 15:17:16 -0400
-Received: from mail-ew0-f208.google.com ([209.85.219.208]:52030 "EHLO
-	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752837AbZJWTRP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Oct 2009 15:17:15 -0400
-Received: by ewy4 with SMTP id 4so1941863ewy.37
-        for <git@vger.kernel.org>; Fri, 23 Oct 2009 12:17:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=6+T0tTZ+6xzXKc543wOQoWZuN4oO7xqIsnxnHpFJhXA=;
-        b=XeO4tTebRQldaj86E5hmYKkSw1iVKq2oCrvwQSrKFhkvxIdMoKGXalgTauifK3rZ+8
-         DSG3cD2Q96hGS+2O12hizwf3LSQHFY1INIEzyw3lVtIfijPOBsgveVfRF2PR5DI13QA4
-         I+C4OgER4kOBQNS2DqiDkDQFPNI+ssftNzkgk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=UmCG+hn6kpg0wbKRcJYbO4p2KPzPrRlHdcotU5ESLumZlAB0ZEm/KoO6STrrQBHRU7
-         vqdGT5LwUelcsIyYdS2N7MmFKVLnLSZ5wZNYZX9vlb4XQHkgE59h2ppuArfvWzajCUqo
-         pSIL+RM7QF3J/f7C90tusnVRCvjiMHEFGYhaM=
-Received: by 10.216.85.210 with SMTP id u60mr3985484wee.226.1256325439381; 
-	Fri, 23 Oct 2009 12:17:19 -0700 (PDT)
-In-Reply-To: <7vd44eaqc5.fsf@alter.siamese.dyndns.org>
+	id S1752901AbZJWTWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2009 15:22:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752869AbZJWTWM
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 15:22:12 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:58150 "EHLO smtp.gentoo.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752845AbZJWTWM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2009 15:22:12 -0400
+Received: from [192.168.0.3] (unknown [78.52.97.59])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.gentoo.org (Postfix) with ESMTP id BD4BE67372;
+	Fri, 23 Oct 2009 19:22:15 +0000 (UTC)
+User-Agent: Thunderbird 2.0.0.23 (X11/20091018)
+In-Reply-To: <7vtyxqaqg5.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131120>
 
-Heya,
+Junio C Hamano wrote:
+> Rustom Mody <rustompmody@gmail.com> writes:
+> 
+>> On Fri, Oct 23, 2009 at 2:11 AM, Sebastian Pipping <sping@gentoo.org> wrote:
+>>> would be nice to get info pages (and pdf) doc releases in addition to
+>>> html and man pages.  i imagine such a change to the release machine
+>>> should not be too hard to integrate.  we could use it in gentoo.
+>> +1
+>> Why only gentoo? I would use it on ubuntu or windows as well
+> 
+> As I understand it, Gentoo is supposed to build everything from the source
+> anyway, you would not want to use pregenerated info nor pdf, no?  You
+> shouldn't be using pregenerated html nor man for that matter...
 
-On Fri, Oct 23, 2009 at 13:59, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> =A01. The series will break your rc script (either $HOME/.bashrc, or
-> =A0 =A0system-side) that sources $git/contrib/completion/git-completi=
-on.bash
-> =A0 =A0because it has to be built; having "make" generate it may alle=
-viate
-> =A0 =A0the issue, but "make clean" will break it again, so it is not
-> =A0 =A0something you can solve in any way other than changing your se=
-tting.
+With "compiling" documentation things are a bit different.
+Simplified, in contrast to source code compiling documentation leads to
+the same results on all machines while sources produces lots of
+different results depending on the configuration of the machine ("use
+flags", compile flags, versions of linked libraries, ..) which differ
+heavily from one machine to another.
 
-This is my main concern, adding 'bash_completion' as a target to all:
-would be ok; why would 'make clean' break it? As long as you don't add
-"make -C contrib/completion clean' to the main clean target there's no
-problem?
+Generating documentation downstream means more dependencies for us
+without any advantages that I would be aware of.  In case of dblatex the
+dependencies get quite extreme actually :-)  So we thought why not just
+ask for it if you provide similar things already.
 
---=20
-Cheers,
 
-Sverre Rabbelier
+> FWIW, you can already say "make info" and "make pdf" yourselves if you
+> have necessary toolchains installed.  Integration is not an issue.
+
+We use make info at the moment.  (On a sidenote I hope you get it
+working with the latest asciidoc again.  See my earlier mail on this list.)
+
+
+> Neither my primary development box (Debian, which I would test before
+> pushing things out) nor the machine at k.org I use for the final sanity
+> check (FC11, on which the documents are automatically generated) has
+> dblatex nor docbook2x installed.  I am not particularly enthused about
+> installing a lot of dependencies for these packages on my machine.  I do
+> not want to bother k.org admins who are already overloaded to install
+> these on their machines either.
+
+I see, thanks for your explanation.
+
+
+
+Sebastian
