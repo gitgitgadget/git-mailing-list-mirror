@@ -1,84 +1,80 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: git bisect Vs branch
-Date: Fri, 23 Oct 2009 10:34:10 +0200
-Message-ID: <4AE16A82.1010103@viscovery.net>
-References: <4AE07EEB.2010101@maxim-ic.com> <adf1fd3d0910220950s50ccf8efwda891374e6480a30@mail.gmail.com> <4AE156A9.9060809@maxim-ic.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Detached HEAD and "git log --all"
+Date: Fri, 23 Oct 2009 10:33:52 +0200
+Message-ID: <4AE16A70.9050200@drmicha.warpmail.net>
+References: <200910222237.04056.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	=?UTF-8?B?U2FudGkgQsOpamE=?= =?UTF-8?B?cg==?= <santi@agolina.net>
-To: =?UTF-8?B?R3LDqWdvcnkgUm9tw6k=?= <gregory.rome@maxim-ic.com>
-X-From: git-owner@vger.kernel.org Fri Oct 23 10:36:37 2009
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 23 10:36:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1FbL-0003F0-0Q
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 10:34:23 +0200
+	id 1N1Fb6-00032o-4N
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 10:34:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751346AbZJWIeJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Oct 2009 04:34:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751329AbZJWIeJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 04:34:09 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:10331 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751168AbZJWIeI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Oct 2009 04:34:08 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1N1Fb8-0004hN-FI; Fri, 23 Oct 2009 10:34:10 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 33E0BBC81; Fri, 23 Oct 2009 10:34:10 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <4AE156A9.9060809@maxim-ic.com>
-X-Spam-Score: -1.4 (-)
+	id S1751312AbZJWId4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2009 04:33:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbZJWId4
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 04:33:56 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:43986 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751083AbZJWIdz (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Oct 2009 04:33:55 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 0CBA4B6103;
+	Fri, 23 Oct 2009 04:34:00 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Fri, 23 Oct 2009 04:34:00 -0400
+X-Sasl-enc: BaTijMtkHPcplxz7rx2ZahcPN30TPMD9BlnJw/GzH1fU 1256286839
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 539766F938;
+	Fri, 23 Oct 2009 04:33:59 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5pre) Gecko/20091020 Lightning/1.0pre Shredder/3.0pre
+In-Reply-To: <200910222237.04056.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131098>
 
-Gr=C3=A9gory Rom=C3=A9 schrieb:
-> Thanks Santi but I have a problem, due to the fact that the commit wh=
-ich
-> has an impact on my code is in origin/master or first-origin/master
->=20
-> When bisect checkout a commit from those branch I have none of my own
-> modifications... So I can' test if my code is good or bad excepted if=
- I
-> can merge my commits in the bisect branch...
->                                                     =E1=90=81
-> first-origin/master  *---A---------B----------------o------C-
->                           \         \                       \
-> origin/master              ----------B'----------U-----------C'-
->                                       \           \           \
-> master                                 ------------U'----------C''-
+Jakub Narebski venit, vidit, dixit 22.10.2009 22:37:
+> When discussing differences between concept and implementation
+> of branches in Git and in Mercurial on StackOverflow[1] (abusing
+> SO comment system a bit), Steve Losh[2] wrote that he was surprised
+> by the fact that "git log --all" doesn't include commits made
+> on detached HEAD.
+> 
+> While documentation clearly states:
+> 
+>   --all  Pretend as if all the refs in `$GIT_DIR/refs/` are listed
+>          on the command line as <commit>.
+> 
+> and HEAD is in `$GIT_DIR/HEAD`, which is outside `$GIT_DIR/refs/`,
+> it is nevertheless a bit strange that "git log --all" doesn't list
+> all (everything).
+> 
+> This is of course only an issue if we are on detached HEAD; I guess
+> that semantics of `--all` option to git-log predates this feature.
+> 
+> [1] http://stackoverflow.com/questions/1598759/git-and-mercurial-compare-and-contrast/1599930#1599930
+> [2] http://stevelosh.com/blog/entry/2009/8/30/a-guide-to-branching-in-mercurial/
+> 
 
-C" is the commit that merges upstream changes into your changes. You ar=
-e
-saying that your changes alone (before the merge) are good, and that
-upstream before the merge is also good (since it doesn't contain your
-changes, it is good by definition, more or less). That indeed means tha=
-t
-the merge commit is the first bad one; i.e., this is exactly the situat=
-ion
-that the user manual describes.
+Commit 77abcbd (Let --decorate show HEAD position, 2009-10-12) goes a
+little bit in that direction, adding HEAD to the "labels" that
+--decorate may use, but not to the list of refs specified by "--all". But:
 
-You should do:
+Well, after playing around a bit: git rev-list --all does list my
+detached HEAD, git log --all shows it (which is the same statement, of
+course), whether I use --decorate or not. Are you seeing different
+behaviour?
 
-  $ git checkout -b tmp master   # master is at C"
-  $ git rebase origin/master
-  $ git bisect start tmp orgin/master
+git describe --all HEAD does not describe the detached HEAD (other than
+v1.6.5-87-g4584daf in my case), which may or may not be desirable
+(because describe outputs at most one description, unlike --decorate).
 
-That is, you rebuild your history on top of origin/master in a linear
-fashion. (If you had merge conflicts in U', then you will see them agai=
-n.)
-Then you bisect the linearized history. This will point you to the bad
-commit and you will understand what is going wrong.
-
-With this new knowledge, go back to master (C") and fix the problem.
-
--- Hannes
+Michael
