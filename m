@@ -1,75 +1,82 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: ks/precompute-completion
-Date: Fri, 23 Oct 2009 15:09:26 -0500
-Message-ID: <fabb9a1e0910231309r41bc8fb6h61898318ed5568b0@mail.gmail.com>
-References: <7veiovly35.fsf@alter.siamese.dyndns.org> <fabb9a1e0910221011r957246dx3162cd675ff16800@mail.gmail.com> 
-	<4AE0DAB3.1030103@gmail.com> <fabb9a1e0910221555k287b45ebwb15ac97851b845f9@mail.gmail.com> 
-	<fabb9a1e0910221556s694a344ag8e5ae07c35351ee4@mail.gmail.com> 
-	<4AE0E542.8010501@gmail.com> <fabb9a1e0910231127i3ab469qebdc17168a58f22a@mail.gmail.com> 
-	<7vd44eaqc5.fsf@alter.siamese.dyndns.org> <fabb9a1e0910231216j2a024ac5mf5b5ccb5322722f8@mail.gmail.com> 
-	<7v1vktc1uk.fsf@alter.siamese.dyndns.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [cvsimport] Import CVS repository from a specified date or branch name
+Date: Fri, 23 Oct 2009 22:10:08 +0200
+Message-ID: <m2k4ylq3bz.fsf@igel.home>
+References: <4AE160BC.5000608@vipco.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: gitzilla@gmail.com, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Kirill Smelkov <kirr@mns.spb.ru>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 23 22:10:01 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Klaus =?utf-8?Q?R=C3=B6del?= <klaus.roedel@vipco.de>
+X-From: git-owner@vger.kernel.org Fri Oct 23 22:10:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1QSW-0005g3-NZ
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 22:10:01 +0200
+	id 1N1QSy-0005r7-Dy
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 22:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753154AbZJWUJn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Oct 2009 16:09:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753122AbZJWUJn
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 16:09:43 -0400
-Received: from mail-ew0-f208.google.com ([209.85.219.208]:57582 "EHLO
-	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753149AbZJWUJm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Oct 2009 16:09:42 -0400
-Received: by ewy4 with SMTP id 4so1984683ewy.37
-        for <git@vger.kernel.org>; Fri, 23 Oct 2009 13:09:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=4a82jnTqxH58tb3lu11B6DaghnVcevKZZ+XnsySV550=;
-        b=RaB6+1CKPa//0zfnsfMHQPc+Y7rzBpzv8XneoXv8YaEH7bvKiYW7ysZosyBNNxoU5H
-         E6twbgr4WsfxhB8YLfJyvMB7pO/Vw0fVbPoVfwhSrVmC1pTf6MSup5n4VKvq2uu2K+Bp
-         lz3PfPHRowXgX2PW5W1lVoq7+IKKlqq9qTheE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=INtPYCybmepPJHowU4Tdalzz3uvzEE1HWuH6w87aEez2Jmy/pdNax0ccLCer3HGWNd
-         PPVxk4OXIGlWuV+naXQaQXUR1ZGzP8RHAjDTObtZ+U40EY1yBh42niN1AoWwWEfC8Ofb
-         yRRWEwcZdQ4ttgfvYpVIPyUHjgNqE4p1vCKWw=
-Received: by 10.216.87.147 with SMTP id y19mr3896987wee.12.1256328586094; Fri, 
-	23 Oct 2009 13:09:46 -0700 (PDT)
-In-Reply-To: <7v1vktc1uk.fsf@alter.siamese.dyndns.org>
+	id S1753159AbZJWUKI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Oct 2009 16:10:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753122AbZJWUKI
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 16:10:08 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:37726 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753111AbZJWUKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2009 16:10:06 -0400
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id C5ACF1C1579F;
+	Fri, 23 Oct 2009 22:10:10 +0200 (CEST)
+Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
+	by mail.m-online.net (Postfix) with ESMTP id 3BF289021B;
+	Fri, 23 Oct 2009 22:10:10 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
+	with ESMTP id v+TXgt6ztRCj; Fri, 23 Oct 2009 22:10:09 +0200 (CEST)
+Received: from igel.home (DSL01.83.171.152.41.ip-pool.NEFkom.net [83.171.152.41])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Fri, 23 Oct 2009 22:10:09 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id DA9D310C4CB; Fri, 23 Oct 2009 22:10:08 +0200 (CEST)
+X-Yow: I'm EMOTIONAL now because I have MERCHANDISING CLOUT!!
+In-Reply-To: <4AE160BC.5000608@vipco.de> ("Klaus =?utf-8?Q?R=C3=B6del=22's?=
+ message of "Fri, 23
+	Oct 2009 09:52:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131125>
 
-Heya,
+Klaus R=C3=B6del <klaus.roedel@vipco.de> writes:
 
-On Fri, Oct 23, 2009 at 15:05, Junio C Hamano <gitster@pobox.com> wrote:
-> "make clean" should remove it, because it is a normal build product,
-> if you make your "make all" build completion scripts.
+> I have a very large and old (serveral years) cvs repository and I wan=
+t to
+> import this in git.
+> For my work it is not nessecary to import all the revision history fr=
+om
+> the cvs repository.
+> It is engough to import only the revisions from a specified date or b=
+ranch
+> name of the cvs repo.
+>
+> Is this possible with git-cvsimport?
+> If yes, how?
 
-Hmm, I guess that's fair enough, if you 'make clean' you want all
-build products to be removed; this problem would be solved by
-installing the completion script in the share dir, that way it doens't
-matter if 'make clean' removes the one in ~/code/git, as long as the
-one in ~/share/git-completion remains.
+You may be able to do that by passing the right arguments to cvsps.
+=46rom cvsps --help:
 
--- 
-Cheers,
+  -d <date1> -d <date2> if just one date specified, show
+     revisions newer than date1.  If two dates specified,
+     show revisions between two dates.
+  -b <branch> restrict output to patch sets affecting history of branch
 
-Sverre Rabbelier
+Andreas.
+
+--=20
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
+ED5
+"And now for something completely different."
