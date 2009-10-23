@@ -1,81 +1,65 @@
-From: Howard Miller <howard@e-learndesign.co.uk>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: Any way to "flatten" a series of changes in git
-Date: Fri, 23 Oct 2009 06:40:30 +0100
-Message-ID: <26ae428a0910222240w7956e57dn325afcdd15aa2cb@mail.gmail.com>
-References: <26ae428a0910221303n493fb7s701269d694110685@mail.gmail.com>
-	 <m3hbtrdu1r.fsf@localhost.localdomain>
-	 <26ae428a0910221411l73aa7cbak5c060925ccdf4cea@mail.gmail.com>
-	 <200910222357.15189.jnareb@gmail.com>
-	 <26ae428a0910222236l58bc64b7l12c4cff09b086dac@mail.gmail.com>
+Date: Fri, 23 Oct 2009 07:48:44 +0200
+Message-ID: <4AE143BC.7040507@viscovery.net>
+References: <26ae428a0910221303n493fb7s701269d694110685@mail.gmail.com>	 <m3hbtrdu1r.fsf@localhost.localdomain> <26ae428a0910221411l73aa7cbak5c060925ccdf4cea@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 23 07:40:41 2009
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Howard Miller <howard@e-learndesign.co.uk>
+X-From: git-owner@vger.kernel.org Fri Oct 23 07:48:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1CtB-0002hV-1c
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 07:40:37 +0200
+	id 1N1D1A-00055e-5V
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 07:48:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751783AbZJWFk1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Oct 2009 01:40:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751585AbZJWFk1
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 01:40:27 -0400
-Received: from mail-ew0-f208.google.com ([209.85.219.208]:37159 "EHLO
-	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750962AbZJWFk0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Oct 2009 01:40:26 -0400
-Received: by ewy4 with SMTP id 4so1319473ewy.37
-        for <git@vger.kernel.org>; Thu, 22 Oct 2009 22:40:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=Nfq4nfccveFewb00Ej5rvfF9BG71/ON6vYZvLZjdXKQ=;
-        b=NSkz5E3Km1ga5D7sb/Uujn/bVoN+ahvsg1s60BFSYs3x/W4L1lvt48eoNYatFUbOJC
-         lQqG49ft9KdhL+LIhx+JAQ1YWWAOvEEDI4TI3pu7TLqgdct0VyXoOoI2xlYTySW+SjQB
-         EivKleCIniPBeDUtD7yDcDM+4OzXmRjd24o5M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=BnLUimlXGa6ZSvnlBAUn5u2GfCaWQZvi93BfKyU/4pMuFSabDeHBHalnAfcAJ4gasi
-         RKmhiN3ZUzyDzbD+EEvX3LiHmBnmMxhjGmY0ZVd7jg9teyHjwQI5944MXuCdkXVsDWoh
-         H5A17z6iZje3gptjDw0ctDtKzpacdFb7jPVSQ=
-Received: by 10.216.85.68 with SMTP id t46mr861633wee.114.1256276430647; Thu, 
-	22 Oct 2009 22:40:30 -0700 (PDT)
-In-Reply-To: <26ae428a0910222236l58bc64b7l12c4cff09b086dac@mail.gmail.com>
-X-Google-Sender-Auth: e50e1029f75a5b03
+	id S1751824AbZJWFsm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2009 01:48:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751648AbZJWFsm
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 01:48:42 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:58433 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751525AbZJWFsl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2009 01:48:41 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1N1D12-0001si-L6; Fri, 23 Oct 2009 07:48:44 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 5D560BC81; Fri, 23 Oct 2009 07:48:44 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <26ae428a0910221411l73aa7cbak5c060925ccdf4cea@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131088>
 
->
-> Hi Jakub,
->
-> Yes it helps a lot. What I *don't* care about (or want to do) is
-> actually do a merge or a rebase I just want to change history. Well,
-> that's what I thought I wanted. What I suppose I really want is the
-> full history for *me* and a second branch with the 'reduced' history
-> to push to my client. =A0I suppose that's different yet again?
->
-> Howard
->
+Howard Miller schrieb:
+> Actually thinking some more.... I don't understand something about
+> this. I don't actually want to merge or rebase with anything. I just
+> want to say "make those commits a series of commits on a branch into
+> just one commit with a new message". I seriously suspect I'm missing
+> the point somewhere but what has that got to do with merging or
+> rebasing?
 
-Actually, what I should have said in the first place is that this is
-specifically nothing to do with the main trunk. We are doing small
-custom developments for clients away from the main project
-development. So we specifically don't want to merge or rebase with the
-master - that's never going to happen. I want to keep the development
-branch in tact for my reference, but when I push (the custom
-development branch) to the client I need that sanitized. I think I
-finally have it clear in my own head now!
+The easiest way (IMHO) to achieve this is certainly:
 
-Howard
+  # start a new branch at the tip of the series
+  $ git checkout -b all-in-one the-series
+
+  # squash 17 commits
+  $ git reset --soft HEAD~17
+  $ git commit
+
+Now you have a new branch 'all-in-one' that has the same contents as the
+original series 'the-series', but with only one commit:
+
+  $ git diff the-series..all-in-one  # must show no differences
+
+-- Hannes
