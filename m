@@ -1,118 +1,79 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: feature "git tag -r" to show tags and commits they are pointing 
-	to
-Date: Thu, 22 Oct 2009 22:30:37 -0400
-Message-ID: <76c5b8580910221930s4b31b180t8298c262d9d9f421@mail.gmail.com>
-References: <76c5b8580910221424n220449b9vda26f032174b6fa7@mail.gmail.com>
-	 <7vr5svf6x9.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] pull: refuse complete src:dst fetchspec arguments
+Date: Thu, 22 Oct 2009 22:54:36 -0400
+Message-ID: <20091023025434.GA29908@sigio.peff.net>
+References: <d561e70f0aa802ceb96eba16d3bb2316134d69c8.1256062808.git.trast@student.ethz.ch> <alpine.LNX.2.00.0910202044150.14365@iabervon.org> <20091021031528.GB18997@atjola.homenet> <200910211005.29053.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 23 04:31:05 2009
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Sean Estabrooks <seanlkml@sympatico.ca>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Oct 23 04:52:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N19vl-0005zN-3Z
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 04:31:05 +0200
+	id 1N1AGA-0003XG-A1
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 04:52:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751071AbZJWCae (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2009 22:30:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751041AbZJWCae
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 22:30:34 -0400
-Received: from mail-gx0-f216.google.com ([209.85.217.216]:47091 "EHLO
-	mail-gx0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751011AbZJWCad (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2009 22:30:33 -0400
-Received: by gxk8 with SMTP id 8so9741791gxk.1
-        for <git@vger.kernel.org>; Thu, 22 Oct 2009 19:30:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=H8auP/pK3lHo8n/v4NjzF2GTqS0YyjTEWwPqbhCgf6c=;
-        b=npzY+jrKzfUkB1FF3Vg/E54eCK3hsTKK8tH8NCgMAeH5A7LnXat3CzrYZKNNqHbzeN
-         VyVbO7CDnSjuKZWBHamb7BhqTsD/k0kLCqJgZaWeIQ3cQsjpp507ZtO7Wch1rS+8d5Hv
-         G+b8XOGWV5sjC976NKjFW4Ao4XKfSkX5i1c88=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=hGXD45S32ruiRyv8HdonZ/f3Zn9ZGjKAdTLcXSmhUjuPWMZwv1Df+xYfHmHdz6CMCZ
-         vwvgQcZilq+QAt9Jd1q13U0DAw7cUU4B0/mquJBNFFidN3ZHpT2yoUiqyz5vyLSRtkZa
-         pZvCztajjb187+nB1obGPyM/No7Ppe0jzvNjU=
-Received: by 10.91.143.18 with SMTP id v18mr13239165agn.71.1256265037916; Thu, 
-	22 Oct 2009 19:30:37 -0700 (PDT)
-In-Reply-To: <7vr5svf6x9.fsf@alter.siamese.dyndns.org>
+	id S1751060AbZJWCu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2009 22:50:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750876AbZJWCu4
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 22:50:56 -0400
+Received: from peff.net ([208.65.91.99]:57110 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750840AbZJWCu4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2009 22:50:56 -0400
+Received: (qmail 1007 invoked by uid 1000); 23 Oct 2009 02:54:36 -0000
+Content-Disposition: inline
+In-Reply-To: <200910211005.29053.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131083>
 
-Please, disregard...
+On Wed, Oct 21, 2009 at 10:05:27AM +0200, Thomas Rast wrote:
 
-I was looking for this info in order to create second tag for the same
-commit. For example if the first tag created by somebody or
-automatically (CI, release system), so i could add a verbose tag.
+> What if any combination of fetch and merge always gave you the long
+> form?  After all, even if you do have a tracking branch for whatever
+> you are merging, that information is probably useless and it would be
+> nicer if all of the following resulted in the long form:
+> 
+> * git fetch git://git.kernel.org/pub/scm/git/git pu
+>   git merge FETCH_HEAD
+> 
+> * git remote add origin git://git.kernel.org/pub/scm/git/git
+>   git fetch origin
+>   git merge origin/pu
+> 
+> * git fetch git://git.kernel.org/pub/scm/git/git pu:tmp
+>   git merge tmp
 
-But i just realized that i don't need commit id for that - just tag
-the tag, stupid...
+Maybe it's just me, but I actually prefer the shorthand names. Five
+years from now when I browse the history and see that I merged
+remote branch "mike/topic", I'll know exactly what that means: developer
+Mike's version of a certain topic branch. But I am not likely to care
+about exactly where we were storing developer repos at that time.
 
-Thanks,
-Eugene
+But probably that is an artifact of the workflow. The scenario I am
+describing above implies a somewhat centralized workflow, where the
+shorthand contains all of the interesting information. In a totally
+distributed, we-don't-share-anything-except-the-url-namespace setup of
+an open source repo, the full URL makes more sense.
 
+So maybe it is something that should be optional.
 
-On 10/22/09, Junio C Hamano <gitster@pobox.com> wrote:
-> Eugene Sajine <euguess@gmail.com> writes:
->
->> Hi,
->>
->> Currently there is no way you can get the commits your tags are
->> pointing to by using git tag.
->> The only way i found is to use rev-parse (which is by the way not
->> supported by the bash_completion)
->>
->> It seems reasonable to have upper level command like:
->>
->> $ git tag -r
->>
->> to output
->>
->> v0.1  8794hke84f9e8h9ef9eh949793...
->> v0.2  jhkd934398e9f499f47w9789o97...
->>
->> $ git tag -n -r
->>
->> v0.1 "super message"     8794hke84f9e8h9ef9eh949793...
->> v0.2  "another message" jhkd934398e9f499f47w9789o9f...
->>
->> $ git tag -r v0.2
->> v0.2  jhkd934398e9f499f47w9789o9f...
->>
->>
->> What do you think?
->
-> Not intereseted at all, as this does not look anything more than "because
-> I could", not "because this is useful and sorely lacking".
->
-> The "super message" and such are actually useful to humans, but "v0.1" is
-> much more useful than 8794hke to humans, and these tag names are just as
-> usable as the hexadecimal commit object names to the tools.  You can say
-> "git show v0.1^0" and "git show 8794hke" and get the same thing.
->
-> Heck, "8794hke" is not even hexadecimal, and the fact that you did not
-> even notice it is a _S*RE_ sign that they are not useful to humans.
->
-> If you _are_ a human, that is ;-)
->
-> In other words, please do not justify such a proposal with "I want to have
-> 'git tag' command to show the commit object name".  Rather, justify _why_
-> (1) you _need_ to show the commit object name to begin with, and (2) the
-> output _has_ to come from 'git tag' and not 'git rev-parse'.
+-Peff
+
+> 
+> and so on.
+> 
+> -- 
+> Thomas Rast
+> trast@{inf,student}.ethz.ch
 > --
 > To unsubscribe from this list: send the line "unsubscribe git" in
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
