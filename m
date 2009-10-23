@@ -1,106 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Write and Submit Your First Kernel Patch
-Date: Fri, 23 Oct 2009 13:58:05 -0700
-Message-ID: <7vskd9akv6.fsf@alter.siamese.dyndns.org>
-References: <dc1d0f40910231146y14028f4el9753debdf334103@mail.gmail.com>
- <alpine.LNX.2.00.0910231621550.14365@iabervon.org>
+From: Bernhard Reutner-Fischer <rep.dot.nop@gmail.com>
+Subject: Re: [PATCH] tar: on extract, -o is --no-same-owner
+Date: Fri, 23 Oct 2009 23:06:48 +0200
+Message-ID: <20091023210648.GA23122@mx.loc>
+References: <1256328943-22136-1-git-send-email-rep.dot.nop@gmail.com>
+ <20091023202524.GE4615@mx.loc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kevyn-Alexandre =?utf-8?Q?Par=C3=A9?= 
-	<kevyn.alexandre.pare@gmail.com>, linux-newbie@vger.kernel.org,
-	kernel-janitors@vger.kernel.org, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: linux-newbie-owner@vger.kernel.org Fri Oct 23 22:58:24 2009
-Return-path: <linux-newbie-owner@vger.kernel.org>
-Envelope-to: lnx-linux-newbie@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: busybox@busybox.net, git@vger.kernel.org
+To: vda.linux@googlemail.com
+X-From: git-owner@vger.kernel.org Fri Oct 23 23:06:33 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1RDL-00074q-Q4
-	for lnx-linux-newbie@lo.gmane.org; Fri, 23 Oct 2009 22:58:24 +0200
+	id 1N1RLC-0001ti-AK
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 23:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752033AbZJWU6Q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;lnx-linux-newbie@m.gmane.org>);
-	Fri, 23 Oct 2009 16:58:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751970AbZJWU6Q
-	(ORCPT <rfc822;linux-newbie-outgoing>);
-	Fri, 23 Oct 2009 16:58:16 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51745 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751936AbZJWU6O convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-newbie@vger.kernel.org>);
-	Fri, 23 Oct 2009 16:58:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A720A64B2A;
-	Fri, 23 Oct 2009 16:58:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=uWNRx1iptT2l
-	cDl6EI4guUpa5Fg=; b=YK3ZAtV6jb29LHh+XSowAMRexc4Ll/6jDH1nlVWQdd3e
-	l6+zfn3NY5hK5M/GbLpm6E1FwF38/f0ybWpbqDcQgJCQoNQuTCASuw9H90o46r67
-	bMGzUDaLMN6NIdhqvo0fptzw3o38+rcj3719NkxsHHUYR4I6/g+VOZHVvDEKJBk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=K2xaYS
-	QPcmR0z+q2uwroT70z+//ZBxcKABrS78OHmf/vbWX7sFSqojgE7/JA4ggV55fGfs
-	LVTuYPejKQ92hDogr7evTHYcJq9+E/Tw0/QKo6K2SocD6oKcrgGgEDON2ugjkIdI
-	uWYkCqjkZvN1Em0wEeTdufuIEqmBP1b29QVo8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CDEF64B29;
-	Fri, 23 Oct 2009 16:58:13 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 38A4264B28; Fri, 23 Oct
- 2009 16:58:07 -0400 (EDT)
-In-Reply-To: <alpine.LNX.2.00.0910231621550.14365@iabervon.org> (Daniel
- Barkalow's message of "Fri\, 23 Oct 2009 16\:33\:04 -0400 \(EDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C73B378C-C016-11DE-BCAA-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
-Sender: linux-newbie-owner@vger.kernel.org
+	id S1752196AbZJWVGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2009 17:06:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752153AbZJWVGS
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 17:06:18 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:41974 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751982AbZJWVGS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2009 17:06:18 -0400
+Received: by fxm18 with SMTP id 18so10681525fxm.37
+        for <git@vger.kernel.org>; Fri, 23 Oct 2009 14:06:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=r3NxmgL7/eAB02zzXlHr+MeH7q3JeBCbTnf5ONvKgUw=;
+        b=UYG++mBeuZKSuylrVdVIlBegcXaKXmuWAxPKHPe9ONmjm4pwL46slvMIXn4Hpw5sPN
+         9oFh/1/3V1hgT0XMNAT2/PzijL7/35iBwCvZ+n52+IVaqYPOciWQ1nGTMAfoLTfVnwAu
+         OiTTCO4enbPoCNTICkuXSWfoKtqwsiBfSqXfc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=A4smUC2N6ssaqgyQ6GBD5EB+xTB6yHT/+CwJnZDTtOu1Ft9OnXvcSlitMwPA6QH1i4
+         YB06WhfCABc3S065HEX4OiNU1XgvvfTG0CQqPdHrSbs+S/tl89nGRFffah2yZGoG0Qy6
+         5fs8i5aJ08gaM4ERCJLQETO/UZJA+R4ut4Q6A=
+Received: by 10.204.33.194 with SMTP id i2mr1118903bkd.146.1256331980734;
+        Fri, 23 Oct 2009 14:06:20 -0700 (PDT)
+Received: from s42.loc (85-127-251-67.dynamic.xdsl-line.inode.at [85.127.251.67])
+        by mx.google.com with ESMTPS id 13sm447270bwz.10.2009.10.23.14.06.19
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 23 Oct 2009 14:06:19 -0700 (PDT)
+Received: from cow by s42.loc with local (Exim 4.69)
+	(envelope-from <rep.dot.nop@gmail.com>)
+	id 1N1RLU-00062P-LZ; Fri, 23 Oct 2009 23:06:48 +0200
+Content-Disposition: inline
+In-Reply-To: <20091023202524.GE4615@mx.loc>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-newbie.vger.kernel.org>
-X-Mailing-List: linux-newbie@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131132>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131133>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
-
-> On Fri, 23 Oct 2009, Kevyn-Alexandre Par=C3=A9 wrote:
+On Fri, Oct 23, 2009 at 10:25:24PM +0200, Bernhard Reutner-Fischer wrote:
+>On Fri, Oct 23, 2009 at 10:15:43PM +0200, Bernhard Reutner-Fischer wrote:
+>>GNU tar-1.22 handles 'o' as no-same-owner only on extract,
+>>on create, 'o' would be --old-archive.
 >
->> Just before I send my patch I got this error with:
->> ./scripts/checkpatch.pl --terse --file
->> 0001-Staging-comedi-driver-fix-coding-style.patch
+>FYI this was prompted by:
 >
-> You're using checkpatch --file on a patch. I hope you don't intend yo=
-ur=20
-> patch to be added to the kernel source as a file, but rather applied =
-to=20
-> the kernel source, changing other files. (I bet "gcc 0001-Staging*.pa=
-tch"=20
-> will get interesting errors, too...) The patch format adds a single=20
-> character at the beginning of each line to say whether it's a additio=
-n, a=20
-> deletion, or a context line, and the context lines are identified by =
-a=20
-> space character. This means that a blank context line consists of jus=
-t=20
-> this space character, which is therefore a trailing space. We get the=
- same=20
-> type of complaints when we have expected diff output in our test scri=
-pts.
+>Signed-off-by: Bernhard Reutner-Fischer <rep.dot.nop@gmail.com>
 >
-> I'm kind of surprised that checkpatch doesn't completely blow up when=
- it's=20
-> expecting a source file and getting a patch (and maybe tell you what=20
-> you've done). But that's the source of your errors, anyway.
+>diff -rdup git-1.6.5.oorig/templates/Makefile git-1.6.5/templates/Makefile
+>--- git-1.6.5.oorig/templates/Makefile	2009-10-11 03:42:04.000000000 +0200
+>+++ git-1.6.5/templates/Makefile	2009-10-23 21:43:06.000000000 +0200
+>@@ -50,4 +50,4 @@ clean:
+> install: all
+> 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(template_instdir_SQ)'
+> 	(cd blt && $(TAR) cf - .) | \
+>-	(cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && umask 022 && $(TAR) xfo -)
+>+	(cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && umask 022 && $(TAR) x --no-numeric-owner -f -)
 
-Ah, your analysis is correct.  This is a usage error of checkpatch scri=
-pt
-and there is nothing for us to worry about.
+argh, sorry! --no-same-owner of course.
 
-Thanks; I also failed to spot --file option when I responded.
---
-To unsubscribe from this list: send the line "unsubscribe linux-newbie"=
- in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
-Please read the FAQ at http://www.linux-learn.org/faqs
+>Someone should try to ask the git people not to rely on getopt
+>permuting options.. xof would be gentle to folks who don't want
+>to turn on getopt_long though.
