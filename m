@@ -1,52 +1,45 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: confusion with git diff-tree output
-Date: Thu, 22 Oct 2009 20:54:26 -0400
-Message-ID: <20091023005426.GA2431@sigill.intra.peff.net>
-References: <117f2cc80910211043q3a92a7b6o15464cc049ee33dc@mail.gmail.com>
- <20091021195103.01cef9c4@perceptron>
- <117f2cc80910211523m5c1399aej594398fb6597e5de@mail.gmail.com>
+From: Jeff Epler <jepler@unpythonic.net>
+Subject: Re: [RFC PATCH] git-gui: Allow staging multiple lines at once
+Date: Thu, 22 Oct 2009 20:53:15 -0500
+Message-ID: <20091023015315.GB10347@unpythonic.net>
+References: <20091019195456.GA11121@unpythonic.net> <20091022195116.GB3944@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: David Roundy <roundyd@physics.oregonstate.edu>
-X-From: git-owner@vger.kernel.org Fri Oct 23 02:54:49 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Fri Oct 23 03:53:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N18QZ-0004cm-H0
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 02:54:47 +0200
+	id 1N19LQ-0004Sy-D7
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 03:53:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751463AbZJWAy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2009 20:54:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751391AbZJWAy0
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 20:54:26 -0400
-Received: from peff.net ([208.65.91.99]:46611 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751232AbZJWAy0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2009 20:54:26 -0400
-Received: (qmail 29065 invoked by uid 107); 23 Oct 2009 00:58:06 -0000
-Received: from 106.sub-70-193-249.myvzw.com (HELO sigill.intra.peff.net) (70.193.249.106)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 22 Oct 2009 20:58:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Oct 2009 20:54:26 -0400
+	id S1751257AbZJWBxW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2009 21:53:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751161AbZJWBxW
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 21:53:22 -0400
+Received: from dsl.unpythonic.net ([206.222.212.217]:40533 "EHLO
+	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751038AbZJWBxW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2009 21:53:22 -0400
+Received: by unpythonic.net (Postfix, from userid 1000)
+	id 2F75411456C; Thu, 22 Oct 2009 20:53:15 -0500 (CDT)
 Content-Disposition: inline
-In-Reply-To: <117f2cc80910211523m5c1399aej594398fb6597e5de@mail.gmail.com>
+In-Reply-To: <20091022195116.GB3944@book.hvoigt.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131081>
 
-On Wed, Oct 21, 2009 at 06:23:08PM -0400, David Roundy wrote:
+On Thu, Oct 22, 2009 at 09:51:16PM +0200, Heiko Voigt wrote:
+> Tested it and it works like a charm. I will include Shawn in the CC: so
+> he can comment.
 
-> You're right.  I figured I must be overlooking something obvious, and
-> that was it.  What surprised me was that -p implies -r, which is not
-> documented.  Since the -p output was recursive, I incorrectly presumed
-> that this was the default.
+Thanks, but don't miss the v2 patch:
+http://thread.gmane.org/gmane.comp.version-control.git/130968
+this fixes a bug staging line(s) followed only by deletions.
 
-It's due to hysterical raisins:
-
-  http://article.gmane.org/gmane.comp.version-control.git/54078
-
--Peff
+Jeff
