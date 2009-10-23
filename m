@@ -1,104 +1,342 @@
-From: =?UTF-8?B?R3LDqWdvcnkgUm9tw6k=?= <gregory.rome@maxim-ic.com>
-Subject: Re: git bisect Vs branch
-Date: Fri, 23 Oct 2009 11:24:21 +0200
-Organization: Maxim Integrated Products
-Message-ID: <4AE17645.2000408@maxim-ic.com>
-References: <4AE07EEB.2010101@maxim-ic.com> <adf1fd3d0910220950s50ccf8efwda891374e6480a30@mail.gmail.com> <4AE156A9.9060809@maxim-ic.com> <4AE16A82.1010103@viscovery.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] add tests for git diff --submodule
+Date: Fri, 23 Oct 2009 13:25:33 +0200
+Message-ID: <4AE192AD.70603@web.de>
+References: <7veiovly35.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	=?UTF-8?B?U2FudGkgQsOpamE=?= =?UTF-8?B?cg==?= <santi@agolina.net>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Oct 23 11:24:35 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 23 13:26:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1GNt-0008Mb-GP
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 11:24:33 +0200
+	id 1N1IHT-0006od-Hb
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 13:26:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751331AbZJWJYX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Oct 2009 05:24:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751300AbZJWJYX
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 05:24:23 -0400
-Received: from smtp06.msg.oleane.net ([62.161.4.6]:43234 "EHLO
-	smtp06.msg.oleane.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751021AbZJWJYX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Oct 2009 05:24:23 -0400
-X-Greylist: delayed 63325 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Oct 2009 05:24:22 EDT
-Received: from zebulon.innova-card.com (6-61.252-81.static-ip.oleane.fr [81.252.61.6]) (authenticated)
-	by smtp06.msg.oleane.net (MTA) with ESMTP id n9N9ONH1013177;
-	Fri, 23 Oct 2009 11:24:23 +0200
-X-Oleane-Rep: REPA
-Received: from localhost ([127.0.0.1])
-	by zebulon.innova-card.com
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
-	Fri, 23 Oct 2009 11:24:21 +0200
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <4AE16A82.1010103@viscovery.net>
-X-Spam-Flag: NO
-X-PMX-Spam: Probability=8%
-X-PFSI-Info: PMX 5.5.5.374460, Antispam-Engine: 2.7.1.369594, Antispam-Data: 2009.10.23.91218 (no antivirus check)
-X-Orange-Auth: dG9zbXRwQGZyLm9sZWFuZS5jb20=
+	id S1751986AbZJWLZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2009 07:25:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbZJWLZe
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 07:25:34 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:32873 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751956AbZJWLZa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2009 07:25:30 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 8A670131A584D;
+	Fri, 23 Oct 2009 13:25:34 +0200 (CEST)
+Received: from [80.128.62.151] (helo=[192.168.178.26])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1N1IH0-00063t-00; Fri, 23 Oct 2009 13:25:34 +0200
+User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
+In-Reply-To: <7veiovly35.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19/uf4SnB79fndpoS7AqIg0oHD7YJD8UaIZJXhn
+	cYnNfIpsAqq5jOn3oycW0/kQpp278+69qJRMg9S3MPGjzKFJax
+	oLxWDZiD7ys5ehs2Xz7w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131104>
 
-Thanks even if that's what scared me :)
-The draw is very simple comparing to the reality (much more merge point=
-s) and=20
-rebase will require lot of conflicts resolutions but now I'm sure that'=
-s what I=20
-have to do.
+Copied from the submodule summary test and changed to reflect the
+differences in the output of git diff --submodule.
 
-Gr=C3=A9gory
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-Johannes Sixt wrote:
-> Gr=C3=A9gory Rom=C3=A9 schrieb:
->> Thanks Santi but I have a problem, due to the fact that the commit w=
-hich
->> has an impact on my code is in origin/master or first-origin/master
->>
->> When bisect checkout a commit from those branch I have none of my ow=
-n
->> modifications... So I can' test if my code is good or bad excepted i=
-f I
->> can merge my commits in the bisect branch...
->>                                                    =E1=90=81
->> first-origin/master  *---A---------B----------------o------C-
->>                           \         \                       \
->> origin/master              ----------B'----------U-----------C'-
->>                                       \           \           \
->> master                                 ------------U'----------C''-
->=20
-> C" is the commit that merges upstream changes into your changes. You =
-are
-> saying that your changes alone (before the merge) are good, and that
-> upstream before the merge is also good (since it doesn't contain your
-> changes, it is good by definition, more or less). That indeed means t=
-hat
-> the merge commit is the first bad one; i.e., this is exactly the situ=
-ation
-> that the user manual describes.
->=20
-> You should do:
->=20
->   $ git checkout -b tmp master   # master is at C"
->   $ git rebase origin/master
->   $ git bisect start tmp orgin/master
->=20
-> That is, you rebuild your history on top of origin/master in a linear
-> fashion. (If you had merge conflicts in U', then you will see them ag=
-ain.)
-> Then you bisect the linearized history. This will point you to the ba=
-d
-> commit and you will understand what is going wrong.
->=20
-> With this new knowledge, go back to master (C") and fix the problem.
->=20
-> -- Hannes
->=20
+Junio C Hamano schrieb:
+> * js/diff-verbose-submodule (2009-10-14) 2 commits.
+>  - add tests for git diff --submodule-summary
+>  - Add the --submodule option to the diff option family
+> 
+> I should retitle and fix some comments in the tip commit (the tests have
+> already been adjusted to use the real option name), but otherwise I think
+> this is ready for 'next'.
+
+Sorry for sending the updated test so late, i haven't had much time for
+git in the last few days.
+
+Apart from your changes necessary to make the test run again my changes are:
+
+- rename from "t4041-diff-submodule-summary.sh" to "t4041-diff-submodule.sh"
+- corrected all comments still speaking of "summary"
+- added tests to test the behaviour of "--submodule" and "--submodule=short"
+
+
+ t/t4041-diff-submodule.sh |  260 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 260 insertions(+), 0 deletions(-)
+ create mode 100755 t/t4041-diff-submodule.sh
+
+diff --git a/t/t4041-diff-submodule.sh b/t/t4041-diff-submodule.sh
+new file mode 100755
+index 0000000..5bb4fed
+--- /dev/null
++++ b/t/t4041-diff-submodule.sh
+@@ -0,0 +1,260 @@
++#!/bin/sh
++#
++# Copyright (c) 2009 Jens Lehmann, based on t7401 by Ping Yin
++#
++
++test_description='Support for verbose submodule differences in git diff
++
++This test tries to verify the sanity of the --submodule option of git diff.
++'
++
++. ./test-lib.sh
++
++add_file () {
++	sm=$1
++	shift
++	owd=$(pwd)
++	cd "$sm"
++	for name; do
++		echo "$name" > "$name" &&
++		git add "$name" &&
++		test_tick &&
++		git commit -m "Add $name"
++	done >/dev/null
++	git rev-parse --verify HEAD | cut -c1-7
++	cd "$owd"
++}
++commit_file () {
++	test_tick &&
++	git commit "$@" -m "Commit $*" >/dev/null
++}
++
++test_create_repo sm1 &&
++add_file . foo >/dev/null
++
++head1=$(add_file sm1 foo1 foo2)
++
++test_expect_success 'added submodule' "
++	git add sm1 &&
++	git diff-index -p --submodule=log HEAD >actual &&
++	diff actual - <<-EOF
++Submodule sm1 0000000...$head1 (new submodule)
++EOF
++"
++
++commit_file sm1 &&
++head2=$(add_file sm1 foo3)
++
++test_expect_success 'modified submodule(forward)' "
++	git diff-index -p --submodule=log HEAD >actual &&
++	diff actual - <<-EOF
++Submodule sm1 $head1..$head2:
++  > Add foo3
++EOF
++"
++
++test_expect_success 'modified submodule(forward)' "
++	git diff --submodule=log >actual &&
++	diff actual - <<-EOF
++Submodule sm1 $head1..$head2:
++  > Add foo3
++EOF
++"
++
++test_expect_success 'modified submodule(forward) --submodule' "
++	git diff --submodule >actual &&
++	diff actual - <<-EOF
++Submodule sm1 $head1..$head2:
++  > Add foo3
++EOF
++"
++
++fullhead1=$(cd sm1; git rev-list --max-count=1 $head1)
++fullhead2=$(cd sm1; git rev-list --max-count=1 $head2)
++test_expect_success 'modified submodule(forward) --submodule=short' "
++	git diff --submodule=short >actual &&
++	diff actual - <<-EOF
++diff --git a/sm1 b/sm1
++index $head1..$head2 160000
++--- a/sm1
+++++ b/sm1
++@@ -1 +1 @@
++-Subproject commit $fullhead1
+++Subproject commit $fullhead2
++EOF
++"
++
++commit_file sm1 &&
++cd sm1 &&
++git reset --hard HEAD~2 >/dev/null &&
++head3=$(git rev-parse --verify HEAD | cut -c1-7) &&
++cd ..
++
++test_expect_success 'modified submodule(backward)' "
++	git diff-index -p --submodule=log HEAD >actual &&
++	diff actual - <<-EOF
++Submodule sm1 $head2..$head3 (rewind):
++  < Add foo3
++  < Add foo2
++EOF
++"
++
++head4=$(add_file sm1 foo4 foo5) &&
++head4_full=$(GIT_DIR=sm1/.git git rev-parse --verify HEAD)
++test_expect_success 'modified submodule(backward and forward)' "
++	git diff-index -p --submodule=log HEAD >actual &&
++	diff actual - <<-EOF
++Submodule sm1 $head2...$head4:
++  > Add foo5
++  > Add foo4
++  < Add foo3
++  < Add foo2
++EOF
++"
++
++commit_file sm1 &&
++mv sm1 sm1-bak &&
++echo sm1 >sm1 &&
++head5=$(git hash-object sm1 | cut -c1-7) &&
++git add sm1 &&
++rm -f sm1 &&
++mv sm1-bak sm1
++
++test_expect_success 'typechanged submodule(submodule->blob), --cached' "
++	git diff --submodule=log --cached >actual &&
++	diff actual - <<-EOF
++Submodule sm1 41fbea9...0000000 (submodule deleted)
++diff --git a/sm1 b/sm1
++new file mode 100644
++index 0000000..9da5fb8
++--- /dev/null
+++++ b/sm1
++@@ -0,0 +1 @@
+++sm1
++EOF
++"
++
++test_expect_success 'typechanged submodule(submodule->blob)' "
++	git diff --submodule=log >actual &&
++	diff actual - <<-EOF
++diff --git a/sm1 b/sm1
++deleted file mode 100644
++index 9da5fb8..0000000
++--- a/sm1
+++++ /dev/null
++@@ -1 +0,0 @@
++-sm1
++Submodule sm1 0000000...$head4 (new submodule)
++EOF
++"
++
++rm -rf sm1 &&
++git checkout-index sm1
++test_expect_success 'typechanged submodule(submodule->blob)' "
++	git diff-index -p --submodule=log HEAD >actual &&
++	diff actual - <<-EOF
++Submodule sm1 $head4...0000000 (submodule deleted)
++diff --git a/sm1 b/sm1
++new file mode 100644
++index 0000000..$head5
++--- /dev/null
+++++ b/sm1
++@@ -0,0 +1 @@
+++sm1
++EOF
++"
++
++rm -f sm1 &&
++test_create_repo sm1 &&
++head6=$(add_file sm1 foo6 foo7)
++fullhead6=$(cd sm1; git rev-list --max-count=1 $head6)
++test_expect_success 'nonexistent commit' "
++	git diff-index -p --submodule=log HEAD >actual &&
++	diff actual - <<-EOF
++Submodule sm1 $head4...$head6 (commits not present)
++EOF
++"
++
++commit_file
++test_expect_success 'typechanged submodule(blob->submodule)' "
++	git diff-index -p --submodule=log HEAD >actual &&
++	diff actual - <<-EOF
++diff --git a/sm1 b/sm1
++deleted file mode 100644
++index $head5..0000000
++--- a/sm1
+++++ /dev/null
++@@ -1 +0,0 @@
++-sm1
++Submodule sm1 0000000...$head6 (new submodule)
++EOF
++"
++
++commit_file sm1 &&
++rm -rf sm1
++test_expect_success 'deleted submodule' "
++	git diff-index -p --submodule=log HEAD >actual &&
++	diff actual - <<-EOF
++Submodule sm1 $head6...0000000 (submodule deleted)
++EOF
++"
++
++test_create_repo sm2 &&
++head7=$(add_file sm2 foo8 foo9) &&
++git add sm2
++
++test_expect_success 'multiple submodules' "
++	git diff-index -p --submodule=log HEAD >actual &&
++	diff actual - <<-EOF
++Submodule sm1 $head6...0000000 (submodule deleted)
++Submodule sm2 0000000...$head7 (new submodule)
++EOF
++"
++
++test_expect_success 'path filter' "
++	git diff-index -p --submodule=log HEAD sm2 >actual &&
++	diff actual - <<-EOF
++Submodule sm2 0000000...$head7 (new submodule)
++EOF
++"
++
++commit_file sm2
++test_expect_success 'given commit' "
++	git diff-index -p --submodule=log HEAD^ >actual &&
++	diff actual - <<-EOF
++Submodule sm1 $head6...0000000 (submodule deleted)
++Submodule sm2 0000000...$head7 (new submodule)
++EOF
++"
++
++test_expect_success 'given commit --submodule' "
++	git diff-index -p --submodule HEAD^ >actual &&
++	diff actual - <<-EOF
++Submodule sm1 $head6...0000000 (submodule deleted)
++Submodule sm2 0000000...$head7 (new submodule)
++EOF
++"
++
++fullhead7=$(cd sm2; git rev-list --max-count=1 $head7)
++
++test_expect_success 'given commit --submodule=short' "
++	git diff-index -p --submodule=short HEAD^ >actual &&
++	diff actual - <<-EOF
++diff --git a/sm1 b/sm1
++deleted file mode 160000
++index $head6..0000000
++--- a/sm1
+++++ /dev/null
++@@ -1 +0,0 @@
++-Subproject commit $fullhead6
++diff --git a/sm2 b/sm2
++new file mode 160000
++index 0000000..$head7
++--- /dev/null
+++++ b/sm2
++@@ -0,0 +1 @@
+++Subproject commit $fullhead7
++EOF
++"
++
++test_done
+-- 
+1.6.5.rc2.19.gcbaec.dirty
