@@ -1,88 +1,119 @@
-From: Sebastian Pipping <sping@gentoo.org>
-Subject: Re: requesting info page (and pdf) doc releases
-Date: Fri, 23 Oct 2009 21:22:12 +0200
-Message-ID: <4AE20264.2060207@gentoo.org>
-References: <4AE0C362.3030900@gentoo.org> <f46c52560910221513w1cb19949lfa05ef964987d809@mail.gmail.com> <7vtyxqaqg5.fsf@alter.siamese.dyndns.org>
+From: Michal Nazarewicz <mina86@tlen.pl>
+Subject: Re: Write and Submit Your First Kernel Patch
+Date: Fri, 23 Oct 2009 21:41:33 +0200
+Message-ID: <87vdi5uccy.fsf@erwin.mina86.com>
+References: <dc1d0f40910231146y14028f4el9753debdf334103@mail.gmail.com>
+	<87zl7hudn4.fsf@erwin.mina86.com>
+	<dc1d0f40910231219l600d3579i57c7580fe798d445@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Rustom Mody <rustompmody@gmail.com>, git@vger.kernel.org,
-	"Robin H. Johnson" <robbat2@gentoo.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 23 21:22:25 2009
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Cc: linux-newbie@vger.kernel.org, kernel-janitors@vger.kernel.org,
+	git@vger.kernel.org
+To: Kevyn-Alexandre =?utf-8?Q?Par=C3=A9?= 
+	<kevyn.alexandre.pare@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 23 21:41:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1PiR-0002Xu-5h
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 21:22:23 +0200
+	id 1N1Q1I-0002iu-Ff
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 21:41:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752901AbZJWTWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Oct 2009 15:22:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752869AbZJWTWM
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 15:22:12 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:58150 "EHLO smtp.gentoo.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752845AbZJWTWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Oct 2009 15:22:12 -0400
-Received: from [192.168.0.3] (unknown [78.52.97.59])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.gentoo.org (Postfix) with ESMTP id BD4BE67372;
-	Fri, 23 Oct 2009 19:22:15 +0000 (UTC)
-User-Agent: Thunderbird 2.0.0.23 (X11/20091018)
-In-Reply-To: <7vtyxqaqg5.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.7
+	id S1753132AbZJWTlk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2009 15:41:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753121AbZJWTlk
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 15:41:40 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:35548 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753097AbZJWTli (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2009 15:41:38 -0400
+Received: by fxm18 with SMTP id 18so10625826fxm.37
+        for <multiple recipients>; Fri, 23 Oct 2009 12:41:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:from:to:cc:subject
+         :references:x-url:x-pgp-fp:x-pgp:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=jhHh2i/Wx+mmMeDZnnRR0bK/bESUYteVesJujdSzcWc=;
+        b=B1ckIBVOpzZa9tZPLXHYiFN555895b4K+l6g60Zhb0B44ht+JKHsi5qLoRl8S8I/Fz
+         ny+HjHhb0rMlbO+HPj+QWdT8Sg34D0QcTRAwsj5V+VRzcTec278YVfaK5Br3QFAHDsIE
+         qYqiCGyFhPyuohkHht8m0hgAwOPigiGQamGTA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:from:to:cc:subject:references:x-url:x-pgp-fp:x-pgp:date
+         :in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=ZS6NHwuC0im98Exp+B6BXf6IbHHzUg/uuciV2ekhH7uPXR1LmUzeha0DQfLa0f+SKt
+         suPFh7NarCr5K/UD5er+Hv3IPjKRWt7SmuRkr5847eFrEO/6sPWSbOGbsWz8lXhg/5Dd
+         LlsT7Xlfu4XYpmvxZ0sMbqpxtck2Xesj2R4VY=
+Received: by 10.204.162.143 with SMTP id v15mr4499207bkx.50.1256326901656;
+        Fri, 23 Oct 2009 12:41:41 -0700 (PDT)
+Received: from erwin.piotrekn (aaru70.neoplus.adsl.tpnet.pl [83.5.206.70])
+        by mx.google.com with ESMTPS id 13sm643240bwz.6.2009.10.23.12.41.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 23 Oct 2009 12:41:40 -0700 (PDT)
+X-Url: http://mina86.com/
+X-PGP-FP: 9134 06FA 7AD8 D134 9D0C  C33F 532C CB00 B7C6 DF1E
+X-PGP: B7C6DF1E
+In-Reply-To: <dc1d0f40910231219l600d3579i57c7580fe798d445@mail.gmail.com>
+	("Kevyn-Alexandre =?utf-8?Q?Par=C3=A9=22's?= message of "Fri, 23 Oct 2009
+ 15:19:32
+	-0400")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (Slckware Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131121>
 
-Junio C Hamano wrote:
-> Rustom Mody <rustompmody@gmail.com> writes:
-> 
->> On Fri, Oct 23, 2009 at 2:11 AM, Sebastian Pipping <sping@gentoo.org> wrote:
->>> would be nice to get info pages (and pdf) doc releases in addition to
->>> html and man pages.  i imagine such a change to the release machine
->>> should not be too hard to integrate.  we could use it in gentoo.
->> +1
->> Why only gentoo? I would use it on ubuntu or windows as well
-> 
-> As I understand it, Gentoo is supposed to build everything from the source
-> anyway, you would not want to use pregenerated info nor pdf, no?  You
-> shouldn't be using pregenerated html nor man for that matter...
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-With "compiling" documentation things are a bit different.
-Simplified, in contrast to source code compiling documentation leads to
-the same results on all machines while sources produces lots of
-different results depending on the configuration of the machine ("use
-flags", compile flags, versions of linked libraries, ..) which differ
-heavily from one machine to another.
+>> Kevyn-Alexandre Par=C3=A9 <kevyn.alexandre.pare@gmail.com> writes:
+>>> 0001-Staging-comedi-driver-fix-coding-style.patch:27: ERROR: trailing w=
+hitespace
+>>> 0001-Staging-comedi-driver-fix-coding-style.patch:35: ERROR: trailing w=
+hitespace
+>>> 0001-Staging-comedi-driver-fix-coding-style.patch:43: ERROR: trailing w=
+hitespace
+>>> 0001-Staging-comedi-driver-fix-coding-style.patch:53: ERROR: trailing w=
+hitespace
+>>>
+>>> I have done a step by step explanation of what I have done:
+>>> http://kapare.blogspot.com/2009/09/write-and-submit-your-first-kernel.h=
+tml>>
+>>> It seem to me that the whitespace are added after I do this command:
+>>> git format-patch -s -n master..mybranch
 
-Generating documentation downstream means more dependencies for us
-without any advantages that I would be aware of.  In case of dblatex the
-dependencies get quite extreme actually :-)  So we thought why not just
-ask for it if you provide similar things already.
+> On Fri, Oct 23, 2009 at 3:13 PM, Michal Nazarewicz <mina86@tlen.pl> wrote:
+>> Do "git rebase --whitespace=3Dfix master" and git will try to fix whites=
+paces.
 
+Kevyn-Alexandre Par=C3=A9 <kevyn.alexandre.pare@gmail.com> writes:
+> thx Michal,
+>
+> But the problem remain:
 
-> FWIW, you can already say "make info" and "make pdf" yourselves if you
-> have necessary toolchains installed.  Integration is not an issue.
+If I'm not mistaken "git rebase --whitespace=3Dfix master" should do the
+trick.  I'm out of good ideas if it does not.  Best I can advice is to
+fix the patch by hand -- just edit it in some decent editor and remove
+trailing whitespaces from those lines.
 
-We use make info at the moment.  (On a sidenote I hope you get it
-working with the latest asciidoc again.  See my earlier mail on this list.)
+=2D-=20
+Best regards,                                         _     _
+ .o. | Liege of Serenly Enlightened Majesty of      o' \,=3D./ `o
+ ..o | Computer Science,  Michal "mina86" Nazarewicz   (o o)
+ ooo +--<mina86*tlen.pl>--<jid:mina86*jabber.org>--ooO--(_)--Ooo--
 
+--=-=-=
+Content-Type: application/pgp-signature
 
-> Neither my primary development box (Debian, which I would test before
-> pushing things out) nor the machine at k.org I use for the final sanity
-> check (FC11, on which the documents are automatically generated) has
-> dblatex nor docbook2x installed.  I am not particularly enthused about
-> installing a lot of dependencies for these packages on my machine.  I do
-> not want to bother k.org admins who are already overloaded to install
-> these on their machines either.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.12 (GNU/Linux)
 
-I see, thanks for your explanation.
-
-
-
-Sebastian
+iEYEARECAAYFAkriBvEACgkQUyzLALfG3x535wCfXiB4Rz1/uNltpt4jPUd2fn8c
+aAoAnAhCF4je11wA2ABlNjfxYkiwsqwO
+=0e6t
+-----END PGP SIGNATURE-----
+--=-=-=--
