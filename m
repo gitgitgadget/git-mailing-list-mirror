@@ -1,99 +1,103 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] pull/fetch rename
-Date: Fri, 23 Oct 2009 23:30:16 -0700
-Message-ID: <7v4opp9udj.fsf@alter.siamese.dyndns.org>
-References: <200910201947.50423.trast@student.ethz.ch>
- <alpine.LNX.2.00.0910201912390.14365@iabervon.org>
- <20091021063008.GA3349@glandium.org>
- <7v3a5db6ij.fsf@alter.siamese.dyndns.org>
- <7v63a99pok.fsf@alter.siamese.dyndns.org>
- <20091021074522.GA13531@coredump.intra.peff.net>
+Subject: Re: [PATCH 3/3] git checkout --nodwim
+Date: Fri, 23 Oct 2009 23:35:54 -0700
+Message-ID: <7vzl7h8fjp.fsf@alter.siamese.dyndns.org>
+References: <1254775583-49452-1-git-send-email-jaysoffian@gmail.com>
+ <alpine.DEB.1.00.0910052314580.4985@pacific.mpi-cbg.de>
+ <7vzl7pyvzl.fsf@alter.siamese.dyndns.org>
+ <7v63adxh9a.fsf_-_@alter.siamese.dyndns.org>
+ <81b0412b0910180540u7030c22br7efcaf7f51df771d@mail.gmail.com>
+ <7v7huspjg0.fsf@alter.siamese.dyndns.org>
+ <32541b130910211029x2f4295c3w40dd13b3cdc7762c@mail.gmail.com>
+ <20091022062145.6117@nanako3.lavabit.com>
+ <alpine.DEB.1.00.0910220226270.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Mike Hommey <mh@glandium.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Oct 24 08:30:53 2009
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Jay Soffian <jaysoffian@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Oct 24 08:36:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1a9L-0006s4-8I
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Oct 2009 08:30:51 +0200
+	id 1N1aEj-00084u-PA
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Oct 2009 08:36:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751648AbZJXGae (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Oct 2009 02:30:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751541AbZJXGae
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 02:30:34 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33738 "EHLO
+	id S1751845AbZJXGgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Oct 2009 02:36:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbZJXGgH
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 02:36:07 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47241 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751525AbZJXGad (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Oct 2009 02:30:33 -0400
+	with ESMTP id S1751525AbZJXGgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Oct 2009 02:36:07 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 07E9683CCA;
-	Sat, 24 Oct 2009 02:30:34 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E81D65FE0;
+	Sat, 24 Oct 2009 02:36:10 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gEwiJrvTOfuG5t/vfX7PzYd7LOo=; b=FTuHRX
-	/nIgmFQUGWKtunz6jUr0pbYUq0sCM6wPrKegHTlHRjUdZ+Q5CGWaufmJm19kGAh9
-	5IBhKaIPIOvZMM/iTZjjUu94M+Rigj4XKXWSKd/MX5a7SfsfaQV7IcNoH/nqJKxN
-	/QUtgXOJeUHs2jcKnfq2tyPGSs3ETuoYHi2g4=
+	:content-type; s=sasl; bh=cXkhQKiy5D1ppqyCU7LtievFGG0=; b=I6jwSm
+	czpL8kU/FgB79DxVs52KUfuOvi3jWPSG2Z4ZDJ4QVAV2mvrsXvAsn/jQIgCTF4zm
+	MSUPFxayNFBvDqMkBx7bIcpq5RJMGRkvC06jU9kxq5w7L+9wbXUXhBQq/B2YUL72
+	yIhpXLi0CyhBFKyANMq7DPuzPtc9SK21/VP/U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vsXRjqTYI0ybLlTqvwgl4c5Fs/vtrbHp
-	L/KfKh2xHEnJO6uL096GTU55C8ffFeDCO1WLGZwpPkMwPNbbdEIskLYgQ/N5vWsd
-	wfWZFVmMfqM08ArpoqQ1resGH8Cq0XAn66/gZ63t/rbJensCBLDW5JRTSDDl6dBT
-	rvVMMVwrAS4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A4B4983CC5;
-	Sat, 24 Oct 2009 02:30:27 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=B8zxzQvAf0Gqh8aMASK+nS3IpNiy2E/Y
+	oKSQGJjbRt6Hm0o9m/jSujlR10I+K2ZD1GhEf05p+0AZ7/yxU/1BvWp7bsdo1xcM
+	xSD07IPLdPdEKfFfZCJAI0prGNrP9NkCdampOQpFZ5eVGmSfX3V2u4UG4ZF8kCV/
+	y2Rp8/H+spY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 04E5C65FDB;
+	Sat, 24 Oct 2009 02:36:03 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 755A983CC3; Sat, 24 Oct 2009
- 02:30:18 -0400 (EDT)
-In-Reply-To: <20091021074522.GA13531@coredump.intra.peff.net> (Jeff King's
- message of "Wed\, 21 Oct 2009 03\:45\:22 -0400")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 00E6965FDA; Sat, 24 Oct
+ 2009 02:35:55 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0910220226270.4985@pacific.mpi-cbg.de>
+ (Johannes Schindelin's message of "Thu\, 22 Oct 2009 02\:27\:30 +0200
+ \(CEST\)")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B8220B40-C066-11DE-99ED-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 809D502A-C067-11DE-A16F-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131143>
 
-Jeff King <peff@peff.net> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Wed, Oct 21, 2009 at 12:22:35AM -0700, Junio C Hamano wrote:
+> Hi,
 >
->> It is not even a typesaver.  "git fetch" updates from the default remote,
->> so does "git remote update".  Personally I think the people who invented
->> "git remote update" were misguided, and that is why I say it was a failed
->> UI experiment that failed, but that is hindsight talking [*1*].
+> On Thu, 22 Oct 2009, Nanako Shiraishi wrote:
 >
-> Declaring it a failure depends on what you consider the goal of "git
-> remote update" to be. I find it very useful as a shorthand for "fetch
-> from _all_ remotes"[1]. Which does save typing over
+>> Quoting Avery Pennarun <apenwarr@gmail.com>
+>> 
+>> > On Sun, Oct 18, 2009 at 3:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> >> Helping hands in polishing it up is very welcome.
+>> >
+>> > I find the idea of an option for "don't do what I mean" to be pretty
+>> > entertaining.  Or maybe just misleading :)
+>> >
+>> > Have fun,
+>> >
+>> > Avery
+>> 
+>> As Junio asked for helping hands, let's try to be helpful and constructive.
+>> 
+>> Maybe "don't second-guess" explains it better?
 >
->   $ for i in `git remote`; do git fetch $i; done
-
-You've since read my footnote about "git fetch <group>", so I do not think
-this part is controversial anymore.
-
-> And of course, there is "git remote" again, saving us a few keystrokes
-> over:
+> My take on it:
 >
->   $ git config --get-regexp 'remote..*.url' | cut -d. -f2
+> 1) --no-porcelain
+>
+> 2) we all are bike-shedding, not being constructive at all
 
-And as you may have already realized by now, I was saying two things.
+You are right about (2), regarding the option name. I've queued one that
+uses --no-guess.
 
- (1) "git remote" in general is a good management interface for remote
-     nicknames and attributes attached to them, in the similar spirit as
-     "git config" is a good management interface for the underlying
-     configuration files.
-
- (2) "git remote update" is a misguided UI expariment that failed.
-
-So there is no disagreement between us on the "and of course" part,
-either.
+Regarding the correct use of parse_options(), I had to figure it out
+myself, and helping hand would have, eh, helped me.
