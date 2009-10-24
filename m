@@ -1,114 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Oct 2009, #04; Wed, 21)
-Date: Fri, 23 Oct 2009 23:45:20 -0700
-Message-ID: <7vpr8d8f3z.fsf@alter.siamese.dyndns.org>
-References: <7veiovly35.fsf@alter.siamese.dyndns.org>
- <m3ljj3es02.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Mark Rada <marada@uwaterloo.ca>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Nick Edelen <sirnot@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 24 08:45:50 2009
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] Use fast-forward
+Date: Sat, 24 Oct 2009 11:31:31 +0300
+Message-ID: <1256373092-15126-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 24 10:31:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1aNp-0001vm-16
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Oct 2009 08:45:49 +0200
+	id 1N1c2R-0007Kg-Dk
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Oct 2009 10:31:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752338AbZJXGpg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Oct 2009 02:45:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752195AbZJXGpg
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 02:45:36 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36027 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752158AbZJXGpf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Oct 2009 02:45:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 093E283D63;
-	Sat, 24 Oct 2009 02:45:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=BwedqtnO0wQH
-	7slnuoVlpJ39/NA=; b=oL/SeM/5w4vCkBpIcXOU6jebJHxUGcsZbOF2V+bI5uNm
-	+534wnlzVJcgPPcjFWr6ANpHHr/BRD7ryoUhhDB2u3UoHM/paq3T9+gJ7X7tgyLv
-	ZuXxuKekEwLaMkaIopET2u6X9nRid0ULDuwciofkam+ZKlAS50JKlx9aNtzqBlQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=yGPxOp
-	t6RdIHXLoc0Fn+QUlfFMMVqlFwhiU7N+Fs863UelpHWpZOX6qAGBDsCbbxHFFKDe
-	UaG1O4abiLriqNe/6jogy3EATwmsKw0z5YTpPqTf7LyrraDtAMsz6s0IfcITi2BK
-	BoPOkRzrAmy3M6IrOn88eRFN5OfZyEzRepKLo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9985583D62;
-	Sat, 24 Oct 2009 02:45:32 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E4EB483D60; Sat, 24 Oct 2009
- 02:45:21 -0400 (EDT)
-In-Reply-To: <m3ljj3es02.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Thu\, 22 Oct 2009 01\:46\:50 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D389ECAC-C068-11DE-BBC6-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1751794AbZJXIbi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Oct 2009 04:31:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751665AbZJXIbi
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 04:31:38 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:57408 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751535AbZJXIbh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Oct 2009 04:31:37 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so521503fga.1
+        for <git@vger.kernel.org>; Sat, 24 Oct 2009 01:31:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=esjTm9u8X2lr2af7d8K2Q/cNc+NogSrRol0mYXsCjjM=;
+        b=Dr/JTD/bNtNrPfXfW4wzWiBwIAEwSmysqmDjKgzbtwYCDtvyzK7rfOhkoFrG46VTDT
+         3huu64m4viGhzrsD6tWgJ/GVryevuD7Y15GQo9G37e+M/S5qz5Im+wEB4kCThhttEqXy
+         tk1CPOQIUSKtNkN9q2ijr+VsKdr5ZprOuRLb0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ctGJEHetoToyFMJnj806U5heYTLn37uhk3zXi5RgwYrw3PDeaWp2Vf4PTaJCtYJuNE
+         EiBmS10rsknUB6V9cs0Qg6H0LzHWU1lHd8pCSePyFNHYdz38eAFuCMK5dOdKmFff77EF
+         +S3eHq9kyc4aSEi9ybcZKQrsPgZmbWI4HPIOE=
+Received: by 10.86.159.37 with SMTP id h37mr3503179fge.79.1256373101476;
+        Sat, 24 Oct 2009 01:31:41 -0700 (PDT)
+Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
+        by mx.google.com with ESMTPS id l12sm5554829fgb.22.2009.10.24.01.31.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 24 Oct 2009 01:31:40 -0700 (PDT)
+X-Mailer: git-send-email 1.6.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131146>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+As suggested in the mailing list, now I've replaced all instances of 'fast
+forward' with 'fast-forward'.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> * rs/pretty-wrap (2009-10-17) 1 commit
->>  - Implement wrap format %w() as if it is a mode switch
->>  (this branch uses js/log-rewrap; is related to jc/strbuf-nested-exp=
-and.)
->>=20
->> When it comes to design issues to keep unnecessary complexity out, I=
- tend
->> to trust Rene (and Nico) a lot more than I trust myself.  Tonight's =
-'pu'
->> queues this series instead of my "nested" one.
->
->> * jc/strbuf-nested-expand (2009-10-18) 3 commits
->>  . Teach --wrap to only indent without wrapping
->>  . Add %[wrap(width,in1,in2)<<any-string>>%] implementation
->>  . strbuf_nested_expand(): allow expansion to interrupt in the middl=
-e
->>  (this branch uses js/log-rewrap; is related to rs/pretty-wrap.)
->>=20
->> Ejected from 'pu' to let rs/pretty-wrap in as described above.
->
-> I think nested expand is easier to use than a mode switch: using
-> scoping (well, kind of) like in high-level programming languages is
-> IMVHO easier than programming a state machine like in assembler (or
-> e.g. OpenGL).
->
-> On the other hand this makes pretty format into a mini-language; also
-> we already have and use mode switches in the form of color codes.
-> Perhaps if color also used wrapping / nested expand, so one doesn't
-> have to track where to turn off and on which toggle...
+Felipe Contreras (1):
+  Use 'fast-forward' all over the place
 
-Indeed, the "mini-language"-ness was what made R=C3=A9ne worried and re=
-minded
-me that I should be worried, too.  We need to get the design right if w=
-e
-do so---there may come a time that we are better off biting the bullet
-when we discover needs (notice, it is not "wants, because we can") for
-many useful string functions, but I do not think we have reached that
-point yet.
-
->> * jc/pretty-lf (2009-10-04) 1 commit.
->>  - Pretty-format: %[+-]x to tweak inter-item newlines
->
-> I understand that %a%+b expands to %a%n%b if %b has non-empty
-> expansion, and to %a if %b is empty, but what %-b is used for?
-
-I know you can read the commit log message.
+ Documentation/config.txt                     |    2 +-
+ Documentation/git-http-push.txt              |    4 ++--
+ Documentation/git-push.txt                   |   14 +++++++-------
+ Documentation/git-read-tree.txt              |    2 +-
+ Documentation/git-receive-pack.txt           |    2 +-
+ Documentation/git-reset.txt                  |    4 ++--
+ Documentation/git-send-pack.txt              |    4 ++--
+ Documentation/gitcore-tutorial.txt           |    4 ++--
+ Documentation/githooks.txt                   |    2 +-
+ Documentation/glossary-content.txt           |    4 ++--
+ Documentation/howto/maintain-git.txt         |    2 +-
+ Documentation/howto/revert-branch-rebase.txt |    4 ++--
+ Documentation/howto/update-hook-example.txt  |    2 +-
+ Documentation/pull-fetch-param.txt           |    4 ++--
+ Documentation/user-manual.txt                |   14 +++++++-------
+ builtin-fetch--tool.c                        |    8 ++++----
+ builtin-fetch.c                              |    4 ++--
+ builtin-merge.c                              |    8 ++++----
+ builtin-push.c                               |    2 +-
+ builtin-receive-pack.c                       |    4 ++--
+ builtin-remote.c                             |    2 +-
+ builtin-send-pack.c                          |    2 +-
+ contrib/examples/git-merge.sh                |    8 ++++----
+ contrib/examples/git-resolve.sh              |    2 +-
+ contrib/hooks/post-receive-email             |    6 +++---
+ git-gui/lib/branch_create.tcl                |    2 +-
+ git-merge-octopus.sh                         |    2 +-
+ git-pull.sh                                  |    2 +-
+ git-rebase--interactive.sh                   |    6 +++---
+ git-rebase.sh                                |    2 +-
+ t/t1001-read-tree-m-2way.sh                  |    6 +++---
+ t/t5505-remote.sh                            |    2 +-
+ t/t5518-fetch-exit-status.sh                 |    2 +-
+ t/t6028-merge-up-to-date.sh                  |    2 +-
+ transport.c                                  |    2 +-
+ unpack-trees.c                               |    2 +-
+ 36 files changed, 72 insertions(+), 72 deletions(-)
