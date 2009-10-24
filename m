@@ -1,51 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: confusion with git diff-tree output
-Date: Sat, 24 Oct 2009 05:51:57 -0400
-Message-ID: <20091024095156.GA9865@sigio.peff.net>
-References: <117f2cc80910211043q3a92a7b6o15464cc049ee33dc@mail.gmail.com> <20091021195103.01cef9c4@perceptron> <117f2cc80910211523m5c1399aej594398fb6597e5de@mail.gmail.com> <20091023005426.GA2431@sigill.intra.peff.net> <7vvdi58fhw.fsf@alter.siamese.dyndns.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] tar: on extract, -o is --no-same-owner
+Date: Sat, 24 Oct 2009 11:49:10 +0200
+Message-ID: <m28wf1unop.fsf@whitebox.home>
+References: <1256328943-22136-1-git-send-email-rep.dot.nop@gmail.com>
+	<20091023202524.GE4615@mx.loc> <20091023210648.GA23122@mx.loc>
+	<7vocnxajj6.fsf@alter.siamese.dyndns.org>
+	<20091024091758.GF4615@mx.loc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: David Roundy <roundyd@physics.oregonstate.edu>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 24 11:48:26 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, vda.linux@googlemail.com,
+	busybox@busybox.net, git@vger.kernel.org
+To: Bernhard Reutner-Fischer <rep.dot.nop@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 24 11:49:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1dEX-0005lJ-TD
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Oct 2009 11:48:26 +0200
+	id 1N1dFQ-000619-O9
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Oct 2009 11:49:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751910AbZJXJsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Oct 2009 05:48:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751848AbZJXJsQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 05:48:16 -0400
-Received: from peff.net ([208.65.91.99]:48934 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751666AbZJXJsP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Oct 2009 05:48:15 -0400
-Received: (qmail 9875 invoked by uid 1000); 24 Oct 2009 09:51:57 -0000
-Content-Disposition: inline
-In-Reply-To: <7vvdi58fhw.fsf@alter.siamese.dyndns.org>
+	id S1752130AbZJXJtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Oct 2009 05:49:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752034AbZJXJtL
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 05:49:11 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:38779 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752003AbZJXJtK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Oct 2009 05:49:10 -0400
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id DE40C1C001E1;
+	Sat, 24 Oct 2009 11:49:11 +0200 (CEST)
+X-Auth-Info: JFtc626pY3m8wEVFRkAemd6aQMytoE4Na+xWff/ZK64=
+Received: from whitebox.home (DSL01.83.171.146.84.ip-pool.NEFkom.net [83.171.146.84])
+	by mail.mnet-online.de (Postfix) with ESMTP id D2430902BA;
+	Sat, 24 Oct 2009 11:49:11 +0200 (CEST)
+Received: by whitebox.home (Postfix, from userid 501)
+	id 358FE1E5379; Sat, 24 Oct 2009 11:49:11 +0200 (CEST)
+X-Yow: I love FRUIT PICKERS!!
+In-Reply-To: <20091024091758.GF4615@mx.loc> (Bernhard Reutner-Fischer's
+	message of "Sat, 24 Oct 2009 11:17:58 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131154>
 
-On Fri, Oct 23, 2009 at 11:36:59PM -0700, Junio C Hamano wrote:
+Bernhard Reutner-Fischer <rep.dot.nop@gmail.com> writes:
 
-> >> You're right.  I figured I must be overlooking something obvious, and
-> >> that was it.  What surprised me was that -p implies -r, which is not
-> >> documented.  Since the -p output was recursive, I incorrectly presumed
-> >> that this was the default.
-> >
-> > It's due to hysterical raisins:
-> >
-> >   http://article.gmane.org/gmane.comp.version-control.git/54078
-> 
-> Just to make sure, the Porcelain "diff" does recurse even with --raw 
-> and "diff-tree" doesn't for historical reasons, right?
+> On Fri, Oct 23, 2009 at 02:26:53PM -0700, Junio C Hamano wrote:
+>>Bernhard Reutner-Fischer <rep.dot.nop@gmail.com> writes:
+>>
+>>> On Fri, Oct 23, 2009 at 10:25:24PM +0200, Bernhard Reutner-Fischer wrote:
+>>>>On Fri, Oct 23, 2009 at 10:15:43PM +0200, Bernhard Reutner-Fischer wrote:
+>>>>>GNU tar-1.22 handles 'o' as no-same-owner only on extract,
+>>>>>on create, 'o' would be --old-archive.
+>>>>
+>>>>FYI this was prompted by:
+>>>>
+>>>>Signed-off-by: Bernhard Reutner-Fischer <rep.dot.nop@gmail.com>
+>>>>
+>>>>diff -rdup git-1.6.5.oorig/templates/Makefile git-1.6.5/templates/Makefile
+>>>>--- git-1.6.5.oorig/templates/Makefile	2009-10-11 03:42:04.000000000 +0200
+>>>>+++ git-1.6.5/templates/Makefile	2009-10-23 21:43:06.000000000 +0200
+>>>>@@ -50,4 +50,4 @@ clean:
+>>>> install: all
+>>>> 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(template_instdir_SQ)'
+>>>> 	(cd blt && $(TAR) cf - .) | \
+>>>>-	(cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && umask 022 && $(TAR) xfo -)
+>>>>+	(cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && umask 022 && $(TAR) x --no-numeric-owner -f -)
+>>>
+>>> argh, sorry! --no-same-owner of course.
+>>
+>>Either way, your change would break non-GNU tar implementations that are
+>>properly POSIX.1, isn't it?
+>
+> I suppose xf - -o would work?
 
-Yes, that's right (and yes, I just checked it to be double sure).
+Isn't that the same as 'xfo -'?
 
--Peff
+(tar isn't specified by POSIX, btw.)
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
