@@ -1,201 +1,102 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Use 'fast-forward' all over the place
-Date: Sat, 24 Oct 2009 22:12:36 +0300
-Message-ID: <94a0d4530910241212s5d644eb6u66c6f96feafcaf10@mail.gmail.com>
-References: <1256373092-15126-1-git-send-email-felipe.contreras@gmail.com>
-	 <1256373092-15126-2-git-send-email-felipe.contreras@gmail.com>
-	 <7v3a587kc2.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] tar: on extract, -o is --no-same-owner
+Date: Sat, 24 Oct 2009 12:25:40 -0700
+Message-ID: <7vd44c61cb.fsf@alter.siamese.dyndns.org>
+References: <1256328943-22136-1-git-send-email-rep.dot.nop@gmail.com>
+ <20091023202524.GE4615@mx.loc> <20091023210648.GA23122@mx.loc>
+ <7vocnxajj6.fsf@alter.siamese.dyndns.org> <20091024091758.GF4615@mx.loc>
+ <m28wf1unop.fsf@whitebox.home> <20091024100502.GG4615@mx.loc>
+ <m2ocnxt6jl.fsf@whitebox.home> <m2ocnxuej2.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 24 21:18:51 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Bernhard Reutner-Fischer <rep.dot.nop@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, vda.linux@googlemail.com,
+	busybox@busybox.net, git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sat Oct 24 21:26:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1m8Y-0000LR-3l
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Oct 2009 21:18:50 +0200
+	id 1N1mFU-0002jY-6I
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Oct 2009 21:26:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751764AbZJXTMe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Oct 2009 15:12:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751694AbZJXTMd
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 15:12:33 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:53233 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751510AbZJXTMd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Oct 2009 15:12:33 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so635927fga.1
-        for <git@vger.kernel.org>; Sat, 24 Oct 2009 12:12:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=9g9SOY0Aqu/oYo8FBMXWQDHIo22imWdX+yLliOAXnEg=;
-        b=R0pE++FxJD5NZbsBisEz0ylLeBpgTOIzjY/y4tKKdOOdEum86w3OUTCiqFDVOo20PV
-         +2e2sWZp4Cvrvd4E8kSjG+BjBbm94musvhySWHgfwFUEjIha0Ub8ne5FQm21I5fxiF7+
-         cg3lzHrC4ygW+lxXrqy5gT0MKaTTX9/Js+hYk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FxalnuRnpkz+4QR/Bge+QZGSVfTzaY49TsosiCfeO7cZZUsUcPc8OqadUvJeeR5+O1
-         agAN7OHvwG8Q9kL2WUWhE7vLEY+HQPLzd8hwu1DWOmm5Hc2Nc3oKB+5pBjEaqfudobqC
-         JZXnNDWkY5Pha9P3Byyu89YeIcGGVJDEHcVK8=
-Received: by 10.86.192.34 with SMTP id p34mr6927891fgf.28.1256411556302; Sat, 
-	24 Oct 2009 12:12:36 -0700 (PDT)
-In-Reply-To: <7v3a587kc2.fsf@alter.siamese.dyndns.org>
+	id S1751915AbZJXTZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Oct 2009 15:25:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751857AbZJXTZv
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 15:25:51 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41560 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751794AbZJXTZu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Oct 2009 15:25:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0183765976;
+	Sat, 24 Oct 2009 15:25:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=uCQGV3kZmZ2Mmk1J+o3I80YN7DI=; b=hJdKvHAP3T9RgoX4+NlOLQw
+	EKWae9uhBAIZb+E0i7cLGw0DGQFuTifQlTavPaVh8vrXvFqoC79puUWa7RJvSMeR
+	UXP8gRgL+Dqk1FNh92LSw4n/bXF+hg8RbS/PtVysUbE2mKtUEtlOIikrjFDc698F
+	WiMlEaEd7oocntOEIyUI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=duhiyHaGV9UTclod4CziE/7bpvAhy+zVFOtfkb2gJmuT48db6
+	5pNYOyzRBH/pMpWwv12hcV8ScIXVJH9eGu1/hCWo7Dn6otAnNy1eOqIVNZZgY2on
+	zI+VkSfT+oK1qZj/FR7/wXasBUNiB6sKWApLnog9vlO6zt+n2lVUCbjcnc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A86DF65975;
+	Sat, 24 Oct 2009 15:25:48 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC03965973; Sat, 24 Oct
+ 2009 15:25:41 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 08D562DC-C0D3-11DE-9009-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131173>
 
-On Sat, Oct 24, 2009 at 8:50 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Is this meant to replace the previous one that is already queued: a0c=
-0ecb
-> (user-manual: use 'fast-forward', 2009-10-11)?
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-Yes.
+> Like this.
 
-> It seems that these mostly match a mechanical token replacement
-> "s/([fF])ast forward/$1ast-forward/g" in the Documentation area,
-> but I suspect there may be some manual fixes.
+Yeah, correct and it beautifly explains the issue.  Thanks.
+
+>>From ebadb41b346c305b94f27e3bb787bf0ba6bb8a5b Mon Sep 17 00:00:00 2001
+> From: Andreas Schwab <schwab@linux-m68k.org>
+> Date: Sat, 24 Oct 2009 15:01:03 +0200
+> Subject: [PATCH] Work around option parsing bug in the busybox tar implementation
 >
-> Token-replace is much harder to review than to produce, as the result=
- of
-> such mechanical substitution needs to be examined to see if each chan=
-ge
-> makes sense individually.
-
-I manually replaced each instance, and reviewed the patch myself. Most
-of the changes are essentially the same, except a few instances:
-
-"Fast forward" -> fast-forward
-=46ast Forward Only -> Fast-forward Only
-
-> I suspect the patch would have been much easier to the reviewers it i=
-t
-> stated somewhere in the log message:
+> Traditionally the first argument of the tar command was interpreted a
+> bundle of letters specifying the mode of operation and additional options,
+> with any option arguments taken from subsequent words on the command line
+> as needed.  The implementation of tar in busybox apparently treats this
+> bundle as if preceded by a dash and then parses it by getopt rules, which
+> mishandles 'tar xfo -'.  Use 'tar xof -' instead which is parsed the same
+> way by both traditional tar implementations and busybox.
 >
-> =C2=A0(1) how the mechanical change was produced;
-
-There wasn't such.
-
-> =C2=A0(2) what criteria was used to choose between leaving the mechan=
-ical
-> =C2=A0 =C2=A0 change as-is and rewording them manually; and
-
-If it wasn't straight forward. I considered the following straightforwa=
-rd:
-fast forward -> fast-forward
-fast forwarded -> fast-forwarded
-fast forwarding -> fast-forwarding
-fast forwardable -> fast-forwardable
-non-fast forward -> non-fast-forward
-=46ast forward -> Fast-forward
-=46ast forwarding -> Fast-forwarding
-
-> =C2=A0(3) where these non-mechanical changes are.
-
-Mentioned on the second comment.
-
-> Here are the list of paths I looked at (during this sitting which did
-> not go til the end of the patch):
+> Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
+> ---
+>  templates/Makefile |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
 >
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> diff --git a/templates/Makefile b/templates/Makefile
+> index a12c6e2..408f013 100644
+> --- a/templates/Makefile
+> +++ b/templates/Makefile
+> @@ -50,4 +50,4 @@ clean:
+>  install: all
+>  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(template_instdir_SQ)'
+>  	(cd blt && $(TAR) cf - .) | \
+> -	(cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && umask 022 && $(TAR) xfo -)
+> +	(cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && umask 022 && $(TAR) xof -)
+> -- 
+> 1.6.5.1
 >
-> OK
 >
->> diff --git a/Documentation/git-http-push.txt b/Documentation/git-htt=
-p-push.txt
->
-> OK
->
->> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
->
-> OK, except for two hunks below I am not absolutely sure.
->
->> @@ -60,7 +60,7 @@ EXAMPLES below for details.
->> =C2=A0Pushing an empty <src> allows you to delete the <dst> ref from
->> =C2=A0the remote repository.
->> =C2=A0+
->> -The special refspec `:` (or `{plus}:` to allow non-fast forward upd=
-ates)
->> +The special refspec `:` (or `{plus}:` to allow non-fast-forward upd=
-ates)
->> =C2=A0directs git to push "matching" branches: for every branch that=
- exists on
->> =C2=A0the local side, the remote side is updated if a branch of the =
-same name
->> =C2=A0already exists on the remote side. =C2=A0This is the default o=
-peration mode
->
-> Hmm, is non-fast-forward a yet another compound word?
-
-Yes. AFAIK.
-
->> @@ -342,9 +342,9 @@ git push origin :experimental::
->
-> Likewise.
->
->> diff --git a/Documentation/git-read-tree.txt b/Documentation/git-rea=
-d-tree.txt
->> diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-=
-receive-pack.txt
->> diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.t=
-xt
->> diff --git a/Documentation/git-send-pack.txt b/Documentation/git-sen=
-d-pack.txt
->> diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitc=
-ore-tutorial.txt
->> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
->> diff --git a/Documentation/glossary-content.txt b/Documentation/glos=
-sary-content.txt
->> diff --git a/Documentation/howto/maintain-git.txt b/Documentation/ho=
-wto/maintain-git.txt
->> diff --git a/Documentation/howto/revert-branch-rebase.txt b/Document=
-ation/howto/revert-branch-rebase.txt
->> diff --git a/Documentation/howto/update-hook-example.txt b/Documenta=
-tion/howto/update-hook-example.txt
->> diff --git a/Documentation/user-manual.txt b/Documentation/user-manu=
-al.txt
->
-> OK, except for this hunk I am not sure about.
->
->> @@ -2115,7 +2115,7 @@ $ git checkout release && git pull
->>
->> =C2=A0Important note! =C2=A0If you have any local changes in these b=
-ranches, then
->> =C2=A0this merge will create a commit object in the history (with no=
- local
->> -changes git will simply do a "Fast forward" merge). =C2=A0Many peop=
-le dislike
->> +changes git will simply do a fast-forward merge). =C2=A0Many people=
- dislike
->> =C2=A0the "noise" that this creates in the Linux history, so you sho=
-uld avoid
->> =C2=A0doing this capriciously in the "release" branch, as these nois=
-y commits
->> =C2=A0will become part of the permanent history when you ask Linus t=
-o pull
->
-> It may be Ok not to emphasize this word but that is not about "fast
-> forward" vs "fast-forward". =C2=A0It is more about "in this context, =
-this word
-> does not have to be emphasized" kind of copy-editing which does not h=
-ave
-> to be limited to the case where the "word" is 'fast-forward'.
-
-I couldn't parse that. From what I can see "Fast forward" was
-emphasized because the author thought the words didn't make much sense
-separated. Now that the word is fast-forward, there's no need to
-emphasize.
-
-Cheers.
-
---=20
-=46elipe Contreras
+> -- 
+> Andreas Schwab, schwab@linux-m68k.org
+> GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+> "And now for something completely different."
