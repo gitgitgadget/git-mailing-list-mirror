@@ -1,114 +1,201 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/2] user-manual: new "getting started" section
-Date: Sat, 24 Oct 2009 11:19:46 -0700
-Message-ID: <7vr5ss64e5.fsf@alter.siamese.dyndns.org>
-References: <1256377489-16719-1-git-send-email-felipe.contreras@gmail.com>
- <7vy6n065os.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] Use 'fast-forward' all over the place
+Date: Sat, 24 Oct 2009 22:12:36 +0300
+Message-ID: <94a0d4530910241212s5d644eb6u66c6f96feafcaf10@mail.gmail.com>
+References: <1256373092-15126-1-git-send-email-felipe.contreras@gmail.com>
+	 <1256373092-15126-2-git-send-email-felipe.contreras@gmail.com>
+	 <7v3a587kc2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 24 20:20:07 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 24 21:18:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1lDh-0004LH-QF
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Oct 2009 20:20:06 +0200
+	id 1N1m8Y-0000LR-3l
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Oct 2009 21:18:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751816AbZJXSTz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Oct 2009 14:19:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751764AbZJXSTz
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 14:19:55 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34463 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751755AbZJXSTy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Oct 2009 14:19:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D9B265520;
-	Sat, 24 Oct 2009 14:19:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Zwzc083o8GYblntuR7yiGjC5Q5U=; b=dDDMJt
-	TpOjrlZCVDJYZRAic7yYfoNBd3uCwStYmMzBgBnaVn4aHfNnYKcm4DfF2ZwiRn72
-	nbcpdNfrM6XtxOuWNl4btnfG8pcjtkYjJjmF1bt6wQYcalF/Y69zZqecNelXv0Sj
-	DY5JwVULuJhy6hajIM5QJlWz6q/z0jS2uDsAc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=obVEshb7I6y8qlE0TiE3Vo+pk53yVOlj
-	mSWHWkPoi5bWK35FHn5tKLSNhbKcrjmL3F1UxDNXqauo0C3pyCKai5M7PCMCsa3D
-	FjUCqLYk4ti6ebgecvKy4Y14BRkEzDsYOCq8tQhfuaOVSXhs+dTQvayKAGAFDyvM
-	icZ3wzgFTKY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D72646551F;
-	Sat, 24 Oct 2009 14:19:53 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC0DA6551E; Sat, 24 Oct
- 2009 14:19:47 -0400 (EDT)
-In-Reply-To: <7vy6n065os.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat\, 24 Oct 2009 10\:51\:47 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D396B494-C0C9-11DE-8336-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751764AbZJXTMe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Oct 2009 15:12:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751694AbZJXTMd
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 15:12:33 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:53233 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751510AbZJXTMd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Oct 2009 15:12:33 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so635927fga.1
+        for <git@vger.kernel.org>; Sat, 24 Oct 2009 12:12:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9g9SOY0Aqu/oYo8FBMXWQDHIo22imWdX+yLliOAXnEg=;
+        b=R0pE++FxJD5NZbsBisEz0ylLeBpgTOIzjY/y4tKKdOOdEum86w3OUTCiqFDVOo20PV
+         +2e2sWZp4Cvrvd4E8kSjG+BjBbm94musvhySWHgfwFUEjIha0Ub8ne5FQm21I5fxiF7+
+         cg3lzHrC4ygW+lxXrqy5gT0MKaTTX9/Js+hYk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=FxalnuRnpkz+4QR/Bge+QZGSVfTzaY49TsosiCfeO7cZZUsUcPc8OqadUvJeeR5+O1
+         agAN7OHvwG8Q9kL2WUWhE7vLEY+HQPLzd8hwu1DWOmm5Hc2Nc3oKB+5pBjEaqfudobqC
+         JZXnNDWkY5Pha9P3Byyu89YeIcGGVJDEHcVK8=
+Received: by 10.86.192.34 with SMTP id p34mr6927891fgf.28.1256411556302; Sat, 
+	24 Oct 2009 12:12:36 -0700 (PDT)
+In-Reply-To: <7v3a587kc2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131172>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sat, Oct 24, 2009 at 8:50 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Is this meant to replace the previous one that is already queued: a0c=
+0ecb
+> (user-manual: use 'fast-forward', 2009-10-11)?
 
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Yes.
+
+> It seems that these mostly match a mechanical token replacement
+> "s/([fF])ast forward/$1ast-forward/g" in the Documentation area,
+> but I suspect there may be some manual fixes.
 >
->> Reworded the getting started section based on comments from Michael J Gruber,
->> Jonathan Nieder and Junio C Hamano.
+> Token-replace is much harder to review than to produce, as the result=
+ of
+> such mechanical substitution needs to be examined to see if each chan=
+ge
+> makes sense individually.
+
+I manually replaced each instance, and reviewed the patch myself. Most
+of the changes are essentially the same, except a few instances:
+
+"Fast forward" -> fast-forward
+=46ast Forward Only -> Fast-forward Only
+
+> I suspect the patch would have been much easier to the reviewers it i=
+t
+> stated somewhere in the log message:
 >
-> Hmm, I thought JBF also had some input...
+> =C2=A0(1) how the mechanical change was produced;
 
-Ah, nevermind. Yes, he did have input, and I tend to agree with him, and
-more importantly trust his judgement on the manual.
+There wasn't such.
 
-I think a "Getting started" section that only covers "git config" looks
-way out of place in the beginning of this document.
+> =C2=A0(2) what criteria was used to choose between leaving the mechan=
+ical
+> =C2=A0 =C2=A0 change as-is and rewording them manually; and
 
-Manuals by other people that teach "here is how you would do a hello-world
-repository" would want to teach user.name before reaching that point, but
-because the user-manual is written in such a way that it first introduces
-concepts to understand what is going on without changing anything, we do
-not have much need user.name until it gets to "Developing with git"
-section.
+If it wasn't straight forward. I considered the following straightforwa=
+rd:
+fast forward -> fast-forward
+fast forwarded -> fast-forwarded
+fast forwarding -> fast-forwarding
+fast forwardable -> fast-forwardable
+non-fast forward -> non-fast-forward
+=46ast forward -> Fast-forward
+=46ast forwarding -> Fast-forwarding
 
-"Many people prefer to teach it this way" does not justify "everybody must
-teach it this way" an iota, when teaching "config user.name" upfront will
-fit the flow of how they teach but does not fit the flow of how this
-manual teaches [*1*].
+> =C2=A0(3) where these non-mechanical changes are.
 
-I'm inclined to to discard the first patch.
+Mentioned on the second comment.
 
-The point of the original text the second patch touches was to show how
-simple the contents of the configuration file is and give the users that
-there is nothing magic there.  While I do not like the second patch as-is,
-because it destroys that nice property and treats the end users mindless
-"cut-and-paste without thinking" sheeples, I think that it is rather vague
-and unhelpful to the current target audience to say:
+> Here are the list of paths I looked at (during this sitting which did
+> not go til the end of the patch):
+>
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>
+> OK
+>
+>> diff --git a/Documentation/git-http-push.txt b/Documentation/git-htt=
+p-push.txt
+>
+> OK
+>
+>> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+>
+> OK, except for two hunks below I am not absolutely sure.
+>
+>> @@ -60,7 +60,7 @@ EXAMPLES below for details.
+>> =C2=A0Pushing an empty <src> allows you to delete the <dst> ref from
+>> =C2=A0the remote repository.
+>> =C2=A0+
+>> -The special refspec `:` (or `{plus}:` to allow non-fast forward upd=
+ates)
+>> +The special refspec `:` (or `{plus}:` to allow non-fast-forward upd=
+ates)
+>> =C2=A0directs git to push "matching" branches: for every branch that=
+ exists on
+>> =C2=A0the local side, the remote side is updated if a branch of the =
+same name
+>> =C2=A0already exists on the remote side. =C2=A0This is the default o=
+peration mode
+>
+> Hmm, is non-fast-forward a yet another compound word?
 
-    ...  The easiest way to do so is to make sure the following lines
-    appear in a file named .gitconfig in your home directory:
+Yes. AFAIK.
 
-and the parts can use some improvement.  For example, "home directory"
-does not hold true for people on platforms that lack the concept.  Keeping
-the current "the following lines appear", rewording "in a file named
-.gitconfig in your home directory" with "in your per-user configuration
-file", keeping the display that shows how the config snippet should look
-like, and using "config --global -e" might be a better approach.
+>> @@ -342,9 +342,9 @@ git push origin :experimental::
+>
+> Likewise.
+>
+>> diff --git a/Documentation/git-read-tree.txt b/Documentation/git-rea=
+d-tree.txt
+>> diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-=
+receive-pack.txt
+>> diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.t=
+xt
+>> diff --git a/Documentation/git-send-pack.txt b/Documentation/git-sen=
+d-pack.txt
+>> diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitc=
+ore-tutorial.txt
+>> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+>> diff --git a/Documentation/glossary-content.txt b/Documentation/glos=
+sary-content.txt
+>> diff --git a/Documentation/howto/maintain-git.txt b/Documentation/ho=
+wto/maintain-git.txt
+>> diff --git a/Documentation/howto/revert-branch-rebase.txt b/Document=
+ation/howto/revert-branch-rebase.txt
+>> diff --git a/Documentation/howto/update-hook-example.txt b/Documenta=
+tion/howto/update-hook-example.txt
+>> diff --git a/Documentation/user-manual.txt b/Documentation/user-manu=
+al.txt
+>
+> OK, except for this hunk I am not sure about.
+>
+>> @@ -2115,7 +2115,7 @@ $ git checkout release && git pull
+>>
+>> =C2=A0Important note! =C2=A0If you have any local changes in these b=
+ranches, then
+>> =C2=A0this merge will create a commit object in the history (with no=
+ local
+>> -changes git will simply do a "Fast forward" merge). =C2=A0Many peop=
+le dislike
+>> +changes git will simply do a fast-forward merge). =C2=A0Many people=
+ dislike
+>> =C2=A0the "noise" that this creates in the Linux history, so you sho=
+uld avoid
+>> =C2=A0doing this capriciously in the "release" branch, as these nois=
+y commits
+>> =C2=A0will become part of the permanent history when you ask Linus t=
+o pull
+>
+> It may be Ok not to emphasize this word but that is not about "fast
+> forward" vs "fast-forward". =C2=A0It is more about "in this context, =
+this word
+> does not have to be emphasized" kind of copy-editing which does not h=
+ave
+> to be limited to the case where the "word" is 'fast-forward'.
 
+I couldn't parse that. From what I can see "Fast forward" was
+emphasized because the author thought the words didn't make much sense
+separated. Now that the word is fast-forward, there's no need to
+emphasize.
 
-[Footnote]
+Cheers.
 
-*1* Unless you are changing the flow of how this manual teaches at the
-same time, that is.  And no, I am not suggesting that we should start from
-"let's do a hello-world repository from scratch".  I think the current
-"start from read-only and then learn how to grow history later" is one
-valid way to teach.
+--=20
+=46elipe Contreras
