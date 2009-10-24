@@ -1,85 +1,143 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE] Stacked Git 0.15
-Date: Sat, 24 Oct 2009 16:20:30 -0700 (PDT)
-Message-ID: <m34opoe5t6.fsf@localhost.localdomain>
-References: <b0943d9e0910241541n7b1091ecp6b21fa896405afa0@mail.gmail.com>
+From: Denys Vlasenko <vda.linux@googlemail.com>
+Subject: Re: [PATCH] tar: on extract, -o is --no-same-owner
+Date: Sun, 25 Oct 2009 01:32:04 +0200
+Message-ID: <200910250132.04187.vda.linux@googlemail.com>
+References: <1256328943-22136-1-git-send-email-rep.dot.nop@gmail.com> <20091024100502.GG4615@mx.loc> <m2ocnxt6jl.fsf@whitebox.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 25 01:27:21 2009
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_0544KM8/QZ3qjiN"
+Cc: Bernhard Reutner-Fischer <rep.dot.nop@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, busybox@busybox.net,
+	git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sun Oct 25 01:29:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1q11-0004Po-Ui
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Oct 2009 01:27:20 +0200
+	id 1N1q2y-0004vT-4O
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Oct 2009 01:29:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751921AbZJXXUf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Oct 2009 19:20:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751837AbZJXXUf
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 19:20:35 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:45663 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751823AbZJXXUe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Oct 2009 19:20:34 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so675621fga.1
-        for <git@vger.kernel.org>; Sat, 24 Oct 2009 16:20:38 -0700 (PDT)
+	id S1751956AbZJXX3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Oct 2009 19:29:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751837AbZJXX3I
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 19:29:08 -0400
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:33078 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751729AbZJXX3H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Oct 2009 19:29:07 -0400
+Received: by bwz27 with SMTP id 27so1488521bwz.21
+        for <git@vger.kernel.org>; Sat, 24 Oct 2009 16:29:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=7VC2iYjwcj3hbSzX/Npv2KfaXjV4MThqlS2SSXN73eY=;
-        b=h6lg1WI43i4l8swpJZCHURCfG8Za/+JsBiGiYj49mofLZRHsJj4SiKbq93A6CA383k
-         4Ime3+pISxHJkPad7eEJOIoQw9G70TLKmhgTIiFzR3gwhQvZnxTF1e/VV9vaFV9auOVP
-         z7Pc9oelWGYduyIiIH3OMr7Npzh/bEsSoDRDA=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :message-id;
+        bh=TX5b9H+C5RhsoCcizfhGwJlkctW21Q6zHWCcVc70sX4=;
+        b=xmO1RiCOrB/67d9VtKAiF4ZzHb/T4xjxuSicpfIAHSZ7V4QL49b2SaNW2o45ZEZAa1
+         azOnrFPBX2NbRxfYbZTBBQwdvpHrIZVPAuKI9OxMt4kMSc8RZrcoDwLJec7RJvoTXta2
+         w8GRc3pIuoBxr4TykgqUXqw1k++V9kW4fboB8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=R40D2+n7sSjGYt49fgxO2LK/5fl8uKJMamSY7VOM0Cnz1h/xKfInSfSBVcaCkBa4Vc
-         3oY+4T+wpHMF+z7hpO9+NyO9Aq0bVnWgcGX+40AbowBRJy3J34bS2QA+iVhXOu5SnTke
-         WuRWYrt9It6NK/ptnD2m1FTIsE2LpsO9844ms=
-Received: by 10.86.231.13 with SMTP id d13mr2186838fgh.41.1256426437738;
-        Sat, 24 Oct 2009 16:20:37 -0700 (PDT)
-Received: from localhost.localdomain (abvo67.neoplus.adsl.tpnet.pl [83.8.212.67])
-        by mx.google.com with ESMTPS id d6sm3512321fga.15.2009.10.24.16.20.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 24 Oct 2009 16:20:30 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n9ONLwCR029007;
-	Sun, 25 Oct 2009 01:21:59 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n9ONLvWF029004;
-	Sun, 25 Oct 2009 01:21:57 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <b0943d9e0910241541n7b1091ecp6b21fa896405afa0@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        d=googlemail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:message-id;
+        b=gvXk0TgN/KmwyVOO/gIR2jsy/FKp93cky/F4baf0j4/dA3yjpNosrylmUt0U+VXPYq
+         x151QAUyjOENIWIa7xizyHSpWxc5NEwARZQgn5NwAlvix0xiOWL/jJ5Y6LkQGX2vnze3
+         efnG0kOCDFoaYOJrLdApz6HHfl96MeVpULEsI=
+Received: by 10.204.2.199 with SMTP id 7mr4209208bkk.76.1256426950356;
+        Sat, 24 Oct 2009 16:29:10 -0700 (PDT)
+Received: from shadow (79.40.broadband9.iol.cz [90.176.40.79])
+        by mx.google.com with ESMTPS id 22sm6686995fkr.47.2009.10.24.16.29.08
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 24 Oct 2009 16:29:08 -0700 (PDT)
+User-Agent: KMail/1.8.2
+In-Reply-To: <m2ocnxt6jl.fsf@whitebox.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131184>
 
-Catalin Marinas <catalin.marinas@gmail.com> writes:
+--Boundary-00=_0544KM8/QZ3qjiN
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> StGit is a Python application providing functionality similar to Quilt
-> (i.e. pushing/popping patches to/from a stack) on top of Git. These
-> operations are performed using Git commands, and the patches are
-> stored as Git commit objects, allowing easy merging of the StGit
-> patches into other repositories using standard Git functionality.
-> 
->   Download:         http://download.gna.org/stgit/stgit-0.15.tar.gz
->   Main repository:  git://repo.or.cz/stgit.git
->   Project homepage: http://www.procode.org/stgit/
->   Mailing list:     git@vger.kernel.org (please use "StGit" in the subject)
->   Bug tracker:      https://gna.org/bugs/?group=stgit
+On Saturday 24 October 2009 12:44, Andreas Schwab wrote:
+> Bernhard Reutner-Fischer <rep.dot.nop@gmail.com> writes:
+>=20
+> > On Sat, Oct 24, 2009 at 11:49:10AM +0200, Andreas Schwab wrote:
+> >>Bernhard Reutner-Fischer <rep.dot.nop@gmail.com> writes:
+> >>
+> >>> I suppose xf - -o would work?
+> >>
+> >>Isn't that the same as 'xfo -'?
+> >
+> > Not really (if you do not permute the arguments which we don't in
+> > busybox, for size reasons).
+>=20
+> There is no argument permutation.  The traditional argument parsing of
+> tar does not cluster option letters with option arguments.
+>=20
+> Of course, just using 'xof -' will work around this busybox bug.
 
-Is there RPM or SRPM (src.rpm) available somewhere? Or does tarball
-include *.spec file, or an rpm target?
+=46rom my side, I prefer to squash that busybox bug.
+This is the second time people complain about it,
+so it is a reoccurring problem.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+The attached patch has been pushed to busybox git.
+
+function                                             old     new   delta
+tar_main                                             702     751     +49
+
+=2D-
+vda
+
+--Boundary-00=_0544KM8/QZ3qjiN
+Content-Type: text/x-diff;
+  charset="iso-8859-1";
+  name="1.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="1.patch"
+
+diff -d -urpN busybox.0/archival/tar.c busybox.1/archival/tar.c
+--- busybox.0/archival/tar.c	2009-10-20 22:11:09.000000000 +0200
++++ busybox.1/archival/tar.c	2009-10-25 01:27:38.000000000 +0200
+@@ -841,6 +841,33 @@ int tar_main(int argc UNUSED_PARAM, char
+ #if ENABLE_FEATURE_TAR_LONG_OPTIONS
+ 	applet_long_options = tar_longopts;
+ #endif
++#if ENABLE_DESKTOP
++	if (argv[1][0] != '-') {
++		/* Compat:
++		 * 1st argument without dash handles options with parameters
++		 * differently from dashed one: it takes *next argv[i]*
++		 * as paramenter even if there are more chars in 1st argument:
++		 *  "tar fx TARFILE" - "x" is not taken as f's param
++		 *  but is interpreted as -x option
++		 *  "tar -xf TARFILE" - dashed equivalent of the above
++		 *  "tar -fx ..." - "x" is taken as f's param
++		 * getopt32 wouldn't handle 1st command correctly.
++		 * Unfortunately, people do use such commands.
++		 * We massage argv[1] to work around it by moving 'f'
++		 * to the end of the string.
++		 * More contrived "tar fCx TARFILE DIR" still fails,
++		 * but such commands are much less likely to be used.
++		 */
++		char *f = strchr(argv[1], 'f');
++		if (f) {
++			while (f[1] != '\0') {
++				*f = f[1];
++				f++;
++			}
++			*f = 'f';
++		}
++	}
++#endif
+ 	opt = getopt32(argv,
+ 		"txC:f:Opvk"
+ 		IF_FEATURE_TAR_CREATE(   "ch"  )
+
+--Boundary-00=_0544KM8/QZ3qjiN--
