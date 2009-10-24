@@ -1,126 +1,200 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Use 'fast-forward' all over the place
-Date: Sat, 24 Oct 2009 12:44:36 -0700
-Message-ID: <7v3a5860gr.fsf@alter.siamese.dyndns.org>
-References: <1256373092-15126-1-git-send-email-felipe.contreras@gmail.com>
- <1256373092-15126-2-git-send-email-felipe.contreras@gmail.com>
- <7v3a587kc2.fsf@alter.siamese.dyndns.org>
- <94a0d4530910241212s5d644eb6u66c6f96feafcaf10@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 0/2] user-manual: new "getting started" section
+Date: Sat, 24 Oct 2009 23:16:51 +0300
+Message-ID: <94a0d4530910241316r3fc4136emd036d18aa45a4192@mail.gmail.com>
+References: <1256377489-16719-1-git-send-email-felipe.contreras@gmail.com>
+	 <7vy6n065os.fsf@alter.siamese.dyndns.org>
+	 <7vr5ss64e5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 24 21:44:56 2009
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Hannu Koivisto <azure@iki.fi>, Jeff King <peff@peff.net>,
+	Wincent Colaiuta <win@wincent.com>,
+	Matthias Lederhofer <matled@gmx.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 24 22:17:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1mXo-0000zD-0O
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Oct 2009 21:44:56 +0200
+	id 1N1n2t-0003WD-Ry
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Oct 2009 22:17:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752079AbZJXTon convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Oct 2009 15:44:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752053AbZJXTon
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 15:44:43 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53541 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752023AbZJXTom convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Oct 2009 15:44:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 45E9984270;
-	Sat, 24 Oct 2009 15:44:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=oWDhcmI6p1vP
-	dUUc6oJInWZs7KM=; b=Ca3TJo1lSWStxtefzd4NhZDFlHfwGuaUreG1W1MGdi+G
-	KoOMhGYmXx9xTd/11ezv/QXAVF2awSJzBQld5ncnp0kgQ5tC6pJUbrG1IMYxmYe6
-	CDUgffx21X/WpBM/qk59ENeOkb1/wQY3G9j8aLTa8bHoXGsgslPPm/0TFvTVt68=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=uySOb8
-	GPHVkk3YIskhPp4MSx/aQMaGDjLMcg6GQrA2zYJfSYVAfE+KxANgbJrxMnqZzpTa
-	SiHeRgvOnWM5QZVmv0+cVS/MW+JdQGYoYUjUkzSwI+fc602L2TmpqPqcb66P1H8x
-	HpfEEQszeG6wbnt3xT9H1km+0b/5kby0d3gJM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1BF608426F;
-	Sat, 24 Oct 2009 15:44:43 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 973218426E; Sat, 24 Oct 2009
- 15:44:38 -0400 (EDT)
-In-Reply-To: <94a0d4530910241212s5d644eb6u66c6f96feafcaf10@mail.gmail.com>
- (Felipe Contreras's message of "Sat\, 24 Oct 2009 22\:12\:36 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AD000964-C0D5-11DE-BB62-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1752085AbZJXUQu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Oct 2009 16:16:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751982AbZJXUQt
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 16:16:49 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:30666 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751864AbZJXUQt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Oct 2009 16:16:49 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so646857fga.1
+        for <git@vger.kernel.org>; Sat, 24 Oct 2009 13:16:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=sFkGNdcG2ZPXa9T6HnFwOeeZIyo/lWAw2KHrkcWDCWc=;
+        b=xuIuGoPeqk/HexjkbL3ayEjYd9v440raPs+fPSTxSGAnlUERLJqjP3E1aSKwR9KNk4
+         gtg6Gd+vQ+B1d1extSGzNu1odAV3BEVkCZtzmAZFLcihLfj2rEl1cpDLp7hjqNxZ6M1i
+         o4F2LFOPXkYlbjAsACG2up9aOsIuwdsrc5N5I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ZMJOuN+xmtbPUMXwZzDw9RA5OfyrDUxI0IayBgrTNFu6y9t7UXnJ2ifEJuvpz8XQj8
+         2R40F9XYNiZ6/RGEI/xXjqIkDDSn5OjRK6PJMRWOPOBBWo7QMpI9b+K+I1ue/OW4hScZ
+         Kg7IaJWyhMslcpGTr6cvR6xoB42l64gpnPmsA=
+Received: by 10.86.231.15 with SMTP id d15mr6915210fgh.74.1256415411926; Sat, 
+	24 Oct 2009 13:16:51 -0700 (PDT)
+In-Reply-To: <7vr5ss64e5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131177>
 
-=46elipe Contreras <felipe.contreras@gmail.com> writes:
-
->> I suspect the patch would have been much easier to the reviewers it =
-it
->> stated somewhere in the log message:
+On Sat, Oct 24, 2009 at 9:19 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >>
->> =C2=A0(1) how the mechanical change was produced;
+>>> Reworded the getting started section based on comments from Michael=
+ J Gruber,
+>>> Jonathan Nieder and Junio C Hamano.
+>>
+>> Hmm, I thought JBF also had some input...
 >
-> There wasn't such.
+> Ah, nevermind. Yes, he did have input, and I tend to agree with him, =
+and
+> more importantly trust his judgement on the manual.
 
-That is actually a bad news; it is even worse than mechanical spotting
-followed by manual inspection.  It would force us feel _more_ worried, =
-as
-we would then need to grep for leftovers that your manual conversion ma=
-y
-not have caught.  Sigh...
+JBF said this[1]:
+If we have to do this, just keep it short....
 
->> =C2=A0(2) what criteria was used to choose between leaving the mecha=
-nical
->> =C2=A0 =C2=A0 change as-is and rewording them manually; and
+And I am trying to keep it short.
+
+> I think a "Getting started" section that only covers "git config" loo=
+ks
+> way out of place in the beginning of this document.
+
+Now you are saying that the fact that it's short is a bad thing? That
+goes against to what JBF said.
+
+And let's not forget your previous comments
+
+[2]: I think a "getting started" section near the beginning of the manu=
+al is a
+good idea (and ll.40- is a very early part of the manual).
+
+[3]: I actually wish this section appeared a lot earlier in the documen=
+t, but
+that is a separate issue.
+
+> Manuals by other people that teach "here is how you would do a hello-=
+world
+> repository" would want to teach user.name before reaching that point,=
+ but
+> because the user-manual is written in such a way that it first introd=
+uces
+> concepts to understand what is going on without changing anything, we=
+ do
+> not have much need user.name until it gets to "Developing with git"
+> section.
 >
-> If it wasn't straight forward. I considered the following straightfor=
-ward:
-> fast forward -> fast-forward
-> fast forwarded -> fast-forwarded
-> fast forwarding -> fast-forwarding
-> fast forwardable -> fast-forwardable
-> non-fast forward -> non-fast-forward
-> Fast forward -> Fast-forward
-> Fast forwarding -> Fast-forwarding
+> "Many people prefer to teach it this way" does not justify "everybody=
+ must
+> teach it this way" an iota, when teaching "config user.name" upfront =
+will
+> fit the flow of how they teach but does not fit the flow of how this
+> manual teaches [*1*].
 
-All of these are what "s/([fF])ast forward/$1ast-forward/g" does, aren'=
-t
-they?
+Nobody argued that "everybody must teach it this way", the argument
+was that most people find it easier, and considering the section is
+about "developing with git" it is sensible to avoid burdening the
+reader with concepts that don't pertain to the objective at hand,
+which is getting them to configure their user.
 
-> I couldn't parse that. From what I can see "Fast forward" was
-> emphasized because the author thought the words didn't make much sens=
+And let's not forget that the current text is broken for Windows users.
+
+> I'm inclined to to discard the first patch.
+
+And you decided to mention that after many people including you, have
+agreed that it's a good idea?
+
+> The point of the original text the second patch touches was to show h=
+ow
+> simple the contents of the configuration file is and give the users t=
+hat
+> there is nothing magic there. =C2=A0While I do not like the second pa=
+tch as-is,
+> because it destroys that nice property and treats the end users mindl=
+ess
+> "cut-and-paste without thinking" sheeples,
+
+What's wrong with teaching one thing at a time? Configuring the user
+is something so essential, I don't think it makes sense to make the
+task difficult on purpose. Some people might avoid doing it precisely
+because of that.
+
+> I think that it is rather vague
+> and unhelpful to the current target audience to say:
+>
+> =C2=A0 =C2=A0... =C2=A0The easiest way to do so is to make sure the f=
+ollowing lines
+> =C2=A0 =C2=A0appear in a file named .gitconfig in your home directory=
+:
+>
+> and the parts can use some improvement. =C2=A0For example, "home dire=
+ctory"
+> does not hold true for people on platforms that lack the concept. =C2=
+=A0Keeping
+> the current "the following lines appear", rewording "in a file named
+> .gitconfig in your home directory" with "in your per-user configurati=
+on
+> file", keeping the display that shows how the config snippet should l=
+ook
+> like, and using "config --global -e" might be a better approach.
+
+If you read the results of the last git survey you'll see that the
+area that needs most improvement is the documentation. Also I still
+see many people doing commits without configuring the user name and
+email properly and so I've tried very hard to improve the user manual
+to make it easier for them to understand they must do that. In the
+process I've added the --edit option to 'git config' and the new
+"getting started" section, in order to address all the issues
+mentioned in previous threads and gone through several iterations of
+these patches already.
+
+I'm starting to think that all the previous "constructive" feedback
+was actually targeted to deter people from making any changes.
+
+I'm CC'ing people that have been involved in previous threads.
+
+> [Footnote]
+>
+> *1* Unless you are changing the flow of how this manual teaches at th=
 e
-> separated. Now that the word is fast-forward, there's no need to
-> emphasize.
+> same time, that is. =C2=A0And no, I am not suggesting that we should =
+start from
+> "let's do a hello-world repository from scratch". =C2=A0I think the c=
+urrent
+> "start from read-only and then learn how to grow history later" is on=
+e
+> valid way to teach.
 
-Even after your patch, hunk beginning on line 1384 of the
-user-manual says
+I also don't think the flow should be changed, that's why I didn't put
+the user configuration on the "getting started" section. It goes into
+the "developing with git" section.
 
-    ... then git just performs a "fast-forward"; the head of the ...
+[1] http://article.gmane.org/gmane.comp.version-control.git/130236
+[2] http://article.gmane.org/gmane.comp.version-control.git/115649
+[3] http://article.gmane.org/gmane.comp.version-control.git/106667
 
-and I think you did the right thing by keeping these dq here.  This is =
-the
-first occurrence of the word followed by its explanation and for that
-reason, the word deserves to be emphasized---IOW, the context calls for=
- an
-emphasis.
-
-In the "Important note!" part, we talk about the pull operation that
-normally creates a merge commit, and _in contrast_, under a particular
-condition (namely, "no local changes"), it does something different
-(namely, a "fast-forward").  We should keep the emphasis on "fast-forwa=
-rd"
-here for exactly the same reason---the context calls for an emphasis.
-
-I was about to read the rest of the patch (the non-doc part) but instea=
-d I
-ended up spending another 20 minutes writing this message, so the revie=
-w
-by me on the remainder has to wait til sometime later.
+--=20
+=46elipe Contreras
