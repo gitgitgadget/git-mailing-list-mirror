@@ -1,88 +1,51 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 2/2] user-manual: simplify the user configuration
-Date: Sat, 24 Oct 2009 12:44:49 +0300
-Message-ID: <1256377489-16719-3-git-send-email-felipe.contreras@gmail.com>
-References: <1256377489-16719-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 24 11:45:28 2009
+From: Jeff King <peff@peff.net>
+Subject: Re: confusion with git diff-tree output
+Date: Sat, 24 Oct 2009 05:51:57 -0400
+Message-ID: <20091024095156.GA9865@sigio.peff.net>
+References: <117f2cc80910211043q3a92a7b6o15464cc049ee33dc@mail.gmail.com> <20091021195103.01cef9c4@perceptron> <117f2cc80910211523m5c1399aej594398fb6597e5de@mail.gmail.com> <20091023005426.GA2431@sigill.intra.peff.net> <7vvdi58fhw.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: David Roundy <roundyd@physics.oregonstate.edu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 24 11:48:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1dBc-0004ka-Cn
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Oct 2009 11:45:24 +0200
+	id 1N1dEX-0005lJ-TD
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Oct 2009 11:48:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731AbZJXJpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Oct 2009 05:45:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752602AbZJXJpI
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 05:45:08 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:64087 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752494AbZJXJpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Oct 2009 05:45:06 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so532718fga.1
-        for <git@vger.kernel.org>; Sat, 24 Oct 2009 02:45:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=XGezqTu6pzEyJobJekYuM6UDAHjRLXzJ5End8J30ODI=;
-        b=uCJvh4STUFRJqD9FUMSuQpUvYYNRrenjYupoklKDM7RXGvc/NviR673N1ic8Z+8vGq
-         uyWc3fYzpYdWTSvbhCopUM6/MedtHLXHJMY2NWK5OdaMZE95+YBxhfAmddrzhe9KrWvs
-         o0MYpd8DA54a927aqMQsxdYQfuLyePTdk9LaM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=AwygyMqBB8RwuPXZAouomWYR7GxH2Pr1mLTe6UVqozAUyw33CjFx/13hOKMQkQnE2r
-         yGa9AuD5nnflAn+AgguIY9WV3gBp5KQ5dLFmpHXcmXuBY3jYmcq7qquKC7V2Ib1ncI+7
-         EOKTyfqFXDuxo5XBOLxl8pD0d5cr/ejgBoxtE=
-Received: by 10.86.242.15 with SMTP id p15mr1155809fgh.14.1256377511095;
-        Sat, 24 Oct 2009 02:45:11 -0700 (PDT)
-Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
-        by mx.google.com with ESMTPS id d6sm2379229fga.5.2009.10.24.02.45.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 24 Oct 2009 02:45:10 -0700 (PDT)
-X-Mailer: git-send-email 1.6.5.1
-In-Reply-To: <1256377489-16719-1-git-send-email-felipe.contreras@gmail.com>
+	id S1751910AbZJXJsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Oct 2009 05:48:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751848AbZJXJsQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Oct 2009 05:48:16 -0400
+Received: from peff.net ([208.65.91.99]:48934 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751666AbZJXJsP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Oct 2009 05:48:15 -0400
+Received: (qmail 9875 invoked by uid 1000); 24 Oct 2009 09:51:57 -0000
+Content-Disposition: inline
+In-Reply-To: <7vvdi58fhw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131153>
 
-This is shorter, avoids the burder to think about the format of the
-configuration file, and git config is already used in other places in
-the manual.
+On Fri, Oct 23, 2009 at 11:36:59PM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/user-manual.txt |    8 +++-----
- 1 files changed, 3 insertions(+), 5 deletions(-)
+> >> You're right.  I figured I must be overlooking something obvious, and
+> >> that was it.  What surprised me was that -p implies -r, which is not
+> >> documented.  Since the -p output was recursive, I incorrectly presumed
+> >> that this was the default.
+> >
+> > It's due to hysterical raisins:
+> >
+> >   http://article.gmane.org/gmane.comp.version-control.git/54078
+> 
+> Just to make sure, the Porcelain "diff" does recurse even with --raw 
+> and "diff-tree" doesn't for historical reasons, right?
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 3fcbc36..a0a75af 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1010,13 +1010,11 @@ Telling git your name
- ---------------------
- 
- Before creating any commits, you should introduce yourself to git.  The
--easiest way to do so is to make sure the following lines appear in a
--file named .gitconfig in your home directory:
-+easiest way is to use the linkgit:git-config[1] command:
- 
- ------------------------------------------------
--[user]
--	name = Your Name Comes Here
--	email = you@yourdomain.example.com
-+$ git config --global user.name "Your Name Comes Here"
-+$ git config --global user.email you@yourdomain.example.com
- ------------------------------------------------
- 
- (See the "CONFIGURATION FILE" section of linkgit:git-config[1] for
--- 
-1.6.5.1
+Yes, that's right (and yes, I just checked it to be double sure).
+
+-Peff
