@@ -1,105 +1,89 @@
 From: Mark Lodato <lodatom@gmail.com>
-Subject: [PATCH 2/5] http-backend: reword some documentation
-Date: Sun, 25 Oct 2009 14:05:32 -0400
-Message-ID: <1256493935-8680-3-git-send-email-lodatom@gmail.com>
+Subject: [PATCH 3/5] http-backend: use mod_alias instead of mod_rewrite
+Date: Sun, 25 Oct 2009 14:05:33 -0400
+Message-ID: <1256493935-8680-4-git-send-email-lodatom@gmail.com>
 References: <1256493935-8680-1-git-send-email-lodatom@gmail.com>
  <1256493935-8680-2-git-send-email-lodatom@gmail.com>
+ <1256493935-8680-3-git-send-email-lodatom@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Mark Lodato <lodatom@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 25 19:05:17 2009
+X-From: git-owner@vger.kernel.org Sun Oct 25 19:05:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N27Sq-00075h-HV
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Oct 2009 19:05:12 +0100
+	id 1N27Sr-00075h-25
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Oct 2009 19:05:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753877AbZJYSEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Oct 2009 14:04:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753864AbZJYSEs
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Oct 2009 14:04:48 -0400
-Received: from qw-out-2122.google.com ([74.125.92.26]:28831 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753800AbZJYSEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Oct 2009 14:04:47 -0400
-Received: by qw-out-2122.google.com with SMTP id 9so1667665qwb.37
-        for <git@vger.kernel.org>; Sun, 25 Oct 2009 11:04:52 -0700 (PDT)
+	id S1753884AbZJYSEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Oct 2009 14:04:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbZJYSEu
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Oct 2009 14:04:50 -0400
+Received: from mail-qy0-f174.google.com ([209.85.221.174]:65052 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753864AbZJYSEt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Oct 2009 14:04:49 -0400
+Received: by mail-qy0-f174.google.com with SMTP id 4so7380254qyk.33
+        for <git@vger.kernel.org>; Sun, 25 Oct 2009 11:04:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=98xB25FwExREQeIKsZza2QJYFDiUUyWeOyAWmIf/bE0=;
-        b=YJ605i41TjLMyPqrNJUh/OtXx9TXl0MIbAYkbc6eKXbw7/iKID94bKidGHdSAnJhDs
-         +pylEg8nQt5swl+VQduB8DlOkrafHcAlZGBDvXZLOb8W1WhQPo8QBBtF8AWdOjoiT0/A
-         MhqpWdvKBepMihCs8liRs1dNTmwab9Uv2Uyv4=
+        bh=6FpTKbi+t4tiMnuFI4F70Xc1WvzlxiIUfgrjGdL8D9I=;
+        b=uybsd7LSNBqYDPJB9d+tSwUYaXlAYoU1Ltap6F72aRkQ9pMO8+U7Lx/FlBWiO2VNM4
+         0ymoLxfv8xm9gMVAZIysJ3D1buEBAv8xMxOb3Av0IWHVyBshmBcgNhjepphRaNRPZahz
+         a8lasH6mGPuHXxT96pPI1yx1r4aWCVXzxG8AM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=kny/U8U9YsaJZcZM63xhChtAz4WdtCdqysqMjlGcU1hK7gXqyXHErmzajxDBo855v/
-         YgsyELGm10CsFrbdpBifUoSpVMqKFCJkn+ZlOt/2DGsudG6oFrirXyY0kgH3edvH6fo/
-         uWDUK4tQ+o6UOmKekM9+KbFrLA/jbO4AyyVeI=
-Received: by 10.224.96.77 with SMTP id g13mr6757439qan.305.1256493892845;
-        Sun, 25 Oct 2009 11:04:52 -0700 (PDT)
+        b=QQ5WTOi9nZvJL2RCCbJWeCDOkvTqeZRIyka+JRpXxlgCW18cVlVsfINXficp9K+0/E
+         KfnkTv3tXvlwa370KoVNYFZRSckeVa4C8lF0ZUUaEbXnzQbCbXfaHtVoKxKOLfC2pWtj
+         9qS6+zMYKGMr3phjQEo6hgWOyz0G69pCMBF7E=
+Received: by 10.224.61.141 with SMTP id t13mr6722259qah.313.1256493894241;
+        Sun, 25 Oct 2009 11:04:54 -0700 (PDT)
 Received: from localhost.localdomain (c-68-33-182-150.hsd1.dc.comcast.net [68.33.182.150])
-        by mx.google.com with ESMTPS id 7sm13930120qwf.46.2009.10.25.11.04.51
+        by mx.google.com with ESMTPS id 7sm13930120qwf.46.2009.10.25.11.04.52
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 25 Oct 2009 11:04:52 -0700 (PDT)
+        Sun, 25 Oct 2009 11:04:53 -0700 (PDT)
 X-Mailer: git-send-email 1.6.5.1
-In-Reply-To: <1256493935-8680-2-git-send-email-lodatom@gmail.com>
+In-Reply-To: <1256493935-8680-3-git-send-email-lodatom@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131232>
 
-Clarify some of the git-http-backend documentation, particularly:
-
-* In the Description, state that smart/dumb HTTP fetch and smart HTTP
-  push are supported, state that authenticated clients allow push, and
-  remove the note that this is only suited for read-only updates.
-
-* At the start of Examples, state explicitly what URL is mapping to what
-  location on disk.
+In the git-http-backend documentation, use mod_alias exlusively, instead
+of using a combination of mod_alias and mod_rewrite.  This makes the
+example slightly shorted and a bit more clear.
 
 Signed-off-by: Mark Lodato <lodatom@gmail.com>
 ---
- Documentation/git-http-backend.txt |   12 ++++++++----
- 1 files changed, 8 insertions(+), 4 deletions(-)
+ Documentation/git-http-backend.txt |   10 +++-------
+ 1 files changed, 3 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/git-http-backend.txt b/Documentation/git-http-backend.txt
-index 99dbbfb..0b5e951 100644
+index 0b5e951..e67519d 100644
 --- a/Documentation/git-http-backend.txt
 +++ b/Documentation/git-http-backend.txt
-@@ -14,13 +14,15 @@ DESCRIPTION
- -----------
- A simple CGI program to serve the contents of a Git repository to Git
- clients accessing the repository over http:// and https:// protocols.
-+The program supports clients fetching using both the smart HTTP protcol
-+and the backwards-compatible dumb HTTP protocol, as well as clients
-+pushing using the smart HTTP protocol.
+@@ -98,13 +98,9 @@ Accelerated static Apache 2.x::
+ ----------------------------------------------------------------
+ SetEnv GIT_PROJECT_ROOT /var/www/git
  
- By default, only the `upload-pack` service is enabled, which serves
- 'git-fetch-pack' and 'git-ls-remote' clients, which are invoked from
--'git-fetch', 'git-pull', and 'git-clone'.
+-ScriptAlias /git/        /usr/libexec/git-core/git-http-backend/
+-Alias       /git_static/ /var/www/git/
 -
--This is ideally suited for read-only updates, i.e., pulling from
--git repositories.
-+'git-fetch', 'git-pull', and 'git-clone'.  If the client is authenticated,
-+the `receive-pack` service is enabled, which serves 'git-send-pack'
-+clients, which is invoked from 'git-push'.
+-RewriteEngine on
+-RewriteRule ^/git/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$    /git_static/$1 [PT]
+-RewriteRule ^/git/(.*/objects/pack/pack-[0-9a-f]{40}.pack)$ /git_static/$1 [PT]
+-RewriteRule ^/git/(.*/objects/pack/pack-[0-9a-f]{40}.idx)$  /git_static/$1 [PT]
++AliasMatch ^/git/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$          /var/www/git/$1
++AliasMatch ^/git/(.*/objects/pack/pack-[0-9a-f]{40}.(pack|idx))$ /var/www/git/$1
++ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/
+ ----------------------------------------------------------------
  
- SERVICES
- --------
-@@ -50,6 +52,8 @@ automatically by the web server.
  
- EXAMPLES
- --------
-+All of the following examples map 'http://$hostname/git/foo/bar.git'
-+to '/var/www/git/foo/bar.git'.
- 
- Apache 2.x::
- 	Ensure mod_cgi, mod_alias, and mod_env are enabled, set
 -- 
 1.6.5.1
