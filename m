@@ -1,190 +1,270 @@
 From: =?ISO-8859-1?Q?Bj=F6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: [PATCH 2/3] format-patch documentation: Remove diff options that
- are not useful
-Date: Sun, 25 Oct 2009 16:56:15 +0100
-Message-ID: <4AE4751F.9060300@gmail.com>
+Subject: [PATCH 3/3] format-patch documentation: Fix formatting
+Date: Sun, 25 Oct 2009 16:56:54 +0100
+Message-ID: <4AE47546.6040804@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 25 16:56:33 2009
+X-From: git-owner@vger.kernel.org Sun Oct 25 16:57:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N25SH-0005fR-Uy
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Oct 2009 16:56:30 +0100
+	id 1N25Sp-0005vb-Bn
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Oct 2009 16:57:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752842AbZJYP4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Oct 2009 11:56:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752369AbZJYP4N
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Oct 2009 11:56:13 -0400
-Received: from mail-ew0-f208.google.com ([209.85.219.208]:35140 "EHLO
+	id S1753511AbZJYP4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Oct 2009 11:56:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753221AbZJYP4x
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Oct 2009 11:56:53 -0400
+Received: from mail-ew0-f208.google.com ([209.85.219.208]:42963 "EHLO
 	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752247AbZJYP4M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Oct 2009 11:56:12 -0400
-Received: by mail-ew0-f208.google.com with SMTP id 4so2959953ewy.37
-        for <git@vger.kernel.org>; Sun, 25 Oct 2009 08:56:17 -0700 (PDT)
+	with ESMTP id S1752667AbZJYP4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Oct 2009 11:56:52 -0400
+Received: by ewy4 with SMTP id 4so2960488ewy.37
+        for <git@vger.kernel.org>; Sun, 25 Oct 2009 08:56:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from
          :user-agent:mime-version:to:cc:subject:content-type
          :content-transfer-encoding;
-        bh=R8uoxMWhto176GJOhg2CtxPM5AXQOZHdsA1yu0EiTAI=;
-        b=oUrdYHgWhls2gepeiikkFpo379hM9sWWEg22rkiKio5CWK37yEOqmIXxf5AU+EQARx
-         Y7kAVMGhk0QvvnykU6J/gmTqLry1GvixSeBDon+ym2FgkCC2F82XE4h+cDM03g/DSmD1
-         SiIB1QpYpuGdzdhYwDlWrI/GC2YQjtpvCzOGs=
+        bh=ah3or6yx7hV5H/EDsshjNgT+leezq+afoK8YCAmiVRs=;
+        b=GuaO/6hhOEodZf7FRSKg42Tr8BHi63yuR3frPTyWPoMxHfOR7xdMLq1DaVMrqAY9eu
+         g1PdqndVtETXPPj/UcOLAuSyJE/SLtUXh8tS6VzS1Ds8OrZRh5Pq+5yqoL6a7PRm/HA4
+         O8AuR4AtD8B6a/efvuV0Cv8wy6AHuHbqI6KD0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :content-type:content-transfer-encoding;
-        b=BA4+tof7aFq6fRg1bqT6vvb/w6fTZ7Qs34Kl4K8GKgogAQmDcddvQ3AVtvCBjXJqP3
-         Aaihs5tsGln833yvMuF1oKfUHTVTUCCrAvuX8fmUrdOWr4WENqHjBSsn7K4mlpWX7I7Y
-         xKlYA8E+uljYkKYtCW+lv95m/VDq+ImP2zOkA=
-Received: by 10.211.147.12 with SMTP id z12mr5320244ebn.37.1256486176610;
-        Sun, 25 Oct 2009 08:56:16 -0700 (PDT)
+        b=gWX5yCEeky7nnKZQiYt0KwYYb2gFemT0RJTC6J+uYCyCQ3cu0orXLfIh8zSPJoWbSi
+         YavsFerjk0jzhHQeTw83rXolkzLEGZ0/GhQAHNYzAhctjlJajEqumGSD9layykDkytCI
+         elwIDVvAIt4UmcKVXgnsyMaTxwt8VgkfSXmVA=
+Received: by 10.211.129.8 with SMTP id g8mr14820684ebn.71.1256486216266;
+        Sun, 25 Oct 2009 08:56:56 -0700 (PDT)
 Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
-        by mx.google.com with ESMTPS id 5sm10059552eyh.2.2009.10.25.08.56.15
+        by mx.google.com with ESMTPS id 28sm1245844eye.39.2009.10.25.08.56.55
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 25 Oct 2009 08:56:16 -0700 (PDT)
+        Sun, 25 Oct 2009 08:56:55 -0700 (PDT)
 User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131218>
 
-To simplify reading the documentation for format-patch, remove the
-description of common diff options that are not useful for the
-purpose of the command (i.e. "Prepare patches for e-mail submission").
-
-Remove the description of the following options:
-
---raw
--z
---color
---no-color
---color-words
---diff-filter
--S
---pickaxe-all
---pickaxe-regex
--R
---relative
---exit-code
---quiet
+Format git commands and options consistently using back quotes
+(i.e. a fixed font in the resulting HTML document).
 ---
- Documentation/diff-options.txt |   15 ++++++++++++---
- 1 files changed, 12 insertions(+), 3 deletions(-)
+ Documentation/diff-options.txt     |   26 ++++++++++----------
+ Documentation/git-format-patch.txt |   44 ++++++++++++++++++------------------
+ 2 files changed, 35 insertions(+), 35 deletions(-)
 
 diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 673fbb0..88e88d7 100644
+index 88e88d7..86d3d80 100644
 --- a/Documentation/diff-options.txt
 +++ b/Documentation/diff-options.txt
-@@ -27,9 +27,11 @@ ifndef::git-format-patch[]
- 	Implies "-p".
+@@ -24,7 +24,7 @@ endif::git-format-patch[]
+ 	Generate diffs with <n> lines of context instead of
+ 	the usual three.
+ ifndef::git-format-patch[]
+-	Implies "-p".
++	Implies `-p`.
  endif::git-format-patch[]
  
-+ifndef::git-format-patch[]
- --raw::
- 	Generate the raw format.
- 	{git-diff-core? This is the default.}
-+endif::git-format-patch[]
+ ifndef::git-format-patch[]
+@@ -35,7 +35,7 @@ endif::git-format-patch[]
  
  ifndef::git-format-patch[]
  --patch-with-raw::
-@@ -76,20 +78,18 @@ ifndef::git-format-patch[]
- 	Synonym for "-p --stat".
+-	Synonym for "-p --raw".
++	Synonym for `-p --raw`.
  endif::git-format-patch[]
  
-+ifndef::git-format-patch[]
- -z::
- 	NUL-line termination on output.  This affects the --raw
- 	output field terminator.  Also output from commands such
- 	as "git-log" will be delimited with NUL between commits.
+ --patience::
+@@ -67,7 +67,7 @@ endif::git-format-patch[]
+ 	counted for the parent directory, unless "--cumulative" is used.
  
--ifndef::git-format-patch[]
+ --dirstat-by-file[=limit]::
+-	Same as --dirstat, but counts changed files instead of lines.
++	Same as `--dirstat`, but counts changed files instead of lines.
+ 
+ --summary::
+ 	Output a condensed summary of extended header information
+@@ -75,14 +75,14 @@ endif::git-format-patch[]
+ 
+ ifndef::git-format-patch[]
+ --patch-with-stat::
+-	Synonym for "-p --stat".
++	Synonym for `-p --stat`.
+ endif::git-format-patch[]
+ 
+ ifndef::git-format-patch[]
+ -z::
+-	NUL-line termination on output.  This affects the --raw
++	NUL-line termination on output.  This affects the `--raw`
+ 	output field terminator.  Also output from commands such
+-	as "git-log" will be delimited with NUL between commits.
++	as `git-log` will be delimited with NUL between commits.
+ 
  --name-only::
  	Show only names of changed files.
+@@ -133,16 +133,16 @@ endif::git-format-patch[]
+ 	line when generating patch format output.
  
- --name-status::
- 	Show only names and status of changed files. See the description
- 	of the `--diff-filter` option on what the status letters mean.
--endif::git-format-patch[]
--
- --color::
- 	Show colored diff.
+ --binary::
+-	In addition to --full-index, output "binary diff" that
+-	can be applied with "git apply".
++	In addition to `--full-index`, output a binary diff that
++	can be applied with `git-apply`.
  
-@@ -113,6 +113,7 @@ The regex can also be set via a diff driver or configuration option, see
- linkgit:gitattributes[1] or linkgit:git-config[1].  Giving it explicitly
- overrides any diff driver or configuration setting.  Diff drivers
- override configuration settings.
-+endif::git-format-patch[]
+ --abbrev[=<n>]::
+ 	Instead of showing the full 40-byte hexadecimal object
+ 	name in diff-raw format output and diff-tree header
+ 	lines, show only a partial prefix.  This is
+-	independent of --full-index option above, which controls
++	independent of the `--full-index` option above, which controls
+ 	the diff-patch output format.  Non default number of
+-	digits can be specified with --abbrev=<n>.
++	digits can be specified with `--abbrev=<n>`.
  
- --no-renames::
- 	Turn off rename detection, even when the configuration
-@@ -152,6 +153,7 @@ endif::git-format-patch[]
- -C::
- 	Detect copies as well as renames.  See also `--find-copies-harder`.
+ -B::
+ 	Break complete rewrite changes into pairs of delete and create.
+@@ -177,7 +177,7 @@ endif::git-format-patch[]
+ 	`-C` option has the same effect.
  
-+ifndef::git-format-patch[]
- --diff-filter=[ACDMRTUXB*]::
- 	Select only files that are Added (`A`), Copied (`C`),
- 	Deleted (`D`), Modified (`M`), Renamed (`R`), have their
-@@ -163,6 +165,7 @@ endif::git-format-patch[]
- 	paths are selected if there is any file that matches
- 	other criteria in the comparison; if there is no file
- 	that matches other criteria, nothing is selected.
-+endif::git-format-patch[]
- 
- --find-copies-harder::
- 	For performance reasons, by default, `-C` option finds copies only
-@@ -180,6 +183,7 @@ endif::git-format-patch[]
+ -l<num>::
+-	-M and -C options require O(n^2) processing time where n
++	The `-M` and `-C` options require O(n^2) processing time where n
+ 	is the number of potential rename/copy targets.  This
+ 	option prevents rename/copy detection from running if
  	the number of rename/copy targets exceeds the specified
- 	number.
+@@ -191,7 +191,7 @@ ifndef::git-format-patch[]
+ 	linkgit:gitdiffcore[7] for more details.
  
-+ifndef::git-format-patch[]
- -S<string>::
- 	Look for differences that introduce or remove an instance of
- 	<string>. Note that this is different than the string simply
-@@ -194,11 +198,13 @@ endif::git-format-patch[]
- --pickaxe-regex::
- 	Make the <string> not a plain string but an extended POSIX
- 	regex to match.
-+endif::git-format-patch[]
+ --pickaxe-all::
+-	When -S finds a change, show all the changes in that
++	When `-S` finds a change, show all the changes in that
+ 	changeset, not just the files that contain the change
+ 	in <string>.
  
- -O<orderfile>::
- 	Output the patch in the order specified in the
- 	<orderfile>, which has one shell glob pattern per line.
- 
-+ifndef::git-format-patch[]
- -R::
- 	Swap two inputs; that is, show differences from index or
- 	on-disk file to tree contents.
-@@ -210,6 +216,7 @@ endif::git-format-patch[]
- 	not in a subdirectory (e.g. in a bare repository), you
- 	can name which subdirectory to make the output relative
- 	to by giving a <path> as an argument.
-+endif::git-format-patch[]
- 
- -a::
- --text::
-@@ -234,6 +241,7 @@ endif::git-format-patch[]
- 	Show the context between diff hunks, up to the specified number
- 	of lines, thereby fusing hunks that are close to each other.
- 
-+ifndef::git-format-patch[]
- --exit-code::
- 	Make the program exit with codes similar to diff(1).
- 	That is, it exits with 1 if there were differences and
-@@ -241,6 +249,7 @@ endif::git-format-patch[]
+@@ -248,7 +248,7 @@ ifndef::git-format-patch[]
+ 	0 means no differences.
  
  --quiet::
- 	Disable all output of the program. Implies --exit-code.
-+endif::git-format-patch[]
+-	Disable all output of the program. Implies --exit-code.
++	Disable all output of the program. Implies `--exit-code`.
+ endif::git-format-patch[]
  
  --ext-diff::
- 	Allow an external diff helper to be executed. If you set an
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 687e667..79d77f7 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -43,28 +43,28 @@ There are two ways to specify which commits to operate on.
+ 
+ The first rule takes precedence in the case of a single <commit>.  To
+ apply the second rule, i.e., format everything since the beginning of
+-history up until <commit>, use the '\--root' option: "git format-patch
+-\--root <commit>".  If you want to format only <commit> itself, you
+-can do this with "git format-patch -1 <commit>".
++history up until <commit>, use the '\--root' option: `git format-patch
++\--root <commit>`.  If you want to format only <commit> itself, you
++can do this with `git format-patch -1 <commit>`.
+ 
+ By default, each output file is numbered sequentially from 1, and uses the
+ first line of the commit message (massaged for pathname safety) as
+-the filename. With the --numbered-files option, the output file names
++the filename. With the `--numbered-files` option, the output file names
+ will only be numbers, without the first line of the commit appended.
+ The names of the output files are printed to standard
+-output, unless the --stdout option is specified.
++output, unless the `--stdout` option is specified.
+ 
+-If -o is specified, output files are created in <dir>.  Otherwise
++If `-o` is specified, output files are created in <dir>.  Otherwise
+ they are created in the current working directory.
+ 
+ By default, the subject of a single patch is "[PATCH] First Line" and
+ the subject when multiple patches are output is "[PATCH n/m] First
+-Line". To force 1/1 to be added for a single patch, use -n.  To omit
+-patch numbers from the subject, use -N
++Line". To force 1/1 to be added for a single patch, use `-n`.  To omit
++patch numbers from the subject, use `-N`.
+ 
+-If given --thread, 'git-format-patch' will generate In-Reply-To and
+-References headers to make the second and subsequent patch mails appear
+-as replies to the first mail; this also generates a Message-Id header to
++If given `--thread`, `git-format-patch` will generate `In-Reply-To` and
++`References` headers to make the second and subsequent patch mails appear
++as replies to the first mail; this also generates a `Message-Id` header to
+ reference.
+ 
+ OPTIONS
+@@ -112,7 +112,7 @@ include::diff-options.txt[]
+ --attach[=<boundary>]::
+ 	Create multipart/mixed attachment, the first part of
+ 	which is the commit message and the patch itself in the
+-	second part, with "Content-Disposition: attachment".
++	second part, with `Content-Disposition: attachment`.
+ 
+ --no-attach::
+ 	Disable the creation of an attachment, overriding the
+@@ -121,13 +121,13 @@ include::diff-options.txt[]
+ --inline[=<boundary>]::
+ 	Create multipart/mixed attachment, the first part of
+ 	which is the commit message and the patch itself in the
+-	second part, with "Content-Disposition: inline".
++	second part, with `Content-Disposition: inline`.
+ 
+ --thread[=<style>]::
+ --no-thread::
+-	Controls addition of In-Reply-To and References headers to
++	Controls addition of `In-Reply-To` and `References` headers to
+ 	make the second and subsequent mails appear as replies to the
+-	first.  Also controls generation of the Message-Id header to
++	first.  Also controls generation of the `Message-Id` header to
+ 	reference.
+ +
+ The optional <style> argument can be either `shallow` or `deep`.
+@@ -136,16 +136,16 @@ series, where the head is chosen from the cover letter, the
+ `\--in-reply-to`, and the first patch mail, in this order.  'deep'
+ threading makes every mail a reply to the previous one.
+ +
+-The default is --no-thread, unless the 'format.thread' configuration
+-is set.  If --thread is specified without a style, it defaults to the
++The default is `--no-thread`, unless the 'format.thread' configuration
++is set.  If `--thread` is specified without a style, it defaults to the
+ style specified by 'format.thread' if any, or else `shallow`.
+ +
+ Beware that the default for 'git send-email' is to thread emails
+-itself.  If you want 'git format-patch' to take care of hreading, you
+-will want to ensure that threading is disabled for 'git send-email'.
++itself.  If you want `git format-patch` to take care of threading, you
++will want to ensure that threading is disabled for `git send-email`.
+ 
+ --in-reply-to=Message-Id::
+-	Make the first mail (or all the mails with --no-thread) appear as a
++	Make the first mail (or all the mails with `--no-thread`) appear as a
+ 	reply to the given Message-Id, which avoids breaking threads to
+ 	provide a new patch series.
+ 
+@@ -163,13 +163,13 @@ will want to ensure that threading is disabled for 'git send-email'.
+ 	combined with the --numbered option.
+ 
+ --cc=<email>::
+-	Add a "Cc:" header to the email headers. This is in addition
++	Add a `Cc:` header to the email headers. This is in addition
+ 	to any configured headers, and may be used multiple times.
+ 
+ --add-header=<header>::
+ 	Add an arbitrary header to the email headers.  This is in addition
+ 	to any configured headers, and may be used multiple times.
+-	For example, --add-header="Organization: git-foo"
++	For example, `--add-header="Organization: git-foo"`
+ 
+ --cover-letter::
+ 	In addition to the patches, generate a cover letter file
 -- 
 1.6.5.1.69.g36942
