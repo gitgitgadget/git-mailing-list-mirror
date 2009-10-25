@@ -1,9 +1,9 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 4/7] t5540-http-push: expect success when pushing without
- arguments
-Date: Sun, 25 Oct 2009 23:21:42 +0800
-Message-ID: <20091025232142.6558d9e4.rctay89@gmail.com>
-References: <20091025232044.06d7ce5c.rctay89@gmail.com>
+Subject: [PATCH 5/7] t5540-http-push: check existence of fetched files
+Date: Sun, 25 Oct 2009 23:22:27 +0800
+Message-ID: <20091025232227.96769e50.rctay89@gmail.com>
+References: <20091025232142.6558d9e4.rctay89@gmail.com>
+ <20091025232044.06d7ce5c.rctay89@gmail.com>
  <20091025231932.be9a6dfa.rctay89@gmail.com>
  <20091025231809.15b470fa.rctay89@gmail.com>
  <20091025231651.18c75559.rctay89@gmail.com>
@@ -12,102 +12,112 @@ Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: "Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 25 16:21:55 2009
+X-From: git-owner@vger.kernel.org Sun Oct 25 16:22:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N24un-0001pn-VD
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Oct 2009 16:21:54 +0100
+	id 1N24vX-000244-MW
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Oct 2009 16:22:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752557AbZJYPVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Oct 2009 11:21:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752470AbZJYPVn
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Oct 2009 11:21:43 -0400
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:43359 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752455AbZJYPVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Oct 2009 11:21:43 -0400
-Received: by yxe17 with SMTP id 17so9152843yxe.33
-        for <git@vger.kernel.org>; Sun, 25 Oct 2009 08:21:47 -0700 (PDT)
+	id S1753132AbZJYPW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Oct 2009 11:22:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752835AbZJYPW1
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Oct 2009 11:22:27 -0400
+Received: from mail-yw0-f202.google.com ([209.85.211.202]:63679 "EHLO
+	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752659AbZJYPW1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Oct 2009 11:22:27 -0400
+Received: by ywh40 with SMTP id 40so7628001ywh.33
+        for <git@vger.kernel.org>; Sun, 25 Oct 2009 08:22:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:in-reply-to:references:x-mailer:mime-version
          :content-type:content-transfer-encoding;
-        bh=xXUJEGspwlSEYYN/U5k1SXFfmcIMeCLqPL/ZvaSOiPM=;
-        b=KhV6w6QffcPmGH35ieuNUmIVbWMg1m1TCaXRqr7TYNEewpfRixpIPv+iUQE6LiVSD5
-         KXMYZxbc8f31I6ViSd3hrzyLAYIYID3VydfiCwjT+AXGPlmUrBwCQUBdqr0Sz3L207bF
-         R8Y2jmPZt+loQFXbxYcIDdA/VTL2fqdFiGzvM=
+        bh=oPIJ/j1h6A83K13oHE1u0iu78a4gjsCXbdCnb545dr4=;
+        b=Rpd0CT203nq35ORGYhE+33Z0+w0aOGjo71i672pqZCWGh+Xk1bUELVqojQtWTEOvNj
+         bT9oIEy2UL38izfxMrmfbJvqSamz++yjFjhmq7ixWqLaCWB502DjeF0KTB8DqcYgMymK
+         wk+xvG5yOfIX28/tC26X0I6LSJKgo5lpg2GsA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
          :mime-version:content-type:content-transfer-encoding;
-        b=lEg0GDh81LOdThYC0Yf9s+rA6vqsDlvpwQq3LEoedKKAteKqtKBbZgBTIzOwmqf9bo
-         2km5v8YNS9/3uLcxRxbN5cSFUec62Hgqm7sRzLXSollKRCywh+Zt8PBSML6eaIPFOoX3
-         f0y4ebylp9nG6ljdw7KqqQB4RP+37TkyMPjGA=
-Received: by 10.101.28.5 with SMTP id f5mr1650591anj.97.1256484107825;
-        Sun, 25 Oct 2009 08:21:47 -0700 (PDT)
+        b=sXfiCIGjWMTJrhgXlcTacghgXkdzGS0Xx6JkVJFwNVGbAXNEko3Nfc6DIRgaoKClcm
+         MiHhsKYZFnIf2pDxeLFyowlbSJu8corAV/J/jobt15S2fOOkfIB4oPrXnv3hILi7RgXd
+         NwpouzlRxgdEI+LC3rucoxafTNVKM+99C5tHs=
+Received: by 10.101.88.1 with SMTP id q1mr1692425anl.177.1256484151854;
+        Sun, 25 Oct 2009 08:22:31 -0700 (PDT)
 Received: from your-cukc5e3z5n (cm73.zeta152.maxonline.com.sg [116.87.152.73])
-        by mx.google.com with ESMTPS id 6sm895248yxg.12.2009.10.25.08.21.45
+        by mx.google.com with ESMTPS id 35sm894358yxh.51.2009.10.25.08.22.29
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 25 Oct 2009 08:21:47 -0700 (PDT)
-In-Reply-To: <20091025232044.06d7ce5c.rctay89@gmail.com>
+        Sun, 25 Oct 2009 08:22:31 -0700 (PDT)
+In-Reply-To: <20091025232142.6558d9e4.rctay89@gmail.com>
 X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131211>
-
-Remove mention of packed refs from the test description, and expect
-success.
-
-The dumb http push mechanism used to learn about the refs on the remote
-repository by recursing through the /refs directory in the repository.
-This meant that it was unaware of packed refs, since it did not read
-/packed-refs. Thus the push failed, as no remote refs were found.
-
-But after c6aa27e (Move WebDAV HTTP push under remote-curl, Wed Oct
-14), the dumb http mechanism additionally learns about the refs through
-/info/refs (via remote-curl.c::get_refs), so it is aware of packed
-refs, even though it still doesn't read /packed-refs (assuming /info/
-refs is up-to-date). Thus the push now succeeds.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131212>
 
 Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
- t/t5540-http-push.sh |   12 +-----------
- 1 files changed, 1 insertions(+), 11 deletions(-)
+ t/t5540-http-push.sh |   23 ++++++++++++++++++-----
+ 1 files changed, 18 insertions(+), 5 deletions(-)
 
 diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
-index f4a2cf6..c7b8a40 100755
+index c7b8a40..ee7f84a 100755
 --- a/t/t5540-http-push.sh
 +++ b/t/t5540-http-push.sh
-@@ -45,7 +45,7 @@ test_expect_success 'clone remote repository' '
- 	git clone $HTTPD_URL/test_repo.git test_repo_clone
+@@ -64,13 +64,18 @@ test_expect_success 'http-push fetches unpacked objects' '
+ 	git clone $HTTPD_URL/test_repo_unpacked.git \
+ 		"$ROOT_PATH"/fetch_unpacked &&
+
++	COMMIT_PATH=$(git rev-parse --verify HEAD |
++		sed -e "s/^\([0-9a-f]\{2\}\)\([0-9a-f]\{38\}\)/\1\/\2/") &&
++
+ 	# By reset, we force git to retrieve the object
+ 	(cd "$ROOT_PATH"/fetch_unpacked &&
+ 	 git reset --hard HEAD^ &&
+ 	 git remote rm origin &&
+ 	 git reflog expire --expire=0 --all &&
+ 	 git prune &&
+-	 git push -f -v $HTTPD_URL/test_repo_unpacked.git master)
++	 test ! -e ".git/objects/$COMMIT_PATH" &&
++	 git push -f -v $HTTPD_URL/test_repo_unpacked.git master &&
++	 test -e ".git/objects/$COMMIT_PATH")
  '
 
--test_expect_failure 'push to remote repository with packed refs' '
-+test_expect_success 'push to remote repository' '
- 	cd "$ROOT_PATH"/test_repo_clone &&
- 	: >path2 &&
- 	git add path2 &&
-@@ -57,16 +57,6 @@ test_expect_failure 'push to remote repository with packed refs' '
- 	 test $HEAD = $(git rev-parse --verify HEAD))
+ test_expect_success 'http-push fetches packed objects' '
+@@ -80,9 +85,14 @@ test_expect_success 'http-push fetches packed objects' '
+ 	git clone $HTTPD_URL/test_repo_packed.git \
+ 		"$ROOT_PATH"/test_repo_clone_packed &&
+
+-	(cd "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo_packed.git &&
+-	 git --bare repack &&
+-	 git --bare prune-packed) &&
++	cd "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo_packed.git &&
++	git --bare repack &&
++	git --bare prune-packed &&
++
++	PACK_PATH=$(cat "objects/info/packs" |
++		sed -e "s/^P \(pack-[0-9a-f]\{40\}\.pack\)/\1/") &&
++	COMMIT_PATH=$(git rev-parse --verify HEAD |
++		sed -e "s/^\([0-9a-f]\{2\}\)\([0-9a-f]\{38\}\)/\1\/\2/") &&
+
+ 	# By reset, we force git to retrieve the packed object
+ 	(cd "$ROOT_PATH"/test_repo_clone_packed &&
+@@ -90,7 +100,10 @@ test_expect_success 'http-push fetches packed objects' '
+ 	 git remote rm origin &&
+ 	 git reflog expire --expire=0 --all &&
+ 	 git prune &&
+-	 git push -f -v $HTTPD_URL/test_repo_packed.git master)
++	 test ! -e ".git/objects/$COMMIT_PATH" &&
++	 test ! -e ".git/objects/pack/$PACK_PATH" &&
++	 git push -f -v $HTTPD_URL/test_repo_packed.git master &&
++	 test -e ".git/objects/pack/$PACK_PATH")
  '
 
--test_expect_success ' push to remote repository with unpacked refs' '
--	(cd "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git &&
--	 rm packed-refs &&
--	 git update-ref refs/heads/master \
--		0c973ae9bd51902a28466f3850b543fa66a6aaf4) &&
--	git push &&
--	(cd "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git &&
--	 test $HEAD = $(git rev-parse --verify HEAD))
--'
--
- test_expect_success 'http-push fetches unpacked objects' '
- 	cp -R "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git \
- 		"$HTTPD_DOCUMENT_ROOT_PATH"/test_repo_unpacked.git &&
+ test_expect_success 'create and delete remote branch' '
 --
 1.6.4.4
