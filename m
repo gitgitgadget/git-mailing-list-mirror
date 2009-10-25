@@ -1,72 +1,82 @@
-From: Corey Trager <ctrager@yahoo.com>
-Subject: Fw: [ANNOUNCE]  BugTracker.NET (FOSS) now supports git integration
-Date: Sun, 25 Oct 2009 09:53:21 -0700 (PDT)
-Message-ID: <169557.95216.qm@web65401.mail.ac4.yahoo.com>
-References: <97625.96130.qm@web65401.mail.ac4.yahoo.com> <87k4yj8ta3.fsf@sanosuke.troilus.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [ANNOUNCE] Stacked Git 0.15
+Date: Sun, 25 Oct 2009 17:13:03 +0000
+Message-ID: <b0943d9e0910251013v19fb39b7we412e7f734c2755f@mail.gmail.com>
+References: <b0943d9e0910241541n7b1091ecp6b21fa896405afa0@mail.gmail.com>
+	 <m34opoe5t6.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 25 17:53:28 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 25 18:13:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N26LP-0002lq-Mw
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Oct 2009 17:53:28 +0100
+	id 1N26eY-0001mz-L5
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Oct 2009 18:13:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753741AbZJYQxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Oct 2009 12:53:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753729AbZJYQxR
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Oct 2009 12:53:17 -0400
-Received: from web65401.mail.ac4.yahoo.com ([76.13.9.21]:43877 "HELO
-	web65401.mail.ac4.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752845AbZJYQxQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Oct 2009 12:53:16 -0400
-Received: (qmail 96630 invoked by uid 60001); 25 Oct 2009 16:53:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1256489601; bh=Wd/cZIDXH9aWHzUSJHLWw7drwU94sAGYZZd8+GRv2Ao=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:References:Date:From:Subject:To:In-Reply-To:MIME-Version:Content-Type; b=RJlyYhO+A9Kwr26KOjNFM8cNUo6eQbJmVVnug0vl25Cb7tcpGH4yGAAbNIDcxaaa/E4CSmglKtkiIIuv4iKz/Ccy2abUYZei0sORfQnJjwl7oBanLuu29bM3FykfzyfSWj4olmgX04AOnCV4C95JlkAXuZa4/H5MgkzHJ0yU8Bk=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:References:Date:From:Subject:To:In-Reply-To:MIME-Version:Content-Type;
-  b=ADGayB0Mq2ELxBPGkye54UgIb8GuzMJ9vcJiwe9YSWYNVSgLr3Gavf5mr2MnU7RpfGL59nUAMYhfw2XnigRNgpPvcC38qFstvj2QIfGHKC2Lt4ojlXZHj67cu8nmcFp1H8fdwJKPpuv8JbWrJJvdEINml+NsEoyX3SkNlq3wQx4=;
-X-YMail-OSG: D55z0BMVM1mEqJPpAP8fjTjaqrDPlscm8IGDDcU5eG87qsYvrBgHBqa_Gizc4W.zTtZayAJjGy36Ww3W0HmbMKZshC.79runEf.ht5tq.NQh1f2HlKHsIjxb4WPR18.HAit4vl20b0kyXkAOpzH0cmz6IQY_Y_V.vbRjf3QNoEOi1neSm1BwMt1J25B2Tt6TOEiHg0NP5TyWWRCgawcw6oCgjOZjHXgnBPhplBahpYJkcWd5R0.71_.fiqdnDu7be2i8vR2wnhAI0x9ApKWDl1AIoWEtXEZ5Mz2o8H1ddkyGjrB2vEHlLQVmkX5KkTRXV0mhG.30dYFp5jOvvinte9kai8FJ7fo4RWHBdm4oycWcCUmQqGbaZBNs120lk_5YW0ODkwmM.anoXNJVdRSILqqQMTO74gWremBo_1akB8CvKUV4gZtRvSOW
-Received: from [75.56.60.139] by web65401.mail.ac4.yahoo.com via HTTP; Sun, 25 Oct 2009 09:53:21 PDT
-X-Mailer: YahooMailRC/211.5 YahooMailWebService/0.7.361.3
-In-Reply-To: <87k4yj8ta3.fsf@sanosuke.troilus.org>
+	id S1753704AbZJYRND convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Oct 2009 13:13:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753661AbZJYRNC
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Oct 2009 13:13:02 -0400
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:62347 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752357AbZJYRNB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Oct 2009 13:13:01 -0400
+Received: by bwz27 with SMTP id 27so1676994bwz.21
+        for <git@vger.kernel.org>; Sun, 25 Oct 2009 10:13:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=evE4Y1S2AO9TxsNXtJTLr/1hoWSfwtXcLwO9r9r2hOo=;
+        b=KgCO5otacEG94obEzl4cQMiqcGwNFh9d0HKTYIoYU5OAPPAzwkqh18oT/J+opUaAWE
+         hDnc5kFNc1+pWLyHCF5et9gPmUEqudcS1v/Y0lFTU3BM65z3dbTb0tR2mRT7pQ5gFgjU
+         Z9or7qqHU4jt/i7MBfHALhJ9TIjUO7/BVjFKg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rKvzWUVPoJPu4Q9Eq0p3kbH/AirOHxHXt3ye/VMH9u7bt9IB+4F2lko9dJnvpSjPyo
+         2xaHosxMgdZ0bkvpLTWmrvYKf8rCzsDT7So20X0ECCxs/XKrqw0OYnfR7OuJG9aR4uQO
+         /dLHmS+Bm/i+IBmnXqmuu/8ZH2LfxWqYPUN9k=
+Received: by 10.223.143.15 with SMTP id s15mr182557fau.77.1256490784043; Sun, 
+	25 Oct 2009 10:13:04 -0700 (PDT)
+In-Reply-To: <m34opoe5t6.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131224>
 
-
-Right now it just recognizes a number at the very beginning of the commit message, but what I should do is make that configure.   That is, I'm using a regex to find the integer, so I can just make that regex be something that's easy to configure.  I'll get that done soon, maybe today.
-
-
------ Original Message ----
-From: Michael Poole <mdpoole@troilus.org>
-To: Corey Trager <ctrager@yahoo.com>
-Cc: git@vger.kernel.org
-Sent: Sun, October 25, 2009 9:03:48 AM
-Subject: Re: [ANNOUNCE]  BugTracker.NET (FOSS) now supports git integration
-
-Corey Trager writes:
-
-> BugTracker.NET is a free, open-source, GPL,  ASP.NET bug tracking app.
-> More info at http://ifdefined.com/bugtrackernet.html
+2009/10/25 Jakub Narebski <jnareb@gmail.com>:
+> Catalin Marinas <catalin.marinas@gmail.com> writes:
 >
-> With the integration, if you do a commit like...
-> git commit  -a -m "123 fixed the bug"
-> ...then the hook script will link up the commit to bug 123.
+>> StGit is a Python application providing functionality similar to Qui=
+lt
+>> (i.e. pushing/popping patches to/from a stack) on top of Git. These
+>> operations are performed using Git commands, and the patches are
+>> stored as Git commit objects, allowing easy merging of the StGit
+>> patches into other repositories using standard Git functionality.
+>>
+>> =A0 Download: =A0 =A0 =A0 =A0 http://download.gna.org/stgit/stgit-0.=
+15.tar.gz
+>> =A0 Main repository: =A0git://repo.or.cz/stgit.git
+>> =A0 Project homepage: http://www.procode.org/stgit/
+>> =A0 Mailing list: =A0 =A0 git@vger.kernel.org (please use "StGit" in=
+ the subject)
+>> =A0 Bug tracker: =A0 =A0 =A0https://gna.org/bugs/?group=3Dstgit
 >
-> Here are screenshots of the Subversion integration, which looks pretty much like the git integration:
-> http://ifdefined.com/doc_bug_tracker_subversion.html
->
-> Feedback very welcome, good or bad.
+> Is there RPM or SRPM (src.rpm) available somewhere? Or does tarball
+> include *.spec file, or an rpm target?
 
-Does it recognize bug IDs in the footer section of a commit message
-(where Signed-Off-By and similar lines typically go)?
+Late last night when running my release script I realised that
+setup.py no longer accepts the --prefix=3D/usr option I used for RPMs.
+I'll try to build one in the next couple of days (I wasn't even sure
+anyone was using it).
 
-Michael Poole
-
-
-      
+--=20
+Catalin
