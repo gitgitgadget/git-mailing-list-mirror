@@ -1,92 +1,72 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH 5/7] t5540-http-push: check existence of fetched files
-Date: Sun, 25 Oct 2009 17:49:13 +0100
-Message-ID: <20091025164913.GA11267@localhost>
-References: <20091025232142.6558d9e4.rctay89@gmail.com> <20091025232044.06d7ce5c.rctay89@gmail.com> <20091025231932.be9a6dfa.rctay89@gmail.com> <20091025231809.15b470fa.rctay89@gmail.com> <20091025231651.18c75559.rctay89@gmail.com> <20091025232227.96769e50.rctay89@gmail.com>
+From: Corey Trager <ctrager@yahoo.com>
+Subject: Fw: [ANNOUNCE]  BugTracker.NET (FOSS) now supports git integration
+Date: Sun, 25 Oct 2009 09:53:21 -0700 (PDT)
+Message-ID: <169557.95216.qm@web65401.mail.ac4.yahoo.com>
+References: <97625.96130.qm@web65401.mail.ac4.yahoo.com> <87k4yj8ta3.fsf@sanosuke.troilus.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 25 17:49:20 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 25 17:53:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N26HO-00013i-Pr
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Oct 2009 17:49:19 +0100
+	id 1N26LP-0002lq-Mw
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Oct 2009 17:53:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753542AbZJYQtH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Oct 2009 12:49:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbZJYQtH
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Oct 2009 12:49:07 -0400
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:38949 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752845AbZJYQtF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Oct 2009 12:49:05 -0400
-Received: by bwz27 with SMTP id 27so1669909bwz.21
-        for <git@vger.kernel.org>; Sun, 25 Oct 2009 09:49:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=xxFiIztNWWpM9TIlYPTVNTkPv+jcmsaRik9HImeg/UA=;
-        b=xQXEDiAEMsc2ND2+65ls7CkWPjedDHoPXp8Nl1AspjM4iqSqCDRZkx83RNLB3MiU+V
-         BsTe806DsfItDb8XQluAO/Hpxf1DrO2/DjOKPRU19G5CycRNZoF1cdDOkoIhHnAT4Zd3
-         VHXJOQ2VjuyDrv15322SUP/1QzHYbV/bDyyY4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=Dk7gsQcp0sy04xwRFpxZdCzV35T4phC8NBhI4YZFXMmOssimrvrsY/Vd1v80l5f71D
-         6E3m2g1XmFCurLhNJBCA3oQKYl5xFJ8EDpCg3zgkYJhtgJw6jL1KCCtgHLHJ2o0chPlI
-         Ej73YZzqta07YkfjF9eQuM8TupOxoJ2picWR4=
-Received: by 10.204.10.6 with SMTP id n6mr13337932bkn.27.1256489349347;
-        Sun, 25 Oct 2009 09:49:09 -0700 (PDT)
-Received: from darc.lan (p549A3880.dip.t-dialin.net [84.154.56.128])
-        by mx.google.com with ESMTPS id 15sm674579bwz.4.2009.10.25.09.49.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 25 Oct 2009 09:49:09 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1N26HJ-0004ua-PH; Sun, 25 Oct 2009 17:49:13 +0100
-Content-Disposition: inline
-In-Reply-To: <20091025232227.96769e50.rctay89@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753741AbZJYQxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Oct 2009 12:53:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753729AbZJYQxR
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Oct 2009 12:53:17 -0400
+Received: from web65401.mail.ac4.yahoo.com ([76.13.9.21]:43877 "HELO
+	web65401.mail.ac4.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752845AbZJYQxQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Oct 2009 12:53:16 -0400
+Received: (qmail 96630 invoked by uid 60001); 25 Oct 2009 16:53:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1256489601; bh=Wd/cZIDXH9aWHzUSJHLWw7drwU94sAGYZZd8+GRv2Ao=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:References:Date:From:Subject:To:In-Reply-To:MIME-Version:Content-Type; b=RJlyYhO+A9Kwr26KOjNFM8cNUo6eQbJmVVnug0vl25Cb7tcpGH4yGAAbNIDcxaaa/E4CSmglKtkiIIuv4iKz/Ccy2abUYZei0sORfQnJjwl7oBanLuu29bM3FykfzyfSWj4olmgX04AOnCV4C95JlkAXuZa4/H5MgkzHJ0yU8Bk=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:References:Date:From:Subject:To:In-Reply-To:MIME-Version:Content-Type;
+  b=ADGayB0Mq2ELxBPGkye54UgIb8GuzMJ9vcJiwe9YSWYNVSgLr3Gavf5mr2MnU7RpfGL59nUAMYhfw2XnigRNgpPvcC38qFstvj2QIfGHKC2Lt4ojlXZHj67cu8nmcFp1H8fdwJKPpuv8JbWrJJvdEINml+NsEoyX3SkNlq3wQx4=;
+X-YMail-OSG: D55z0BMVM1mEqJPpAP8fjTjaqrDPlscm8IGDDcU5eG87qsYvrBgHBqa_Gizc4W.zTtZayAJjGy36Ww3W0HmbMKZshC.79runEf.ht5tq.NQh1f2HlKHsIjxb4WPR18.HAit4vl20b0kyXkAOpzH0cmz6IQY_Y_V.vbRjf3QNoEOi1neSm1BwMt1J25B2Tt6TOEiHg0NP5TyWWRCgawcw6oCgjOZjHXgnBPhplBahpYJkcWd5R0.71_.fiqdnDu7be2i8vR2wnhAI0x9ApKWDl1AIoWEtXEZ5Mz2o8H1ddkyGjrB2vEHlLQVmkX5KkTRXV0mhG.30dYFp5jOvvinte9kai8FJ7fo4RWHBdm4oycWcCUmQqGbaZBNs120lk_5YW0ODkwmM.anoXNJVdRSILqqQMTO74gWremBo_1akB8CvKUV4gZtRvSOW
+Received: from [75.56.60.139] by web65401.mail.ac4.yahoo.com via HTTP; Sun, 25 Oct 2009 09:53:21 PDT
+X-Mailer: YahooMailRC/211.5 YahooMailWebService/0.7.361.3
+In-Reply-To: <87k4yj8ta3.fsf@sanosuke.troilus.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131223>
 
-On Sun, Oct 25, 2009 at 11:22:27PM +0800, Tay Ray Chuan wrote:
 
->  	# By reset, we force git to retrieve the object
->  	(cd "$ROOT_PATH"/fetch_unpacked &&
->  	 git reset --hard HEAD^ &&
->  	 git remote rm origin &&
->  	 git reflog expire --expire=0 --all &&
->  	 git prune &&
-> -	 git push -f -v $HTTPD_URL/test_repo_unpacked.git master)
-> +	 test ! -e ".git/objects/$COMMIT_PATH" &&
-> +	 git push -f -v $HTTPD_URL/test_repo_unpacked.git master &&
-> +	 test -e ".git/objects/$COMMIT_PATH")
->  '
+Right now it just recognizes a number at the very beginning of the commit message, but what I should do is make that configure.   That is, I'm using a regex to find the integer, so I can just make that regex be something that's easy to configure.  I'll get that done soon, maybe today.
 
-This fails with smart HTTP. First of all, the objects are packed,
-so I substituted the above with
 
- ! git rev-list -1 $HEAD &&
- git push -f -v $HTTPD_GIT_URL/test_repo_unpacked.git master &&
- git rev-list -1 $HEAD > rev-list.out &&
- test -n rev-list.out
+----- Original Message ----
+From: Michael Poole <mdpoole@troilus.org>
+To: Corey Trager <ctrager@yahoo.com>
+Cc: git@vger.kernel.org
+Sent: Sun, October 25, 2009 9:03:48 AM
+Subject: Re: [ANNOUNCE]  BugTracker.NET (FOSS) now supports git integration
 
-That should be an equivalent test, right? But still, why should push
-re-fetch the commit we just pruned? Smart HTTP does not do that and
-therefore fails the last rev-list test:
+Corey Trager writes:
 
- ++ git rev-list -1 9d498b0bbc2a25438e2fbd19081948da86028c23
- fatal: bad object 9d498b0bbc2a25438e2fbd19081948da86028c23
+> BugTracker.NET is a free, open-source, GPL,  ASP.NET bug tracking app.
+> More info at http://ifdefined.com/bugtrackernet.html
+>
+> With the integration, if you do a commit like...
+> git commit  -a -m "123 fixed the bug"
+> ...then the hook script will link up the commit to bug 123.
+>
+> Here are screenshots of the Subversion integration, which looks pretty much like the git integration:
+> http://ifdefined.com/doc_bug_tracker_subversion.html
+>
+> Feedback very welcome, good or bad.
 
-Clemens
+Does it recognize bug IDs in the footer section of a commit message
+(where Signed-Off-By and similar lines typically go)?
+
+Michael Poole
+
+
+      
