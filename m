@@ -1,74 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git rebase -i <first_commit_in_repository>
-Date: Mon, 26 Oct 2009 22:11:22 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0910262210480.4985@pacific.mpi-cbg.de>
-References: <2b05065b0910261014t4eb93952oc804bcd01b339a84@mail.gmail.com>  <40aa078e0910261025l1ad7bf8ex27fd62072a317f9d@mail.gmail.com> <2b05065b0910261108g4a8448c8x295606a8d33612f5@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] git checkout --nodwim
+Date: Mon, 26 Oct 2009 17:26:28 -0400
+Message-ID: <20091026212628.GC27744@sigio.peff.net>
+References: <7v63adxh9a.fsf_-_@alter.siamese.dyndns.org> <81b0412b0910180540u7030c22br7efcaf7f51df771d@mail.gmail.com> <7v7huspjg0.fsf@alter.siamese.dyndns.org> <32541b130910211029x2f4295c3w40dd13b3cdc7762c@mail.gmail.com> <20091022062145.6117@nanako3.lavabit.com> <alpine.DEB.1.00.0910220226270.4985@pacific.mpi-cbg.de> <7vzl7h8fjp.fsf@alter.siamese.dyndns.org> <117f2cc80910240759oa9f57e7h67f06816d37e328c@mail.gmail.com> <alpine.DEB.1.00.0910262111340.4985@pacific.mpi-cbg.de> <32541b130910261340g1988caednc17f3d159ec00d26@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-429053308-1256591484=:4985"
-Cc: kusmabite@gmail.com, git@vger.kernel.org
-To: eschvoca <eschvoca@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 26 22:08:33 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	David Roundy <roundyd@physics.oregonstate.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Jay Soffian <jaysoffian@gmail.com>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 26 22:22:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2Wnp-0001ef-3K
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Oct 2009 22:08:33 +0100
+	id 1N2X1k-0000E3-7x
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Oct 2009 22:22:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752839AbZJZVIV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2009 17:08:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752595AbZJZVIU
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 17:08:20 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59521 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752322AbZJZVIT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2009 17:08:19 -0400
-Received: (qmail invoked by alias); 26 Oct 2009 21:08:18 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp068) with SMTP; 26 Oct 2009 22:08:18 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/53OlsCcT5QF4GiBBID5eTGnF15ibZhKAhogSR2P
-	okqK+9plJ55XwR
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <2b05065b0910261108g4a8448c8x295606a8d33612f5@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1753619AbZJZVWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2009 17:22:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753588AbZJZVWr
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 17:22:47 -0400
+Received: from peff.net ([208.65.91.99]:47993 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752947AbZJZVWq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2009 17:22:46 -0400
+Received: (qmail 27786 invoked by uid 1000); 26 Oct 2009 21:26:28 -0000
+Content-Disposition: inline
+In-Reply-To: <32541b130910261340g1988caednc17f3d159ec00d26@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131272>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, Oct 26, 2009 at 04:40:41PM -0400, Avery Pennarun wrote:
 
---8323328-429053308-1256591484=:4985
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+> I don't think there's actually a plumbing alternative to git-checkout,
+> however.  My git-subtree script (and another script at work) have
+> already had some bugs because of this (specifically, the differing
+> behaviour of git-checkout with and without a path specified).  Is
+> there something else I should be using in my scripts to be maximally
+> safe?
 
-Hi,
+It's git-update-ref. Which highlights one problem with the
+porcelain/plumbing distinction. Our plumbing building blocks work at a
+very low level, but often when scripting you want to use higher level
+building blocks. So porcelain gets used in scripts, and gets an
+ambiguous state. Consider "git commit", for example. Does anyone
+actually script around "write-tree" and "commit-tree" these days, or do
+they just script around "git commit"?
 
-On Mon, 26 Oct 2009, eschvoca wrote:
-
-> On Mon, Oct 26, 2009 at 1:25 PM, Erik Faye-Lund
-> <kusmabite@googlemail.com> wrote:
-> > On Mon, Oct 26, 2009 at 6:14 PM, eschvoca <eschvoca@gmail.com> wrote:
-> >> Hi,
-> >>
-> >> Is there a way to rewrite history, including the first commit.  It
-> >> seems that the first commit can not be modified with a rebase.
-> >
-> > This question is answered in the FAQ:
-> > http://git.or.cz/gitwiki/GitFaq#HowdoIedittherootcommit.3F
-> 
-> Thanks Eric.  Hopefully someone will enhance rebase to handle the root 
-> commit.
-
-If you cannot do it yourself, you can always offer to bribe^Wpay somebody 
-to do it for you.
-
-Ciao,
-Dscho
-
---8323328-429053308-1256591484=:4985--
+-Peff
