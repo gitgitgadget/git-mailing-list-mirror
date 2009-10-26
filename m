@@ -1,91 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: keeping track of where a patch begins
-Date: Mon, 26 Oct 2009 10:30:07 -0400
-Message-ID: <20091026143006.GA3300@sigill.intra.peff.net>
-References: <3a69fa7c0910210745r311cf18xf966f5c63650cde6@mail.gmail.com>
- <alpine.LFD.2.00.0910211402490.21460@xanadu.home>
- <7veiow4iqc.fsf@alter.siamese.dyndns.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [ANNOUNCE] Stacked Git 0.15
+Date: Mon, 26 Oct 2009 16:23:06 +0000
+Message-ID: <b0943d9e0910260923v77c457f8w2d56d8c06f71e965@mail.gmail.com>
+References: <b0943d9e0910241541n7b1091ecp6b21fa896405afa0@mail.gmail.com>
+	 <m34opoe5t6.fsf@localhost.localdomain>
+	 <b0943d9e0910251013v19fb39b7we412e7f734c2755f@mail.gmail.com>
+	 <b0943d9e0910260332x1ca40f97r351e94f5baeb1c6b@mail.gmail.com>
+	 <20091026134915.GA1565@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nicolas Pitre <nico@fluxnic.net>, E R <pc88mxer@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 26 15:30:19 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Karl Wiberg <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Oct 26 17:23:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2QaR-0007Yr-9F
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Oct 2009 15:30:19 +0100
+	id 1N2SLi-0003r9-Dn
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Oct 2009 17:23:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751764AbZJZOaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2009 10:30:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751766AbZJZOaH
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 10:30:07 -0400
-Received: from peff.net ([208.65.91.99]:56721 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751606AbZJZOaG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2009 10:30:06 -0400
-Received: (qmail 24966 invoked by uid 107); 26 Oct 2009 14:33:47 -0000
-Received: from c-98-234-220-119.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (98.234.220.119)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 26 Oct 2009 10:33:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Oct 2009 10:30:07 -0400
-Content-Disposition: inline
-In-Reply-To: <7veiow4iqc.fsf@alter.siamese.dyndns.org>
+	id S1753640AbZJZQXE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Oct 2009 12:23:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753523AbZJZQXE
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 12:23:04 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:43305 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753562AbZJZQXC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Oct 2009 12:23:02 -0400
+Received: by fxm18 with SMTP id 18so12212451fxm.37
+        for <git@vger.kernel.org>; Mon, 26 Oct 2009 09:23:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=JNfPscVYQXzrOe14x19vrwF6c0+zveLTDJER45DosDE=;
+        b=Dj4D6dBl52HFDf6pYXs1sZ6hrxKbddeh8JANTcflGUrn2Lh4oLW3CkLlpsSvBoUNa1
+         mxJfubR2o8XzUA+l0h0NuDquIgpg0J8M9BBuf11PH/fhCkeEtvKKBtWC5NpXUJD5WJL2
+         RAuJwweer6Q+ms0FT1xoEpq0PMDm0zPovJUdE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=tOVesyxBoUQFSUpiQDNuYUrMkms/EmUVdiw523te01/xCbF9PHsJ3yF6hGn2v0RJoz
+         5Bqfe0bnUkzJPgHqDyxjNZwjUfFdW/m2TLLJEF0MfFEQzEtr1rLq0f34AUHbjGnEkAfk
+         LdJlo4UqVzjucz44gLYkyUSZwBkYTr2OQG398=
+Received: by 10.223.132.210 with SMTP id c18mr2432746fat.31.1256574186320; 
+	Mon, 26 Oct 2009 09:23:06 -0700 (PDT)
+In-Reply-To: <20091026134915.GA1565@diana.vm.bytemark.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131254>
 
-On Wed, Oct 21, 2009 at 01:03:55PM -0700, Junio C Hamano wrote:
+2009/10/26 Karl Wiberg <kha@treskal.com>:
+> On 2009-10-26 10:32:07 +0000, Catalin Marinas wrote:
+>> The problem was a bit more complicated than this. Some files are
+>> generated by the Makefile rather than setup.py so using the latter
+>> directly fails to build anything.
+>>
+>> So it's time for 0.15.1 this week with the fix below (in my
+>> "proposed" branch). I cc'ed Karl as well in case he has time to have
+>> a quick look.
+>
+> I don't have any objections, except ...
+[...]
+>> -test: build
+>> +test:
+>> =A0 =A0 =A0 cd t && $(MAKE) all
+>
+> ... don't we need to run "setup.py build" here in order to not change
+> the behavior?
 
->  (0) Define a way to identify the bottom of a branch.  One way to do this
->      is by an extra ref (e.g. refs/branchpoints/frotz).  Then the commits
->      between refs/branchpoints/frotz..refs/heads/frotz identifies the
->      commits on the branch.  None of the additional restrictions below
->      applies when the branch does not have such bottom defined (i.e.
->      created by the current git without this extension).
+Good point. I updated the patch in the "proposed" branch.
 
-Hmm. This feels like redundant information to me. It has always been
-git's strategy to record the history graph, and to use merge bases as
-the "bottom" of branches, rather than keeping an artificial "started
-here" commit. So I am trying to see the advantages of recording a static
-bottom versus doing a merge-base calculation later. Some things I can
-think of:
+Thanks.
 
-  - a bottom implies a specific commit, whereas a merge-base is always
-    with respect to anothe tip. So to have a default "bottom" calculated
-    by merge-base, you need a default "upstream". Which we do have, but
-    of course it is subject to being rewound.
-
-  - your merge-base will move when you merge. But arguably, that is a
-    good thing. If you are talking about "git log" only looking at the
-    commits on this branch (as you do later in the quoted email), I
-    would expect to see only stuff that happened since upstream last
-    merged. Although to be honest, I am not sure such a limit is all
-    that useful. We already have "git log upstream..branch".
-
-So I am not really clear on what you are trying to accomplish by
-recording such a bottom. Your steps (0) through (3) seem to be leading
-up to this use case:
-
->  (4) Operations that browse histories, e.g. "log", "show-branch", while on
->      a branch that records its bottom can be taught to pay attention to
->      the bottom.  For example, it is conceivable that
-> 
->      $ git log
->      $ git log -- Documentation/
-> 
->      without an explicit branch name that fell back to the default HEAD
->      while on branch "frotz" might be better run with an implicit bottom
->      ^refs/branchpoint/frotz.
-
-If that is all you want, can't we just default to something like:
-
-  $ git log $(git for-each-ref --format='%(upstream)' $(git symbolic-ref HEAD)))..
-
-Of course it would be much easier to type as "git log @{upstream}.." :)
-
--Peff
+--=20
+Catalin
