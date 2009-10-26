@@ -1,116 +1,71 @@
-From: Jeffrey Middleton <jefromi@gmail.com>
-Subject: git update --prune issue
-Date: Mon, 26 Oct 2009 17:08:45 -0500
-Message-ID: <4389ce950910261508p7eca354el77bad07305a80952@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] git checkout --nodwim
+Date: Mon, 26 Oct 2009 18:14:24 -0400
+Message-ID: <20091026221424.GA28184@sigio.peff.net>
+References: <7v7huspjg0.fsf@alter.siamese.dyndns.org> <32541b130910211029x2f4295c3w40dd13b3cdc7762c@mail.gmail.com> <20091022062145.6117@nanako3.lavabit.com> <alpine.DEB.1.00.0910220226270.4985@pacific.mpi-cbg.de> <7vzl7h8fjp.fsf@alter.siamese.dyndns.org> <117f2cc80910240759oa9f57e7h67f06816d37e328c@mail.gmail.com> <alpine.DEB.1.00.0910262111340.4985@pacific.mpi-cbg.de> <32541b130910261340g1988caednc17f3d159ec00d26@mail.gmail.com> <20091026212628.GC27744@sigio.peff.net> <32541b130910261501n32046cc5s12283a8e3981d04e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 26 23:09:15 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	David Roundy <roundyd@physics.oregonstate.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Jay Soffian <jaysoffian@gmail.com>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 26 23:10:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2XkY-0005w0-4T
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Oct 2009 23:09:14 +0100
+	id 1N2Xm7-0006hw-KE
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Oct 2009 23:10:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754110AbZJZWJD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Oct 2009 18:09:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754026AbZJZWJD
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 18:09:03 -0400
-Received: from mail-ew0-f208.google.com ([209.85.219.208]:46595 "EHLO
-	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753113AbZJZWJC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Oct 2009 18:09:02 -0400
-Received: by ewy4 with SMTP id 4so4097083ewy.37
-        for <git@vger.kernel.org>; Mon, 26 Oct 2009 15:09:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        bh=m1e34PLkAJWTa/XCyyuJTQvo1e76yGMG8djnZ7a2Lik=;
-        b=Pbf6SzU+kwadwG2042w9bDLfcBFU4wjRZC2bZVu9yccgCh8xkO/Kn7tTHJ7SFdnHEA
-         OckgrFlcUChhpslOL0uJlrk+/sT57aLBGCvoqS5pQhETMyhHCochfb07ZSbvdeJthYg1
-         TUJUX4UVcfYxOnd9EDYIU4XWiBV4ymhv5Q41w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=tpQ3ZaOrib3bxyHjSFInMzNrI85H8lMtLUlsBivgTU+ZXzaJiZIzW2Fn12HdklMBPX
-         5ssgTRoqWZhAla7s02BrzoNYwBcs2guredXMi8+SosTWvLjpvytXgTLqHNNBlgNiBD7j
-         C1TCcF6CyHH07JjS5cma8G/ugFtcA3Ydk1QTM=
-Received: by 10.216.85.14 with SMTP id t14mr2270943wee.222.1256594945331; Mon, 
-	26 Oct 2009 15:09:05 -0700 (PDT)
+	id S1754412AbZJZWKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2009 18:10:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752277AbZJZWKm
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 18:10:42 -0400
+Received: from peff.net ([208.65.91.99]:54117 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754405AbZJZWKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2009 18:10:41 -0400
+Received: (qmail 28194 invoked by uid 1000); 26 Oct 2009 22:14:24 -0000
+Content-Disposition: inline
+In-Reply-To: <32541b130910261501n32046cc5s12283a8e3981d04e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131276>
 
-I have an unreliable problem when using "git remote update --prune".
-git claims that many refs from a particular remote do not point to a
-valid object, but only after finishing another update.=A0 I've included
-a shortened version of the output from one particular instance of the
-issue.=A0 Note that the errors are printed for every subsequent remote
-as well.=A0 However, after the update is completed, everything is fine.
+On Mon, Oct 26, 2009 at 06:01:29PM -0400, Avery Pennarun wrote:
 
-It seems to only happen when there are non-fast-forward changes (new
-branch, forced update, pruned branch).=A0 The issue only happens with
-this particular remote, which I've tried removing and recreating, and
-is the same type of remote as all my others (another user's
-NFS-mounted home directory).=A0 However, my remotes are all individual
-developers, and this developer is the only one who ever rebases her
-working branches.=A0 (recloning the repo from origin and setting up my
-config and remotes all over again has also had no effect)
+> > It's git-update-ref.
+> 
+> That would be similar to git commit, not git checkout, right?  Oh
+> wait, I see the confusion: git checkout does two things.  It switches
+> branches, and it checks out files from the index into the work tree.
+> I meant the latter meaning.
 
-Unfortunately, I have been unable to reproduce the problem in any test
-repos - for example, though a forced update and a pruned branch in the
-problematic remote along with an update in another remote seems to
-fairly reliably produce the problem in this repo, recreating that
-situation in another repo doesn't cause any problems.=A0 Sorry for the
-incomplete bug report, but perhaps this will be enough to go on!
+Er, sorry, yes. It should be "git symbolic-ref", of course, to change
+HEAD, and then probably read-tree and checkout-index. I was just not
+thinking when I wrote the other message (hopefully I am doing so now).
 
-Thanks,
-Jeffrey
+> > Consider "git commit", for example. Does anyone
+> > actually script around "write-tree" and "commit-tree" these days, or do
+> > they just script around "git commit"?
+> 
+> Oh, I use those all the time.  They're awesome!  It allows you to
+> create commits without having a working tree, which lets me do very
+> interesting tricks.  git-subtree uses this heavily.
+> 
+> I'm probably a weirdo, though.
 
+OK, I should have phrased my statement differently (see, I told you I
+wasn't thinking). Yes, there are reasons to script around low-level
+building blocks, when you don't want the assumptions associated with the
+higher level. But I'm sure there are tons of scripts that munge some
+files in a worktree, followed by "git add -A; git commit -m 'automagic
+update'". And in that case, nobody would script around "commit-tree"
+because it's a lot more work.
 
-I've seen the issue in previous versions built from git.git master, as
-well as v1.6.3.3, but for this particular one:
-
-$ git --version
-git version 1.6.5.1.61.ge79999
-
-$ git remote update --prune
-Updating origin
-remote: Counting objects: 42, done.
-remote: Compressing objects: 100% (9/9), done.
-remote: Total 15 (delta 9), reused 12 (delta 6)
-Unpacking objects: 100% (15/15), done.
-=46rom /users/cxtfcm/CxTF_DB
-=A0=A0 88b8613..d40f26d=A0 2009.Q4=A0=A0=A0 -> origin/2009.Q4
-=A0=A0 d40f26d..56305b8=A0 dev=A0=A0=A0=A0=A0=A0=A0 -> origin/dev
-Updating steph
-remote: Counting objects: 299, done.
-remote: Compressing objects: 100% (241/241), done.
-remote: Total 276 (delta 186), reused 19 (delta 6)
-Receiving objects: 100% (276/276), 41.09 KiB | 10 KiB/s, done.
-Resolving deltas: 100% (186/186), completed with 17 local objects.
-=46rom /users/sdewet/CxTF_DEV/CxTF_DB
-=A0+ c2439dd...69cb5c3 beta_gc_dev -> steph/beta_gc_dev=A0 (forced upda=
-te)
-=A0+ fb25173...f0e4963 beta_veh_dev -> steph/beta_veh_dev=A0 (forced up=
-date)
-=A0* [new branch]=A0=A0=A0=A0=A0 beta_veh_dev_old -> steph/beta_veh_dev=
-_old
-Pruning steph
-URL: /users/sdewet/CxTF_DEV/CxTF_DB/
-=A0* [pruned] steph/beta_gc_dev_old
-Updating kevin
-error: refs/remotes/steph/beta_gc_dev does not point to a valid object!
-error: refs/remotes/steph/beta_veh_dev does not point to a valid object=
-!
-Updating jose
-error: refs/remotes/steph/beta_gc_dev does not point to a valid object!
-error: refs/remotes/steph/beta_veh_dev does not point to a valid object=
-!
-### many more remotes with the same errors ###
+-Peff
