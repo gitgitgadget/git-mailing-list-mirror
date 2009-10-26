@@ -1,81 +1,82 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git push interface inconsistency
-Date: Mon, 26 Oct 2009 18:31:44 -0400
-Message-ID: <32541b130910261531o36b8ce7eh6bddf26a2ae15663@mail.gmail.com>
-References: <76c5b8580910261525y5397b54eyf9c3d58c0fe19fce@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 26 23:33:03 2009
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: [PATCH v2 3/2] remote: fix poential ref_map list corruption in
+	ref_remove_duplicates
+Date: Mon, 26 Oct 2009 23:12:14 +0000
+Message-ID: <20091026231215.91316.47162.julian@quantumfyre.co.uk>
+References: <20091025212449.48498.23208.julian@quantumfyre.co.uk>
+	<20091025212813.48498.51868.julian@quantumfyre.co.uk>
+Cc: git@vger.kernel.org, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 00:17:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2Y6l-0002Dk-A7
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Oct 2009 23:32:11 +0100
+	id 1N2Yp2-0008Mn-8A
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 00:17:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754124AbZJZWcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2009 18:32:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754058AbZJZWcA
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 18:32:00 -0400
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:44062 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753556AbZJZWb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2009 18:31:59 -0400
-Received: by yxe17 with SMTP id 17so10240499yxe.33
-        for <git@vger.kernel.org>; Mon, 26 Oct 2009 15:32:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=lyuZKCUiysF1HlatjoU0AR0OiYSYrg5kS4K+AfJGZwM=;
-        b=r3Hhjl0K1kvMwob4NO0eqGSS/rG5dO9Afxm+G2YNfR6CJfV90qNJLPzNDyV4OVbsRD
-         CDB67o9dYdLnoHBhGbtrm7Y26om14nsQAIPVkg/BDBjtWh5nCQyKPqvdGsIkmdA5R8kh
-         WihLeMUjNGMo7RBnvNpldNlwn90wWd2QUD1bM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=hUP+vF/fD57UhUuSNwSTI6qhFvrvpWAHuUhPkHBOGT0UoODWcrb7EJrpuDZjxqmQ2S
-         SBPl2xiBI+HVeEUKPmi6Ez993hzHidTCXmeOFqcP5KLS3JZnw0qYhc+zb/NwGFdtrINY
-         cZojvipFaUZT+oKCpTE7w+v9nLUC8BDxvqS1s=
-Received: by 10.151.5.21 with SMTP id h21mr24999630ybi.26.1256596324079; Mon, 
-	26 Oct 2009 15:32:04 -0700 (PDT)
-In-Reply-To: <76c5b8580910261525y5397b54eyf9c3d58c0fe19fce@mail.gmail.com>
+	id S1754722AbZJZXRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2009 19:17:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754702AbZJZXRo
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 19:17:44 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:44446 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754651AbZJZXRn (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Oct 2009 19:17:43 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 4BAB636729C
+	for <git@vger.kernel.org>; Mon, 26 Oct 2009 23:17:47 +0000 (GMT)
+Received: (qmail 19472 invoked by uid 103); 26 Oct 2009 23:16:19 +0000
+Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
+ (clamdscan: 0.95.2/9940. spamassassin: 3.2.1. perlscan: 2.05st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.025049 secs); 26 Oct 2009 23:16:19 -0000
+Received: from reaper.quantumfyre.co.uk (HELO rayne.quantumfyre.co.uk) (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 26 Oct 2009 23:16:19 +0000
+X-git-sha1: 53a76e18164c57c2a41ccc7b19bdac79e2075ee7 
+X-Mailer: git-mail-commits v0.5.3
+In-Reply-To: <20091025212813.48498.51868.julian@quantumfyre.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131283>
 
-On Mon, Oct 26, 2009 at 6:25 PM, Eugene Sajine <euguess@gmail.com> wrote:
-> I have a question:
->
-> Why I can't do
->
-> $ git push my_tag
->
-> It will fail because the remote is not specified, even if there is
-> only one origin remote
->
-> but can do
->
-> $ git push --tags
->
-> and it will push tags to origin...
+The prev pointer was not being updated when the peer_ref member
+pointer was NULL, which means that that any items in the list with a
+NULL peer_ref immediately preceeding a duplicate would be dropped
+without being freed.
 
-Because 'my_tag' is interpreted as the name or URL of the remote, not
-as a branch name.  You can do "git push origin" and it will guess the
-branch name(s) to push, but because of that, the one-parameter push
-can't *also* be used to guess the remote name.
+Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
+---
 
-In contrast, --tags is a flag, so it's actually the zero-parameter
-version of push, which assumes 'origin' and then guesses the branch
-name (and --tags changes the guessed result).
+Having fixed the access after free bug, I realised that there was
+still a problem.  This one didn't show up in the tests - due to the
+rather specific circumstances required, but may occur in real use.
 
-Hope that helps.
+ remote.c |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
-Have fun,
-
-Avery
+diff --git a/remote.c b/remote.c
+index 1380b20..4f9f0cc 100644
+--- a/remote.c
++++ b/remote.c
+@@ -738,7 +738,7 @@ void ref_remove_duplicates(struct ref *ref_map)
+ 	struct string_list refs = { NULL, 0, 0, 0 };
+ 	struct string_list_item *item = NULL;
+ 	struct ref *prev = NULL, *next = NULL;
+-	for (; ref_map; ref_map = next) {
++	for (; ref_map; prev = ref_map, ref_map = next) {
+ 		next = ref_map->next;
+ 		if (!ref_map->peer_ref)
+ 			continue;
+@@ -758,7 +758,6 @@ void ref_remove_duplicates(struct ref *ref_map)
+ 
+ 		item = string_list_insert(ref_map->peer_ref->name, &refs);
+ 		item->util = ref_map;
+-		prev = ref_map;
+ 	}
+ 	string_list_clear(&refs, 0);
+ }
+-- 
+1.6.5.rc2
