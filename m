@@ -1,83 +1,53 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [ANNOUNCE] Stacked Git 0.15
-Date: Mon, 26 Oct 2009 16:23:06 +0000
-Message-ID: <b0943d9e0910260923v77c457f8w2d56d8c06f71e965@mail.gmail.com>
-References: <b0943d9e0910241541n7b1091ecp6b21fa896405afa0@mail.gmail.com>
-	 <m34opoe5t6.fsf@localhost.localdomain>
-	 <b0943d9e0910251013v19fb39b7we412e7f734c2755f@mail.gmail.com>
-	 <b0943d9e0910260332x1ca40f97r351e94f5baeb1c6b@mail.gmail.com>
-	 <20091026134915.GA1565@diana.vm.bytemark.co.uk>
+From: eschvoca <eschvoca@gmail.com>
+Subject: git rebase -i <first_commit_in_repository>
+Date: Mon, 26 Oct 2009 13:14:47 -0400
+Message-ID: <2b05065b0910261014t4eb93952oc804bcd01b339a84@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Karl Wiberg <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Oct 26 17:23:15 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 26 18:21:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2SLi-0003r9-Dn
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Oct 2009 17:23:14 +0100
+	id 1N2TGR-0001QZ-Sx
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Oct 2009 18:21:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753640AbZJZQXE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Oct 2009 12:23:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753523AbZJZQXE
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 12:23:04 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:43305 "EHLO
+	id S1753993AbZJZRVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2009 13:21:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753759AbZJZRVi
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 13:21:38 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:40594 "EHLO
 	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753562AbZJZQXC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Oct 2009 12:23:02 -0400
-Received: by fxm18 with SMTP id 18so12212451fxm.37
-        for <git@vger.kernel.org>; Mon, 26 Oct 2009 09:23:06 -0700 (PDT)
+	with ESMTP id S1752646AbZJZRVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2009 13:21:37 -0400
+Received: by fxm18 with SMTP id 18so12267355fxm.37
+        for <git@vger.kernel.org>; Mon, 26 Oct 2009 10:21:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JNfPscVYQXzrOe14x19vrwF6c0+zveLTDJER45DosDE=;
-        b=Dj4D6dBl52HFDf6pYXs1sZ6hrxKbddeh8JANTcflGUrn2Lh4oLW3CkLlpsSvBoUNa1
-         mxJfubR2o8XzUA+l0h0NuDquIgpg0J8M9BBuf11PH/fhCkeEtvKKBtWC5NpXUJD5WJL2
-         RAuJwweer6Q+ms0FT1xoEpq0PMDm0zPovJUdE=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=6YLuLaku5rF38c4t36Te8X3F1ZC18OElPtD5BIhLJWw=;
+        b=DeYU628T/+6iSsjBGb1g2H7QM0InFa1AT4yqxt7DqXxXdAyeT+6dcBWy8dNnxVk8S4
+         2MPua2mS2V4CK1m5MyJaFUD3OlkzCIWNWkIqJEBPioPlHOc6vXnD71TODdPPhS0kBWfA
+         fCRbxML4tfc0X12dl985TgyH9BF5daVq9Fvos=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=tOVesyxBoUQFSUpiQDNuYUrMkms/EmUVdiw523te01/xCbF9PHsJ3yF6hGn2v0RJoz
-         5Bqfe0bnUkzJPgHqDyxjNZwjUfFdW/m2TLLJEF0MfFEQzEtr1rLq0f34AUHbjGnEkAfk
-         LdJlo4UqVzjucz44gLYkyUSZwBkYTr2OQG398=
-Received: by 10.223.132.210 with SMTP id c18mr2432746fat.31.1256574186320; 
-	Mon, 26 Oct 2009 09:23:06 -0700 (PDT)
-In-Reply-To: <20091026134915.GA1565@diana.vm.bytemark.co.uk>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=RWeA+9STitMN09ptMX0xPNLcCiMAzED3GcQjnQxXgAiYGe16EizwSMWlBqb01h19GV
+         sNudwxrL33EyfHUeMUNdxAUbizVlcgca6fLa3VQ/e2AxfsxMcIklyMQdGJigcdHIULia
+         SfeNi1fL4s75f/IwSn+yEDij1Y9k3o9ap2Htg=
+Received: by 10.103.122.37 with SMTP id z37mr2596826mum.86.1256577287868; Mon, 
+	26 Oct 2009 10:14:47 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131255>
 
-2009/10/26 Karl Wiberg <kha@treskal.com>:
-> On 2009-10-26 10:32:07 +0000, Catalin Marinas wrote:
->> The problem was a bit more complicated than this. Some files are
->> generated by the Makefile rather than setup.py so using the latter
->> directly fails to build anything.
->>
->> So it's time for 0.15.1 this week with the fix below (in my
->> "proposed" branch). I cc'ed Karl as well in case he has time to have
->> a quick look.
->
-> I don't have any objections, except ...
-[...]
->> -test: build
->> +test:
->> =A0 =A0 =A0 cd t && $(MAKE) all
->
-> ... don't we need to run "setup.py build" here in order to not change
-> the behavior?
+Hi,
 
-Good point. I updated the patch in the "proposed" branch.
+Is there a way to rewrite history, including the first commit.  It
+seems that the first commit can not be modified with a rebase.
 
-Thanks.
-
---=20
-Catalin
+Cheers.
