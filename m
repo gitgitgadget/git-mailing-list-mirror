@@ -1,85 +1,208 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: What's cooking in git.git (Oct 2009, #04; Wed, 21)
-Date: Mon, 26 Oct 2009 11:07:56 +0100
-Message-ID: <20091026100756.GA9874@localhost>
-References: <7veiovly35.fsf@alter.siamese.dyndns.org> <20091025160213.GA8532@localhost> <7vzl7eocd6.fsf@alter.siamese.dyndns.org> <20091026082931.GA6192@localhost> <4AE56552.70407@gmail.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [ANNOUNCE] Stacked Git 0.15
+Date: Mon, 26 Oct 2009 10:32:07 +0000
+Message-ID: <b0943d9e0910260332x1ca40f97r351e94f5baeb1c6b@mail.gmail.com>
+References: <b0943d9e0910241541n7b1091ecp6b21fa896405afa0@mail.gmail.com>
+	 <m34opoe5t6.fsf@localhost.localdomain>
+	 <b0943d9e0910251013v19fb39b7we412e7f734c2755f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 26 11:08:12 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Karl Wiberg <kha@treskal.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 26 11:32:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2MUi-00077w-PD
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Oct 2009 11:08:09 +0100
+	id 1N2Ms5-0007a5-UB
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Oct 2009 11:32:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755476AbZJZKHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2009 06:07:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755473AbZJZKHn
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 06:07:43 -0400
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:35421 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755451AbZJZKHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2009 06:07:42 -0400
-Received: by bwz27 with SMTP id 27so1937303bwz.21
-        for <git@vger.kernel.org>; Mon, 26 Oct 2009 03:07:46 -0700 (PDT)
+	id S1755511AbZJZKcG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Oct 2009 06:32:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755480AbZJZKcG
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 06:32:06 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:34769 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755462AbZJZKcE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Oct 2009 06:32:04 -0400
+Received: by fxm18 with SMTP id 18so11924319fxm.37
+        for <git@vger.kernel.org>; Mon, 26 Oct 2009 03:32:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=M1uI7ptqeLE0Il29e/1KmKb6szN+9sntHSiSIpazpp0=;
-        b=q5ULStF5OA6KBs6pPsf7vve09ZIJmRGDqAR1EAf7A9Uv9ZL2n9Rp1XQLFJ67ycvKZV
-         NoCj5N+H4VL4WAFhazDHewX1sRJ4r9Hy5q2bsmyXVPSddrEAu5WPj1gRVB3XfXC600by
-         nfhRl+Z2fU0q/qgbyAHws5u9pudL53kI12ZD0=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=cp58hy0cG+ypybDARI0kl2BnK8u4hccvk/5Rhjdx6cU=;
+        b=iPHYXyx0qXC23aKKeYc9FLGQeVrM+YZaop23y7xZz2uhssW2BBzqEooVT+1eGP4nBG
+         iSk4SupnxHDqX0U1Ze0nb99/P5Hv+XQDLqOhhe2DfwOzO1dG+G6f06NjXq7PkVtP+1IY
+         rR8dCTz79IXuK+EyNSLtw6FloR4zxO9hJB4DI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=MeWDcj39khfqLR1zFSI96V+qYmi7mKz+uiErByWaO3VBffeKihrv7JXhSoIHWwZj7N
-         tGfjPYSSvs2F14Mqdh+iyIebz63IxfMoZoqFbnJ0b6TWYB66Fn8/BniJ4zSftmZUkpH6
-         Z3Aw0DL6Pd5zgPYS9iJxMRRJ0K0ifQE2xtXkw=
-Received: by 10.204.153.220 with SMTP id l28mr5888377bkw.86.1256551666754;
-        Mon, 26 Oct 2009 03:07:46 -0700 (PDT)
-Received: from darc.lan (p549A7830.dip.t-dialin.net [84.154.120.48])
-        by mx.google.com with ESMTPS id 13sm790688bwz.2.2009.10.26.03.07.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 26 Oct 2009 03:07:45 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1N2MUW-0003Ec-Ak; Mon, 26 Oct 2009 11:07:56 +0100
-Content-Disposition: inline
-In-Reply-To: <4AE56552.70407@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=IjRjzaVfNsAXYCGm9Ord6A+RnQaHmiEBA3/rOZ+YCvEmb9BQxJM9AHOeEPRVqFltZG
+         E+yCPOzhnoHj4T5684l8nfAXgs96mHl2jPRDQ4L6tLYA7VpbL7yP349INSCbFv+oY+5v
+         ti4ziqmpHAweLjY5UYBURqAaz3Hc7o6/jKL1U=
+Received: by 10.223.132.210 with SMTP id c18mr2367616fat.31.1256553127759; 
+	Mon, 26 Oct 2009 03:32:07 -0700 (PDT)
+In-Reply-To: <b0943d9e0910251013v19fb39b7we412e7f734c2755f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131248>
 
-On Mon, Oct 26, 2009 at 02:01:06AM -0700, Stephen Boyd wrote:
-
-> Clemens Buchacher wrote:
+2009/10/25 Catalin Marinas <catalin.marinas@gmail.com>:
+> 2009/10/25 Jakub Narebski <jnareb@gmail.com>:
+>> Catalin Marinas <catalin.marinas@gmail.com> writes:
+>>
+>>> StGit is a Python application providing functionality similar to Qu=
+ilt
+>>> (i.e. pushing/popping patches to/from a stack) on top of Git. These
+>>> operations are performed using Git commands, and the patches are
+>>> stored as Git commit objects, allowing easy merging of the StGit
+>>> patches into other repositories using standard Git functionality.
+>>>
+>>> =A0 Download: =A0 =A0 =A0 =A0 http://download.gna.org/stgit/stgit-0=
+=2E15.tar.gz
+>>> =A0 Main repository: =A0git://repo.or.cz/stgit.git
+>>> =A0 Project homepage: http://www.procode.org/stgit/
+>>> =A0 Mailing list: =A0 =A0 git@vger.kernel.org (please use "StGit" i=
+n the subject)
+>>> =A0 Bug tracker: =A0 =A0 =A0https://gna.org/bugs/?group=3Dstgit
+>>
+>> Is there RPM or SRPM (src.rpm) available somewhere? Or does tarball
+>> include *.spec file, or an rpm target?
 >
-> > Why does your PATH include the build directory during make, Stephen?
-> 
-> The Makefile says:
-> 
-> git-completion.bash: git-completion.bash.in git-completion.bash.generate
->         # Generate completions for binaries we have just built
->         PATH="$(shell pwd)/../..:$$PATH" ./git-completion.bash.generate
+> Late last night when running my release script I realised that
+> setup.py no longer accepts the --prefix=3D/usr option I used for RPMs=
+=2E
+> I'll try to build one in the next couple of days (I wasn't even sure
+> anyone was using it).
 
-Right, of course. I guess ignoring *.sh and *.perl is reasonable then.
+The problem was a bit more complicated than this. Some files are
+generated by the Makefile rather than setup.py so using the latter
+directly fails to build anything.
 
-> Personally, I'd rather keep it dynamic but I can see how it's useful to
-> get the 10x speedup. It would be really cool if we could have the best
-> of both worlds, where I keep my dynamic loading, but others can build
-> the completion and get the speedup.
+So it's time for 0.15.1 this week with the fix below (in my "proposed"
+branch). I cc'ed Karl as well in case he has time to have a quick
+look.
 
-Should not be too hard to do using a configuration variable like
-core.completion = dynamic.
+=46ix setup.py to generate the needed files
 
-Clemens
+=46rom: Catalin Marinas <catalin.marinas@gmail.com>
+
+StGit was relying on Makefile to generate some files but this breaks
+using setup.py directly for targets like rpm.
+
+Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
+---
+ Makefile  |   20 +++++---------------
+ setup.cfg |    2 +-
+ setup.py  |   17 ++++++++++++++---
+ 3 files changed, 20 insertions(+), 19 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 0fa5c6a..5f88f7d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -4,20 +4,10 @@ PYTHON	?=3D python
+
+ TEST_PATCHES ?=3D ..
+
+-all: build
++all:
+ 	$(PYTHON) setup.py build
+
+-build: stgit/commands/cmdlist.py stgit-completion.bash
+-
+-ALL_PY =3D $(shell find stgit -name '*.py')
+-
+-stgit/commands/cmdlist.py: $(ALL_PY)
+-	$(PYTHON) stg-build --py-cmd-list > $@
+-
+-stgit-completion.bash: $(ALL_PY)
+-	$(PYTHON) stg-build --bash-completion > $@
+-
+-install: build
++install:
+ 	$(PYTHON) setup.py install --prefix=3D$(prefix) --root=3D$(DESTDIR) -=
+-force
+
+ doc:
+@@ -29,10 +19,10 @@ install-doc:
+ install-html:
+ 	$(MAKE) -C Documentation install-html
+
+-test: build
++test:
+ 	cd t && $(MAKE) all
+
+-test_patches: build
++test_patches:
+ 	for patch in $$(stg series --noprefix $(TEST_PATCHES)); do \
+ 		stg goto $$patch && $(MAKE) test || break; \
+ 	done
+@@ -53,5 +43,5 @@ tags:
+ TAGS:
+ 	ctags -e -R stgit/*
+
+-.PHONY: all build install doc install-doc install-html test test_patch=
+es \
++.PHONY: all install doc install-doc install-html test test_patches \
+ 	clean tags TAGS
+diff --git a/setup.cfg b/setup.cfg
+index 4359033..1eb8e9b 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -1,2 +1,2 @@
+ [install]
+-prefix: ~
++prefix: /usr
+diff --git a/setup.py b/setup.py
+index 3f5ccb2..12ed1db 100755
+--- a/setup.py
++++ b/setup.py
+@@ -4,6 +4,7 @@ import sys, glob, os
+ from distutils.core import setup
+
+ from stgit import version
++from stgit import commands, completion
+
+ def __version_to_list(version):
+     """Convert a version string to a list of numbers or strings
+@@ -63,14 +64,24 @@ def __run_setup():
+             ])
+
+ # Check the minimum versions required
+-if sys.argv[1] in ['install', 'build']:
+-    __check_python_version()
+-    __check_git_version()
++__check_python_version()
++__check_git_version()
+
+ # ensure readable template files
+ old_mask =3D os.umask(0022)
+
+ version.write_builtin_version()
++
++# generate the python command list
++f =3D file('stgit/commands/cmdlist.py', 'w')
++commands.py_commands(commands.get_commands(allow_cached =3D False), f)
++f.close()
++
++# generate the bash completion script
++f =3D file('stgit-completion.bash', 'w')
++completion.write_completion(f)
++f.close()
++
+ __run_setup()
+
+ # restore the old mask
+
+
+
+--=20
+Catalin
