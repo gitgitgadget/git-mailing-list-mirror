@@ -1,65 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] gitk: Use the --submodule option for diffs
-Date: Tue, 27 Oct 2009 16:41:31 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0910271640540.11562@felix-maschine>
-References: <4AE70AC9.6040302@web.de>
+From: =?UTF-8?B?SGVydsOpIENhdXdlbGllcg==?= <herve@itaapy.com>
+Subject: Re: Getting Ensimag students to work on Git for a few weeks
+Date: Tue, 27 Oct 2009 16:47:53 +0100
+Message-ID: <4AE71629.6050208@itaapy.com>
+References: <vpqocntxhzv.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Paul Mackerras <paulus@samba.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Oct 27 16:41:45 2009
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Oct 27 16:45:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2oB5-0003yj-A8
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 16:41:43 +0100
+	id 1N2oF5-00060x-0o
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 16:45:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755548AbZJ0Pld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2009 11:41:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755543AbZJ0Plc
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 11:41:32 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57799 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754391AbZJ0Plc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2009 11:41:32 -0400
-Received: (qmail invoked by alias); 27 Oct 2009 15:41:36 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO [10.1.35.45]) [141.5.11.5]
-  by mail.gmx.net (mp055) with SMTP; 27 Oct 2009 16:41:36 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+H1RlNTwiHaXzFN6aBxbs+SKG1wlh6+NLeVpA1hC
-	C5xG0JnNY9QuHZ
-X-X-Sender: johannes@felix-maschine
-In-Reply-To: <4AE70AC9.6040302@web.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1755622AbZJ0Ppl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Oct 2009 11:45:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755548AbZJ0Ppl
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 11:45:41 -0400
+Received: from smtp6-g21.free.fr ([212.27.42.6]:39796 "EHLO smtp6-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755432AbZJ0Ppk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2009 11:45:40 -0400
+Received: from smtp6-g21.free.fr (localhost [127.0.0.1])
+	by smtp6-g21.free.fr (Postfix) with ESMTP id A634CE08068;
+	Tue, 27 Oct 2009 16:45:39 +0100 (CET)
+Received: from [192.168.1.4] (lns-bzn-57-82-249-49-219.adsl.proxad.net [82.249.49.219])
+	by smtp6-g21.free.fr (Postfix) with ESMTP id 63635E080D6;
+	Tue, 27 Oct 2009 16:45:36 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.4pre) Gecko/20091014 Lightning/1.0pre Thunderbird/3.0b4
+In-Reply-To: <vpqocntxhzv.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131350>
 
-Hi,
+On 27/10/2009 11:12, Matthieu Moy wrote:
+> Hi,
+>
+> I'd like to propose a kind of mini-google summer of code to the
+> students of the the school where I teach, i.e. Ensimag, France
+> ( http://ensimag.grenoble-inp.fr/ ). In short, this means having a fe=
+w
+> students working for Git for a month at no cost ;-).
 
-On Tue, 27 Oct 2009, Jens Lehmann wrote:
+Have you considered projects contributing to libgit2? The students at=20
+ULCO [1] will be mentored by Andreas Ericsson.
 
-> Instead of just showing not-quite-helpful SHA-1 pairs display the first
-> lines of the corresponding commit messages in the submodule (similar to
-> the output of 'git submodule summary').
-> 
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> ---
-> 
-> This patch applies to 'next' and uses the new --submodule option of git
-> diff to achieve a more meaningful output of submodule differences in
-> gitk.
-> 
-> Any objections against making this the default?
+Given that libgit2 is quite empty, there are many small tasks like=20
+starting commits, trees, tags, etc. objects.
 
-Certainly not from me.  It would help people in my day-job project.
+But I guess he won't have time for mentoring more students.
 
-Ciao,
-Dscho
+[1]=20
+http://dpt-info.univ-littoral.fr/mediawiki/index.php/I2L:Projet#libgit2=
+_-_Herv.C3.A9_Cauwelier_-_itaapy
+
+--=20
+Herv=C3=A9 Cauwelier - ITAAPY - 9 rue Darwin 75018 Paris
+T=C3=A9l. 01 42 23 67 45 - Fax 01 53 28 27 88
+http://www.itaapy.com/ - http://www.cms-migration.com
