@@ -1,69 +1,60 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] gitk: fix typo when diffing committed -> staged
-Date: Tue, 27 Oct 2009 18:13:42 +0100
-Message-ID: <4AE72A46.5040201@web.de>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: git-svn changing file:// to svn+ssh://
+Date: Tue, 27 Oct 2009 10:17:40 -0700
+Message-ID: <1256663860.680.3.camel@denix>
+References: <4AE5EF55.2070902@obry.net>
+	 <32541b130910261218x5fdc0233jcce7c5769aad73ec@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Oct 27 18:15:05 2009
+Cc: pascal@obry.net, git list <git@vger.kernel.org>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 18:18:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2pdQ-0004d6-Fn
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 18:15:04 +0100
+	id 1N2ph4-0006bI-Jr
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 18:18:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753866AbZJ0RO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2009 13:14:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753720AbZJ0ROz
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 13:14:55 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:39882 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753713AbZJ0ROz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2009 13:14:55 -0400
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id ECAC713361C94;
-	Tue, 27 Oct 2009 18:14:58 +0100 (CET)
-Received: from [80.128.59.71] (helo=[192.168.178.26])
-	by smtp06.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1N2pcB-0008K2-00; Tue, 27 Oct 2009 18:13:47 +0100
-User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
-X-Provags-ID: 
+	id S1754105AbZJ0RSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2009 13:18:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754071AbZJ0RSm
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 13:18:42 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:43544 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754073AbZJ0RSl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2009 13:18:41 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 51BB221C4D7; Wed, 28 Oct 2009 06:18:39 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [IPv6:::1] (longdrop.musashi.utsl.gen.nz [192.168.253.12])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 7F71921C3D6;
+	Wed, 28 Oct 2009 06:18:21 +1300 (NZDT)
+In-Reply-To: <32541b130910261218x5fdc0233jcce7c5769aad73ec@mail.gmail.com>
+X-Mailer: Evolution 2.28.0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131361>
 
-When highlighting a commit, using the context menu over the staged changes
-and then selecting "Diff this -> selected" the diff was empty. The same
-happened when highlighting the staged changes and using "Diff selected ->
-this" over a commit.
+On Mon, 2009-10-26 at 15:18 -0400, Avery Pennarun wrote:
+> > Now I have converted the file:// to svn+ssh:// using:
+> 
+> I'm not sure about the actual bug you're experiencing, but you could
+> have done this more simply using the --rewrite-root option to git-svn.
+>  It might still save you time to just do that from scratch.
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+Another thing: if your file:// repository was copied from the original
+location using SVN::Mirror or svnsync, then git-svn is capable of
+reading the breadcrumbs left by those tools with a switch and rewriting
+the git-svn-id: lines accordingly.
 
-I became aware of this issue while testing the submodule patch sent
-earlier. Looks just like a copy & paste typo.
-
- gitk-git/gitk |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index a0214b7..8e892b3 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -7224,7 +7224,7 @@ proc diffcmd {ids flags} {
- 	set cmd [concat | git diff-index --cached $flags]
- 	if {[llength $ids] > 1} {
- 	    # comparing index with specific revision
--	    if {$i == 0} {
-+	    if {$j == 0} {
- 		lappend cmd -R [lindex $ids 1]
- 	    } else {
- 		lappend cmd [lindex $ids 0]
--- 
-1.6.5.2.181.gd6f41.dirty
+Sam
