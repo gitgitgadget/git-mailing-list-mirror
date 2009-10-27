@@ -1,73 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Getting Ensimag students to work on Git for a few weeks
-Date: Tue, 27 Oct 2009 16:54:14 +0100
-Message-ID: <vpqfx94vnmh.fsf@bauges.imag.fr>
-References: <vpqocntxhzv.fsf@bauges.imag.fr>
-	<alpine.DEB.1.00.0910271456490.4985@pacific.mpi-cbg.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: git update --prune issue
+Date: Tue, 27 Oct 2009 12:29:36 -0400
+Message-ID: <20091027162936.GA8130@sigill.intra.peff.net>
+References: <4389ce950910261508p7eca354el77bad07305a80952@mail.gmail.com>
+ <4AE6B28F.9010407@drmicha.warpmail.net>
+ <4389ce950910270807o69d51155xb083f34bb31e1dae@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 27 16:57:43 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Jeffrey Middleton <jefromi@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 17:29:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2oQY-00045W-O5
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 16:57:43 +0100
+	id 1N2ove-0005RW-Ja
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 17:29:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755806AbZJ0P5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2009 11:57:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755760AbZJ0P5c
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 11:57:32 -0400
-Received: from imag.imag.fr ([129.88.30.1]:48042 "EHLO imag.imag.fr"
+	id S1755915AbZJ0Q3g convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Oct 2009 12:29:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755888AbZJ0Q3f
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 12:29:35 -0400
+Received: from peff.net ([208.65.91.99]:55015 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755699AbZJ0P5b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2009 11:57:31 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n9RFsERi010046
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 27 Oct 2009 16:54:15 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1N2oNC-0004iw-UM; Tue, 27 Oct 2009 16:54:14 +0100
-In-Reply-To: <alpine.DEB.1.00.0910271456490.4985@pacific.mpi-cbg.de> (Johannes Schindelin's message of "Tue\, 27 Oct 2009 14\:59\:43 +0100 \(CET\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 27 Oct 2009 16:54:15 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1755850AbZJ0Q3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2009 12:29:35 -0400
+Received: (qmail 1766 invoked by uid 107); 27 Oct 2009 16:33:17 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (216.239.45.19)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 27 Oct 2009 12:33:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Oct 2009 12:29:36 -0400
+Content-Disposition: inline
+In-Reply-To: <4389ce950910270807o69d51155xb083f34bb31e1dae@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131353>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, Oct 27, 2009 at 10:07:27AM -0500, Jeffrey Middleton wrote:
 
-> Hi,
->
-> On Tue, 27 Oct 2009, Matthieu Moy wrote:
->
->> I'd like to propose a kind of mini-google summer of code to the students 
->> of the the school where I teach, i.e. Ensimag, France ( 
->> http://ensimag.grenoble-inp.fr/ ). In short, this means having a few 
->> students working for Git for a month at no cost ;-).
->
-> Do not underestimate the cost of time and nerves, both on the student's 
-> and the mentor's part.
+> > Do you get the same problem if you do the steps individually, i.e.:
+> >
+> > git remote update steph
+> > git remote prune steph
+> > git remote update kevin
+>=20
+> I don't *think* I'll see it this way - I was doing essentially this
+> prior to introduction of the --prune option, and never saw it then.
 
-Hey, you're talking to a teacher ;-).
+I suspect you are seeing git keeping an invalid cache of the set of ref=
+s
+within a single program. Your original report had:
 
-Yes, for sure, this takes a lot of time. But on my side that's my job,
-the school gives me time to mentor the students. And I'll be
-geographically close to the students, having regular physical
-meetings, ... I'd appreciate a co-mentor, but the feedback from the
-mailing list (like the one for non-school-related contributors) plus
-my mentoring can be sufficient.
+> Pruning steph
+> URL: /users/sdewet/CxTF_DEV/CxTF_DB/
+> =C2=A0* [pruned] steph/beta_gc_dev_old
+> Updating kevin
+> error: refs/remotes/steph/beta_gc_dev does not point to a valid objec=
+t!
+> error: refs/remotes/steph/beta_veh_dev does not point to a valid obje=
+ct!
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+The "pruned" line basically means that we are deleting that ref, and
+then we complain immediately about that very ref (which is probably
+pointing to the null sha1 or something at this point). We tend to cache
+packed refs, so that may be the cause.
+
+So either we need to invalidate that ref from the cache when it gets
+deleted, or perhaps we are already invalidating it and we need to be
+respecting that invalidation in other parts of the code. I'll take a
+look.
+
+-Peff
