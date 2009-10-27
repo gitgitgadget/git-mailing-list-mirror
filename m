@@ -1,80 +1,78 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Getting Ensimag students to work on Git for a few weeks
-Date: Tue, 27 Oct 2009 11:12:52 +0100
-Message-ID: <vpqocntxhzv.fsf@bauges.imag.fr>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: possible usability issue in rebase -i?
+Date: Tue, 27 Oct 2009 11:13:42 +0100
+Message-ID: <40aa078e0910270313j5dc68576v86a3947f0dc7f9f@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 27 11:13:07 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 27 11:13:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2j33-0003SK-Aq
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 11:13:05 +0100
+	id 1N2j3k-0003ih-Vr
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 11:13:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752773AbZJ0KMy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2009 06:12:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752700AbZJ0KMy
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 06:12:54 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:43480 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752519AbZJ0KMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2009 06:12:53 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n9RACatr021183
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 27 Oct 2009 11:12:36 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1N2j2q-0007CP-QU; Tue, 27 Oct 2009 11:12:52 +0100
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 27 Oct 2009 11:12:37 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n9RACatr021183
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1257243157.24716@SNTtioqcYYHNSKYmvYTRqQ
+	id S1752879AbZJ0KNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2009 06:13:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752802AbZJ0KNj
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 06:13:39 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:46672 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752793AbZJ0KNi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2009 06:13:38 -0400
+Received: by fxm18 with SMTP id 18so12794849fxm.37
+        for <git@vger.kernel.org>; Tue, 27 Oct 2009 03:13:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:date:message-id
+         :subject:from:to:content-type;
+        bh=lJmllNAnFJpnczNiZCLA/A/EhmzzVJYEvQ/XLvtT+FQ=;
+        b=u07/r3nOx2pxJsEPVLi10iX8sqCG6r82W0US0ray6mfxOWzNMMN5IeNMeWjhAGeorh
+         IkSaiujsI0cSMbl+kSy/1GneDWhlJDzdPv2ezbQUsuHPbIaPoYTXmHnGRQzuaFSBFJIx
+         BnNOa0SEniJKI1fkerThlhB0RNXShF1aIrJfo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:date:message-id:subject:from:to:content-type;
+        b=dZL4knwMJthj0whGfvD4en05VMV/k9Np1Etx+hHPKOb44/x3noLXYkrqtJf2hlL4J+
+         4z+IOZ3tetr4W+D+8lDwg5uLOlUNN+EXopJxbN3KQYzZ+LT9fPLCGtX2zrdFJl8HNkyx
+         p1vOtfhIAD+N+YQHUFSDm7xjSHF6iG5B2KjVM=
+Received: by 10.204.143.151 with SMTP id v23mr10277321bku.169.1256638422297; 
+	Tue, 27 Oct 2009 03:13:42 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131322>
 
-Hi,
+I recently came over a not-overly-helpful error in git rebase -i, when
+a line got wrapped by the editor so that a part of the commit-message
+was interpreted as a command:
 
-I'd like to propose a kind of mini-google summer of code to the
-students of the the school where I teach, i.e. Ensimag, France
-( http://ensimag.grenoble-inp.fr/ ). In short, this means having a few
-students working for Git for a month at no cost ;-).
+---
+$ git rebase -i HEAD~20
+<edit file>
+Unknown command: .
+fatal: ambiguous argument 'Please fix this in the file C:/msysgit/git/.git/rebas
+e-merge/git-rebase-todo.': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions
+fatal: Not a valid object name Please fix this in the file C:/msysgit/git/.git/r
+ebase-merge/git-rebase-todo.
+fatal: bad revision 'Please fix this in the file C:/msysgit/git/.git/rebase-merg
+e/git-rebase-todo.'
 
-Currently, the students have an end-of-year project (in equivalent of
-master 1) with the choice between many subjects, some of them being
-somehow "real-life" (i.e. actually usefull things), and other being
-artificial (i.e. enjoy doing it, and throw it away afterwards).
+$ git --version
+git version 1.6.5.1386.g43a7a.dirty
+---
 
-This year, I'd like to propose a subject "contribution to an existing
-free software", and since the one I know best currently is Git, this
-would take the form of "contribution to the Git project". I'd see the
-practical organization a bit like the google summer of code: chose a
-feature (the GSoC proposals on the wiki can be a good source of
-inspiration), and implement it with the goal of being eventually
-merged upstream. There would be no money involved, but the students
-get a grade at the end. I would anyway follow the work of the
-students, but a co-mentoring from a Git expert would be great.
-
-The students work full-time for about 3 weeks (May 20th to June 16th),
-and are grouped by teams of 2 to 4 students. Given my bandwidth, I
-plan to propose only one group of 4 students this year, but we may
-scale up later, who knows.
-
-We have plenty of time before this starts, but I'm just sending this
-email to get your feeling on it.
-
-Any opinion? Do you like the idea?
+In this particular case, the first character on the new line was '.',
+so the first line of the error message makes perfect sense, but the
+lines that followed the real error got me pretty confused. Perhaps
+this is something that could be cleaned away? I'd think that an
+unknown command always should be fatal, and not need to propagate
+further. But I might be wrong, as I'm not familiar with the inner
+workings of rebase -i.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Erik "kusma" Faye-Lund
