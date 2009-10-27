@@ -1,58 +1,57 @@
-From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
-Subject: Re: Autodiscovery of git repositories from HTML
-Date: Tue, 27 Oct 2009 14:32:29 +0100
-Message-ID: <20091027143229.78140450@perceptron>
-References: <20091027130000.GX30085@Dorothy.plexq.com>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] help -i: properly error out if no info viewer can be found
+Date: Tue, 27 Oct 2009 13:31:33 +0000
+Message-ID: <20091027133134.28975.qmail@34dfe9cde77152.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Thomas Thurman <tthurman@gnome.org>
-X-From: git-owner@vger.kernel.org Tue Oct 27 14:35:15 2009
+Content-Type: text/plain; charset=us-ascii
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 27 14:38:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2mA9-0004B2-Df
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 14:32:37 +0100
+	id 1N2mGA-0000iG-0L
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 14:38:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754604AbZJ0Nc2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2009 09:32:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754521AbZJ0Nc1
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 09:32:27 -0400
-Received: from zoidberg.org ([88.198.6.61]:43342 "EHLO cthulhu.zoidberg.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754260AbZJ0Nc1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2009 09:32:27 -0400
-Received: from perceptron (xdsl-78-35-136-244.netcologne.de [::ffff:78.35.136.244])
-  (IDENT: unknown, AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-  by cthulhu.zoidberg.org with esmtp; Tue, 27 Oct 2009 14:32:31 +0100
-  id 004D0114.4AE6F66F.00001463
-In-Reply-To: <20091027130000.GX30085@Dorothy.plexq.com>
-X-Mailer: Claws Mail 3.7.3 (GTK+ 2.16.1; i486-pc-linux-gnu)
-X-Obscure-Spam: http://music-jk.net/
+	id S1754881AbZJ0NiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2009 09:38:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754306AbZJ0NiN
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 09:38:13 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:1665 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754293AbZJ0NiM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2009 09:38:12 -0400
+X-Greylist: delayed 454 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Oct 2009 09:38:12 EDT
+Received: (qmail 28985 invoked by uid 1000); 27 Oct 2009 13:31:34 -0000
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131333>
 
-> I have a web page which lives in a git repository so that it can be 
-> easily mirrored.  I would like to use a "rel" link to the URL of the
-> git repository so that it can be automatically discovered, like an
-> RSS feed:
-> 
-> <link rel="alternate" type="???" href="http://example.com/.git"/>
-> 
-> Is there any existing convention as to what the type should be?
+With this commit, git help -i <cmd> prints an error message and exits
+non-zero instead of being silent and exit code 0.
 
-I don't think there is any such convention, since I don't think anyone
-has done this before (but it would have interesting use cases).
+Reported by Trent W. Buck through
+ http://bugs.debian.org/537664
 
-Actually, I don't think rel="alternate" describes the relation well; a
-repository isn't exactly an alternate version of the document.
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
+ builtin-help.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-If we don't care about the standard, we might want to use something like
-the widely used rel="shortcut icon", e.g. rel="git repository".
-
-Jan
+diff --git a/builtin-help.c b/builtin-help.c
+index e1eba77..e1ade8e 100644
+--- a/builtin-help.c
++++ b/builtin-help.c
+@@ -372,6 +372,7 @@ static void show_info_page(const char *git_cmd)
+ 	const char *page = cmd_to_page(git_cmd);
+ 	setenv("INFOPATH", system_path(GIT_INFO_PATH), 1);
+ 	execlp("info", "info", "gitman", page, NULL);
++	die("no info viewer handled the request");
+ }
+ 
+ static void get_html_page_path(struct strbuf *page_path, const char *page)
+-- 
+1.6.5.2
