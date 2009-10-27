@@ -1,79 +1,99 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 2/2] completion: allow use without compiling
-Date: Mon, 26 Oct 2009 17:38:10 -0700
-Message-ID: <7v4opld631.fsf@alter.siamese.dyndns.org>
-References: <1256589116-6998-1-git-send-email-bebarino@gmail.com>
- <1256589116-6998-3-git-send-email-bebarino@gmail.com>
- <7vocntd7vt.fsf@alter.siamese.dyndns.org> <20091027003353.GA29205@localhost>
+Subject: Re: Problems with git am
+Date: Mon, 26 Oct 2009 17:52:11 -0700
+Message-ID: <7vvdi1bqv8.fsf@alter.siamese.dyndns.org>
+References: <59976.134.134.139.70.1256602329.squirrel@clueserver.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stephen Boyd <bebarino@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Oct 27 01:38:32 2009
+Cc: git@vger.kernel.org
+To: "Alan" <alan@clueserver.org>
+X-From: git-owner@vger.kernel.org Tue Oct 27 01:52:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2a51-0003n0-EO
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 01:38:31 +0100
+	id 1N2aIU-0007kq-3Q
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 01:52:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755504AbZJ0AiV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2009 20:38:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755454AbZJ0AiV
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 20:38:21 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60904 "EHLO
+	id S1755834AbZJ0AwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2009 20:52:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755504AbZJ0AwP
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 20:52:15 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60957 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755416AbZJ0AiU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2009 20:38:20 -0400
+	with ESMTP id S1755553AbZJ0AwO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2009 20:52:14 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5657C68C77;
-	Mon, 26 Oct 2009 20:38:24 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 19AB186A6B;
+	Mon, 26 Oct 2009 20:52:18 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wBiH1bNKUmzjlA9vL2w9KAxWmrE=; b=U0tr6V
-	xlgHCX0ADVhj34fgUgQV7G1ZKpM5/pWTIuvRw9nTGNNil/hAE8OKpiS48viVpykw
-	uAPkpUEjhXLei44RpSFysPXYm9VFnV7CmdrE3Xiy3O0BOrcti7hgrF2aCUkgqaF0
-	MaWYA+MSe1Ed+w7kroTYdlT5bOc9xXYl23RPY=
+	:content-type; s=sasl; bh=6TNTApSmXwquvGUgA+++tlJIMgE=; b=BrOTP6
+	+DmhmEElAAEPp1a4mGSSe0d/w41phoM+qW0ev7owFlAgAJcj3DF/QdcWHajvdYRM
+	jRy/LUZHw0pDBpGE/tfEDDDrkVgqq0UzjNdyMPLt4hM8g7j8WAXzLAu96JR6zo4z
+	12WxwtucFybazctLXyi2OTYKdvW60Mx/L3sa0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yRyj8zONWE3EsN4Dmvh1yfImmtXImL0G
-	6f1MKv8pVNMBuD1ctAKOdSx8sAZX+RIy5xxBWw4nNwolm6pfKDwhJcIXTd24S6im
-	pZhpzVVDwecyz2MWqBeOSPgieVUa/DReTaVbVI2GEGi7ZlkMiBcB+6ap/tOEaUI9
-	v72uGuuaAlk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C03668C73;
-	Mon, 26 Oct 2009 20:38:19 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=uyIsz/buHoL4V5HrNvdh4txHZln9MlLW
+	EPo+wtdAcCjjT/Bs4CbCZjKncwRHKYGs0ys7uZ/gDONTGvC+v8b2PO/86T7G8Xfl
+	RrjQtOPL74cxe4YE5XY0DJ05hPQkDPpAGN10f218yew4tqwAlPTNr0p0ZtJEyGAR
+	/33nWVur5FE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EF97786A67;
+	Mon, 26 Oct 2009 20:52:15 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 18F5568C72; Mon, 26 Oct
- 2009 20:38:11 -0400 (EDT)
-In-Reply-To: <20091027003353.GA29205@localhost> (Clemens Buchacher's message
- of "Tue\, 27 Oct 2009 01\:33\:53 +0100")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EBDBE86A5C; Mon, 26 Oct 2009
+ 20:52:12 -0400 (EDT)
+In-Reply-To: <59976.134.134.139.70.1256602329.squirrel@clueserver.org>
+ (alan@clueserver.org's message of "Mon\, 26 Oct 2009 17\:12\:09 -0700
+ \(PDT\)")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 05BF723A-C291-11DE-ABA4-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F8979A0E-C292-11DE-A7DF-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131296>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+"Alan" <alan@clueserver.org> writes:
 
-> On Mon, Oct 26, 2009 at 04:59:18PM -0700, Junio C Hamano wrote:
+> The header of the patch looks like:
 >
->> Stephen Boyd <bebarino@gmail.com> writes:
->> 
->> >  This duplicates code, but I don't know of a way to re-use the dynamic
->> >  code without sourcing a bash script and possibly breaking someone's build.
->>
->>  (1) If the script notices that there is a file that contains the command
->>      list, it sources it; otherwise,
->
-> Or we substitute the command list in-place, so that we still have the entire
-> completion script in one file.
+> commit 62b266585bb5555d44a764c90d80f9c4bb8188c1
+> Author: Joe Example <joe@example.com>
+> Date:   Wed Sep 19 10:03:47 2009 -0600
 
-That defeats the whole point of my suggestion, as you would be overwriting
-the tracked file.
+It shouldn't.
+
+The format "git am" understands is a mbox file and format-patch is the
+command to write commits out in that form.  It should begin with lines
+that look like:
+
+    From 610f99ec7d22b5750f12350f67c1341d6be8030f Mon Sep 17 00:00:00 2001
+    From: Junio C Hamano <gitster@pobox.com>
+    Date: Sun, 25 Oct 2009 18:41:09 -0700
+    Subject: [PATCH] Update draft release notes to 1.6.6
+
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    ---
+    .... patch follows here ...
+
+I do not think it is particularly hard to add a new case arm in "am" to
+support "git log" output.  It is different from a mbox format in that it
+
+ * begins each commit with "commit " marker;
+ * has Author: and Date: header that is different from a mailbox;
+ * lacks Subject: but makes it part of the message body; and
+ * indents the message by 4 places.
+
+Nobody has bothered to do so, probably because nobody needed it.
+
+The easiest, safest and quickest for you right now (meaning, before
+waiting for anybody to help you by adding a new feature to "am") would be
+to see if it is possible for you to get the commits re-exported in an
+appropriate format.
+
+I say the "safest" in the above because you _could_ massage what you have
+into a format that looks like a mbox with some Perl script, but it risks
+mismassaging.
