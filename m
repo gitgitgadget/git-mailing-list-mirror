@@ -1,79 +1,71 @@
-From: Alex K <spaceoutlet@gmail.com>
-Subject: Re: date change of commit?
-Date: Tue, 27 Oct 2009 10:41:47 +0100
-Message-ID: <e4a904790910270241g4a165023o30438c5d000b5de4@mail.gmail.com>
-References: <e4a904790910250435p3ff50dcfv5c0c6a86c13d17b@mail.gmail.com>
-	 <vpq1vkrqttt.fsf@bauges.imag.fr>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: more fancy ignoring of files ('if' in .gitignore?)
+Date: Tue, 27 Oct 2009 10:56:02 +0100
+Message-ID: <4AE6C3B2.9050601@drmicha.warpmail.net>
+References: <200910271030.54571.schubert.seb@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Oct 27 10:41:59 2009
+To: Sebastian Schubert <schubert.seb@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 10:56:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2iYr-0006zI-Vc
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 10:41:54 +0100
+	id 1N2imk-0004Z5-Um
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 10:56:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753382AbZJ0Jln convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Oct 2009 05:41:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752300AbZJ0Jln
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 05:41:43 -0400
-Received: from mail-qy0-f174.google.com ([209.85.221.174]:54223 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752670AbZJ0Jlm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Oct 2009 05:41:42 -0400
-Received: by qyk4 with SMTP id 4so8180638qyk.33
-        for <git@vger.kernel.org>; Tue, 27 Oct 2009 02:41:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=VZWrUEslAeRQx78Gx/dTHC/2BOQ+IiOc1Kb5MBooElI=;
-        b=V2Y+HWinIz2rVGLP1F4HbJHEtSQwCgmXXAG3CYBxqAVj8olOcPZ48uVRt0uZ/gojyG
-         9mSl7Y0prBrNJA+2M95swau6K0SrabUnbEyMXY4MBZS+kJ9zk9xQ7jaLMmCxRQF0V1yj
-         +LddD/aPFkfhi+ioOR5Ts0i7zP/ynn0B/Qvwc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=lLpexrD1cA0jH+PJG/tBYzY38E0sk44mtgJqpg7vtdVrtnOSxAK+WGkcZleMOjGJLA
-         dDrih/+NJwqaY/A+NNis4Dbgb1eC5OPH2sQnVBwZ2FNM5Tg6bXzSfvRoop4+uDh7X3Mf
-         DHrlMbH7TcU1ZD5hH0u/oWlKAlBwX77p3Owho=
-Received: by 10.229.37.130 with SMTP id x2mr597219qcd.15.1256636507051; Tue, 
-	27 Oct 2009 02:41:47 -0700 (PDT)
-In-Reply-To: <vpq1vkrqttt.fsf@bauges.imag.fr>
-X-Google-Sender-Auth: c016e96521e150f9
+	id S1752521AbZJ0J4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2009 05:56:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752519AbZJ0J4D
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 05:56:03 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:41296 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751533AbZJ0J4C (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Oct 2009 05:56:02 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 87440BD5ED;
+	Tue, 27 Oct 2009 05:56:06 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 27 Oct 2009 05:56:06 -0400
+X-Sasl-enc: zf66xz8GmoKToEUGnFAtzn4uT/OdhTjzH2Cnpk3FjvPF 1256637366
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D751D162C6;
+	Tue, 27 Oct 2009 05:56:05 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5pre) Gecko/20091027 Lightning/1.0pre Shredder/3.0pre
+In-Reply-To: <200910271030.54571.schubert.seb@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131319>
 
-Thank you. And how would you use git-filter-branch to create another
-branch with a different time stamp? Is it possible to commit under a
-different time stamp than the one provided by your default local time?
+Sebastian Schubert venit, vidit, dixit 27.10.2009 10:30:
+> Hi,
+> 
+> I would like to ignore files if certain other files are present. In my 
+> special case, I want to ignore foo.pdf and foo.eps if foo.fig is 
+> present (both pdf and eps are generated on the fly but don't belong 
+> into repository). In general, I do NOT want to ignore pdf or eps. There 
+> are a lot of foos so I would like to have a general solution.
+> 
+> Is this possible?
 
-2009/10/25 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
-> Alex K <spaceoutlet@gmail.com> writes:
->
->> Hello,
->>
->> Is it possible to change the date of a commit?
->
-> See git-filter-branch. This won't change the date of the existing
-> commit (which is impossible in Git), but will create another commit
-> where only the date has been changed.
->
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+No.
+
+You can script around it by making e.g. your build process (which
+generated pdf/eps from fig) add a specific foo.pdf etc to .gitignore.
+
+In fact, at the the time you add a fig to your repo you should add (&
+commit) corresponding lines to .gitignore. This is the common approach.
+
+Alternatively, you can update your ignore with
+
+rm -f .gitignore;find . -name \*.fig | while read i;do echo -e
+${i%fig}pdf "\n" ${i%fig}eps >>.gitignore;done
+
+if you have no other ignore patterns in there. (This is q&d, adjust if
+you have spaces in file names or such.)
+
+Michael
