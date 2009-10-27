@@ -1,69 +1,99 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH] mergetool--lib: add p4merge as a pre-configured
-	mergetool option
-Date: Tue, 27 Oct 2009 23:00:43 +0000
-Message-ID: <20091027230043.GA11607@hashpling.org>
-References: <d411cc4a0910271536u5817802at43f7477dd8ccabc7@mail.gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: git svn branch tracking + ignore paths
+Date: Tue, 27 Oct 2009 19:16:20 -0400
+Message-ID: <32541b130910271616ha861d08xa4b90b822d31f0ea@mail.gmail.com>
+References: <41F0F1D6-4F99-4828-9259-1B2BDC689747@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 28 00:10:32 2009
+To: Lachlan Deck <lachlan.deck@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 28 00:16:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2vBP-0006Qy-Ed
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 00:10:31 +0100
+	id 1N2vHW-0000dc-9M
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 00:16:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756119AbZJ0XKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2009 19:10:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755999AbZJ0XKU
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 19:10:20 -0400
-Received: from relay.pcl-ipout01.plus.net ([212.159.7.99]:16311 "EHLO
-	relay.pcl-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755902AbZJ0XKU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Oct 2009 19:10:20 -0400
-X-Greylist: delayed 578 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Oct 2009 19:10:19 EDT
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoEAMcY50rUnw4T/2dsb2JhbADaG4Q/BIJf
-Received: from pih-relay06.plus.net ([212.159.14.19])
-  by relay.pcl-ipout01.plus.net with ESMTP; 27 Oct 2009 23:00:45 +0000
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay06.plus.net with esmtp (Exim) id 1N2v1w-0007SO-Li; Tue, 27 Oct 2009 23:00:44 +0000
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n9RN0i6d012194
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 27 Oct 2009 23:00:44 GMT
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n9RN0hIe012193;
-	Tue, 27 Oct 2009 23:00:43 GMT
-Content-Disposition: inline
-In-Reply-To: <d411cc4a0910271536u5817802at43f7477dd8ccabc7@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: 95c23af7903c172615c6c5a8434bfbad
+	id S1756149AbZJ0XQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2009 19:16:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755979AbZJ0XQg
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 19:16:36 -0400
+Received: from mail-gx0-f212.google.com ([209.85.217.212]:57105 "EHLO
+	mail-gx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755902AbZJ0XQf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2009 19:16:35 -0400
+Received: by gxk4 with SMTP id 4so279456gxk.8
+        for <git@vger.kernel.org>; Tue, 27 Oct 2009 16:16:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=UUNamuaZ08GaiA1WmbA8FpnUjEdDIpHFQIHr7sn7P24=;
+        b=Mt0z4TQZoG05OsQ9+MezchJUufJzckgC1X6Jp+PrhZ41gquQVKqHNDRESrj61tA/HB
+         vcL1drw4dDkoBQ9Ir7yi0PfuUOy77YriPY2vsfO4pBIEyIv7Gahz8hseCklClniFaBbf
+         09j5GtPOUICqdQwN202w1fmfavPn7qfO9f9xY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=v5VyGcM8de8eXK4x4tXf7iHABmet1wpUa9u3agIXO8m4tgAxcIbxJpdxn/7usp1uhJ
+         VUPHw/EBepGUFJ94A6CLXeReULX3gKvtFp05VGXPjUTzvthMpbj5ENo+jXWa7z9owaJK
+         GvBVix77TYlXQb4axmDfEhsErqr9NdpoCq2HE=
+Received: by 10.150.20.1 with SMTP id 1mr5891902ybt.4.1256685400088; Tue, 27 
+	Oct 2009 16:16:40 -0700 (PDT)
+In-Reply-To: <41F0F1D6-4F99-4828-9259-1B2BDC689747@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131388>
 
-On Tue, Oct 27, 2009 at 03:36:49PM -0700, Scott Chacon wrote:
-> p4merge is now a built-in diff/merge tool.
-> This adds p4merge to git-completion and updates
-> the documentation to mention p4merge.
-> ---
+On Tue, Oct 27, 2009 at 7:00 PM, Lachlan Deck <lachlan.deck@gmail.com> wrote:
+> I'm wondering if it's possible to create a branch (starting as local but
+> later on pushed to svn) that essentially stays in sync with the main branch
+> (svn trunk) but both (a) ignores pulling in certain paths from trunk and (b)
+> provides a few extra paths of its own (some of which overlap with those
+> ignored from trunk) and (c) only pushes to trunk paths that are relevant for
+> trunk (i.e., not specifically ignored)?
+>
+> If someone's able to share how they'd go about setting this up that'd be
+> great.
 
-I approve (but haven't had a chance to test this). p4merge is a
-good mergetool, but now I'll have to find something else as an example
-that you need to use custom mergetool support for.
+This sounds like a generally scary idea.  Perhaps if you described
+your problem at a higher level (what are you really trying to
+achieve?) there would be a less scary way to do it.
 
-I'm just wondering, does this work well with unixes and Mac OS X? I
-think it's recommended install practice to symlink p4v as p4merge on
-*nix, but Mac OS X needs some sort of 'launchp4merge' to be called
-IIRC, or is this something that users can just configure with
-mergetool.p4diff.path?
+That said, if you *really* need this... one option that comes to mind is:
 
--- 
-Charles Bailey
-http://ccgi.hashpling.plus.com/blog/
+1. extract the history from svn into git using 'git svn' as usual.
+
+2. extract the subtree of svn that you're interested in (if you're
+lucky enough that you only need one subtree) by using 'git subtree
+split'.  This creates a new branch or new git repo, depending how you
+do it.
+
+3. Create a third project that will host your new work with extra
+subtrees that you don't want.  Use 'git subtree add' and 'git subtree
+merge' to keep this up to date with the stuff you extracted in step 2.
+ (Repeat steps 1-3 as necessary to keep your project up to date with
+the svn project.)
+
+4. When you want to merge your own changes back into svn, first
+extract them from your own project (step 3) using 'git subtree split'.
+ Then merge those changes into the main project (step 1) using 'git
+subtree merge'.  Then use git-svn to upload them to the main svn repo.
+
+You can save yourself some steps if you import the *entire* svn
+project into your own project, rather than trying to trim it on
+import.  That way you only have to split when going from #3 to #1, not
+in the other direction, and you don't need repository #2.
+
+If all this sounds crazy, it probably is.  Maybe see if you can come
+up with a way to avoid trying to do this altogether.
+
+Good luck... :)
+
+Avery
+
+[1] http://github.com/apenwarr/git-subtree
