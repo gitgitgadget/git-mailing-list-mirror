@@ -1,86 +1,83 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCHv3 0/3] git-gui: more robust handling of fancy repos
-Date: Tue, 27 Oct 2009 12:35:23 +0100
-Message-ID: <36ca99e90910270435h69c1e983j78ff9ec49e7e8eae@mail.gmail.com>
-References: <1250467128-29839-1-git-send-email-giuseppe.bilotta@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] Fix resource leaks in wrapper.c
+Date: Tue, 27 Oct 2009 12:44:32 +0100
+Message-ID: <4AE6DD20.6000308@drmicha.warpmail.net>
+References: <1256615635-4940-1-git-send-email-djszapi@archlinux.us>	 <4AE69DA7.6030704@viscovery.net>	 <4AE6AEC8.4040800@drmicha.warpmail.net> <a362e8010910270335g106024e6if3f016c271ab55d6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 27 12:35:31 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Laszlo Papp <djszapi2@gmail.com>, git@vger.kernel.org
+To: Laszlo Papp <djszapi@archlinux.us>
+X-From: git-owner@vger.kernel.org Tue Oct 27 12:44:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2kKp-0000Xv-59
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 12:35:31 +0100
+	id 1N2kTj-0004V7-Do
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 12:44:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753808AbZJ0LfU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Oct 2009 07:35:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753802AbZJ0LfU
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 07:35:20 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:37048 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753746AbZJ0LfT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Oct 2009 07:35:19 -0400
-Received: by bwz19 with SMTP id 19so50846bwz.28
-        for <git@vger.kernel.org>; Tue, 27 Oct 2009 04:35:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=adKUHWGhVnq1y1f0PI0TafOc5m7H9EPHXrCmLeQwZw4=;
-        b=HMog/fCJcVPeeVAwH5d8oDuMae5kVOlT80Y3CF/J5m8zVhS06fWZisGOs5vgFUNHPu
-         f4Ef48SoVr8IFCih/lwp/PbA8zdE/U7zDDd5PwzGZKrjsyYmWpt+AYcoDtUL8E5clah0
-         q7jmf1yoxWQpDi81ie0H9qBVJXYTiALwLcSM0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=CqDjgMJsdQ5mivYKQvbkabpylghc47zgc9vxXNtGDzPJVnBTz5t2oKdOU9ABicjKNn
-         qgV59HKN0sypGtqLQGkHE125uqBgvcgvNgA/3Jjts3++08VFme05PRNfH+NqSScY3mw9
-         y+T6kR0x4toWSieBrrY0GpUtwxbMFgZqi2to4=
-Received: by 10.223.161.212 with SMTP id s20mr537698fax.2.1256643323671; Tue, 
-	27 Oct 2009 04:35:23 -0700 (PDT)
-In-Reply-To: <1250467128-29839-1-git-send-email-giuseppe.bilotta@gmail.com>
+	id S1753918AbZJ0Lod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2009 07:44:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753915AbZJ0Lod
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 07:44:33 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:48060 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753659AbZJ0Loc (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Oct 2009 07:44:32 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 05F82B8A54;
+	Tue, 27 Oct 2009 07:44:36 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Tue, 27 Oct 2009 07:44:36 -0400
+X-Sasl-enc: CiweoRgTgp7eSwtkTKnANbyzFLaCHoV/Ra/9gDQJUo2h 1256643876
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D56572CD677;
+	Tue, 27 Oct 2009 07:44:35 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5pre) Gecko/20091027 Lightning/1.0pre Shredder/3.0pre
+In-Reply-To: <a362e8010910270335g106024e6if3f016c271ab55d6@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131327>
 
-On Mon, Aug 17, 2009 at 00:58, Giuseppe Bilotta
-<giuseppe.bilotta@gmail.com> wrote:
-> As promised a long time ago (March 30), version 3 of the small patchs=
-et
-> to improve handling of repositories in git gui. The most significant
-> change is the addition of the third patch.
->
-> The first patch allows git gui to work with respotiories for which
-> the worktree is not the parent of the gitdir.
->
-> The second patch refactors bare repository detection, improves the er=
-ror
-> message if the bare support feature is disabled, and disabled
-> inapplicable menu entries.
->
-> The third patch allows git-gui to work properly when launched from th=
-e
-> .git directory itself, solving the issue Markus Heidelberg was having=
- in
-> http://thread.gmane.org/gmane.comp.version-control.git/115044
->
-> Giuseppe Bilotta (3):
-> =C2=A0git-gui: handle non-standard worktree locations
-> =C2=A0git-gui: handle bare repos correctly
-> =C2=A0git-gui: work from the .git dir
-What is the state of this patch, I can't find it applied.
+Laszlo Papp venit, vidit, dixit 27.10.2009 11:35:
+> 
+> 
+> On Tue, Oct 27, 2009 at 9:26 AM, Michael J Gruber
+> <git@drmicha.warpmail.net <mailto:git@drmicha.warpmail.net>> wrote:
+> 
+>     Johannes Sixt venit, vidit, dixit 27.10.2009 08:13:
+>     > Laszlo Papp schrieb:
+>     >> @@ -266,7 +266,7 @@ int odb_mkstemp(char *template, size_t limit,
+>     const char *pattern)
+>     >>      fd = mkstemp(template);
+>     >>      if (0 <= fd)
+>     >>              return fd;
+>     >> -
+>     >> +    close(fd);
+>     >
+>     > Sorry, where is here a resource leak? You are "closing" something
+>     that was
+>     > never opened because fd is less than zero.
+>     >
+>     > Ditto for the other case.
+> 
+>     I guess it's about silencing some challenged code analysis tool. I
+>     recall that last time we had something like this we decided that coders
+>     are smarter than tools... and also that clean up like this (for real
+>     leaks) would be something for libgit.
+> 
+>     Michael
+> 
+> 
+> Yeah you're rights guys, sorry for my fault, this cppcheck program is
+> not the best at this momment, really sorry.
 
-I would also suggest to always export GIT_DIR into the environment, so
-that guitools can relay on this.
+No need to feel overly sorry, but in general it helps if, in a commit
+message or thereabout, you say something like "cppcheck found the
+following (potential) errors".
 
-Regards,
-Bert
+Cheers,
+Michael
