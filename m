@@ -1,83 +1,71 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] Fix resource leaks in wrapper.c
-Date: Tue, 27 Oct 2009 12:44:32 +0100
-Message-ID: <4AE6DD20.6000308@drmicha.warpmail.net>
-References: <1256615635-4940-1-git-send-email-djszapi@archlinux.us>	 <4AE69DA7.6030704@viscovery.net>	 <4AE6AEC8.4040800@drmicha.warpmail.net> <a362e8010910270335g106024e6if3f016c271ab55d6@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: date change of commit?
+Date: Tue, 27 Oct 2009 13:21:56 +0100
+Message-ID: <20091027122156.GD6115@genesis.frugalware.org>
+References: <e4a904790910250435p3ff50dcfv5c0c6a86c13d17b@mail.gmail.com>
+ <vpq1vkrqttt.fsf@bauges.imag.fr>
+ <e4a904790910270241g4a165023o30438c5d000b5de4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Laszlo Papp <djszapi2@gmail.com>, git@vger.kernel.org
-To: Laszlo Papp <djszapi@archlinux.us>
-X-From: git-owner@vger.kernel.org Tue Oct 27 12:44:46 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="EEnv9zyGND1dPpWR"
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: Alex K <spaceoutlet@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 13:22:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2kTj-0004V7-Do
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 12:44:43 +0100
+	id 1N2l3s-0007NG-Lw
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 13:22:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753918AbZJ0Lod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2009 07:44:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753915AbZJ0Lod
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 07:44:33 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:48060 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753659AbZJ0Loc (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Oct 2009 07:44:32 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 05F82B8A54;
-	Tue, 27 Oct 2009 07:44:36 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 27 Oct 2009 07:44:36 -0400
-X-Sasl-enc: CiweoRgTgp7eSwtkTKnANbyzFLaCHoV/Ra/9gDQJUo2h 1256643876
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id D56572CD677;
-	Tue, 27 Oct 2009 07:44:35 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5pre) Gecko/20091027 Lightning/1.0pre Shredder/3.0pre
-In-Reply-To: <a362e8010910270335g106024e6if3f016c271ab55d6@mail.gmail.com>
+	id S1753957AbZJ0MVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2009 08:21:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753928AbZJ0MVx
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 08:21:53 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:53058 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753918AbZJ0MVx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2009 08:21:53 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 9729D58055;
+	Tue, 27 Oct 2009 13:21:56 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 70AB54493A;
+	Tue, 27 Oct 2009 13:21:56 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 69C2E11F002B; Tue, 27 Oct 2009 13:21:56 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <e4a904790910270241g4a165023o30438c5d000b5de4@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131328>
 
-Laszlo Papp venit, vidit, dixit 27.10.2009 11:35:
-> 
-> 
-> On Tue, Oct 27, 2009 at 9:26 AM, Michael J Gruber
-> <git@drmicha.warpmail.net <mailto:git@drmicha.warpmail.net>> wrote:
-> 
->     Johannes Sixt venit, vidit, dixit 27.10.2009 08:13:
->     > Laszlo Papp schrieb:
->     >> @@ -266,7 +266,7 @@ int odb_mkstemp(char *template, size_t limit,
->     const char *pattern)
->     >>      fd = mkstemp(template);
->     >>      if (0 <= fd)
->     >>              return fd;
->     >> -
->     >> +    close(fd);
->     >
->     > Sorry, where is here a resource leak? You are "closing" something
->     that was
->     > never opened because fd is less than zero.
->     >
->     > Ditto for the other case.
-> 
->     I guess it's about silencing some challenged code analysis tool. I
->     recall that last time we had something like this we decided that coders
->     are smarter than tools... and also that clean up like this (for real
->     leaks) would be something for libgit.
-> 
->     Michael
-> 
-> 
-> Yeah you're rights guys, sorry for my fault, this cppcheck program is
-> not the best at this momment, really sorry.
 
-No need to feel overly sorry, but in general it helps if, in a commit
-message or thereabout, you say something like "cppcheck found the
-following (potential) errors".
+--EEnv9zyGND1dPpWR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Cheers,
-Michael
+On Tue, Oct 27, 2009 at 10:41:47AM +0100, Alex K <spaceoutlet@gmail.com> wrote:
+> Thank you. And how would you use git-filter-branch to create another
+> branch with a different time stamp? Is it possible to commit under a
+> different time stamp than the one provided by your default local time?
+
+You can set GIT_AUTHOR_DATE and GIT_COMMITTER_DATE. Both expect a format
+like: "1112911993 -0700" (unix timestamp + timezone info).
+
+--EEnv9zyGND1dPpWR
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkrm5eQACgkQe81tAgORUJbligCfeA/PqVua7gFK/3qO+ek2GoZN
+i48An1wptktC49raff6sz3iGGy7QPche
+=NZ4E
+-----END PGP SIGNATURE-----
+
+--EEnv9zyGND1dPpWR--
