@@ -1,97 +1,78 @@
-From: eschvoca <eschvoca@gmail.com>
-Subject: Re: git rebase -i <first_commit_in_repository>
-Date: Mon, 26 Oct 2009 20:27:13 -0400
-Message-ID: <2b05065b0910261727g75e4330fn23ed6c633114e689@mail.gmail.com>
-References: <2b05065b0910261014t4eb93952oc804bcd01b339a84@mail.gmail.com>
-	 <40aa078e0910261025l1ad7bf8ex27fd62072a317f9d@mail.gmail.com>
-	 <2b05065b0910261108g4a8448c8x295606a8d33612f5@mail.gmail.com>
-	 <alpine.DEB.1.00.0910262210480.4985@pacific.mpi-cbg.de>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH/RFC 2/2] completion: allow use without compiling
+Date: Tue, 27 Oct 2009 01:33:53 +0100
+Message-ID: <20091027003353.GA29205@localhost>
+References: <1256589116-6998-1-git-send-email-bebarino@gmail.com> <1256589116-6998-3-git-send-email-bebarino@gmail.com> <7vocntd7vt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: kusmabite@gmail.com, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 27 01:27:24 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Stephen Boyd <bebarino@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 01:33:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2ZuF-0000kH-Nm
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 01:27:24 +0100
+	id 1N2a0V-0002Yl-Pi
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 01:33:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755546AbZJ0A1K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Oct 2009 20:27:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755543AbZJ0A1K
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 20:27:10 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:62865 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755310AbZJ0A1J convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Oct 2009 20:27:09 -0400
-Received: by fxm18 with SMTP id 18so12568647fxm.37
-        for <git@vger.kernel.org>; Mon, 26 Oct 2009 17:27:13 -0700 (PDT)
+	id S1755779AbZJ0Adl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2009 20:33:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755748AbZJ0Adk
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 20:33:40 -0400
+Received: from mail-ew0-f208.google.com ([209.85.219.208]:57022 "EHLO
+	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755751AbZJ0Adi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2009 20:33:38 -0400
+Received: by ewy4 with SMTP id 4so4187519ewy.37
+        for <git@vger.kernel.org>; Mon, 26 Oct 2009 17:33:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JILu0KFwsK+jPJm9k5w6PZEUnrLtWuAppNe9k7poM68=;
-        b=EmQQOOFGO5uZg3HdQV8ZfLL4uWJyrjoFycUTzKrTirlaIr0n+oU0mq5ZSYjWQyxw8l
-         F3onFbV44jIAO944QhVzmLhsoY+H1bOGaEzMvzk8H5aUQR649ItxKJlukiueaKgnbAQt
-         Cylndgls62v8IvtPF+yjBuCoyND9QiD6y+o4g=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=dP/e4ZfAP3eG3ekiiPN43bNj3uaq1PFNYGeaUyc3dFU=;
+        b=Kdsgu6vMLnkYEohmCufFnOb1P/UnBQid34PbAMJiiFD0rOCs5jvR5jIpq20cOzr7tN
+         UBqk9UNeLEHXPPuEtl01ZsasKVEGl+YftKieHJQyG81psw8BMhHKbGdT7CSOq0MLVhS5
+         3o3RtjwfVXsetheQTvSXkg8aWveaOOVL7DeM4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=LxgRGspSTQy0H/d8kMWPd0LvXU1UCs6++0dl98e9L2ynvzB/leK8yWXwdk4Q/15kBt
-         3HYJzEaFgSZTqIe5qBf+Sn3FcHDf5zpdnPt16Qn6DKNBSnZxbseDOA5lDyrmAFZot4Tg
-         FCJ7MaF/QT2jtwoZGML4HkuQ13eDLuzoElDKQ=
-Received: by 10.103.48.28 with SMTP id a28mr6205605muk.128.1256603233132; Mon, 
-	26 Oct 2009 17:27:13 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0910262210480.4985@pacific.mpi-cbg.de>
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=INcnUkpGrPYpWW/ztfBrWPg1ZdEd11a4IX0POdwJ0KOgK4kp4ZvcolEWcYIaVW3nAd
+         WmZUkAB7bnBxC9A8Y3d5cZ80p2K6e/98KLgkUG3wv7sAFLo9QVtfpNivGAvTEIvDVmm9
+         oM11+FLxIMBeNmOS9cMFyMGi8gkTk921bkFHg=
+Received: by 10.211.147.10 with SMTP id z10mr3343728ebn.28.1256603622316;
+        Mon, 26 Oct 2009 17:33:42 -0700 (PDT)
+Received: from darc.lan (p549A6E37.dip.t-dialin.net [84.154.110.55])
+        by mx.google.com with ESMTPS id 4sm22473990ewy.57.2009.10.26.17.33.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 26 Oct 2009 17:33:41 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1N2a0X-0007gI-7y; Tue, 27 Oct 2009 01:33:53 +0100
+Content-Disposition: inline
+In-Reply-To: <7vocntd7vt.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131294>
 
-Hi,
+On Mon, Oct 26, 2009 at 04:59:18PM -0700, Junio C Hamano wrote:
 
-On Mon, Oct 26, 2009 at 5:11 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
+> Stephen Boyd <bebarino@gmail.com> writes:
+> 
+> >  This duplicates code, but I don't know of a way to re-use the dynamic
+> >  code without sourcing a bash script and possibly breaking someone's build.
 >
-> On Mon, 26 Oct 2009, eschvoca wrote:
->
->> On Mon, Oct 26, 2009 at 1:25 PM, Erik Faye-Lund
->> <kusmabite@googlemail.com> wrote:
->> > On Mon, Oct 26, 2009 at 6:14 PM, eschvoca <eschvoca@gmail.com> wro=
-te:
->> >> Hi,
->> >>
->> >> Is there a way to rewrite history, including the first commit. =A0=
-It
->> >> seems that the first commit can not be modified with a rebase.
->> >
->> > This question is answered in the FAQ:
->> > http://git.or.cz/gitwiki/GitFaq#HowdoIedittherootcommit.3F
->>
->> Thanks Eric. =A0Hopefully someone will enhance rebase to handle the =
-root
->> commit.
->
-> If you cannot do it yourself, you can always offer to bribe^Wpay some=
-body
-> to do it for you.
->
-> Ciao,
-> Dscho
->
+>  (1) If the script notices that there is a file that contains the command
+>      list, it sources it; otherwise,
 
-I can do the workaround myself but not the production ready patch.
-Right now the only bribe I can offer is that it might be less work
-writing the patch than supporting this corner case with answering
-questions and writing a FAQ entry about it.  It also would make the
-awesome rebase -i even awesomer :)  I know, a disappointing bribe but
-from a thankful user.
+Or we substitute the command list in-place, so that we still have the entire
+completion script in one file.
 
-Thanks
+Clemens
