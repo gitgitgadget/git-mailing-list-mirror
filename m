@@ -1,93 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git update --prune issue
-Date: Tue, 27 Oct 2009 14:46:27 -0400
-Message-ID: <20091027184627.GA19292@sigill.intra.peff.net>
-References: <4389ce950910261508p7eca354el77bad07305a80952@mail.gmail.com>
- <4AE6B28F.9010407@drmicha.warpmail.net>
- <4389ce950910270807o69d51155xb083f34bb31e1dae@mail.gmail.com>
- <20091027162936.GA8130@sigill.intra.peff.net>
- <20091027164040.GB12464@localhost>
- <20091027165054.GA8554@sigill.intra.peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH/RFC 2/2] completion: allow use without compiling
+Date: Tue, 27 Oct 2009 11:52:23 -0700
+Message-ID: <20091027185223.GH10505@spearce.org>
+References: <1256589116-6998-1-git-send-email-bebarino@gmail.com> <1256589116-6998-3-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jeffrey Middleton <jefromi@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Oct 27 19:46:46 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Clemens Buchacher <drizzd@aon.at>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 19:52:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2r48-0002fi-2f
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 19:46:44 +0100
+	id 1N2r9i-0005Y7-BK
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 19:52:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756302AbZJ0Sq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2009 14:46:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756253AbZJ0Sq1
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 14:46:27 -0400
-Received: from peff.net ([208.65.91.99]:50795 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756127AbZJ0Sq1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2009 14:46:27 -0400
-Received: (qmail 3120 invoked by uid 107); 27 Oct 2009 18:50:08 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (216.239.45.19)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 27 Oct 2009 14:50:08 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Oct 2009 14:46:27 -0400
+	id S1756374AbZJ0SwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2009 14:52:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756304AbZJ0SwT
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 14:52:19 -0400
+Received: from george.spearce.org ([209.20.77.23]:43258 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756206AbZJ0SwT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2009 14:52:19 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 0AE4F381D3; Tue, 27 Oct 2009 18:52:23 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <20091027165054.GA8554@sigill.intra.peff.net>
+In-Reply-To: <1256589116-6998-3-git-send-email-bebarino@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131369>
 
-On Tue, Oct 27, 2009 at 12:50:55PM -0400, Jeff King wrote:
-
-> > Actually, it's beta_gc_dev_old and beta_gc_dev, not the same refs.
+Stephen Boyd <bebarino@gmail.com> wrote:
+> Some users don't want to compile their completion, even when the build
+> generated completion is 10x faster to load. For example, in my bashrc I
+> source the completion script directly so I can stay up to date with the
+> latest completion by merely pulling changes.
 > 
-> OK, I'm a bit blind. Thanks for pointing it out. I'll still see if I can
-> replicate it.
+> Do this by generating the lists dynamically when the merge strategy and
+> command lists still have their initial values (__GIT_MERGE_STRATEGYLIST,
+> __GIT_ALL_COMMANDLIST).
+> 
+> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+> ---
+> 
+>  This duplicates code, but I don't know of a way to re-use the dynamic
+>  code without sourcing a bash script and possibly breaking someone's build.
 
-I'm not having any luck reproducing here with a simple case. :( I'm
-trying:
+NAK on code duplication, especially this much.  As Junio already
+pointed out in this thread we need an approach that doesn't cause
+this sort of redundant code.
 
--- >8 --
-#!/bin/sh
+I'm trying to catch up on email right now.  I have no great
+suggestions on how to implement this to avoid the code duplication
+and still be able to support both compile-time and on-the-fly
+computation, but I do know I don't want this code twice.
 
-rm -rf parent* child
-
-commit() {
-  echo $1 >file && git add file && git commit -m $1
-}
-
-mkdir parent1 && (
-  cd parent1 &&
-  git init &&
-  commit one &&
-  commit two &&
-  git checkout -b other
-) &&
-mkdir parent2 && (
-  cd parent2 &&
-  git init &&
-  commit three
-) &&
-mkdir child && (
-  cd child &&
-  git init &&
-  git remote add parent1 ../parent1 &&
-  git remote add parent2 ../parent2 &&
-  git remote update
-) &&
-(
-  cd parent1 &&
-  git checkout master &&
-  git branch -d other &&
-  git reset --hard HEAD^ &&
-  commit four
-) && (
-  cd child &&
-  git remote update --prune
-)
+-- 
+Shawn.
