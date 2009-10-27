@@ -1,86 +1,97 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: gti push interface inconsistency
-Date: Tue, 27 Oct 2009 00:47:59 -0400
-Message-ID: <76c5b8580910262147w4e3ef7a9k8b65f586e893f4fd@mail.gmail.com>
-References: <76c5b8580910261523s51ac22b5y624ec3502e8fed67@mail.gmail.com>
-	 <7veiopd7gs.fsf@alter.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Fix memory leak in transport-helper
+Date: Tue, 27 Oct 2009 00:55:46 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0910270032170.14365@iabervon.org>
+References: <1255577814-14745-1-git-send-email-spearce@spearce.org> <20091015185253.6117@nanako3.lavabit.com> <20091015143340.GI10505@spearce.org> <200910151721.08352.johan@herland.net> <20091015154142.GL10505@spearce.org> <7vfx9k4d33.fsf@alter.siamese.dyndns.org>
+ <20091015204543.GP10505@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 27 05:48:06 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johan Herland <johan@herland.net>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Oct 27 05:56:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2dyY-0006tR-7P
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 05:48:06 +0100
+	id 1N2e6j-0000Il-FY
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 05:56:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754078AbZJ0Erz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2009 00:47:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754027AbZJ0Erz
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 00:47:55 -0400
-Received: from mail-yw0-f202.google.com ([209.85.211.202]:48493 "EHLO
-	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753718AbZJ0Erz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2009 00:47:55 -0400
-Received: by ywh40 with SMTP id 40so8951733ywh.33
-        for <git@vger.kernel.org>; Mon, 26 Oct 2009 21:47:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=xCKSLc6vnFJT93DRLgGiHf9kuiyIexzadrW68AzcwqM=;
-        b=tchWoiBzBkYMzLq422dddvJb4adZ0TgC+ZO+WRK++TtP1hE+OaJeJEAYiaU3z4B5aq
-         mGjL6ztnhLh8feOSaRyspnFggLp56HmygK8F1Gxd3grGXOHCtVdb28OR8tvyqtvbbBXr
-         2QM6hbHW99St3+F6GfAFwaTDqp0MTwUx+LGAU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=iZWBSImxxs5s6Qq+smVMHFYfsjvzfyf9ozStdwQ/9+gadQHDrudfDiOyIfGHAYX7aJ
-         5epa/OTDTjYS/jSVTX6HQtzCLeAoODqs1TMpCWmF1h+99ElsZrD1iMIbMYgW4oEs2ZN3
-         d//Thcnj0ufpEJFV0G+PXGQ7JD+NqrjUvBTr4=
-Received: by 10.91.161.28 with SMTP id n28mr6179314ago.36.1256618879748; Mon, 
-	26 Oct 2009 21:47:59 -0700 (PDT)
-In-Reply-To: <7veiopd7gs.fsf@alter.siamese.dyndns.org>
+	id S1754291AbZJ0Ezm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2009 00:55:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754243AbZJ0Ezm
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 00:55:42 -0400
+Received: from iabervon.org ([66.92.72.58]:50139 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754078AbZJ0Ezm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2009 00:55:42 -0400
+Received: (qmail 18210 invoked by uid 1000); 27 Oct 2009 04:55:46 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 27 Oct 2009 04:55:46 -0000
+In-Reply-To: <20091015204543.GP10505@spearce.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131311>
 
->
-> Probably because git is not smart enough to understand the human language
-> to notice 't' 'a' 'g' is a tag and cannot be a remote name spelled
-> incorrectly, or git cannot read your mind and find out that you spelled
-> a name of the remote correctly but forgot to add the remote first.
->
+On Thu, 15 Oct 2009, Shawn O. Pearce wrote:
 
-;)
-did you mean It is not smart enough yet?
+> The disconnect_helper function is not prepared to be called twice:
+> 
+> static int disconnect_helper(struct transport *transport)
+> {
+> 	struct helper_data *data = transport->data;
+> 	if (data->helper) {
+> 	...
+> 	}
+> 	free(data);
+> 	return 0;
+> }
 
-My question was caused only by the fact that in both situations same
-object type is transmitted to the origin repo. As understand that it
-was done this way  in order to avoid specifying keys for remote...
-I.e. "git push origin master" is kinda easier then something like "git
-push -r origin master" (-r for remote).
-But if for "git push --tags" the remote is not important (uses origin
-by default) why it is important for "git push my_tag" or for "git push
-origin master"?
+Actually, my version just leaks transport->data; it looks like the 
+"free(data);" line comes from your patch "remote-helpers: Support custom 
+transport options". Here's a version (against origin/master) that neither 
+leaks memory nor frees too much for disconnecting temporarily. 
 
-Do you think
+commit 8731d804c20828d20130e286f088613b5d33d57a
+Author: Daniel Barkalow <barkalow@iabervon.org>
+Date:   Tue Oct 27 00:42:16 2009 -0400
 
-$ git push master
+    Fix memory leak in helper method for disconnect.
+    
+    Since some cases may need to disconnect from the helper and reconnect,
+    wrap the function that just disconnects in a function that also frees
+    transport->data.
+    
+    Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 
-Which would default to origin have a chance to exist? (I would vote for this)
-Or the correct aproach is to have
-
-$ git push origin --tags
-
-IMHO, In any case the push operation interface should be consistent.
-Else it is a bit confusing (untill you didn't step on it and didn't
-learn the difference).
-
-Best regards,
-Eugene
+diff --git a/transport-helper.c b/transport-helper.c
+index f57e84c..479539d 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -67,6 +67,13 @@ static int disconnect_helper(struct transport *transport)
+ 	return 0;
+ }
+ 
++static int close_helper(struct transport *transport)
++{
++	disconnect_helper(transport);
++	free(transport->data);
++	return 0;
++}
++
+ static int fetch_with_fetch(struct transport *transport,
+ 			    int nr_heads, const struct ref **to_fetch)
+ {
+@@ -163,6 +170,6 @@ int transport_helper_init(struct transport *transport, const char *name)
+ 	transport->data = data;
+ 	transport->get_refs_list = get_refs_list;
+ 	transport->fetch = fetch;
+-	transport->disconnect = disconnect_helper;
++	transport->disconnect = close_helper;
+ 	return 0;
+ }
