@@ -1,80 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git vs hg commit counts?
-Date: Mon, 26 Oct 2009 17:18:33 -0700
-Message-ID: <7v8wexd6zq.fsf@alter.siamese.dyndns.org>
-References: <1256602127.29938.8.camel@Joe-Laptop.home>
+From: "Alan" <alan@clueserver.org>
+Subject: Problems with git am
+Date: Mon, 26 Oct 2009 17:12:09 -0700 (PDT)
+Message-ID: <59976.134.134.139.70.1256602329.squirrel@clueserver.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: LKML <linux-kernel@vger.kernel.org>, git <git@vger.kernel.org>,
-	mercurial@selenic.com, Marti Raudsepp <marti@juffo.org>
-To: Joe Perches <joe@perches.com>
-X-From: git-owner@vger.kernel.org Tue Oct 27 01:19:05 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 27 01:22:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2Zm9-0006Oh-T3
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 01:19:02 +0100
+	id 1N2ZpP-0007Xt-2n
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 01:22:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755350AbZJ0ASn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2009 20:18:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754828AbZJ0ASm
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 20:18:42 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39130 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754722AbZJ0ASl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2009 20:18:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D6FF68ACC;
-	Mon, 26 Oct 2009 20:18:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1LnVFN6QdFRjcux9AIuqbR15H6o=; b=tn+MKn
-	ZeRk4DcQEBl7er0HFFQB9eYh2zxYWVOcbiD1psXhsUoBfGQEtYRQTQzpWtiOJMP8
-	x4vSzQajG1BKK2/wQyn3hUPLylJ6xWjO4tmDOxIAoq6fPf3p9+ReMMuEBa/d7Kb6
-	vySfnVka403RH/7IRLxvvghDgUMXNaU+6Sf/E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Da6EfboV6UhKQahDGrhPzNKndW0D7zHc
-	pbXL+6v8oN2XSF04c/sBxQxs6P4Qxkq34k0HqCO9T70Htfs8Chf6BgpXjLI12vJW
-	WdstD51b7O5jfBT5DXuLZE+l1T5w4V7NF2UngfkX2S3xmycci0++9YaDg87ZlcOU
-	bGleXUiGwJ0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ECF6868ACB;
-	Mon, 26 Oct 2009 20:18:40 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D50768ACA; Mon, 26 Oct
- 2009 20:18:34 -0400 (EDT)
-In-Reply-To: <1256602127.29938.8.camel@Joe-Laptop.home> (Joe Perches's
- message of "Mon\, 26 Oct 2009 17\:08\:47 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 478F9C56-C28E-11DE-9D37-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755297AbZJ0AWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2009 20:22:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755059AbZJ0AWM
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Oct 2009 20:22:12 -0400
+Received: from clueserver.org ([65.102.45.174]:46216 "EHLO clueserver.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754828AbZJ0AWM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2009 20:22:12 -0400
+X-Greylist: delayed 608 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Oct 2009 20:22:12 EDT
+Received: by clueserver.org (Postfix, from userid 48)
+	id CE615F5055A; Mon, 26 Oct 2009 17:12:09 -0700 (PDT)
+Received: from 134.134.139.70
+        (SquirrelMail authenticated user alan)
+        by clueserver.org with HTTP;
+        Mon, 26 Oct 2009 17:12:09 -0700 (PDT)
+User-Agent: SquirrelMail/1.4.10a-1.fc6
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131291>
 
-Joe Perches <joe@perches.com> writes:
+I am encountering an interesting issue.  I am not certain if I am doing
+something wrong or I am encountering a bug or what.
 
-> I'm comparing linux-kernel git vs hg repositories.
->
-> While testing some changes to scripts/get_maintainer.pl,
-> I noticed that git and hg have different commit counts
-> for the same files.
->
-> For instance:
->
-> $ git log --since=1-year-ago -- MAINTAINERS | \
-> 	grep -P "^commit [0-9a-f]{40,40}$"  | wc -l
-> 514
->
-> $ hg log --template="commit {node}\n" --date -365 -- MAINTAINERS  | \
-> 	grep -P "^commit [0-9a-f]{40,40}$" | wc -l
-> 601
->
-> Anyone have any understanding why?
+I am using Git version 1.6.0.6 from Fedora 9.  I am not using the current
+version because it has changed how it errors out.  (If git does not
+understand the patch, instead of exiting with an error code that xargs
+will fail on it exits with something non-fatal.)
 
-We simplify a merge history by discarding one branch when the merge result
-matches one of the parents.  Does "hg" know how to do that as well?
+I have a number of patches that I have been handed to apply to a git tree.
+
+The patches have been generated by git, but have not been e-mailed.  (They
+may have been extracted from gitweb or some other source.)
+
+The header of the patch looks like:
+
+commit 62b266585bb5555d44a764c90d80f9c4bb8188c1
+Author: Joe Example <joe@example.com>
+Date:   Wed Sep 19 10:03:47 2009 -0600
+
+There is no e-mail line, but it has the information for e-mail address.
+
+If I apply this patch it will error out with:
+
+"Patch does not have a valid e-mail address."
+
+If I use a current version of Git it errors out with a message "Cannot
+determine patch format", but does not issue a fatal error code.
+
+If I use git-apply on this patch, it applies it to the tree, but does not
+commit it.  (I need the comments and signoffs to remain intact.) I have to
+cut-and-paste the commit information to keep it.  (I am working on an
+automated process to handle these patches and don' want to have to
+reinvent git-am.)
+
+Am i doing something wrong here?
+
+My goal is to be able to take whatever patch I am handed and apply it to
+the current tree.  If it is a raw diff, I can handle that.  What concerns
+me are these patches that look like they are generated by git, but which
+do not apply cleanly with git-am.
+
+Is there some sort of instructions for applying patches that are dumped
+out using "git-show" or some other mechanism?
+
+I am not finding this process documented anywhere.  (If it is, it is
+pretty well hidden.)
+
+Thanks!
