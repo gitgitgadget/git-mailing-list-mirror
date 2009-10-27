@@ -1,70 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git update --prune issue
-Date: Tue, 27 Oct 2009 12:50:55 -0400
-Message-ID: <20091027165054.GA8554@sigill.intra.peff.net>
-References: <4389ce950910261508p7eca354el77bad07305a80952@mail.gmail.com>
- <4AE6B28F.9010407@drmicha.warpmail.net>
- <4389ce950910270807o69d51155xb083f34bb31e1dae@mail.gmail.com>
- <20091027162936.GA8130@sigill.intra.peff.net>
- <20091027164040.GB12464@localhost>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: From 200 to 404 to 407.
+Date: Tue, 27 Oct 2009 12:53:39 -0400
+Message-ID: <32541b130910270953w6bd35ddctd471e682830b8f62@mail.gmail.com>
+References: <82fd2c5d0910270318wc30bc44tfd3362933d3f62cf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeffrey Middleton <jefromi@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Oct 27 17:51:06 2009
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Peter_Od=E9us?= <peter.odeus@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 17:54:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2pGD-0000Wc-HV
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 17:51:05 +0100
+	id 1N2pJ8-0002Ab-GE
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Oct 2009 17:54:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756051AbZJ0Quy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Oct 2009 12:50:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755891AbZJ0Quy
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 12:50:54 -0400
-Received: from peff.net ([208.65.91.99]:42223 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755915AbZJ0Qux (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2009 12:50:53 -0400
-Received: (qmail 2104 invoked by uid 107); 27 Oct 2009 16:54:35 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (216.239.45.19)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 27 Oct 2009 12:54:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Oct 2009 12:50:55 -0400
-Content-Disposition: inline
-In-Reply-To: <20091027164040.GB12464@localhost>
+	id S1756175AbZJ0Qxz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Oct 2009 12:53:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756172AbZJ0Qxz
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 12:53:55 -0400
+Received: from mail-yw0-f202.google.com ([209.85.211.202]:52374 "EHLO
+	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756123AbZJ0Qxy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Oct 2009 12:53:54 -0400
+Received: by ywh40 with SMTP id 40so303305ywh.33
+        for <git@vger.kernel.org>; Tue, 27 Oct 2009 09:53:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CtP4sHoPjWxDnq//AJ6eBbUpswBVRo3JbqCeukc5kN0=;
+        b=eKN9JFDDTQaqtT3pdJSOe61OZEkoSMD11vHAWKKY7+L2MsN17SmqjcivAMQo9qUs7t
+         lFqAb6apVtFbiS0ELfnxl3HQLq0Y2rG2yWdpu6reK785rcTMV2v2pYOEp0of8wDMUzEJ
+         95Nq/CjudAX1QBg2dpivpX2mxPQmoyEhS+EZg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=gP13ju7AZTPHib7rbUa9peGDr+e7tQ+ZgGid2DetcbfwCSid48BdPF5kQpFVJ9kgzF
+         8Gw0ytFtqai5FzWta3Fkyg4M1efFL5oWdHTM4rfyXbgwbVJHLsrb4nX0gLpxB/6St+ds
+         xbIuN3ifeFmyvV9O5H0zeyZVYn0yv6MAs4p+A=
+Received: by 10.150.20.1 with SMTP id 1mr5149447ybt.4.1256662439096; Tue, 27 
+	Oct 2009 09:53:59 -0700 (PDT)
+In-Reply-To: <82fd2c5d0910270318wc30bc44tfd3362933d3f62cf@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131359>
 
-On Tue, Oct 27, 2009 at 05:40:40PM +0100, Clemens Buchacher wrote:
+On Tue, Oct 27, 2009 at 6:18 AM, Peter Od=E9us <peter.odeus@gmail.com> =
+wrote:
+> Doing a "git clone..." using authenticated proxy (set in $http_proxy)=
+:
+>
+> Upon initial success (HTTP 200) and receiving a single HTTP 404 (not
+> found), every GET after that renders a HTTP 407 (Proxy authentication
+> required).
+>
+> curl -I "url_giving_http_407" comes out just fine as a HTTP 200.
 
-> On Tue, Oct 27, 2009 at 12:29:36PM -0400, Jeff King wrote:
->=20
-> > > Pruning steph
-> > > URL: /users/sdewet/CxTF_DEV/CxTF_DB/
-> > > =C2=A0* [pruned] steph/beta_gc_dev_old
-> > > Updating kevin
-> > > error: refs/remotes/steph/beta_gc_dev does not point to a valid o=
-bject!
-> > > error: refs/remotes/steph/beta_veh_dev does not point to a valid =
-object!
-> >=20
-> > The "pruned" line basically means that we are deleting that ref, an=
-d
-> > then we complain immediately about that very ref (which is probably
-> > pointing to the null sha1 or something at this point).
->=20
-> Actually, it's beta_gc_dev_old and beta_gc_dev, not the same refs.
+The easiest way to track this down is to log it using ethereal, and
+compare the http session dumps.  There may be differences in headers
+or something that git is providing vs. the command-line curl.
 
-OK, I'm a bit blind. Thanks for pointing it out. I'll still see if I ca=
-n
-replicate it.
+If you don't know how to analyze http dumps, then just log them to a
+file using tcpdump's -w option and email them to me, and I'll take a
+look.  (I probably won't fix the bug in git, but I can at least tell
+you what/if the bug is :))  Please don't send the binary dumpfiles to
+the mailing list, though.
 
--Peff
+Have fun,
+
+Avery
