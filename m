@@ -1,104 +1,57 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] commit: More generous accepting of RFC-2822 footer
-	lines.
-Date: Tue, 27 Oct 2009 17:05:11 -0700
-Message-ID: <20091028000511.GK10505@spearce.org>
-References: <20091027234520.GA11433@quaoar.codeaurora.org>
+Subject: Re: [PATCH 1/3] update http tests according to remote-curl
+	capabilities
+Date: Tue, 27 Oct 2009 17:10:56 -0700
+Message-ID: <20091028001056.GL10505@spearce.org>
+References: <1256472380-924-1-git-send-email-drizzd@aon.at> <1256472380-924-2-git-send-email-drizzd@aon.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Brown <davidb@codeaurora.org>
-X-From: git-owner@vger.kernel.org Wed Oct 28 01:05:21 2009
+Cc: Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Wed Oct 28 01:11:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2w2S-0004GP-BD
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 01:05:20 +0100
+	id 1N2w8K-0006oD-Lr
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 01:11:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756890AbZJ1AFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2009 20:05:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756884AbZJ1AFI
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 20:05:08 -0400
-Received: from george.spearce.org ([209.20.77.23]:43489 "EHLO
+	id S1756939AbZJ1AKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2009 20:10:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756941AbZJ1AKw
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 20:10:52 -0400
+Received: from george.spearce.org ([209.20.77.23]:48610 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756541AbZJ1AFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2009 20:05:07 -0400
+	with ESMTP id S1756935AbZJ1AKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2009 20:10:51 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id CA98C381D3; Wed, 28 Oct 2009 00:05:11 +0000 (UTC)
+	id 9DD97381D3; Wed, 28 Oct 2009 00:10:56 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <20091027234520.GA11433@quaoar.codeaurora.org>
+In-Reply-To: <1256472380-924-2-git-send-email-drizzd@aon.at>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131393>
 
-David Brown <davidb@codeaurora.org> wrote:
-> From: David Brown <davidb@quicinc.com>
+Clemens Buchacher <drizzd@aon.at> wrote:
+>  o Pushing packed refs is now fixed.
 > 
-> 'git commit -s' will insert a blank line before the Signed-off-by
-> line at the end of the message, unless this last line is a
-> Signed-off-by line itself.  Common use has other trailing lines
-> at the ends of commit text, in the style of RFC2822 headers.
+>  o The transport helper fails if refs are already up-to-date. Add a
+>    test for that.
 > 
-> Be more generous in considering lines to be part of this footer.
-> This may occasionally leave out the blank line for cases where
-> the commit text happens to start with a word ending in a colon,
-> but this results in less fixups than the extra blank lines with
-> Acked-by, or other custom footers.
+>  o The transport helper will notice if refs are already up-to-date. We
+>    therefore need to update server info in the unpacked-refs test.
+> 
+>  o The transport helper will purge deleted branches automatically.
+> 
+> Signed-off-by: Clemens Buchacher <drizzd@aon.at>
 
-The nasty perl I use in Gerrit's commit-msg hook is a bit more
-expressive.  Basically the rule is we insert a blank line before
-the new footer unless all lines in the last paragraph (so all text
-after the last "\n\n" sequence) match the regex "^[a-zA-Z0-9-]+:".
- 
-> +test_expect_success 'signoff gap' '
-> +
-> +	echo 3 >positive &&
-> +	git add positive &&
-> +	alt="Alt-RFC-822-Header: Value" &&
-> +	git commit -s -m "welcome
-> +
-> +$alt" &&
+Acked-by: Shawn O. Pearce <spearce@spearce.org>
 
-I wonder if we shouldn't also have a test case for the message:
-
-	msg="test
-
-this is a test that
-fixes: 42.
-"
-
-as the result would be expected to be:
-
-	exp="test
-
-this is a test that
-fixes: 42.
-
-Signed-off-by A. U. Thor <...>
-"
-
-But:
-
-	msg="test
-
-this is a test
-
-fixes: 42
-"
-
-would produce:
-
-	exp="test
-
-this is a test
-
-fixes: 42
-Signed-off-by A. U. Thor <...>
-"
+>  t/t5540-http-push.sh |   14 +++++++++-----
+>  1 files changed, 9 insertions(+), 5 deletions(-)
 
 -- 
 Shawn.
