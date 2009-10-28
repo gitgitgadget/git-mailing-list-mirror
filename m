@@ -1,65 +1,51 @@
-From: David Brown <davidb@quicinc.com>
-Subject: Re: [PATCH] commit: More generous accepting of RFC-2822 footer
- lines.
-Date: Wed, 28 Oct 2009 07:23:28 -0700
-Message-ID: <20091028142328.GA13343@huya.quicinc.com>
-References: <20091027234520.GA11433@quaoar.codeaurora.org>
- <20091028000511.GK10505@spearce.org>
- <7vk4yguh00.fsf@alter.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] bash completion: difftool accepts the same options as
+	diff
+Date: Wed, 28 Oct 2009 07:32:54 -0700
+Message-ID: <20091028143254.GQ10505@spearce.org>
+References: <1256723138-1480-1-git-send-email-markus.heidelberg@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	David Brown <davidb@codeaurora.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 28 15:23:55 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Wed Oct 28 15:33:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N39RJ-0000XR-KO
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 15:23:53 +0100
+	id 1N39a9-0005JK-R2
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 15:33:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754082AbZJ1OXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 10:23:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753899AbZJ1OXe
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 10:23:34 -0400
-Received: from wolverine01.qualcomm.com ([199.106.114.254]:51789 "EHLO
-	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753832AbZJ1OXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 10:23:33 -0400
-X-IronPort-AV: E=McAfee;i="5300,2777,5784"; a="26287594"
-Received: from pdmz-ns-mip.qualcomm.com (HELO numenor.qualcomm.com) ([199.106.114.10])
-  by wolverine01.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 28 Oct 2009 07:23:38 -0700
-Received: from msgtransport01.qualcomm.com (msgtransport01.qualcomm.com [129.46.61.148])
-	by numenor.qualcomm.com (8.14.2/8.14.2/1.0) with ESMTP id n9SENcEx012324
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL);
-	Wed, 28 Oct 2009 07:23:38 -0700
-Received: from huya.quicinc.com (huya.qualcomm.com [10.46.167.38])
-	by msgtransport01.qualcomm.com (8.14.2/8.14.2/1.0) with ESMTP id n9SENWDt028311
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 28 Oct 2009 07:23:37 -0700
+	id S1754115AbZJ1Ocu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 10:32:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754097AbZJ1Ocu
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 10:32:50 -0400
+Received: from george.spearce.org ([209.20.77.23]:38091 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754076AbZJ1Ocu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 10:32:50 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id E652A381D3; Wed, 28 Oct 2009 14:32:54 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <7vk4yguh00.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <1256723138-1480-1-git-send-email-markus.heidelberg@web.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131465>
 
-On Wed, Oct 28, 2009 at 12:14:55AM -0700, Junio C Hamano wrote:
+Markus Heidelberg <markus.heidelberg@web.de> wrote:
+> So complete refs, files after the doubledash and some diff options that
+> make sense for difftool.
+> 
+> Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
 
-> When deciding to omit adding a new S-o-b, we deliberately check only the
-> last S-o-b to see if it matches what we are trying to add.  This is so
-> that a message from you, that has my patch that was reviewed and touched
-> up by you with your sign-off, i.e.
+Acked-by: Shawn O. Pearce <spearce@spearce.org>
 
-This is good to know.  I'll leave the existing last-SoB test in
-place then, and just use the sophisticated check for a block of
-RFC2822 footers to determine if there should be a blank line.
+>  contrib/completion/git-completion.bash |   10 ++++++++--
+>  1 files changed, 8 insertions(+), 2 deletions(-)
 
-Jeff also pointed out that I should probably also allow lines
-starting with whitespace to be considered header lines.
-
-David
+-- 
+Shawn.
