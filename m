@@ -1,81 +1,71 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Is it possible to use git as a remote file storage without making 
-	any local repos?
-Date: Wed, 28 Oct 2009 14:33:34 -0400
-Message-ID: <32541b130910281133nf79e03fy208b7f9fdb86bd05@mail.gmail.com>
-References: <8496f91a0910280509p49447d6egd7c07b382657c375@mail.gmail.com>
+From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
+Subject: Re: git rebase -i <first_commit_in_repository>
+Date: Wed, 28 Oct 2009 20:24:49 +0100
+Message-ID: <4AE89A81.9040407@dirk.my1.cc>
+References: <2b05065b0910261014t4eb93952oc804bcd01b339a84@mail.gmail.com>	 <40aa078e0910261025l1ad7bf8ex27fd62072a317f9d@mail.gmail.com>	 <2b05065b0910261108g4a8448c8x295606a8d33612f5@mail.gmail.com>	 <4AE60669.9080402@dirk.my1.cc> <b2e43f8f0910261347m38ccb608nb5858ff1dc432b33@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: matvejchikov@gmail.com
-X-From: git-owner@vger.kernel.org Wed Oct 28 19:34:03 2009
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>,
+	eschvoca <eschvoca@gmail.com>, kusmabite@gmail.com,
+	git@vger.kernel.org
+To: Allan Caffee <allan.caffee@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 28 20:25:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3DLO-0003t7-Bk
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 19:34:02 +0100
+	id 1N3E8h-0002S6-NN
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 20:25:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754344AbZJ1Sdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 14:33:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753755AbZJ1Sdv
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 14:33:51 -0400
-Received: from mail-yw0-f202.google.com ([209.85.211.202]:47134 "EHLO
-	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752247AbZJ1Sdv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 14:33:51 -0400
-Received: by ywh40 with SMTP id 40so918855ywh.33
-        for <git@vger.kernel.org>; Wed, 28 Oct 2009 11:33:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=AEz5ncL4gAblsfr3qSV7r1Lw9sg7J8CFW03+xn8I5Rk=;
-        b=CZ3kQIGO6sxe9PrbPh1JIWQL/ibY48KDJvugHOibAWAz7Mbi6c/GJwtFxJ/wZlFqJ0
-         cKJ3UxBNs3cljJ0Sw2uSMbfk1iQh8aI+HepoH6B4Q9VetBMCtmdZU38ORpt9kGXxzJH4
-         AmnyNf8FImzVyz7iqzfSt8VIDIyv1R/EoCnZ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=YlJ2aAGrxPNKB3ycqTf5WVM+3IrsPGO41LclD66ibnddWMRzdkq5uE0R6ASJWxcuu9
-         jlLqDOVGY+HW1q25p1mcC7C4AZMdHsWYtZAbQ5wpEBCb7sJe1Xs7Gx4Ix6yBYqCeZLTj
-         Lnn8oTGUUpnF1dHxmvVwvdTYoDuhxVu77L3uI=
-Received: by 10.150.15.25 with SMTP id 25mr7251582ybo.276.1256754834075; Wed, 
-	28 Oct 2009 11:33:54 -0700 (PDT)
-In-Reply-To: <8496f91a0910280509p49447d6egd7c07b382657c375@mail.gmail.com>
+	id S1753446AbZJ1TYt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Oct 2009 15:24:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752868AbZJ1TYt
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 15:24:49 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.31.28]:44670 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751904AbZJ1TYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 15:24:49 -0400
+X-Greylist: delayed 168985 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Oct 2009 15:24:48 EDT
+Received: from [84.176.117.197] (helo=[192.168.2.100])
+	by smtprelay05.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1N3E8Y-0007p0-3c; Wed, 28 Oct 2009 20:24:50 +0100
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <b2e43f8f0910261347m38ccb608nb5858ff1dc432b33@mail.gmail.com>
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131495>
 
-On Wed, Oct 28, 2009 at 8:09 AM, Matvejchikov Ilya
-<matvejchikov@gmail.com> wrote:
-> I have a remote storage server with a git-daemon running and I want to
-> be able to put some data in that repo
-> in a way like 'git hash-object -w <object>'. The general problem for
-> me is that I don't want to create any local
-> git repositories that is needed by 'pit push ...' etc.
->
-> So, is it possible to use git for remote storage purposes without
-> making local repository?
+Am 26.10.2009 21:47 schrieb Allan Caffee:
+> 2009/10/26 Dirk S=C3=BCsserott <newsletter@dirk.my1.cc>:
+>> Am 26.10.2009 19:08 schrieb eschvoca:
+>> Hi,
+>>
+>> probably my approach could help you in the future: When I create a n=
+ew repo
+>> (git init) I firstly create an initial commit with nothing else than=
+ an
+>> initial commit, i.e.:
+>>
+>> $ git init
+>> $ echo "initial" > initial.commit
+>> $ git add initial.commit
+>> $ git commit -m "Initial commit"
+>=20
+> I don't think this is actually necessary.  You should just be able to=
+ do:
+> $ git init
+> $ git commit --allow-empty -m "Initial commit (empty)"
+>=20
 
-This functionality isn't built into git (and it might be considered a
-security hole, strictly speaking, if a repository let you download any
-object by default).  However, it would be pretty easy to create your
-own server that does this.
+Allan,
 
-For example, you could make one CGI script that dumps its POST data
-into a pipe to "git hash-object --stdin -w"
+that works great and is not as cumbersome as my solution.
+Thank you!
 
-I've written a service similar to this at work.  It's relatively
-simple to do a basic version. Of course, as you get into more
-complicated situations (what about multiple users updating the same
-filename?  merges?  authentication?) it gets more complicated.  But I
-think everybody would want this for a different reason, so it's
-unlikely that there'll ever be a single "standard" solution.
-
-Have fun,
-
-Avery
+Dirk
