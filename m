@@ -1,123 +1,113 @@
-From: David Brown <davidb@codeaurora.org>
-Subject: [PATCH] commit: More generous accepting of RFC-2822 footer lines.
-Date: Tue, 27 Oct 2009 16:45:20 -0700
-Message-ID: <20091027234520.GA11433@quaoar.codeaurora.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] push: support remote branches in guess_ref DWIM
+Date: Tue, 27 Oct 2009 20:01:04 -0400
+Message-ID: <20091028000104.GA9426@sigill.intra.peff.net>
+References: <20091026213353.GA27871@sigio.peff.net>
+ <7v8wexn34i.fsf@alter.siamese.dyndns.org>
+ <20091027014525.GA29583@sigio.peff.net>
+ <7vaazc31sj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 28 00:45:31 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 28 01:01:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N2vjF-0004tj-V9
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 00:45:30 +0100
+	id 1N2vyc-0002ex-V8
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 01:01:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756859AbZJ0XpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2009 19:45:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756515AbZJ0XpS
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 19:45:18 -0400
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:6977 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755551AbZJ0XpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2009 19:45:17 -0400
-X-IronPort-AV: E=McAfee;i="5300,2777,5784"; a="26242524"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 27 Oct 2009 16:45:22 -0700
-Received: from quaoar.codeaurora.org (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id CD95A10004B6
-	for <git@vger.kernel.org>; Tue, 27 Oct 2009 16:48:50 -0700 (PDT)
+	id S1756882AbZJ1ABD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2009 20:01:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756541AbZJ1ABD
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Oct 2009 20:01:03 -0400
+Received: from peff.net ([208.65.91.99]:54303 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751445AbZJ1ABC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2009 20:01:02 -0400
+Received: (qmail 4950 invoked by uid 107); 28 Oct 2009 00:04:45 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (216.239.45.19)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 27 Oct 2009 20:04:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Oct 2009 20:01:04 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <7vaazc31sj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131391>
 
-From: David Brown <davidb@quicinc.com>
+On Tue, Oct 27, 2009 at 03:33:16PM -0700, Junio C Hamano wrote:
 
-'git commit -s' will insert a blank line before the Signed-off-by
-line at the end of the message, unless this last line is a
-Signed-off-by line itself.  Common use has other trailing lines
-at the ends of commit text, in the style of RFC2822 headers.
+> >   $ git fetch ;# presumably gets origin/branch
+> >   $ git push origin/branch:renamed-branch
+> >
+> > which is much nicer than exposing clueless users to
+> > ":refs/heads/renamed-branch".
+> 
+> You would need to expose ":refs/heads/branch" to make this a rename, not a
+> copy, wouldn't you?
 
-Be more generous in considering lines to be part of this footer.
-This may occasionally leave out the blank line for cases where
-the commit text happens to start with a word ending in a colon,
-but this results in less fixups than the extra blank lines with
-Acked-by, or other custom footers.
+Yeah, you're right. This was based on an actual user request, and I
+didn't think too closely about the other steps. But since the deletion
+is of an existing branch, you should be able to do that without
+refs/heads. So:
 
-Signed-off-by: David Brown <davidb@quicinc.com>
----
- builtin-commit.c  |   17 ++++++++++++++++-
- t/t7501-commit.sh |   19 +++++++++++++++++++
- 2 files changed, 35 insertions(+), 1 deletions(-)
+  $ git push origin origin/branch:renamed-branch
+  $ git push origin :branch
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 200ffda..f081e80 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -414,6 +414,21 @@ static void determine_author_info(void)
- 	author_date = date;
- }
- 
-+static int is_rfc2822_footer(const char *line)
-+{
-+	int ch;
-+
-+	while ((ch = *line++)) {
-+		if (ch == ':')
-+			return 1;
-+		if ((33 <= ch && ch <= 57) ||
-+		    (59 <= ch && ch <= 126))
-+			continue;
-+		break;
-+	}
-+	return 0;
-+}
-+
- static int prepare_to_commit(const char *index_file, const char *prefix,
- 			     struct wt_status *s)
- {
-@@ -489,7 +504,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		for (i = sb.len - 1; i > 0 && sb.buf[i - 1] != '\n'; i--)
- 			; /* do nothing */
- 		if (prefixcmp(sb.buf + i, sob.buf)) {
--			if (prefixcmp(sb.buf + i, sign_off_header))
-+			if (!is_rfc2822_footer(sb.buf + i))
- 				strbuf_addch(&sb, '\n');
- 			strbuf_addbuf(&sb, &sob);
- 		}
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index e2ef532..05542b4 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -247,6 +247,25 @@ $existing" &&
- 
- '
- 
-+test_expect_success 'signoff gap' '
-+
-+	echo 3 >positive &&
-+	git add positive &&
-+	alt="Alt-RFC-822-Header: Value" &&
-+	git commit -s -m "welcome
-+
-+$alt" &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
-+	(
-+		echo welcome
-+		echo
-+		echo $alt
-+		git var GIT_COMMITTER_IDENT |
-+		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
-+	) >expected &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'multiple -m' '
- 
- 	>negative &&
--- 
-1.6.5.1
+Which of course you could do in one command if you wanted to live
+(more) dangerously.
+
+> > Am I missing some part of your argument?
+> 
+> I do not see much point (other than your "rename" example) in pushing what
+> you got from the other end without changing anything yourself back to the
+> same remote.
+
+I don't either; my hope was that we can make that case a little bit
+easier without creating undue hardship for anybody else.
+
+> There was a thread in which people argued that the primary thing that is
+> dangerous in this sequence
+> 
+>     $ git checkout origin/next; work-commit; work-commit; ...
+> 
+> is when you leave the detached HEAD state without saving it to a local
+> branch.  I think what is more dangerous is that it will not give the user
+> a solid understanding that these commits do _not_ change origin/next in
+> any way.  After doing the above, it is understandable that a novice would
+> mistakenly think: "I started from origin/next and built some, let's push
+> the result".
+
+I suppose it's possible. I don't have any evidence that users actually
+think that way.
+
+> With such a misconception, you will see the likely mistake here, too:
+> 
+>     $ git push origin origin/next:refs/heads/next
+> 
+> If "rename" is the _only_ valid reason you might want to push what you got
+> from there back to the same remote, _and_ if "rename" is something very
+> often needed, I think we would prefer to have a way to support that
+> operation directly, instead of more general DWIM that would risk passing
+> mistakes like the above unwarned.
+
+OK, I can buy that. It would be much nicer even to support explicit
+renaming (in fact, the user request started with that, and I just didn't
+want to give them an answer that involved refs/heads/, which I think is
+unnecessarily scary to users).
+
+> IOW, it's between "prevent push with dubious $src from happening in the
+> first place" vs "give them rope".  Historically I always sided with the
+> latter camp, but I am trying to play a devil's advocate for a change ;-).
+
+Heh. Thanks for explaining your thinking.
+
+Let's scrap this for now, then. Remote rename doesn't actually come up
+very often, and I agree that it would be nice to have an actual atomic
+movement, which is what people really want.
+
+-Peff
