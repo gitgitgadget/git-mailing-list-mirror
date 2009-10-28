@@ -1,141 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Teach 'git merge' and 'git pull' the option --ff-only
-Date: Wed, 28 Oct 2009 15:45:34 -0700
-Message-ID: <7vk4yfi1dd.fsf@alter.siamese.dyndns.org>
-References: <4AE8C281.50104@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v3 1/2] filter-branch: stop special-casing $filter_subdir argument
+Date: Wed, 28 Oct 2009 23:59:16 +0100
+Message-ID: <6e01558f719f4bfcd12f3c6dc5657790e86c874d.1256770377.git.trast@student.ethz.ch>
+References: <4AE0187C.4040608@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Bj=C3=B6rn?= Gustavsson <bgustavsson@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 28 23:45:59 2009
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 29 00:00:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3HHB-0006xX-RB
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 23:45:58 +0100
+	id 1N3HVI-00050L-1d
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 00:00:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754216AbZJ1Wps convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Oct 2009 18:45:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754211AbZJ1Wps
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 18:45:48 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61060 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754156AbZJ1Wpr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Oct 2009 18:45:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9406B89EE0;
-	Wed, 28 Oct 2009 18:45:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=4Z4XtpZDcJ1a
-	lSK1vsJ7+9JQ184=; b=ZG1bAVJSEXtgzgG1wVXfR/4r/FIi7DGXPOlj8vg2DZXs
-	j0f/JXGDX+7n3gjJrNd+PQnIV1C678r9NbgmgMOYT2EnXxUbsTuqnMC90FwoInKG
-	oLxzUD5DDP87WLsnwI5GbwU62h2zLAaeAyFClghGgJOlvFvgmmYWLJQl6UnpdV0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=uORMYR
-	WRy42HEHoT5kzeBLfUARrv11+Kcrj45FIF+F89N75ybVeCqSGdjEftXjD0KsXQ4x
-	mhfk9wJa36rcStMMVYr8YodawIojTOuNai+HfvKnnx450dtHVaGgncAMccUMNIki
-	Te4kwy81ApSzG5sUVLyvCGKotTlXttdGcZtQ8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 75B9989EDF;
-	Wed, 28 Oct 2009 18:45:48 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 25A9189EDA; Wed, 28 Oct 2009
- 18:45:40 -0400 (EDT)
-In-Reply-To: <4AE8C281.50104@gmail.com> (=?utf-8?Q?=22Bj=C3=B6rn?=
- Gustavsson"'s message of "Wed\, 28 Oct 2009 23\:15\:29 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A2E99D96-C413-11DE-89AD-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1752350AbZJ1XAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 19:00:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752094AbZJ1XAR
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 19:00:17 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:40134 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751862AbZJ1XAQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 19:00:16 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 29 Oct
+ 2009 00:00:22 +0100
+Received: from localhost.localdomain (84.74.103.245) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 28 Oct
+ 2009 23:59:58 +0100
+X-Mailer: git-send-email 1.6.5.1.161.g3b9c0
+In-Reply-To: <4AE0187C.4040608@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131507>
 
-Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com> writes:
+Handling $filter_subdir in the usual way requires a separate case at
+every use, because the variable is empty when unused.
 
-> For convenience in scripts and aliases, add the option
-> --ff-only to only allow fast-forwards.
->
-> Acknowledgements: I did look at Yuval Kogman's earlier
-> patch (107768 in gmane), mainly as shortcut to find my
-> way in the code, but I did not copy anything directly.
->
-> Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
+Furthermore, the case for --subdirectory-filter supplies its own --,
+so the user cannot provide one himself, so the following was
+impossible:
 
-Thanks.  I think you covered the points in the old discussion thread.
+  git filter-branch --subdirectory-filter subdir -- --all -- subdir/file
 
-> diff --git a/Documentation/merge-options.txt b/Documentation/merge-op=
-tions.txt
-> index adadf8e..fbf8976 100644
-> --- a/Documentation/merge-options.txt
-> +++ b/Documentation/merge-options.txt
-> @@ -60,6 +60,10 @@
->  	a fast-forward, only update the branch pointer. This is
->  	the default behavior of git-merge.
-> =20
-> +--ff-only::
-> +	Refuse to merge unless the merge can be resolved as a
-> +	fast-forward.
+To keep the argument handling sane, we filter $@ to contain only the
+non-revision arguments, and store all revisions in $ref_args.  The
+$ref_args are easy to handle since only the SHA1s are needed; the
+actual branch names have already been stored in $tempdir/heads at this
+point.
 
-Do you or do you not allow "already up to date"?  I think it makes sens=
-e
-to allow it, but it is unclear from these two lines.
+An extra separating -- is only required if the user did not provide
+any non-revision arguments, as the latter disambiguate the
+$filter_subdir following after them (or fail earlier because they are
+ambiguous themselves).
 
-> @@ -874,6 +877,9 @@ int cmd_merge(int argc, const char **argv, const =
-char *prefix)
->  		option_commit =3D 0;
->  	}
-> =20
-> +	if (!allow_fast_forward && fast_forward_only)
-> +		die("You cannot combine --no-ff with --ff-only.");
+Thanks to Johannes Sixt for suggesting this solution.
 
-Are these the only nonsensical combinations?  How should this interact
-with other options, e.g. --squash or --message?
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
-> @@ -969,8 +975,11 @@ int cmd_merge(int argc, const char **argv, const=
- char *prefix)
->  	}
-> =20
->  	for (i =3D 0; i < use_strategies_nr; i++) {
-> -		if (use_strategies[i]->attr & NO_FAST_FORWARD)
-> +		if (use_strategies[i]->attr & NO_FAST_FORWARD) {
->  			allow_fast_forward =3D 0;
-> +			if (fast_forward_only)
-> +				die("You cannot combine --ff-only with the merge strategy '%s'."=
-, use_strategies[i]->name);
-> +		}
+Johannes Sixt wrote:
+> When the shell expands $variable (outside quotes), it does not apply
+> quotes anymore, but only word-splits using $IFS. In your code, the words
+> would contain literal single-quotes, and paths with spaces would still be
+> split into words.
 
-I am not convinced this tests the right condition nor it is placed at t=
-he
-right place in the codepath---even if a specified strategy happens to
-allow fast-forward, wouldn't it be nonsense to say
+If there's a good reason for these weird rules, I'm still missing
+it...
 
-    $ git merge --ff-only -s resolve that-one
+But your suggestion works very nicely.
 
-in the first place?  Note that I am not saying "I am convinced this is
-wrong."
+ git-filter-branch.sh |   21 ++++++++++++++-------
+ 1 files changed, 14 insertions(+), 7 deletions(-)
 
-> @@ -1040,7 +1049,7 @@ int cmd_merge(int argc, const char **argv, cons=
-t char *prefix)
->  		 * only one common.
->  		 */
->  		refresh_cache(REFRESH_QUIET);
-> -		if (allow_trivial) {
-> +		if (allow_trivial && !fast_forward_only) {
-
-Good.
-
-> @@ -1079,6 +1088,9 @@ int cmd_merge(int argc, const char **argv, cons=
-t char *prefix)
->  		}
->  	}
-> =20
-> +	if (fast_forward_only)
-> +		die("Not possible to fast forward, aborting.");
-
-Good.
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index a480d6f..da23b99 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -257,15 +257,23 @@ git read-tree || die "Could not seed the index"
+ # map old->new commit ids for rewriting parents
+ mkdir ../map || die "Could not create map/ directory"
+ 
++dashdash=
++test -z "$(git rev-parse --no-revs "$@")" && dashdash=--
++ref_args=$(git rev-parse --revs-only "$@")
++
+ case "$filter_subdir" in
+ "")
+-	git rev-list --reverse --topo-order --default HEAD \
+-		--parents --simplify-merges "$@"
++	eval set -- "$(git rev-parse --sq --no-revs "$@")"
+ 	;;
+ *)
+-	git rev-list --reverse --topo-order --default HEAD \
+-		--parents --simplify-merges "$@" -- "$filter_subdir"
+-esac > ../revs || die "Could not get the commits"
++	eval set -- "$(git rev-parse --sq --no-revs "$@")" \
++	    $dashdash "$filter_subdir"
++	;;
++esac
++
++git rev-list --reverse --topo-order --default HEAD \
++	--parents --simplify-merges $ref_args "$@" \
++	> ../revs || die "Could not get the commits"
+ commits=$(wc -l <../revs | tr -d " ")
+ 
+ test $commits -eq 0 && die "Found nothing to rewrite"
+@@ -356,8 +364,7 @@ then
+ 	do
+ 		sha1=$(git rev-parse "$ref"^0)
+ 		test -f "$workdir"/../map/$sha1 && continue
+-		ancestor=$(git rev-list --simplify-merges -1 \
+-				$ref -- "$filter_subdir")
++		ancestor=$(git rev-list --simplify-merges -1 "$ref" "$@")
+ 		test "$ancestor" && echo $(map $ancestor) >> "$workdir"/../map/$sha1
+ 	done < "$tempdir"/heads
+ fi
+-- 
+1.6.5.1.161.g3b9c0
