@@ -1,161 +1,119 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v3 2/2] filter-branch: nearest-ancestor rewriting outside subdir filter
-Date: Wed, 28 Oct 2009 23:59:17 +0100
-Message-ID: <a11809cee976bb42102dbd9b2afb06b9e5b587bf.1256770377.git.trast@student.ethz.ch>
-References: <6e01558f719f4bfcd12f3c6dc5657790e86c874d.1256770377.git.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Add '--bisect' revision machinery argument
+Date: Wed, 28 Oct 2009 16:07:34 -0700
+Message-ID: <7viqdzgls9.fsf@alter.siamese.dyndns.org>
+References: <alpine.LFD.2.01.0910271124110.31845@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 29 00:00:33 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Oct 29 00:08:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3HVI-00050L-In
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 00:00:32 +0100
+	id 1N3Hcp-0007qQ-SP
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 00:08:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753023AbZJ1XAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 19:00:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752094AbZJ1XAT
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 19:00:19 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:40134 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751915AbZJ1XAR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 19:00:17 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 29 Oct
- 2009 00:00:22 +0100
-Received: from localhost.localdomain (84.74.103.245) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 28 Oct
- 2009 23:59:58 +0100
-X-Mailer: git-send-email 1.6.5.1.161.g3b9c0
-In-Reply-To: <6e01558f719f4bfcd12f3c6dc5657790e86c874d.1256770377.git.trast@student.ethz.ch>
+	id S1754026AbZJ1XIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 19:08:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753511AbZJ1XIJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 19:08:09 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44697 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751877AbZJ1XII (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 19:08:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 98FA76A284;
+	Wed, 28 Oct 2009 19:08:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cA3YECKZEKc+4L0A7BpInkahcpo=; b=EGwAT/
+	eXtW1iuBK5k/W4kY/1+Dj2e44CG8qZolG67otGAGIZ304n51oZecrDOHvTbKTaww
+	WJE61HGTuHHzCSIp4F3gyLcXXwxH+ZtzGYCLdfbGDZqU8UN9E7hDy/LonNEWptpK
+	wGwGKmP9GcQGAo82p3ghH7DNEHKDN+93BWWws=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Kd9i0WOtGmsNg6SbzTNifyq/dbSilQff
+	2gu3HMK7lDkn1uFRycte2DB2qrFj+Ak2bSUbci8HnbF8j/pQsV09sgaVpmKJLsWI
+	TRQBmFQkOt7K4It13DwNIPJVmRIbSn4Zj1ZA4MzgbkZCb6FRcTjt2sAzEwncJeFE
+	ZWhNR4UWxyw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B9C96A281;
+	Wed, 28 Oct 2009 19:08:07 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BE8216A27F; Wed, 28 Oct
+ 2009 19:07:55 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.01.0910271124110.31845@localhost.localdomain>
+ (Linus Torvalds's message of "Tue\, 27 Oct 2009 11\:28\:07 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C10134A8-C416-11DE-9B97-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131509>
 
-Since a0e4639 (filter-branch: fix ref rewriting with
---subdirectory-filter, 2008-08-12) git-filter-branch has done
-nearest-ancestor rewriting when using a --subdirectory-filter.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-However, that rewriting strategy is also a useful building block in
-other tasks.  For example, if you want to split out a subset of files
-from your history, you would typically call
+> So this adds "--bisect" as a revision parsing argument, and as a result it 
+> just works with all the normal logging tools. So now I can just do
+>
+> 	gitk --bisect --simplify-by-decoration filename-here
 
-  git filter-branch -- <refs> -- <files>
+This shows a very nice direction to evolve, but your patch as-is breaks
+"rev-list --bisect", I think. Call to your setup_revisions() eats the
+command line "--bisect" option but cmd_rev_list() wants to see it to go
+into the "bisection" mode of traversal.
 
-But this fails for all refs that do not point directly to a commit
-that affects <files>, because their referenced commit will not be
-rewritten and the ref remains untouched.
+Also, the helper of "git bisect" can and probably should be taught to just
+ask this new behaviour from the revision machinery, instead of collecting
+good and bad refs itself using bisect.c::read_bisect_refs().
 
-The code was already there for the --subdirectory-filter case, so just
-introduce an option that enables it independently.
+Here is a short-term fix that can be squashed in, in order to allow t6022
+to pass again.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+ builtin-rev-list.c |    2 ++
+ revision.c         |    1 +
+ revision.h         |    1 +
+ 3 files changed, 4 insertions(+), 0 deletions(-)
 
-Same as v2.
-
- Documentation/git-filter-branch.txt |   13 ++++++++++++-
- git-filter-branch.sh                |    9 ++++++++-
- t/t7003-filter-branch.sh            |   18 ++++++++++++++++++
- 3 files changed, 38 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index 2b40bab..394a77a 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -159,7 +159,18 @@ to other tags will be rewritten to point to the underlying commit.
- --subdirectory-filter <directory>::
- 	Only look at the history which touches the given subdirectory.
- 	The result will contain that directory (and only that) as its
--	project root.
-+	project root.  Implies --remap-to-ancestor.
-+
-+--remap-to-ancestor::
-+	Rewrite refs to the nearest rewritten ancestor instead of
-+	ignoring them.
-++
-+Normally, positive refs on the command line are only changed if the
-+commit they point to was rewritten.  However, you can limit the extent
-+of this rewriting by using linkgit:rev-list[1] arguments, e.g., path
-+limiters.  Refs pointing to such excluded commits would then normally
-+be ignored.  With this option, they are instead rewritten to point at
-+the nearest ancestor that was not excluded.
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 4ba1c12..32bf033 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -319,6 +319,8 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
  
- --prune-empty::
- 	Some kind of filters will generate empty commits, that left the tree
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index da23b99..ad2bc6f 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -125,6 +125,7 @@ filter_subdir=
- orig_namespace=refs/original/
- force=
- prune_empty=
-+remap_to_ancestor=
- while :
- do
- 	case "$1" in
-@@ -137,6 +138,11 @@ do
- 		force=t
- 		continue
- 		;;
-+	--remap-to-ancestor)
-+		shift
-+		remap_to_ancestor=t
-+		continue
-+		;;
- 	--prune-empty)
- 		shift
- 		prune_empty=t
-@@ -182,6 +188,7 @@ do
- 		;;
- 	--subdirectory-filter)
- 		filter_subdir="$OPTARG"
-+		remap_to_ancestor=t
- 		;;
- 	--original)
- 		orig_namespace=$(expr "$OPTARG/" : '\(.*[^/]\)/*$')/
-@@ -358,7 +365,7 @@ done <../revs
- # revision walker.  Fix it by mapping these heads to the unique nearest
- # ancestor that survived the pruning.
+ 	memset(&info, 0, sizeof(info));
+ 	info.revs = &revs;
++	if (revs.bisect)
++		bisect_list = 1;
  
--if test "$filter_subdir"
-+if test "$remap_to_ancestor" = t
- then
- 	while read ref
- 	do
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 329c851..9503875 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -288,4 +288,22 @@ test_expect_success 'Prune empty commits' '
- 	test_cmp expect actual
- '
+ 	quiet = DIFF_OPT_TST(&revs.diffopt, QUIET);
+ 	for (i = 1 ; i < argc; i++) {
+diff --git a/revision.c b/revision.c
+index 80a0528..a36c0d9 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1273,6 +1273,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ 			if (!strcmp(arg, "--bisect")) {
+ 				handle_refs(revs, flags, for_each_bad_bisect_ref);
+ 				handle_refs(revs, flags ^ UNINTERESTING, for_each_good_bisect_ref);
++				revs->bisect = 1;
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--tags")) {
+diff --git a/revision.h b/revision.h
+index b6421a6..921656a 100644
+--- a/revision.h
++++ b/revision.h
+@@ -63,6 +63,7 @@ struct rev_info {
+ 			reverse:1,
+ 			reverse_output_stage:1,
+ 			cherry_pick:1,
++			bisect:1,
+ 			first_parent_only:1;
  
-+test_expect_success '--remap-to-ancestor with filename filters' '
-+	git checkout master &&
-+	git reset --hard A &&
-+	test_commit add-foo foo 1 &&
-+	git branch moved-foo &&
-+	test_commit add-bar bar a &&
-+	git branch invariant &&
-+	orig_invariant=$(git rev-parse invariant) &&
-+	git branch moved-bar &&
-+	test_commit change-foo foo 2 &&
-+	git filter-branch -f --remap-to-ancestor \
-+		moved-foo moved-bar A..master \
-+		-- -- foo &&
-+	test $(git rev-parse moved-foo) = $(git rev-parse moved-bar) &&
-+	test $(git rev-parse moved-foo) = $(git rev-parse master^) &&
-+	test $orig_invariant = $(git rev-parse invariant)
-+'
-+
- test_done
--- 
-1.6.5.1.161.g3b9c0
+ 	/* Diff flags */
