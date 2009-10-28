@@ -1,174 +1,430 @@
-From: David Brown <davidb@codeaurora.org>
-Subject: [PATCH] commit: More generous accepting of RFC-2822 footer lines.
-Date: Wed, 28 Oct 2009 10:13:44 -0700
-Message-ID: <20091028171344.GA22290@quaoar.codeaurora.org>
-References: <20091027234520.GA11433@quaoar.codeaurora.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] t5540: test both smart and dumb protocols
+Date: Wed, 28 Oct 2009 18:52:26 +0100
+Message-ID: <20091028175226.GA10264@localhost>
+References: <1256472380-924-1-git-send-email-drizzd@aon.at> <1256472380-924-2-git-send-email-drizzd@aon.at> <1256472380-924-3-git-send-email-drizzd@aon.at> <1256472380-924-4-git-send-email-drizzd@aon.at> <20091028001737.GN10505@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 28 18:13:57 2009
+Cc: Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Oct 28 18:53:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3C5o-0005rw-Th
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 18:13:53 +0100
+	id 1N3Che-0001YA-59
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 18:52:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752929AbZJ1RNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 13:13:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752790AbZJ1RNl
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 13:13:41 -0400
-Received: from wolverine02.qualcomm.com ([199.106.114.251]:31500 "EHLO
-	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752744AbZJ1RNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 13:13:40 -0400
-X-IronPort-AV: E=McAfee;i="5300,2777,5784"; a="26299451"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 28 Oct 2009 10:13:45 -0700
-Received: from quaoar.codeaurora.org (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 8603110004B6
-	for <git@vger.kernel.org>; Wed, 28 Oct 2009 10:17:15 -0700 (PDT)
+	id S1755390AbZJ1Rwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 13:52:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755388AbZJ1Rwq
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 13:52:46 -0400
+Received: from mail-ew0-f208.google.com ([209.85.219.208]:35921 "EHLO
+	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755336AbZJ1Rwg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 13:52:36 -0400
+Received: by ewy4 with SMTP id 4so993334ewy.37
+        for <git@vger.kernel.org>; Wed, 28 Oct 2009 10:52:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=sqarO9gx5jAGUO/9e5ECSCscryl1etjnI6fsHFn4KWs=;
+        b=Eb3nLBYbsorxveTQ7FT32seDVOoGHx5GT9YI1G6gy1hTO4UXQOWM5xmd+fbteMi//d
+         Pmc4qxbK4m9YHCr4Jy4iZ2H+xpSdtd8bS0KQfmVK4VnXFsLBNFqJhTrg1nOwZdks0ysc
+         2jBHWwi4xPJs71fBIO5vcxteIW+wVxoLUVQKM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=JHI9FuFHHd2GJC7rnG6E9dXrT5VQcKobpCWRALs7E9ujmJQrqWRPGlZXxzI7dabpbF
+         Ixnu1GxjZQ5A16UdfPueLn4pNjDvzWjnrW03TUlSfH4LXjoWjLIJGRjVyouO+Lk/M5yX
+         BGVWlkVhKTxaZJZPn+r8Q5wySrdrzxLVBwnxo=
+Received: by 10.211.147.10 with SMTP id z10mr11252452ebn.61.1256752360312;
+        Wed, 28 Oct 2009 10:52:40 -0700 (PDT)
+Received: from darc.lan (p549A75A2.dip.t-dialin.net [84.154.117.162])
+        by mx.google.com with ESMTPS id 20sm3961844ewy.65.2009.10.28.10.52.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 28 Oct 2009 10:52:39 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1N3Ch8-0008F3-SX; Wed, 28 Oct 2009 18:52:26 +0100
 Content-Disposition: inline
-In-Reply-To: <20091027234520.GA11433@quaoar.codeaurora.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20091028001737.GN10505@spearce.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131482>
 
-From: David Brown <davidb@quicinc.com>
 
-'git commit -s' will insert a blank line before the Signed-off-by
-line at the end of the message, unless this last line is a
-Signed-off-by line itself.  Common use has other trailing lines
-at the ends of commit text, in the style of RFC2822 headers.
-
-Be more generous in considering lines to be part of this footer.
-If the last paragraph of the commit message reasonably resembles
-RFC-2822 formatted lines, don't insert that blank line.
-
-The new Signed-off-by line is still only suppressed when the
-author's existing Signed-off-by is the last line of the message.
-
-Signed-off-by: David Brown <davidb@quicinc.com>
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
 ---
- builtin-commit.c  |   43 ++++++++++++++++++++++++++++++++++++++++++-
- t/t7501-commit.sh |   41 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 83 insertions(+), 1 deletions(-)
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 200ffda..c395cbf 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -414,6 +414,47 @@ static void determine_author_info(void)
- 	author_date = date;
+On Tue, Oct 27, 2009 at 05:17:38PM -0700, Shawn O. Pearce wrote:
+> Clemens Buchacher <drizzd@aon.at> wrote:
+> > Set LIB_HTTPD_GIT to enable smart HTTP tests.
+> 
+> My concern here is we have to run the test suite twice in order to
+> test HTTP support.  We should only run it once, with GIT_TEST_HTTPD=1
+> set and have it all run at once.
+
+How about this? The original code is not touched except for the test
+description.
+
+Clemens
+
+ t/lib-httpd.sh       |    2 +
+ t/t5540-http-push.sh |  160 ++-----------------------------------------------
+ t/test-http-push.sh  |  159 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 168 insertions(+), 153 deletions(-)
+ create mode 100755 t/test-http-push.sh
+
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index aaa0a71..cf1f1df 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -121,4 +121,6 @@ stop_httpd() {
+ 
+ 	"$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
+ 		-f "$TEST_PATH/apache.conf" $HTTPD_PARA -k stop
++
++	rm -f "$HTTPD_ROOT_PATH/modules"
  }
+diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
+index 049e129..a156f37 100755
+--- a/t/t5540-http-push.sh
++++ b/t/t5540-http-push.sh
+@@ -1,155 +1,9 @@
+ #!/bin/sh
+-#
+-# Copyright (c) 2008 Clemens Buchacher <drizzd@aon.at>
+-#
  
-+static int ends_rfc2822_footer(struct strbuf *sb)
-+{
-+	int ch;
-+	int hit = 0;
-+	int i, j, k;
-+	int len = sb->len;
-+	int first = 1;
-+	const char *buf = sb->buf;
+-test_description='test http-push
+-
+-This test runs various sanity checks on http-push.'
+-
+-. ./test-lib.sh
+-
+-ROOT_PATH="$PWD"
+-if test -z "$LIB_HTTPD_GIT"
+-then
+-	LIB_HTTPD_DAV=t
+-fi
+-LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'5540'}
+-
+-if git http-push > /dev/null 2>&1 || [ $? -eq 128 ]
+-then
+-	say "skipping test, USE_CURL_MULTI is not defined"
+-	test_done
+-fi
+-
+-. "$TEST_DIRECTORY"/lib-httpd.sh
+-start_httpd
+-
+-test_expect_success 'setup remote repository' '
+-	cd "$ROOT_PATH" &&
+-	mkdir test_repo &&
+-	cd test_repo &&
+-	git init &&
+-	: >path1 &&
+-	git add path1 &&
+-	test_tick &&
+-	git commit -m initial &&
+-	cd - &&
+-	git clone --bare test_repo test_repo.git &&
+-	cd test_repo.git &&
+-	ORIG_HEAD=$(git rev-parse --verify HEAD) &&
+-	if test -n "$LIB_HTTPD_GIT"
+-	then
+-		git config http.receivepack true
+-	else
+-		git --bare update-server-info &&
+-		mv hooks/post-update.sample hooks/post-update
+-	fi &&
+-	cd - &&
+-	mv test_repo.git "$HTTPD_GIT_PATH"
+-'
+-
+-test_expect_success 'clone remote repository' '
+-	cd "$ROOT_PATH" &&
+-	git clone $HTTPD_GIT_URL/test_repo.git test_repo_clone
+-'
+-
+-test_expect_success 'push to remote repository with packed refs' '
+-	cd "$ROOT_PATH"/test_repo_clone &&
+-	: >path2 &&
+-	git add path2 &&
+-	test_tick &&
+-	git commit -m path2 &&
+-	HEAD=$(git rev-parse --verify HEAD) &&
+-	git push &&
+-	(cd "$HTTPD_GIT_PATH"/test_repo.git &&
+-	 test $HEAD = $(git rev-parse --verify HEAD))
+-'
+-
+-test_expect_success 'push already up-to-date' '
+-	git push
+-'
+-
+-test_expect_success 'push to remote repository with unpacked refs' '
+-	(cd "$HTTPD_GIT_PATH"/test_repo.git &&
+-	 rm packed-refs &&
+-	 git update-ref refs/heads/master $ORIG_HEAD &&
+-	 git --bare update-server-info) &&
+-	git push &&
+-	(cd "$HTTPD_GIT_PATH"/test_repo.git &&
+-	 test $HEAD = $(git rev-parse --verify HEAD))
+-'
+-
+-test_expect_success 'http-push fetches unpacked objects' '
+-	cp -R "$HTTPD_GIT_PATH"/test_repo.git \
+-		"$HTTPD_GIT_PATH"/test_repo_unpacked.git &&
+-
+-	git clone $HTTPD_GIT_URL/test_repo_unpacked.git \
+-		"$ROOT_PATH"/fetch_unpacked &&
+-
+-	# By reset, we force git to retrieve the object
+-	(cd "$ROOT_PATH"/fetch_unpacked &&
+-	 git reset --hard HEAD^ &&
+-	 git remote rm origin &&
+-	 git reflog expire --expire=0 --all &&
+-	 git prune &&
+-	 git push -f -v $HTTPD_GIT_URL/test_repo_unpacked.git master)
+-'
+-
+-test_expect_success 'http-push fetches packed objects' '
+-	cp -R "$HTTPD_GIT_PATH"/test_repo.git \
+-		"$HTTPD_GIT_PATH"/test_repo_packed.git &&
+-
+-	git clone $HTTPD_GIT_URL/test_repo_packed.git \
+-		"$ROOT_PATH"/test_repo_clone_packed &&
+-
+-	(cd "$HTTPD_GIT_PATH"/test_repo_packed.git &&
+-	 git --bare repack &&
+-	 git --bare prune-packed) &&
+-
+-	# By reset, we force git to retrieve the packed object
+-	(cd "$ROOT_PATH"/test_repo_clone_packed &&
+-	 git reset --hard HEAD^ &&
+-	 git remote rm origin &&
+-	 git reflog expire --expire=0 --all &&
+-	 git prune &&
+-	 git push -f -v $HTTPD_GIT_URL/test_repo_packed.git master)
+-'
+-
+-test_expect_success 'create and delete remote branch' '
+-	cd "$ROOT_PATH"/test_repo_clone &&
+-	git checkout -b dev &&
+-	: >path3 &&
+-	git add path3 &&
+-	test_tick &&
+-	git commit -m dev &&
+-	git push origin dev &&
+-	git fetch &&
+-	git push origin :dev &&
+-	git fetch &&
+-	test_must_fail git show-ref --verify refs/remotes/origin/dev
+-'
+-
+-test -n "$LIB_HTTPD_GIT" ||
+-test_expect_success 'MKCOL sends directory names with trailing slashes' '
+-
+-	! grep "\"MKCOL.*[^/] HTTP/[^ ]*\"" < "$HTTPD_ROOT_PATH"/access.log
+-
+-'
+-
+-x1="[0-9a-f]"
+-x2="$x1$x1"
+-x5="$x1$x1$x1$x1$x1"
+-x38="$x5$x5$x5$x5$x5$x5$x5$x1$x1$x1"
+-x40="$x38$x2"
+-
+-test -n "$LIB_HTTPD_GIT" ||
+-test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
+-	sed -e "s/PUT /OP /" -e "s/MOVE /OP /" "$HTTPD_ROOT_PATH"/access.log |
+-	grep -e "\"OP .*/objects/$x2/${x38}_$x40 HTTP/[.0-9]*\" 20[0-9] "
+-
+-'
+-
+-stop_httpd
+-
+-test_done
++LIB_HTTPD_GIT=t
++export LIB_HTTPD_GIT
++./test-http-push.sh $@
++sleep 1
++LIB_HTTPD_GIT=
++export LIB_HTTPD_GIT
++./test-http-push.sh $@
+diff --git a/t/test-http-push.sh b/t/test-http-push.sh
+new file mode 100755
+index 0000000..c557541
+--- /dev/null
++++ b/t/test-http-push.sh
+@@ -0,0 +1,159 @@
++#!/bin/sh
 +
-+	for (i = len - 1; i > 0; i--) {
-+		if (hit && buf[i] == '\n')
-+			break;
-+		hit = (buf[i] == '\n');
-+	}
++if test -n "$LIB_HTTPD_GIT"
++then
++	protocol=smart
++else
++	protocol=dumb
++fi
 +
-+	while (i < len - 1 && buf[i] == '\n')
-+		i++;
++test_description="test http-push ($protocol)
 +
-+	for (; i < len; i = k) {
-+		for (k = i; k < len && buf[k] != '\n'; k++)
-+			; /* do nothing */
-+		k++;
++This test runs various sanity checks on http-push."
 +
-+		if ((buf[k] == ' ' || buf[k] == '\t') && !first)
-+			continue;
++. ./test-lib.sh
 +
-+		first = 0;
++ROOT_PATH="$PWD"
++if test -z "$LIB_HTTPD_GIT"
++then
++	LIB_HTTPD_DAV=t
++fi
++LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'5540'}
 +
-+		for (j = 0; i + j < len; j++) {
-+			ch = buf[i + j];
-+			if (ch == ':')
-+				break;
-+			if (isalnum(ch) ||
-+			    (ch == '-'))
-+				continue;
-+			return 0;
-+		}
-+	}
-+	return 1;
-+}
++if git http-push > /dev/null 2>&1 || [ $? -eq 128 ]
++then
++	say "skipping test, USE_CURL_MULTI is not defined"
++	test_done
++fi
 +
- static int prepare_to_commit(const char *index_file, const char *prefix,
- 			     struct wt_status *s)
- {
-@@ -489,7 +530,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		for (i = sb.len - 1; i > 0 && sb.buf[i - 1] != '\n'; i--)
- 			; /* do nothing */
- 		if (prefixcmp(sb.buf + i, sob.buf)) {
--			if (prefixcmp(sb.buf + i, sign_off_header))
-+			if (!ends_rfc2822_footer(&sb))
- 				strbuf_addch(&sb, '\n');
- 			strbuf_addbuf(&sb, &sob);
- 		}
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index e2ef532..d2de576 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -247,6 +247,47 @@ $existing" &&
- 
- '
- 
-+test_expect_success 'signoff gap' '
++. "$TEST_DIRECTORY"/lib-httpd.sh
++start_httpd
 +
-+	echo 3 >positive &&
-+	git add positive &&
-+	alt="Alt-RFC-822-Header: Value" &&
-+	git commit -s -m "welcome
-+
-+$alt" &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
-+	(
-+		echo welcome
-+		echo
-+		echo $alt
-+		git var GIT_COMMITTER_IDENT |
-+		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
-+	) >expected &&
-+	test_cmp expected actual
++test_expect_success 'setup remote repository' '
++	cd "$ROOT_PATH" &&
++	mkdir test_repo &&
++	cd test_repo &&
++	git init &&
++	: >path1 &&
++	git add path1 &&
++	test_tick &&
++	git commit -m initial &&
++	cd - &&
++	git clone --bare test_repo test_repo.git &&
++	cd test_repo.git &&
++	ORIG_HEAD=$(git rev-parse --verify HEAD) &&
++	if test -n "$LIB_HTTPD_GIT"
++	then
++		git config http.receivepack true
++	else
++		git --bare update-server-info &&
++		mv hooks/post-update.sample hooks/post-update
++	fi &&
++	cd - &&
++	mv test_repo.git "$HTTPD_GIT_PATH"
 +'
 +
-+test_expect_success 'signoff gap 2' '
-+
-+	echo 4 >positive &&
-+	git add positive &&
-+	alt="fixed: 34" &&
-+	git commit -s -m "welcome
-+
-+We have now
-+$alt" &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
-+	(
-+		echo welcome
-+		echo
-+		echo We have now
-+		echo $alt
-+		echo
-+		git var GIT_COMMITTER_IDENT |
-+		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
-+	) >expected &&
-+	test_cmp expected actual
++test_expect_success 'clone remote repository' '
++	cd "$ROOT_PATH" &&
++	git clone $HTTPD_GIT_URL/test_repo.git test_repo_clone
 +'
 +
- test_expect_success 'multiple -m' '
- 
- 	>negative &&
++test_expect_success 'push to remote repository with packed refs' '
++	cd "$ROOT_PATH"/test_repo_clone &&
++	: >path2 &&
++	git add path2 &&
++	test_tick &&
++	git commit -m path2 &&
++	HEAD=$(git rev-parse --verify HEAD) &&
++	git push &&
++	(cd "$HTTPD_GIT_PATH"/test_repo.git &&
++	 test $HEAD = $(git rev-parse --verify HEAD))
++'
++
++test_expect_success 'push already up-to-date' '
++	git push
++'
++
++test_expect_success 'push to remote repository with unpacked refs' '
++	(cd "$HTTPD_GIT_PATH"/test_repo.git &&
++	 rm packed-refs &&
++	 git update-ref refs/heads/master $ORIG_HEAD &&
++	 git --bare update-server-info) &&
++	git push &&
++	(cd "$HTTPD_GIT_PATH"/test_repo.git &&
++	 test $HEAD = $(git rev-parse --verify HEAD))
++'
++
++test_expect_success 'http-push fetches unpacked objects' '
++	cp -R "$HTTPD_GIT_PATH"/test_repo.git \
++		"$HTTPD_GIT_PATH"/test_repo_unpacked.git &&
++
++	git clone $HTTPD_GIT_URL/test_repo_unpacked.git \
++		"$ROOT_PATH"/fetch_unpacked &&
++
++	# By reset, we force git to retrieve the object
++	(cd "$ROOT_PATH"/fetch_unpacked &&
++	 git reset --hard HEAD^ &&
++	 git remote rm origin &&
++	 git reflog expire --expire=0 --all &&
++	 git prune &&
++	 git push -f -v $HTTPD_GIT_URL/test_repo_unpacked.git master)
++'
++
++test_expect_success 'http-push fetches packed objects' '
++	cp -R "$HTTPD_GIT_PATH"/test_repo.git \
++		"$HTTPD_GIT_PATH"/test_repo_packed.git &&
++
++	git clone $HTTPD_GIT_URL/test_repo_packed.git \
++		"$ROOT_PATH"/test_repo_clone_packed &&
++
++	(cd "$HTTPD_GIT_PATH"/test_repo_packed.git &&
++	 git --bare repack &&
++	 git --bare prune-packed) &&
++
++	# By reset, we force git to retrieve the packed object
++	(cd "$ROOT_PATH"/test_repo_clone_packed &&
++	 git reset --hard HEAD^ &&
++	 git remote rm origin &&
++	 git reflog expire --expire=0 --all &&
++	 git prune &&
++	 git push -f -v $HTTPD_GIT_URL/test_repo_packed.git master)
++'
++
++test_expect_success 'create and delete remote branch' '
++	cd "$ROOT_PATH"/test_repo_clone &&
++	git checkout -b dev &&
++	: >path3 &&
++	git add path3 &&
++	test_tick &&
++	git commit -m dev &&
++	git push origin dev &&
++	git fetch &&
++	git push origin :dev &&
++	git fetch &&
++	test_must_fail git show-ref --verify refs/remotes/origin/dev
++'
++
++test -n "$LIB_HTTPD_GIT" ||
++test_expect_success 'MKCOL sends directory names with trailing slashes' '
++
++	! grep "\"MKCOL.*[^/] HTTP/[^ ]*\"" < "$HTTPD_ROOT_PATH"/access.log
++
++'
++
++x1="[0-9a-f]"
++x2="$x1$x1"
++x5="$x1$x1$x1$x1$x1"
++x38="$x5$x5$x5$x5$x5$x5$x5$x1$x1$x1"
++x40="$x38$x2"
++
++test -n "$LIB_HTTPD_GIT" ||
++test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
++	sed -e "s/PUT /OP /" -e "s/MOVE /OP /" "$HTTPD_ROOT_PATH"/access.log |
++	grep -e "\"OP .*/objects/$x2/${x38}_$x40 HTTP/[.0-9]*\" 20[0-9] "
++
++'
++
++stop_httpd
++
++test_done
 -- 
-1.6.5.1
+1.6.5.1.208.gd7b37
