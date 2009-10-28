@@ -1,43 +1,42 @@
 From: Vietor Liu <vietor@vxwo.org>
-Subject: [PATCH] imap-send.c: fix pointer to be const
-Date: Wed, 28 Oct 2009 15:24:37 +0800
-Message-ID: <1256714677-3659-1-git-send-email-vietor@vxwo.org>
+Subject: [PATCH v2] imap-send.c: fix pointer to be const
+Date: Wed, 28 Oct 2009 15:26:26 +0800
+Message-ID: <1256714786-3723-1-git-send-email-vietor@vxwo.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 28 08:21:49 2009
+X-From: git-owner@vger.kernel.org Wed Oct 28 08:23:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N32qr-0000e6-7U
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 08:21:49 +0100
+	id 1N32sS-0001GR-1V
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 08:23:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932413AbZJ1HVk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Oct 2009 03:21:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932292AbZJ1HVj
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 03:21:39 -0400
-Received: from mail-gx0-f228.google.com ([209.85.217.228]:39180 "EHLO
-	mail-gx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932092AbZJ1HVj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 03:21:39 -0400
-X-Greylist: delayed 1023 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Oct 2009 03:21:39 EDT
-Received: by gxk28 with SMTP id 28so457087gxk.9
-        for <git@vger.kernel.org>; Wed, 28 Oct 2009 00:21:43 -0700 (PDT)
-Received: by 10.150.172.4 with SMTP id u4mr6152207ybe.252.1256714503548;
-        Wed, 28 Oct 2009 00:21:43 -0700 (PDT)
+	id S932541AbZJ1HXS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Oct 2009 03:23:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932446AbZJ1HXS
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 03:23:18 -0400
+Received: from mail-yw0-f202.google.com ([209.85.211.202]:57740 "EHLO
+	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932292AbZJ1HXR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 03:23:17 -0400
+Received: by ywh40 with SMTP id 40so412834ywh.33
+        for <git@vger.kernel.org>; Wed, 28 Oct 2009 00:23:22 -0700 (PDT)
+Received: by 10.150.76.36 with SMTP id y36mr1747913yba.44.1256714602557;
+        Wed, 28 Oct 2009 00:23:22 -0700 (PDT)
 Received: from localhost.localdomain ([123.113.74.202])
-        by mx.google.com with ESMTPS id 16sm358306gxk.3.2009.10.28.00.21.40
+        by mx.google.com with ESMTPS id 15sm357708gxk.4.2009.10.28.00.23.20
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 28 Oct 2009 00:21:43 -0700 (PDT)
+        Wed, 28 Oct 2009 00:23:21 -0700 (PDT)
 X-Mailer: git-send-email 1.6.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131430>
 
 =46ixes some compiler warnings:
 imap-send.c: In function =E2=80=98ssl_socket_connect=E2=80=99:
