@@ -1,75 +1,174 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: From 200 to 404 to 407.
-Date: Wed, 28 Oct 2009 12:48:47 -0400
-Message-ID: <32541b130910280948u57535c2bnbc30424b7ef13e2a@mail.gmail.com>
-References: <82fd2c5d0910270318wc30bc44tfd3362933d3f62cf@mail.gmail.com> 
-	<32541b130910270953w6bd35ddctd471e682830b8f62@mail.gmail.com> 
-	<82fd2c5d0910280138r52baff98p3f4ff65e968b0d37@mail.gmail.com> 
-	<32541b130910280850t5b4baa91p90b31b4c1c467e94@mail.gmail.com> 
-	<loom.20091028T170227-957@post.gmane.org>
+From: David Brown <davidb@codeaurora.org>
+Subject: [PATCH] commit: More generous accepting of RFC-2822 footer lines.
+Date: Wed, 28 Oct 2009 10:13:44 -0700
+Message-ID: <20091028171344.GA22290@quaoar.codeaurora.org>
+References: <20091027234520.GA11433@quaoar.codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Peter_Od=E9us?= <peter.odeus@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 28 17:49:17 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 28 18:13:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3Bhz-0000wi-9p
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 17:49:15 +0100
+	id 1N3C5o-0005rw-Th
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 18:13:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754972AbZJ1QtE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Oct 2009 12:49:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754866AbZJ1QtD
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 12:49:03 -0400
-Received: from mail-yw0-f202.google.com ([209.85.211.202]:50512 "EHLO
-	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754761AbZJ1QtC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Oct 2009 12:49:02 -0400
-Received: by ywh40 with SMTP id 40so814757ywh.33
-        for <git@vger.kernel.org>; Wed, 28 Oct 2009 09:49:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5K1rlkZl0j8t/dttSb8blhC6RSkA8DJsgXW8x36Ql6w=;
-        b=lKmWmq8INLR7yAyo2UbScFnHNzohJI7SQAlVfGNO0YqMYKlTxuFnIPxqNckv8Vy8PN
-         NW9VNVHoY9U3wyPMYUGEcJkbs9MLFxKLy7KCJmcs/v/Bb1/kQHHEGwfZojGC82LvcV0n
-         8Tup6LUKpDVoUiOyQIu4qKQVQXW8P8W8Bb0Xk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=qHNNze2TwDR+eVIJNhFm0rovdNLvY2dwl2cqDnLG0Vkf1eqAD8uBEord6ynp1//hkt
-         z3v7bTK4w9bUYhT687qIKoww1mhJmg7f16WeKhO1m0aTCY+BzQ++hgfE5VSqgT1WAGQR
-         C0gvkO1t6y8FeX4nv1lSqtL8BoEfUra113rmw=
-Received: by 10.150.235.17 with SMTP id i17mr18067814ybh.200.1256748547115; 
-	Wed, 28 Oct 2009 09:49:07 -0700 (PDT)
-In-Reply-To: <loom.20091028T170227-957@post.gmane.org>
+	id S1752929AbZJ1RNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 13:13:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752790AbZJ1RNl
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 13:13:41 -0400
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:31500 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752744AbZJ1RNk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 13:13:40 -0400
+X-IronPort-AV: E=McAfee;i="5300,2777,5784"; a="26299451"
+Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
+  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 28 Oct 2009 10:13:45 -0700
+Received: from quaoar.codeaurora.org (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 8603110004B6
+	for <git@vger.kernel.org>; Wed, 28 Oct 2009 10:17:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20091027234520.GA11433@quaoar.codeaurora.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131481>
 
-On Wed, Oct 28, 2009 at 12:10 PM, Peter Od=E9us <peter.odeus@gmail.com>=
- wrote:
-> Anyway. Behind these corporate walls, the proxy is a reality to deal =
-with, so
-> hopefully someone else can bring us closer to a solutiuon.
+From: David Brown <davidb@quicinc.com>
 
-I was just looking at the source and it seems all the curl-related
-stuff is isolated in git/http.c, and is pretty easy to understand.
-Since I have no way to reproduce your problem, I won't attempt to look
-into it myself.  But if you look for "proxy" (and especially
-CURLOPT_PROXY) in that file, you might find something.
+'git commit -s' will insert a blank line before the Signed-off-by
+line at the end of the message, unless this last line is a
+Signed-off-by line itself.  Common use has other trailing lines
+at the ends of commit text, in the style of RFC2822 headers.
 
-Specifically, I would suggest resetting the CURLOPT_PROXY setting
-before each URL request (eg. in new_http_object_request).
+Be more generous in considering lines to be part of this footer.
+If the last paragraph of the commit message reasonably resembles
+RFC-2822 formatted lines, don't insert that blank line.
 
-Hope this helps.
+The new Signed-off-by line is still only suppressed when the
+author's existing Signed-off-by is the last line of the message.
 
-Avery
+Signed-off-by: David Brown <davidb@quicinc.com>
+---
+ builtin-commit.c  |   43 ++++++++++++++++++++++++++++++++++++++++++-
+ t/t7501-commit.sh |   41 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 83 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 200ffda..c395cbf 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -414,6 +414,47 @@ static void determine_author_info(void)
+ 	author_date = date;
+ }
+ 
++static int ends_rfc2822_footer(struct strbuf *sb)
++{
++	int ch;
++	int hit = 0;
++	int i, j, k;
++	int len = sb->len;
++	int first = 1;
++	const char *buf = sb->buf;
++
++	for (i = len - 1; i > 0; i--) {
++		if (hit && buf[i] == '\n')
++			break;
++		hit = (buf[i] == '\n');
++	}
++
++	while (i < len - 1 && buf[i] == '\n')
++		i++;
++
++	for (; i < len; i = k) {
++		for (k = i; k < len && buf[k] != '\n'; k++)
++			; /* do nothing */
++		k++;
++
++		if ((buf[k] == ' ' || buf[k] == '\t') && !first)
++			continue;
++
++		first = 0;
++
++		for (j = 0; i + j < len; j++) {
++			ch = buf[i + j];
++			if (ch == ':')
++				break;
++			if (isalnum(ch) ||
++			    (ch == '-'))
++				continue;
++			return 0;
++		}
++	}
++	return 1;
++}
++
+ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 			     struct wt_status *s)
+ {
+@@ -489,7 +530,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		for (i = sb.len - 1; i > 0 && sb.buf[i - 1] != '\n'; i--)
+ 			; /* do nothing */
+ 		if (prefixcmp(sb.buf + i, sob.buf)) {
+-			if (prefixcmp(sb.buf + i, sign_off_header))
++			if (!ends_rfc2822_footer(&sb))
+ 				strbuf_addch(&sb, '\n');
+ 			strbuf_addbuf(&sb, &sob);
+ 		}
+diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+index e2ef532..d2de576 100755
+--- a/t/t7501-commit.sh
++++ b/t/t7501-commit.sh
+@@ -247,6 +247,47 @@ $existing" &&
+ 
+ '
+ 
++test_expect_success 'signoff gap' '
++
++	echo 3 >positive &&
++	git add positive &&
++	alt="Alt-RFC-822-Header: Value" &&
++	git commit -s -m "welcome
++
++$alt" &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
++	(
++		echo welcome
++		echo
++		echo $alt
++		git var GIT_COMMITTER_IDENT |
++		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
++	) >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success 'signoff gap 2' '
++
++	echo 4 >positive &&
++	git add positive &&
++	alt="fixed: 34" &&
++	git commit -s -m "welcome
++
++We have now
++$alt" &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
++	(
++		echo welcome
++		echo
++		echo We have now
++		echo $alt
++		echo
++		git var GIT_COMMITTER_IDENT |
++		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
++	) >expected &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'multiple -m' '
+ 
+ 	>negative &&
+-- 
+1.6.5.1
