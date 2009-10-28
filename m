@@ -1,101 +1,141 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Getting Ensimag students to work on Git for a few weeks
-Date: Wed, 28 Oct 2009 15:41:32 -0700 (PDT)
-Message-ID: <m3r5sncfbv.fsf@localhost.localdomain>
-References: <vpqocntxhzv.fsf@bauges.imag.fr>
-	<20091027144405.GA12464@localhost>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Teach 'git merge' and 'git pull' the option --ff-only
+Date: Wed, 28 Oct 2009 15:45:34 -0700
+Message-ID: <7vk4yfi1dd.fsf@alter.siamese.dyndns.org>
+References: <4AE8C281.50104@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Wed Oct 28 23:41:42 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Bj=C3=B6rn?= Gustavsson <bgustavsson@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 28 23:45:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3HD3-0005RK-ED
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 23:41:41 +0100
+	id 1N3HHB-0006xX-RB
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 23:45:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753479AbZJ1Wlb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 18:41:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752123AbZJ1Wla
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 18:41:30 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:7571 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752083AbZJ1Wla (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 18:41:30 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so713125fgg.1
-        for <git@vger.kernel.org>; Wed, 28 Oct 2009 15:41:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=XTqG7KB1al0cF3i9fBiKkAEMuhEfqXlDLwOhy1nxUyI=;
-        b=M4ujSencFXlreWQpQXW7xKRGG5B7HkMGT16wsBiwoKKr6ZNf2JwkrudAFX8UhRRyAY
-         6e71lfKwweraalFG259pE/hfLarQzAt+kS5lhufkxcpkr/OOg+id8VkpbaNjdnQeYANU
-         SeI3PKS70IkDsE7rtYeo4Km4tDLsZBS1UZelo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=sQHkGWZ8ipGHixRoYvaeMLckF9R2yfaP1qSXcie2JLxK7+o54cpa0672rRPscsgDsC
-         4Z6Ms4kwtLwb1z4YC4/iGLAMyneAQboBD2Ilxc2NspGSup0jebZvDBdiWrdjpFxvbQdx
-         dwLpMKDZsj1myjgC6LNgentXK+UJ5eRG4kAQo=
-Received: by 10.86.214.34 with SMTP id m34mr1424758fgg.6.1256769693944;
-        Wed, 28 Oct 2009 15:41:33 -0700 (PDT)
-Received: from localhost.localdomain (abvm102.neoplus.adsl.tpnet.pl [83.8.210.102])
-        by mx.google.com with ESMTPS id e3sm3344595fga.13.2009.10.28.15.41.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 28 Oct 2009 15:41:32 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n9SMeur7028599;
-	Wed, 28 Oct 2009 23:41:04 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n9SMeaf9028594;
-	Wed, 28 Oct 2009 23:40:36 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20091027144405.GA12464@localhost>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754216AbZJ1Wps convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Oct 2009 18:45:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754211AbZJ1Wps
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 18:45:48 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61060 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754156AbZJ1Wpr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Oct 2009 18:45:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9406B89EE0;
+	Wed, 28 Oct 2009 18:45:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=4Z4XtpZDcJ1a
+	lSK1vsJ7+9JQ184=; b=ZG1bAVJSEXtgzgG1wVXfR/4r/FIi7DGXPOlj8vg2DZXs
+	j0f/JXGDX+7n3gjJrNd+PQnIV1C678r9NbgmgMOYT2EnXxUbsTuqnMC90FwoInKG
+	oLxzUD5DDP87WLsnwI5GbwU62h2zLAaeAyFClghGgJOlvFvgmmYWLJQl6UnpdV0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=uORMYR
+	WRy42HEHoT5kzeBLfUARrv11+Kcrj45FIF+F89N75ybVeCqSGdjEftXjD0KsXQ4x
+	mhfk9wJa36rcStMMVYr8YodawIojTOuNai+HfvKnnx450dtHVaGgncAMccUMNIki
+	Te4kwy81ApSzG5sUVLyvCGKotTlXttdGcZtQ8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 75B9989EDF;
+	Wed, 28 Oct 2009 18:45:48 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 25A9189EDA; Wed, 28 Oct 2009
+ 18:45:40 -0400 (EDT)
+In-Reply-To: <4AE8C281.50104@gmail.com> (=?utf-8?Q?=22Bj=C3=B6rn?=
+ Gustavsson"'s message of "Wed\, 28 Oct 2009 23\:15\:29 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A2E99D96-C413-11DE-89AD-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131506>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com> writes:
 
-> On Tue, Oct 27, 2009 at 11:12:52AM +0100, Matthieu Moy wrote:
-> 
-> > The students work full-time for about 3 weeks (May 20th to June 16th),
-> > and are grouped by teams of 2 to 4 students. Given my bandwidth, I
-> > plan to propose only one group of 4 students this year, but we may
-> > scale up later, who knows.
-> 
-> That's not much time to get familiar with a complex project like git. So you
-> will have to do something extremely simple, which probably means that it
-> won't be anything exciting. If it were, someone else would have done it
-> already.
+> For convenience in scripts and aliases, add the option
+> --ff-only to only allow fast-forwards.
+>
+> Acknowledgements: I did look at Yuval Kogman's earlier
+> patch (107768 in gmane), mainly as shortcut to find my
+> way in the code, but I did not copy anything directly.
+>
+> Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
 
-Let's take a look at some projects from SoC2009Ideas and Wishlist:
-* "smart" HTTP transport is being actively worked on
-* narrow / sparse checkout is being worked on
-* directory renames development stalled, I think last was in
-  http://thread.gmane.org/gmane.comp.version-control.git/99529
-* git-svnserver has supposedly partial Python implementation
-* restartable clone, which should be fairly easy to add to "dumb"
-  protocols, and quite challenging to add to "smart" protocols;
-  even without a code, having fresh ideas would be nice
-* (optional) support for empty directories, needs index extension,
-  there were some patches, but the area might be muddy
+Thanks.  I think you covered the points in the old discussion thread.
 
-It all depends on what you want to achieve in this short time.  Would
-it be to get to know OSS development workflow (submitting patches,
-answering reviews, etc.), or would it be solving interesting real-life
-problem, or perhaps solving some problem from beginning to the end
-(the code being accepted).
+> diff --git a/Documentation/merge-options.txt b/Documentation/merge-op=
+tions.txt
+> index adadf8e..fbf8976 100644
+> --- a/Documentation/merge-options.txt
+> +++ b/Documentation/merge-options.txt
+> @@ -60,6 +60,10 @@
+>  	a fast-forward, only update the branch pointer. This is
+>  	the default behavior of git-merge.
+> =20
+> +--ff-only::
+> +	Refuse to merge unless the merge can be resolved as a
+> +	fast-forward.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Do you or do you not allow "already up to date"?  I think it makes sens=
+e
+to allow it, but it is unclear from these two lines.
+
+> @@ -874,6 +877,9 @@ int cmd_merge(int argc, const char **argv, const =
+char *prefix)
+>  		option_commit =3D 0;
+>  	}
+> =20
+> +	if (!allow_fast_forward && fast_forward_only)
+> +		die("You cannot combine --no-ff with --ff-only.");
+
+Are these the only nonsensical combinations?  How should this interact
+with other options, e.g. --squash or --message?
+
+> @@ -969,8 +975,11 @@ int cmd_merge(int argc, const char **argv, const=
+ char *prefix)
+>  	}
+> =20
+>  	for (i =3D 0; i < use_strategies_nr; i++) {
+> -		if (use_strategies[i]->attr & NO_FAST_FORWARD)
+> +		if (use_strategies[i]->attr & NO_FAST_FORWARD) {
+>  			allow_fast_forward =3D 0;
+> +			if (fast_forward_only)
+> +				die("You cannot combine --ff-only with the merge strategy '%s'."=
+, use_strategies[i]->name);
+> +		}
+
+I am not convinced this tests the right condition nor it is placed at t=
+he
+right place in the codepath---even if a specified strategy happens to
+allow fast-forward, wouldn't it be nonsense to say
+
+    $ git merge --ff-only -s resolve that-one
+
+in the first place?  Note that I am not saying "I am convinced this is
+wrong."
+
+> @@ -1040,7 +1049,7 @@ int cmd_merge(int argc, const char **argv, cons=
+t char *prefix)
+>  		 * only one common.
+>  		 */
+>  		refresh_cache(REFRESH_QUIET);
+> -		if (allow_trivial) {
+> +		if (allow_trivial && !fast_forward_only) {
+
+Good.
+
+> @@ -1079,6 +1088,9 @@ int cmd_merge(int argc, const char **argv, cons=
+t char *prefix)
+>  		}
+>  	}
+> =20
+> +	if (fast_forward_only)
+> +		die("Not possible to fast forward, aborting.");
+
+Good.
