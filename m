@@ -1,103 +1,91 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] mergetool--lib: add support for p4merge
-Date: Wed, 28 Oct 2009 02:27:19 -0700
-Message-ID: <20091028092718.GB90780@gmail.com>
-References: <1256721087-72534-1-git-send-email-jaysoffian@gmail.com>
- <76718490910280221u4e1d3e78me7f9b0b45f590e56@mail.gmail.com>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] help -a: do not unnecessarily look for a repository
+Date: Wed, 28 Oct 2009 09:30:22 +0000
+Message-ID: <20091028093022.30253.qmail@d8110c1e8cdcdf.315fe32.mid.smarden.org>
+References: <20090902095843.28914.qmail@3cd9dde586d86b.315fe32.mid.smarden.org> <fabb9a1e0909020447p212594cake8c6fe3a43b667ec@mail.gmail.com> <20090904092929.23208.qmail@00cf3567a0e8b4.315fe32.mid.smarden.org> <alpine.DEB.1.00.0909041217370.4605@intel-tinevez-2-302> <20090904110936.6663.qmail@046e1bfbf7e41d.315fe32.mid.smarden.org> <20091027133040.28836.qmail@fe20635a713ff7.315fe32.mid.smarden.org> <7viqe0yrnu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, "Shawn O . Pearce" <spearce@spearce.org>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Scott Chacon <schacon@gmail.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 28 10:27:31 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 28 10:30:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N34oU-0004V9-MT
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 10:27:31 +0100
+	id 1N34rU-0005Zs-O6
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 10:30:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755753AbZJ1J1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 05:27:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755476AbZJ1J1U
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 05:27:20 -0400
-Received: from mail-yw0-f202.google.com ([209.85.211.202]:51609 "EHLO
-	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753944AbZJ1J1T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 05:27:19 -0400
-Received: by ywh40 with SMTP id 40so458092ywh.33
-        for <git@vger.kernel.org>; Wed, 28 Oct 2009 02:27:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=BaFqlogQX5HHcZEIACc0FBKTglHVLWFbPUV7a1Kt43A=;
-        b=J4P/O0VLq+E7VcLyamDoS6cEZ3osB3v7Qyzv73qTGFFPq+dpyhaxfjJK1v6otQLDhk
-         cwBuTdNIGMSBwZhSFvr7brWYOrBbS9VFrAAUWvByw1UYk17hJMWUG7nCQoRNONRqHPP6
-         BRS3N8Fd8b52ekO+YNDuLK4dE+imGoxjqmWdc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=rLihEaEoGXcPsccGPSW+8SVci2OBQ3oiOJSzutn/1vS9NWirbyBeuiDI16FGadhkZE
-         BXhb3t483eARn01DaTzXEeLnmo1+baygSuQF1CZ8nIvmzYjDnOREQ6eAetJ9IU0F+XfM
-         N0Ej5+Ys9suMB59IfuTgrGqq4dOea4y/mZkVc=
-Received: by 10.90.41.29 with SMTP id o29mr11204255ago.101.1256722043964;
-        Wed, 28 Oct 2009 02:27:23 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 4sm363570yxd.16.2009.10.28.02.27.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 28 Oct 2009 02:27:23 -0700 (PDT)
+	id S1755338AbZJ1JaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 05:30:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755091AbZJ1JaX
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 05:30:23 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:4388 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754444AbZJ1JaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 05:30:22 -0400
+Received: (qmail 30254 invoked by uid 1000); 28 Oct 2009 09:30:22 -0000
 Content-Disposition: inline
-In-Reply-To: <76718490910280221u4e1d3e78me7f9b0b45f590e56@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <7viqe0yrnu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131440>
 
-On Wed, Oct 28, 2009 at 02:21:46AM -0700, Jay Soffian wrote:
-> On Wed, Oct 28, 2009 at 2:11 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> > Add native support for p4merge as a diff / merge tool. There are two
-> > oddities. First, launching p4merge on Mac OS X requires running a helper
-> > shim (which in turn is looked for in a couple common locations, as it's
-> > very unlikely to be in PATH). Second, p4merge seems to require its file
-> > arguments be absolute paths.
-> >
-> > Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
-> > ---
-> 
-> Amusing. I didn't see Scott's patch.
+Although 'git help -a' actually doesn't need to be run inside a git
+repository and uses no repository-specific information, it looks for a
+git directory.  On 'git <TAB><TAB>' the bash completion runs 'git help
+-a' and unnecessary searching for a git directory can be annoying in
+auto-mount environments.  With this commit, 'git help' no longer
+searches for a repository when run with the -a option.
 
-Apologies Jay!
+The fix is from Johannes Schindelin, the annoying behavior has been
+reported by Vincent Danjean through
+ http://bugs.debian.org/539273
 
-It's late and I saw Scott listed in the CC: and guessed wrong ;)
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
 
-Thanks for the patch again, man.  Good stuff.
+On Tue, Oct 27, 2009 at 11:11:01PM -0700, Junio C Hamano wrote:
+> Gerrit Pape <pape@smarden.org> writes:
+> > Hi Junio, I suggest to apply this patch from Johannes to master.
+
+> Could you help by coming up with a suitable log message?
+>
+> It's a bit too much to ask me to hunt for ancient discussion to
+> correct the <<all the ack go here>> myself to describe what the
+> issue was,
+
+Sure, sorry for that.  Regards, Gerrit.
 
 
+ builtin-help.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-> 
-> But, in my testing, for things to work properly I needed to use
-> launchp4merge per:
-> 
-> http://kb.perforce.com/AllPerforceApplications/StandAloneClients/P4merge/CommandLineP..rgeOnMacOsX
-> 
-> And I also found things didn't work properly unless I provided an absolute path.
-> 
-> (Aside, the "right" way to launch p4merge, at least on 10.6 would be:
-> 
-> /usr/bin/open -b com.perforce.p4merge -W -n --args <args to p4merge...>
-> 
-> This way OS X's launch services would find p4merge.app wherever it is
-> on the user's system. But, I think some of these options to open are
-> 10.6 specific and in practice looking in /Applications and
-> $HOME/Applications I think is a sane enough default.)
-> 
-> j.
-
+diff --git a/builtin-help.c b/builtin-help.c
+index e1ade8e..ca08519 100644
+--- a/builtin-help.c
++++ b/builtin-help.c
+@@ -417,9 +417,6 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 	const char *alias;
+ 	load_command_list("git-", &main_cmds, &other_cmds);
+ 
+-	setup_git_directory_gently(&nongit);
+-	git_config(git_help_config, NULL);
+-
+ 	argc = parse_options(argc, argv, prefix, builtin_help_options,
+ 			builtin_help_usage, 0);
+ 
+@@ -430,6 +427,9 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 		return 0;
+ 	}
+ 
++	setup_git_directory_gently(&nongit);
++	git_config(git_help_config, NULL);
++
+ 	if (!argv[0]) {
+ 		printf("usage: %s\n\n", git_usage_string);
+ 		list_common_cmds_help();
 -- 
-		David
+1.6.5.2
