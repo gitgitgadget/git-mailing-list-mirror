@@ -1,87 +1,66 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: possible usability issue in rebase -i?
-Date: Wed, 28 Oct 2009 15:41:41 +0100
-Message-ID: <40aa078e0910280741w1656757asbdfab417688f3e8c@mail.gmail.com>
-References: <40aa078e0910270313j5dc68576v86a3947f0dc7f9f@mail.gmail.com>
-	 <2faad3050910270817l71394722nda55265ed96722df@mail.gmail.com>
-	 <40aa078e0910270850u6ffec41cj372da11d9df533f@mail.gmail.com>
-	 <2faad3050910271405k4a391184vb978b9b35484383b@mail.gmail.com>
-	 <40aa078e0910280520t497f1289sf374a3a501856a23@mail.gmail.com>
-	 <2faad3050910280734l7297c30erfb0a47b12b0bd07d@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: sp/smart-http topic
+Date: Wed, 28 Oct 2009 07:47:26 -0700
+Message-ID: <20091028144726.GA17602@spearce.org>
+References: <7veiovly35.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Baz <brian.ewins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 28 15:41:49 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 28 15:48:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N39if-0001DT-6u
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 15:41:49 +0100
+	id 1N39of-0004L2-4l
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 15:48:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754113AbZJ1Olj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 10:41:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754076AbZJ1Olj
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 10:41:39 -0400
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:42163 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754057AbZJ1Oli (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 10:41:38 -0400
-Received: by bwz27 with SMTP id 27so1075183bwz.21
-        for <git@vger.kernel.org>; Wed, 28 Oct 2009 07:41:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=qek4uU7iSeEPv8C3vBimy4CuWPEegkwiZkBsYu4gdsQ=;
-        b=oTFMFsSNUFlco//bUBej8QMvf5wI4Sz8sgccrQXEOcsNRX0mMCe8/NWhNsn0EXOJcM
-         /WvPHdAXvEeqqDZcJUco/FatGz3RbZc2pZ+WigrEv9Xx2uO1P8xxHkmPkizHdcNIi9tc
-         2cR+PIcukXOeV1TDw06xRNuDirBrKf8DQzAMo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        b=g6yAksxSpkdOjl4FRxZA6gg4UavBx37/FqsceI0y24DrxdMvYWNkoF+jCXYk/uKv+R
-         CRk/U5jlInB8RlWkwsKS/Wrmqi/OGbZUPqd276mJiOA4bnFG9h2iLaqqqKkXqrT3fHaz
-         ofxRPoKgpIONEuyAmDh4bwtgh2c7X3Mqf0SzQ=
-Received: by 10.204.34.83 with SMTP id k19mr5198763bkd.96.1256740902148; Wed, 
-	28 Oct 2009 07:41:42 -0700 (PDT)
-In-Reply-To: <2faad3050910280734l7297c30erfb0a47b12b0bd07d@mail.gmail.com>
+	id S1754275AbZJ1OrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 10:47:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754264AbZJ1OrX
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 10:47:23 -0400
+Received: from george.spearce.org ([209.20.77.23]:41022 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752994AbZJ1OrW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 10:47:22 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 023B3381D3; Wed, 28 Oct 2009 14:47:26 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <7veiovly35.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131468>
 
-On Wed, Oct 28, 2009 at 3:34 PM, Baz <brian.ewins@gmail.com> wrote:
-> 2009/10/28 Erik Faye-Lund <kusmabite@googlemail.com>:
->> I'm not sure I follow - aren't dashless options, uhm, dashless? Do you
->> mean to use the long-form instead of the short-form? I'll assume
->> that's what you mean for now, since you changed "-i" to "--interactive
->> | -i".
->
-> No, I just meant 'git rebase' not 'git-rebase'. Sorry, I changed a
-> couple of things at once.
+Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> * sp/smart-http (2009-10-14) 17 commits
+>  - Smart fetch over HTTP: client side
+...
+> What's the doneness of this series?
 
-Ah, didn't notice that one. I completely agree with you on this.
+Not done yet.  I want to respin once more before it hits next.
 
-> tend to emit one-liners. As for calling out 'interactive', at the
-> other extreme its not clear to me why we mention '-i' separately from
-> '[options]' at all. rebase is already pretty inconsistent here, giving
-> short or long usage messages depending on whether you passed '-i'. But
-> I'll take comments on this when I submit the patch, I've no strong
-> feelings on it.
+I've picked up a number of test related changes from Clemens
+Buchacher and Tay Ray Chuan, plus some suggestions from the latter
+were fixed up in the WebDAV code.
 
-It's a simple reason why the output is different - this is the usage
-for "git rebase -i" (hence it is in git-rebase--interactive.sh). I
-guess this distinction would be slightly clearer if we removed the
-brackets from the usage like this:
+John "warthog9" Hawley and I were spending some time yesterday to
+try to figure out why smart HTTP serving off kernel.org was giving
+me only 300 KiB/sec during clone, but git-daemon was giving me 12
+MiB/sec for the same server and repository.
 
--git-rebase [-i] [whatever]
-+git-rebase -i [whatever]
+Peff noticed the TCP windows for smart HTTP were ~16 KiB in size,
+but with git-daemon were ~200 KiB on size.  John and I are pretty
+sure this is the throughput problem, but we haven't found why the
+window is so much smaller under smart HTTP.
 
+We also need proper tests for smart HTTP.  I haven't had time to
+write tests yet, and the ones that were proposed for t5540-http-push
+aren't suitable because you have to run the test suite twice in
+order to test both WebDAV and smart HTTP push for the same build.
 
 -- 
-Erik "kusma" Faye-Lund
+Shawn.
