@@ -1,91 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitk: Use the --submodule option for diffs
-Date: Wed, 28 Oct 2009 00:19:49 -0700
-Message-ID: <7v7hugrnmy.fsf@alter.siamese.dyndns.org>
-References: <4AE70AC9.6040302@web.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] gitignore: root most patterns at the top-level directory
+Date: Wed, 28 Oct 2009 08:21:00 +0100
+Message-ID: <4AE7F0DC.6010508@viscovery.net>
+References: <20091027011024.GA29361@sigio.peff.net> <7vmy3cys0f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Oct 28 08:20:08 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 28 08:21:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N32pD-0008Ut-Jz
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 08:20:07 +0100
+	id 1N32qE-0000RK-Fg
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 08:21:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932578AbZJ1HTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 03:19:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932572AbZJ1HTy
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 03:19:54 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48315 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932559AbZJ1HTx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 03:19:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AD16769DFE;
-	Wed, 28 Oct 2009 03:19:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=g7A5tNsc8utzsVrQlMfLnd8doDk=; b=RMU09Tfui7hOyXvuzJHEcNa
-	aOJZzHBrlCqQ85f3DeaOjP+2qogfMk468exNMqwKH0HdAFlkXhznR76FT0IV65V7
-	IobJnCo2WXm3FCXRy2Fec/ofDeg2mfvpWoZ6uRgW+ht1oUsh19Qer00NFGKHMm4B
-	D7rCSvCmijeb+gD+b0vs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=KHryzXmnEhLk/g+8ldHlWWWuwfZVqFl6H/oG4YwYQqHkRWi5g
-	ADCss/u/ZH0NFFrx2ZzCmdWTsKqnqpGqS9yuoP1dVMWt03SvVGAPezbmtxMXrG8M
-	SvhjbzZL5QCUcrCg3C7zeru0ev27d39SQ1aYfvL5Xp7+cnVb8P4BbvDRaI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DFEC69DFD;
-	Wed, 28 Oct 2009 03:19:55 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A7A3169DFC; Wed, 28 Oct
- 2009 03:19:50 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4AC6596E-C392-11DE-9A45-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932587AbZJ1HU7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 03:20:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932582AbZJ1HU7
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 03:20:59 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:7270 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932580AbZJ1HU7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 03:20:59 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1N32q5-0004sS-3C; Wed, 28 Oct 2009 08:21:01 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id D81F4BC81; Wed, 28 Oct 2009 08:21:00 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <7vmy3cys0f.fsf@alter.siamese.dyndns.org>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131428>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Junio C Hamano schrieb:
+> How does .cvsignore and .svnignore work?  Don't they have the same issue,
+> and perhaps worse as I do not recall seeing a way to anchor a pattern to a
+> particular directory like we do in their .SCMignore files?  And judging
+> from the fact that they can get away with the lack of that "feature", this
+> perhaps is not an issue in real life?
 
-> Instead of just showing not-quite-helpful SHA-1 pairs display the first
-> lines of the corresponding commit messages in the submodule (similar to
-> the output of 'git submodule summary').
->
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> ---
->
-> This patch applies to 'next' and uses the new --submodule option of git
-> diff to achieve a more meaningful output of submodule differences in
-> gitk.
->
-> Any objections against making this the default?
+.cvsignore and .svnignore do not apply recursively to subdirectories, do they?
 
-It looks like you are not making this the default, but are making it
-mandatory.  That's quite different.
+> For example, it crossed my mind that perhaps we can change the ignore
+> rules so that a non-globbing pattern is automatically anchored at the
+> current directly but globbing ones are recursive as before.
+> 
+> If we do so, there is no need to change the current .gitignore entires.
+> You need to spell a concrete filename as a glob pattern that matches only
+> one path if you want the recursive behaviour.  E.g. if you have a Makefile
+> per subdirectory, each of which generates and includes Makefile.depend
+> file, you would write "Makefile.depen[d]" in the toplevel .gitignore file.
 
-As long as gitk ships with matching version of git, I do not think it is a
-huge problem to force "diff" to always run with --submodule option, but if
-that is what the patch does, I'd prefer to see the patch says so, instead
-of giving a false impression that there may be a way to disable it if one
-wants to.
+In one project that uses autotools, I have "Makefile" and "Makefile.in" in
+the top-level .gitignore. I would be forced to use this ugliness instead.
 
-Looking at the patched text, I had to wonder where these $flags come from.
-The callers of "diffcmd" give it to you, and I am not sure if all of them
-want -p format diffs.  Specifically, what does gettreediffs do?  Does it
-make sense to give --submodule to that invocation?
+Granted, to write "/git", "/git-add", etc in .gitignore is not exactly
+pretty, either, but the reason that it is so extra-ugly in the git code
+itself is only because there are so many build products in a single
+directory that cannot be caught by a glob pattern. In practice, you
+usually have only a hand-full non-glob ignored files per directory; it
+doesn't hurt to anchor them using "/frotz" style.
 
-Yes, I know --submodule happens to be a no-op in non-patch format diffs,
-but I do not think that is by design.  It is something somebody may notice
-and correct it later, at which time this patch will be broken.
+> But that is a kind of incompatible change whose necessity is unproven and
+> has to cook and wait.
 
-I also suspect that this might break getpatchid, but as long as all the
-patches consistently change/break ids it would be Ok.
+I would be concerned by this change.
+
+-- Hannes
