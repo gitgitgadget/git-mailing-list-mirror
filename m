@@ -1,92 +1,63 @@
-From: Tim Mazid <timmazid@hotmail.com>
-Subject: Re: How do I see all of my changes on a branch?
-Date: Wed, 28 Oct 2009 05:08:21 -0700 (PDT)
-Message-ID: <26093515.post@talk.nabble.com>
-References: <25879435.post@talk.nabble.com>
+From: Matvejchikov Ilya <matvejchikov@gmail.com>
+Subject: Is it possible to use git as a remote file storage without making any 
+	local repos?
+Date: Wed, 28 Oct 2009 15:09:09 +0300
+Message-ID: <8496f91a0910280509p49447d6egd7c07b382657c375@mail.gmail.com>
+Reply-To: matvejchikov@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 28 13:08:27 2009
+X-From: git-owner@vger.kernel.org Wed Oct 28 13:09:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N37KF-00048I-3t
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 13:08:27 +0100
+	id 1N37L3-0004S5-HZ
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Oct 2009 13:09:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753418AbZJ1MIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 08:08:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753397AbZJ1MIR
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 08:08:17 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:56545 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753299AbZJ1MIQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 08:08:16 -0400
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1N37K9-00044x-8X
-	for git@vger.kernel.org; Wed, 28 Oct 2009 05:08:21 -0700
-In-Reply-To: <25879435.post@talk.nabble.com>
-X-Nabble-From: timmazid@hotmail.com
+	id S1753434AbZJ1MJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 08:09:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753420AbZJ1MJG
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 08:09:06 -0400
+Received: from mail-ew0-f208.google.com ([209.85.219.208]:47755 "EHLO
+	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753317AbZJ1MJF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 08:09:05 -0400
+Received: by ewy4 with SMTP id 4so656874ewy.37
+        for <git@vger.kernel.org>; Wed, 28 Oct 2009 05:09:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:date:message-id
+         :subject:from:to:content-type;
+        bh=/doK7xO8IEuDssgj+z62Jr20UpXx5gXG0dzIW36Hihc=;
+        b=w6xBm1gNd4JLtRWJ8dYrdtXEtJ9pqeUwuONS6H9TCDkN1DC013rfSIYGtnjrXSMfb3
+         5AkaYO4H/Ea8DhpfsUORZ/tz2jERmUWtqRv9BP5mOVJig5nMrJmY8o/vaTfNJqEyS2Sb
+         m8Car0qyRtmI+X2NbhLzpyeBNnHJHtnL5ROes=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:date:message-id:subject:from:to:content-type;
+        b=TPc4j8vkCR/6Xd+utCFwiUZrqWLi+nHsFHxBhPF/hp9jFf72QzBylO1Ub9Vxx1MFY9
+         8+WCaMnvA/3Qgd0o4kFR1z6bE8yNSQiNvurxWpaOObZMQlBuRhmpbqWm4KZMiKVUrsYO
+         +avO2fpeualdwhr/9Ap3SdVQuyvEH9CamxKVY=
+Received: by 10.216.88.3 with SMTP id z3mr1992382wee.94.1256731749070; Wed, 28 
+	Oct 2009 05:09:09 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131452>
 
+Hi all,
 
+My question is about using git as a remote file storage.
 
-jonhud wrote:
-> 
-> Hi,
-> 
-> We are using github (but that's more or less irrelevant, since I'm just
-> running git 1.6 locally on Ubuntu). Some time ago, I created a new branch
-> (release.2.2) and pushed it out to the remote repository. All the digging
-> through log, gitk, etc. has not made it possible for me to figure out the
-> commit (or point in time) at which I cut the branch. 
-> 
+I have a remote storage server with a git-daemon running and I want to
+be able to put some data in that repo
+in a way like 'git hash-object -w <object>'. The general problem for
+me is that I don't want to create any local
+git repositories that is needed by 'pit push ...' etc.
 
-Um, unfortunately, all the commits that are prior to HEAD count as being on
-the branch.
-Have you tried using 'gitk --all' to look through? You should be able to see
-the split point there.
+So, is it possible to use git for remote storage purposes without
+making local repository?
 
-
-jonhud wrote:
-> 
-> What I want to do is to get a list of files (and/or diffs for those files)
-> from that point in time to HEAD on the branch. I understand that git-diff
-> --name-only is part of the solution. What I can't figure out is how to
-> pinpoint the first commit. So that's my first question... how do I do
-> that?
-> 
-
-Once you've found the commit, you can 'git diff COMMIT', or you can even,
-straight in gitk, (make sure you have your branch selected), right click on
-the commit and select 'diff this->selected'.
-
-
-jonhud wrote:
-> 
-> To complicate things, I was also working on a side branch which I merged
-> to master before cutting the release.2.2 branch. In the best of all
-> worlds, I would trace my changes back to the point at which I cut *that*
-> branch and follow through the HEAD of release.2.2. How do I do that? I
-> know I might have to take 2 passes, one for release 2.2 and one for the
-> side branch and that's OK.
-> 
-> Thanks!
-> 
-> Jon
-> 
-
-The same method should work for that as well.
-
-Good luck,
-Tim.
--- 
-View this message in context: http://www.nabble.com/How-do-I-see-all-of-my-changes-on-a-branch--tp25879435p26093515.html
-Sent from the git mailing list archive at Nabble.com.
+Thanks.
