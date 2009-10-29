@@ -1,61 +1,65 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 7/7] Factor ref updating out of fetch_with_import
-Date: Thu, 29 Oct 2009 08:56:07 -0700
-Message-ID: <20091029155607.GA10505@spearce.org>
-References: <1256798426-21816-1-git-send-email-srabbelier@gmail.com> <1256798426-21816-8-git-send-email-srabbelier@gmail.com> <20091029142232.GS10505@spearce.org> <fabb9a1e0910290853p49070443v6d6bf2bf75faf80@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Insertions/Deletions summary for a contributor
+Date: Thu, 29 Oct 2009 12:01:57 -0400
+Message-ID: <20091029160156.GA7622@sigill.intra.peff.net>
+References: <a362e8010910282344vad53b7ck1b7ae04ff3c499ed@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Johan Herland <johan@herland.net>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 29 16:56:15 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Laszlo Papp <djszapi@archlinux.us>
+X-From: git-owner@vger.kernel.org Thu Oct 29 17:02:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3XMF-0007aa-Dn
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 16:56:15 +0100
+	id 1N3XRu-00022o-Lt
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 17:02:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752552AbZJ2P4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2009 11:56:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752254AbZJ2P4E
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 11:56:04 -0400
-Received: from george.spearce.org ([209.20.77.23]:57140 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751972AbZJ2P4D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2009 11:56:03 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id F24E438200; Thu, 29 Oct 2009 15:56:07 +0000 (UTC)
+	id S1753111AbZJ2QB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2009 12:01:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753099AbZJ2QB4
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 12:01:56 -0400
+Received: from peff.net ([208.65.91.99]:41313 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752875AbZJ2QBz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2009 12:01:55 -0400
+Received: (qmail 22577 invoked by uid 107); 29 Oct 2009 16:05:39 -0000
+Received: from 65-121-75-131.dia.static.qwest.net (HELO sigill.intra.peff.net) (65.121.75.131)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 29 Oct 2009 12:05:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Oct 2009 12:01:57 -0400
 Content-Disposition: inline
-In-Reply-To: <fabb9a1e0910290853p49070443v6d6bf2bf75faf80@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <a362e8010910282344vad53b7ck1b7ae04ff3c499ed@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131606>
 
-Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> On Thu, Oct 29, 2009 at 07:22, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > Please define a transport_update_refs wrapper function to implement
-> > this method invocation on the transport instance. ?Callers should
-> > not be reaching into the struct transport directly.
+On Thu, Oct 29, 2009 at 07:44:40AM +0100, Laszlo Papp wrote:
+
+> It would be nice to see summary for a contributor in insertions/deletions
+> lines, changed files regard, in the life of the whole project.
 > 
-> With pleasure, should the transport_update_refs wrapper simply 'return
-> 1' without doing anything if transport->update_refs is not set?
-
-If the function isn't defined, it should behave as though it were
-defined and successfully completed.
- 
-> > I certainly have to wonder... if this is done in both fetch and
-> > clone, why isn't it just part of fetch_refs?
+> So the output would be the summary of the following output lines:
+> git log --author="Laszlo Papp" --pretty=tformat: --numstat
 > 
-> Because clone does not use fetch_refs, or am I missing something?
+> Can I deal with it, does it make sense, what do you think about it ?
 
-Hmmph.  Weird.  Its been a while since I last looked at this code,
-maybe I misunderstood it.
- 
--- 
-Shawn.
+Try piping the output of the command above through:
+
+  perl -ane '
+        $add{$F[2]} += $F[0];
+        $del{$F[2]} += $F[1];
+        END { print "$add{$_} $del{$_} $_\n" foreach sort keys(%add) }
+  '
+
+but keep in mind that such a summary is not necessarily a useful value.
+Modified lines are represented as deletion and add, and you may simply
+be deleting and adding the same lines over and over again. :)
+
+A more interesting summary is to "git blame" files and count
+contributor lines. This shows content by that contributor which has
+survived to the current tree.
+
+-Peff
