@@ -1,7 +1,7 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [RFC PATCH v4 02/26] pkt-line: Add strbuf based functions
-Date: Wed, 28 Oct 2009 17:00:24 -0700
-Message-ID: <1256774448-7625-3-git-send-email-spearce@spearce.org>
+Subject: [RFC PATCH v4 04/26] fetch-pack: Use a strbuf to compose the want list
+Date: Wed, 28 Oct 2009 17:00:26 -0700
+Message-ID: <1256774448-7625-5-git-send-email-spearce@spearce.org>
 References: <1256774448-7625-1-git-send-email-spearce@spearce.org>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Thu Oct 29 01:03:06 2009
@@ -9,25 +9,25 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3ITp-0001CG-Rn
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 01:03:06 +0100
+	id 1N3ITp-0001CG-5P
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 01:03:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756041AbZJ2ACG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 20:02:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755503AbZJ2ACF
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 20:02:05 -0400
-Received: from george.spearce.org ([209.20.77.23]:36218 "EHLO
+	id S1756038AbZJ2ACE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 20:02:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755503AbZJ2ACD
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 20:02:03 -0400
+Received: from george.spearce.org ([209.20.77.23]:36222 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755333AbZJ2AAp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 20:00:45 -0400
+	with ESMTP id S1755323AbZJ2AAq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 20:00:46 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id B868938222; Thu, 29 Oct 2009 00:00:50 +0000 (UTC)
+	id A2E3738222; Thu, 29 Oct 2009 00:00:51 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 3C804381FF
+	by george.spearce.org (Postfix) with ESMTP id CCDA538200
 	for <git@vger.kernel.org>; Thu, 29 Oct 2009 00:00:49 +0000 (UTC)
 X-Mailer: git-send-email 1.6.5.2.181.gd6f41
 In-Reply-To: <1256774448-7625-1-git-send-email-spearce@spearce.org>
@@ -35,172 +35,175 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131539>
 
-These routines help to work with pkt-line values inside of a strbuf,
-permitting simple formatting of buffered network messages.
+This change is being offered as a refactoring to make later
+commits in the smart HTTP series easier.
+
+By changing the enabled capabilities to be formatted in a strbuf
+it is easier to add a new capability to the set of supported
+capabilities.
+
+By formatting the want portion of the request into a strbuf and
+writing it as a whole block we can later decide to hold onto
+the req_buf (instead of releasing it) to recycle in stateless
+communications.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- pkt-line.c |   84 +++++++++++++++++++++++++++++++++++++++++++++++++++--------
- pkt-line.h |    4 +++
- 2 files changed, 76 insertions(+), 12 deletions(-)
+ builtin-fetch-pack.c |   52 ++++++++++++++++++++++++++++++++-----------------
+ commit.c             |   10 +++-----
+ commit.h             |    2 +-
+ 3 files changed, 39 insertions(+), 25 deletions(-)
 
-diff --git a/pkt-line.c b/pkt-line.c
-index b691abe..bd603f8 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -42,17 +42,19 @@ void packet_flush(int fd)
- 	safe_write(fd, "0000", 4);
- }
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index 629735f..783c2b0 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -165,6 +165,7 @@ static int find_common(int fd[2], unsigned char *result_sha1,
+ 	const unsigned char *sha1;
+ 	unsigned in_vain = 0;
+ 	int got_continue = 0;
++	struct strbuf req_buf = STRBUF_INIT;
  
-+void packet_buf_flush(struct strbuf *buf)
-+{
-+	strbuf_add(buf, "0000", 4);
-+}
-+
- #define hex(a) (hexchar[(a) & 15])
--void packet_write(int fd, const char *fmt, ...)
-+static char buffer[1000];
-+static unsigned format_packet(const char *fmt, va_list args)
- {
--	static char buffer[1000];
- 	static char hexchar[] = "0123456789abcdef";
--	va_list args;
- 	unsigned n;
+ 	if (marked)
+ 		for_each_ref(clear_marks, NULL);
+@@ -175,6 +176,7 @@ static int find_common(int fd[2], unsigned char *result_sha1,
+ 	fetching = 0;
+ 	for ( ; refs ; refs = refs->next) {
+ 		unsigned char *remote = refs->old_sha1;
++		const char *remote_hex;
+ 		struct object *o;
  
--	va_start(args, fmt);
- 	n = vsnprintf(buffer + 4, sizeof(buffer) - 4, fmt, args);
--	va_end(args);
- 	if (n >= sizeof(buffer)-4)
- 		die("protocol error: impossibly long line");
- 	n += 4;
-@@ -60,9 +62,31 @@ void packet_write(int fd, const char *fmt, ...)
- 	buffer[1] = hex(n >> 8);
- 	buffer[2] = hex(n >> 4);
- 	buffer[3] = hex(n);
-+	return n;
-+}
-+
-+void packet_write(int fd, const char *fmt, ...)
-+{
-+	va_list args;
-+	unsigned n;
-+
-+	va_start(args, fmt);
-+	n = format_packet(fmt, args);
-+	va_end(args);
- 	safe_write(fd, buffer, n);
- }
- 
-+void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
-+{
-+	va_list args;
-+	unsigned n;
-+
-+	va_start(args, fmt);
-+	n = format_packet(fmt, args);
-+	va_end(args);
-+	strbuf_add(buf, buffer, n);
-+}
-+
- static void safe_read(int fd, void *buffer, unsigned size)
- {
- 	ssize_t ret = read_in_full(fd, buffer, size);
-@@ -72,15 +96,11 @@ static void safe_read(int fd, void *buffer, unsigned size)
- 		die("The remote end hung up unexpectedly");
- }
- 
--int packet_read_line(int fd, char *buffer, unsigned size)
-+static int packet_length(const char *linelen)
- {
- 	int n;
--	unsigned len;
--	char linelen[4];
--
--	safe_read(fd, linelen, 4);
-+	int len = 0;
- 
--	len = 0;
- 	for (n = 0; n < 4; n++) {
- 		unsigned char c = linelen[n];
- 		len <<= 4;
-@@ -96,8 +116,20 @@ int packet_read_line(int fd, char *buffer, unsigned size)
- 			len += c - 'A' + 10;
+ 		/*
+@@ -192,27 +194,36 @@ static int find_common(int fd[2], unsigned char *result_sha1,
  			continue;
  		}
--		die("protocol error: bad line length character");
-+		return -1;
+ 
+-		if (!fetching)
+-			packet_write(fd[1], "want %s%s%s%s%s%s%s%s\n",
+-				     sha1_to_hex(remote),
+-				     (multi_ack ? " multi_ack" : ""),
+-				     (use_sideband == 2 ? " side-band-64k" : ""),
+-				     (use_sideband == 1 ? " side-band" : ""),
+-				     (args.use_thin_pack ? " thin-pack" : ""),
+-				     (args.no_progress ? " no-progress" : ""),
+-				     (args.include_tag ? " include-tag" : ""),
+-				     (prefer_ofs_delta ? " ofs-delta" : ""));
+-		else
+-			packet_write(fd[1], "want %s\n", sha1_to_hex(remote));
++		remote_hex = sha1_to_hex(remote);
++		if (!fetching) {
++			struct strbuf c = STRBUF_INIT;
++			if (multi_ack)          strbuf_addstr(&c, " multi_ack");
++			if (use_sideband == 2)  strbuf_addstr(&c, " side-band-64k");
++			if (use_sideband == 1)  strbuf_addstr(&c, " side-band");
++			if (args.use_thin_pack) strbuf_addstr(&c, " thin-pack");
++			if (args.no_progress)   strbuf_addstr(&c, " no-progress");
++			if (args.include_tag)   strbuf_addstr(&c, " include-tag");
++			if (prefer_ofs_delta)   strbuf_addstr(&c, " ofs-delta");
++			packet_buf_write(&req_buf, "want %s%s\n", remote_hex, c.buf);
++			strbuf_release(&c);
++		} else
++			packet_buf_write(&req_buf, "want %s\n", remote_hex);
+ 		fetching++;
  	}
-+	return len;
-+}
 +
-+int packet_read_line(int fd, char *buffer, unsigned size)
-+{
-+	int len;
-+	char linelen[4];
-+
-+	safe_read(fd, linelen, 4);
-+	len = packet_length(linelen);
-+	if (len < 0)
-+		die("protocol error: bad line length character");
- 	if (!len)
- 		return 0;
- 	len -= 4;
-@@ -107,3 +139,31 @@ int packet_read_line(int fd, char *buffer, unsigned size)
- 	buffer[len] = 0;
- 	return len;
- }
-+
-+int packet_get_line(struct strbuf *out,
-+	char **src_buf, size_t *src_len)
-+{
-+	int len;
-+
-+	if (*src_len < 4)
-+		return -1;
-+	len = packet_length(*src_buf);
-+	if (len < 0)
-+		return -1;
-+	if (!len) {
-+		*src_buf += 4;
-+		*src_len -= 4;
-+		return 0;
++	if (!fetching) {
++		strbuf_release(&req_buf);
++		packet_flush(fd[1]);
++		return 1;
 +	}
-+	if (*src_len < len)
-+		return -2;
 +
-+	*src_buf += 4;
-+	*src_len -= 4;
-+	len -= 4;
+ 	if (is_repository_shallow())
+-		write_shallow_commits(fd[1], 1);
++		write_shallow_commits(&req_buf, 1);
+ 	if (args.depth > 0)
+-		packet_write(fd[1], "deepen %d", args.depth);
+-	packet_flush(fd[1]);
+-	if (!fetching)
+-		return 1;
++		packet_buf_write(&req_buf, "deepen %d", args.depth);
++	packet_buf_flush(&req_buf);
 +
-+	strbuf_add(out, *src_buf, len);
-+	*src_buf += len;
-+	*src_len -= len;
-+	return len;
-+}
-diff --git a/pkt-line.h b/pkt-line.h
-index 9df653f..1e5dcfe 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -2,14 +2,18 @@
- #define PKTLINE_H
++	safe_write(fd[1], req_buf.buf, req_buf.len);
  
- #include "git-compat-util.h"
-+#include "strbuf.h"
+ 	if (args.depth > 0) {
+ 		char line[1024];
+@@ -296,6 +307,8 @@ done:
+ 		multi_ack = 0;
+ 		flushes++;
+ 	}
++	strbuf_release(&req_buf);
++
+ 	while (flushes || multi_ack) {
+ 		int ack = get_ack(fd[0], result_sha1);
+ 		if (ack) {
+@@ -809,6 +822,7 @@ struct ref *fetch_pack(struct fetch_pack_args *my_args,
  
- /*
-  * Silly packetized line writing interface
-  */
- void packet_flush(int fd);
- void packet_write(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
-+void packet_buf_flush(struct strbuf *buf);
-+void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ 	if (args.depth > 0) {
+ 		struct cache_time mtime;
++		struct strbuf sb = STRBUF_INIT;
+ 		char *shallow = git_path("shallow");
+ 		int fd;
  
- int packet_read_line(int fd, char *buffer, unsigned size);
-+int packet_get_line(struct strbuf *out, char **src_buf, size_t *src_len);
- ssize_t safe_write(int, const void *, ssize_t);
+@@ -826,12 +840,14 @@ struct ref *fetch_pack(struct fetch_pack_args *my_args,
  
- #endif
+ 		fd = hold_lock_file_for_update(&lock, shallow,
+ 					       LOCK_DIE_ON_ERROR);
+-		if (!write_shallow_commits(fd, 0)) {
++		if (!write_shallow_commits(&sb, 0)
++		 || write_in_full(fd, sb.buf, sb.len) != sb.len) {
+ 			unlink_or_warn(shallow);
+ 			rollback_lock_file(&lock);
+ 		} else {
+ 			commit_lock_file(&lock);
+ 		}
++		strbuf_release(&sb);
+ 	}
+ 
+ 	reprepare_packed_git();
+diff --git a/commit.c b/commit.c
+index fedbd5e..471efb0 100644
+--- a/commit.c
++++ b/commit.c
+@@ -199,7 +199,7 @@ struct commit_graft *lookup_commit_graft(const unsigned char *sha1)
+ 	return commit_graft[pos];
+ }
+ 
+-int write_shallow_commits(int fd, int use_pack_protocol)
++int write_shallow_commits(struct strbuf *out, int use_pack_protocol)
+ {
+ 	int i, count = 0;
+ 	for (i = 0; i < commit_graft_nr; i++)
+@@ -208,12 +208,10 @@ int write_shallow_commits(int fd, int use_pack_protocol)
+ 				sha1_to_hex(commit_graft[i]->sha1);
+ 			count++;
+ 			if (use_pack_protocol)
+-				packet_write(fd, "shallow %s", hex);
++				packet_buf_write(out, "shallow %s", hex);
+ 			else {
+-				if (write_in_full(fd, hex,  40) != 40)
+-					break;
+-				if (write_str_in_full(fd, "\n") != 1)
+-					break;
++				strbuf_addstr(out, hex);
++				strbuf_addch(out, '\n');
+ 			}
+ 		}
+ 	return count;
+diff --git a/commit.h b/commit.h
+index f4fc5c5..817c75c 100644
+--- a/commit.h
++++ b/commit.h
+@@ -131,7 +131,7 @@ extern struct commit_list *get_octopus_merge_bases(struct commit_list *in);
+ 
+ extern int register_shallow(const unsigned char *sha1);
+ extern int unregister_shallow(const unsigned char *sha1);
+-extern int write_shallow_commits(int fd, int use_pack_protocol);
++extern int write_shallow_commits(struct strbuf *out, int use_pack_protocol);
+ extern int is_repository_shallow(void);
+ extern struct commit_list *get_shallow_commits(struct object_array *heads,
+ 		int depth, int shallow_flag, int not_shallow_flag);
 -- 
 1.6.5.2.181.gd6f41
