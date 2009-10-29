@@ -1,65 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mergetool--lib: add p4merge as a pre-configured
- mergetool  option
-Date: Wed, 28 Oct 2009 16:37:57 -0700
-Message-ID: <7v1vkngkdm.fsf@alter.siamese.dyndns.org>
-References: <d411cc4a0910271536u5817802at43f7477dd8ccabc7@mail.gmail.com>
- <20091027230043.GA11607@hashpling.org> <20091028090022.GA90780@gmail.com>
- <d411cc4a0910280837h52596089je9ab4d03383d43cc@mail.gmail.com>
- <d411cc4a0910281439v3388c243v42b3700f73744623@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>, git list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Charles Bailey <charles@hashpling.org>,
-	David Aguilar <davvid@gmail.com>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 29 00:38:37 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [RFC PATCH v4 05/26] Move "get_ack()" back to fetch-pack
+Date: Wed, 28 Oct 2009 17:00:27 -0700
+Message-ID: <1256774448-7625-6-git-send-email-spearce@spearce.org>
+References: <1256774448-7625-1-git-send-email-spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 29 01:01:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3I69-0001Vw-5J
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 00:38:37 +0100
+	id 1N3IRp-0000RN-KY
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 01:01:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755161AbZJ1Xi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 19:38:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755132AbZJ1Xi0
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 19:38:26 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43715 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751862AbZJ1Xi0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 19:38:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DB6696A585;
-	Wed, 28 Oct 2009 19:38:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SoPqnAbLSflJaMo2uiO74hYUSlA=; b=fKxRrJ
-	sgI5OZyPU5/JoPGjz2AaFYj0Z4Kf2QdmtDtWtrIrwy3qFBwOVgGPNaNk1u4uLXJD
-	E6yMAJQ3he3UaMhlH9bdOjORGfBzJK0XKA8MowsDXGC7mLA8ovRMvQQ1g91tFEXq
-	PGi5Gz2/HFq4aHBjrqyxAHWi+stD5WQY0ghsU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=itjT2rwSgaujQz9b8HnfkIh5ym4au7pP
-	f2batFGLCcfIG5bo35Pkvxcn6tUi/hrWJKfJm8uJk9k3ITS/2ysSjiIQ9dUKWEzy
-	odPScAptYqG1DrgOydRRmTsuCeftSJ01R4IvflR71pwCPSzRN9bEjzsN1U2Eb480
-	JYj6217DVA8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 924BF6A582;
-	Wed, 28 Oct 2009 19:38:25 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 984186A57B; Wed, 28 Oct
- 2009 19:38:15 -0400 (EDT)
-In-Reply-To: <d411cc4a0910281439v3388c243v42b3700f73744623@mail.gmail.com>
- (Scott Chacon's message of "Wed\, 28 Oct 2009 14\:39\:32 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FCB6CFEA-C41A-11DE-829C-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755608AbZJ2AAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 20:00:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755585AbZJ2AAt
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 20:00:49 -0400
+Received: from george.spearce.org ([209.20.77.23]:36224 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755330AbZJ2AAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 20:00:47 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 1C64B38239; Thu, 29 Oct 2009 00:00:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 20B593821F
+	for <git@vger.kernel.org>; Thu, 29 Oct 2009 00:00:50 +0000 (UTC)
+X-Mailer: git-send-email 1.6.5.2.181.gd6f41
+In-Reply-To: <1256774448-7625-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131513>
 
-Thanks.  Is Jay happy with this version?
+In 41cb7488 Linus moved this function to connect.c for reuse inside
+of the git-clone-pack command.  That was 2005, but in 2006 Junio
+retired git-clone-pack in commit efc7fa53.  Since then the only
+caller has been fetch-pack.  Since this ACK/NAK exchange is only
+used by the fetch-pack/upload-pack protocol we should keep move
+it back to a private detail of fetch-pack.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ builtin-fetch-pack.c |   21 +++++++++++++++++++++
+ cache.h              |    1 -
+ connect.c            |   21 ---------------------
+ 3 files changed, 21 insertions(+), 22 deletions(-)
+
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index 783c2b0..7c09d46 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -157,6 +157,27 @@ static const unsigned char *get_rev(void)
+ 	return commit->object.sha1;
+ }
+ 
++static int get_ack(int fd, unsigned char *result_sha1)
++{
++	static char line[1000];
++	int len = packet_read_line(fd, line, sizeof(line));
++
++	if (!len)
++		die("git fetch-pack: expected ACK/NAK, got EOF");
++	if (line[len-1] == '\n')
++		line[--len] = 0;
++	if (!strcmp(line, "NAK"))
++		return 0;
++	if (!prefixcmp(line, "ACK ")) {
++		if (!get_sha1_hex(line+4, result_sha1)) {
++			if (strstr(line+45, "continue"))
++				return 2;
++			return 1;
++		}
++	}
++	die("git fetch_pack: expected ACK/NAK, got '%s'", line);
++}
++
+ static int find_common(int fd[2], unsigned char *result_sha1,
+ 		       struct ref *refs)
+ {
+diff --git a/cache.h b/cache.h
+index a5eeead..4e283be 100644
+--- a/cache.h
++++ b/cache.h
+@@ -856,7 +856,6 @@ extern struct ref *find_ref_by_name(const struct ref *list, const char *name);
+ extern struct child_process *git_connect(int fd[2], const char *url, const char *prog, int flags);
+ extern int finish_connect(struct child_process *conn);
+ extern int path_match(const char *path, int nr, char **match);
+-extern int get_ack(int fd, unsigned char *result_sha1);
+ struct extra_have_objects {
+ 	int nr, alloc;
+ 	unsigned char (*array)[20];
+diff --git a/connect.c b/connect.c
+index 7945e38..839a103 100644
+--- a/connect.c
++++ b/connect.c
+@@ -107,27 +107,6 @@ int server_supports(const char *feature)
+ 		strstr(server_capabilities, feature) != NULL;
+ }
+ 
+-int get_ack(int fd, unsigned char *result_sha1)
+-{
+-	static char line[1000];
+-	int len = packet_read_line(fd, line, sizeof(line));
+-
+-	if (!len)
+-		die("git fetch-pack: expected ACK/NAK, got EOF");
+-	if (line[len-1] == '\n')
+-		line[--len] = 0;
+-	if (!strcmp(line, "NAK"))
+-		return 0;
+-	if (!prefixcmp(line, "ACK ")) {
+-		if (!get_sha1_hex(line+4, result_sha1)) {
+-			if (strstr(line+45, "continue"))
+-				return 2;
+-			return 1;
+-		}
+-	}
+-	die("git fetch_pack: expected ACK/NAK, got '%s'", line);
+-}
+-
+ int path_match(const char *path, int nr, char **match)
+ {
+ 	int i;
+-- 
+1.6.5.2.181.gd6f41
