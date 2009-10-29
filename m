@@ -1,117 +1,206 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [RFC PATCH v4 07/26] remote-curl: Refactor walker initialization
-Date: Wed, 28 Oct 2009 17:00:29 -0700
-Message-ID: <1256774448-7625-8-git-send-email-spearce@spearce.org>
+Subject: [RFC PATCH v4 02/26] pkt-line: Add strbuf based functions
+Date: Wed, 28 Oct 2009 17:00:24 -0700
+Message-ID: <1256774448-7625-3-git-send-email-spearce@spearce.org>
 References: <1256774448-7625-1-git-send-email-spearce@spearce.org>
-Cc: Daniel Barkalow <barkalow@iabervon.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 29 01:02:26 2009
+X-From: git-owner@vger.kernel.org Thu Oct 29 01:03:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3ISw-0000kN-DG
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 01:02:10 +0100
+	id 1N3ITp-0001CG-Rn
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 01:03:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756029AbZJ2AB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 20:01:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755559AbZJ2ABz
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 20:01:55 -0400
-Received: from george.spearce.org ([209.20.77.23]:36224 "EHLO
+	id S1756041AbZJ2ACG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 20:02:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755503AbZJ2ACF
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 20:02:05 -0400
+Received: from george.spearce.org ([209.20.77.23]:36218 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755459AbZJ2AAs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 20:00:48 -0400
+	with ESMTP id S1755333AbZJ2AAp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 20:00:45 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 264ED38239; Thu, 29 Oct 2009 00:00:53 +0000 (UTC)
+	id B868938222; Thu, 29 Oct 2009 00:00:50 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id C59CF381FF;
-	Thu, 29 Oct 2009 00:00:50 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 3C804381FF
+	for <git@vger.kernel.org>; Thu, 29 Oct 2009 00:00:49 +0000 (UTC)
 X-Mailer: git-send-email 1.6.5.2.181.gd6f41
 In-Reply-To: <1256774448-7625-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131538>
 
-We will need the walker, url and remote in other functions as the
-code grows larger to support smart HTTP.  Extract this out into a
-set of globals we can easily reference once configured.
+These routines help to work with pkt-line values inside of a strbuf,
+permitting simple formatting of buffered network messages.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-CC: Daniel Barkalow <barkalow@iabervon.org>
 ---
- remote-curl.c |   24 ++++++++++++++----------
- 1 files changed, 14 insertions(+), 10 deletions(-)
+ pkt-line.c |   84 +++++++++++++++++++++++++++++++++++++++++++++++++++--------
+ pkt-line.h |    4 +++
+ 2 files changed, 76 insertions(+), 12 deletions(-)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index 2faf1c6..478f3ea 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -5,7 +5,17 @@
- #include "http.h"
- #include "exec_cmd.h"
+diff --git a/pkt-line.c b/pkt-line.c
+index b691abe..bd603f8 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -42,17 +42,19 @@ void packet_flush(int fd)
+ 	safe_write(fd, "0000", 4);
+ }
  
--static struct ref *get_refs(struct walker *walker, const char *url)
-+static struct remote *remote;
-+static const char *url;
-+static struct walker *walker;
-+
-+static void init_walker(void)
++void packet_buf_flush(struct strbuf *buf)
 +{
-+	if (!walker)
-+		walker = get_http_walker(url, remote);
++	strbuf_add(buf, "0000", 4);
 +}
 +
-+static struct ref *get_refs(void)
+ #define hex(a) (hexchar[(a) & 15])
+-void packet_write(int fd, const char *fmt, ...)
++static char buffer[1000];
++static unsigned format_packet(const char *fmt, va_list args)
  {
- 	struct strbuf buffer = STRBUF_INIT;
- 	char *data, *start, *mid;
-@@ -21,6 +31,7 @@ static struct ref *get_refs(struct walker *walker, const char *url)
- 	refs_url = xmalloc(strlen(url) + 11);
- 	sprintf(refs_url, "%s/info/refs", url);
+-	static char buffer[1000];
+ 	static char hexchar[] = "0123456789abcdef";
+-	va_list args;
+ 	unsigned n;
  
-+	init_walker();
- 	http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
- 	switch (http_ret) {
- 	case HTTP_OK:
-@@ -78,10 +89,7 @@ static struct ref *get_refs(struct walker *walker, const char *url)
+-	va_start(args, fmt);
+ 	n = vsnprintf(buffer + 4, sizeof(buffer) - 4, fmt, args);
+-	va_end(args);
+ 	if (n >= sizeof(buffer)-4)
+ 		die("protocol error: impossibly long line");
+ 	n += 4;
+@@ -60,9 +62,31 @@ void packet_write(int fd, const char *fmt, ...)
+ 	buffer[1] = hex(n >> 8);
+ 	buffer[2] = hex(n >> 4);
+ 	buffer[3] = hex(n);
++	return n;
++}
++
++void packet_write(int fd, const char *fmt, ...)
++{
++	va_list args;
++	unsigned n;
++
++	va_start(args, fmt);
++	n = format_packet(fmt, args);
++	va_end(args);
+ 	safe_write(fd, buffer, n);
+ }
  
- int main(int argc, const char **argv)
++void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
++{
++	va_list args;
++	unsigned n;
++
++	va_start(args, fmt);
++	n = format_packet(fmt, args);
++	va_end(args);
++	strbuf_add(buf, buffer, n);
++}
++
+ static void safe_read(int fd, void *buffer, unsigned size)
  {
--	struct remote *remote;
- 	struct strbuf buf = STRBUF_INIT;
--	const char *url;
--	struct walker *walker = NULL;
+ 	ssize_t ret = read_in_full(fd, buffer, size);
+@@ -72,15 +96,11 @@ static void safe_read(int fd, void *buffer, unsigned size)
+ 		die("The remote end hung up unexpectedly");
+ }
  
- 	git_extract_argv0_path(argv[0]);
- 	setup_git_directory();
-@@ -103,8 +111,7 @@ int main(int argc, const char **argv)
- 			break;
- 		if (!prefixcmp(buf.buf, "fetch ")) {
- 			char *obj = buf.buf + strlen("fetch ");
--			if (!walker)
--				walker = get_http_walker(url, remote);
-+			init_walker();
- 			walker->get_all = 1;
- 			walker->get_tree = 1;
- 			walker->get_history = 1;
-@@ -115,11 +122,8 @@ int main(int argc, const char **argv)
- 			printf("\n");
- 			fflush(stdout);
- 		} else if (!strcmp(buf.buf, "list")) {
--			struct ref *refs;
-+			struct ref *refs = get_refs();
- 			struct ref *posn;
--			if (!walker)
--				walker = get_http_walker(url, remote);
--			refs = get_refs(walker, url);
- 			for (posn = refs; posn; posn = posn->next) {
- 				if (posn->symref)
- 					printf("@%s %s\n", posn->symref, posn->name);
+-int packet_read_line(int fd, char *buffer, unsigned size)
++static int packet_length(const char *linelen)
+ {
+ 	int n;
+-	unsigned len;
+-	char linelen[4];
+-
+-	safe_read(fd, linelen, 4);
++	int len = 0;
+ 
+-	len = 0;
+ 	for (n = 0; n < 4; n++) {
+ 		unsigned char c = linelen[n];
+ 		len <<= 4;
+@@ -96,8 +116,20 @@ int packet_read_line(int fd, char *buffer, unsigned size)
+ 			len += c - 'A' + 10;
+ 			continue;
+ 		}
+-		die("protocol error: bad line length character");
++		return -1;
+ 	}
++	return len;
++}
++
++int packet_read_line(int fd, char *buffer, unsigned size)
++{
++	int len;
++	char linelen[4];
++
++	safe_read(fd, linelen, 4);
++	len = packet_length(linelen);
++	if (len < 0)
++		die("protocol error: bad line length character");
+ 	if (!len)
+ 		return 0;
+ 	len -= 4;
+@@ -107,3 +139,31 @@ int packet_read_line(int fd, char *buffer, unsigned size)
+ 	buffer[len] = 0;
+ 	return len;
+ }
++
++int packet_get_line(struct strbuf *out,
++	char **src_buf, size_t *src_len)
++{
++	int len;
++
++	if (*src_len < 4)
++		return -1;
++	len = packet_length(*src_buf);
++	if (len < 0)
++		return -1;
++	if (!len) {
++		*src_buf += 4;
++		*src_len -= 4;
++		return 0;
++	}
++	if (*src_len < len)
++		return -2;
++
++	*src_buf += 4;
++	*src_len -= 4;
++	len -= 4;
++
++	strbuf_add(out, *src_buf, len);
++	*src_buf += len;
++	*src_len -= len;
++	return len;
++}
+diff --git a/pkt-line.h b/pkt-line.h
+index 9df653f..1e5dcfe 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -2,14 +2,18 @@
+ #define PKTLINE_H
+ 
+ #include "git-compat-util.h"
++#include "strbuf.h"
+ 
+ /*
+  * Silly packetized line writing interface
+  */
+ void packet_flush(int fd);
+ void packet_write(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++void packet_buf_flush(struct strbuf *buf);
++void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ 
+ int packet_read_line(int fd, char *buffer, unsigned size);
++int packet_get_line(struct strbuf *out, char **src_buf, size_t *src_len);
+ ssize_t safe_write(int, const void *, ssize_t);
+ 
+ #endif
 -- 
 1.6.5.2.181.gd6f41
