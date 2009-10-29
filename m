@@ -1,188 +1,77 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [RFC PATCH v4 14/26] Add stateless RPC options to upload-pack, receive-pack
-Date: Wed, 28 Oct 2009 17:00:36 -0700
-Message-ID: <1256774448-7625-15-git-send-email-spearce@spearce.org>
+Subject: [RFC PATCH v4 12/26] remote-helpers: return successfully if everything up-to-date
+Date: Wed, 28 Oct 2009 17:00:34 -0700
+Message-ID: <1256774448-7625-13-git-send-email-spearce@spearce.org>
 References: <1256774448-7625-1-git-send-email-spearce@spearce.org>
+Cc: Clemens Buchacher <drizzd@aon.at>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Thu Oct 29 01:01:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3ISj-0000kN-Ol
+	id 1N3ISk-0000kN-9c
 	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 01:01:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755585AbZJ2AA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 20:00:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755777AbZJ2AAy
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 20:00:54 -0400
-Received: from george.spearce.org ([209.20.77.23]:36245 "EHLO
+	id S1755967AbZJ2AA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 20:00:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755690AbZJ2AA4
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 20:00:56 -0400
+Received: from george.spearce.org ([209.20.77.23]:36224 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755653AbZJ2AAx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 20:00:53 -0400
+	with ESMTP id S1755609AbZJ2AAv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 20:00:51 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 1A79538267; Thu, 29 Oct 2009 00:00:58 +0000 (UTC)
+	id 598BF38267; Thu, 29 Oct 2009 00:00:56 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 3807C381FF
-	for <git@vger.kernel.org>; Thu, 29 Oct 2009 00:00:53 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 9C41538221;
+	Thu, 29 Oct 2009 00:00:52 +0000 (UTC)
 X-Mailer: git-send-email 1.6.5.2.181.gd6f41
 In-Reply-To: <1256774448-7625-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131518>
 
-When --stateless-rpc is passed as a command line parameter to
-upload-pack or receive-pack the programs now assume they may
-perform only a single read-write cycle with stdin and stdout.
-This fits with the HTTP POST request processing model where a
-program may read the request, write a response, and must exit.
+From: Clemens Buchacher <drizzd@aon.at>
 
-When --advertise-refs is passed as a command line parameter only
-the initial ref advertisement is output, and the program exits
-immediately.  This fits with the HTTP GET request model, where
-no request content is received but a response must be produced.
-
-HTTP headers and/or environment are not processed here, but
-instead are assumed to be handled by the program invoking
-either service backend.
-
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- builtin-receive-pack.c |   26 ++++++++++++++++++++------
- upload-pack.c          |   40 ++++++++++++++++++++++++++++++++++++----
- 2 files changed, 56 insertions(+), 10 deletions(-)
+ t/t5540-http-push.sh |    2 +-
+ transport-helper.c   |    2 ++
+ 2 files changed, 3 insertions(+), 1 deletions(-)
 
-diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
-index b771fe9..70ff8c5 100644
---- a/builtin-receive-pack.c
-+++ b/builtin-receive-pack.c
-@@ -615,6 +615,8 @@ static void add_alternate_refs(void)
+diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
+index 09edd23..2ece661 100755
+--- a/t/t5540-http-push.sh
++++ b/t/t5540-http-push.sh
+@@ -58,7 +58,7 @@ test_expect_success 'push to remote repository with packed refs' '
+ 	 test $HEAD = $(git rev-parse --verify HEAD))
+ '
  
- int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- {
-+	int advertise_refs = 0;
-+	int stateless_rpc = 0;
- 	int i;
- 	char *dir = NULL;
+-test_expect_failure 'push already up-to-date' '
++test_expect_success 'push already up-to-date' '
+ 	git push
+ '
  
-@@ -623,7 +625,15 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		const char *arg = *argv++;
- 
- 		if (*arg == '-') {
--			/* Do flag handling here */
-+			if (!strcmp(arg, "--advertise-refs")) {
-+				advertise_refs = 1;
-+				continue;
-+			}
-+			if (!strcmp(arg, "--stateless-rpc")) {
-+				stateless_rpc = 1;
-+				continue;
-+			}
-+
- 			usage(receive_pack_usage);
- 		}
- 		if (dir)
-@@ -652,12 +662,16 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		" report-status delete-refs ofs-delta " :
- 		" report-status delete-refs ";
- 
--	add_alternate_refs();
--	write_head_info();
--	clear_extra_refs();
-+	if (advertise_refs || !stateless_rpc) {
-+		add_alternate_refs();
-+		write_head_info();
-+		clear_extra_refs();
- 
--	/* EOF */
--	packet_flush(1);
-+		/* EOF */
-+		packet_flush(1);
-+	}
-+	if (advertise_refs)
+diff --git a/transport-helper.c b/transport-helper.c
+index 16c6641..5078c71 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -263,6 +263,8 @@ static int push_refs(struct transport *transport,
+ 		strbuf_addstr(&buf, ref->name);
+ 		strbuf_addch(&buf, '\n');
+ 	}
++	if (buf.len == 0)
 +		return 0;
  
- 	read_head_info();
- 	if (commands) {
-diff --git a/upload-pack.c b/upload-pack.c
-index f1dc3a3..70badcf 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -39,6 +39,8 @@ static unsigned int timeout;
-  */
- static int use_sideband;
- static int debug_fd;
-+static int advertise_refs;
-+static int stateless_rpc;
- 
- static void reset_timeout(void)
- {
-@@ -509,6 +511,8 @@ static int get_common_commits(void)
- 		if (!len) {
- 			if (have_obj.nr == 0 || multi_ack)
- 				packet_write(1, "NAK\n");
-+			if (stateless_rpc)
-+				exit(0);
- 			continue;
- 		}
- 		strip(line, len);
-@@ -710,12 +714,32 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 	return 0;
- }
- 
-+static int mark_our_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
-+{
-+	struct object *o = parse_object(sha1);
-+	if (!o)
-+		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
-+	if (!(o->flags & OUR_REF)) {
-+		o->flags |= OUR_REF;
-+		nr_our_refs++;
-+	}
-+	return 0;
-+}
-+
- static void upload_pack(void)
- {
--	reset_timeout();
--	head_ref(send_ref, NULL);
--	for_each_ref(send_ref, NULL);
--	packet_flush(1);
-+	if (advertise_refs || !stateless_rpc) {
-+		reset_timeout();
-+		head_ref(send_ref, NULL);
-+		for_each_ref(send_ref, NULL);
-+		packet_flush(1);
-+	} else {
-+		head_ref(mark_our_ref, NULL);
-+		for_each_ref(mark_our_ref, NULL);
-+	}
-+	if (advertise_refs)
-+		return;
-+
- 	receive_needs();
- 	if (want_obj.nr) {
- 		get_common_commits();
-@@ -737,6 +761,14 @@ int main(int argc, char **argv)
- 
- 		if (arg[0] != '-')
- 			break;
-+		if (!strcmp(arg, "--advertise-refs")) {
-+			advertise_refs = 1;
-+			continue;
-+		}
-+		if (!strcmp(arg, "--stateless-rpc")) {
-+			stateless_rpc = 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--strict")) {
- 			strict = 1;
- 			continue;
+ 	transport->verbose = flags & TRANSPORT_PUSH_VERBOSE ? 1 : 0;
+ 	standard_options(transport);
 -- 
 1.6.5.2.181.gd6f41
