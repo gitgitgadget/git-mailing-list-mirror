@@ -1,66 +1,63 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH I18N filenames v2 2/3] Use I18N-wrappers everywhere in Git
-Date: Thu, 29 Oct 2009 10:30:58 +0100
-Message-ID: <81b0412b0910290230x9092c88n414ad0e03fc7f8db@mail.gmail.com>
-References: <1256752900-2615-1-git-send-email-timur@iris-comp.ru>
-	 <1256752900-2615-2-git-send-email-timur@iris-comp.ru>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] git-rebase -i: improve usage message
+Date: Thu, 29 Oct 2009 10:40:28 +0100
+Message-ID: <200910291040.30820.trast@student.ethz.ch>
+References: <1256774549-8191-1-git-send-email-brian.ewins@gmail.com> <7vtyxiafa9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Timur Sufiev <timur@iris-comp.ru>
-X-From: git-owner@vger.kernel.org Thu Oct 29 10:31:06 2009
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Brian Ewins <brian.ewins@gmail.com>, <git@vger.kernel.org>,
+	<kusmabite@googlemail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 29 10:41:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3RLV-0007zh-PI
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 10:31:06 +0100
+	id 1N3RVn-0004FP-8a
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 10:41:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752945AbZJ2Ja4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Oct 2009 05:30:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752398AbZJ2Ja4
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 05:30:56 -0400
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:57728 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751360AbZJ2Jaz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Oct 2009 05:30:55 -0400
-Received: by bwz27 with SMTP id 27so2040646bwz.21
-        for <git@vger.kernel.org>; Thu, 29 Oct 2009 02:30:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=okcSGLxVbeI2iQlzhIgm9IPoTCkDQv/YFl1ZY9GOsjE=;
-        b=nyMOCZ1f8I1V5MGdpFz1SFxcXRXd812gC+oC8dGMCDJI3KfJbqzWFNjS0lGaldwK9g
-         rUju+RMvKp/FclzesXf51EoxL5wuGmQOxrrRcllDpAcz/cV7vhvYTX+bgh8R19/WJuyG
-         2S26kkKn1JGc6qExylHG+5Q4JIp4ko0+bdsdM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=HfexpY+f0C7mU2u6g71YDgBZeKW0v8E540xqysBeRYKxigoWH4fAweQ4GqjjZDP0xN
-         USSDOr/fwFvJUS+R4wvOw+eSRBQRS9wYmJvpjHqSFi6vA0+GqRKrEW+G+cNaatT7W1YH
-         k6Ypr9FUADWAgupGOEaosPs4bD+c3e0TFmI3g=
-Received: by 10.204.32.209 with SMTP id e17mr8073bkd.84.1256808659312; Thu, 29 
-	Oct 2009 02:30:59 -0700 (PDT)
-In-Reply-To: <1256752900-2615-2-git-send-email-timur@iris-comp.ru>
+	id S1752254AbZJ2Jld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2009 05:41:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751864AbZJ2Jlc
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 05:41:32 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:14704 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751757AbZJ2Jlc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2009 05:41:32 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 29 Oct
+ 2009 10:41:35 +0100
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 29 Oct
+ 2009 10:41:14 +0100
+User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
+In-Reply-To: <7vtyxiafa9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131578>
 
-On Wed, Oct 28, 2009 at 19:01, Timur Sufiev <timur@iris-comp.ru> wrote:
-> Signed-off-by: Timur Sufiev <timur@iris-comp.ru>
-> ---
-> =C2=A0abspath.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=
-=A0 =C2=A01 +
-> =C2=A0attr.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0| =C2=A0 =C2=A01 +
-> =C2=A0bisect.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
-| =C2=A0 =C2=A01 +
+Junio C Hamano wrote:
+> 
+> The OPTIONS_SPEC in rebase--interactive is for the interactive mode and
+> for nothing else, so it may be a good idea to clearly say so at the
+> beginning.  The user experience perhaps should look like:
+> 
+>     $ git rebase -i -h
+>     Note: this help is only about the interactive mode;
+>     see 'git rebase -h' for help on non-interactive mode.
+> 
+>     usage: git rebase -i [<options>] [--] <upstream> [<branch>]
+>        or: git rebase -i (--continue|--abort|--skip)
 
-Instead of modifying all these files you could just have put that
-darn header in compat/mingw.h
+Nit-pick: the last line is not correct; the user does not have to
+specify -i for git-rebase to figure out that an interactive rebase is
+in progress.
+
+(I agree with the rest though.)
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
