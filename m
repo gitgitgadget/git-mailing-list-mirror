@@ -1,93 +1,84 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] diff --color-words -U0: fix the location of hunk headers
-Date: Thu, 29 Oct 2009 11:45:03 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0910291144170.3687@felix-maschine>
-References: <1256732672-11817-1-git-send-email-markus.heidelberg@web.de> <1256732672-11817-4-git-send-email-markus.heidelberg@web.de>
+Subject: Re: What's cooking in git.git (Oct 2009, #01; Wed, 07)
+Date: Thu, 29 Oct 2009 11:54:35 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0910291151330.3687@felix-maschine>
+References: <7viqeqjsx6.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0910080848380.4985@pacific.mpi-cbg.de>  <fabb9a1e0910072349q68d6756cgebb041a0bbe2ba65@mail.gmail.com>  <20091008173900.GI9261@spearce.org> <fabb9a1e0910081058m59527600o392a6b438b18512e@mail.gmail.com>
+ <fabb9a1e0910281508m3e9bb8a6g7b39abc29fceae78@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: git-owner@vger.kernel.org Thu Oct 29 11:45:20 2009
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	vcs-fast-import-devs@lists.launchpad.net
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 29 11:54:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3SVM-00068H-Eh
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 11:45:20 +0100
+	id 1N3SeS-0001UV-Rd
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 11:54:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754050AbZJ2KpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2009 06:45:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753978AbZJ2KpH
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 06:45:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33677 "HELO mail.gmx.net"
+	id S1753977AbZJ2Kye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2009 06:54:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753955AbZJ2Kye
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 06:54:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40941 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753977AbZJ2KpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2009 06:45:06 -0400
-Received: (qmail invoked by alias); 29 Oct 2009 10:45:08 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO [10.1.35.45]) [141.5.11.5]
-  by mail.gmx.net (mp002) with SMTP; 29 Oct 2009 11:45:08 +0100
+	id S1753635AbZJ2Kyd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2009 06:54:33 -0400
+Received: (qmail invoked by alias); 29 Oct 2009 10:54:36 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO felix-maschine.local) [141.5.11.5]
+  by mail.gmx.net (mp047) with SMTP; 29 Oct 2009 11:54:36 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19U3ZRmoxZU0eC8nD4hFdIgZr2Z6E4LfDz3XP5eKf
-	qKsc5ey13NGcmv
+X-Provags-ID: V01U2FsdGVkX19O9HdmO8hO6JVd0rvUvV81q1W0JLW6hZd1eFJ+BN
+	L+R1Zaj4HJkPEe
 X-X-Sender: johannes@felix-maschine
-In-Reply-To: <1256732672-11817-4-git-send-email-markus.heidelberg@web.de>
+In-Reply-To: <fabb9a1e0910281508m3e9bb8a6g7b39abc29fceae78@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131581>
 
+Hi,
 
-Colored word diff without context lines firstly printed all the hunk
-headers among each other and then printed the diff.
+On Wed, 28 Oct 2009, Sverre Rabbelier wrote:
 
-This was due to the code relying on getting at least one context line at
-the end of each hunk, where the colored words would be flushed (it is
-done that way to be able to ignore rewrapped lines).
+> On Thu, Oct 8, 2009 at 10:58, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> > I think it makes to ignore options that are not for our vcs, as long 
+> > as options that change import behavior (such as marks, date-format) 
+> > are combined with, say, 'feature tool=git'. This way we can be sure 
+> > that when outputting out a vcs specific stream, it is only parsed by 
+> > that vcs.
+> >
+> > Note: yes, I know that marks and date-format are features now, but
+> > there's really no other suitable example that I could think of).
+> >
+> > vcs fast import devs please ack this idea (and perhaps suggest
+> > something other than "feature tool=git" if preferable) so that I can
+> > reroll my gfi-options series :).
+> 
+> Shawn, what do you want to do with this, it seems the vcs devs are not
+> very interested in this feature, should I implement it as described
+> above? That is:
+>   * If you use any option that is stream-changing you should include
+>     "feature tool=git" in your stream
+>   * import-marks and export-marks are made into features
+>   * "option vcs" is ignored if vcs is a different vcs
+>   * "option vcs" must be recognised if vcs is this vcs
 
-Noticed by Markus Heidelberg.
+It would be quite nice if this issue moved forward for a change.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+As a consequence of it moving forward, I could nudge Sverre into 
+continuing with his git-remote-hg work that will allow me to work 
+transparently on a Mercurial repository using Git.
 
-	I would strongly prefer this fix instead of your 2/3 and 3/3.
+Transparent as in "no hassles".
 
- diff.c                |    6 ++++++
- t/t4034-diff-words.sh |    2 +-
- 2 files changed, 7 insertions(+), 1 deletions(-)
+It also will serve nicely as a perfect excuse to fix some design mistakes 
+in the foreign vcs stuff.
 
-diff --git a/diff.c b/diff.c
-index 51b5dbb..4eafaf5 100644
---- a/diff.c
-+++ b/diff.c
-@@ -656,6 +656,12 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 	for (i = 0; i < len && line[i] == '@'; i++)
- 		;
- 	if (2 <= i && i < len && line[i] == ' ') {
-+		/* flush --color-words even for --unified=0 */
-+		if (ecbdata->diff_words &&
-+		    (ecbdata->diff_words->minus.text.size ||
-+		     ecbdata->diff_words->plus.text.size))
-+			diff_words_show(ecbdata->diff_words);
-+
- 		ecbdata->nparents = i - 1;
- 		len = sane_truncate_line(ecbdata, line, len);
- 		emit_line(ecbdata->file,
-diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-index 82240cf..21db6e9 100755
---- a/t/t4034-diff-words.sh
-+++ b/t/t4034-diff-words.sh
-@@ -77,7 +77,7 @@ cat > expect <<\EOF
- <GREEN>aeff = aeff * ( aaa )<RESET>
- EOF
- 
--test_expect_failure 'word diff without context' '
-+test_expect_success 'word diff without context' '
- 
- 	word_diff --color-words --unified=0
- 
--- 
-1.6.4.GIT
+Ciao,
+Dscho
