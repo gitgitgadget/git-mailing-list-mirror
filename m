@@ -1,55 +1,119 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] clone: detect extra arguments
-Date: Thu, 29 Oct 2009 12:06:15 -0400
-Message-ID: <20091029160614.GB7622@sigill.intra.peff.net>
-References: <20091029081030.GA11213@progeny.tock>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC PATCH v4 06/26] Add multi_ack_detailed capability to
+	fetch-pack/upload-pack
+Date: Thu, 29 Oct 2009 09:17:48 -0700
+Message-ID: <20091029161748.GB10505@spearce.org>
+References: <1256774448-7625-1-git-send-email-spearce@spearce.org> <1256774448-7625-7-git-send-email-spearce@spearce.org> <7v4opibv4i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 29 17:06:25 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 29 17:18:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3XW3-00041Y-0I
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 17:06:23 +0100
+	id 1N3XhJ-0001Wv-03
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 17:18:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753497AbZJ2QGN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2009 12:06:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753397AbZJ2QGN
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 12:06:13 -0400
-Received: from peff.net ([208.65.91.99]:42080 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753226AbZJ2QGM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2009 12:06:12 -0400
-Received: (qmail 22624 invoked by uid 107); 29 Oct 2009 16:09:57 -0000
-Received: from 65-121-75-131.dia.static.qwest.net (HELO sigill.intra.peff.net) (65.121.75.131)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 29 Oct 2009 12:09:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Oct 2009 12:06:15 -0400
+	id S1754109AbZJ2QRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2009 12:17:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753076AbZJ2QRo
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 12:17:44 -0400
+Received: from george.spearce.org ([209.20.77.23]:37962 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752875AbZJ2QRn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2009 12:17:43 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 48099381D3; Thu, 29 Oct 2009 16:17:48 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <20091029081030.GA11213@progeny.tock>
+In-Reply-To: <7v4opibv4i.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131608>
 
-On Thu, Oct 29, 2009 at 03:10:30AM -0500, Jonathan Nieder wrote:
+Junio C Hamano <gitster@pobox.com> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+> > ACK %s
+> > -----------------------------------
+> >   * no multi_ack or multi_ack_detailed:
+> >
+> >     Sent in response to "have" when the object exists on the remote
+> >     side and is therefore an object in common between the peers.
+> >     The argument is the SHA-1 of the common object.
+> 
+> Do you mean by "exists" something a bit stronger than that, namely, it
+> exists and everything reachable from it also exists, right?
 
-> If git clone is given more than two non-option arguments, it
-> silently throws away all but the first one.  Complain instead.
-> [...]
-> +	if (argc > 2)
-> +		die("Too many arguments.");
-> +
+No, I mean "object exists".  The upload-pack code makes no check that
+the object is in fact complete, just that it has the object in the
+object database.  The object could be a dangling commit whose parents
+aren't present, and we'd still (currently) return an "ACK %s" for it.
 
-Should we maybe be showing the usage in this case?
+I specifically didn't get into completeness here because we don't
+actually check for it.
+ 
+> > ACK %s common
+> > -----------------------------------
+> >   * multi_ack_detailed only:
+> >
+> >     Sent in response to "have".  Both sides have this object.
+> >     Like with "ACK %s continue" above the client should stop
+> >     sending have lines reachable for objects from the argument.
+> >
+> > ACK %s ready
+> > -----------------------------------
+> >   * multi_ack_detailed only:
+> >
+> >     Sent in response to "have".
+> >
+> >     The client should stop transmitting objects which are reachable
+> >     from the argument, and send "done" soon to get the objects.
+> >
+> >     If the remote side has the specified object, it should
+> >     first send an "ACK %s common" message prior to sending
+> >     "ACK %s ready".
+> >
+> >     Clients may still submit additional "have" lines if there are
+> >     more side branches for the client to explore that might be added
+> >     to the common set and reduce the number of objects to transfer.
+> 
+> I do not understand this after reading it three times.  The remote side
+> says "ACK $it common", allow the requestor to feed more "have", then
+> eventually send an "ACK $it ready" for the same object it earlier sent
+> "common" for?  The first one tells the requestor not to go down the path
+> from $it further, so presumably all the "have"s that come after it will be
+> about different ancestry paths.
+> 
+> What is the advantage of using this?  In other words, how, in what
+> situation and why would the remote side choose to use "ready" --- it looks
+> to me that it could always say "common" whenever it hits a "have" that it
+> can determine to be common.
 
->  	if (argc == 0)
->  		die("You must specify a repository to clone.");
+"ACK $it ready" should be used when ok_to_give_up() returns true.
 
-Probably we should do the same here, too.
+The "ACK $it ready" message is trying to say "don't talk any more
+about things reachable from $it, and by the way, if you say 'done'
+now I will give you a pack".
 
--Peff
+The "ACK $it common" message is trying to say "$it is a common base,
+don't talk any more about things reachable from $it, but there
+may be other branches you should explore before I send you a pack,
+so talk about those if you can".
+
+
+A client only wants to store $it into its request state vector for
+replay on the next RPC if $it is truely common.
+
+The "ACK $it common" before "ACK $it ready" is because clients can't
+assume that "ACK $it ready" means $it is really common.  Servers send
+"ACK $it ready" if they don't have $it but are ok_to_give_up().
+But if it is common, *and* ok_to_give_up() is true, a server can
+send both messages, but it must send "ACK $it common" first.
+
+-- 
+Shawn.
