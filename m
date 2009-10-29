@@ -1,144 +1,77 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH/RFC 2/2] Provide a build time default-editor setting
-Date: Thu, 29 Oct 2009 12:50:13 +0100
-Message-ID: <4AE98175.504@viscovery.net>
-References: <1256742357-sup-3798@ntdws12.chass.utoronto.ca>	 <7vskd3o11t.fsf@alter.siamese.dyndns.org>	 <20091029073224.GA15403@progeny.tock>	 <20091029075021.GC15403@progeny.tock> <117f2cc80910290336k1e7b5877uc472ad511bb6f5ae@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 1/7] Refactor git_remote_cvs to a more generic
+ git_remote_helpers
+Date: Thu, 29 Oct 2009 13:05:26 +0100
+Message-ID: <200910291305.26523.johan@herland.net>
+References: <1256798426-21816-1-git-send-email-srabbelier@gmail.com>
+ <1256798426-21816-2-git-send-email-srabbelier@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ben Walton <bwalton@artsci.utoronto.ca>,
-	GIT List <git@vger.kernel.org>
-To: David Roundy <roundyd@physics.oregonstate.edu>
-X-From: git-owner@vger.kernel.org Thu Oct 29 12:50:39 2009
+Content-Type: Text/Plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7BIT
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 29 13:05:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3TWV-0006Cv-Du
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 12:50:35 +0100
+	id 1N3TlA-0004VT-67
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 13:05:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752801AbZJ2LuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2009 07:50:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752571AbZJ2LuP
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 07:50:15 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:7446 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751573AbZJ2LuO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2009 07:50:14 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1N3TW9-0003O7-Sz; Thu, 29 Oct 2009 12:50:14 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 901244E4; Thu, 29 Oct 2009 12:50:13 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <117f2cc80910290336k1e7b5877uc472ad511bb6f5ae@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1753085AbZJ2MFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2009 08:05:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751946AbZJ2MFY
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 08:05:24 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:44842 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752839AbZJ2MFY (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Oct 2009 08:05:24 -0400
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KS900D89YX3EW30@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 29 Oct 2009 13:05:27 +0100 (MET)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KS900HR8YX3IB30@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 29 Oct 2009 13:05:27 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.10.29.115425
+User-Agent: KMail/1.12.2 (Linux/2.6.30-ARCH; KDE/4.3.2; x86_64; ; )
+In-reply-to: <1256798426-21816-2-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131585>
 
-David Roundy schrieb:
-> Any chance this will be exported as plumbing? I know it's pretty
-> high-level, but it'd be handy to have be able to write `git editor
-> $FILENAME` and just have it do the right thing.  This would also mean
-> that the perl scripts below could be simplified.
+On Thursday 29 October 2009, Sverre Rabbelier wrote:
+> This in an effort to allow future remote helpers written in python to
+> re-use the non-cvs-specific code.
+> 
+> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+> CC: Johan Herland <johan@herland.net>
+> ---
+> 
+> 	As discussed with Johan Herland, refactored git_remote_cvs into a
+> 	more reusable git_remote_helpers module.
 
-Something like below? Possible usage in shell scripts:
+It's hard to review this patch for a couple of reasons:
 
-	editor=$(git var GIT_EDITOR)
-	"$editor" "$filename"
+1. It's over 200K large, which causes it to be blocked by the Git mailing 
+list (100K limit, I believe).
 
--- Hannes
+2. The patch renames some files, but instead of simply stating the rename, 
+the patch lists the entire file twice (deletion + creation)
 
-PS: warning: linewrapped.
+Fortunately, you can easily solve both problems by rerolling the patch with 
+the -M flag to git-format-patch.
 
-Subject: [PATCH] Teach git var about GIT_EDITOR
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- cache.h  |    1 +
- editor.c |   13 +++++++++++--
- var.c    |    6 ++++++
- 3 files changed, 18 insertions(+), 2 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index a5eeead..3103dda 100644
---- a/cache.h
-+++ b/cache.h
-@@ -750,6 +750,7 @@ extern const char *git_author_info(int);
- extern const char *git_committer_info(int);
- extern const char *fmt_ident(const char *name, const char *email, const
-char *date_str, int);
- extern const char *fmt_name(const char *name, const char *email);
-+extern const char *git_editor();
-
- struct checkout {
- 	const char *base_dir;
-diff --git a/editor.c b/editor.c
-index 4d469d0..bd8c828 100644
---- a/editor.c
-+++ b/editor.c
-@@ -2,7 +2,7 @@
- #include "strbuf.h"
- #include "run-command.h"
-
--int launch_editor(const char *path, struct strbuf *buffer, const char
-*const *env)
-+const char *git_editor()
- {
- 	const char *editor, *terminal;
-
-@@ -16,11 +16,20 @@ int launch_editor(const char *path, struct strbuf
- 	terminal = getenv("TERM");
- 	if (!editor && (!terminal || !strcmp(terminal, "dumb")))
--		return error("Terminal is dumb but no VISUAL nor EDITOR defined.");
-+		return "/dev/null";
-
- 	if (!editor)
- 		editor = "vi";
-
-+	return editor;
-+}
-+
-+int launch_editor(const char *path, struct strbuf *buffer, const char
-*const *env)
-+{
-+	const char *editor = git_editor();
-+
-+	if (!strcmp(editor, "/dev/null"))
-+		return error("Terminal is dumb but no VISUAL nor EDITOR defined.");
- 	if (strcmp(editor, ":")) {
- 		size_t len = strlen(editor);
- 		int i = 0;
-diff --git a/var.c b/var.c
-index 125c0d1..48d8b9a 100644
---- a/var.c
-+++ b/var.c
-@@ -8,6 +8,11 @@
-
- static const char var_usage[] = "git var [-l | <variable>]";
-
-+static const char *editor(int unused)
-+{
-+	return git_editor();
-+}
-+
- struct git_var {
- 	const char *name;
- 	const char *(*read)(int);
-@@ -15,6 +20,7 @@ struct git_var {
- static struct git_var git_vars[] = {
- 	{ "GIT_COMMITTER_IDENT", git_committer_info },
- 	{ "GIT_AUTHOR_IDENT",   git_author_info },
-+	{ "GIT_EDITOR", editor },
- 	{ "", NULL },
- };
+...Johan
 
 -- 
-1.6.5.rc2.47.g49402
+Johan Herland, <johan@herland.net>
+www.herland.net
