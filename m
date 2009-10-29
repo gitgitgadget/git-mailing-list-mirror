@@ -1,170 +1,125 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] add autoupdate feature
-Date: Wed, 28 Oct 2009 20:24:25 -0400
-Message-ID: <20091029002425.GC1057@sigill.intra.peff.net>
-References: <20091029002229.GA986@sigill.intra.peff.net>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [RFC PATCH v4 26/26] test smart http fetch and push
+Date: Thu, 29 Oct 2009 01:31:17 +0100
+Message-ID: <20091029003117.GA18299@localhost>
+References: <1256774448-7625-1-git-send-email-spearce@spearce.org> <1256774448-7625-27-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 29 01:24:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Oct 29 01:31:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3Ioa-0000Ug-Qr
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 01:24:33 +0100
+	id 1N3IvT-0002mi-1q
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 01:31:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755978AbZJ2AYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 20:24:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755949AbZJ2AYX
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 20:24:23 -0400
-Received: from peff.net ([208.65.91.99]:38816 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755497AbZJ2AYW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 20:24:22 -0400
-Received: (qmail 13825 invoked by uid 107); 29 Oct 2009 00:28:06 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (216.239.45.19)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 28 Oct 2009 20:28:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Oct 2009 20:24:25 -0400
+	id S1755995AbZJ2Ab3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 20:31:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755991AbZJ2Ab3
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 20:31:29 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:62094 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755988AbZJ2Ab2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 20:31:28 -0400
+Received: by ey-out-2122.google.com with SMTP id 9so332341eyd.19
+        for <git@vger.kernel.org>; Wed, 28 Oct 2009 17:31:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=nbvOEMH+RpEqMvF8tby6DwlDNi93WnWxAlKXcZPqEgI=;
+        b=mGB2FoHTLyfxDHk5LGfioDX6BW/WUu94PYw/RO7dx8w6u4lmZz4v1wK0PfGbdZ2ByH
+         77OUO0Br77pqHT5+bSWk0J3Qs/4MdrQzlCy3NGZkDkfp5kqLVZg3J2LeIspbJsjdEjHd
+         RLNOyPDCDIuml9Sm4/E4PWo1SnHyDBAywmlAI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=Q6z4zJm+IfMLufj8t3wPGuzDrfKK1PtKhEx4kt4ULSx+OAmjoqA4zILiBpSgVfxIBq
+         BgoWPynKD4z+Or0lFnWkCy5/6M23xc4Yid83U4PSvDZ7KVVJ2d8Yp4AJBgKsyPp99CW/
+         vFslalwOFrfoocHWlzwZcF9tjrWBczdk35bd8=
+Received: by 10.211.132.3 with SMTP id j3mr1599889ebn.54.1256776292218;
+        Wed, 28 Oct 2009 17:31:32 -0700 (PDT)
+Received: from darc.lan (p549A7F29.dip.t-dialin.net [84.154.127.41])
+        by mx.google.com with ESMTPS id 1sm10763967ewy.49.2009.10.28.17.31.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 28 Oct 2009 17:31:31 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1N3Iv7-000517-O3; Thu, 29 Oct 2009 01:31:17 +0100
 Content-Disposition: inline
-In-Reply-To: <20091029002229.GA986@sigill.intra.peff.net>
+In-Reply-To: <1256774448-7625-27-git-send-email-spearce@spearce.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131546>
 
-Users can't be bothered to keep their software up to date, so
-we must do it for them.  Whenever any git command is
-invoked, this patch checks for new releases of git at
-kernel.org, and automatically upgrades your version of git.
+On Wed, Oct 28, 2009 at 05:00:48PM -0700, Shawn O. Pearce wrote:
 
-Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
-Signed-off-by: Sam Vilain <sam@vilain.net>
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-Signed-off-by: Nick Edelen <sirnot@gmail.com>
-Signed-off-by: "J.H." <warthog9@kernel.org>
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
+> --- /dev/null
+> +++ b/t/t5541-http-push.sh
+[...]
+> +LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'5550'}
+
+This should be 5541. We need different ports to be able to run the tests
+simultenously.
+
+> --- a/t/t5550-http-fetch.sh
+> +++ b/t/t5550-http-fetch.sh
+
+There is also a http port related bug in t5550. I'm attaching the patch
+below. Maybe you want to squash this in here.
+
+> --- /dev/null
+> +++ b/t/t5551-http-fetch.sh
+[...]
+> +LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'5550'}
+
+Ditto, 5551.
+
+Clemens
+
+-->o--
+Subject: [PATCH] set httpd port before sourcing lib-httpd
+
+If LIB_HTTPD_PORT is not set already, lib-httpd will set it to the
+default 8111.
+
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
 ---
- .gitignore          |    1 +
- Makefile            |    1 +
- git-autoupdate.perl |   58 +++++++++++++++++++++++++++++++++++++++++++++++++++
- git.c               |    9 +++++++-
- 4 files changed, 68 insertions(+), 1 deletions(-)
- create mode 100644 git-autoupdate.perl
+ t/t5540-http-push.sh  |    7 +++----
+ 1 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index cf0d8b9..5a2703d 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -10,6 +10,7 @@ git-annotate
- git-apply
- git-archimport
- git-archive
-+git-autoupdate
- git-bisect
- git-bisect--helper
- git-blame
-diff --git a/Makefile b/Makefile
-index ae4b9fc..ba386a4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -335,6 +335,7 @@ SCRIPT_SH += git-submodule.sh
- SCRIPT_SH += git-web--browse.sh
+diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
+index 5c0f4d7..ea46d1e 100755
+--- a/t/t5540-http-push.sh
++++ b/t/t5540-http-push.sh
+@@ -9,17 +9,16 @@ This test runs various sanity checks on http-push.'
  
- SCRIPT_PERL += git-add--interactive.perl
-+SCRIPT_PERL += git-autoupdate.perl
- SCRIPT_PERL += git-difftool.perl
- SCRIPT_PERL += git-archimport.perl
- SCRIPT_PERL += git-cvsexportcommit.perl
-diff --git a/git-autoupdate.perl b/git-autoupdate.perl
-new file mode 100644
-index 0000000..c8ca10b
---- /dev/null
-+++ b/git-autoupdate.perl
-@@ -0,0 +1,58 @@
-+#!/usr/bin/perl
-+
-+use LWP::Simple;
-+use strict;
-+
-+my $ROOT = "http://kernel.org/pub/software/scm/git";
-+
-+my $us = our_git_version();
-+my $them = latest_git_version();
-+
-+if (compare_versions($us, $them) < 0) {
-+	print STDERR <<EOF;
-+A new version of git is available! Auto-installing version $them.
-+EOF
-+}
-+else {
-+	exit 0;
-+}
-+
-+upgrade($them);
-+exit 42;
-+
-+sub our_git_version {
-+	local $_ = `git version`;
-+	/^git version (.*?)(\.\d+\.g[a-f0-9]+)?(\.dirty)?$/
-+		or die "unable to read git version: $_";
-+	return $1;
-+}
-+
-+sub latest_git_version {
-+	local $_ = get("$ROOT/");
-+	my @versions = /git-([0-9.]+)\.tar\.gz/g
-+		or die "unable to find any git versions at $ROOT";
-+	# git version numbers have always sorted lexicographically so far,
-+	# so let's just assume that will be the case forever
-+	return (sort @versions)[-1];
-+}
-+
-+sub compare_versions {
-+	# let's assume lexicographical sorting again
-+	return $_[0] cmp $_[1];
-+}
-+
-+sub upgrade {
-+	my $version = shift;
-+	my $fn = "git-$version.tar.gz";
-+	getstore("$ROOT/$fn", "/tmp/$fn") == 200
-+		or die "unable to fetch $ROOT/$fn";
-+	my $rc = system qq(
-+		cd /tmp &&
-+		gunzip -c $fn | tar xf - &&
-+		cd git-$version &&
-+		git config-mak >config.mak &&
-+		make install
-+	);
-+	$rc == 0 or die "failed to upgrade git";
-+	system("less /tmp/git-$version/RelNotes");
-+}
-diff --git a/git.c b/git.c
-index 01ddf06..959ad52 100644
---- a/git.c
-+++ b/git.c
-@@ -462,10 +462,17 @@ int main(int argc, const char **argv)
+ . ./test-lib.sh
  
- 	if (!getenv("GIT_NOSPLASH") && !(argv[1] && !strcmp(argv[1], "splash"))) {
- 		const char *a[] = { "splash", NULL };
--		const char *e[] = { "GIT_NOSPLASH=1", NULL };
-+		const char *e[] = { "GIT_NOSPLASH=1", "GIT_NOAUTOUPDATE=1", NULL };
- 		run_command_v_opt_cd_env(a, RUN_GIT_CMD, NULL, e);
- 	}
+-ROOT_PATH="$PWD"
+-LIB_HTTPD_DAV=t
+-LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'5540'}
+-
+ if git http-push > /dev/null 2>&1 || [ $? -eq 128 ]
+ then
+ 	say "skipping test, USE_CURL_MULTI is not defined"
+ 	test_done
+ fi
  
-+	if (!getenv("GIT_NOAUTOUPDATE")) {
-+		const char *a[] = { "autoupdate", NULL };
-+		const char *e[] = { "GIT_NOSPLASH=1", "GIT_NOAUTOUPDATE=1", NULL };
-+		if (run_command_v_opt_cd_env(a, RUN_GIT_CMD, NULL, e) == 42)
-+			exit(run_command_v_opt_cd_env(argv, 0, NULL, e));
-+	}
-+
- 	/*
- 	 * "git-xxxx" is the same as "git xxxx", but we obviously:
- 	 *
++LIB_HTTPD_DAV=t
++LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'5540'}
+ . "$TEST_DIRECTORY"/lib-httpd.sh
++ROOT_PATH="$PWD"
+ start_httpd
+ 
+ test_expect_success 'setup remote repository' '
 -- 
-1.6.5.1.3.g9d77a
+1.6.5.1.208.gd7b37
