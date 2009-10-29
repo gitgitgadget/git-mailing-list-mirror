@@ -1,77 +1,73 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 1/7] Refactor git_remote_cvs to a more generic
- git_remote_helpers
-Date: Thu, 29 Oct 2009 13:05:26 +0100
-Message-ID: <200910291305.26523.johan@herland.net>
-References: <1256798426-21816-1-git-send-email-srabbelier@gmail.com>
- <1256798426-21816-2-git-send-email-srabbelier@gmail.com>
+From: "Anthony W. Youngman" <wol@thewolery.demon.co.uk>
+Subject: msysgit won't install as per instructions
+Date: Thu, 29 Oct 2009 12:38:36 +0000
+Message-ID: <DyCV4WDMzY6KFwha@thewolery.demon.co.uk>
+Reply-To: "Anthony W. Youngman" <wol@thewolery.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7BIT
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 29 13:05:44 2009
+Content-Type: text/plain;charset=us-ascii;format=flowed
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 29 13:40:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3TlA-0004VT-67
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 13:05:44 +0100
+	id 1N3UIZ-0002Zz-NI
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 13:40:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753085AbZJ2MFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2009 08:05:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751946AbZJ2MFY
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 08:05:24 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:44842 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752839AbZJ2MFY (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Oct 2009 08:05:24 -0400
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KS900D89YX3EW30@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 29 Oct 2009 13:05:27 +0100 (MET)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KS900HR8YX3IB30@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 29 Oct 2009 13:05:27 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.10.29.115425
-User-Agent: KMail/1.12.2 (Linux/2.6.30-ARCH; KDE/4.3.2; x86_64; ; )
-In-reply-to: <1256798426-21816-2-git-send-email-srabbelier@gmail.com>
+	id S1752680AbZJ2Mj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2009 08:39:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752622AbZJ2Mj6
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 08:39:58 -0400
+Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:40160 "EHLO
+	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752392AbZJ2Mj5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Oct 2009 08:39:57 -0400
+Received: from dyn-62-56-51-120.dslaccess.co.uk ([62.56.51.120] helo=thewolery.demon.co.uk)
+	by lon1-post-2.mail.demon.net with esmtpa (AUTH thewolery)
+	(Exim 4.69)
+	id 1N3UIM-0007by-as
+	for git@vger.kernel.org; Thu, 29 Oct 2009 12:40:02 +0000
+User-Agent: Turnpike/6.07-M (<UIe6Thl4PTCai3mvYGa+2+ugZs>)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131586>
 
-On Thursday 29 October 2009, Sverre Rabbelier wrote:
-> This in an effort to allow future remote helpers written in python to
-> re-use the non-cvs-specific code.
-> 
-> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
-> CC: Johan Herland <johan@herland.net>
-> ---
-> 
-> 	As discussed with Johan Herland, refactored git_remote_cvs into a
-> 	more reusable git_remote_helpers module.
+I want to do some work on git-daemon under msysgit. And as a newbie to 
+git it could well be I'm just being stupid, but ...
 
-It's hard to review this patch for a couple of reasons:
+I installed msysgit, did a clone on the msysgit repository, and followed 
+the instructions, namely double-click on msys.bat. It falls over with 
+"no target for make install" - I know make well enough to know that 
+*sounds* *like* a messed up makefile. But lack of experience means 
+trying to track how it got there defeats me. The error output is below.
 
-1. It's over 200K large, which causes it to be blocked by the Git mailing 
-list (100K limit, I believe).
-
-2. The patch renames some files, but instead of simply stating the rename, 
-the patch lists the entire file twice (deletion + creation)
-
-Fortunately, you can easily solve both problems by rerolling the patch with 
-the -M flag to git-format-patch.
+Cheers,
+Wol
 
 
-...Johan
+-------------------------------------------------------
+Building and Installing Git
+-------------------------------------------------------
+make: *** No rule to make target `install'.  Stop.
 
+
+-------------------------
+Hello, dear Git developer.
+
+This is a minimal MSYS environment to work on Git.
+
+Your build failed...  Please fix it, and give feedback on the Git list.
+
+Welcome to msysGit
+
+
+Run 'git help git' to display the help index.
+Run 'git help <command>' to display help for specific commands.
+Run '/share/msysGit/add-shortcut.tcl' to add a shortcut to msysGit.
+bash: /git/contrib/completion/git-completion.bash: No such file or 
+directory
+bash: __git_ps1: command not found
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Anthony W. Youngman - anthony@thewolery.demon.co.uk
