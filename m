@@ -1,112 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC PATCH v4 14/26] Add stateless RPC options to upload-pack,
-	receive-pack
-Date: Thu, 29 Oct 2009 08:26:29 -0700
-Message-ID: <20091029152629.GY10505@spearce.org>
-References: <1256774448-7625-1-git-send-email-spearce@spearce.org> <1256774448-7625-15-git-send-email-spearce@spearce.org> <7vd446dfx4.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 29 16:26:36 2009
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] Make t9150 and t9151 test scripts executable
+Date: Thu, 29 Oct 2009 16:26:20 +0100
+Message-ID: <2cd5f4dcea8c36732de402caa0b8721b7b4a786f.1256829775.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 29 16:26:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3WtW-0008ME-O2
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 16:26:35 +0100
+	id 1N3WtW-0008ME-7h
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 16:26:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755258AbZJ2P0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2009 11:26:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755239AbZJ2P0Z
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 11:26:25 -0400
-Received: from george.spearce.org ([209.20.77.23]:60020 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755234AbZJ2P0Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2009 11:26:24 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 96727381D3; Thu, 29 Oct 2009 15:26:29 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7vd446dfx4.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755216AbZJ2P0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2009 11:26:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755206AbZJ2P0X
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 11:26:23 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:56270 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754959AbZJ2P0W (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Oct 2009 11:26:22 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id B6628B5860;
+	Thu, 29 Oct 2009 11:26:26 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Thu, 29 Oct 2009 11:26:26 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=FY1WHdU/mDg6sJu8xA/+XwA+nEs=; b=TjHUBu58uxSMiLEbLRoeb29a+wVpUmA7rH5FkCv2s3VT5pgmiecX2VjbWonrYD4T7rMXo7fZ/wukR4AkuMALjVhVmdhr41IYPjloCnlCYERSUNvYFgzhopgGZBEAt/aZuqMhCatWhrA6TPmQHlB5ock29v3N1jb9XEHZ0phrRzc=
+X-Sasl-enc: KB1ZA6/2O++LByv/e71NAgaPChjZrl1UNANdADDs7qoT 1256829986
+Received: from localhost (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 29660BF8;
+	Thu, 29 Oct 2009 11:26:26 -0400 (EDT)
+X-Mailer: git-send-email 1.6.5.86.g0056e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131600>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > When --stateless-rpc is passed [...]
-> > When --advertise-refs is passed [...]
-> 
-> Is the idea to first run with --advertise-refs to get the set of refs, and
-> then doing another, separate run with --stateless-rpc, assuming that the
-> refs the other end advertised does not change in the meantime, to conclude
-> the business?
+so that they can be run individually as
+(cd t && ./t9150-svk-mergetickets.sh)
+etc. just like all other test scripts.
 
-Yes.
- 
-> I suspect that two separate invocations on a (supposedly) single
-> repository made back-to-back can produce an inconsistent response in
-> verious situations (e.g. somebody pushing in the middle, or the same
-> hostname served by more than one mirrors) and the other end can get
-> confused.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Not much more to say. Wanted to be a good boy and run the new tests.
+One can use sh, of course, but there's a reason all other tests are executable.
 
-Yes, that can happen.
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ mode change 100644 => 100755 t/t9150-svk-mergetickets.sh
+ mode change 100644 => 100755 t/t9151-svn-mergeinfo.sh
 
-> I do not think there is any way to avoid it, short of adding to the second
-> request some "cookie" that allows the second requestee to verify that the
-> request is based on what he would give to the requester if this request
-> were the first step of the request made to him, iow, his state did not
-> change in the middle since the first request was made (either to him or to
-> the equivalent mirror sitting next to himm).
-
-There isn't a lot we can do, you are right.
-
-One approach is to use an HMAC and sign each advertised SHA-1
-during the initial --advertise-refs phase.  Requesters then present
-the SHA-1 and the HAMC signature in each "want" line, and the
---stateless-rpc phase validates the signatures to ensure they came
-from a trusted party.
-
-The major problem with this approach is the private key management.
-All mirrors of that repository need to have a common private key
-so they can generate and later verify that HMAC signature.  This is
-additional complexity, for perhaps not much gain.
-
-A different approach is to have the --stateless-rpc phase validate
-the want lines against its refs (like we do now), but if the validate
-fails (no ref exactly matches) support walking backwards through the
-last few records in the reflog, or through that ref's own history
-for a few hundred commits, to see if the want SHA-1 appears in the
-recent prior past.
-
-Obviously when walking the reflog we would need to use a time bound,
-e.g. "only examine last record if more recent than 5 minutes ago".
-This way a force push to erase something will still erase it, but
-a client who had just recently observed the prior SHA-1 can still
-complete their fetch request, just as with native git:// they could
-do that due to the prior SHA-1 being held in the git-upload-pack's
-private memory.
-
-Also, obviously when walking the commit history of a ref (to see
-if the want'd SHA-1 is merged into one or more reachable refs)
-we don't want to walk backwards too far, as it costs CPU time on
-the server side, but we also don't want to walk too few commits.
-E.g. pushes for me tend to be in the 20 commit range, while Linus
-probably pushes a thousand commits or more in a single merge.
-Finding the right balance may be tricky.
-
-> I wouldn't worry too much about this if the only negative effect could be
-> that the requestor's second request may result in an error, but I am
-> wondering if this can be used to attack the requestee.
-
-I don't think it can be used to attack the server.  The only impact
-I can see is the client gets confused and gets an error response
-from the server when the server aborts due to the invalid "want"
-line sent during that 2nd (or any subsequent) request.
-
+diff --git a/t/t9150-svk-mergetickets.sh b/t/t9150-svk-mergetickets.sh
+old mode 100644
+new mode 100755
+diff --git a/t/t9151-svn-mergeinfo.sh b/t/t9151-svn-mergeinfo.sh
+old mode 100644
+new mode 100755
 -- 
-Shawn.
+1.6.5.86.g0056e
