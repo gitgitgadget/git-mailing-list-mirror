@@ -1,258 +1,193 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [RFC PATCH v4 21/26] Discover refs via smart HTTP server when available
-Date: Wed, 28 Oct 2009 17:00:43 -0700
-Message-ID: <1256774448-7625-22-git-send-email-spearce@spearce.org>
+Subject: [RFC PATCH v4 16/26] http-backend: add GIT_PROJECT_ROOT environment var
+Date: Wed, 28 Oct 2009 17:00:38 -0700
+Message-ID: <1256774448-7625-17-git-send-email-spearce@spearce.org>
 References: <1256774448-7625-1-git-send-email-spearce@spearce.org>
-Cc: Daniel Barkalow <barkalow@iabervon.org>
+Cc: Mark Lodato <lodatom@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 29 01:02:00 2009
+X-From: git-owner@vger.kernel.org Thu Oct 29 01:02:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3ISm-0000kN-4H
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 01:02:00 +0100
+	id 1N3ISn-0000kN-PV
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 01:02:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755981AbZJ2ABD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 20:01:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755979AbZJ2ABC
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 20:01:02 -0400
-Received: from george.spearce.org ([209.20.77.23]:36264 "EHLO
+	id S1755985AbZJ2ABJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 20:01:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755609AbZJ2ABI
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 20:01:08 -0400
+Received: from george.spearce.org ([209.20.77.23]:36249 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755918AbZJ2AA6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 20:00:58 -0400
+	with ESMTP id S1755895AbZJ2AA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 20:00:56 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 2CF2E381D3; Thu, 29 Oct 2009 00:01:03 +0000 (UTC)
+	id 1E85538215; Thu, 29 Oct 2009 00:01:01 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 3616038265;
-	Thu, 29 Oct 2009 00:00:55 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id A447A3811E;
+	Thu, 29 Oct 2009 00:00:53 +0000 (UTC)
 X-Mailer: git-send-email 1.6.5.2.181.gd6f41
 In-Reply-To: <1256774448-7625-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131523>
 
-Instead of loading the cached info/refs, try to use the smart HTTP
-version when the server supports it.  Since the smart variant is
-actually the pkt-line stream from the start of either upload-pack
-or receive-pack we need to parse these through get_remote_heads,
-which requires a background thread to feed its pipe.
+From: Mark Lodato <lodatom@gmail.com>
 
+Add a new environment variable, GIT_PROJECT_ROOT, to override the
+method of using PATH_TRANSLATED to find the git repository on disk.
+This makes it much easier to configure the web server, especially when
+the web server's DocumentRoot does not contain the git repositories,
+which is the usual case.
+
+Signed-off-by: Mark Lodato <lodatom@gmail.com>
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-CC: Daniel Barkalow <barkalow@iabervon.org>
 ---
- remote-curl.c |  148 ++++++++++++++++++++++++++++++++++++++++++++++++++-------
- 1 files changed, 131 insertions(+), 17 deletions(-)
+ Documentation/git-http-backend.txt |   39 +++++++++++++++--------------------
+ http-backend.c                     |   25 ++++++++++++++++++++--
+ 2 files changed, 39 insertions(+), 25 deletions(-)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index 5c9dd97..3917d45 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -5,6 +5,7 @@
- #include "http.h"
- #include "exec_cmd.h"
- #include "run-command.h"
-+#include "pkt-line.h"
+diff --git a/Documentation/git-http-backend.txt b/Documentation/git-http-backend.txt
+index 022a243..99dbbfb 100644
+--- a/Documentation/git-http-backend.txt
++++ b/Documentation/git-http-backend.txt
+@@ -41,29 +41,24 @@ http.receivepack::
  
- static struct remote *remote;
- static const char *url;
-@@ -75,21 +76,46 @@ static int set_option(const char *name, const char *value)
- 	}
- }
+ URL TRANSLATION
+ ---------------
+-'git-http-backend' relies on the invoking web server to perform
+-URL to path translation, and store the repository path into the
+-PATH_TRANSLATED environment variable.  Most web servers will do
+-this translation automatically, resolving the suffix after the
+-CGI name relative to the server's document root.
++To determine the location of the repository on disk, 'git-http-backend'
++concatenates the environment variables PATH_INFO, which is set
++automatically by the web server, and GIT_PROJECT_ROOT, which must be set
++manually in the web server configuration.  If GIT_PROJECT_ROOT is not
++set, 'git-http-backend' reads PATH_TRANSLATED, which is also set
++automatically by the web server.
  
--static struct ref *get_refs(void)
-+struct discovery {
-+	const char *service;
-+	char *buf_alloc;
-+	char *buf;
-+	size_t len;
-+	unsigned proto_git : 1;
-+};
-+static struct discovery *last_discovery;
-+
-+static void free_discovery(struct discovery *d)
-+{
-+	if (d) {
-+		if (d == last_discovery)
-+			last_discovery = NULL;
-+		free(d->buf_alloc);
-+		free(d);
-+	}
-+}
-+
-+static struct discovery* discover_refs(const char *service)
- {
- 	struct strbuf buffer = STRBUF_INIT;
--	char *data, *start, *mid;
--	char *ref_name;
-+	struct discovery *last = last_discovery;
- 	char *refs_url;
--	int i = 0;
--	int http_ret;
-+	int http_ret, is_http = 0;
+ EXAMPLES
+ --------
  
--	struct ref *refs = NULL;
--	struct ref *ref = NULL;
--	struct ref *last_ref = NULL;
-+	if (last && !strcmp(service, last->service))
-+		return last;
-+	free_discovery(last);
- 
--	refs_url = xmalloc(strlen(url) + 11);
--	sprintf(refs_url, "%s/info/refs", url);
-+	strbuf_addf(&buffer, "%s/info/refs", url);
-+	if (!prefixcmp(url, "http://") || !prefixcmp(url, "https://")) {
-+		is_http = 1;
-+		if (!strchr(url, '?'))
-+			strbuf_addch(&buffer, '?');
-+		else
-+			strbuf_addch(&buffer, '&');
-+		strbuf_addf(&buffer, "service=%s", service);
-+	}
-+	refs_url = strbuf_detach(&buffer, NULL);
- 
- 	init_walker();
- 	http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
-@@ -104,10 +130,86 @@ static struct ref *get_refs(void)
- 		die("HTTP request failed");
- 	}
- 
--	data = buffer.buf;
-+	last= xcalloc(1, sizeof(*last_discovery));
-+	last->service = service;
-+	last->buf_alloc = strbuf_detach(&buffer, &last->len);
-+	last->buf = last->buf_alloc;
-+
-+	if (is_http && 5 <= last->len && last->buf[4] == '#') {
-+		/* smart HTTP response; validate that the service
-+		 * pkt-line matches our request.
-+		 */
-+		struct strbuf exp = STRBUF_INIT;
-+
-+		if (packet_get_line(&buffer, &last->buf, &last->len) <= 0)
-+			die("%s has invalid packet header", refs_url);
-+		if (buffer.len && buffer.buf[buffer.len - 1] == '\n')
-+			strbuf_setlen(&buffer, buffer.len - 1);
-+
-+		strbuf_addf(&exp, "# service=%s", service);
-+		if (strbuf_cmp(&exp, &buffer))
-+			die("invalid server response; got '%s'", buffer.buf);
-+		strbuf_release(&exp);
-+
-+		/* The header can include additional metadata lines, up
-+		 * until a packet flush marker.  Ignore these now, but
-+		 * in the future we might start to scan them.
-+		 */
-+		strbuf_reset(&buffer);
-+		while (packet_get_line(&buffer, &last->buf, &last->len) > 0)
-+			strbuf_reset(&buffer);
-+
-+		last->proto_git = 1;
-+	}
-+
-+	free(refs_url);
-+	strbuf_release(&buffer);
-+	last_discovery = last;
-+	return last;
-+}
-+
-+static int write_discovery(int fd, void *data)
-+{
-+	struct discovery *heads = data;
-+	int err = 0;
-+	if (write_in_full(fd, heads->buf, heads->len) != heads->len)
-+		err = 1;
-+	close(fd);
-+	return err;
-+}
-+
-+static struct ref *parse_git_refs(struct discovery *heads)
-+{
-+	struct ref *list = NULL;
-+	struct async async;
-+
-+	memset(&async, 0, sizeof(async));
-+	async.proc = write_discovery;
-+	async.data = heads;
-+
-+	if (start_async(&async))
-+		die("cannot start thread to parse advertised refs");
-+	get_remote_heads(async.out, &list, 0, NULL, 0, NULL);
-+	close(async.out);
-+	if (finish_async(&async))
-+		die("ref parsing thread failed");
-+	return list;
-+}
-+
-+static struct ref *parse_info_refs(struct discovery *heads)
-+{
-+	char *data, *start, *mid;
-+	char *ref_name;
-+	int i = 0;
-+
-+	struct ref *refs = NULL;
-+	struct ref *ref = NULL;
-+	struct ref *last_ref = NULL;
-+
-+	data = heads->buf;
- 	start = NULL;
- 	mid = data;
--	while (i < buffer.len) {
-+	while (i < heads->len) {
- 		if (!start) {
- 			start = &data[i];
- 		}
-@@ -131,8 +233,7 @@ static struct ref *get_refs(void)
- 		i++;
- 	}
- 
--	strbuf_release(&buffer);
+ Apache 2.x::
+-	To serve all Git repositories contained within the '/git/'
+-	subdirectory of the DocumentRoot, ensure mod_cgi and
+-	mod_alias are enabled, and create a ScriptAlias to the CGI:
++	Ensure mod_cgi, mod_alias, and mod_env are enabled, set
++	GIT_PROJECT_ROOT (or DocumentRoot) appropriately, and
++	create a ScriptAlias to the CGI:
+ +
+ ----------------------------------------------------------------
+-ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/git/
 -
-+	init_walker();
- 	ref = alloc_ref("HEAD");
- 	if (!walker->fetch_ref(walker, ref) &&
- 	    !resolve_remote_symref(ref, refs)) {
-@@ -142,11 +243,23 @@ static struct ref *get_refs(void)
- 		free(ref);
- 	}
+-<Directory /usr/libexec/git-core>
+-	Options None
+-</Directory>
+-<Files /usr/libexec/git-core/git-http-backend>
+-	Options ExecCGI
+-</Files>
++SetEnv GIT_PROJECT_ROOT /var/www/git
++ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/
+ ----------------------------------------------------------------
+ +
+ To enable anonymous read access but authenticated write access,
+@@ -78,16 +73,16 @@ require authorization with a LocationMatch directive:
+ </LocationMatch>
+ ----------------------------------------------------------------
+ +
+-To require authentication for both reads and writes, use a Directory
++To require authentication for both reads and writes, use a Location
+ directive around the repository, or one of its parent directories:
+ +
+ ----------------------------------------------------------------
+-<Directory /var/www/git/private>
++<Location /git/private>
+ 	AuthType Basic
+ 	AuthName "Private Git Access"
+ 	Require group committers
+ 	...
+-</Directory>
++</Location>
+ ----------------------------------------------------------------
  
--	strbuf_release(&buffer);
--	free(refs_url);
- 	return refs;
+ Accelerated static Apache 2.x::
+@@ -97,9 +92,9 @@ Accelerated static Apache 2.x::
+ 	file contents from the file system directly to the network:
+ +
+ ----------------------------------------------------------------
+-DocumentRoot /var/www
++SetEnv GIT_PROJECT_ROOT /var/www/git
+ 
+-ScriptAlias /git/        /usr/libexec/git-core/git-http-backend/git/
++ScriptAlias /git/        /usr/libexec/git-core/git-http-backend/
+ Alias       /git_static/ /var/www/git/
+ 
+ RewriteEngine on
+@@ -114,7 +109,7 @@ ENVIRONMENT
+ 'git-http-backend' relies upon the CGI environment variables set
+ by the invoking web server, including:
+ 
+-* PATH_TRANSLATED
++* PATH_INFO (if GIT_PROJECT_ROOT is set, otherwise PATH_TRANSLATED)
+ * REMOTE_USER
+ * REMOTE_ADDR
+ * CONTENT_TYPE
+diff --git a/http-backend.c b/http-backend.c
+index 67030b5..8e5c0a2 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -528,6 +528,26 @@ static NORETURN void die_webcgi(const char *err, va_list params)
+ 	exit(0);
  }
  
-+static struct ref *get_refs(int for_push)
++static char* getdir(void)
 +{
-+	struct discovery *heads;
++	struct strbuf buf = STRBUF_INIT;
++	char *pathinfo = getenv("PATH_INFO");
++	char *root = getenv("GIT_PROJECT_ROOT");
++	char *path = getenv("PATH_TRANSLATED");
 +
-+	if (for_push)
-+		heads = discover_refs("git-receive-pack");
-+	else
-+		heads = discover_refs("git-upload-pack");
-+
-+	if (heads->proto_git)
-+		return parse_git_refs(heads);
-+	return parse_info_refs(heads);
++	if (root && *root) {
++		if (!pathinfo || !*pathinfo)
++			die("GIT_PROJECT_ROOT is set but PATH_INFO is not");
++		strbuf_addstr(&buf, root);
++		strbuf_addstr(&buf, pathinfo);
++		return strbuf_detach(&buf, NULL);
++	} else if (path && *path) {
++		return xstrdup(path);
++	} else
++		die("No GIT_PROJECT_ROOT or PATH_TRANSLATED from server");
++	return NULL;
 +}
 +
- static void output_refs(struct ref *refs)
+ static struct service_cmd {
+ 	const char *method;
+ 	const char *pattern;
+@@ -550,7 +570,7 @@ static struct service_cmd {
+ int main(int argc, char **argv)
  {
- 	struct ref *posn;
-@@ -317,7 +430,8 @@ int main(int argc, const char **argv)
- 			parse_fetch(&buf);
+ 	char *method = getenv("REQUEST_METHOD");
+-	char *dir = getenv("PATH_TRANSLATED");
++	char *dir;
+ 	struct service_cmd *cmd = NULL;
+ 	char *cmd_arg = NULL;
+ 	int i;
+@@ -562,8 +582,7 @@ int main(int argc, char **argv)
+ 		die("No REQUEST_METHOD from server");
+ 	if (!strcmp(method, "HEAD"))
+ 		method = "GET";
+-	if (!dir)
+-		die("No PATH_TRANSLATED from server");
++	dir = getdir();
  
- 		} else if (!strcmp(buf.buf, "list") || !prefixcmp(buf.buf, "list ")) {
--			output_refs(get_refs());
-+			int for_push = !!strstr(buf.buf + 4, "for-push");
-+			output_refs(get_refs(for_push));
- 
- 		} else if (!prefixcmp(buf.buf, "push ")) {
- 			parse_push(&buf);
+ 	for (i = 0; i < ARRAY_SIZE(services); i++) {
+ 		struct service_cmd *c = &services[i];
 -- 
 1.6.5.2.181.gd6f41
