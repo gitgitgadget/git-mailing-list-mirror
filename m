@@ -1,60 +1,51 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] Make t9150 and t9151 test scripts executable
-Date: Thu, 29 Oct 2009 16:26:20 +0100
-Message-ID: <2cd5f4dcea8c36732de402caa0b8721b7b4a786f.1256829775.git.git@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 29 16:26:37 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC PATCH v4 00/26] Return of smart HTTP
+Date: Thu, 29 Oct 2009 08:28:39 -0700
+Message-ID: <20091029152839.GZ10505@spearce.org>
+References: <1256774448-7625-1-git-send-email-spearce@spearce.org> <m3my3ad3gp.fsf@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 29 16:28:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3WtW-0008ME-7h
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 16:26:34 +0100
+	id 1N3Wvd-00017C-BV
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 16:28:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755216AbZJ2P0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2009 11:26:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755206AbZJ2P0X
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 11:26:23 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:56270 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754959AbZJ2P0W (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Oct 2009 11:26:22 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id B6628B5860;
-	Thu, 29 Oct 2009 11:26:26 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 29 Oct 2009 11:26:26 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=FY1WHdU/mDg6sJu8xA/+XwA+nEs=; b=TjHUBu58uxSMiLEbLRoeb29a+wVpUmA7rH5FkCv2s3VT5pgmiecX2VjbWonrYD4T7rMXo7fZ/wukR4AkuMALjVhVmdhr41IYPjloCnlCYERSUNvYFgzhopgGZBEAt/aZuqMhCatWhrA6TPmQHlB5ock29v3N1jb9XEHZ0phrRzc=
-X-Sasl-enc: KB1ZA6/2O++LByv/e71NAgaPChjZrl1UNANdADDs7qoT 1256829986
-Received: from localhost (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 29660BF8;
-	Thu, 29 Oct 2009 11:26:26 -0400 (EDT)
-X-Mailer: git-send-email 1.6.5.86.g0056e
+	id S1754959AbZJ2P2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2009 11:28:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754783AbZJ2P2e
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 11:28:34 -0400
+Received: from george.spearce.org ([209.20.77.23]:60027 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754533AbZJ2P2e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2009 11:28:34 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 457AD381D3; Thu, 29 Oct 2009 15:28:39 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <m3my3ad3gp.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131601>
 
-so that they can be run individually as
-(cd t && ./t9150-svk-mergetickets.sh)
-etc. just like all other test scripts.
+Jakub Narebski <jnareb@gmail.com> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+> > I think this is the final spin of the smart HTTP series.
+>  
+> If it is a final spin, then what of missing RFC-like documentation of
+> Git HTTP protocol in Documentation/technical/http-protocol.txt
+> (it was present only in first version of new series)?
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-Not much more to say. Wanted to be a good boy and run the new tests.
-One can use sh, of course, but there's a reason all other tests are executable.
+Its still incomplete.  I want to get the code cooking while I work
+on the documentation.  Its a separate patch anyway, whether or not
+its in the middle of the code series or after it is doesn't matter.
 
- 0 files changed, 0 insertions(+), 0 deletions(-)
- mode change 100644 => 100755 t/t9150-svk-mergetickets.sh
- mode change 100644 => 100755 t/t9151-svn-mergeinfo.sh
-
-diff --git a/t/t9150-svk-mergetickets.sh b/t/t9150-svk-mergetickets.sh
-old mode 100644
-new mode 100755
-diff --git a/t/t9151-svn-mergeinfo.sh b/t/t9151-svn-mergeinfo.sh
-old mode 100644
-new mode 100755
 -- 
-1.6.5.86.g0056e
+Shawn.
