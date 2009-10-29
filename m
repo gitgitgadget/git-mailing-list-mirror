@@ -1,149 +1,115 @@
-From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
-Subject: Re: [PATCH] Teach 'git merge' and 'git pull' the option --ff-only
-Date: Thu, 29 Oct 2009 07:23:22 +0100
-Message-ID: <4AE934DA.7080907@gmail.com>
-References: <4AE8C281.50104@gmail.com> <7vk4yfi1dd.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-rebase -i: improve usage message
+Date: Wed, 28 Oct 2009 23:24:30 -0700
+Message-ID: <7vtyxiafa9.fsf@alter.siamese.dyndns.org>
+References: <1256774549-8191-1-git-send-email-brian.ewins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 29 07:24:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, kusmabite@googlemail.com
+To: Brian Ewins <brian.ewins@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 29 07:25:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3OQg-0005lF-CP
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 07:24:14 +0100
+	id 1N3ORY-00067V-FO
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 07:25:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753436AbZJ2GXV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Oct 2009 02:23:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753374AbZJ2GXV
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 02:23:21 -0400
-Received: from mail-ew0-f208.google.com ([209.85.219.208]:54519 "EHLO
-	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753076AbZJ2GXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2009 02:23:21 -0400
-Received: by ewy4 with SMTP id 4so1478244ewy.37
-        for <git@vger.kernel.org>; Wed, 28 Oct 2009 23:23:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=7QCNFm/UEVoVSI7bw+o8C/kwqAel6Kq4qsO+qm43GYw=;
-        b=i9JfkqFPGnrOC2X8QNu/1ifT7XFpKVpLVj/dK6IZsY2Pf2tnFyYshJtzbx4Zi1iZIG
-         A4nf8uWBC2AQI2NdOsy4EhhxPnTXFwESYrnyaXVCCqITky2Rb2XWfLGZr2oTtoi2pp29
-         m5HSDDF/cTPAg1hZGpdM8u7iLrUn76Y6zeKKA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=hWo3khNz9ZFCK3exte5NVZKoKyZOqmSCdxxSjr87oD/oUpZEsBFrAL+2IBg7lb7cyv
-         v9PoLXlTjFAwM4mCHuIe5Zw1DA+HUAmcWg7nZZ5/W2OZcd35I5UfLzRFy5tc/tBiw8Tn
-         cECO7MdNSBWuNMoaGzTW1WV0mqr1Q1JEi8bG0=
-Received: by 10.210.96.1 with SMTP id t1mr5271971ebb.17.1256797404735;
-        Wed, 28 Oct 2009 23:23:24 -0700 (PDT)
-Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
-        by mx.google.com with ESMTPS id 7sm4874949eyg.1.2009.10.28.23.23.23
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 28 Oct 2009 23:23:24 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
-In-Reply-To: <7vk4yfi1dd.fsf@alter.siamese.dyndns.org>
+	id S1753853AbZJ2GY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2009 02:24:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753076AbZJ2GY5
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 02:24:57 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38512 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751798AbZJ2GY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2009 02:24:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9672D6B55A;
+	Thu, 29 Oct 2009 02:25:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Vbqi6sxCRoezJYzCSJtTmqxNHDo=; b=EteHU+
+	k2jykxtM73vOglQIsa/WbXWF1kGNa20rqHH+Ee1e5mm6IYhtvVQuWB/MLILIzyMh
+	EWMnGb/idaq06bjokXR7UVks/8/UwN8vulr4DXzqZFCUuZQJC5ODh2CQ2h3dK9MM
+	kYiu6vFpa9m0kiKyrtBeqSBhrTse7j8iOD6VQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=b3/SUvRfRqGUpDLGMFz6eaX7Rf/l4glE
+	+qbCVdNBWQVAjTGjVdbcfyU41UJLvRfX5JvVfFmfEloFDmNf93DUgKMjGJR4aolN
+	VYtPEqNZrKbiBJHE3MocMdESNAy002PzwOhNbq/VJyo7bNDaQ/0mnmnyyqTSTGZy
+	uQCig1CgEzM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 628656B559;
+	Thu, 29 Oct 2009 02:24:57 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 84E546B557; Thu, 29 Oct
+ 2009 02:24:46 -0400 (EDT)
+In-Reply-To: <1256774549-8191-1-git-send-email-brian.ewins@gmail.com> (Brian
+ Ewins's message of "Thu\, 29 Oct 2009 00\:02\:29 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C75ACFFC-C453-11DE-852C-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131557>
 
-Junio C Hamano wrote:
-> Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com> writes:
->> =20
->> +--ff-only::
->> +	Refuse to merge unless the merge can be resolved as a
->> +	fast-forward.
->=20
-> Do you or do you not allow "already up to date"?  I think it makes se=
-nse
-> to allow it, but it is unclear from these two lines.
+Brian Ewins <brian.ewins@gmail.com> writes:
 
-I do allow it. I will change the description to the following in the
-re-roll:
+> The usage message was confusing as it implied that interactive
+> mode was optional but the default. Change the message to more
+> appropriately report usage when the -i flag is supplied.
+> In addition, use the same division into 3 command formats as
+> the man page.
 
---ff-only::
-	Refuse to merge and exit with a non-zero status unless the
-	current `HEAD` is already up-to-date or the merge can be
-	resolved as a fast-forward.
+I agree; if "git rebase--interactive -h" were asked, "-i is always used"
+might be a correct thing to say, but nobody will get the message that way.
+Instead, "git rebase --nonsense -i" and "git rebase -i --nonsense" will be
+the most common way for users to see the message (also "git rebase -i -h").
 
+The OPTIONS_SPEC in rebase--interactive is for the interactive mode and
+for nothing else, so it may be a good idea to clearly say so at the
+beginning.  The user experience perhaps should look like:
 
->=20
->> @@ -874,6 +877,9 @@ int cmd_merge(int argc, const char **argv, const=
- char *prefix)
->>  		option_commit =3D 0;
->>  	}
->> =20
->> +	if (!allow_fast_forward && fast_forward_only)
->> +		die("You cannot combine --no-ff with --ff-only.");
->=20
-> Are these the only nonsensical combinations?  How should this interac=
-t
-> with other options, e.g. --squash or --message?
+    $ git rebase -i -h
+    Note: this help is only about the interactive mode;
+    see 'git rebase -h' for help on non-interactive mode.
 
-They are the only options I can think of that flatly contradict each ot=
-her.
+    usage: git rebase -i [<options>] [--] <upstream> [<branch>]
+       or: git rebase -i (--continue|--abort|--skip)
 
-Combining --squash and --ff-only will succeed if the current HEAD can b=
-e
-fast-forwarded and will abort otherwise. I don't know how useful that
-would be in practice, but I see no strong reason to forbid it.
+    Available options are
+    -v,--verbose          verbose output
+    --onto <commit>       rebase onto given commit instead of <upstream>
+    -p,--preserve-merges  try to recreate merges
+    -i,--interactive      (always in effect in interactive mode)
+    -m,--merge            (always in effect in interactive mode)
 
-The -m option will always be ignored, of course, and there will be
-the usual warning if fast-forward is possible:
+    Actions:
+        --continue        continue the interrupted rebase session
+        ...
 
-   Fast forward (no commit created; -m option ignored)
+By the way, I think the main "git rebase" help should be improved first
+for this improvement to make sense.
 
-I don't think there is any need to explicitly forbid the combination
-of -m and --ff-only.
+ * Its first line "usage" is too long;
 
-I should probably update the commit message in the re-roll to include
-the information in the previous paragraphs.
+ * It only mentions [-i] in the first line but does not hint that the
+   detailed help on interactive mode is available with "rebase -i -h".
 
->> @@ -969,8 +975,11 @@ int cmd_merge(int argc, const char **argv, cons=
-t char *prefix)
->>  	}
->> =20
->>  	for (i =3D 0; i < use_strategies_nr; i++) {
->> -		if (use_strategies[i]->attr & NO_FAST_FORWARD)
->> +		if (use_strategies[i]->attr & NO_FAST_FORWARD) {
->>  			allow_fast_forward =3D 0;
->> +			if (fast_forward_only)
->> +				die("You cannot combine --ff-only with the merge strategy '%s'.=
-", use_strategies[i]->name);
->> +		}
->=20
-> I am not convinced this tests the right condition nor it is placed at=
- the
-> right place in the codepath---even if a specified strategy happens to
-> allow fast-forward, wouldn't it be nonsense to say
->=20
->     $ git merge --ff-only -s resolve that-one
->=20
-> in the first place?  Note that I am not saying "I am convinced this i=
-s
-> wrong."
+The user experience perhaps should look like this:
 
-Re-thinking it, I think that the test should be removed. It seemed like
-a good idea at the time to point out which strategy that prevented the=20
-fast-forward, but if there is a list of merge strategies, the test will=
- prevent
---ff-only to succeed if *any* of merge strategies cannot fast-forward.
-(Also, but I am not sure about this, a merge strategy that does not all=
-ow
-fast-forward might allow up-to-date.)
+    $ git rebase -h
+    usage: git rebase [<options>] (<upstream>|--root) [<branch>]
 
-Therefore, I will remove the test in the re-roll.
+    -i,--interactive  go interactive (see 'git rebase -i -h')
+    -v,--verbose      verbose output
+    ...
 
+Also see
 
-Thanks for the comments!
+  http://thread.gmane.org/gmane.comp.version-control.git/129906/focus=130646
 
-/Bj=C3=B6rn
+I agree with Peff that the first-line usage should just say <options> in general
+and have a table of options and their descriptions.
