@@ -1,85 +1,75 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH 1/3] add splash screen
-Date: Wed, 28 Oct 2009 22:25:05 -0400
-Message-ID: <4AE8FD01.3070009@gmail.com>
-References: <20091029002229.GA986@sigill.intra.peff.net> <20091029002400.GA1057@sigill.intra.peff.net>
-Reply-To: gitzilla@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH v4 26/26] test smart http fetch and push
+Date: Wed, 28 Oct 2009 20:20:04 -0700
+Message-ID: <7vpr86dgyj.fsf@alter.siamese.dyndns.org>
+References: <1256774448-7625-1-git-send-email-spearce@spearce.org>
+ <1256774448-7625-27-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 29 03:25:20 2009
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Oct 29 04:20:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3KhU-0003ls-2V
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 03:25:20 +0100
+	id 1N3LYn-0003VV-Nz
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 04:20:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756191AbZJ2CZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2009 22:25:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756189AbZJ2CZI
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 22:25:08 -0400
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:59673 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754942AbZJ2CZH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2009 22:25:07 -0400
-Received: by yxe17 with SMTP id 17so1290976yxe.33
-        for <git@vger.kernel.org>; Wed, 28 Oct 2009 19:25:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id
-         :disposition-notification-to:date:from:reply-to:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=+hMhVfyRfVIGZT1uj2N3exjbqhzBW7yb+AheTSDGfI4=;
-        b=D+YjiA/KWCIrF8sKH44nHTABpAGp2XcygMAHWtCt3H+YUhUUXwfHL7WjYyCjlB53YR
-         jAdP1GJFoSkFXfxS4umrTGvWT60+m/aRYV0pYnr+yatCreGGThDhOXMDAYLdr4muy1I3
-         V/6XQu9jWIHumv7BHKQ7RRqWe9J6uuxU4l9/s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        b=Q68M5aD5u0FEedom/u3G5dAgxsbERWvaWyd0mXQfxTY5xETRnLUtJvW4Tn8GMxoNKL
-         wnV2dT03cpwjlEj7g5d3ILFCgL5HYZu2JGY/qbjvZEwT4rP4PF/XMPttHuujOTryYRm0
-         UuUQjD3fk2fqhbJ4vR+y/nw6spnXPx0Yz438I=
-Received: by 10.150.236.18 with SMTP id j18mr2125389ybh.110.1256783111567;
-        Wed, 28 Oct 2009 19:25:11 -0700 (PDT)
-Received: from ?10.0.0.6? (c-71-199-240-201.hsd1.fl.comcast.net [71.199.240.201])
-        by mx.google.com with ESMTPS id 20sm580190ywh.32.2009.10.28.19.25.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 28 Oct 2009 19:25:11 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
-In-Reply-To: <20091029002400.GA1057@sigill.intra.peff.net>
+	id S1755108AbZJ2DUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2009 23:20:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754888AbZJ2DUN
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Oct 2009 23:20:13 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54114 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754655AbZJ2DUM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2009 23:20:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DBE7E6B887;
+	Wed, 28 Oct 2009 23:20:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lb5NYOfo5+EQiXIJU+T0SZ+3xXk=; b=SxrDlu
+	latUZTgYJMxJOUrzsgBI0ZGU87HnbuXynM8IvTSohUXW/oHwM6SKRJv4YIkjdtBk
+	C1fp90qy0t6V2d7rFexwtnPBtkdn5sQYvOYLbceR1ibtfhN0iGPbZp4TcUdEpHpW
+	kbXa9GKvXsImELjMWuWP7qzjUE80yqjU6NExk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kvFw0TkqnnCGGavR9YZhg/Qp2ZoqqT7M
+	LF8xa7nU62xiSkQ4YFvUa31qvBvxa7yloD8X8L2XsR39LaQ1wc94aOTf5igF8z3p
+	6YHg8vJ6BmBDmHSh/IBzL9gp+giZ2ck2GFg+PB6Dz3AoWBnUTzeG/QIJ8BLk3KgW
+	8beEWRvizb4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BDE156B886;
+	Wed, 28 Oct 2009 23:20:13 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D56E36B885; Wed, 28 Oct
+ 2009 23:20:08 -0400 (EDT)
+In-Reply-To: <1256774448-7625-27-git-send-email-spearce@spearce.org> (Shawn
+ O. Pearce's message of "Wed\, 28 Oct 2009 17\:00\:48 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F901B972-C439-11DE-9FE1-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131550>
 
-Jeff King wrote:
-> Because bash completion is so slow to start, we need to
-> entertain users with a splash screen, so reuse the one from
-> git-gui.
-> 
-> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
-> Signed-off-by: Sam Vilain <sam@vilain.net>
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> Signed-off-by: Nick Edelen <sirnot@gmail.com>
-> Signed-off-by: "J.H." <warthog9@kernel.org>
-> Signed-off-by: Brandon Casey <drafnel@gmail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  .gitignore    |    1 +
->  Makefile      |    3 +++
->  git-splash.sh |    4 ++++
->  git.c         |    6 ++++++
->  4 files changed, 14 insertions(+), 0 deletions(-)
->  create mode 100644 git-splash.sh
-> 
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-If you're going to assume that the user has a working network connection 
-for every git command invoked for part 3 of this series, why not get the 
-logo image from kernel.org also so you always have the most up-to-date logo?
+> +test_expect_success 'clone http repository' '
+> +	GIT_CURL_VERBOSE=1 git clone $HTTPD_URL/git/repo.git clone 2>err &&
+> +	test_cmp file clone/file &&
+> +	egrep "^([<>]|Pragma|Accept|Content-|Transfer-)" err |
+> +	egrep -v "^< (Server|Expires|Date|Content-Length:|Transfer-Encoding: chunked)" |
+> +	sed -e "
+> +		s/
+> //
+> +		s/^Content-Length: .*$/Content-Length: xxxx/
+> +	" >act &&
+
+This chomped line is so unlike you---what happened?
+
+Also, when the last downstream is sed, why would you even need two egrep
+process?
