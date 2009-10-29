@@ -1,298 +1,171 @@
-From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
-Subject: [PATCH] Teach 'git merge' and 'git pull' the option --ff-only
-Date: Thu, 29 Oct 2009 23:08:31 +0100
-Message-ID: <4AEA125F.9070704@gmail.com>
+From: Laszlo Papp <djszapi@archlinux.us>
+Subject: Add gitk-hit/po Hungarian translation
+Date: Thu, 29 Oct 2009 23:40:58 +0100
+Message-ID: <a362e8010910291540y1f59ce55jd9125599f03acfe9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary=0016e6470c18e87b1e04771a9aa7
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 29 23:14:03 2009
+X-From: git-owner@vger.kernel.org Thu Oct 29 23:41:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3dFq-0000eA-Gh
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 23:14:02 +0100
+	id 1N3dg1-00040V-Iw
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 23:41:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756705AbZJ2WNv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Oct 2009 18:13:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756607AbZJ2WNv
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 18:13:51 -0400
-Received: from mail-ew0-f209.google.com ([209.85.219.209]:44263 "EHLO
-	mail-ew0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756045AbZJ2WNu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2009 18:13:50 -0400
-X-Greylist: delayed 320 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Oct 2009 18:13:49 EDT
-Received: by ewy5 with SMTP id 5so501378ewy.37
-        for <git@vger.kernel.org>; Thu, 29 Oct 2009 15:13:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=CbH87X6pgNCKyyHh35MvhtH+4K9FEbVtMe90AXRu/eQ=;
-        b=fNhTm/+PpWITY7+mWWOJ5wJ7ZwMb550LC4cJ/JIvBuYJZaK3sfBr52os2wfXmOIYzt
-         bvOfRdGpX/Ry7hZa4sCisoIPj1KCW86F8R+NCxQCZnsHr9G62iQUBjWLiEZarKKbONVE
-         C6roIlAoRcNwUfcDLt0j8+4XTRo3U4Dg3l/X0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=NQgmj+0/frPqKSjRR4qdBmlmvaCDlQX57q7i5CQpI+HlJK9HLHI8f1fGVJWVLfLTP5
-         vXeDKCIpiVdJTRntGTjeAx4/taEK8+xHEvH29LNGIxS9s7Frx/GQa1pttfRY5sEutPTX
-         xTZon356Xpk6p7GQvKBUpyr+5rolQOGCHvGzs=
-Received: by 10.211.147.5 with SMTP id z5mr735114ebn.87.1256854113025;
-        Thu, 29 Oct 2009 15:08:33 -0700 (PDT)
-Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
-        by mx.google.com with ESMTPS id 7sm6969147eyb.8.2009.10.29.15.08.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 29 Oct 2009 15:08:32 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
+	id S1756762AbZJ2Wkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2009 18:40:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756737AbZJ2Wkz
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 18:40:55 -0400
+Received: from mail-yw0-f202.google.com ([209.85.211.202]:39136 "EHLO
+	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756712AbZJ2Wky (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2009 18:40:54 -0400
+Received: by ywh40 with SMTP id 40so2163285ywh.33
+        for <git@vger.kernel.org>; Thu, 29 Oct 2009 15:40:58 -0700 (PDT)
+Received: by 10.100.26.2 with SMTP id 2mr1279021anz.1.1256856058624; Thu, 29 
+	Oct 2009 15:40:58 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131664>
 
-=46or convenience in scripts and aliases, add the option
---ff-only to only allow fast-forwards (and up-to-date,
-despite the name).
+--0016e6470c18e87b1e04771a9aa7
+Content-Type: text/plain; charset=ISO-8859-1
 
-Disallow combining --ff-only and --no-ff, since they
-flatly contradict each other.
+Hello,
 
-Allow all other options to be combined with --ff-only
-(i.e. do not add any code to handle them specially),
-including the following options:
+See the Hungarian translation for gitk-git in the attachment!
 
-* --strategy (one or more): As long as the chosen merge
-  strategy results in up-to-date or fast-forward, the
-  command will succeed.
+Thanks in advance
 
-* --squash: I cannot imagine why anyone would want to
-  squash commits only if fast-forward is possible, but I
-  also see no reason why it should not be allowed.
+Best Regards,
+Laszlo Papp
 
-* --message: The message will always be ignored, but I see
-  no need to explicitly disallow providing a redundant message.
+--0016e6470c18e87b1e04771a9aa7
+Content-Type: application/x-bzip2; name="hu.po.tar.bz2"
+Content-Disposition: attachment; filename="hu.po.tar.bz2"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_g1e3mrzx0
 
-Acknowledgements: I did look at Yuval Kogman's earlier
-patch (107768 in gmane), mainly as shortcut to find my
-way in the code, but I did not copy anything directly.
-
-Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
----
-Here is a re-roll of my previous patch with improvements
-suggested by Junio's review. Compared to the previous version,
-I have changed the following:
-
-* The documentation now clearly states that up-to-date
-  is also allowed.
-
-* The redundant and incorrect test to reject merge strategies
-  that do not allow fast-forward has been removed (along
-  with the corresponding test case).
-
-* I have added some background on the design decisions to
-  the commit message.
-
-* I have added two test cases to test --squash in combination
-  with --ff-only.
-
- Documentation/merge-options.txt |    5 ++++
- builtin-merge.c                 |   11 +++++++++-
- git-pull.sh                     |    7 ++++-
- t/t7600-merge.sh                |   41 +++++++++++++++++++++++++++++++=
-++++++++
- 4 files changed, 61 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-opti=
-ons.txt
-index adadf8e..27a9a84 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -60,6 +60,11 @@
- 	a fast-forward, only update the branch pointer. This is
- 	the default behavior of git-merge.
-=20
-+--ff-only::
-+	Refuse to merge and exit with a non-zero status unless the
-+	current `HEAD` is already up-to-date or the merge can be
-+	resolved as a fast-forward.
-+
- -s <strategy>::
- --strategy=3D<strategy>::
- 	Use the given merge strategy; can be supplied more than
-diff --git a/builtin-merge.c b/builtin-merge.c
-index b6b8428..5e8c4b5 100644
---- a/builtin-merge.c
-+++ b/builtin-merge.c
-@@ -43,6 +43,7 @@ static const char * const builtin_merge_usage[] =3D {
-=20
- static int show_diffstat =3D 1, option_log, squash;
- static int option_commit =3D 1, allow_fast_forward =3D 1;
-+static int fast_forward_only;
- static int allow_trivial =3D 1, have_message;
- static struct strbuf merge_msg;
- static struct commit_list *remoteheads;
-@@ -167,6 +168,8 @@ static struct option builtin_merge_options[] =3D {
- 		"perform a commit if the merge succeeds (default)"),
- 	OPT_BOOLEAN(0, "ff", &allow_fast_forward,
- 		"allow fast forward (default)"),
-+	OPT_BOOLEAN(0, "ff-only", &fast_forward_only,
-+		"abort if fast forward is not possible"),
- 	OPT_CALLBACK('s', "strategy", &use_strategies, "strategy",
- 		"merge strategy to use", option_parse_strategy),
- 	OPT_CALLBACK('m', "message", &merge_msg, "message",
-@@ -874,6 +877,9 @@ int cmd_merge(int argc, const char **argv, const ch=
-ar *prefix)
- 		option_commit =3D 0;
- 	}
-=20
-+	if (!allow_fast_forward && fast_forward_only)
-+		die("You cannot combine --no-ff with --ff-only.");
-+
- 	if (!argc)
- 		usage_with_options(builtin_merge_usage,
- 			builtin_merge_options);
-@@ -1040,7 +1046,7 @@ int cmd_merge(int argc, const char **argv, const =
-char *prefix)
- 		 * only one common.
- 		 */
- 		refresh_cache(REFRESH_QUIET);
--		if (allow_trivial) {
-+		if (allow_trivial && !fast_forward_only) {
- 			/* See if it is really trivial. */
- 			git_committer_info(IDENT_ERROR_ON_NO_NAME);
- 			printf("Trying really trivial in-index merge...\n");
-@@ -1079,6 +1085,9 @@ int cmd_merge(int argc, const char **argv, const =
-char *prefix)
- 		}
- 	}
-=20
-+	if (fast_forward_only)
-+		die("Not possible to fast forward, aborting.");
-+
- 	/* We are going to make a new commit. */
- 	git_committer_info(IDENT_ERROR_ON_NO_NAME);
-=20
-diff --git a/git-pull.sh b/git-pull.sh
-index fc78592..37f3d93 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -16,7 +16,8 @@ cd_to_toplevel
- test -z "$(git ls-files -u)" ||
- 	die "You are in the middle of a conflicted merge."
-=20
--strategy_args=3D diffstat=3D no_commit=3D squash=3D no_ff=3D log_arg=3D=
- verbosity=3D
-+strategy_args=3D diffstat=3D no_commit=3D squash=3D no_ff=3D ff_only=3D
-+log_arg=3D verbosity=3D
- curr_branch=3D$(git symbolic-ref -q HEAD)
- curr_branch_short=3D$(echo "$curr_branch" | sed "s|refs/heads/||")
- rebase=3D$(git config --bool branch.$curr_branch_short.rebase)
-@@ -45,6 +46,8 @@ do
- 		no_ff=3D--ff ;;
- 	--no-ff)
- 		no_ff=3D--no-ff ;;
-+	--ff-only)
-+		ff_only=3D--ff-only ;;
- 	-s=3D*|--s=3D*|--st=3D*|--str=3D*|--stra=3D*|--strat=3D*|--strate=3D*=
-|\
- 		--strateg=3D*|--strategy=3D*|\
- 	-s|--s|--st|--str|--stra|--strat|--strate|--strateg|--strategy)
-@@ -215,5 +218,5 @@ merge_name=3D$(git fmt-merge-msg $log_arg <"$GIT_DI=
-R/FETCH_HEAD") || exit
- test true =3D "$rebase" &&
- 	exec git-rebase $diffstat $strategy_args --onto $merge_head \
- 	${oldremoteref:-$merge_head}
--exec git-merge $diffstat $no_commit $squash $no_ff $log_arg $strategy_=
-args \
-+exec git-merge $diffstat $no_commit $squash $no_ff $ff_only $log_arg $=
-strategy_args \
- 	"$merge_name" HEAD $merge_head $verbosity
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index e5b210b..57f6d2b 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -243,6 +243,16 @@ test_expect_success 'merge c0 with c1' '
-=20
- test_debug 'gitk --all'
-=20
-+test_expect_success 'merge c0 with c1 with --ff-only' '
-+	git reset --hard c0 &&
-+	git merge --ff-only c1 &&
-+	git merge --ff-only HEAD c0 c1 &&
-+	verify_merge file result.1 &&
-+	verify_head "$c1"
-+'
-+
-+test_debug 'gitk --all'
-+
- test_expect_success 'merge c1 with c2' '
- 	git reset --hard c1 &&
- 	test_tick &&
-@@ -263,6 +273,14 @@ test_expect_success 'merge c1 with c2 and c3' '
-=20
- test_debug 'gitk --all'
-=20
-+test_expect_success 'failing merges with --ff-only' '
-+	git reset --hard c1 &&
-+	test_tick &&
-+	test_must_fail git merge --ff-only c2 &&
-+	test_must_fail git merge --ff-only c3 &&
-+	test_must_fail git merge --ff-only c2 c3
-+'
-+
- test_expect_success 'merge c0 with c1 (no-commit)' '
- 	git reset --hard c0 &&
- 	git merge --no-commit c1 &&
-@@ -303,6 +321,17 @@ test_expect_success 'merge c0 with c1 (squash)' '
-=20
- test_debug 'gitk --all'
-=20
-+test_expect_success 'merge c0 with c1 (squash, ff-only)' '
-+	git reset --hard c0 &&
-+	git merge --squash --ff-only c1 &&
-+	verify_merge file result.1 &&
-+	verify_head $c0 &&
-+	verify_no_mergehead &&
-+	verify_diff squash.1 .git/SQUASH_MSG "[OOPS] bad squash message"
-+'
-+
-+test_debug 'gitk --all'
-+
- test_expect_success 'merge c1 with c2 (squash)' '
- 	git reset --hard c1 &&
- 	git merge --squash c2 &&
-@@ -314,6 +343,13 @@ test_expect_success 'merge c1 with c2 (squash)' '
-=20
- test_debug 'gitk --all'
-=20
-+test_expect_success 'unsuccesful merge of c1 with c2 (squash, ff-only)=
-' '
-+	git reset --hard c1 &&
-+	test_must_fail git merge --squash --ff-only c2
-+'
-+
-+test_debug 'gitk --all'
-+
- test_expect_success 'merge c1 with c2 and c3 (squash)' '
- 	git reset --hard c1 &&
- 	git merge --squash c2 c3 &&
-@@ -432,6 +468,11 @@ test_expect_success 'combining --squash and --no-f=
-f is refused' '
- 	test_must_fail git merge --no-ff --squash c1
- '
-=20
-+test_expect_success 'combining --ff-only and --no-ff is refused' '
-+	test_must_fail git merge --ff-only --no-ff c1 &&
-+	test_must_fail git merge --no-ff --ff-only c1
-+'
-+
- test_expect_success 'merge c0 with c1 (ff overrides no-ff)' '
- 	git reset --hard c0 &&
- 	git config branch.master.mergeoptions "--no-ff" &&
---=20
-1.6.5.1.69.g36942
+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
+--0016e6470c18e87b1e04771a9aa7--
