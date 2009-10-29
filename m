@@ -1,67 +1,81 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 1/7] Refactor git_remote_cvs to a more generic 
-	git_remote_helpers
-Date: Thu, 29 Oct 2009 08:48:35 -0700
-Message-ID: <fabb9a1e0910290848h3fe03a63r15f461d70ec6d6f3@mail.gmail.com>
+Subject: Re: [PATCH 7/7] Factor ref updating out of fetch_with_import
+Date: Thu, 29 Oct 2009 08:53:59 -0700
+Message-ID: <fabb9a1e0910290853p49070443v6d6bf2bf75faf80@mail.gmail.com>
 References: <1256798426-21816-1-git-send-email-srabbelier@gmail.com> 
-	<1256798426-21816-2-git-send-email-srabbelier@gmail.com> <200910291305.26523.johan@herland.net>
+	<1256798426-21816-8-git-send-email-srabbelier@gmail.com> <20091029142232.GS10505@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Oct 29 16:49:04 2009
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Johan Herland <johan@herland.net>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Oct 29 16:54:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3XFH-000483-9r
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 16:49:03 +0100
+	id 1N3XKU-0006fb-6S
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 16:54:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755445AbZJ2Psw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2009 11:48:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755432AbZJ2Psw
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 11:48:52 -0400
-Received: from gv-out-0910.google.com ([216.239.58.188]:20656 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755330AbZJ2Psv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2009 11:48:51 -0400
-Received: by gv-out-0910.google.com with SMTP id r4so300682gve.37
-        for <git@vger.kernel.org>; Thu, 29 Oct 2009 08:48:55 -0700 (PDT)
+	id S1752545AbZJ2PyQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Oct 2009 11:54:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752351AbZJ2PyQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 11:54:16 -0400
+Received: from mail-ew0-f209.google.com ([209.85.219.209]:37794 "EHLO
+	mail-ew0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752212AbZJ2PyP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Oct 2009 11:54:15 -0400
+Received: by ewy5 with SMTP id 5so134482ewy.37
+        for <git@vger.kernel.org>; Thu, 29 Oct 2009 08:54:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=N3tmTBRh1EJhlYetXTgFN+EBMR09l34L8/z1RkqHggU=;
-        b=MslODKRaRe1cJFjkD0fJNLz6BWuwDKSKTqxGL5KsJ77ab7perJ8Vk6DSU+WDCBpEZz
-         JNJKjz7eq6qyqF6V41CsUohRKCHaTl+QsqljZTcVNoJ42VMqKqsTUPr7lO5JH3miwvLL
-         VVKes4ZCOz5IbfQe+MfnEzEZOOZwcKTKdxCds=
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=4FMa58mPImTVX9SoDHA8WLqpEMJNi9qF2Apg7RexsJA=;
+        b=UIKqAxiBYA+1vRS4VvKXJXwZn83sG+qRWiVB36X2/yAPQ0YDIjWxHJgswj5KgkUnHb
+         5mVI6i1+oyQzN5E1Mldo8JYI+wHKs/ctVQi/lNOmXj5oyiYfLkKwLg9ml1D4tIZWxsGL
+         B0XS4epqZY0SdM+0C8maEHTcwC7dNxCnMLW5c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=fCBmGAQwlghoJaGq+trQHiUhSEgAmEFwCCXHZTWksHOWHscaDlGzW+wKtKnxqPGZZo
-         2rK7rlnzElBIru80XL0JRNHpGXSML5A7Fz/riTg19vSmKwouyblloMp+8TROFHQscod9
-         MsfkrWHEf4fcGP85WWE4+cpGyDBbqVJgrThDA=
-Received: by 10.216.88.8 with SMTP id z8mr80288wee.109.1256831335580; Thu, 29 
-	Oct 2009 08:48:55 -0700 (PDT)
-In-Reply-To: <200910291305.26523.johan@herland.net>
+         :cc:content-type:content-transfer-encoding;
+        b=h8bPaeg0S+okbhKIKr3FDyvat24RZ/iu485aAoJIlNfTfTgmPg84FKzpAOojzvH5F8
+         QCEiYpsaVgN7UDFQYISzdIuj8uqfryDowfjtfH9OzRbwWcrzmBY3IvB0QHNKMX8DcrHW
+         XBIn6ceNlapLOViiw413qN0fD6VHyW0etku+Y=
+Received: by 10.216.87.67 with SMTP id x45mr99178wee.18.1256831659118; Thu, 29 
+	Oct 2009 08:54:19 -0700 (PDT)
+In-Reply-To: <20091029142232.GS10505@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131604>
 
 Heya,
 
-On Thu, Oct 29, 2009 at 05:05, Johan Herland <johan@herland.net> wrote:
-> Fortunately, you can easily solve both problems by rerolling the patch with
-> the -M flag to git-format-patch.
+On Thu, Oct 29, 2009 at 07:22, Shawn O. Pearce <spearce@spearce.org> wr=
+ote:
+> Please define a transport_update_refs wrapper function to implement
+> this method invocation on the transport instance. =A0Callers should
+> not be reaching into the struct transport directly.
 
-Whow, I feel really silly now, thanks for pointing that out, proper patch sent!
+With pleasure, should the transport_update_refs wrapper simply 'return
+1' without doing anything if transport->update_refs is not set?
 
--- 
+> I certainly have to wonder... if this is done in both fetch and
+> clone, why isn't it just part of fetch_refs?
+
+Because clone does not use fetch_refs, or am I missing something?
+
+> Please set this before the disconnect method (move it up one line).
+
+Will do.
+
+--=20
 Cheers,
 
 Sverre Rabbelier
