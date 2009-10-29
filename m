@@ -1,115 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-rebase -i: improve usage message
-Date: Wed, 28 Oct 2009 23:24:30 -0700
-Message-ID: <7vtyxiafa9.fsf@alter.siamese.dyndns.org>
-References: <1256774549-8191-1-git-send-email-brian.ewins@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, kusmabite@googlemail.com
-To: Brian Ewins <brian.ewins@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 29 07:25:09 2009
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: [PATCH 2/7] .gitignore: add git-remote-cvs
+Date: Wed, 28 Oct 2009 23:40:21 -0700
+Message-ID: <1256798426-21816-3-git-send-email-srabbelier@gmail.com>
+References: <1256798426-21816-1-git-send-email-srabbelier@gmail.com>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>
+To: "Git List" <git@vger.kernel.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Daniel Barkalow" <barkalow@iabervon.org>,
+	"Johan Herland" <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Oct 29 07:41:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3ORY-00067V-FO
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 07:25:08 +0100
+	id 1N3OhW-0003HI-6D
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 07:41:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753853AbZJ2GY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2009 02:24:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753076AbZJ2GY5
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 02:24:57 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38512 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751798AbZJ2GY4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2009 02:24:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9672D6B55A;
-	Thu, 29 Oct 2009 02:25:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Vbqi6sxCRoezJYzCSJtTmqxNHDo=; b=EteHU+
-	k2jykxtM73vOglQIsa/WbXWF1kGNa20rqHH+Ee1e5mm6IYhtvVQuWB/MLILIzyMh
-	EWMnGb/idaq06bjokXR7UVks/8/UwN8vulr4DXzqZFCUuZQJC5ODh2CQ2h3dK9MM
-	kYiu6vFpa9m0kiKyrtBeqSBhrTse7j8iOD6VQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=b3/SUvRfRqGUpDLGMFz6eaX7Rf/l4glE
-	+qbCVdNBWQVAjTGjVdbcfyU41UJLvRfX5JvVfFmfEloFDmNf93DUgKMjGJR4aolN
-	VYtPEqNZrKbiBJHE3MocMdESNAy002PzwOhNbq/VJyo7bNDaQ/0mnmnyyqTSTGZy
-	uQCig1CgEzM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 628656B559;
-	Thu, 29 Oct 2009 02:24:57 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 84E546B557; Thu, 29 Oct
- 2009 02:24:46 -0400 (EDT)
-In-Reply-To: <1256774549-8191-1-git-send-email-brian.ewins@gmail.com> (Brian
- Ewins's message of "Thu\, 29 Oct 2009 00\:02\:29 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C75ACFFC-C453-11DE-852C-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756474AbZJ2Gl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2009 02:41:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756447AbZJ2Gl1
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 02:41:27 -0400
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:62904 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756449AbZJ2GlW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2009 02:41:22 -0400
+Received: by pwj9 with SMTP id 9so1251859pwj.21
+        for <git@vger.kernel.org>; Wed, 28 Oct 2009 23:41:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=mMCKlHL8IHf0JUC6cpqrnPCMkSbQz40sOG/Ib2mGycA=;
+        b=pMDGS5DruIDonWfpULXgRd8cXW4npa0CIpzdCllYge/NL3cxcO0A2XvT4Fxi6e22YV
+         LWjo+teaCpEstYEXYbc4+jhku1vGhiX3BO+6h2fi5Zb46rEXzNswnUXu82jr/yg5uOpP
+         REqHp/Fxlcu1VL7vgGQwMvSbMCHnu6rJquuXs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=ff5laOIPhv+Gn1afXQclpfC0mO7BQWut8s70h9FpjL48GaCVZC0pOuLL4rOuz98wyB
+         yljtJKY1omUYD4NIasXhsAPCPbLZO3xAYuzzeYwtb8T0h9cR1p/o2X5VlwKZq3kcNkSV
+         3oqXXKFSuJefsqsclqWaRdX1snFRw91rFm758=
+Received: by 10.114.237.24 with SMTP id k24mr5995066wah.5.1256798487396;
+        Wed, 28 Oct 2009 23:41:27 -0700 (PDT)
+Received: from localhost.localdomain (ip67-152-86-163.z86-152-67.customer.algx.net [67.152.86.163])
+        by mx.google.com with ESMTPS id 23sm401242pxi.1.2009.10.28.23.41.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 28 Oct 2009 23:41:26 -0700 (PDT)
+X-Mailer: git-send-email 1.6.5.2.291.gf76a3
+In-Reply-To: <1256798426-21816-1-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131558>
 
-Brian Ewins <brian.ewins@gmail.com> writes:
+Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+---
+ .gitignore |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-> The usage message was confusing as it implied that interactive
-> mode was optional but the default. Change the message to more
-> appropriately report usage when the -i flag is supplied.
-> In addition, use the same division into 3 command formats as
-> the man page.
-
-I agree; if "git rebase--interactive -h" were asked, "-i is always used"
-might be a correct thing to say, but nobody will get the message that way.
-Instead, "git rebase --nonsense -i" and "git rebase -i --nonsense" will be
-the most common way for users to see the message (also "git rebase -i -h").
-
-The OPTIONS_SPEC in rebase--interactive is for the interactive mode and
-for nothing else, so it may be a good idea to clearly say so at the
-beginning.  The user experience perhaps should look like:
-
-    $ git rebase -i -h
-    Note: this help is only about the interactive mode;
-    see 'git rebase -h' for help on non-interactive mode.
-
-    usage: git rebase -i [<options>] [--] <upstream> [<branch>]
-       or: git rebase -i (--continue|--abort|--skip)
-
-    Available options are
-    -v,--verbose          verbose output
-    --onto <commit>       rebase onto given commit instead of <upstream>
-    -p,--preserve-merges  try to recreate merges
-    -i,--interactive      (always in effect in interactive mode)
-    -m,--merge            (always in effect in interactive mode)
-
-    Actions:
-        --continue        continue the interrupted rebase session
-        ...
-
-By the way, I think the main "git rebase" help should be improved first
-for this improvement to make sense.
-
- * Its first line "usage" is too long;
-
- * It only mentions [-i] in the first line but does not hint that the
-   detailed help on interactive mode is available with "rebase -i -h".
-
-The user experience perhaps should look like this:
-
-    $ git rebase -h
-    usage: git rebase [<options>] (<upstream>|--root) [<branch>]
-
-    -i,--interactive  go interactive (see 'git rebase -i -h')
-    -v,--verbose      verbose output
-    ...
-
-Also see
-
-  http://thread.gmane.org/gmane.comp.version-control.git/129906/focus=130646
-
-I agree with Peff that the first-line usage should just say <options> in general
-and have a table of options and their descriptions.
+diff --git a/.gitignore b/.gitignore
+index 46c26cd..b8afdf4 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -105,6 +105,7 @@ git-reflog
+ git-relink
+ git-remote
+ git-remote-curl
++git-remote-cvs
+ git-repack
+ git-repo-config
+ git-request-pull
+-- 
+1.6.5.2.291.gf76a3
