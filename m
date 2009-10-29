@@ -1,101 +1,102 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH] diff --color-words -U0: fix the location of hunk headers
-Date: Thu, 29 Oct 2009 17:29:23 +0100
-Message-ID: <200910291729.23562.markus.heidelberg@web.de>
-References: <1256732672-11817-1-git-send-email-markus.heidelberg@web.de> <200910291222.42598.markus.heidelberg@web.de> <alpine.DEB.1.00.0910291425010.3687@felix-maschine>
-Reply-To: markus.heidelberg@web.de
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 7/7] Factor ref updating out of fetch_with_import
+Date: Thu, 29 Oct 2009 09:32:38 -0700
+Message-ID: <fabb9a1e0910290932u45c9c416m4d0ba0a8b2f5b01d@mail.gmail.com>
+References: <1256798426-21816-1-git-send-email-srabbelier@gmail.com> 
+	<1256798426-21816-8-git-send-email-srabbelier@gmail.com> <20091029142232.GS10505@spearce.org> 
+	<fabb9a1e0910290853p49070443v6d6bf2bf75faf80@mail.gmail.com> 
+	<20091029155607.GA10505@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Oct 29 17:30:47 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Johan Herland <johan@herland.net>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Oct 29 17:33:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3Xte-0008VK-2i
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 17:30:46 +0100
+	id 1N3XwH-0001kS-Dq
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Oct 2009 17:33:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753111AbZJ2Qag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2009 12:30:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752832AbZJ2Qag
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 12:30:36 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:51910 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752552AbZJ2Qaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2009 12:30:35 -0400
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 76FCC134587B7;
-	Thu, 29 Oct 2009 17:29:13 +0100 (CET)
-Received: from [89.59.78.39] (helo=pluto.fritz.box)
-	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #314)
-	id 1N3Xs9-0007QO-00; Thu, 29 Oct 2009 17:29:13 +0100
-User-Agent: KMail/1.9.10
-In-Reply-To: <alpine.DEB.1.00.0910291425010.3687@felix-maschine>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX181E2l29vZZ3Q56I4XVerx9LxAK3NFvPBAi7kRf
-	KJ7QC6lc2WyCb9AeHiydyQHxniChCHxM9O6g8rphUakFui3JAD
-	Johw0aSoopKecd7FxFeA==
+	id S1755491AbZJ2QdE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Oct 2009 12:33:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753680AbZJ2QdE
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 12:33:04 -0400
+Received: from mail-ew0-f209.google.com ([209.85.219.209]:50590 "EHLO
+	mail-ew0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753383AbZJ2QdC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Oct 2009 12:33:02 -0400
+Received: by ewy5 with SMTP id 5so171757ewy.37
+        for <git@vger.kernel.org>; Thu, 29 Oct 2009 09:33:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=elpS38ocsCfrnWWI7aZESRRCiXZMUyuroq2WVSLR8nc=;
+        b=KlNJvo+a8jthZw04UAmQ/bLRygZLWLvr/hDY5PJlkUhep1lBZGrwbU3BLVd8XF/tJ1
+         Cb7ZKkxM1xmNaH9dXNba5p1w3bT7QRanCek6liBRoGXb9zoZFNg8xDJLozcK97wCnHIJ
+         Q8YHBuaDCSTvbDjBorAuEOIviKIj8qbOspN1E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=ORlTtOhO2p5qyT+sifN5ccD49204m2fRBJ3Ee7EkN63A4b/K1SZqM/49EuqcG2MvHc
+         EL8uoVoViySTqpQ0YJu3Ep6kF1gZu6K2ULMVjMDAG8OKaqzgO+VQmZjZgt4DyGDmovpr
+         9RH2g1/uZP7zSg81iz35g7Xj5gignhlIChwB8=
+Received: by 10.216.89.13 with SMTP id b13mr134733wef.45.1256833978104; Thu, 
+	29 Oct 2009 09:32:58 -0700 (PDT)
+In-Reply-To: <20091029155607.GA10505@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131611>
 
-Johannes Schindelin, 29.10.2009:
-> Hi,
-> 
-> On Thu, 29 Oct 2009, Markus Heidelberg wrote:
-> 
-> > Indeed my initial fix was in the same fashion:
-> > 
-> > @@ -772,6 +772,15 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
-> >         }
-> > 
-> >         if (line[0] == '@') {
-> > +               if (ecbdata->diff_words) {
-> > +                       /*
-> > +                        * The content of the previous hunk, necessary for
-> > +                        * 0-context.
-> > +                        */
-> > +                       if (ecbdata->diff_words->minus.text.size ||
-> > +                           ecbdata->diff_words->plus.text.size)
-> > +                               diff_words_show(ecbdata->diff_words);
-> > +               }
-> >                 len = sane_truncate_line(ecbdata, line, len);
-> >                 find_lno(line, ecbdata);
-> >                 emit_line(ecbdata->file,
-> > 
-> > But then I thought I should not put the diff output from --color-words
-> > into the block that deals with the hunk header, but save another place
-> > where diff_words_show() is called.
-> 
-> I found this paragraph, as well as the patches 2/3 and 3/3, hard to 
-> follow.
+Heya,
 
-I try to reword:
-With 2/3 and 3/3 I wanted to keep --color-words specific code in the
-block starting with
+On Thu, Oct 29, 2009 at 08:56, Shawn O. Pearce <spearce@spearce.org> wr=
+ote:
+>> > I certainly have to wonder... if this is done in both fetch and
+>> > clone, why isn't it just part of fetch_refs?
+>>
+>> Because clone does not use fetch_refs, or am I missing something?
+>
+> Hmmph. =A0Weird. =A0Its been a while since I last looked at this code=
+,
+> maybe I misunderstood it.
 
-	if (ecbdata->diff_words) {
+Unless you mean transport_fetch_refs? It can't be done in
+transport_fetch_refs because the foreign helper transport needs to
+update all refs, including those that wanted_peer_refs decided not to
+fetch. Otherwise the 'HEAD' ref will not be updated, and it is left at
+all zeros. It is not as obvious that that is a problem in this patch,
+but when Junio merges with Nico's [5bdc32d3e "make 'git clone' ask the
+remote only for objects it cares about"] the code looks like this:
 
-and didn't want to contaminate the block starting with
+		if (refs) {
+			struct ref *ref_cpy;
+			mapped_refs =3D wanted_peer_refs(refs, refspec);
+			ref_cpy =3D copy_ref_list(mapped_refs);
+			transport_fetch_refs(transport, ref_cpy);
+			if (transport->update_refs)
+			{
+				ref_cpy =3D copy_ref_list(refs);
+				transport->update_refs(transport, ref_cpy);
+				refs =3D ref_cpy;
+				mapped_refs =3D wanted_peer_refs(refs, refspec);
+			}
+		}
 
-	if (line[0] == '@') {
+Does it make more sense now? transport_fetch_refs gets only a limited
+view of the refs, so it cannot pass all the refs to
+transport_update_refs as needed.
 
-with non-hunk-header content.
+--=20
+Cheers,
 
-But I'm not sure what's the better way and am content with either.
-
-> And besides, flushing in that block is the correct thing to do.  The 
-> function diff_words_show() is a function for that exact purpose.
-
-Yes, 2/3 and 3/3 just don't introduce a new invocation of this function
-at another place in the code.
-
-Markus
+Sverre Rabbelier
