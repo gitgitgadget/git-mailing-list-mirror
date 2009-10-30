@@ -1,98 +1,109 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] clone: detect extra arguments
-Date: Fri, 30 Oct 2009 06:19:19 -0500
-Message-ID: <20091030111919.GA13242@progeny.tock>
-References: <20091029081030.GA11213@progeny.tock>
- <20091029160614.GB7622@sigill.intra.peff.net>
+From: Reece Dunn <msclrhd@googlemail.com>
+Subject: Re: [PATCH] mergetool--lib: add p4merge as a pre-configured mergetool 
+	option
+Date: Fri, 30 Oct 2009 11:25:25 +0000
+Message-ID: <3f4fd2640910300425q602471a6v1111a7dceee7746c@mail.gmail.com>
+References: <d411cc4a0910271536u5817802at43f7477dd8ccabc7@mail.gmail.com>
+	 <200910300202.02016.markus.heidelberg@web.de>
+	 <76718490910292000t7b024b83y68d71b6ff810c15@mail.gmail.com>
+	 <200910301135.59831.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 30 12:09:19 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Charles Bailey <charles@hashpling.org>,
+	Scott Chacon <schacon@gmail.com>,
+	git list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Fri Oct 30 12:26:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3pM7-0000Jk-0F
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 12:09:19 +0100
+	id 1N3pcH-0000Sa-Mr
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 12:26:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754708AbZJ3LJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 07:09:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753559AbZJ3LJH
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 07:09:07 -0400
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:34888 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751311AbZJ3LJG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 07:09:06 -0400
-Received: by yxe17 with SMTP id 17so2564542yxe.33
-        for <git@vger.kernel.org>; Fri, 30 Oct 2009 04:09:10 -0700 (PDT)
+	id S1756585AbZJ3LZW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 07:25:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756045AbZJ3LZW
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 07:25:22 -0400
+Received: from mail-vw0-f192.google.com ([209.85.212.192]:43638 "EHLO
+	mail-vw0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755477AbZJ3LZV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 07:25:21 -0400
+Received: by vws30 with SMTP id 30so589570vws.33
+        for <git@vger.kernel.org>; Fri, 30 Oct 2009 04:25:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=6ua6HtYo0PNO9pIJzia4ikZCCfkuNwnLqRowBryAF30=;
-        b=Z8F72lq3ThQFDlvFR2U9htz1EjLJgIwa0nO0f+j0mzqp/Ob3JAG5Obld/c5+FPgsUA
-         KdPc5x4Epu6UrvQIjGXQWoTlAXmbcP76zaoFveoRzN2JgAxNlvk7tdsTJbGIxkrM4RLP
-         nmUKD7um+aYyRTC8v2W/AqxnJEAlujJ7ZEHCc=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=/+ABiZWY2/tDh394wFe8N5ucnd1j4cKyR0za7dCZToE=;
+        b=KiANJyUhXwbHVk6nZ1tKkBIW1lDwWr/ZqTgZswSpwrUf7eIHpuquW61oPWsp/YBH3H
+         rvGljvA2XMnSo+yF5RTD76f+o9Kq1+dpabFDnzx2uW6c4x+Z9RLqbunN6wlhkQsZchH3
+         /7tCmNAfU+/jNzDNPda3Cml+xPT2kCq4+qRAE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=DRsgQxUge3805/rGUdBFLM6J1urIJri/qkXi6J0vGsPF25WTjAsR5JzhCdXoRuDDcG
-         +HFkt/8ldJB2A8CxYY3I7slO8j1iSRP06lgmtG3hDzoT7r9RbgNyRvRegxYJyKH2VdUE
-         2hfQzoGZSsZqoPzvCJZpJiMe6TI4Nk+G5StTY=
-Received: by 10.150.30.40 with SMTP id d40mr2721025ybd.133.1256900950521;
-        Fri, 30 Oct 2009 04:09:10 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 16sm71662gxk.15.2009.10.30.04.09.08
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 30 Oct 2009 04:09:09 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20091029160614.GB7622@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=SvbjyhydE3qGC0+FEJQPHlzoc3U+FiCykWbcmN1PieJYxiSAZKG1GRl/vA2BSiBVkE
+         6WpQnNn8/9XHeuWW+tSvVtWUSvg5QKF9plv5v96antvj7lMi0D9PXyWcpL9/5oOkIZ8j
+         qa5+XVrmuywj4IobI5cxCQ4TZzGyrBbAqQSBo=
+Received: by 10.220.126.224 with SMTP id d32mr1148744vcs.57.1256901926042; 
+	Fri, 30 Oct 2009 04:25:26 -0700 (PDT)
+In-Reply-To: <200910301135.59831.markus.heidelberg@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131696>
 
-Jeff King wrote:
+2009/10/30 Markus Heidelberg <markus.heidelberg@web.de>:
+> Jay Soffian, 30.10.2009:
+>> On Thu, Oct 29, 2009 at 9:02 PM, Markus Heidelberg
+>> <markus.heidelberg@web.de> wrote:
+>> > He didn't mean p4merge on other platforms, but other merge tools on Mac
+>> > OS X. What about all the other merge tools already in mergetool--lib?
+>> > Should they get special handling, too?
+>>
+>> If someone wants to scratch that itch, then yes. The default diff tool
+>> for OS X has its helper already in /usr/bin (opendiff). p4merge is
+>> arguably a better merge tool, and it installs as an app bundle in
+>> /Applications. I'm not sure about the other diff tools, I haven't
+>> looked.
+>>
+>> > And for Windows we could add C:\Program Files\MergeToolX\tool.exe for
+>> > every merge tool.
+>>
+>> If it makes those tools easier to use with git, and if someone on
+>> Windows wants to scratch that itch, then yes, we should.
+>
+> Another possible problem: the user can change the installation
+> destination on Windows. What's the behaviour of Mac OS here? Is the
+> instalation path fixed or changeable?
 
-> Should we maybe be showing the usage in this case?
+For Windows, the program should have an InstallDir or similar registry
+value in a fixed place in the registry to point to where it is
+installed (something like
+HKLM/Software/[Vendor]/[Application]/[Version]).
 
-Sounds reasonable.  How about this patch on top?
+As for Linux, there is no guarantee that things like p4merge are in
+the path either. It could be placed under /opt/perforce or
+/home/perforce.
 
--- %< --
-Subject: [PATCH] clone: print usage on wrong number of arguments
+What would be sensible (for all platforms) is:
+  1/  if [difftool|mergetool].toolname.path is set, use that (is this
+documented?)
+  2/  try looking for the tool in the system path
+  3/  try some intelligent guessing
+  4/  if none of these work, print out an error message -- ideally,
+this should mention the configuration option in (1)
 
-git clone's short usage string is only 22 lines, so an error
-message plus usage string still fits comfortably on an 80x24
-terminal.
+(3) is what is being discussed. It is good that it will work without
+any user configuration (especially for standard tools installed in
+standard places), but isn't really a big problem as long as the user
+is prompted to configure the tool path. Also, I'm not sure how this
+will work with multiple versions of the tools installed (e.g. vim/gvim
+and p4merge).
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- builtin-clone.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/builtin-clone.c b/builtin-clone.c
-index 76ad581..736d9e1 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -378,10 +378,12 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 			     builtin_clone_usage, 0);
- 
- 	if (argc > 2)
--		die("Too many arguments.");
-+		usage_msg_opt("Too many arguments.",
-+			builtin_clone_usage, builtin_clone_options);
- 
- 	if (argc == 0)
--		die("You must specify a repository to clone.");
-+		usage_msg_opt("You must specify a repository to clone.",
-+			builtin_clone_usage, builtin_clone_options);
- 
- 	if (option_mirror)
- 		option_bare = 1;
--- 
-1.6.5.2
+- Reece
