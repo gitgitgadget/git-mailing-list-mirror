@@ -1,80 +1,76 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git svn show-ignore is excrutiatingly slow
-Date: Thu, 29 Oct 2009 23:39:36 -0700
-Message-ID: <20091030063936.GA13527@dcvr.yhbt.net>
-References: <20091028174307.GA5691@atlantic.linksys.moosehall>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC PATCH 06/19] Factor ref updating out of fetch_with_import
+Date: Fri, 30 Oct 2009 03:10:18 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0910300221290.14365@iabervon.org>
+References: <1256839287-19016-1-git-send-email-srabbelier@gmail.com> <1256839287-19016-7-git-send-email-srabbelier@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git mailing list <git@vger.kernel.org>
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Fri Oct 30 07:39:44 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johan Herland <johan@herland.net>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 30 08:10:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3l9D-0006Cw-TM
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 07:39:44 +0100
+	id 1N3ld3-0006qK-Vi
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 08:10:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756073AbZJ3Gjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 02:39:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756052AbZJ3Gjd
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 02:39:33 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:50134 "EHLO dcvr.yhbt.net"
+	id S1756176AbZJ3HKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 03:10:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756146AbZJ3HKP
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 03:10:15 -0400
+Received: from iabervon.org ([66.92.72.58]:47899 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750898AbZJ3Gjd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 02:39:33 -0400
-Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id AAA161F790;
-	Fri, 30 Oct 2009 06:39:37 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20091028174307.GA5691@atlantic.linksys.moosehall>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754845AbZJ3HKO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 03:10:14 -0400
+Received: (qmail 24351 invoked by uid 1000); 30 Oct 2009 07:10:18 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 30 Oct 2009 07:10:18 -0000
+In-Reply-To: <1256839287-19016-7-git-send-email-srabbelier@gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131676>
 
-Adam Spiers <git@adamspiers.org> wrote:
-> Mail-Followup-To: git mailing list <git@vger.kernel.org>
+On Thu, 29 Oct 2009, Sverre Rabbelier wrote:
 
-Hi Adam, MFT is frowned upon here.
-
-> Something is badly wrong here ...
+> Also allow the new update_refs to actually update the refs set, this
+> way the remote helper can set the value of previously unknown refs.
 > 
-> $ cd $svn_wd
-> $ time svn propget -R svn:ignore >/dev/null
-> svn propget -R svn:ignore > /dev/null  0.28s user 0.20s system 98% cpu 0.490 total
-> $ cd $git_wd
-> $ time git svn show-ignore > show-ignore.out
-> git svn show-ignore > show-ignore.out  20.52s user 33.69s system 1% cpu 1:23:42.17 total
+> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+> ---
 > 
-> That's 10,000 times slower for what is effectively the same source
-> tree!  Admittedly the svn propget was a "warm" run and took longer the
-> first time around, but even so there are several orders of magnitude
-> difference.
+> 	Daniel, if we can get wanted_peer_refs to keep HEAD as a
+> 	wanted ref somehow this patch could be a lot simpler.
 
-It's the difference between reading locally vs remotely.  git svn always
-looks at the remote repository for this information.  In your example,
-svn was looking at the working copy where it already has that
-information in an easily accessible form.
+Actually, I think the problem is that builtin-clone will always default to 
+setting up a refspec of "refs/heads/*:refs/remotes/origin/*", but that 
+doesn't actually make any sense if the source repository isn't presented 
+as having refs names like "refs/heads/*". The immediate problem that you 
+don't get HEAD because it's a symref to something outside the pattern is 
+somewhat secondary to the general problem that you don't get anything at 
+all, because everything's outside the pattern.
 
-Try running svn against your repository URL instead for a comparison:
+I don't really think that presenting the real refs in refs/<vcs>/*, and 
+having the list give symrefs to them from refs/heads/* and refs/tags/* 
+really makes sense; I think it would be better to rework fetch_with_import 
+and the list provided by a foreign vcs helper such that it can present 
+refs with normal names (refs/heads/*, refs/tags/*, etc) if the foreign vcs 
+has standards that correspond to branches and tags. Then "clone" would 
+work normally.
 
-  time svn propget -R svn:ignore $SVN_URL >/dev/null
+Or, perhaps, there should be some other way of allowing git users to take 
+advantage of foreign vcs standards; I don't have a good perspective on 
+this, since I only presently use git and a foreign vcs without any useful
+standards. But I think it should be such that the transport user sees as 
+close as possible to a native git layout, and clone continues to rely on 
+the layout being normal, instead of presenting a weird layout mapped into 
+a normal layout or something like that and working around transport users 
+not expecting this.
 
-> I had a quick look at the code and it seemed to be doing the svn tree
-> recursion itself via Git::SVN::prop_walk(), which might explain why.
-> However I did not have time to dig deeper, so would welcome any ideas.
-
-It would be possible to reconstruct the information given untouched
-copies of unhandled.log inside $GIT_DIR/svn/**.  On the other hand, it
-does require running through the history of the project and I don't
-think it's worth it for an operation that should be rarely needed.  I
-designed the output of "git svn show-ignore" be stored in
-$GIT_DIR/info/exclude
-
--- 
-Eric Wong
+	-Daniel
+*This .sig left intentionally blank*
