@@ -1,72 +1,123 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH] More precise description of 'git describe --abbrev'
-Date: Fri, 30 Oct 2009 21:18:39 +0100
-Message-ID: <m2my38fxeo.fsf@igel.home>
-References: <b48ea8a00910291438r8b66a0fq9e821393ecfff0bf@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Changed timestamp behavior of options -c/-C/--amend
+Date: Fri, 30 Oct 2009 16:26:28 -0400
+Message-ID: <20091030202628.GA26513@coredump.intra.peff.net>
+References: <1256931394-9338-1-git-send-email-erick.mattos@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Gisle Aas <gisle@aas.no>
-X-From: git-owner@vger.kernel.org Fri Oct 30 21:18:54 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Erick Mattos <erick.mattos@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 30 21:26:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3xvx-0003oL-Nr
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 21:18:54 +0100
+	id 1N3y3Y-0006qI-3X
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 21:26:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754019AbZJ3USj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 16:18:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbZJ3USj
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 16:18:39 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:33896 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751866AbZJ3USi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 16:18:38 -0400
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id CC9FA1C00204;
-	Fri, 30 Oct 2009 21:18:41 +0100 (CET)
-Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
-	by mail.m-online.net (Postfix) with ESMTP id 9AD0A90174;
-	Fri, 30 Oct 2009 21:18:41 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
-	with ESMTP id DlTrSLI7HCCx; Fri, 30 Oct 2009 21:18:40 +0100 (CET)
-Received: from igel.home (DSL01.83.171.185.109.ip-pool.NEFkom.net [83.171.185.109])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Fri, 30 Oct 2009 21:18:40 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 2C68C10DB86; Fri, 30 Oct 2009 21:18:39 +0100 (CET)
-X-Yow: Everybody gets free BORSCHT!
-In-Reply-To: <b48ea8a00910291438r8b66a0fq9e821393ecfff0bf@mail.gmail.com>
-	(Gisle Aas's message of "Thu, 29 Oct 2009 22:38:29 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S1757252AbZJ3U0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 16:26:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756885AbZJ3U0c
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 16:26:32 -0400
+Received: from peff.net ([208.65.91.99]:60923 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754155AbZJ3U0c (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 16:26:32 -0400
+Received: (qmail 3152 invoked by uid 107); 30 Oct 2009 20:30:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 30 Oct 2009 16:30:16 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Oct 2009 16:26:28 -0400
+Content-Disposition: inline
+In-Reply-To: <1256931394-9338-1-git-send-email-erick.mattos@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131749>
 
-Gisle Aas <gisle@aas.no> writes:
+On Fri, Oct 30, 2009 at 05:36:34PM -0200, Erick Mattos wrote:
 
-> diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-> index b231dbb..743eb95 100644
-> --- a/Documentation/git-describe.txt
-> +++ b/Documentation/git-describe.txt
-> @@ -44,7 +44,9 @@ OPTIONS
->
->  --abbrev=<n>::
->  	Instead of using the default 7 hexadecimal digits as the
-> -	abbreviated object name, use <n> digits.
-> +	abbreviated object name, use <n> digits or as many digits
-> +	are needed to form a unique object name.  An <n> of 0
+> Anyway this update creates new options for choosing the source timestamp
+> or a new one.  And set as default for -c option (editing one) to take a
+> new timestamp and for -C option the source timestamp.  That is because
+> we are normally using the source as template when we we are editing and
+> as a correction when we are just copying it.
+> 
+> Those options are also useful for --amend option which is by default
+> behaving the same.
 
-"as many digits as needed"?
+Thanks, this is something I have been wanting. I have always thought
+that --amend should give a new timestamp, so that while I'm fixing up
+commits via "rebase -i" the commits end up in correct date order.
 
-Andreas.
+Your patch seems to always use the old timestamp for -C, the new one for
+-c, and the old one for --amend. I would want it always for --amend.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+I talked with Shawn about this at the GitTogether; his counter-argument
+was that many people in maintainer roles will be amending or rebasing
+just to do little things, like marking Signed-off-by, and that the date
+should remain the same.
+
+So my suspicion is that there are some people who almost always want
+--new-timestamp, and some people who almost always want --old-timestamp,
+depending on their usual workflow. In which case a config option
+probably makes the most sense (but keeping the command-line to override
+the config, of course).
+
+> ---
+>  Documentation/git-commit.txt |   10 ++++++++--
+>  builtin-commit.c             |   15 ++++++++++++---
+>  2 files changed, 20 insertions(+), 5 deletions(-)
+
+Tests?
+
+>  	Take an existing commit object, and reuse the log message
+> -	and the authorship information (including the timestamp)
+> -	when creating the commit.
+> +	and the authorship information when creating the commit.
+> +	By default, timestamp is taken from specified commit unless
+> +	option --new-timestamp is included.
+
+We should clarify that this is the _author_ timestamp. The committer
+timestamp is always updated. Yes, it is talking about authorship
+information in the previous sentence, but at least I had to read it
+a few times to figure that out. Plus there are some minor English
+tweaks needed, so maybe:
+
+  and the authorship information when creating the commit.
+  By default, the author timestamp is taken from the specified commit
+  unless the option --new-timestamp is used.
+
+>  -c <commit>::
+>  --reedit-message=<commit>::
+>  	Like '-C', but with '-c' the editor is invoked, so that
+>  	the user can further edit the commit message.
+> +	By default, timestamp is recalculated and not taken from
+> +	specified commit unless option --old-timestamp is included.
+
+Ditto:
+
+  By default, the author timestamp is recalculated and not taken from
+  the specified commit unless the option --old-timestamp is used.
+
+> @@ -134,6 +138,8 @@ OPTIONS
+>  	current tip -- if it was a merge, it will have the parents of
+>  	the current tip as parents -- so the current top commit is
+>  	discarded.
+> +	By default, timestamp is taken from latest commit unless option
+> +	--new-timestamp is included.
+
+And:
+
+  By default, the author timestamp is taken from the latest commit
+  unless the option --new-timestamp is included.
+
+> +	if (old_timestamp && new_timestamp)
+> +		die("You can not use --old-timesamp and --new-timestamp together.");
+
+Typo: s/samp/stamp/
+
+But this mutual exclusivity implies to me that the option should
+probably be "--timestamp=old|new".
+
+-Peff
