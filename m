@@ -1,115 +1,139 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: My custom cccmd
-Date: Fri, 30 Oct 2009 10:39:18 +0200
-Message-ID: <94a0d4530910300139l2f20e3aaw2f89e0b809a7246c@mail.gmail.com>
-References: <94a0d4530910150620g733bdf0aq88660053f869b0a9@mail.gmail.com>
-	 <7vk4yw4dy3.fsf@alter.siamese.dyndns.org>
-	 <94a0d4530910151437s780bd96anca82d2b26ef99e0a@mail.gmail.com>
-	 <94a0d4530910250804w3a7da36eke10710eb1cbb03c1@mail.gmail.com>
-	 <7vzl7c4i81.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 18/19] Refactor git_remote_cvs to a more generic
+ git_remote_helpers
+Date: Fri, 30 Oct 2009 09:42:53 +0100
+Message-ID: <200910300942.54101.johan@herland.net>
+References: <1256839287-19016-1-git-send-email-srabbelier@gmail.com>
+ <1256839287-19016-19-git-send-email-srabbelier@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 09:39:39 2009
+Content-Type: Text/Plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7BIT
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 30 09:43:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3n1F-0003Sm-Sf
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 09:39:38 +0100
+	id 1N3n4Y-0004qn-7e
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 09:43:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756397AbZJ3IjP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Oct 2009 04:39:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756365AbZJ3IjP
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 04:39:15 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:21750 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756351AbZJ3IjO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Oct 2009 04:39:14 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so1425705fgg.1
-        for <git@vger.kernel.org>; Fri, 30 Oct 2009 01:39:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=oyGf5f/qkBUaffOls0srcMPoM2XdGY3mz7pk5/JuhG0=;
-        b=tnI+4rlMdRLfXF2Pjx3VYO9QZtoA1Mf2sd4HkOc/VhLcKbnCFm1d7PK8B2K+TSSLfd
-         8QAiUBlgo1Es5dFVPiVPwiFT+rZmrL/H+7EUdEb32C9oeLhleJTLyH164cYGnzEpOFYJ
-         ORekyeeI+4LQwLZ6sbn/4G+Ob7J1Ewm4eFAbg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=pPKW35HPpOcZEDVDgbxGEH9215FuoryZgo4/zoju8Jm2vUVWHy3Z4MAvEPdkP8uS9M
-         oK+h2U3GN813614mVsl09Tn+tzNOdjkpzd0hQmPT22JgOgdl7kB8dtOXkQ6r/Zw7ximK
-         to062grFmlp039xEFyZVckNVb4DpAP1Uv2OIA=
-Received: by 10.86.106.21 with SMTP id e21mr839929fgc.67.1256891958196; Fri, 
-	30 Oct 2009 01:39:18 -0700 (PDT)
-In-Reply-To: <7vzl7c4i81.fsf@alter.siamese.dyndns.org>
+	id S1756525AbZJ3Imw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 04:42:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756500AbZJ3Imv
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 04:42:51 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:51842 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756490AbZJ3Imv (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Oct 2009 04:42:51 -0400
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KSB000WHK7JB8C0@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 30 Oct 2009 09:42:55 +0100 (MET)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KSB006GNK7IR600@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 30 Oct 2009 09:42:55 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.10.30.82723
+User-Agent: KMail/1.12.2 (Linux/2.6.30-ARCH; KDE/4.3.2; x86_64; ; )
+In-reply-to: <1256839287-19016-19-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131683>
 
-On Tue, Oct 27, 2009 at 11:53 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> I explored this a bit more and I've come to the conclusion that we
->> actually don't wand to discard the previous commits in the patch
->> series. Let's think about this example:
->> 0001 <- John
->> 0002 <- Me overriding some changes from John
->>
->> In this case we want John to appear in the CC list of 0002, because =
-we
->> are changing his code.
->
-> There are two cases: your patch partially overrides his code, and you=
-r
-> patch completely rewrites/removes his code.
->
-> Obviously in the former case you do want to Cc, but there are parts o=
-f his
-> change that remain in the final result, so this case does not matter =
-in
-> this discussion. =C2=A0You will Cc him because of these remaining lin=
-es anyway.
->
-> In the latter case, the only contribution that remains from him is a
-> commit with his log message that does not help describing anything in=
- the
-> end result, cluttering the history.
->
-> In such a case, I would imagine that the reviewers would want to see =
-a
-> cleaned up series that does not have his patch that is irrelevant for
-> understanding the final result. =C2=A0John might want to know about i=
-t, if only
-> to raise objection to the way how you arranged your series. =C2=A0For=
- that
-> reason, I think it makes sense to Cc him.
->
-> But it is a rather a convoluted logic, if you ask me. =C2=A0You find =
-John and
-> Cc him, primarily so that he can point out that you should be redoing=
- the
-> series not to have his patch as an intermediate state in the series t=
-o
-> begin with, because his commit does not contribute to the end result.
->
-> It might make more sense if your tool told you about such a case dire=
-ctly,
-> rather than helping you find John so that he can tell you ;-).
+On Thursday 29 October 2009, Sverre Rabbelier wrote:
+> This in an effort to allow future remote helpers written in python to
+> re-use the non-cvs-specific code.
+> 
+> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+> ---
 
-But that's not the purpose of the cccmd tool.
+[snip]
 
-I agree that such "patch series simplificator" tool would be very
-useful, but that's out of scope for this. Isn't it?
+> diff --git a/git_remote_helpers/__init__.py
+>  b/git_remote_helpers/__init__.py new file mode 100644
+> index 0000000..38c7b5f
+> --- /dev/null
+> +++ b/git_remote_helpers/__init__.py
+> @@ -0,0 +1,27 @@
+> +#!/usr/bin/env python
+> +
+> +"""Support library package for git remote helpers.
+> +
+> +Git remote helpers are helper commands that interfaces with a non-git
+> +repository to provide automatic import of non-git history into a Git
+> +repository.
+> +
+> +This package provides the support library needed by these helpers..
+> +The following modules are included:
+> +
+> +- cvs/cvs - Interaction with CVS repositories
+> +
+> +- cvs/symbol_cache - Local CVS symbol cache
+> +
+> +- cvs/changeset - Collect individual CVS revisions into commits
+> +
+> +- cvs/commit_states - Map Git commits to CVS states
+> +
+> +- cvs/revision_map - Map CVS revisions to various metainformation
+> +
+> +- git/git - Interaction with Git repositories
 
---=20
-=46elipe Contreras
+Since this is Python documentation within a package, I'd rather refer to the 
+python modules as _modules_ and not files. I.e. please use '.' instead of 
+'/':
+
++- cvs.cvs - Interaction with CVS repositories
++
++- cvs.symbol_cache - Local CVS symbol cache
++
++- cvs.changeset - Collect individual CVS revisions into commits
++
++- cvs.commit_states - Map Git commits to CVS states
++
++- cvs.revision_map - Map CVS revisions to various metainformation
++
++- git.git - Interaction with Git repositories
+
+
+> +
+> +- util - General utility functionality use by the other modules in
+> +         this package, and also used directly by git-remote-cvs.
+
+Probably you should drop the direct reference to git-remote-cvs.
+
+> diff --git a/git_remote_cvs/util.py b/git_remote_helpers/util.py
+> similarity index 100%
+> rename from git_remote_cvs/util.py
+> rename to git_remote_helpers/util.py
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 77ad23e..c7530aa 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -640,9 +640,9 @@ test -d ../templates/blt || {
+> 
+>  if test -z "$GIT_TEST_INSTALLED"
+>  then
+> -	GITPYTHONLIB="$(pwd)/../git_remote_cvs/build/lib"
+> +	GITPYTHONLIB="$(pwd)/../git_remote_helpers/build/lib"
+>  	export GITPYTHONLIB
+> -	test -d ../git_remote_cvs/build || {
+> +	test -d ../git_remote_helpers/build || {
+>  		error "You haven't built git_remote_cvs yet, have you?"
+
+Please also s/git_remote_cvs/git_remote_helpers/ in the error message.
+
+Otherwise, it all looks good :)
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
