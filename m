@@ -1,76 +1,84 @@
-From: David Roundy <roundyd@physics.oregonstate.edu>
-Subject: Re: [PATCH/RFC 2/2] Provide a build time default-editor setting
-Date: Thu, 29 Oct 2009 22:21:44 -0400
-Message-ID: <117f2cc80910291921u6fc5e6e6j12c8433a67852ec0@mail.gmail.com>
-References: <1256742357-sup-3798@ntdws12.chass.utoronto.ca>
-	 <4AE98175.504@viscovery.net> <7viqdy6ii1.fsf@alter.siamese.dyndns.org>
-	 <200910292157.37474.j.sixt@viscovery.net>
-	 <7vfx916ea6.fsf@alter.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] mergetool--lib: add p4merge as a pre-configured mergetool 
+	option
+Date: Thu, 29 Oct 2009 23:00:52 -0400
+Message-ID: <76718490910292000t7b024b83y68d71b6ff810c15@mail.gmail.com>
+References: <d411cc4a0910271536u5817802at43f7477dd8ccabc7@mail.gmail.com>
+	 <20091029221234.GB32590@hashpling.org>
+	 <76718490910291747l165baf49tab781727d010610a@mail.gmail.com>
+	 <200910300202.02016.markus.heidelberg@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ben Walton <bwalton@artsci.utoronto.ca>,
-	GIT List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 03:21:54 2009
+Cc: Charles Bailey <charles@hashpling.org>,
+	Scott Chacon <schacon@gmail.com>,
+	git list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Fri Oct 30 04:01:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3h7e-0003GI-7V
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 03:21:50 +0100
+	id 1N3hjp-0007td-4H
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 04:01:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756938AbZJ3CVk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2009 22:21:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756907AbZJ3CVk
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 22:21:40 -0400
-Received: from mail-qy0-f174.google.com ([209.85.221.174]:58957 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756877AbZJ3CVj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2009 22:21:39 -0400
-Received: by qyk4 with SMTP id 4so1474237qyk.33
-        for <git@vger.kernel.org>; Thu, 29 Oct 2009 19:21:44 -0700 (PDT)
+	id S1756900AbZJ3DAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2009 23:00:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756710AbZJ3DAt
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Oct 2009 23:00:49 -0400
+Received: from mail-iw0-f180.google.com ([209.85.223.180]:39357 "EHLO
+	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755081AbZJ3DAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2009 23:00:49 -0400
+Received: by iwn10 with SMTP id 10so1862763iwn.4
+        for <git@vger.kernel.org>; Thu, 29 Oct 2009 20:00:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type;
-        bh=oqM3i5oPpOKUBgIoXZR3ashtIJ/bVjpp2jOvkPNgB4s=;
-        b=A+b3WiJeby9HuTPZT22kgAA/NQkMjmQVKMbQhec4lDzHye+YXMEN59GeEjlacV/hMw
-         PZd73ggV3Pu7W4lOqM7uerN42OvQPmJSFyktACJ/HWQzDcPqTZLmkO5FKjgx4Q5cMAD/
-         eKJAzqc+uJiaoWyGnLpjhGIozvhdVAniv7PC4=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=AkbjXe0lhBycAUJTl/wQPLjDqr+EVs2cloMCb9Z4z6g=;
+        b=fdXJ35hpDr9nBma4g+upDDk66P9WpLmjEt+771Tw7mGfpEx8XOr8lvB4EULww1VSYw
+         mf+Si0kZb3sQjwgKiE79bXWCDYaSzWfQ+/P3ursXChoan/xwmJbXfugVjKFH73H67OwM
+         Yx72FxI3shNLnH0b7JkPw/r6fjlRH0ZKe1OYg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        b=IZau/rEK11ycUE5r3qj0lRUZ/65X665wwXtPWkL/MjxTBlrNpaE9DSvW2faU7OIGlG
-         d6zhYUESn+mWP8fdLySUr2LqqEq4s+22kXFkEo8AS+bbXp7cW33tx8CDPMuTE3/OIMpY
-         K7kzMGGz+PtCzZJa4Wvz3hW2tGWbvtqeJ8w28=
-Received: by 10.224.96.202 with SMTP id i10mr512654qan.311.1256869304121; Thu, 
-	29 Oct 2009 19:21:44 -0700 (PDT)
-In-Reply-To: <7vfx916ea6.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: 896ff4de8cb465df
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=HCiGw5gYNqV27xDXdc3XXDFfP7AML/5i6Lb87HqmertJ3VNQnXSdeSkeENNCGZd+zM
+         Z5P7J4LW02/lVYiR8VqIonGrBdprC1e7qp9I113iNJBfEu0ony3qQ15qug668PyAXfSo
+         DmCSEGsQxb5+LgzLPWtHAA8fwFwc41QEX0fAM=
+Received: by 10.231.81.148 with SMTP id x20mr2737854ibk.2.1256871652353; Thu, 
+	29 Oct 2009 20:00:52 -0700 (PDT)
+In-Reply-To: <200910300202.02016.markus.heidelberg@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131671>
 
-On Thu, Oct 29, 2009 at 6:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
->
->> Yeah, whatever, I didn't take the time to think it through. But this may be an
->> opportunity to give some life back to the zombie that git-var currently is,
->> that is, to make it the plumbing that does value discovery for variables like
->> GIT_AUTHOR_INDENT, GIT_COMMITTER_IDENT, GIT_EDITOR, and perhaps also
->> GIT_PAGER.
->
-> Hmm, wouldn't it make even more sense to "run" them for the calling
-> Porcelain script?
+On Thu, Oct 29, 2009 at 9:02 PM, Markus Heidelberg
+<markus.heidelberg@web.de> wrote:
+> He didn't mean p4merge on other platforms, but other merge tools on Mac
+> OS X. What about all the other merge tools already in mergetool--lib?
+> Should they get special handling, too?
 
-That was what I had been thinking.  That way the caller doesn't need
-to know whether it may be a space-containing absolute path or an
-executable with flags, as long as git knows what to do.
+If someone wants to scratch that itch, then yes. The default diff tool
+for OS X has its helper already in /usr/bin (opendiff). p4merge is
+arguably a better merge tool, and it installs as an app bundle in
+/Applications. I'm not sure about the other diff tools, I haven't
+looked.
 
-David
+> And for Windows we could add C:\Program Files\MergeToolX\tool.exe for
+> every merge tool.
+
+If it makes those tools easier to use with git, and if someone on
+Windows wants to scratch that itch, then yes, we should.
+
+> But where will we end?
+
+I don't understand this argument. It's a few lines of code to make git
+a little friendlier. We end when folks stop contributing patches
+because either no one cares of there's nothing left to improve.
+
+j.
