@@ -1,139 +1,137 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 18/19] Refactor git_remote_cvs to a more generic
- git_remote_helpers
-Date: Fri, 30 Oct 2009 09:42:53 +0100
-Message-ID: <200910300942.54101.johan@herland.net>
-References: <1256839287-19016-1-git-send-email-srabbelier@gmail.com>
- <1256839287-19016-19-git-send-email-srabbelier@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2 0/8] Default pager and editor
+Date: Fri, 30 Oct 2009 05:16:34 -0500
+Message-ID: <20091030101634.GA1610@progeny.tock>
+References: <1256742357-sup-3798@ntdws12.chass.utoronto.ca>
+ <7vskd3o11t.fsf@alter.siamese.dyndns.org>
+ <20091029073224.GA15403@progeny.tock>
+ <20091029075021.GC15403@progeny.tock>
+ <7v8weu6idl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7BIT
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 09:43:04 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	David Roundy <roundyd@physics.oregonstate.edu>,
+	GIT List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 30 11:06:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3n4Y-0004qn-7e
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 09:43:02 +0100
+	id 1N3oNN-0004HI-19
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 11:06:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756525AbZJ3Imw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 04:42:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756500AbZJ3Imv
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 04:42:51 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:51842 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1756490AbZJ3Imv (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Oct 2009 04:42:51 -0400
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KSB000WHK7JB8C0@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 30 Oct 2009 09:42:55 +0100 (MET)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KSB006GNK7IR600@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 30 Oct 2009 09:42:55 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.10.30.82723
-User-Agent: KMail/1.12.2 (Linux/2.6.30-ARCH; KDE/4.3.2; x86_64; ; )
-In-reply-to: <1256839287-19016-19-git-send-email-srabbelier@gmail.com>
+	id S1756367AbZJ3KGW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Oct 2009 06:06:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755881AbZJ3KGW
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 06:06:22 -0400
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:63420 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755849AbZJ3KGV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 06:06:21 -0400
+Received: by yxe17 with SMTP id 17so2531098yxe.33
+        for <git@vger.kernel.org>; Fri, 30 Oct 2009 03:06:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=JHKugT1t/0r9I556qTnz/JFmKefE0dtlixpTjeyyt5w=;
+        b=tXnuh4kzZAroH2gFoHQuceqymM++HgA3ekBukNHXQRv3KkXq568BkSWmsfRFyPxDha
+         1jDl/vPn57G/PPgWsLQ5MHebguT0r+CZ8YHjw1pM3hb3QYq0fLVbPxmnV17wwZYB3xSl
+         Bd1tKE0G7WVqeVbgqxjTuhUsZ9KKTwm8aYdiQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=vkfKl/Mc6boghdGgbwEh3DyzAl0W9i4iFByaU/Zg9GlVdm8hhkdDVOJpYR/U6Lnb09
+         vLel38LdECgu0MDQo373oBKAh8xavhMJMt3v1CrRdq/egU0Grg3iw4720l8TSlfC4veB
+         xSapEOLwEty8piakFHMzstSIcoSxoQk7j16qA=
+Received: by 10.90.222.1 with SMTP id u1mr3798125agg.103.1256897186302;
+        Fri, 30 Oct 2009 03:06:26 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 4sm1292636yxd.70.2009.10.30.03.06.24
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 30 Oct 2009 03:06:25 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v8weu6idl.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131684>
 
-On Thursday 29 October 2009, Sverre Rabbelier wrote:
-> This in an effort to allow future remote helpers written in python to
-> re-use the non-cvs-specific code.
-> 
-> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
-> ---
+Junio C Hamano wrote:
 
-[snip]
+> My "how about" patch on DEFAULT_PAGER might be minimally safe with
+>=20
+>     make DEFAULT_PAGER=3D"/c/my program/less"
 
-> diff --git a/git_remote_helpers/__init__.py
->  b/git_remote_helpers/__init__.py new file mode 100644
-> index 0000000..38c7b5f
-> --- /dev/null
-> +++ b/git_remote_helpers/__init__.py
-> @@ -0,0 +1,27 @@
-> +#!/usr/bin/env python
-> +
-> +"""Support library package for git remote helpers.
-> +
-> +Git remote helpers are helper commands that interfaces with a non-git
-> +repository to provide automatic import of non-git history into a Git
-> +repository.
-> +
-> +This package provides the support library needed by these helpers..
-> +The following modules are included:
-> +
-> +- cvs/cvs - Interaction with CVS repositories
-> +
-> +- cvs/symbol_cache - Local CVS symbol cache
-> +
-> +- cvs/changeset - Collect individual CVS revisions into commits
-> +
-> +- cvs/commit_states - Map Git commits to CVS states
-> +
-> +- cvs/revision_map - Map CVS revisions to various metainformation
-> +
-> +- git/git - Interaction with Git repositories
+It isn=E2=80=99t, actually, since in pager.c the pager already gets run=
+ through
+sh if it contains certain shell metacharacters.
 
-Since this is Python documentation within a package, I'd rather refer to the 
-python modules as _modules_ and not files. I.e. please use '.' instead of 
-'/':
+> but if you are going to do this for real, you would need to use prope=
+r
+> quoting in the Makefile (look for _SQ for hints).
 
-+- cvs.cvs - Interaction with CVS repositories
-+
-+- cvs.symbol_cache - Local CVS symbol cache
-+
-+- cvs.changeset - Collect individual CVS revisions into commits
-+
-+- cvs.commit_states - Map Git commits to CVS states
-+
-+- cvs.revision_map - Map CVS revisions to various metainformation
-+
-+- git.git - Interaction with Git repositories
+Good catch --- thanks.
+=20
+> > This change makes t7005-editor into a mess.  Any ideas for fixing
+> > this?
+>=20
+> I think the introduction of DEFAULT_EDITOR makes it unfixable; your
+> DEFAULT_EDITOR may be set to '/usr/bin/vi' not 'vi'.
+>=20
+> Just detect DEFAULT_EDITOR being not the default 'vi' and abort/skip =
+the
+> entire test, perhaps?
 
+Yep, unfortunately that looks like the best thing to do.  I tried to
+salvage some of the test for distros (like Debian) that might override
+the default without using an absolute path.
 
-> +
-> +- util - General utility functionality use by the other modules in
-> +         this package, and also used directly by git-remote-cvs.
+Here=E2=80=99s an updated series.  It doesn=E2=80=99t provide git var -=
+-run yet since
+the Windows exit status magic means that would require either futzing
+with the run_pager() implementation or reimplementing cat in var.c.
 
-Probably you should drop the direct reference to git-remote-cvs.
+Thoughts?
 
-> diff --git a/git_remote_cvs/util.py b/git_remote_helpers/util.py
-> similarity index 100%
-> rename from git_remote_cvs/util.py
-> rename to git_remote_helpers/util.py
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 77ad23e..c7530aa 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -640,9 +640,9 @@ test -d ../templates/blt || {
-> 
->  if test -z "$GIT_TEST_INSTALLED"
->  then
-> -	GITPYTHONLIB="$(pwd)/../git_remote_cvs/build/lib"
-> +	GITPYTHONLIB="$(pwd)/../git_remote_helpers/build/lib"
->  	export GITPYTHONLIB
-> -	test -d ../git_remote_cvs/build || {
-> +	test -d ../git_remote_helpers/build || {
->  		error "You haven't built git_remote_cvs yet, have you?"
+Johannes Sixt (1):
+  Teach git var about GIT_EDITOR
 
-Please also s/git_remote_cvs/git_remote_helpers/ in the error message.
+Jonathan Nieder (6):
+  launch_editor: Longer error message when TERM=3Ddumb
+  Handle more shell metacharacters in editor name
+  Teach git var about GIT_PAGER
+  add -i, send-email, svn, p4, etc: Use "git var GIT_EDITOR"
+  am -i, git-svn: use $(git var GIT_PAGER) instead of 'less'
+  Provide a build time default-editor setting
 
-Otherwise, it all looks good :)
+Junio C Hamano (1):
+  Provide a build time default-pager setting
 
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+ Documentation/config.txt         |    4 +---
+ Documentation/git-commit.txt     |    2 +-
+ Documentation/git-send-email.txt |    4 ++--
+ Documentation/git-var.txt        |   14 ++++++++++++++
+ Makefile                         |   28 ++++++++++++++++++++++++++++
+ cache.h                          |    2 ++
+ contrib/fast-import/git-p4       |    5 +----
+ editor.c                         |   33 ++++++++++++++++++++++++++++--=
+---
+ git-add--interactive.perl        |    3 +--
+ git-am.sh                        |    5 ++++-
+ git-send-email.perl              |    3 ++-
+ git-sh-setup.sh                  |   19 ++++++-------------
+ git-svn.perl                     |   11 ++++-------
+ pager.c                          |   24 ++++++++++++++++++++----
+ t/t7005-editor.sh                |   31 ++++++++++++++++++++++++------=
+-
+ var.c                            |   20 ++++++++++++++++++++
+ 16 files changed, 158 insertions(+), 50 deletions(-)
