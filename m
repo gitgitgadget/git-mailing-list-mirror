@@ -1,77 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Erick Mattos <erick.mattos@gmail.com>
 Subject: Re: [PATCH] Changed timestamp behavior of options -c/-C/--amend
-Date: Fri, 30 Oct 2009 15:26:56 -0700
-Message-ID: <7v8wesh61b.fsf@alter.siamese.dyndns.org>
-References: <1256931394-9338-1-git-send-email-erick.mattos@gmail.com>
- <7vljisk1m7.fsf@alter.siamese.dyndns.org>
- <55bacdd30910301505xe712b74m837dc862a6ee953@mail.gmail.com>
- <55bacdd30910301513u6ba6a575w2c65358ff368aeab@mail.gmail.com>
+Date: Fri, 30 Oct 2009 20:30:40 -0200
+Message-ID: <55bacdd30910301530n5ce39e03la417685bf02ad50@mail.gmail.com>
+References: <1256931394-9338-1-git-send-email-erick.mattos@gmail.com> 
+	<7vljisk1m7.fsf@alter.siamese.dyndns.org> <55bacdd30910301505xe712b74m837dc862a6ee953@mail.gmail.com> 
+	<55bacdd30910301513u6ba6a575w2c65358ff368aeab@mail.gmail.com> 
+	<7v8wesh61b.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Erick Mattos <erick.mattos@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 23:27:13 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 30 23:31:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3zw5-0006xV-HQ
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 23:27:09 +0100
+	id 1N3zzu-0008LH-4R
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 23:31:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932929AbZJ3W06 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Oct 2009 18:26:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932918AbZJ3W06
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 18:26:58 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50231 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932140AbZJ3W05 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Oct 2009 18:26:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A3B176D583;
-	Fri, 30 Oct 2009 18:27:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=mXuzQlQOK19f
-	2V4wZNP92hQtFZk=; b=lOegDHK0N1exPotZyCatdPsuuIGMciEXgagbBdgknzDt
-	RqaNSLIGY87Y6hAEyzR7fjMoGbtWBFCuynEtPWSAzBP7HbWpMAYDiTQydNSxm1/R
-	W4eXUeIfJ78sDXYwlniCTy5y/amPfeyJvlo7S85yGeEQYNmh/vUi4bDbfR8RmVQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Ova8TG
-	DFve96ChO9a/rDoNJ1fT6+IOfxpkcSTNwqSXGtq/eeAOG2sJp+hnxt0bsaixleed
-	cNloFI1SDBl8qwgQRhVWfFprgKkSaYzWFpNyw7yvKhkWeXwTmdPUeWwkKs4gbqcm
-	Fa3FCeKZh1aFeTOikD7y/uoj0qv8EZeBcLwF4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 763F66D580;
-	Fri, 30 Oct 2009 18:27:00 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C4E056D57E; Fri, 30 Oct
- 2009 18:26:57 -0400 (EDT)
-In-Reply-To: <55bacdd30910301513u6ba6a575w2c65358ff368aeab@mail.gmail.com>
- (Erick Mattos's message of "Fri\, 30 Oct 2009 20\:13\:11 -0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5767DAE0-C5A3-11DE-B568-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932929AbZJ3Waz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Oct 2009 18:30:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932906AbZJ3Waz
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 18:30:55 -0400
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:47048 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932140AbZJ3Waz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Oct 2009 18:30:55 -0400
+Received: by yxe17 with SMTP id 17so3136769yxe.33
+        for <git@vger.kernel.org>; Fri, 30 Oct 2009 15:31:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xyyhiB0GR7sOoc1hyLGJGk1Sifa/V9cJDy0wbaula3g=;
+        b=BFd6/jIkLN+z12zC3CHCgCdwEtnGV6Xhbpw0pVvc1zuWc91avoKigBorHBJKNYE6+N
+         h86T/X1IRLsYbP/jYQM6/WJ7MVQMqVNdI9oKHwOEDFTP5Vr4tzCoR7rTSFHQLolbKZ+P
+         6Dh5nxAF9q5EottXxcbBWKcH2HN/lk6I7HnvU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Qqg5zseHmNqGYUEaOczEDaLSeJQr7J+B6VeazhRnQtHgcS34qq7k/V71JQOksZJi04
+         Ice1/ISg5C2VMQyP6hah7C30EEOYd04+ifTPJziEbTU/22Tu4D6gcfDoJcg5sAj/nhNQ
+         wz5Wey/b8o8qaS9wcvOD5/NxBNByw4jj/NeGE=
+Received: by 10.150.172.1 with SMTP id u1mr3994522ybe.300.1256941860126; Fri, 
+	30 Oct 2009 15:31:00 -0700 (PDT)
+In-Reply-To: <7v8wesh61b.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131769>
 
-Erick Mattos <erick.mattos@gmail.com> writes:
-
-> 2009/10/30 Junio C Hamano <gitster@pobox.com>:
+2009/10/30 Junio C Hamano <gitster@pobox.com>:
+> Erick Mattos <erick.mattos@gmail.com> writes:
 >
->>(besides, you write logs as if you are making
->> an order to the codebase to "do this!").
+>> 2009/10/30 Junio C Hamano <gitster@pobox.com>:
+>>
+>>>(besides, you write logs as if you are making
+>>> an order to the codebase to "do this!").
+>>
+>> Not a chance! =C2=A0Just trying to help.
 >
-> Not a chance! =C2=A0Just trying to help.
+> Sorry, you misunderstood me. =C2=A0What I meant was:
+>
+> =C2=A0 =C2=A0It is customery for us to write our log messages as if t=
+he author of
+> =C2=A0 =C2=A0the patch is giving an order, iow, in imperative mood. =C2=
+=A0Your "Changed
+> =C2=A0 =C2=A0blah" violates that style.
+>
+I got it in the opposite way.  :-D
 
-Sorry, you misunderstood me.  What I meant was:
-
-    It is customery for us to write our log messages as if the author o=
-f
-    the patch is giving an order, iow, in imperative mood.  Your "Chang=
-ed
-    blah" violates that style.
+So one should give an "order"!...  :-1
