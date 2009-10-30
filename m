@@ -1,59 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] push: fix typo in usage
-Date: Fri, 30 Oct 2009 11:04:53 -0400
-Message-ID: <20091030150453.GA1954@coredump.intra.peff.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 02/19] Allow fetch to modify refs
+Date: Fri, 30 Oct 2009 11:16:48 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0910301110120.14365@iabervon.org>
+References: <1256839287-19016-1-git-send-email-srabbelier@gmail.com>  <1256839287-19016-3-git-send-email-srabbelier@gmail.com> <alpine.LNX.2.00.0910300151450.14365@iabervon.org> <fabb9a1e0910300522je3d76aep160d87fe302f8779@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 16:05:14 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-957073245-1256915808=:14365"
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johan Herland <johan@herland.net>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 30 16:17:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3t2J-0005Wa-VR
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 16:05:08 +0100
+	id 1N3tET-0003bP-8l
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 16:17:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932321AbZJ3PE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 11:04:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932257AbZJ3PE5
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 11:04:57 -0400
-Received: from peff.net ([208.65.91.99]:51775 "EHLO peff.net"
+	id S932394AbZJ3PQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 11:16:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932353AbZJ3PQq
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 11:16:46 -0400
+Received: from iabervon.org ([66.92.72.58]:40748 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932246AbZJ3PE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 11:04:56 -0400
-Received: (qmail 505 invoked by uid 107); 30 Oct 2009 15:08:41 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 30 Oct 2009 11:08:41 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Oct 2009 11:04:53 -0400
-Content-Disposition: inline
+	id S932417AbZJ3PQo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 11:16:44 -0400
+Received: (qmail 3064 invoked by uid 1000); 30 Oct 2009 15:16:48 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 30 Oct 2009 15:16:48 -0000
+In-Reply-To: <fabb9a1e0910300522je3d76aep160d87fe302f8779@mail.gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131709>
 
-Missing ")".
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I posted this in $gmane/130293, but I think it simply got missed.
+--1547844168-957073245-1256915808=:14365
+Content-Type: TEXT/PLAIN; charset=windows-1252
+Content-Transfer-Encoding: 8BIT
 
- builtin-push.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Fri, 30 Oct 2009, Sverre Rabbelier wrote:
 
-diff --git a/builtin-push.c b/builtin-push.c
-index 7d78711..019c986 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -181,7 +181,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_BIT( 0 , "all", &flags, "push all refs", TRANSPORT_PUSH_ALL),
- 		OPT_BIT( 0 , "mirror", &flags, "mirror all refs",
- 			    (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE)),
--		OPT_BOOLEAN( 0 , "tags", &tags, "push tags (can't be used with --all or --mirror"),
-+		OPT_BOOLEAN( 0 , "tags", &tags, "push tags (can't be used with --all or --mirror)"),
- 		OPT_BIT( 0 , "purge", &flags,
- 			"remove locally deleted refs from remote",
- 			TRANSPORT_PUSH_PURGE),
--- 
-1.6.5.1.143.g1dab74.dirty
+> Heya,
+> 
+> On Thu, Oct 29, 2009 at 22:56, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> >> +++ b/builtin-clone.c
+> >> @@ -526,8 +526,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+> >>
+> >>               refs = transport_get_remote_refs(transport);
+> >>               if (refs) {
+> >> -                     mapped_refs = wanted_peer_refs(refs, refspec);
+> >> -                     transport_fetch_refs(transport, mapped_refs);
+> >> +                     struct ref *ref_cpy = wanted_peer_refs(refs, refspec);
+> >> +                     mapped_refs = ref_cpy;
+> >> +                     transport_fetch_refs(transport, ref_cpy);
+> >
+> > Just drop this hunk; the change doesn't actually do anything. Otherwise,
+> > the patch matches what I have.
+> 
+> Am I missing something? I thought we need this hunk since mapped_refs
+> is const, and transport_fetch_refs takes a non-const argument?
+> 
+> builtin-clone.c: In function ‘cmd_clone’:
+> builtin-clone.c:531: warning: passing argument 2 of
+> ‘transport_fetch_refs’ discards qualifiers from pointer target type
+
+Ah, actually, mapped_refs should just be made non-const; unlike "refs", 
+it's set from wanted_peer_refs(), which returns a non-const value.
+
+	-Daniel
+*This .sig left intentionally blank*
+--1547844168-957073245-1256915808=:14365--
