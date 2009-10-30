@@ -1,108 +1,78 @@
-From: Erick Mattos <erick.mattos@gmail.com>
-Subject: Re: [PATCH] Changed timestamp behavior of options -c/-C/--amend
-Date: Fri, 30 Oct 2009 21:12:58 -0200
-Message-ID: <55bacdd30910301612xabe2071i1319d920191f080f@mail.gmail.com>
-References: <1256931394-9338-1-git-send-email-erick.mattos@gmail.com> 
-	<7vljisk1m7.fsf@alter.siamese.dyndns.org> <7viqdwilx2.fsf@alter.siamese.dyndns.org> 
-	<55bacdd30910301520h2678d0c2hd8478716d8ce4a17@mail.gmail.com> 
-	<7v4opgh5qr.fsf@alter.siamese.dyndns.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [RFC PATCH v4 11/26] Move WebDAV HTTP push under remote-curl
+Date: Sat, 31 Oct 2009 07:20:03 +0800
+Message-ID: <be6fef0d0910301620x2e80864ft67b7d067b00005f2@mail.gmail.com>
+References: <1256774448-7625-1-git-send-email-spearce@spearce.org>
+	 <1256774448-7625-12-git-send-email-spearce@spearce.org>
+	 <be6fef0d0910300910me43c77fue6dcb6034dd0ea5b@mail.gmail.com>
+	 <20091030190655.GA7442@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 31 00:13:27 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Mike Hommey <mh@glandium.org>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sat Oct 31 00:20:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N40er-0006Zs-Ps
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 00:13:26 +0100
+	id 1N40lO-0000QU-Rv
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 00:20:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932985AbZJ3XNO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Oct 2009 19:13:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932929AbZJ3XNO
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 19:13:14 -0400
-Received: from mail-yw0-f202.google.com ([209.85.211.202]:37651 "EHLO
-	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932139AbZJ3XNN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Oct 2009 19:13:13 -0400
-Received: by ywh40 with SMTP id 40so3149103ywh.33
-        for <git@vger.kernel.org>; Fri, 30 Oct 2009 16:13:18 -0700 (PDT)
+	id S933040AbZJ3XT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 19:19:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933036AbZJ3XT7
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 19:19:59 -0400
+Received: from mail-iw0-f180.google.com ([209.85.223.180]:45856 "EHLO
+	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933028AbZJ3XT7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 19:19:59 -0400
+Received: by iwn10 with SMTP id 10so2492141iwn.4
+        for <git@vger.kernel.org>; Fri, 30 Oct 2009 16:20:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=SzTs+w3L1TdjVVEi9WIzSjulVA/accqvl8HwIT83r7I=;
-        b=lemjQQEcAdeOz/mWh4Uexhzqd9wRgbyBSOnzPH6CYf16kfAEQhbvPVB+X36eIS8+8P
-         r76h7afZi7tEk0ARVRUO05RSHlv6K4gnGN89GSs5TpsZ/Y6CBOjfRfPWKHMTSxy6yLsM
-         aNBw+yi/m52T0/rv810JkIC3pXHPpndmB/T2g=
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=AQceOikgvxvXmFaQ2BnwnvtnLV+dJH+B4TMX15GRUEs=;
+        b=gvbjwa3UV3GLgb78RZ4p/GAAnWQCVpWaJxH7DJzNGfhK6MQXAIG0vhOsN6zSBPazB0
+         LJFApGQ2truE5yWdKLwwkqWNnRWFs+6dQQw6vH0djeTqSyhJgDta9UN18cLOYN6Tg8ui
+         BmxMpW7VBFM0fAzqLajYlTdimCr388x2WOGAc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=eE/1zbB13jIFJQQ37nynQ4ND/J2I1uFgCtz7cmrbYWvgUahzYWLGlkeBs7OYvjkuTC
-         3y/pY0I93+Q7CWTlxVuoQRd3V5iF+Ic/4JsuIeXOu07FFmpa7D6C/CDgfX4lRtbne4YD
-         9wzWmE0fnczhVab9rbYFolUMpTquGyREhBiCY=
-Received: by 10.150.46.15 with SMTP id t15mr4052051ybt.253.1256944398048; Fri, 
-	30 Oct 2009 16:13:18 -0700 (PDT)
-In-Reply-To: <7v4opgh5qr.fsf@alter.siamese.dyndns.org>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=i2r1qzLa+WsQ/bj+L2W9C3D0cLf8CQ1Ozc1UP4MmuZBCWxUMiiPAbtU3bzA637RZHK
+         lQTp2RmMeeh6zm5ahESjWcH3VlfER5Qm6kWZHKLlG1Kty67uynBDCiZXNm7mcQKUU1Tt
+         8cES2+rUPyH1pR/yEMBm/A/VftsXZ4DbuA9P0=
+Received: by 10.231.125.28 with SMTP id w28mr4733198ibr.50.1256944803641; Fri, 
+	30 Oct 2009 16:20:03 -0700 (PDT)
+In-Reply-To: <20091030190655.GA7442@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131776>
 
-2009/10/30 Junio C Hamano <gitster@pobox.com>:
-> Erick Mattos <erick.mattos@gmail.com> writes:
->
->> 2009/10/30 Junio C Hamano <gitster@pobox.com>:
->>> Junio C Hamano <gitster@pobox.com> writes:
->>>
->>>> ...
->>>> I agree that the issue the patch addresses is worth improving, and=
- I think
->>>> it is sensible to default to reuse the timestamp for -C and not to=
- reuse
->>>> for --amend. =C2=A0I am not sure about -c myself, but it probably =
-shouldn't
->>>> reuse the timestamp by default.
->>>
->>> So after realizing that this was about "author" timestamp, I am res=
-cinding
->>> this comment about the change of the default for -c and --amend.
->>
->> Actually I am only changing the default for -c and I see it useful.
->> At least with me I normally use -c only to use messages of commits a=
-s
->> template.
->
-> I do that from time to time as well. =C2=A0As I said in a different m=
-essage, it
-> may make the default more intutitive if we give new timestamp when th=
-e
-> author is the same as the committer when doing "-c". =C2=A0You are cr=
-eating
-> your own commit in that case.
->
+Hi,
 
-I don't see a use for comparing the author and committer because I can
-use as template my own commits or others'.
+On Sat, Oct 31, 2009 at 3:06 AM, Clemens Buchacher <drizzd@aon.at> wrote:
+> How can the changed result of one test suddenly make another test redundant?
+> The two are testing different things.
+>[snip]
+> No, 'git update-ref' correctly reverts the earlier push, so we can push again
+> and 'git update-server-info' is therefore necessary for the test to work
+> independently of its predecessors result.
 
-Let's clarify the subject:
+I said "redundant" because in the first push, we've already 1) updated
+/refs/heads/master (which is what the 'git update-ref' here does) and
+2) updated /info/refs (which is what the 'git update-server-info' does
+and 3) pushed changes. To me, the "unpacked refs" test reads as a
+trivial test of http-push's ability to update /refs/heads/master and
+/info/refs (something we've already done in the first "packed refs"
+test), rather than its pushing per se. Is it your intention to keep
+the "unpacked refs" test due to the former?
 
-In my point-of-view -c option is mainly used for templating commit mess=
-ages.
-In that case -c has a different default from -C and --amend options
-thus creating a need for two new options: --reuse-timestamp and
---no-reuse-timestamp.
-
-As I see by your messages you do prefer to have all those options set
-up for reusing timestamp as default.
-In that case we just need one new option: --no-reuse-timestamp (or
---recreate-timestamp or whatever).
-
-So now It is a matter of decision only and you are the guy.
-
-What should be for all?
+-- 
+Cheers,
+Ray Chuan
