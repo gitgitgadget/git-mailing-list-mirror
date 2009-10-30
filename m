@@ -1,79 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug#553296: gitignore broken completely
-Date: Fri, 30 Oct 2009 14:41:13 -0700
-Message-ID: <7v7huck1ae.fsf@alter.siamese.dyndns.org>
-References: <20091029233458.GA32764@ikki.ethgen.de>
- <20091030162857.26604.qmail@67b7e3b41a17c8.315fe32.mid.smarden.org>
- <20091030165903.GA10671@ikki.ethgen.de>
- <20091030173838.GB18583@coredump.intra.peff.net>
- <7vaaz8lleg.fsf@alter.siamese.dyndns.org>
- <20091030194333.GA4551@coredump.intra.peff.net>
+From: James Pickens <jepicken@gmail.com>
+Subject: Re: [PATCH] gitignore: root most patterns at the top-level directory
+Date: Fri, 30 Oct 2009 14:52:07 -0700
+Message-ID: <885649360910301452g7d7311d7w1133f5d4c98072dc@mail.gmail.com>
+References: <20091027011024.GA29361@sigio.peff.net>
+	 <7vmy3cys0f.fsf@alter.siamese.dyndns.org>
+	 <20091030182431.GA19901@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Klaus Ethgen <Klaus@Ethgen.de>,
-	553296@bugs.debian.org, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 30 22:41:35 2009
+X-From: git-owner@vger.kernel.org Fri Oct 30 22:52:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3zDv-0005s3-NX
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 22:41:32 +0100
+	id 1N3zOK-00024h-96
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 22:52:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757535AbZJ3VlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 17:41:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757475AbZJ3VlU
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 17:41:20 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51079 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757433AbZJ3VlU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 17:41:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D89036D14E;
-	Fri, 30 Oct 2009 17:41:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WM8vo2o708vPCFcN/H2TO+m3km0=; b=qS6igs
-	X1/UFxREKPoLYOQAC+JjgJCTJqtS0HUYtNU1RS2EVtt2t1y7h8vz74+470EfO02t
-	1CA6ssT1Q72Te7jEtdTMaUg9MJxqVXUN2axOSB0rjOJQ3074IWhZrftHNqOseic9
-	5ZGrzdxnhv1NNig0rum2NbL+GxKQx2e2mF8Jo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eFIBGBOuwvVdA8t9K9VofwcpPa/yuWvA
-	xAXyB14hf40U/q4GOYwQLOxqY6hovC/Pm1OpRLykQTtDjFNJ75QS5H5haZnK0Ceb
-	AVQ/IAdCUxq+C9IiyE45tpTfBJaUfgZ6qRcFpvd7jZdxfxU3lik43kJQSYi0znbA
-	oGPDkJysKLA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 999516D14C;
-	Fri, 30 Oct 2009 17:41:20 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A4ED06D147; Fri, 30 Oct
- 2009 17:41:14 -0400 (EDT)
-In-Reply-To: <20091030194333.GA4551@coredump.intra.peff.net> (Jeff King's
- message of "Fri\, 30 Oct 2009 15\:43\:33 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F6540D06-C59C-11DE-9D91-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932920AbZJ3VwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 17:52:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932910AbZJ3VwE
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 17:52:04 -0400
+Received: from mail-iw0-f180.google.com ([209.85.223.180]:35144 "EHLO
+	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932903AbZJ3VwC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 17:52:02 -0400
+Received: by iwn10 with SMTP id 10so2452821iwn.4
+        for <git@vger.kernel.org>; Fri, 30 Oct 2009 14:52:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=tFGcBXHksfFtsc/px1fxTCAW9bPWtFVx918/5quZiU0=;
+        b=jAXkPric/gvY7jGdN0iAtRGmbVUG7H7EauGWqVxEeOSVj+fSU4gSu+KWV3WYx4X03I
+         HtZrcRFb6/YNr9XZ7MdVRVJ7ibHMUpus5hO/2vKobFyCkIDikHfy+4N8hUs/SqAP3qJd
+         c47M10epq0mVQ9WHoZ2LvHs6aNqTjvTD/RI4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=e0a+Kkon+rYNeG8EyEMquOSipEudSTXW8foOyupY40VY9j3ksrFpesv8CulwLvJmXy
+         HJylnwi6+DWlkTo87CntP7PWprp416ePstTOtMKD2y7WWhcICmzeU+LVP53SnAyJSl3B
+         T9fGAactivuHWZVjtw5kbj6FVPUywqR09CQXI=
+Received: by 10.231.73.131 with SMTP id q3mr6337806ibj.6.1256939527408; Fri, 
+	30 Oct 2009 14:52:07 -0700 (PDT)
+In-Reply-To: <20091030182431.GA19901@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131757>
 
-Jeff King <peff@peff.net> writes:
-
-> On Fri, Oct 30, 2009 at 12:41:27PM -0700, Junio C Hamano wrote:
+On Fri, Oct 30, 2009 at 11:24 AM, Jeff King <peff@peff.net> wrote:
+>> If we do so, there is no need to change the current .gitignore entires.
+>> You need to spell a concrete filename as a glob pattern that matches only
+>> one path if you want the recursive behaviour.  E.g. if you have a Makefile
+>> per subdirectory, each of which generates and includes Makefile.depend
+>> file, you would write "Makefile.depen[d]" in the toplevel .gitignore file.
 >
->> I've never understood the use of "ls-files -i" without -o, so in that
->> sense, I have done 2. myself already long time ago.
->> 
->> In other words, I do not really care that much, and the choice would be
->> between "0. do not do anything---the patch in question was a bugfix for
->> longstanding insanity" and your "4. -i without -o didn't make much sense
->> but now it does and here is the new meaning".
+> While clever, that use of '[d]' seems unneccessarily obscure to me. Why
+> not just give a wildcard for "any subdirectory of me" and do:
 >
-> OK, I think the patch I sent elsewhere in the thread should be applied,
-> then, as it should make you, me, and Klaus happy.
+>  Makefile.depend
+>  **/Makefile.depend
+>
+> Since "**" is in common use in other systems, it's pretty clear (to me,
+> anyway, but then I am the one suggesting the syntax ;) ) what that
+> means.
 
-Thanks; will queue on top of b5227d8.
++1 to that.  I've often wished for Git to support the ** wildcard, not only in
+.gitignore but also in other places like .gitattributes and sparse checkout (if
+that feature ever gets completed anyways).  It's on my list of "git features I
+would work on if I ever had any free time."
+
+James
