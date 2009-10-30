@@ -1,73 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] clone: detect extra arguments
-Date: Fri, 30 Oct 2009 10:51:09 -0400
-Message-ID: <20091030145108.GA881@coredump.intra.peff.net>
-References: <20091029081030.GA11213@progeny.tock>
- <20091029160614.GB7622@sigill.intra.peff.net>
- <20091030111919.GA13242@progeny.tock>
- <20091030144525.GA22583@coredump.intra.peff.net>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [RFC PATCH v4 11/26] Move WebDAV HTTP push under remote-curl
+Date: Fri, 30 Oct 2009 23:02:39 +0800
+Message-ID: <be6fef0d0910300802t44801cb9n7a129905725f5c56@mail.gmail.com>
+References: <1256774448-7625-1-git-send-email-spearce@spearce.org>
+	 <1256774448-7625-12-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johan Herland <johan@herland.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 15:52:12 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Clemens Buchacher <drizzd@aon.at>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Mike Hommey <mh@glandium.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Oct 30 16:02:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3sp1-0006DL-09
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 15:51:23 +0100
+	id 1N3t01-0004PP-RP
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 16:02:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932287AbZJ3OvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 10:51:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932277AbZJ3OvM
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 10:51:12 -0400
-Received: from peff.net ([208.65.91.99]:48155 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932259AbZJ3OvM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 10:51:12 -0400
-Received: (qmail 361 invoked by uid 107); 30 Oct 2009 14:54:57 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 30 Oct 2009 10:54:57 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Oct 2009 10:51:09 -0400
-Content-Disposition: inline
-In-Reply-To: <20091030144525.GA22583@coredump.intra.peff.net>
+	id S932310AbZJ3PCf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Oct 2009 11:02:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932246AbZJ3PCf
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 11:02:35 -0400
+Received: from mail-iw0-f180.google.com ([209.85.223.180]:63159 "EHLO
+	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932210AbZJ3PCe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Oct 2009 11:02:34 -0400
+Received: by iwn10 with SMTP id 10so2176927iwn.4
+        for <git@vger.kernel.org>; Fri, 30 Oct 2009 08:02:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=n1Znci2pfHNKefOU4PeNmyGw7a9sSCBgDjPVgrOuOg4=;
+        b=BAeC8XIR/uXUaB2mlUEUM/S1X6MhgOahhW4iQ/zGc/Sy5GWVw+52xbQNXasI6PIVxF
+         VualtHLkD5DLQpFShrNQiRJYO4/GYV9kD/hblN5qPIgmneRzefVCCiMpDKOjuXIQaf71
+         KnOZhrUsxpELnM4MxFRdneTrcy+GolEP9WfjI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=EIC+VSPP8EkM4Ama/XFf7V5KJ/ik24R2a9LOqAvNiAli/FWImVHIQ8KRK0enJzeYMw
+         mG//qd1tLYyVWrU5UjPU09bMp7Zbse0cBbKCbweBRpl3C+/+Nx+9i6h+EA8/0IBnwJjf
+         tK2g8Rcplp5zzcdUNpwd44odueTmS/9VWTw8s=
+Received: by 10.231.10.16 with SMTP id n16mr374665ibn.24.1256914959503; Fri, 
+	30 Oct 2009 08:02:39 -0700 (PDT)
+In-Reply-To: <1256774448-7625-12-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131707>
 
-On Fri, Oct 30, 2009 at 10:45:25AM -0400, Jeff King wrote:
+Hi,
 
-> But looking at the usage message, there is some potential for cleanup.
+On Thu, Oct 29, 2009 at 8:00 AM, Shawn O. Pearce <spearce@spearce.org> =
+wrote:
+> =A0update http tests according to remote-curl capabilities
 
-Also, we should probably do this (I did it as a patch on master, though,
-as it is an independent fix):
+it would be great if you could mention the $ORIG_HEAD bit:
 
--- >8 --
-Subject: [PATCH] clone: fix --recursive usage message
+ o Use a variable ($ORIG_HEAD) instead of full SHA-1 name.
 
-Looks like a mistaken cut-and-paste in e7fed18a.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin-clone.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-clone.c b/builtin-clone.c
-index 5762a6f..436e8da 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -61,7 +61,7 @@ static struct option builtin_clone_options[] = {
- 	OPT_BOOLEAN('s', "shared", &option_shared,
- 		    "setup as shared repository"),
- 	OPT_BOOLEAN(0, "recursive", &option_recursive,
--		    "setup as shared repository"),
-+		    "initialize submodules in the clone"),
- 	OPT_STRING(0, "template", &option_template, "path",
- 		   "path the template repository"),
- 	OPT_STRING(0, "reference", &option_reference, "repo",
--- 
-1.6.5.1.143.g1dab74.dirty
+--=20
+Cheers,
+Ray Chuan
