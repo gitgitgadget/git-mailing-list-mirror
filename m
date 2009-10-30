@@ -1,76 +1,95 @@
-From: James Pickens <jepicken@gmail.com>
-Subject: Re: [PATCH] gitignore: root most patterns at the top-level directory
-Date: Fri, 30 Oct 2009 14:52:07 -0700
-Message-ID: <885649360910301452g7d7311d7w1133f5d4c98072dc@mail.gmail.com>
-References: <20091027011024.GA29361@sigio.peff.net>
-	 <7vmy3cys0f.fsf@alter.siamese.dyndns.org>
-	 <20091030182431.GA19901@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Changed timestamp behavior of options -c/-C/--amend
+Date: Fri, 30 Oct 2009 14:51:59 -0700
+Message-ID: <7v3a50k0sg.fsf@alter.siamese.dyndns.org>
+References: <1256931394-9338-1-git-send-email-erick.mattos@gmail.com>
+ <20091030202628.GA26513@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Erick Mattos <erick.mattos@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 30 22:52:17 2009
+X-From: git-owner@vger.kernel.org Fri Oct 30 22:52:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3zOK-00024h-96
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 22:52:16 +0100
+	id 1N3zOU-00029E-5a
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 22:52:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932920AbZJ3VwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 17:52:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932910AbZJ3VwE
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 17:52:04 -0400
-Received: from mail-iw0-f180.google.com ([209.85.223.180]:35144 "EHLO
-	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932903AbZJ3VwC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 17:52:02 -0400
-Received: by iwn10 with SMTP id 10so2452821iwn.4
-        for <git@vger.kernel.org>; Fri, 30 Oct 2009 14:52:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=tFGcBXHksfFtsc/px1fxTCAW9bPWtFVx918/5quZiU0=;
-        b=jAXkPric/gvY7jGdN0iAtRGmbVUG7H7EauGWqVxEeOSVj+fSU4gSu+KWV3WYx4X03I
-         HtZrcRFb6/YNr9XZ7MdVRVJ7ibHMUpus5hO/2vKobFyCkIDikHfy+4N8hUs/SqAP3qJd
-         c47M10epq0mVQ9WHoZ2LvHs6aNqTjvTD/RI4w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=e0a+Kkon+rYNeG8EyEMquOSipEudSTXW8foOyupY40VY9j3ksrFpesv8CulwLvJmXy
-         HJylnwi6+DWlkTo87CntP7PWprp416ePstTOtMKD2y7WWhcICmzeU+LVP53SnAyJSl3B
-         T9fGAactivuHWZVjtw5kbj6FVPUywqR09CQXI=
-Received: by 10.231.73.131 with SMTP id q3mr6337806ibj.6.1256939527408; Fri, 
-	30 Oct 2009 14:52:07 -0700 (PDT)
-In-Reply-To: <20091030182431.GA19901@coredump.intra.peff.net>
+	id S932925AbZJ3VwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 17:52:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932921AbZJ3VwJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 17:52:09 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35324 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932910AbZJ3VwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 17:52:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 00C9E8BD36;
+	Fri, 30 Oct 2009 17:52:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XYNLWTN3U7qxaSoqWxsHaUtPDvo=; b=MPLZZT
+	2JoHZk3PH78B3ddDllORz+b9kojYQWr2pMB5arVw97ROMfaNdIuBem5hlmo9b75J
+	gfEG2lz5qP/AgurR58YLzwhrpgjAoQ+A2eV91nLKsvTm9RdiQzwoz7L3kO5Aq+TG
+	VYS1jTXZ6M1x/BLOkCTLfO9lhOvP41+VbvTLA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MblxaqlPEw/9C5oLWFnItyanbYEwT6+w
+	MF7lN/U2E+2YuA1CStk96ZDHsYEBRCun5zDgdIEx3O1zyQlub8CW4923dOwL/hRc
+	u7UN3h5My6GQvwH/HUGOTEWkGlwH9Dcfm9/7xePW3jo2xCYZE8Pc2qXcdeM6wu6b
+	iEUxdJWycVQ=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C65488BD35;
+	Fri, 30 Oct 2009 17:52:06 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3DE648BD32; Fri, 30 Oct 2009
+ 17:52:00 -0400 (EDT)
+In-Reply-To: <20091030202628.GA26513@coredump.intra.peff.net> (Jeff King's
+ message of "Fri\, 30 Oct 2009 16\:26\:28 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 777A1BC2-C59E-11DE-9DEB-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131758>
 
-On Fri, Oct 30, 2009 at 11:24 AM, Jeff King <peff@peff.net> wrote:
->> If we do so, there is no need to change the current .gitignore entires.
->> You need to spell a concrete filename as a glob pattern that matches only
->> one path if you want the recursive behaviour.  E.g. if you have a Makefile
->> per subdirectory, each of which generates and includes Makefile.depend
->> file, you would write "Makefile.depen[d]" in the toplevel .gitignore file.
->
-> While clever, that use of '[d]' seems unneccessarily obscure to me. Why
-> not just give a wildcard for "any subdirectory of me" and do:
->
->  Makefile.depend
->  **/Makefile.depend
->
-> Since "**" is in common use in other systems, it's pretty clear (to me,
-> anyway, but then I am the one suggesting the syntax ;) ) what that
-> means.
+Jeff King <peff@peff.net> writes:
 
-+1 to that.  I've often wished for Git to support the ** wildcard, not only in
-.gitignore but also in other places like .gitattributes and sparse checkout (if
-that feature ever gets completed anyways).  It's on my list of "git features I
-would work on if I ever had any free time."
+> On Fri, Oct 30, 2009 at 05:36:34PM -0200, Erick Mattos wrote:
+>
+>> Anyway this update creates new options for choosing the source timestamp
+>> or a new one.  And set as default for -c option (editing one) to take a
+>> new timestamp and for -C option the source timestamp.  That is because
+>> we are normally using the source as template when we we are editing and
+>> as a correction when we are just copying it.
+>> 
+>> Those options are also useful for --amend option which is by default
+>> behaving the same.
+>
+> Thanks, this is something I have been wanting. I have always thought
+> that --amend should give a new timestamp, so that while I'm fixing up
+> commits via "rebase -i" the commits end up in correct date order.
+>
+> Your patch seems to always use the old timestamp for -C, the new one for
+> -c, and the old one for --amend. I would want it always for --amend.
+>
+> I talked with Shawn about this at the GitTogether; his counter-argument
+> was that many people in maintainer roles will be amending or rebasing
+> just to do little things, like marking Signed-off-by, and that the date
+> should remain the same.
 
-James
+Yeah, author timestamp shouldn't be molested for that kind of thing,
+although we should update commit timestamp.
+
+Yuck, was this about author timestamp?  Please then disregard my previous
+response about the default.  I do not think there is strong reason to
+change the default for any of them at all, even though giving people to
+update what they committed with --no-reuse-timestamp would be a good
+addition.
+
+I also suspect that comparing committer and author name may give us a good
+way to tweak the default in a more user friendly way.
