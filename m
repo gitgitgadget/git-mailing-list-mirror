@@ -1,115 +1,71 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 12/19] 1/2: Add Python support library for CVS remote helper
-Date: Fri, 30 Oct 2009 09:33:35 +0100
-Message-ID: <200910300933.35567.johan@herland.net>
-References: <1256839287-19016-1-git-send-email-srabbelier@gmail.com>
- <1256839287-19016-13-git-send-email-srabbelier@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: keeping track of where a patch begins
+Date: Fri, 30 Oct 2009 09:37:18 +0100
+Message-ID: <200910300937.22949.trast@student.ethz.ch>
+References: <3a69fa7c0910210745r311cf18xf966f5c63650cde6@mail.gmail.com> <200910221027.32739.trast@student.ethz.ch> <4AEA94EB.8080304@obry.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7BIT
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	David Aguilar <davvid@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 09:33:46 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>, E R <pc88mxer@gmail.com>,
+	<git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Fri Oct 30 09:38:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3mvY-0000yG-HT
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 09:33:44 +0100
+	id 1N3n0Q-0003C1-0N
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 09:38:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756143AbZJ3Ide (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 04:33:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755482AbZJ3Idd
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 04:33:33 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:33492 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1755263AbZJ3Idc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Oct 2009 04:33:32 -0400
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KSB000P8JS1KG30@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Fri, 30 Oct 2009 09:33:37 +0100 (MET)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KSB0062VJRZR600@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 30 Oct 2009 09:33:37 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.10.30.82124
-User-Agent: KMail/1.12.2 (Linux/2.6.30-ARCH; KDE/4.3.2; x86_64; ; )
-In-reply-to: <1256839287-19016-13-git-send-email-srabbelier@gmail.com>
+	id S1756257AbZJ3IiY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Oct 2009 04:38:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756196AbZJ3IiY
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 04:38:24 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:18779 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755491AbZJ3IiX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Oct 2009 04:38:23 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Fri, 30 Oct
+ 2009 09:38:26 +0100
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Fri, 30 Oct
+ 2009 09:38:05 +0100
+User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
+In-Reply-To: <4AEA94EB.8080304@obry.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131681>
 
-On Thursday 29 October 2009, Sverre Rabbelier wrote:
-> From: Johan Herland <johan@herland.net>
-> 
-> This patch introduces parts of a Python package called "git_remote_cvs"
-> containing the building blocks of the CVS remote helper.
-> The CVS remote helper itself is NOT part of this patch.
-> 
-> This patch has been improved by the following contributions:
-> - David Aguilar: Lots of Python coding style fixes
-> 
-> Cc: David Aguilar <davvid@gmail.com>
-> Signed-off-by: Johan Herland <johan@herland.net>
-> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
-> ---
-> 
-> 	This has my patch to util.py squashed in.
+Pascal Obry wrote:
+>=20
+> Le 22/10/2009 10:27, Thomas Rast a =E9crit :
+> > I think this not only changes the model of branches, but also commi=
+ts,
+> > to some extent.  Currently, commit have no intrinsic branch
+> > membership
+[...]
+> To me there is case where it is important to know which are the commi=
+ts=20
+> done on a topic branch for example. When working on multiple topic it=
+ is=20
+> difficult to remember which commits have been done on this specific=20
+> branch. This is needed to rebase onto:
+>=20
+>     $ git rebase --onto somebranch <topic_base> <topic_head>
+>=20
+> A common idiom, but one as to think hard (& right) to properly get th=
+e=20
+> topic_base today.
 
-Why? Or: why that one, and not the others? Also, you might want to mention 
-your contribution in the commit message itself.
+But how frequently do your topics start on other topics?  Otherwise
+they will start on an integration or maint branch, and in the git.git
+model where each integration branch is contained in the next "less
+stable" one, that means you can just specify 'pu' or equivalent.
 
-> diff --git a/git_remote_cvs/util.py b/git_remote_cvs/util.py
-> new file mode 100644
-> index 0000000..d3ca487
-> --- /dev/null
-> +++ b/git_remote_cvs/util.py
-> @@ -0,0 +1,194 @@
-[snip]
-> +
-> +def notify(msg, *args):
-> +	"""Print a message to stderr."""
-> +	print >> sys.stderr, msg % args
-> +
-> +def debug (msg, *args):
-> +    """Print a debug message to stderr when DEBUG is enabled."""
-> +    if DEBUG:
-> +        print >> sys.stderr, msg % args
-> +
-> +def error (msg, *args):
-> +    """Print an error message to stderr."""
-> +    print >> sys.stderr, "ERROR:", msg % args
-> +
-> +def warn(msg, *args):
-> +	"""Print a warning message to stderr."""
-> +	print >> sys.stderr, "warning:", msg % args
-> +
-> +def die (msg, *args):
-> +    """Print as error message to stderr and exit the program."""
-> +    error(msg, *args)
-> +    sys.exit(1)
-> +
-> +
-
-It seems the two functions you add (notify() and warn()) have a different 
-indentation than the existing code (which uses 4 spaces). Please fix.
-
-(When I first introduced these Python patches, there was a discussion on the 
-differences in indentation/style between the Git C code, and Python code, 
-and it was decided to follow the Python conventions, to make the code more 
-inviting to the Python community.)
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
