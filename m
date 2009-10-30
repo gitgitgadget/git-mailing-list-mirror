@@ -1,78 +1,124 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [RFC PATCH v4 11/26] Move WebDAV HTTP push under remote-curl
-Date: Sat, 31 Oct 2009 07:20:03 +0800
-Message-ID: <be6fef0d0910301620x2e80864ft67b7d067b00005f2@mail.gmail.com>
-References: <1256774448-7625-1-git-send-email-spearce@spearce.org>
-	 <1256774448-7625-12-git-send-email-spearce@spearce.org>
-	 <be6fef0d0910300910me43c77fue6dcb6034dd0ea5b@mail.gmail.com>
-	 <20091030190655.GA7442@localhost>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: finding the merge of two or more commits
+Date: Fri, 30 Oct 2009 16:38:12 -0700 (PDT)
+Message-ID: <m3iqdwcv17.fsf@localhost.localdomain>
+References: <3a69fa7c0910291412l439f7f61vd3b55a77cd7e10b5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Mike Hommey <mh@glandium.org>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sat Oct 31 00:20:11 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: E R <pc88mxer@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 31 00:40:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N40lO-0000QU-Rv
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 00:20:11 +0100
+	id 1N4152-0006zx-8o
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 00:40:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933040AbZJ3XT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 19:19:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933036AbZJ3XT7
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 19:19:59 -0400
-Received: from mail-iw0-f180.google.com ([209.85.223.180]:45856 "EHLO
-	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933028AbZJ3XT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 19:19:59 -0400
-Received: by iwn10 with SMTP id 10so2492141iwn.4
-        for <git@vger.kernel.org>; Fri, 30 Oct 2009 16:20:04 -0700 (PDT)
+	id S933072AbZJ3XiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 19:38:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933060AbZJ3XiL
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 19:38:11 -0400
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:55952 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933058AbZJ3XiK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 19:38:10 -0400
+Received: by bwz27 with SMTP id 27so4179461bwz.21
+        for <git@vger.kernel.org>; Fri, 30 Oct 2009 16:38:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=AQceOikgvxvXmFaQ2BnwnvtnLV+dJH+B4TMX15GRUEs=;
-        b=gvbjwa3UV3GLgb78RZ4p/GAAnWQCVpWaJxH7DJzNGfhK6MQXAIG0vhOsN6zSBPazB0
-         LJFApGQ2truE5yWdKLwwkqWNnRWFs+6dQQw6vH0djeTqSyhJgDta9UN18cLOYN6Tg8ui
-         BmxMpW7VBFM0fAzqLajYlTdimCr388x2WOGAc=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=foWqbiijJaQ0H3v1P5i9WnKCz0KnkKAJABrsEDkHwF0=;
+        b=GYP5eoY68N4hbJLpGjxZWEPXROFMzIJwwUPx08P9Bl4xho3fkJq/rk1gbxKh2LgQr0
+         LsVc/jcsCEL+Avehdv3OGslIutuVfgFRfm4wyvWSO8Ve8AD9/LLimMTLn5AAh3ehFCJC
+         pA7IvxEHIRWmAoDpXAJuoTdCOxbV/dnkPs0fw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=i2r1qzLa+WsQ/bj+L2W9C3D0cLf8CQ1Ozc1UP4MmuZBCWxUMiiPAbtU3bzA637RZHK
-         lQTp2RmMeeh6zm5ahESjWcH3VlfER5Qm6kWZHKLlG1Kty67uynBDCiZXNm7mcQKUU1Tt
-         8cES2+rUPyH1pR/yEMBm/A/VftsXZ4DbuA9P0=
-Received: by 10.231.125.28 with SMTP id w28mr4733198ibr.50.1256944803641; Fri, 
-	30 Oct 2009 16:20:03 -0700 (PDT)
-In-Reply-To: <20091030190655.GA7442@localhost>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=R9R8EmgiRedhwgqXlVxlYzT7sZCzawDZ8g9Q/gZhdimJvrKY+k7Kzb43lXTKUR8HPI
+         RBs2dpCwKW7xjxfMHq5S64fgQe6hJ4hR3/W27EyxZYrrKWzZVyfC4sMxdXZKaXgVDSAZ
+         at0npv4r/EhmqA5ykf0CNiZ/0RRET8NubB4uI=
+Received: by 10.103.76.34 with SMTP id d34mr921819mul.31.1256945893324;
+        Fri, 30 Oct 2009 16:38:13 -0700 (PDT)
+Received: from localhost.localdomain (abwo144.neoplus.adsl.tpnet.pl [83.8.238.144])
+        by mx.google.com with ESMTPS id 23sm1438835mum.14.2009.10.30.16.38.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 30 Oct 2009 16:38:12 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n9UNcDl0012116;
+	Sat, 31 Oct 2009 00:38:13 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n9UNcCqn012113;
+	Sat, 31 Oct 2009 00:38:12 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <3a69fa7c0910291412l439f7f61vd3b55a77cd7e10b5@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131777>
 
-Hi,
+E R <pc88mxer@gmail.com> writes:
 
-On Sat, Oct 31, 2009 at 3:06 AM, Clemens Buchacher <drizzd@aon.at> wrote:
-> How can the changed result of one test suddenly make another test redundant?
-> The two are testing different things.
->[snip]
-> No, 'git update-ref' correctly reverts the earlier push, so we can push again
-> and 'git update-server-info' is therefore necessary for the test to work
-> independently of its predecessors result.
+> Given two commits c1 and c2, is it possible to ask git if there are
+> any commits in the repository that were created by either a sequence
+> of commands like:
+> 
+> git checkout c1
+> git merge c2
+> 
+> or:
+> 
+> git checkout c2
+> git merge c1
+> 
+> with any required conflict resolution?
+> 
+> That is, I don't want to merge c1 and c2 myself, but I want to know if
+> someone else has merged c1 and c2, performed any conflict resolution
+> and committed the result.
 
-I said "redundant" because in the first push, we've already 1) updated
-/refs/heads/master (which is what the 'git update-ref' here does) and
-2) updated /info/refs (which is what the 'git update-server-info' does
-and 3) pushed changes. To me, the "unpacked refs" test reads as a
-trivial test of http-push's ability to update /refs/heads/master and
-/info/refs (something we've already done in the first "packed refs"
-test), rather than its pushing per se. Is it your intention to keep
-the "unpacked refs" test due to the former?
+I assume that commits c1 and c2 are not one ancestor of the other (are
+not in fast-forward relation).
+
+Translating your question into question about DAG of revisions, you
+want to check if there is branch for which both c1 and c2 are
+reachable from:
+
+  c1sha=$(git rev-parse c1)
+  c2sha=$(git rev-parse c2)
+  git for-each-ref --format="%(refname)" refs/heads/ |
+  while read refname
+  do 
+      b1=$(git merge-base c1 $refname)
+      b2=$(git merge-base c2 $refname)
+      if [ "$b1" = "$c1sha" -a "$b2" = "$c2sha" ]
+      then
+          print ${refname#refs/heads/}
+      fi
+  done
+
+Instead of comparing git-merge-base with SHA-1 of c1 and c2
+respoectively, you can count commits:
+
+  git for-each-ref --format="%(refname)" refs/heads/ |
+  while read refname
+  do 
+      count1=$(git rev-list c1..$refname | wc -l)
+      count2=$(git rev-list c2..$refname | wc -l)
+      if [ "$count1" > 0  -a  "$count2" > 0 ]
+      then
+          print ${refname#refs/heads/}
+      fi
+  done
+
+Not tested!
 
 -- 
-Cheers,
-Ray Chuan
+Jakub Narebski
+Poland
+ShadeHawk on #git
