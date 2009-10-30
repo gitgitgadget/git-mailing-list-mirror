@@ -1,95 +1,154 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] More precise description of 'git describe --abbrev'
-Date: Fri, 30 Oct 2009 12:00:33 -0700
-Message-ID: <7viqdwlnam.fsf@alter.siamese.dyndns.org>
-References: <b48ea8a00910291438r8b66a0fq9e821393ecfff0bf@mail.gmail.com>
- <7vws2d4y3d.fsf@alter.siamese.dyndns.org>
- <b48ea8a00910300101i38f2e4a8q2c2e014d2df1a150@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug#553296: gitignore broken completely
+Date: Fri, 30 Oct 2009 15:05:52 -0400
+Message-ID: <20091030190552.GA3528@coredump.intra.peff.net>
+References: <20091029233458.GA32764@ikki.ethgen.de>
+ <20091030162857.26604.qmail@67b7e3b41a17c8.315fe32.mid.smarden.org>
+ <20091030165903.GA10671@ikki.ethgen.de>
+ <20091030173838.GB18583@coredump.intra.peff.net>
+ <20091030182331.GC10671@ikki.ethgen.de>
+ <20091030184155.GC19901@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Gisle Aas <gisle@aas.no>
-X-From: git-owner@vger.kernel.org Fri Oct 30 20:00:51 2009
+Content-Type: text/plain; charset=utf-8
+Cc: 553296@bugs.debian.org, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Klaus Ethgen <Klaus@Ethgen.de>
+X-From: git-owner@vger.kernel.org Fri Oct 30 20:07:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3wiR-0003zX-2E
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 20:00:51 +0100
+	id 1N3wp3-000717-BU
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 20:07:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757351AbZJ3TAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 15:00:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757349AbZJ3TAl
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 15:00:41 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56954 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757320AbZJ3TAk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 15:00:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C34DB8CDD0;
-	Fri, 30 Oct 2009 15:00:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xCqWpDZAxQOpsouJ2DrJTAtsr2k=; b=xxXlPS
-	wmgSE8n8Mhg5NAy8qeadS+OabpLDcCliAiuuhJyyQMG1Dbs2LxjFat+IohRynINc
-	mNOHJlOC5Z0Ithb48iwpzxdMWo6wNXZ6P51VRRbIgkYa+nyyLW6ZRTjVNrNPlgxM
-	zV3aIlrl7EZPIjdOVgxiBGrvT+kPc0j75c04o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gU4JydiLETkHUvC5VrsxV6JdZoPnyyjt
-	vkDusdKjVOKqQx32UBC/fnAE1pHyrD41eorIonipavDe/19sRNBQOdjTxviToUF9
-	GXjkP32Bt6CXVb7esaOsYDOnhmMVjCxKJ3vNdaLo+/trtJDNOiAgS3cqxEOVaFmy
-	i/6+MGuwbWg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A3FE78CDCF;
-	Fri, 30 Oct 2009 15:00:42 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id ABE3C8CDCD; Fri, 30 Oct 2009
- 15:00:35 -0400 (EDT)
-In-Reply-To: <b48ea8a00910300101i38f2e4a8q2c2e014d2df1a150@mail.gmail.com>
- (Gisle Aas's message of "Fri\, 30 Oct 2009 09\:01\:38 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 85A5B822-C586-11DE-8CB7-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1757339AbZJ3TF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 15:05:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757328AbZJ3TF5
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 15:05:57 -0400
+Received: from peff.net ([208.65.91.99]:54057 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756350AbZJ3TF4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 15:05:56 -0400
+Received: (qmail 2290 invoked by uid 107); 30 Oct 2009 19:09:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 30 Oct 2009 15:09:40 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Oct 2009 15:05:52 -0400
+Content-Disposition: inline
+In-Reply-To: <20091030184155.GC19901@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131730>
 
-Gisle Aas <gisle@aas.no> writes:
+On Fri, Oct 30, 2009 at 02:41:55PM -0400, Jeff King wrote:
 
-> On Thu, Oct 29, 2009 at 23:47, Junio C Hamano <gitster@pobox.com> wrote:
->> Gisle Aas <gisle@aas.no> writes:
->>
->>> Also make the examples show what 'git describe' actually outputs
->>> currently.  I guess the default --abbrev value has been changed from 4
->>> to 7 at some point.
->>
->> Some are good changes, but I do not think the example with --abbrev=4 is.
->>
->> $ git describe 975bf9cf5ad5d440f98f464ae8124609a4835ce1
->> v1.3.2-216-g975bf9c
->> $ git describe 975b31dc6e12fba8f7b067ddbe32230995e05400
->> v1.0.0-21-g975b31d
->>
->> Next time somebody adds a new object whose name happens to begin with
->> 975b3 you would need to update the example output.
->
-> Yeah, I know, but I don't think that's a big deal.  So do you want an
-> updated patch for that?  We could either simply remove this example or
-> make it use --abbrev=10 or something like that.
+> >    6. Revert the patch and rework it so that it will only have effect if
+> >       there is no -i option on the command line. (That is similiar to a
+> >       mix of 3 and 4.)
+> 
+> Yeah, that would actually be the least invasive change, and would keep
+> "-i" just as it is. If we do anything except a simple, I think your (6)
+> makes the most sense.
+> 
+> Let me see if I can make a patch.
 
-Not touching the example would be the simplest.
+Here it is. I think this is the right thing to do. Junio?
 
-Adding an explanation like this so that nobody will be tempted to "fix"
-the example would be the best, I think.
+-- >8 --
+Subject: [PATCH] ls-files: unbreak "ls-files -i"
 
-     [torvalds@g5 git]$ git describe --all --abbrev=4 v1.0.5^2
-     tags/v1.0.0-21-g975b
+Commit b5227d8 changed the behavior of "ls-files" with
+respect to includes, but accidentally broke the "-i" option
+The original behavior was:
 
-     Note that the suffix you get if you type this command today may be
-     longer than what Linus saw above when he ran this command, as your
-     git repository may have new commits whose object names begin with
-     975b that did not exist back then, and "-g975b" suffix alone is not
-     sufficient to disambiguate these commits.
+  1. if no "-i" is given, cull all results according to --exclude*
+  2. if "-i" is given, show the inverse of (1)
+
+The broken behavior was:
+
+  1. if no "-i" is given:
+     a. for "-o", cull results according to --exclude*
+     b. for index files, always show all
+  2. if "-i" is given:
+     a. for "-o", shows the inverse of (1a)
+     b. for index files, always show all
+
+The fixed behavior keeps the new (1b) behavior introduced
+by b5227d8, but fixes the (2b) behavior to show only ignored
+files, not all files.
+
+This patch also tweaks the documentation. The original text
+was somewhat obscure in the first place, but it is also now
+inaccurate (the relationship between (1b) and (2b) is not
+quite a "reverse").
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-ls-files.txt |    6 ++++--
+ builtin-ls-files.c             |    8 ++++++++
+ t/t3003-ls-files-exclude.sh    |    8 ++++++++
+ 3 files changed, 20 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 021066e..625723e 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -48,8 +48,10 @@ OPTIONS
+ 
+ -i::
+ --ignored::
+-	Show ignored files in the output.
+-	Note that this also reverses any exclude list present.
++	Show only ignored files in the output. When showing files in the
++	index, print only those matched by an exclude pattern. When
++	showing "other" files, show only those matched by an exclude
++	pattern.
+ 
+ -s::
+ --stage::
+diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+index c5c0407..c9a03e5 100644
+--- a/builtin-ls-files.c
++++ b/builtin-ls-files.c
+@@ -170,6 +170,10 @@ static void show_files(struct dir_struct *dir, const char *prefix)
+ 	if (show_cached | show_stage) {
+ 		for (i = 0; i < active_nr; i++) {
+ 			struct cache_entry *ce = active_cache[i];
++			int dtype = ce_to_dtype(ce);
++			if (dir->flags & DIR_SHOW_IGNORED &&
++			    !excluded(dir, ce->name, &dtype))
++				continue;
+ 			if (show_unmerged && !ce_stage(ce))
+ 				continue;
+ 			if (ce->ce_flags & CE_UPDATE)
+@@ -182,6 +186,10 @@ static void show_files(struct dir_struct *dir, const char *prefix)
+ 			struct cache_entry *ce = active_cache[i];
+ 			struct stat st;
+ 			int err;
++			int dtype = ce_to_dtype(ce);
++			if (dir->flags & DIR_SHOW_IGNORED &&
++			    !excluded(dir, ce->name, &dtype))
++				continue;
+ 			if (ce->ce_flags & CE_UPDATE)
+ 				continue;
+ 			err = lstat(ce->name, &st);
+diff --git a/t/t3003-ls-files-exclude.sh b/t/t3003-ls-files-exclude.sh
+index fc1e379..d5ec333 100755
+--- a/t/t3003-ls-files-exclude.sh
++++ b/t/t3003-ls-files-exclude.sh
+@@ -29,4 +29,12 @@ test_expect_success 'add file to gitignore' '
+ '
+ check_all_output
+ 
++test_expect_success 'ls-files -i lists only tracked-but-ignored files' '
++	echo content >other-file &&
++	git add other-file &&
++	echo file >expect &&
++	git ls-files -i --exclude-standard >output &&
++	test_cmp expect output
++'
++
+ test_done
+-- 
+1.6.5.2.224.g22719.dirty
