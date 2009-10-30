@@ -1,86 +1,92 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [RFC PATCH v4 11/26] Move WebDAV HTTP push under remote-curl
-Date: Fri, 30 Oct 2009 20:06:55 +0100
-Message-ID: <20091030190655.GA7442@localhost>
-References: <1256774448-7625-1-git-send-email-spearce@spearce.org> <1256774448-7625-12-git-send-email-spearce@spearce.org> <be6fef0d0910300910me43c77fue6dcb6034dd0ea5b@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC PATCH v4 03/26] pkt-line: Make packet_read_line easier to
+	debug
+Date: Fri, 30 Oct 2009 12:12:40 -0700
+Message-ID: <20091030191239.GF10505@spearce.org>
+References: <1256774448-7625-1-git-send-email-spearce@spearce.org> <1256774448-7625-4-git-send-email-spearce@spearce.org> <7vhbtidgmp.fsf@alter.siamese.dyndns.org> <20091029151152.GX10505@spearce.org> <7v1vkm6id9.fsf@alter.siamese.dyndns.org> <20091029215829.GD10505@spearce.org> <20091030175741.GC18583@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Mike Hommey <mh@glandium.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 20:07:52 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 30 20:12:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3wp3-000717-Rw
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 20:07:42 +0100
+	id 1N3wtx-0001Jd-PH
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 20:12:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757353AbZJ3TH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 15:07:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757351AbZJ3TH3
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 15:07:29 -0400
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:43148 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757349AbZJ3TH2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 15:07:28 -0400
-Received: by ewy28 with SMTP id 28so3334828ewy.18
-        for <git@vger.kernel.org>; Fri, 30 Oct 2009 12:07:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=JMW51qZ+7m3x7tqjF+zbvoCZ20my1m1VHnitBfGpwUI=;
-        b=b4ltzPW63/d316J1aIr28WabRPECEBWuGwbAnpYCWdTWKwPLDIUrDnTxEP9TMa5O+l
-         jQEd20Uyt1xUr60e0oMxIXm752lvXbpCw/UmUgqqmJscsDkYHmSvlByd9NbLfWA8mNwT
-         w+S8JQjpxwiHtj5d8IKRrQa89jX2xPEYkg6IY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=MAfa3WPNB8I7PxezGUl7uh8u/B37MhF88al//jNwx0BiEgnNQ+MBWvm9j0JFL7Usu5
-         VEff6yHSj+MT1F5GB3BmuQeMg8p2SPnqfTzhkNrlVmpEyv5ODgrcRwMXsc/Ygq77V/+P
-         qTSaFstrU8gXxu6oogckNcrx+lbTZfYlzw6BE=
-Received: by 10.211.154.16 with SMTP id g16mr1287730ebo.19.1256929652388;
-        Fri, 30 Oct 2009 12:07:32 -0700 (PDT)
-Received: from darc.lan ([80.123.242.182])
-        by mx.google.com with ESMTPS id 7sm7964395ewy.6.2009.10.30.12.07.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 30 Oct 2009 12:07:19 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1N3woJ-0002MJ-SB; Fri, 30 Oct 2009 20:06:55 +0100
+	id S932834AbZJ3TMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 15:12:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757349AbZJ3TMf
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 15:12:35 -0400
+Received: from george.spearce.org ([209.20.77.23]:57219 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757339AbZJ3TMf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 15:12:35 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 174D5381FF; Fri, 30 Oct 2009 19:12:40 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <be6fef0d0910300910me43c77fue6dcb6034dd0ea5b@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <20091030175741.GC18583@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131732>
 
-On Sat, Oct 31, 2009 at 12:10:29AM +0800, Tay Ray Chuan wrote:
+Jeff King <peff@peff.net> wrote:
+> On Thu, Oct 29, 2009 at 02:58:29PM -0700, Shawn O. Pearce wrote:
+> > Junio C Hamano <gitster@pobox.com> wrote:
+> > > I knew and understood all of what you just said.  static linelen[] is not
+> > > about stack allocation.  It's about letting the compiler initialize it to
+> > > five NULs so that you do not have to assign NUL to its fifth place before
+> > > you die.  This removes one added line from your patch.
+> 
+> I am just a bystander, so maybe my opinion is not worth anything, but
+> personally I think you are obfuscating the code to save a single line.
 
-> Clemens, the following addresses your non-desire to remove the
-> "unpacked refs" test in your earlier email
-> <20091025161630.GB8532@localhost>.
+Yup, me too.  But I'm also willing to do what I need to get my
+patches included in git.git.  Smart HTTP is something a lot of people
+have been waiting for.  If the maintainer wants the bikeshed to be
+a particular shade of red, I'll paint it that way.
 
-> Now that the first push in "push to remote repository with packed
-> refs" succeeds, the "unpacked refs" test is redundant.
+> When I see a static variable, I assume it is because the value should be
+> saved from invocation to invocation, and now I will spend time wondering
+> why that would be the case here.
 
-How can the changed result of one test suddenly make another test redundant?
-The two are testing different things.
+Me too.  I also can't grok the code I just wrote, for the same
+reason, it just reads wrong.  But who am I to argue with the guy
+who is most likely going to be the one who needs to deal with it
+in the future?
+ 
+> If you really just want to initialize to zero, using
+> 
+>   char linelen[5] = { 0 };
 
-> Since http-push
-> in that first test already updated /refs/heads/master and /info/refs,
-> 'git update-ref' incorrectly reverts the earlier push, and 'git
-> update-server-info' is redundant.
+Bleh, I find that has hard to grok as what we have now.  Perhaps my
+understanding of the relevant standards is incomplete, but I'd read
+that as linelen[0] = 0, but the other 4 positions are undefined
+and may be not be initialized.
+ 
+> I think it would be even more clear to leave it as
+> 
+>   die("protocol error: bad line length character: %.4s", linelen);
 
-No, 'git update-ref' correctly reverts the earlier push, so we can push again
-and 'git update-server-info' is therefore necessary for the test to work
-independently of its predecessors result.
+I actually considered this one, but again I wasn't clear what would
+happen in the standard C library when we fed a string that wasn't
+actually NUL terminated.  Is the library permitted to call strlen()
+before formatting?  If so strlen() could SIGSEGV if we are unlucky
+and no NUL is present between our string and the end of the assigned
+memory region.
 
-Clemens
+To me, my original version was the most clear, to me and anyone
+else who could ever possibly come by to read it.  The "one extra
+line of code" is also only in an error condition which never occurs
+(but did once due to a bug in the HTTP code, which is why I added
+this patch to my series, to help debug it).  Its not like this is
+a performance sensitive section of git that Linus is going to come
+back and overhaul.
+
+-- 
+Shawn.
