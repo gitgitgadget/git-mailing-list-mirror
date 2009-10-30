@@ -1,85 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mergetool--lib: add p4merge as a pre-configured
- mergetool option
-Date: Fri, 30 Oct 2009 11:54:47 -0700
-Message-ID: <7vmy38lnk8.fsf@alter.siamese.dyndns.org>
-References: <d411cc4a0910271536u5817802at43f7477dd8ccabc7@mail.gmail.com>
- <20091027230043.GA11607@hashpling.org> <20091028090022.GA90780@gmail.com>
- <d411cc4a0910280837h52596089je9ab4d03383d43cc@mail.gmail.com>
- <d411cc4a0910281439v3388c243v42b3700f73744623@mail.gmail.com>
- <20091030174421.GA21486@hashpling.org>
+Subject: Re: [PATCH] More precise description of 'git describe --abbrev'
+Date: Fri, 30 Oct 2009 12:00:33 -0700
+Message-ID: <7viqdwlnam.fsf@alter.siamese.dyndns.org>
+References: <b48ea8a00910291438r8b66a0fq9e821393ecfff0bf@mail.gmail.com>
+ <7vws2d4y3d.fsf@alter.siamese.dyndns.org>
+ <b48ea8a00910300101i38f2e4a8q2c2e014d2df1a150@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Scott Chacon <schacon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	git list <git@vger.kernel.org>,
-	David Aguilar <davvid@gmail.com>
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Fri Oct 30 19:55:11 2009
+Cc: git@vger.kernel.org
+To: Gisle Aas <gisle@aas.no>
+X-From: git-owner@vger.kernel.org Fri Oct 30 20:00:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3wcw-0001Z3-SF
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 19:55:11 +0100
+	id 1N3wiR-0003zX-2E
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 20:00:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757328AbZJ3Sy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 14:54:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757326AbZJ3Sy7
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 14:54:59 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48351 "EHLO
+	id S1757351AbZJ3TAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 15:00:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757349AbZJ3TAl
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 15:00:41 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56954 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757320AbZJ3Sy6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 14:54:58 -0400
+	with ESMTP id S1757320AbZJ3TAk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 15:00:40 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D8606D0CC;
-	Fri, 30 Oct 2009 14:55:01 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C34DB8CDD0;
+	Fri, 30 Oct 2009 15:00:44 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Vmo4T6NFJV3hqRM0nlzB7z+m2AM=; b=jUJSlX
-	/mQ2MjbF1Rs1B/6vR9D0MysWTvmOAfg759lbhQpCx+6b7PCN75Gsm0ZGK4uNm+uP
-	9USFCXoKrAN0LhugLmbKtY1I9fdHCbBkzTEkwYUKcFC8GBhplem7LFycGIAXKKnC
-	1+l6qvTCCb3KaRV4hO6vgoaJnu5l/lo5lDkXs=
+	:content-type; s=sasl; bh=xCqWpDZAxQOpsouJ2DrJTAtsr2k=; b=xxXlPS
+	wmgSE8n8Mhg5NAy8qeadS+OabpLDcCliAiuuhJyyQMG1Dbs2LxjFat+IohRynINc
+	mNOHJlOC5Z0Ithb48iwpzxdMWo6wNXZ6P51VRRbIgkYa+nyyLW6ZRTjVNrNPlgxM
+	zV3aIlrl7EZPIjdOVgxiBGrvT+kPc0j75c04o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tHFwt2yUq5cGzNiOjiM8uUrANpn+Spow
-	roJI7CTQ1xNcpVBScKucFPCQBgQB0AGBuXK3cKOO0ifRxLpJLSzdUqUcOLioTq4c
-	5XAEOf4pS2Ywzt78KELf6hY6RdA4GCxmGfHQEj8ykIS+KLxqd8lWnG/H3jDlZ+qi
-	PrXRqmXPKtg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 33DC86D0C4;
-	Fri, 30 Oct 2009 14:54:56 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=gU4JydiLETkHUvC5VrsxV6JdZoPnyyjt
+	vkDusdKjVOKqQx32UBC/fnAE1pHyrD41eorIonipavDe/19sRNBQOdjTxviToUF9
+	GXjkP32Bt6CXVb7esaOsYDOnhmMVjCxKJ3vNdaLo+/trtJDNOiAgS3cqxEOVaFmy
+	i/6+MGuwbWg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A3FE78CDCF;
+	Fri, 30 Oct 2009 15:00:42 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1A37F6D0C2; Fri, 30 Oct
- 2009 14:54:48 -0400 (EDT)
-In-Reply-To: <20091030174421.GA21486@hashpling.org> (Charles Bailey's message
- of "Fri\, 30 Oct 2009 17\:44\:21 +0000")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id ABE3C8CDCD; Fri, 30 Oct 2009
+ 15:00:35 -0400 (EDT)
+In-Reply-To: <b48ea8a00910300101i38f2e4a8q2c2e014d2df1a150@mail.gmail.com>
+ (Gisle Aas's message of "Fri\, 30 Oct 2009 09\:01\:38 +0100")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B727BE32-C585-11DE-81F2-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 85A5B822-C586-11DE-8CB7-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131729>
 
-Charles Bailey <charles@hashpling.org> writes:
+Gisle Aas <gisle@aas.no> writes:
 
-> On Wed, Oct 28, 2009 at 02:39:32PM -0700, Scott Chacon wrote:
->> p4merge is now a built-in diff/merge tool.
->> This adds p4merge to git-completion and updates
->> the documentation to mention p4merge.
->> 
->> Signed-Off-By: Scott Chacon <schacon@gmail.com>
->> ---
+> On Thu, Oct 29, 2009 at 23:47, Junio C Hamano <gitster@pobox.com> wrote:
+>> Gisle Aas <gisle@aas.no> writes:
+>>
+>>> Also make the examples show what 'git describe' actually outputs
+>>> currently.  I guess the default --abbrev value has been changed from 4
+>>> to 7 at some point.
+>>
+>> Some are good changes, but I do not think the example with --abbrev=4 is.
+>>
+>> $ git describe 975bf9cf5ad5d440f98f464ae8124609a4835ce1
+>> v1.3.2-216-g975bf9c
+>> $ git describe 975b31dc6e12fba8f7b067ddbe32230995e05400
+>> v1.0.0-21-g975b31d
+>>
+>> Next time somebody adds a new object whose name happens to begin with
+>> 975b3 you would need to update the example output.
 >
-> Acked-by: Charles Bailey <charles@hashpling.org>
->
-> I'm aware that we haven't reached full agreement on the best way to
-> make p4merge + git as Mac OS X friendly as possible, but Jay said that
-> this patch is 'good enough' and I agree. If we go with this for now,
-> we're not closing the door to further improvements.
+> Yeah, I know, but I don't think that's a big deal.  So do you want an
+> updated patch for that?  We could either simply remove this example or
+> make it use --abbrev=10 or something like that.
 
-Will queue; the peculiarity of MacOS X may be annoying, but the annoyance
-is not limited to the topic of adding p4merge to this codepath.
+Not touching the example would be the simplest.
+
+Adding an explanation like this so that nobody will be tempted to "fix"
+the example would be the best, I think.
+
+     [torvalds@g5 git]$ git describe --all --abbrev=4 v1.0.5^2
+     tags/v1.0.0-21-g975b
+
+     Note that the suffix you get if you type this command today may be
+     longer than what Linus saw above when he ran this command, as your
+     git repository may have new commits whose object names begin with
+     975b that did not exist back then, and "-g975b" suffix alone is not
+     sufficient to disambiguate these commits.
