@@ -1,154 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug#553296: gitignore broken completely
-Date: Fri, 30 Oct 2009 15:05:52 -0400
-Message-ID: <20091030190552.GA3528@coredump.intra.peff.net>
-References: <20091029233458.GA32764@ikki.ethgen.de>
- <20091030162857.26604.qmail@67b7e3b41a17c8.315fe32.mid.smarden.org>
- <20091030165903.GA10671@ikki.ethgen.de>
- <20091030173838.GB18583@coredump.intra.peff.net>
- <20091030182331.GC10671@ikki.ethgen.de>
- <20091030184155.GC19901@coredump.intra.peff.net>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [RFC PATCH v4 11/26] Move WebDAV HTTP push under remote-curl
+Date: Fri, 30 Oct 2009 20:06:55 +0100
+Message-ID: <20091030190655.GA7442@localhost>
+References: <1256774448-7625-1-git-send-email-spearce@spearce.org> <1256774448-7625-12-git-send-email-spearce@spearce.org> <be6fef0d0910300910me43c77fue6dcb6034dd0ea5b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: 553296@bugs.debian.org, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Klaus Ethgen <Klaus@Ethgen.de>
-X-From: git-owner@vger.kernel.org Fri Oct 30 20:07:41 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Mike Hommey <mh@glandium.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 30 20:07:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N3wp3-000717-BU
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 20:07:41 +0100
+	id 1N3wp3-000717-Rw
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Oct 2009 20:07:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757339AbZJ3TF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 15:05:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757328AbZJ3TF5
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 15:05:57 -0400
-Received: from peff.net ([208.65.91.99]:54057 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756350AbZJ3TF4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 15:05:56 -0400
-Received: (qmail 2290 invoked by uid 107); 30 Oct 2009 19:09:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 30 Oct 2009 15:09:40 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Oct 2009 15:05:52 -0400
+	id S1757353AbZJ3TH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 15:07:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757351AbZJ3TH3
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 15:07:29 -0400
+Received: from mail-ew0-f228.google.com ([209.85.219.228]:43148 "EHLO
+	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757349AbZJ3TH2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 15:07:28 -0400
+Received: by ewy28 with SMTP id 28so3334828ewy.18
+        for <git@vger.kernel.org>; Fri, 30 Oct 2009 12:07:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=JMW51qZ+7m3x7tqjF+zbvoCZ20my1m1VHnitBfGpwUI=;
+        b=b4ltzPW63/d316J1aIr28WabRPECEBWuGwbAnpYCWdTWKwPLDIUrDnTxEP9TMa5O+l
+         jQEd20Uyt1xUr60e0oMxIXm752lvXbpCw/UmUgqqmJscsDkYHmSvlByd9NbLfWA8mNwT
+         w+S8JQjpxwiHtj5d8IKRrQa89jX2xPEYkg6IY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=MAfa3WPNB8I7PxezGUl7uh8u/B37MhF88al//jNwx0BiEgnNQ+MBWvm9j0JFL7Usu5
+         VEff6yHSj+MT1F5GB3BmuQeMg8p2SPnqfTzhkNrlVmpEyv5ODgrcRwMXsc/Ygq77V/+P
+         qTSaFstrU8gXxu6oogckNcrx+lbTZfYlzw6BE=
+Received: by 10.211.154.16 with SMTP id g16mr1287730ebo.19.1256929652388;
+        Fri, 30 Oct 2009 12:07:32 -0700 (PDT)
+Received: from darc.lan ([80.123.242.182])
+        by mx.google.com with ESMTPS id 7sm7964395ewy.6.2009.10.30.12.07.11
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 30 Oct 2009 12:07:19 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1N3woJ-0002MJ-SB; Fri, 30 Oct 2009 20:06:55 +0100
 Content-Disposition: inline
-In-Reply-To: <20091030184155.GC19901@coredump.intra.peff.net>
+In-Reply-To: <be6fef0d0910300910me43c77fue6dcb6034dd0ea5b@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131731>
 
-On Fri, Oct 30, 2009 at 02:41:55PM -0400, Jeff King wrote:
+On Sat, Oct 31, 2009 at 12:10:29AM +0800, Tay Ray Chuan wrote:
 
-> >    6. Revert the patch and rework it so that it will only have effect if
-> >       there is no -i option on the command line. (That is similiar to a
-> >       mix of 3 and 4.)
-> 
-> Yeah, that would actually be the least invasive change, and would keep
-> "-i" just as it is. If we do anything except a simple, I think your (6)
-> makes the most sense.
-> 
-> Let me see if I can make a patch.
+> Clemens, the following addresses your non-desire to remove the
+> "unpacked refs" test in your earlier email
+> <20091025161630.GB8532@localhost>.
 
-Here it is. I think this is the right thing to do. Junio?
+> Now that the first push in "push to remote repository with packed
+> refs" succeeds, the "unpacked refs" test is redundant.
 
--- >8 --
-Subject: [PATCH] ls-files: unbreak "ls-files -i"
+How can the changed result of one test suddenly make another test redundant?
+The two are testing different things.
 
-Commit b5227d8 changed the behavior of "ls-files" with
-respect to includes, but accidentally broke the "-i" option
-The original behavior was:
+> Since http-push
+> in that first test already updated /refs/heads/master and /info/refs,
+> 'git update-ref' incorrectly reverts the earlier push, and 'git
+> update-server-info' is redundant.
 
-  1. if no "-i" is given, cull all results according to --exclude*
-  2. if "-i" is given, show the inverse of (1)
+No, 'git update-ref' correctly reverts the earlier push, so we can push again
+and 'git update-server-info' is therefore necessary for the test to work
+independently of its predecessors result.
 
-The broken behavior was:
-
-  1. if no "-i" is given:
-     a. for "-o", cull results according to --exclude*
-     b. for index files, always show all
-  2. if "-i" is given:
-     a. for "-o", shows the inverse of (1a)
-     b. for index files, always show all
-
-The fixed behavior keeps the new (1b) behavior introduced
-by b5227d8, but fixes the (2b) behavior to show only ignored
-files, not all files.
-
-This patch also tweaks the documentation. The original text
-was somewhat obscure in the first place, but it is also now
-inaccurate (the relationship between (1b) and (2b) is not
-quite a "reverse").
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-ls-files.txt |    6 ++++--
- builtin-ls-files.c             |    8 ++++++++
- t/t3003-ls-files-exclude.sh    |    8 ++++++++
- 3 files changed, 20 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index 021066e..625723e 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -48,8 +48,10 @@ OPTIONS
- 
- -i::
- --ignored::
--	Show ignored files in the output.
--	Note that this also reverses any exclude list present.
-+	Show only ignored files in the output. When showing files in the
-+	index, print only those matched by an exclude pattern. When
-+	showing "other" files, show only those matched by an exclude
-+	pattern.
- 
- -s::
- --stage::
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index c5c0407..c9a03e5 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -170,6 +170,10 @@ static void show_files(struct dir_struct *dir, const char *prefix)
- 	if (show_cached | show_stage) {
- 		for (i = 0; i < active_nr; i++) {
- 			struct cache_entry *ce = active_cache[i];
-+			int dtype = ce_to_dtype(ce);
-+			if (dir->flags & DIR_SHOW_IGNORED &&
-+			    !excluded(dir, ce->name, &dtype))
-+				continue;
- 			if (show_unmerged && !ce_stage(ce))
- 				continue;
- 			if (ce->ce_flags & CE_UPDATE)
-@@ -182,6 +186,10 @@ static void show_files(struct dir_struct *dir, const char *prefix)
- 			struct cache_entry *ce = active_cache[i];
- 			struct stat st;
- 			int err;
-+			int dtype = ce_to_dtype(ce);
-+			if (dir->flags & DIR_SHOW_IGNORED &&
-+			    !excluded(dir, ce->name, &dtype))
-+				continue;
- 			if (ce->ce_flags & CE_UPDATE)
- 				continue;
- 			err = lstat(ce->name, &st);
-diff --git a/t/t3003-ls-files-exclude.sh b/t/t3003-ls-files-exclude.sh
-index fc1e379..d5ec333 100755
---- a/t/t3003-ls-files-exclude.sh
-+++ b/t/t3003-ls-files-exclude.sh
-@@ -29,4 +29,12 @@ test_expect_success 'add file to gitignore' '
- '
- check_all_output
- 
-+test_expect_success 'ls-files -i lists only tracked-but-ignored files' '
-+	echo content >other-file &&
-+	git add other-file &&
-+	echo file >expect &&
-+	git ls-files -i --exclude-standard >output &&
-+	test_cmp expect output
-+'
-+
- test_done
--- 
-1.6.5.2.224.g22719.dirty
+Clemens
