@@ -1,74 +1,66 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: [PATCH 2/2] configure: allow user to set gitconfig, pager and editor
-Date: Sat, 31 Oct 2009 16:41:35 -0400
-Message-ID: <1257021695-21260-3-git-send-email-bwalton@artsci.utoronto.ca>
-References: <1257021695-21260-1-git-send-email-bwalton@artsci.utoronto.ca>
- <1257021695-21260-2-git-send-email-bwalton@artsci.utoronto.ca>
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>
-To: gitster@pobox.com, jrnieder@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 31 21:41:56 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: Add '--bisect' revision machinery argument
+Date: Sat, 31 Oct 2009 21:58:08 +0100
+Message-ID: <200910312158.09049.chriscool@tuxfamily.org>
+References: <alpine.LFD.2.01.0910271124110.31845@localhost.localdomain> <7viqdzgls9.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0910281631400.31845@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Oct 31 21:57:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N4Kln-00068J-Tl
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 21:41:56 +0100
+	id 1N4Kzm-00039B-QL
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 21:56:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933242AbZJaUlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Oct 2009 16:41:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933236AbZJaUln
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Oct 2009 16:41:43 -0400
-Received: from www.cquest.utoronto.ca ([192.82.128.5]:38886 "EHLO
-	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933230AbZJaUlj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Oct 2009 16:41:39 -0400
-Received: from ntdws12.chass.utoronto.ca ([128.100.160.253]:41963 ident=93)
-	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
-	id 1N4Klc-0003LU-4y; Sat, 31 Oct 2009 16:41:44 -0400
-Received: from localhost
-	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
-	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1N4Klc-0005bZ-2Y; Sat, 31 Oct 2009 16:41:44 -0400
-Received: (from bwalton@localhost)
-	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n9VKfitC021545;
-	Sat, 31 Oct 2009 16:41:44 -0400
-X-Mailer: git-send-email 1.6.5
-In-Reply-To: <1257021695-21260-2-git-send-email-bwalton@artsci.utoronto.ca>
+	id S933254AbZJaU4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Oct 2009 16:56:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933252AbZJaU4K
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Oct 2009 16:56:10 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:46260 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933249AbZJaU4F (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Oct 2009 16:56:05 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id ADCA4818111;
+	Sat, 31 Oct 2009 21:56:03 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 64BE38180EE;
+	Sat, 31 Oct 2009 21:56:00 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.LFD.2.01.0910281631400.31845@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131857>
 
-Use the new GIT_WITH_MAKE_VAR function to allow user specified
-values for ETC_GITCONFIG, DEFAULT_PAGER and DEFAULT_EDITOR.
+On Thursday 29 October 2009, Linus Torvalds wrote:
+> On Wed, 28 Oct 2009, Junio C Hamano wrote:
+> > This shows a very nice direction to evolve, but your patch as-is breaks
+> > "rev-list --bisect", I think.
+>
+> I think you're right. I tested git rev-parse, and the 'git log'
+> machinery, but I didn't think about the fact that we already had a
+> meaning
+> for '--bisect' in rev-list.
+>
+> > Also, the helper of "git bisect" can and probably should be taught to
+> > just ask this new behaviour from the revision machinery, instead of
+> > collecting good and bad refs itself using bisect.c::read_bisect_refs().
+>
+> Yeah. And git-bisect.sh can be simplified too.
 
-Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
----
- configure.ac |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+I will have a look at that.
 
-diff --git a/configure.ac b/configure.ac
-index 2829dbb..d50d492 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -241,6 +241,16 @@ GIT_PARSE_WITH(iconv))
- # change being considered an inode change from the update-index perspective.
- 
- #
-+# Allow user to set ETC_GITCONFIG variable
-+GIT_WITH_MAKE_VAR(gitconfig, ETC_GITCONFIG)
-+#
-+# Allow user to set the default pager
-+GIT_WITH_MAKE_VAR(pager, DEFAULT_PAGER)
-+#
-+# Allow user to set the default editor
-+GIT_WITH_MAKE_VAR(editor, DEFAULT_EDITOR)
-+
-+#
- # Define SHELL_PATH to provide path to shell.
- GIT_ARG_SET_PATH(shell)
- #
--- 
-1.6.5
+Sorry for not responding earlier but I just came back today from the Linux 
+Kongress 2009 in Dresden (http://www.linux-kongress.org/2009/).
+
+Best regards,
+Christian.
