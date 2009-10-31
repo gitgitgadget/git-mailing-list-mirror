@@ -1,54 +1,50 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC PATCH v4 14/26] Add stateless RPC options to upload-pack,
-	receive-pack
-Date: Fri, 30 Oct 2009 16:59:36 -0700
-Message-ID: <20091030235936.GH10505@spearce.org>
-References: <1256774448-7625-1-git-send-email-spearce@spearce.org> <1256774448-7625-15-git-send-email-spearce@spearce.org> <7vd446dfx4.fsf@alter.siamese.dyndns.org> <20091029152629.GY10505@spearce.org> <7vtyxi53sh.fsf@alter.siamese.dyndns.org>
+Subject: Re: [RFC PATCH v4 11/26] Move WebDAV HTTP push under remote-curl
+Date: Fri, 30 Oct 2009 17:09:33 -0700
+Message-ID: <20091031000933.GJ10505@spearce.org>
+References: <1256774448-7625-1-git-send-email-spearce@spearce.org> <1256774448-7625-12-git-send-email-spearce@spearce.org> <be6fef0d0910300802t44801cb9n7a129905725f5c56@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 31 00:59:42 2009
+Cc: git@vger.kernel.org, Clemens Buchacher <drizzd@aon.at>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Mike Hommey <mh@glandium.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 31 01:11:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N41Nd-0004kk-UW
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 00:59:42 +0100
+	id 1N41Yn-0008EG-Kw
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 01:11:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933105AbZJ3X7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 19:59:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933077AbZJ3X7c
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 19:59:32 -0400
-Received: from george.spearce.org ([209.20.77.23]:38681 "EHLO
+	id S933113AbZJaAJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 20:09:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933107AbZJaAJ3
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 20:09:29 -0400
+Received: from george.spearce.org ([209.20.77.23]:60762 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933060AbZJ3X7b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 19:59:31 -0400
+	with ESMTP id S933077AbZJaAJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 20:09:28 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id A0F67381D3; Fri, 30 Oct 2009 23:59:36 +0000 (UTC)
+	id 97B8B381D3; Sat, 31 Oct 2009 00:09:33 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <7vtyxi53sh.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <be6fef0d0910300802t44801cb9n7a129905725f5c56@mail.gmail.com>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131780>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> I think that is probably too much complexity for too little gain.  I think
-> detecting stale request and having requestor retry would be sufficient,
-> and validating the want lines as we already do would give the same level
-> of assurance as "check against the hash of first phase response" I
-> outlined above, and would be much simpler thus more robust.
+Tay Ray Chuan <rctay89@gmail.com> wrote:
+> On Thu, Oct 29, 2009 at 8:00 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> > ?update http tests according to remote-curl capabilities
+> 
+> it would be great if you could mention the $ORIG_HEAD bit:
+> 
+>  o Use a variable ($ORIG_HEAD) instead of full SHA-1 name.
 
-Ack.
-
-I think what we want here is to just add an "ERR invalid want"
-message just before disconnecting when the client gives us a SHA-1
-which we don't point to directly.  Client implementations can choose
-how to handle this error.  They could retry from the beginning,
-or they could abort.
+Thanks, added.
 
 -- 
 Shawn.
