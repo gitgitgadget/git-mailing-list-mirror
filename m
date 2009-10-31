@@ -1,159 +1,77 @@
-From: Samium Gromoff <_deepfire@feelingofgreen.ru>
-Subject: Fw: git-core: SIGSEGV during {peek,ls}-remote on HTTP remotes.
-Date: Sun, 01 Nov 2009 01:07:02 +0300 (MSK)
-Message-ID: <20091101.010702.527849118592864646._deepfire@feelingofgreen.ru>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH 1/2] gitk: Initialize msgcat before first use
+Date: 31 Oct 2009 21:34:53 +0000
+Message-ID: <87d443xn5u.fsf@users.sourceforge.net>
+References: <1256415640-10328-1-git-send-email-bernt@norang.ca>
+	<1256415640-10328-2-git-send-email-bernt@norang.ca>
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
- boundary="--Next_Part(Sun_Nov__1_01_07_02_2009_267)--"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 31 23:10:26 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+To: Bernt Hansen <bernt@norang.ca>
+X-From: git-owner@vger.kernel.org Sat Oct 31 23:30:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N4M9O-00042n-4i
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 23:10:22 +0100
+	id 1N4MSd-0001fz-Gk
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 23:30:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933297AbZJaWKJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Oct 2009 18:10:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933251AbZJaWKJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Oct 2009 18:10:09 -0400
-Received: from 69-100-st.zelcom.ru ([80.92.100.69]:41920 "HELO
-	feelingofgreen.ru" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with SMTP id S932892AbZJaWKI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Oct 2009 18:10:08 -0400
-X-Greylist: delayed 392 seconds by postgrey-1.27 at vger.kernel.org; Sat, 31 Oct 2009 18:10:07 EDT
-Received: (qmail 6995 invoked from network); 1 Nov 2009 01:07:03 +0300
-Received: from unknown (HELO localhost) (80.92.100.69)
-  by auriga.feelingofgreen.ru with SMTP; 1 Nov 2009 01:07:03 +0300
-X-Mailer: Mew version 6.2.52 on Emacs 23.1 / Mule 6.0 (HANACHIRUSATO)
+	id S933305AbZJaW3q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Oct 2009 18:29:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757872AbZJaW3q
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Oct 2009 18:29:46 -0400
+Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:33677 "EHLO
+	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757868AbZJaW3p (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 31 Oct 2009 18:29:45 -0400
+X-Greylist: delayed 3292 seconds by postgrey-1.27 at vger.kernel.org; Sat, 31 Oct 2009 18:29:45 EDT
+Received: from [172.23.170.138] (helo=anti-virus01-09)
+	by smtp-out5.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1N4Lb5-0000LZ-JD; Sat, 31 Oct 2009 21:34:55 +0000
+Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
+	by asmtp-out6.blueyonder.co.uk with esmtp (Exim 4.52)
+	id 1N4Lb4-0001D3-VM; Sat, 31 Oct 2009 21:34:55 +0000
+Received: by badger.patthoyts.tk (Postfix, from userid 1000)
+	id 541D813D310; Sat, 31 Oct 2009 21:34:54 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+In-Reply-To: <1256415640-10328-2-git-send-email-bernt@norang.ca>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131862>
 
-----Next_Part(Sun_Nov__1_01_07_02_2009_267)--
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Bernt Hansen <bernt@norang.ca> writes:
 
-Good day folks,
+>The error text generated when your version of Tcl is too old is
+>translated with msgcat (mc) before msgcat is initialized.  This
+>causes Tcl to abort with:
+>
+>    Error in startup script: invalid command name "mc"
+>
+>We now initialize msgcat first before we check the Tcl version.  Msgcat
+>is available since Tcl 8.1.
+>
 
-Attached is the SEGV bugreport I sent to debian.
+This doesn't quite work. [file normalize] was introduced with Tcl 8.4
+and when I test this by starting it using Tcl 8.3 I get an error:
+ "bad option "normalize": must be atime, attributes, channels..."
+from line 11014. It is probably sufficient to just drop the [file
+normalize] here. On Windows $argv0 is fully qualified and 
+[file dirname] works ok on it. By removing the [file normalize] I get
+the expected error dialog when testing with 8.3.
 
-I tried to convince ld to use /usr/lib/debug, via LD_LIBRARY_PATH,
-and run the thing under gdb 7.0, but it won't use debug libraries
-for some reason.
+However, on Windows we actually get a better looking result by not
+catching the [package require Tcl 8.4] and just letting Tk bring up a
+standard message box with the version conflict error message.
 
+Well, actually if show_error just used tk_messageBox it would look
+better on Windows.
 
-regards,
-  Samium Gromoff
---
-                                 _deepfire-at-feelingofgreen.ru
-O< ascii ribbon campaign - stop html mail - www.asciiribbon.org
-
-
-----Next_Part(Sun_Nov__1_01_07_02_2009_267)--
-Content-Type: Message/Rfc822
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-Received: (qmail 4154 invoked by uid 1000); 1 Nov 2009 00:38:31 +0300
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-From: Samium Gromoff <deepfire@feelingofgreen.ru>
-To: Debian Bug Tracking System <submit@bugs.debian.org>
-Subject: git-core: SIGSEGV during {peek,ls}-remote on HTTP remotes.
-Message-ID: <20091031213831.3786.15715.reportbug@auriga.deep> (sfid-20091101_003832_561599_A7C90C6C)
-X-Mailer: reportbug 4.8
-Date: Sun, 01 Nov 2009 00:38:31 +0300
-X-CRM114-Version: 20090807-BlameThorstenAndJenny ( TRE 0.7.6 (BSD) ) MR-27CA1CFB 
-X-CRM114-CacheID: sfid-20091101_003832_561599_A7C90C6C 
-X-CRM114-Status: GOOD (  29.23  )
-
-Package: git-core
-Version: 1:1.6.5-1
-Severity: important
-
-
-Basically,
-
-deepfire@auriga:/$ git peek-remote http://common-lisp.net/project/qitab/git/poiu.git 
-Segmentation fault
-deepfire@auriga:/$ git peek-remote http://www.lichteblau.com/git/atdoc.git 
-Segmentation fault
-
-Strace shows following:
-[snip]
-open("/dev/urandom", O_RDONLY)          = 3
-read(3, "\27\n\7\210!\373\210\265", 8)  = 8
-close(3)                                = 0
-mprotect(0x7fe055d69000, 16384, PROT_READ) = 0
-mprotect(0x7fe055f89000, 4096, PROT_READ) = 0
-mprotect(0x7fe0563c2000, 4096, PROT_READ) = 0
-munmap(0x7fe0563ae000, 67595)           = 0
-set_tid_address(0x7fe0563ac7c0)         = 4047
-set_robust_list(0x7fe0563ac7d0, 0x18)   = 0
-futex(0x7fff5e3c057c, FUTEX_WAKE_PRIVATE, 1) = 0
-futex(0x7fff5e3c057c, FUTEX_WAIT_BITSET_PRIVATE|FUTEX_CLOCK_REALTIME, 1, NULL, 7fe0563ac6f0) = -1 ENOSYS (Function not implemented)
-rt_sigaction(SIGRTMIN, {0x7fe055d78750, [], SA_RESTORER|SA_SIGINFO, 0x7fe055d819a0}, NULL, 8) = 0
-rt_sigaction(SIGRT_1, {0x7fe055d787e0, [], SA_RESTORER|SA_RESTART|SA_SIGINFO, 0x7fe055d819a0}, NULL, 8) = 0
-rt_sigprocmask(SIG_UNBLOCK, [RTMIN RT_1], NULL, 8) = 0
-getrlimit(RLIMIT_STACK, {rlim_cur=8192*1024, rlim_max=RLIM_INFINITY}) = 0
-brk(0)                                  = 0x26d6000
-brk(0x26f7000)                          = 0x26f7000
-getcwd("/", 4096)                       = 2
-stat(".git", 0x7fff5e3c02d0)            = -1 ENOENT (No such file or directory)
-access(".git/objects", X_OK)            = -1 ENOENT (No such file or directory)
-access("./objects", X_OK)               = -1 ENOENT (No such file or directory)
-chdir("..")                             = 0
-stat(".git", 0x7fff5e3c02d0)            = -1 ENOENT (No such file or directory)
-access(".git/objects", X_OK)            = -1 ENOENT (No such file or directory)
-access("./objects", X_OK)               = -1 ENOENT (No such file or directory)
-chdir("/")                              = 0
---- SIGSEGV (Segmentation fault) @ 0 (0) ---
-+++ killed by SIGSEGV +++
-Segmentation fault
-
-
--- System Information:
-Debian Release: squeeze/sid
-  APT prefers unstable
-  APT policy: (500, 'unstable'), (1, 'experimental')
-Architecture: amd64 (x86_64)
-
-Kernel: Linux 2.6.26-2-amd64 (SMP w/2 CPU cores)
-Locale: LANG=C, LC_CTYPE=C (charmap=ANSI_X3.4-1968)
-Shell: /bin/sh linked to /bin/dash
-
-Versions of packages git-core depends on:
-ii  libc6                  2.10.1-3          GNU C Library: Shared libraries
-ii  libcurl3-gnutls        7.19.5-1.1        Multi-protocol file transfer libra
-ii  libdigest-sha1-perl    2.12-1            NIST SHA-1 message digest algorith
-ii  liberror-perl          0.17-1            Perl module for error/exception ha
-ii  libexpat1              2.0.1-4           XML parsing C library - runtime li
-ii  perl-modules           5.10.1-6          Core Perl modules
-ii  zlib1g                 1:1.2.3.3.dfsg-15 compression library - runtime
-
-Versions of packages git-core recommends:
-ii  less                          436-1      pager program similar to more
-ii  openssh-client [ssh-client]   1:5.1p1-8  secure shell client, an rlogin/rsh
-ii  patch                         2.5.9-5    Apply a diff file to an original
-ii  rsync                         3.0.6-1    fast remote file copy program (lik
-
-Versions of packages git-core suggests:
-pn  git-arch                      <none>     (no description available)
-ii  git-cvs                       1:1.6.5-1  fast, scalable, distributed revisi
-ii  git-daemon-run                1:1.6.5-1  fast, scalable, distributed revisi
-pn  git-doc                       <none>     (no description available)
-pn  git-email                     <none>     (no description available)
-ii  git-gui                       1:1.6.5-1  fast, scalable, distributed revisi
-ii  git-svn                       1:1.6.5-1  fast, scalable, distributed revisi
-ii  gitk                          1:1.6.5-1  fast, scalable, distributed revisi
-pn  gitweb                        <none>     (no description available)
-
--- no debconf information
-
-----Next_Part(Sun_Nov__1_01_07_02_2009_267)----
+-- 
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
