@@ -1,271 +1,134 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 7/8] Provide a build time default-editor setting
-Date: Fri, 30 Oct 2009 22:26:47 -0500
-Message-ID: <20091031032647.GA5583@progeny.tock>
+Subject: Re: [PATCH v2 3/8] Teach git var about GIT_EDITOR
+Date: Fri, 30 Oct 2009 23:00:03 -0500
+Message-ID: <20091031040003.GA6022@progeny.tock>
 References: <20091030101634.GA1610@progeny.tock>
  <20091031012050.GA5160@progeny.tock>
- <20091031014441.GH5160@progeny.tock>
- <7vfx90co1e.fsf@alter.siamese.dyndns.org>
+ <20091031013934.GD5160@progeny.tock>
+ <7vk4yccodl.fsf@alter.siamese.dyndns.org>
+ <20091031022347.GA5569@progeny.tock>
+ <7vws2cb8bp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Ben Walton <bwalton@artsci.utoronto.ca>,
 	Johannes Sixt <j.sixt@viscovery.net>,
 	David Roundy <roundyd@physics.oregonstate.edu>,
 	GIT List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 31 04:16:44 2009
+X-From: git-owner@vger.kernel.org Sat Oct 31 04:50:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N44SI-0006Vv-2G
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 04:16:42 +0100
+	id 1N44z4-0006Hy-HX
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 04:50:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757676AbZJaDQ2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Oct 2009 23:16:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757659AbZJaDQ2
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 23:16:28 -0400
-Received: from mail-gx0-f226.google.com ([209.85.217.226]:58740 "EHLO
-	mail-gx0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757653AbZJaDQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 23:16:27 -0400
-X-Greylist: delayed 3780 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Oct 2009 23:16:27 EDT
-Received: by gxk26 with SMTP id 26so954446gxk.1
-        for <git@vger.kernel.org>; Fri, 30 Oct 2009 20:16:32 -0700 (PDT)
+	id S1757696AbZJaDuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 23:50:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757691AbZJaDuK
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 23:50:10 -0400
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:55618 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757688AbZJaDuJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 23:50:09 -0400
+Received: by yxe17 with SMTP id 17so3273873yxe.33
+        for <git@vger.kernel.org>; Fri, 30 Oct 2009 20:50:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=YoKW2oUAR/O+nmlSXOGobzUgdJ5fb2LirhL//5RktDk=;
-        b=WUEVKMOT2uI4foCJDjlwQuVG09ySBVFrlvRiZejAFWjccZRqf5s0u2cbrD1hZ0IRcw
-         0YLZxZx9CGqgLclmT3iYbVjiJfqWLr4hU4D5RzF0gog8y2vkzfSRQRSZ3IXb0gj1fuCz
-         CoZ7gw5fhg/OGiUy5WDF3tca3H2ZAYRFAGghY=
+         :in-reply-to:user-agent;
+        bh=yPpAQlwdpk11QobUCOeXJvAnFS13jIbwlQ9aywvc5Eo=;
+        b=K6YMgC0+JdXPpQG8dnRepvg2SU/6D5oMXRExa8ZmRJ3zc2gZ36HZgHbLkG29NuEfOE
+         uZ4rc+Ry5TVSqZs7kA0GW7MCaVBy+PcvWkdyo7WqdCvMIesh9Kevb5G+dr+LpdY/Uqw7
+         /bvcThzxRcrXp4lkkj6R0ahP17ecv1o37bd54=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=KhTlVjIrUsPE53gV4JDulpEDGP7wjEWvTfIx8UTRnHXR3nRKGeCJPA1hqWmQpXBQIp
-         OxgnguacFYfyxWM/i+fRI46ftyUWMLXoZIii5tmYGEzr6qVEAOas1+2aWrDZQECekA/Z
-         ANsLnDjgosLLQ8MSPOb1GcFNnrXOXmLE7eLNM=
-Received: by 10.91.148.16 with SMTP id a16mr6163805ago.119.1256958992152;
-        Fri, 30 Oct 2009 20:16:32 -0700 (PDT)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=qVJlvNwrG+SK6uN2bw6ov9BgAYlLczgamARwpL+p4Bex81I+h//iY8ezd14UL+DnLv
+         XMIwxj7hBIate3HAMfzez+CzzfX3jJjh5CGdKUWSqcXeNSrQajnabylWQ998WI68aC92
+         egesUXkzZQlsSlj6bZhfGTH2x90u79gsgWMNA=
+Received: by 10.90.22.2 with SMTP id 2mr6325618agv.104.1256961014391;
+        Fri, 30 Oct 2009 20:50:14 -0700 (PDT)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm1641436yxe.18.2009.10.30.20.16.30
+        by mx.google.com with ESMTPS id 20sm1637285yxe.38.2009.10.30.20.50.13
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 30 Oct 2009 20:16:31 -0700 (PDT)
+        Fri, 30 Oct 2009 20:50:13 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7vfx90co1e.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vws2cb8bp.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131830>
 
 Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-=20
->> +test_expect_success 'does editor have a simple name (no slashes, et=
-c)?' '
->> +
->> +	editor=3D$(TERM=3Dvt100 git var GIT_EDITOR) &&
->> +	test -n "$editor" &&
->> +	simple=3Dt &&
->> +	case "$editor" in
->> +	*/* | core_editor | [A-Z]*)
->=20
-> Hmm, what are the latter two cases designed to catch?
 
-Both are meant to allow the test to work without too many changes.
-The core_editor case is a little pedantic, since it is unlikely to
-actually come up in practice.  With a default editor of core_editor,
-the initial loop will overwrite e-core_editor.sh (to be used through
-the core.editor configuration) with e-core_editor.sh (to be used as a
-fallback editor) before renaming it to core_editor.
+> But the user did not even ask for GIT_EDITOR.  Should it even mention
+> "unusable"?  or should it just say something like
+> 
+> 	GIT_EDITOR=
+> 
+> without complaining?
+> 
+> For that matter, I also wonder if we can squelch the user.email one when
+> we are only listing the variables (I know it is not part of this topic,
+> but I can still wonder).
+[...]
+> I think people run "git var -l", store the results in variables (think
+> Perl or Python script) and read from there, instead of making separate
+> invocations of "git var" for individual variables.
 
-I missed some other cases: If editor is .git, e-GIT_EDITOR.sh, etc,
-the mv will still misbehave.
+In that case, most variable-specific warnings should be suppressed as
+irrelevant.  So squelching the warnings makes sense.
 
-The [A-Z]* test is to avoid changing the loop around line 86:
-
-| unset EDITOR VISUAL GIT_EDITOR
-| git config --unset-all core.editor
-| for i in "$editor" EDITOR VISUAL core_editor GIT_EDITOR
-| do
-|	echo "Edited by $i" >expect
-|	case "$i" in
-|	core_editor)
-|		git config core.editor ./e-core_editor.sh
-|		;;
-|	[A-Z]*)
-|		eval "$i=3D./e-$i.sh"
-|		export $i
-|		;;
-|	esac
-|	test_expect_success "Using $i (override)" '
-|		git --exec-path=3D. commit --amend &&
-|		git show -s --pretty=3Doneline |
-|		sed -e "s/^[0-9a-f]* //" >actual &&
-|		diff actual expect
-|	'
-| done
-
-which I do not think is worth making more complicated.
-
-Maybe it would be better to just check for an editor consisting only
-of alphabetical characters.  Perhaps something like the following:
+How about this patch?  With the "git var GIT_EDITOR" patch applied on
+top, "git var -l" silently omits the GIT_EDITOR variable when a suitable
+editor cannot be found.
 
 -- %< --
-=46rom: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] Provide a build time default-editor setting
+Subject: Suppress warnings from "git var -l"
 
-Provide a DEFAULT_EDITOR knob to allow setting the fallback
-editor to use instead of vi (when VISUAL, EDITOR, and GIT_EDITOR
-are unset).  The value can be set at build time according to a
-system=E2=80=99s policy.  For example, on Debian systems, the default
-editor should be the 'editor' command.
+For scripts using "git var -l" to read all logical variables at
+once, not all per-variable warnings will be relevant.  Suppress
+them.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+The git source tree does not include any scripts using "git var
+-l", so this change should not affect other git commands.
+
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Makefile          |   17 +++++++++++++++++
- editor.c          |    6 +++++-
- t/t7005-editor.sh |   27 ++++++++++++++++++++-------
- 3 files changed, 42 insertions(+), 8 deletions(-)
+ ident.c |    2 +-
+ var.c   |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 268aede..625866c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -200,6 +200,14 @@ all::
- # memory allocators with the nedmalloc allocator written by Niall Doug=
-las.
- #
- # Define NO_REGEX if you have no or inferior regex support in your C l=
-ibrary.
-+#
-+# Define DEFAULT_EDITOR to a sensible editor command (defaults to "vi"=
-) if you
-+# want to use something different.  The value will be interpreted by t=
-he shell
-+# if necessary when it is used.  Examples:
-+#
-+#   DEFAULT_EDITOR=3D'~/bin/vi',
-+#   DEFAULT_EDITOR=3D'$GIT_FALLBACK_EDITOR',
-+#   DEFAULT_EDITOR=3D'"C:\Program Files\Vim\gvim.exe" --nofork'
-=20
- GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -1363,6 +1371,15 @@ BASIC_CFLAGS +=3D -DSHA1_HEADER=3D'$(SHA1_HEADER=
-_SQ)' \
- 	$(COMPAT_CFLAGS)
- LIB_OBJS +=3D $(COMPAT_OBJS)
-=20
-+# Quote for C
-+
-+ifdef DEFAULT_EDITOR
-+DEFAULT_EDITOR_CQ =3D "$(subst ",\",$(subst \,\\,$(DEFAULT_EDITOR)))"
-+DEFAULT_EDITOR_CQ_SQ =3D $(subst ','\'',$(DEFAULT_EDITOR_CQ))
-+
-+BASIC_CFLAGS +=3D -DDEFAULT_EDITOR=3D'$(DEFAULT_EDITOR_CQ_SQ)'
-+endif
-+
- ALL_CFLAGS +=3D $(BASIC_CFLAGS)
- ALL_LDFLAGS +=3D $(BASIC_LDFLAGS)
-=20
-diff --git a/editor.c b/editor.c
-index 4f98b72..2aac807 100644
---- a/editor.c
-+++ b/editor.c
-@@ -2,6 +2,10 @@
- #include "strbuf.h"
- #include "run-command.h"
-=20
-+#ifndef DEFAULT_EDITOR
-+#define DEFAULT_EDITOR "vi"
-+#endif
-+
- const char *git_editor(void)
+diff --git a/ident.c b/ident.c
+index 99f1c85..26409b2 100644
+--- a/ident.c
++++ b/ident.c
+@@ -205,7 +205,7 @@ const char *fmt_ident(const char *name, const char *email,
+ 		if ((warn_on_no_name || error_on_no_name) &&
+ 		    name == git_default_name && env_hint) {
+ 			fprintf(stderr, env_hint, au_env, co_env);
+-			env_hint = NULL; /* warn only once, for "git var -l" */
++			env_hint = NULL; /* warn only once */
+ 		}
+ 		if (error_on_no_name)
+ 			die("empty ident %s <%s> not allowed", name, email);
+diff --git a/var.c b/var.c
+index 125c0d1..dacbaab 100644
+--- a/var.c
++++ b/var.c
+@@ -22,7 +22,7 @@ static void list_vars(void)
  {
- 	const char *editor =3D getenv("GIT_EDITOR");
-@@ -19,7 +23,7 @@ const char *git_editor(void)
- 		return NULL;
-=20
- 	if (!editor)
--		editor =3D "vi";
-+		editor =3D DEFAULT_EDITOR;
-=20
- 	return editor;
+ 	struct git_var *ptr;
+ 	for (ptr = git_vars; ptr->read; ptr++)
+-		printf("%s=%s\n", ptr->name, ptr->read(IDENT_WARN_ON_NO_NAME));
++		printf("%s=%s\n", ptr->name, ptr->read(0));
  }
-diff --git a/t/t7005-editor.sh b/t/t7005-editor.sh
-index b647957..13c37de 100755
---- a/t/t7005-editor.sh
-+++ b/t/t7005-editor.sh
-@@ -4,7 +4,22 @@ test_description=3D'GIT_EDITOR, core.editor, and stuff=
-'
-=20
- . ./test-lib.sh
-=20
--for i in GIT_EDITOR core_editor EDITOR VISUAL vi
-+unset EDITOR VISUAL GIT_EDITOR
-+
-+test_expect_success 'determine default editor' '
-+
-+	editor=3D$(TERM=3Dvt100 git var GIT_EDITOR) &&
-+	test -n "$editor"
-+
-+'
-+
-+if ! test -z "$(printf '%s\n' "$editor" | sed '/^[a-z]*$/d')"
-+then
-+	say 'skipping editor tests, default editor name too complicated'
-+	test_done
-+fi
-+
-+for i in GIT_EDITOR core_editor EDITOR VISUAL "$editor"
- do
- 	cat >e-$i.sh <<-EOF
- 	#!$SHELL_PATH
-@@ -12,15 +27,13 @@ do
- 	EOF
- 	chmod +x e-$i.sh
- done
--unset vi
--mv e-vi.sh vi
--unset EDITOR VISUAL GIT_EDITOR
-+mv "e-$editor.sh" "$editor"
-=20
- test_expect_success setup '
-=20
- 	msg=3D"Hand edited" &&
- 	echo "$msg" >expect &&
--	git add vi &&
-+	git add "$editor" &&
- 	test_tick &&
- 	git commit -m "$msg" &&
- 	git show -s --pretty=3Doneline |
-@@ -44,7 +57,7 @@ test_expect_success 'dumb should error out when falli=
-ng back on vi' '
-=20
- TERM=3Dvt100
- export TERM
--for i in vi EDITOR VISUAL core_editor GIT_EDITOR
-+for i in "$editor" EDITOR VISUAL core_editor GIT_EDITOR
- do
- 	echo "Edited by $i" >expect
- 	unset EDITOR VISUAL GIT_EDITOR
-@@ -68,7 +81,7 @@ done
-=20
- unset EDITOR VISUAL GIT_EDITOR
- git config --unset-all core.editor
--for i in vi EDITOR VISUAL core_editor GIT_EDITOR
-+for i in "$editor" EDITOR VISUAL core_editor GIT_EDITOR
- do
- 	echo "Edited by $i" >expect
- 	case "$i" in
---=20
+ 
+ static const char *read_var(const char *var)
+-- 
 1.6.5.2
