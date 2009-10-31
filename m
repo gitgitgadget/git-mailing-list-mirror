@@ -1,143 +1,144 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 8/8] Provide a build time default-pager setting
-Date: Fri, 30 Oct 2009 20:45:34 -0500
-Message-ID: <20091031014534.GI5160@progeny.tock>
-References: <20091030101634.GA1610@progeny.tock>
- <20091031012050.GA5160@progeny.tock>
+From: Erick Mattos <erick.mattos@gmail.com>
+Subject: Re: [PATCH] Changed timestamp behavior of options -c/-C/--amend
+Date: Fri, 30 Oct 2009 23:42:47 -0200
+Message-ID: <55bacdd30910301842m77cf5d7fi8389e305fd439a72@mail.gmail.com>
+References: <1256931394-9338-1-git-send-email-erick.mattos@gmail.com> 
+	<7vljisk1m7.fsf@alter.siamese.dyndns.org> <7viqdwilx2.fsf@alter.siamese.dyndns.org> 
+	<55bacdd30910301520h2678d0c2hd8478716d8ce4a17@mail.gmail.com> 
+	<7v4opgh5qr.fsf@alter.siamese.dyndns.org> <55bacdd30910301612xabe2071i1319d920191f080f@mail.gmail.com> 
+	<7vocnoe83m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	David Roundy <roundyd@physics.oregonstate.edu>,
-	GIT List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 31 02:35:24 2009
+X-From: git-owner@vger.kernel.org Sat Oct 31 02:43:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N42sF-0006lX-Nb
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 02:35:24 +0100
+	id 1N42zt-0000M2-KT
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 02:43:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757594AbZJaBfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 21:35:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757591AbZJaBfN
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 21:35:13 -0400
-Received: from mail-yw0-f202.google.com ([209.85.211.202]:53543 "EHLO
-	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756257AbZJaBfM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 21:35:12 -0400
-Received: by ywh40 with SMTP id 40so3213967ywh.33
-        for <git@vger.kernel.org>; Fri, 30 Oct 2009 18:35:17 -0700 (PDT)
+	id S1757610AbZJaBnF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Oct 2009 21:43:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757607AbZJaBnD
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 21:43:03 -0400
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:39201 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757605AbZJaBnC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Oct 2009 21:43:02 -0400
+Received: by yxe17 with SMTP id 17so3228431yxe.33
+        for <git@vger.kernel.org>; Fri, 30 Oct 2009 18:43:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=gshBFrunPk7jl78GSxnkks9RflT7buBFGM2dEkdPH+g=;
-        b=EDFsIvbOwpV9h7NxLaQsztJuAu+G5z42qdfvvWwA+RCap0mxja/ux4pMM7oRJHotDz
-         pv3cHqQNsbigO686j5I+spX0IUhy1E4UfuoUz0kUC+CR52pixcW7X8mCKqypc55NvfDy
-         3xk/piq6XUl+FyeRQe+VNDNYxAQqYQviHNwwk=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lnqAejpAkqigq2EfllqTIyOJp1iDW1HifOjCQoExtRI=;
+        b=XCOFaRRgCv5bCSimkaSxnQCLZ/2nfuBWpUJcYdEuHFbDuKyl0sxLKszPKL7M8++Gwu
+         6Js+oJ5TVAfvb6fLdhSwTTDC0g9xhEtglqjsWkLxirud4UmWwnDRxHwRwiem4NgzE0Qa
+         galFloeMlUuje1QY2i9VhxUF9+r0aUYtx7v8I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Qv4B/ejVbffHuXZlrRfvQnOT+LdwtgwIhnIujz2mJTzIWN73aGjaqy+xKYTbNYmYH7
-         W9P3pnisyBuch6unM/N8YzK92kYoA+c4OHoFfvN5Il0QwRaXjt+z2if6iSPsnIejcvpx
-         RAAxgTmdoDsynE+//PIL+AhAK1iRXqAFs3oV8=
-Received: by 10.91.183.4 with SMTP id k4mr6279030agp.41.1256952917373;
-        Fri, 30 Oct 2009 18:35:17 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 35sm1607815yxh.51.2009.10.30.18.35.16
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 30 Oct 2009 18:35:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20091031012050.GA5160@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Fvc6ARkAMMZOeE4H3MWO5gmcgY34Xtdarg9AJDixA8svVaA/jawmV+VxAuRk/GDG9K
+         wH1iy5DUw27IpJwlS/+GSD8BH/jcBeTVM8D9GMvh0/QjPSfaHfo2yv5zjJOmhLsFSB+I
+         2wm/NqW5dnguuZv34t6MTDGKZs7zllBFPWi+c=
+Received: by 10.151.2.5 with SMTP id e5mr4254847ybi.114.1256953387125; Fri, 30 
+	Oct 2009 18:43:07 -0700 (PDT)
+In-Reply-To: <7vocnoe83m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131822>
 
-From: Junio C Hamano <gitster@pobox.com>
+You are completely right.
 
-Provide a DEFAULT_PAGER knob so packagers can set the fallback
-pager to something appropriate during the build.
+All your concern is relevant and the whole problem must be re-engineere=
+d.
 
-Examples:
+The good news is that I have almost finished it and I will be starting
+a new thread with the new solution in a few minutes.
 
-On (old) solaris systems, /usr/bin/less (typically the first less
-found) doesn't understand the default arguments (FXRS), which
-forces users to alter their environment (PATH, GIT_PAGER, LESS,
-etc) or have a local or global gitconfig before paging works as
-expected.
+Regards
 
-On Debian systems, by policy packages must fall back to the
-'pager' command, so that changing the target of the
-/usr/bin/pager symlink changes the default pager for all packages
-at once.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Makefile |   11 +++++++++++
- pager.c  |    6 +++++-
- 2 files changed, 16 insertions(+), 1 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 625866c..18fc50a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -201,6 +201,10 @@ all::
- #
- # Define NO_REGEX if you have no or inferior regex support in your C library.
- #
-+# Define DEFAULT_PAGER to a sensible pager command (defaults to "less") if
-+# you want to use something different.  The value will be interpreted by the
-+# shell at runtime when it is used.
-+#
- # Define DEFAULT_EDITOR to a sensible editor command (defaults to "vi") if you
- # want to use something different.  The value will be interpreted by the shell
- # if necessary when it is used.  Examples:
-@@ -1380,6 +1384,13 @@ DEFAULT_EDITOR_CQ_SQ = $(subst ','\'',$(DEFAULT_EDITOR_CQ))
- BASIC_CFLAGS += -DDEFAULT_EDITOR='$(DEFAULT_EDITOR_CQ_SQ)'
- endif
- 
-+ifdef DEFAULT_PAGER
-+DEFAULT_PAGER_CQ = "$(subst ",\",$(subst \,\\,$(DEFAULT_PAGER)))"
-+DEFAULT_PAGER_CQ_SQ = $(subst ','\'',$(DEFAULT_PAGER_CQ))
-+
-+BASIC_CFLAGS += -DDEFAULT_PAGER='$(DEFAULT_PAGER_CQ_SQ)'
-+endif
-+
- ALL_CFLAGS += $(BASIC_CFLAGS)
- ALL_LDFLAGS += $(BASIC_LDFLAGS)
- 
-diff --git a/pager.c b/pager.c
-index 0b63d99..92c03f6 100644
---- a/pager.c
-+++ b/pager.c
-@@ -2,6 +2,10 @@
- #include "run-command.h"
- #include "sigchain.h"
- 
-+#ifndef DEFAULT_PAGER
-+#define DEFAULT_PAGER "less"
-+#endif
-+
- /*
-  * This is split up from the rest of git so that we can do
-  * something different on Windows.
-@@ -60,7 +64,7 @@ const char *git_pager(void)
- 	if (!pager)
- 		pager = getenv("PAGER");
- 	if (!pager)
--		pager = "less";
-+		pager = DEFAULT_PAGER;
- 	else if (!*pager || !strcmp(pager, "cat"))
- 		pager = NULL;
- 
--- 
-1.6.5.2
+2009/10/30 Junio C Hamano <gitster@pobox.com>:
+> Erick Mattos <erick.mattos@gmail.com> writes:
+>
+>> I don't see a use for comparing the author and committer because I c=
+an
+>> use as template my own commits or others'.
+>
+> You _can_ use whichever irrelevant commit as a template, but "you _ca=
+n_"
+> is different from what it means, and what is and what is not _sensibl=
+e_.
+>
+> You may be rewriting somebody else's patch (e.g. fixing up a typo in =
+the
+> message, or changing the implementation, or both). =C2=A0If you are g=
+oing to
+> keep the authorship, you are saying that "it is still _his_ code, not
+> mine". =C2=A0In such a case, it never makes sense to change the times=
+tamp, if
+> that author is somebody other than you. =C2=A0After all that other gu=
+y may not
+> even be aware of what you are doing when you make this commit; he may=
+ be
+> in bed sound asleep in a different timezone.
+>
+> In another scenario, if your fix-up is very significant, even if you
+> started from somebody else's patch, you may want to say "now this is =
+my
+> patch, the original author may have given me some inspiration, but th=
+e
+> changes in this commit, including all the bugs, are mine". =C2=A0The =
+same
+> applies if you looked at the problem description of somebody' patch, =
+and
+> did your own solution without using anything from his commit.
+>
+> At that point, you would want the resulting commit to say it was writ=
+ten
+> by you at this moment. =C2=A0You do not want to see -c/-C/--amend to =
+retain any
+> part of the authorship (not just timestamp) from the original commit.
+>
+> =C2=A0 =C2=A0Side note. You may be fixing your own patch, in which ca=
+se you may or
+> =C2=A0 =C2=A0may not consider your change significant, but at the tim=
+e of either
+> =C2=A0 =C2=A0old timestamp or current time, you were working on this =
+change, so
+> =C2=A0 =C2=A0using the current timestamp instead of using the old one=
+ is not a big
+> =C2=A0 =C2=A0deal, and that is why I think committer=3D=3Dauthor may =
+be a good
+> =C2=A0 =C2=A0heuristic when deciding to touch or not touch the timest=
+amp.
+>
+> =C2=A0 =C2=A0But in general I do not like such dwim that depends on w=
+ho you are (it
+> =C2=A0 =C2=A0makes it harder to explain, even if the end result may b=
+e useful in
+> =C2=A0 =C2=A0practice), so I'd rather not to see such a code for this=
+ topic if we
+> =C2=A0 =C2=A0can avoid it.
+>
+> In short, I do not think it makes sense to change only the timestamp =
+while
+> keeping the author. =C2=A0The issue is not "timestamp behaviour" with=
+ "use new
+> timestamp" option, but rather is an ability to declare "Now this is a
+> commit made _by me_ and _now_; iow, I take authorship for this change=
+",
+> even when you reuse the commit log message from somewhere else.
+>
+> So what is needed is an option to tell -c/-C/--amend to reuse _only_ =
+the
+> message but no authorship information from the original commit, I thi=
+nk.
+>
