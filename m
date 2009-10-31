@@ -1,158 +1,83 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 7/8] Provide a build time default-editor setting
-Date: Sat, 31 Oct 2009 16:21:45 -0500
-Message-ID: <20091031212144.GA5022@progeny.tock>
-References: <20091030101634.GA1610@progeny.tock>
- <20091031012050.GA5160@progeny.tock>
- <20091031014441.GH5160@progeny.tock>
- <7vfx90co1e.fsf@alter.siamese.dyndns.org>
- <20091031032647.GA5583@progeny.tock>
- <7vzl775ol5.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] commit -c/-C/--amend: take over authorship and restamp
+ time with --claim
+Date: Sat, 31 Oct 2009 14:24:17 -0700
+Message-ID: <7v7hub5kam.fsf@alter.siamese.dyndns.org>
+References: <1256958480-6775-1-git-send-email-erick.mattos@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	David Roundy <roundyd@physics.oregonstate.edu>,
-	GIT List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 31 22:15:25 2009
+Cc: git@vger.kernel.org
+To: Erick Mattos <erick.mattos@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 31 22:24:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N4LIC-0002uK-N7
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 22:15:25 +0100
+	id 1N4LR2-00060g-Iw
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 22:24:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933277AbZJaVLW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Oct 2009 17:11:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933285AbZJaVLW
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Oct 2009 17:11:22 -0400
-Received: from mail-yw0-f202.google.com ([209.85.211.202]:33047 "EHLO
-	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933275AbZJaVLV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Oct 2009 17:11:21 -0400
-Received: by ywh40 with SMTP id 40so3581340ywh.33
-        for <git@vger.kernel.org>; Sat, 31 Oct 2009 14:11:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=GtFvUTLfRd1RCT994jSxdK7/uqFk7lLkgPy9yqewadA=;
-        b=Y1UWjlkSjwaPeW4UbazTpQWHG5A8o1uvDnd/6qtL4+a3Hex/3LtYSQcFPvN3lQgo6X
-         f1W2gSPj2zu94/EEOdk+qZRS4cZJeN5l9WKdXNYurdvuhVkkTld//stvmOMr68FPEdhz
-         3IcM32Zf23xhBVQkLLm/7z/Ln6phxD69rFORg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=D4PbzXu1FMfXdZmV6+sjU/IweCBSNLHYoycE1Q0J3jiB3Fl0zfDDP4Zhi9Z0Wuv0uT
-         Z3r2cvCXa5ARMYCBWyFq0pytaChJ0DkQkIrojfTnwqo43DxLFTdRMsHKY+9UU9BLtQLP
-         Zi2m+iHUQRkHoYIKlolDKAHvPDHc3OxMPjiE8=
-Received: by 10.91.97.9 with SMTP id z9mr2615335agl.46.1257023486091;
-        Sat, 31 Oct 2009 14:11:26 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 8sm514951yxg.24.2009.10.31.14.11.24
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 31 Oct 2009 14:11:25 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vzl775ol5.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S933276AbZJaVYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Oct 2009 17:24:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933249AbZJaVYV
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Oct 2009 17:24:21 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47365 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933224AbZJaVYV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Oct 2009 17:24:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5804A8D65C;
+	Sat, 31 Oct 2009 17:24:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1gjJA4qvSHJQk0sH+prnZODrpNo=; b=m23eXc
+	8cmCTw5+2Bn2Yw0gKnm9BJw4D2nLINPV0E9EVk//65kyt+h+n5dfjdyzRSf1l4p8
+	2OqXtSsyRb68Ebo/NxoeHMJCbxy22NqZRG5z3iFFtrFaPwIhuSE9jmERJKtGDHCu
+	ceQCV4anzsF21Hx1lR3pFRza8Di59iyMMejFo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Yy7Lt6lUQEAok1G+CcnmeOZ+KmIW2Hik
+	YDGe2PMaeXsYSUBCnC2vKi3jAeVS6kcBv3pGILq7YhZH7BLNQ19WLtp7VVquNSfe
+	+8jcCyhS01uFUdNgMPoD4m9+rKtqk1bDaEpWkg4iv6VB1rtfXoUURtzzf3V8hkFk
+	y1alvtPCsN4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3BA298D65B;
+	Sat, 31 Oct 2009 17:24:23 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4EA2E8D65A; Sat, 31 Oct 2009
+ 17:24:20 -0400 (EDT)
+In-Reply-To: <1256958480-6775-1-git-send-email-erick.mattos@gmail.com> (Erick
+ Mattos's message of "Sat\, 31 Oct 2009 01\:08\:00 -0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C253C88A-C663-11DE-AD89-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131859>
 
-Junio C Hamano wrote:
+Erick Mattos <erick.mattos@gmail.com> writes:
 
-> Honestly speaking, my preference is to see if the built-in editor is
-> exactly spelled as 'v' 'i', and skip this test altogether if it isn't.
+> The new --claim option is meant to solve this need by regenerating the
+> timestamp and setting as new author the committer or the one specified
+> on --author option.
 
-That does make sense.  But let me try one last time, before doing
-that.  (I should have sat down and thought this through carefully
-before sending the first version --- sorry.)
+I'll leave discussion on the option name to others.
 
-Though the first two iterations of the patch were pretty ugly, the
-third was just 's/vi/"$editor"/g' after setting editor and bailing out
-if it does not consist of lowercase letters.  As you mentioned, it
-makes more sense to skip only the "vi" part of the test.
+> +--claim::
+> +	When used with -C/-c/--amend options the committer takes over
+> +	the cloned commit authorship and renew the timestamp thus using
+> +	only the commit message from the source.
 
-Tested with DEFAULT_EDITOR=vi, vim, /usr/bin/nonexistent.
+"The cloned commit" is a bit misleading; in the mind of users --amend does
+not clone but rewrite, as the old commit usually only belongs to a reflog
+and not any other branch.  I'd rewrite it this way, perhaps.
 
- t/t7005-editor.sh |   37 +++++++++++++++++++++++++------------
- 1 files changed, 25 insertions(+), 12 deletions(-)
+	When used with -C/-c/--amend options, declare that the authorship
+	of the resulting commit now belongs of the committer.  This also
+	renews the author timestamp.
 
-diff --git a/t/t7005-editor.sh b/t/t7005-editor.sh
-index a95fe19..5257f4d 100755
---- a/t/t7005-editor.sh
-+++ b/t/t7005-editor.sh
-@@ -4,7 +4,21 @@ test_description='GIT_EDITOR, core.editor, and stuff'
- 
- . ./test-lib.sh
- 
--for i in GIT_EDITOR core_editor EDITOR VISUAL vi
-+unset EDITOR VISUAL GIT_EDITOR
-+
-+test_expect_success 'determine default editor' '
-+
-+	vi=$(TERM=vt100 git var GIT_EDITOR) &&
-+	test -n "$vi"
-+
-+'
-+
-+if ! expr "$vi" : '^[a-z]*$' >/dev/null
-+then
-+	vi=
-+fi
-+
-+for i in GIT_EDITOR core_editor EDITOR VISUAL $vi
- do
- 	cat >e-$i.sh <<-EOF
- 	#!$SHELL_PATH
-@@ -12,19 +26,18 @@ do
- 	EOF
- 	chmod +x e-$i.sh
- done
--unset vi
--mv e-vi.sh vi
--unset EDITOR VISUAL GIT_EDITOR
-+
-+if ! test -z "$vi"
-+then
-+	mv e-$vi.sh $vi
-+fi
- 
- test_expect_success setup '
- 
--	msg="Hand edited" &&
-+	msg="Hand-edited" &&
-+	test_commit "$msg" &&
- 	echo "$msg" >expect &&
--	git add vi &&
--	test_tick &&
--	git commit -m "$msg" &&
--	git show -s --pretty=oneline |
--	sed -e "s/^[0-9a-f]* //" >actual &&
-+	git show -s --format=%s > actual &&
- 	diff actual expect
- 
- '
-@@ -54,7 +67,7 @@ test_expect_success 'dumb should prefer EDITOR to VISUAL' '
- 
- TERM=vt100
- export TERM
--for i in vi EDITOR VISUAL core_editor GIT_EDITOR
-+for i in $vi EDITOR VISUAL core_editor GIT_EDITOR
- do
- 	echo "Edited by $i" >expect
- 	unset EDITOR VISUAL GIT_EDITOR
-@@ -78,7 +91,7 @@ done
- 
- unset EDITOR VISUAL GIT_EDITOR
- git config --unset-all core.editor
--for i in vi EDITOR VISUAL core_editor GIT_EDITOR
-+for i in $vi EDITOR VISUAL core_editor GIT_EDITOR
- do
- 	echo "Edited by $i" >expect
- 	case "$i" in
+We also would need a test to protect this new feature from getting broken
+by future updates.
+
+Thanks.
