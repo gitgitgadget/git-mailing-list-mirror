@@ -1,55 +1,63 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC PATCH v4 26/26] test smart http fetch and push
-Date: Fri, 30 Oct 2009 17:13:14 -0700
-Message-ID: <20091031001314.GK10505@spearce.org>
-References: <1256774448-7625-1-git-send-email-spearce@spearce.org> <1256774448-7625-27-git-send-email-spearce@spearce.org> <be6fef0d0910300910x5e8bc552k4f020ca8bb890352@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Clemens Buchacher <drizzd@aon.at>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 31 01:13:27 2009
+Subject: [PATCH v5 03/28] pkt-line: Make packet_read_line easier to debug
+Date: Fri, 30 Oct 2009 17:47:22 -0700
+Message-ID: <1256950067-27938-5-git-send-email-spearce@spearce.org>
+References: <1256950067-27938-1-git-send-email-spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 31 01:48:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N41as-0000Tr-BK
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 01:13:22 +0100
+	id 1N428Z-0001cH-IY
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 01:48:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933138AbZJaANM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 20:13:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933136AbZJaANK
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 20:13:10 -0400
-Received: from george.spearce.org ([209.20.77.23]:32966 "EHLO
+	id S1757580AbZJaAru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 20:47:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757575AbZJaArs
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 20:47:48 -0400
+Received: from george.spearce.org ([209.20.77.23]:36907 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933135AbZJaANJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 20:13:09 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id C9753381D3; Sat, 31 Oct 2009 00:13:14 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <be6fef0d0910300910x5e8bc552k4f020ca8bb890352@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	with ESMTP id S1757547AbZJaArp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 20:47:45 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 17DFC38262; Sat, 31 Oct 2009 00:47:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 71A0338215
+	for <git@vger.kernel.org>; Sat, 31 Oct 2009 00:47:49 +0000 (UTC)
+X-Mailer: git-send-email 1.6.5.2.181.gd6f41
+In-Reply-To: <1256950067-27938-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131783>
 
-Tay Ray Chuan <rctay89@gmail.com> wrote:
-> 
-> Having "/git/" reside as a subdirectory in "/" where WebDAV is enabled
-> may be confusing to readers. I think we should use "/smart/" for the
-> CGI map, and consequently, use "/dumb/" for WebDAV repositories,
-> rather than the root "/" that it is occupying.
+When there is an error parsing the 4 byte length component we now
+display it as part of the die message, this may hint as to what
+data was misunderstood by the application.
 
-Yup, great idea.  Patch added to switch to /dumb/ for WebDAV,
-and changed to use /smart/ for this patch.
- 
-> Mention of "packed refs" should be removed from the description, and
-> the 'unpacked refs' test, irrelevant in this context, should be
-> removed too. The assumptions these tests are based on is relevant to
-> t5540, but not in t5541. My explanation follows.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ pkt-line.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Yup, you are right, thanks.  Fixed.
- 
+diff --git a/pkt-line.c b/pkt-line.c
+index bd603f8..295ba2b 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -129,7 +129,7 @@ int packet_read_line(int fd, char *buffer, unsigned size)
+ 	safe_read(fd, linelen, 4);
+ 	len = packet_length(linelen);
+ 	if (len < 0)
+-		die("protocol error: bad line length character");
++		die("protocol error: bad line length character: %.4s", linelen);
+ 	if (!len)
+ 		return 0;
+ 	len -= 4;
 -- 
-Shawn.
+1.6.5.2.181.gd6f41
