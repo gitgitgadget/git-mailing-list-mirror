@@ -1,164 +1,77 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH nd/sparse] Support directory exclusion from index
-Date: Sat, 31 Oct 2009 21:09:23 +0700
-Message-ID: <1256998163-979-1-git-send-email-pclouds@gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 10/19] Allow helpers to request marks for fast-import
+Date: Sat, 31 Oct 2009 17:19:32 +0100
+Message-ID: <fabb9a1e0910310919l2e81bf43uc5adaec845e26b4e@mail.gmail.com>
+References: <1256839287-19016-1-git-send-email-srabbelier@gmail.com> 
+	<200910300921.00561.johan@herland.net> <fabb9a1e0910300526v5cbcf685l69f60c58b7e3732@mail.gmail.com> 
+	<200910311304.05408.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Sat Oct 31 15:09:46 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sat Oct 31 17:21:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N4EeH-0006Si-I1
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 15:09:45 +0100
+	id 1N4Ght-0007BE-GT
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 17:21:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757777AbZJaOJe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Oct 2009 10:09:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757774AbZJaOJe
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Oct 2009 10:09:34 -0400
-Received: from mail-px0-f179.google.com ([209.85.216.179]:49653 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757755AbZJaOJd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Oct 2009 10:09:33 -0400
-Received: by pxi9 with SMTP id 9so2357220pxi.4
-        for <git@vger.kernel.org>; Sat, 31 Oct 2009 07:09:38 -0700 (PDT)
+	id S1757855AbZJaQV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Oct 2009 12:21:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757847AbZJaQV0
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Oct 2009 12:21:26 -0400
+Received: from mail-ew0-f228.google.com ([209.85.219.228]:32835 "EHLO
+	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752804AbZJaQVZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Oct 2009 12:21:25 -0400
+Received: by ewy28 with SMTP id 28so3784602ewy.18
+        for <git@vger.kernel.org>; Sat, 31 Oct 2009 09:21:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=AGIuViYpDKmPOx+X1y5jFYxCFcAqvhZR5W77PwhCmCo=;
-        b=Hq5nON3X71LXe31pSfcUR7ouZmD7UWdUSWrqKCCztlhvEoYWkfCuLbpRNiiCQuLjNR
-         XEvNFP+NETyK6e74mx9Bqh57qKCIA3laKzhRDXp7bsHQrwZxG15w7vb2FBhMBMBCtjoJ
-         liTPHFYYVHeyneupP9Uj7ptyHXxrckXOEENkE=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=XEscmqjRY067eNMZqCqaHoVaMaZ+AhCCIg7Ih+Uw0pQ=;
+        b=cCgK/vH9GVUDHcbR5ILCawu8x0RF1adb8lsNyrzhFjAGQUcg4dh8PrUSZSGFKBPJ7o
+         BWJtv9t/FBUNtsUObgb6abNy+SW6wj3i196WtnorSAEIS9N1N9lYDfVCKQnHhueqLvy7
+         /Uv0CrjsK8g3K09mtNGoLvmX5avtpkJmVCMrM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=EkKUhdmBwOFa+xLgxmpfDbXqEbEMXtoBqv/O+8VOUaKz3+xfLbdr61islphsOfoRRB
-         3ulKFQrgc2x3gzRRVRjgEHOK/K9sLma85+QKF+R140enMQikvHLUkal3F0Gfu+GtyrGl
-         v8x/lzmu/VTd82gHr8bzATClKooJ1jkBVY9ms=
-Received: by 10.115.114.7 with SMTP id r7mr3250901wam.72.1256998178630;
-        Sat, 31 Oct 2009 07:09:38 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.73.200.202])
-        by mx.google.com with ESMTPS id 20sm307769pxi.15.2009.10.31.07.09.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 31 Oct 2009 07:09:37 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 31 Oct 2009 21:09:26 +0700
-X-Mailer: git-send-email 1.6.5.2.216.g9c1ec
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Y5O2J7+JhsvEq7hMkuEa/B0Zzc31aRmro87GbZeNx7L99XKbSURPRycMxAaFahVujL
+         U3QQG/pNr80c+MYl8nkGZle/kq1KpVvxWxukisnvt5V+W08lb56LiR/m06d2khUWJcWF
+         jjAoNjs4ymiWtEvdJaSUeavwzTmVl/YIjvw0E=
+Received: by 10.216.89.193 with SMTP id c43mr1875183wef.221.1257006089645; 
+	Sat, 31 Oct 2009 09:21:29 -0700 (PDT)
+In-Reply-To: <200910311304.05408.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131845>
 
-The function excluded_from_list (or its public API excluded) is
-currently used to mark what entry is included in sparse checkout.
-Because index does not have directories, the pattern "foo", while
-would match directory "foo" on working directory, would not match
-against index.
+Heya,
 
-To overcome this, if a pattern does not match, check if it matches
-parent directories too before moving on to the next pattern. This
-behavior only applies to index matching.
+On Sat, Oct 31, 2009 at 13:04, Johan Herland <johan@herland.net> wrote:
+> On Friday 30 October 2009, Sverre Rabbelier wrote:
+> This conglomeration of patch series is becoming fairly complicated, and it's
+> becoming hard to stay in sync. I suggest that you drop the CVS-specific
+> parts from this series, and work on stabilizing the common infrastructure.
+> Once that has settled, you can send a git-remote-hg series, and I can send a
+> rebased and updated git-remote-cvs series.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- There is subtle difference, which might break things. When working
- with file system, it checks top-down, parent directories first.
- I do bottom-up.
+That sounds like a good idea; I want to use the marks in git-remote-hg as well.
 
- If/you/have/deep/directories sparse checkout may become slow.
+> Feel free to reorganize the patches so that the git_remote_helpers
+> infrastructure is created in the correct location (instead of reorganizing
+> git_remote_cvs).
 
- And my test broke :(
+Ok, will do.
 
- dir.c                                |   24 ++++++++++++++++++++++--
- t/t1009-read-tree-sparse-checkout.sh |    4 ++--
- 2 files changed, 24 insertions(+), 4 deletions(-)
+-- 
+Cheers,
 
-diff --git a/dir.c b/dir.c
-index 3a8d3e6..82227e5 100644
---- a/dir.c
-+++ b/dir.c
-@@ -334,13 +334,15 @@ static void prep_exclude(struct dir_struct *dir, =
-const char *base, int baselen)
- }
-=20
- /* Scan the list and let the last match determine the fate.
-+ * dtype =3D=3D NULL means matching against index, not working directo=
-ry.
-  * Return 1 for exclude, 0 for include and -1 for undecided.
-  */
--int excluded_from_list(const char *pathname,
--		       int pathlen, const char *basename, int *dtype,
-+int excluded_from_list(const char *pathname_,
-+		       int pathlen_, const char *basename_, int *dtype,
- 		       struct exclude_list *el)
- {
- 	int i;
-+	char buf[PATH_MAX];
-=20
- 	if (el->nr) {
- 		for (i =3D el->nr - 1; 0 <=3D i; i--) {
-@@ -348,6 +350,11 @@ int excluded_from_list(const char *pathname,
- 			const char *exclude =3D x->pattern;
- 			int to_exclude =3D x->to_exclude;
-=20
-+			const char *pathname =3D pathname_;
-+			const char *basename =3D basename_;
-+			int pathlen =3D pathlen_;
-+
-+recheck:
- 			if (x->flags & EXC_FLAG_MUSTBEDIR) {
- 				if (!dtype) {
- 					if (!prefixcmp(pathname, exclude))
-@@ -398,6 +405,19 @@ int excluded_from_list(const char *pathname,
- 					    return to_exclude;
- 				}
- 			}
-+
-+			if (!dtype) { /* matching against index */
-+				basename =3D strrchr(pathname, '/');
-+				if (basename) {
-+					pathlen =3D basename-pathname;
-+					memcpy(buf, pathname, pathlen);
-+					buf[pathlen] =3D '\0';
-+					pathname =3D buf;
-+					basename =3D strrchr(pathname, '/');
-+					basename =3D (basename) ? basename+1 : pathname;
-+					goto recheck;
-+				}
-+			}
- 		}
- 	}
- 	return -1; /* undecided */
-diff --git a/t/t1009-read-tree-sparse-checkout.sh b/t/t1009-read-tree-s=
-parse-checkout.sh
-index 62246db..b57d237 100755
---- a/t/t1009-read-tree-sparse-checkout.sh
-+++ b/t/t1009-read-tree-sparse-checkout.sh
-@@ -84,13 +84,13 @@ cat >expected.swt <<EOF
- H init.t
- H sub/added
- EOF
--test_expect_failure 'match directories without trailing slash' '
-+test_expect_success 'match directories without trailing slash' '
- 	echo init.t > .git/info/sparse-checkout &&
- 	echo sub >> .git/info/sparse-checkout &&
- 	git read-tree -m -u HEAD &&
- 	git ls-files -t > result &&
- 	test_cmp expected.swt result &&
--	test ! -f init.t &&
-+	test -f init.t &&
- 	test -f sub/added
- '
-=20
---=20
-1.6.5.2.216.g9c1ec
+Sverre Rabbelier
