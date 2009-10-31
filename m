@@ -1,90 +1,61 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] clone: detect extra arguments
-Date: Sat, 31 Oct 2009 12:32:27 +0100
-Message-ID: <200910311232.27278.johan@herland.net>
-References: <20091029081030.GA11213@progeny.tock>
- <20091030144525.GA22583@coredump.intra.peff.net>
- <20091030145108.GA881@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] diff --color-words -U0: fix the location of hunk
+ headers
+Date: Sat, 31 Oct 2009 12:48:57 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0910311247590.4985@pacific.mpi-cbg.de>
+References: <1256732672-11817-1-git-send-email-markus.heidelberg@web.de> <200910291222.42598.markus.heidelberg@web.de> <alpine.DEB.1.00.0910291425010.3687@felix-maschine> <200910291729.23562.markus.heidelberg@web.de> <7v3a50n6hw.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.0910301831190.5383@felix-maschine> <7vr5sklo7c.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: markus.heidelberg@web.de, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 31 12:37:58 2009
+X-From: git-owner@vger.kernel.org Sat Oct 31 12:45:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N4CHO-0007Ty-2t
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 12:37:58 +0100
+	id 1N4CP3-0001Yv-H9
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 12:45:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757520AbZJaLcZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Oct 2009 07:32:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757507AbZJaLcZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Oct 2009 07:32:25 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:57768 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1757504AbZJaLcY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 31 Oct 2009 07:32:24 -0400
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KSD00K41MQ4L060@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Sat, 31 Oct 2009 12:32:28 +0100 (MET)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KSD00G02MQ3CK20@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Sat, 31 Oct 2009 12:32:28 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.10.31.112126
-User-Agent: KMail/1.12.2 (Linux/2.6.30-ARCH; KDE/4.3.2; x86_64; ; )
-In-reply-to: <20091030145108.GA881@coredump.intra.peff.net>
+	id S1757583AbZJaLpl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Oct 2009 07:45:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757575AbZJaLpk
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Oct 2009 07:45:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45829 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757570AbZJaLpk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Oct 2009 07:45:40 -0400
+Received: (qmail invoked by alias); 31 Oct 2009 11:45:43 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp006) with SMTP; 31 Oct 2009 12:45:43 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Dw+QfstND0+z7od641c8Ihz8ESbzFKv23KMmsQC
+	Veg3EMrhOn880Q
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vr5sklo7c.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.73
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131840>
 
-On Friday 30 October 2009, Jeff King wrote:
-> On Fri, Oct 30, 2009 at 10:45:25AM -0400, Jeff King wrote:
-> > But looking at the usage message, there is some potential for cleanup.
+Hi,
+
+On Fri, 30 Oct 2009, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Also, we should probably do this (I did it as a patch on master, though,
-> as it is an independent fix):
+> > The reason I did not do that was to avoid a full subroutine call, as I 
+> > expected this code path to be very expensive.
 > 
-> -- >8 --
-> Subject: [PATCH] clone: fix --recursive usage message
-> 
-> Looks like a mistaken cut-and-paste in e7fed18a.
+> This is only done for the "word diff" mode, and my gut feeling is that it
+> is not such a big issue.
 
-Yes. Please fix my screwup.
+Yeah, sorry, I should have stated explicitely that I no longer think that 
+there is a performance issue.
 
-> Signed-off-by: Jeff King <peff@peff.net>
-
-Acked-by: Johan Herland <johan@herland.net>
-
-> ---
->  builtin-clone.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/builtin-clone.c b/builtin-clone.c
-> index 5762a6f..436e8da 100644
-> --- a/builtin-clone.c
-> +++ b/builtin-clone.c
-> @@ -61,7 +61,7 @@ static struct option builtin_clone_options[] = {
->  	OPT_BOOLEAN('s', "shared", &option_shared,
->  		    "setup as shared repository"),
->  	OPT_BOOLEAN(0, "recursive", &option_recursive,
-> -		    "setup as shared repository"),
-> +		    "initialize submodules in the clone"),
->  	OPT_STRING(0, "template", &option_template, "path",
->  		   "path the template repository"),
->  	OPT_STRING(0, "reference", &option_reference, "repo",
-> 
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Ciao,
+Dscho
