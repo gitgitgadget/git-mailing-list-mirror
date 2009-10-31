@@ -1,118 +1,206 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH v5 00/28] Return of smart HTTP
-Date: Fri, 30 Oct 2009 17:47:18 -0700
-Message-ID: <1256950067-27938-1-git-send-email-spearce@spearce.org>
+Subject: [PATCH v5 02/28] pkt-line: Add strbuf based functions
+Date: Fri, 30 Oct 2009 17:47:21 -0700
+Message-ID: <1256950067-27938-4-git-send-email-spearce@spearce.org>
+References: <1256950067-27938-1-git-send-email-spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 31 01:48:11 2009
+X-From: git-owner@vger.kernel.org Sat Oct 31 01:48:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N428Z-0001cH-1z
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 01:48:11 +0100
+	id 1N428a-0001cH-EA
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Oct 2009 01:48:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757561AbZJaAro (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2009 20:47:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757547AbZJaAro
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 20:47:44 -0400
-Received: from george.spearce.org ([209.20.77.23]:36898 "EHLO
+	id S1757582AbZJaArv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2009 20:47:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757576AbZJaArt
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Oct 2009 20:47:49 -0400
+Received: from george.spearce.org ([209.20.77.23]:36905 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757542AbZJaArn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2009 20:47:43 -0400
+	with ESMTP id S1757568AbZJaArp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2009 20:47:45 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id ACD583811E; Sat, 31 Oct 2009 00:47:48 +0000 (UTC)
+	id C861E38260; Sat, 31 Oct 2009 00:47:50 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id F2D053811E
-	for <git@vger.kernel.org>; Sat, 31 Oct 2009 00:47:47 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id D6C2038200
+	for <git@vger.kernel.org>; Sat, 31 Oct 2009 00:47:48 +0000 (UTC)
 X-Mailer: git-send-email 1.6.5.2.181.gd6f41
+In-Reply-To: <1256950067-27938-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131785>
 
-Hopefully the final spin of the smart HTTP series.  I think we are
-down to bike shedding, which I take it means folks are otherwise
-reasonably happy with the code.
+These routines help to work with pkt-line values inside of a strbuf,
+permitting simple formatting of buffered network messages.
 
-Because the series is so large I'll send an inter-diff relative to
-v4 after this cover letter.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ pkt-line.c |   84 +++++++++++++++++++++++++++++++++++++++++++++++++++--------
+ pkt-line.h |    4 +++
+ 2 files changed, 76 insertions(+), 12 deletions(-)
 
-
-Clemens Buchacher (2):
-  remote-helpers: return successfully if everything up-to-date
-  set httpd port before sourcing lib-httpd
-
-Mark Lodato (5):
-  http-backend: add GIT_PROJECT_ROOT environment var
-  http-backend: reword some documentation
-  http-backend: use mod_alias instead of mod_rewrite
-  http-backend: add example for gitweb on same URL
-  http-backend: more explict LocationMatch
-
-Shawn O. Pearce (19):
-  pkt-line: Add strbuf based functions
-  pkt-line: Make packet_read_line easier to debug
-  fetch-pack: Use a strbuf to compose the want list
-  Move "get_ack()" back to fetch-pack
-  Add multi_ack_detailed capability to fetch-pack/upload-pack
-  remote-curl: Refactor walker initialization
-  fetch: Allow transport -v -v -v to set verbosity to 3
-  remote-helpers: Fetch more than one ref in a batch
-  remote-helpers: Support custom transport options
-  Move WebDAV HTTP push under remote-curl
-  Git-aware CGI to provide dumb HTTP transport
-  Add stateless RPC options to upload-pack, receive-pack
-  Smart fetch and push over HTTP: server side
-  Discover refs via smart HTTP server when available
-  Smart push over HTTP: client side
-  Smart fetch over HTTP: client side
-  Smart HTTP fetch: gzip requests
-  http tests: use /dumb/ URL prefix
-  test smart http fetch and push
-
-Tay Ray Chuan (2):
-  http-push: fix check condition on http.c::finish_http_pack_request()
-  t5540-http-push: remove redundant fetches
-
- .gitignore                           |    1 +
- Documentation/config.txt             |    8 +
- Documentation/git-http-backend.txt   |  170 ++++++++
- Documentation/git-remote-helpers.txt |   85 ++++-
- Makefile                             |    1 +
- builtin-fetch-pack.c                 |  210 ++++++++--
- builtin-fetch.c                      |    2 +-
- builtin-receive-pack.c               |   26 +-
- builtin-send-pack.c                  |  116 +++++-
- cache.h                              |    1 -
- commit.c                             |   10 +-
- commit.h                             |    2 +-
- connect.c                            |   21 -
- fetch-pack.h                         |    3 +-
- http-backend.c                       |  627 ++++++++++++++++++++++++++++
- http-push.c                          |   31 ++-
- http.c                               |   13 +-
- http.h                               |    2 +
- pkt-line.c                           |   84 ++++-
- pkt-line.h                           |    4 +
- remote-curl.c                        |  759 ++++++++++++++++++++++++++++++++--
- send-pack.h                          |    3 +-
- sideband.c                           |   11 +-
- t/lib-httpd/apache.conf              |   24 +-
- t/t5540-http-push.sh                 |   35 +-
- t/t5541-http-push.sh                 |   92 ++++
- t/t5550-http-fetch.sh                |   12 +-
- t/t5551-http-fetch.sh                |  102 +++++
- transport-helper.c                   |  264 +++++++++++-
- transport.c                          |   32 +--
- transport.h                          |    2 +-
- upload-pack.c                        |   71 +++-
- 32 files changed, 2589 insertions(+), 235 deletions(-)
- create mode 100644 Documentation/git-http-backend.txt
- create mode 100644 http-backend.c
- create mode 100755 t/t5541-http-push.sh
- create mode 100755 t/t5551-http-fetch.sh
+diff --git a/pkt-line.c b/pkt-line.c
+index b691abe..bd603f8 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -42,17 +42,19 @@ void packet_flush(int fd)
+ 	safe_write(fd, "0000", 4);
+ }
+ 
++void packet_buf_flush(struct strbuf *buf)
++{
++	strbuf_add(buf, "0000", 4);
++}
++
+ #define hex(a) (hexchar[(a) & 15])
+-void packet_write(int fd, const char *fmt, ...)
++static char buffer[1000];
++static unsigned format_packet(const char *fmt, va_list args)
+ {
+-	static char buffer[1000];
+ 	static char hexchar[] = "0123456789abcdef";
+-	va_list args;
+ 	unsigned n;
+ 
+-	va_start(args, fmt);
+ 	n = vsnprintf(buffer + 4, sizeof(buffer) - 4, fmt, args);
+-	va_end(args);
+ 	if (n >= sizeof(buffer)-4)
+ 		die("protocol error: impossibly long line");
+ 	n += 4;
+@@ -60,9 +62,31 @@ void packet_write(int fd, const char *fmt, ...)
+ 	buffer[1] = hex(n >> 8);
+ 	buffer[2] = hex(n >> 4);
+ 	buffer[3] = hex(n);
++	return n;
++}
++
++void packet_write(int fd, const char *fmt, ...)
++{
++	va_list args;
++	unsigned n;
++
++	va_start(args, fmt);
++	n = format_packet(fmt, args);
++	va_end(args);
+ 	safe_write(fd, buffer, n);
+ }
+ 
++void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
++{
++	va_list args;
++	unsigned n;
++
++	va_start(args, fmt);
++	n = format_packet(fmt, args);
++	va_end(args);
++	strbuf_add(buf, buffer, n);
++}
++
+ static void safe_read(int fd, void *buffer, unsigned size)
+ {
+ 	ssize_t ret = read_in_full(fd, buffer, size);
+@@ -72,15 +96,11 @@ static void safe_read(int fd, void *buffer, unsigned size)
+ 		die("The remote end hung up unexpectedly");
+ }
+ 
+-int packet_read_line(int fd, char *buffer, unsigned size)
++static int packet_length(const char *linelen)
+ {
+ 	int n;
+-	unsigned len;
+-	char linelen[4];
+-
+-	safe_read(fd, linelen, 4);
++	int len = 0;
+ 
+-	len = 0;
+ 	for (n = 0; n < 4; n++) {
+ 		unsigned char c = linelen[n];
+ 		len <<= 4;
+@@ -96,8 +116,20 @@ int packet_read_line(int fd, char *buffer, unsigned size)
+ 			len += c - 'A' + 10;
+ 			continue;
+ 		}
+-		die("protocol error: bad line length character");
++		return -1;
+ 	}
++	return len;
++}
++
++int packet_read_line(int fd, char *buffer, unsigned size)
++{
++	int len;
++	char linelen[4];
++
++	safe_read(fd, linelen, 4);
++	len = packet_length(linelen);
++	if (len < 0)
++		die("protocol error: bad line length character");
+ 	if (!len)
+ 		return 0;
+ 	len -= 4;
+@@ -107,3 +139,31 @@ int packet_read_line(int fd, char *buffer, unsigned size)
+ 	buffer[len] = 0;
+ 	return len;
+ }
++
++int packet_get_line(struct strbuf *out,
++	char **src_buf, size_t *src_len)
++{
++	int len;
++
++	if (*src_len < 4)
++		return -1;
++	len = packet_length(*src_buf);
++	if (len < 0)
++		return -1;
++	if (!len) {
++		*src_buf += 4;
++		*src_len -= 4;
++		return 0;
++	}
++	if (*src_len < len)
++		return -2;
++
++	*src_buf += 4;
++	*src_len -= 4;
++	len -= 4;
++
++	strbuf_add(out, *src_buf, len);
++	*src_buf += len;
++	*src_len -= len;
++	return len;
++}
+diff --git a/pkt-line.h b/pkt-line.h
+index 9df653f..1e5dcfe 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -2,14 +2,18 @@
+ #define PKTLINE_H
+ 
+ #include "git-compat-util.h"
++#include "strbuf.h"
+ 
+ /*
+  * Silly packetized line writing interface
+  */
+ void packet_flush(int fd);
+ void packet_write(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++void packet_buf_flush(struct strbuf *buf);
++void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ 
+ int packet_read_line(int fd, char *buffer, unsigned size);
++int packet_get_line(struct strbuf *out, char **src_buf, size_t *src_len);
+ ssize_t safe_write(int, const void *, ssize_t);
+ 
+ #endif
+-- 
+1.6.5.2.181.gd6f41
