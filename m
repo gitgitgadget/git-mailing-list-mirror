@@ -1,99 +1,102 @@
-From: Bernt Hansen <bernt@norang.ca>
-Subject: Re: [PATCH 1/2] gitk: Initialize msgcat before first use
-Date: Sun, 01 Nov 2009 08:09:01 -0500
-Organization: Norang Consulting Inc
-Message-ID: <874opel7de.fsf@gollum.intra.norang.ca>
-References: <1256415640-10328-1-git-send-email-bernt@norang.ca>
-	<1256415640-10328-2-git-send-email-bernt@norang.ca>
-	<87d443xn5u.fsf@users.sourceforge.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Fw: git-core: SIGSEGV during {peek,ls}-remote on HTTP remotes.
+Date: Sun, 1 Nov 2009 15:46:40 +0100
+Message-ID: <fabb9a1e0911010646v2043bdb7l9215f1114e9e8385@mail.gmail.com>
+References: <20091101.010702.527849118592864646._deepfire@feelingofgreen.ru> 
+	<7v8weq50pm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sun Nov 01 14:12:04 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Samium Gromoff <_deepfire@feelingofgreen.ru>, git@vger.kernel.org,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Tay Ray Chuan <rctay89@gmail.com>,
+	Mike Hommey <mh@glandium.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 01 15:47:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N4aBH-0007Z2-8X
-	for gcvg-git-2@lo.gmane.org; Sun, 01 Nov 2009 14:09:15 +0100
+	id 1N4bhz-00071W-6r
+	for gcvg-git-2@lo.gmane.org; Sun, 01 Nov 2009 15:47:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751956AbZKANJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Nov 2009 08:09:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751952AbZKANJD
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Nov 2009 08:09:03 -0500
-Received: from mho-01-ewr.mailhop.org ([204.13.248.71]:55616 "EHLO
-	mho-01-ewr.mailhop.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751614AbZKANJC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Nov 2009 08:09:02 -0500
-Received: from cpe000102d0fe75-cm0012256ecbde.cpe.net.cable.rogers.com ([99.239.148.180] helo=mail.norang.ca)
-	by mho-01-ewr.mailhop.org with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <bernt@norang.ca>)
-	id 1N4aB8-0002c2-Fs; Sun, 01 Nov 2009 13:09:06 +0000
-X-Mail-Handler: MailHop Outbound by DynDNS
-X-Originating-IP: 99.239.148.180
-X-Report-Abuse-To: abuse@dyndns.com (see http://www.dyndns.com/services/mailhop/outbound_abuse.html for abuse reporting information)
-X-MHO-User: U2FsdGVkX1//DBHsLeDQ6eJxugEwC7fd
-Received-SPF: none (mail.norang.ca: bernt@gollum.intra.norang.ca does not designate permitted sender hosts) receiver=mail.norang.ca; client-ip=192.168.1.5; helo=gollum.intra.norang.ca; envelope-from=bernt@gollum.intra.norang.ca; x-software=spfmilter 0.97 http://www.acme.com/software/spfmilter/ with libspf-unknown;
-Received: from gollum.intra.norang.ca (gollum.intra.norang.ca [192.168.1.5])
-	by mail.norang.ca (8.14.3/8.14.3/Debian-5) with ESMTP id nA1D93E5006770
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 1 Nov 2009 08:09:04 -0500
-Received: from gollum.intra.norang.ca (localhost [127.0.0.1])
-	by gollum.intra.norang.ca (8.14.3/8.14.3/Debian-5) with ESMTP id nA1D93vu008100;
-	Sun, 1 Nov 2009 08:09:03 -0500
-Received: (from bernt@localhost)
-	by gollum.intra.norang.ca (8.14.3/8.14.3/Submit) id nA1D926K008099;
-	Sun, 1 Nov 2009 08:09:02 -0500
-In-Reply-To: <87d443xn5u.fsf@users.sourceforge.net> (Pat Thoyts's message of "31 Oct 2009 21\:34\:53 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1752703AbZKAOq5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Nov 2009 09:46:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752569AbZKAOq4
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Nov 2009 09:46:56 -0500
+Received: from mail-ew0-f228.google.com ([209.85.219.228]:33404 "EHLO
+	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752564AbZKAOq4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Nov 2009 09:46:56 -0500
+Received: by ewy28 with SMTP id 28so4135652ewy.18
+        for <git@vger.kernel.org>; Sun, 01 Nov 2009 06:47:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Lw4A+K5mJ1RVwuS/12zP3Ap6xwJ4xCoBZnkq7kE5nrc=;
+        b=PEsO290OEB1wMLmFKQ9fH5lS9luCud/Qz6PYpRqoXahHeBlP76Y2DPH8Rt4Wa0Royc
+         +swE71y3Ozocgo9qTEX0FFLMhxN9VQIZbg6s/HbbYTyFfjbhMFmBVywPKv83mjrAqlrl
+         vPcOBcqwLPeaKyQNkk9dSzi+PFRpmQmjmK57A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=AufSy5ilQ4lw+sdt1KGifIFEtlOrX0JCQsb3eUmDdN+bkoH+3ANKfSToehjtCKKTxG
+         nZw1YYIbuyfuTqNxuB8yTdPS1Nru4Dfgk/SOd2OKp2lpOJaIb99eTb0wR3noOc2iG7zF
+         Sptt/rTZgHXDr3rD96y7AoK0sddEgRt+/ErIA=
+Received: by 10.216.90.198 with SMTP id e48mr1679350wef.188.1257086820137; 
+	Sun, 01 Nov 2009 06:47:00 -0800 (PST)
+In-Reply-To: <7v8weq50pm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131870>
 
-Pat Thoyts <patthoyts@users.sourceforge.net> writes:
+Heya,
 
-> Bernt Hansen <bernt@norang.ca> writes:
->
->>The error text generated when your version of Tcl is too old is
->>translated with msgcat (mc) before msgcat is initialized.  This
->>causes Tcl to abort with:
->>
->>    Error in startup script: invalid command name "mc"
->>
->>We now initialize msgcat first before we check the Tcl version.  Msgcat
->>is available since Tcl 8.1.
->>
->
-> This doesn't quite work. [file normalize] was introduced with Tcl 8.4
-> and when I test this by starting it using Tcl 8.3 I get an error:
->  "bad option "normalize": must be atime, attributes, channels..."
-> from line 11014. It is probably sufficient to just drop the [file
-> normalize] here. On Windows $argv0 is fully qualified and 
-> [file dirname] works ok on it. By removing the [file normalize] I get
-> the expected error dialog when testing with 8.3.
-> However, on Windows we actually get a better looking result by not
-> catching the [package require Tcl 8.4] and just letting Tk bring up a
-> standard message box with the version conflict error message.
->
-> Well, actually if show_error just used tk_messageBox it would look
-> better on Windows.
+On Sun, Nov 1, 2009 at 05:27, Junio C Hamano <gitster@pobox.com> wrote:
+> =A0- Should we fix get_helper() in transport-helper.c, instead of tou=
+ching
+> =A0 ls-remote.c like this patch does?
 
-You're right.  Thanks for catching this.  When I tested this code I
-bumped the version number temporarily to 8.5 instead of downgrading TK
-to 8.3.
+Probably, yes.
 
-The problem I was trying to fix was show_error using mc internally
-before it was initialized.  Maybe it would be better to give show_error
-an optional parameter that controls calling mc - so that the call for
-the version check can just bypass the mc translation of the text and OK
-buttons.  With this approach the code I moved around can just stay where
-it is and all of the existing calls to show_error will use the default
-parameter setting which invokes mc.
+> =A0 This issue really boils down to this question: is it valid for a
+> =A0 transport to have NULL in its remote field, and should all the co=
+de
+> =A0 that touch transport be prepared to deal with such a transport
+> =A0 structure?
 
-Would that be a better approach?
+I think the code in transport-helper should be prepared to deal with
+such a field appropriately, since it knows beforehand that only a few
+operations will be performed on such a remote (I'm guessing just the
+'list' command).
 
--Bernt
+> =A0 In general, what should the initial environment for helpers be? =A0=
+Should
+> =A0 they assume that they have to figure out where the git repository=
+ is
+> =A0 themselves (in other words, should they assume they cannot rely o=
+n
+> =A0 anything the caller does before they are called?
+
+Let's not duplicate that logic, if git can figure out where we are, it
+should do so, if it can't, then the helper can't either.
+
+> =A0 Would the caller
+> =A0 generally have done the usual repo discovery (including chdir() t=
+o the
+> =A0 toplevel), and there are some set of assumptions they can make? =A0=
+If so
+> =A0 what are they?
+
+Probably the above, if there is going to be a git repository, we'll
+have found it, if there isn't one, we're in 'bare' mode.
+
+--=20
+Cheers,
+
+Sverre Rabbelier
