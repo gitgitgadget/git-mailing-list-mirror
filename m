@@ -1,236 +1,161 @@
-From: Erick Mattos <erick.mattos@gmail.com>
-Subject: [PATCH] commit -c/-C/--amend: acquire authorship and restamp time with --claim
-Date: Sun,  1 Nov 2009 16:45:27 -0200
-Message-ID: <1257101127-8196-1-git-send-email-erick.mattos@gmail.com>
-References: <1257099580-7365-1-git-send-email-erick.mattos@gmail.com>
-Cc: git@vger.kernel.org, Erick Mattos <erick.mattos@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Fw: git-core: SIGSEGV during {peek,ls}-remote on HTTP remotes.
+Date: Sun, 1 Nov 2009 14:43:34 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.0911011348190.14365@iabervon.org>
+References: <20091101.010702.527849118592864646._deepfire@feelingofgreen.ru> <7v8weq50pm.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Samium Gromoff <_deepfire@feelingofgreen.ru>, git@vger.kernel.org,
+	Tay Ray Chuan <rctay89@gmail.com>,
+	Mike Hommey <mh@glandium.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 01 19:45:59 2009
+X-From: git-owner@vger.kernel.org Sun Nov 01 20:43:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N4fR8-0001wG-1X
-	for gcvg-git-2@lo.gmane.org; Sun, 01 Nov 2009 19:45:58 +0100
+	id 1N4gL1-0001FX-HK
+	for gcvg-git-2@lo.gmane.org; Sun, 01 Nov 2009 20:43:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753216AbZKASpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Nov 2009 13:45:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753211AbZKASpq
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Nov 2009 13:45:46 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:59055 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753063AbZKASpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Nov 2009 13:45:45 -0500
-Received: by yxe17 with SMTP id 17so3947940yxe.33
-        for <git@vger.kernel.org>; Sun, 01 Nov 2009 10:45:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=PliqsPZM6Fh4zZa2w7PcQkB6aypVasYy9l3arAWUH30=;
-        b=KKuLSYfC0QY0B8i6LFbKx1tdna3GUe2Pvyb3s9Bx4Y+WcFDiVijABcsHKbgdt4FaJw
-         tlMwn2fMxUO/RAeFNfzKL/yNOAXm2xMyGAuL/dGKtsOl0uTtvM5wd9axEQJu91wpGx4p
-         hCeGfGS3NVqPJ3XQVNZ8WNNXnw93EgljxfVx4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Tk/Ih3yPiAHSaEU7Gpxog1z3cex/nzAbxUvJCnQyKH155NO7dWE4ECk6qTZmYp9Djn
-         6vRvtBrFCdXA68KgAcIdJir5m7YUPeGSOe7VBvMYsNHLFGWWG6go8PB082Hxs7Hy+AnX
-         u6jfPTrYvxj9K5DfH7eVn4wb1z0M1T03q29Ss=
-Received: by 10.150.16.14 with SMTP id 14mr6794583ybp.246.1257101150337;
-        Sun, 01 Nov 2009 10:45:50 -0800 (PST)
-Received: from localhost.localdomain ([187.15.76.58])
-        by mx.google.com with ESMTPS id 8sm1830888ywg.19.2009.11.01.10.45.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 01 Nov 2009 10:45:49 -0800 (PST)
-X-Mailer: git-send-email 1.6.5.GIT
-In-Reply-To: <1257099580-7365-1-git-send-email-erick.mattos@gmail.com>
+	id S1753325AbZKATnb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Nov 2009 14:43:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753209AbZKATnb
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Nov 2009 14:43:31 -0500
+Received: from iabervon.org ([66.92.72.58]:52088 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752112AbZKATna (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Nov 2009 14:43:30 -0500
+Received: (qmail 16037 invoked by uid 1000); 1 Nov 2009 19:43:34 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 1 Nov 2009 19:43:34 -0000
+In-Reply-To: <7v8weq50pm.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131874>
 
-When we use one of the options above we are normally trying to do mainly
-two things: one is using the source as a template and second is to
-recreate a commit with corrections.
+On Sat, 31 Oct 2009, Junio C Hamano wrote:
 
-When they are used, the authorship and timestamp recorded in the newly
-created commit is always taken from the original commit.  And they
-should not when we are using it as a template.
+> Samium Gromoff <_deepfire@feelingofgreen.ru> writes:
+> 
+> > Attached is the SEGV bugreport I sent to debian.
+> 
+> Thanks for a report.
+> 
+> There are two issues.
+> 
+>  * transport-helper.c::get_helper() assumes that the transport structure
+>    always has its remote member filled and it can get name out of it.
+>    This is the segv in the report.
+> 
+>  * Even if we work around the above issue, the helper subprocess (in this
+>    case, remote-curl helper) insists on being inside a git repository,  To
+>    satisfy ls-remote request, you do not have to be in one.
+> 
+> Attached is a minimum fix/work around, but this is done without being very
+> familiar with the current assumptions in the codepaths involved.
+> 
+> Issues I want area experts to consider before coming up with the final fix
+> are:
+> 
+>  - Should we fix get_helper() in transport-helper.c, instead of touching
+>    ls-remote.c like this patch does?
+> 
+>    This issue really boils down to this question: is it valid for a
+>    transport to have NULL in its remote field, and should all the code
+>    that touch transport be prepared to deal with such a transport
+>    structure?
 
-The new --claim option is meant to solve this need by regenerating the
-timestamp and setting as new author the committer or the one specified
-on --author option.
+I think there's no benefit to allowing NULL for the remote; I think you 
+can always get a struct remote for what you want to access. So it's 
+probably just as well to require it, particularly because, as in the case 
+of cmd_ls_remote() below, you'd need a special case to not get a struct 
+remote.
 
-Signed-off-by: Erick Mattos <erick.mattos@gmail.com>
----
- Documentation/git-commit.txt |   11 ++++-
- builtin-commit.c             |    7 ++-
- t/t7509-commit.sh            |   87 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 99 insertions(+), 6 deletions(-)
- create mode 100755 t/t7509-commit.sh
+Is there any way in which the intended semantics of "transport_get(NULL, 
+url)" is not the same as "transport_get(remote_get(url), url)"?
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 0578a40..01eeb3e 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git commit' [-a | --interactive] [-s] [-v] [-u<mode>] [--amend] [--dry-run]
--	   [(-c | -C) <commit>] [-F <file> | -m <msg>]
-+	   [(-c | -C) <commit>] [-F <file> | -m <msg>] [--claim]
- 	   [--allow-empty] [--no-verify] [-e] [--author=<author>]
- 	   [--cleanup=<mode>] [--] [[-i | -o ]<file>...]
- 
-@@ -61,14 +61,19 @@ OPTIONS
- -C <commit>::
- --reuse-message=<commit>::
- 	Take an existing commit object, and reuse the log message
--	and the authorship information (including the timestamp)
--	when creating the commit.
-+	and the authorship information when creating the commit.
- 
- -c <commit>::
- --reedit-message=<commit>::
- 	Like '-C', but with '-c' the editor is invoked, so that
- 	the user can further edit the commit message.
- 
-+--claim::
-+	When used with -C/-c/--amend options, declare that the
-+	authorship of the resulting commit now belongs of the committer.
-+	This also renews the author timestamp.  Therefore this option
-+	sets the use of only the message from the original commit.
-+
- -F <file>::
- --file=<file>::
- 	Take the commit message from the given file.  Use '-' to
-diff --git a/builtin-commit.c b/builtin-commit.c
-index c395cbf..919e3fe 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -51,7 +51,7 @@ static const char *template_file;
- static char *edit_message, *use_message;
- static char *author_name, *author_email, *author_date;
- static int all, edit_flag, also, interactive, only, amend, signoff;
--static int quiet, verbose, no_verify, allow_empty, dry_run;
-+static int quiet, verbose, no_verify, allow_empty, dry_run, claim;
- static char *untracked_files_arg;
- /*
-  * The default commit message cleanup mode will remove the lines
-@@ -91,8 +91,9 @@ static struct option builtin_commit_options[] = {
- 	OPT_FILENAME('F', "file", &logfile, "read log from file"),
- 	OPT_STRING(0, "author", &force_author, "AUTHOR", "override author for commit"),
- 	OPT_CALLBACK('m', "message", &message, "MESSAGE", "specify commit message", opt_parse_m),
--	OPT_STRING('c', "reedit-message", &edit_message, "COMMIT", "reuse and edit message from specified commit "),
-+	OPT_STRING('c', "reedit-message", &edit_message, "COMMIT", "reuse and edit message from specified commit"),
- 	OPT_STRING('C', "reuse-message", &use_message, "COMMIT", "reuse message from specified commit"),
-+	OPT_BOOLEAN(0, "claim", &claim, "acquire authorship and restamp time of resulting commit"),
- 	OPT_BOOLEAN('s', "signoff", &signoff, "add Signed-off-by:"),
- 	OPT_FILENAME('t', "template", &template_file, "use specified template file"),
- 	OPT_BOOLEAN('e', "edit", &edit_flag, "force edit of commit"),
-@@ -381,7 +382,7 @@ static void determine_author_info(void)
- 	email = getenv("GIT_AUTHOR_EMAIL");
- 	date = getenv("GIT_AUTHOR_DATE");
- 
--	if (use_message) {
-+	if (use_message && !claim) {
- 		const char *a, *lb, *rb, *eol;
- 
- 		a = strstr(use_message_buffer, "\nauthor ");
-diff --git a/t/t7509-commit.sh b/t/t7509-commit.sh
-new file mode 100755
-index 0000000..62fb00f
---- /dev/null
-+++ b/t/t7509-commit.sh
-@@ -0,0 +1,87 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2009 Erick Mattos
-+#
-+
-+test_description='git commit
-+
-+Tests for --claim option on a commit.'
-+
-+. ./test-lib.sh
-+
-+TEST_FILE="$PWD"/foo
-+
-+test_expect_success '-C option should be working' '
-+	echo "Initial" > "$TEST_FILE" && 
-+	git add "$TEST_FILE" && 
-+	git commit -m "Initial Commit" --author Frigate\ \<flying@over.world\> && 
-+	sleep 1 && 
-+	echo "Test 1" >> "$TEST_FILE" && 
-+	git add "$TEST_FILE" && 
-+	git commit -C HEAD && 
-+	git cat-file -p HEAD^ | sed -e '/^parent/d' -e '/^tree/d' -e '/^committer/d' > commit_1 && 
-+	git cat-file -p HEAD | sed -e '/^parent/d' -e '/^tree/d' -e '/^committer/d' > commit_2 && 
-+	cmp commit_1 commit_2
-+'
-+
-+test_expect_success '-C option with --claim is working properly' '
-+	sleep 1 &&
-+	echo "Test 2" >> "$TEST_FILE" &&
-+	git add "$TEST_FILE" &&
-+	git commit -C HEAD^ --claim &&
-+	git cat-file -p HEAD^ | grep '^author' > commit_1 &&
-+	git cat-file -p HEAD | grep '^author' > commit_2 &&
-+	test_must_fail cmp commit_1 commit_2
-+'
-+
-+test_expect_success '-c option should be working' '
-+	echo "Initial" > "$TEST_FILE" && 
-+	git add "$TEST_FILE" && 
-+	git commit -m "Initial Commit" --author Frigate\ \<flying@over.world\> && 
-+	sleep 1 && 
-+	echo "Test 3" >> "$TEST_FILE" && 
-+	git add "$TEST_FILE" && 
-+	git commit -c HEAD <<EOF
-+	"Changed" 
-+	EOF && 
-+	git cat-file -p HEAD^ | grep '^author' > commit_1 &&
-+	git cat-file -p HEAD | grep '^author' > commit_2 &&
-+	cmp commit_1 commit_2
-+'
-+
-+test_expect_success '-c option with --claim is working properly' '
-+	sleep 1 &&
-+	echo "Test 4" >> "$TEST_FILE" &&
-+	git add "$TEST_FILE" &&
-+	git commit -c HEAD^ --claim <<EOF
-+	"Changed again" 
-+	EOF && 
-+	git cat-file -p HEAD^ | grep '^author' > commit_1 &&
-+	git cat-file -p HEAD | grep '^author' > commit_2 &&
-+	test_must_fail cmp commit_1 commit_2
-+'
-+
-+test_expect_success '--amend option should be working' '
-+	echo "Initial" > "$TEST_FILE" && 
-+	git add "$TEST_FILE" && 
-+	git commit -m "Initial Commit" --author Frigate\ \<flying@over.world\> && 
-+	echo "Test 5" >> "$TEST_FILE" && 
-+	git add "$TEST_FILE" && 
-+	git commit -m "--amend test" && 
-+	git cat-file -p HEAD | grep '^author' > commit_1 &&
-+	sleep 1 && 
-+	git commit -m "Changed" --amend && 
-+	git cat-file -p HEAD | grep '^author' > commit_2 &&
-+	cmp commit_1 commit_2
-+'
-+
-+test_expect_success '--amend option with --claim is working properly' '
-+	sleep 1 &&
-+	echo "Test 6" >> "$TEST_FILE" &&
-+	git add "$TEST_FILE" &&
-+	git commit -m "Changed again" --amend --claim && 
-+	git cat-file -p HEAD | grep '^author' > commit_1 &&
-+	test_must_fail cmp commit_1 commit_2
-+'
-+
-+test_done
--- 
-1.6.5.GIT
+(And, in the extended series, I make "transport_get(remote_get(url), 
+NULL)" also mean the same thing as above, while "transport_get(NULL, 
+NULL)" is obviously underspecified.)
+
+>  - When helping to handle ls-remote request, there is no need for the
+>    helper to know anything about the local state.  We probably shouldn't
+>    even run setup_git_directory_gently() at all in this case.  But when
+>    helping other kinds of request, the helper does need to know where our
+>    repository is.
+> 
+>    In general, what should the initial environment for helpers be?  Should
+>    they assume that they have to figure out where the git repository is
+>    themselves (in other words, should they assume they cannot rely on
+>    anything the caller does before they are called?  Would the caller
+>    generally have done the usual repo discovery (including chdir() to the
+>    toplevel), and there are some set of assumptions they can make?  If so
+>    what are they?
+
+Probably, the helper should be run with a predicable initial environment, 
+simply because operations that use remote repositories are most often run 
+from the toplevel of a repo, so people will fail to notice their bugs 
+which trigger on running from subdirectories. If it's possible for the 
+core git code to enforce regularity here, these oversights aren't bugs. 
+That is, I think people working on helpers will assume that they always 
+run from the environment that they run from the first time they try, 
+whether or not they're supposed to assume this, and we can save a lot of 
+trouble by making it okay.
+
+Perhaps we should actively tell the helper if there is no git repository 
+(or, if any git repository we happen to be in is merely coincidental and 
+shouldn't affect the helper)? Helpers involving importing will probably 
+want to know they don't have a private refs namespace, private state 
+directory, etc. even for implementing "list" for ls-remote, and it would 
+probably be best to require helper authors to report that they've 
+considered this possibility before trying to use it.
+
+>  builtin-ls-remote.c |    2 +-
+>  remote-curl.c       |    3 ++-
+>  2 files changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin-ls-remote.c b/builtin-ls-remote.c
+> index 78a88f7..a8d5613 100644
+> --- a/builtin-ls-remote.c
+> +++ b/builtin-ls-remote.c
+> @@ -86,7 +86,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+>  			pattern[j - i] = p;
+>  		}
+>  	}
+> -	remote = nongit ? NULL : remote_get(dest);
+> +	remote = remote_get(dest);
+>  	if (remote && !remote->url_nr)
+>  		die("remote %s has no configured URL", dest);
+>  	transport = transport_get(remote, remote ? remote->url[0] : dest);
+
+You can also drop the two checks for remote being non-NULL here, since 
+it's now always non-NULL...
+
+> diff --git a/remote-curl.c b/remote-curl.c
+> index ad6a163..7c83f77 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -81,8 +81,9 @@ int main(int argc, const char **argv)
+>  	struct strbuf buf = STRBUF_INIT;
+>  	const char *url;
+>  	struct walker *walker = NULL;
+> +	int nongit = 0;
+>  
+> -	setup_git_directory();
+> +	setup_git_directory_gently(&nongit);
+>  	if (argc < 2) {
+>  		fprintf(stderr, "Remote needed\n");
+>  		return 1;
+
+Do things like git_path() fail cleanly if there was no git directory? If 
+not, there should probably be tests of nongit on paths that actually need 
+a git directory, rather than relying on the caller not to do anything that 
+needs a git directory. Even if the core is wise enough not to use "fetch" 
+if there's nowhere to put the result, this code is likely to be an example 
+for helpers that won't be able to rely on the same analysis.
+
+	-Daniel
+*This .sig left intentionally blank*
