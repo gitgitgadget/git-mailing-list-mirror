@@ -1,55 +1,55 @@
 From: Erick Mattos <erick.mattos@gmail.com>
-Subject: [PATCH v2] commit -c/-C/--amend: take over authorship and restamp time with --claim
-Date: Sun,  1 Nov 2009 16:19:40 -0200
-Message-ID: <1257099580-7365-1-git-send-email-erick.mattos@gmail.com>
-References: <7v7hub5kam.fsf@alter.siamese.dyndns.org>
+Subject: [PATCH] commit -c/-C/--amend: acquire authorship and restamp time with --claim
+Date: Sun,  1 Nov 2009 16:45:27 -0200
+Message-ID: <1257101127-8196-1-git-send-email-erick.mattos@gmail.com>
+References: <1257099580-7365-1-git-send-email-erick.mattos@gmail.com>
 Cc: git@vger.kernel.org, Erick Mattos <erick.mattos@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 01 19:20:41 2009
+X-From: git-owner@vger.kernel.org Sun Nov 01 19:45:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N4f2e-00080P-0A
-	for gcvg-git-2@lo.gmane.org; Sun, 01 Nov 2009 19:20:40 +0100
+	id 1N4fR8-0001wG-1X
+	for gcvg-git-2@lo.gmane.org; Sun, 01 Nov 2009 19:45:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753103AbZKASUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Nov 2009 13:20:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753091AbZKASUZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Nov 2009 13:20:25 -0500
-Received: from mail-yw0-f202.google.com ([209.85.211.202]:61382 "EHLO
-	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753068AbZKASUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Nov 2009 13:20:24 -0500
-Received: by ywh40 with SMTP id 40so3923773ywh.33
-        for <git@vger.kernel.org>; Sun, 01 Nov 2009 10:20:28 -0800 (PST)
+	id S1753216AbZKASpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Nov 2009 13:45:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753211AbZKASpq
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Nov 2009 13:45:46 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:59055 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753063AbZKASpp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Nov 2009 13:45:45 -0500
+Received: by yxe17 with SMTP id 17so3947940yxe.33
+        for <git@vger.kernel.org>; Sun, 01 Nov 2009 10:45:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=tKxZE7vQ0AKnRlijSqDmuckFCUCG+TiSS4ysIc4Qfb4=;
-        b=owYzUqEz1v1j7IgfuCEfoluhyQgjGo3P9lfkTvbklG/p0DIRh9ms0rygrJlMo0WPHf
-         DGxvRxoYNQlHz29Bv5a6U+TLlslFsybrroELyXlO/r4RxX9mn06HbwWpVcTUx4v1ANSH
-         6vPGbua1qmsUUR2PMJ4POJS8VqzHAV8OyTLoE=
+        bh=PliqsPZM6Fh4zZa2w7PcQkB6aypVasYy9l3arAWUH30=;
+        b=KKuLSYfC0QY0B8i6LFbKx1tdna3GUe2Pvyb3s9Bx4Y+WcFDiVijABcsHKbgdt4FaJw
+         tlMwn2fMxUO/RAeFNfzKL/yNOAXm2xMyGAuL/dGKtsOl0uTtvM5wd9axEQJu91wpGx4p
+         hCeGfGS3NVqPJ3XQVNZ8WNNXnw93EgljxfVx4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=mqCeuE7dFfdiUjG16w85dpQqYCCY57mIAG1WyIjxMfgDvqbEKGyG/FbcMnteKZq52x
-         JrjECRzHLfngeyAfHOXtLcglqglTV4G7RbbGr7aTa4nHdsfn7OYk1wYSOWh5BEpU+inH
-         hdpEX9eDYhAufMYEgS9O7Md4EKiApxnZQvfhE=
-Received: by 10.150.16.27 with SMTP id 27mr6743501ybp.335.1257099627939;
-        Sun, 01 Nov 2009 10:20:27 -0800 (PST)
+        b=Tk/Ih3yPiAHSaEU7Gpxog1z3cex/nzAbxUvJCnQyKH155NO7dWE4ECk6qTZmYp9Djn
+         6vRvtBrFCdXA68KgAcIdJir5m7YUPeGSOe7VBvMYsNHLFGWWG6go8PB082Hxs7Hy+AnX
+         u6jfPTrYvxj9K5DfH7eVn4wb1z0M1T03q29Ss=
+Received: by 10.150.16.14 with SMTP id 14mr6794583ybp.246.1257101150337;
+        Sun, 01 Nov 2009 10:45:50 -0800 (PST)
 Received: from localhost.localdomain ([187.15.76.58])
-        by mx.google.com with ESMTPS id 4sm1823871ywi.27.2009.11.01.10.20.25
+        by mx.google.com with ESMTPS id 8sm1830888ywg.19.2009.11.01.10.45.48
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 01 Nov 2009 10:20:26 -0800 (PST)
+        Sun, 01 Nov 2009 10:45:49 -0800 (PST)
 X-Mailer: git-send-email 1.6.5.GIT
-In-Reply-To: <7v7hub5kam.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <1257099580-7365-1-git-send-email-erick.mattos@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131873>
 
 When we use one of the options above we are normally trying to do mainly
 two things: one is using the source as a template and second is to
@@ -72,7 +72,7 @@ Signed-off-by: Erick Mattos <erick.mattos@gmail.com>
  create mode 100755 t/t7509-commit.sh
 
 diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 0578a40..27b774e 100644
+index 0578a40..01eeb3e 100644
 --- a/Documentation/git-commit.txt
 +++ b/Documentation/git-commit.txt
 @@ -9,7 +9,7 @@ SYNOPSIS
@@ -101,13 +101,13 @@ index 0578a40..27b774e 100644
 +	When used with -C/-c/--amend options, declare that the
 +	authorship of the resulting commit now belongs of the committer.
 +	This also renews the author timestamp.  Therefore this option
-+	sets the use of the message only from the original commit.
++	sets the use of only the message from the original commit.
 +
  -F <file>::
  --file=<file>::
  	Take the commit message from the given file.  Use '-' to
 diff --git a/builtin-commit.c b/builtin-commit.c
-index c395cbf..33922df 100644
+index c395cbf..919e3fe 100644
 --- a/builtin-commit.c
 +++ b/builtin-commit.c
 @@ -51,7 +51,7 @@ static const char *template_file;
@@ -126,7 +126,7 @@ index c395cbf..33922df 100644
 -	OPT_STRING('c', "reedit-message", &edit_message, "COMMIT", "reuse and edit message from specified commit "),
 +	OPT_STRING('c', "reedit-message", &edit_message, "COMMIT", "reuse and edit message from specified commit"),
  	OPT_STRING('C', "reuse-message", &use_message, "COMMIT", "reuse message from specified commit"),
-+	OPT_BOOLEAN(0, "claim", &claim, "take over cloned commit authorship and renew timestamp"),
++	OPT_BOOLEAN(0, "claim", &claim, "acquire authorship and restamp time of resulting commit"),
  	OPT_BOOLEAN('s', "signoff", &signoff, "add Signed-off-by:"),
  	OPT_FILENAME('t', "template", &template_file, "use specified template file"),
  	OPT_BOOLEAN('e', "edit", &edit_flag, "force edit of commit"),
