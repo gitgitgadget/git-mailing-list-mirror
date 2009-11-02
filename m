@@ -1,83 +1,78 @@
-From: Markus Hitter <mah@jump-ing.de>
-Subject: Binary files in a linear repository
-Date: Mon, 2 Nov 2009 16:08:25 +0100
-Message-ID: <8470D32E-2CAA-4E3F-8BA0-B4578372A3C4@jump-ing.de>
-References: <S1754797AbZKBONX/20091102141323Z+268@vger.kernel.org>
-Mime-Version: 1.0 (Apple Message framework v753.1)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 02 16:14:37 2009
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC PATCH 06/19] Factor ref updating out of fetch_with_import
+Date: Mon, 2 Nov 2009 16:12:59 +0100
+Message-ID: <fabb9a1e0911020712q4920e009w5a6d435be205b68e@mail.gmail.com>
+References: <1256839287-19016-1-git-send-email-srabbelier@gmail.com> 
+	<1256839287-19016-7-git-send-email-srabbelier@gmail.com> <alpine.LNX.2.00.0910300221290.14365@iabervon.org> 
+	<fabb9a1e0910300557x42d3612pf7e83907e91efdc9@mail.gmail.com> 
+	<alpine.LNX.2.00.0910301118070.14365@iabervon.org> <fabb9a1e0911011733o7d8d95eem57e02d455e0bd86@mail.gmail.com> 
+	<alpine.LNX.2.00.0911012038120.14365@iabervon.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johan Herland <johan@herland.net>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Nov 02 16:15:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N4yc8-0003Ov-Lf
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Nov 2009 16:14:37 +0100
+	id 1N4ycg-0003fP-86
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Nov 2009 16:15:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755390AbZKBPOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2009 10:14:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755387AbZKBPOW
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Nov 2009 10:14:22 -0500
-Received: from ud03.udmedia.de ([194.117.254.43]:56356 "EHLO
-	mail.ud03.udmedia.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755380AbZKBPOV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2009 10:14:21 -0500
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Nov 2009 10:14:21 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=mail.ud03.udmedia.de; h=
-	mime-version:in-reply-to:references:content-type:message-id:
-	content-transfer-encoding:from:subject:date:to; q=dns/txt; s=
-	beta; bh=e3kLUIjHOmf1MvjKTTzr6VMDgxQXshdjOvI+4urYRuI=; b=jIaD9Ao
-	Vlbqz6yAUszxRfmoQxJ7pgD3QDW05SKXLFN4Y/nJ6BcmzSZcVP1hLGCLIJWCl/1+
-	e+4WqK3lZkuSuabuGX1lAEEjEd+FUYv/i+pGS7CC7iyyM6vPgGseTt0R11Y5UFF3
-	45htrrqB6v4X0BHRR9TYU7R9idmWXMPjQdAU=
-Received: (qmail 17189 invoked from network); 2 Nov 2009 16:07:44 +0100
-Received: from unknown (HELO ?10.0.0.50?) (ud03?291p1@95.208.144.124)
-  by mail.ud03.udmedia.de with ESMTPA; 2 Nov 2009 16:07:44 +0100
-In-Reply-To: <S1754797AbZKBONX/20091102141323Z+268@vger.kernel.org>
-X-Mailer: Apple Mail (2.753.1)
+	id S1755299AbZKBPOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2009 10:14:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755277AbZKBPOr
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Nov 2009 10:14:47 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:36151 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755262AbZKBPOq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2009 10:14:46 -0500
+Received: by bwz27 with SMTP id 27so6413994bwz.21
+        for <git@vger.kernel.org>; Mon, 02 Nov 2009 07:14:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=xaXVnS/rJHy9ZJ7CrtoSDu6FnW1n+adz+zAoHKq5va0=;
+        b=Dt0yNc1jqZxeYFPy79Zu4FK922WuoVNpPvJ4rF5nj61/MtxwPB9Q4AT+xP3056mnSo
+         dA5CdImyT8H+vluIDLWhsDbPzWgxVRp7C6Wu48BSp4zS21v+oycj5Mj2Ip7PI8jf9Zv/
+         hOP+lBP2j9RLLwnpr8GXmP47Fi3wHNZ0u4Upw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=sTQG0gEqIY0cBdmHHk3oS5bBtyCSTawDQTcqKplRjySsD1qG2eCBl5gTaoKT+vIKCw
+         vCVgg6zgmi6gZAQ0X9opm/T4y2tRQQoC1HxFR4AsemLDuAaG2uDJuQ1h1amWGKsItGI+
+         Rhual+MwwoeRpPT5pZRmoRRiY3zMwgw+Ia0y8=
+Received: by 10.204.10.135 with SMTP id p7mr4104304bkp.69.1257174889858; Mon, 
+	02 Nov 2009 07:14:49 -0800 (PST)
+In-Reply-To: <alpine.LNX.2.00.0911012038120.14365@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131913>
 
+Heya,
 
-Hello all,
+On Mon, Nov 2, 2009 at 04:16, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> Why not have the regular list report:
+>
+> @refs/heads/trunkr HEAD
+>
+> or whatever it is, again like native git? That is, SVN would have an
+> interaction like:
 
-currently I'm planning a frontend tool which makes use of only a  
-small subset of git. The repo's contents is all binary (think of  
-pictures). Accordingly, I can't merge in a meaningful way, making  
-branches of very limited use.
+That's fine with me, but earlier you said you didn't like the whole
+symlinking idea.
 
-The situation I'm trying to solve is:
+You said in another thread you'll be working on some patches, does
+that include this 'refs' command? I want to avoid duplicate work if
+possible :).
 
-- A revision earlier than the latest one is checked out.
+-- 
+Cheers,
 
-- Files of this earlier commit are modified.
-
-- I want to record this earlier commit along with it's modifications  
-as a new commit on top of master, ignoring intermediate commits:
-
-com005  <-- master
-com004
-com003  <-- HEAD, files modified
-com002
-com001 (initial commit)
-
-One solution to do this is to move all files somewhere else, check  
-out master, deleting all checked out files, placing the moved away  
-files back into place and committing the result as com006. Obviously,  
-this is a pretty complex operation, just waiting to exploit coding  
-mistakes. Additionally, this will be slow.
-
-Now I'm thinking about a much simpler solution: Simply declare the  
-current set of files as (a modified) master/com005 and commit them. A  
-"cp $GIT_DIR/master $GIT_DIR/HEAD" followed by a commit would do it.
-
-Now my question: Is it safe to tweak the files in $GIT_DIR this way  
-or will this corrupt the repository?
-
-
-Thanks for any opinions,
-Markus
+Sverre Rabbelier
