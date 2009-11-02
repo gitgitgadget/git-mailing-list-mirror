@@ -1,68 +1,93 @@
-From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-Subject: Re: BUG: git rebase -i -p silently looses commits
-Date: Mon, 2 Nov 2009 19:59:27 +0300
-Message-ID: <85647ef50911020859l1d76d03emf1302aafab642438@mail.gmail.com>
-References: <85647ef50911020818p61d0c975kd5655fa58993e07b@mail.gmail.com>
-	 <9b18b3110911020833y56be8fbdoaf10b6e6259f57c8@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Binary files in a linear repository
+Date: Mon, 2 Nov 2009 18:01:06 +0100
+Message-ID: <20091102170106.GA8650@atjola.homenet>
+References: <S1754797AbZKBONX/20091102141323Z+268@vger.kernel.org>
+ <8470D32E-2CAA-4E3F-8BA0-B4578372A3C4@jump-ing.de>
+ <20091102154831.GC27126@dpotapov.dyndns.org>
+ <20091102160903.GA6197@atjola.homenet>
+ <20091102165215.GD27126@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 02 18:03:52 2009
+Cc: Markus Hitter <mah@jump-ing.de>, git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 02 18:03:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N50Ja-0005aR-8s
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Nov 2009 18:03:34 +0100
+	id 1N50Jb-0005aR-Bw
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Nov 2009 18:03:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756300AbZKBRAw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Nov 2009 12:00:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756168AbZKBQ7Z
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Nov 2009 11:59:25 -0500
-Received: from mail-qy0-f174.google.com ([209.85.221.174]:53580 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756137AbZKBQ7X convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Nov 2009 11:59:23 -0500
-Received: by qyk4 with SMTP id 4so2565323qyk.33
-        for <git@vger.kernel.org>; Mon, 02 Nov 2009 08:59:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2nu8j7/AOplLxkdssq+MnMkrvun0SVckUmQzxFwqaao=;
-        b=Y0wgiFdNoVqCghggoq/H0Xsvq176zlxtBNlKkc4SPnIgv84BODWAkFd5ul5+wByNRA
-         LjlTJuB0hABsK7WP3vVRuRIqzjRw4Fy8buwNZn5m1z2ybWyXospNB4xmq8zutWj0rPuA
-         16bxaDcGqr0yK8umDRLvEdVRr8x6haUn9mmwg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Q6WwjcRp65DB6yolxJdCK5pIYh7x24I2A8bvSfJqHRRhH6lk1Yo3F1clXbzpeYcHYm
-         Ff8AQQqN4a+8VgW7sg+QJ4/QrNAjcPDsIpnFdiFkWdLLE4wGxpsjGzyEVzRORe/UtW3d
-         q3FgW++sSb9l2QRAP7zh4s/nnx78cIWf8XqaY=
-Received: by 10.239.139.215 with SMTP id u23mr597144hbu.28.1257181167327; Mon, 
-	02 Nov 2009 08:59:27 -0800 (PST)
-In-Reply-To: <9b18b3110911020833y56be8fbdoaf10b6e6259f57c8@mail.gmail.com>
+	id S1756014AbZKBRBL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Nov 2009 12:01:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756148AbZKBRBK
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Nov 2009 12:01:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54241 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756014AbZKBRBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2009 12:01:09 -0500
+Received: (qmail invoked by alias); 02 Nov 2009 17:01:10 -0000
+Received: from i59F546D3.versanet.de (EHLO atjola.homenet) [89.245.70.211]
+  by mail.gmx.net (mp060) with SMTP; 02 Nov 2009 18:01:10 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18HpIh0rdwHLEASEvDL4VhnPoWp3CyNOyx37//Dsw
+	Fp2ZTnb7ZDFOvX
+Content-Disposition: inline
+In-Reply-To: <20091102165215.GD27126@dpotapov.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131927>
 
-On Mon, Nov 2, 2009 at 7:33 PM, demerphq <demerphq@gmail.com> wrote:
-> 2009/11/2 Constantine Plotnikov <constantine.plotnikov@gmail.com>:
+On 2009.11.02 19:52:15 +0300, Dmitry Potapov wrote:
+> On Mon, Nov 02, 2009 at 05:09:03PM +0100, Bj=F6rn Steinbrink wrote:
+> > On 2009.11.02 18:48:31 +0300, Dmitry Potapov wrote:
+> > > On Mon, Nov 02, 2009 at 04:08:25PM +0100, Markus Hitter wrote:
+> > > You probably should use 'git update-ref' if you want to change HE=
+AD
+> > > manually. But it seems to me that you do not need even that. All =
+what
+> > > you need is:
+> > >=20
+> > > $ git reset --soft master
+> > >=20
+> > > and then commit your changes (git reset --soft does not touch the=
+ index
+> > > file nor the working tree at all).
+> >=20
+> > But then you still have to do:
+> > git checkout master
+> > git merge HEAD@{1}
+> >=20
+> > To actually update the "master" branch head. The reset doesn't re-a=
+ttach
+> > HEAD.
+>=20
+> You are right... I forgot about that somehow. So, it should be
+>=20
+> $ git reset --soft master
+> $ git checkout master
+>=20
+> and only then
+>=20
+> $ git commit
 
-> Doesnt -p ONLY work for interactive rebase?
->
-> =A0 =A0 =A0 -p, --preserve-merges
-> =A0 =A0 =A0 =A0 =A0 Instead of ignoring merges, try to recreate them.=
- This
-> option only works in interactive mode.
->
-Yep, I forgot about it. But it does not seem to work correctly for
-interactive rebase either.
+That would do, but:
+git checkout <commit>
+*make changes*
+git reset --soft master
+git checkout master
+git commit
 
-Constantine
+seems unnecessarily complicated, when you could as well do:
+git read-tree -u --reset <commit>
+*make changes*
+git commit
+
+Bj=F6rn
