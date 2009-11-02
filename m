@@ -1,64 +1,62 @@
-From: Karl Wiberg <kha@treskal.com>
-Subject: Re: stgit, rebasing with 100 patches
-Date: Mon, 2 Nov 2009 09:22:13 +0100
-Message-ID: <b8197bcb0911020022k5fefa7f5ia0901af8df0a3604@mail.gmail.com>
-References: <9e4733910910011604w68cdca86l2baa2f2fe4db4a32@mail.gmail.com>
-	 <9e4733910910040600g2cbd1deah6e7ae3ad9a4aa54e@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Catalin Marinas <catalin.marinas@gmail.com>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 02 09:55:23 2009
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCH] t1402: Make test executable
+Date: Mon,  2 Nov 2009 01:30:05 -0800
+Message-ID: <1257154205-7400-1-git-send-email-bebarino@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 02 10:31:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N4sh9-0008Lu-CR
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Nov 2009 09:55:23 +0100
+	id 1N4tEw-0007Ex-M6
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Nov 2009 10:30:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753832AbZKBIzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2009 03:55:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753531AbZKBIzI
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Nov 2009 03:55:08 -0500
-Received: from mail1.space2u.com ([62.20.1.135]:60980 "EHLO mail1.space2u.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752894AbZKBIzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2009 03:55:07 -0500
-X-Greylist: delayed 1974 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Nov 2009 03:55:06 EST
-Received: from mail-bw0-f227.google.com (mail-bw0-f227.google.com [209.85.218.227])
-	(authenticated bits=0)
-	by mail1.space2u.com (8.14.3/8.14.3) with ESMTP id nA28M6t7030152
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 2 Nov 2009 09:22:08 +0100
-Received: by bwz27 with SMTP id 27so5985566bwz.21
-        for <git@vger.kernel.org>; Mon, 02 Nov 2009 00:22:13 -0800 (PST)
-Received: by 10.103.48.26 with SMTP id a26mr2001562muk.83.1257150133889; Mon, 
-	02 Nov 2009 00:22:13 -0800 (PST)
-In-Reply-To: <9e4733910910040600g2cbd1deah6e7ae3ad9a4aa54e@mail.gmail.com>
+	id S1754237AbZKBJaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2009 04:30:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754190AbZKBJaF
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Nov 2009 04:30:05 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:52718 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754097AbZKBJaE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2009 04:30:04 -0500
+Received: by yxe17 with SMTP id 17so4347982yxe.33
+        for <git@vger.kernel.org>; Mon, 02 Nov 2009 01:30:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer;
+        bh=4F+K7wXNOZ+UUlt8NQPBjnoHD/HNPHZhL6Rn+Y5tRMc=;
+        b=Yy5YE4NN2iRP09mMcAMw4hGQnSXzPmfFRK0A7RfvvVKoEIYM+8BFf0LQvQ469rZRWR
+         MsrjYc6HwNc4o3NZuYf1w592UsOkQbO7UeKL6nmoCXI6gggGZDRtG0QLCps4kxFvHDSe
+         SJDcPiQsbjjvdLoZ48F/F1dPnBnzLnEftY11M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=dn/54ZTZCqz/nNG/tLCoRo1b9D1CvnlLmmC+ULoUZSrD/em2VkGfvnojv/sIwIEZYZ
+         X62WvcTVxdmJ0xQ5xjBOB2E0P3+f1Gb72GNyVsmhYYRyM683PwDAHl7pAvaEUJqBl5VO
+         cFHzZFPS+8hHR1NtuGNTlIIQsq3lbdqFC3jIE=
+Received: by 10.150.129.23 with SMTP id b23mr7817513ybd.175.1257154209608;
+        Mon, 02 Nov 2009 01:30:09 -0800 (PST)
+Received: from earth (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
+        by mx.google.com with ESMTPS id 15sm1346353gxk.4.2009.11.02.01.30.07
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 02 Nov 2009 01:30:08 -0800 (PST)
+Received: by earth (sSMTP sendmail emulation); Mon, 02 Nov 2009 01:30:05 -0800
+X-Mailer: git-send-email 1.6.5.2.181.gd6f41
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131898>
 
-On Sun, Oct 4, 2009 at 2:00 PM, Jon Smirl <jonsmirl@gmail.com> wrote:
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+---
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ mode change 100644 => 100755 t/t1402-check-ref-format.sh
 
-> On Thu, Oct 1, 2009 at 7:04 PM, Jon Smirl <jonsmirl@gmail.com> wrote:
->
-> > Is there a better way to locate the patches the got applied?
->
-> A solution to this is to make an option on rebase that walks the
-> patch stack forward one commit at a time.
->
-> What does the --merged option do on stg rebase? The doc is rather
-> sparse.
-
-Right, -m/--merged is what you want. Before applying any of the
-patches, it tries to reverse-apply all of them in reverse
-order---successful applications mean the patch was already in
-upstream. It works surprisingly well.
-
+diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
+old mode 100644
+new mode 100755
 -- 
-Karl Wiberg, kha@treskal.com
-   www.treskal.com/kalle
+1.6.5.2.181.gd6f41
