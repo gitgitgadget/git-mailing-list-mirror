@@ -1,78 +1,91 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Binary files in a linear repository
-Date: Mon, 2 Nov 2009 17:09:03 +0100
-Message-ID: <20091102160903.GA6197@atjola.homenet>
-References: <S1754797AbZKBONX/20091102141323Z+268@vger.kernel.org>
- <8470D32E-2CAA-4E3F-8BA0-B4578372A3C4@jump-ing.de>
- <20091102154831.GC27126@dpotapov.dyndns.org>
+From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+Subject: BUG: git rebase -i -p silently looses commits
+Date: Mon, 2 Nov 2009 19:18:07 +0300
+Message-ID: <85647ef50911020818p61d0c975kd5655fa58993e07b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Markus Hitter <mah@jump-ing.de>, git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 02 17:09:23 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 02 17:18:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N4zT3-00051g-G7
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Nov 2009 17:09:17 +0100
+	id 1N4zcI-00017B-DO
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Nov 2009 17:18:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755381AbZKBQJF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Nov 2009 11:09:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755336AbZKBQJE
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Nov 2009 11:09:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42731 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755168AbZKBQJD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2009 11:09:03 -0500
-Received: (qmail invoked by alias); 02 Nov 2009 16:09:07 -0000
-Received: from i59F546D3.versanet.de (EHLO atjola.homenet) [89.245.70.211]
-  by mail.gmx.net (mp063) with SMTP; 02 Nov 2009 17:09:07 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18iHpIRnsgirtE4l/pXDtM9cYMokCCdqC69jmT7eM
-	ZmG3aGETc4iO+s
-Content-Disposition: inline
-In-Reply-To: <20091102154831.GC27126@dpotapov.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+	id S1755864AbZKBQSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2009 11:18:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755749AbZKBQSG
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Nov 2009 11:18:06 -0500
+Received: from mail-qy0-f174.google.com ([209.85.221.174]:49006 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755805AbZKBQSD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2009 11:18:03 -0500
+Received: by qyk4 with SMTP id 4so2544977qyk.33
+        for <git@vger.kernel.org>; Mon, 02 Nov 2009 08:18:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=jFv2eJVcKgM9vjk+wEUrxwijux1deaZzvdYgJyKRHwg=;
+        b=RbkdTwV3x2uETbZNdnc+fMWNJZaccEUd8FsiqQSAVj6ncsfQc7kjo+/YupYsKV/9b+
+         5rO83yeLZZJ7cJEV7q41vnZkYhlUs9i7fzHXLK37arrG4EnoThN0Sh1MDAP/05QVGv4Q
+         7Hju6MHh3+SNI7ghuHGsjsh+OBAAvHe+RcSwU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=riCEE4zEeLhV9C20L/r4vJViXPaoUcfQwvwr2TEZbsGmJwUwAJHVHJ13CAFPxMuqYV
+         I2L/ygbG912oU3y4pVV/DvWiwSGqBC9XOt2GO+NFhKQ0YIf4MgHsy6ERn9kVT20oMyc2
+         YN72yGeDDpfprdtGZoDyZL+G6C9HRAxRypRHY=
+Received: by 10.239.139.158 with SMTP id t30mr593325hbt.94.1257178687446; Mon, 
+	02 Nov 2009 08:18:07 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131921>
 
-On 2009.11.02 18:48:31 +0300, Dmitry Potapov wrote:
-> On Mon, Nov 02, 2009 at 04:08:25PM +0100, Markus Hitter wrote:
-> >
-> > Now I'm thinking about a much simpler solution: Simply declare the =
-=20
-> > current set of files as (a modified) master/com005 and commit them.=
- A =20
-> > "cp $GIT_DIR/master $GIT_DIR/HEAD" followed by a commit would do it=
-=2E
-> >
-> > Now my question: Is it safe to tweak the files in $GIT_DIR this way=
- or=20
-> > will this corrupt the repository?
->=20
-> You probably should use 'git update-ref' if you want to change HEAD
-> manually. But it seems to me that you do not need even that. All what
-> you need is:
->=20
-> $ git reset --soft master
->=20
-> and then commit your changes (git reset --soft does not touch the ind=
-ex
-> file nor the working tree at all).
+I have encountered what looks like critical bugs in the git rebase -i
+-p (it can be reproduced on mingw and cygwin, I have not tried other
+platforms).
 
-But then you still have to do:
-git checkout master
-git merge HEAD@{1}
+Let's create a git repository with
 
-To actually update the "master" branch head. The reset doesn't re-attac=
-h
-HEAD.
+git init
+# the next line is for mingw
+git config core.autocrlf input
+echo a >a.txt
+echo b >b.txt
+git add a.txt b.txt
+git commit -m "init commit"
+echo aa >a.txt
+git add a.txt
+git commit -m "aa commit"
+echo bb >b.txt
+git add b.txt
+git commit -m "bb commit"
+echo aaa >a.txt
+git add a.txt
+git commit -m "aaa commit"
 
-Bj=F6rn
+Now let's use the following rebase command:
+
+git rebase -i -p HEAD~3
+
+When the editor will appear, just move the commit "bb commit" to the
+end of the list. The rebase process will complete successfully, but
+commit "aaa commit" will be missing from the history and working tree
+will not be affected by that commit.
+
+Other bug is that if we move "bb commit" to the top of the list in the
+editor, the rebase process will apply "bb commit", but instead of
+applying "aa commit" and than "aaa commit", the rebase process fails
+with a merge conflict.
+
+This can be reproduced with git 1.6.5.1 (msys) and 1.6.1.2 (cygwin). I
+consider these to be a critical bugs that make "-p" option extremely
+dangerous for interactive rebase. It might even make sense to disable
+it for interactive rebase until the bug is fixed.
+
+Regards,
+Constantine
