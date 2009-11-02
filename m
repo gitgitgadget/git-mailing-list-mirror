@@ -1,62 +1,65 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH] t1402: Make test executable
-Date: Mon,  2 Nov 2009 01:30:05 -0800
-Message-ID: <1257154205-7400-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 02 10:31:54 2009
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Headless tags don't have a follows or precedes?
+Date: Mon, 02 Nov 2009 10:42:07 +0100
+Message-ID: <4AEEA96F.7080609@drmicha.warpmail.net>
+References: <1257067898626-3926483.post@n2.nabble.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Tim Mazid <timmazid@hotmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 02 10:42:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N4tEw-0007Ex-M6
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Nov 2009 10:30:19 +0100
+	id 1N4tR6-0004sv-Qa
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Nov 2009 10:42:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754237AbZKBJaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2009 04:30:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754190AbZKBJaF
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Nov 2009 04:30:05 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:52718 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754097AbZKBJaE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2009 04:30:04 -0500
-Received: by yxe17 with SMTP id 17so4347982yxe.33
-        for <git@vger.kernel.org>; Mon, 02 Nov 2009 01:30:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=4F+K7wXNOZ+UUlt8NQPBjnoHD/HNPHZhL6Rn+Y5tRMc=;
-        b=Yy5YE4NN2iRP09mMcAMw4hGQnSXzPmfFRK0A7RfvvVKoEIYM+8BFf0LQvQ469rZRWR
-         MsrjYc6HwNc4o3NZuYf1w592UsOkQbO7UeKL6nmoCXI6gggGZDRtG0QLCps4kxFvHDSe
-         SJDcPiQsbjjvdLoZ48F/F1dPnBnzLnEftY11M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=dn/54ZTZCqz/nNG/tLCoRo1b9D1CvnlLmmC+ULoUZSrD/em2VkGfvnojv/sIwIEZYZ
-         X62WvcTVxdmJ0xQ5xjBOB2E0P3+f1Gb72GNyVsmhYYRyM683PwDAHl7pAvaEUJqBl5VO
-         cFHzZFPS+8hHR1NtuGNTlIIQsq3lbdqFC3jIE=
-Received: by 10.150.129.23 with SMTP id b23mr7817513ybd.175.1257154209608;
-        Mon, 02 Nov 2009 01:30:09 -0800 (PST)
-Received: from earth (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
-        by mx.google.com with ESMTPS id 15sm1346353gxk.4.2009.11.02.01.30.07
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 02 Nov 2009 01:30:08 -0800 (PST)
-Received: by earth (sSMTP sendmail emulation); Mon, 02 Nov 2009 01:30:05 -0800
-X-Mailer: git-send-email 1.6.5.2.181.gd6f41
+	id S1754145AbZKBJml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2009 04:42:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754106AbZKBJml
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Nov 2009 04:42:41 -0500
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:55026 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754105AbZKBJmk (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Nov 2009 04:42:40 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 37BE6BD330;
+	Mon,  2 Nov 2009 04:42:18 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Mon, 02 Nov 2009 04:42:18 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=opokjoUgeOiW/8hiaOTCkuhcG04=; b=c9xU7CiXXvaas8ChvzpMJfMfILUQylYauwUAhBbO3G1KGJwgLMF6vFe2po7/ZQuLMXaSwwZQ019eEWKA5BUCBgq3QzWSwuJz2wGIh1H5ZOUp0TXPSh5JEpyrwjvWi+C1+Rbsfd7rEjbNLg6UrbKtwBbp1hTy8C1Zu0TD8cw0vuc=
+X-Sasl-enc: qsszvT9FKZ+vmKIBEXvkIv29vrKhNf9VSX6EyJU//KW5 1257154932
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 86CC3323AE;
+	Mon,  2 Nov 2009 04:42:12 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5pre) Gecko/20091102 Lightning/1.0pre Shredder/3.0pre
+In-Reply-To: <1257067898626-3926483.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131899>
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
- 0 files changed, 0 insertions(+), 0 deletions(-)
- mode change 100644 => 100755 t/t1402-check-ref-format.sh
+Tim Mazid venit, vidit, dixit 01.11.2009 10:31:
+> 
+> Hi all,
+> 
+> I've noticed that if I create a headless tag (one that doesn't have a
+> branch, right?), when I click on that commit, it doesn't have precedes or
+> follows information. Is this by design? Is there a work-around I can use
+> without creating a branch there?
 
-diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
-old mode 100644
-new mode 100755
--- 
-1.6.5.2.181.gd6f41
+Reposting (without even saying so) doesn't necessarily increase your
+chance of getting responses. Would would help:
+
+- saying you're talking about gitk/git view/whatever it is you're
+"clicking" on
+
+- providing a minimal example others can reproduce. That would be one
+where a tag on a detached head (assuming that's what you mean) has no
+precedes/follow but a tag "on a branch" does have that info
+
+Cheers,
+Michael
