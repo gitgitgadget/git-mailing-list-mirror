@@ -1,90 +1,79 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: Re: how to rebase backwards
-Date: Tue, 3 Nov 2009 17:37:16 +0800
-Message-ID: <20091103093716.GD7117@debian.b2j>
-References: <20091103054510.GB7117@debian.b2j>
- <7vocnkt5o4.fsf@alter.siamese.dyndns.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH] Re: Gitk --all error when there are more than 797 refs
+ in a repository
+Date: Tue, 3 Nov 2009 20:40:17 +1100
+Message-ID: <19183.64129.695745.269570@cargo.ozlabs.ibm.com>
+References: <6F87406399731F489FBACE5C5FFA04584BFA53@ex2k.bankofamerica.com>
+	<878wgcbb52.fsf@users.sourceforge.net>
+	<19124.8378.975976.347711@cargo.ozlabs.ibm.com>
+	<6F87406399731F489FBACE5C5FFA0458518DE8@ex2k.bankofamerica.com>
+	<4AB78910.7010402@viscovery.net>
+	<6F87406399731F489FBACE5C5FFA0458518E11@ex2k.bankofamerica.com>
+	<4AB7A2E7.5000601@viscovery.net>
+	<874oqvc0n3.fsf@users.sourceforge.net>
+	<19129.24056.422939.880134@cargo.ozlabs.ibm.com>
+	<7vd45io7da.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: bill lam <cbill.lam@gmail.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	"Murphy\, John" <john.murphy@bankofamerica.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 10:37:42 2009
+X-From: git-owner@vger.kernel.org Tue Nov 03 10:44:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5Fpd-0002iT-RR
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 10:37:42 +0100
+	id 1N5Fvx-0005D4-L8
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 10:44:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754740AbZKCJh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 04:37:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754303AbZKCJh2
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 04:37:28 -0500
-Received: from mail-px0-f179.google.com ([209.85.216.179]:63029 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751968AbZKCJh1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 04:37:27 -0500
-Received: by pxi9 with SMTP id 9so3775902pxi.4
-        for <git@vger.kernel.org>; Tue, 03 Nov 2009 01:37:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=DeVpGv6ffh81LKcgzkmg8Hn/wFaIHfdnAIONqifD6GE=;
-        b=OiZ4QxLzKE3BbHsaZcsfEfTc+rJQBIKKKKEoCiPjSJZMa9CM7Rvqb5Vn05tyAwPJhU
-         4RxIkdhMKborXcPGrY5dFrns9COfLMzY7pTmquHv+uvKLXsPGkS6so32juRU177hLkSx
-         4eyLfSiA9Sev/rHXBQSQ7a6IFmB+nVkP+h2fE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=h1E9NX6hlKNsQ6+plSrL+c03K98P4OLzXlgJbcIA8PhgG9ve/66wP+px+KoTzZwJm4
-         9Qr7WHiwfgDQ3h+/aSqqCKEUMQWmbqC5Ggimdfh95eOb59dzPAAYRjl8Hu78cbCGj+Sq
-         QQNz5u9ymsrqImnlFj3L64LBfgVg8uGI8yvcE=
-Received: by 10.115.101.25 with SMTP id d25mr10547951wam.46.1257241050768;
-        Tue, 03 Nov 2009 01:37:30 -0800 (PST)
-Received: from localhost (n218103234051.netvigator.com [218.103.234.51])
-        by mx.google.com with ESMTPS id 21sm54822pzk.11.2009.11.03.01.37.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 03 Nov 2009 01:37:29 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vocnkt5o4.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-08-17)
+	id S1755150AbZKCJoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 04:44:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754153AbZKCJoB
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 04:44:01 -0500
+Received: from ozlabs.org ([203.10.76.45]:48635 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752766AbZKCJoA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 04:44:00 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id A82F1B7BFD; Tue,  3 Nov 2009 20:44:02 +1100 (EST)
+In-Reply-To: <7vd45io7da.fsf@alter.siamese.dyndns.org>
+X-Mailer: VM 8.0.12 under 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131957>
 
-Thank you for detail explanation.  From what you described, I begin
-with master commit D, 
- $ git checkout -b deploy
- $ git commit --allow-empty -m deploy
+Junio C Hamano writes:
 
- 
-                      E
-                     /^ deploy
-     ---A---B---C---D
-                    ^ master
- 
- $ git rebase -i A
+> Paul Mackerras <paulus@samba.org> writes:
+> 
+> > If git log had an argument to tell it to mark those commits that were
+> > a starting point or a finishing point, then I could simplify this
+> > logic enormously, plus we wouldn't have to pass a long parameter list
+> > to git log.  It may still turn out to be necessary to add a negative
+> > argument for each previous starting point, though, when refreshing the
+> > list.
+> >
+> > I think the simplest fix for now is to arrange to take the
+> > non-optimized path on windows when the list of revs gets too long,
+> > i.e., set $vcanopt($view) to 0 and take that path.  That means that
+> > refreshing the view will be slow, but I think it's the best we can do
+> > at this point.
+> 
+> Hmph.
+> 
+> The negative ones you can learn by giving --boundary, but I do not think
+> the set of starting points are something you can get out of log output.
+> 
+> Even if you could, you would have the same issue giving them from the
+> command line anyway.  The right solution would likely to be to give the
+> same --stdin option as rev-list to "git log", I think.
 
-                      v deploy
-          B'--C'--D'--E'
-         /
-     ---A---B---C---D
-                    ^ master
+A --stdin option to git log would be great, but it doesn't seem to be
+implemented yet.  How hard would it be to add?
 
-since E is an empty commit, I suppose content of D' E' and D are
-identical at this point.  Is that correct?
-
-If several months later, I forget which is the common ancestor for
-master and deploy, how do I generate the above graph or identify
-commit A as the common ancestor for these two branches?
-
--- 
-regards,
-====================================================
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
+Paul.
