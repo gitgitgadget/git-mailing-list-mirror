@@ -1,189 +1,89 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Problem with "From:" line on "git format-patch" generated
- patches
-Date: Tue, 3 Nov 2009 16:55:56 -0600
-Message-ID: <20091103225556.GA20160@progeny.tock>
-References: <b8bf37780911030830l42ea6dc2v3ef66e2a9e1ca281@mail.gmail.com>
- <adf1fd3d0911030902x15faffcen86644733ffda43d5@mail.gmail.com>
- <b8bf37780911031006q4bc4c487xd9db86eb0fa531e7@mail.gmail.com>
- <b8bf37780911031011v5c8ec684ke6eebc6b0de1a66a@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?iso-8859-1?Q?Andr=E9?= Goddard Rosa <andre.goddard@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 23:46:29 2009
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH] gitk: Fix "git gui blame" invocation when called from topdir
+Date: Wed,  4 Nov 2009 00:21:41 +0100
+Message-ID: <1257290501-21093-1-git-send-email-markus.heidelberg@web.de>
+References: <19184.2163.760155.285153@cargo.ozlabs.ibm.com>
+Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Wed Nov 04 00:25:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5S8y-0003ad-Hf
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 23:46:29 +0100
+	id 1N5Skl-0002U8-AL
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 00:25:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751991AbZKCWqR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Nov 2009 17:46:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751123AbZKCWqR
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 17:46:17 -0500
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:53903 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751002AbZKCWqQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 17:46:16 -0500
-Received: by ewy3 with SMTP id 3so2524107ewy.37
-        for <git@vger.kernel.org>; Tue, 03 Nov 2009 14:46:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=zPO9RPNE8BaKBecx1zEe1joX95rdvLbCKGgbt67kqcw=;
-        b=mqKQ2M2+J9UZK7+7tfJaMEn3pc4d1OKhSPMHU9fHZUJaEC5FCv6sc8WyQfr6agRDMH
-         vJaLBM8kLnEdxgFFBnx5z+xuO5Z2oJC9PCSphRo6kuRFh5iKs0nCeI4Xi6bzm03Hi/7Y
-         3gKLlfQmNjVcWJzqbbF1aRM65sQAI/+8mEJjg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=jcC2HvuG/wsebBiCOWaz1WGkHtcJa6mMPJckARoglmaklwssRRJqMB98LGNu1VNqQL
-         9BN6OIiZNjBoSSKO732QbFT5ldedP3y5ulMSvdmGkvWS7hBA/G6LyKHa8pkUbWTC0dBK
-         6EK2FVA/9d5aphxyeyrLKhY1Xalo8Jc8+3csU=
-Received: by 10.216.93.70 with SMTP id k48mr262487wef.134.1257288380202;
-        Tue, 03 Nov 2009 14:46:20 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id g9sm1533159gvc.25.2009.11.03.14.46.17
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 03 Nov 2009 14:46:19 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <b8bf37780911031011v5c8ec684ke6eebc6b0de1a66a@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752054AbZKCXZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 18:25:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752011AbZKCXZT
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 18:25:19 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:41633 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751915AbZKCXZS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 18:25:18 -0500
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id D05BA1378310A;
+	Wed,  4 Nov 2009 00:21:43 +0100 (CET)
+Received: from [89.59.85.220] (helo=localhost.localdomain)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #314)
+	id 1N5Sh5-0002Xj-00; Wed, 04 Nov 2009 00:21:43 +0100
+X-Mailer: git-send-email 1.6.5.2.155.gaa0e5
+In-Reply-To: <19184.2163.760155.285153@cargo.ozlabs.ibm.com>
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1/q/M7yAuXx+abAvFfin8b2NF/S676pcOYcLCAt
+	lpRCgaNSXV+HN7/C7/WSGXPLOVq7N1rDq7eTOWFfGvZGNNZcJ9
+	mX9iDXyTzblcL3TzCyeA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132008>
 
-Hi Andr=E9,
+In this case "git rev-parse --git-dir" doesn't return an absolute path,
+but merely ".git", so the selected file has a relative path.
+The function make_relative then tries to make the already relative path
+relative, which results in a path like "../../../../Makefile" with as
+much ".." as the number of parts [pwd] consists of.
 
-Andr=E9 Goddard Rosa wrote:
+This regression was introduced by commit 9712b81 (gitk: Fix bugs in
+blaming code, 2008-12-06), which fixed "git gui blame" when called from
+subdirs.
 
->> I'm not using any specific tool for inputting the git-format-patch,
->> but instead I'm sending the files generated by it through gmail as a=
-n
->> inlined patch in the email body.
->>
->> I like the convenience of format-patch for generating the patch file=
-s,
->> but in this case, formatting the header as rfc2047 is not necessary
->> and makes a funny/garbled output in my patch submission.
+This also fixes it for bare repositories.
 
-The header fields git format-patch outputs are just intended as a
-starting point for the header of your mailing.  It is more convenient
-to receive an e-mail with
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+---
 
-	Delivered-to: maintainer@example.com
-	Received: [...]
-	Message-ID: <patch.sender.0001@example.com>
-	Date: Tue, 03 Nov 2009 16:33:54 -0600
-	From: Patch Sender <patch.sender@example.com>
-	Subject: [PATCH] Fix one bug, add another
-	Content-Type: text/plain; charset=3Dus-ascii
+    Paul Mackerras, 03.11.2009:
+    > Thanks for the patch, but I'd prefer to just add:
+    > 
+    >     if {[file pathtype $f] ne "relative"} {
+    >         return $f
+    >     }
+    > 
+    > at the start of the function.  I think that's easier to read than
+    > having a big if statement.
+    
+    Definitely yes. But eq instead of ne.
+    
 
-	Blah blah blah
+ gitk |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-than one in which the content includes some useless metadata that was
-already in the header.  So you should just strip the header out from
-the body before sending.
-
-There are three common exceptions: 1) you might want to send a patch
-written by someone else, 2) you might want to mark a patch as written
-before it was sent, and 3) some people like to receive patches as
-attachments rather than inlined in messages.  For the first two cases,
-the solution is to include the header fields to change in the body:
-
-	From: Patch Writer <patch.writer@example.com>
-	Date: Wed, 01 Apr 1970 01:23:45 +0100
-
-	Blah blah blah
-	---
-	Hi,
-
-	Patch Writer wrote this patch a while ago that might be
-	relevant.  It needed a straightforward one-line change to
-	apply and is otherwise unchanged.
-
-	What do you think?
-[...]
-
-=46or the last case, I think it is most common to send unchanged 'git
-format-patch' output.  But only the From, Date, and Subject fields
-are actually needed.
-
-I am not sure how well 'git am' copes with non-ascii characters in
-the pseudo-header lines: I would have guessed it could handle them
-both rfc2047-encoded and not, but I have not tried.
-
-> I really would like continuing having the convenience of using a web
-> access to my gmail for sending the patches, so I just need a way to
-> format the patches which makes it easy submitting them later. I'd lik=
-e
-> to avoid using any other email client for that, if possible.
-
-Here, there is another danger: the Gmail web interface does not
-consider your whitespace precious, so it is very prone to mangling
-patches (especially with long lines).
-
-Documentation/SubmittingPatches [1] has some advice:
-
-| Gmail
-| -----
-|=20
-| GMail does not appear to have any way to turn off line wrapping in th=
-e web
-| interface, so this will mangle any emails that you send.  You can how=
-ever
-| use any IMAP email client to connect to the google imap server, and f=
-orward
-| the emails through that.  Just make sure to disable line wrapping in =
-that
-| email client.  Alternatively, use "git send-email" instead.
-|=20
-| Submitting properly formatted patches via Gmail is simple now that
-| IMAP support is available. First, edit your ~/.gitconfig to specify y=
-our
-| account settings:
-|=20
-| [imap]
-| 	folder =3D "[Gmail]/Drafts"
-| 	host =3D imaps://imap.gmail.com
-| 	user =3D user@gmail.com
-| 	pass =3D p4ssw0rd
-| 	port =3D 993
-| 	sslverify =3D false
-|=20
-| You might need to instead use: folder =3D "[Google Mail]/Drafts" if y=
-ou get an error
-| that the "Folder doesn't exist".
-|=20
-| Next, ensure that your Gmail settings are correct. In "Settings" the
-| "Use Unicode (UTF-8) encoding for outgoing messages" should be checke=
-d.
-|=20
-| Once your commits are ready to send to the mailing list, run the foll=
-owing
-| command to send the patch emails to your Gmail Drafts folder.
-|=20
-| 	$ git format-patch -M --stdout origin/master | git imap-send
-|=20
-| Go to your Gmail account, open the Drafts folder, find the patch emai=
-l, fill
-| in the To: and CC: fields and send away!
-
-Good luck.
-
-Hope that helps,
-Jonathan
-
-[1] <http://git.kernel.org/?p=3Dgit/git.git;a=3Dblob_plain;f=3DDocument=
-ation/SubmittingPatches>
-converting tabs to spaces. =20
+diff --git a/gitk b/gitk
+index 32e4ab0..949abfe 100755
+--- a/gitk
++++ b/gitk
+@@ -3378,6 +3378,9 @@ proc index_sha1 {fname} {
+ 
+ # Turn an absolute path into one relative to the current directory
+ proc make_relative {f} {
++    if {[file pathtype $f] eq "relative"} {
++	return $f
++    }
+     set elts [file split $f]
+     set here [file split [pwd]]
+     set ei 0
+-- 
+1.6.5.2.155.gaa0e5
