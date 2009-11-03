@@ -1,81 +1,98 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: how to rebase backwards
-Date: Tue, 3 Nov 2009 13:45:10 +0800
-Message-ID: <20091103054510.GB7117@debian.b2j>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: git pull --rebase and losing commits
+Date: Tue, 3 Nov 2009 08:01:38 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0911030757400.15633@ds9.cixit.se>
+References: <alpine.DEB.2.00.0911021318400.3919@ds9.cixit.se> <20091102151022.GA3995@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 03 06:45:45 2009
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>,
+	=?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Nov 03 08:02:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5CDA-0004jO-P6
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 06:45:45 +0100
+	id 1N5DP4-0007b9-2I
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 08:02:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751382AbZKCFpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 00:45:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751363AbZKCFpM
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 00:45:12 -0500
-Received: from mail-pz0-f188.google.com ([209.85.222.188]:50222 "EHLO
-	mail-pz0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750791AbZKCFpL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 00:45:11 -0500
-Received: by pzk26 with SMTP id 26so3746154pzk.4
-        for <git@vger.kernel.org>; Mon, 02 Nov 2009 21:45:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=gi6njSt9FfWuMfYuU3AQnNSAsduSKHEE51n9raVEcDc=;
-        b=NEu6lGP17QgcKxySiiI0iRK/ysLXA1Tbbs7GWVeRsa9tbHZ6gRx2sZIWna59fkVH0f
-         glSygCbSEbAwQl8RslwS+R80Azvi3c05LPDx3FqKfe1nchwHJ3JNlsExE3SND4n1o36s
-         abu5wHuAPZ2h6V37Cy26jckZqu/Wlzw3QJIyM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=gFnQ5YxPRyS9NDti9C19Udo/+d85JsHoDB/0PuvGxYuW6ccloDzDEukeVDRbUjDxdw
-         ckHfpCVp/ci5Dtvch7VdpwlUCqLZ1DNWBptpfujEdM18D1HeURFQ0YF8Oz2jfcEdEw4f
-         +Wsu9+GQdRXQFK/gnXWjIQgJNsP9fgkFJBB78=
-Received: by 10.115.84.9 with SMTP id m9mr10226637wal.163.1257227116235;
-        Mon, 02 Nov 2009 21:45:16 -0800 (PST)
-Received: from localhost (n218103234051.netvigator.com [218.103.234.51])
-        by mx.google.com with ESMTPS id 22sm638485pxi.10.2009.11.02.21.45.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 02 Nov 2009 21:45:15 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-08-17)
+	id S1755902AbZKCHBv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Nov 2009 02:01:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754553AbZKCHBv
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 02:01:51 -0500
+Received: from upper-gw.cixit.se ([92.43.32.133]:41304 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755893AbZKCHBu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 02:01:50 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id nA371dgW016456
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 3 Nov 2009 08:01:39 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id nA371cPm016452;
+	Tue, 3 Nov 2009 08:01:39 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <20091102151022.GA3995@atjola.homenet>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Tue, 03 Nov 2009 08:01:39 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131945>
 
-I want to rebase a new branch onto an earlier commit 
+Thomas Rast:
 
-original:  
-E is a newly created branch from D and not yet modified
-                    E
-                   /
--- A -- B -- C -- D
+> Not very surprising if you use the 'ours' strategy, which doesn't mer=
+ge at=20
+> all but instead takes the 'ours' side (IIRC that's the upstream for a=
+=20
+> rebase, but I always have these mixed up).
 
-new: what I wanted
-     B'-- C' -- E     for deployment
-    /          
--- A -- B -- C -- D    trunk
+Sounds like it should be called "theirs", then. Or the documentation sh=
+ould=20
+be clarify.
 
-so that I can continue to change all commits from B to C without
-affecting E
+> So what happens is that git-rebase rebuilds some commit C from your s=
+ide=20
+> on some base B from the remote, but the 'ours' strategy turns the *tr=
+ee*=20
+> for C' into that of B.
 
-I try (not sure if correct) doing it by
-  git rebase --onto A B E
+Right. I thought it was working on the individual blobs (I want it to=20
+automatically resolve conflicts by applying the version that is in the=20
+repository I am running the rebase from, no matter what).
 
-but then there is a lot of conflict/both modified files. What will be
-the correct way to do it?
 
--- 
-regards,
-====================================================
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
+Bj=F6rn Steinbrink:
+
+> The "ours" strategy doesn't just avoid merge conflicts, it avoids mak=
+ing
+> any changes at all. The ours strategy means "just keep our state, jus=
+t
+> pretend that we've merged". And rebase will see that there were no
+> changes and conclude:
+>
+> Already applied: 0001 test commit
+>
+> And thus it will drop the commit.
+
+I've seen that message show up in my logs a couple of times. I'd better=
+ drop=20
+the --strategy=3Dours, then. :-/
+
+
+Now to figure out if it is possible to get a setup like this working at=
+ all.=20
+Maybe dropping rebase in favour of regular merge may help a bit, but I =
+still=20
+want it to auto-resolve any conflicts for me.
+
+--=20
+\\// Peter - http://www.softwolves.pp.se/
