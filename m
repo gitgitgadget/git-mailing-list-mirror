@@ -1,72 +1,47 @@
-From: morgflast <daniel@sibblingz.com>
-Subject: git subtree issues
-Date: Mon, 2 Nov 2009 19:56:28 -0800 (PST)
-Message-ID: <26159961.post@talk.nabble.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: git pull --rebase and losing commits
+Date: Mon, 02 Nov 2009 20:27:33 -0800
+Message-ID: <86my3444i2.fsf@blue.stonehenge.com>
+References: <alpine.DEB.2.00.0911021318400.3919@ds9.cixit.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 03 04:57:36 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Tue Nov 03 05:27:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5AWV-0000YJ-DI
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 04:57:35 +0100
+	id 1N5Azd-0008Sh-5b
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 05:27:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757756AbZKCD4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2009 22:56:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757624AbZKCD4Y
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Nov 2009 22:56:24 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:55929 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757554AbZKCD4Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2009 22:56:24 -0500
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1N5AVQ-0000eV-Ps
-	for git@vger.kernel.org; Mon, 02 Nov 2009 19:56:28 -0800
-X-Nabble-From: daniel@sibblingz.com
+	id S1755628AbZKCE13 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2009 23:27:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755553AbZKCE13
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Nov 2009 23:27:29 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:8392 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755541AbZKCE12 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2009 23:27:28 -0500
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 84D311DE38A; Mon,  2 Nov 2009 20:27:33 -0800 (PST)
+x-mayan-date: Long count = 12.19.16.14.15; tzolkin = 3 Men; haab = 13 Zac
+In-Reply-To: <alpine.DEB.2.00.0911021318400.3919@ds9.cixit.se> (Peter Krefting's message of "Mon, 2 Nov 2009 13:26:37 +0100 (CET)")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131943>
 
+>>>>> "Peter" == Peter Krefting <peter@softwolves.pp.se> writes:
 
-So, I went ahead and did this
+Peter>  git pull --rebase --strategy=ours origin master
 
-$ git remote add -f vw_extensions git@github.com:sibblingz/vw_extensions.git
-(1)
-$ git merge -s ours --no-commit vw_extensions/master (2)
-$ git read-tree --prefix=some/directory/vw_extensions -u
-vw_extensions/master (3)
-$ git commit -m "Merge B project as our subdirectory" 
-
-And that all seems to work ok.
-
-Then, I went to another directory where i had vw_extensions cloned, and made
-a change to the README file, and pushed it.
-
-I went back to my first project, and did this, to try to pull those changes:
-
-git pull -s subtree vw_extensions master remote: Counting objects: 5, done.
-remote: Compressing objects: 100% (3/3), done.
-remote: Total 3 (delta 2), reused 0 (delta 0)
-Unpacking objects: 100% (3/3), done.
-From git@github.com:sibblingz/vw_extensions
- * branch            master     -> FETCH_HEAD
-Already uptodate!
-Merge made by subtree.
-
-However, when I looked at the README file in the first project, the changes
-weren't there.  I was wondering if anyone might have any suggestions about
-what to do.
-
-Thanks!
-Daniel
+"No good can come of this."
 
 -- 
-View this message in context: http://old.nabble.com/git-subtree-issues-tp26159961p26159961.html
-Sent from the git mailing list archive at Nabble.com.
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
+See http://methodsandmessages.vox.com/ for Smalltalk and Seaside discussion
