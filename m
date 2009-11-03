@@ -1,124 +1,73 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH bg/format-patch-p-noop] log-tree: always add --- marker when options are patch and a stat
-Date: Tue,  3 Nov 2009 13:24:16 -0800
-Message-ID: <1257283456-7007-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20Gustavsson?= <bgustavsson@gmail.com>
+From: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
+Subject: [PATCH 0/1] Port of pthreads to Windows API threads
+Date: Tue,  3 Nov 2009 22:30:01 +0100
+Message-ID: <1257283802-29726-1-git-send-email-ahaczewski@gmail.com>
+Cc: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 03 22:24:31 2009
+X-From: git-owner@vger.kernel.org Tue Nov 03 22:30:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5Qrf-0007do-DP
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 22:24:31 +0100
+	id 1N5QxU-0001ry-HL
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 22:30:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754957AbZKCVYU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 16:24:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754847AbZKCVYT
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 16:24:19 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:42823 "EHLO
+	id S1754429AbZKCVaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 16:30:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754413AbZKCVaN
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 16:30:13 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:54154 "EHLO
 	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754438AbZKCVYT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 16:24:19 -0500
-Received: by bwz27 with SMTP id 27so8103282bwz.21
-        for <git@vger.kernel.org>; Tue, 03 Nov 2009 13:24:22 -0800 (PST)
+	with ESMTP id S1752278AbZKCVaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 16:30:12 -0500
+Received: by bwz27 with SMTP id 27so8109508bwz.21
+        for <git@vger.kernel.org>; Tue, 03 Nov 2009 13:30:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer;
-        bh=nuF3H5ZOGWV+xSF3BOzQozinYWNQRrCeM5H0Wwjho1g=;
-        b=qQAsLi4DM1mYlzQqYHd+J/X+9t5wbWMkrbUY9lkxXGzOg+M7ozpSKRHXGS9ZdWIn4Z
-         H7awgsO3PE8eOFS0q9ctRbK16SfQSSVI0eW5QRhil7pBNwOzAG49UfZUZStR9gFtp68R
-         XZulXtASJja+DzwH4a1KHeOXpUSgZ+0JTLsXI=
+        bh=g2n4XPzBpRn66+Su/c+TF6JYw8MnCCNLVsA+8eGp9mo=;
+        b=LtBYuiJsLUQ0fW58t5kiKXnLlwYcOr860S1GoNP6vJsX9FnJCKqgs/qzVrz+H7Zyct
+         trDzSfbtkwdm0ZtfbQ/rV9aMe92xqvGuNCwb+FmEIoBinVBh4kANW+jx5Vkzby53GC3D
+         mVs9q87YiIwO39Im/bP3nnsSbyvg7WkZcP2EE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        b=XVWgbb5MrklZpi/NJpCPOxFwBcAZGlhmPIpB1vT1sensmAyTq7JsZh8wnFSRZxlsi8
-         43MNiSDF9+1c0qERZfV0hQ0jmwbC2CpxVGJHKGZrWq66t388fo8cRmVhDaGtvngzbbrf
-         nweBWgwZ+6eANoqxu8VYnooML5Lj4pwJW0NDs=
-Received: by 10.204.174.209 with SMTP id u17mr563294bkz.7.1257283462382;
-        Tue, 03 Nov 2009 13:24:22 -0800 (PST)
-Received: from earth (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
-        by mx.google.com with ESMTPS id g28sm1230540fkg.15.2009.11.03.13.24.19
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 03 Nov 2009 13:24:21 -0800 (PST)
-Received: by earth (sSMTP sendmail emulation); Tue, 03 Nov 2009 13:24:16 -0800
-X-Mailer: git-send-email 1.6.5.2.181.gd6f41
+        b=KoNkPwIwB/c6fhZH5jKoTwt4Ortd3ayFKAWvYHa7YSOhS8GGv8cyx38N2C1CT62yvf
+         uTmMh6kl9sttGueKNHGKMEwOy5Zm//GcC/mPS8lxviwYvn6yJKmjI6KV2kLMXIc85N8k
+         SytCw2GCTd5Jn37uvHC82fbcF0c3y7jwM+HSg=
+Received: by 10.204.35.142 with SMTP id p14mr563016bkd.21.1257283816629;
+        Tue, 03 Nov 2009 13:30:16 -0800 (PST)
+Received: from evo.home.haczewski.net (14-mi2-10.acn.waw.pl [85.222.57.14])
+        by mx.google.com with ESMTPS id z15sm1252593fkz.44.2009.11.03.13.30.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 03 Nov 2009 13:30:16 -0800 (PST)
+Received: by evo.home.haczewski.net (Postfix, from userid 1000)
+	id 751DEA7EADE; Tue,  3 Nov 2009 22:30:13 +0100 (CET)
+X-Mailer: git-send-email 1.6.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131998>
 
-Previously, the three dash marker (---) would only be added if the diff
-output format was a patch and diffstat (usually -p and --stat). Now that
-patches are always generated by format-patch regardless of the stat
-format being used (--stat, --raw, --numstat, etc.), always add the three
-dash marker when a patch is being generated and a stat option is used.
+Here is a small patch that allows use of native Windows API threads for
+where git uses pthreads. I don't have full msysgit environment to test it,
+all I know is it compiles, so someone else could test it a little. I enabled
+it for MSVC only (since msysgit uses win32-pthreads and cygwin has it's own).
+I assume that patch could help with getting rid of that one dependency for
+msysgit.
 
-This allows users to choose the stat format they want and unifies the
-format of patches with stats. It also make patches easier to apply when
-generated by format-patch with non-standard stat options as the stat is
-no longer considered part of the commit message.
+PS. I'm new here (actually new for whole kernel-like-development-cycle-with-
+patches-flying-low-on-mailing-lists), so please be kind to my stupidity for
+a while... please? ;-)
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
+Andrzej K. Haczewski (1):
+  MSVC: port pthread code to native Windows threads
 
-It seems that after looking at this series it would be better if the
-marker is always displayed even when a user has used a non-standard
-stat option with format-patch.
-
-I'm not sure this is wanted though and I guess this could break people's
-scripts. Are people actually using --numstat or --raw to put the stat into
-the commit message?
-
- log-tree.c                                         |    5 +++--
- ...f-tree_--pretty_--root_--patch-with-raw_initial |    2 +-
- t/t4013/diff.show_--patch-with-raw_side            |    2 +-
- 3 files changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/log-tree.c b/log-tree.c
-index 1618f3c..1871c6c 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -461,8 +461,9 @@ int log_tree_diff_flush(struct rev_info *opt)
- 		if ((opt->diffopt.output_format & ~DIFF_FORMAT_NO_OUTPUT) &&
- 		    opt->verbose_header &&
- 		    opt->commit_format != CMIT_FMT_ONELINE) {
--			int pch = DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_PATCH;
--			if ((pch & opt->diffopt.output_format) == pch)
-+			int pch = DIFF_FORMAT_PATCH;
-+			int fmt = opt->diffopt.output_format;
-+			if (pch & fmt && pch ^ fmt)
- 				printf("---");
- 			putchar('\n');
- 		}
-diff --git a/t/t4013/diff.diff-tree_--pretty_--root_--patch-with-raw_initial b/t/t4013/diff.diff-tree_--pretty_--root_--patch-with-raw_initial
-index a3203bd..2f4fec9 100644
---- a/t/t4013/diff.diff-tree_--pretty_--root_--patch-with-raw_initial
-+++ b/t/t4013/diff.diff-tree_--pretty_--root_--patch-with-raw_initial
-@@ -4,7 +4,7 @@ Author: A U Thor <author@example.com>
- Date:   Mon Jun 26 00:00:00 2006 +0000
- 
-     Initial
--
-+---
- :000000 100644 0000000000000000000000000000000000000000 35d242ba79ae89ac695e26b3d4c27a8e6f028f9e A	dir/sub
- :000000 100644 0000000000000000000000000000000000000000 01e79c32a8c99c557f0757da7cb6d65b3414466d A	file0
- :000000 100644 0000000000000000000000000000000000000000 01e79c32a8c99c557f0757da7cb6d65b3414466d A	file2
-diff --git a/t/t4013/diff.show_--patch-with-raw_side b/t/t4013/diff.show_--patch-with-raw_side
-index 221b46a..b7566be 100644
---- a/t/t4013/diff.show_--patch-with-raw_side
-+++ b/t/t4013/diff.show_--patch-with-raw_side
-@@ -4,7 +4,7 @@ Author: A U Thor <author@example.com>
- Date:   Mon Jun 26 00:03:00 2006 +0000
- 
-     Side
--
-+---
- :100644 100644 35d242b... 7289e35... M	dir/sub
- :100644 100644 01e79c3... f4615da... M	file0
- :000000 100644 0000000... 7289e35... A	file3
--- 
-1.6.5.2.181.gd6f41
+ Makefile               |    2 +-
+ builtin-pack-objects.c |   42 +++++++++-
+ compat/winthread.h     |  219 ++++++++++++++++++++++++++++++++++++++++++++++++
+ preload-index.c        |   12 +++
+ 4 files changed, 272 insertions(+), 3 deletions(-)
+ create mode 100644 compat/winthread.h
