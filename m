@@ -1,117 +1,189 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH] commit -c/-C/--amend: reset timestamp and authorship to committer with --reset-author
-Date: Wed, 04 Nov 2009 07:38:22 +0900
-Message-ID: <20091104073822.6117@nanako3.lavabit.com>
-References: <1257282551-9999-1-git-send-email-erick.mattos@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Problem with "From:" line on "git format-patch" generated
+ patches
+Date: Tue, 3 Nov 2009 16:55:56 -0600
+Message-ID: <20091103225556.GA20160@progeny.tock>
+References: <b8bf37780911030830l42ea6dc2v3ef66e2a9e1ca281@mail.gmail.com>
+ <adf1fd3d0911030902x15faffcen86644733ffda43d5@mail.gmail.com>
+ <b8bf37780911031006q4bc4c487xd9db86eb0fa531e7@mail.gmail.com>
+ <b8bf37780911031011v5c8ec684ke6eebc6b0de1a66a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Erick Mattos <erick.mattos@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 23:40:56 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?iso-8859-1?Q?Andr=E9?= Goddard Rosa <andre.goddard@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 03 23:46:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5S3b-00017b-SU
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 23:40:56 +0100
+	id 1N5S8y-0003ad-Hf
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 23:46:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755105AbZKCWko (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 17:40:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754711AbZKCWko
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 17:40:44 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:38300 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754524AbZKCWkn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 17:40:43 -0500
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 46B7111B7BF;
-	Tue,  3 Nov 2009 16:40:49 -0600 (CST)
-Received: from 5889.lavabit.com (customer-148-233-239-23.uninet.net.mx [148.233.239.23])
-	by lavabit.com with ESMTP id FV6KN80Y0BX2; Tue, 03 Nov 2009 16:40:49 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=qfTIZJ2uGPLXaQmRMWXT4IK4Bw0B1NM6TCiO/tOzI55InVPLc8S0v7UTFV1YbwJkiBu2EShVCrujH2bRihQ1MuimZ+t9mkxv6+4cA2CBIDR0/b6AQ8t/NQBnJ1JXD6XcOSGlEZ+Izj1/8y9Qp4ttrWXjNjyhuN12aEMlAhnhW2Q=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <1257282551-9999-1-git-send-email-erick.mattos@gmail.com>
+	id S1751991AbZKCWqR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Nov 2009 17:46:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751123AbZKCWqR
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 17:46:17 -0500
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:53903 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751002AbZKCWqQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 17:46:16 -0500
+Received: by ewy3 with SMTP id 3so2524107ewy.37
+        for <git@vger.kernel.org>; Tue, 03 Nov 2009 14:46:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=zPO9RPNE8BaKBecx1zEe1joX95rdvLbCKGgbt67kqcw=;
+        b=mqKQ2M2+J9UZK7+7tfJaMEn3pc4d1OKhSPMHU9fHZUJaEC5FCv6sc8WyQfr6agRDMH
+         vJaLBM8kLnEdxgFFBnx5z+xuO5Z2oJC9PCSphRo6kuRFh5iKs0nCeI4Xi6bzm03Hi/7Y
+         3gKLlfQmNjVcWJzqbbF1aRM65sQAI/+8mEJjg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=jcC2HvuG/wsebBiCOWaz1WGkHtcJa6mMPJckARoglmaklwssRRJqMB98LGNu1VNqQL
+         9BN6OIiZNjBoSSKO732QbFT5ldedP3y5ulMSvdmGkvWS7hBA/G6LyKHa8pkUbWTC0dBK
+         6EK2FVA/9d5aphxyeyrLKhY1Xalo8Jc8+3csU=
+Received: by 10.216.93.70 with SMTP id k48mr262487wef.134.1257288380202;
+        Tue, 03 Nov 2009 14:46:20 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id g9sm1533159gvc.25.2009.11.03.14.46.17
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 03 Nov 2009 14:46:19 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <b8bf37780911031011v5c8ec684ke6eebc6b0de1a66a@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132007>
 
-Quoting Erick Mattos <erick.mattos@gmail.com>
+Hi Andr=E9,
 
-> When we use one of the options above we are normally trying to do mainly
-> two things: using the source as a template or recreating a commit with
-> corrections.
->
-> When they are used, the authorship and timestamp recorded in the newly
-> created commit are always taken from the original commit.  And they
-> should not when we are using it as a template or when our change to the
-> code is so significant that we should take over the authorship (with the
-> blame for bugs we introduce, of course).
->
-> The new --reset-author option is meant to solve this need by
-> regenerating the timestamp and setting as the new author the committer
-> or the one specified by --author option.
->
-> Signed-off-by: Erick Mattos <erick.mattos@gmail.com>
-> ---
+Andr=E9 Goddard Rosa wrote:
 
-If you are sending an update to a previous patch (I am comparing
-this patch with the "show by example" patch Junio sent on 11/02 
-http://article.gmane.org/gmane.comp.version-control.git/131893), 
-it is a common courtesy to summarize what you changed relative 
-to the base version after the three dashes line, so that people 
-will know which part can be skipped while reviewing your patch.
+>> I'm not using any specific tool for inputting the git-format-patch,
+>> but instead I'm sending the files generated by it through gmail as a=
+n
+>> inlined patch in the email body.
+>>
+>> I like the convenience of format-patch for generating the patch file=
+s,
+>> but in this case, formatting the header as rfc2047 is not necessary
+>> and makes a funny/garbled output in my patch submission.
 
-I was originally puzzled by Junio's "mine" because I thought 
-"what does taking over the authorship have to do with digging 
-diamonds out of earth?". "reset-author" makes it very clear,
-and I think it is a much better name for the option.
+The header fields git format-patch outputs are just intended as a
+starting point for the header of your mailing.  It is more convenient
+to receive an e-mail with
 
-Your first paragraph mentions "one of the options", but subject 
-mentions four (-c, -C, --amend and --reset-author) and you want 
-only the first three of them.
+	Delivered-to: maintainer@example.com
+	Received: [...]
+	Message-ID: <patch.sender.0001@example.com>
+	Date: Tue, 03 Nov 2009 16:33:54 -0600
+	From: Patch Sender <patch.sender@example.com>
+	Subject: [PATCH] Fix one bug, add another
+	Content-Type: text/plain; charset=3Dus-ascii
 
-The second paragraph of gmane/131893 says "borrow the commit log 
-message" instead of repeating "a template". It has the effect of 
-clarifying that only the message part is borrowed but not the 
-authorship information.
+	Blah blah blah
 
-I think gmane/131893 has much better description than your first 
-two paragraphs for the these reasons.
+than one in which the content includes some useless metadata that was
+already in the header.  So you should just strip the header out from
+the body before sending.
 
-> diff --git a/t/t7509-commit.sh b/t/t7509-commit.sh
-> new file mode 100755
-> index 0000000..7290242
-> --- /dev/null
-> +++ b/t/t7509-commit.sh
+There are three common exceptions: 1) you might want to send a patch
+written by someone else, 2) you might want to mark a patch as written
+before it was sent, and 3) some people like to receive patches as
+attachments rather than inlined in messages.  For the first two cases,
+the solution is to include the header fields to change in the body:
 
-I have to say that the test script is much worse than what 
-gmane/131893 had.
+	From: Patch Writer <patch.writer@example.com>
+	Date: Wed, 01 Apr 1970 01:23:45 +0100
 
-The old test made sure that -C copied the message, with or 
-without the --mine option. But this test only checks the 
-author line (and it doesn't even make sure that "^author" 
-matches only in the header). The messages are unchecked, 
-and it will let a bug when someone breaks --reset-author 
-logic in the future in such a way that it corrupts the 
-message by mistake go unnoticed.
+	Blah blah blah
+	---
+	Hi,
 
-Also the old test was much more readable because it used 
-shell functions to avoid repeating cat-file and pipe to sed 
-script. It also tagged the initial commit, which had a nice 
-effect that a failure in any intermediate test will not change 
-which earlier commit is reused (eg. yours say "-C HEAD^" but 
-old test said "-C Initial").
+	Patch Writer wrote this patch a while ago that might be
+	relevant.  It needed a straightforward one-line change to
+	apply and is otherwise unchanged.
 
-It looks silly to create an "Initial Commit" in the middle 
-of history, too (^_^).
+	What do you think?
+[...]
 
-I think it is much better to replace "--mine" in gmane/131893 
-with "--reset-author" and make no other change to the test.
+=46or the last case, I think it is most common to send unchanged 'git
+format-patch' output.  But only the From, Date, and Subject fields
+are actually needed.
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+I am not sure how well 'git am' copes with non-ascii characters in
+the pseudo-header lines: I would have guessed it could handle them
+both rfc2047-encoded and not, but I have not tried.
+
+> I really would like continuing having the convenience of using a web
+> access to my gmail for sending the patches, so I just need a way to
+> format the patches which makes it easy submitting them later. I'd lik=
+e
+> to avoid using any other email client for that, if possible.
+
+Here, there is another danger: the Gmail web interface does not
+consider your whitespace precious, so it is very prone to mangling
+patches (especially with long lines).
+
+Documentation/SubmittingPatches [1] has some advice:
+
+| Gmail
+| -----
+|=20
+| GMail does not appear to have any way to turn off line wrapping in th=
+e web
+| interface, so this will mangle any emails that you send.  You can how=
+ever
+| use any IMAP email client to connect to the google imap server, and f=
+orward
+| the emails through that.  Just make sure to disable line wrapping in =
+that
+| email client.  Alternatively, use "git send-email" instead.
+|=20
+| Submitting properly formatted patches via Gmail is simple now that
+| IMAP support is available. First, edit your ~/.gitconfig to specify y=
+our
+| account settings:
+|=20
+| [imap]
+| 	folder =3D "[Gmail]/Drafts"
+| 	host =3D imaps://imap.gmail.com
+| 	user =3D user@gmail.com
+| 	pass =3D p4ssw0rd
+| 	port =3D 993
+| 	sslverify =3D false
+|=20
+| You might need to instead use: folder =3D "[Google Mail]/Drafts" if y=
+ou get an error
+| that the "Folder doesn't exist".
+|=20
+| Next, ensure that your Gmail settings are correct. In "Settings" the
+| "Use Unicode (UTF-8) encoding for outgoing messages" should be checke=
+d.
+|=20
+| Once your commits are ready to send to the mailing list, run the foll=
+owing
+| command to send the patch emails to your Gmail Drafts folder.
+|=20
+| 	$ git format-patch -M --stdout origin/master | git imap-send
+|=20
+| Go to your Gmail account, open the Drafts folder, find the patch emai=
+l, fill
+| in the To: and CC: fields and send away!
+
+Good luck.
+
+Hope that helps,
+Jonathan
+
+[1] <http://git.kernel.org/?p=3Dgit/git.git;a=3Dblob_plain;f=3DDocument=
+ation/SubmittingPatches>
+converting tabs to spaces. =20
