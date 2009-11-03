@@ -1,59 +1,57 @@
 From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH v2] gitk: Use the --submodule option for displaying diffs
- when available
-Date: Tue, 3 Nov 2009 22:32:16 +1100
-Message-ID: <19184.5312.712632.894685@cargo.ozlabs.ibm.com>
-References: <4AE70AC9.6040302@web.de>
-	<19175.49800.697048.349753@drongo.ozlabs.ibm.com>
-	<4AE82DBD.5070202@web.de>
+Subject: Re: [PATCH] Skip translation of wrong Tcl version text
+Date: Tue, 3 Nov 2009 22:31:21 +1100
+Message-ID: <19184.5257.944412.835848@cargo.ozlabs.ibm.com>
+References: <1256415640-10328-1-git-send-email-bernt@norang.ca>
+	<1256415640-10328-2-git-send-email-bernt@norang.ca>
+	<87d443xn5u.fsf@users.sourceforge.net>
+	<874opel7de.fsf@gollum.intra.norang.ca>
+	<87ljipje03.fsf@gollum.intra.norang.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Nov 03 12:33:29 2009
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org
+To: Bernt Hansen <bernt@norang.ca>
+X-From: git-owner@vger.kernel.org Tue Nov 03 12:33:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5Hdg-00020U-BO
+	id 1N5Hdf-00020U-RJ
 	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 12:33:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752619AbZKCLdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 06:33:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752469AbZKCLdJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 06:33:09 -0500
-Received: from ozlabs.org ([203.10.76.45]:56770 "EHLO ozlabs.org"
+	id S1752525AbZKCLdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 06:33:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752469AbZKCLdI
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 06:33:08 -0500
+Received: from ozlabs.org ([203.10.76.45]:56775 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752114AbZKCLdH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 06:33:07 -0500
+	id S1752123AbZKCLdG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 06:33:06 -0500
 Received: by ozlabs.org (Postfix, from userid 1003)
-	id 50E0BB7B9C; Tue,  3 Nov 2009 22:33:08 +1100 (EST)
-In-Reply-To: <4AE82DBD.5070202@web.de>
+	id 55F3AB7BE1; Tue,  3 Nov 2009 22:33:08 +1100 (EST)
+In-Reply-To: <87ljipje03.fsf@gollum.intra.norang.ca>
 X-Mailer: VM 8.0.12 under 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131966>
 
-Jens Lehmann writes:
+Bernt Hansen writes:
 
-> Instead of just showing not-quite-helpful SHA-1 pairs in the diff display
-> of a submodule gitk will display the first lines of the corresponding
-> commit messages (similar to the output of 'git submodule summary') when
-> the underlying git installation supports this. That makes it much easier
-> to evaluate the changes, as it eliminates the need to start a gitk inside
-> the submodule and use the superprojects hashes there to find out what the
-> commits are about.
+> We check the required Tcl version number before we setup msgcat for
+> language translation.  If the Tcl version is too old just display the
+> untranslated error text.
 > 
-> This patch applies to 'next' - which will be 1.6.6 or 1.7.0 when merged -
-> and uses the new --submodule option of git diff when a version of 1.6.6 or
-> higher is detected to achieve a more human readable output of submodule
-> differences in gitk.
+> The caller of show_error can now pass an alternative function for mc.
+> The Tcl list function turns the transalation into a no-op.
 > 
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+> This fixes the
+>     Error in startup script: invalid command name "mc"
+> when attempting to start gitk with Tcl 8.3.
+> 
+> Signed-off-by: Bernt Hansen <bernt@norang.ca>
 
 Thanks, applied.
 
