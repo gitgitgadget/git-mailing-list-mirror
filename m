@@ -1,94 +1,78 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git subtree issues
-Date: Tue, 3 Nov 2009 11:43:37 -0400
-Message-ID: <32541b130911030743i4dcd9e37q34ead6a4a9a9814c@mail.gmail.com>
-References: <26159961.post@talk.nabble.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: [PATCH] gitk: disable checkout of remote branch
+Date: Tue, 3 Nov 2009 21:30:12 +0530
+Message-ID: <2e24e5b90911030800j22b00372r99a56c3f847a3644@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: morgflast <daniel@sibblingz.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 16:44:06 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Nov 03 17:00:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5LYD-0006x1-Di
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 16:44:05 +0100
+	id 1N5LoM-0006vd-3O
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 17:00:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751187AbZKCPny convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Nov 2009 10:43:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750928AbZKCPny
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 10:43:54 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:41272 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750796AbZKCPnx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Nov 2009 10:43:53 -0500
-Received: by yxe17 with SMTP id 17so5500020yxe.33
-        for <git@vger.kernel.org>; Tue, 03 Nov 2009 07:43:58 -0800 (PST)
+	id S1754206AbZKCQAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 11:00:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754189AbZKCQAL
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 11:00:11 -0500
+Received: from mail-iw0-f180.google.com ([209.85.223.180]:54569 "EHLO
+	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754187AbZKCQAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 11:00:08 -0500
+Received: by iwn10 with SMTP id 10so4192188iwn.4
+        for <git@vger.kernel.org>; Tue, 03 Nov 2009 08:00:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=tH486zQOOWGaNkYUP/7ui5yJpZNab4qkWy8xiH9Z3Gs=;
-        b=N/IuYLWTunigXNXGApNFsBpGXswCLGGW3ADe/RrLPZK5Kzd9n+Fwa4qYYcWu7rXDHC
-         0spLIiKOnXWmMXEheDnFNi6njPQEDYp3k7rYWS8L+culuL7xCJOy2i/NG3CYVDfW1lfT
-         Mtz/oQW8ahDzghvfKfRlpKGonQ3VSJEP2L5Fs=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=82FLvd55MZU6SulSa6vR97BzyQcWTy7J7c/Vn6KSyDo=;
+        b=jCcOm2fVY9/RWB/PM7hRmK1qEoB0KwEeMv2Of5il3pAcH7tKiUI8TAJCQQSopiFph8
+         NKTIqdEhL0IbW5zhJGprJzWGRvzCL3iNyDhYoS/Z0EcMwi4o9gss6Gk+oOnOGfUHzyLL
+         97BVeuhfM3NqS1TUDT1sOISBxtYrnUHtGfUqc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Y2xwh/baUVkD2mQkzHGPN5g8QXKZWPPkPQ/NVLKv/++PSH9NKNNcPA1xADSnAaeZvk
-         II+flh3l6UO0DPnnSwkDk/Cj7rSNKjc4FhsmJzGCGkt8oW0hW49Ggr0/ZuBpNp6H7Vao
-         K7bs42C87uZkI60FopSEJU0vtIB2zBkYQdeHw=
-Received: by 10.150.16.14 with SMTP id 14mr415188ybp.246.1257263037121; Tue, 
-	03 Nov 2009 07:43:57 -0800 (PST)
-In-Reply-To: <26159961.post@talk.nabble.com>
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=gfbbaVLrco+B9vA/b232wx09k/WR0Nic2Z63Bz3rKH6eDRc0GvNvrgDNNyZxAbWilB
+         9re4CN6K0eDXzf5gUIHb9V2+vPREtW91TwIb1TvKAUrdF/1kF2wcfkiuS5NtkkfKLcz5
+         W3tqjgJ7mKjzAN91PapY1/Gxd1u8Czay6l/w0=
+Received: by 10.231.9.218 with SMTP id m26mr499697ibm.29.1257264012800; Tue, 
+	03 Nov 2009 08:00:12 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131975>
 
-On Mon, Nov 2, 2009 at 11:56 PM, morgflast <daniel@sibblingz.com> wrote=
-:
-> git pull -s subtree vw_extensions master remote: Counting objects: 5,=
- done.
-> remote: Compressing objects: 100% (3/3), done.
-> remote: Total 3 (delta 2), reused 0 (delta 0)
-> Unpacking objects: 100% (3/3), done.
-> From git@github.com:sibblingz/vw_extensions
-> =A0* branch =A0 =A0 =A0 =A0 =A0 =A0master =A0 =A0 -> FETCH_HEAD
-> Already uptodate!
-> Merge made by subtree.
->
-> However, when I looked at the README file in the first project, the c=
-hanges
-> weren't there. =A0I was wondering if anyone might have any suggestion=
-s about
-> what to do.
+At the command line, this gives you a detailed warning message, but the
+GUI currently allows it without any fuss.
 
-Hmm, the output certainly wasn't very helpful :(
+Since the GUI is often used by people much less familiar with git, it
+seems reasonable to make the GUI more restrictive than the command line,
+not less.
 
-Usually what "already uptodate" means is that the commit it merged
-didn't actually cause any changes.  Is it possible there's another
-README file that already contained this change?
+This prevents a lot of detached HEAD commits by new users.
 
-The other problem with subtree merge is that it tries to *guess* which
-subtree you want to merge, which unfortunately fails almost as often
-as it succeeds.  If it guessed incorrectly, it might have thrown away
-all the directories except one that didn't change at all.  If this is
-the problem, I don't have an easy fix; my git-subtree command (which
-makes it a bit easier to do the things you're trying to do in your
-email) suffers from this too.  Eventually I was thinking of giving in
-and making subtree merge properly configurable, but I haven't had
-time.
+Signed-off-by: Sitaram Chamarty <sitaramc@gmail.com>
+---
+ gitk |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-Or maybe this is a totally different problem.  What do you get from:
-
-  git diff --stat $(git merge-base HEAD^ FETCH_HEAD) FETCH_HEAD
-
-?
-
-Avery
+diff --git a/gitk b/gitk
+index db5ec54..95e27d4 100755
+--- a/gitk
++++ b/gitk
+@@ -8897,6 +8897,9 @@ proc headmenu {x y id head} {
+     set headmenuid $id
+     set headmenuhead $head
+     set state normal
++    if {[string match "remotes/*" $head]} {
++	set state disabled
++    }
+     if {$head eq $mainhead} {
+ 	set state disabled
+     }
+-- 
+1.6.5
