@@ -1,80 +1,91 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Re: Gitk --all error when there are more than 797 refs in 
-	a repository
-Date: Tue, 3 Nov 2009 11:04:44 +0100
-Message-ID: <81b0412b0911030204v46adf54gb9ed65e78ce2b6df@mail.gmail.com>
-References: <6F87406399731F489FBACE5C5FFA04584BFA53@ex2k.bankofamerica.com>
-	 <878wgcbb52.fsf@users.sourceforge.net>
-	 <19124.8378.975976.347711@cargo.ozlabs.ibm.com>
-	 <6F87406399731F489FBACE5C5FFA0458518DE8@ex2k.bankofamerica.com>
-	 <4AB78910.7010402@viscovery.net>
-	 <6F87406399731F489FBACE5C5FFA0458518E11@ex2k.bankofamerica.com>
-	 <4AB7A2E7.5000601@viscovery.net>
-	 <874oqvc0n3.fsf@users.sourceforge.net>
-	 <7v1vlzvjtg.fsf@alter.siamese.dyndns.org>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: git pull --rebase and losing commits
+Date: Tue, 3 Nov 2009 11:12:13 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0911031103450.19057@ds9.cixit.se>
+References: <alpine.DEB.2.00.0911021318400.3919@ds9.cixit.se> <20091102151022.GA3995@atjola.homenet> <alpine.DEB.2.00.0911030757400.15633@ds9.cixit.se> <alpine.DEB.1.00.0911031047510.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	"Murphy, John" <john.murphy@bankofamerica.com>,
-	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 11:04:57 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	=?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Nov 03 11:12:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5GFy-0004y7-UH
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 11:04:55 +0100
+	id 1N5GNR-0008E3-Vh
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 11:12:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755872AbZKCKEm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Nov 2009 05:04:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755468AbZKCKEm
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 05:04:42 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:44082 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753232AbZKCKEl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Nov 2009 05:04:41 -0500
-Received: by bwz27 with SMTP id 27so7368944bwz.21
-        for <git@vger.kernel.org>; Tue, 03 Nov 2009 02:04:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=9deG3rC15IA1IV4oL0unFIs+zOlN/50UyLU7qTaWrbE=;
-        b=TAORSEdXQR06yHT47IR+CL6kxS3h+5Dny9U6zE3eLLhwjq3eBF/IlRwkhmZR/EpLpg
-         xpEH2i2ONU+SQ9x2VnvsEBSzhmf0sI8AMbtJVqbujOcB2S1N5ijINDvDZYSC2LemKNaZ
-         ZjI+SU2IAPHBtIxc3M5qaShiIDU03fBy3O9ZU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=L8yuSL9GG8+rh1Tft3YshvFopLLTFOyIckeeuRoO1R1Uzx919UTBNeaZDu6IABlPpi
-         t4IJwcQ7cNLJr4peKTwFJB5Hx8oUUT05OxDNOiksu9FVkMQQwGbfziJqxjBLner/ppu7
-         8hObhyWZQl7vabzsD+lQigTEg3E6jzh4ODvU0=
-Received: by 10.204.153.22 with SMTP id i22mr50216bkw.123.1257242684919; Tue, 
-	03 Nov 2009 02:04:44 -0800 (PST)
-In-Reply-To: <7v1vlzvjtg.fsf@alter.siamese.dyndns.org>
+	id S1756514AbZKCKMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 05:12:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756482AbZKCKMP
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 05:12:15 -0500
+Received: from upper-gw.cixit.se ([92.43.32.133]:40469 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756290AbZKCKMO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 05:12:14 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id nA3ACEV8006469
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 3 Nov 2009 11:12:14 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id nA3ACEuD006464;
+	Tue, 3 Nov 2009 11:12:14 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <alpine.DEB.1.00.0911031047510.4985@pacific.mpi-cbg.de>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Tue, 03 Nov 2009 11:12:14 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131960>
 
-On Tue, Sep 22, 2009 at 02:39, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Pat Thoyts <patthoyts@users.sourceforge.net> writes:
->> =C2=A0 =C2=A0 =C2=A0if {$revs eq {}} {
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 set revs HEAD
->> + =C2=A0 =C2=A0} elseif {$revs eq "--all"} {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0return $revs
->> =C2=A0 =C2=A0 =C2=A0}
->
-> That looks like an ugly hack (aka sweeping the issue under the rug).
->
+Johannes Schindelin:
 
-And it is a race condition. By the time git log has got --all list of r=
-eferences
-it may look completely different to what gitk has.
+>> Sounds like it should be called "theirs", then.
+> Why should it be called "theirs" when it takes "ours"?
+
+Because it took "their" (= upstream) tree, not "our" (= local branch) tree.
+
+Seems to me the name is a bit confusing in the case of a rebase, as I am 
+"merging" my changes *onto* the upstream, not the other way round as would 
+be the case with a regular merge.
+
+> Note: the thing I think Thomas wanted to clarify is that this strategy 
+> does not _resolve conflicts_ to "our" version, but it just outright 
+> ignores "theirs".  IOW, after a merge with the "ours" strategy, 
+> "HEAD^{tree}" and "HEAD^^{tree}" will point to _exactly the same object_.
+
+And in the case of a rebase, the other way around: With --rebase 
+--strategy=ours, I am basically asking to throw all my local commits away?
+
+> If you want to use any merge strategy, you must understand what it does 
+> first.  There is no way around that.  No change in UI, or in the core code 
+> of Git, can relieve you of this obligation.
+
+No, that is why I recommended that what needed clarification was the 
+documentation. I read the documentation of "ours":
+
+   "This resolves any number of heads, but the result of the merge is
+    always the current branch head. It is meant to be used to
+    supersede old development history of side branches."
+
+and thought that it meant that it
+
+a) could resolve a merge conflict, no matter the number of branches involved 
+("resolves any number of heads").
+b) would replace any merge conflict with the contents in the current 
+repository's branch ("result of the merge is always the current branch head").
+
+Apparently, the "used to supersede old development history" means that it 
+actually throws the entire contents of one of the branches out, which is not 
+what I wanted. I didn't understand that from the documentation, however.
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
