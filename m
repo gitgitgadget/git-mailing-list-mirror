@@ -1,89 +1,82 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH] gitk: Fix "git gui blame" invocation when called from topdir
-Date: Wed,  4 Nov 2009 00:21:41 +0100
-Message-ID: <1257290501-21093-1-git-send-email-markus.heidelberg@web.de>
-References: <19184.2163.760155.285153@cargo.ozlabs.ibm.com>
-Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Nov 04 00:25:31 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] MSVC: port pthread code to native Windows threads
+Date: Wed, 4 Nov 2009 00:38:13 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0911040031210.4985@pacific.mpi-cbg.de>
+References: <1257283802-29726-1-git-send-email-ahaczewski@gmail.com> <1257283802-29726-2-git-send-email-ahaczewski@gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 00:35:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5Skl-0002U8-AL
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 00:25:31 +0100
+	id 1N5SuC-0006H3-66
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 00:35:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752054AbZKCXZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 18:25:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752011AbZKCXZT
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 18:25:19 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:41633 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751915AbZKCXZS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 18:25:18 -0500
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate01.web.de (Postfix) with ESMTP id D05BA1378310A;
-	Wed,  4 Nov 2009 00:21:43 +0100 (CET)
-Received: from [89.59.85.220] (helo=localhost.localdomain)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #314)
-	id 1N5Sh5-0002Xj-00; Wed, 04 Nov 2009 00:21:43 +0100
-X-Mailer: git-send-email 1.6.5.2.155.gaa0e5
-In-Reply-To: <19184.2163.760155.285153@cargo.ozlabs.ibm.com>
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1/q/M7yAuXx+abAvFfin8b2NF/S676pcOYcLCAt
-	lpRCgaNSXV+HN7/C7/WSGXPLOVq7N1rDq7eTOWFfGvZGNNZcJ9
-	mX9iDXyTzblcL3TzCyeA==
+	id S1752223AbZKCXe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 18:34:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752179AbZKCXey
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 18:34:54 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46118 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751792AbZKCXet (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 18:34:49 -0500
+Received: (qmail invoked by alias); 03 Nov 2009 23:34:53 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp060) with SMTP; 04 Nov 2009 00:34:53 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18AR70dYN4Aw4g83Ip8E9gVdxSDz/HjpO5ADRrZyz
+	mr/27Npm8UqzPf
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1257283802-29726-2-git-send-email-ahaczewski@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132009>
 
-In this case "git rev-parse --git-dir" doesn't return an absolute path,
-but merely ".git", so the selected file has a relative path.
-The function make_relative then tries to make the already relative path
-relative, which results in a path like "../../../../Makefile" with as
-much ".." as the number of parts [pwd] consists of.
+Hi,
 
-This regression was introduced by commit 9712b81 (gitk: Fix bugs in
-blaming code, 2008-12-06), which fixed "git gui blame" when called from
-subdirs.
+On Tue, 3 Nov 2009, Andrzej K. Haczewski wrote:
 
-This also fixes it for bare repositories.
+> ---
 
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
----
+Could you please add the reasoning from the cover letter to this commit 
+message?  And add a sign-off?
 
-    Paul Mackerras, 03.11.2009:
-    > Thanks for the patch, but I'd prefer to just add:
-    > 
-    >     if {[file pathtype $f] ne "relative"} {
-    >         return $f
-    >     }
-    > 
-    > at the start of the function.  I think that's easier to read than
-    > having a big if statement.
-    
-    Definitely yes. But eq instead of ne.
-    
+> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+> index 02f9246..a8a4f59 100644
+> --- a/builtin-pack-objects.c
+> +++ b/builtin-pack-objects.c
+> @@ -18,8 +18,12 @@
+>  #include "refs.h"
+>  
+>  #ifdef THREADED_DELTA_SEARCH
+> -#include "thread-utils.h"
+> -#include <pthread.h>
+> +# include "thread-utils.h"
+> +# ifndef _WIN32
+> +#  include <pthread.h>
+> +# else
+> +#  include <winthread.h>
+> +# endif
+>  #endif
+>  
 
- gitk |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+It is unlikely that an #ifdef "contamination" of this extent will go 
+through easily, but I have a suggestion that may make your patch both 
+easier to read and more likely to be accepted into git.git: Try to wrap 
+the win32 calls into pthread-compatible function signatures.  Then you can 
+add a compat/win32/pthread.h and not even touch core files of git.git at 
+all.
 
-diff --git a/gitk b/gitk
-index 32e4ab0..949abfe 100755
---- a/gitk
-+++ b/gitk
-@@ -3378,6 +3378,9 @@ proc index_sha1 {fname} {
- 
- # Turn an absolute path into one relative to the current directory
- proc make_relative {f} {
-+    if {[file pathtype $f] eq "relative"} {
-+	return $f
-+    }
-     set elts [file split $f]
-     set here [file split [pwd]]
-     set ei 0
--- 
-1.6.5.2.155.gaa0e5
+Oh, and you definitely do not want to copy-paste err_win_to_posix().  You 
+definitely want to reuse the existing instance.
+
+Ciao,
+Dscho
