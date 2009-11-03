@@ -1,118 +1,62 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/2] Set Makefile variables from configure
-Date: Tue, 3 Nov 2009 16:21:23 -0600
-Message-ID: <20091103222123.GA17097@progeny.tock>
-References: <1257021695-21260-1-git-send-email-bwalton@artsci.utoronto.ca>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git hang with corrupted .pack
+Date: Tue, 3 Nov 2009 14:28:35 -0800
+Message-ID: <20091103222834.GC10505@spearce.org>
+References: <20091014042249.GA5250@hexapodia.org> <20091014142351.GI9261@spearce.org> <alpine.LFD.2.00.0910141208170.20122@xanadu.home> <20091014161259.GK9261@spearce.org> <alpine.LFD.2.00.0910141234540.20122@xanadu.home> <20091014180302.GL9261@spearce.org> <alpine.LFD.2.00.0910141435040.20122@xanadu.home> <7vbpk985t1.fsf@alter.siamese.dyndns.org> <81b0412b0910200814v269e91fbkd7841308685e1c54@mail.gmail.com> <4AF0A132.1060103@obry.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Ben Walton <bwalton@artsci.utoronto.ca>
-X-From: git-owner@vger.kernel.org Tue Nov 03 23:11:55 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Andy Isaacson <adi@hexapodia.org>, git@vger.kernel.org
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Tue Nov 03 23:28:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5RbW-0004bO-Uy
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 23:11:55 +0100
+	id 1N5Rru-0004BZ-SU
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 23:28:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755299AbZKCWLo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Nov 2009 17:11:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755004AbZKCWLo
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 17:11:44 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:40679 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754799AbZKCWLn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 17:11:43 -0500
-Received: by bwz27 with SMTP id 27so8151918bwz.21
-        for <git@vger.kernel.org>; Tue, 03 Nov 2009 14:11:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=XD7kHVFglv+02okZnEm+/hgJTxJK7bkS5ASEUBWWjm8=;
-        b=f63fOgsnozN0GE7kM5a+tnRL0JoJBl7AxDuXvW9fft/yjQ8B2zKAL7bnHD43TKuEzn
-         3zo803+3BdtGqPlsW8iT0xd7/qLHnZPXrz9DiVeHiMCAjzZ5lMJ9wgTjnEfQrmBEJgiY
-         7Y8K5iYLIxk6QyqJ9XNnMg8WflNXU9pZ1LZeU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=xPSV/C5HDsx8KSaDOQaG2Dp6ieysw2ZSZ7BaC6Q3a/7uHvyWAe/s1U4BCM9DvWgFm9
-         psI3LYu6UxGo1fwhsSxYHZoFYtCcXikeeZ/wLz1Xgdw33OI65ut4PBlKwjsTO9nCq/0f
-         JNmfHn5qmMgXyBdSpO/R+7KCVWwrLERBEkytw=
-Received: by 10.204.10.2 with SMTP id n2mr585319bkn.91.1257286307649;
-        Tue, 03 Nov 2009 14:11:47 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 18sm1312743fkq.37.2009.11.03.14.11.44
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 03 Nov 2009 14:11:46 -0800 (PST)
+	id S1755553AbZKCW2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 17:28:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755339AbZKCW2c
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 17:28:32 -0500
+Received: from george.spearce.org ([209.20.77.23]:60542 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755526AbZKCW2a (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 17:28:30 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 2893F381FE; Tue,  3 Nov 2009 22:28:35 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1257021695-21260-1-git-send-email-bwalton@artsci.utoronto.ca>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <4AF0A132.1060103@obry.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132004>
 
-Ben Walton wrote:
-> These patches add support for setting the newly created DEFAULT_EDITO=
-R
-> and DEFAULT_PAGER from the configure script.  I also tacked in
-> ETC_GITCONFIG, since I can't currently toggle this without setting a
-> command line value when building, but have need to alter it.
+Pascal Obry <pascal@obry.net> wrote:
+> Le 20/10/2009 17:14, Alex Riesen a ??crit :
+>> I seem to have problems with this change (on Cygwin). Sometimes
+>> accessing an object in a pack fails in unpack_compressed_entry.
+>> When it happens, both avail_in and avail_out of the stream are 0,
+>> and the reported status is Z_BUF_ERROR.
+>> Output with the second attached patch:
+>>
+>> error: *** inflate error: 0x862380 size=1256, avail_in=0 (was 697),
+>> avail_out=0 (was 1256)
+>> error: *** unpack_compressed_entry failed
+>> error: failed to read object 3296766eb5531ef051ae392114de5d75556f5613
+>> at offset 2620741 from
+>> .git/objects/pack/pack-996206790aaefbf4d34c86b3ff546bb924546b7c.pack
+>> fatal: object 3296766eb5531ef051ae392114de5d75556f5613 is corrupted
+>
+> I have this problem on some repository on Cygwin too. For now I have  
+> reverted to Git 1.6.4 which seems to be working fine.
 
-Would the --sysconfdir option work for you here?  Setting --sysconfdir
-currently does nothing, so the question is kind of moot without some
-change like this (untested):
+It was fixed in 1.6.5.2 by Junio.
 
-Hook up more of ./configure=E2=80=99s installation directory options to
-actually do something.  Unfortunately, this defeats the RUNTIME_PREFIX
-facility unless all the relevant paths are explicitly set.  Probably
-the defaults set in Makefile should not be overridden unless
-explicitly requested.
-
-This patch also changes the default location for HTML documentation
-after running ./configure from /usr/local/share/git-doc to
-/usr/local/share/git.  In my opinion, the fix to this would also be to
-make the configure script not override defaults from Makefile.
-
- config.mak.in |   14 +++++++++-----
- 1 files changed, 9 insertions(+), 5 deletions(-)
-
-diff --git a/config.mak.in b/config.mak.in
-index 67b12f7..430134a 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -11,17 +11,21 @@ TAR =3D @TAR@
- TCLTK_PATH =3D @TCLTK_PATH@
-=20
- prefix =3D @prefix@
--exec_prefix =3D @exec_prefix@
- bindir =3D @bindir@
-+mandir =3D @mandir@
-+infodir =3D @infodir@
- gitexecdir =3D @libexecdir@/git-core
--datarootdir =3D @datarootdir@
-+sharedir =3D @datadir@
- template_dir =3D @datadir@/git-core/templates
-+htmldir =3D @htmldir@
-+sysconfdir =3D @sysconfdir@
-=20
--mandir=3D@mandir@
--
-+exec_prefix =3D @exec_prefix@
-+datarootdir =3D @datarootdir@
-+PACKAGE_TARNAME =3D @PACKAGE_TARNAME@
-+docdir =3D @docdir@
- srcdir =3D @srcdir@
- VPATH =3D @srcdir@
--
- export exec_prefix mandir
- export srcdir VPATH
-=20
---=20
-1.6.5.2
+-- 
+Shawn.
