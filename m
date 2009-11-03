@@ -1,79 +1,69 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] Re: Gitk --all error when there are more than 797 refs
- in a repository
-Date: Tue, 3 Nov 2009 20:40:17 +1100
-Message-ID: <19183.64129.695745.269570@cargo.ozlabs.ibm.com>
-References: <6F87406399731F489FBACE5C5FFA04584BFA53@ex2k.bankofamerica.com>
-	<878wgcbb52.fsf@users.sourceforge.net>
-	<19124.8378.975976.347711@cargo.ozlabs.ibm.com>
-	<6F87406399731F489FBACE5C5FFA0458518DE8@ex2k.bankofamerica.com>
-	<4AB78910.7010402@viscovery.net>
-	<6F87406399731F489FBACE5C5FFA0458518E11@ex2k.bankofamerica.com>
-	<4AB7A2E7.5000601@viscovery.net>
-	<874oqvc0n3.fsf@users.sourceforge.net>
-	<19129.24056.422939.880134@cargo.ozlabs.ibm.com>
-	<7vd45io7da.fsf@alter.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git pull --rebase and losing commits
+Date: Tue, 3 Nov 2009 10:52:51 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0911031047510.4985@pacific.mpi-cbg.de>
+References: <alpine.DEB.2.00.0911021318400.3919@ds9.cixit.se> <20091102151022.GA3995@atjola.homenet> <alpine.DEB.2.00.0911030757400.15633@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	"Murphy\, John" <john.murphy@bankofamerica.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 10:44:14 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	=?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Tue Nov 03 10:49:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5Fvx-0005D4-L8
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 10:44:13 +0100
+	id 1N5G1G-0007Qh-LW
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Nov 2009 10:49:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755150AbZKCJoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 04:44:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754153AbZKCJoB
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 04:44:01 -0500
-Received: from ozlabs.org ([203.10.76.45]:48635 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752766AbZKCJoA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 04:44:00 -0500
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id A82F1B7BFD; Tue,  3 Nov 2009 20:44:02 +1100 (EST)
-In-Reply-To: <7vd45io7da.fsf@alter.siamese.dyndns.org>
-X-Mailer: VM 8.0.12 under 22.2.1 (i486-pc-linux-gnu)
+	id S1755704AbZKCJta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 04:49:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755037AbZKCJta
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 04:49:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60718 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754178AbZKCJt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 04:49:29 -0500
+Received: (qmail invoked by alias); 03 Nov 2009 09:49:32 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp050) with SMTP; 03 Nov 2009 10:49:32 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX188iDwDex08QI8kaA14k7lFlaYb+vUsbhi4XUZmSZ
+	tu0rcfkaTrG5ch
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.DEB.2.00.0911030757400.15633@ds9.cixit.se>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131958>
 
-Junio C Hamano writes:
+Hi,
 
-> Paul Mackerras <paulus@samba.org> writes:
-> 
-> > If git log had an argument to tell it to mark those commits that were
-> > a starting point or a finishing point, then I could simplify this
-> > logic enormously, plus we wouldn't have to pass a long parameter list
-> > to git log.  It may still turn out to be necessary to add a negative
-> > argument for each previous starting point, though, when refreshing the
-> > list.
-> >
-> > I think the simplest fix for now is to arrange to take the
-> > non-optimized path on windows when the list of revs gets too long,
-> > i.e., set $vcanopt($view) to 0 and take that path.  That means that
-> > refreshing the view will be slow, but I think it's the best we can do
-> > at this point.
-> 
-> Hmph.
-> 
-> The negative ones you can learn by giving --boundary, but I do not think
-> the set of starting points are something you can get out of log output.
-> 
-> Even if you could, you would have the same issue giving them from the
-> command line anyway.  The right solution would likely to be to give the
-> same --stdin option as rev-list to "git log", I think.
+On Tue, 3 Nov 2009, Peter Krefting wrote:
 
-A --stdin option to git log would be great, but it doesn't seem to be
-implemented yet.  How hard would it be to add?
+> Thomas Rast:
+> 
+> > Not very surprising if you use the 'ours' strategy, which doesn't merge at
+> > all but instead takes the 'ours' side (IIRC that's the upstream for a
+> > rebase, but I always have these mixed up).
+> 
+> Sounds like it should be called "theirs", then.
 
-Paul.
+Why should it be called "theirs" when it takes "ours"?
+
+Note: the thing I think Thomas wanted to clarify is that this strategy 
+does not _resolve conflicts_ to "our" version, but it just outright 
+ignores "theirs".  IOW, after a merge with the "ours" strategy, 
+"HEAD^{tree}" and "HEAD^^{tree}" will point to _exactly the same object_.
+
+If you want to use any merge strategy, you must understand what it does 
+first.  There is no way around that.  No change in UI, or in the core code 
+of Git, can relieve you of this obligation.
+
+Ciao,
+Dscho
