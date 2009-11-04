@@ -1,77 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] MSVC: port pthread code to native Windows threads
-Date: Wed, 4 Nov 2009 12:02:20 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0911041201380.2788@felix-maschine>
-References: <1257283802-29726-1-git-send-email-ahaczewski@gmail.com> <1257283802-29726-2-git-send-email-ahaczewski@gmail.com> <alpine.DEB.1.00.0911040031210.4985@pacific.mpi-cbg.de> <4AF0E842.2010201@workspacewhiz.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH] MSVC: port pthread code to native Windows threads
+Date: Wed, 04 Nov 2009 12:14:08 +0100
+Message-ID: <hcrnm0$dh6$1@ger.gmane.org>
+References: <1257283802-29726-1-git-send-email-ahaczewski@gmail.com>	 <1257331059-26344-1-git-send-email-ahaczewski@gmail.com> <40aa078e0911040250k55fa1920g6eee5657c6e35345@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 12:03:02 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 04 12:14:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5ddM-0000Sb-EJ
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 12:02:36 +0100
+	id 1N5dp1-0005Im-Kv
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 12:14:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755293AbZKDLCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 06:02:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755290AbZKDLCZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 06:02:25 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45639 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753723AbZKDLCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 06:02:25 -0500
-Received: (qmail invoked by alias); 04 Nov 2009 11:02:28 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO [10.1.35.45]) [141.5.11.5]
-  by mail.gmx.net (mp006) with SMTP; 04 Nov 2009 12:02:28 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/WzURm83LWaQpHFzkyuPejXZz5lrp5BVcyyb3Nvm
-	guNNJVO3nd2y33
-X-X-Sender: johannes@felix-maschine
-In-Reply-To: <4AF0E842.2010201@workspacewhiz.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1754774AbZKDLO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 06:14:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755332AbZKDLO2
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 06:14:28 -0500
+Received: from lo.gmane.org ([80.91.229.12]:39811 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755195AbZKDLO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 06:14:27 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1N5dot-0005H1-Ga
+	for git@vger.kernel.org; Wed, 04 Nov 2009 12:14:31 +0100
+Received: from nat-pool-brq-t.redhat.com ([209.132.186.34])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Nov 2009 12:14:31 +0100
+Received: from bonzini by nat-pool-brq-t.redhat.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Nov 2009 12:14:31 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: nat-pool-brq-t.redhat.com
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.4pre) Gecko/20091014 Fedora/3.0-2.8.b4.fc11 Lightning/1.0pre Thunderbird/3.0b4
+In-Reply-To: <40aa078e0911040250k55fa1920g6eee5657c6e35345@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132078>
 
-Hi,
+On 11/04/2009 11:50 AM, Erik Faye-Lund wrote:
+> On Wed, Nov 4, 2009 at 11:37 AM, Andrzej K. Haczewski
+> <ahaczewski@gmail.com>  wrote:
+>> +/*
+>> + * Properly defines thread routine for Windows and POSIX
+>> + */
+>> +#ifndef NO_PTHREADS
+>> +# ifndef _WIN32
+>> +#  define THREAD_FUNC(f, a) void *f(void *a)
+>> +#  define THREAD_RETURN(x) return (x)
+>> +# else
+>> +#  define THREAD_FUNC(f, a) DWORD __stdcall f(LPVOID a)
+>> +#  define THREAD_RETURN(x) return (DWORD)(x);
+>> +# endif
+>> +#endif
+>> +
+>
+> Seeing how THREAD_RETURN is only called with NULL-parameter, perhaps
+> it would be better to do this?
+>
+> +/*
+> + * Properly defines thread routine for Windows and POSIX
+> + */
+> +#ifndef NO_PTHREADS
+> +# ifndef _WIN32
+> +#  define THREAD_FUNC(f, a) void *f(void *a)
+> +#  define THREAD_RETURN() return NULL;
+> +# else
+> +#  define THREAD_FUNC(f, a) DWORD __stdcall f(LPVOID a)
+> +#  define THREAD_RETURN() return 0;
+> +# endif
+> +#endif
+>> +
 
-I do not appreciate at all that you culled me from the Cc: list.
+Even better, "return 0" is good under either platform (0 converts to 
+void *), and LPVOID is the same thing as void*, so you can just do
 
-On Tue, 3 Nov 2009, Joshua Jensen wrote:
+#ifndef _WIN32
+# define THREAD_RET_TYPE DWORD __stdcall
+#else
+# define THREAD_RET_TYPE void *
+#endif
 
-> ----- Original Message -----
-> From: Johannes Schindelin
-> Date: 11/3/2009 4:38 PM
-> > >   #ifdef THREADED_DELTA_SEARCH
-> > > -#include "thread-utils.h"
-> > > -#include<pthread.h>
-> > > +# include "thread-utils.h"
-> > > +# ifndef _WIN32
-> > > +#  include<pthread.h>
-> > > +# else
-> > > +#  include<winthread.h>
-> > > +# endif
-> > >   #endif
-> > >
-> > >      
-> > It is unlikely that an #ifdef "contamination" of this extent will go 
-> > through easily, but I have a suggestion that may make your patch both 
-> > easier to read and more likely to be accepted into git.git: Try to 
-> > wrap the win32 calls into pthread-compatible function signatures.  
-> > Then you can add a compat/win32/pthread.h and not even touch core 
-> > files of git.git at all.
-> >    
-> Pardon my ignorance, but is there a reason to not use Pthreads for 
-> Win32? http://sourceware.org/pthreads-win32/
-
-Pthreads is a rather large dependency we do not really need.
-
-Ciao,
-Dscho
+Paolo
