@@ -1,70 +1,73 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] MSVC: Windows-native implementation for subset of Pthreads
- API
-Date: Wed, 04 Nov 2009 13:10:22 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0911041247250.10340@xanadu.home>
-References: <1257331059-26344-1-git-send-email-ahaczewski@gmail.com>
- <1257350100-29281-1-git-send-email-ahaczewski@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 0/3] use '--bisect-refs' as bisect rev machinery
+ option
+Date: Wed, 04 Nov 2009 10:25:08 -0800
+Message-ID: <7vljimgnaz.fsf@alter.siamese.dyndns.org>
+References: <20091104034312.4545.2176.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
-To: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 19:10:43 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Nov 04 19:25:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5kJe-0000TO-LY
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 19:10:43 +0100
+	id 1N5kXw-0007Zb-Vy
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 19:25:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757565AbZKDSKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 13:10:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757544AbZKDSKS
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 13:10:18 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:15465 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753987AbZKDSKR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 13:10:17 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KSL00L60JTAGUF0@VL-MR-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 04 Nov 2009 13:10:22 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <1257350100-29281-1-git-send-email-ahaczewski@gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1757670AbZKDSZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 13:25:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757515AbZKDSZP
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 13:25:15 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36968 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754762AbZKDSZO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 13:25:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2778A92CBE;
+	Wed,  4 Nov 2009 13:25:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=G3mxeewnUhaPOdb3LkSMVv1tVwo=; b=tho4iv
+	xOEW7FWm56bHhsRKLtImkEhd86QWbY3FZ2poSSkh75DdjTdPqVIgGK3RiQdoX3iR
+	ouDnAXUxgEJZJiCdq5Y11wPEBpyEtLgfAJpritGjqVkXSijQaUk5e9d4VushYshx
+	jF6EZWn1PG/9W875ZBLQ69MAnXoxADCCOd5kQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wYhx34qmmEGQ95AmvxUf6DWAL6c+y/OI
+	rsivE9NuunC3wuNaN4DhPpqmUtuWERyKpKsmFO1Yndn7F7DvAr9dwE9rA8MVKNLY
+	o/3zFkxdGSZgKSFmyLHPmObeqiNIMX1c+fAnKQm7286RUJRIR+HE//xkuyd4Ucyc
+	AUfHB3VWqPc=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F05EF92CBC;
+	Wed,  4 Nov 2009 13:25:15 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7C19092CBB; Wed,  4 Nov 2009
+ 13:25:10 -0500 (EST)
+In-Reply-To: <20091104034312.4545.2176.chriscool@tuxfamily.org> (Christian
+ Couder's message of "Wed\, 04 Nov 2009 05\:00\:00 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 661CD408-C96F-11DE-BDEB-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132111>
 
-On Wed, 4 Nov 2009, Andrzej K. Haczewski wrote:
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-> +	NO_STATIC_PTHREADS_INIT = YesPlease
+> So I suggest to use '--bisect-refs' instead of '--bisect' as the new
+> bisect revision machinery option, because otherwise I think we get a
+> regression when we call "git rev-list --bisect BAD --not GOOD" and we
+> are already bisecting with bisect refs different than BAD and GOOD.
+> This also simplifies the code a little bit.
 
-Let's not go that route please.  If Windows can't get away without 
-runtime initializations then let's use them on all platforms.  There is 
-no gain in exploding the code path combinations here wrt testing 
-coverage.
+Just to make sure that I read you correctly, do you mean that Linus now
+would say:
 
-> +static THREAD_RET_TYPE threaded_find_deltas(void *arg)
-
-Why can't you just cast the function pointer in your pthread_create 
-wrapper instead?  No one cares about the returned value anyway.
-
-> @@ -2327,6 +2354,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
->  #ifdef THREADED_DELTA_SEARCH
->  	if (!delta_search_threads)	/* --threads=0 means autodetect */
->  		delta_search_threads = online_cpus();
-> +
-> +	init_threaded_delta_search();
-
-What about doing this at the beginning of ll_find_deltas() instead?
-And similarly for cleanup_threaded_delta_search(): call it right before 
-leaving ll_find_deltas().  This way thread issues would remain more 
-localized.  In fact I'd move the whole thing above in ll_find_deltas() 
-as well (separately from this patch though).
-
-
-Nicolas
+    $ git bisect ...
+    ... inside bisect session
+    $ gitk --bisect-refs arch/x86
