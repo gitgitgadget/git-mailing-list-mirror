@@ -1,89 +1,176 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: Re: [PATCH bg/format-patch-p-noop] log-tree: always add --- marker 
-	when options are patch and a stat
-Date: Wed, 4 Nov 2009 08:00:58 +0100
-Message-ID: <6672d0160911032300w1a2dfdbck5b1db98f2059639b@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH bg/format-patch-p-noop] log-tree: always add --- marker
+ when options are patch and a stat
+Date: Wed, 4 Nov 2009 02:10:54 -0500
+Message-ID: <20091104071053.GB24263@coredump.intra.peff.net>
 References: <1257283456-7007-1-git-send-email-bebarino@gmail.com>
-	 <7vy6mmltz9.fsf@alter.siamese.dyndns.org>
+ <7vy6mmltz9.fsf@alter.siamese.dyndns.org>
+ <20091104063612.GA24263@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org
+Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org,
+	=?utf-8?B?QmrDtnJu?= Gustavsson <bgustavsson@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 08:01:36 2009
+X-From: git-owner@vger.kernel.org Wed Nov 04 08:11:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5Zs8-0007d5-CO
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 08:01:36 +0100
+	id 1N5a1H-0001rb-LX
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 08:11:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752650AbZKDHAz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Nov 2009 02:00:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751486AbZKDHAz
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 02:00:55 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:23306 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751104AbZKDHAy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Nov 2009 02:00:54 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so116571fgg.1
-        for <git@vger.kernel.org>; Tue, 03 Nov 2009 23:00:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ngqCVQKartNJb7bcTqKAeDHWIxaleRBYnxNC+/26skw=;
-        b=ovwYgjwmT+NC3ylwfUn/sIHL//vZ/34WL8HTR1a1j7z88DdFU/Y09OxmWAGhc8O2GF
-         Zj4ceekTiQi9iaA5K6EmzRxRag4NUbW/FtL446sg7WRrnyG9+5PCeqDtCrRyScM9TI//
-         AdaWs3JPBU7x2Coe7Xh4hGCWsoFJJUpmtIq5g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Lr4B1SKkxC4FG1cap/nB8H5Tgm0lzETtnsdQs5p6QSeXOb4ez//AI3oddWiXomvu3o
-         ST5qg7Wo7K6SNIPS+PSz5bp3yEMTzw7T6LnMK7wPS5usU8JTKncp1cvzKo0nabvBLJ9f
-         3TE415ki6SCDVPzy6plzHBSYavhBJVkb1jPTE=
-Received: by 10.204.156.201 with SMTP id y9mr955571bkw.204.1257318058633; Tue, 
-	03 Nov 2009 23:00:58 -0800 (PST)
-In-Reply-To: <7vy6mmltz9.fsf@alter.siamese.dyndns.org>
+	id S1751975AbZKDHKx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Nov 2009 02:10:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751486AbZKDHKx
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 02:10:53 -0500
+Received: from peff.net ([208.65.91.99]:59845 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751909AbZKDHKw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 02:10:52 -0500
+Received: (qmail 8211 invoked by uid 107); 4 Nov 2009 07:14:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 04 Nov 2009 02:14:40 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Nov 2009 02:10:54 -0500
+Content-Disposition: inline
+In-Reply-To: <20091104063612.GA24263@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132048>
 
-2009/11/4 Junio C Hamano <gitster@pobox.com>:
+On Wed, Nov 04, 2009 at 01:36:13AM -0500, Jeff King wrote:
 
-> In an ideal world, I would probably say:
->
-> =C2=A0* format-patch should have three-dash after the commit message,=
- no matter
-> =C2=A0 what format the patch is asked for, and it always will give pa=
-tch text.
+> Here's a patch which fixes the regression, but it feels awfully hack-=
+ish
+> to me, as it treats "-p" specially in diff_opt (but in a way that no
+> other existing code should care about). It would be "cleaner" to me t=
+o
+> have some infrastructure for keeping an implicit and an explicit form=
+at,
+> and then merging them at the end. But I don't think we ever care abou=
+t
+> this explicitness for any other formats, so this is at least simple.
+>=20
+> Another option might be for format-patch to simply parse "-p" itself,
+> setting the format and marking an "explicit" flag. I'll look into tha=
+t
+> as an alternative.
 
-I agree.
+OK, doing that turned out to be much nicer. Less code, localized to
+format-patch, and less confusing to read.
 
-> =C2=A0* format-patch -p should be reinstated as a way to ask for "jus=
-t patch
-> =C2=A0 text, no diffstat". =C2=A0Introducing a new option --no-stat _=
-in addition_
-> =C2=A0 to improve the UI is Ok.
-
-Since -p has been broken for 14 months, is really necessary to reinstat=
+This patch goes on top of master, and terribly conflicts with Bj=C3=B6r=
+n's
+changes in the area. But I had the impression you wanted to revert thos=
 e
-it? (Or has the breakage not been reported because the people who care
-still use a git version older than 14 months?)
+changes for now anyway, so probably this should go in as a bug fix and
+everything else should be built on top. It actually would be an even
+smaller change on top of his "always show patch, even when other format=
+s
+are given" change, but I didn't want to depend on it.
 
-Why not just add a new --no-stat option?
+-- >8 --
+Subject: [PATCH] format-patch: make "-p" suppress diffstat
 
-> =C2=A0* format-patch -U<n> should not be mistaken as a request to sup=
-press
-> =C2=A0 diffstat; what 68daa64 _tried_ to do was worthy.
+Once upon a time, format-patch would use its default stat
+plus patch format only when no diff format was given on the
+command line. This meant that "format-patch -p" would
+suppress the stat and show just the patch.
 
-I agree.
+Commit 68daa64 changed this to keep the stat format when we
+had an "implicit" patch format, like "-U5". As a side
+effect, this meant that an explicit patch format was now
+ignored (because cmd_format_patch didn't know the reason
+that the format was set way down in diff_opt_parse).
 
-/Bj=C3=B6rn
+This patch unbreaks what 68daa64 did (while still preserving
+what 68daa64 was trying to do), reinstating "-p" to suppress
+the default behavior. We do this by parsing "-p" ourselves
+in format-patch, and noting whether it was used explicitly.
 
+Signed-off-by: Jeff King <peff@peff.net>
+---
+The help text for "-p" is up for debate. It can also of course be used
+as "show patch in addition to other things you already specified on the
+command line". But I wanted to point out that its main use is the side
+effect that it suppresses the default output. I am open to suggestions.
+
+ builtin-log.c           |    9 +++++++--
+ t/t4014-format-patch.sh |   21 +++++++++++++++++++++
+ 2 files changed, 28 insertions(+), 2 deletions(-)
+
+diff --git a/builtin-log.c b/builtin-log.c
+index 207a361..da79047 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -891,6 +891,7 @@ int cmd_format_patch(int argc, const char **argv, c=
+onst char *prefix)
+ 	struct patch_ids ids;
+ 	char *add_signoff =3D NULL;
+ 	struct strbuf buf =3D STRBUF_INIT;
++	int use_patch_format =3D 0;
+ 	const struct option builtin_format_patch_options[] =3D {
+ 		{ OPTION_CALLBACK, 'n', "numbered", &numbered, NULL,
+ 			    "use [PATCH n/m] even with a single patch",
+@@ -940,6 +941,8 @@ int cmd_format_patch(int argc, const char **argv, c=
+onst char *prefix)
+ 		{ OPTION_CALLBACK, 0, "thread", &thread, "style",
+ 			    "enable message threading, styles: shallow, deep",
+ 			    PARSE_OPT_OPTARG, thread_callback },
++		OPT_BOOLEAN('p', NULL, &use_patch_format,
++			"show patch format instead of default (patch + stat)"),
+ 		OPT_END()
+ 	};
+=20
+@@ -1027,8 +1030,10 @@ int cmd_format_patch(int argc, const char **argv=
+, const char *prefix)
+ 	if (argc > 1)
+ 		die ("unrecognized argument: %s", argv[1]);
+=20
+-	if (!rev.diffopt.output_format
+-		|| rev.diffopt.output_format =3D=3D DIFF_FORMAT_PATCH)
++	if (patch_format)
++		rev.diffopt.output_format |=3D DIFF_FORMAT_PATCH;
++	else if (!rev.diffopt.output_format ||
++		  rev.diffopt.output_format =3D=3D DIFF_FORMAT_PATCH)
+ 		rev.diffopt.output_format =3D DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_SUM=
+MARY | DIFF_FORMAT_PATCH;
+=20
+ 	if (!DIFF_OPT_TST(&rev.diffopt, TEXT) && !no_binary_diff)
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 531f5b7..cab6ce2 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -455,6 +455,27 @@ test_expect_success 'format-patch respects -U' '
+=20
+ '
+=20
++cat > expect << EOF
++
++diff --git a/file b/file
++index 40f36c6..2dc5c23 100644
++--- a/file
+++++ b/file
++@@ -14,3 +14,19 @@ C
++ D
++ E
++ F
+++5
++EOF
++
++test_expect_success 'format-patch -p suppresses stat' '
++
++	git format-patch -p -2 &&
++	sed -e "1,/^$/d" -e "/^+5/q" < 0001-This-is-an-excessively-long-subje=
+ct-line-for-a-messa.patch > output &&
++	test_cmp expect output
++
++'
++
+ test_expect_success 'format-patch from a subdirectory (1)' '
+ 	filename=3D$(
+ 		rm -rf sub &&
 --=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+1.6.5.2.308.g2bb5
