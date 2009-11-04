@@ -1,83 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH bg/format-patch-p-noop] log-tree: always add --- marker 
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH bg/format-patch-p-noop] log-tree: always add --- marker
  when options are patch and a stat
-Date: Tue, 03 Nov 2009 23:31:24 -0800
-Message-ID: <7vhbtakapf.fsf@alter.siamese.dyndns.org>
-References: <1257283456-7007-1-git-send-email-bebarino@gmail.com>
- <7vy6mmltz9.fsf@alter.siamese.dyndns.org>
- <6672d0160911032300w1a2dfdbck5b1db98f2059639b@mail.gmail.com>
+Date: Tue, 03 Nov 2009 23:35:33 -0800
+Message-ID: <4AF12EC5.4030407@gmail.com>
+References: <1257283456-7007-1-git-send-email-bebarino@gmail.com> <7vy6mmltz9.fsf@alter.siamese.dyndns.org> <20091104063612.GA24263@coredump.intra.peff.net> <20091104071053.GB24263@coredump.intra.peff.net> <20091104071940.GA15011@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org
-To: =?utf-8?Q?Bj=C3=B6rn?= Gustavsson <bgustavsson@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 08:31:41 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?ISO-8859-1?Q?Bj=F6rn_Gustavsson?= <bgustavsson@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 04 08:35:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5aLE-0001Qm-Pn
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 08:31:41 +0100
+	id 1N5aP8-0002cN-FT
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 08:35:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751867AbZKDHba convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Nov 2009 02:31:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751075AbZKDHba
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 02:31:30 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38538 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750826AbZKDHb3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Nov 2009 02:31:29 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B60373EF3;
-	Wed,  4 Nov 2009 02:31:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=SfAxv4QMfojJ
-	p/tNwkIH0lbQhek=; b=tq+07bA2Abn8Mwh63WNysYFlMNtnEg4IrCavHkyqZhcK
-	b0LrAb1LpdXs9QG+WD2UX066mmT/nN81rVmJQArZcEcQqxLCKt4zjcn+/8IQun9s
-	rq9tmOYuyk8bOWg2PJjfr0SX3JRRyRfQRhQrveI7ZOs+Umd3YLDeT0LBfuLLa6g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=W/5ujm
-	VQKlWBUfBv8FsT4y7I1sr2ll9nKGBqa3hCLSw4gUcIWoxgNLxiaVwQytHuSvz9IO
-	FGgWuEIjEg1wqhJzUc0IeSsSg4bdY9I8WjVK+n5uoTZRDcrAui+cinmfWxae1WJa
-	xXJbsxMUL9fW9raS+K8xuOznQFU9oKvjxqADk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D41C373EF2;
-	Wed,  4 Nov 2009 02:31:29 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2B95473EF1; Wed,  4 Nov
- 2009 02:31:26 -0500 (EST)
-In-Reply-To: <6672d0160911032300w1a2dfdbck5b1db98f2059639b@mail.gmail.com>
- (=?utf-8?Q?=22Bj=C3=B6rn?= Gustavsson"'s message of "Wed\, 4 Nov 2009
- 08\:00\:58 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 11885436-C914-11DE-BFB0-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752109AbZKDHfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 02:35:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752022AbZKDHfb
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 02:35:31 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:54705 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751075AbZKDHfb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 02:35:31 -0500
+Received: by yxe17 with SMTP id 17so6144588yxe.33
+        for <git@vger.kernel.org>; Tue, 03 Nov 2009 23:35:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=O4crlE50Cq9KOL4iEW9+DWcWK7d6odCwKQV6HLZt8JY=;
+        b=av+2P8fErfrdHe7cU2gPn9/wMOXTYBThc4ZC8mw4AyNYjOXY4puPUgpvzZ5dov8Td1
+         KvWmR41x13AnU37q1zteywgWbX35SD9harRiJSPmh7SDB1n749xgkpmwxr3ikIXFBnzi
+         XBgIei0ralX/3FMsK/qa4TpV7LG/5InXxQJg0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=nrr/vre54180++Yv6r0Sg1kZW0Foe99SXzwhfnH5BLiE1kR1k7sVIsRgk33zrIEibN
+         CXnvAXPTytTB7EMrevNMGVfoa6UdfLYqi8XgZIa4HNiPDnJ0qgTNTMwT3nO9RD+RBz/m
+         dI9r/RJaC3kDRVzrv6Qch4cIX7tyPN5Opzsc4=
+Received: by 10.150.44.28 with SMTP id r28mr2134642ybr.36.1257320136341;
+        Tue, 03 Nov 2009 23:35:36 -0800 (PST)
+Received: from ?192.168.0.5? (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
+        by mx.google.com with ESMTPS id 14sm418151gxk.14.2009.11.03.23.35.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 03 Nov 2009 23:35:35 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (X11/20091026)
+In-Reply-To: <20091104071940.GA15011@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132056>
 
-Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com> writes:
+Jeff King wrote:
+>
+> This patch unbreaks what 68daa64 did (while still preserving
+> what 68daa64 was trying to do), reinstating "-p" to suppress
+> the default behavior. We do this by parsing "-p" ourselves
+> in format-patch, and noting whether it was used explicitly.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>   
 
-> Since -p has been broken for 14 months, is really necessary to reinst=
-ate
-> it? (Or has the breakage not been reported because the people who car=
-e
-> still use a git version older than 14 months?)
+This looks good to me; covering 2 and 3 of Junio's TODO list.
 
-Oh, 1.6.0 has the old behaviour and we see many people still on 1.5.X
-series.  Hopefully nobody uses 1.4.X series anymore but I wouldn't be
-overly surprised if somebody raised hand in the next 6 hours after seei=
-ng
-this message ;-)
+> @@ -940,6 +941,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  		{ OPTION_CALLBACK, 0, "thread", &thread, "style",
+>  			    "enable message threading, styles: shallow, deep",
+>  			    PARSE_OPT_OPTARG, thread_callback },
+> +		OPT_BOOLEAN('p', NULL, &use_patch_format,
+> +			"show patch format instead of default (patch + stat)"),
+>  		OPT_END()
+>  	};
 
-> Why not just add a new --no-stat option?
-
-I am all for teaching _new_ people to say "format-patch --no-stat", but=
- it
-won't help people who have been happy with 1.6.0 when they update, if t=
-hey
-have to change their "format-patch -p" to "format-patch --no-stat".
+I don't imagine we want this option in the messaging group though. Can 
+you move it up?
