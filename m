@@ -1,92 +1,99 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v2 11/13] Allow helpers to request the path to the .git directory
-Date: Wed,  4 Nov 2009 20:48:16 +0100
-Message-ID: <1257364098-1685-12-git-send-email-srabbelier@gmail.com>
-References: <1257364098-1685-1-git-send-email-srabbelier@gmail.com>
-Cc: Sverre Rabbelier <srabbelier@gmail.com>
-To: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Nov 04 20:50:02 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: thoughts on setting core.logAllRefUpdates default true for bare
+ repos
+Date: Wed, 04 Nov 2009 11:49:33 -0800
+Message-ID: <7v3a4ugjea.fsf@alter.siamese.dyndns.org>
+References: <slrnhf2uep.7d3.sitaramc@sitaramc.homelinux.net>
+ <alpine.DEB.1.00.0911041422170.2788@felix-maschine>
+ <vpqzl729j72.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Nov 04 20:50:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5lrl-0000NL-Gt
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 20:50:01 +0100
+	id 1N5lrm-0000NL-27
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 20:50:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932109AbZKDTth (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 14:49:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758097AbZKDTtg
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 14:49:36 -0500
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:55343 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758090AbZKDTtQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 14:49:16 -0500
-Received: by mail-ew0-f207.google.com with SMTP id 3so3490482ewy.37
-        for <git@vger.kernel.org>; Wed, 04 Nov 2009 11:49:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=jz+f19IrUKieIYfHygt5C100a+UJ8ZSgmVoyyzKD2Ss=;
-        b=XIzsfciVNbrgrdCHBgtfA5toLtZoATzrYReACybCW2VWwx/3cC0flXjxGIk38s6sTY
-         BSpWRg4vO6Nij0zNx0RFaH6yLVReLaRn6sjwuVXjmgwJuBUqmH9wR4fVr0nqMPq7qDKW
-         E39kn47E7Mkm+V6Wdj/6YibMpptMbBD2FitGg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=I0GVJ5zx3C5GRE0aEGpCJRLXpvlOkoR0UPxgH3ga3MNJgcpVWUT/wz9edi+x90fjYG
-         JFdk8Yxo56YVmlTobkUvlepWk5qt1ksDaiwnlaET+XS9VQtL6cev/t6G/E9DXm8xkRok
-         h3rJ1sX2qoJsx9X7HG75f0k6erawnu+QNcPYc=
-Received: by 10.213.96.65 with SMTP id g1mr1792943ebn.44.1257364161646;
-        Wed, 04 Nov 2009 11:49:21 -0800 (PST)
-Received: from localhost.localdomain (ip138-114-211-87.adsl2.static.versatel.nl [87.211.114.138])
-        by mx.google.com with ESMTPS id 5sm4314489eyh.2.2009.11.04.11.49.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Nov 2009 11:49:20 -0800 (PST)
-X-Mailer: git-send-email 1.6.5.2.295.g0d105
-In-Reply-To: <1257364098-1685-1-git-send-email-srabbelier@gmail.com>
+	id S932141AbZKDTtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 14:49:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932125AbZKDTtm
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 14:49:42 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44658 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932110AbZKDTtk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 14:49:40 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E287F92495;
+	Wed,  4 Nov 2009 14:49:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8XRIKd3b8PNg6icObLC0NDaqw/s=; b=TVNwYM
+	VEs4Es/TS3cPfPirhzFFTmsOAV86LvyZrNmQ8+jSaAkMJFpNnVYz2hqe55a+Vu39
+	pdmhjBPLtBEOTWF3XFHcaWVm752lrV2tQ9Xu7Wwxn8pM6c+zfb0v1MPoHEyMQ+eO
+	2LPKm/xIzeOQAWJlbzF6gEd+PeMDAxXAYhP2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bQ7iUDSpi99JzH/liekgxOAKoq7aXECF
+	PKUCxbyQt9wtf/FjPZ02haWCOPv84h2TzPW6VMGjLfWMU2YGz8ZHMwEksbciS/dM
+	LojNnKv1I8zrL82DmqyQQNyjjGrxsKps5EMig5kmAbH7dUun9agDMrKadLs1fJvS
+	C718vLFflkg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AE36292493;
+	Wed,  4 Nov 2009 14:49:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D98DE92490; Wed,  4 Nov 2009
+ 14:49:34 -0500 (EST)
+In-Reply-To: <vpqzl729j72.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Wed\, 04 Nov 2009 20\:35\:45 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 30EB53CA-C97B-11DE-B83D-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132124>
 
-The 'gitdir' capability is reported by the remote helper if it
-requires the location of the .git directory. The location of the .git
-directory can then be used by the helper to store status files even
-when the current directory is not a git repository (such as is the
-case when cloning).
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-The location of the .git dir is specified as an absolute path.
+> I can't think of any, and I just tried launching two
+>
+> while true; do git pull; date > foo.txt ; git add .; git commit -m "xxx"; git push; done
+>
+> in parallel, with two different users pushing to a --bare --shared
+> repository, and it did work well. But I may very well have missed
+> something.
+>
+> (and actually, if it causes problem, it's an argument in favor of
+> defaulting to false when core.shared is true, not when core.bare).
+>
+> Unless I missed something, I think core.logAllRefUpdates should be
+> enabled for bare repos.
 
-Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
----
+Your experiment justifies "could be enabled safely" and saying "should be"
+based on that is a bit too strong and also premature.
 
-	Daniel, is this a good idea, or should we perhaps tell the
-	helper the location of the git repository otherwise?
+The single most common reason why a bare repository is bare is because
+nobody regularly logs in to the machine that hosts it and goes there to
+access its contents.  As reflog is a local thing, and not exposed to
+outside world, enabling it alone would not help a lot to people who do not
+have such a direct access to the bare repository, which by definition is
+the majority because the reason why the repository is bare to begin with.
 
- transport-helper.c |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+Once we add ways to expose information kept in reflog of a bare repository
+more effectively and conveniently, the argument could become "should be
+enabled now it would be very useful to have one".
 
-diff --git a/transport-helper.c b/transport-helper.c
-index a80d803..4f95e7b 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -51,6 +51,12 @@ static struct child_process *get_helper(struct transport *transport)
- 			data->fetch = 1;
- 		if (!strcmp(buf.buf, "import"))
- 			data->import = 1;
-+		if (!strcmp(buf.buf, "gitdir")) {
-+			struct strbuf gitdir = STRBUF_INIT;
-+			strbuf_addf(&gitdir, "gitdir %s\n", get_git_dir());
-+			write_in_full(helper->in, gitdir.buf, gitdir.len);
-+			strbuf_reset(&gitdir);
-+		}
- 	}
- 	return data->helper;
- }
--- 
-1.6.5.2.295.g0d105
+I mentioned a possible option to show reflog entry annotations in gitweb.
+That was an example of such an addition of "a way to expose".
+
+It also is plausible to teach git-daemon a remote "log" request; similar
+to "git fetch" running "upload-pack" on the other end in the bare
+repository, a "git log --remote" command may run "upload-log" on the other
+end and this service may allow passing the "-g" option when it does so.
+That would be another addition of "a way to expose".
