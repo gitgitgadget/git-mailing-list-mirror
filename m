@@ -1,126 +1,142 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] commit -c/-C/--amend: reset timestamp and authorship
- to committer with --reset-author
-Date: Tue, 03 Nov 2009 23:14:43 -0800
-Message-ID: <7vpr7ykbh8.fsf@alter.siamese.dyndns.org>
-References: <1257304811-26812-1-git-send-email-erick.mattos@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH bg/format-patch-p-noop] log-tree: always add --- marker
+ when options are patch and a stat
+Date: Wed, 4 Nov 2009 02:19:40 -0500
+Message-ID: <20091104071940.GA15011@coredump.intra.peff.net>
+References: <1257283456-7007-1-git-send-email-bebarino@gmail.com>
+ <7vy6mmltz9.fsf@alter.siamese.dyndns.org>
+ <20091104063612.GA24263@coredump.intra.peff.net>
+ <20091104071053.GB24263@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Erick Mattos <erick.mattos@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 08:14:59 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org,
+	=?utf-8?B?QmrDtnJu?= Gustavsson <bgustavsson@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 08:19:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5a53-00036r-8j
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 08:14:57 +0100
+	id 1N5a9m-0004Vh-L0
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 08:19:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751642AbZKDHOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 02:14:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751486AbZKDHOq
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 02:14:46 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:65232 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751428AbZKDHOp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 02:14:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2551991C8F;
-	Wed,  4 Nov 2009 02:14:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=qjmlTmOCa4fwfDnYmSCQH8psSts=; b=QFLE7jxJ+JmNEPzCjUgxtzq
-	y+LFwIPxTPGV7VzkHlPXf7TwDAPC239yePHXJt1SCTW5GVPReiqfZz/kxFXvNSbP
-	CTS39c4Ga0dTJ/pz8By32XVMRQr3K0LQOl0T2c1LaQ+wHXwVEGrjODxR5I72UaPg
-	G6jDJF2agNe1PxmKAXxM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=JrrHG9FkCahKMGgJRIqHYOwsiGGYr73nABOl4y6UyGBaVfIpO
-	wczr7ElV+2wJQOpY2snMfe2Eov2T1oXPADys/GDZVukqlHuHhUsLUibsUsSMfwtU
-	rjlATJXNQ2mRFp6gxGMvfwKABTf5N93dr8FD39ckpz/rVMqI4ucpDCmung=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0573E91C8E;
-	Wed,  4 Nov 2009 02:14:48 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C244491C8D; Wed,  4 Nov 2009
- 02:14:44 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: BC60F8F2-C911-11DE-B078-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753914AbZKDHTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 02:19:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbZKDHTj
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 02:19:39 -0500
+Received: from peff.net ([208.65.91.99]:46112 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752663AbZKDHTi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 02:19:38 -0500
+Received: (qmail 8303 invoked by uid 107); 4 Nov 2009 07:23:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 04 Nov 2009 02:23:26 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Nov 2009 02:19:40 -0500
+Content-Disposition: inline
+In-Reply-To: <20091104071053.GB24263@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132050>
 
-Erick Mattos <erick.mattos@gmail.com> writes:
+On Wed, Nov 04, 2009 at 02:10:54AM -0500, Jeff King wrote:
 
-> Cutting --author away would make impossible for someone to force a new author
-> with a new timestamp in case he is templating.  As an example he can be using
-> the --author because he is doing a change in a computer not his own or
-> something alike.
+> Subject: [PATCH] format-patch: make "-p" suppress diffstat
 
-Sorry, but I cannot help feeling a bit frustrated and mildly irritated.
+Ugh. And here is one that actually compiles. Yes, I actually did test
+it, but the one-line typo was sitting uncommitted in my workdir.
 
-I had an impression that we have already established that setting the
-author with --author="Somebody Else <s@b.e>" and committing with the
-current time does not make much sense from the workflow point of view long
-time ago in this thread.
+-- >8 --
+Subject: [PATCH] format-patch: make "-p" suppress diffstat
 
-The mail transport might have mangled the name, and when using --amend (or
-read-tree followed by commit -c), it is handy to fix the mangled name by
-using --author, but in such a case you would actively want to keep the
-timestamp obtained from the e-mail via either --amend or -c.
+Once upon a time, format-patch would use its default stat
+plus patch format only when no diff format was given on the
+command line. This meant that "format-patch -p" would
+suppress the stat and show just the patch.
 
-But allowing this combination, even though it might not make much sense,
-is just giving extra length to the rope, so it may not be such a big deal.
+Commit 68daa64 changed this to keep the stat format when we
+had an "implicit" patch format, like "-U5". As a side
+effect, this meant that an explicit patch format was now
+ignored (because cmd_format_patch didn't know the reason
+that the format was set way down in diff_opt_parse).
 
-I didn't feel motivated enough to read the whole thing while other patches
-are in my inbox, so I instead ran diff between the previous one (without
-my suggestion today) and this round.
+This patch unbreaks what 68daa64 did (while still preserving
+what 68daa64 was trying to do), reinstating "-p" to suppress
+the default behavior. We do this by parsing "-p" ourselves
+in format-patch, and noting whether it was used explicitly.
 
-I see that you fixed a lot of grammar in the log message of my earlier
-suggestion, all of which looked very good.  Also you added a check in the
-program to make sure that --renew is given only when -C/-c/--amend is
-given, which is also good.  Neither of our set of tests checks this
-condition, though.  IOW, we would need to add something like this at the
-end of my version (adjust to --reset-author for your version):
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin-log.c           |    9 +++++++--
+ t/t4014-format-patch.sh |   21 +++++++++++++++++++++
+ 2 files changed, 28 insertions(+), 2 deletions(-)
 
-    test_expect_success '--mine should be rejected without -c/-C/--amend' '
-            git checkout Initial &&
-            echo "Test 7" >>foo &&
-            test_tick &&
-            test_must_fail git commit -a --mine -m done
-    '
-
-I am not sure why you insist to use your version of test script and keep
-changing it, though.  It looks a lot worse even only after reviewing its
-early part.
-
- - author_id runs an extra grep that is unnecessary.  The separation of
-   _id and _timestamp are unnecessary if you checked against an expected
-   author ident and timestamp as a single string, i.e.
-
-   FRIGATE='Frigate <flying@over.world>' ;# do this only once at the beginning
-   ...
-   git commit -C HEAD --reset-author --author="$FRIGATE" &&
-   echo "author $FRIGATE $GIT_AUTHOR_TIME" >expect &&
-   author_header HEAD >actual &&
-   test_cmp expect actual
-
-   This becomes irrelevant if we don't support mixing --renew and
-   --author, of course.
-
- - message_body() now has a backslash whose sole purpose is to be an
-   eyesore.
-
- - initiate_test() does not string the commands together with &&
-
-I might change my mind after I take a break, review others' patches, and
-spend some time on my own hacking on other topics before revisiting this
-patch, but at this point I find that reviewing newer rounds of this series
-has rather quickly diminishing value, and more time is being spent on
-teaching shell scripting to you rather than on polishing the end result.
-
-Sorry, but I cannot help feeling a bit frustrated and mildly irritated.
-Time to take a break and attend other topics for a change.
+diff --git a/builtin-log.c b/builtin-log.c
+index 207a361..0ff032b 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -891,6 +891,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	struct patch_ids ids;
+ 	char *add_signoff = NULL;
+ 	struct strbuf buf = STRBUF_INIT;
++	int use_patch_format = 0;
+ 	const struct option builtin_format_patch_options[] = {
+ 		{ OPTION_CALLBACK, 'n', "numbered", &numbered, NULL,
+ 			    "use [PATCH n/m] even with a single patch",
+@@ -940,6 +941,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_CALLBACK, 0, "thread", &thread, "style",
+ 			    "enable message threading, styles: shallow, deep",
+ 			    PARSE_OPT_OPTARG, thread_callback },
++		OPT_BOOLEAN('p', NULL, &use_patch_format,
++			"show patch format instead of default (patch + stat)"),
+ 		OPT_END()
+ 	};
+ 
+@@ -1027,8 +1030,10 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	if (argc > 1)
+ 		die ("unrecognized argument: %s", argv[1]);
+ 
+-	if (!rev.diffopt.output_format
+-		|| rev.diffopt.output_format == DIFF_FORMAT_PATCH)
++	if (use_patch_format)
++		rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
++	else if (!rev.diffopt.output_format ||
++		  rev.diffopt.output_format == DIFF_FORMAT_PATCH)
+ 		rev.diffopt.output_format = DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_SUMMARY | DIFF_FORMAT_PATCH;
+ 
+ 	if (!DIFF_OPT_TST(&rev.diffopt, TEXT) && !no_binary_diff)
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 531f5b7..cab6ce2 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -455,6 +455,27 @@ test_expect_success 'format-patch respects -U' '
+ 
+ '
+ 
++cat > expect << EOF
++
++diff --git a/file b/file
++index 40f36c6..2dc5c23 100644
++--- a/file
+++++ b/file
++@@ -14,3 +14,19 @@ C
++ D
++ E
++ F
+++5
++EOF
++
++test_expect_success 'format-patch -p suppresses stat' '
++
++	git format-patch -p -2 &&
++	sed -e "1,/^$/d" -e "/^+5/q" < 0001-This-is-an-excessively-long-subject-line-for-a-messa.patch > output &&
++	test_cmp expect output
++
++'
++
+ test_expect_success 'format-patch from a subdirectory (1)' '
+ 	filename=$(
+ 		rm -rf sub &&
+-- 
+1.6.5.2.308.g2bb5
