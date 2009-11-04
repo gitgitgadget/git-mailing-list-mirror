@@ -1,140 +1,82 @@
-From: Erick Mattos <erick.mattos@gmail.com>
-Subject: Re: [PATCH] commit -c/-C/--amend: reset timestamp and authorship to 
-	committer with --reset-author
-Date: Tue, 3 Nov 2009 21:51:43 -0200
-Message-ID: <55bacdd30911031551k1bfd3151t940864e4793f5a37@mail.gmail.com>
-References: <1257282551-9999-1-git-send-email-erick.mattos@gmail.com> 
-	<20091104073822.6117@nanako3.lavabit.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Update packfile transfer protocol documentation
+Date: Tue, 03 Nov 2009 16:40:00 -0800
+Message-ID: <7vbpjjp1gf.fsf@alter.siamese.dyndns.org>
+References: <d411cc4a0911011518q15a8267bn642e6937be8c9ab1@mail.gmail.com>
+ <7vzl74trmc.fsf@alter.siamese.dyndns.org>
+ <20091102235707.GV10505@spearce.org>
+ <7vtyxctpf8.fsf@alter.siamese.dyndns.org>
+ <20091103005815.GW10505@spearce.org>
+ <d411cc4a0911031405x60ea2396o35eea78a0b07fda9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 00:53:55 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	git list <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 01:40:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5TC5-0004dd-NF
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 00:53:46 +0100
+	id 1N5TvB-0003ob-NU
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 01:40:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753717AbZKCXwB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 18:52:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753473AbZKCXwA
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 18:52:00 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:52493 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753512AbZKCXv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 18:51:58 -0500
-Received: by yxe17 with SMTP id 17so5915911yxe.33
-        for <git@vger.kernel.org>; Tue, 03 Nov 2009 15:52:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=Wh6rhlmwAiwaDmMancK7NVPab2tmeVx9+geah+P79Wc=;
-        b=Y9uFrkjUd0/PU+vWvJnb60fU2yIHvHWeJsn5RbCOzNVSDUJUpphBuUiJnbsJUvKbjz
-         sLWDiv3JTI1X9qMhp0o0RBpW7DduJPYgTsaC/Xq1R5CMMVLFu/IOxeeLmVLjcbKHa0PR
-         S8Nc00YFHx+UFdVDO2pEGso3cxnEl60dJVOvI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=rrXZMQS/A5qxqdaN4L5NA1AnpBWkEbWnuwK82DXatZLFckI5UgagdzP8Rtnf+zXFQp
-         66h9XpwdNaY6DkDHBufJYpaO675a+NAc5LCegg1TreHpCOwmKb6Obp4DEj/Ntf4NQEir
-         6LDhKH7tKNW2LZeqdNlRNNn2gpYQlSss+5jzE=
-Received: by 10.150.213.7 with SMTP id l7mr1356614ybg.220.1257292323085; Tue, 
-	03 Nov 2009 15:52:03 -0800 (PST)
-In-Reply-To: <20091104073822.6117@nanako3.lavabit.com>
+	id S1751906AbZKDAkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 19:40:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751110AbZKDAkI
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 19:40:08 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47437 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750812AbZKDAkH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 19:40:07 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0672C9143C;
+	Tue,  3 Nov 2009 19:40:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LSTJcWH8CKIb7ToO79KEKDXNDQg=; b=wr3IyD
+	KanX7QgNwoDPOww1ruIaHZXiQRgu+aUyM3/vmOlKRhIROFLK+PR9yn8JCwmk9npJ
+	QgPozczuwTzYJsteCDfjJllgHBMbCyWiO4D5lwxMN9ojuVPDf/Tyw4QKXRavX5aV
+	d3jOAOnfvblaTsaGv88Ywrq/YvuBn+SnM0x2g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mhyYTnxBHdE7AKPl61G1bTOgMqlkx/MT
+	2JLF0an7XNS0klwf2hysBC45iMkIiM39LbKugckWEwEMiVVO96AIHpHJgbylOw0R
+	io4mIUCdhaamA7pFyAx2SQY7iQu37oj181s/TpYCt+j2RqxIzQivgOQMlJJuoo9E
+	MnYNpPNkGw0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CE7C89143B;
+	Tue,  3 Nov 2009 19:40:06 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 808F59143A; Tue,  3 Nov 2009
+ 19:40:02 -0500 (EST)
+In-Reply-To: <d411cc4a0911031405x60ea2396o35eea78a0b07fda9@mail.gmail.com>
+ (Scott Chacon's message of "Tue\, 3 Nov 2009 14\:05\:12 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 994C37E6-C8DA-11DE-8C02-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132011>
 
-2009/11/3 Nanako Shiraishi <nanako3@lavabit.com>:
-> If you are sending an update to a previous patch (I am comparing
-> this patch with the "show by example" patch Junio sent on 11/02
-> http://article.gmane.org/gmane.comp.version-control.git/131893),
-> it is a common courtesy to summarize what you changed relative
-> to the base version after the three dashes line, so that people
-> will know which part can be skipped while reviewing your patch.
+Scott Chacon <schacon@gmail.com> writes:
 
-I got your point.  I will try to improve that.
+> Would you prefer that I try to incorporate all these comments and
+> submit another patch, or are you going to modify it in-tree?
 
-I have been talking to Junio during the weekend and with a lot of
-emails sent to each other.  It happens that when he sent gmane/131893
-(I had to find out what that code meant because I was using
-[marc.info]! :-) ) I had already sent another patch with the
-suggestions he made in a previous email.
-So his message was late.  While I was waiting for his acknowledgment I
-started thinking he could be lost on those e-mails so I sent the one
-you are replying to make it the last on the queue.
+I prefer to not munge other people's patches if the modification will
+involve more than ten lines and if I know the original submitter can be
+trusted to do the right thing.
 
-> I have to say that the test script is much worse than what
-> gmane/131893 had.
->
-> The old test made sure that -C copied the message, with or
-> without the --mine option. But this test only checks the
-> author line (and it doesn't even make sure that "^author"
-> matches only in the header). The messages are unchecked,
-> and it will let a bug when someone breaks --reset-author
-> logic in the future in such a way that it corrupts the
-> message by mistake go unnoticed.
+I would rewrite other's patch myself heavily _only_ after I tried the
+usual "suggest to improve" and found that it would not be worth my time to
+wait for yet more rounds that would require more suggestions, major part
+of which will eventually be forgotten or ignored again, iow, when I sense
+that the communication with the contributor is hopelessly inefficient.
 
-I think you misunderstood something here:
-* On his patch (which he sent before seeing mine), while testing -C,
-on first check, he is checking author_header only.
-* While testing -C on mine I compare both messages without "parent",
-"tree" and "committer".  Whole!
+Needless to say, you have been here long enough to be in the "trusted"
+category.
 
-After check one I did concentrate only on author data.  But on mine I
-separate the tests between timestamp and author (name and email),
-making sure the author was set to the actual committer and that the
-timestamp was behaving as expected.
-
-I am not saying mine is better.  What I am saying is that I expected
-him to notice and change/improve THIS patch.  Not the other.
-
-The new option only touches on getting new author or copying the
-original so that is why I made the first check in whole and the others
-only by author.  If people think that this operation is so uncertain,
-then everything should be compared: parent, author and message on all
-tests.
-
-It is not a problem for me adding more code to the test even if I
-consider it unnecessary.  I am doing this only to give a pay-back for
-all the good service this free software gave to me so I am very
-patient to all demands.  I will be letting this effort go only at the
-real end.  No matter how long it takes.
-
-> Also the old test was much more readable because it used
-> shell functions to avoid repeating cat-file and pipe to sed
-> script. It also tagged the initial commit, which had a nice
-> effect that a failure in any intermediate test will not change
-> which earlier commit is reused (eg. yours say "-C HEAD^" but
-> old test said "-C Initial").
-
-I am so used to scripts that I really haven't thought it difficult to
-read but I can do some cosmetic too if it is important.  As I said
-early, I was waiting for Junio's jugdement over my later patch.
-
-> It looks silly to create an "Initial Commit" in the middle
-> of history, too (^_^).
-
-This is something more laborious but which I thought was important to
-let murphy's law act on a real case.  We never do an amend on an
-initial commit so I only did the tests on a later one.
-
-> I think it is much better to replace "--mine" in gmane/131893
-> with "--reset-author" and make no other change to the test.
-
-Let's see Junio's opinion...  We have changed names a lot since start.  ;-)
-
-> --
-> Nanako Shiraishi
-> http://ivory.ap.teacup.com/nanako3/
->
->
-
-Thank you very much for all your comments.  I really appreciate about
-being noticed by you people.  It is nice for a newcomer!
+Thanks.
