@@ -1,74 +1,167 @@
-From: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
-Subject: Re: [PATCH] MSVC: port pthread code to native Windows threads
-Date: Wed, 4 Nov 2009 15:50:10 +0100
-Message-ID: <16cee31f0911040650s3eba1067mb66a48bb50c97c28@mail.gmail.com>
-References: <1257283802-29726-1-git-send-email-ahaczewski@gmail.com>
-	 <1257331059-26344-1-git-send-email-ahaczewski@gmail.com>
-	 <4AF175E8.7020400@viscovery.net>
-	 <16cee31f0911040547m69e5b9cbi30e20d2a7790bd6f@mail.gmail.com>
-	 <4AF190F1.3020607@viscovery.net>
+From: Abdelrazak Younes <younes@lyx.org>
+Subject: [QGIT PATCH/RFC]
+Date: Wed, 04 Nov 2009 15:56:48 +0100
+Organization: LyX
+Message-ID: <4AF19630.2070402@lyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Nov 04 15:51:00 2009
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 15:57:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5hCN-0001dZ-FM
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 15:50:59 +0100
+	id 1N5hIG-0004pt-G3
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 15:57:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756067AbZKDOuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 09:50:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756046AbZKDOuI
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 09:50:08 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:55453 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756659AbZKDOuG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 09:50:06 -0500
-Received: by yxe17 with SMTP id 17so6383070yxe.33
-        for <git@vger.kernel.org>; Wed, 04 Nov 2009 06:50:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=wv1JIEsNx0sikR8B08MXUccHwumITxIblMH5UmJ3Jek=;
-        b=ax+4Qz7L6n4PixnJYQFcJbngY+3FoAxWoIiMYB+tMBHxTgYWf8MaAgJ/XVwUJlFRkq
-         0mCUwaGn0DpENP2mQiHQ7P54kV11RPSDlBCgTaZz4xc+3Nz/IIsYg5NxPwPI8lEHzb1B
-         YHc30HU8A0BSoHusfsUURREvh6rCLDNJ2M4eQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=CMwqQhKbsgsxQln4EL+wcgk69pywQez0QD+67u+vjt/o4FvKeeW9/gUNTQNuwRnEa7
-         GerG2pRL3NtGfHcYQFxOhDR0zGNpglP4EDRCxj624wHsymuutMOlZBMIiSdf+WKkagMR
-         KIc7IlqUmvSM1RI4fNK9tSVn+KJLhpfp9KjtU=
-Received: by 10.239.163.205 with SMTP id q13mr170416hbd.132.1257346210611; 
-	Wed, 04 Nov 2009 06:50:10 -0800 (PST)
-In-Reply-To: <4AF190F1.3020607@viscovery.net>
+	id S1756374AbZKDO4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 09:56:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756161AbZKDO4x
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 09:56:53 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:8080 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756133AbZKDO4x (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 09:56:53 -0500
+Received: by ey-out-2122.google.com with SMTP id d26so907469eyd.19
+        for <git@vger.kernel.org>; Wed, 04 Nov 2009 06:56:57 -0800 (PST)
+Received: by 10.213.100.167 with SMTP id y39mr189040ebn.51.1257346617343;
+        Wed, 04 Nov 2009 06:56:57 -0800 (PST)
+Received: from ?192.168.4.216? ([62.161.104.182])
+        by mx.google.com with ESMTPS id 5sm976070eyf.39.2009.11.04.06.56.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 04 Nov 2009 06:56:55 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132091>
 
-2009/11/4 Johannes Sixt <j.sixt@viscovery.net>:
->
-> You are right. But #ifdef THREADED_DELTA_SEARCH is about a "generic"
-> property of the code and is already used elsewhere in the file, whereas
-> #ifdef WIN32 would be new and is is about platform differences.
->
-> Anyway, we would have to see what Junio says about the new function calls,
-> because he's usually quite anal when it comes to added code vs. static
-> initialization. ;)
+Hello Marco,
 
-I could do it with wrappers for pthread_mutex_lock and _unlock and
-lazy init there plus lazy init cond var in cond_wait and _signal, that
-way it could be done without any additional code in the first #ifdef.
-But I don't see any simple solution for working around
-deinitialization, that's why I'd leave non-static initialization. Let
-me put some touchups and resubmit for another round.
+While recompiling latest qgit4, I stumbled accross this. I am not quite 
+sure you used a QLatin1String instead of a QByteArray but the attached 
+seems to work fine...
 
---
-Andrzej
+Anyway, I'll let you decide what do to with it.
+
+Thanks for QGit,
+Abdel.
+
+
+diff --git a/src/cache.cpp b/src/cache.cpp 
+ 
+
+index af18fbf..2d9f415 100644 
+ 
+
+--- a/src/cache.cpp 
+ 
+
++++ b/src/cache.cpp 
+ 
+
+@@ -70,11 +70,11 @@ bool Cache::save(const QString& gitDir, const 
+RevFileMap& rf, 
+
+                 const ShaString& sha = it.key(); 
+ 
+
+                 if (   sha == ZERO_SHA_RAW 
+ 
+
+                     || sha == CUSTOM_SHA_RAW 
+ 
+
+-                   || sha.latin1()[0] == 'A') // ALL_MERGE_FILES + rev 
+sha 
+
++                   || sha.at(0) == 'A') // ALL_MERGE_FILES + rev sha 
+ 
+
+                         continue; 
+ 
+
+
+                 v.append(it.value());
+-               buf.append(sha.latin1()).append('\0');
++               buf.append(sha);
+                 newSize += 41;
+                 if (newSize > bufSize) {
+                         dbs("ASSERT in Cache::save, out of allocated 
+space");
+diff --git a/src/common.h b/src/common.h
+index ceb62fb..0d65980 100644
+--- a/src/common.h
++++ b/src/common.h
+@@ -7,6 +7,7 @@
+  #ifndef COMMON_H
+  #define COMMON_H
+
++#include <QByteArray>
+  #include <QColor>
+  #include <QEvent>
+  #include <QFont>
+@@ -49,7 +50,7 @@ class QDataStream;
+  class QProcess;
+  class QSplitter;
+  class QWidget;
+-class ShaString;
++typedef QByteArray ShaString;
+
+  // type shortcuts
+  typedef const QString&              SCRef;
+@@ -274,18 +275,6 @@ namespace QGit {
+         extern const QString SCRIPT_EXT;
+  }
+
+-class ShaString : public QLatin1String {
+-public:
+-       inline ShaString() : QLatin1String(NULL) {}
+-       inline ShaString(const ShaString& sha) : 
+QLatin1String(sha.latin1()) {}
+-       inline explicit ShaString(const char* sha) : QLatin1String(sha) {}
+-
+-       inline bool operator!=(const ShaString& o) const { return 
+!operator==(o); }
+-       inline bool operator==(const ShaString& o) const {
+-
+-               return (latin1() == o.latin1()) || !qstrcmp(latin1(), 
+o.latin1());
+-       }
+-};
+
+  class Rev {
+         // prevent implicit C++ compiler defaults
+diff --git a/src/git.cpp b/src/git.cpp
+index 177b24a..afa5234 100644
+--- a/src/git.cpp
++++ b/src/git.cpp
+@@ -725,7 +725,7 @@ const Rev* Git::revLookup(SCRef sha, const 
+FileHistory* fh) const {
+  const Rev* Git::revLookup(const ShaString& sha, const FileHistory* fh) 
+const {
+
+         const RevMap& r = (fh ? fh->revs : revData->revs);
+-       return (sha.latin1() ? r.value(sha) : NULL);
++       return (sha.isEmpty() ? NULL : r.value(sha));
+  }
+
+  bool Git::run(SCRef runCmd, QString* runOutput, QObject* receiver, 
+SCRef buf) {
+diff --git a/src/namespace_def.cpp b/src/namespace_def.cpp
+index 80c2551..2960c36 100644
+--- a/src/namespace_def.cpp
++++ b/src/namespace_def.cpp
+@@ -95,7 +95,7 @@ static inline uint hexVal(const uchar* ch) {
+
+  uint qHash(const ShaString& s) { // fast path, called 6-7 times per 
+revision
+
+-       const uchar* ch = reinterpret_cast<const uchar*>(s.latin1());
++       const uchar* ch = reinterpret_cast<const uchar*>(s.data());
+         return (hexVal(ch     ) << 24)
+              + (hexVal(ch +  2) << 20)
+              + (hexVal(ch +  4) << 16)
