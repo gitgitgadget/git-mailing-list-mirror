@@ -1,87 +1,92 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: [PATCH v2] format-patch: autonumber by default
-Date: Wed, 04 Nov 2009 03:20:05 -0800
-Message-ID: <m1ws261qqi.fsf@fess.ebiederm.org>
-References: <20081002205539.GA36768@Hermes>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH] MSVC: port pthread code to native Windows threads
+Date: Wed, 04 Nov 2009 12:23:15 +0100
+Message-ID: <hcro74$fgb$1@ger.gmane.org>
+References: <1257283802-29726-1-git-send-email-ahaczewski@gmail.com> <1257331059-26344-1-git-send-email-ahaczewski@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Andreas Ericsson <ae@op5.se>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 12:20:22 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 04 12:23:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5duY-0007T0-1o
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 12:20:22 +0100
+	id 1N5dxs-0000Qo-OS
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 12:23:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755124AbZKDLUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 06:20:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755055AbZKDLUJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 06:20:09 -0500
-Received: from out02.mta.xmission.com ([166.70.13.232]:45679 "EHLO
-	out02.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754889AbZKDLUI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 06:20:08 -0500
-Received: from in02.mta.xmission.com ([166.70.13.52])
-	by out02.mta.xmission.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <ebiederm@xmission.com>)
-	id 1N5duN-0000er-JC; Wed, 04 Nov 2009 04:20:11 -0700
-Received: from c-76-21-114-89.hsd1.ca.comcast.net ([76.21.114.89] helo=fess.ebiederm.org)
-	by in02.mta.xmission.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <ebiederm@xmission.com>)
-	id 1N5duN-00027h-AL; Wed, 04 Nov 2009 04:20:11 -0700
-Received: from fess.ebiederm.org (localhost [127.0.0.1])
-	by fess.ebiederm.org (8.14.3/8.14.3/Debian-4) with ESMTP id nA4BK8bc030927;
-	Wed, 4 Nov 2009 03:20:08 -0800
-Received: (from eric@localhost)
-	by fess.ebiederm.org (8.14.3/8.14.3/Submit) id nA4BK5NO030867;
-	Wed, 4 Nov 2009 03:20:05 -0800
-In-Reply-To: <20081002205539.GA36768@Hermes> (Brian Gernhardt's message of "Thu\, 2 Oct 2008 16\:55\:39 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-XM-SPF: eid=;;;mid=;;;hst=in02.mta.xmission.com;;;ip=76.21.114.89;;;frm=ebiederm@xmission.com;;;spf=neutral
-X-SA-Exim-Connect-IP: 76.21.114.89
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-X-SA-Exim-Version: 4.2.1 (built Thu, 25 Oct 2007 00:26:12 +0000)
-X-SA-Exim-Scanned: No (on in02.mta.xmission.com); Unknown failure
+	id S1755410AbZKDLXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 06:23:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755387AbZKDLXh
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 06:23:37 -0500
+Received: from lo.gmane.org ([80.91.229.12]:47166 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755212AbZKDLXh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 06:23:37 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1N5dxm-0000Nu-2q
+	for git@vger.kernel.org; Wed, 04 Nov 2009 12:23:42 +0100
+Received: from nat-pool-brq-t.redhat.com ([209.132.186.34])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Nov 2009 12:23:42 +0100
+Received: from bonzini by nat-pool-brq-t.redhat.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Nov 2009 12:23:42 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: nat-pool-brq-t.redhat.com
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.4pre) Gecko/20091014 Fedora/3.0-2.8.b4.fc11 Lightning/1.0pre Thunderbird/3.0b4
+In-Reply-To: <1257331059-26344-1-git-send-email-ahaczewski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132080>
 
+The condition variable implementation seems more complicated than 
+necessary.  The mutex can be used to protect access to cond->waiters, so 
+waiters_lock is not necessary.  On the other hand, it seems to me that 
+pthread_cond_signal should be the one that decrements the waiters count. 
+  Otherwise, a loop like
 
-Brian Gernhardt <benji@silverinsanity.com> writes:
+	while (pthread_cond_signal (cond, mutex));
 
-> format-patch is most commonly used for multiple patches at once when
-> sending a patchset, in which case we want to number the patches; on
-> the other hand, single patches are not usually expected to be
-> numbered.
->
-> In other words, the typical behavior expected from format-patch is the
-> one obtained by enabling autonumber, so we set it to be the default.
->
-> Users that want to disable numbering for a particular patchset can do
-> so with the existing -N command-line switch.  Users that want to
-> change the default behavior can use the format.numbering config key.
->
-> Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
-> ---
+will fill the semaphore with signals and the waiters will get lots of 
+spurious accesses.
 
+static __inline int pthread_cond_wait(pthread_cond_t *cond,
+                                       CRITICAL_SECTION *mutex)
+{
+	int ret = 0;
 
-Grumble.  I updated git last night and this change just bit me.
-Grumble.
-Grumble.
+	/* the mutex protects access to waiters count */
+	++cond->waiters;
 
-It is probably a good change, but it was unexpected.
-Grumble. Grumble. Grumble.
+	/*
+	 * Unlock external mutex and wait for signal.
+	 * NOTE: cond->waiters > 0 now.  If pthread_cond_signal
+	 * is called after leaving mutex unlocked before we wait on
+	 * semaphore, it will add a signal to the semaphore,
+	 * and we'll happily go on with the wait.  This would not
+	 * happen with an event, for example.
+	 */
+	LeaveCriticalSection(mutex);
+	if (0 != WaitForSingleObject(cond->sema, INFINITE))
+		ret = -1;
 
+	EnterCriticalSection(mutex);
+	return ret;
+}
 
-Eric
+static __inline int pthread_cond_signal(pthread_cond_t *cond)
+{
+	/* the mutex protects access to waiters count */
+	if (cond->waiters > 0) {
+		--cond->waiters;
+		return ReleaseSemaphore(cond->sema, 1, NULL) ? 0 : -1;
+	} else
+		return 0;
+}
+
+Paolo
