@@ -1,85 +1,196 @@
-From: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
-Subject: Re: [PATCH 1/1] MSVC: port pthread code to native Windows threads
-Date: Wed, 4 Nov 2009 11:53:30 +0100
-Message-ID: <16cee31f0911040253t57e9f8a4le70db2f5607fd645@mail.gmail.com>
-References: <1257283802-29726-1-git-send-email-ahaczewski@gmail.com>
-	 <1257283802-29726-2-git-send-email-ahaczewski@gmail.com>
-	 <4AF13819.7050306@viscovery.net>
+From: =?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?= <andre.goddard@gmail.com>
+Subject: Re: Problem with "From:" line on "git format-patch" generated patches
+Date: Wed, 4 Nov 2009 08:55:49 -0200
+Message-ID: <b8bf37780911040255u53a663b9u60aa97bea750939f@mail.gmail.com>
+References: <b8bf37780911030830l42ea6dc2v3ef66e2a9e1ca281@mail.gmail.com>
+	 <adf1fd3d0911030902x15faffcen86644733ffda43d5@mail.gmail.com>
+	 <b8bf37780911031006q4bc4c487xd9db86eb0fa531e7@mail.gmail.com>
+	 <b8bf37780911031011v5c8ec684ke6eebc6b0de1a66a@mail.gmail.com>
+	 <20091103225556.GA20160@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Nov 04 11:53:39 2009
+Cc: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 11:55:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5dUg-0005KZ-8T
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 11:53:38 +0100
+	id 1N5dWu-0006NZ-FC
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 11:55:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755309AbZKDKx1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Nov 2009 05:53:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755308AbZKDKx1
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 05:53:27 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:46687 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755083AbZKDKx0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Nov 2009 05:53:26 -0500
-Received: by bwz27 with SMTP id 27so8693477bwz.21
-        for <git@vger.kernel.org>; Wed, 04 Nov 2009 02:53:30 -0800 (PST)
+	id S1755369AbZKDKzq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Nov 2009 05:55:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755349AbZKDKzp
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 05:55:45 -0500
+Received: from mail-vw0-f192.google.com ([209.85.212.192]:34140 "EHLO
+	mail-vw0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755348AbZKDKzo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Nov 2009 05:55:44 -0500
+Received: by vws30 with SMTP id 30so1899004vws.33
+        for <git@vger.kernel.org>; Wed, 04 Nov 2009 02:55:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=DZQcDabjzXKJxrY9SyahhUAvi3Ha/Kbsv85pLI35E0Y=;
-        b=B3S/9ZbhBT2luoU3JgFkuGjQGH1Lg3Sz+d3vxasWECZmHSfMmWNxaIMzdA2oXGincU
-         amUztixGuH5ZowRlIrPbyOicdDBROx3PYAg5Bk7AcBpammUVRv3XNSK9vOGxc8Z/hF7I
-         LTexIT9HRvrL/00JT7uCKJ//m2QCQE9jofGsg=
+        bh=8VvPGO6KUHd85uP8dfCdgigIl2lJMJ2KagojVnx5UK4=;
+        b=dA07YVqkIsbv0Qqxi3sgzgjFKhsC9kYdYjUgup6Lu+74IBLhlKQyIqodfFFVnbdjqO
+         FcQMTcyZviYZlMjW2R+m0c+zwj9DkuRDcHD9vglP58nZegb7NpuDtkCgCXNE4EdddhmU
+         vh1jjd0WrwwoTT7pOJEW1TmObxqLJwgayFpbQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=eDLPTo521QTOKZYPPlvlZguVZxnIwqHXFZb7jXpNLf4iNXv2BSo4l8vvI7GbNQguou
-         /4O08G6nXoZxeQC32h6zLiGokcMzt/HVIrhOO18kFI9yOlSig+e8zPXw0IkkhvIY+EIo
-         kkVmDmckMv7dT8VvkihLuVlZwZbbnYsLaP43Q=
-Received: by 10.239.190.227 with SMTP id y35mr132755hbh.212.1257332010693; 
-	Wed, 04 Nov 2009 02:53:30 -0800 (PST)
-In-Reply-To: <4AF13819.7050306@viscovery.net>
+        b=XvMewe1+pu1o0j2E6wvCezNON49e5OgzDoBXDb1/s+WkOPlSyqC4eoTF//lYf85uSb
+         hfb0IwdzuQXne8LhaJLAKMsecc+bSBJ8U7YyfTTYUUKdb7/pXmz6gX+dnTyr6z72h9GF
+         L2RF32hYdm7v+HGGGDJZWgLfqkZ92stwTDGUs=
+Received: by 10.220.3.220 with SMTP id 28mr1378377vco.79.1257332149594; Wed, 
+	04 Nov 2009 02:55:49 -0800 (PST)
+In-Reply-To: <20091103225556.GA20160@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132073>
 
-2009/11/4 Johannes Sixt <j.sixt@viscovery.net>:
-> Can't you just use the pthread package that is included in msysgit?
-
-I don't like bloat, and msysgit is bloated. Sure, there are parts of
-msysgit that are even heavier (bash, perl), but this will be removed
-with further C'ification of scripts. I did what I thought could be
-sensible for my first patch. I'm newbie after all.
-
->> + =A0 =A0 /* we're waiting... */
->> + =A0 =A0 EnterCriticalSection(&cond->waiters_lock);
->> + =A0 =A0 ++cond->waiters;
->> + =A0 =A0 LeaveCriticalSection(&cond->waiters_lock);
->> +
->> + =A0 =A0 /* unlock external mutex and wait for signal */
->> + =A0 =A0 LeaveCriticalSection(mutex);
->> + =A0 =A0 result =3D WaitForSingleObject(cond->sema, INFINITE);
+On 11/3/09, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Hi Andr=E9,
 >
-> Releasing the mutex and entering the wait state as well as leaving th=
+> Andr=E9 Goddard Rosa wrote:
+>
+>>> I'm not using any specific tool for inputting the git-format-patch,
+>>> but instead I'm sending the files generated by it through gmail as =
+an
+>>> inlined patch in the email body.
+>>>
+>>> I like the convenience of format-patch for generating the patch fil=
+es,
+>>> but in this case, formatting the header as rfc2047 is not necessary
+>>> and makes a funny/garbled output in my patch submission.
+>
+> The header fields git format-patch outputs are just intended as a
+> starting point for the header of your mailing.  It is more convenient
+> to receive an e-mail with
+>
+> 	Delivered-to: maintainer@example.com
+> 	Received: [...]
+> 	Message-ID: <patch.sender.0001@example.com>
+> 	Date: Tue, 03 Nov 2009 16:33:54 -0600
+> 	From: Patch Sender <patch.sender@example.com>
+> 	Subject: [PATCH] Fix one bug, add another
+> 	Content-Type: text/plain; charset=3Dus-ascii
+>
+> 	Blah blah blah
+>
+> than one in which the content includes some useless metadata that was
+> already in the header.  So you should just strip the header out from
+> the body before sending.
+>
+> There are three common exceptions: 1) you might want to send a patch
+> written by someone else, 2) you might want to mark a patch as written
+> before it was sent, and 3) some people like to receive patches as
+> attachments rather than inlined in messages.  For the first two cases=
+,
+> the solution is to include the header fields to change in the body:
+>
+> 	From: Patch Writer <patch.writer@example.com>
+> 	Date: Wed, 01 Apr 1970 01:23:45 +0100
+>
+> 	Blah blah blah
+> 	---
+> 	Hi,
+>
+> 	Patch Writer wrote this patch a while ago that might be
+> 	relevant.  It needed a straightforward one-line change to
+> 	apply and is otherwise unchanged.
+>
+> 	What do you think?
+> [...]
+>
+> For the last case, I think it is most common to send unchanged 'git
+> format-patch' output.  But only the From, Date, and Subject fields
+> are actually needed.
+>
+> I am not sure how well 'git am' copes with non-ascii characters in
+> the pseudo-header lines: I would have guessed it could handle them
+> both rfc2047-encoded and not, but I have not tried.
+>
+>> I really would like continuing having the convenience of using a web
+>> access to my gmail for sending the patches, so I just need a way to
+>> format the patches which makes it easy submitting them later. I'd li=
+ke
+>> to avoid using any other email client for that, if possible.
+>
+> Here, there is another danger: the Gmail web interface does not
+> consider your whitespace precious, so it is very prone to mangling
+> patches (especially with long lines).
+>
+> Documentation/SubmittingPatches [1] has some advice:
+>
+> | Gmail
+> | -----
+> |
+> | GMail does not appear to have any way to turn off line wrapping in =
+the web
+> | interface, so this will mangle any emails that you send.  You can h=
+owever
+> | use any IMAP email client to connect to the google imap server, and
+> forward
+> | the emails through that.  Just make sure to disable line wrapping i=
+n that
+> | email client.  Alternatively, use "git send-email" instead.
+> |
+> | Submitting properly formatted patches via Gmail is simple now that
+> | IMAP support is available. First, edit your ~/.gitconfig to specify=
+ your
+> | account settings:
+> |
+> | [imap]
+> | 	folder =3D "[Gmail]/Drafts"
+> | 	host =3D imaps://imap.gmail.com
+> | 	user =3D user@gmail.com
+> | 	pass =3D p4ssw0rd
+> | 	port =3D 993
+> | 	sslverify =3D false
+> |
+> | You might need to instead use: folder =3D "[Google Mail]/Drafts" if=
+ you get
+> an error
+> | that the "Folder doesn't exist".
+> |
+> | Next, ensure that your Gmail settings are correct. In "Settings" th=
 e
-> wait state and reacquiring the mutex should be atomic. Neither are in=
- this
-> implementation. You are not mentioning why you are implementing thing=
-s
-> like this and why this would be acceptable.
+> | "Use Unicode (UTF-8) encoding for outgoing messages" should be chec=
+ked.
+> |
+> | Once your commits are ready to send to the mailing list, run the fo=
+llowing
+> | command to send the patch emails to your Gmail Drafts folder.
+> |
+> | 	$ git format-patch -M --stdout origin/master | git imap-send
+> |
+> | Go to your Gmail account, open the Drafts folder, find the patch em=
+ail,
+> fill
+> | in the To: and CC: fields and send away!
+>
+> Good luck.
+>
+> Hope that helps,
 
-It's safe to do it like this here because we're serializing waiters
-count and when signaling we make sure we have waiters before we
-release semaphore. That implementation is based on ACE.
+Hello, Jonatan!
 
-Andrew
+     Thanks for your insights, surely I understand what is reasoning be=
+hind it.
+     I expect this thread will be useful to others in the future. Here
+goes another relevant reference about sending patches using web GUI of
+gmail :
+http://git.kernel.org/?p=3Dlinux/kernel/git/torvalds/linux-2.6.git;a=3D=
+blob;f=3DDocumentation/email-clients.txt;h=3Da618efab7b156658be70b29c1a=
+6a9b9c4093e0f5;hb=3DHEAD
+
+Thanks a lot,
+Andr=E9
