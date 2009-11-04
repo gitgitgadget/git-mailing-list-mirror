@@ -1,70 +1,75 @@
-From: Michael Wookey <michaelwookey@gmail.com>
-Subject: Re: [PATCH 1/1] MSVC: port pthread code to native Windows threads
-Date: Wed, 4 Nov 2009 19:48:35 +1100
-Message-ID: <d2e97e800911040048h42ef7193v117773cc528b2361@mail.gmail.com>
-References: <1257283802-29726-1-git-send-email-ahaczewski@gmail.com> 
-	<1257283802-29726-2-git-send-email-ahaczewski@gmail.com> <4AF13819.7050306@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Problem with "From:" line on "git format-patch" generated
+ patches
+Date: Wed, 4 Nov 2009 03:49:03 -0500
+Message-ID: <20091104084903.GA1137@coredump.intra.peff.net>
+References: <b8bf37780911030830l42ea6dc2v3ef66e2a9e1ca281@mail.gmail.com>
+ <adf1fd3d0911030902x15faffcen86644733ffda43d5@mail.gmail.com>
+ <b8bf37780911031006q4bc4c487xd9db86eb0fa531e7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Andrzej K. Haczewski" <ahaczewski@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Nov 04 09:49:04 2009
+Cc: Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?B?QW5kcsOp?= Goddard Rosa <andre.goddard@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 09:49:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5bY5-00074b-9Y
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 09:49:01 +0100
+	id 1N5bYJ-0007Bd-Dj
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 09:49:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753964AbZKDIsu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Nov 2009 03:48:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753526AbZKDIsu
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 03:48:50 -0500
-Received: from mail-pz0-f188.google.com ([209.85.222.188]:55625 "EHLO
-	mail-pz0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752623AbZKDIst convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Nov 2009 03:48:49 -0500
-Received: by pzk26 with SMTP id 26so4556655pzk.4
-        for <git@vger.kernel.org>; Wed, 04 Nov 2009 00:48:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=L43Dq1RIcql6qMsKBTv2wzlgfQkNZ9xJGVUoYQ5Jfn4=;
-        b=Bo8I4U8/A0FAvhKYC9cTAHwJTCAiVqFxrmMj04u1rKdvYr7NfQy5PKTAHH19/n6brL
-         coLjapCUDwsQWWp0DQ+D0rcCBCag0ZS5uS9yAfsrenjj+2c9wJF8d3YNiY7cV2OkV1dR
-         5vfKyS3PpL8lkf2JQANsBov0nejpLbNcOMBIc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=EBFiqCwIeT85Zhmd1g53SkhPqtyFv4i/cIjVkavmiXptiz5lrWFqwd/aOi3Y4mRpT4
-         sXFDpWpbr1bdQY/VfVv3iyyYsiA2IU8YCzmdGaTc7Iq7C3nsHVer/Ad/D1SPJFJwbyq2
-         VVIIvjD9aLdBpighPdqNH36OtowfYKDwxaAJM=
-Received: by 10.115.26.13 with SMTP id d13mr1591888waj.210.1257324535150; Wed, 
-	04 Nov 2009 00:48:55 -0800 (PST)
-In-Reply-To: <4AF13819.7050306@viscovery.net>
+	id S1754704AbZKDItE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Nov 2009 03:49:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754659AbZKDItD
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 03:49:03 -0500
+Received: from peff.net ([208.65.91.99]:54997 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754157AbZKDItD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 03:49:03 -0500
+Received: (qmail 9188 invoked by uid 107); 4 Nov 2009 08:52:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 04 Nov 2009 03:52:49 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Nov 2009 03:49:03 -0500
+Content-Disposition: inline
+In-Reply-To: <b8bf37780911031006q4bc4c487xd9db86eb0fa531e7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132064>
 
-2009/11/4 Johannes Sixt <j.sixt@viscovery.net>:
-> Andrzej K. Haczewski schrieb:
->
->> +static __inline int win32_cond_init(win32_cond_t *cond)
->> +{
->> + =C2=A0 =C2=A0 cond->waiters =3D 0;
->> +
->> + =C2=A0 =C2=A0 InitializeCriticalSection(&cond->waiters_lock);
->> +
->> + =C2=A0 =C2=A0 cond->sema =3D CreateSemaphore(NULL, 0, LONG_MAX, NU=
-LL);
->
-> Wouldn't an Event object be lighter-weight? (I'm only guessing.)
+On Tue, Nov 03, 2009 at 04:06:39PM -0200, Andr=C3=A9 Goddard Rosa wrote=
+:
 
-Both events and semaphores resolve to wait-able kernel objects; so
-neither is "lighter-weight" than the other.
+> I'm not using any specific tool for inputting the git-format-patch,
+> but instead I'm sending the files generated by it through gmail as an
+> inlined patch in the email body.
+>=20
+> I like the convenience of format-patch for generating the patch files=
+,
+> but in this case, formatting the header as rfc2047 is not necessary
+> and makes a funny/garbled output in my patch submission.
+>=20
+> Do you have a suggestion for my workflow?
+
+I don't think there's currently a way to turn off the rfc2047 from
+within format-patch. You can generate a single patch with the same
+format using:
+
+  git log -1 -p --stat --summary \
+    --pretty=3Dtformat:'From: %an <%ae>%nDate: %aD%nSubject: [PATCH] %s=
+%n%n%b'
+
+but it won't do nice things like putting one patch in each file.
+
+Probably it would make sense for format-patch to have an option to
+indicate that you are going to inline these patches into a different
+MUA. So drop the 'From' mbox header line, don't rfc2047 encode, and
+maybe some other behaviors. I do the same thing (including inline in
+mutt), but I just delete the unwanted lines manually, and fortunately m=
+y
+name doesn't contain any non-ascii characters. ;)
+
+-Peff
