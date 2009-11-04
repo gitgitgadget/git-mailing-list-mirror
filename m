@@ -1,61 +1,56 @@
-From: Vietor Liu <vietor@vxwo.org>
-Subject: Re: Common setting for interoperability repo across windows and
- unix?
-Date: Wed, 04 Nov 2009 08:46:18 +0800
-Message-ID: <1257295578.2212.4.camel@localhost.localdomain>
-References: <c94f8e120911030709h29c5b8edr53df269632990e81@mail.gmail.com>
+From: Tim Mazid <timmazid@hotmail.com>
+Subject: Re: [PATCH] gitk: disable checkout of remote branch
+Date: Tue, 3 Nov 2009 16:48:57 -0800 (PST)
+Message-ID: <1257295737457-3942366.post@n2.nabble.com>
+References: <2e24e5b90911030800j22b00372r99a56c3f847a3644@mail.gmail.com> <fabb9a1e0911030807h6b76b661pef75628a1255356@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Dilip M <dilipm79@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 01:43:10 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 04 01:49:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5Txu-0004lY-Ft
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 01:43:10 +0100
+	id 1N5U3b-0006du-3o
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 01:49:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752537AbZKDAm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 19:42:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752265AbZKDAm6
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 19:42:58 -0500
-Received: from ey-out-2122.google.com ([74.125.78.27]:28207 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752055AbZKDAm6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 19:42:58 -0500
-Received: by ey-out-2122.google.com with SMTP id d26so787851eyd.19
-        for <git@vger.kernel.org>; Tue, 03 Nov 2009 16:43:02 -0800 (PST)
-Received: by 10.216.86.212 with SMTP id w62mr224833wee.131.1257295382543;
-        Tue, 03 Nov 2009 16:43:02 -0800 (PST)
-Received: from ?192.168.254.104? ([114.244.46.33])
-        by mx.google.com with ESMTPS id g11sm1738751gve.20.2009.11.03.16.42.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 03 Nov 2009 16:43:01 -0800 (PST)
-In-Reply-To: <c94f8e120911030709h29c5b8edr53df269632990e81@mail.gmail.com>
-X-Mailer: Evolution 2.28.0 (2.28.0-2.fc12) 
+	id S1752232AbZKDAsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 19:48:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416AbZKDAsw
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 19:48:52 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:34808 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752232AbZKDAsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 19:48:52 -0500
+Received: from tervel.nabble.com ([192.168.236.150])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
+	id 1N5U3V-0003Wd-Ex
+	for git@vger.kernel.org; Tue, 03 Nov 2009 16:48:57 -0800
+In-Reply-To: <fabb9a1e0911030807h6b76b661pef75628a1255356@mail.gmail.com>
+X-Nabble-From: Tim Mazid <timmazid@hotmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132014>
 
-On Tue, 2009-11-03 at 20:39 +0530, Dilip M wrote:
-> Hello,
+
+
+Sverre Rabbelier-2 wrote:
 > 
-> I have repo in unix. The same repo is cloned onto windows.I have set
-> "core.autocrlf=input" in both the repos.
+> On Tue, Nov 3, 2009 at 17:00, Sitaram Chamarty <sitaramc@gmail.com> wrote:
+>> At the command line, this gives you a detailed warning message, but the
+>> GUI currently allows it without any fuss.
 > 
-> When I do some change to a file in windows and push to unix repo, I
-> get file deleted If I do "git status"?
-> 
-> What is the setting to be done if I want an repo to be
-> access/push/pulled across windows and unix?
-> 
-> 
+> This is even better than an annoying popup dialog, as we all know
+> those are just ignored anyway :).
 > 
 
-msysgit, test:
-
- core.autocrlf=false
+Might be better to include a configuration option to allow this, for those
+that know what they're doing. Most of the people that know what they're
+doing will use the command line, anyway, but it may irritate some people.
+-- 
+View this message in context: http://n2.nabble.com/PATCH-gitk-disable-checkout-of-remote-branch-tp3939363p3942366.html
+Sent from the git mailing list archive at Nabble.com.
