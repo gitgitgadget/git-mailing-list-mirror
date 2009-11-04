@@ -1,73 +1,76 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: How to ensure a word has been removed from repository?
-Date: Tue, 03 Nov 2009 21:49:07 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0911032138400.13333@xanadu.home>
-References: <6fb3af8e0911031812j54a9b698xca9f5301ac07442a@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Allow curl helper to work without a local repository
+Date: Tue, 3 Nov 2009 21:52:35 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.0911032149390.14365@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Patrick Higgins <patrick.allen.higgins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 03:49:18 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 03:52:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5Vvx-0008IN-4J
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 03:49:17 +0100
+	id 1N5VzG-0000y4-IQ
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 03:52:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754033AbZKDCtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 21:49:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753797AbZKDCtD
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 21:49:03 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:15314 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753105AbZKDCtD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 21:49:03 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KSK003JGD5VFWA0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 03 Nov 2009 21:49:07 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <6fb3af8e0911031812j54a9b698xca9f5301ac07442a@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1753591AbZKDCwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 21:52:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752572AbZKDCwc
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 21:52:32 -0500
+Received: from iabervon.org ([66.92.72.58]:39705 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751105AbZKDCwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 21:52:31 -0500
+Received: (qmail 23405 invoked by uid 1000); 4 Nov 2009 02:52:35 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 4 Nov 2009 02:52:35 -0000
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132027>
 
-On Tue, 3 Nov 2009, Patrick Higgins wrote:
+It's okay to use the curl helper without a local repository, so long
+as you don't use "fetch". There aren't any git programs that would try
+to use it, and it doesn't make sense to try it (since there's nowhere
+to write the results), but we may as well be clear.
 
-> Hi all,
-> 
-> I just completed a series of filter-branch commands to remove a couple
-> of sensitive words from a repository before I publish it. The words
-> were found in commit messages, directory names, file contents, and
-> various other places (kind of weird, I know). I believe I have removed
-> them all, but I would like to double check but don't know how.
-> 
-> Given that much of the repository is stored in compressed packs, I
-> can't just use grep to look for the words. To get around this, I've
-> unpacked the objects, use a Perl script (filtinf example script) to
-> decompress them and then use grep (this has proven to be quite slow).
-> 
-> Is that going to find every possible occurrence if all the relevant
-> files are plain text?
-> 
-> Is there an easier way to search the repository? The way I'm doing it
-> has required some awfully deep knowledge to expire and prune
-> everything. I feel like I must be missing something.
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+This is the simple change to let remote-curl work without a local 
+repository for git ls-remote; it leave the transport-helper code assuming 
+that all helpers can list without a local repo, which happens to be true 
+of this helper, the only one in current git.
 
-An easy way to look for the presence of a particular string in all the 
-repository data is:
+ remote-curl.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-	git rev-list --all --objects | cut -c -40 | \
-		git cat-file --batch | grep <string>
-
-Alternatively you can use:
-
-	git fast-export --all --signed-tag=verbatim | grep <string>
-
-
-Nicolas
+diff --git a/remote-curl.c b/remote-curl.c
+index 2faf1c6..ebdab36 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -82,9 +82,10 @@ int main(int argc, const char **argv)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	const char *url;
+ 	struct walker *walker = NULL;
++	int nongit;
+ 
+ 	git_extract_argv0_path(argv[0]);
+-	setup_git_directory();
++	setup_git_directory_gently(&nongit);
+ 	if (argc < 2) {
+ 		fprintf(stderr, "Remote needed\n");
+ 		return 1;
+@@ -103,6 +104,8 @@ int main(int argc, const char **argv)
+ 			break;
+ 		if (!prefixcmp(buf.buf, "fetch ")) {
+ 			char *obj = buf.buf + strlen("fetch ");
++			if (nongit)
++				die("Fetch attempted without a local repo");
+ 			if (!walker)
+ 				walker = get_http_walker(url, remote);
+ 			walker->get_all = 1;
+-- 
+1.6.5.2.142.g063c5.dirty
