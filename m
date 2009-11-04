@@ -1,69 +1,90 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Update packfile transfer protocol documentation
-Date: Tue, 3 Nov 2009 17:18:03 -0800
-Message-ID: <20091104011802.GE10505@spearce.org>
-References: <d411cc4a0911011518q15a8267bn642e6937be8c9ab1@mail.gmail.com> <7v4opbp1fa.fsf@alter.siamese.dyndns.org> <20091104005614.GD10505@spearce.org> <7vljinnllj.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] commit -c/-C/--amend: reset timestamp and authorship to 
+ committer with --reset-author
+Date: Tue, 03 Nov 2009 17:23:18 -0800
+Message-ID: <7v639rnkvt.fsf@alter.siamese.dyndns.org>
+References: <1257282551-9999-1-git-send-email-erick.mattos@gmail.com>
+ <20091104073822.6117@nanako3.lavabit.com>
+ <55bacdd30911031551k1bfd3151t940864e4793f5a37@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Scott Chacon <schacon@gmail.com>, git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 02:18:15 2009
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Erick Mattos <erick.mattos@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 02:23:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5UVl-0007jm-7o
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 02:18:09 +0100
+	id 1N5UbG-000113-Rk
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 02:23:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752393AbZKDBR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 20:17:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbZKDBR6
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 20:17:58 -0500
-Received: from george.spearce.org ([209.20.77.23]:57605 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751707AbZKDBR5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 20:17:57 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 2B1AD381FE; Wed,  4 Nov 2009 01:18:03 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7vljinnllj.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753217AbZKDBXY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 20:23:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752690AbZKDBXX
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 20:23:23 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61578 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751712AbZKDBXW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 20:23:22 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 76F39917B2;
+	Tue,  3 Nov 2009 20:23:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DuqXyw5SsrFImq/LwUEfP4r3ueE=; b=jsfKrt
+	sQuTbVcylP/Jy2pq1S0tN0xJYonNwCDvhA9LTR8f27pmLJQ1GZO9Gp+4DJeIf0Ek
+	8WBQwWRH+XTc2ZMFe/sO5kaqx1Wmc0Wp6LGkMRXIT4NJ8/9YRYb0GxE8npDtRjko
+	v5uqSaro9soJBgHOy7mbnNrCtMMXCp9zTQe0M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OALQpWqYeTMARN8mp7x/mkfAZUW5Q9zM
+	Qllf0l+3ZEtJdp4+/lHsoo9DMIoW/gwf/Pv0I60O9SVYGe3sGtgZKN39Bsc7BIGi
+	h0KJWIUS2QROPOPZW504ZoLQpmWb7ZGanRIK2p6Gl3425fA0aJ5yfbSkaTEty77j
+	xJjjKra0zqU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4B227917B0;
+	Tue,  3 Nov 2009 20:23:24 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E1576917AB; Tue,  3 Nov 2009
+ 20:23:19 -0500 (EST)
+In-Reply-To: <55bacdd30911031551k1bfd3151t940864e4793f5a37@mail.gmail.com>
+ (Erick Mattos's message of "Tue\, 3 Nov 2009 21\:51\:43 -0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A58176E2-C8E0-11DE-BE96-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132020>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > I don't think we ever send an empty packet.  If we have no data to
-> > send, why the hell did we create the packet header?
-> 
-> Oh, I do not disagree that it is pointless, but the example that followed
-> the part we are discussing also had "0004".  I think it is Ok to allow it.
+Erick Mattos <erick.mattos@gmail.com> writes:
 
-If its pointless, why encourage it?  Why not discourage it with SHOULD NOT?
- 
-> The original intent of packet_flush() was that everything else could be
-> kept buffered in-core without going to write() until packet_flush() is
-> called.  The protocol was defined in a way that we won't wait for
-> listening a response from the other end to an earlier message we "sent"
-> with packet_write() but haven't called packet_flush() yet hence could
-> still be in our buffer.  We still have this comment:
-> 
->     /*
->      * If we buffered things up above (we don't, but we should),
->      * we'd flush it here
->      */
->     void packet_flush(int fd)
+> ... I had already sent another patch with the
+> suggestions he made in a previous email.
 
-The smart-http series causes fetch-pack to buffer.  :-)
+That happens in real life with people working in different timezones.
 
-> And once we start buffering, allowing "0004" packet_write() wouldn't even
-> be a problem; it can be optimized out in the buffering layer.
+> The new option only touches on getting new author or copying the
+> original so that is why I made the first check in whole and the others
+> only by author.  If people think that this operation is so uncertain,
+> then everything should be compared: parent, author and message on all
+> tests.
 
-Sure, but can't packet_write just return early without write()
-if format_packet returned 4 (aka vsnprintf returned 0)?
+You probably have misunderstood why we write tests; it is not about making
+sure _your_ implementation is Ok.  If that were the case, using knowledge
+of implementation details to short-circuit the tests would perfectly be
+acceptable.
 
--- 
-Shawn.
+We write tests so that long after you get bored and stop visiting the git
+project mailing-list, if somebody _else_ changes the program and its
+behaviour gets changed in a way _you_ did not expect, such a mistake can
+be caught, even if you are not monitoring the mailing list to actively
+catch such a bad change to go into the system.  So we prefer to test both
+sides of the coin without saying "this option only affects this codepath
+(currently) so it never can break this part, it is not worth checking this
+and that (right now)" when it is not too much trouble.  It is a win in the
+long run.
+
+In any case, I like --reset-author better than --mine.  I didn't think of
+diamond-mine, though ;-)
