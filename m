@@ -1,65 +1,78 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] Allow curl helper to work without a local repository
-Date: Wed, 4 Nov 2009 06:32:41 +0100
-Message-ID: <fabb9a1e0911032132v5e76e4b6n559169ad43d9f7c0@mail.gmail.com>
-References: <alpine.LNX.2.00.0911032149390.14365@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Require a struct remote in transport_get()
+Date: Tue, 03 Nov 2009 21:42:59 -0800
+Message-ID: <7vbpjin8v0.fsf@alter.siamese.dyndns.org>
+References: <alpine.LNX.2.00.0911032133540.14365@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Nov 04 06:33:15 2009
+X-From: git-owner@vger.kernel.org Wed Nov 04 06:43:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5YUd-0006nt-Dm
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 06:33:15 +0100
+	id 1N5YeR-0001T0-GA
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 06:43:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751034AbZKDFc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 00:32:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751049AbZKDFc7
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 00:32:59 -0500
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:34244 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751030AbZKDFc7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 00:32:59 -0500
-Received: by ewy3 with SMTP id 3so2762105ewy.37
-        for <git@vger.kernel.org>; Tue, 03 Nov 2009 21:33:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=wsdoKpoyFRV/oVYUqtt/mIMXBUWirMr1SSAZ+Qrh82M=;
-        b=JmtuRNbndbaPLCEjfiHuPnwqIAvoBz3yfTwDt93RsiMOQTPJi8OVx9oKK52O2/izEi
-         eG2OCMwRNKr6QR2F1CrSutsdQRU4mTmn2hht/Ud9FV3wFut8Bm4er8fgM9Q8KmVuy3eY
-         BaqW6llOYl2t0NLKk9+SDhHIMDQ4CEpdmnamw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=vlYjpHD6RyZtU6miX0RORmlhvwfoN2KXnBYR1A0W8ySyCEAPBWQd3kQMXWI/+pf+T+
-         qBJYn/aLY0T3ElllPvtNoYTGuvP0xQzPGhftlKAoLp9savA8Rzm3P9LdnEkkheWWva2t
-         CmxuAkyuHnmMwWpP1xc9MWw6xJ2Z93TsZSL8c=
-Received: by 10.216.88.65 with SMTP id z43mr429982wee.5.1257312781641; Tue, 03 
-	Nov 2009 21:33:01 -0800 (PST)
-In-Reply-To: <alpine.LNX.2.00.0911032149390.14365@iabervon.org>
+	id S1751184AbZKDFnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 00:43:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751135AbZKDFnL
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 00:43:11 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45325 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750859AbZKDFnL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 00:43:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 912B273964;
+	Wed,  4 Nov 2009 00:43:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=LqE4VIGPLLEjOZktX8kxSDC3VWY=; b=ilJPr6YyYRRuRu4ZJr14t4N
+	v3XSre9SZ2yfKjiDup8IrWF6fjWlZ0InM1/K3DMvOvqIZ4CiTukG+lnwfzOZdhGR
+	IpTUTs/YYANWV0w+QCeg7Xr2vm3VZNxA8SXdgqk1Tai+lvyrHV2ASV6meDBo4AGx
+	G8fUOgEI0/rnJ6z+Oa60=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=cY6qaRrFttDAJ/u+O7OGo7cProZZseoqMDjOYyaobDR6CZ0yj
+	KtuLIh6XMPxy3zIxDSkGop1nItjbDgCEd2hs+6fCRR30Grs4hMs2PNkiLx75vfLR
+	pCbbSYr3jICNdNkza1356n3TICAVnqkCggTu7v4W+vES9NwH9wD0CysNjI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 72F1473963;
+	Wed,  4 Nov 2009 00:43:11 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3CC8B73962; Wed,  4 Nov
+ 2009 00:43:01 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F01AA54C-C904-11DE-9AE9-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132037>
 
-Heya,
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-On Wed, Nov 4, 2009 at 03:52, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> This is the simple change to let remote-curl work without a local
-> repository for git ls-remote; it leave the transport-helper code assuming
-> that all helpers can list without a local repo, which happens to be true
-> of this helper, the only one in current git.
+> cmd_ls_remote() was calling transport_get() with a NULL remote and a
+> non-NULL url in the case where it was run outside a git
+> repository. This involved a bunch of ill-tested special
+> cases. Instead, simply get the struct remote for the URL with
+> remote_get(), which works fine outside a git repository, and can also
+> take global options into account.
+>
+> This fixes a tiny and obscure bug where "git ls-remote" without a repo
+> didn't support global url.*.insteadOf, even though "git clone" and
+> "git ls-remote" in any repo did.
+>
+> Also, enforce that all callers provide a struct remote to transport_get().
+>
+> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> ---
+> This is sufficient to stop the segfault when tring "git ls-remote 
+> http://..." outside of a repo, but not to make it work, which requires 
+> either something simple but not ideal or something complex.
 
-Add a capability for it? :P
-
--- 
-Cheers,
-
-Sverre Rabbelier
+Thanks; I think this and your other patch are important fixes, and should
+go directly on 'maint'.  Do you prefer to queue them on 'next' to cook for
+a week instead?
