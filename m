@@ -1,74 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH bg/format-patch-p-noop] log-tree: always add --- marker
- when options are patch and a stat
-Date: Wed, 04 Nov 2009 10:10:01 -0800
-Message-ID: <7vy6mmgo06.fsf@alter.siamese.dyndns.org>
-References: <1257283456-7007-1-git-send-email-bebarino@gmail.com>
- <7vy6mmltz9.fsf@alter.siamese.dyndns.org>
- <20091104063612.GA24263@coredump.intra.peff.net>
- <20091104071053.GB24263@coredump.intra.peff.net>
- <20091104071940.GA15011@coredump.intra.peff.net> <4AF12EC5.4030407@gmail.com>
- <20091104073731.GA15408@coredump.intra.peff.net>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] MSVC: Windows-native implementation for subset of Pthreads
+ API
+Date: Wed, 04 Nov 2009 13:10:22 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0911041247250.10340@xanadu.home>
+References: <1257331059-26344-1-git-send-email-ahaczewski@gmail.com>
+ <1257350100-29281-1-git-send-email-ahaczewski@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org,
-	=?utf-8?Q?Bj?= =?utf-8?Q?=C3=B6rn?= Gustavsson 
-	<bgustavsson@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 04 19:10:25 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
+To: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 19:10:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5kJN-0000JI-5d
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 19:10:25 +0100
+	id 1N5kJe-0000TO-LY
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 19:10:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757215AbZKDSKJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 13:10:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753987AbZKDSKJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 13:10:09 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63174 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751196AbZKDSKI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 13:10:08 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D13B092B5D;
-	Wed,  4 Nov 2009 13:10:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ebl/PLc62bVCRG6YmtypDoGTxHY=; b=pgZBJ0
-	7PvzkYwI1U3G7ukIZTYDQoViUbS1tStrOm3ZSjL3hTyB62XMRDWf3fy2iyHxhTIp
-	nmSsBP7uhdQLIpeIov4WtxiGrB18trVSYB6EeJbfs7b4V74RdVFb1j9pOAKkBLp+
-	LNj7mfSgtgoXJle3p+0j0L2S755d97vmLIWz4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wL5uuGFTyF6xdieQWex4fKqZc+gcAcRW
-	iFnqjU4vsvEKwLRbMt5e3LzbeYu4WHzo/l4e19ajNwaE6RY3NsG0lwTsyOLI8Zki
-	wJ/KX0NE06CUwRZGSC+Ev01hug0WBjLtwKjdw53g8ahVACzzcybLMCDNIYiQvcwB
-	R7y0+mbgu2g=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9340D92B59;
-	Wed,  4 Nov 2009 13:10:08 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D8F7C92B58; Wed,  4 Nov 2009
- 13:10:02 -0500 (EST)
-In-Reply-To: <20091104073731.GA15408@coredump.intra.peff.net> (Jeff King's
- message of "Wed\, 4 Nov 2009 02\:37\:31 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 49458214-C96D-11DE-A497-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1757565AbZKDSKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 13:10:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757544AbZKDSKS
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 13:10:18 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:15465 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753987AbZKDSKR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 13:10:17 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0KSL00L60JTAGUF0@VL-MR-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 04 Nov 2009 13:10:22 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <1257350100-29281-1-git-send-email-ahaczewski@gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132110>
 
-Jeff King <peff@peff.net> writes:
+On Wed, 4 Nov 2009, Andrzej K. Haczewski wrote:
 
->> I don't imagine we want this option in the messaging group though.
->> Can you move it up?
->
-> Thanks, good catch. I just tacked it onto the end, forgetting that we
-> were using grouping. Junio, can you tweak it, or do you want a resend?
+> +	NO_STATIC_PTHREADS_INIT = YesPlease
 
-Just ater "no-binary" would be a good place for this to go; done.
+Let's not go that route please.  If Windows can't get away without 
+runtime initializations then let's use them on all platforms.  There is 
+no gain in exploding the code path combinations here wrt testing 
+coverage.
+
+> +static THREAD_RET_TYPE threaded_find_deltas(void *arg)
+
+Why can't you just cast the function pointer in your pthread_create 
+wrapper instead?  No one cares about the returned value anyway.
+
+> @@ -2327,6 +2354,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+>  #ifdef THREADED_DELTA_SEARCH
+>  	if (!delta_search_threads)	/* --threads=0 means autodetect */
+>  		delta_search_threads = online_cpus();
+> +
+> +	init_threaded_delta_search();
+
+What about doing this at the beginning of ll_find_deltas() instead?
+And similarly for cleanup_threaded_delta_search(): call it right before 
+leaving ll_find_deltas().  This way thread issues would remain more 
+localized.  In fact I'd move the whole thing above in ll_find_deltas() 
+as well (separately from this patch though).
+
+
+Nicolas
