@@ -1,99 +1,102 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: Re: [PATCH 0/2] Set Makefile variables from configure
-Date: Wed, 04 Nov 2009 14:47:45 -0500
-Message-ID: <1257363937-sup-5123@ntdws12.chass.utoronto.ca>
-References: <20091103222123.GA17097@progeny.tock> <1257357960-12763-1-git-send-email-bwalton@artsci.utoronto.ca> <7v7hu6gjzz.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; boundary="=-1257364070-27458-21017-3297-24-="; micalg="pgp-sha1"
-Content-Transfer-Encoding: 8bit
-Cc: jrnieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 20:48:06 2009
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: [PATCH v2 00/13] Reroll of the remote-vcs-helper series
+Date: Wed,  4 Nov 2009 20:48:05 +0100
+Message-ID: <1257364098-1685-1-git-send-email-srabbelier@gmail.com>
+To: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Nov 04 20:49:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5lpn-0007uh-DT
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 20:47:59 +0100
+	id 1N5lr0-0008UA-76
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 20:49:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758036AbZKDTrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 14:47:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758033AbZKDTrr
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 14:47:47 -0500
-Received: from www.cquest.utoronto.ca ([192.82.128.5]:49721 "EHLO
-	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757970AbZKDTrq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 14:47:46 -0500
-Received: from ntdws12.chass.utoronto.ca ([128.100.160.253]:50181 ident=93)
-	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
-	id 1N5lpe-0001mh-Mh; Wed, 04 Nov 2009 14:47:50 -0500
-Received: from localhost
-	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
-	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1N5lpe-00045S-J7; Wed, 04 Nov 2009 14:47:50 -0500
-Received: (from bwalton@localhost)
-	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id nA4Jlo9u015710;
-	Wed, 4 Nov 2009 14:47:50 -0500
-In-reply-to: <7v7hu6gjzz.fsf@alter.siamese.dyndns.org>
-User-Agent: Sup/git
+	id S1758055AbZKDTtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 14:49:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758033AbZKDTtB
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 14:49:01 -0500
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:61042 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758025AbZKDTtA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 14:49:00 -0500
+Received: by ewy3 with SMTP id 3so3490470ewy.37
+        for <git@vger.kernel.org>; Wed, 04 Nov 2009 11:49:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:x-mailer;
+        bh=WkLthRmuO6izKcmrq7uVmThYmN8OuLAv2Rm0HBhrezc=;
+        b=Ft8fnk1JJgV8tEuz1vIDSektrxMfuimKlOdPm7DmFqMDkbiS56PGfQdv2S6A1MXD0/
+         cswoPjPQan5laMHJ9al0c/iI6/SiCcqT2HYdBoDb1prtz3LT9CkNPy+EcXZr1A1zMtZA
+         i8D/5IVzFsCWuNmvPaBtX645wSgyILcTDQLvM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:message-id:x-mailer;
+        b=V1FJauSQAqhncCHBhubEWw/kxWPX4yaRKwgGl7JtxweMzZotIwh7Tg30eNOhg5cf1T
+         uCvNGT8oFBy0W6fMwvB5YsNwX1DH67ffkSwalMNnzAHtifVCfROeB779waJqoWRuEcRj
+         XymgIL2rdvqPiqDZW9DyjgHzQBBe6wFSQL3Qo=
+Received: by 10.213.24.3 with SMTP id t3mr137731ebb.40.1257364144723;
+        Wed, 04 Nov 2009 11:49:04 -0800 (PST)
+Received: from localhost.localdomain (ip138-114-211-87.adsl2.static.versatel.nl [87.211.114.138])
+        by mx.google.com with ESMTPS id 5sm4314489eyh.2.2009.11.04.11.49.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 04 Nov 2009 11:49:04 -0800 (PST)
+X-Mailer: git-send-email 1.6.5.2.295.g0d105
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132121>
 
+Major changes include removal of the cvs specific code as well incorperation
+of most of Daniel's comments. For details see the post-triple-dash of the
+individual patches.
 
---=-1257364070-27458-21017-3297-24-=
-Content-Type: text/plain; charset=UTF-8
+Daniel, I haven't yet had time to write the 'refspec' part, but that is
+something that can definitely go on top of the current series.
 
-Excerpts from Junio C Hamano's message of Wed Nov 04 14:36:32 -0500 2009:
+Daniel Barkalow (7):
+      Fix memory leak in helper method for disconnect
+      Allow programs to not depend on remotes having urls
+      Use a function to determine whether a remote is valid
+      Allow fetch to modify refs
+      Add a config option for remotes to specify a foreign vcs
+      Add support for "import" helper command
+      Allow helpers to report in "list" command that the ref is unchanged
 
-> I am a bit puzzled about the "warning" logic.  Is this because you expect
-> variables we typically give YesPlease/NoThanks as their values will not be
-> handled with this new PARSE_WITH_SET_MAKE_VAR() macro?
+Johan Herland (1):
+      Basic build infrastructure for Python scripts
 
-No, this is because it's perfectly acceptable, in my opinion for a
-user to say:
+Johannes Schindelin (1):
+      Allow specifying the remote helper in the url
 
---with-pager=no
-or
---with-editor=yes
+Sverre Rabbelier (4):
+      Write local refs written by the "import" helper command only once
+      Honour the refspec when updating refs after import
+      Allow helpers to request the path to the .git directory
+      Add Python support library for remote helpers
 
-Neither of those are smart things to do, but they're not necessarily
-wrong, either.  I'm open to bailing on error for these, but I thought
-leaving these as unvalidated, but with a warning, was more
-flexible...if say a user wanted to have a pager called 'no' or
-something.
-
-For the variables that are accepting YesPlease/NoThanks, I think it's
-more suitable to use the standard autoconf header/function/library
-detection as it stands now.  This macro is more for 'oddball'
-variables like DEFAULT_PAGER, DEFAULT_EDITOR, etc that aren't
-necessarily easily detectable.  In some cases, even if it were
-detectable, the detection might not be right.
-
-Thanks
--Ben
--- 
-Ben Walton
-Systems Programmer - CHASS
-University of Toronto
-C:416.407.5610 | W:416.978.4302
-
-GPG Key Id: 8E89F6D2; Key Server: pgp.mit.edu
-Contact me to arrange for a CAcert assurance meeting.
-
---=-1257364070-27458-21017-3297-24-=
-Content-Disposition: attachment; filename="signature.asc"
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQFK8dpl8vuMHY6J9tIRAsMAAJ9ogkZiJp9TwvSYL4Zrz1SC67gkwACfZWSF
-rZOSB7GQ+ztlBQxjOjXFPzI=
-=Z2y2
------END PGP SIGNATURE-----
-
---=-1257364070-27458-21017-3297-24-=--
+ Documentation/config.txt             |    4 +
+ Documentation/git-remote-helpers.txt |   14 +-
+ Makefile                             |   51 +++
+ builtin-clone.c                      |    8 +-
+ builtin-fetch.c                      |    7 +-
+ builtin-ls-remote.c                  |    4 +-
+ builtin-push.c                       |   68 ++--
+ configure.ac                         |    3 +
+ git_remote_helpers/.gitignore        |    2 +
+ git_remote_helpers/Makefile          |   35 ++
+ git_remote_helpers/__init__.py       |   16 +
+ git_remote_helpers/git/git.py        |  678 ++++++++++++++++++++++++++++++++++
+ git_remote_helpers/setup.py          |   17 +
+ git_remote_helpers/util.py           |  194 ++++++++++
+ remote.c                             |   15 +-
+ remote.h                             |    2 +
+ t/test-lib.sh                        |   10 +
+ transport-helper.c                   |   99 +++++-
+ transport.c                          |   31 ++-
+ transport.h                          |   43 ++-
+ 20 files changed, 1253 insertions(+), 48 deletions(-)
