@@ -1,73 +1,84 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: thoughts on setting core.logAllRefUpdates default true for bare repos
-Date: Wed, 04 Nov 2009 20:35:45 +0100
-Message-ID: <vpqzl729j72.fsf@bauges.imag.fr>
-References: <slrnhf2uep.7d3.sitaramc@sitaramc.homelinux.net>
-	<alpine.DEB.1.00.0911041422170.2788@felix-maschine>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Set Makefile variables from configure
+Date: Wed, 04 Nov 2009 11:36:32 -0800
+Message-ID: <7v7hu6gjzz.fsf@alter.siamese.dyndns.org>
+References: <20091103222123.GA17097@progeny.tock>
+ <1257357960-12763-1-git-send-email-bwalton@artsci.utoronto.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 04 20:36:14 2009
+Cc: jrnieder@gmail.com, git@vger.kernel.org
+To: Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Wed Nov 04 20:36:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5leM-0001KV-4D
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 20:36:10 +0100
+	id 1N5lez-0001jV-1N
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 20:36:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755558AbZKDTf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 14:35:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755091AbZKDTf6
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 14:35:58 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:54284 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751361AbZKDTf6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 14:35:58 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id nA4JZ43c015897
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 4 Nov 2009 20:35:07 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1N5ldx-0002Yk-BO; Wed, 04 Nov 2009 20:35:45 +0100
-In-Reply-To: <alpine.DEB.1.00.0911041422170.2788@felix-maschine> (Johannes Schindelin's message of "Wed\, 4 Nov 2009 14\:25\:33 +0100 \(CET\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 04 Nov 2009 20:35:07 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: nA4JZ43c015897
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1257968107.67639@KpARZhIM5D8rzOuvvzq8Cw
+	id S1757909AbZKDTgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 14:36:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757901AbZKDTgh
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 14:36:37 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57225 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757597AbZKDTgg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 14:36:36 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 717FA92371;
+	Wed,  4 Nov 2009 14:36:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5ZclBgYRh3RENql+9+MtprLsjwo=; b=DARSuN
+	IbdHKyafRcHWsvjPHGoPSMvwgIGfwCOiuBheKXTYwA7GPHZRk39CmmIKq0cCb3zP
+	lW/j8x9Tm+Zu4Rp0Eqg+1ja8EIXM9RuvKWiN2hDBbrTuYhCQLWa4a6LKTTowOg0z
+	rvtiNKOVyYqDBZxthKBfvdyPG6LXF+48eLqts=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BA0nroqGgO1eJBr/bbwAhOxEgNCS/f5f
+	ECV73lbfxE0iEv9Ol9hAFiNAQTS2KZSuOZi47A+SCHK0vfIV5+o49Sn1w1PrltuR
+	qwdoVH9lGiXzFzAUaTzkEAk1OXFG8T/1Dkugcaudu4rNz+eanUbDLsr9p77W46Ih
+	Kcz4hVF7QI0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 445E292370;
+	Wed,  4 Nov 2009 14:36:38 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 059E49236B; Wed,  4 Nov 2009
+ 14:36:33 -0500 (EST)
+In-Reply-To: <1257357960-12763-1-git-send-email-bwalton@artsci.utoronto.ca>
+ (Ben Walton's message of "Wed\,  4 Nov 2009 13\:05\:58 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5E8F3A96-C979-11DE-BEED-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132119>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Ben Walton <bwalton@artsci.utoronto.ca> writes:
 
-> I did not have time yet to investigate, but it seems that there are 
-> problems with the permissions of shared bare repositories when activating 
-> the reflogs.
+> Ok, a second attempt, taking into account Jonathan's feedback and
+> proposed updates.  The revised macro allows for specified help text.
+>
+> I opted to use a more 'dry' approach to the macro instead of repeating
+> the boilerplate AC_WITH_ARG bits when calling this feature.
+>
+> Additionally, I only WARN when 'yes' or 'no' is passed.  Bailing on
+> errors in most cases is reasonable, but I don't think it's globally
+> appropriate.
+>
+> As to why I want this...It's cleaner, in my opinion, to do all build
+> configuration through a single mechanism than to do most with
+> ./configure and the rest with variables passed to make.  In other
+> words, this is purely a style issue.
 
-I can't think of any, and I just tried launching two
+Sorry, I wasn't following the discussion primarily because I am totally
+uninterested in autoconf myself (it's purely a style issue and using a
+single mechanism of echoing into config.mak is just as clean), so allow me
+to ask a stupid question that might have been already answered while the
+initial round was discussed.
 
-while true; do git pull; date > foo.txt ; git add .; git commit -m "xxx"; git push; done
-
-in parallel, with two different users pushing to a --bare --shared
-repository, and it did work well. But I may very well have missed
-something.
-
-(and actually, if it causes problem, it's an argument in favor of
-defaulting to false when core.shared is true, not when core.bare).
-
-
-Unless I missed something, I think core.logAllRefUpdates should be
-enabled for bare repos.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I am a bit puzzled about the "warning" logic.  Is this because you expect
+variables we typically give YesPlease/NoThanks as their values will not be
+handled with this new PARSE_WITH_SET_MAKE_VAR() macro?
