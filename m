@@ -1,73 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [RFC/PATCH 0/3] use '--bisect-refs' as bisect rev machinery
  option
-Date: Wed, 04 Nov 2009 10:25:08 -0800
-Message-ID: <7vljimgnaz.fsf@alter.siamese.dyndns.org>
-References: <20091104034312.4545.2176.chriscool@tuxfamily.org>
+Date: Wed, 4 Nov 2009 10:32:53 -0800 (PST)
+Message-ID: <alpine.LFD.2.01.0911041030080.31845@localhost.localdomain>
+References: <20091104034312.4545.2176.chriscool@tuxfamily.org> <7vljimgnaz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Wed Nov 04 19:25:29 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 19:33:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5kXw-0007Zb-Vy
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 19:25:29 +0100
+	id 1N5kfU-0003CU-0O
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 19:33:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757670AbZKDSZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 13:25:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757515AbZKDSZP
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 13:25:15 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36968 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754762AbZKDSZO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 13:25:14 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2778A92CBE;
-	Wed,  4 Nov 2009 13:25:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=G3mxeewnUhaPOdb3LkSMVv1tVwo=; b=tho4iv
-	xOEW7FWm56bHhsRKLtImkEhd86QWbY3FZ2poSSkh75DdjTdPqVIgGK3RiQdoX3iR
-	ouDnAXUxgEJZJiCdq5Y11wPEBpyEtLgfAJpritGjqVkXSijQaUk5e9d4VushYshx
-	jF6EZWn1PG/9W875ZBLQ69MAnXoxADCCOd5kQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wYhx34qmmEGQ95AmvxUf6DWAL6c+y/OI
-	rsivE9NuunC3wuNaN4DhPpqmUtuWERyKpKsmFO1Yndn7F7DvAr9dwE9rA8MVKNLY
-	o/3zFkxdGSZgKSFmyLHPmObeqiNIMX1c+fAnKQm7286RUJRIR+HE//xkuyd4Ucyc
-	AUfHB3VWqPc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F05EF92CBC;
-	Wed,  4 Nov 2009 13:25:15 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7C19092CBB; Wed,  4 Nov 2009
- 13:25:10 -0500 (EST)
-In-Reply-To: <20091104034312.4545.2176.chriscool@tuxfamily.org> (Christian
- Couder's message of "Wed\, 04 Nov 2009 05\:00\:00 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 661CD408-C96F-11DE-BDEB-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1757769AbZKDSdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 13:33:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757759AbZKDSdE
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 13:33:04 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:37267 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757703AbZKDSdD (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Nov 2009 13:33:03 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id nA4IWsYe028711
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 4 Nov 2009 10:32:55 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id nA4IWrhN031721;
+	Wed, 4 Nov 2009 10:32:54 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <7vljimgnaz.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.961 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132112>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
 
-> So I suggest to use '--bisect-refs' instead of '--bisect' as the new
-> bisect revision machinery option, because otherwise I think we get a
-> regression when we call "git rev-list --bisect BAD --not GOOD" and we
-> are already bisecting with bisect refs different than BAD and GOOD.
-> This also simplifies the code a little bit.
 
-Just to make sure that I read you correctly, do you mean that Linus now
-would say:
+On Wed, 4 Nov 2009, Junio C Hamano wrote:
 
-    $ git bisect ...
-    ... inside bisect session
-    $ gitk --bisect-refs arch/x86
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> 
+> > So I suggest to use '--bisect-refs' instead of '--bisect' as the new
+> > bisect revision machinery option, because otherwise I think we get a
+> > regression when we call "git rev-list --bisect BAD --not GOOD" and we
+> > are already bisecting with bisect refs different than BAD and GOOD.
+> > This also simplifies the code a little bit.
+> 
+> Just to make sure that I read you correctly, do you mean that Linus now
+> would say:
+> 
+>     $ git bisect ...
+>     ... inside bisect session
+>     $ gitk --bisect-refs arch/x86
+
+I'd really rather prefer to keep '--bisect' for that, it doesn't make 
+sense to export '--bisect-refs' to be the user-visible switch, and then 
+have '--bisect' as some internal switch just for 'git rev-list'.
+
+In fact, I'd argue that the ne wbehavior of 'git rev-list' is to some 
+degree _better_ (ie the existing bad/good ones are implicit while doing 
+bisection).
+
+Yes, it is a behavioral change, but is it a bad one?
+
+			Linus
