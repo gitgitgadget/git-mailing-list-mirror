@@ -1,116 +1,67 @@
-From: "Joshua J. Kugler" <joshua@eeinternet.com>
-Subject: Re: Problem signing a tag
-Date: Wed, 04 Nov 2009 10:47:49 -0800
-Organization: EE Internet
-Message-ID: <200911040947.50226.joshua@eeinternet.com>
-References: <200911021558.17550.joshua@eeinternet.com>
- <200911030911.47030.joshua@eeinternet.com>
- <4AF18F7A.2000904@drmicha.warpmail.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Accessing the reflog remotely
+Date: Wed, 04 Nov 2009 20:06:00 +0100
+Message-ID: <vpqeioeaz53.fsf@bauges.imag.fr>
+References: <vpqljimpr95.fsf@bauges.imag.fr>
+	<alpine.LFD.2.00.0911041243350.10340@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Nov 04 19:48:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Wed Nov 04 20:06:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5ktu-0002NZ-B8
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 19:48:10 +0100
+	id 1N5lBb-0003RK-DQ
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 20:06:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752178AbZKDSr7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Nov 2009 13:47:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750829AbZKDSr6
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 13:47:58 -0500
-Received: from msgmmp-2.gci.net ([209.165.130.12]:47336 "EHLO msgmmp-2.gci.net"
+	id S1755875AbZKDTGE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 14:06:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752517AbZKDTGE
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 14:06:04 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:50122 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750752AbZKDSr5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 13:47:57 -0500
-Received: from hyperion.eeinternet.com ([206.174.62.163])
- by msgmmp-1.gci.net (Sun Java System Messaging Server 6.2-3.03 (built Jun 27
- 2005)) with ESMTP id <0KSL00IIALJSAH40@msgmmp-1.gci.net> for
- git@vger.kernel.org; Wed, 04 Nov 2009 09:47:52 -0900 (AKST)
-Received: from hosanna.eeinternet.com (unknown [192.168.100.194])
-	by hyperion.eeinternet.com (Postfix) with ESMTP id 1F56A3F21D; Wed,
- 04 Nov 2009 09:47:52 -0900 (AKST)
-X-Face: %RQZkR-ZZZ/},^dzp$qPotQ8:EI[dl6TX^9<K):};#rjcB`apZ95_e*NbqV8Db$,=?utf-8?q?r=7C7x=5FK=0A=09TOpQkS5A?=>=R9nGN)Qva<p+^;@rEbe*bA5XUd<=?utf-8?q?csl=3BT0d=5FP=3AdH21=2EuJAZ=24iao=26H!K=3A9u=7E=7B9=0A=09WV4=5BX4?=
- =?utf-8?q?*=7B=60=5Evlz=5FIVZ?=)R^X5{:l6#=%fLpM^!}~B"CN.R%wwU-Ni-L2TgD](24jBa=_G@
- =?utf-8?q?Zga=0A=09KNcSq4/Lv=3AJm!z=5D=2Ee5=25IgMb=5Cl-xGs=2EN5M4=5D=3A?=
- =?utf-8?q?vz2?="XrHM]j$h/aNM2J_1}}i@"
- =?utf-8?q?l=26Phy5=3FU1=0A=09mfdxMpo=7D?=)/ixNj03,scN>w*od72RYo9i+XAj
-In-reply-to: <4AF18F7A.2000904@drmicha.warpmail.net>
-Content-disposition: inline
-User-Agent: KMail/1.9.10
+	id S1755867AbZKDTGD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 14:06:03 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id nA4J5LVQ009540
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 4 Nov 2009 20:05:21 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1N5lBB-0002F2-BW; Wed, 04 Nov 2009 20:06:01 +0100
+In-Reply-To: <alpine.LFD.2.00.0911041243350.10340@xanadu.home> (Nicolas Pitre's message of "Wed\, 04 Nov 2009 12\:46\:48 -0500 \(EST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 04 Nov 2009 20:05:21 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: nA4J5LVQ009540
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1257966321.97391@cQTTyDLjLW5PvL1uVRvylQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132115>
 
-On Wednesday 04 November 2009, Michael J Gruber said something like:
-> > gpg: problem with the agent - disabling agent use
-> > error: gpg failed to sign the tag
-> > error: unable to sign the tag
-> > $ echo $?
-> > 128
-> >
-> > And when I sign at the prompt:
-> >
-> > $ gpg -sa
-> >
-> > You need a passphrase to unlock the secret key for
-> > user: "Joshua J. Kugler <joshua@azariah.com>"
-> > 1024-bit DSA key, ID 14EA086E, created 2009-08-09
-> >
-> > gpg: problem with the agent - disabling agent use
-> > Blah blah blah blah
-> > Blah blah blah blah
-> > $ echo $?
-> > 2
->
-> [...]
->
-> I assume you don't want to use gpg-agent, that should be the easy way
-> out.
+Nicolas Pitre <nico@fluxnic.net> writes:
 
-Well, I could, but I just haven't set it up. :)
+> You could checkout the first revision which committer's date is older 
+> than midnight.  Of course that means you have to trust that students 
+> didn't mess up with time stamps.
 
-> If that helps you can put "--no-use-agent" in your gpg config.
+Not only that: they could have commited something the day before, and
+pushed it the day after. In the particular case I have in mind, the
+deliverable is an intermediate one, and we insist a lot on testing, so
+the senario is not unlikely: commit dangerous code the day of the
+deadline, and push it the day after. So, the reflog is definitely the
+answer here.
 
-I commented out use-agent in the config. That worked. THANKS!
+But thanks anyway!
 
-> 2 is a non-fatal error, 128 a fatal one, btw.
-
-Well, the 2 was from running gpg alone, and 128 was from git erroring=20
-out.  According to the gpg docs:
-
-"The program returns 0 if everything was fine, 1 if at least a signatur=
-e=20
-was bad, and other error codes for fatal errors."
-
-So, the docs consider 2 a fatal error, even though it appears it isn't.=
- =20
-It seems that=20
-http://github.com/git/git/blob/a6dbf8814f433a7fbfa9cde6333c98019f6db1e4=
-/builtin-tag.c#L202=20
-needs to be patched to something along the lines of:
-
-rv =3D finish_command(&gpg)
-if ((rv && rv !=3D2)  || !len || len < 0)
-
-Probably digging in to the gpg source code to figure out what errors ar=
-e=20
-and aren't fatal would be in order.
-
-Thanks again for your help! Glad to know what I needed to do to sign my=
-=20
-tags!
-
-j
-
---=20
-Joshua Kugler
-Part-Time System Admin/Programmer
-http://www.eeinternet.com
-PGP Key: http://pgp.mit.edu/ =C2=A0ID 0x14EA086E
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
