@@ -1,234 +1,105 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v2 04/13] Allow fetch to modify refs
-Date: Wed,  4 Nov 2009 20:48:09 +0100
-Message-ID: <1257364098-1685-5-git-send-email-srabbelier@gmail.com>
-References: <1257364098-1685-1-git-send-email-srabbelier@gmail.com>
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Nov 04 20:50:12 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Set Makefile variables from configure
+Date: Wed, 04 Nov 2009 11:56:57 -0800
+Message-ID: <7vy6mmf4hi.fsf@alter.siamese.dyndns.org>
+References: <20091103222123.GA17097@progeny.tock>
+ <1257357960-12763-1-git-send-email-bwalton@artsci.utoronto.ca>
+ <7v7hu6gjzz.fsf@alter.siamese.dyndns.org>
+ <1257363937-sup-5123@ntdws12.chass.utoronto.ca>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, jrnieder <jrnieder@gmail.com>,
+	git <git@vger.kernel.org>
+To: Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Wed Nov 04 20:57:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5lrn-0000NL-Ke
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 20:50:03 +0100
+	id 1N5lyz-00046c-8o
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 20:57:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932237AbZKDTtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 14:49:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932206AbZKDTts
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 14:49:48 -0500
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:61042 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758072AbZKDTtF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 14:49:05 -0500
-Received: by mail-ew0-f207.google.com with SMTP id 3so3490470ewy.37
-        for <git@vger.kernel.org>; Wed, 04 Nov 2009 11:49:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=ZTRduWPQfRrBWTJ1hPDo9oeH/UljzTeWndNWpWyvbrY=;
-        b=XfQbBToSsBHPp9OX0YudioGi/d6zUg3G1UPxKQ+C0hC3c/FI0BP3k9Ue5c/6acVSnm
-         gYgR9Pt22qFVSaS+q8TLR0AEMFkA6CWonL3of99sy9QFmj8jqL7tC2c0eLWswVRzsxtf
-         e0UgjCiQZRPwg7iIc3h+fLVoRj/FMeLCHhBuw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=eC6jk3KGcP8gcgUCqyk2tToLnZ6sEjOZeGJMIM9zI6cRz8ppwrf9Cp1LknBKTMQWcP
-         AggpPB3JUm/vjUPUTTlYj1Db3fGKHDxb+phwE6CNR3ljj01dy/3+43mJSD+SaXP0/SU/
-         UZ6e8SuitTKbrkfHcNQ1rx6ZAr2eTgHrhjtXM=
-Received: by 10.213.107.17 with SMTP id z17mr1956904ebo.10.1257364149554;
-        Wed, 04 Nov 2009 11:49:09 -0800 (PST)
-Received: from localhost.localdomain (ip138-114-211-87.adsl2.static.versatel.nl [87.211.114.138])
-        by mx.google.com with ESMTPS id 5sm4314489eyh.2.2009.11.04.11.49.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Nov 2009 11:49:09 -0800 (PST)
-X-Mailer: git-send-email 1.6.5.2.295.g0d105
-In-Reply-To: <1257364098-1685-1-git-send-email-srabbelier@gmail.com>
+	id S1758065AbZKDT5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 14:57:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758045AbZKDT5F
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 14:57:05 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55774 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757901AbZKDT5D (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 14:57:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 504D373F8B;
+	Wed,  4 Nov 2009 14:57:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1SmfJxvsQPOTyKJhTV21IYdIxW0=; b=ZvLAmF
+	1zCrkMLm/TMrcXaKKPdrLp6YTiGe9QjxWaQgHc7gd9MCqDt1QZUzgAZw1CbCPy8A
+	aBKev01VLkBdm8RAcbVXrGyRqqJnX4U8gInginApLpkkcKVQUTX6Euxmt1dc+UsO
+	uRSVESePS6A1k8zRxBQafTaYMFGlWjaBU+qh0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TUeUkDIcpPt8p29IuIafpMnYUthW03bR
+	VH9eDRPeIDuSMuFTzP7vXOAMaAM8xU5cZ7VvA69gTcVsaSNfLKd2k1DjmOc0b+et
+	zT4j+QQViWygkOl/pCcjZvrGzaQrfcRJ0LZKmGjKa0fmyHe7weICKhgPKUQGQ3TZ
+	enKhCiT+zM8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 213B473F8A;
+	Wed,  4 Nov 2009 14:57:05 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4D14973F89; Wed,  4 Nov
+ 2009 14:56:58 -0500 (EST)
+In-Reply-To: <1257363937-sup-5123@ntdws12.chass.utoronto.ca> (Ben Walton's
+ message of "Wed\, 04 Nov 2009 14\:47\:45 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 39D49CDE-C97C-11DE-82D0-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132136>
 
-From: Daniel Barkalow <barkalow@iabervon.org>
+Ben Walton <bwalton@artsci.utoronto.ca> writes:
 
-This allows the transport to use the null sha1 for a ref reported to
-be present in the remote repository to indicate that a ref exists but
-its actual value is presently unknown and will be set if the objects
-are fetched.
+> Excerpts from Junio C Hamano's message of Wed Nov 04 14:36:32 -0500 2009:
+>
+>> I am a bit puzzled about the "warning" logic.  Is this because you expect
+>> variables we typically give YesPlease/NoThanks as their values will not be
+>> handled with this new PARSE_WITH_SET_MAKE_VAR() macro?
+>
+> No, this is because it's perfectly acceptable, in my opinion for a
+> user to say:
+>
+> --with-pager=no
+> or
+> --with-editor=yes
+>
+> Neither of those are smart things to do, but they're not necessarily
+> wrong, either.  I'm open to bailing on error for these, but I thought
+> leaving these as unvalidated, but with a warning, was more
+> flexible...if say a user wanted to have a pager called 'no' or
+> something.
 
-Also adds documentation to the API to specify exactly what the methods
-should do and how they should interpret arguments.
+What puzzled me was not "why is it not an error but just a warning?", which
+is what you just explained, but "why should we even care what value is
+being given to begin with?".
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
----
+I am _not_ saying "I think it is more correct not to check the value at
+all".  I just wanted to understand in what situation it may be benefitial
+to give this warning in the first place.
 
-	Now only changes constness (changes to line 526-257 removed).
+> For the variables that are accepting YesPlease/NoThanks, I think it's
+> more suitable to use the standard autoconf header/function/library
+> detection as it stands now.  This macro is more for 'oddball'
+> variables like DEFAULT_PAGER, DEFAULT_EDITOR, etc that aren't
+> necessarily easily detectable.  In some cases, even if it were
+> detectable, the detection might not be right.
 
- builtin-clone.c    |    3 ++-
- transport-helper.c |    4 ++--
- transport.c        |   13 +++++++------
- transport.h        |   41 +++++++++++++++++++++++++++++++++++++++--
- 4 files changed, 50 insertions(+), 11 deletions(-)
+I am guessing from this description of 'oddball variables' that your
+answer to my question is yes.  That is, configure.ac writers are strongly
+discouraged from using this new macro for variables that would usually get
+YesPlease/NoThanks kind of values.
 
-diff --git a/builtin-clone.c b/builtin-clone.c
-index caf3025..5df8b0f 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -362,9 +362,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	const char *repo_name, *repo, *work_tree, *git_dir;
- 	char *path, *dir;
- 	int dest_exists;
--	const struct ref *refs, *remote_head, *mapped_refs;
-+	const struct ref *refs, *remote_head;
- 	const struct ref *remote_head_points_at;
- 	const struct ref *our_head_points_at;
-+	struct ref *mapped_refs;
- 	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT;
- 	struct strbuf branch_top = STRBUF_INIT, reflog_msg = STRBUF_INIT;
- 	struct transport *transport = NULL;
-diff --git a/transport-helper.c b/transport-helper.c
-index e24fcbb..53d8f08 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -75,7 +75,7 @@ static int release_helper(struct transport *transport)
- }
- 
- static int fetch_with_fetch(struct transport *transport,
--			    int nr_heads, const struct ref **to_fetch)
-+			    int nr_heads, struct ref **to_fetch)
- {
- 	struct child_process *helper = get_helper(transport);
- 	FILE *file = xfdopen(helper->out, "r");
-@@ -99,7 +99,7 @@ static int fetch_with_fetch(struct transport *transport,
- }
- 
- static int fetch(struct transport *transport,
--		 int nr_heads, const struct ref **to_fetch)
-+		 int nr_heads, struct ref **to_fetch)
- {
- 	struct helper_data *data = transport->data;
- 	int i, count;
-diff --git a/transport.c b/transport.c
-index 9daa686..5ae8db6 100644
---- a/transport.c
-+++ b/transport.c
-@@ -204,7 +204,7 @@ static struct ref *get_refs_via_rsync(struct transport *transport, int for_push)
- }
- 
- static int fetch_objs_via_rsync(struct transport *transport,
--				int nr_objs, const struct ref **to_fetch)
-+				int nr_objs, struct ref **to_fetch)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct child_process rsync;
-@@ -408,7 +408,7 @@ static struct ref *get_refs_from_bundle(struct transport *transport, int for_pus
- }
- 
- static int fetch_refs_from_bundle(struct transport *transport,
--			       int nr_heads, const struct ref **to_fetch)
-+			       int nr_heads, struct ref **to_fetch)
- {
- 	struct bundle_transport_data *data = transport->data;
- 	return unbundle(&data->header, data->fd);
-@@ -486,7 +486,7 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
- }
- 
- static int fetch_refs_via_pack(struct transport *transport,
--			       int nr_heads, const struct ref **to_fetch)
-+			       int nr_heads, struct ref **to_fetch)
- {
- 	struct git_transport_data *data = transport->data;
- 	char **heads = xmalloc(nr_heads * sizeof(*heads));
-@@ -926,16 +926,17 @@ const struct ref *transport_get_remote_refs(struct transport *transport)
- 	return transport->remote_refs;
- }
- 
--int transport_fetch_refs(struct transport *transport, const struct ref *refs)
-+int transport_fetch_refs(struct transport *transport, struct ref *refs)
- {
- 	int rc;
- 	int nr_heads = 0, nr_alloc = 0, nr_refs = 0;
--	const struct ref **heads = NULL;
--	const struct ref *rm;
-+	struct ref **heads = NULL;
-+	struct ref *rm;
- 
- 	for (rm = refs; rm; rm = rm->next) {
- 		nr_refs++;
- 		if (rm->peer_ref &&
-+		    !is_null_sha1(rm->old_sha1) &&
- 		    !hashcmp(rm->peer_ref->old_sha1, rm->old_sha1))
- 			continue;
- 		ALLOC_GROW(heads, nr_heads + 1, nr_alloc);
-diff --git a/transport.h b/transport.h
-index c14da6f..503db11 100644
---- a/transport.h
-+++ b/transport.h
-@@ -18,11 +18,48 @@ struct transport {
- 	int (*set_option)(struct transport *connection, const char *name,
- 			  const char *value);
- 
-+	/**
-+	 * Returns a list of the remote side's refs. In order to allow
-+	 * the transport to try to share connections, for_push is a
-+	 * hint as to whether the ultimate operation is a push or a fetch.
-+	 *
-+	 * If the transport is able to determine the remote hash for
-+	 * the ref without a huge amount of effort, it should store it
-+	 * in the ref's old_sha1 field; otherwise it should be all 0.
-+	 **/
- 	struct ref *(*get_refs_list)(struct transport *transport, int for_push);
--	int (*fetch)(struct transport *transport, int refs_nr, const struct ref **refs);
-+
-+	/**
-+	 * Fetch the objects for the given refs. Note that this gets
-+	 * an array, and should ignore the list structure.
-+	 *
-+	 * If the transport did not get hashes for refs in
-+	 * get_refs_list(), it should set the old_sha1 fields in the
-+	 * provided refs now.
-+	 **/
-+	int (*fetch)(struct transport *transport, int refs_nr, struct ref **refs);
-+
-+	/**
-+	 * Push the objects and refs. Send the necessary objects, and
-+	 * then, for any refs where peer_ref is set and
-+	 * peer_ref->new_sha1 is different from old_sha1, tell the
-+	 * remote side to update each ref in the list from old_sha1 to
-+	 * peer_ref->new_sha1.
-+	 *
-+	 * Where possible, set the status for each ref appropriately.
-+	 *
-+	 * The transport must modify new_sha1 in the ref to the new
-+	 * value if the remote accepted the change. Note that this
-+	 * could be a different value from peer_ref->new_sha1 if the
-+	 * process involved generating new commits.
-+	 **/
- 	int (*push_refs)(struct transport *transport, struct ref *refs, int flags);
- 	int (*push)(struct transport *connection, int refspec_nr, const char **refspec, int flags);
- 
-+	/** get_refs_list(), fetch(), and push_refs() can keep
-+	 * resources (such as a connection) reserved for futher
-+	 * use. disconnect() releases these resources.
-+	 **/
- 	int (*disconnect)(struct transport *connection);
- 	char *pack_lockfile;
- 	signed verbose : 2;
-@@ -74,7 +111,7 @@ int transport_push(struct transport *connection,
- 
- const struct ref *transport_get_remote_refs(struct transport *transport);
- 
--int transport_fetch_refs(struct transport *transport, const struct ref *refs);
-+int transport_fetch_refs(struct transport *transport, struct ref *refs);
- void transport_unlock_pack(struct transport *transport);
- int transport_disconnect(struct transport *transport);
- char *transport_anonymize_url(const char *url);
--- 
-1.6.5.2.295.g0d105
+And then it makes sense to warn 'yes/no', as it is unlikely that the user
+wants to set name (or path) of programs we allow to be tweaked to 'yes' or
+'no'.
