@@ -1,70 +1,70 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] gitk: disable checkout of remote branch
-Date: Wed, 4 Nov 2009 07:41:28 +0100
-Message-ID: <fabb9a1e0911032241u3735fa30heaa195d959879f5a@mail.gmail.com>
-References: <2e24e5b90911030800j22b00372r99a56c3f847a3644@mail.gmail.com> 
-	<fabb9a1e0911030807h6b76b661pef75628a1255356@mail.gmail.com> 
-	<1257295737457-3942366.post@n2.nabble.com> <2e24e5b90911031758t651735f9xe9d078079112cfa6@mail.gmail.com> 
-	<1257315478920-3943388.post@n2.nabble.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] t1200: cleanup and modernize test style
+Date: Tue, 03 Nov 2009 22:50:49 -0800
+Message-ID: <4AF12449.7050905@gmail.com>
+References: <1257282328-6491-1-git-send-email-bebarino@gmail.com> <7vr5seltyi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Tim Mazid <timmazid@hotmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 07:41:56 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 07:51:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5ZZ5-0001gG-4o
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 07:41:55 +0100
+	id 1N5Zi0-0004bw-Lo
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 07:51:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751700AbZKDGlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 01:41:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751193AbZKDGlo
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 01:41:44 -0500
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:48785 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751004AbZKDGln (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 01:41:43 -0500
-Received: by ewy3 with SMTP id 3so2789449ewy.37
-        for <git@vger.kernel.org>; Tue, 03 Nov 2009 22:41:48 -0800 (PST)
+	id S1753092AbZKDGu5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 01:50:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752701AbZKDGu5
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 01:50:57 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:40811 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752654AbZKDGu4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 01:50:56 -0500
+Received: by yxe17 with SMTP id 17so6128455yxe.33
+        for <git@vger.kernel.org>; Tue, 03 Nov 2009 22:51:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=fiLs4gPkj2kwxzKX1OsfV7q4ollau8Yif1fSpL7IoYY=;
-        b=CjnE/nrK8rj37E/gIdCI7GC35zX/NtozVFVJTTCFJ0xkLDsRLM4YAnIhJ853a7q1DZ
-         sIl8HZyLYhnTniYVq5453vFX86z22UHJgFbOjJ6soifOKMaSUfqrYdgEhuYvd7ealK3y
-         FgCnkBaxyDYlXjNPFaNSMGF+OxIqgJmGqgRIE=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=2sY+nSZwybh7Tb4JAeWoeXsqJu8tManuUFj0sl2ZTsQ=;
+        b=b3DBd4wV9N6AUehqekLhBy5A0VS3pFZEH10kbdIdv8P7u19F8l9SAG5w/S+Y8abkC8
+         vIVZ2vo4rWgYyeFrFbwEaceF8ukPwbRDPxaiPXAAH9MsiFSYMWf75VP4XFKmBC/8vOUb
+         snm+0V8IvzgIcZHpIVDxpIqgjNqK9h5flBe1A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=sjZWDifaEd33Ed58fw5Bq9uWSVaLVhAkS+gZ21l/whyQgaqmYNlOSOIbA4p0OsXXfD
-         sJyxdIT1RClYxbFBxIz8AvJbZn6vBrOfvtw0zNltuHxWxkbDiObWvbG0fFie3/mhjl0T
-         TBPzHoCGMbFjYR8a84SsvXsL0idr9QJ6vkZDs=
-Received: by 10.216.87.9 with SMTP id x9mr402959wee.0.1257316908162; Tue, 03 
-	Nov 2009 22:41:48 -0800 (PST)
-In-Reply-To: <1257315478920-3943388.post@n2.nabble.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=x3/X9Y0CXrNoIKJxrJ8d88QDniJG5qE3PnFb+BUeKfgsDQMZcUO9KfbAMwkFBt1pSw
+         1otMoRP4fj6fxhthfAnh7XGbPvFx0uqxCWNE6svvpKZbpPNJbUfnkI35EcbQhbJ+1k+j
+         KWS0JFWVLwELKuiG4tmHJbb1F43nj9XaXRIY0=
+Received: by 10.90.37.36 with SMTP id k36mr2118675agk.111.1257317452761;
+        Tue, 03 Nov 2009 22:50:52 -0800 (PST)
+Received: from ?192.168.0.5? (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
+        by mx.google.com with ESMTPS id 8sm391653yxb.43.2009.11.03.22.50.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 03 Nov 2009 22:50:51 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (X11/20091026)
+In-Reply-To: <7vr5seltyi.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132046>
 
-Heya,
+Junio C Hamano wrote:
+> Thanks.
+>
+> The sequence of commands are suppopsed to match what the user manual
+> teaches, and I suspect we have had quite a many updates to the manual
+> since this test script was last touched.  Do you happen to know if they
+> still match the manual?
 
-On Wed, Nov 4, 2009 at 07:17, Tim Mazid <timmazid@hotmail.com> wrote:
-> So instead of invoking 'git checkout REMOTE/BRANCH', do 'git checkout -b
-> BRANCH REMOTE/BRANCH'.
-
-Automagically doing 'git checkout -t remote/branch' when asked to do
-'git checkout remote/branch' was suggested earlier on the list and I
-think there was even a patch that implemented it, not sure what the
-outcome of the series was. I do remember that Peff was annoyed by it
-at the GitTogether though so it might be a bad idea.
-
--- 
-Cheers,
-
-Sverre Rabbelier
+I just read through it and it's different. I'm ignoring the cloning, 
+fetching, pushing, and gitk parts too. There is a whole section on 
+merging which isn't really covered. I'll resend sometime soon (the last 
+test is broken too, sorry).
