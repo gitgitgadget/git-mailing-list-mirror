@@ -1,90 +1,115 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Update packfile transfer protocol documentation
-Date: Tue, 03 Nov 2009 17:07:52 -0800
-Message-ID: <7vljinnllj.fsf@alter.siamese.dyndns.org>
-References: <d411cc4a0911011518q15a8267bn642e6937be8c9ab1@mail.gmail.com>
- <7v4opbp1fa.fsf@alter.siamese.dyndns.org>
- <20091104005614.GD10505@spearce.org>
+Subject: Re: [PATCH] commit -c/-C/--amend: reset timestamp and authorship to
+ committer with --reset-author
+Date: Tue, 03 Nov 2009 17:12:27 -0800
+Message-ID: <7vd43znldw.fsf@alter.siamese.dyndns.org>
+References: <1257282551-9999-1-git-send-email-erick.mattos@gmail.com>
+ <20091104073822.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Scott Chacon <schacon@gmail.com>, git list <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Nov 04 02:08:09 2009
+Cc: Erick Mattos <erick.mattos@gmail.com>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 02:12:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5UM4-0004Ny-TA
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 02:08:09 +0100
+	id 1N5UQX-0005pt-Ar
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 02:12:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752429AbZKDBH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 20:07:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752166AbZKDBH5
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 20:07:57 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55104 "EHLO
+	id S1751889AbZKDBMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 20:12:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751800AbZKDBMe
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 20:12:34 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49952 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752055AbZKDBH5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 20:07:57 -0500
+	with ESMTP id S1751006AbZKDBMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 20:12:33 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 309D39167A;
-	Tue,  3 Nov 2009 20:08:02 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 615DF72401;
+	Tue,  3 Nov 2009 20:12:36 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Hxw32g9Xe9UPPg6795iZpD5hSis=; b=IatABA
-	zwl272HytYpm2cjF49UImPF2i5NXQ9bfs8kjhj4hFHNt9VLR5jqPdTj77xokzJDE
-	tVpdlAaiUOHfBp/58bXN0PzBS0zQ9PD4qmV54EYTJIrxLiefoLpKRyddyd6/+zWN
-	kXrqPjKvU55VUuVqlH9qR190R3oUjnrkr7tss=
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=2DSRxwRdnlbopYHdiaCmQf9BG/k=; b=xQM/NQGSMDX9DBxfigglS2R
+	xnAHbsWENNUemuEdHDyULenQvpljVLlC8JCxNsZn30YeAcq0gRHhvSkJDlpuFI6w
+	MctZtYAhGWMno+X2xGtzD9tuzJIUNLXCdb7Qb11nNjGgFNIG1Gr81LeunDGraRE+
+	F/9KjmNl29kgsKZpmqWI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GHUQS2uwUXbVXQpUqVDBidFuvRsUl/fx
-	YEjBo0hmrjwZxYsOHQtsokjfPBzgNDi4F/XGnPpyd/d78IvjxIVNDsfrroy0iDfa
-	84FOvaV4PNi6M2OJpncYiP/4Xh7WlZ3jbbfy0qWa3gp66lUfrNNPWAreaSrQFIr+
-	G+x4iFu2Zz0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 691FB91679;
-	Tue,  3 Nov 2009 20:07:58 -0500 (EST)
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=e7L9n1JbtxocsWVLmyGul2+KcZipwHBzg40RE2poh+BVwWvXg
+	9aPnUsEeSpGj25Povhl3Wto53yDSr6o1Oqw+/RtxD02hCqQAk5tPQjMNnqMST9ZC
+	vBaG0IK7qiQJD0I8bty88RvRX1FtLqw+04/3dMZwCx7Sdyw7b/+R0dYJFw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 34F0772400;
+	Tue,  3 Nov 2009 20:12:33 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1837991678; Tue,  3 Nov 2009
- 20:07:53 -0500 (EST)
-In-Reply-To: <20091104005614.GD10505@spearce.org> (Shawn O. Pearce's message
- of "Tue\, 3 Nov 2009 16\:56\:14 -0800")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 492C5723FC; Tue,  3 Nov
+ 2009 20:12:29 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7DA3F700-C8DE-11DE-92DE-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 216F440C-C8DF-11DE-A784-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132017>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
->> > +A pkt-line with a length field of 0 ("0000"), called a flush-pkt,
->> > +is a special case and MUST be handled differently than an empty
->> > +pkt-line ("0004").
->> 
->> ...especially that this sentence makes it sound as if it is perfectly
->> normal to send "0004" for "an empty line" (and I've always thought that is
->> Ok), I am quite puzzled by that "SHOULD NOT".
->
-> I don't think we ever send an empty packet.  If we have no data to
-> send, why the hell did we create the packet header?
+> I think it is much better to replace "--mine" in gmane/131893 
+> with "--reset-author" and make no other change to the test.
 
-Oh, I do not disagree that it is pointless, but the example that followed
-the part we are discussing also had "0004".  I think it is Ok to allow it.
+Heh, I would not claim my tests were perfect, even though I agree with
+most of the suggestions and comments, including the parts I did not quote
+that are not about the test script.
 
-The original intent of packet_flush() was that everything else could be
-kept buffered in-core without going to write() until packet_flush() is
-called.  The protocol was defined in a way that we won't wait for
-listening a response from the other end to an earlier message we "sent"
-with packet_write() but haven't called packet_flush() yet hence could
-still be in our buffer.  We still have this comment:
+My first test did not check the message contents, but all the other ones
+(except the last one that we expect the command to fail) check output from
+both author_header and message_body, so that not just "--mine affects the
+authorship" but also "--mine does not mangle the message contents" are
+checked.
 
-    /*
-     * If we buffered things up above (we don't, but we should),
-     * we'd flush it here
-     */
-    void packet_flush(int fd)
+One thing you did not mention was that I made sure that the command failed
+when given both --mine and --author options; I think Erick's last round
+fails to test this condition.
 
-And once we start buffering, allowing "0004" packet_write() wouldn't even
-be a problem; it can be optimized out in the buffering layer.
+    Side note.  When writing tests for their shiny new toy, people often
+    forget to test "the other side".
+
+    It is just human nature.  It is more fun to demonstrate what your new
+    feature does, than making sure that the new feature does not kick in
+    when it is not supposed to, nor it does not change what it is not
+    supposed to change.
+
+    Negative tests are not particularly hard to write.  The harder part is
+    to force the habit of writing them on yourself.  Right after designing
+    and implementing a new feature, the list of things it is supposed to
+    do and when it is supposed to kick in are pretty clear in your mind,
+    and that is what makes writing positive tests psychologically a lot
+    easier.
+
+    On the other hand, it takes concious effort to list what it is _not_
+    supposed to do or when it is _not_ supposed to kick in.  That is why
+    people often fail to write negative tests.
+
+I think in addition to the obvious "s/--mine/--reset-author/g"
+replacements, we would need this patch on top of mine.
+
+ t/t7509-commit.sh |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/t/t7509-commit.sh b/t/t7509-commit.sh
+index ec13cea..1dad228 100755
+--- a/t/t7509-commit.sh
++++ b/t/t7509-commit.sh
+@@ -28,6 +28,10 @@ test_expect_success '-C option copies authorship and message' '
+ 	git commit -a -C Initial &&
+ 	author_header Initial >expect &&
+ 	author_header HEAD >actual &&
++	test_cmp expect actual &&
++
++	message_body Initial >expect &&
++	message_body HEAD >actual &&
+ 	test_cmp expect actual
+ '
+ 
