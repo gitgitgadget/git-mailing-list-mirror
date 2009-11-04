@@ -1,66 +1,101 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] MSVC: port pthread code to native Windows threads
-Date: Wed, 4 Nov 2009 15:43:01 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.0911041406101.14365@iabervon.org>
-References: <1257283802-29726-1-git-send-email-ahaczewski@gmail.com>  <1257331059-26344-1-git-send-email-ahaczewski@gmail.com>  <4AF175E8.7020400@viscovery.net>  <16cee31f0911040547m69e5b9cbi30e20d2a7790bd6f@mail.gmail.com>  <4AF190F1.3020607@viscovery.net>
- <16cee31f0911040650s3eba1067mb66a48bb50c97c28@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: thoughts on setting core.logAllRefUpdates default true for bare repos
+Date: Wed, 04 Nov 2009 21:42:43 +0100
+Message-ID: <vpqr5se58e4.fsf@bauges.imag.fr>
+References: <slrnhf2uep.7d3.sitaramc@sitaramc.homelinux.net>
+	<alpine.DEB.1.00.0911041422170.2788@felix-maschine>
+	<vpqzl729j72.fsf@bauges.imag.fr>
+	<7v3a4ugjea.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 21:43:10 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 21:43:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5mhB-0001MG-S5
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 21:43:10 +0100
+	id 1N5mhT-0001TH-Fq
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 21:43:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932385AbZKDUm5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 15:42:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932366AbZKDUm5
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 15:42:57 -0500
-Received: from iabervon.org ([66.92.72.58]:43705 "EHLO iabervon.org"
+	id S932525AbZKDUnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 15:43:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932404AbZKDUnO
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 15:43:14 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:57983 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932347AbZKDUm5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 15:42:57 -0500
-Received: (qmail 30239 invoked by uid 1000); 4 Nov 2009 20:43:01 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Nov 2009 20:43:01 -0000
-In-Reply-To: <16cee31f0911040650s3eba1067mb66a48bb50c97c28@mail.gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S932366AbZKDUnN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 15:43:13 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id nA4Kg2JG007642
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 4 Nov 2009 21:42:02 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1N5mgl-0003Mh-UM; Wed, 04 Nov 2009 21:42:43 +0100
+In-Reply-To: <7v3a4ugjea.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 04 Nov 2009 11\:49\:33 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 04 Nov 2009 21:42:05 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: nA4Kg2JG007642
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1257972125.77403@62rD2fqykXBKtQIytmS1dw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132146>
 
-On Wed, 4 Nov 2009, Andrzej K. Haczewski wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> 2009/11/4 Johannes Sixt <j.sixt@viscovery.net>:
-> >
-> > You are right. But #ifdef THREADED_DELTA_SEARCH is about a "generic"
-> > property of the code and is already used elsewhere in the file, whereas
-> > #ifdef WIN32 would be new and is is about platform differences.
-> >
-> > Anyway, we would have to see what Junio says about the new function calls,
-> > because he's usually quite anal when it comes to added code vs. static
-> > initialization. ;)
-> 
-> I could do it with wrappers for pthread_mutex_lock and _unlock and
-> lazy init there plus lazy init cond var in cond_wait and _signal, that
-> way it could be done without any additional code in the first #ifdef.
-> But I don't see any simple solution for working around
-> deinitialization, that's why I'd leave non-static initialization. Let
-> me put some touchups and resubmit for another round.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> I can't think of any, and I just tried launching two
+>>
+>> while true; do git pull; date > foo.txt ; git add .; git commit -m "xxx"; git push; done
+>>
+>> in parallel, with two different users pushing to a --bare --shared
+>> repository, and it did work well. But I may very well have missed
+>> something.
+>>
+>> (and actually, if it causes problem, it's an argument in favor of
+>> defaulting to false when core.shared is true, not when core.bare).
+>>
+>> Unless I missed something, I think core.logAllRefUpdates should be
+>> enabled for bare repos.
+>
+> Your experiment justifies "could be enabled safely" and saying "should be"
+> based on that is a bit too strong and also premature.
 
-Is it actually necessary to deinitialize? Since the variables are static 
-and therefore can't leak, and would presumably not need to be 
-reinitialized differently if they were used again, I think they should be 
-able to just stay. If Windows is unhappy about processes still having 
-locks initialized at exit, I suppose we could go through and destroy all 
-our mutexes and conds at cleanup time. Pthreads does have the appropriate 
-functions, and it would be correct to use them, although unnecessary.
+Right, there were no cause/effect relationship between the first part
+and the "should".
 
-	-Daniel
-*This .sig left intentionally blank*
+> As reflog is a local thing, and not exposed to outside world,
+> enabling it alone would not help a lot to people who do not have
+> such a direct access to the bare repository, which by definition is
+> the majority because the reason why the repository is bare to begin
+> with.
+
+For sure, it's the majority. But it's not 100% cases either.
+
+And in most cases, even if the user doesn't have access to the repo,
+there exists a sysadmin somewhere who has. And the day a user will
+send a mail "hey, I've messed up everything, I did a push -f and what
+happened?", this sysadmin will appreciate to have a log somewhere.
+
+And another use-case for the reflog is to find know reliable where a
+piece of code is comming from. "git blame" tells you who the commiter
+said he was, while the reflog says reliably who the push-er was.
+
+So, clearly, the reflog on a bare repo is not usefull for daily use
+like it is for non-bare repos (where, really, it's a killer
+feature ;-) ). But it doesn't seem useless either, and it doesn't cost
+much, so ...
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
