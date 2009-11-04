@@ -1,70 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] MSVC: Windows-native implementation for subset of
- Pthreads API
-Date: Wed, 04 Nov 2009 15:58:27 -0800
-Message-ID: <7viqdpg7vg.fsf@alter.siamese.dyndns.org>
-References: <1257331059-26344-1-git-send-email-ahaczewski@gmail.com>
- <1257350100-29281-1-git-send-email-ahaczewski@gmail.com>
- <alpine.LFD.2.00.0911041247250.10340@xanadu.home>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: thoughts on setting core.logAllRefUpdates default true for bare 
+	repos
+Date: Thu, 5 Nov 2009 00:59:32 +0100
+Message-ID: <fabb9a1e0911041559m18a50d50r1b31aa99a1ce76aa@mail.gmail.com>
+References: <slrnhf2uep.7d3.sitaramc@sitaramc.homelinux.net> 
+	<alpine.DEB.1.00.0911041422170.2788@felix-maschine> <2e24e5b90911040841l7741787et48fabb8c8066e946@mail.gmail.com> 
+	<20091104235241.GA12984@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Andrzej K. Haczewski" <ahaczewski@gmail.com>, git@vger.kernel.org,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Nov 05 00:58:46 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Sitaram Chamarty <sitaramc@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Thu Nov 05 01:00:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5pkT-0000S8-PO
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 00:58:46 +0100
+	id 1N5plf-0000sL-Kz
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 00:59:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932725AbZKDX6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 18:58:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758250AbZKDX6f
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 18:58:35 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56734 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758032AbZKDX6e (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 18:58:34 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F731737CD;
-	Wed,  4 Nov 2009 18:58:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=z3mzoP+VqfMhfQUHl+DLAvzyLjY=; b=a2OoANDolptvcOYk4t2MVN4
-	9XW9SDw8iK6TZbjH95+kCISADAFiJ3MGfwpKTLOtAeen3P2deRJIP4/cIpdrMZON
-	QH9AgmhXYaFyDaWNaBVXHZ7WyqLuA5KQC4x5FnDyLez1jHqwmT/k9jyp4Rlw4Z+n
-	xUAUDMhxWeuzWrLwEP9E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=DxZ89+GPHqVa9uqo36HtA/5No1QYKLr4mp7GuJ/TNGPrP2MW8
-	iJ6b8sNn6mfARW07svC7skGYYsUP2GqypvJfn1wCXEculbnHgzGCdkIyda6/y0xj
-	kZ5HFwQtC33TmDhnPc06bRizo0DbhP3WftyiGSq6SHr3KBxuZiB6gVPEs0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 081CC737CB;
-	Wed,  4 Nov 2009 18:58:35 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2A69E737CA; Wed,  4 Nov
- 2009 18:58:29 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F67BB8E2-C99D-11DE-9152-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932811AbZKDX7s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 18:59:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932692AbZKDX7s
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 18:59:48 -0500
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:40553 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932703AbZKDX7r (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 18:59:47 -0500
+Received: by ewy3 with SMTP id 3so3750342ewy.37
+        for <git@vger.kernel.org>; Wed, 04 Nov 2009 15:59:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=KdUpI4KhMPgdXuY+HmmO13aIIvxhPUmrvSFQ93Du7f8=;
+        b=F7hxopbhW/gh1re+DqRrAti0TOr8RTUoMjOk5AlWvrJ7saoIut2wnFFouKVwODmcPP
+         kR1bX24TTTCPfw/VvZwQeHdiV6qwMP/enAlh858YXhML5lCteJ6f7yrBG3Zr6cYpFTNW
+         T5SoBen6rs7eBqAzDfTCm3Y+6ekNYS7zHC5KU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=JYgnW9LISW0Yg/fwarvHybm9d5rAcrlU0W2MqScDoWWyqjXmZMS38Zwbyvvz4kSXKk
+         Bb1kjx6i5msrV2UkexPlsvoC3Nrd1UuiViBaO2fsOiAvjzz6ImEDtqxDG9m61Gw+iH59
+         cB+79cOh7UCyC+ADoI40GFQ2jpUG4PFgH+nJY=
+Received: by 10.216.88.75 with SMTP id z53mr713112wee.46.1257379192151; Wed, 
+	04 Nov 2009 15:59:52 -0800 (PST)
+In-Reply-To: <20091104235241.GA12984@vidovic>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132177>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
+Heya,
 
-> On Wed, 4 Nov 2009, Andrzej K. Haczewski wrote:
->
->> +	NO_STATIC_PTHREADS_INIT = YesPlease
->
-> Let's not go that route please.  If Windows can't get away without 
-> runtime initializations then let's use them on all platforms.  There is 
-> no gain in exploding the code path combinations here wrt testing 
-> coverage.
+On Thu, Nov 5, 2009 at 00:52, Nicolas Sebrecht <nicolas.s.dev@gmx.fr> wrote:
+> Or did you mean if "non-admin users could" ?
 
-Hear hear.
+We're talking about the case wherein a confidential object is pruned,
+regardless of whether it is a non-admin or admin user doing the
+pruning, they should be able to 'reflog expire' if they can 'git gc'.
+
+-- 
+Cheers,
+
+Sverre Rabbelier
