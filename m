@@ -1,113 +1,105 @@
-From: Erick Mattos <erick.mattos@gmail.com>
-Subject: Re: [PATCH] commit -c/-C/--amend: reset timestamp and authorship to 
-	committer with --reset-author
-Date: Wed, 4 Nov 2009 00:55:56 -0200
-Message-ID: <55bacdd30911031855k6b38557bte14c858775d39da6@mail.gmail.com>
-References: <1257282551-9999-1-git-send-email-erick.mattos@gmail.com> 
-	<20091104073822.6117@nanako3.lavabit.com> <55bacdd30911031551k1bfd3151t940864e4793f5a37@mail.gmail.com> 
-	<7v639rnkvt.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH] commit: fix too generous RFC-2822 footer handling
+Date: Wed,  4 Nov 2009 04:09:06 +0100
+Message-ID: <1257304146-15543-1-git-send-email-szeder@ira.uka.de>
+References: <20091103165951.GA2241@neumann>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 03:56:24 2009
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Junio C Hamano <gitster@pobox.com>,
+	David Brown <davidb@codeaurora.org>
+X-From: git-owner@vger.kernel.org Wed Nov 04 04:11:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5W2o-00023h-Gy
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 03:56:22 +0100
+	id 1N5WGw-0006oe-Gx
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 04:10:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753797AbZKDC4M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Nov 2009 21:56:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753792AbZKDC4M
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 21:56:12 -0500
-Received: from mail-gx0-f226.google.com ([209.85.217.226]:36430 "EHLO
-	mail-gx0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753680AbZKDC4L convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Nov 2009 21:56:11 -0500
-Received: by gxk26 with SMTP id 26so4237668gxk.1
-        for <git@vger.kernel.org>; Tue, 03 Nov 2009 18:56:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KgsnlLydw+WReyFzPOlnyVweb2EJK43djnAn+Bl+Ogc=;
-        b=PaIy6c6TeNPIZBhk5WbBGEj4hA86nyp30J3lYfZt8exsqJSk72yLXzKA2r7p+Vqu3W
-         55qIsBvCyqDUOM5bY+3sMLdcVrs/mj4v2mgRrz7VoSRT1PsEg27ck4KlCrPoDC1X3w8U
-         AkR/etUV1FoaCsVJ1QmjujzVOQHQw2qm75uKU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=DSfSbmW6NU+rIfDzAjirGD3iI0+VB+9bg6FYKMHriRvu6sRgIOZuyXdD3FZTyny0kW
-         Ao2fx37wJ4gT8gtT3PpotDIo6fC68yHyiG3tTFYhdsbtstiD9HK9fnSYU8O38iGCLZwY
-         nR0CISHSKCkYYOh6V4V1OoYIxn/S5tWT478XM=
-Received: by 10.151.92.9 with SMTP id u9mr1647698ybl.158.1257303376265; Tue, 
-	03 Nov 2009 18:56:16 -0800 (PST)
-In-Reply-To: <7v639rnkvt.fsf@alter.siamese.dyndns.org>
+	id S1751707AbZKDDJo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Nov 2009 22:09:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751336AbZKDDJo
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 22:09:44 -0500
+Received: from moutng.kundenserver.de ([212.227.126.171]:51201 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751008AbZKDDJn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 22:09:43 -0500
+Received: from [127.0.1.1] (p5B1312A0.dip0.t-ipconnect.de [91.19.18.160])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0LodLS-1MUWo80hvW-00gO7f; Wed, 04 Nov 2009 04:09:35 +0100
+X-Mailer: git-send-email 1.6.5.2.201.g0f47
+In-Reply-To: <20091103165951.GA2241@neumann>
+X-Provags-ID: V01U2FsdGVkX19AIDZ+QRG+blcqNYFHP6ieC5y7zzYD7NLLLuN
+ BYe2XrdfHdWeC1fpUB/Qpu3nNql2Amn/zL+US3GzWl9ZkMEnxJ
+ plsZ4pRwMP7mon6wgTrjw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132029>
 
-2009/11/3 Junio C Hamano <gitster@pobox.com>:
-> Erick Mattos <erick.mattos@gmail.com> writes:
->
->> ... I had already sent another patch with the
->> suggestions he made in a previous email.
->
-> That happens in real life with people working in different timezones.
+Since commit c1e01b0c (commit: More generous accepting of RFC-2822
+footer lines, 2009-10-28) RFC-2822-looking lines at the end of the
+message are considered part of the footer and 'git commit -s -m'
+doesn't add a newline between that footer and the new S-O-B line.
+This new behaviour causes problems with subject-only commit messages
+which happens to look like an RFC-2822 header (e.g. 'git commit -s -m
+"subsystem: coolest feature ever"').  In such cases there won't be any
+newline between the subject and the S-O-B line, and the S-O-B line
+will show up at places where it should not (e.g. in the output of 'git
+shortlog').
 
-6 hours between you and me!
+With this patch the newline will be always added if a commit message
+has only a single line, even if it looks like an RFC-2822 header.
 
->> The new option only touches on getting new author or copying the
->> original so that is why I made the first check in whole and the othe=
-rs
->> only by author. =C2=A0If people think that this operation is so unce=
-rtain,
->> then everything should be compared: parent, author and message on al=
-l
->> tests.
->
-> You probably have misunderstood why we write tests; it is not about m=
-aking
-> sure _your_ implementation is Ok. =C2=A0If that were the case, using =
-knowledge
-> of implementation details to short-circuit the tests would perfectly =
-be
-> acceptable.
->
-> We write tests so that long after you get bored and stop visiting the=
- git
-> project mailing-list, if somebody _else_ changes the program and its
-> behaviour gets changed in a way _you_ did not expect, such a mistake =
-can
-> be caught, even if you are not monitoring the mailing list to activel=
-y
-> catch such a bad change to go into the system. =C2=A0So we prefer to =
-test both
-> sides of the coin without saying "this option only affects this codep=
-ath
-> (currently) so it never can break this part, it is not worth checking=
- this
-> and that (right now)" when it is not too much trouble. =C2=A0It is a =
-win in the
-> long run.
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
 
-I really did not get the reason before the other guy argued...  :-S
+ Maybe something like this?  Be careful when reviewing, it's 4AM
+ here...
 
-> In any case, I like --reset-author better than --mine. =C2=A0I didn't=
- think of
-> diamond-mine, though ;-)
->
 
-So that's it!  Diamond...  me neither!  :-D
+ builtin-commit.c  |    8 ++++++++
+ t/t7501-commit.sh |    4 ++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-I am going to send you another patch in a few minutes.  I hope this
-time will be almost there.
-
-Regards
+diff --git a/builtin-commit.c b/builtin-commit.c
+index beddf01..4971156 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -429,6 +429,14 @@ static int ends_rfc2822_footer(struct strbuf *sb)
+ 		hit =3D (buf[i] =3D=3D '\n');
+ 	}
+=20
++	for (j =3D i-1; j > 0; j--)
++		if (buf[j] =3D=3D '\n') {
++			hit =3D 1;
++			break;
++		}
++	if (!hit)	/* one-line message */
++		return 0;
++
+ 	while (i < len - 1 && buf[i] =3D=3D '\n')
+ 		i++;
+=20
+diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+index d2de576..aaeedda 100755
+--- a/t/t7501-commit.sh
++++ b/t/t7501-commit.sh
+@@ -215,10 +215,10 @@ test_expect_success 'sign off (1)' '
+=20
+ 	echo 1 >positive &&
+ 	git add positive &&
+-	git commit -s -m "thank you" &&
++	git commit -s -m "subsystem: coolest feature ever" &&
+ 	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
+ 	(
+-		echo thank you
++		echo subsystem: coolest feature ever
+ 		echo
+ 		git var GIT_COMMITTER_IDENT |
+ 		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
+--=20
+1.6.5.2.201.g0f47
