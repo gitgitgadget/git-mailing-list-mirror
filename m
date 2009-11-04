@@ -1,71 +1,76 @@
-From: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
-Subject: Re: [PATCH] MSVC: Windows-native implementation for subset of   
- Pthreads API
-Date: Wed, 04 Nov 2009 23:50:28 +0100
-Message-ID: <4AF20534.2030004@gmail.com>
-References: <1257331059-26344-1-git-send-email-ahaczewski@gmail.com>	 <1257350100-29281-1-git-send-email-ahaczewski@gmail.com>	 <alpine.LFD.2.00.0911041247250.10340@xanadu.home>	 <16cee31f0911041316n20fc9f12s6595dadc813d8f46@mail.gmail.com> <40aa078e0911041341s1adbbf31t6961207ba9c7905b@mail.gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Common setting for interoperability repo across windows and unix?
+Date: Wed, 4 Nov 2009 17:59:21 -0500
+Message-ID: <32541b130911041459y7a2201a3r18601522187891f2@mail.gmail.com>
+References: <c94f8e120911030709h29c5b8edr53df269632990e81@mail.gmail.com> 
+	<32541b130911030733i734b9f6doc366934873bf7713@mail.gmail.com> 
+	<S0ax5AE0Xf8KFwjv@thewolery.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@fluxnic.net>, git@vger.kernel.org,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Wed Nov 04 23:50:40 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Anthony W. Youngman" <wol@thewolery.demon.co.uk>
+X-From: git-owner@vger.kernel.org Wed Nov 04 23:59:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5ogY-0002TJ-8F
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 23:50:38 +0100
+	id 1N5opP-00066o-Tr
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 23:59:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932792AbZKDWu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 17:50:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932781AbZKDWu0
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 17:50:26 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:56146 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932744AbZKDWuZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 17:50:25 -0500
-Received: by fg-out-1718.google.com with SMTP id d23so2096117fga.1
-        for <git@vger.kernel.org>; Wed, 04 Nov 2009 14:50:30 -0800 (PST)
+	id S1755517AbZKDW7h convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Nov 2009 17:59:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755374AbZKDW7h
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 17:59:37 -0500
+Received: from mail-yw0-f202.google.com ([209.85.211.202]:63364 "EHLO
+	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754954AbZKDW7g convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Nov 2009 17:59:36 -0500
+Received: by ywh40 with SMTP id 40so6790141ywh.33
+        for <git@vger.kernel.org>; Wed, 04 Nov 2009 14:59:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=8drFDO9eB+b9hCrmviAA1uyf0YmTEHKTa6AISE4zOqg=;
-        b=lY52FYQm6oEuY0BLRcq+NQqPlcROvEccTbH4stRHRh35gI4qe3fFdFOOSt8QTx1PdJ
-         wYT5NhtOKRqb80lCIvMQEJeDgjBynv68gloNUHc4X4fBuCZKucFkO7z0FpSU4j0/8ZSP
-         LCkbIb6s8Z3jXsw4nrTICkeWrom+U2L7S1cVI=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=LMUvgP/tTSvmRFBYt3CgX1gwsCGCfxBCFh5OKdzzxHI=;
+        b=bJPwS+uw+zzlZOpU95D9GIEZsC5+r9W4cVIbUraAWcyT1R6bZ+C8hebskEP/KmyxAf
+         /Rln39y0qWBYEKVeowzkt55td5FmOIOfRoL5Hms5nzmEWBLfHqpZ9fH+Jb9yE+92lzew
+         zeqCS9api9f9Jw9Uj7TuDFNn2GoJg6bw1Wnek=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=MK1ryocLw88bTUBozn0cnzwCmpGOi/mkTsV//lPOenw2Aph27wnTOa5mM15OALR/1H
-         fG6oSQLbIG5W0u3oapMNdzcZDkwYL8qH2VwpX3YBgIc3/MJE8UirVdKobHg2DoxEeZjl
-         YMz/uqTg1uD3U9+reV/PLsZnDB79XNeuY4E3I=
-Received: by 10.87.69.28 with SMTP id w28mr4338925fgk.46.1257375030126;
-        Wed, 04 Nov 2009 14:50:30 -0800 (PST)
-Received: from macendru.local (14-mi2-10.acn.waw.pl [85.222.57.14])
-        by mx.google.com with ESMTPS id d4sm2621644fga.16.2009.11.04.14.50.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Nov 2009 14:50:29 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
-In-Reply-To: <40aa078e0911041341s1adbbf31t6961207ba9c7905b@mail.gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=KNyxqF48vQzloNKmViSMcEy7rglO3UaoiwBGPASAlkjDVlskJSKLTVrDiiyhTRivgQ
+         0LaUmeRXhQngxGaAo+SqFLWxb/Yyr80138synaFtBu9tpLyEFxH1kdnWOFijf7iT5ZyD
+         I4SZooVzYcbf/SJLlhndGZHnFSHla4pS9h7IY=
+Received: by 10.150.244.4 with SMTP id r4mr3853231ybh.127.1257375581769; Wed, 
+	04 Nov 2009 14:59:41 -0800 (PST)
+In-Reply-To: <S0ax5AE0Xf8KFwjv@thewolery.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132166>
 
-Erik Faye-Lund pisze:
-> Couldn't the windows version of pthread_create have a wrapper
-> function, that corrected the calling convention, much like the
-> function run_thread that start_async in run-command.c has?
+On Wed, Nov 4, 2009 at 4:45 PM, Anthony W. Youngman
+<wol@thewolery.demon.co.uk> wrote:
+> In message <32541b130911030733i734b9f6doc366934873bf7713@mail.gmail.c=
+om>,
+> Avery Pennarun <apenwarr@gmail.com> writes
+>> You can pull from a Windows box by running git-daemon on that box fr=
+om
+>> the command line. =A0(It's easier than it sounds.)
+>
+> That presumes you're running Cygwin ...
+>
+> git-daemon doesn't (currently) work on msysgit. Currently I run git-d=
+aemon
+> on my linpus netbook and pull/push from windows.
 
-Can't be done without allocations. I'd have to pass to that wrapping
-thread function an address of original function *and* an original
-argument, and there's no way to pack that as one void*.
+I didn't know that.  Windows sockets are mercifully very nearly
+compatible with Linux ones, so hopefully this wouldn't be too hard to
+fix for someone that needs it.  (Not me; I prefer cygwin over msys in
+all cases.)
 
---
-Andrzej
+Avery
