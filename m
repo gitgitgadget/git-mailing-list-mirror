@@ -1,69 +1,104 @@
-From: Patrick Higgins <patrick.allen.higgins@gmail.com>
-Subject: How to ensure a word has been removed from repository?
-Date: Tue, 3 Nov 2009 19:12:49 -0700
-Message-ID: <6fb3af8e0911031812j54a9b698xca9f5301ac07442a@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Require a struct remote in transport_get()
+Date: Tue, 3 Nov 2009 21:38:51 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.0911032133540.14365@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 04 03:13:00 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 03:38:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5VMp-00019k-UT
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 03:13:00 +0100
+	id 1N5Vly-0004dU-Bd
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 03:38:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753891AbZKDCMt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 21:12:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753797AbZKDCMt
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 21:12:49 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:63737 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753666AbZKDCMs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 21:12:48 -0500
-Received: by yxe17 with SMTP id 17so5998456yxe.33
-        for <git@vger.kernel.org>; Tue, 03 Nov 2009 18:12:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=qz/T4jhjOpRxmIEopsztZmJLz5jqtVlVYdiagZyJxkQ=;
-        b=J7PfgSoHBjVZwm/Mx0boVS6uCKQeXh4SqWnvdnhd1vr5wjIak2GqVJID9a1CuBogoA
-         p7l3g0fwtWbzJXRvxi6zQuWp1nxpo59Ps8PgVx/Ujm8efkfAahVhEct5BlgShHpxRX0d
-         jGpHMozAHSWCG7jC/M3LsBh7Nj8TfzPcLlFp8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=Dg2kyzUGXgS2bv9XnOZZe0qupXvKmbqHvyw+sOSGHz640hghUa7wzg5JOukRP8UaRQ
-         hhXvRz3S8cNzJ0cnWqL4S5seeQuIi7MzNvluWWS86oxD/9xTONX2P4LyRHlpD/5vStqh
-         xjiypEdYaPSGjscFYCVUQ1ux3dudS6JSCBgEU=
-Received: by 10.100.237.16 with SMTP id k16mr949407anh.128.1257300769477; Tue, 
-	03 Nov 2009 18:12:49 -0800 (PST)
+	id S1753765AbZKDCir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 21:38:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753456AbZKDCir
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 21:38:47 -0500
+Received: from iabervon.org ([66.92.72.58]:41170 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752943AbZKDCiq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 21:38:46 -0500
+Received: (qmail 22382 invoked by uid 1000); 4 Nov 2009 02:38:51 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 4 Nov 2009 02:38:51 -0000
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132024>
 
-Hi all,
+cmd_ls_remote() was calling transport_get() with a NULL remote and a
+non-NULL url in the case where it was run outside a git
+repository. This involved a bunch of ill-tested special
+cases. Instead, simply get the struct remote for the URL with
+remote_get(), which works fine outside a git repository, and can also
+take global options into account.
 
-I just completed a series of filter-branch commands to remove a couple
-of sensitive words from a repository before I publish it. The words
-were found in commit messages, directory names, file contents, and
-various other places (kind of weird, I know). I believe I have removed
-them all, but I would like to double check but don't know how.
+This fixes a tiny and obscure bug where "git ls-remote" without a repo
+didn't support global url.*.insteadOf, even though "git clone" and
+"git ls-remote" in any repo did.
 
-Given that much of the repository is stored in compressed packs, I
-can't just use grep to look for the words. To get around this, I've
-unpacked the objects, use a Perl script (filtinf example script) to
-decompress them and then use grep (this has proven to be quite slow).
+Also, enforce that all callers provide a struct remote to transport_get().
 
-Is that going to find every possible occurrence if all the relevant
-files are plain text?
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+This is sufficient to stop the segfault when tring "git ls-remote 
+http://..." outside of a repo, but not to make it work, which requires 
+either something simple but not ideal or something complex.
 
-Is there an easier way to search the repository? The way I'm doing it
-has required some awfully deep knowledge to expire and prune
-everything. I feel like I must be missing something.
+ builtin-ls-remote.c |    6 +++---
+ transport.c         |    7 +++++--
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-Thanks,
-Patrick
+diff --git a/builtin-ls-remote.c b/builtin-ls-remote.c
+index 78a88f7..b5bad0c 100644
+--- a/builtin-ls-remote.c
++++ b/builtin-ls-remote.c
+@@ -86,10 +86,10 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 			pattern[j - i] = p;
+ 		}
+ 	}
+-	remote = nongit ? NULL : remote_get(dest);
+-	if (remote && !remote->url_nr)
++	remote = remote_get(dest);
++	if (!remote->url_nr)
+ 		die("remote %s has no configured URL", dest);
+-	transport = transport_get(remote, remote ? remote->url[0] : dest);
++	transport = transport_get(remote, remote->url[0]);
+ 	if (uploadpack != NULL)
+ 		transport_set_option(transport, TRANS_OPT_UPLOADPACK, uploadpack);
+ 
+diff --git a/transport.c b/transport.c
+index 644a30a..298dc46 100644
+--- a/transport.c
++++ b/transport.c
+@@ -812,6 +812,9 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ {
+ 	struct transport *ret = xcalloc(1, sizeof(*ret));
+ 
++	if (!remote)
++		die("No remote provided to transport_get()");
++
+ 	ret->remote = remote;
+ 	ret->url = url;
+ 
+@@ -849,10 +852,10 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		data->thin = 1;
+ 		data->conn = NULL;
+ 		data->uploadpack = "git-upload-pack";
+-		if (remote && remote->uploadpack)
++		if (remote->uploadpack)
+ 			data->uploadpack = remote->uploadpack;
+ 		data->receivepack = "git-receive-pack";
+-		if (remote && remote->receivepack)
++		if (remote->receivepack)
+ 			data->receivepack = remote->receivepack;
+ 	}
+ 
+-- 
+1.6.5.2.142.g063c5.dirty
