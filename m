@@ -1,73 +1,68 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH v2 09/13] Honour the refspec when updating refs after
- import
-Date: Wed, 4 Nov 2009 16:20:11 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.0911041601170.14365@iabervon.org>
-References: <1257364098-1685-1-git-send-email-srabbelier@gmail.com> <1257364098-1685-10-git-send-email-srabbelier@gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH v2 09/13] Honour the refspec when updating refs after 
+	import
+Date: Wed, 4 Nov 2009 22:21:23 +0100
+Message-ID: <fabb9a1e0911041321i1ccec898r53ddafb9405c6331@mail.gmail.com>
+References: <1257364098-1685-1-git-send-email-srabbelier@gmail.com> 
+	<1257364098-1685-10-git-send-email-srabbelier@gmail.com> <alpine.LNX.2.00.0911041601170.14365@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: Git List <git@vger.kernel.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Johan Herland <johan@herland.net>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 22:20:30 2009
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Nov 04 22:21:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5nHG-0001nX-7l
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 22:20:26 +0100
+	id 1N5nId-0002ZB-D5
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 22:21:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932630AbZKDVUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 16:20:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758176AbZKDVUH
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 16:20:07 -0500
-Received: from iabervon.org ([66.92.72.58]:45839 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758175AbZKDVUG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 16:20:06 -0500
-Received: (qmail 32509 invoked by uid 1000); 4 Nov 2009 21:20:11 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Nov 2009 21:20:11 -0000
-In-Reply-To: <1257364098-1685-10-git-send-email-srabbelier@gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S932634AbZKDVVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 16:21:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932632AbZKDVVl
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 16:21:41 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:64652 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932609AbZKDVVk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 16:21:40 -0500
+Received: by bwz27 with SMTP id 27so9360243bwz.21
+        for <git@vger.kernel.org>; Wed, 04 Nov 2009 13:21:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=CEUCpkRIxOePh9Xtx3tQqSQNvpdJ8cqzUAdvMAGP2bc=;
+        b=A7EQRyoA9TP8F+0dxhmGGvhE0CtFJktPNOT3EprxUSX9c7g7WmpTDSLUgf2/CL0UQ7
+         19c5hLnPhfGXf3yHPoXy64VoP1nKuPc0/azlkUbChpnPndLexMylI4r49hxgH0uI6tCg
+         z/Gvl0kFuVM4yLf5OilOfTc846MZKEb8abukU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=A2CN2kQfOevNOIKNUxDlfxl2+uzne2CnGQ/LZ6zDgEz/38fj73tDlTAtXJN/kyCUQa
+         9RZYTq6vrkG/nGsGi1U2eQvksU+q2owfTPrIgySvshwrWpajsN/9ehxeea/6bzhja8QX
+         ZZ/XdzMm/MpHfTJIeH9EuBfQ5OHMmi6yWEazk=
+Received: by 10.204.20.143 with SMTP id f15mr2076034bkb.49.1257369703668; Wed, 
+	04 Nov 2009 13:21:43 -0800 (PST)
+In-Reply-To: <alpine.LNX.2.00.0911041601170.14365@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132150>
 
-On Wed, 4 Nov 2009, Sverre Rabbelier wrote:
+Heya,
 
-> This way the helper can write to 'refs/remotes/origin/*' instead of
-> writing to 'refs/heads/*'.
-> 
-> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
-> ---
-> 
->   Daniel, does this look good to you?
-> 
->   Let's assume the following:
->   * list: only HEAD is a symref (to refs/heads/<branch>), all other
->           refs are '? refs/heads/<branch>'.
->   * import: the helper creates branches under refs/remotes/<alias>/*
->             (since the refspec code is not yet in that would allow
->              it to create them under refs/<vcs>/<alias>/*)
->
->   Now when updating the refs we do the following:
->   transport-helper.c:145 "read_ref(posn->name, posn->old_sha1);"
-> 
->   The value of posn->name looks like "refs/heads/<branch>". So what
->   does this lookup do? It tries to lookup the new value of the ref
->   _where it will be created_, this fails of course, since the ref
->   currently only exists as "refs/remotes/origin/<branch>". So, we
->   should instead be doing a lookup using posn->peer_ref->name, and
->   not do a lookup at all if it posn->peer_ref is not set (which
->   should not occur as we are passed only wanted peer refs).
+On Wed, Nov 4, 2009 at 22:20, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> That's not true for "git pull <url> <branch>"; we do want the remote ref,
+> but it doesn't have a local peer. I think going straight to the refspec
+> command is the right answer.
 
-That's not true for "git pull <url> <branch>"; we do want the remote ref, 
-but it doesn't have a local peer. I think going straight to the refspec 
-command is the right answer.
+Can you clarity what you mean with "the refspec command"?
 
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+Cheers,
+
+Sverre Rabbelier
