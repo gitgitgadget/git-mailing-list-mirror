@@ -1,66 +1,69 @@
-From: Alex MDC <alex.mdc@gmail.com>
-Subject: Re: Unhappy git in a jailshell?
-Date: Wed, 4 Nov 2009 12:17:03 +1100
-Message-ID: <130714cd0911031717q7aa68a33wec501aec066d228d@mail.gmail.com>
-References: <130714cd0911020416r6a686026q697d843f47b68692@mail.gmail.com>
-	 <20091102124746.GA27126@dpotapov.dyndns.org>
-	 <4AEEE3D2.9040905@drmicha.warpmail.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Update packfile transfer protocol documentation
+Date: Tue, 3 Nov 2009 17:18:03 -0800
+Message-ID: <20091104011802.GE10505@spearce.org>
+References: <d411cc4a0911011518q15a8267bn642e6937be8c9ab1@mail.gmail.com> <7v4opbp1fa.fsf@alter.siamese.dyndns.org> <20091104005614.GD10505@spearce.org> <7vljinnllj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>,
-	Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 02:17:11 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Scott Chacon <schacon@gmail.com>, git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 02:18:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5UUo-0007RY-Hp
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 02:17:10 +0100
+	id 1N5UVl-0007jm-7o
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 02:18:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752166AbZKDBQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 20:16:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751707AbZKDBQ7
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 20:16:59 -0500
-Received: from mail-pz0-f188.google.com ([209.85.222.188]:48877 "EHLO
-	mail-pz0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751170AbZKDBQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 20:16:58 -0500
-Received: by pzk26 with SMTP id 26so4348170pzk.4
-        for <git@vger.kernel.org>; Tue, 03 Nov 2009 17:17:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=aLKprJmvsdIg+caD4aPcQYhIs7lYBoI5YYbG/c0mhkU=;
-        b=Epud7quYPXwyDrx4HGanMCXhbdZvea3zXyTGW3h91gKaDusHuO2YbVDWYSDFLAUL2s
-         W/UWecAiWwP0Aa/Og5asFYZPQopplqtd5nqh3jis9c6DiPBb7ihLm8K7AASvaSFcweac
-         zY2XEEhrEFR411jdpq+mJB/MLeLV5qCfUYvWE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=KTFXKI5vXhgKDQawSzH/OdUyg4mW2cMafF4ZU2VZgwJuUOTw+sQEOWy1lPsqgWWva4
-         GdpPE4fs3ImDpClzc30V+t3/AqB3GXQrGbMx0OF9vS5rDFGdDfNDajzTcTlPM2+8HqNB
-         4d8qpEaBjjZqitaXooCmZdcNhif11GZeIHaiw=
-Received: by 10.142.5.27 with SMTP id 27mr82166wfe.59.1257297423771; Tue, 03 
-	Nov 2009 17:17:03 -0800 (PST)
-In-Reply-To: <4AEEE3D2.9040905@drmicha.warpmail.net>
+	id S1752393AbZKDBR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 20:17:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbZKDBR6
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 20:17:58 -0500
+Received: from george.spearce.org ([209.20.77.23]:57605 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751707AbZKDBR5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 20:17:57 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 2B1AD381FE; Wed,  4 Nov 2009 01:18:03 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <7vljinnllj.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132019>
 
-Hi guys,
+Junio C Hamano <gitster@pobox.com> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> > I don't think we ever send an empty packet.  If we have no data to
+> > send, why the hell did we create the packet header?
+> 
+> Oh, I do not disagree that it is pointless, but the example that followed
+> the part we are discussing also had "0004".  I think it is Ok to allow it.
 
-I requested the admins allow access to the `git --exec-path` directory
-from the jailshell and incredibly, they granted it! Now everything is
-working and "git --help --all" lists all the commands as expected, so
-that was indeed the problem.
+If its pointless, why encourage it?  Why not discourage it with SHOULD NOT?
+ 
+> The original intent of packet_flush() was that everything else could be
+> kept buffered in-core without going to write() until packet_flush() is
+> called.  The protocol was defined in a way that we won't wait for
+> listening a response from the other end to an earlier message we "sent"
+> with packet_write() but haven't called packet_flush() yet hence could
+> still be in our buffer.  We still have this comment:
+> 
+>     /*
+>      * If we buffered things up above (we don't, but we should),
+>      * we'd flush it here
+>      */
+>     void packet_flush(int fd)
 
-It was just a bit deceiving at first that some git commands were
-working but others weren't, but Dmitry explained that one.
+The smart-http series causes fetch-pack to buffer.  :-)
 
-Thanks for your help,
-Alex
+> And once we start buffering, allowing "0004" packet_write() wouldn't even
+> be a problem; it can be optimized out in the buffering layer.
+
+Sure, but can't packet_write just return early without write()
+if format_packet returned 4 (aka vsnprintf returned 0)?
+
+-- 
+Shawn.
