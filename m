@@ -1,78 +1,122 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Require a struct remote in transport_get()
-Date: Tue, 03 Nov 2009 21:42:59 -0800
-Message-ID: <7vbpjin8v0.fsf@alter.siamese.dyndns.org>
-References: <alpine.LNX.2.00.0911032133540.14365@iabervon.org>
+Subject: Re: [PATCH bg/format-patch-p-noop] log-tree: always add --- marker
+ when options are patch and a stat
+Date: Tue, 03 Nov 2009 21:49:46 -0800
+Message-ID: <7vy6mmltz9.fsf@alter.siamese.dyndns.org>
+References: <1257283456-7007-1-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Nov 04 06:43:25 2009
+Cc: git@vger.kernel.org,
+	=?utf-8?Q?Bj=C3=B6rn?= Gustavsson <bgustavsson@gmail.com>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 06:50:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5YeR-0001T0-GA
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 06:43:23 +0100
+	id 1N5Yku-0003Ri-TY
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 06:50:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751184AbZKDFnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 00:43:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751135AbZKDFnL
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 00:43:11 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45325 "EHLO
+	id S1751372AbZKDFtw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 00:49:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751281AbZKDFtw
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 00:49:52 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61789 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750859AbZKDFnL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 00:43:11 -0500
+	with ESMTP id S1751087AbZKDFtw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 00:49:52 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 912B273964;
-	Wed,  4 Nov 2009 00:43:13 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BA2C291824;
+	Wed,  4 Nov 2009 00:49:55 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=LqE4VIGPLLEjOZktX8kxSDC3VWY=; b=ilJPr6YyYRRuRu4ZJr14t4N
-	v3XSre9SZ2yfKjiDup8IrWF6fjWlZ0InM1/K3DMvOvqIZ4CiTukG+lnwfzOZdhGR
-	IpTUTs/YYANWV0w+QCeg7Xr2vm3VZNxA8SXdgqk1Tai+lvyrHV2ASV6meDBo4AGx
-	G8fUOgEI0/rnJ6z+Oa60=
+	sasl; bh=Qfx5al1PQhiXJwvgmy1KOi4N5Gs=; b=aQA4heT/c9u3WWMuHQUvzy3
+	tOYzCYyscugcbwXO4/x64w/xi2TPUQ34vTNbOmKcBny/M8n2jZaa9/rXmgbHDNdG
+	wMsnBooUmoic+1Poh5yO79G83dStDhUQGrRabHxDnwJ8/x2qijnXNIQZNzAFhNpW
+	OUCxsadSHjNuGzObYddM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=cY6qaRrFttDAJ/u+O7OGo7cProZZseoqMDjOYyaobDR6CZ0yj
-	KtuLIh6XMPxy3zIxDSkGop1nItjbDgCEd2hs+6fCRR30Grs4hMs2PNkiLx75vfLR
-	pCbbSYr3jICNdNkza1356n3TICAVnqkCggTu7v4W+vES9NwH9wD0CysNjI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 72F1473963;
-	Wed,  4 Nov 2009 00:43:11 -0500 (EST)
+	dns; s=sasl; b=Oqxh5VUgw4eeKbS2IbJUjx3SEXMPD6O7lbE1e8+lunomL1EeA
+	obaWDrg2r1qwnoEOyMXRY7N06V+MwyI85zvMD6w1HohPQWvcx3mWfSRY+7hXNd4T
+	5a/uT+NybSKXp0JVx4I4Wntmyykc5IKplXEItdeFp4PY0CGPRffe7fqsno=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 935B391823;
+	Wed,  4 Nov 2009 00:49:52 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3CC8B73962; Wed,  4 Nov
- 2009 00:43:01 -0500 (EST)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2D77191821; Wed,  4 Nov 2009
+ 00:49:47 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F01AA54C-C904-11DE-9AE9-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DF459712-C905-11DE-900D-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132038>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Stephen Boyd <bebarino@gmail.com> writes:
 
-> cmd_ls_remote() was calling transport_get() with a NULL remote and a
-> non-NULL url in the case where it was run outside a git
-> repository. This involved a bunch of ill-tested special
-> cases. Instead, simply get the struct remote for the URL with
-> remote_get(), which works fine outside a git repository, and can also
-> take global options into account.
+> Previously, the three dash marker (---) would only be added if the diff
+> output format was a patch and diffstat (usually -p and --stat). Now that
+> patches are always generated by format-patch regardless of the stat
+> format being used (--stat, --raw, --numstat, etc.), always add the three
+> dash marker when a patch is being generated and a stat option is used.
 >
-> This fixes a tiny and obscure bug where "git ls-remote" without a repo
-> didn't support global url.*.insteadOf, even though "git clone" and
-> "git ls-remote" in any repo did.
+> This allows users to choose the stat format they want and unifies the
+> format of patches with stats. It also make patches easier to apply when
+> generated by format-patch with non-standard stat options as the stat is
+> no longer considered part of the commit message.
 >
-> Also, enforce that all callers provide a struct remote to transport_get().
->
-> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
 > ---
-> This is sufficient to stop the segfault when tring "git ls-remote 
-> http://..." outside of a repo, but not to make it work, which requires 
-> either something simple but not ideal or something complex.
 
-Thanks; I think this and your other patch are important fixes, and should
-go directly on 'maint'.  Do you prefer to queue them on 'next' to cook for
-a week instead?
+I actually am more worried about 68daa64 from 14 months ago, as I vaguely
+recall seeing an explicit user request that in some community the diffstat
+information is unwanted on their mailing list, and I am reasonably sure
+that "-p suppresses --stat" was done deliberately to satisfy them (even
+though it may have been a suboptimal UI and --no-stat might have been a
+lot more straightforward).
+
+Even though I personally find the stat information very useful, I would be
+happier if somebody reverts the bg/format-patch-p-noop series and instead
+fixes the regression caused by 68daa64, and does so without touching any
+output from the low-level plumbing like diff-tree that may be used by
+scripts.
+
+With older (say 1.6.0) git, format-patch with the -p option does not give
+these three-dash lines, and it does look funny.  Even though the same
+funniness appears only when you use --raw or --numstat with the current
+code, if we fix "-p" to suppress the default "--stat", this will become an
+issue again.
+
+> I'm not sure this is wanted though and I guess this could break people's
+> scripts. Are people actually using --numstat or --raw to put the stat into
+> the commit message?
+
+I am not worried so much about "format-patch --any-option" output; I think
+it is sane to have three-dash line in it and that is what people expect to
+see.
+
+I however think people used "diff-tree --pretty --raw" as a mechanism to
+obtain statistics.  A script can easily see where the header is and where
+messages are (they are four-space indented), and what remains after
+stripping them give you the list of paths each commit touches.  --numstat
+was invented to help this kind of application gather line-level statistics
+more easily, and I am a bit reluctant to suddenly start giving three-dash
+in their output.  It will upset what is reading from the pipe downstream.
+
+In an ideal world, I would probably say:
+
+ * format-patch should have three-dash after the commit message, no matter
+   what format the patch is asked for, and it always will give patch text.
+
+ * format-patch -p should be reinstated as a way to ask for "just patch
+   text, no diffstat".  Introducing a new option --no-stat _in addition_
+   to improve the UI is Ok.
+
+ * format-patch -U<n> should not be mistaken as a request to suppress
+   diffstat; what 68daa64 _tried_ to do was worthy.
+
+ * Other commands of "log" family that understand -p/-U<n> to produce
+   patch text should also give three-dash after the log message, and no
+   three-dash when they don't produce patch text.
