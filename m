@@ -1,104 +1,64 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Require a struct remote in transport_get()
-Date: Tue, 3 Nov 2009 21:38:51 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.0911032133540.14365@iabervon.org>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: Re: [PATCH 1/1] MSVC: port pthread code to native Windows threads
+Date: Tue, 03 Nov 2009 19:34:42 -0700
+Message-ID: <4AF0E842.2010201@workspacewhiz.com>
+References: <1257283802-29726-1-git-send-email-ahaczewski@gmail.com> <1257283802-29726-2-git-send-email-ahaczewski@gmail.com> <alpine.DEB.1.00.0911040031210.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 03:38:58 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 04 03:41:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5Vly-0004dU-Bd
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 03:38:58 +0100
+	id 1N5VoY-0005Zk-5C
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 03:41:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753765AbZKDCir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2009 21:38:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753456AbZKDCir
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 21:38:47 -0500
-Received: from iabervon.org ([66.92.72.58]:41170 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752943AbZKDCiq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2009 21:38:46 -0500
-Received: (qmail 22382 invoked by uid 1000); 4 Nov 2009 02:38:51 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Nov 2009 02:38:51 -0000
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1753888AbZKDCl1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2009 21:41:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753839AbZKDCl1
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Nov 2009 21:41:27 -0500
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:58435 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753664AbZKDCl0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2009 21:41:26 -0500
+X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Nov 2009 21:41:26 EST
+Received: (qmail 32573 invoked by uid 399); 3 Nov 2009 19:34:48 -0700
+Received: from unknown (HELO ?192.168.1.107?) (jjensen@workspacewhiz.com@24.10.200.9)
+  by hsmail.qwknetllc.com with ESMTPAM; 3 Nov 2009 19:34:48 -0700
+X-Originating-IP: 24.10.200.9
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.4pre) Gecko/20090915 Lightning/1.0pre Thunderbird/3.0b4
+In-Reply-To: <alpine.DEB.1.00.0911040031210.4985@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132025>
 
-cmd_ls_remote() was calling transport_get() with a NULL remote and a
-non-NULL url in the case where it was run outside a git
-repository. This involved a bunch of ill-tested special
-cases. Instead, simply get the struct remote for the URL with
-remote_get(), which works fine outside a git repository, and can also
-take global options into account.
+----- Original Message -----
+From: Johannes Schindelin
+Date: 11/3/2009 4:38 PM
+>>   #ifdef THREADED_DELTA_SEARCH
+>> -#include "thread-utils.h"
+>> -#include<pthread.h>
+>> +# include "thread-utils.h"
+>> +# ifndef _WIN32
+>> +#  include<pthread.h>
+>> +# else
+>> +#  include<winthread.h>
+>> +# endif
+>>   #endif
+>>
+>>      
+> It is unlikely that an #ifdef "contamination" of this extent will go
+> through easily, but I have a suggestion that may make your patch both
+> easier to read and more likely to be accepted into git.git: Try to wrap
+> the win32 calls into pthread-compatible function signatures.  Then you can
+> add a compat/win32/pthread.h and not even touch core files of git.git at
+> all.
+>    
+Pardon my ignorance, but is there a reason to not use Pthreads for 
+Win32?  http://sourceware.org/pthreads-win32/
 
-This fixes a tiny and obscure bug where "git ls-remote" without a repo
-didn't support global url.*.insteadOf, even though "git clone" and
-"git ls-remote" in any repo did.
-
-Also, enforce that all callers provide a struct remote to transport_get().
-
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
----
-This is sufficient to stop the segfault when tring "git ls-remote 
-http://..." outside of a repo, but not to make it work, which requires 
-either something simple but not ideal or something complex.
-
- builtin-ls-remote.c |    6 +++---
- transport.c         |    7 +++++--
- 2 files changed, 8 insertions(+), 5 deletions(-)
-
-diff --git a/builtin-ls-remote.c b/builtin-ls-remote.c
-index 78a88f7..b5bad0c 100644
---- a/builtin-ls-remote.c
-+++ b/builtin-ls-remote.c
-@@ -86,10 +86,10 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 			pattern[j - i] = p;
- 		}
- 	}
--	remote = nongit ? NULL : remote_get(dest);
--	if (remote && !remote->url_nr)
-+	remote = remote_get(dest);
-+	if (!remote->url_nr)
- 		die("remote %s has no configured URL", dest);
--	transport = transport_get(remote, remote ? remote->url[0] : dest);
-+	transport = transport_get(remote, remote->url[0]);
- 	if (uploadpack != NULL)
- 		transport_set_option(transport, TRANS_OPT_UPLOADPACK, uploadpack);
- 
-diff --git a/transport.c b/transport.c
-index 644a30a..298dc46 100644
---- a/transport.c
-+++ b/transport.c
-@@ -812,6 +812,9 @@ struct transport *transport_get(struct remote *remote, const char *url)
- {
- 	struct transport *ret = xcalloc(1, sizeof(*ret));
- 
-+	if (!remote)
-+		die("No remote provided to transport_get()");
-+
- 	ret->remote = remote;
- 	ret->url = url;
- 
-@@ -849,10 +852,10 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 		data->thin = 1;
- 		data->conn = NULL;
- 		data->uploadpack = "git-upload-pack";
--		if (remote && remote->uploadpack)
-+		if (remote->uploadpack)
- 			data->uploadpack = remote->uploadpack;
- 		data->receivepack = "git-receive-pack";
--		if (remote && remote->receivepack)
-+		if (remote->receivepack)
- 			data->receivepack = remote->receivepack;
- 	}
- 
--- 
-1.6.5.2.142.g063c5.dirty
+Josh
