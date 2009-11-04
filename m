@@ -1,59 +1,100 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH v2 09/13] Honour the refspec when updating refs after 
- import
-Date: Wed, 4 Nov 2009 16:30:07 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.0911041624401.14365@iabervon.org>
-References: <1257364098-1685-1-git-send-email-srabbelier@gmail.com>  <1257364098-1685-10-git-send-email-srabbelier@gmail.com> <alpine.LNX.2.00.0911041601170.14365@iabervon.org> <fabb9a1e0911041321i1ccec898r53ddafb9405c6331@mail.gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: [PATCH] pack-objects: move thread autodetection closer to relevant code
+Date: Wed, 04 Nov 2009 16:32:46 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0911041623570.10340@xanadu.home>
+References: <1257331059-26344-1-git-send-email-ahaczewski@gmail.com>
+ <1257350100-29281-1-git-send-email-ahaczewski@gmail.com>
+ <alpine.LFD.2.00.0911041247250.10340@xanadu.home>
+ <16cee31f0911041316n20fc9f12s6595dadc813d8f46@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johan Herland <johan@herland.net>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 22:30:21 2009
+Content-Type: multipart/mixed; boundary="Boundary_(ID_BOBw3Flpo/kox82Wn2vnlQ)"
+Cc: "Andrzej K. Haczewski" <ahaczewski@gmail.com>, git@vger.kernel.org,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 22:34:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5nQq-00078s-Jc
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 22:30:20 +0100
+	id 1N5nV1-0000pN-I5
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 22:34:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758205AbZKDVaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 16:30:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758183AbZKDVaD
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 16:30:03 -0500
-Received: from iabervon.org ([66.92.72.58]:36091 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756838AbZKDVaD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2009 16:30:03 -0500
-Received: (qmail 765 invoked by uid 1000); 4 Nov 2009 21:30:07 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Nov 2009 21:30:07 -0000
-In-Reply-To: <fabb9a1e0911041321i1ccec898r53ddafb9405c6331@mail.gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S932609AbZKDVe3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 16:34:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758230AbZKDVe2
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 16:34:28 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:13608 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758209AbZKDVe2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 16:34:28 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0KSL004XDT6MNY40@VL-MR-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 04 Nov 2009 16:32:46 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <16cee31f0911041316n20fc9f12s6595dadc813d8f46@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132153>
 
-On Wed, 4 Nov 2009, Sverre Rabbelier wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Heya,
-> 
-> On Wed, Nov 4, 2009 at 22:20, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> > That's not true for "git pull <url> <branch>"; we do want the remote ref,
-> > but it doesn't have a local peer. I think going straight to the refspec
-> > command is the right answer.
-> 
-> Can you clarity what you mean with "the refspec command"?
+--Boundary_(ID_BOBw3Flpo/kox82Wn2vnlQ)
+Content-type: TEXT/PLAIN; charset=ISO-8859-1
+Content-transfer-encoding: 8BIT
 
-Whatever it is that lets the helper tell the transport code where in the 
-helper's private namespace to look for refs. I'd been thinking the helper 
-would advertize the "refspec" capability, and the transport code would 
-call the "refspec" command in order to get the helper to report that; but 
-then I actually only said that the helper reports refspec, and not 
-proposed a name for the command.
+Let's keep thread stuff close together if possible.  And in this case, 
+this even reduces the #ifdef noise, and allows for skipping the 
+autodetection altogether if delta search is not needed (like with a pure 
+clone).
 
-	-Daniel
-*This .sig left intentionally blank*
+Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
+---
+
+> 2009/11/4 Nicolas Pitre <nico@fluxnic.net>:
+> >> @@ -2327,6 +2354,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+> >>  #ifdef THREADED_DELTA_SEARCH
+> >>       if (!delta_search_threads)      /* --threads=0 means autodetect */
+> >>               delta_search_threads = online_cpus();
+> >> +
+> >> +     init_threaded_delta_search();
+> >
+> > What about doing this at the beginning of ll_find_deltas() instead?
+> > And similarly for cleanup_threaded_delta_search(): call it right before
+> > leaving ll_find_deltas().  This way thread issues would remain more
+> > localized.  In fact I'd move the whole thing above in ll_find_deltas()
+> > as well (separately from this patch though).
+
+So here it is.
+
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 02f9246..4c91e94 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1629,6 +1629,8 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
+ 	struct thread_params *p;
+ 	int i, ret, active_threads = 0;
+ 
++	if (!delta_search_threads)	/* --threads=0 means autodetect */
++		delta_search_threads = online_cpus();
+ 	if (delta_search_threads <= 1) {
+ 		find_deltas(list, &list_size, window, depth, processed);
+ 		return;
+@@ -2324,11 +2326,6 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	if (keep_unreachable && unpack_unreachable)
+ 		die("--keep-unreachable and --unpack-unreachable are incompatible.");
+ 
+-#ifdef THREADED_DELTA_SEARCH
+-	if (!delta_search_threads)	/* --threads=0 means autodetect */
+-		delta_search_threads = online_cpus();
+-#endif
+-
+ 	prepare_packed_git();
+ 
+ 	if (progress)
+
+--Boundary_(ID_BOBw3Flpo/kox82Wn2vnlQ)--
