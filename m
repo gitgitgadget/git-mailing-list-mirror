@@ -1,87 +1,66 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 1/4] MSVC: Fix an "unresolved symbol" linker error on
- cygwin
-Date: Wed, 04 Nov 2009 20:20:13 +0000
-Message-ID: <4AF1E1FD.1050102@ramsay1.demon.co.uk>
-References: <4AE74408.7080103@ramsay1.demon.co.uk> <4AEFD9E2.6060004@viscovery.net> <7veiogt4g8.fsf@alter.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] MSVC: port pthread code to native Windows threads
+Date: Wed, 4 Nov 2009 15:43:01 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.0911041406101.14365@iabervon.org>
+References: <1257283802-29726-1-git-send-email-ahaczewski@gmail.com>  <1257331059-26344-1-git-send-email-ahaczewski@gmail.com>  <4AF175E8.7020400@viscovery.net>  <16cee31f0911040547m69e5b9cbi30e20d2a7790bd6f@mail.gmail.com>  <4AF190F1.3020607@viscovery.net>
+ <16cee31f0911040650s3eba1067mb66a48bb50c97c28@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Marius Storm-Olsen <mstormo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 21:22:48 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 21:43:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5mNR-0008NR-Ev
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 21:22:45 +0100
+	id 1N5mhB-0001MG-S5
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Nov 2009 21:43:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932367AbZKDUW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2009 15:22:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932363AbZKDUW2
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 15:22:28 -0500
-Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:42181 "EHLO
-	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932351AbZKDUW2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Nov 2009 15:22:28 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1N5mNE-00044V-oA; Wed, 04 Nov 2009 20:22:33 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <7veiogt4g8.fsf@alter.siamese.dyndns.org>
+	id S932385AbZKDUm5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 15:42:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932366AbZKDUm5
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 15:42:57 -0500
+Received: from iabervon.org ([66.92.72.58]:43705 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932347AbZKDUm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 15:42:57 -0500
+Received: (qmail 30239 invoked by uid 1000); 4 Nov 2009 20:43:01 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 4 Nov 2009 20:43:01 -0000
+In-Reply-To: <16cee31f0911040650s3eba1067mb66a48bb50c97c28@mail.gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132145>
 
-Junio C Hamano wrote:
-> How does Cygwin-ness of the build environment affect the end result when
-> you build with MSVC?
+On Wed, 4 Nov 2009, Andrzej K. Haczewski wrote:
 
-Not at all. This is an MSVC/NO_MMAP combo problem. (The "problem" also exists
-with the msvc build on msysGit[1])
-
->                      I am not a Windows person, so I am only guessing,
-> but I suspect that the result does not pull any library nor crt0 from what
-> people usually consider "Cygwin environment".  It feels that the "default
-> configuration of Cygwin" that insists on NO_MMAP is the guilty party here.
+> 2009/11/4 Johannes Sixt <j.sixt@viscovery.net>:
+> >
+> > You are right. But #ifdef THREADED_DELTA_SEARCH is about a "generic"
+> > property of the code and is already used elsewhere in the file, whereas
+> > #ifdef WIN32 would be new and is is about platform differences.
+> >
+> > Anyway, we would have to see what Junio says about the new function calls,
+> > because he's usually quite anal when it comes to added code vs. static
+> > initialization. ;)
 > 
+> I could do it with wrappers for pthread_mutex_lock and _unlock and
+> lazy init there plus lazy init cond var in cond_wait and _signal, that
+> way it could be done without any additional code in the first #ifdef.
+> But I don't see any simple solution for working around
+> deinitialization, that's why I'd leave non-static initialization. Let
+> me put some touchups and resubmit for another round.
 
-See patch #3.
+Is it actually necessary to deinitialize? Since the variables are static 
+and therefore can't leak, and would presumably not need to be 
+reinitialized differently if they were used again, I think they should be 
+able to just stay. If Windows is unhappy about processes still having 
+locks initialized at exit, I suppose we could go through and destroy all 
+our mutexes and conds at cleanup time. Pthreads does have the appropriate 
+functions, and it would be correct to use them, although unnecessary.
 
-> Shouldn't this be solved by teaching the Makefile about this new "Cygwin
-> but using MSVC as compiler toolchain" combination?
-
-Yes. Err... see patch #3 :-P
-
-> [Footnote]
-> 
-> *1* Notice "if" at the beginning of this sentence---I am not qualified to
-> make a judgement without help from area experts here.  Is it a sane thing
-> to run Cygwin and still use MSVC as the compiler toolchain?
-
-About as sane as running msysGit and still use MSVC as the compiler! :D
-
->  Is it
-> commonly done?  I have no idea.
-> 
-
-Nor me. I just tried it, and it works (after applying these patches!); for
-exactly the same reason, and to the same extent, that it works on msysGit.
-
-[Footnote]
-*1* I admit to sometimes being a bit sloppy with naming (and maybe confused
-also!). Now, IIUC, MinGW is basically gcc + binutils, MSYS is bash + some
-unix tools and msysGit is MinGW + MSYS + some additional packages needed to
-build and run git (eg perl). So, the "MinGW build" should really be called the
-msysGit build ;-) (but the config section specifically picks out the MINGW string
-from uname_S)
-Also, the "msvc build on MinGW" should really be the "msvc build on msysGit".
-Or something like that!
-
-ATB,
-Ramsay Jones
+	-Daniel
+*This .sig left intentionally blank*
