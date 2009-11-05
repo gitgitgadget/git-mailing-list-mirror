@@ -1,69 +1,90 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 1/4] MSVC: Fix an "unresolved symbol" linker error on
- cygwin
-Date: Thu, 05 Nov 2009 08:55:27 +0100
-Message-ID: <4AF284EF.2030606@viscovery.net>
-References: <4AE74408.7080103@ramsay1.demon.co.uk> <4AEFD9E2.6060004@viscovery.net> <7veiogt4g8.fsf@alter.siamese.dyndns.org> <4AF1E1FD.1050102@ramsay1.demon.co.uk>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: Automatically remote prune
+Date: Thu, 5 Nov 2009 17:05:50 +0900
+Message-ID: <43d8ce650911050005l6d120cb0h374f3c04b3948b25@mail.gmail.com>
+References: <43d8ce650911040242l44bbf87dm35494e04ce9039aa@mail.gmail.com>
+	 <7v639qi2un.fsf@alter.siamese.dyndns.org>
+	 <43d8ce650911041741w4b39d137ha2a1529a15256d27@mail.gmail.com>
+	 <7viqdpemki.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Marius Storm-Olsen <mstormo@gmail.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu Nov 05 08:55:35 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 05 09:05:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5xBu-0007Pc-LO
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 08:55:34 +0100
+	id 1N5xLx-0002RH-H9
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 09:05:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755093AbZKEHzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2009 02:55:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754571AbZKEHzX
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 02:55:23 -0500
-Received: from lilzmailmt02.liwest.at ([212.33.55.12]:50332 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755058AbZKEHzX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2009 02:55:23 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1N5xBn-0001j5-FJ; Thu, 05 Nov 2009 08:55:27 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 3C1CA4E9; Thu,  5 Nov 2009 08:55:27 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <4AF1E1FD.1050102@ramsay1.demon.co.uk>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1755564AbZKEIFq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Nov 2009 03:05:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755291AbZKEIFq
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 03:05:46 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:65024 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754492AbZKEIFp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Nov 2009 03:05:45 -0500
+Received: by pwj9 with SMTP id 9so3735760pwj.21
+        for <git@vger.kernel.org>; Thu, 05 Nov 2009 00:05:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=hiS9n+TwPa8rodG3gIflqYVPwW9wccij4J4n/dyeOrQ=;
+        b=BSbCAB7WIIrKciOkerCSCzWJ8osYVIqje6SDZsYExh40ksXLaLmQM7xr+QuEU6FsM3
+         KEH9z/OFYoK9gG4NRQKu+I5gqtHe/UM9mmgOnFazGcphttIO9dg2rp+u3yLxm93mvAsX
+         /iqxaG0dGjtolAGNEFBrR4kw7UAO4p00/Smn8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=YdABuc8vgrTa5tybmu3uwUniWvbnST/avaa5vmn7x3Nt4vH4mDtAzEKuvTFNupAsWx
+         isAOXv4LoRDs9qSEvOF1SgZsA7R8ecv8FzVPc6qm1aChCyTzqXz6btax1vRl0oB9pPwF
+         Zyriw0VedbdvdrawkJwXDBgViAB8McXPWB5xk=
+Received: by 10.114.242.14 with SMTP id p14mr4349044wah.179.1257408350756; 
+	Thu, 05 Nov 2009 00:05:50 -0800 (PST)
+In-Reply-To: <7viqdpemki.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132210>
 
-Ramsay Jones schrieb:
-> Junio C Hamano wrote:
->> Shouldn't this be solved by teaching the Makefile about this new "Cygwin
->> but using MSVC as compiler toolchain" combination?
-> 
-> Yes. Err... see patch #3 :-P
+2009/11/5 Junio C Hamano <gitster@pobox.com>:
+> John Tapsell <johnflux@gmail.com> writes:
+> "what the benefits are to give this information _in the 'branch' outp=
+ut_"
+> was what I meant. =C2=A0From the part you omitted from my message:
 
-A clarifiction: Junio talks about using the MSVC tools to build Cygwin
-programs, that is, to merely substitute Cygwin's gcc by MSVC, but to still
-link against cygwin's C runtime.
+I omitted it just because, imho, it's not what I 'care about'.  I'm
+not trying to help advanced users (Users that _want_ to keep
+remotes/origin/* clean and users that _want_ to be careful to not lose
+commits are both advanced users, imho).  I'm just interested in
+reducing confusion for non-advanced users.  So either not-showing
+removed remote branches by default, or showing them but marking them
+as deleted.
 
-But this is not what this series is about.
+> A better approach to please the first class of audience may be to
+> introduce an option that tells fetch to cull tracking refs that are s=
+tale.
+> Then "branch -r" output will not show stale refs and there is no plac=
+e
+> (nor need) to show [Deleted] labels.
 
-When the "MSVC build" of git is made, then the MSVC compiler is used, and
-this will always use Microsoft libraries in the resulting executables,
-regardless of whether "make MSVC=1" was called from a "cygwin environment"
-or from and "msys environment".
+If it's a non-default option, then it won't help the non-advanced users=
+=2E
 
-This series is about fixing "make MSVC=1" when it is run from a "cygwin
-environment" by disentangling the MSVC and Cygwin configuration sections
-in the Makefile.
+> Such an option won't be very useful for the second class of audience,
+> though. =C2=A0For them we would need something else, and it would lik=
+ely be an
+> enhancement to "git remote".
 
--- Hannes
+Which still leaves confusion when viewing "git branch -r" since they
+would show up there still.
+
+
+John
