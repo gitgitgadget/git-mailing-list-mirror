@@ -1,275 +1,245 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCHv2 2/2] t1200: Make documentation and test agree
-Date: Wed,  4 Nov 2009 22:33:53 -0800
-Message-ID: <1257402833-4741-2-git-send-email-bebarino@gmail.com>
-References: <1257282328-6491-1-git-send-email-bebarino@gmail.com>
- <1257402833-4741-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 05 07:34:13 2009
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH v2 09/13] Honour the refspec when updating refs after 
+ import
+Date: Thu, 5 Nov 2009 01:53:37 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.0911050145010.14365@iabervon.org>
+References: <1257364098-1685-1-git-send-email-srabbelier@gmail.com>  <1257364098-1685-10-git-send-email-srabbelier@gmail.com> <alpine.LNX.2.00.0911041601170.14365@iabervon.org>  <fabb9a1e0911041321i1ccec898r53ddafb9405c6331@mail.gmail.com> 
+ <alpine.LNX.2.00.0911041624401.14365@iabervon.org> <fabb9a1e0911041745x577f7e4rc678da4d7d559193@mail.gmail.com> <alpine.LNX.2.00.0911050016360.14365@iabervon.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johan Herland <johan@herland.net>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 05 07:54:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5vvA-0007tH-L9
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 07:34:12 +0100
+	id 1N5wEb-0005AB-QP
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 07:54:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751499AbZKEGd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2009 01:33:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751486AbZKEGd6
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 01:33:58 -0500
-Received: from mail-gx0-f226.google.com ([209.85.217.226]:58956 "EHLO
-	mail-gx0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750965AbZKEGd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2009 01:33:57 -0500
-Received: by gxk26 with SMTP id 26so5665329gxk.1
-        for <git@vger.kernel.org>; Wed, 04 Nov 2009 22:34:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=RH73XSi6yek2UbFNRKULoeklo9pnRBbiwI+lnyJWkCU=;
-        b=OiCqR44q9sLbCSv+fVC60Azr3M96tlbO3/68Ww5RGKbX3ceYeVq1CjYftDv35ZM3Vn
-         5saU0OvTVovdRE7qC1CtrfMf0J1UF1toGiLys6w977iF+feIiZK4t127whIv/UX53BIE
-         mmiI0d9jK9MY3IDOdS5pO1T9KlI+Sw/SbjLFM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=FY4YaXgd8Emw4f4hiqbD1ve0WgE8v0ngE49HUW2jj3IcySuibo2/oz3tZ5XbRXAFnV
-         2l1EPeijjFfQRFXVj/Y2DHrfCKCTnr+CS0hAdhZr4hwKar3ubxP7h191K3YdvEfj1CNz
-         T0LKu1xt7NmJ4BOZAQBnEcYrTYh/gGEc/3ZYI=
-Received: by 10.150.125.24 with SMTP id x24mr2269626ybc.5.1257402842105;
-        Wed, 04 Nov 2009 22:34:02 -0800 (PST)
-Received: from earth (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
-        by mx.google.com with ESMTPS id 16sm867907gxk.7.2009.11.04.22.33.59
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 04 Nov 2009 22:34:01 -0800 (PST)
-Received: by earth (sSMTP sendmail emulation); Wed, 04 Nov 2009 22:33:57 -0800
-X-Mailer: git-send-email 1.6.5.2.143.g8cc62
-In-Reply-To: <1257402833-4741-1-git-send-email-bebarino@gmail.com>
+	id S1756057AbZKEGxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2009 01:53:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756025AbZKEGxd
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 01:53:33 -0500
+Received: from iabervon.org ([66.92.72.58]:52879 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754949AbZKEGxd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2009 01:53:33 -0500
+Received: (qmail 17199 invoked by uid 1000); 5 Nov 2009 06:53:37 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 5 Nov 2009 06:53:37 -0000
+In-Reply-To: <alpine.LNX.2.00.0911050016360.14365@iabervon.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132203>
 
-There were some differences between t1200 and the gitcore-tutorial. Add
-missing tests for manually merging two branches, and use the same
-commands in both files.
+On Thu, 5 Nov 2009, Daniel Barkalow wrote:
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
+> On Thu, 5 Nov 2009, Sverre Rabbelier wrote:
+> 
+> > Heya,
+> > 
+> > On Wed, Nov 4, 2009 at 22:30, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> > > On Wed, 4 Nov 2009, Sverre Rabbelier wrote:
+> > >> On Wed, Nov 4, 2009 at 22:20, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> > >> > That's not true for "git pull <url> <branch>"; we do want the remote ref,
+> > >> > but it doesn't have a local peer.
+> > 
+> > No, I don't think that's right, when doing a fetch we want to store
+> > the refs somewhere, sure, but not under 'refs/heads/<branch>', perhaps
+> > 'refs/hg/fetch/<branch>', either way, the current code does not work.
+> 
+> I think you've still got things backwards. From the point of view of 
+> transport.c, refs/<vcs> is entirely opaque, and we never look at it. Those 
+> aren't local peers. They're a way for the helper to communicate to 
+> transport-helper.c. The user says: pull refs/heads/master of this hg 
+> repo. Transport.c tries to fetch refs/heads/master and get the sha1 to 
+> write into FETCH_HEAD or wherever. Transport-helper.c says "import 
+> refs/heads/master", and git-fast-import reads the resulting script and 
+> writes some ref that the helper tells it to write. Then transport-helper.c 
+> figures out where the ref was written, reads it, and updates the struct 
+> ref representing the remote info. Then builtin-fetch looks at the struct 
+> ref and writes it to the local repositories ref namespace or FETCH_HEAD.
+> 
+> > >> >I think going straight to the refspec
+> > >> > command is the right answer.
+> > >>
+> > >> Can you clarity what you mean with "the refspec command"?
+> > >
+> > > Whatever it is that lets the helper tell the transport code where in the
+> > > helper's private namespace to look for refs. I'd been thinking the helper
+> > > would advertize the "refspec" capability, and the transport code would
+> > > call the "refspec" command in order to get the helper to report that; but
+> > > then I actually only said that the helper reports refspec, and not
+> > > proposed a name for the command.
+> > 
+> > Currently I'm implementing so that it would work like this for the svn helper:
+> > 
+> > $ echo capabilities | git remote-svn origin /path/to/hg/repo
+> > import
+> > refspec +refs/trunk:refs/svn/origin/trunk
+> > refspec +refs/branches/*:refs/svn/origin/*
+> > 
+> > That way we can put the refspec in the config file at clone time.
+> > 
+> > Now I've been browsing through the builtin-fetch code, and it looks
+> > like the main problem is going to be to apply this refspec at all.
+> > I'll have a more extensive look tomorrow.
+> 
+> This is entirely not what I think we should have. The config file should 
+> say refs/heads/*:refs/remotes/origin/* like it always does, because the 
+> transport will list the refs like refs/heads/* and refs/tags/* and return 
+> them like that.
+> 
+> I'll see if I can write up an untested patch that does what I'm thinking 
+> of.
 
- This is all new since v1
+Here's a patch (on my original series, which doesn't seem to be in pu any 
+more, but should be floating around somewhere). Completely untested, 
+except that it compiles. The idea is that the helper will say something 
+like:
 
- Documentation/gitcore-tutorial.txt |   20 ++++----
- t/t1200-tutorial.sh                |   97 ++++++++++++++++++++++++++++++++---
- 2 files changed, 98 insertions(+), 19 deletions(-)
+refspec refs/heads/master:refs/svn/origin/trunk
+refspec refs/heads/*:refs/svn/origin/branches/*
+refspec refs/tags/*:refs/svn/origin/tags/*
 
-diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore-tutorial.txt
-index b3640c4..7bdf090 100644
---- a/Documentation/gitcore-tutorial.txt
-+++ b/Documentation/gitcore-tutorial.txt
-@@ -185,7 +185,7 @@ object is. git will tell you that you have a "blob" object (i.e., just a
- regular file), and you can see the contents with
+and transport-helper will use these patterns to figure out where to find 
+the correct value from the helper's private namespace when asked to fetch 
+refs/heads/topic.
+
+	-Daniel
+
+commit 483836f6411d2317f24c7594c557fb01133508b6
+Author: Daniel Barkalow <barkalow@iabervon.org>
+Date:   Thu Nov 5 01:39:02 2009 -0500
+
+    Allow helper to map private ref names into normal names
+    
+    This allows a helper to say that, when it handles "import
+    refs/heads/topic", the script it outputs will actually write to
+    refs/svn/origin/branches/topic; therefore, transport-helper should
+    read it from the latter location after git-fast-import completes.
+
+diff --git a/remote.c b/remote.c
+index f0441c4..58d1a61 100644
+--- a/remote.c
++++ b/remote.c
+@@ -790,6 +790,24 @@ static int match_name_with_pattern(const char *key, const char *name,
+ 	return ret;
+ }
  
- ----------------
--$ git cat-file "blob" 557db03
-+$ git cat-file blob 557db03
- ----------------
- 
- which will print out "Hello World". The object `557db03` is nothing
-@@ -1188,7 +1188,7 @@ $ git show-branch
- --
-  + [mybranch] Some work.
- *  [master] Some fun.
--*+ [mybranch^] New day.
-+*+ [mybranch^] Initial commit
- ------------
- 
- Now we are ready to experiment with the merge by hand.
-@@ -1204,11 +1204,11 @@ $ mb=$(git merge-base HEAD mybranch)
- The command writes the commit object name of the common ancestor
- to the standard output, so we captured its output to a variable,
- because we will be using it in the next step.  By the way, the common
--ancestor commit is the "New day." commit in this case.  You can
-+ancestor commit is the "Initial commit" commit in this case.  You can
- tell it by:
- 
- ------------
--$ git name-rev $mb
-+$ git name-rev --name-only --tags $mb
- my-first-tag
- ------------
- 
-@@ -1237,8 +1237,8 @@ inspect the index file with this command:
- ------------
- $ git ls-files --stage
- 100644 7f8b141b65fdcee47321e399a2598a235a032422 0	example
--100644 263414f423d0e4d70dae8fe53fa34614ff3e2860 1	hello
--100644 06fa6a24256dc7e560efa5687fa84b51f0263c3a 2	hello
-+100644 557db03de997c86a4a028e1ebd3a1ceb225be238 1	hello
-+100644 ba42a2a96e3027f3333e13ede4ccf4498c3ae942 2	hello
- 100644 cc44c73eb783565da5831b4d820c962954019b69 3	hello
- ------------
- 
-@@ -1253,8 +1253,8 @@ To look at only non-zero stages, use `\--unmerged` flag:
- 
- ------------
- $ git ls-files --unmerged
--100644 263414f423d0e4d70dae8fe53fa34614ff3e2860 1	hello
--100644 06fa6a24256dc7e560efa5687fa84b51f0263c3a 2	hello
-+100644 557db03de997c86a4a028e1ebd3a1ceb225be238 1	hello
-+100644 ba42a2a96e3027f3333e13ede4ccf4498c3ae942 2	hello
- 100644 cc44c73eb783565da5831b4d820c962954019b69 3	hello
- ------------
- 
-@@ -1283,8 +1283,8 @@ the working tree..  This can be seen if you run `ls-files
- ------------
- $ git ls-files --stage
- 100644 7f8b141b65fdcee47321e399a2598a235a032422 0	example
--100644 263414f423d0e4d70dae8fe53fa34614ff3e2860 1	hello
--100644 06fa6a24256dc7e560efa5687fa84b51f0263c3a 2	hello
-+100644 557db03de997c86a4a028e1ebd3a1ceb225be238 1	hello
-+100644 ba42a2a96e3027f3333e13ede4ccf4498c3ae942 2	hello
- 100644 cc44c73eb783565da5831b4d820c962954019b69 3	hello
- ------------
- 
-diff --git a/t/t1200-tutorial.sh b/t/t1200-tutorial.sh
-index c57c9d5..299e724 100755
---- a/t/t1200-tutorial.sh
-+++ b/t/t1200-tutorial.sh
-@@ -47,8 +47,9 @@ test_expect_success 'tree' '
- '
- 
- test_expect_success 'git diff-index -p HEAD' '
--	echo "Initial commit" | \
--	git commit-tree $(git write-tree) 2>&1 > .git/refs/heads/master &&
-+	tree=$(git write-tree)
-+	commit=$(echo "Initial commit" | git commit-tree $tree) &&
-+	git update-ref HEAD $commit &&
- 	git diff-index -p HEAD > diff.output &&
- 	cmp diff.expect diff.output
- '
-@@ -131,16 +132,18 @@ Work, work, work
- EOF
- 
- cat > show-branch.expect << EOF
--* [master] Merged "mybranch" changes.
-+* [master] Merge work in mybranch
-  ! [mybranch] Some work.
- --
---  [master] Merged "mybranch" changes.
-+-  [master] Merge work in mybranch
- *+ [mybranch] Some work.
-+*  [master^] Some fun.
- EOF
- 
- test_expect_success 'git show-branch' '
--	git commit -m "Merged \"mybranch\" changes." -i hello &&
--	git show-branch --topo-order master mybranch > show-branch.output &&
-+	git commit -m "Merge work in mybranch" -i hello &&
-+	git show-branch --topo-order --more=1 master mybranch \
-+		> show-branch.output &&
- 	cmp show-branch.expect show-branch.output
- '
- 
-@@ -160,10 +163,10 @@ test_expect_success 'git resolve' '
- '
- 
- cat > show-branch2.expect << EOF
--! [master] Merged "mybranch" changes.
-- * [mybranch] Merged "mybranch" changes.
-+! [master] Merge work in mybranch
-+ * [mybranch] Merge work in mybranch
- --
---- [master] Merged "mybranch" changes.
-+-- [master] Merge work in mybranch
- EOF
- 
- test_expect_success 'git show-branch (part 2)' '
-@@ -171,6 +174,82 @@ test_expect_success 'git show-branch (part 2)' '
- 	cmp show-branch2.expect show-branch2.output
- '
- 
-+cat > show-branch3.expect << EOF
-+! [master] Merge work in mybranch
-+ * [mybranch] Merge work in mybranch
-+--
-+-- [master] Merge work in mybranch
-++* [master^2] Some work.
-++* [master^] Some fun.
-+EOF
++char *apply_refspecs(struct refspec *refspecs, int nr_refspec,
++		     const char *name)
++{
++	int i;
++	char *ret = NULL;
++	for (i = 0; i < nr_refspec; i++) {
++		struct refspec *refspec = refspecs + i;
++		if (refspec->pattern) {
++			if (match_name_with_pattern(refspec->src, name,
++						    refspec->dst, &ret))
++				return ret;
++		} else if (!strcmp(refspec->src, name))
++			return strdup(refspec->dst);
++	}
++	return NULL;
++	
++}
 +
-+test_expect_success 'git show-branch (part 3)' '
-+	git show-branch --topo-order --more=2 master mybranch \
-+		> show-branch3.output &&
-+	cmp show-branch3.expect show-branch3.output
-+'
+ int remote_find_tracking(struct remote *remote, struct refspec *refspec)
+ {
+ 	int find_src = refspec->src == NULL;
+diff --git a/remote.h b/remote.h
+index ac0ce2f..c2f920b 100644
+--- a/remote.h
++++ b/remote.h
+@@ -91,6 +91,9 @@ void ref_remove_duplicates(struct ref *ref_map);
+ int valid_fetch_refspec(const char *refspec);
+ struct refspec *parse_fetch_refspec(int nr_refspec, const char **refspec);
+ 
++char *apply_refspecs(struct refspec *refspecs, int nr_refspec,
++		     const char *name);
 +
-+test_expect_success 'rewind to "Some fun." and "Some work."' '
-+	git checkout mybranch &&
-+	git reset --hard master^2 &&
-+	git checkout master &&
-+	git reset --hard master^
-+'
-+
-+cat > show-branch4.expect << EOF
-+* [master] Some fun.
-+ ! [mybranch] Some work.
-+--
-+ + [mybranch] Some work.
-+*  [master] Some fun.
-+*+ [mybranch^] Initial commit
-+EOF
-+
-+test_expect_success 'git show-branch (part 4)' '
-+	git show-branch --topo-order > show-branch4.output &&
-+	cmp show-branch4.expect show-branch4.output
-+'
-+
-+test_expect_success 'manual merge' '
-+	mb=$(git merge-base HEAD mybranch) &&
-+	git name-rev --name-only --tags $mb > name-rev.output &&
-+	test "my-first-tag" = $(cat name-rev.output) &&
-+
-+	git read-tree -m -u $mb HEAD mybranch
-+'
-+
-+cat > ls-files.expect << EOF
-+100644 7f8b141b65fdcee47321e399a2598a235a032422 0	example
-+100644 557db03de997c86a4a028e1ebd3a1ceb225be238 1	hello
-+100644 ba42a2a96e3027f3333e13ede4ccf4498c3ae942 2	hello
-+100644 cc44c73eb783565da5831b4d820c962954019b69 3	hello
-+EOF
-+
-+test_expect_success 'git ls-files --stage' '
-+	git ls-files --stage > ls-files.output &&
-+	cmp ls-files.expect ls-files.output
-+'
-+
-+cat > ls-files-unmerged.expect << EOF
-+100644 557db03de997c86a4a028e1ebd3a1ceb225be238 1	hello
-+100644 ba42a2a96e3027f3333e13ede4ccf4498c3ae942 2	hello
-+100644 cc44c73eb783565da5831b4d820c962954019b69 3	hello
-+EOF
-+
-+test_expect_success 'git ls-files --unmerged' '
-+	git ls-files --unmerged > ls-files-unmerged.output &&
-+	cmp ls-files-unmerged.expect ls-files-unmerged.output
-+'
-+
-+test_expect_success 'git-merge-index' '
-+	test_must_fail git merge-index git-merge-one-file hello
-+'
-+
-+test_expect_success 'git ls-files --stage (part 2)' '
-+	git ls-files --stage > ls-files.output2 &&
-+	cmp ls-files.expect ls-files.output2
-+'
-+
- test_expect_success 'git repack' 'git repack'
- test_expect_success 'git prune-packed' 'git prune-packed'
- test_expect_success '-> only packed objects' '
--- 
-1.6.5.2.143.g8cc62
+ int match_refs(struct ref *src, struct ref **dst,
+ 	       int nr_refspec, const char **refspec, int all);
+ 
+diff --git a/transport-helper.c b/transport-helper.c
+index aa5ad3c..88573e7 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -5,6 +5,7 @@
+ #include "commit.h"
+ #include "diff.h"
+ #include "revision.h"
++#include "remote.h"
+ 
+ struct helper_data
+ {
+@@ -12,6 +13,9 @@ struct helper_data
+ 	struct child_process *helper;
+ 	unsigned fetch : 1;
+ 	unsigned import : 1;
++	/* These go from remote name (as in "list") to private name */
++	struct refspec *refspecs;
++	int refspec_nr;
+ };
+ 
+ static struct child_process *get_helper(struct transport *transport)
+@@ -20,6 +24,9 @@ static struct child_process *get_helper(struct transport *transport)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct child_process *helper;
+ 	FILE *file;
++	const char **refspecs = NULL;
++	int refspec_nr = 0;
++	int refspec_alloc = 0;
+ 
+ 	if (data->helper)
+ 		return data->helper;
+@@ -53,6 +60,16 @@ static struct child_process *get_helper(struct transport *transport)
+ 			data->fetch = 1;
+ 		if (!strcmp(buf.buf, "import"))
+ 			data->import = 1;
++		if (!prefixcmp(buf.buf, "refspec ")) {
++			ALLOC_GROW(refspecs,
++				   refspec_nr + 1,
++				   refspec_alloc);
++			refspecs[refspec_nr++] = strdup(buf.buf + strlen("refspec "));
++		}
++	}
++	if (refspecs) {
++		data->refspec_nr = refspec_nr;
++		data->refspecs = parse_fetch_refspec(refspec_nr, refspecs);
+ 	}
+ 	return data->helper;
+ }
+@@ -121,6 +138,7 @@ static int fetch_with_import(struct transport *transport,
+ {
+ 	struct child_process fastimport;
+ 	struct child_process *helper = get_helper(transport);
++	struct helper_data *data = transport->data;
+ 	int i;
+ 	struct ref *posn;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -141,10 +159,16 @@ static int fetch_with_import(struct transport *transport,
+ 	finish_command(&fastimport);
+ 
+ 	for (i = 0; i < nr_heads; i++) {
++		char *private;
+ 		posn = to_fetch[i];
+ 		if (posn->status & REF_STATUS_UPTODATE)
+ 			continue;
+-		read_ref(posn->name, posn->old_sha1);
++		if (data->refspecs)
++			private = apply_refspecs(data->refspecs, data->refspec_nr, posn->name);
++		else
++			private = strdup(posn->name);
++		read_ref(private, posn->old_sha1);
++		free(private);
+ 	}
+ 	return 0;
+ }
