@@ -1,90 +1,112 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: Automatically remote prune
-Date: Thu, 5 Nov 2009 17:05:50 +0900
-Message-ID: <43d8ce650911050005l6d120cb0h374f3c04b3948b25@mail.gmail.com>
-References: <43d8ce650911040242l44bbf87dm35494e04ce9039aa@mail.gmail.com>
-	 <7v639qi2un.fsf@alter.siamese.dyndns.org>
-	 <43d8ce650911041741w4b39d137ha2a1529a15256d27@mail.gmail.com>
-	 <7viqdpemki.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Problem signing a tag
+Date: Thu, 05 Nov 2009 09:29:24 +0100
+Message-ID: <4AF28CE4.5000906@drmicha.warpmail.net>
+References: <200911021558.17550.joshua@eeinternet.com> <200911030911.47030.joshua@eeinternet.com> <4AF18F7A.2000904@drmicha.warpmail.net> <200911040947.50226.joshua@eeinternet.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 05 09:05:57 2009
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: "Joshua J. Kugler" <joshua@eeinternet.com>
+X-From: git-owner@vger.kernel.org Thu Nov 05 09:29:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5xLx-0002RH-H9
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 09:05:57 +0100
+	id 1N5xit-00027q-6j
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 09:29:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755564AbZKEIFq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Nov 2009 03:05:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755291AbZKEIFq
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 03:05:46 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:65024 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754492AbZKEIFp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Nov 2009 03:05:45 -0500
-Received: by pwj9 with SMTP id 9so3735760pwj.21
-        for <git@vger.kernel.org>; Thu, 05 Nov 2009 00:05:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hiS9n+TwPa8rodG3gIflqYVPwW9wccij4J4n/dyeOrQ=;
-        b=BSbCAB7WIIrKciOkerCSCzWJ8osYVIqje6SDZsYExh40ksXLaLmQM7xr+QuEU6FsM3
-         KEH9z/OFYoK9gG4NRQKu+I5gqtHe/UM9mmgOnFazGcphttIO9dg2rp+u3yLxm93mvAsX
-         /iqxaG0dGjtolAGNEFBrR4kw7UAO4p00/Smn8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=YdABuc8vgrTa5tybmu3uwUniWvbnST/avaa5vmn7x3Nt4vH4mDtAzEKuvTFNupAsWx
-         isAOXv4LoRDs9qSEvOF1SgZsA7R8ecv8FzVPc6qm1aChCyTzqXz6btax1vRl0oB9pPwF
-         Zyriw0VedbdvdrawkJwXDBgViAB8McXPWB5xk=
-Received: by 10.114.242.14 with SMTP id p14mr4349044wah.179.1257408350756; 
-	Thu, 05 Nov 2009 00:05:50 -0800 (PST)
-In-Reply-To: <7viqdpemki.fsf@alter.siamese.dyndns.org>
+	id S1756634AbZKEI32 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2009 03:29:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756646AbZKEI32
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 03:29:28 -0500
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:43936 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755727AbZKEI31 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Nov 2009 03:29:27 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 4F843B59CE;
+	Thu,  5 Nov 2009 03:29:32 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Thu, 05 Nov 2009 03:29:32 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=uYDepAcC27A/97O6YiKvuMCHL5M=; b=l4mga36MVUIIUrg1ggARllHUeUsOlsxnau/YzjuFHE+7rHkixOmkYCk8rq98N1HoAzdp6sj+bU47Oho9qWP1yUc7VfqKEF1s0H25LvE2mfqnrASB/yqWzzRcv//ugmvMgKGj80iunBzdAkSjp+RJHqWgdrnfI7HMGouQvWX2Arw=
+X-Sasl-enc: VP9UpI3t39FFH0peXWxXHRH4w8HaY5o7PqlJyM1SJVGm 1257409771
+Received: from localhost.localdomain (p5DCC17C2.dip0.t-ipconnect.de [93.204.23.194])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 534FA3BEE;
+	Thu,  5 Nov 2009 03:29:31 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091104 Lightning/1.0pre Shredder/3.0pre
+In-Reply-To: <200911040947.50226.joshua@eeinternet.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132211>
 
-2009/11/5 Junio C Hamano <gitster@pobox.com>:
-> John Tapsell <johnflux@gmail.com> writes:
-> "what the benefits are to give this information _in the 'branch' outp=
-ut_"
-> was what I meant. =C2=A0From the part you omitted from my message:
+Joshua J. Kugler venit, vidit, dixit 04.11.2009 19:47:
+> On Wednesday 04 November 2009, Michael J Gruber said something like:
+>>> gpg: problem with the agent - disabling agent use
+>>> error: gpg failed to sign the tag
+>>> error: unable to sign the tag
+>>> $ echo $?
+>>> 128
+>>>
+>>> And when I sign at the prompt:
+>>>
+>>> $ gpg -sa
+>>>
+>>> You need a passphrase to unlock the secret key for
+>>> user: "Joshua J. Kugler <joshua@azariah.com>"
+>>> 1024-bit DSA key, ID 14EA086E, created 2009-08-09
+>>>
+>>> gpg: problem with the agent - disabling agent use
+>>> Blah blah blah blah
+>>> Blah blah blah blah
+>>> $ echo $?
+>>> 2
+>>
+>> [...]
+>>
+>> I assume you don't want to use gpg-agent, that should be the easy way
+>> out.
+> 
+> Well, I could, but I just haven't set it up. :)
+> 
+>> If that helps you can put "--no-use-agent" in your gpg config.
+> 
+> I commented out use-agent in the config. That worked. THANKS!
+> 
+>> 2 is a non-fatal error, 128 a fatal one, btw.
+> 
+> Well, the 2 was from running gpg alone, and 128 was from git erroring 
+> out.  According to the gpg docs:
+> 
+> "The program returns 0 if everything was fine, 1 if at least a signature 
+> was bad, and other error codes for fatal errors."
+> 
+> So, the docs consider 2 a fatal error, even though it appears it isn't.  
+> It seems that 
+> http://github.com/git/git/blob/a6dbf8814f433a7fbfa9cde6333c98019f6db1e4/builtin-tag.c#L202 
+> needs to be patched to something along the lines of:
+> 
+> rv = finish_command(&gpg)
+> if ((rv && rv !=2)  || !len || len < 0)
+> 
+> Probably digging in to the gpg source code to figure out what errors are 
+> and aren't fatal would be in order.
+> 
+> Thanks again for your help! Glad to know what I needed to do to sign my 
+> tags!
 
-I omitted it just because, imho, it's not what I 'care about'.  I'm
-not trying to help advanced users (Users that _want_ to keep
-remotes/origin/* clean and users that _want_ to be careful to not lose
-commits are both advanced users, imho).  I'm just interested in
-reducing confusion for non-advanced users.  So either not-showing
-removed remote branches by default, or showing them but marking them
-as deleted.
+Dig dig dig... gpg exits with 2 in a lot of cases, one would need to
+parse fd-error to find out more. But it also looks as if gpg exits
+normally with a good passphrase. So I tried, and at least with gpg 1.4.9
+and git 1.6.5.2 I can sign tags with "use-agent" and without a running
+agent: I get asked for the passphrase (after reporting the agent MIA),
+and everything's fine.
 
-> A better approach to please the first class of audience may be to
-> introduce an option that tells fetch to cull tracking refs that are s=
-tale.
-> Then "branch -r" output will not show stale refs and there is no plac=
-e
-> (nor need) to show [Deleted] labels.
+My gpg returns 0 in this case; it returns 2 only if I don't enter the
+passphrase. So, this seems to depend on the version of gpg. Or on
+entering the correct passphrase ;)
 
-If it's a non-default option, then it won't help the non-advanced users=
-=2E
-
-> Such an option won't be very useful for the second class of audience,
-> though. =C2=A0For them we would need something else, and it would lik=
-ely be an
-> enhancement to "git remote".
-
-Which still leaves confusion when viewing "git branch -r" since they
-would show up there still.
-
-
-John
+Michael
