@@ -1,86 +1,95 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-0.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=1.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_RECEIVED,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-Received: (qmail 11824 invoked by uid 107); 4 Oct 2009 16:32:07 -0000
+Received: (qmail 29481 invoked by uid 107); 5 Nov 2009 19:40:41 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Sun, 04 Oct 2009 12:32:04 -0400
+    by peff.net (qpsmtpd/0.40) with ESMTP; Thu, 05 Nov 2009 14:40:39 -0500
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757270AbZJDQ1N (ORCPT <rfc822;peff@peff.net>);
-	Sun, 4 Oct 2009 12:27:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757265AbZJDQ1N
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Oct 2009 12:27:13 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:54753 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757150AbZJDQ1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Oct 2009 12:27:12 -0400
-Received: from archeboc.imag.fr (archeboc.imag.fr [129.88.43.1])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n94GQsxE014990
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 4 Oct 2009 18:26:56 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by archeboc.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1MuTul-0001wF-LZ; Sun, 04 Oct 2009 18:26:27 +0200
-To:	Jakub Narebski <jnareb@gmail.com>
-Cc:	Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
-Subject: Re: Git push over git protocol for corporate environment
-References: <00163623ac5d75929b0474e66b96@google.com>
-	<200910041725.39992.jnareb@gmail.com>
-From:	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Date:	Sun, 04 Oct 2009 18:26:27 +0200
-In-Reply-To: <200910041725.39992.jnareb@gmail.com> (Jakub Narebski's message of "Sun\, 4 Oct 2009 17\:25\:39 +0200")
-Message-ID: <vpqtyyf5dn0.fsf@bauges.imag.fr>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+	id S1758742AbZKETgr (ORCPT <rfc822;peff@peff.net>);
+	Thu, 5 Nov 2009 14:36:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758445AbZKETgq
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 14:36:46 -0500
+Received: from mail.lysator.liu.se ([130.236.254.3]:32909 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757755AbZKETgq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2009 14:36:46 -0500
+X-Greylist: delayed 1461 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Nov 2009 14:36:46 EST
+Received: from mail.lysator.liu.se (localhost [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id C544F40026;
+	Thu,  5 Nov 2009 20:11:33 +0100 (CET)
+Received: by mail.lysator.liu.se (Postfix, from userid 1674)
+	id B6A5E40036; Thu,  5 Nov 2009 20:11:33 +0100 (CET)
+Received: from krank (unknown [62.20.90.206])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id 7274E40026;
+	Thu,  5 Nov 2009 20:11:33 +0100 (CET)
+Received: by krank (Postfix, from userid 1000)
+	id DEDC6617E7; Thu,  5 Nov 2009 20:12:29 +0100 (CET)
+To:	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To:	bill lam <cbill.lam@gmail.com>
+Subject: Re: how to rebase backwards
+From:	=?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Date:	Thu, 05 Nov 2009 20:12:29 +0100
+In-Reply-To: <20091103093716.GD7117@debian.b2j> (bill lam's message of "Tue, 3
+	Nov 2009 17:37:16 +0800")
+Message-ID: <877hu4zsyq.fsf@lysator.liu.se>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+References: <20091103054510.GB7117@debian.b2j>
+	<7vocnkt5o4.fsf@alter.siamese.dyndns.org>
+	<20091103093716.GD7117@debian.b2j>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 04 Oct 2009 18:26:56 +0200 (CEST)
-X-IMAG-MailScanner-Information:	Please contact MI2S MIM  for more information
-X-MailScanner-ID: n94GQsxE014990
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check:	1255278418.05977@oU9Q92hupEzBg5WW2CUGyg
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
+X-Old-Spam-Status: No, score=-0.2 required=5.0 tests=AWL autolearn=disabled 
+	version=3.1.7-deb3
 
-Jakub Narebski <jnareb@gmail.com> writes:
+bill lam <cbill.lam@gmail.com> writes:
 
-> On Thu, 1 Oct 2009, Eugene Sajine wrote:
+> Thank you for detail explanation.  From what you described, I begin
+> with master commit D, 
+>  $ git checkout -b deploy
+>  $ git commit --allow-empty -m deploy
+
+But why on earth would you want to use --allow-empty? There is no reason
+for that. Just let deploy be where it is when you created it (until you
+actually add something to it).
+
+>                       E
+>                      /^ deploy
+>      ---A---B---C---D
+>                     ^ master
+>  
+>  $ git rebase -i A
 >
->> Thanks to everybody for prompt answers!
+>                       v deploy
+>           B'--C'--D'--E'
+>          /
+>      ---A---B---C---D
+>                     ^ master
 >
-> You are welcome!
->
->> There is one thing I'm still missing though. Do I understand correctly that  
->> if a person has an ssh access (account) to the host in internal network,  
->> then this won't be enough for him to be able to push to the repo? Should we  
->> still go through the hassle of managing the ssh keys for each particular  
->> user who is supposed to have push access?
->
-> Yes, it is enough to push (and fetch) via SSH protocol.
+> since E is an empty commit, I suppose content of D' E' and D are
+> identical at this point.  Is that correct?
 
-To be a bit more precise: roughly, there are two ways to manage access
-to a Git repo via SSH:
+Assuming you didn't intentionally change it during rebase, yes.
 
-* One unix user (typically called "git") managing the repository, and
-  eveybody connecting to the repo via ssh://git@.... Then, if you want
-  any access control within the owned repositories for this user, you
-  need a key-based authentication to be able to distinguish who's
-  connecting. This is what gitorious does.
+> If several months later, I forget which is the common ancestor for
+> master and deploy, how do I generate the above graph or identify
+> commit A as the common ancestor for these two branches?
 
-* Everyone has its own unix account, and the repository is shared (via
-  ACLs or simple group-based permissions, see git init --shared).
-  Then, each user can choose the way he prefers for authentication,
-  and if the user has an unrestricted account (i.e. can write
-  ~/.ssh/authorized_keys), then it's the job of the users to manage
-  this, not the one of the sysadmin.
+That is exactly what git does all the time. You can use many
+command. For instance git log --graph master...deply whill show you both
+branches, starting from their common ancestor. "git merge-base deploy
+master" will tell you that the common ancestor is. Etc.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+David Kågedal
