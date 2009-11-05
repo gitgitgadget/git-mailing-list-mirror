@@ -1,76 +1,88 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: Automatically remote prune
-Date: Thu, 5 Nov 2009 08:45:41 +0530
-Message-ID: <2e24e5b90911041915o40922167ob48a8503ee262b37@mail.gmail.com>
-References: <43d8ce650911040242l44bbf87dm35494e04ce9039aa@mail.gmail.com>
-	 <7v639qi2un.fsf@alter.siamese.dyndns.org>
-	 <43d8ce650911041741w4b39d137ha2a1529a15256d27@mail.gmail.com>
-	 <7viqdpemki.fsf@alter.siamese.dyndns.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH v2] commit -c/-C/--amend: reset timestamp and authorship to committer with --reset-author
+Date: Thu, 05 Nov 2009 12:34:56 +0900
+Message-ID: <20091105123456.6117@nanako3.lavabit.com>
+References: <1257304811-26812-1-git-send-email-erick.mattos@gmail.com>
+	<7vpr7ykbh8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: John Tapsell <johnflux@gmail.com>, Git List <git@vger.kernel.org>
+Content-Transfer-Encoding: 8bit
+Cc: Erick Mattos <erick.mattos@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 05 04:15:51 2009
+X-From: git-owner@vger.kernel.org Thu Nov 05 04:35:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5spA-0003pn-Re
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 04:15:49 +0100
+	id 1N5t7u-0000JN-IM
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 04:35:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752740AbZKEDPi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Nov 2009 22:15:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751716AbZKEDPh
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 22:15:37 -0500
-Received: from mail-iw0-f180.google.com ([209.85.223.180]:47613 "EHLO
-	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750848AbZKEDPh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Nov 2009 22:15:37 -0500
-Received: by iwn10 with SMTP id 10so5498972iwn.4
-        for <git@vger.kernel.org>; Wed, 04 Nov 2009 19:15:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VfBlPopiXVUExF6uZwQCjkEch90XQmyZlKfN20bJEGk=;
-        b=bh6RRHmhZGQC4FL/jKi4HaEmBfeLWNMkubO7zjeuOzlTdyn0iXxJKSKyXyfcS8hDf3
-         k4I9eI6z7JhwXMP6MSiyhNu3SHX/ZvQbV/0WgBQhWgy4dU67Vv+LIGyAdoakDeVU0RhB
-         Ky3g5ywnkt303+8qgodnY9X1/pa5Q2SwSk938=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=SHBZfFAO0OcvGIPuUBxktB0HCJBSnoJaYmPBR1WUCPZYmMpDIr1HsF3jDmh+q+8LRc
-         dEhIdSpzu2KMCjMpaDrYfnO59ovXcQl9Rs2W3SzT0CxeMu5MhPdkpllfGCOTjNgOzVJH
-         BLoAtxX/lFaYijyKAzdpzHjRzBXLEP3QIsI8s=
-Received: by 10.231.170.201 with SMTP id e9mr162907ibz.16.1257390942056; Wed, 
-	04 Nov 2009 19:15:42 -0800 (PST)
-In-Reply-To: <7viqdpemki.fsf@alter.siamese.dyndns.org>
+	id S1754954AbZKEDez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 22:34:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754797AbZKEDez
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 22:34:55 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:60740 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751716AbZKEDey (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 22:34:54 -0500
+Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
+	by karen.lavabit.com (Postfix) with ESMTP id 13B7811B854;
+	Wed,  4 Nov 2009 21:35:00 -0600 (CST)
+Received: from 6562.lavabit.com (customer-148-233-239-23.uninet.net.mx [148.233.239.23])
+	by lavabit.com with ESMTP id IEU55YKKU2T5; Wed, 04 Nov 2009 21:35:00 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=k6lQrPhCCJOIlDMj+fNwlj9kTUaBGwk6Iz9CysnYPfyGJJ8nYBWw1Raxa5g8gnkB2UWRO/0Or8RfSxTRiZ1znxUZ9eSIh3Si7vQEtPbmgB7LqQmNPQ33ibEsVECGi3TCdW3nBdN8MH/fbazaKU9/P7wSXB/ikb88BmgtAnPsDVY=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7vpr7ykbh8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132195>
 
-On Thu, Nov 5, 2009 at 7:53 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
+Quoting Junio C Hamano <gitster@pobox.com>
 
-> =C2=A0(1) The user wants to keep the remotes/<origin>/* namespace cle=
-an (iow,
+> I had an impression that we have already established that setting the
+> author with --author="Somebody Else <s@b.e>" and committing with the
+> current time does not make much sense from the workflow point of view long
+> time ago in this thread.
+> <snip>
+> But allowing this combination, even though it might not make much sense,
+> is just giving extra length to the rope, so it may not be such a big deal.
 
-[snip]
+It may be wise to forbid a combination of options if it 
+encourages mistakes or a wrong workflow, but I don't think 
+using --author and --reset-author with 'git commit --amend' 
+is such a case.
 
-> =C2=A0(2) The user does want to be careful not to lose commits that n=
-ow only
+Imagine somebody other than you (eg. me) were the maintainer, 
+and a message by Szeder was sent with a good commit log message.
 
-This whole discussion is a conflict between those two.  The current
-system does the latter, safer, thing.  John's users are getting
-confused because they *think* this means the remote still has those
-refs.
+ http://article.gmane.org/gmane.comp.version-control.git/132029
 
-At best an alias that does a prune before (or after) a fetch should do.
+Then you sent a replacement patch that solves the same problem 
+in a more elegant way, but without anything that is usable as the 
+commit log message.
 
-And I notice 'git gui' has an option to "prune during fetch" -- maybe
-that should be an option that is also made available to the CLI fetch.
+ http://article.gmane.org/gmane.comp.version-control.git/132041
+
+If I were the maintainer, I would find it very convenient if I can 
+work like this:
+
+ % git am -s 132029   --- first I apply Szeder's version
+
+Then I see your message. Replace the code change but use Szeder's
+log message.
+
+ % git reset --hard HEAD^
+ % git am 132041   --- your version with no usable log message
+ % git commit --amend -s -c @{2} --author='Junio C Hamano <...>'
+
+> Sorry, but I cannot help feeling a bit frustrated and mildly irritated.
+
+Don't try to be perfect and feel stressed out, and please take 
+a good rest.
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
