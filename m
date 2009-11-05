@@ -1,68 +1,119 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Automatically remote prune
-Date: Thu, 5 Nov 2009 18:09:03 -0500
-Message-ID: <76718490911051509r65af2dd2k2574e2e521fed6f2@mail.gmail.com>
-References: <43d8ce650911040242l44bbf87dm35494e04ce9039aa@mail.gmail.com>
-	 <7v639qi2un.fsf@alter.siamese.dyndns.org>
-	 <43d8ce650911041741w4b39d137ha2a1529a15256d27@mail.gmail.com>
-	 <7viqdpemki.fsf@alter.siamese.dyndns.org>
-	 <43d8ce650911050005l6d120cb0h374f3c04b3948b25@mail.gmail.com>
-	 <7v3a4sagau.fsf@alter.siamese.dyndns.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Preserving branches after merging on ancestor
+Date: Fri, 6 Nov 2009 00:28:48 +0100
+Message-ID: <20091105232848.GA1939@atjola.homenet>
+References: <26217077.post@talk.nabble.com>
+ <20091105223004.GA3224@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: John Tapsell <johnflux@gmail.com>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 06 00:09:14 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Richard Lee <richard@webdezign.co.uk>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 06 00:29:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6BS3-0001cJ-OX
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 00:09:12 +0100
+	id 1N6BlY-0001ad-NK
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 00:29:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753839AbZKEXI7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2009 18:08:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753493AbZKEXI7
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 18:08:59 -0500
-Received: from mail-iw0-f180.google.com ([209.85.223.180]:43145 "EHLO
-	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753105AbZKEXI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2009 18:08:58 -0500
-Received: by iwn10 with SMTP id 10so436843iwn.4
-        for <git@vger.kernel.org>; Thu, 05 Nov 2009 15:09:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=B4to9bH0MJYsKTjY70il7J48HDDxsq8GWZNjB7etAug=;
-        b=pPPqGenlsNP8K+4tkQyntvn02QnQu2FHmaEedJNUA527smbkiMahrYao/H2Q2TMvS0
-         yoORORwWjh6fADzHxWg3pIHVHEI8OokeAZI1pprYnaBgm2n2zFlrKKT3iwTBMPBP+K2R
-         L3WduOdhsn9eHuWHE9/RvlI9kqcw+pxL7V1R4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=u52Ui+VuyV45HfkYS6u6grhKOAbJpbHsjnr4Zza6rq2zQoC7v05UirHsiu2QMsVcPq
-         W+nQUwZjyoRdpxeEuEJO29ch9rPfgyD8VJcnqOC9znziBm7HfCT5G4cAo2G6gU2I16JT
-         1VZ8qpS7dTpTokSiJIPVESprrb5WUfsvdbnmE=
-Received: by 10.231.170.201 with SMTP id e9mr3016237ibz.17.1257462543210; Thu, 
-	05 Nov 2009 15:09:03 -0800 (PST)
-In-Reply-To: <7v3a4sagau.fsf@alter.siamese.dyndns.org>
+	id S1758387AbZKEX2t convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Nov 2009 18:28:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758390AbZKEX2t
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 18:28:49 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39079 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753566AbZKEX2s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2009 18:28:48 -0500
+Received: (qmail invoked by alias); 05 Nov 2009 23:28:52 -0000
+Received: from i59F56212.versanet.de (EHLO atjola.homenet) [89.245.98.18]
+  by mail.gmx.net (mp063) with SMTP; 06 Nov 2009 00:28:52 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19DogQgIwJDGvtEMSl+sfRRpDWZNqGPM5TQVcg/aA
+	TCuS+qo3iXXTw4
+Content-Disposition: inline
+In-Reply-To: <20091105223004.GA3224@progeny.tock>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132252>
 
-On Thu, Nov 5, 2009 at 3:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> The necessary change to "git fetch" shouldn't be too hard to code, as we
-> are already doing this in mirror mode.
+On 2009.11.05 16:30:04 -0600, Jonathan Nieder wrote:
+> But doing this misses some of the main benefits of feature branches
+> imho.
+>=20
+> If you base each feature branch on the stable release or features it
+> depends on instead, this gives you the freedom to merge one feature w=
+ithout
+> the others to another branch.
 
-Actually, mirror mode applies to push only. Unless I'm missing
-something obvious.
+I guess Richard took the "branch topic1, merge topic1, branch topic2,
+merge topic2" thing just as an example because that ends up with two
+fast-forwards. And your example _still_ has such a fast-forward.
 
-Thus, adding prune to builtin-fetch duplicates the logic from
-builtin-remote, unless I do some refactoring. Hmph, I was hoping for a
-15 minute patch. :-(
+> For example:
+>=20
+> # wouldn=E2=80=99t feature1 be neat? let me try it.
+> git checkout -b feature1 v1.0
+> hack hack hack
+> # looks good.
+> git commit -a
+>=20
+> # how about an unrelated feature2?
+> git checkout -b feature2 v1.0
+> hack hack hack
+> # looks good.
+> git commit -a
+>=20
+> # but do they work?
+> git checkout v1.0; # detach head for testing [1]
+> git merge feature1 feature2
+> make check
+> # hmm, these don=E2=80=99t seem to work well together
+> ... (investigating some more)
+>=20
+> # looks like feature1 is not ready for prime time
+> # so let=E2=80=99s just use feature2 for now.
+> git checkout master
+> git merge feature2
+> git branch -d feature2
+> make check
+> # looks good; better publish it.
+> git push origin master
+>=20
+> v1.0 --- feature1
+>     \
+>      \-- feature2 [master]
 
-j.
+And here you got a fast-forward of master to feature2, i.e. linear
+history, which is what Richard was trying to avoid.
+
+Instead of:
+
+A---B---C---D---E (topic2) (master)
+     \
+      F---G---H (topic1)
+
+He wants:
+
+      F---G---H (topic1)
+     /
+A---B-----------M (master)
+     \         /
+      C---D---E (topic2)
+
+So he can see at which point topic2 got merged. This allows to ask "whi=
+ch
+commits got merged here" (and for a merge-once topic branch this means:
+Which commits are related to that topic), by using for example:
+
+git log M^1..M^2 # Will show C, D and E
+
+In the fast-forward case, there's no way to get that without manually
+figuring out where the topic branch started.
+
+Bj=C3=B6rn
