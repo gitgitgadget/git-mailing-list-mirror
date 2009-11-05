@@ -1,110 +1,93 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] MSVC: Windows-native implementation for subset of Pthreads
- API
-Date: Thu, 05 Nov 2009 14:25:27 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0911051422590.10340@xanadu.home>
-References: <1257331059-26344-1-git-send-email-ahaczewski@gmail.com>
- <1257350100-29281-1-git-send-email-ahaczewski@gmail.com>
- <alpine.LFD.2.00.0911041247250.10340@xanadu.home>
- <16cee31f0911041316n20fc9f12s6595dadc813d8f46@mail.gmail.com>
- <40aa078e0911041341s1adbbf31t6961207ba9c7905b@mail.gmail.com>
- <4AF20534.2030004@gmail.com> <alpine.LFD.2.00.0911042111270.10340@xanadu.home>
- <16cee31f0911050100v76316dacye7edd8718a893f01@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] MSVC: Fix an "unresolved symbol" linker error on
+ cygwin
+Date: Thu, 05 Nov 2009 11:37:10 -0800
+Message-ID: <7vhbt8ahll.fsf@alter.siamese.dyndns.org>
+References: <4AE74408.7080103@ramsay1.demon.co.uk>
+ <4AEFD9E2.6060004@viscovery.net> <7veiogt4g8.fsf@alter.siamese.dyndns.org>
+ <4AF1E1FD.1050102@ramsay1.demon.co.uk> <4AF284EF.2030606@viscovery.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_QH8xeF45SB6CziVjEFYvlw)"
-Cc: kusmabite@gmail.com, git@vger.kernel.org,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 05 20:25:41 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Marius Storm-Olsen <mstormo@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Nov 05 20:37:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N67xd-0005Cr-QI
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 20:25:34 +0100
+	id 1N689C-0002uW-OD
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 20:37:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758741AbZKETZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2009 14:25:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758713AbZKETZX
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 14:25:23 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:20175 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758506AbZKETZW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2009 14:25:22 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KSN00CS9HYFN260@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 05 Nov 2009 14:25:28 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <16cee31f0911050100v76316dacye7edd8718a893f01@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1758777AbZKEThT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2009 14:37:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758750AbZKEThT
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 14:37:19 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53938 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758570AbZKEThS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2009 14:37:18 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 796757572C;
+	Thu,  5 Nov 2009 14:37:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9OPmm9IXbs027KKPA08+BOH27pE=; b=B/ZEaL
+	57ZuL1syWhgpIDmqXHHQY2nU3Pl6aWHyjNemfdV4ylDVJavhLLG6rMH9stBgIS+H
+	HIbMtJSEbn6PdhI+qeUXIpg5t3Uiv8RsFSU5p+rLS8txSbjJRrmL7rXouoMUW32j
+	0yh7mw79HzJVH7PWHS/6hKSePqxhPa9GekjW4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ao7A0azgtQGbUC493v7YIRy0TbGMTdei
+	9eScEj7SvcgLxKFvp5pqPWB1ofcBiv7ZBnVD9lDOGcCy/XK+QaYKJowVN1ufDGP0
+	nnBoocMXNgrKwmN5y06v+Wz93fdkqz9dbkSQjHS34hMmSiVDlQ57Bd4afZCptlkZ
+	v6NnHEfT6J4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3368175729;
+	Thu,  5 Nov 2009 14:37:18 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F20D075723; Thu,  5 Nov
+ 2009 14:37:11 -0500 (EST)
+In-Reply-To: <4AF284EF.2030606@viscovery.net> (Johannes Sixt's message of
+ "Thu\, 05 Nov 2009 08\:55\:27 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A0C6B17C-CA42-11DE-87AA-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132238>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
---Boundary_(ID_QH8xeF45SB6CziVjEFYvlw)
-Content-type: TEXT/PLAIN; charset=ISO-8859-1
-Content-transfer-encoding: 8BIT
+> Ramsay Jones schrieb:
+>> Junio C Hamano wrote:
+>>> Shouldn't this be solved by teaching the Makefile about this new "Cygwin
+>>> but using MSVC as compiler toolchain" combination?
+>> 
+>> Yes. Err... see patch #3 :-P
+>
+> A clarifiction: Junio talks about using the MSVC tools to build Cygwin
+> programs, that is, to merely substitute Cygwin's gcc by MSVC, but to still
+> link against cygwin's C runtime.
 
-On Thu, 5 Nov 2009, Andrzej K. Haczewski wrote:
+Actually I do not talk about that; at least I meant to.
 
-> 2009/11/5 Nicolas Pitre <nico@fluxnic.net>:
-> > On Wed, 4 Nov 2009, Andrzej K. Haczewski wrote:
-> >
-> > What about:
-> >
-> > typedef struct {
-> >        HANDLE handle;
-> >        void *(*start_routine)(void *);
-> >        void *arg;
-> > } pthread_t;
-> >
-> > DWORD __stdcall windows_thread_start(LPVOID _self)
-> > {
-> >        pthread_t *self = _self;
-> >        void *ret = self->start_routine(self->arg);
-> >        return (DWORD)ret;
-> > }
-> >
-> > static inline int pthread_create(pthread_t *thread, const void *unused,
-> >                                 void *(*start_routine)(void *), void *arg)
-> > {
-> >        thread->handle = CreateThread(NULL, 0, windows_thread_start,
-> >                                      thread, 0, NULL);
-> >        [...]
-> > }
-> 
-> The problem I see is not with pthread_init, but pthread_join. Here's
-> how it looks:
-> 
-> int pthread_join(pthread_t thread, void **value_ptr);
-> 
-> If pthread_t would be a struct, then we can't call pthread_join like
-> that...
+> When the "MSVC build" of git is made, then the MSVC compiler is used, and
+> this will always use Microsoft libraries in the resulting executables,
+> regardless of whether "make MSVC=1" was called from a "cygwin environment"
+> or from and "msys environment".
 
-Why not?  At least gcc is quite happy with such a construct.  It 
-probably makes a copy of the stack before passing it though.
+> This series is about fixing "make MSVC=1" when it is run from a "cygwin
+> environment" by disentangling the MSVC and Cygwin configuration sections
+> in the Makefile.
 
-> At least that's what I though yesterday, but maybe it can be done like 
-> this:
-> 
-> int win32_pthread_join(pthread_t *thread, void **value_ptr)
-> {
->         [...]
-> }
-> 
-> #define pthread_join(a, b) win32_pthread_join(&(a), (b))
-> 
-> That way we don't need allocations to simulate pthread init/join API
+Yup.
 
-Right.
-
-
-Nicolas
-
---Boundary_(ID_QH8xeF45SB6CziVjEFYvlw)--
+I think we all three are in agreement that "When on Cygwin we do this"
+part of the Makefile should be adjusted.  Even though I lost track of the
+exact text in "patch #3", I can tell from Ramsay's response that the
+series is about that.
