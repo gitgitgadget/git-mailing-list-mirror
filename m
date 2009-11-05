@@ -1,89 +1,66 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH v2 11/13] Allow helpers to request the path to the .git 
-	directory
-Date: Thu, 5 Nov 2009 01:15:55 +0100
-Message-ID: <fabb9a1e0911041615o2a1afb6akdb120cdc94864e60@mail.gmail.com>
-References: <1257364098-1685-1-git-send-email-srabbelier@gmail.com> 
-	<1257364098-1685-12-git-send-email-srabbelier@gmail.com> <alpine.LNX.2.00.0911041621400.14365@iabervon.org> 
-	<fabb9a1e0911041406tce0956ai2ad3fe6cfbdc546d@mail.gmail.com> 
-	<7vd43xg7lf.fsf@alter.siamese.dyndns.org>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] MSVC: Windows-native implementation for subset of Pthreads
+ API
+Date: Wed, 04 Nov 2009 19:22:01 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0911041915120.10340@xanadu.home>
+References: <1257331059-26344-1-git-send-email-ahaczewski@gmail.com>
+ <1257350100-29281-1-git-send-email-ahaczewski@gmail.com>
+ <alpine.LFD.2.00.0911041247250.10340@xanadu.home>
+ <16cee31f0911041316n20fc9f12s6595dadc813d8f46@mail.gmail.com>
+ <4AF21283.3080407@gmail.com> <4AF214D5.6050202@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johan Herland <johan@herland.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 05 01:16:28 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
+To: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 05 01:22:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N5q1X-0006dV-VE
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 01:16:24 +0100
+	id 1N5q75-0008Rm-QQ
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 01:22:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752265AbZKEAQM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Nov 2009 19:16:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751956AbZKEAQM
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 19:16:12 -0500
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:35520 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751716AbZKEAQL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Nov 2009 19:16:11 -0500
-Received: by ewy3 with SMTP id 3so3762198ewy.37
-        for <git@vger.kernel.org>; Wed, 04 Nov 2009 16:16:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5s37mi1ytIG4mhBOHUTyZ+HTmqIk40qdrLbtXotJgYw=;
-        b=CidzXkBvSHuBF45cuoeZzLbZFzJvfU7uqQMZAY4sZp8hDRYqMUZhV22Ox+t0rHAK2v
-         dIujScOnL/yxPz4kuHrj9cwmvj8qIMzLhCYV7H0Rem71iM3KncQdk/sfSMIXqVEufQ1R
-         giHDul7De1k/L5Afsg2yEwPitOTVzGlh/MLp8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=P88XbRh/fOEwDfrIXGsxcqL0gyLfnQKWSUR4EN08xrrKTJcmge4V2tt3z0/sxcQqru
-         7IhYvKAEiC1vkrY+CgIWw4iyLJ6VuoQPXDFYJCxKSBDaouNL5RJ/IsVbOS7l7uOrjVLy
-         yv9raWiz2isHJwHICiiGPupyZ3OJo3DM9RlLI=
-Received: by 10.216.90.65 with SMTP id d43mr723342wef.41.1257380175150; Wed, 
-	04 Nov 2009 16:16:15 -0800 (PST)
-In-Reply-To: <7vd43xg7lf.fsf@alter.siamese.dyndns.org>
+	id S1754129AbZKEAV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2009 19:21:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752779AbZKEAV5
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Nov 2009 19:21:57 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:9537 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752435AbZKEAV5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2009 19:21:57 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0KSM00KOF10PW740@VL-MR-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 04 Nov 2009 19:22:02 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <4AF214D5.6050202@gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132180>
 
-Heya,
+On Thu, 5 Nov 2009, Andrzej K. Haczewski wrote:
 
-On Thu, Nov 5, 2009 at 01:04, Junio C Hamano <gitster@pobox.com> wrote:
-> What do you mean by <alias> here? =A0Is it the <alias> in
->
-> =A0 =A0 =A0 =A0[remote "alias"]
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0url =3D hg::http://some.where/repo/sit=
-o/ry.hg
+> @@ -1638,6 +1657,8 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
+>  				delta_search_threads);
+>  	p = xcalloc(delta_search_threads, sizeof(*p));
+>  
+> +	init_threaded_search();
 
-Yes, that one.
+Careful.  At the beginning of the function you'll find:
 
-> IOW, can a user ever use the foreign interface directly from the comm=
-and
-> line, without ever defining such entries in .git/config, perhaps usin=
-g
-> "git remote"?
+        if (delta_search_threads <= 1) {
+                find_deltas(list, &list_size, window, depth, processed);
+                return;
+        }
 
-No, my primary use case for remote helpers is currently 'git clone
-hg::https://soc.googlecode.com/hg/', and to have 'git fetch origin'
-Just Work (tm) from that clone. My secondary use case though, is to
-support 'git fetch hg:: https://soc.googlecode.com/hg/' just as well
-and have 'git log FETCH_HEAD' Just Work (tm) too. In that light
-=2Egit/info/remote-<vcs>/ is probably a better idea, so that the helper
-can use say '.git/info/remote-<vcs>/fetch/ for one-time fetches.
+That is, if we have thread support compiled in but we're told to use 
+only one thread, then the bulk of the work splitting is bypassed 
+entirely.  Inside find_deltas() there will still be pthread_mutex_lock() 
+and pthread_mutex_unlock() calls even if no threads are spawned.
 
---=20
-Cheers,
 
-Sverre Rabbelier
+Nicolas
