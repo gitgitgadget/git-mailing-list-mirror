@@ -1,80 +1,89 @@
-From: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
-Subject: Re: [PATCH] MSVC: Windows-native implementation for subset of 
-	Pthreads API
-Date: Thu, 5 Nov 2009 21:38:41 +0100
-Message-ID: <16cee31f0911051238v71ec4b57s415efb7bb48999d1@mail.gmail.com>
-References: <1257331059-26344-1-git-send-email-ahaczewski@gmail.com>
-	 <1257350100-29281-1-git-send-email-ahaczewski@gmail.com>
-	 <alpine.LFD.2.00.0911041247250.10340@xanadu.home>
-	 <16cee31f0911041316n20fc9f12s6595dadc813d8f46@mail.gmail.com>
-	 <40aa078e0911041341s1adbbf31t6961207ba9c7905b@mail.gmail.com>
-	 <4AF20534.2030004@gmail.com>
-	 <alpine.LFD.2.00.0911042111270.10340@xanadu.home>
-	 <16cee31f0911050100v76316dacye7edd8718a893f01@mail.gmail.com>
-	 <alpine.LFD.2.00.0911051422590.10340@xanadu.home>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] MSVC: Windows-native implementation for subset of Pthreads
+ API
+Date: Thu, 05 Nov 2009 15:36:51 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0911051527570.10340@xanadu.home>
+References: <1257283802-29726-1-git-send-email-ahaczewski@gmail.com>
+ <1257439548-9258-1-git-send-email-ahaczewski@gmail.com>
+ <alpine.LFD.2.00.0911051434090.10340@xanadu.home>
+ <16cee31f0911051209jcc490e2pabeab9a1b6e3b11d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: kusmabite@gmail.com, git@vger.kernel.org,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Nov 05 21:39:02 2009
+Content-Type: multipart/mixed; boundary="Boundary_(ID_YOOPxTwgNT6RusKoLb6LVA)"
+Cc: git@vger.kernel.org, kusmabite@gmail.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Paolo Bonzini <bonzini@gnu.org>
+To: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 05 21:44:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N696g-0006uf-4x
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 21:38:58 +0100
+	id 1N69Bv-00013Y-K0
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 21:44:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758834AbZKEUih convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Nov 2009 15:38:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757236AbZKEUih
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 15:38:37 -0500
-Received: from gv-out-0910.google.com ([216.239.58.190]:65335 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758827AbZKEUig convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Nov 2009 15:38:36 -0500
-Received: by gv-out-0910.google.com with SMTP id r4so130132gve.37
-        for <git@vger.kernel.org>; Thu, 05 Nov 2009 12:38:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AWooFOps4o9oMATZtbpPeF98KuPxVcQ9hdgy7vbIv+8=;
-        b=iS+LssOflEKa+CjTvsNkcUReNMzsWdVC9D1C55358DobFTr/HEuKIrjLEklS1Xkwn3
-         EIM8+zgcbF2rTGNG0vhMwY1HS9cafddqqCE4h9sBp8y0x3eVd6pH16z8K9IqQP7zw8k/
-         ++Jei20ijpbNx3gkuInkDJMgmgrXxLUKr+KF0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=v9muwUzUCkJOQ7ggsudhie93BVOlckAizEHKOXrwOXZNmXeChTsfpqMO0636GPglT0
-         8+0RXzEmBcbAVn5BnU80YcYCGUaKoBF3DNLvg8564X5fEYXsETw/n52zmUglcQobHks0
-         nnyLGGZ8BvJcdwH9E3X+t/ssDDLFrhJKPvQNw=
-Received: by 10.239.170.36 with SMTP id q36mr319196hbe.153.1257453521175; Thu, 
-	05 Nov 2009 12:38:41 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.00.0911051422590.10340@xanadu.home>
+	id S1758514AbZKEUoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2009 15:44:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758428AbZKEUoM
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 15:44:12 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:65461 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756322AbZKEUoM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2009 15:44:12 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0KSN00D64L9FPOC0@VL-MR-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 05 Nov 2009 15:36:51 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <16cee31f0911051209jcc490e2pabeab9a1b6e3b11d@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132248>
 
-2009/11/5 Nicolas Pitre <nico@fluxnic.net>:
-> Why not? =A0At least gcc is quite happy with such a construct. =A0It
-> probably makes a copy of the stack before passing it though.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Err... my mind is rotted with all that ugly java, c#, python and ruby,
-even c++. I should start taking some medications I suppose... what was
-I thinking is that C can't copy-construct a struct. Damn, too much sun
-(of java fame)...
+--Boundary_(ID_YOOPxTwgNT6RusKoLb6LVA)
+Content-type: TEXT/PLAIN; charset=ISO-8859-1
+Content-transfer-encoding: 8BIT
 
-That way I rediscovered simple struct construct...man I missed C so muc=
-h :)
+On Thu, 5 Nov 2009, Andrzej K. Haczewski wrote:
 
-Anyway, the solution with passing pthread_t as pointer saves some
-stack, so it's probably not that bad.
+> 2009/11/5 Nicolas Pitre <nico@fluxnic.net>:
+> > On Thu, 5 Nov 2009, Andrzej K. Haczewski wrote:
+> >
+> >> +static unsigned __stdcall win32_start_routine(void *arg)
+> >> +{
+> >> +     pthread_t *thread = arg;
+> >> +     thread->value = thread->start_routine(thread->arg);
+> >> +     return 0;
+> >> +}
+> >
+> > I suppose you could reuse thread->arg for both the argument and the
+> > returned value to save a word.
+> 
+> You're right! J6t committed already, what can I do now?
 
---
-Andrzej
+Just post a replacement patch.
+
+> > Why are you casting thread->handle here?  Why not simply declaring it as
+> > a HANDLE?
+> 
+> Just to silence MSVC warnings. WaitForSingleObject requires HANDLE,
+> _beginthreadex() returns uintptr_t. It's just a matter of where would
+> I put cast ;).
+
+Wonderful.  One could wonder why Windows can't have coherent 
+interfaces...
+
+Well, given that all existing usages in the tree (run-command.c and 
+compat/mingw.c) already cast the _beginthreadex() return value instead, 
+then that might be a good idea to follow the same model.
+
+
+Nicolas
+
+--Boundary_(ID_YOOPxTwgNT6RusKoLb6LVA)--
