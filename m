@@ -1,95 +1,164 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: [PATCH] pre-commit.sample: Diff against the empty tree when HEAD
- is invalid
-Date: Thu, 5 Nov 2009 11:57:57 +0100
-Message-ID: <20091105105757.GA31787@atjola.homenet>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] MSVC: Windows-native implementation for subset of Pthreads
+ API
+Date: Thu, 05 Nov 2009 13:27:37 +0100
+Message-ID: <4AF2C4B9.10402@viscovery.net>
+References: <16cee31f0911050100v76316dacye7edd8718a893f01@mail.gmail.com> <1257416325-5605-1-git-send-email-ahaczewski@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 05 11:58:19 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>,
+	kusmabite@gmail.com
+To: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 05 13:29:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N602j-0004mt-Tk
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 11:58:18 +0100
+	id 1N61RT-0007z8-H4
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Nov 2009 13:27:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753938AbZKEK6F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Nov 2009 05:58:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753944AbZKEK6F
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 05:58:05 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35451 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753938AbZKEK6E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2009 05:58:04 -0500
-Received: (qmail invoked by alias); 05 Nov 2009 10:58:07 -0000
-Received: from i59F56796.versanet.de (EHLO atjola.homenet) [89.245.103.150]
-  by mail.gmx.net (mp058) with SMTP; 05 Nov 2009 11:58:07 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/t9b956q3tLcF/1lELJIOUcRsOiyMCNvkIqFIUBf
-	9/1uCEiFg4vXFK
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1754571AbZKEM1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2009 07:27:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754084AbZKEM1o
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 07:27:44 -0500
+Received: from lilzmailmt02.liwest.at ([212.33.55.12]:22417 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751944AbZKEM1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2009 07:27:43 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1N61RB-0003Xe-KO; Thu, 05 Nov 2009 13:27:46 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 60D924E9; Thu,  5 Nov 2009 13:27:37 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <1257416325-5605-1-git-send-email-ahaczewski@gmail.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132225>
 
-This was already the case for the old "diff --check" call, but the new
-one that checks whether there are any non-ascii file names was missing
-it, making that check fail for root commits.
+Andrzej K. Haczewski schrieb:
+> diff --git a/Makefile b/Makefile
+> index bc039ac..30089a8 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -453,6 +453,7 @@ LIB_H += commit.h
+>  LIB_H += compat/bswap.h
+>  LIB_H += compat/cygwin.h
+>  LIB_H += compat/mingw.h
+> +LIB_H += compat/win32/pthread.h
+>  LIB_H += csum-file.h
+>  LIB_H += decorate.h
+>  LIB_H += delta.h
+> @@ -971,15 +972,15 @@ ifdef MSVC
+>  	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
+>  	NO_REGEX = YesPlease
+>  	NO_CURL = YesPlease
+> -	NO_PTHREADS = YesPlease
+> +	THREADED_DELTA_SEARCH = YesPlease
+>  	BLK_SHA1 = YesPlease
+>  
+>  	CC = compat/vcbuild/scripts/clink.pl
+>  	AR = compat/vcbuild/scripts/lib.pl
+>  	CFLAGS =
+>  	BASIC_CFLAGS = -nologo -I. -I../zlib -Icompat/vcbuild -Icompat/vcbuild/include -DWIN32 -D_CONSOLE -DHAVE_STRING_H -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE
+> -	COMPAT_OBJS = compat/msvc.o compat/fnmatch/fnmatch.o compat/winansi.o
+> -	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -DHAVE_ALLOCA_H -Icompat -Icompat/fnmatch -Icompat/regex -Icompat/fnmatch -DSTRIP_EXTENSION=\".exe\"
+> +	COMPAT_OBJS = compat/msvc.o compat/fnmatch/fnmatch.o compat/winansi.o compat/win32/pthread.o
+> +	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -DHAVE_ALLOCA_H -Icompat -Icompat/fnmatch -Icompat/regex -Icompat/fnmatch -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
+>  	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE -NODEFAULTLIB:MSVCRT.lib
+>  	EXTLIBS = advapi32.lib shell32.lib wininet.lib ws2_32.lib
+>  	lib =
 
-Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
----
- templates/hooks--pre-commit.sample |   18 +++++++++---------
- 1 files changed, 9 insertions(+), 9 deletions(-)
+What compiles compat/win32/pthread.c?
 
-diff --git a/templates/hooks--pre-commit.sample b/templates/hooks--pre-=
-commit.sample
-index 043970a..439eefd 100755
---- a/templates/hooks--pre-commit.sample
-+++ b/templates/hooks--pre-commit.sample
-@@ -7,6 +7,14 @@
- #
- # To enable this hook, rename this file to "pre-commit".
-=20
-+if git-rev-parse --verify HEAD >/dev/null 2>&1
-+then
-+	against=3DHEAD
-+else
-+	# Initial commit: diff against an empty tree object
-+	against=3D4b825dc642cb6eb9a060e54bf8d69288fbee4904
-+fi
-+
- # If you want to allow non-ascii filenames set this variable to true.
- allownonascii=3D$(git config hooks.allownonascii)
-=20
-@@ -17,7 +25,7 @@ if [ "$allownonascii" !=3D "true" ] &&
- 	# Note that the use of brackets around a tr range is ok here, (it's
- 	# even required, for portability to Solaris 10's /usr/bin/tr), since
- 	# the square bracket bytes happen to fall in the designated range.
--	test "$(git diff --cached --name-only --diff-filter=3DA -z |
-+	test "$(git diff --cached --name-only --diff-filter=3DA -z $against |
- 	  LC_ALL=3DC tr -d '[ -~]\0')"
- then
- 	echo "Error: Attempt to add a non-ascii file name."
-@@ -35,12 +43,4 @@ then
- 	exit 1
- fi
-=20
--if git-rev-parse --verify HEAD >/dev/null 2>&1
--then
--	against=3DHEAD
--else
--	# Initial commit: diff against an empty tree object
--	against=3D4b825dc642cb6eb9a060e54bf8d69288fbee4904
--fi
--
- exec git diff-index --check --cached $against --
---=20
-1.6.5.2.143.g8cc62
+Please don't forget to add compat/win32/*.o to the clean target.
+
+> +int pthread_create(pthread_t *thread, const void *unused,
+> +		   void *(*start_routine)(void*), void *arg)
+> +{
+> +	thread->arg = arg;
+> +	thread->handle = CreateThread(NULL, 0, win32_start_routine, thread, 0, NULL);
+
+Elsewhere we use _beginthreadex(). What's the difference?
+
+> +static inline int pthread_cond_init(pthread_cond_t *cond, const void *unused)
+> +{
+> +	cond->waiters = 0;
+> +
+> +	InitializeCriticalSection(&cond->waiters_lock);
+> +
+> +	cond->sema = CreateSemaphore(NULL, 0, LONG_MAX, NULL);
+> +	if (!cond->sema)
+> +		die("");
+> +	return 0;
+> +}
+> +
+> +static inline int pthread_cond_destroy(pthread_cond_t *cond)
+> +{
+> +	CloseHandle(cond->sema);
+> +	cond->sema = NULL;
+> +
+> +	DeleteCriticalSection(&cond->waiters_lock);
+> +
+> +	return 0;
+> +}
+> +
+> +static inline int pthread_cond_wait(pthread_cond_t *cond, CRITICAL_SECTION *mutex)
+> +{
+> +	/* serialize access to waiters count */
+> +	EnterCriticalSection(&cond->waiters_lock);
+> +	++cond->waiters;
+> +	LeaveCriticalSection(&cond->waiters_lock);
+> +
+> +	/*
+> +	 * Unlock external mutex and wait for signal.
+> +	 * NOTE: we've held mutex locked long enough to increment
+> +	 * waiters count above, so there's no problem with
+> +	 * leaving mutex unlocked before we wait on semaphore.
+> +	 */
+> +	LeaveCriticalSection(mutex);
+> +
+> +	/* let's wait */
+> +	WaitForSingleObject(cond->sema, INFINITE))
+> +
+> +	/* we're done waiting, so make sure we decrease waiters count */
+> +	EnterCriticalSection(&cond->waiters_lock);
+> +	--cond->waiters;
+> +	LeaveCriticalSection(&cond->waiters_lock);
+> +
+> +	/* lock external mutex again */
+> +	EnterCriticalSection(mutex);
+> +
+> +	return 0;
+> +}
+> +
+> +static inline int pthread_cond_signal(pthread_cond_t *cond)
+> +{
+> +	int have_waiters;
+> +
+> +	/* serialize access to waiters count */
+> +	EnterCriticalSection(&cond->waiters_lock);
+> +	have_waiters = cond->waiters > 0;
+> +	LeaveCriticalSection(&cond->waiters_lock);
+> +
+> +	/*
+> +	 * Signal only when there are waiters
+> +	 */
+> +	if (have_waiters)
+> +		return ReleaseSemaphore(cond->sema, 1, NULL) ?
+> +			0 : err_win_to_posix(GetLastError();
+> +	else
+> +		return 0;
+> +}
+
+The pthread_cond_* functions are quite voluminous, but not performance
+critical. Could you please move them to pthread.c as well?
+
+-- Hannes
