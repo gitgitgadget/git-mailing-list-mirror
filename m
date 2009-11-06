@@ -1,77 +1,80 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Automatically remote prune
-Date: Thu, 5 Nov 2009 19:38:39 -0500
-Message-ID: <76718490911051638w7cd5306bx65ed8d9ac525d2c3@mail.gmail.com>
-References: <43d8ce650911040242l44bbf87dm35494e04ce9039aa@mail.gmail.com>
-	 <7v639qi2un.fsf@alter.siamese.dyndns.org>
-	 <43d8ce650911041741w4b39d137ha2a1529a15256d27@mail.gmail.com>
-	 <7viqdpemki.fsf@alter.siamese.dyndns.org>
-	 <43d8ce650911050005l6d120cb0h374f3c04b3948b25@mail.gmail.com>
-	 <7v3a4sagau.fsf@alter.siamese.dyndns.org>
-	 <76718490911051509r65af2dd2k2574e2e521fed6f2@mail.gmail.com>
-	 <20091106001751.GF17748@machine.or.cz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitk: disable checkout of remote branch
+Date: Thu, 05 Nov 2009 16:45:24 -0800
+Message-ID: <7v8wek7a6z.fsf@alter.siamese.dyndns.org>
+References: <2e24e5b90911030800j22b00372r99a56c3f847a3644@mail.gmail.com>
+ <fabb9a1e0911030807h6b76b661pef75628a1255356@mail.gmail.com>
+ <1257295737457-3942366.post@n2.nabble.com>
+ <2e24e5b90911031758t651735f9xe9d078079112cfa6@mail.gmail.com>
+ <1257315478920-3943388.post@n2.nabble.com>
+ <fabb9a1e0911032241u3735fa30heaa195d959879f5a@mail.gmail.com>
+ <20091104072709.GC24263@coredump.intra.peff.net>
+ <7vhbtai2uy.fsf@alter.siamese.dyndns.org>
+ <20091105074808.GA12114@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>,
-	John Tapsell <johnflux@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Nov 06 01:39:18 2009
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Tim Mazid <timmazid@hotmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 06 01:45:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6Cqk-0006W0-0C
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 01:38:46 +0100
+	id 1N6CxX-0001Cm-Om
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 01:45:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759159AbZKFAif (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2009 19:38:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759155AbZKFAif
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 19:38:35 -0500
-Received: from mail-iw0-f180.google.com ([209.85.223.180]:51805 "EHLO
-	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758954AbZKFAif (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2009 19:38:35 -0500
-Received: by iwn10 with SMTP id 10so489060iwn.4
-        for <git@vger.kernel.org>; Thu, 05 Nov 2009 16:38:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=zZFeuO5rzYW9P7E0EE1ZC/8n/wpdY2iEENpa7FYayrI=;
-        b=f5Ed8xTKijIIUNsyEN1xUqQfI6CjElVaBK+oeV9HsNgZ8wMKV3va4+mX81jUD+U+Jo
-         lVY53C/P0xvncbCFzT511bcAUtAj2q3BNwcxuiSFpMQ7pPS1jswfbKsbl5JrkDsuLjBZ
-         tAOFCoe22WlpCM7AwmBmeY46qpVNsMsqT+/7s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=XKUxFdwFXX59j6IXCGNf5TnIldqNjts3WNok0yGPET4TECgQYEWwv4EOFZ92MfYQdz
-         Y0zcwvQWNbqMpoVCczCzRUXuxMA//PBkvA6EDSeVLGTLqvV3kyOL7tYeBKLDpwUv/SI6
-         G8QgWwKSDgZRwUOwtTN0FnEEUTsEPjtU/1qEs=
-Received: by 10.231.123.41 with SMTP id n41mr899446ibr.46.1257467919739; Thu, 
-	05 Nov 2009 16:38:39 -0800 (PST)
-In-Reply-To: <20091106001751.GF17748@machine.or.cz>
+	id S1759230AbZKFApf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2009 19:45:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759221AbZKFApf
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 19:45:35 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43920 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759211AbZKFApe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2009 19:45:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 46D6E93C6E;
+	Thu,  5 Nov 2009 19:45:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QqzS5UJJHfK3W4gLr6YBd8PVuz4=; b=O66ZJ8
+	rGzxJ+iVUCmoeGmk9XXm/LrGit/zxwir15zMetXribJqZdncAdCsC+vdcTe7ybeL
+	N2+0Mom5gr2aZysoERYKf0tzkMzrFQb0QqooiZGNDUSL5rhlepusNDhdaHYIzktv
+	OvebNp9dzUQSkdhpg2INlQpPwDfQ7iqrfxwDk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iA40gR+FEhn8O4X2wd/biYVQbIdx14hw
+	63N38K1qeGfPezKXkLq/jE9j0HDhEDlY9vUcZZZKx38PMJShbKvyYjMWIKwpIEUq
+	pkCis0fAEhFMUKEUlPNAEvgs1AJRFAf3ACbo+o/LwbaJ5wbFLrfDux2FpJBv23hO
+	6RYB+Ppb1so=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0EFB793C6D;
+	Thu,  5 Nov 2009 19:45:35 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AD39993C6A; Thu,  5 Nov 2009
+ 19:45:26 -0500 (EST)
+In-Reply-To: <20091105074808.GA12114@coredump.intra.peff.net> (Jeff King's
+ message of "Thu\, 5 Nov 2009 02\:48\:08 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B1C19E6C-CA6D-11DE-9F46-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132263>
 
-On Thu, Nov 5, 2009 at 7:17 PM, Petr Baudis <pasky@suse.cz> wrote:
-> On Thu, Nov 05, 2009 at 06:09:03PM -0500, Jay Soffian wrote:
->> Actually, mirror mode applies to push only. Unless I'm missing
->> something obvious.
+Jeff King <peff@peff.net> writes:
+
+>> Isn't it quite different?  What's in 'next' for 1.7.0 is to guess the
+>> user's intention when:
 >
-> Perhaps you are, mirror mode applies to fetch as well; that's how e.g.
-> repo.or.cz mirror mode is done currently.
+> Sorry, yes, I just saw Sverre's comment and misread the original
+> proposal.  Checking out "$remote/$branch" will still detach the HEAD,
+> and I don't think anybody has a previous proposal to change that.
 
-Can you please be more specific? There is no mention of mirror in
-builtin-fetch.c, only builtin-push.c. Further, the docs for
-"remote.<name>.mirror" indicate it's a push option only.
-
-So please explain what you mean by "that's how repo.or.cz mirror mode is done".
-
-Cluelessly yours,
-
-j.
+Heh, I think both of us forgot that we decided it is safe enough not to
+wait for 1.7.0 already, because the situation this kicks in has always
+resulted in an error.  We have it in master since e3de372 (Merge branch
+'jc/checkout-auto-track', 2009-10-30).
