@@ -1,116 +1,187 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH/RFC 3/3] builtin-fetch: add --prune option
-Date: Fri,  6 Nov 2009 00:10:41 -0500
-Message-ID: <1257484241-27219-4-git-send-email-jaysoffian@gmail.com>
+Subject: [PATCH/RFC 1/3] remote: refactor some logic into get_stale_heads()
+Date: Fri,  6 Nov 2009 00:10:39 -0500
+Message-ID: <1257484241-27219-2-git-send-email-jaysoffian@gmail.com>
 References: <1257484241-27219-1-git-send-email-jaysoffian@gmail.com>
- <1257484241-27219-2-git-send-email-jaysoffian@gmail.com>
- <1257484241-27219-3-git-send-email-jaysoffian@gmail.com>
 Cc: Jay Soffian <jaysoffian@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 06 06:11:33 2009
+X-From: git-owner@vger.kernel.org Fri Nov 06 06:11:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6H6g-0006me-W7
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 06:11:31 +0100
+	id 1N6H6f-0006me-Vq
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 06:11:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751741AbZKFFLH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Nov 2009 00:11:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751248AbZKFFLG
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 00:11:06 -0500
+	id S1751425AbZKFFLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2009 00:11:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751411AbZKFFLA
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 00:11:00 -0500
 Received: from qw-out-2122.google.com ([74.125.92.24]:1337 "EHLO
 	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751538AbZKFFLC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Nov 2009 00:11:02 -0500
+	with ESMTP id S1750883AbZKFFK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Nov 2009 00:10:59 -0500
 Received: by qw-out-2122.google.com with SMTP id 3so143925qwe.37
-        for <git@vger.kernel.org>; Thu, 05 Nov 2009 21:11:08 -0800 (PST)
+        for <git@vger.kernel.org>; Thu, 05 Nov 2009 21:11:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=eYg1K4XRnejQSyfDqg1B1NTWdOmgL1bSQovIqKNzYCc=;
-        b=Owp0kALuhNLib0J1OQJ9U/G3oUPm3Ne283nuWilp/mGvOPfXJdChJrkY5wR7uDOAzx
-         0BZfzsMwTZYJT+6u4Y+7SwEVhAnfv9Fnx0z35A3D0RmNuYkVy7NxjzWUYY0yJ64CFrGM
-         QcC6+yKq6yvufHWG3tXK9f6J/kCP0syET4S38=
+        bh=T/juXNOufCUDV+vOhxWoG0ID0GcGbbN4nps8AyS5K4w=;
+        b=E7LnXBtoPsVSFHMToCGJZn88tHDniLABWeU6YcbDvfT3SNGt54FfBbYVz3qfDQ5sff
+         NP6x4LIKxmMxQ/RCYYn052K8o1iquSMbDXt70OJibPFFIMQcB2GMfnuTAzLtVInO90/q
+         lZbuPvvq8P7VhGrFUgvdpCZ6rsRZ5PkP4fP5Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Uvm8x7U8m6io/zwEGOZg4M6909l4TYgbAdRzlEBnopATyS/aJoqvvBVY9v5hSENcug
-         KZf8UoFFWVWpoZ3RcMX7YpYGkMNTvFK15/qz9cSkVGYPCtVjiHQz8r0dQdDTIOoSc5C8
-         XW+2qsOt6y+KZh35Xxl8V1CaoabT0pRgcN23s=
-Received: by 10.224.69.161 with SMTP id z33mr2112697qai.59.1257484268241;
-        Thu, 05 Nov 2009 21:11:08 -0800 (PST)
+        b=W4W7L5DTGsI4VdzEmf4WktbVH4WW+QYAVx/GtWnbbtlCOGNRtbCWjekBN3qNekzwXy
+         mXh1CL/tKpTsDO1GcoKjmvRi6SguOHHn8BSU32KBedTkePk8TAooAV0AVvxlHomcUQ26
+         +1P9h4FBBfaSUkZFv61S0XMkW0tf0MMy0AOqg=
+Received: by 10.224.73.37 with SMTP id o37mr2095054qaj.252.1257484264592;
+        Thu, 05 Nov 2009 21:11:04 -0800 (PST)
 Received: from localhost (cpe-069-134-096-008.nc.res.rr.com [69.134.96.8])
-        by mx.google.com with ESMTPS id 21sm1029283qyk.12.2009.11.05.21.11.07
+        by mx.google.com with ESMTPS id 20sm1014610qyk.13.2009.11.05.21.11.03
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 05 Nov 2009 21:11:07 -0800 (PST)
+        Thu, 05 Nov 2009 21:11:04 -0800 (PST)
 X-Mailer: git-send-email 1.6.4.2
-In-Reply-To: <1257484241-27219-3-git-send-email-jaysoffian@gmail.com>
+In-Reply-To: <1257484241-27219-1-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132273>
 
-Teach fetch --prune, as an alternative to git remote prune.
+Move the logic in builtin-remote.c which determines which local heads are stale
+to remote.c so it can be used by other builtins.
 ---
- builtin-fetch.c |   22 +++++++++++++++++++++-
- 1 files changed, 21 insertions(+), 1 deletions(-)
+ builtin-remote.c |   32 ++++++++------------------------
+ remote.c         |   40 ++++++++++++++++++++++++++++++++++++++++
+ remote.h         |    3 +++
+ 3 files changed, 51 insertions(+), 24 deletions(-)
 
-diff --git a/builtin-fetch.c b/builtin-fetch.c
-index 985b36b..e8a5b9b 100644
---- a/builtin-fetch.c
-+++ b/builtin-fetch.c
-@@ -23,7 +23,7 @@ enum {
- 	TAGS_SET = 2
+diff --git a/builtin-remote.c b/builtin-remote.c
+index 0777dd7..b48267b 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -227,32 +227,10 @@ struct ref_states {
+ 	int queried;
  };
  
--static int append, dry_run, force, keep, update_head_ok, verbosity;
-+static int append, dry_run, force, keep, prune, update_head_ok, verbosity;
- static int tags = TAGS_DEFAULT;
- static const char *depth;
- static const char *upload_pack;
-@@ -42,6 +42,8 @@ static struct option builtin_fetch_options[] = {
- 		    "fetch all tags and associated objects", TAGS_SET),
- 	OPT_SET_INT('n', NULL, &tags,
- 		    "do not fetch all tags (--no-tags)", TAGS_UNSET),
-+	OPT_BOOLEAN('p', "prune", &prune,
-+		    "prune tracking branches no longer on remote"),
- 	OPT_BOOLEAN(0, "dry-run", &dry_run,
- 		    "dry run"),
- 	OPT_BOOLEAN('k', "keep", &keep, "keep downloaded pack"),
-@@ -489,6 +491,22 @@ static int fetch_refs(struct transport *transport, struct ref *ref_map)
- 	return ret;
- }
+-static int handle_one_branch(const char *refname,
+-	const unsigned char *sha1, int flags, void *cb_data)
+-{
+-	struct ref_states *states = cb_data;
+-	struct refspec refspec;
+-
+-	memset(&refspec, 0, sizeof(refspec));
+-	refspec.dst = (char *)refname;
+-	if (!remote_find_tracking(states->remote, &refspec)) {
+-		struct string_list_item *item;
+-		const char *name = abbrev_branch(refspec.src);
+-		/* symbolic refs pointing nowhere were handled already */
+-		if ((flags & REF_ISSYMREF) ||
+-		    string_list_has_string(&states->tracked, name) ||
+-		    string_list_has_string(&states->new, name))
+-			return 0;
+-		item = string_list_append(name, &states->stale);
+-		item->util = xstrdup(refname);
+-	}
+-	return 0;
+-}
+-
+ static int get_ref_states(const struct ref *remote_refs, struct ref_states *states)
+ {
+ 	struct ref *fetch_map = NULL, **tail = &fetch_map;
+-	struct ref *ref;
++	struct ref *ref, *stale_refs;
+ 	int i;
  
-+static int prune_refs(struct transport *transport, struct ref *ref_map)
-+{
-+	int result = 0;
-+	struct ref *ref, *stale_refs = get_stale_heads(transport->remote, ref_map);
+ 	for (i = 0; i < states->remote->fetch_refspec_nr; i++)
+@@ -268,11 +246,17 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
+ 		else
+ 			string_list_append(abbrev_branch(ref->name), &states->tracked);
+ 	}
++	stale_refs = get_stale_heads(states->remote, fetch_map);
 +	for (ref = stale_refs; ref; ref = ref->next) {
-+		if (!dry_run)
-+			result |= delete_ref(ref->name, NULL, 0);
-+		if (verbosity >= 0)
-+			fprintf(stderr, " x %-*s %-*s -> %s\n",
-+				SUMMARY_WIDTH, "[deleted]",
-+				REFCOL_WIDTH, "(none)", prettify_refname(ref->name));
++		struct string_list_item *item =
++			string_list_append(abbrev_branch(ref->name), &states->stale);
++		item->util = xstrdup(ref->name);
 +	}
 +	free_refs(stale_refs);
+ 	free_refs(fetch_map);
+ 
+ 	sort_string_list(&states->new);
+ 	sort_string_list(&states->tracked);
+-	for_each_ref(handle_one_branch, states);
+ 	sort_string_list(&states->stale);
+ 
+ 	return 0;
+diff --git a/remote.c b/remote.c
+index 73d33f2..ee48b49 100644
+--- a/remote.c
++++ b/remote.c
+@@ -6,6 +6,7 @@
+ #include "revision.h"
+ #include "dir.h"
+ #include "tag.h"
++#include "string-list.h"
+ 
+ static struct refspec s_tag_refspec = {
+ 	0,
+@@ -1586,3 +1587,42 @@ struct ref *guess_remote_head(const struct ref *head,
+ 
+ 	return list;
+ }
++
++struct stale_heads_info {
++	struct remote *remote;
++	struct string_list *ref_names;
++	struct ref **stale_refs_tail;
++};
++
++static int get_stale_heads_cb(const char *refname,
++	const unsigned char *sha1, int flags, void *cb_data)
++{
++	struct stale_heads_info *info = cb_data;
++	struct refspec refspec;
++	memset(&refspec, 0, sizeof(refspec));
++	refspec.dst = (char *)refname;
++	if (!remote_find_tracking(info->remote, &refspec)) {
++		if (!((flags & REF_ISSYMREF) ||
++		    string_list_has_string(info->ref_names, refspec.src))) {
++			struct ref *ref = make_linked_ref(refname, &info->stale_refs_tail);
++			hashcpy(ref->new_sha1, sha1);
++		}
++	}
 +	return 0;
 +}
 +
- static int add_existing(const char *refname, const unsigned char *sha1,
- 			int flag, void *cbdata)
- {
-@@ -613,6 +631,8 @@ static int do_fetch(struct transport *transport,
- 		free_refs(ref_map);
- 		return 1;
- 	}
-+	if (prune)
-+		prune_refs(transport, ref_map);
- 	free_refs(ref_map);
++struct ref *get_stale_heads(struct remote *remote, struct ref *fetch_map)
++{
++	struct ref *ref, *stale_refs = NULL;
++	struct string_list ref_names = { NULL, 0, 0, 0 };
++	struct stale_heads_info info;
++	info.remote = remote;
++	info.ref_names = &ref_names;
++	info.stale_refs_tail = &stale_refs;
++	for (ref = fetch_map; ref; ref = ref->next)
++		string_list_append(ref->name, &ref_names);
++	sort_string_list(&ref_names);
++	for_each_ref(get_stale_heads_cb, &info);
++	string_list_clear(&ref_names, 0);
++	return stale_refs;
++}
+diff --git a/remote.h b/remote.h
+index 5db8420..d0aba81 100644
+--- a/remote.h
++++ b/remote.h
+@@ -154,4 +154,7 @@ struct ref *guess_remote_head(const struct ref *head,
+ 			      const struct ref *refs,
+ 			      int all);
  
- 	/* if neither --no-tags nor --tags was specified, do automated tag
++/* Return refs which no longer exist on remote */
++struct ref *get_stale_heads(struct remote *remote, struct ref *fetch_map);
++
+ #endif
 -- 
 1.6.4.2
