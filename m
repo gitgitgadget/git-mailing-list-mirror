@@ -1,70 +1,77 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH v2 09/13] Honour the refspec when updating refs after 
- import
-Date: Thu, 5 Nov 2009 19:37:18 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.0911051929340.14365@iabervon.org>
-References: <1257364098-1685-1-git-send-email-srabbelier@gmail.com>  <1257364098-1685-10-git-send-email-srabbelier@gmail.com> <alpine.LNX.2.00.0911041601170.14365@iabervon.org>  <fabb9a1e0911041321i1ccec898r53ddafb9405c6331@mail.gmail.com> 
- <alpine.LNX.2.00.0911041624401.14365@iabervon.org> <fabb9a1e0911041745x577f7e4rc678da4d7d559193@mail.gmail.com>  <alpine.LNX.2.00.0911050016360.14365@iabervon.org> <alpine.LNX.2.00.0911050145010.14365@iabervon.org>  <fabb9a1e0911051551r2e13cfb9me0e668adb962f6bd@mail.gmail.com>
-  <alpine.LNX.2.00.0911051917100.14365@iabervon.org> <fabb9a1e0911051628v2ba15be2s9c3fb06879607cc0@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: Automatically remote prune
+Date: Thu, 5 Nov 2009 19:38:39 -0500
+Message-ID: <76718490911051638w7cd5306bx65ed8d9ac525d2c3@mail.gmail.com>
+References: <43d8ce650911040242l44bbf87dm35494e04ce9039aa@mail.gmail.com>
+	 <7v639qi2un.fsf@alter.siamese.dyndns.org>
+	 <43d8ce650911041741w4b39d137ha2a1529a15256d27@mail.gmail.com>
+	 <7viqdpemki.fsf@alter.siamese.dyndns.org>
+	 <43d8ce650911050005l6d120cb0h374f3c04b3948b25@mail.gmail.com>
+	 <7v3a4sagau.fsf@alter.siamese.dyndns.org>
+	 <76718490911051509r65af2dd2k2574e2e521fed6f2@mail.gmail.com>
+	 <20091106001751.GF17748@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johan Herland <johan@herland.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 06 01:39:04 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Tapsell <johnflux@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Fri Nov 06 01:39:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6CpZ-0005aH-Uk
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 01:37:34 +0100
+	id 1N6Cqk-0006W0-0C
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 01:38:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759112AbZKFAhQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2009 19:37:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758816AbZKFAhP
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 19:37:15 -0500
-Received: from iabervon.org ([66.92.72.58]:43836 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757867AbZKFAhO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2009 19:37:14 -0500
-Received: (qmail 11703 invoked by uid 1000); 6 Nov 2009 00:37:18 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 6 Nov 2009 00:37:18 -0000
-In-Reply-To: <fabb9a1e0911051628v2ba15be2s9c3fb06879607cc0@mail.gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1759159AbZKFAif (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2009 19:38:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759155AbZKFAif
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 19:38:35 -0500
+Received: from mail-iw0-f180.google.com ([209.85.223.180]:51805 "EHLO
+	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758954AbZKFAif (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2009 19:38:35 -0500
+Received: by iwn10 with SMTP id 10so489060iwn.4
+        for <git@vger.kernel.org>; Thu, 05 Nov 2009 16:38:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=zZFeuO5rzYW9P7E0EE1ZC/8n/wpdY2iEENpa7FYayrI=;
+        b=f5Ed8xTKijIIUNsyEN1xUqQfI6CjElVaBK+oeV9HsNgZ8wMKV3va4+mX81jUD+U+Jo
+         lVY53C/P0xvncbCFzT511bcAUtAj2q3BNwcxuiSFpMQ7pPS1jswfbKsbl5JrkDsuLjBZ
+         tAOFCoe22WlpCM7AwmBmeY46qpVNsMsqT+/7s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=XKUxFdwFXX59j6IXCGNf5TnIldqNjts3WNok0yGPET4TECgQYEWwv4EOFZ92MfYQdz
+         Y0zcwvQWNbqMpoVCczCzRUXuxMA//PBkvA6EDSeVLGTLqvV3kyOL7tYeBKLDpwUv/SI6
+         G8QgWwKSDgZRwUOwtTN0FnEEUTsEPjtU/1qEs=
+Received: by 10.231.123.41 with SMTP id n41mr899446ibr.46.1257467919739; Thu, 
+	05 Nov 2009 16:38:39 -0800 (PST)
+In-Reply-To: <20091106001751.GF17748@machine.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132262>
 
-On Fri, 6 Nov 2009, Sverre Rabbelier wrote:
+On Thu, Nov 5, 2009 at 7:17 PM, Petr Baudis <pasky@suse.cz> wrote:
+> On Thu, Nov 05, 2009 at 06:09:03PM -0500, Jay Soffian wrote:
+>> Actually, mirror mode applies to push only. Unless I'm missing
+>> something obvious.
+>
+> Perhaps you are, mirror mode applies to fetch as well; that's how e.g.
+> repo.or.cz mirror mode is done currently.
 
-> Heya,
-> 
-> On Fri, Nov 6, 2009 at 01:19, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> > I didn't understand the version of my patch that contains your changes,
-> > and I didn't know what was in it.
-> 
-> Either way, I managed to apply your patch, will send a new version of
-> the series tomorrow.
+Can you please be more specific? There is no mention of mirror in
+builtin-fetch.c, only builtin-push.c. Further, the docs for
+"remote.<name>.mirror" indicate it's a push option only.
 
-Does it make sense now in what it's trying to do? (And does it turn out to 
-work?) I'm fairly certain it's the easiest way to make the remote appear 
-most natural to the rest of git, but I don't actually have code that wants 
-to use it, so I wouldn't know if this just wouldn't work for hg or 
-something.
+So please explain what you mean by "that's how repo.or.cz mirror mode is done".
 
-> > I don't know why Junio squashed your
-> > changes into my patch, particularly when I disagreed with those changes.
-> 
-> Junio didn't squash anything, it's just that pu still contains v4 of
-> the series, in which I had squashed my changes in.
+Cluelessly yours,
 
-Oh, okay. You probably shouldn't squash un-acked changes into other 
-people's patches when taking over their series.
-
-	-Daniel
-*This .sig left intentionally blank*
+j.
