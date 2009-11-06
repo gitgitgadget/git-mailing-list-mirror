@@ -1,181 +1,189 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] gitweb: Support for no project list on gitweb front page
-Date: Fri,  6 Nov 2009 16:11:05 +0100
-Message-ID: <1257520265-16699-1-git-send-email-pasky@suse.cz>
+Subject: [PATCH] gitweb: Polish the content tags support
+Date: Fri,  6 Nov 2009 16:10:55 +0100
+Message-ID: <1257520255-12698-1-git-send-email-pasky@suse.cz>
 Cc: Petr Baudis <pasky@suse.cz>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 06 16:19:53 2009
+X-From: git-owner@vger.kernel.org Fri Nov 06 16:19:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6QbO-0006Td-1j
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 16:19:50 +0100
+	id 1N6QbP-0006Td-3P
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 16:19:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759355AbZKFPTE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Nov 2009 10:19:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759358AbZKFPTC
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 10:19:02 -0500
-Received: from rover.dkm.cz ([62.24.64.27]:54572 "EHLO rover.dkm.cz"
+	id S1759005AbZKFPTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2009 10:19:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759351AbZKFPTE
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 10:19:04 -0500
+Received: from rover.dkm.cz ([62.24.64.27]:34890 "EHLO rover.dkm.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759354AbZKFPS7 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1759355AbZKFPS7 (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 6 Nov 2009 10:18:59 -0500
 Received: by rover.dkm.cz (Postfix, from userid 1001)
-	id 775A6165F0D; Fri,  6 Nov 2009 16:11:05 +0100 (CET)
+	id 3E5A8165F0C; Fri,  6 Nov 2009 16:10:55 +0100 (CET)
 X-Mailer: git-send-email 1.5.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132306>
 
-On very large sites like repo.or.cz (but maybe also git.debian.org,
-git.kernel.org, etc.), it is desirable not to have the project list
-on the front page since generating it is significant overhead and it
-takes significant data transfer and load time for the user, who might
-prefer to instead use the search form and possibly content tags to
-navigate to the target project. A link to the full list of projects is
-still available on the front page for users who wish to browse it. The
-whole feature is turned off by default.
+This patch integrates the tag filtering CGI parameter into the framework
+for parameter passing, dropping 'by_tag' and instead using query name 't'
+and symbolic name 'ctag_filter'. Compatibility support for 'by_tag' query
+name is retained.
 
-The patch introduces a new config variable $frontpage_no_project_list,
-by default 0 keeping the current behavior; if set to 1, no project list
-will be shown, but all projects will be still scanned if ctags are
-enabled; if set to 2, no project will be shown and no projects will
-be scanned while showing the front page. The compromise value of 1 is
-useful for sites where project scan time is not an issue or which
-use additional project list caching patches.
-
-The patch furthermore modifies project_list action not to show the
-index text, and introduces new default action frontpage which is by
-default identical to old project_list action, but can be further
-controlled by the $frontpage_no_project_list variable.
+This means that content tag links are now created using $cgi->a() and
+the href() method, and that they now point to the proper action;
+project_list in case of global content tags, forks in case of per-fork
+content tags. Also any other arguments like sorting order of projects
+are replayed within the links.
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 
 ---
- gitweb/README      |    8 ++++++++
- gitweb/gitweb.css  |    5 +++++
- gitweb/gitweb.perl |   32 +++++++++++++++++++++++++++++---
- 3 files changed, 42 insertions(+), 3 deletions(-)
+ gitweb/gitweb.perl |   37 +++++++++++++++++++++++--------------
+ 1 files changed, 23 insertions(+), 14 deletions(-)
 
-diff --git a/gitweb/README b/gitweb/README
-index 66c6a93..c5fd1b8 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -223,6 +223,14 @@ not include variables usually directly set during build):
-    repositories from launching cross-site scripting (XSS) attacks.  Set this
-    to true if you don't trust the content of your repositories. The default
-    is false.
-+ * $frontpage_no_project_list
-+   If 0, the gitweb frontpage will contain the project list; if 1 instead,
-+   it will contain just the index text, search form, tag cloud (if enabled)
-+   and a link to the actual project list. The page is reduced, but all
-+   projects still need to be scanned for the tag cloud construction. If the
-+   option is set to 2, not even the tag cloud will be shown; this is fastest.
-+   This option is useful for sites with large amount of projects. The default
-+   is 0.
- 
- 
- Projects list file format
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index cb3f0ba..9fee3f0 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -97,6 +97,11 @@ div.readme {
- 	padding: 8px;
- }
- 
-+p.projectlist_link {
-+	text-align: center;
-+	font-weight: bold;
-+}
-+
- a.title:hover {
- 	background-color: #d9d8d1;
- }
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 97e88b4..48326a4 100755
+index e82ca45..97e88b4 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -152,6 +152,11 @@ our @diff_opts = ('-M'); # taken from git_commit
- # the gitweb domain.
- our $prevent_xss = 0;
- 
-+# Whether to include project list on the gitweb front page; 0 means yes,
-+# 1 means no list but show tag cloud if enabled (all projects still need
-+# to be scanned), 2 means no list and no tag cloud (very fast)
-+our $frontpage_no_project_list = 0;
-+
- # information about snapshot formats that gitweb is capable of serving
- our %known_snapshot_formats = (
- 	# name => {
-@@ -601,6 +606,7 @@ our %actions = (
- 	"object" => \&git_object,
- 	# those below don't need $project
- 	"opml" => \&git_opml,
-+	"frontpage" => \&git_frontpage,
- 	"project_list" => \&git_project_list,
- 	"project_index" => \&git_project_index,
+@@ -566,6 +566,7 @@ our @cgi_param_mapping = (
+ 	searchtext => "s",
+ 	searchtype => "st",
+ 	snapshot_format => "sf",
++	ctag_filter => 't',
+ 	extra_options => "opt",
+ 	search_use_regexp => "sr",
  );
-@@ -901,13 +907,13 @@ if (!defined $action) {
- 	} elsif (defined $project) {
- 		$action = 'summary';
- 	} else {
--		$action = 'project_list';
-+		$action = 'frontpage';
+@@ -622,6 +623,11 @@ while (my ($name, $symbol) = each %cgi_param_mapping) {
  	}
  }
- if (!defined($actions{$action})) {
- 	die_error(400, "Unknown action");
- }
--if ($action !~ m/^(?:opml|project_list|project_index)$/ &&
-+if ($action !~ m/^(?:opml|frontpage|project_list|project_index)$/ &&
-     !$project) {
- 	die_error(400, "Project needed");
- }
-@@ -4377,6 +4383,7 @@ sub git_project_list_body {
  
- sub git_project_search_form {
- 	print $cgi->startform(-method => "get") .
-+	      $cgi->hidden({-name=>"a", -value=>"project_list"}) . "\n" .
- 	      "<p class=\"projsearch\">Search:\n" .
- 	      $cgi->textfield(-name => "s", -value => $searchtext) . "\n" .
- 	      "</p>" .
-@@ -4665,7 +4672,7 @@ sub git_search_grep_body {
- ## ======================================================================
- ## actions
- 
--sub git_project_list {
-+sub git_frontpage {
- 	git_header_html();
- 	if (-f $home_text) {
- 		print "<div class=\"index_include\">\n";
-@@ -4673,6 +4680,25 @@ sub git_project_list {
- 		print "</div>\n";
- 	}
- 	git_project_search_form();
-+	if (not $frontpage_no_project_list) {
-+		git_project_list_all();
-+	} else {
-+		my $show_ctags = gitweb_check_feature('ctags');
-+		if ($frontpage_no_project_list == 1 and $show_ctags) {
-+			my @list = git_get_projects_list();
-+			my @projects = fill_project_list_info(\@list, gitweb_check_feature('forks'), $show_ctags);
-+			git_project_list_ctags(\@projects);
-+		}
-+		print "<p class=\"projectlist_link\">" .
-+			$cgi->a({-href => href(action=>'project_list')}, "Browse all projects") .
-+			"</p>\n";
-+	}
-+	git_footer_html();
++# Backwards compatibility - by_tag= <=> t=
++if ($cgi->param('by_tag')) {
++	$input_params{'ctag_filter'} = $cgi->param('by_tag');
 +}
 +
-+sub git_project_list {
-+	git_header_html();
-+	git_project_search_form();
- 	git_project_list_all();
+ # now read PATH_INFO and update the parameter list for missing parameters
+ sub evaluate_path_info {
+ 	return if defined $input_params{'project'};
+@@ -2257,7 +2263,7 @@ sub git_get_project_ctags {
+ }
+ 
+ sub git_populate_project_tagcloud {
+-	my $ctags = shift;
++	my ($ctags, $action) = @_;
+ 
+ 	# First, merge different-cased tags; tags vote on casing
+ 	my %ctags_lc;
+@@ -2280,7 +2286,8 @@ sub git_populate_project_tagcloud {
+ 			$title =~ s/ /&nbsp;/g;
+ 			$title =~ s/^/&nbsp;/g;
+ 			$title =~ s/$/&nbsp;/g;
+-			$cloud->add($title, $home_link."?by_tag=".$_, $ctags_lc{$_}->{count});
++			$cloud->add($title, href(-replay=>1, action=>$action, ctag_filter=>$_),
++			            $ctags_lc{$_}->{count});
+ 		}
+ 	} else {
+ 		$cloud = \%ctags_lc;
+@@ -2289,14 +2296,15 @@ sub git_populate_project_tagcloud {
+ }
+ 
+ sub git_show_project_tagcloud {
+-	my ($cloud, $count) = @_;
++	my ($cloud, $count, $action) = @_;
+ 	print STDERR ref($cloud)."..\n";
+ 	if (ref $cloud eq 'HTML::TagCloud') {
+ 		return $cloud->html_and_css($count);
+ 	} else {
+ 		my @tags = sort { $cloud->{$a}->{count} <=> $cloud->{$b}->{count} } keys %$cloud;
+ 		return '<p align="center">' . join (', ', map {
+-			"<a href=\"$home_link?by_tag=$_\">$cloud->{$_}->{topname}</a>"
++			$cgi->a({-href => href(-replay=>1, action=>$action, ctag_filter=>$_)},
++				$cloud->{$_}->{topname});
+ 		} splice(@tags, 0, $count)) . '</p>';
+ 	}
+ }
+@@ -4254,7 +4262,8 @@ sub print_sort_th {
+ }
+ 
+ sub git_project_list_ctags {
+-	my ($projects) = @_;
++	my ($projects, $action) = @_;
++	$action ||= 'project_list';
+ 
+ 	my %ctags;
+ 	foreach my $p (@$projects) {
+@@ -4262,13 +4271,13 @@ sub git_project_list_ctags {
+ 			$ctags{$ct} += $p->{'ctags'}->{$ct};
+ 		}
+ 	}
+-	my $cloud = git_populate_project_tagcloud(\%ctags);
+-	print git_show_project_tagcloud($cloud, 64);
++	my $cloud = git_populate_project_tagcloud(\%ctags, $action);
++	print git_show_project_tagcloud($cloud, 64, $action);
+ }
+ 
+ sub git_project_list_body {
+ 	# actually uses global variable $project
+-	my ($projlist, $order, $from, $to, $extra, $no_header) = @_;
++	my ($projlist, $order, $from, $to, $extra, $no_header, $ctags_action) = @_;
+ 
+ 	my $check_forks = gitweb_check_feature('forks');
+ 	my $show_ctags = gitweb_check_feature('ctags');
+@@ -4292,7 +4301,7 @@ sub git_project_list_body {
+ 	}
+ 
+ 	if ($show_ctags) {
+-		git_project_list_ctags(\@projects);
++		git_project_list_ctags(\@projects, $ctags_action);
+ 	}
+ 
+ 	print "<table class=\"project_list\">\n";
+@@ -4309,7 +4318,7 @@ sub git_project_list_body {
+ 		      "</tr>\n";
+ 	}
+ 	my $alternate = 1;
+-	my $tagfilter = $cgi->param('by_tag');
++	my $tagfilter = $input_params{'ctag_filter'};
+ 	for (my $i = $from; $i <= $to; $i++) {
+ 		my $pr = $projects[$i];
+ 
+@@ -4682,7 +4691,7 @@ sub git_forks {
+ 	git_header_html();
+ 	git_print_page_nav('','');
+ 	git_print_header_div('summary', "$project forks");
+-	git_project_list_body(\@list, $order);
++	git_project_list_body(\@list, $order, undef, undef, undef, undef, 'forks');
  	git_footer_html();
  }
+ 
+@@ -4756,12 +4765,12 @@ sub git_summary {
+ 	my $show_ctags = gitweb_check_feature('ctags');
+ 	if ($show_ctags) {
+ 		my $ctags = git_get_project_ctags($project);
+-		my $cloud = git_populate_project_tagcloud($ctags);
++		my $cloud = git_populate_project_tagcloud($ctags, 'project_list');
+ 		print "<tr id=\"metadata_ctags\"><td>Content tags:<br />";
+ 		print "</td>\n<td>" unless %$ctags;
+ 		print "<form action=\"$show_ctags\" method=\"post\"><input type=\"hidden\" name=\"p\" value=\"$project\" />Add: <input type=\"text\" name=\"t\" size=\"8\" /></form>";
+ 		print "</td>\n<td>" if %$ctags;
+-		print git_show_project_tagcloud($cloud, 48);
++		print git_show_project_tagcloud($cloud, 48, 'project_list');
+ 		print "</td></tr>";
+ 	}
+ 
+@@ -4805,7 +4814,7 @@ sub git_summary {
+ 		git_project_list_body(\@forklist, 'age', 0, 15,
+ 		                      $#forklist <= 15 ? undef :
+ 		                      $cgi->a({-href => href(action=>"forks")}, "..."),
+-		                      'no_header');
++		                      'no_header', 'forks');
+ 	}
+ 
+ 	git_footer_html();
 -- 
-tg: (e731dcd..) t/frontpage/separate (depends on: t/frontpage/ctags)
+tg: (73bafe5..) t/frontpage/ctags (depends on: t/frontpage/refactor)
