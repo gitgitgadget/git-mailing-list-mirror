@@ -1,160 +1,133 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Preserving branches after merging on ancestor
-Date: Thu, 5 Nov 2009 19:09:48 -0600
-Message-ID: <20091106010947.GB4425@progeny.tock>
-References: <26217077.post@talk.nabble.com>
- <20091105223004.GA3224@progeny.tock>
- <20091105232848.GA1939@atjola.homenet>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug in git remote prune?
+Date: Thu, 05 Nov 2009 17:36:15 -0800
+Message-ID: <7vvdho5t9s.fsf@alter.siamese.dyndns.org>
+References: <76718490911051634w2d364b73m567e73039508c857@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Richard Lee <richard@webdezign.co.uk>, git@vger.kernel.org
-To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Nov 06 02:00:32 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 06 02:36:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6DBo-0006ef-ED
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 02:00:32 +0100
+	id 1N6Dkc-0001yn-PT
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 02:36:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756955AbZKFBAV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Nov 2009 20:00:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756015AbZKFBAV
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 20:00:21 -0500
-Received: from mail-yw0-f202.google.com ([209.85.211.202]:57574 "EHLO
-	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751396AbZKFBAU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2009 20:00:20 -0500
-Received: by ywh40 with SMTP id 40so522159ywh.33
-        for <git@vger.kernel.org>; Thu, 05 Nov 2009 17:00:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=JXilMk8c3JwcN9t7fRzocbRHiBoHUQxz44A5+Eqcx+U=;
-        b=cqE3lVdPvkej7ov5O4kNN2gL+FHtBRUFxgOY3eYHb9/qdI7wOPuRGZHngZGLX2Y1Gu
-         57STg/WgQhI/TGdmSiKVZJj25YgRcfd4rb1kPSNfcwL8oUxEAEJGxFqpevKmwfx0l0ne
-         iTYVTaqZLlohNQolkQEuHso/smzY1qNmncsYw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=YOZtpEdIdPlQKVA1iAEFBljJEjeTJrvjA5Hg0vVi9qXSS5Ow3Sd/rvKn1X33tQk+Gr
-         d3m3ZLrKQk8bWHv2ktvShPHxBA6Dfxeur16T302QBV2Zeh+EO/HwRmyl52FZTWz15sLF
-         ftzC8bp9S68nejvDhdjVV6Bv/dPx0x5kg2bhY=
-Received: by 10.101.129.1 with SMTP id g1mr2350992ann.124.1257469223547;
-        Thu, 05 Nov 2009 17:00:23 -0800 (PST)
-Received: from progeny.tock (wireless-239-184.uchicago.edu [128.135.239.184])
-        by mx.google.com with ESMTPS id 22sm1181648yxe.39.2009.11.05.17.00.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 05 Nov 2009 17:00:22 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20091105232848.GA1939@atjola.homenet>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755192AbZKFBgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2009 20:36:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754705AbZKFBgT
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 20:36:19 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63018 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752627AbZKFBgS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2009 20:36:18 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B71D5940D1;
+	Thu,  5 Nov 2009 20:36:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wjHVPjn1sNXBcTZW7J5QFsRkJM0=; b=MtYdEY
+	iP5R2HId2RwQsyhytXSQCjyvkpgg4Sk8vLKSrjG95z3D34LAsUpAErUOXu51nR5f
+	2Bm1Bh3D5emUjKY/t/iZeBPmwsYcWDuJsjHiNV2yi8D+G50mWWHdMUVehR0WslYN
+	rt+1sRGLEaG3DXXNIto2wH89nzJiux7Fv0GSY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=g4vDMvjYuutMzWGBGoyGtQaCnEE/BEoH
+	mD/E6yxjoOE0or+NNlzxY5gi/FIOfjDW/X19Ns9x/6FPN3InaVuURdD3+5VeRjBo
+	7z03PDDxzwZb3XTF8ySeyxwfPebpB2bX+IN3GZBkK26CERUy7DQgjYc7uHloOdtb
+	xx0otI/Hx50=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9A989940D0;
+	Thu,  5 Nov 2009 20:36:20 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 66E93940CF; Thu,  5 Nov 2009
+ 20:36:17 -0500 (EST)
+In-Reply-To: <76718490911051634w2d364b73m567e73039508c857@mail.gmail.com>
+ (Jay Soffian's message of "Thu\, 5 Nov 2009 19\:34\:03 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C90ED5E2-CA74-11DE-8244-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132265>
 
-Bj=C3=B6rn Steinbrink wrote:
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-> I guess Richard took the "branch topic1, merge topic1, branch topic2,
-> merge topic2" thing just as an example because that ends up with two
-> fast-forwards.
+> Let's say you've got the following tracking branches:
+>
+> refs/remotes/origin/master
+> refs/remotes/origin/next
+> refs/remotes/origin/ghost
+>
+> And origin has only "master" and "next" (ghost has been removed upstream).
+>
+> Further, let's say you've got a refspec of:
+>
+> [remote "origin"]
+>   fetch = +refs/heads/master:refs/remotes/origin/master
+>
+> What should "git remote prune origin" do?
+>
+> In my opinion, it should prune "next" and "ghost".  "ghost" is gone
+> from upstream, so that's obvious. I think "next" should also be pruned
+> because the refspec indicates the user is no longer interested in it.
+>
+> Currently it doesn't do anything (it only considers "master" per the
+> refspec, which is still on origin, so it doesn't think there is
+> anything to prune).
 
-Hmm, I found Richard=E2=80=99s example pretty realistic.  I used to wor=
-k like
-that, and I don=E2=80=99t think I am the only one.
+In your scenario, tracking branches for next and ghost couldn't have come
+from the refspec you have in the configuration, but they do exist.  The
+user has added them on purpose, perhaps by temporarily using wildcard
+refspec, or perhaps by giving a refspec from the command line.
 
-> And your example _still_ has such a fast-forward.
+It does not matter how they got there, but the important thing to keep in
+mind is that, even if the remote had refs/heads/{next,ghost}, we wouldn't
+update it if we ran "git fetch" now.
 
-Yep, if you really want to avoid fast-forwards, please use "--no-ff"!
+In this situation, "git remote prune" should never prune 'next' nor
+'ghost'.  If we were to implement auto-pruning in 'git fetch', it should
+behave the same way.
 
-But what I was trying to make clear was that in some workflows, the
-fast-forwards are not so harmful.  They even make the history a little
-cleaner (easier to read and understand).
+I would define the logic to decide if refs/remotes/REMOTE/BRANCH is stale
+to be:
 
-> Instead of:
->=20
-> A---B---C---D---E (topic2) (master)
->      \
->       F---G---H (topic1)
->=20
-> He wants:
->=20
->       F---G---H (topic1)
->      /
-> A---B-----------M (master)
->      \         /
->       C---D---E (topic2)
->=20
-> So he can see at which point topic2 got merged. This allows to ask "w=
-hich
-> commits got merged here" (and for a merge-once topic branch this mean=
-s:
-> Which commits are related to that topic), by using for example:
->=20
-> git log M^1..M^2 # Will show C, D and E
+ * See if there exists a refspec (either wildcard or concrete) that may
+   cause "git fetch" to update the tracking branch in question, if the
+   remote side had an appropriate ref.
 
-You can get the same information locally even with a fast-forward:
+   If there is no such refspec, stop here.  It is not stale.
 
-git log master@{1}..master
+   In your example, when considering refs/remotes/origin/master, there is
+   such a refspec, and the "appropriate ref" is "refs/heads/master" on
+   their side.  When considering refs/remotes/origin/{next,ghost}, there
+   is none.  You stop here.
 
-But to someone reading the published history, it is not available.
-Depending on your way of working, this may or may not be reasonable.
+ * Then see if that ref exists at the remote side.  If it exists, stop
+   here.  It means "git fetch" would update the tracking branch in
+   question, so it is not stale.
 
-Perhaps your merge commit messages contain important information about
-the branch=E2=80=99s overall purpose and provenance, which would be imp=
-ossible
-if there is no merge commit.
+   In your example, when considering refs/remotes/origin/master, the
+   matching remote ref 'refs/heads/master' exists, so our tracking ref is
+   not stale.
 
-On the other hand, if the goal is just to present the fact of a merge,
-to explain where a patch falls in the larger scheme of things, then
-how large a chunk of changes I decided to call a feature does not seem
-too important.
+ * Otherwise, it is stale, and we can prune it.
 
-Imagine a patch series, cleaning up some ugly code that has been
-bothering me for a while:
+Imagine a hypothetical "git fetch" that understands a ref with a magic
+value 0{40} to signal "this ref is gone", and imagine what happens if the
+origin had 'ghost' that has such a magic SHA-1 in it.  It would become
+easier to understand how the above logic works.
 
- base [master] --- A --- B --- C [cleanup]
+ - When you issue "git fetch" under the condition of your example, think
+   what would happen to 'next' (which has an ordinary value, not the magic
+   "delete this" request).  Nothing happens.  We do not update it.
 
-It looks good, so I merge to master with --no-ff.
+ - Nothing happens to 'ghost' either when you issue "git fetch".  It does
+   not matter if that ref has this magic 'delete this' value.
 
- base --------- D [master]
-     \         /
-      A---B---C [cleanup]
-
-Looking at that code inspires me to build a new feature that is much
-easier with the cleaned up version.  So I fork a branch from cleanup
-(Or master?  Their content is the same, but somehow I choose one) and
-write some patches for the new feature.
-
- base --------- D [master]
-     \         /
-      A---B---C [cleanup] --- E --- F --- G
-
-It looks good, so I merge.
-
- base --------- D --------- H [master]
-     \         /           /
-      A---B---C---E---F---G
-
-Is this really any easier to read than base---A---B---C---E---F---G?
-In hindsight, was this logically really two series, or is the D commit
-extra cruft?
-
-Almost always, a fast-forward comes from a continuation of this kind,
-since that is what it means for a commit to be the logical commit to
-fork from.
-
-Of course, these things are a matter of taste.  I just wanted to
-explain why a fast-forward could at least sometimes be the right
-result from merging a topic branch (and why, in practice, some people
-never end up needing to use --no-ff).
-
-Regards,
-Jonathan
+Nothing happens because we were told by the refspec not to even look at
+these refs/heads/{next,ghost} refs on the other side.
