@@ -1,155 +1,199 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v3 05/12] Add a config option for remotes to specify a foreign vcs
-Date: Fri,  6 Nov 2009 23:52:39 +0100
-Message-ID: <1257547966-14603-6-git-send-email-srabbelier@gmail.com>
+Subject: [PATCH v3 08/12] Allow helper to map private ref names into normal names
+Date: Fri,  6 Nov 2009 23:52:42 +0100
+Message-ID: <1257547966-14603-9-git-send-email-srabbelier@gmail.com>
 References: <1257547966-14603-1-git-send-email-srabbelier@gmail.com>
  <1257547966-14603-2-git-send-email-srabbelier@gmail.com>
  <1257547966-14603-3-git-send-email-srabbelier@gmail.com>
  <1257547966-14603-4-git-send-email-srabbelier@gmail.com>
  <1257547966-14603-5-git-send-email-srabbelier@gmail.com>
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
+ <1257547966-14603-6-git-send-email-srabbelier@gmail.com>
+ <1257547966-14603-7-git-send-email-srabbelier@gmail.com>
+ <1257547966-14603-8-git-send-email-srabbelier@gmail.com>
+Cc: Daniel Barkalow <barkalow@iabervon.org>
 To: Git List <git@vger.kernel.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Nov 06 23:53:55 2009
+X-From: git-owner@vger.kernel.org Fri Nov 06 23:53:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6Xgp-000813-4k
+	id 1N6Xgp-000813-L3
 	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 23:53:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932447AbZKFWxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Nov 2009 17:53:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932283AbZKFWxj
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 17:53:39 -0500
+	id S932511AbZKFWxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2009 17:53:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932283AbZKFWxm
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 17:53:42 -0500
 Received: from mail-ew0-f207.google.com ([209.85.219.207]:44637 "EHLO
 	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932331AbZKFWxc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Nov 2009 17:53:32 -0500
+	with ESMTP id S1759945AbZKFWxi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Nov 2009 17:53:38 -0500
 Received: by mail-ew0-f207.google.com with SMTP id 3so1557937ewy.37
-        for <git@vger.kernel.org>; Fri, 06 Nov 2009 14:53:38 -0800 (PST)
+        for <git@vger.kernel.org>; Fri, 06 Nov 2009 14:53:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=fRCA3wBPVozqUBch/zoi6K0mncA83IZpRotob7rz840=;
-        b=nmO8qypaPLyLu6uK8TNPMNLv7rycx8uuLcN+vkjPPVi0F/WuUsnFY0bnMyAK6Gs1+U
-         Bdx2aVwidyFd6COR8zi9VU3hfp7+3FkX9R1a/cbSr5MGQZj3JyB9I/egC/KcumPQdmzR
-         QygixZBEi/lMmUb/KIjYd6OQz6tUFgG/bTqoA=
+        bh=SPO6sSVButArbCP9TOfzF/7+seG7athhsHIWgJBd5A8=;
+        b=ri6NvSxmRRlsfHCIenV9t8ZggXAtnVRVG9y4qu9Gp7bbmZwL+aSXx84lAGgcm1emMj
+         mIpYx19f4fLmSCmYeQFJslrBtHNZOeclCOUEGmXrbhCjeeY+P2gbFI3igD/9MLFkp8Ow
+         oCtaBOk9e9/fSRnmc0ZAomg1Zj2qe7yCh4eqU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=kZrHOFGCWFADlo8WGyuKj/XHwHfdD348Qi0nM0oK2PdDNs5OJaYRGYHNWoB4hhdsd3
-         Dh/X8u8CGfDUhK8FKR2iPjqBWcKWA4DwxGQ1D7E7TgqAfQxVixwVnhtVQcc5jzt82UZd
-         Or9AHOrONqB5PTr+GBubvxnoGIPpZnVUcABhs=
-Received: by 10.213.0.138 with SMTP id 10mr38027ebb.12.1257548017952;
-        Fri, 06 Nov 2009 14:53:37 -0800 (PST)
+        b=QK+psaRNqzYnWFInZxRL4UnQS+nRfkDbKRIhVxamNDrQ5VRjSUhq7F+5ioYRAQJWc0
+         j7DhLyfniZfIWriRztmcdsUvtr6aAIEgAuqk1jnhjIY+DcsaZ5Fie/86JpDS5T9DYvQE
+         jbwBG6R6bka4KfA3q94x6ifa6ShuNGSzOjiNM=
+Received: by 10.213.109.148 with SMTP id j20mr45080ebp.2.1257548023461;
+        Fri, 06 Nov 2009 14:53:43 -0800 (PST)
 Received: from localhost.localdomain (ip138-114-211-87.adsl2.static.versatel.nl [87.211.114.138])
-        by mx.google.com with ESMTPS id 7sm1501175eyb.40.2009.11.06.14.53.36
+        by mx.google.com with ESMTPS id 7sm1501175eyb.40.2009.11.06.14.53.40
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 06 Nov 2009 14:53:37 -0800 (PST)
+        Fri, 06 Nov 2009 14:53:42 -0800 (PST)
 X-Mailer: git-send-email 1.6.5.2.158.g6dacb
-In-Reply-To: <1257547966-14603-5-git-send-email-srabbelier@gmail.com>
+In-Reply-To: <1257547966-14603-8-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132333>
 
 From: Daniel Barkalow <barkalow@iabervon.org>
 
-If this is set, the url is not required, and the transport always uses
-a helper named "git-remote-<value>".
-
-It is a separate configuration option in order to allow a sensible
-configuration for foreign systems which either have no meaningful urls
-for repositories or which require urls that do not specify the system
-used by the repository at that location. However, this only affects
-how the name of the helper is determined, not anything about the
-interaction with the helper, and the contruction is such that, if the
-foreign scm does happen to use a co-named url method, a url with that
-method may be used directly.
-
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+This allows a helper to say that, when it handles "import
+refs/heads/topic", the script it outputs will actually write to
+refs/svn/origin/branches/topic; therefore, transport-helper should
+read it from the latter location after git-fast-import completes.
 ---
 
-	Unchanged.
+	New in this series.
+	Daniel, you did not include a S-o-b, I assume because you
+	mean to add documentation?
 
- Documentation/config.txt |    4 ++++
- remote.c                 |    4 +++-
- remote.h                 |    2 ++
- transport.c              |    5 +++++
- 4 files changed, 14 insertions(+), 1 deletions(-)
+ remote.c           |   17 +++++++++++++++++
+ remote.h           |    3 +++
+ transport-helper.c |   26 +++++++++++++++++++++++++-
+ 3 files changed, 45 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index d1e2120..0d9d369 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1408,6 +1408,10 @@ remote.<name>.tagopt::
- 	Setting this value to \--no-tags disables automatic tag following when
- 	fetching from remote <name>
- 
-+remote.<name>.vcs::
-+	Setting this to a value <vcs> will cause git to interact with
-+	the remote with the git-remote-<vcs> helper.
-+
- remotes.<group>::
- 	The list of remotes which are fetched by "git remote update
- 	<group>".  See linkgit:git-remote[1].
 diff --git a/remote.c b/remote.c
-index 15c9cec..09bb79c 100644
+index 09bb79c..09e14a8 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -54,7 +54,7 @@ static char buffer[BUF_SIZE];
- 
- static int valid_remote(const struct remote *remote)
- {
--	return !!remote->url;
-+	return (!!remote->url) || (!!remote->foreign_vcs);
+@@ -811,6 +811,23 @@ static int match_name_with_pattern(const char *key, const char *name,
+ 	return ret;
  }
  
- static const char *alias_url(const char *url, struct rewrites *r)
-@@ -444,6 +444,8 @@ static int handle_config(const char *key, const char *value, void *cb)
- 	} else if (!strcmp(subkey, ".proxy")) {
- 		return git_config_string((const char **)&remote->http_proxy,
- 					 key, value);
-+	} else if (!strcmp(subkey, ".vcs")) {
-+		return git_config_string(&remote->foreign_vcs, key, value);
++char *apply_refspecs(struct refspec *refspecs, int nr_refspec,
++		     const char *name)
++{
++	int i;
++	char *ret = NULL;
++	for (i = 0; i < nr_refspec; i++) {
++		struct refspec *refspec = refspecs + i;
++		if (refspec->pattern) {
++			if (match_name_with_pattern(refspec->src, name,
++						    refspec->dst, &ret))
++				return ret;
++		} else if (!strcmp(refspec->src, name))
++			return strdup(refspec->dst);
++	}
++	return NULL;
++}
++
+ int remote_find_tracking(struct remote *remote, struct refspec *refspec)
+ {
+ 	int find_src = refspec->src == NULL;
+diff --git a/remote.h b/remote.h
+index ac0ce2f..c2f920b 100644
+--- a/remote.h
++++ b/remote.h
+@@ -91,6 +91,9 @@ void ref_remove_duplicates(struct ref *ref_map);
+ int valid_fetch_refspec(const char *refspec);
+ struct refspec *parse_fetch_refspec(int nr_refspec, const char **refspec);
+ 
++char *apply_refspecs(struct refspec *refspecs, int nr_refspec,
++		     const char *name);
++
+ int match_refs(struct ref *src, struct ref **dst,
+ 	       int nr_refspec, const char **refspec, int all);
+ 
+diff --git a/transport-helper.c b/transport-helper.c
+index 82caaae..c4ab84a 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -5,6 +5,7 @@
+ #include "commit.h"
+ #include "diff.h"
+ #include "revision.h"
++#include "remote.h"
+ 
+ struct helper_data
+ {
+@@ -12,6 +13,9 @@ struct helper_data
+ 	struct child_process *helper;
+ 	unsigned fetch : 1;
+ 	unsigned import : 1;
++	/* These go from remote name (as in "list") to private name */
++	struct refspec *refspecs;
++	int refspec_nr;
+ };
+ 
+ static struct child_process *get_helper(struct transport *transport)
+@@ -20,6 +24,9 @@ static struct child_process *get_helper(struct transport *transport)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct child_process *helper;
+ 	FILE *file;
++	const char **refspecs = NULL;
++	int refspec_nr = 0;
++	int refspec_alloc = 0;
+ 
+ 	if (data->helper)
+ 		return data->helper;
+@@ -51,6 +58,16 @@ static struct child_process *get_helper(struct transport *transport)
+ 			data->fetch = 1;
+ 		if (!strcmp(buf.buf, "import"))
+ 			data->import = 1;
++		if (!prefixcmp(buf.buf, "refspec ")) {
++			ALLOC_GROW(refspecs,
++				   refspec_nr + 1,
++				   refspec_alloc);
++			refspecs[refspec_nr++] = strdup(buf.buf + strlen("refspec "));
++		}
++	}
++	if (refspecs) {
++		data->refspec_nr = refspec_nr;
++		data->refspecs = parse_fetch_refspec(refspec_nr, refspecs);
+ 	}
+ 	return data->helper;
+ }
+@@ -119,6 +136,7 @@ static int fetch_with_import(struct transport *transport,
+ {
+ 	struct child_process fastimport;
+ 	struct child_process *helper = get_helper(transport);
++	struct helper_data *data = transport->data;
+ 	int i;
+ 	struct ref *posn;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -139,10 +157,16 @@ static int fetch_with_import(struct transport *transport,
+ 	finish_command(&fastimport);
+ 
+ 	for (i = 0; i < nr_heads; i++) {
++		char *private;
+ 		posn = to_fetch[i];
+ 		if (posn->status & REF_STATUS_UPTODATE)
+ 			continue;
+-		read_ref(posn->name, posn->old_sha1);
++		if (data->refspecs)
++			private = apply_refspecs(data->refspecs, data->refspec_nr, posn->name);
++		else
++			private = strdup(posn->name);
++		read_ref(private, posn->old_sha1);
++		free(private);
  	}
  	return 0;
  }
-diff --git a/remote.h b/remote.h
-index 5db8420..ac0ce2f 100644
---- a/remote.h
-+++ b/remote.h
-@@ -11,6 +11,8 @@ struct remote {
- 	const char *name;
- 	int origin;
- 
-+	const char *foreign_vcs;
-+
- 	const char **url;
- 	int url_nr;
- 	int url_alloc;
-diff --git a/transport.c b/transport.c
-index 5ae8db6..13bab4e 100644
---- a/transport.c
-+++ b/transport.c
-@@ -818,6 +818,11 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 		url = remote->url[0];
- 	ret->url = url;
- 
-+	if (remote && remote->foreign_vcs) {
-+		transport_helper_init(ret, remote->foreign_vcs);
-+		return ret;
-+	}
-+
- 	if (!prefixcmp(url, "rsync:")) {
- 		ret->get_refs_list = get_refs_via_rsync;
- 		ret->fetch = fetch_objs_via_rsync;
 -- 
 1.6.5.2.158.g6dacb
