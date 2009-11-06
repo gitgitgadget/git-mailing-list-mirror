@@ -1,104 +1,76 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: suggestions for local configs?
-Date: Fri, 06 Nov 2009 08:21:39 +0100
-Message-ID: <4AF3CE83.1060400@viscovery.net>
-References: <4AF393EE.4030205@gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Allowing push --dry-run through fetch url
+Date: Fri, 6 Nov 2009 08:37:07 +0100
+Message-ID: <20091106073707.GA14881@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Tim Rupp <caphrim007@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 06 08:21:48 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 06 08:37:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6J8l-00023k-GB
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 08:21:47 +0100
+	id 1N6JNz-0006kv-Ft
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 08:37:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753256AbZKFHVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Nov 2009 02:21:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752994AbZKFHVh
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 02:21:37 -0500
-Received: from lilzmailmt02.liwest.at ([212.33.55.12]:44142 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752442AbZKFHVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Nov 2009 02:21:37 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1N6J8e-0007RQ-72; Fri, 06 Nov 2009 08:21:40 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id E9F839F88; Fri,  6 Nov 2009 08:21:39 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <4AF393EE.4030205@gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1752791AbZKFHhU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2009 02:37:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752751AbZKFHhU
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 02:37:20 -0500
+Received: from vuizook.err.no ([85.19.221.46]:51694 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750850AbZKFHhT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Nov 2009 02:37:19 -0500
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1N6JNo-0000ff-9h
+	for git@vger.kernel.org; Fri, 06 Nov 2009 08:37:22 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1N6JNb-0003zj-Ts
+	for git@vger.kernel.org; Fri, 06 Nov 2009 08:37:07 +0100
+Content-Disposition: inline
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132279>
 
-Tim Rupp schrieb:
-> I have a piece of software that has default and local configuration
-> files. The default files ship with the tarball. The local files are
-> copied over from the default folder during installation and can be
-> modified for a particular install.
+Hi,
 
-This is how *I* would organize it, but it is a bit overengineered if the
-changes needed in the configuration are only minimal:
+I am currently considering, when I'll get some time, to dive in the git
+push code to allow push --dry-run without the rights to push.
 
-  ---o--o--X1--o--o--X2--o          master (aka upstream)
-      \     \             \
-       R-----M1------------M3       rename
-        \     \             \
-         Y-----M2------------M4     production
+We currently have two remote configuration items for urls:
+remote.<name>.url and remote.<name>.pushurl. The latter is used when
+pushing and the former when pulling/fetching.
 
-We need two branches in addition to master, which tracks upstream version.
+The typical use of both at the same time is to put an authenticated
+value for pushurl (ssh://, for example) and an anonymous one (git://,
+for example) for url.
 
-1. The first branch *renames* the example configuration to the effective
-configuration:
+What has been annoying me lately is that git push --dry-run asks me
+for the ssh key or password. I know I could be using an ssh-agent, but
+that's not the point.
 
-   git mv foo.conf.example foo.conf
-   # commit R
-   git commit -m "Use the example configuration"
+It would be interesting, to me at least, that git push --dry-run can do
+its job through the git:// url instead of the ssh:// one. But for now,
+all that does is telling me:
+fatal: The remote end hung up unexpectedly
+(probably because the git server doesn't allow pushes at all)
 
-It is important that *no change* is made to the configuration file, and it
-furthermore assumes that the production configuration (foo.conf) does not
-exist [*].
+So, before I dive in, what would you think about such a feature?
 
-The point of this commit is that git can determine that the file was
-renamed with 100% similarity.
+There is one thing that bothers me, though, it's that --dry-run would,
+in the end, not really be a dry-run anymore, and, for example, could
+not be used to validate that the ssh setup is good without actually
+pushing.
 
-2. The second branch is actually where the customization happens, this is
-commit Y:
+Cheers,
 
-   git checkout production
-   edit foo.conf
-   # commit Y
-   git commit -m "configuration changes needed in production"
-
-
-Assume, upstream made changes to the configuration (commit X1). These
-changes are merged in the following way:
-
-1.  git checkout rename && git merge master
-
-This creates M1. git detects that on our side the file was renamed, and
-merges the upstream changes into the renamed file. Since we didn't modify
-the file in R, there are no conflicts.
-
-2.  git checkout production && git merge rename
-
-This creates M2. This is a regular merge that integrates upstream changes
-with the local changes made in Y, possibly with conflicts.
-
-You repeat the procedure when upstream makes more changes to the example
-configuration in X2. This time, git merge again detects that the file was
-renamed with 100% similarity, and things work just like with M1 and M2.
-
-[*] If there is a configuration file in addition to the example
-configuration, another branch is needed that removes it.
-
--- Hannes
+Mike
