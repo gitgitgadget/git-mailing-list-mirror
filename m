@@ -1,198 +1,106 @@
-From: Brian Collins <bricollins@gmail.com>
-Subject: Re: [PATCH] RFC Allow case insensitive search flag with git-grep for 
-	fixed-strings
-Date: Fri, 6 Nov 2009 01:22:35 -0800
-Message-ID: <d1c0fbfa0911060122u3ffc85e7pf60a689cdfd85850@mail.gmail.com>
-References: <B7C4E16C-B15D-4A7B-873A-B6BD0FDAD8C8@gmail.com>
-	 <20091106084855.GA20964@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Allowing push --dry-run through fetch url
+Date: Fri, 06 Nov 2009 01:44:54 -0800
+Message-ID: <7vfx8s0yy1.fsf@alter.siamese.dyndns.org>
+References: <20091106073707.GA14881@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 06 10:22:49 2009
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Fri Nov 06 10:45:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6L1q-00046x-2n
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 10:22:46 +0100
+	id 1N6LNg-0004Ya-BL
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 10:45:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754727AbZKFJWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Nov 2009 04:22:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754715AbZKFJWd
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 04:22:33 -0500
-Received: from mail-px0-f179.google.com ([209.85.216.179]:50761 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754449AbZKFJWa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Nov 2009 04:22:30 -0500
-Received: by pxi9 with SMTP id 9so591614pxi.4
-        for <git@vger.kernel.org>; Fri, 06 Nov 2009 01:22:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=zOaBkLYlSKQQpQHqBUGdK1zFKHXNiAi0uCqeEpz04g0=;
-        b=wAU4GY2Kc681eCklKoQQcrJZnGZ6xM3h2lKdXiI7gHoUvnsS4oqQkG0iCiw55E3mGv
-         dYmZeKUcefLD6pfwtUx34czW59G6BFf2djF52p69Z+nuQbbzZKT46lOHP5N7gp9+pe4x
-         yUqiXh5c/e6iXd4RBY8aWzOAkkuGlC9XR4uVE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Si3Sh8v3SB0bBH8LsGZnPFsH7bWoJc7Sk5NnnDwn86WF8frPS4cZUKIO5lPxbmYL1U
-         R4Jfd37PVYS7NQfFXeQr8VEROVeytZV7JjnPT9vyqT4sj0GZVKpVDcpzRKDL3UEssgNT
-         gRKxARK49eIgcFJJLJOBVKoupV+mw9kTUG5fQ=
-Received: by 10.114.6.28 with SMTP id 28mr6487193waf.115.1257499355622; Fri, 
-	06 Nov 2009 01:22:35 -0800 (PST)
-In-Reply-To: <20091106084855.GA20964@coredump.intra.peff.net>
+	id S1755447AbZKFJo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2009 04:44:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755354AbZKFJo6
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 04:44:58 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43493 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751831AbZKFJo5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Nov 2009 04:44:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9943694A51;
+	Fri,  6 Nov 2009 04:45:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1qjWVYg0PqYd9SmSS+O7Ub3Sc+A=; b=WEeg/K
+	tWoguksUIb1/JUZfcp0VzP2+Sc1OiurXANwD6pc6dEvft5VxugHggjdvnnQusyDT
+	J2bb/Kz97muo5mS9KFYLfHfepywORHtWZhtQkspv7MsOHOH+JTDjbRF0CEXlC7S4
+	juUrTXRaA0QYtZbRRbfApAO9OJ25fEddDZP0c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OIvzjzzdSybJJAHvHOYlJ/D1ztX9ai4D
+	Z4JS5j4hTTOYXq9yvz3iIs/LjPYUNaNgDQT0dra2V6lftDGfyLoNSGU/jbvH1XYk
+	A58UldZayN9QYBpRK+E1Zgr/lDncQwEa8Fmj83WjY3yU6YuBGkJ1vI9Y6jRwskMr
+	zJmuGHRyRKI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7A59A94A50;
+	Fri,  6 Nov 2009 04:44:59 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3A90194A4F; Fri,  6 Nov 2009
+ 04:44:55 -0500 (EST)
+In-Reply-To: <20091106073707.GA14881@glandium.org> (Mike Hommey's message of
+ "Fri\, 6 Nov 2009 08\:37\:07 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0C772D4A-CAB9-11DE-A58B-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132291>
 
-2009/11/6 Jeff King <peff@peff.net>:
-> You're in the right place (though judging from the response, nobody
-> seemed to find your patch all that interesting...).
+Mike Hommey <mh@glandium.org> writes:
 
-Heh, yeah it is a bit of a boring edge case but a TextMate plugin I am writing
-requires this functionality.
+> The typical use of both at the same time is to put an authenticated
+> value for pushurl (ssh://, for example) and an anonymous one (git://,
+> for example) for url.
+>
+> What has been annoying me lately is that git push --dry-run asks me
+> for the ssh key or password. I know I could be using an ssh-agent, but
+> that's not the point.
 
-> Tests? They help prove to us that your feature works, and also prevent
-> us from accidentally breaking your feature in the future.
+I actually sense a possible XY problem here.
 
-Ah yes that is what I was forgetting. Please see the amended patch including
-test.
-Thanks for your help
+What are you trying to achieve with "git push --dry-run", especially when
+you would instead be doing an equivalent of "git fetch" (or "ls-remote")
+but not storing what you learned from that session with a change like what
+you are imagining?
 
+The answer to the above question is the real reason "X".
 
----
- builtin-grep.c  |    8 +++++---
- grep.c          |   16 ++++++++++++----
- grep.h          |    2 ++
- t/t7002-grep.sh |    9 +++++++++
- 4 files changed, 28 insertions(+), 7 deletions(-)
+It could be that what you are interested in is if you are ahead of the
+other side.  In other words, you would want to know if some branches
+result in non-fast-forward error, causing you to re-fetch and re-merge (or
+rebase).
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 761799d..c73f05b 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -367,7 +367,7 @@ static int external_grep(struct grep_opt *opt,
-const char **paths, int cached)
- 		push_arg("-h");
- 	if (opt->regflags & REG_EXTENDED)
- 		push_arg("-E");
--	if (opt->regflags & REG_ICASE)
-+	if (opt->caseless)
- 		push_arg("-i");
- 	if (opt->binary == GREP_BINARY_NOMATCH)
- 		push_arg("-I");
-@@ -706,8 +706,8 @@ int cmd_grep(int argc, const char **argv, const
-char *prefix)
- 		OPT_GROUP(""),
- 		OPT_BOOLEAN('v', "invert-match", &opt.invert,
- 			"show non-matching lines"),
--		OPT_BIT('i', "ignore-case", &opt.regflags,
--			"case insensitive matching", REG_ICASE),
-+		OPT_BOOLEAN('i', "ignore-case", &opt.caseless,
-+			"case insensitive matching"),
- 		OPT_BOOLEAN('w', "word-regexp", &opt.word_regexp,
- 			"match patterns only at word boundaries"),
- 		OPT_SET_INT('a', "text", &opt.binary,
-@@ -830,6 +830,8 @@ int cmd_grep(int argc, const char **argv, const
-char *prefix)
- 		external_grep_allowed = 0;
- 	if (!opt.pattern_list)
- 		die("no pattern given.");
-+	if (!opt.fixed && opt.caseless)
-+		opt.regflags |= REG_ICASE;
- 	if ((opt.regflags != REG_NEWLINE) && opt.fixed)
- 		die("cannot mix --fixed-strings and regexp");
- 	compile_grep_patterns(&opt);
-diff --git a/grep.c b/grep.c
-index 5d162da..d8f14be 100644
---- a/grep.c
-+++ b/grep.c
-@@ -41,7 +41,8 @@ static void compile_regexp(struct grep_pat *p,
-struct grep_opt *opt)
- 	int err;
+And "push --dry-run" that fails would give you that information, if it
+worked for you without authenticating.  And that could be your "Y".
 
- 	p->word_regexp = opt->word_regexp;
--
-+	p->caseless = opt->caseless;
-+	
- 	if (opt->fixed || is_fixed(p->pattern))
- 		p->fixed = 1;
- 	if (opt->regflags & REG_ICASE)
-@@ -262,9 +263,16 @@ static void show_name(struct grep_opt *opt, const
-char *name)
- 	printf("%s%c", name, opt->null_following_name ? '\0' : '\n');
- }
+But doesn't "branch -v" give the necessary information for that purpose
+and even a bit more?  Couldn't "git fetch && git branch -v" be a better
+solution for your real problem "X"?
 
--static int fixmatch(const char *pattern, char *line, regmatch_t *match)
-+
-+static int fixmatch(const char *pattern, char *line, int caseless,
-regmatch_t *match)
- {
--	char *hit = strstr(line, pattern);
-+	char *hit;
-+	if (caseless) {
-+		hit = strcasestr(line, pattern);
-+	} else {
-+		hit = strstr(line, pattern);
-+	}
-+	
- 	if (!hit) {
- 		match->rm_so = match->rm_eo = -1;
- 		return REG_NOMATCH;
-@@ -326,7 +334,7 @@ static int match_one_pattern(struct grep_pat *p,
-char *bol, char *eol,
+It is a better solution _if_ the real problem you are trying to solve is
+what I suspected above because:
 
-  again:
- 	if (p->fixed)
--		hit = !fixmatch(p->pattern, bol, pmatch);
-+		hit = !fixmatch(p->pattern, bol, p->caseless, pmatch);
- 	else
- 		hit = !regexec(&p->regexp, bol, 1, pmatch, eflags);
+ (1) If you will end up fetching to make you ahead of them again, doing
+     "push --dry-run" to learn fast-forwardness first would still require
+     you to fetch from there anyway.  With "git fetch && git branch -v",
+     you have already fetched when you learned that you are not ahead;
 
-diff --git a/grep.h b/grep.h
-index f6eecc6..24b7d44 100644
---- a/grep.h
-+++ b/grep.h
-@@ -32,6 +32,7 @@ struct grep_pat {
- 	enum grep_header_field field;
- 	regex_t regexp;
- 	unsigned fixed:1;
-+	unsigned caseless:1;
- 	unsigned word_regexp:1;
- };
+ (2) When you learn from "git fetch && git branch -v" that you were indeed
+     ahead, you can push.  In such a case, because you were ahead, the
+     fetch wouldn't have slurped a lot of data from the other end anyway,
+     so there is no real overhead for doing so.
 
-@@ -64,6 +65,7 @@ struct grep_opt {
- 	regex_t regexp;
- 	int linenum;
- 	int invert;
-+	int caseless;
- 	int status_only;
- 	int name_only;
- 	int unmatch_name_only;
-diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
-index ae56a36..87b47dd 100755
---- a/t/t7002-grep.sh
-+++ b/t/t7002-grep.sh
-@@ -345,4 +345,13 @@ test_expect_success 'grep from a subdirectory to
-search wider area (2)' '
- 	)
- '
+ (3) In either case, "branch -v" output would give you not just "is it
+     fast-forward?" but also "if not, by how much they have diverged" (in
+     addition to the commit message for the tip).
 
-+cat >expected <<EOF
-+hello.c:	return 0;
-+EOF
-+
-+test_expect_success 'grep -Fi' '
-+	git grep -Fi rEtUrN >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
--- 
-1.6.4.4
+But this may not be an XY problem.  I am just curious.
