@@ -1,59 +1,58 @@
-From: Abdelrazak Younes <younes@lyx.org>
-Subject: Re: [QGIT PATCH/RFC]
-Date: Fri, 06 Nov 2009 09:16:31 +0100
-Organization: LyX
-Message-ID: <4AF3DB5F.3030704@lyx.org>
-References: <4AF19630.2070402@lyx.org> <e5bfff550911050141t751d45a0r4e340fa0d10af366@mail.gmail.com> 	<4AF2A538.7040303@lyx.org> <4AF2A69F.1090802@lyx.org> <4AF2AAFD.9000309@lyx.org> <e5bfff550911051225s13c6e39dh355dc3ab1c0623f@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] MSVC: Windows-native implementation for subset of Pthreads
+ API
+Date: Fri, 06 Nov 2009 09:25:33 +0100
+Message-ID: <4AF3DD7D.4040102@viscovery.net>
+References: <1257283802-29726-1-git-send-email-ahaczewski@gmail.com> <1257495059-12394-1-git-send-email-ahaczewski@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 06 09:16:42 2009
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>,
+	kusmabite@gmail.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Paolo Bonzini <bonzini@gnu.org>
+To: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 06 09:25:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6Jzs-0003jm-Uj
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 09:16:41 +0100
+	id 1N6K8o-0006qy-0z
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 09:25:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753942AbZKFIQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Nov 2009 03:16:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753651AbZKFIQ3
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 03:16:29 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:44510 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751873AbZKFIQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Nov 2009 03:16:29 -0500
-Received: by ey-out-2122.google.com with SMTP id 25so205291eya.19
-        for <git@vger.kernel.org>; Fri, 06 Nov 2009 00:16:33 -0800 (PST)
-Received: by 10.213.23.84 with SMTP id q20mr446359ebb.55.1257495393260;
-        Fri, 06 Nov 2009 00:16:33 -0800 (PST)
-Received: from ?192.168.4.216? ([62.161.104.182])
-        by mx.google.com with ESMTPS id 5sm5844207eyf.7.2009.11.06.00.16.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 06 Nov 2009 00:16:32 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <e5bfff550911051225s13c6e39dh355dc3ab1c0623f@mail.gmail.com>
+	id S1754687AbZKFIZc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2009 03:25:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754523AbZKFIZb
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 03:25:31 -0500
+Received: from lilzmailmt02.liwest.at ([212.33.55.12]:5812 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754172AbZKFIZa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Nov 2009 03:25:30 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1N6K8U-0008CH-Aq; Fri, 06 Nov 2009 09:25:34 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id E322A9F88; Fri,  6 Nov 2009 09:25:33 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <1257495059-12394-1-git-send-email-ahaczewski@gmail.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132283>
 
-Marco Costalba wrote:
-> On Thu, Nov 5, 2009 at 11:37, Abdelrazak Younes <younes@lyx.org> wrote:
->   
->> I recompiled qgit with the Qt version and I didn't notice any performance
->> problem with a big repo (Qt).
->>
->>     
->
-> In git we don't need to compute hashes of sha strings because they are
-> already hashed !
->   
+Andrzej K. Haczewski schrieb:
+> One more round of that patch with Nicolas' comments considered, and
+> disclamer about the implementation added.
+> 
+> Johannes, can you replace previous commit with that patch?
 
-Now you tell it, it's obvious indeed :-)
+Thanks; the result is in
 
-Thanks,
-Abdel.
+  git://repo.or.cz/git/mingw/j6t.git pthreads-for-windows
+
+-- Hannes
