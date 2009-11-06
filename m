@@ -1,62 +1,96 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH] pre-commit.sample: Diff against the empty tree when
-	HEAD is invalid
-Date: Fri, 6 Nov 2009 18:11:35 +0100
-Message-ID: <20091106171126.GA42592@book.hvoigt.net>
-References: <20091105105757.GA31787@atjola.homenet>
+From: Dmitry Smirnov <divis1969@gmail.com>
+Subject: Re: Git drawbacks?
+Date: Fri, 6 Nov 2009 17:35:46 +0000 (UTC)
+Message-ID: <loom.20091106T180313-750@post.gmane.org>
+References: <loom.20091106T160709-387@post.gmane.org> <32541b130911060849s2d8f13f5sb9b8390f075f8d15@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Nov 06 18:11:47 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 06 18:36:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6SLh-0004wx-Bq
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 18:11:45 +0100
+	id 1N6SjY-0000P3-IY
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 18:36:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759478AbZKFRLd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Nov 2009 12:11:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759460AbZKFRLd
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 12:11:33 -0500
-Received: from darksea.de ([83.133.111.250]:42237 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759344AbZKFRLc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Nov 2009 12:11:32 -0500
-Received: (qmail 5242 invoked from network); 6 Nov 2009 18:11:36 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 6 Nov 2009 18:11:36 +0100
-Content-Disposition: inline
-In-Reply-To: <20091105105757.GA31787@atjola.homenet>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1757606AbZKFRgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2009 12:36:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756983AbZKFRgM
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 12:36:12 -0500
+Received: from lo.gmane.org ([80.91.229.12]:59225 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756223AbZKFRgM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Nov 2009 12:36:12 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1N6SjK-0000Gu-Uf
+	for git@vger.kernel.org; Fri, 06 Nov 2009 18:36:10 +0100
+Received: from 212.92.145.7 ([212.92.145.7])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 06 Nov 2009 18:36:10 +0100
+Received: from divis1969 by 212.92.145.7 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 06 Nov 2009 18:36:10 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 212.92.145.7 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/3.0.195.27 Safari/532.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132313>
 
-Hallo,
+> > Here is the wish list for the VCS I would prefer:
+> > 1. Atomit commits
+> > 2. The possibility to get any slice of the code repository with the 
+possibility
+> > to commit my changes on tip or on separate branch.
+> > 3. The minimum footprint of the same code on my local machine.
+> > 4. No code/history on my machine untill I really need it.
+> > 5. Easy mirroring and replication
+> >
+> > I would say, ClearCase might be my favorite if it is not commercial. 
+> 
+> #1 and #5 are features of any DVCS, so git already has them.  #2, 3,
+> and 4 are all just saying the same thing:
 
-On Thu, Nov 05, 2009 at 11:57:57AM +0100, Bj=F6rn Steinbrink wrote:
-> This was already the case for the old "diff --check" call, but the ne=
-w
-> one that checks whether there are any non-ascii file names was missin=
-g
-> it, making that check fail for root commits.
->=20
-> Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
+No, #2 is about the repository slicing, branching, merging (SCM in other words). 
+Let's suppose I have the product that have 2 directories: component1 and 
+component2. They were developing together for  previous product (on the same 
+branch, for example). Now, I would like to have component1 and replace 
+component2 with some 3rd party component. What should I do with Git to get this? 
+Or maybe I wish to stick with some version of component2 and provide only bug 
+fixes for this product...
+Or let's take a look at GDB. They are using binutils which are in separate 
+repository (they use CVS, but let's imagine they use Git). How many effors they 
+will need for SCM? For example, they would prefer to stick to some stable 
+version/branch of the binutils but should be able to commit bug fixes.
 
-[...]
-> -	test "$(git diff --cached --name-only --diff-filter=3DA -z |
-> +	test "$(git diff --cached --name-only --diff-filter=3DA -z $against=
- |
+Once again, perhaps there is some way to do this with Git? I did not yet find 
+it.
 
-Looks sensible to me. Thanks for that fix.
+> "I can't afford the disk
+> space to store the entire repo."  Are you sure this is true, or is it
+> a preconception?  Even a 1GB repository is tiny by modern disk
+> standards.
 
-As this went unnoticed for quite some time it seems as either not many
-are actually using our example hook or at least not starting new
-projects with it. I fit in the latter group I suppose.
+oh, yes, since we have big drives and fast internet, we do not have to worry 
+about space and download time... :-)
 
-cheers Heiko
+> My (limited) experience with ClearCase is that it's so slow that you'd
+> do *anything* to track fewer files in your working copy, so they put a
+> lot of work into exactly that, and no work into performance.
+
+This probably true. Thought I did not have a lot of problems with it unless I 
+use GUI.
+
+>  This
+> lousy performance isn't the case in git (except in Windows).  Are you
+> using Windows, by chance?
+
+yes. I did not yet noticed any performance problems with Git on windows, except 
+a sync/download time (for android, mostly)
