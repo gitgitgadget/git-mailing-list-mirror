@@ -1,90 +1,126 @@
-From: Tim Rupp <caphrim007@gmail.com>
-Subject: suggestions for local configs?
-Date: Thu, 05 Nov 2009 21:11:42 -0600
-Message-ID: <4AF393EE.4030205@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Preserving branches after merging on ancestor
+Date: Thu, 5 Nov 2009 23:03:53 -0600
+Message-ID: <20091106050353.GA8824@progeny.tock>
+References: <26217077.post@talk.nabble.com>
+ <20091105223004.GA3224@progeny.tock>
+ <20091105232848.GA1939@atjola.homenet>
+ <20091106010947.GB4425@progeny.tock>
+ <20091106021038.GA27206@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 06 04:12:01 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Richard Lee <richard@webdezign.co.uk>, git@vger.kernel.org
+To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Nov 06 05:54:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6FEz-0006PM-6U
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 04:11:57 +0100
+	id 1N6GqJ-0002Lm-9b
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 05:54:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754627AbZKFDLp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2009 22:11:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754436AbZKFDLp
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 22:11:45 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:46075 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752219AbZKFDLo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2009 22:11:44 -0500
-Received: by yxe17 with SMTP id 17so591068yxe.33
-        for <git@vger.kernel.org>; Thu, 05 Nov 2009 19:11:49 -0800 (PST)
+	id S1759305AbZKFEyY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Nov 2009 23:54:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756712AbZKFEyY
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 23:54:24 -0500
+Received: from mail-yw0-f202.google.com ([209.85.211.202]:39003 "EHLO
+	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755190AbZKFEyX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2009 23:54:23 -0500
+Received: by ywh40 with SMTP id 40so641188ywh.33
+        for <git@vger.kernel.org>; Thu, 05 Nov 2009 20:54:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=Ni5B/toRep3jGi7pKTEVG4LuijYcNeQFqNh8z8zZtas=;
-        b=cgEurGKsmG9QTHTaPtXLAg5iRa+dTuFIbeYOxRpt00+8WdCrMv6INb/ZFg4q+FpOYl
-         9zCwarzDk+RONFwWNNCGlGq7A65saGHpn/SZQcW0k8IDznjwRsB952UDdBeJGZZUy1NC
-         c6WugtibNc+5NO0WP9iB9ORImxaaDGSst046o=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=SWoXYxd5YpZIVIKtX+YAi+0dbrw7RYitcUKIsm9QCiA=;
+        b=tpcBozxrdT9NIRqIbVCFy0k00wu/S9noeWP01mIt9tq1sv2kNA3qC27799Wmyt/XPT
+         jZ82SnquIhySR+/jnEj3YexFQ7+7veTMYMWJ6mVlVpwDDosrrwfm9GCb+p2nEJ7WI4MI
+         sJwmw1gKjZDqILhn6mExMgapFgnBA+BFbPv2Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=OqHO1pE8mGMWtfndjF5OLsNzWrXJ5FUfYOmsWhqduxXMwy94sC8nUmk8PMATGHftCE
-         bpIFtT4g/anusQlyfNVPMLp4pyICoKB/JvldxuaMdylhsMmLZYUAdssZag3HO/g9ZyZV
-         OsOXQvqYwZG02w4bDgkctfW/D1/tUzlqb/POk=
-Received: by 10.151.93.20 with SMTP id v20mr6794690ybl.59.1257477108836;
-        Thu, 05 Nov 2009 19:11:48 -0800 (PST)
-Received: from ?172.16.1.101? (adsl-70-131-103-6.dsl.emhril.sbcglobal.net [70.131.103.6])
-        by mx.google.com with ESMTPS id 15sm873795gxk.0.2009.11.05.19.11.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 05 Nov 2009 19:11:47 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=BiXRSaDukR5BdinL8ing7qPoRsgqHlx3+9eqJdm1rHg5W8lS2haHMj30fQfo80aVBc
+         mmoBUG/vdS1rEXrGpVR8LMIrSCnhceIDjc9lYoDSHmbayR+Lsa6zkmDy5HBOBM05OwAp
+         uyWAfLxK8hCy1rXB1jKrAycpBuiY7fs6ALAgE=
+Received: by 10.90.180.16 with SMTP id c16mr7278226agf.15.1257483269141;
+        Thu, 05 Nov 2009 20:54:29 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 20sm1269492yxe.56.2009.11.05.20.54.27
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 05 Nov 2009 20:54:28 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20091106021038.GA27206@atjola.homenet>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132270>
 
-Hi list, I'm wrestling with a question and figured that someone on the
-list may have some suggestions that have worked for them.
+Bj=C3=B6rn Steinbrink wrote:
 
-I have a piece of software that has default and local configuration
-files. The default files ship with the tarball. The local files are
-copied over from the default folder during installation and can be
-modified for a particular install.
+> For example in git.git, I can do "git log --first-parent
+> ..origin/master" to get a high-level log of what happened. And then I
+> might see commit b7eb912b0, which is "Merge branch ja/fetch-doc". So =
+I
+> know "OK, there were some doc updates", without having to crawl throu=
+gh
+> the individual commits.
 
-I clone my source repo on my test and prod systems, but have gotten in
-the bad habit of versioning the local configuration files. My (albeit
-pathetic) excuse is that when I test the code I may accidentally dork
-with the local config files and need to revert back to the correct ones.
+Yep, fast-forward merges do ruin the --first-parent log.  Thanks for
+the reminder.
 
-At the same time though, I do want to version said local configs in
-something so that if changes are made and they need to be backed out, it
-can be done and there is the commit log that keeps track of what changed.
+>> Of course, these things are a matter of taste.  I just wanted to
+>> explain why a fast-forward could at least sometimes be the right
+>> result from merging a topic branch (and why, in practice, some peopl=
+e
+>> never end up needing to use --no-ff).
+>=20
+> Sure, fast-forwards can be the right thing, e.g. when you have a
+> (possibly useless) branch head "master" that you update by pulling. I=
+n
+> such a case merge commits would only lead to useless clutter.
 
-So the question is
+I hope this use case becomes less important as git=E2=80=99s UI improve=
+s.  To
+track unmodified upstream sources, a simple 'git checkout' to get
+up-to-date is much simpler, except that "git branch" does not display
+the current branch any more.  Using 'git pull' for the daily update
+makes for a distractingly merge-heavy history once one has commits of
+one=E2=80=99s own.
 
-- Can anyone suggest good ways of setting up git to track both the code
-and local configs without making a whole new repository (code repo and
-code config repo)
+A similar use case won=E2=80=99t disappear: asking someone else to reso=
+lve a
+merge for you and pulling the result.
 
-If not, any other suggestions are welcome and I'll consider how best to
-make them work in my environment.
+=46or both these tasks, --ff-only might give better behavior.
 
-I've briefly skimmed through the pro git book online and considered sub
-modules and sub-tree merging, but the kicker is that I may need to push
-the whole kit-n-kaboodle master repo to remote git servers and those two
-approaches sound hairy.
+In other cases, I would guess some people would always want --no-ff
+and others never.  Apparently, there is a configuration option to
+support this: add a line "mergeoptions =3D --no-ff" (or "mergeoptions =3D
+--ff") to a [branch "master"] section in .git/config or ~/.gitconfig.
 
-Any help is appreciated.
+> But
+> Richard wants to see where topic branches got merged (to be still abl=
+e
+> to see what got merged in the future), and yeah, that's a matter of
+> taste. But you argued that using --no-ff would "[miss] some of the ma=
+in
+> benefits of feature branches", which is simply not true.
 
-Thanks,
-Tim
+I spoke imprecisely; I should have said that if most merges are
+candidates for fast-forwarding, this suggests feature branches are not
+being used in the best way, and --no-ff just makes that situation more
+tolerable.
+
+Then your response pushed me towards the question of whether --no-ff
+is a good idea in general, and I got distracted. :)  Sorry for the
+confusion, and thanks for the insights.
+
+Regards,
+Jonathan
