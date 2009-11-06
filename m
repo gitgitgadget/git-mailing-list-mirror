@@ -1,71 +1,222 @@
-From: Patrick Doyle <wpdster@gmail.com>
-Subject: Re: How to merge into my working copy?
-Date: Fri, 6 Nov 2009 13:15:37 -0500
-Message-ID: <e2a1d0aa0911061015o412f1ab0k9fbfdb88431d49c9@mail.gmail.com>
-References: <e2a1d0aa0911060653t7bbb54ebp948eac0dffeaba64@mail.gmail.com>
-	 <7v8wejzgim.fsf@alter.siamese.dyndns.org>
+From: Thomas Moulard <thomas.moulard@gmail.com>
+Subject: Re: gitk : french translation
+Date: Fri, 6 Nov 2009 19:16:20 +0100
+Message-ID: <b0c32d010911061016t2208af0er8d7fe88508c30f10@mail.gmail.com>
+References: <9f50533b0911060605p6ad28ad9neac3620a1809c3db@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 06 19:15:50 2009
+Content-Type: multipart/mixed; boundary=0015176f115c36a5210477b7d731
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Emmanuel Trillaud <etrillaud@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 06 19:16:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6TLd-0002cK-Hi
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 19:15:45 +0100
+	id 1N6TMJ-0002zl-DQ
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Nov 2009 19:16:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757160AbZKFSPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Nov 2009 13:15:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756162AbZKFSPd
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 13:15:33 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:45931 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755581AbZKFSPd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Nov 2009 13:15:33 -0500
-Received: by ewy28 with SMTP id 28so1420796ewy.18
-        for <git@vger.kernel.org>; Fri, 06 Nov 2009 10:15:37 -0800 (PST)
+	id S1759251AbZKFSQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2009 13:16:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758198AbZKFSQP
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 13:16:15 -0500
+Received: from mail-iw0-f180.google.com ([209.85.223.180]:47530 "EHLO
+	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758611AbZKFSQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Nov 2009 13:16:15 -0500
+Received: by iwn10 with SMTP id 10so987245iwn.4
+        for <git@vger.kernel.org>; Fri, 06 Nov 2009 10:16:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type;
-        bh=wZrcKCUg6c5P416zqKIRmgDfbWxYPJjF9uxVDlfJ7x8=;
-        b=WR+IOFGwT3Y/qyjT6prPKxBbJIYQCW4bnB+jDydPYHbrrnc79Bb1iicLQowrIUIkWn
-         +edI2f+WWi3jpskan5VL9M6wDGPuizUU+EKk7YDXKPVSyBoPHXJ5B78lMzqhoWR4YjoR
-         sovl2sD3hTikkRmaAvj/OiQZ5/JwZzLuZdrVk=
+        bh=XEDj2xk8kB0WLmbCJp3BflqXm5Hu4eJbGK1J4qAFKa8=;
+        b=gJOAUzkgAd59VQpZbLmkpqrcWexFAlNbqekN4ybuiJuN6kNN5v5wiEgD+xHX+emeet
+         Hes6IAP+Gxr1SBTXXBMwvcvx4b+GIHSmM+t2Np//frlHbJbQ1UKLoM5ARoma3VwwCS0b
+         uQrKMFmwrXTlNDST6Sx7DGRz/ML3N10hVnPeo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        b=TFnFmtMEECtC8jsrBwZQPMjvLl4y+Ukbu3vsfsEqiDg60kKm1IpMF0rAP9x1ORg7fC
-         2/ZH/uyuHtNSY6/qj4ECCDaCsomtAWezHpV43njEtPZs2zS6d0p66so58wV3Fzw9V0os
-         RRfMVnVBF2Q+kZPAhVBjKuea+SACWCY8c2g+k=
-Received: by 10.213.57.80 with SMTP id b16mr1221624ebh.36.1257531337397; Fri, 
-	06 Nov 2009 10:15:37 -0800 (PST)
-In-Reply-To: <7v8wejzgim.fsf@alter.siamese.dyndns.org>
+        b=h0+dUIV37WBRMq0/hJ2TR6i5aK4NZIkr+JUqHDMlcOqYNzlG9mXM3freSEXXnAOhKw
+         LQogSH/e8F0P6mUjIK0qla210P5VmlC5s51JDxRyi9XSObMM5K7Rnz/sB2E12HWgX0qi
+         v7twnGWSqyfVDEUedLnPUSlRmmxqHiQ2pLywQ=
+Received: by 10.231.48.210 with SMTP id s18mr1412124ibf.3.1257531380245; Fri, 
+	06 Nov 2009 10:16:20 -0800 (PST)
+In-Reply-To: <9f50533b0911060605p6ad28ad9neac3620a1809c3db@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132320>
 
-On Fri, Nov 6, 2009 at 12:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> If you do not have to have your extra "without affecting the index"
-> constraint (which I do not see a sensible reason to want to, by the way),
-> you can "merge --no-commit that_branch", I think.
->
+--0015176f115c36a5210477b7d731
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-After bouncing this around a couple of times with Bruce Stephens, and
-only now noticing that I hit "Reply" instead of "Reply-All"... sigh),
-I realized that what I wanted was:
+On Fri, Nov 6, 2009 at 3:05 PM, Emmanuel Trillaud <etrillaud@gmail.com> wro=
+te:
+> Hello all,
+> I made an attempt to translate gitk in french. The translation is
+> _almost_ complete
+> and I would really appreciate to have some comments by the french people =
+here.
+> I also need to improve some translations I am not happy with so it's
+> really a work in progress.
 
-$ git merge --squash that_branch
-$ git reset
+Here is an updated translation with the following changes:
+- translated strings which was still untranslated
+- fixed some fuzzy translations
+- make some consistency changes
+ * s/diff/diff=C3=A9rences/
+ * s/patch/correctif/ everywhere
+- fixed some spelling problems.
 
-I only wanted to affect my working copy, editing and adding things to
-the index (which I think of as "staging area for my next commit") as I
-was ready.
+IMHO the most important should be to decide how to translate the git vocabu=
+lary.
+The Subversion project has guidelines concerning that issue:
+http://svn.collab.net/viewvc/svn/trunk/subversion/po/fr.po?revision=3D39920=
+&view=3Dmarkup
+It may be a good idea to stick with what they are doing if possible.
 
---wpd
+The only exception should their translation of ``commit'' by
+``propagation'' which
+I find awkward. Especially in a Git context , ``git commit'' really
+does not propagate anything.
+
+BTW any reason to translate the GUIs (gitk / git-gui) but not the
+command line tools?
+--=20
+Thomas Moulard
+
+--0015176f115c36a5210477b7d731
+Content-Type: application/x-bzip2; name="fr.po.bz2"
+Content-Disposition: attachment; filename="fr.po.bz2"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_g1p91n6n1
+
+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
+--0015176f115c36a5210477b7d731--
