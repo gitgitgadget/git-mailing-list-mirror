@@ -1,80 +1,65 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH v3 11/12] Basic build infrastructure for Python scripts
-Date: Sat, 7 Nov 2009 00:25:39 +0100
-Message-ID: <fabb9a1e0911061525n7c7ad7dl2d97d979a25335bf@mail.gmail.com>
-References: <1257547966-14603-1-git-send-email-srabbelier@gmail.com> 
-	<1257547966-14603-5-git-send-email-srabbelier@gmail.com> <1257547966-14603-6-git-send-email-srabbelier@gmail.com> 
-	<1257547966-14603-7-git-send-email-srabbelier@gmail.com> <1257547966-14603-8-git-send-email-srabbelier@gmail.com> 
-	<1257547966-14603-9-git-send-email-srabbelier@gmail.com> <1257547966-14603-10-git-send-email-srabbelier@gmail.com> 
-	<1257547966-14603-11-git-send-email-srabbelier@gmail.com> 
-	<1257547966-14603-12-git-send-email-srabbelier@gmail.com> 
-	<16cee31f0911061523v5b9754ebg9c846c0e96ac808@mail.gmail.com>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: [gitk] [PATCH] 0/2 Merging master into dev
+Date: 06 Nov 2009 23:27:37 +0000
+Message-ID: <871vkbw7x2.fsf@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Johan Herland <johan@herland.net>
-To: "Andrzej K. Haczewski" <ahaczewski@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 07 00:26:08 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sat Nov 07 00:27:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6YBy-0003cF-FC
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Nov 2009 00:26:06 +0100
+	id 1N6YDa-0004Hg-RQ
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Nov 2009 00:27:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758792AbZKFXZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Nov 2009 18:25:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758666AbZKFXZz
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 18:25:55 -0500
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:40136 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758516AbZKFXZz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Nov 2009 18:25:55 -0500
-Received: by ewy3 with SMTP id 3so1576371ewy.37
-        for <git@vger.kernel.org>; Fri, 06 Nov 2009 15:25:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=TWxEqifkrtzhwV+7DTtZd3DtWdX3f6+0V2fFVyswhV8=;
-        b=O4g6JMyphLX9XLR48Rb4Hj3AIeV4T9rC62+wrIoVjbX6qW0KjGRt2z1HLvlT6jxt6F
-         Pbk2OSkKE6Dd+558iSMhN2dHlo8fSTY26tehcRqViSa4ybhfiBCz0cyw0OutPg6nIZgf
-         nHpmec/gi5Bz4s3WvE4IfFhVrwr4+3sL2YsJ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=p4e73Z4/moS3G50829okyyDNZEHRMWsT+KUBWj9WrYAJp/XMioIiUQvTMiqziUyxOE
-         P5mFeqYLEHnYIOC0BI+wuTsN68AtCumKTZsgJSR3s8nc+eGF+xM/Asj95eaaX4THVONq
-         tdnHGReAiMU0gJgQx1I7W08N1yN2GxYN5UEp0=
-Received: by 10.216.91.69 with SMTP id g47mr1566512wef.167.1257549959281; Fri, 
-	06 Nov 2009 15:25:59 -0800 (PST)
-In-Reply-To: <16cee31f0911061523v5b9754ebg9c846c0e96ac808@mail.gmail.com>
+	id S1759922AbZKFX1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2009 18:27:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759691AbZKFX1f
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 18:27:35 -0500
+Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:34506 "EHLO
+	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758666AbZKFX1f (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Nov 2009 18:27:35 -0500
+Received: from [172.23.170.146] (helo=anti-virus03-09)
+	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1N6YDT-0008Je-Rv; Fri, 06 Nov 2009 23:27:39 +0000
+Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
+	by asmtp-out5.blueyonder.co.uk with esmtp (Exim 4.52)
+	id 1N6YDT-0006ha-8A; Fri, 06 Nov 2009 23:27:39 +0000
+Received: by badger.patthoyts.tk (Postfix, from userid 1000)
+	id 75DFE13D310; Fri,  6 Nov 2009 23:27:38 +0000 (GMT)
+CC: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132345>
 
-Heya,
 
-On Sat, Nov 7, 2009 at 00:23, Andrzej K. Haczewski <ahaczewski@gmail.com> wrote:
-> Does it mean, that it will be possible to write git-<cmd> scripts in
-> python or, in example, port bash and / or perl scripts to python?
+I've merged the current changes for gitk master onto the dev branch
+and fixed some conflicts and then modified the default colour
+assignments for windows to use the system colours so that it will pick
+up the stock colours defined via the windows property pages.
 
-Technically that would be possible yes.
+However, I'm not too certain how to post such a merge commit. Usually
+I do 'git format-patch -M' but in this case that emits all the commits
+that were merged. It looks like 'git show -p' is producing a merge
+patch so I am posting that for 1/2 and a normal patch for 2/2. If
+there is better way let me know and I will redo.
 
-> I'm asking because bash+perl is a huge stopper for Windows platform,
-> which requires basic unix environment to work, while python support
-> for Windows is excellent and most of Windows developers already use
-> python.
+Note: these patches are for the gitk dev branch.
 
-I don't know what the stance is on this though, currently it is
-intended only for the remote helpers I think.
+Hopefully this themed tk version is suitable for merging up to master
+soon as this will significantly improve the look of the application in
+msysGit.
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
