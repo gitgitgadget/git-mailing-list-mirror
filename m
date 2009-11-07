@@ -1,198 +1,56 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 2/3] gitweb: Document current snapshot rules via new tests
-Date: Sat,  7 Nov 2009 16:13:28 +0100
-Message-ID: <1257606809-23287-3-git-send-email-jnareb@gmail.com>
-References: <1257606809-23287-1-git-send-email-jnareb@gmail.com>
-Cc: Mark Rada <marada@uwaterloo.ca>, Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 07 16:20:32 2009
+From: Sebastian Pipping <webmaster@hartwork.org>
+Subject: Re: [PATCH 2/4] format-patch documentation: Remove diff options that
+ are not useful
+Date: Sat, 07 Nov 2009 17:53:25 +0100
+Message-ID: <4AF5A605.9020008@hartwork.org>
+References: <4AF5435D.9050702@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 07 17:53:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6n5a-0003BT-5o
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Nov 2009 16:20:30 +0100
+	id 1N6oXm-0006W0-TE
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Nov 2009 17:53:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752114AbZKGPUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Nov 2009 10:20:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752094AbZKGPUI
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Nov 2009 10:20:08 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:37833 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752080AbZKGPUH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Nov 2009 10:20:07 -0500
-Received: by bwz27 with SMTP id 27so2102236bwz.21
-        for <git@vger.kernel.org>; Sat, 07 Nov 2009 07:20:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:from:to:cc
-         :subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=kczHtFBPidmX3fM7DeZ5nQX/kD6MwTdbZszz7xAtD9M=;
-        b=Hovh+vxFLwhIH1BcnjYygKO28R7nFQjmeX+pzGhW3wAPO995GC2GRy1Bf7anXb2Kav
-         rwH1xaJpay72YOx933D51P1oG5lls7ZX4uGVD6/forD7H/Gi/y88aYUOVHy3R6S/81ob
-         cAYjMder2/PXUOzFeWYBI2wX1DwJEx89e4e+U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=tEVhW6S660PNqbZQ3pjWasoWm2Pihg/oPj6LiOa0mxMrYDT6BpjCK55F+1lLNqixUf
-         ohjPje+e5wc4ByDtihxf6WtjaPOlOojfXixh/jBg2+a8yoaW7yQ/0KdaiTdAcW7pMsTK
-         HgtLae2Zovot/5HVojvoWOl+AD2G085NmCzfg=
-Received: by 10.204.34.70 with SMTP id k6mr5805529bkd.178.1257606818543;
-        Sat, 07 Nov 2009 07:13:38 -0800 (PST)
-Received: from localhost.localdomain (abuz230.neoplus.adsl.tpnet.pl [83.8.197.230])
-        by mx.google.com with ESMTPS id 13sm328772fxm.5.2009.11.07.07.13.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 07 Nov 2009 07:13:38 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id nA7FDaFg023326;
-	Sat, 7 Nov 2009 16:13:36 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id nA7FDatB023325;
-	Sat, 7 Nov 2009 16:13:36 +0100
-X-Mailer: git-send-email 1.6.5
-In-Reply-To: <1257606809-23287-1-git-send-email-jnareb@gmail.com>
+	id S1752475AbZKGQxY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Nov 2009 11:53:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752333AbZKGQxY
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Nov 2009 11:53:24 -0500
+Received: from smtprelay04.ispgateway.de ([80.67.18.16]:41062 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752276AbZKGQxY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Nov 2009 11:53:24 -0500
+Received: from [78.52.102.80] (helo=[192.168.0.3])
+	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <webmaster@hartwork.org>)
+	id 1N6oXV-0003uu-Q7; Sat, 07 Nov 2009 17:53:25 +0100
+User-Agent: Thunderbird 2.0.0.23 (X11/20091018)
+In-Reply-To: <4AF5435D.9050702@gmail.com>
+X-Df-Sender: 874396
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132370>
 
-Add t9502-gitweb-standalone-parse-output test script, which runs
-gitweb as a CGI script from the commandline and checks that it
-produces the correct output.
+Bj=C3=B6rn Gustavsson wrote:
+> To simplify reading the documentation for format-patch, remove the
+> description of common diff options that are not useful for the
+> purpose of the command (i.e. "Prepare patches for e-mail submission")=
+=2E
+>=20
+> Specifically, this removes the description of the following options:
 
-Currently this test script contains only tests of snapshot naming
-(proposed name of snapshot file) and snapshot prefix (prefix of files
-in the archive / snapshot).  It defines and uses 'tar' snapshot
-format, without compression, for easy checking of snapshot prefix.
-Testing is done using check_snapshot function.
+>   --color-words
 
-Gitweb uses the following format for snapshot filenames:
-  <sanitized project name>-<hash parameter><snapshot suffix>
-where <sanitized project name> is project name with '.git' or '/.git'
-suffix stripped, unless '.git' is the whole project name.  For
-snapshot prefix it uses simply:
-  <sanitized project name>/
+I disagree on at least this one.
 
-Disadvantages of current snapshot rules:
-* There exists convention that <basename>.<suffix> archive unpacks to
-  <basename>/ directory (<basename>/ is prefix of archive).  Gitweb
-  does not respect it
-* Snapshot links generated by gitweb use full SHA-1 id as a value of
-  'h' / $hash parameter.  With current rules it leads to long file
-  names like e.g. repo-1005c80cc11c531d327b12195027cbbb4ff9e3cb.tgz
-* For handcrafted URLs, where 'h' / $hash parameter is a symbolic
-  'volatile' revision name such as "HEAD" or "next" snapshot name
-  doesn't tell us what exact version it was created from
-* Proposed filename in Content-Disposition header should not contain
-  any directory path information, which means that it should not
-  contain '/' (see RFC2183)... which means that snapshot naming is
-  broken for $hash being e.g. hirearchical branch name such as
-  'xx/test'
 
-This would be improved in next commit.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This is a new commit in this series.  It wasn't present in previous
-version of "smarter snapshot names" series.
-
- t/t9502-gitweb-standalone-parse-output.sh |   87 +++++++++++++++++++++++++++++
- 1 files changed, 87 insertions(+), 0 deletions(-)
- create mode 100755 t/t9502-gitweb-standalone-parse-output.sh
-
-diff --git a/t/t9502-gitweb-standalone-parse-output.sh b/t/t9502-gitweb-standalone-parse-output.sh
-new file mode 100755
-index 0000000..741187b
---- /dev/null
-+++ b/t/t9502-gitweb-standalone-parse-output.sh
-@@ -0,0 +1,87 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2009 Mark Rada
-+#
-+
-+test_description='gitweb as standalone script (parsing script output).
-+
-+This test runs gitweb (git web interface) as a CGI script from the
-+commandline, and checks that it produces the correct output, either
-+in the HTTP header or the actual script output.'
-+
-+
-+. ./gitweb-lib.sh
-+
-+# ----------------------------------------------------------------------
-+# snapshot file name and prefix
-+
-+cat >>gitweb_config.perl <<\EOF
-+
-+$known_snapshot_formats{'tar'} = {
-+	'display' => 'tar',
-+	'type' => 'application/x-tar',
-+	'suffix' => '.tar',
-+	'format' => 'tar',
-+};
-+
-+$feature{'snapshot'}{'default'} = ['tar'];
-+EOF
-+
-+# Call check_snapshot with the arguments "<basename> [<prefix>]"
-+#
-+# This will check that gitweb HTTP header contains proposed filename
-+# as <basename> with '.tar' suffix added, and that generated tarfile
-+# (gitweb message body) has <prefix> as prefix for al files in tarfile
-+#
-+# <prefix> default to <basename>
-+check_snapshot () {
-+	basename=$1
-+	prefix=${2:-"$1"}
-+	echo "basename=$basename"
-+	grep "filename=.*$basename.tar" gitweb.headers >/dev/null 2>&1 &&
-+	"$TAR" tf gitweb.body >file_list &&
-+	! grep -v "^$prefix/" file_list
-+}
-+
-+test_expect_success setup '
-+	test_commit first foo &&
-+	git branch xx/test &&
-+	FULL_ID=$(git rev-parse --verify HEAD) &&
-+	SHORT_ID=$(git rev-parse --verify --short=7 HEAD)
-+'
-+test_debug '
-+	echo "FULL_ID  = $FULL_ID"
-+	echo "SHORT_ID = $SHORT_ID"
-+'
-+
-+test_expect_success 'snapshot: full sha1' '
-+	gitweb_run "p=.git;a=snapshot;h=$FULL_ID;sf=tar" &&
-+	check_snapshot ".git-$FULL_ID" ".git"
-+'
-+test_debug 'cat gitweb.headers && cat file_list'
-+
-+test_expect_success 'snapshot: shortened sha1' '
-+	gitweb_run "p=.git;a=snapshot;h=$SHORT_ID;sf=tar" &&
-+	check_snapshot ".git-$SHORT_ID" ".git"
-+'
-+test_debug 'cat gitweb.headers && cat file_list'
-+
-+test_expect_success 'snapshot: HEAD' '
-+	gitweb_run "p=.git;a=snapshot;h=HEAD;sf=tar" &&
-+	check_snapshot ".git-HEAD" ".git"
-+'
-+test_debug 'cat gitweb.headers && cat file_list'
-+
-+test_expect_success 'snapshot: short branch name (master)' '
-+	gitweb_run "p=.git;a=snapshot;h=master;sf=tar" &&
-+	check_snapshot ".git-master" ".git"
-+'
-+test_debug 'cat gitweb.headers && cat file_list'
-+
-+test_expect_failure 'snapshot: hierarchical branch name (xx/test)' '
-+	gitweb_run "p=.git;a=snapshot;h=xx/test;sf=tar" &&
-+	! grep "filename=.*/" gitweb.headers
-+'
-+test_debug 'cat gitweb.headers'
-+
-+test_done
--- 
-1.6.5
+Sebastian
