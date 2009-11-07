@@ -1,83 +1,72 @@
-From: Dilip M <dilipm79@gmail.com>
-Subject: Re: Preserving branches after merging on ancestor
-Date: Sat, 7 Nov 2009 09:11:11 +0530
-Message-ID: <c94f8e120911061941l1fb62d84g9a5ba3f1a00d9156@mail.gmail.com>
-References: <26217077.post@talk.nabble.com> <20091105223004.GA3224@progeny.tock> 
-	<20091105232848.GA1939@atjola.homenet> <20091106010947.GB4425@progeny.tock> 
-	<20091106021038.GA27206@atjola.homenet> <20091106050353.GA8824@progeny.tock> 
-	<1257520877359-3959325.post@n2.nabble.com>
+From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
+Subject: [PATCH 0/4] Improve format-patch (mostly documentation)
+Date: Sat, 07 Nov 2009 10:45:38 +0100
+Message-ID: <4AF541C2.5000504@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: rhlee <richard@webdezign.co.uk>
-X-From: git-owner@vger.kernel.org Sat Nov 07 04:42:50 2009
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 07 10:45:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6cCP-0003sO-J7
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Nov 2009 04:42:49 +0100
+	id 1N6hrj-0000fO-5H
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Nov 2009 10:45:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760075AbZKGDl0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Nov 2009 22:41:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760069AbZKGDl0
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 22:41:26 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:44037 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760023AbZKGDlZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Nov 2009 22:41:25 -0500
-Received: by pwj9 with SMTP id 9so989405pwj.21
-        for <git@vger.kernel.org>; Fri, 06 Nov 2009 19:41:31 -0800 (PST)
+	id S1751327AbZKGJph convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Nov 2009 04:45:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbZKGJpg
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Nov 2009 04:45:36 -0500
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:36751 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751301AbZKGJpg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Nov 2009 04:45:36 -0500
+Received: by ewy3 with SMTP id 3so1770201ewy.37
+        for <git@vger.kernel.org>; Sat, 07 Nov 2009 01:45:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:content-type
          :content-transfer-encoding;
-        bh=c+6jDNobvmPO+STP8GNUxFvX3m+cmXaLTtpXRPkoqFs=;
-        b=MzydiNuaZI7QsSDT5R8GlUvMrY6H/zB39+B48X/2jqoCoFrG8wQPeIKReMoaTFB8/h
-         eaXpKnXB/1Q2K932pNvsAOKu1PPM7lFALBoAYY2kjW8INUj1KEHe04Z6eOqAl4FZyMX7
-         Ys4zh/EKs0VxUIeNNciL9h1tzA9yWPEORbnjE=
+        bh=8AVhviNP4dJ7FsB8DLMq7Aq4Bwa07x6amD6aGENfpSE=;
+        b=pbpM1eS0iG6FQkVWgZOgnok5DTiZjnw8i2sm7cc5AUHLlQioknPcTLFe4wfnvt/LCj
+         47MjaTmRKp2YWqfa9yEkZhDzyLGLL/bi3sBF//dPBT1JiPOlYJYwBdvxzG6rAhz0WFwc
+         HrVSAxMYk8VP6wBTBsqWdfm/8VI+5+ZFqeqIM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=tL9WdX8sHf9T4nWjYuYWQX0b1Hzzu488oANah3CPVyuuN3SmQZv/55qmNXK74GEBlq
-         VvJmoB5gxeWyaIpOmM3XCSBieAfOmH4DqOIwtgkvaevEd8nFUimxLIsgkDUfBicNxp6w
-         ES0koNOdZ4JQMfAsv4EQHFJw9NyYemplta9u8=
-Received: by 10.141.19.11 with SMTP id w11mr298565rvi.66.1257565291072; Fri, 
-	06 Nov 2009 19:41:31 -0800 (PST)
-In-Reply-To: <1257520877359-3959325.post@n2.nabble.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=C+lIPekVm9lViOGOIJCUSs6WeLWSkqhLNX0bCV8SH5Q+TL3S8zxhx/xIECf94+s6GY
+         1+RoPpaGlMh62ahZrfkmJ41XG5gE6usmRC58UXNLtm3QSul2o6z/5U44zernT5x0sQLF
+         iPpTF/G8HBpTOXhL+kcdXG38xUhtEmrKvCdLk=
+Received: by 10.213.23.200 with SMTP id s8mr520460ebb.52.1257587140670;
+        Sat, 07 Nov 2009 01:45:40 -0800 (PST)
+Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
+        by mx.google.com with ESMTPS id 7sm776705eyb.40.2009.11.07.01.45.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 07 Nov 2009 01:45:39 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132354>
 
-On Fri, Nov 6, 2009 at 8:51 PM, rhlee <richard@webdezign.co.uk> wrote:
+Here is version 2 of my patch series to improve the consistency
+between the documentation and implementation of format-patch.
+It is implemented on top of Peff's recent commit to reinstate -p.
 
-> Hi John, Bj=F6rn and Eric,
->
-> Thank you very much for your replies from which I gained a lot insigh=
-t about
-> git merging and different workflows.
->
-> Yes, I have tried out --no-ff and it does the job for me. (Incidental=
-ly, doing
-> that take it look neater in git gui as all the master nodes appear on=
- top of
-> each other. Using empty commits, the merged branches appear on top th=
-e master
-> nodes in the graph.)
+Bj=C3=B6rn Gustavsson (4):
+  format-patch: Always generate a patch
+  format-patch documentation: Remove diff options that are not useful
+  format-patch documentation: Fix formatting
+  format-patch: Add "--no-stat" as a synonym for "-p"
 
-Thanks to Richard, John, Bj=F6rn, and Eric.
-
-I had a similar _confusion_ looking looking at graph. I always use "log=
- --graph
---pretty=3Doneline". Now I have _opted_ to pull/merge with '--no-ff', t=
-o keep the
-graph plain and simple for non-power users :)
-
-
-
--- Dilip
+ Documentation/diff-options.txt     |   61 ++++++++++++++++++++++++----=
+--------
+ Documentation/git-format-patch.txt |   46 +++++++++++++-------------
+ builtin-log.c                      |   21 +++++++++---
+ t/t4014-format-patch.sh            |   18 ++++++++++
+ 4 files changed, 98 insertions(+), 48 deletions(-)
