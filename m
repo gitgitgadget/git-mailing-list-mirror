@@ -1,109 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] RFC Allow case insensitive search flag with git-grep for
- fixed-strings
-Date: Fri, 06 Nov 2009 16:00:51 -0800
-Message-ID: <7vzl6ztd8s.fsf@alter.siamese.dyndns.org>
-References: <B7C4E16C-B15D-4A7B-873A-B6BD0FDAD8C8@gmail.com>
- <20091106084855.GA20964@coredump.intra.peff.net>
- <7vbpjg0y8k.fsf@alter.siamese.dyndns.org>
- <20091106101316.GA22549@coredump.intra.peff.net>
+From: Rys Sommefeldt <rys@pixeltards.com>
+Subject: [cgit PATCH] Close file descriptor on error in readfile()
+Date: Sat, 07 Nov 2009 02:01:16 +0000
+Message-ID: <4AF4D4EC.1040806@pixeltards.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brian Collins <bricollins@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 07 01:01:10 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 07 03:08:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6Yjt-0007J6-L2
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Nov 2009 01:01:09 +0100
+	id 1N6aj8-000490-Im
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Nov 2009 03:08:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751290AbZKGAA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Nov 2009 19:00:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750850AbZKGAA5
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 19:00:57 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55935 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750701AbZKGAA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Nov 2009 19:00:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2CB9C95350;
-	Fri,  6 Nov 2009 19:01:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/9VbB9FjCtRkPpeN0Z6DUO8/Sm0=; b=TtEoBp
-	fEIEJ+2MYBCvJef8GrwERcu7xyenVVZfx0esxFZktrOdIpwST+5yYaNF+1QmCeEI
-	bIoUPfjutUNSkwKBfRiw1ec0Fh6lFhXoNWL8b7fyLEXeNWr2j3r8PE587vt7K3wK
-	TsGhfb6pgUft4S9bz0u7FKWvsQSsebcBIZlgA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p9r1IHzZ0eR9cYO34JguK0DRX4SnzDQq
-	kOf7gYyHd7oiz0njS6UJ7DBuYNydkwlViLzRoT/K9QHZ+jXcZiEVpQQELISEiQL2
-	kCWPJKG/MYW11CHksMoSX+RvwgjPeNhgVZ4jU/LfldTTOYWRBi7mAxhVkfZzD0C+
-	YPvTS4GtOEw=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F329F9534F;
-	Fri,  6 Nov 2009 19:00:57 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 834E49534E; Fri,  6 Nov 2009
- 19:00:53 -0500 (EST)
-In-Reply-To: <20091106101316.GA22549@coredump.intra.peff.net> (Jeff King's
- message of "Fri\, 6 Nov 2009 05\:13\:17 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A0834038-CB30-11DE-BD84-D595BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1755012AbZKGCIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2009 21:08:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755005AbZKGCIQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Nov 2009 21:08:16 -0500
+Received: from pixeltards.com ([64.22.109.241]:55286 "EHLO mail.pixeltards.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754948AbZKGCIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Nov 2009 21:08:16 -0500
+X-Greylist: delayed 424 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 Nov 2009 21:08:16 EST
+Received: by mail.pixeltards.com (Postfix, from userid 1009)
+	id D897E1037A; Sat,  7 Nov 2009 02:01:16 +0000 (GMT)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on pixeltards.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.3 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from [192.168.2.3] (87-194-178-245.bethere.co.uk [87.194.178.245])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.pixeltards.com (Postfix) with ESMTPSA id B5CB810379
+	for <git@vger.kernel.org>; Sat,  7 Nov 2009 02:01:15 +0000 (GMT)
+User-Agent: Mozilla-Thunderbird 2.0.0.22 (X11/20090701)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132349>
 
-Jeff King <peff@peff.net> writes:
+Hi Lars,
 
-> On Fri, Nov 06, 2009 at 02:00:11AM -0800, Junio C Hamano wrote:
->
->> But I didn't try hard to find out what _else_ we are depending on.
->
-> It is not really _us_ depending on it. It is "things the user wants to
-> do that _we_ support, but that their grep might not." So I don't think
-> there is much point in enumerating features. If their system grep
-> doesn't handle options that they want to use, then it won't work for
-> them. If they don't use them, then they will be fine.
->
-> Though "-e" might be the exception, as I think we might use it
-> unconditionally. But something like "-F -i" really depends on whether
-> the user wants to use it.
+My colleagues and I use cgit at work, and we've found that the scanning 
+process can consume all available fds pretty quickly on our cgit hosts, 
+because it doesn't close them properly on error.  We have a few thousand 
+active repositories for cgit to scan, and we noticed it dying after a 
+certain amount.
 
-Yes and no.
+I've attached a patch which should apply against current master, 
+although I developed it a while back on an older 0.8 version (sorry it 
+took so long to subscribe and send the patch in).
 
-Even though we currently punt on a few platforms for simplicity and build
-with NO_EXTERNAL_GREP, we could check if the set of options given are
-within the feature set of what the platform's grep understands and choose
-to spawn "grep" unless some options that are unsupported are used, in
-which case we fall back to the internal one.
+Cheers,
 
-We could certainly do something like this if it turns out to be a problem.
-An invocation that does not use -F and -i together can still spawn
-external grep if that is faster.
+Rys Sommefeldt
+---
 
-You are correct about "-e".  Our NO_EXTERNAL_GREP on SunOS cannot be
-avoided.
+ From 6446cf839d2104cd40848e439bf97cd7fd6ccfee Mon Sep 17 00:00:00 2001
+From: Rys Sommefeldt <rsommefeldt@plus.net>
+Date: Fri, 6 Nov 2009 17:14:56 +0000
+Subject: [PATCH] Close fd when done
 
- builtin-grep.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+---
+ shared.c |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 1df25b0..2905f64 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -357,6 +357,9 @@ static int external_grep(struct grep_opt *opt, const char **paths, int cached)
+diff --git a/shared.c b/shared.c
+index d7b2d5a..d5e54e6 100644
+--- a/shared.c
++++ b/shared.c
+@@ -404,14 +404,19 @@ int readfile(const char *path, char **buf, size_t 
+*size)
+     struct stat st;
  
- 	if (opt->extended || (opt->relative && opt->prefix_length))
- 		return -1;
-+	if (NO_GREP_FIXED_IGNORE_CASE &&
-+	    opt->fixed && (opt->regflags & REG_ICASE))
-+		return -1;
- 	len = nr = 0;
- 	push_arg("grep");
- 	if (opt->fixed)
+     fd = open(path, O_RDONLY);
+-    if (fd == -1)
++    if (fd == -1) {
++        close(fd);
+         return errno;
+-    if (fstat(fd, &st))
++    }
++    if (fstat(fd, &st)) {
++        close(fd);
+         return errno;
++    }
+     if (!S_ISREG(st.st_mode))
+         return EISDIR;
+     *buf = xmalloc(st.st_size + 1);
+     *size = read_in_full(fd, *buf, st.st_size);
+     (*buf)[*size] = '\0';
++    close(fd);
+     return (*size == st.st_size ? 0 : errno);
+ }
+-- 
+1.6.5.2
