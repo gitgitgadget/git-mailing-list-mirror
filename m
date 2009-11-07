@@ -1,111 +1,90 @@
-From: Nathaniel W Filardo <nwf@cs.jhu.edu>
-Subject: Re: Endianness bug in git-svn or called component?
-Date: Fri, 4 Dec 2009 15:29:28 -0500
-Message-ID: <20091204202928.GW17192@gradx.cs.jhu.edu>
-References: <20091204174458.GV17192@gradx.cs.jhu.edu> <m23a3qa40n.fsf@igel.home>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [cgit PATCH] Close file descriptor on error in readfile()
+Date: Sat, 07 Nov 2009 17:14:43 +0100
+Message-ID: <m2ocneb9cc.fsf@igel.home>
+References: <4AF4D4EC.1040806@pixeltards.com>
+	<4AF566C9.5090106@pixeltards.com>
+	<8c5c35580911070659h35c44421q713ddba97318e2b8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Nc+Vvx0JXuqp7Zy0"
-Cc: Nathaniel W Filardo <nwf@cs.jhu.edu>, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Fri Dec 04 21:30:21 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Rys Sommefeldt <rys@pixeltards.com>, git@vger.kernel.org,
+	steven@uplinklabs.net
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 07 17:14:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGenD-0004zF-Qo
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 21:30:20 +0100
+	id 1N6nwF-0000FK-6g
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Nov 2009 17:14:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757221AbZLDUaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2009 15:30:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757214AbZLDUaH
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 15:30:07 -0500
-Received: from blaze.cs.jhu.edu ([128.220.13.50]:54530 "EHLO blaze.cs.jhu.edu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757127AbZLDUaG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2009 15:30:06 -0500
-Received: from gradx.cs.jhu.edu (gradx.cs.jhu.edu [128.220.13.52])
-	by blaze.cs.jhu.edu (8.14.3/8.14.3) with ESMTP id nB4KTT7v007797
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 4 Dec 2009 15:29:29 -0500 (EST)
-Received: from gradx.cs.jhu.edu (localhost.localdomain [127.0.0.1])
-	by gradx.cs.jhu.edu (8.14.2/8.13.1) with ESMTP id nB4KTSOu006002;
-	Fri, 4 Dec 2009 15:29:28 -0500
-Received: (from nwf@localhost)
-	by gradx.cs.jhu.edu (8.14.2/8.13.8/Submit) id nB4KTS9X006001;
-	Fri, 4 Dec 2009 15:29:28 -0500
-Content-Disposition: inline
-In-Reply-To: <m23a3qa40n.fsf@igel.home>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752293AbZKGQOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Nov 2009 11:14:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752289AbZKGQOm
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Nov 2009 11:14:42 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:49633 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752280AbZKGQOl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Nov 2009 11:14:41 -0500
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3415F1C00143;
+	Sat,  7 Nov 2009 17:14:45 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id 1B04E90228;
+	Sat,  7 Nov 2009 17:14:45 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan1.mnet-online.de [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id HXuzRAWmYVDl; Sat,  7 Nov 2009 17:14:44 +0100 (CET)
+Received: from igel.home (DSL01.83.171.174.17.ip-pool.NEFkom.net [83.171.174.17])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Sat,  7 Nov 2009 17:14:44 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id BF19410DB9C; Sat,  7 Nov 2009 17:14:43 +0100 (CET)
+X-Yow: Hydraulic pizza oven!!  Guided missile!  Herring sandwich!  Styrofoam!
+ Jayne Mansfield!  Aluminum siding!  Borax!  Pedal pushers!  Jukebox!
+In-Reply-To: <8c5c35580911070659h35c44421q713ddba97318e2b8@mail.gmail.com>
+	(Lars Hjemli's message of "Sat, 7 Nov 2009 15:59:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134570>
 
+Lars Hjemli <hjemli@gmail.com> writes:
 
---Nc+Vvx0JXuqp7Zy0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> diff --git a/shared.c b/shared.c
+> index d7b2d5a..a27ab30 100644
+> --- a/shared.c
+> +++ b/shared.c
+> @@ -406,12 +406,17 @@ int readfile(const char *path, char **buf, size_t *size)
+>         fd = open(path, O_RDONLY);
+>         if (fd == -1)
+>                 return errno;
+> -       if (fstat(fd, &st))
+> +       if (fstat(fd, &st)) {
+> +               close(fd);
+>                 return errno;
 
-On Fri, Dec 04, 2009 at 09:16:40PM +0100, Andreas Schwab wrote:
-> Nathaniel W Filardo <nwf@cs.jhu.edu> writes:
->=20
-> > On this machine,
-> >
-> > mirrors hydra:/tank0/mirrors/misc% uname -a
-> > FreeBSD hydra.priv.oc.ietfng.org 9.0-CURRENT FreeBSD 9.0-CURRENT #13: S=
-at Nov 14 19:40:25 EST 2009 root@hydra.priv.oc.ietfng.org:/systank/obj/syst=
-ank/src/sys/NWFKERN  sparc64
-> >
-> > attempting to fetch from an svn source yields the following error:
-> >
-> > rs hydra:/tank0/mirrors/misc% git svn init -s https://joshua.svn.source=
-forge.net/svnroot/joshua test-joshua
-> > Initialized empty Git repository in /tank0/mirrors/misc/test-joshua/.gi=
-t/                                      =20
-> > mirrors hydra:/tank0/mirrors/misc% cd test-joshua                      =
-                                        =20
-> > mirrors hydra:/tank0/mirrors/misc/test-joshua% git svn fetch
-> >         A       scripts/distributedLM/config.template      =20
-> > [...]
-> >         A       build.xml
-> > r1 =3D fe84a7d821ec6d92da75133ac7ad1deb476b6484 (refs/remotes/trunk)
-> > error: index uses  extension, which we do not understand
-> > fatal: index file corrupt
-> > write-tree: command returned error: 128
->=20
-> I could not reproduce that on powerpc (both 32bit and 64bit).
->=20
-> Andreas.
+The close call can clobber errno.
 
-Hm.  I seem to have forgotten to mention that I am running
+> -       if (!S_ISREG(st.st_mode))
+> +       }
+> +       if (!S_ISREG(st.st_mode)) {
+> +               close(fd);
+>                 return EISDIR;
+> +       }
+>         *buf = xmalloc(st.st_size + 1);
+>         *size = read_in_full(fd, *buf, st.st_size);
+>         (*buf)[*size] = '\0';
+> +       close(fd);
+>         return (*size == st.st_size ? 0 : errno);
 
-% git --version
-git version 1.6.5.3
+Likewise.
 
-built from the FreeBSD ports tree, in case that matters, using
+Andreas.
 
-% gcc --version
-gcc (GCC) 4.2.1 20070719  [FreeBSD]
-
-Knowing nothing of git's internals, how should I start to investigate what's
-going on here?
-
-Thanks again.
---nwf;
-
---Nc+Vvx0JXuqp7Zy0
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAksZcSgACgkQTeQabvr9Tc86CQCdG09ZCz56qUx5G+lW/2OQicG4
-F3wAn0KLvJAKwr3e6u9QH3IAqNFRp585
-=SNKz
------END PGP SIGNATURE-----
-
---Nc+Vvx0JXuqp7Zy0--
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
