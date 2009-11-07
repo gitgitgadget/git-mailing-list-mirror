@@ -1,141 +1,118 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Preserving branches after merging on ancestor
-Date: Sat, 7 Nov 2009 14:28:40 +0100
-Message-ID: <20091107132840.GA9303@atjola.homenet>
-References: <26217077.post@talk.nabble.com>
- <20091105223004.GA3224@progeny.tock>
- <20091105232848.GA1939@atjola.homenet>
- <20091106010947.GB4425@progeny.tock>
- <20091106021038.GA27206@atjola.homenet>
- <20091106050353.GA8824@progeny.tock>
- <1257520877359-3959325.post@n2.nabble.com>
+From: Pavel Pisa <pisa@cmp.felk.cvut.cz>
+Subject: Helpers scripts to simplify work with submodules (git-sm-commit and git-sm-pull)
+Date: Sat, 7 Nov 2009 14:05:53 +0100
+Message-ID: <200911071405.53530.pisa@cmp.felk.cvut.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: rhlee <richard@webdezign.co.uk>
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Michal Sojka <sojkam1@fel.cvut.cz>
+To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sat Nov 07 14:29:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6lLi-0000Hk-OD
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Nov 2009 14:29:03 +0100
+	id 1N6lLi-0000Hk-80
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Nov 2009 14:29:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751889AbZKGN2l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Nov 2009 08:28:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751855AbZKGN2l
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Nov 2009 08:28:41 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39012 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751800AbZKGN2k (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Nov 2009 08:28:40 -0500
-Received: (qmail invoked by alias); 07 Nov 2009 13:28:43 -0000
-Received: from i59F55CCF.versanet.de (EHLO atjola.homenet) [89.245.92.207]
-  by mail.gmx.net (mp059) with SMTP; 07 Nov 2009 14:28:43 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+fCMI/prGfDJkeyeZOgDN6f7klFg7jFG3r7Lg2XI
-	rSoKc3vGwPCjn5
+	id S1751869AbZKGNZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Nov 2009 08:25:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751855AbZKGNZe
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Nov 2009 08:25:34 -0500
+Received: from viefep16-int.chello.at ([62.179.121.36]:31524 "EHLO
+	viefep16-int.chello.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751841AbZKGNZd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Nov 2009 08:25:33 -0500
+X-Greylist: delayed 1178 seconds by postgrey-1.27 at vger.kernel.org; Sat, 07 Nov 2009 08:25:33 EST
+Received: from edge05.upc.biz ([192.168.13.212]) by viefep18-int.chello.at
+          (InterMail vM.7.09.01.00 201-2219-108-20080618) with ESMTP
+          id <20091107130556.EOBT7028.viefep18-int.chello.at@edge05.upc.biz>;
+          Sat, 7 Nov 2009 14:05:56 +0100
+Received: from baree.pikron.com ([62.24.72.246])
+	by edge05.upc.biz with edge
+	id 2D5t1d0Hr5JpFYE05D5v8c; Sat, 07 Nov 2009 14:05:56 +0100
+X-SourceIP: 62.24.72.246
+User-Agent: KMail/1.9.9
 Content-Disposition: inline
-In-Reply-To: <1257520877359-3959325.post@n2.nabble.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132363>
 
-On 2009.11.06 07:21:17 -0800, rhlee wrote:
-> Jonathan Nieder-2 wrote:
-> >=20
-> > Then your response pushed me towards the question of whether --no-f=
-f is a
-> > good idea in general
-> >=20
->=20
-> John, I get the feeling from what you say in general that fast forwar=
-ds are
-> default behaviour for merges for a reason and by using the --no-ff op=
-tion I
-> am making my workflow and git history uncessesarily awkward and worki=
-ng
-> against best practices?
+Hello to all git developers and users,
 
-As Jonathan already said, there are pros and cons when the merge is
-about merging topic branches to some "main" branch. In addition to that=
-,
-working with git often also involves other merges. For example, you
-might have your private topic branch, on which you work on two differen=
-t
-boxes. So you push your topic branch to some private bare repo, fetch i=
-t
-from the other box, work there, and push the result back to the bare
-repo. And then, in the "original" repo, you of course want to update
-your local branch head to reflect the new changes. So you fetch and
-merge, but you really don't want a merge commit in that case, but the
-default fast-forward behaviour. In some sense, that kind of "merge", is
-more like an "update", for which the fast-forward behaviour is simply
-better.
+we are dropping use of other SCMs for most of our projects
+during time and switch to GIT. The actual one is uLan protocol
+related stuff
 
-> Jonathan Nieder-2 wrote:
-> >=20
-> >> I guess Richard took the "branch topic1, merge topic1, branch topi=
-c2,=20
-> >> merge topic2" thing just as an example because that ends up with t=
-wo=20
-> >> fast-forwards.
-> >=20
-> > Hmm, I found Richard=E2=80=99s example pretty realistic.  I used to=
- work like
-> > that, and I don=E2=80=99t think I am the only one.
-> >=20
->=20
-> I'm not saying there is any one "right" workflow. But is there a more
-> suitable workflow than than "branch topic1, merge topic1, branch topi=
-c2,
-> merge topic2"?
+  http://sourceforge.net/projects/ulan/develop
+  git://ulan.git.sourceforge.net/gitroot/ulan/ulan
 
-That order of commands looks like a strict "Start a topic, finish a
-topic, merge it, start next topic, ..." workflow. And that severely
-limits what you can do, as you're forced to work on only one thing and
-to finish it first before starting something else. Such a strict
-workflow basically makes branching pointless. I often do things like:
+This project provided more libraries and targets support used
+in other university and company projects. CVS allows to checkout
+some subset/directory for use in such case. The GIT does not
+support work with subtrees so we have split project into
+multiple submodules, but actual GIT submodules support
+makes committing and maintenance over whole tree a little painfull.
 
-git checkout -b new_feature master
-*work & commit*
+So there are hackish helper scripts which made us work simpler
+and can be found usable by others as well
 
-*get a bug report about the stable version*
-git checkout -b bug_fix_foo maint
-*work & commit*
+git-sm-pull - runs git pull (by default) or other option or shell specified 
+command
+for all subprojects. It is not necessary to stay in the project top directory,
+when invoked. If it can be instructed to work with top lever repository even
+if current working directory is inside subproject directory if option -w
+is specified.
 
-*get a report about a trivial bug on master*
-git checkout master
-*fix bug & commit* # Yes, directly on master
-git push
+http://ulan.git.sourceforge.net/git/gitweb.cgi?p=ulan/ulan-top;a=blob;f=scripts/git-sm-pull;hb=HEAD
 
-git checkout bug_fix_foo
-*finish the bug_fix*
-git checkout maint
-git merge bug_fix_foo # Merge the bugfix to the oldest branch it applie=
-s to
-git checkout master
-git merge maint # Merge bugfixes forward to the more recent branches
-git push
+Usage: git-sm-pull [options] [shell command]
+      -w --whole      find top repository for whole project
+      -h --help       help
+      -p --pull       pull in all submodules
+      -P --push       push in all submodules
+      -s --status     status in all submodules
 
-git checkout new_feature
-*finish feature*
-git checkout master
-git merge new_feature
-git push
+git-sm-pull - runs git gui (by default) or other option or shell specified 
+command
+for all subproject where status reports that repository is not clean.
 
-So I could work on multiple things at the same time, and even merged
-them in reverse order, compared to the order in which I started the
-branches. It's just the strict "start, finish, merge, start next, ..."
-order that looks suspicious, but that's totally unrelated to the --no-f=
-f
-thing. Even when working on multiple branches and merging them in a
-random order, you can hit a fast-forward for the "first" merge.
+http://ulan.git.sourceforge.net/git/gitweb.cgi?p=ulan/ulan-top;a=blob;f=scripts/git-sm-commit;hb=HEAD
 
-Bj=C3=B6rn
+Usage: git-sm-commit [options] [shell command]
+      -h --help       help
+      -w --whole      find top repository for whole project
+      -m --message    specify commit message on command line
+      -a --all        commit all changes in tracked files
+      -s --status     show status
+
+The second stript can be used without parameters or with -w to do
+select and commit changes interactively or if option -m and/or -a
+are used int runs git commit. You can find quite strange trickeries
+there to propagate correctly multiple word arguments through shell/bash
+there so it works as expected.
+
+  git-sm-commit                    -> invokes GUI for modified submodules
+                                      and for top finally
+  git-sm-commit -a -m "my change"  -> commits changes in all tracked files
+                                      in all submodules with provided message
+                                      and then does toplevel commit which
+                                      should ensure submodules versions tying
+  git-sm-commit qgit               -> runs know fancy viewer for each modified
+                                      submodule and for top finally
+  
+The other git commands can be specified as well, so git-sm-commit
+can be little misleading after script evolution from original single
+purpose version, but commit preparation is it main use still.
+
+Thanks for git and may it be that these scripts can be usable
+for some other users,
+
+                Pavel Pisa
+    e-mail:     pisa@cmp.felk.cvut.cz
+    www:        http://cmp.felk.cvut.cz/~pisa
+    university: http://dce.felk.cvut.cz/
+    company:    http://www.pikron.com/
