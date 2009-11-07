@@ -1,118 +1,76 @@
-From: Pavel Pisa <pisa@cmp.felk.cvut.cz>
-Subject: Helpers scripts to simplify work with submodules (git-sm-commit and git-sm-pull)
-Date: Sat, 7 Nov 2009 14:05:53 +0100
-Message-ID: <200911071405.53530.pisa@cmp.felk.cvut.cz>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Preserving branches after merging on ancestor
+Date: Sat, 7 Nov 2009 14:31:01 +0100
+Message-ID: <20091107133101.GB9303@atjola.homenet>
+References: <26217077.post@talk.nabble.com>
+ <20091105223004.GA3224@progeny.tock>
+ <20091105232848.GA1939@atjola.homenet>
+ <20091106010947.GB4425@progeny.tock>
+ <20091106021038.GA27206@atjola.homenet>
+ <20091106050353.GA8824@progeny.tock>
+ <1257520877359-3959325.post@n2.nabble.com>
+ <c94f8e120911061941l1fb62d84g9a5ba3f1a00d9156@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Michal Sojka <sojkam1@fel.cvut.cz>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 07 14:29:03 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: rhlee <richard@webdezign.co.uk>, git@vger.kernel.org
+To: Dilip M <dilipm79@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 07 14:31:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N6lLi-0000Hk-80
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Nov 2009 14:29:02 +0100
+	id 1N6lNp-0001EC-Di
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Nov 2009 14:31:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751869AbZKGNZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Nov 2009 08:25:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751855AbZKGNZe
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Nov 2009 08:25:34 -0500
-Received: from viefep16-int.chello.at ([62.179.121.36]:31524 "EHLO
-	viefep16-int.chello.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751841AbZKGNZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Nov 2009 08:25:33 -0500
-X-Greylist: delayed 1178 seconds by postgrey-1.27 at vger.kernel.org; Sat, 07 Nov 2009 08:25:33 EST
-Received: from edge05.upc.biz ([192.168.13.212]) by viefep18-int.chello.at
-          (InterMail vM.7.09.01.00 201-2219-108-20080618) with ESMTP
-          id <20091107130556.EOBT7028.viefep18-int.chello.at@edge05.upc.biz>;
-          Sat, 7 Nov 2009 14:05:56 +0100
-Received: from baree.pikron.com ([62.24.72.246])
-	by edge05.upc.biz with edge
-	id 2D5t1d0Hr5JpFYE05D5v8c; Sat, 07 Nov 2009 14:05:56 +0100
-X-SourceIP: 62.24.72.246
-User-Agent: KMail/1.9.9
+	id S1751892AbZKGNbA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Nov 2009 08:31:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751841AbZKGNbA
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Nov 2009 08:31:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60594 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751800AbZKGNa7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Nov 2009 08:30:59 -0500
+Received: (qmail invoked by alias); 07 Nov 2009 13:31:03 -0000
+Received: from i59F55CCF.versanet.de (EHLO atjola.homenet) [89.245.92.207]
+  by mail.gmx.net (mp041) with SMTP; 07 Nov 2009 14:31:03 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19iufVGouRiUerZqOsavInSjF+e3j+iKIQtWNH+Ae
+	T1SA//3YbBVroo
 Content-Disposition: inline
+In-Reply-To: <c94f8e120911061941l1fb62d84g9a5ba3f1a00d9156@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132364>
 
-Hello to all git developers and users,
+On 2009.11.07 09:11:11 +0530, Dilip M wrote:
+> On Fri, Nov 6, 2009 at 8:51 PM, rhlee <richard@webdezign.co.uk> wrote=
+:
+>=20
+> > Hi John, Bj=F6rn and Eric,
+> >
+> > Thank you very much for your replies from which I gained a lot
+> > insight about git merging and different workflows.
+> >
+> > Yes, I have tried out --no-ff and it does the job for me.
+> > (Incidentally, doing that take it look neater in git gui as all the
+> > master nodes appear on top of each other. Using empty commits, the
+> > merged branches appear on top the master nodes in the graph.)
+>=20
+> Thanks to Richard, John, Bj=F6rn, and Eric.
+>=20
+> I had a similar _confusion_ looking looking at graph. I always use
+> "log --graph --pretty=3Doneline". Now I have _opted_ to pull/merge wi=
+th
+> '--no-ff', to keep the graph plain and simple for non-power users :)
 
-we are dropping use of other SCMs for most of our projects
-during time and switch to GIT. The actual one is uLan protocol
-related stuff
+Just be careful with that. There are situations in which you clearly
+don't want --no-ff, see the "working on a topic branch on multiple
+boxes" example I gave in the mail I sent a minute ago. ;-)
 
-  http://sourceforge.net/projects/ulan/develop
-  git://ulan.git.sourceforge.net/gitroot/ulan/ulan
-
-This project provided more libraries and targets support used
-in other university and company projects. CVS allows to checkout
-some subset/directory for use in such case. The GIT does not
-support work with subtrees so we have split project into
-multiple submodules, but actual GIT submodules support
-makes committing and maintenance over whole tree a little painfull.
-
-So there are hackish helper scripts which made us work simpler
-and can be found usable by others as well
-
-git-sm-pull - runs git pull (by default) or other option or shell specified 
-command
-for all subprojects. It is not necessary to stay in the project top directory,
-when invoked. If it can be instructed to work with top lever repository even
-if current working directory is inside subproject directory if option -w
-is specified.
-
-http://ulan.git.sourceforge.net/git/gitweb.cgi?p=ulan/ulan-top;a=blob;f=scripts/git-sm-pull;hb=HEAD
-
-Usage: git-sm-pull [options] [shell command]
-      -w --whole      find top repository for whole project
-      -h --help       help
-      -p --pull       pull in all submodules
-      -P --push       push in all submodules
-      -s --status     status in all submodules
-
-git-sm-pull - runs git gui (by default) or other option or shell specified 
-command
-for all subproject where status reports that repository is not clean.
-
-http://ulan.git.sourceforge.net/git/gitweb.cgi?p=ulan/ulan-top;a=blob;f=scripts/git-sm-commit;hb=HEAD
-
-Usage: git-sm-commit [options] [shell command]
-      -h --help       help
-      -w --whole      find top repository for whole project
-      -m --message    specify commit message on command line
-      -a --all        commit all changes in tracked files
-      -s --status     show status
-
-The second stript can be used without parameters or with -w to do
-select and commit changes interactively or if option -m and/or -a
-are used int runs git commit. You can find quite strange trickeries
-there to propagate correctly multiple word arguments through shell/bash
-there so it works as expected.
-
-  git-sm-commit                    -> invokes GUI for modified submodules
-                                      and for top finally
-  git-sm-commit -a -m "my change"  -> commits changes in all tracked files
-                                      in all submodules with provided message
-                                      and then does toplevel commit which
-                                      should ensure submodules versions tying
-  git-sm-commit qgit               -> runs know fancy viewer for each modified
-                                      submodule and for top finally
-  
-The other git commands can be specified as well, so git-sm-commit
-can be little misleading after script evolution from original single
-purpose version, but commit preparation is it main use still.
-
-Thanks for git and may it be that these scripts can be usable
-for some other users,
-
-                Pavel Pisa
-    e-mail:     pisa@cmp.felk.cvut.cz
-    www:        http://cmp.felk.cvut.cz/~pisa
-    university: http://dce.felk.cvut.cz/
-    company:    http://www.pikron.com/
+Bj=F6rn
