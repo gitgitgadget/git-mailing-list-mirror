@@ -1,87 +1,83 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: Re: [RFC/PATCH 4/4] Re-implement 'git remote update' using 'git 
-	fetch'
-Date: Sun, 8 Nov 2009 23:23:18 +0100
-Message-ID: <6672d0160911081423u41f7faa6md50190b04a71069d@mail.gmail.com>
-References: <4AF6E865.1030900@gmail.com> <hd7c4k$aul$3@ger.gmane.org>
+From: Kate Ebneter <kate@ning.com>
+Subject: Strange behavior (possible bug) using bash command subsitution
+ with "git branch"
+Date: Sun, 08 Nov 2009 14:11:56 -0800
+Message-ID: <C71C822C.22429%kate@ning.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Nov 08 23:23:26 2009
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Nov 08 23:32:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7GAP-0000Xd-SU
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Nov 2009 23:23:26 +0100
+	id 1N7GIn-0003M7-1e
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Nov 2009 23:32:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755491AbZKHWXP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Nov 2009 17:23:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755466AbZKHWXP
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Nov 2009 17:23:15 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:26082 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755460AbZKHWXO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Nov 2009 17:23:14 -0500
-Received: by fg-out-1718.google.com with SMTP id e12so992848fga.1
-        for <git@vger.kernel.org>; Sun, 08 Nov 2009 14:23:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=muIIjdvkIe5OSJedf0MkzsPwt+OsVzC3hArKTKn95ng=;
-        b=fSZresbX/lRBr/H+hlgAxyihFIqJHEZE1RYKoea8OuuvxyAJT3s/A9oqATKhAQzQjB
-         HvbmJPcQ451qytm3SfRaw1RNuxJZ0e0M5shlGhuwNWb+z2tMojN6j2gmklov/JRVlow+
-         1oh8CUa3+uNMz6EtLIgBBr+gVUh32Krcb0EHU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=AxGgBU84pYXoa2Nslyv03Fwvs6Xm3rLOUR1HpiraZw0Bg1cx6yhxQyk4G9YvxMmhlm
-         +lQ1sZzLp9eYgKFSjdlIHQ/xLVFsv2iPQzkVobzQCLAUzwyCaBxdA2mjBOXM7Mhm6DPN
-         +hz/X4InUY0scdcVvzYmze37Di6j6D2M++S4w=
-Received: by 10.204.162.204 with SMTP id w12mr7791201bkx.18.1257718998727; 
-	Sun, 08 Nov 2009 14:23:18 -0800 (PST)
-In-Reply-To: <hd7c4k$aul$3@ger.gmane.org>
+	id S1755611AbZKHWby (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Nov 2009 17:31:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755587AbZKHWby
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Nov 2009 17:31:54 -0500
+Received: from server107c.exghost.com ([207.97.244.178]:1152 "EHLO
+	server107.appriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755584AbZKHWbx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Nov 2009 17:31:53 -0500
+X-Greylist: delayed 601 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Nov 2009 17:31:53 EST
+X-Policy: GLOBAL - ning.com
+X-Primary: kate@ning.com
+X-Note: This Email was scanned by AppRiver SecureTide
+X-ALLOW: kate@ning.com ALLOWED
+X-Virus-Scan: V-
+X-Note: Spam Tests Failed: 
+X-Country-Path: UNITED STATES->UNITED STATES->UNITED STATES->UNITED STATES
+X-Note-Sending-IP: 207.97.230.106
+X-Note-Reverse-DNS: fe08.exg3.exghost.com
+X-Note-WHTLIST: kate@ning.com
+X-Note: User Rule Hits: 
+X-Note: Global Rule Hits: 120 121 122 123 127 128 139 225 
+X-Note: Mail Class: ALLOWEDSENDER
+X-Note: Headers Injected
+Received: from [207.97.230.106] (HELO FE08.exg3.exghost.com)
+  by server107.appriver.com (CommuniGate Pro SMTP 5.2.14)
+  with ESMTP id 192547584 for git@vger.kernel.org; Sun, 08 Nov 2009 17:12:05 -0500
+Received: from be32.exg3.exghost.com ([207.97.230.171]) by FE08.exg3.exghost.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 8 Nov 2009 17:11:58 -0500
+Received: from 207.97.202.210 ([207.97.202.210]) by be32.exg3.exghost.com ([207.97.230.171]) via Exchange Front-End Server exg3.exghost.com ([207.97.230.162]) with Microsoft Exchange Server HTTP-DAV ;
+ Sun,  8 Nov 2009 22:11:57 +0000
+User-Agent: Microsoft-Entourage/11.4.0.080122
+Thread-Topic: Strange behavior (possible bug) using bash command
+ subsitution with "git branch"
+Thread-Index: AcpgwHvFumg19syzEd6LBwAX8g2h+g==
+X-OriginalArrivalTime: 08 Nov 2009 22:11:58.0254 (UTC) FILETIME=[7D1D4CE0:01CA60C0]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132423>
 
-On Sun, Nov 8, 2009 at 10:10 PM, Paolo Bonzini <bonzini@gnu.org> wrote:
-> On 11/08/2009 04:48 PM, Bj=C3=B6rn Gustavsson wrote:
->> There is one incompatibility: the skipDefaultUpdate configuration
->> variable will only be honored if remotes.default is not set (i.e.
->> when 'git remote update' will invoke 'git fetch --all', not when
->> it will invoke 'git fetch default').
->
-> Rather than introducing this incompatibility, I'd rather see 'git rem=
-ote
-> update' deprecated (so that the code will one day go away for good) a=
-nd, for
-> now, leave duplicated functionality for the incompatible case.
+Hi, folks,
 
-I didn't check my facts properly before writing that commit message.
-Looking again at the old code in builtin_remote.c (after a long break),=
- and
-actually testing the behavior, I see that there is no incompatibility.
+I ran into a weird situation while working on a script, which is best
+described with a little snippet from my gitosis-admin repository:
 
-Both the old and the new code use skipDefaultUpdate only if remotes.def=
-ault
-is not set. If remotes.default is set, that list of remotes will be use=
-d. Only
-if remotes.default is not set, will 'git remote update' go through the =
-list
-of all remotes and filter away those that have skipDefaultUpdate set to=
- true.
+    $ git branch
+    * master
+    $ branch=$(git branch)
+    $ echo $branch
+    gitosis.conf keydir master
 
-Sorry for the confusion. I will correct the commit message in my re-rol=
-l
-of the patch.
 
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+That is, if you run 'git branch' inside $() or ``, it lists the directories,
+too. I can't imagine that this is intended behavior, but perhaps I'm wrong.
+
+I can reproduce this on CentOS, Ubuntu, Solaris, and Mac OS X using git
+1.6.2.3, 1.6.3.2, 1.6.3.3, 1.6.4.2, and 1.6.5.2.
+
+(In the end, I figured out a better way to write my script anyway, but this
+is just too weird not to ask about.)
+
+Thanks,
+Kate Ebneter
+Somewhat befuddled build engineer
