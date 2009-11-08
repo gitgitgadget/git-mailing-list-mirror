@@ -1,126 +1,113 @@
-From: Emmanuel Trillaud <etrillaud@gmail.com>
-Subject: Re: gitk : french translation
-Date: Sun, 8 Nov 2009 18:55:51 +0100
-Message-ID: <9f50533b0911080955l606ea87aw4edd7b0bc926a25f@mail.gmail.com>
-References: <9f50533b0911060605p6ad28ad9neac3620a1809c3db@mail.gmail.com>
-	 <b0c32d010911061016t2208af0er8d7fe88508c30f10@mail.gmail.com>
-	 <9f50533b0911061259w54b57fcdo2c0b21e95dbbdc54@mail.gmail.com>
-	 <20091107025439.GC13724@vidovic>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [gitweb feature request] Release snapshots with vX.X.X tags
+Date: Sun, 08 Nov 2009 10:53:22 -0800
+Message-ID: <7vbpjcetlp.fsf@alter.siamese.dyndns.org>
+References: <1257680442.14087.78.camel@owl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Moulard <thomas.moulard@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Sun Nov 08 18:56:08 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git mailing list <git@vger.kernel.org>
+To: Bram Neijt <bneijt@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 08 19:53:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7Bzj-0002Co-1b
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Nov 2009 18:56:07 +0100
+	id 1N7CtO-0007Mp-4L
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Nov 2009 19:53:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754836AbZKHRzx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Nov 2009 12:55:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754829AbZKHRzx
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Nov 2009 12:55:53 -0500
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:53848 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754600AbZKHRzq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Nov 2009 12:55:46 -0500
-Received: by mail-ew0-f207.google.com with SMTP id 3so2494116ewy.37
-        for <git@vger.kernel.org>; Sun, 08 Nov 2009 09:55:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Kx7Fs9dqqhwJbKuVm+r7dneu4QTlSnuZcqhuIwiEPnY=;
-        b=iF/QxCeSZnOAcj8o0gqU+vsM8Zc75o+dRXvZc/16YD3D7YeAR5ZnCPB7OCeAyXKpRT
-         oqYLX8KSgct9AfnK8BSoGBhONRdy0ZdsiVW3NQrhmCzYyOvt3Wq5nVGIBuZL/Y1gZ8m7
-         ZPEqEdaqExBdQ+pgDkADfCXrALyRpRG3WfC1c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=L6fa0QSW4ijPOogYJ3Kj+6XAkuNKiWwdXo1IGgGcfHu3YKbV5d0ffXM5CsCb6j5d+y
-         jb2Syz4sKfjPKLEZtDbIOA3AEoqmKAi+B3LlC0NwrNtRulAjSkGs8Y7+prX/WGoRXMIx
-         BAbIlvNiXfp2PbDoag2MywqEnZPA2XjcJOn40=
-Received: by 10.216.86.85 with SMTP id v63mr2120419wee.32.1257702951740; Sun, 
-	08 Nov 2009 09:55:51 -0800 (PST)
-In-Reply-To: <20091107025439.GC13724@vidovic>
+	id S1754923AbZKHSx0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Nov 2009 13:53:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754895AbZKHSx0
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Nov 2009 13:53:26 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60839 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754841AbZKHSxZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Nov 2009 13:53:25 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 55C1897AA7;
+	Sun,  8 Nov 2009 13:53:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+pyjD0IoSSVGYu7o0CHDDYqsPnc=; b=Dln21w
+	ekGYTq/+yVSEgR0CPNJlSDVBGUM9UUNTNsx/IeMLqY07AtMIppKF4JZKvv8kSfqP
+	ZN3ZKTvZX/d6jgJC6OgcQpDqYlQjnJQmo0lEsSsNdOu8Z2Vz3Y92URSBCNRFUf1y
+	Qrl2MCa5mkpz3lBiZ2UuN5V9t2oiprC6a2o+s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qD97QMrkH4/VQUNQXrmphXRy7xQgFHC3
+	x8MhMcsAV6vozG1frUmeqayLEqycIvmBWxzRBqYx0MK5CIlkSQVNTNb2hDElJDFQ
+	AyNQNewwjjR6EL+HWHvVsdrbMTETQGGCvclFpf8cSrqtutccxBHDGJ+yNHKQhl5q
+	qTbLFVmlgFk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 37AF397AA6;
+	Sun,  8 Nov 2009 13:53:28 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D8EE897AA4; Sun,  8 Nov 2009
+ 13:53:24 -0500 (EST)
+In-Reply-To: <1257680442.14087.78.camel@owl> (Bram Neijt's message of "Sun\,
+ 08 Nov 2009 12\:40\:42 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 006AAAAA-CC98-11DE-A512-D595BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132410>
 
-2009/11/7 Nicolas Sebrecht <nicolas.s.dev@gmx.fr>:
-> [
-> =C2=A0Please, conform to Documentation/SubmittingPatches of the git.g=
-it
-> =C2=A0project and send your patches inline to make the work for revie=
-wers
-> =C2=A0easier.
->
-> =C2=A0Both of your patches lack the Signed-off-by but maybe you don't=
- want
-> =C2=A0them to be merged?
-> ]
-I am aware of this recommendation but this translation is almost 22kb a=
-nd
-I tought that put it inline wouldn't make the review easier. I will
-submit a patch
-gathering my workand those of the reviewers soon.
+Bram Neijt <bneijt@gmail.com> writes:
 
-> The 06/11/09, Emmanuel Trillaud wrote:
->
->> > Here is an updated translation with the following changes:
->
-> <...>
->
->> > - make some consistency changes
->> > =C2=A0* s/diff/diff=C3=A9rences/
->> > =C2=A0* s/patch/correctif/ everywhere
->
-> I disagree here. Words like "diff", "commit", "patch", etc should be
-> kept as is. Translation of those terms make things harder for the use=
-rs.
-I agree with you when those terms refers to _commands_ names, but the
-main goal of a
-translation is to _translate_ and we have to make the best effort to
-use french word if they _exist_
-and _are_ appropriate (that's why I'm not sure about translate
-"cherry-pick" by "ceullir").
-I prefer to translate "Diff this -> selected" by "Diff=C3=A9rence entre=
- =C3=A7a
-et selection"
-because it is what the user do when he make a diff. I am also ok to
-translate "merge" by "fusion"
-because it's what "merge" is in french and I don't this we mislead the
-user by using the term
-"fusion".
+> I would like to create release snapshots with a git tag like "v0.0.1".
+> For proper Debian packaging, a release snapshot of tag "v0.0.1" would
+> have to be named "project-0.0.1.tar.gz" and contain a single directory
+> with "project-0.0.1/" in the archive.
 
->> > IMHO the most important should be to decide how to translate the g=
-it vocabulary.
->> > The Subversion project has guidelines concerning that issue:
->> > http://svn.collab.net/viewvc/svn/trunk/subversion/po/fr.po?revisio=
-n=3D39920&view=3Dmarkup
->> > It may be a good idea to stick with what they are doing if possibl=
-e.
->
-> No, no. SVN and Git vocabulary/operations are not identical (not only
-> for 'commit' as you stated). Please, don't make things harder than it
-> already is.
-Have you read this document? I read it and it contains some
-interesting _advices_ in it
-(especially for an amateur translator like me) and some translations
-ideas. That said, I agree with
-your concerns to not make things harder for the user and to choose the
-good translations
-for the Git vocabulary. I will make a glossary of the Git words and
-the proposed translations for them
+What the intended audience of this feature?  IOW,
 
-Cordiallement
+ - who are going to "click" such a link on gitweb to obtain
+   project-0.0.1.tar.gz with project-0.0.1/?
 
-Emmanuel
+ - how are they going to use that tarball?
+
+I somehow suspect that they won't be the official Debian distro packagers.
+
+Most likely they actually have a clone of the upstream project (how else
+they can stay up to date?  In addition they would want to track their own
+changes), so it would be more efficient for them to generate such a
+tarball from a tag, and more importantly, doing it locally means that they
+can they can verify the tag (and the whole history leading to it) before
+doing so, instead of relying on somebody else's gitweb.
+
+You could be a mere Debian user who produces a *.deb for his own use out
+of such tarball, and in such a case you are a lot less likely be tracking
+the project (meaning, reading the history and keeping track of fixed bugs,
+new regressions and such) than just getting a snapshot that happens to be
+there and building it blindly, and I can understand it would be nicer if
+you did not have to unpack, rename and regenerate an archive.
+
+Also, whose gitweb installations are you envisioning to enable this new
+feature?  Are you going to convince all the gitweb administrators of
+projects packaged by Debian (and derivatives) that have gitweb, and what
+are the incentive for these upstream projects to do so?  I would guess
+that most of the upstream projects do not consider Debian as their sole
+target distribution, and it would be a tough sell if changing the snapshot
+name to suit Debian breaks some other distro's (or human users) needs.
+
+Jakub is polishing Mark's patch to change the snapshot name and contents
+hierarchy, but I think it won't satisfy Debian's naming guideline (it will
+have v0.0.1, not 0.0.1 in the name).  Changing the series's default to
+drop 'v' from the beginning of the tagname when the rest of it consists of
+all digits and dots would not be a correct solution, as Debian is not the
+only system in the world and other people may want different naming rules.
+
+In order to make his series useful for your objective, it probably would
+require a bit more customizability, but because I cannot tell whom such a
+feature is really trying to help, and what the deployment plans are, I
+cannot judge if extra complexity to add such a customizability is worth
+it.  Also because there will be conflicts in the desired archive format
+("Distro X people want this kind of archive, distro Y people want this
+different kind"), the choice somehow how to come from whoever is clicking
+the link, not from the gitweb administrator, and it probably would mean
+the codepath involved would need a lot more careful audit than just a
+server only "this gitweb installation would use this format"
+configuration.
