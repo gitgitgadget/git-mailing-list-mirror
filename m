@@ -1,83 +1,90 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: Re: [PATCH] Teach the --all option to 'git fetch'
-Date: Sun, 8 Nov 2009 16:18:34 +0100
-Message-ID: <6672d0160911080718i2a4ff6e0mf6dfd9c5fc5ef45b@mail.gmail.com>
-References: <4AF682A5.5020500@gmail.com>
-	 <7vaayxfji4.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
+Subject: [RFC/PATCH 0/4] Re-implement 'remote update' using 'fetch'
+Date: Sun, 08 Nov 2009 16:44:52 +0100
+Message-ID: <4AF6E774.80909@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 08 16:18:48 2009
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 08 16:45:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N79XO-00008o-M2
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Nov 2009 16:18:43 +0100
+	id 1N79x5-0001nj-A6
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Nov 2009 16:45:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754057AbZKHPSa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Nov 2009 10:18:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753974AbZKHPSa
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Nov 2009 10:18:30 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:35709 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753959AbZKHPSa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Nov 2009 10:18:30 -0500
-Received: by bwz27 with SMTP id 27so2654131bwz.21
-        for <git@vger.kernel.org>; Sun, 08 Nov 2009 07:18:34 -0800 (PST)
+	id S1753583AbZKHPo4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Nov 2009 10:44:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752677AbZKHPot
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Nov 2009 10:44:49 -0500
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:50174 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750951AbZKHPos (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Nov 2009 10:44:48 -0500
+Received: by mail-ew0-f207.google.com with SMTP id 3so2428901ewy.37
+        for <git@vger.kernel.org>; Sun, 08 Nov 2009 07:44:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:content-type
          :content-transfer-encoding;
-        bh=suMylSWjs8Pcr7BgwSwl+2lwCCFBJnXaunhdsTDMs10=;
-        b=vc7n9OWKRLWkLlsHUmoQjsmuvGLeB/rdWG5Tb40NFcpQuYhlv3rKEG3YppFQVmFCWI
-         FENNS0TncUvng6BRyr7S25LM+1a/MWZAuAHAMLjbieuhtFjRTorWaFlf3lm2AEhzCZGX
-         nezhyO90zzAQndd+1Ab2z74sVVyUwlZsm3kY4=
+        bh=WmVlK4d/bWrwYb5SDG/zdMySPde15N8K43Z1UevQYCY=;
+        b=jhd+LUbk/RTT5Nl6ISr40z09KZYOKtdChEry6kNSVuKXNcxeEZbcp9vrtIzxv1+INs
+         2JQtI+Yg4FkR3aOgfyDyHhJSH4sglXmpn4woXrVG18c7vfvwG5j5iL0IUtecD0D77MnH
+         OZMMt/km8nRevVaNmTHK0ODGVo/wHEDaTcf0c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=n4ulHopybAzp3n9Mpbs/g+Z1tYPzkuUJOefWbSA29FCeiNCYqc41M1dUU9zICrka/f
-         ZzmnJwW38J+FMtGBIX0Oi8FICD/t5pHfkphkoUx7NuTRP7z2RRdC9G0qgMaikltO7H4+
-         Epw1XblGhARdIclGgzDqxljgx9KiNWOz9jajQ=
-Received: by 10.204.15.22 with SMTP id i22mr1184488bka.13.1257693514462; Sun, 
-	08 Nov 2009 07:18:34 -0800 (PST)
-In-Reply-To: <7vaayxfji4.fsf@alter.siamese.dyndns.org>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=f2OFNQjI3oKM4/FnKZAei1uZMvyNACsTIJ3JbJ0Nah9jBVlDdJETALbscb3YtlxW3k
+         GpDFX75jeVUhAk9D8gCc4jb//bYemSaxovucNrzr98eQysUpNqvQ+oGxaJI4Wh1sHZCq
+         xvg7NJbKiuGOV1qdU/E5s/NKMT3U0BcHUOzoU=
+Received: by 10.213.0.143 with SMTP id 15mr7776482ebb.54.1257695093788;
+        Sun, 08 Nov 2009 07:44:53 -0800 (PST)
+Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
+        by mx.google.com with ESMTPS id 28sm3820197eyg.30.2009.11.08.07.44.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 08 Nov 2009 07:44:53 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132403>
 
-2009/11/8 Junio C Hamano <gitster@pobox.com>:
-> Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com> writes:
->
-> Please drop the "because I said so" part, as I made myself clear in t=
-he
-> message I was speaking as mere one-of-participants to the project, no=
-t as
-> the maintainer.
+After having done my previous patch to implement 'git fetch --all'
+I decided to implement as much functionality in 'git fetch' to
+make it possibility to re-implement 'git remote update' in terms of
+'git fetch'.
 
-OK.
+The following things are currently missing from the patch series:
 
-> Very nice. =C2=A0I like the simplicity of this.
+* updated documentation
+* test cases for the group functionality in fetch
+* support for 'git remote update --prune'
 
-Thanks!
+There is also a slight backward incompatibility that I know of (see the=
+ commit
+message for the last commit). I could fix that, if there are
+people depending on it.
 
-> Hopefully after the parse_options() we can inspect the "repo" argumen=
-t to
-> see if it names remote groups and transplant the support for that fro=
-m
-> "remote update" codepath into this, right?
+I have no idea how much of the group functionality is really used. If s=
+omeone
+knows that "no-one uses THIS feature and" it would be nice to know.
 
-Yes, it can be done, but it will lose some of its simplicity. I'll send=
- a new
-patch series that do that soon.
+Bj=C3=B6rn Gustavsson (4):
+  Teach the --all option to 'git fetch'
+  Teach the --multiple option to 'git fetch'
+  Add the configure variable skipFetchAll
+  Re-implement 'git remote update' using 'git fetch'
 
-/Bj=C3=B6rn
-
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+ Documentation/git-fetch.txt |    5 ++
+ builtin-fetch.c             |  158 +++++++++++++++++++++++++++++++++++=
++++-----
+ builtin-remote.c            |   86 +++++++----------------
+ remote.c                    |    3 +-
+ t/t5514-fetch-all.sh        |   76 +++++++++++++++++++++
+ 5 files changed, 249 insertions(+), 79 deletions(-)
+ create mode 100755 t/t5514-fetch-all.sh
