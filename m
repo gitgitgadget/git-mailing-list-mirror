@@ -1,94 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] Add intermediate build products to .gitignore
-Date: Sun, 8 Nov 2009 16:07:16 -0600
-Message-ID: <20091108220716.GA29035@progeny.tock>
-References: <20091108112009.GA23790@progeny.tock>
- <7vvdhkdect.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
+Subject: Re: [RFC/PATCH 4/4] Re-implement 'git remote update' using 'git 
+	fetch'
+Date: Sun, 8 Nov 2009 23:23:18 +0100
+Message-ID: <6672d0160911081423u41f7faa6md50190b04a71069d@mail.gmail.com>
+References: <4AF6E865.1030900@gmail.com> <hd7c4k$aul$3@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Chris Johnsen <chris_johnsen@pobox.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 08 22:57:38 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Nov 08 23:23:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7FlN-0008QC-KP
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Nov 2009 22:57:34 +0100
+	id 1N7GAP-0000Xd-SU
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Nov 2009 23:23:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755267AbZKHV5W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Nov 2009 16:57:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755188AbZKHV5V
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Nov 2009 16:57:21 -0500
-Received: from mail-gx0-f212.google.com ([209.85.217.212]:57832 "EHLO
-	mail-gx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750881AbZKHV5V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Nov 2009 16:57:21 -0500
-Received: by gxk4 with SMTP id 4so2549316gxk.8
-        for <git@vger.kernel.org>; Sun, 08 Nov 2009 13:57:26 -0800 (PST)
+	id S1755491AbZKHWXP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Nov 2009 17:23:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755466AbZKHWXP
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Nov 2009 17:23:15 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:26082 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755460AbZKHWXO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Nov 2009 17:23:14 -0500
+Received: by fg-out-1718.google.com with SMTP id e12so992848fga.1
+        for <git@vger.kernel.org>; Sun, 08 Nov 2009 14:23:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=C0bFhaUsda3e1MJqswY6EkYLHkNjjbKflssX6QQCyww=;
-        b=hqoOk3ebrSnBd0nH6una9vX9i9zAAqc6GUTqNZceeBVzkjk3t9x8cSEsXZmCqHe/Ud
-         cIptlpplfirQ05m0dAw2pGaAY2NHCueBV+hF2ULcgFDnZj21mXKPJUhp/a+sNXH5yLui
-         4SMlfq/j23wrD0IlB9VaROag7DTgelvTr/TUU=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=muIIjdvkIe5OSJedf0MkzsPwt+OsVzC3hArKTKn95ng=;
+        b=fSZresbX/lRBr/H+hlgAxyihFIqJHEZE1RYKoea8OuuvxyAJT3s/A9oqATKhAQzQjB
+         HvbmJPcQ451qytm3SfRaw1RNuxJZ0e0M5shlGhuwNWb+z2tMojN6j2gmklov/JRVlow+
+         1oh8CUa3+uNMz6EtLIgBBr+gVUh32Krcb0EHU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=b3Gcv6lvjp9n1hrSoy+DwWyGmb6iT5HGmq92WbO5AVLafR84cW6MOXLYUCVoywmC4A
-         1pxHFe+81/H+KC468vasDuEm6CfhNuxI+JBCsrIZUGO6cBf9Vsbr4JKiaZGvpNnhhm4d
-         GhlPWEpMce7fstpwoygT68a7hQv2iLaKBYSHc=
-Received: by 10.91.54.8 with SMTP id g8mr13547181agk.83.1257717446525;
-        Sun, 08 Nov 2009 13:57:26 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 15sm953731yxh.4.2009.11.08.13.57.25
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 08 Nov 2009 13:57:26 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vvdhkdect.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=AxGgBU84pYXoa2Nslyv03Fwvs6Xm3rLOUR1HpiraZw0Bg1cx6yhxQyk4G9YvxMmhlm
+         +lQ1sZzLp9eYgKFSjdlIHQ/xLVFsv2iPQzkVobzQCLAUzwyCaBxdA2mjBOXM7Mhm6DPN
+         +hz/X4InUY0scdcVvzYmze37Di6j6D2M++S4w=
+Received: by 10.204.162.204 with SMTP id w12mr7791201bkx.18.1257718998727; 
+	Sun, 08 Nov 2009 14:23:18 -0800 (PST)
+In-Reply-To: <hd7c4k$aul$3@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132422>
 
-Temporaries such as configure.ac+ and Documentation/*.xml+
-sometimes remain after an interrupted build.  Tell git not to
-track them.
+On Sun, Nov 8, 2009 at 10:10 PM, Paolo Bonzini <bonzini@gnu.org> wrote:
+> On 11/08/2009 04:48 PM, Bj=C3=B6rn Gustavsson wrote:
+>> There is one incompatibility: the skipDefaultUpdate configuration
+>> variable will only be honored if remotes.default is not set (i.e.
+>> when 'git remote update' will invoke 'git fetch --all', not when
+>> it will invoke 'git fetch default').
+>
+> Rather than introducing this incompatibility, I'd rather see 'git rem=
+ote
+> update' deprecated (so that the code will one day go away for good) a=
+nd, for
+> now, leave duplicated functionality for the incompatible case.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-=20
->> Some of these files appeared in the "git status" output after an
->> interrupted build.  I hope I caught them all.
->=20
-> Thanks; I think "*+" would suffice, though.
+I didn't check my facts properly before writing that commit message.
+Looking again at the old code in builtin_remote.c (after a long break),=
+ and
+actually testing the behavior, I see that there is no incompatibility.
 
-That=E2=80=99s much better.  Here=E2=80=99s an updated patch.
+Both the old and the new code use skipDefaultUpdate only if remotes.def=
+ault
+is not set. If remotes.default is set, that list of remotes will be use=
+d. Only
+if remotes.default is not set, will 'git remote update' go through the =
+list
+of all remotes and filter away those that have skipDefaultUpdate set to=
+ true.
 
- .gitignore |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+Sorry for the confusion. I will correct the commit message in my re-rol=
+l
+of the patch.
 
-diff --git a/.gitignore b/.gitignore
-index 51a37b1..f0d2e96 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -168,6 +168,7 @@ git.spec
- *.exe
- *.[aos]
- *.py[co]
-+*+
- config.mak
- autom4te.cache
- config.cache
 --=20
-1.6.5.2
+Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
