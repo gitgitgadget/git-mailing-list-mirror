@@ -1,88 +1,105 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] Documentation: avoid tracking intermediate build products
-Date: Sun, 8 Nov 2009 05:20:09 -0600
-Message-ID: <20091108112009.GA23790@progeny.tock>
+From: Bram Neijt <bneijt@gmail.com>
+Subject: [gitweb feature request] Release snapshots with vX.X.X tags
+Date: Sun, 08 Nov 2009 12:40:42 +0100
+Message-ID: <1257680442.14087.78.camel@owl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Chris Johnsen <chris_johnsen@pobox.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 08 12:10:38 2009
+Content-Type: multipart/mixed; boundary="=-GTaLeNcjZhTl5gv38O2x"
+To: Git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Nov 08 12:40:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N75fJ-0005of-Pt
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Nov 2009 12:10:38 +0100
+	id 1N768a-0007bD-OG
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Nov 2009 12:40:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753916AbZKHLKV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Nov 2009 06:10:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753902AbZKHLKU
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Nov 2009 06:10:20 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:39632 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753899AbZKHLKT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Nov 2009 06:10:19 -0500
-Received: by yxe17 with SMTP id 17so1929753yxe.33
-        for <git@vger.kernel.org>; Sun, 08 Nov 2009 03:10:24 -0800 (PST)
+	id S1753953AbZKHLkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Nov 2009 06:40:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753931AbZKHLkk
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Nov 2009 06:40:40 -0500
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:57127 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753905AbZKHLkj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Nov 2009 06:40:39 -0500
+Received: by ewy3 with SMTP id 3so2320405ewy.37
+        for <git@vger.kernel.org>; Sun, 08 Nov 2009 03:40:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=iCaIqpK3iYxNqDyT9zYpj+N8cYHXUWXmgSD2wi2VNRo=;
-        b=DcpLUEPtx6p8BYgo94U2hYXJ9/TCJ/Uar1K/x2OpzdirVyDK7SHaaGtzSYj1VHQqy6
-         5zrQRmr2R+sgGhx7OE8G+MHtakPycvQ/JPzKn06e5zdRYEIR5B88RemEPY3vkR2brc/D
-         sv9+fI+TdCBjkKP5M8oZHdvoG5iZd7vHBZADo=
+        h=domainkey-signature:received:received:subject:from:to:content-type
+         :date:message-id:mime-version:x-mailer;
+        bh=w46n4X87tL28YnDgbBeGyYYwjZ2m1h5QDkAqpfkvvKk=;
+        b=e/IIO0RFsmA6utu0G3lL+bOSOuOKncLKqYNarw2p+R3xry1QnAczPFb7kbA2SCBCU7
+         mRo216g1fu+cpr3uc2rvnzm7hl27iflppsmz2nC/9u2xV/lFqLcqPd5Cl7JREjPRYBku
+         edW1xxujKCQ1+99tzHscfPF7hZqxLm/GQvh+w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=N2XKpPoO7j3TaC3bFpNzsX+6s2yB5MUV1laO6leDVIwDP5I8DJFbRb+hER9c5Ra+W9
-         uaMsqhYeq+O/gLgdVe1mX6BWLBv4V0TnHFfdBPvIgFYqWzYhvMyUdkUcouXFHrTdEG6v
-         gZ8wYdSnmNIktbNjUjnFYgmOmtR6jttAK3F9Q=
-Received: by 10.150.233.3 with SMTP id f3mr11139473ybh.148.1257678623863;
-        Sun, 08 Nov 2009 03:10:23 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 14sm915983gxk.10.2009.11.08.03.10.22
+        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer;
+        b=CqL+5+8zmThub+Im9oHbXS1akJXupPWfDiFny2yTQ+gMqJqXDIcEA/0h+0s3BLuOoh
+         W/+pgAeHG7WBW+2x7wUJ9tKc5J9f9A7P7gUDHVURBIdXyLX6o6YpLMXzu7vh5E2oekF5
+         zIkHsEdkylsTDbDGu1oD+KM8VFsgtVs52lmS4=
+Received: by 10.213.102.65 with SMTP id f1mr1832047ebo.61.1257680444378;
+        Sun, 08 Nov 2009 03:40:44 -0800 (PST)
+Received: from ?192.168.1.33? (82-169-1-45.ip.telfort.nl [82.169.1.45])
+        by mx.google.com with ESMTPS id 7sm3351337eyb.8.2009.11.08.03.40.43
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 08 Nov 2009 03:10:23 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Sun, 08 Nov 2009 03:40:43 -0800 (PST)
+X-Mailer: Evolution 2.28.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132393>
 
-Add *.xml+, *.html+, *.texi+, and *.texi++ to .gitignore.
 
-Cc: Chris Johnsen <chris_johnsen@pobox.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+--=-GTaLeNcjZhTl5gv38O2x
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+Dear list members,
+
+I would like to create release snapshots with a git tag like "v0.0.1".
+For proper Debian packaging, a release snapshot of tag "v0.0.1" would
+have to be named "project-0.0.1.tar.gz" and contain a single directory
+with "project-0.0.1/" in the archive.
+
+Attached is a very dirty patch to the current head of gitweb.perl to
+change the snapshot if the requested hash has a tag which matches
+"m/^v(.+)\^0$/". This regular expression will probably have to be more
+strict then that in the future, but my main concern is the quality of
+the patch, and whether or not this feature is something the mainstream
+would appreciate.
+
+My question to you all is: would this feature be considered as an
+addition, and if so what would be the best way to get this patch into
+shape for inclusion?
+
+Greetings,
+  Bram Neijt
+
+
+--=-GTaLeNcjZhTl5gv38O2x
+Content-Disposition: attachment; filename="tag_version_snapshot_detection.patch"
+Content-Type: text/x-patch; name="tag_version_snapshot_detection.patch"; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+5269a5270,5274
+> 	my $tagname = git_get_rev_name_tags($hash);
+> 	my $tagversion = "";
+> 	if ($tagname =~ m/^v(.+)\^0$/) {
+>   	$tagversion = "-" + $1;
+> 	}
+5275a5281,5288
+> 
+> 	if($tagversion)	{
+> 		$filename .= "$tagversion$known_snapshot_formats{$format}{'suffix'}";
+> 	}
+> 	else	{
+> 		$filename .= "-$hash$known_snapshot_formats{$format}{'suffix'}";
+> 	}
+> 
+5281c5294
+< 		"--prefix=$name/", $hash);
 ---
-Some of these files appeared in the "git status" output after an
-interrupted build.  I hope I caught them all.
+> 		"--prefix=$name$tagversion/", $hash);
 
-Good night,
-Jonathan
-
- Documentation/.gitignore |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/.gitignore b/Documentation/.gitignore
-index d8edd90..22dbc0b 100644
---- a/Documentation/.gitignore
-+++ b/Documentation/.gitignore
-@@ -1,8 +1,12 @@
- *.xml
-+*.xml+
- *.html
-+*.html+
- *.[1-8]
- *.made
- *.texi
-+*.texi+
-+*.texi++
- git.info
- gitman.info
- howto-index.txt
--- 
-1.6.5.2
+--=-GTaLeNcjZhTl5gv38O2x--
