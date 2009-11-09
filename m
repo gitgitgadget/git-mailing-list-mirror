@@ -1,118 +1,89 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2 4/4] Add explicit Cygwin check to guard WIN32 header
- inclusion
-Date: Mon, 09 Nov 2009 08:20:38 +0100
-Message-ID: <4AF7C2C6.5070307@viscovery.net>
-References: <4AF5D6F8.40608@ramsay1.demon.co.uk>
+From: Dmitry Smirnov <divis1969@gmail.com>
+Subject: Re: Git drawbacks?
+Date: Mon, 9 Nov 2009 07:22:17 +0000 (UTC)
+Message-ID: <loom.20091109T080510-448@post.gmane.org>
+References: <loom.20091106T160709-387@post.gmane.org> <32541b130911060849s2d8f13f5sb9b8390f075f8d15@mail.gmail.com>  <loom.20091106T180313-750@post.gmane.org> <32541b130911060951q3358ce9ahe28fb0cf902853f2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Marius Storm-Olsen <mstormo@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Mon Nov 09 08:20:53 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 09 08:22:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7OYT-0005cG-EL
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 08:20:49 +0100
+	id 1N7OaM-0006FI-Rz
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 08:22:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753952AbZKIHUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2009 02:20:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753740AbZKIHUi
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 02:20:38 -0500
-Received: from lilzmailmt02.liwest.at ([212.33.55.12]:34762 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753610AbZKIHUh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Nov 2009 02:20:37 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1N7OYI-0001hs-JB; Mon, 09 Nov 2009 08:20:38 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 35EB34E4; Mon,  9 Nov 2009 08:20:38 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <4AF5D6F8.40608@ramsay1.demon.co.uk>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1753967AbZKIHWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2009 02:22:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753264AbZKIHWg
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 02:22:36 -0500
+Received: from lo.gmane.org ([80.91.229.12]:57739 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753248AbZKIHWf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2009 02:22:35 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1N7OaG-0006Df-Ie
+	for git@vger.kernel.org; Mon, 09 Nov 2009 08:22:40 +0100
+Received: from 212.92.145.7 ([212.92.145.7])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 09 Nov 2009 08:22:40 +0100
+Received: from divis1969 by 212.92.145.7 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 09 Nov 2009 08:22:40 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 212.92.145.7 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/3.0.195.27 Safari/532.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132446>
 
-Ramsay Jones schrieb:
-> Since commit 435bdf8c ("Make usage of windows.h lean and mean",
-> 16-9-2009), the amount of code potentially including the WIN32
-> API header files has greatly increased. In particular, the Cygwin
-> build is at greater risk of inadvertently including WIN32 code
-> within preprocessor sections protected by the WIN32 or _WIN32
-> macros.
+Avery Pennarun <apenwarr <at> gmail.com> writes:
 
-Thanks, this makes the problem pretty clear that you want to solve.
-
-> The previous commit message, along with comments elsewhere, assert
-> that the WIN32 macro is not defined on Cygwin. Currently, this is
-> true for the cygwin build. However, the cygwin platform can be
-> used to develop WIN32 GUI, WIN32 console, and POSIX applications.
-> Indeed it is possible to create applications which use a mix of
-> the WIN32 API and POSIX code (eg git!).
-
-In this paragraph, you are only saying that cygwin comes with headers and
-libraries that can be used to write code using the Windows API in addition
-to the POSIX headers and libraries. (I'm just asking, not complaining;
-perhaps this could be stated differently.)
-
-> Unlike native WIN32 compilers, gcc on cygwin does not automatically
-> define the _WIN32 macro. However, as soon as you include the
-> <windows.h> header file, the _WIN32 and WIN32 macros are defined.
+> There are three methods I know of to manage this:
 > 
-> In order to reduce the risk of problems in the future, we protect
-> the inclusion of the windows header with an explicit check for
-> __CYGWIN__. Also, we move the other use of the <windows.h> header
-> from compat/win32.h to compat/cygwin.c
+> 1) Just commit whatever version of a subproject you want as a subtree
+> of your current project, and if you want to replace/delete/upgrade it,
+> just do that.  (You rarely want to track the actual *history* of the
+> third party tool, just the history of versions *you* used, which is
+> easy to do.)
 
-But I sense a contradiction here. Above you are arguing that much more
-WIN32 code is included, but here you are saying that the explicit check
-for __CYGWIN__ is just a safety measure to protect us from failures in
-future changes. Indeed, looking at the code it seems that this extra check
-is *currently* not necessary:
+Ok. Does that mean that new component2 and common component1 should leave on the 
+new branch (having in mind that old component2 and component1 are still living 
+on previous branch)? So, how many efforts will I need to get both component1 
+versions in sync (it is supposed that most of the changes in this component are 
+common for both)? Is is supposed that having 2 branches for this component is 
+cheaper (from development cycle POW)?
 
-- Cygwin does not define WIN32, hence, in the original code of this hunk,
+> 2) Use git-submodule to link repositories together.  (Arguably, one
+> major reason 'repo' was written is that git-submodule is too
+> complicated, though.)
 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index ef60803..c4b9e5a 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -65,10 +65,10 @@
->  #define _NETBSD_SOURCE 1
->  #define _SGI_SOURCE 1
->  
-> -#ifdef WIN32 /* Both MinGW and MSVC */
-> -#define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
-> -#include <winsock2.h>
-> -#include <windows.h>
-> +#if defined(_WIN32) && !defined(__CYGWIN__) /* Both MinGW and MSVC */
-> +# define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
-> +# include <winsock2.h>
-> +# include <windows.h>
->  #endif
->  
->  #include <unistd.h>
+> 3) Try my git-subtree tool, which basically makes it easier to
+> split/join repositories (similar to #1) without losing the history
+> (similar to #2).
 
-windows.h is not included in cygwin. (Nor is it in the changed version.)
+I'll try to learn it.
 
-- The other files that include windows.h are compat/win32.h and nedmalloc.
-The latter isn't used on cygwin.
+I suppose, both these tools (repo and git-subtree) are the indication of some 
+contradiction between  the tool and SCM practice (especially, for big projects).
 
-- win32.h is included only from cygwin.c, mingw.c, and msvc.c. Only the
-first one is used by cygwin, and since it is a .c file, pulling in
-windows.h can only concern code in cygwin.c, but not code.
+> 
+> Basically, performance is linear with the number of files in your
+> repo.  If you can check out just a "slice" of your repo (say 10% of
+> the whole), you'll have faster performance (eg. 10x) from any VCS.
 
-IOW, I disagree with your analysis that a lot of code suffers from
-windows.h pollution. What am I missing?
+Yes, I just wish to see this feature in some VCS. Why not Git? ;-)
 
--- Hannes
+> So I can see an argument that Windows users would want arbitrary
+> "slices" much more often than Linux+git users, but I think this is
+> largely due to performance, not because people really *want* to be
+> stuck with a restricted view of the repo.
+
+How offten do you use this info? I mean the whole stuff?
