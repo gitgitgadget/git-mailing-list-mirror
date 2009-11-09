@@ -1,89 +1,70 @@
-From: Dmitry Smirnov <divis1969@gmail.com>
-Subject: Re: Git drawbacks?
-Date: Mon, 9 Nov 2009 07:22:17 +0000 (UTC)
-Message-ID: <loom.20091109T080510-448@post.gmane.org>
-References: <loom.20091106T160709-387@post.gmane.org> <32541b130911060849s2d8f13f5sb9b8390f075f8d15@mail.gmail.com>  <loom.20091106T180313-750@post.gmane.org> <32541b130911060951q3358ce9ahe28fb0cf902853f2@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: pulling git -- version confusion
+Date: Mon, 9 Nov 2009 08:51:34 +0100
+Message-ID: <fabb9a1e0911082351o326b205aic205552faae4e4da@mail.gmail.com>
+References: <f46c52560911082214x81ae8beya139a8bcb3cbcf2a@mail.gmail.com> 
+	<fabb9a1e0911082237x462b1203v724b51e309a2d89@mail.gmail.com> 
+	<f46c52560911082345y71eb12c9w114b799d70720dc6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 09 08:22:47 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Rustom Mody <rustompmody@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 09 08:52:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7OaM-0006FI-Rz
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 08:22:47 +0100
+	id 1N7P2f-0006pM-5v
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 08:52:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753967AbZKIHWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2009 02:22:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753264AbZKIHWg
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 02:22:36 -0500
-Received: from lo.gmane.org ([80.91.229.12]:57739 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753248AbZKIHWf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Nov 2009 02:22:35 -0500
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1N7OaG-0006Df-Ie
-	for git@vger.kernel.org; Mon, 09 Nov 2009 08:22:40 +0100
-Received: from 212.92.145.7 ([212.92.145.7])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 09 Nov 2009 08:22:40 +0100
-Received: from divis1969 by 212.92.145.7 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 09 Nov 2009 08:22:40 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 212.92.145.7 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/3.0.195.27 Safari/532.0)
+	id S1751702AbZKIHvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2009 02:51:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751272AbZKIHvu
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 02:51:50 -0500
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:56126 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751245AbZKIHvt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2009 02:51:49 -0500
+Received: by ewy3 with SMTP id 3so2858643ewy.37
+        for <git@vger.kernel.org>; Sun, 08 Nov 2009 23:51:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=nB1u6oNFezWx5WyIc9RV9fTCcQ3TURiq5PFrT1bhJJw=;
+        b=rmNSyXc7eIAIVcAMqAZP7g4CHBIHceRYlKOj+wYvyPpFRxn0LDDF4yljjVKk9vbu2T
+         Bj2NWnK6JBPuKMa0OLk+FSE4H1rykVnHHTIffNm0L5MkWoOZoKNgKaku9w/0w2UIMJPv
+         NdOFvzx53G/Y4kx1NfLC3lmd3AP/iyWbcIcOo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=K0oEDYFU7JQgnDCZUQ/PnEm2aseAQ23R7x7bZnooL1oKMrs8dqPS1rcGIpjdHOF055
+         jHhZ8UBd46d8oFZNJlvin2IQO2hGZQIziOCK7bkoiNnRNpvydMAfznViQIR7njY9wN0F
+         Oi+itp7f871oYShedGkV+xZ40iAnpXuaUR24o=
+Received: by 10.216.88.15 with SMTP id z15mr1027808wee.113.1257753114310; Sun, 
+	08 Nov 2009 23:51:54 -0800 (PST)
+In-Reply-To: <f46c52560911082345y71eb12c9w114b799d70720dc6@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132447>
 
-Avery Pennarun <apenwarr <at> gmail.com> writes:
+Heya,
 
-> There are three methods I know of to manage this:
-> 
-> 1) Just commit whatever version of a subproject you want as a subtree
-> of your current project, and if you want to replace/delete/upgrade it,
-> just do that.  (You rarely want to track the actual *history* of the
-> third party tool, just the history of versions *you* used, which is
-> easy to do.)
+On Mon, Nov 9, 2009 at 08:45, Rustom Mody <rustompmody@gmail.com> wrote:
+> Gives me
+> fatal: ambiguous argument 'origin/master': unknown revision or path
+> not in the working tree.
+> Use '--' to separate paths from revisions
 
-Ok. Does that mean that new component2 and common component1 should leave on the 
-new branch (having in mind that old component2 and component1 are still living 
-on previous branch)? So, how many efforts will I need to get both component1 
-versions in sync (it is supposed that most of the changes in this component are 
-common for both)? Is is supposed that having 2 branches for this component is 
-cheaper (from development cycle POW)?
+Well, as what remote do you have upstream configured?
 
-> 2) Use git-submodule to link repositories together.  (Arguably, one
-> major reason 'repo' was written is that git-submodule is too
-> complicated, though.)
+What is the output of
+$ git config -l
 
-> 3) Try my git-subtree tool, which basically makes it easier to
-> split/join repositories (similar to #1) without losing the history
-> (similar to #2).
+-- 
+Cheers,
 
-I'll try to learn it.
-
-I suppose, both these tools (repo and git-subtree) are the indication of some 
-contradiction between  the tool and SCM practice (especially, for big projects).
-
-> 
-> Basically, performance is linear with the number of files in your
-> repo.  If you can check out just a "slice" of your repo (say 10% of
-> the whole), you'll have faster performance (eg. 10x) from any VCS.
-
-Yes, I just wish to see this feature in some VCS. Why not Git? ;-)
-
-> So I can see an argument that Windows users would want arbitrary
-> "slices" much more often than Linux+git users, but I think this is
-> largely due to performance, not because people really *want* to be
-> stuck with a restricted view of the repo.
-
-How offten do you use this info? I mean the whole stuff?
+Sverre Rabbelier
