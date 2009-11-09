@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 19/24] Let 'git http-fetch -h' show usage outside any git repository
-Date: Mon,  9 Nov 2009 09:04:59 -0600
-Message-ID: <1257779104-23884-19-git-send-email-jrnieder@gmail.com>
+Subject: [PATCH 23/24] merge-{recursive,subtree}: use usage() to print usage
+Date: Mon,  9 Nov 2009 09:05:03 -0600
+Message-ID: <1257779104-23884-23-git-send-email-jrnieder@gmail.com>
 References: <20091109150235.GA23871@progeny.tock>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
@@ -10,115 +10,67 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7VfD-0002nn-Gi
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 15:56:15 +0100
+	id 1N7VfF-0002nn-Ib
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 15:56:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755856AbZKIOzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2009 09:55:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755643AbZKIOzp
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 09:55:45 -0500
+	id S1756038AbZKIOz4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2009 09:55:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756037AbZKIOzz
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 09:55:55 -0500
 Received: from mail-ew0-f207.google.com ([209.85.219.207]:64393 "EHLO
 	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755712AbZKIOzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Nov 2009 09:55:42 -0500
+	with ESMTP id S1755712AbZKIOzv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2009 09:55:51 -0500
 Received: by mail-ew0-f207.google.com with SMTP id 3so3179582ewy.37
-        for <git@vger.kernel.org>; Mon, 09 Nov 2009 06:55:48 -0800 (PST)
+        for <git@vger.kernel.org>; Mon, 09 Nov 2009 06:55:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=1xk9mD5kOrrn1Qn5aYA4iLfuwv04xGDgSVXxuLQ1pPM=;
-        b=LRp/7zYWSSdNikOg3pAexc2sKWXq33AxHeHHXXY0yx9Atn7qtKNyqmANX6R2k/m+mV
-         1R21qDsdCbKkpx/698uWiomy+/L7KEUHz4OxbYF2+2crOBWBfTxFRi3THimLkDBAZN32
-         Xga81D7MDwUM/Wkn0+GRtNX99aZFfMFSreb70=
+        bh=OQfd/2EeYC1NoScxCsqRDCYmxaAtFiyhcGvtm5zZYrY=;
+        b=VjevP1mwRI8YB8d+22k9WFPwQMdwrSis8r8KO9wqbo1XGy00S8pq7CTDX1MMKq/op/
+         ZvBHBoJktGzzb+behHQWWd3dlroMKtptJ4ZE7Q45j79JNqU22moHNu8bLjG8esdNfNoM
+         x3E10xNNMi4jKF14aG3heLUbb8Insi1+Lyy/w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ZmM7EWfXsORh/6+HzRoa3JRk7UuAQGjDH5s8jspBKqLVIuYsqsHOj3QSQxsTQwYWdg
-         A5/WP4wtIFNT0OxYiiG5VfjqaNzO5Yb5qwyZX1cnDQFLvOlen+tHmyToaYacROX1o02E
-         mEFNrdukCCXPKB9405ikvDafowsBazXrR/724=
-Received: by 10.216.93.14 with SMTP id k14mr2476513wef.152.1257778548060;
-        Mon, 09 Nov 2009 06:55:48 -0800 (PST)
+        b=utdhgTkn7GbWQunxYcpEgdpmO8RBaBaE8A/VpiTzgSQbxkitt69n0eN2cnXC3QJgMp
+         VqdT4H9wN/tsTmkzKn7OABH7mKl4Q3qL0AkO2GFrBn20RwC+gcL6WVPR2d/kijp4BRCI
+         t4dGy7K4D5b5kK37ra5Jr1HXcdlilE+K984nQ=
+Received: by 10.216.93.2 with SMTP id k2mr2566832wef.210.1257778556657;
+        Mon, 09 Nov 2009 06:55:56 -0800 (PST)
 Received: from localhost.localdomain (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id p37sm8922607gvf.9.2009.11.09.06.55.46
+        by mx.google.com with ESMTPS id p37sm8922607gvf.9.2009.11.09.06.55.54
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 09 Nov 2009 06:55:47 -0800 (PST)
+        Mon, 09 Nov 2009 06:55:55 -0800 (PST)
 X-Mailer: git-send-email 1.6.5.2
 In-Reply-To: <20091109150235.GA23871@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132479>
 
-Delay search for a git directory until option parsing has finished.
-None of the functions used in option parsing look for or read any
-files other than stdin, so this is safe.
+Usage messages (for example, from "git merge-recursive -h") are
+friendlier when not preceded by "fatal".
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- http-fetch.c |   21 +++++++++++++--------
- 1 files changed, 13 insertions(+), 8 deletions(-)
+ builtin-merge-recursive.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/http-fetch.c b/http-fetch.c
-index e8f44ba..52a4f6d 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -1,6 +1,10 @@
- #include "cache.h"
-+#include "exec_cmd.h"
- #include "walker.h"
- 
-+static const char http_fetch_usage[] = "git http-fetch "
-+"[-c] [-t] [-a] [-v] [--recover] [-w ref] [--stdin] commit-id url";
-+
- int main(int argc, const char **argv)
- {
- 	const char *prefix;
-@@ -19,10 +23,6 @@ int main(int argc, const char **argv)
- 	int get_verbosely = 0;
- 	int get_recover = 0;
- 
--	prefix = setup_git_directory();
--
--	git_config(git_default_config, NULL);
--
- 	while (arg < argc && argv[arg][0] == '-') {
- 		if (argv[arg][1] == 't') {
- 			get_tree = 1;
-@@ -37,6 +37,8 @@ int main(int argc, const char **argv)
- 		} else if (argv[arg][1] == 'w') {
- 			write_ref = &argv[arg + 1];
- 			arg++;
-+		} else if (argv[arg][1] == 'h') {
-+			usage(http_fetch_usage);
- 		} else if (!strcmp(argv[arg], "--recover")) {
- 			get_recover = 1;
- 		} else if (!strcmp(argv[arg], "--stdin")) {
-@@ -44,10 +46,8 @@ int main(int argc, const char **argv)
- 		}
- 		arg++;
+diff --git a/builtin-merge-recursive.c b/builtin-merge-recursive.c
+index d26a96e..add5900 100644
+--- a/builtin-merge-recursive.c
++++ b/builtin-merge-recursive.c
+@@ -33,7 +33,7 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
  	}
--	if (argc < arg + 2 - commits_on_stdin) {
--		usage("git http-fetch [-c] [-t] [-a] [-v] [--recover] [-w ref] [--stdin] commit-id url");
--		return 1;
--	}
-+	if (argc != arg + 2 - commits_on_stdin)
-+		usage(http_fetch_usage);
- 	if (commits_on_stdin) {
- 		commits = walker_targets_stdin(&commit_id, &write_ref);
- 	} else {
-@@ -55,6 +55,11 @@ int main(int argc, const char **argv)
- 		commits = 1;
- 	}
- 	url = argv[arg];
-+
-+	prefix = setup_git_directory();
-+
-+	git_config(git_default_config, NULL);
-+
- 	if (url && url[strlen(url)-1] != '/') {
- 		rewritten_url = xmalloc(strlen(url)+2);
- 		strcpy(rewritten_url, url);
+ 
+ 	if (argc < 4)
+-		die("Usage: %s <base>... -- <head> <remote> ...", argv[0]);
++		usage("%s <base>... -- <head> <remote> ...", argv[0]);
+ 
+ 	for (i = 1; i < argc; ++i) {
+ 		if (!strcmp(argv[i], "--"))
 -- 
 1.6.5.2
