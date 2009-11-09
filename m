@@ -1,77 +1,88 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 17/24] Show usage string for 'git stripspace -h'
-Date: Mon,  9 Nov 2009 09:04:57 -0600
-Message-ID: <1257779104-23884-17-git-send-email-jrnieder@gmail.com>
-References: <20091109150235.GA23871@progeny.tock>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 09 15:57:03 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: What's cooking in git.git (Nov 2009, #02; Sun, 08)
+Date: Mon, 9 Nov 2009 07:29:35 -0800
+Message-ID: <20091109152935.GM11919@spearce.org>
+References: <7vzl6wz36r.fsf@alter.siamese.dyndns.org> <905315640911090008h34b55a37q439d02de37127039@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Tarmigan <tarmigan+git@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 09 16:29:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7Vfw-0003Gv-Mc
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 15:57:01 +0100
+	id 1N7WBb-0001gj-KG
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 16:29:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756058AbZKIO4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2009 09:56:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756055AbZKIO4s
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 09:56:48 -0500
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:34957 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756054AbZKIO4r (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Nov 2009 09:56:47 -0500
-Received: by ewy3 with SMTP id 3so3181481ewy.37
-        for <git@vger.kernel.org>; Mon, 09 Nov 2009 06:56:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=946wQ/aJ1wStwsiBhfuTgV5vy/de6i5Mm2ZN6KBWATc=;
-        b=lHveuyA6b2iiyR2jCgpEMjepIK+0UKOmidFBGdGDDsMlmDht+7KOWEIN/OCDx6iB74
-         1gwXTPHMXPQlTQ6Eo7Nb3LolvmkAQ/QAzI8iAcU908c4UW3/3F6C66NKr8Nml+ad/HzN
-         Ph4KildJ6ywPyXxA5TOZ1Vw2St4ql+u9mxChU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=UR/xJuZswCOhTNbhn6gIX+UWDWPXlp8X2EFweiOzZOGdtVp/Am26k+9ZVsPPzXZpYd
-         +7wtvLmn1LV2j3DKzX0btMSHBDYmxTktlZ9lD4fUrZh24mAOu1C2hSHMP9XriWX+TuTo
-         E9gbjv6kf4wBMnF/eLqgaJun86BB4sXD+xUgA=
-Received: by 10.216.87.132 with SMTP id y4mr690231wee.99.1257778543740;
-        Mon, 09 Nov 2009 06:55:43 -0800 (PST)
-Received: from localhost.localdomain (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id p37sm8922607gvf.9.2009.11.09.06.55.41
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 09 Nov 2009 06:55:43 -0800 (PST)
-X-Mailer: git-send-email 1.6.5.2
-In-Reply-To: <20091109150235.GA23871@progeny.tock>
+	id S1756094AbZKIP3a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2009 10:29:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751272AbZKIP3a
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 10:29:30 -0500
+Received: from george.spearce.org ([209.20.77.23]:34995 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756064AbZKIP3a (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2009 10:29:30 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 6E751381FC; Mon,  9 Nov 2009 15:29:35 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <905315640911090008h34b55a37q439d02de37127039@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132487>
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- builtin-stripspace.c |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+Tarmigan <tarmigan+git@gmail.com> wrote:
+> On Sun, Nov 8, 2009 at 9:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > * sp/smart-http (2009-11-04) 30 commits
+> >  + test smart http fetch and push
+> 
+> I am trying to test smart http, and have had to set
+> DEFAULT_HTTPD_PATH='/usr/sbin/httpd'
+> DEFAULT_HTTPD_MODULE_PATH='/usr/lib64/httpd/modules' on Centos.
+> Perhaps this failing test is just a difference in the default Apache
+> and curl configurations.
 
-diff --git a/builtin-stripspace.c b/builtin-stripspace.c
-index 1fd2205..4d3b93f 100644
---- a/builtin-stripspace.c
-+++ b/builtin-stripspace.c
-@@ -73,9 +73,11 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
- 	struct strbuf buf = STRBUF_INIT;
- 	int strip_comments = 0;
+*sigh*
  
--	if (argc > 1 && (!strcmp(argv[1], "-s") ||
-+	if (argc == 2 && (!strcmp(argv[1], "-s") ||
- 				!strcmp(argv[1], "--strip-comments")))
- 		strip_comments = 1;
-+	else if (argc > 1)
-+		usage("git stripspace [-s | --strip-comments] < <stream>");
- 
- 	if (strbuf_read(&buf, 0, 1024) < 0)
- 		die_errno("could not read the input");
+> --- exp	2009-11-09 07:33:19.000000000 +0000
+> +++ act	2009-11-09 07:33:19.000000000 +0000
+> @@ -6,15 +6,16 @@
+>  < Pragma: no-cache
+>  < Cache-Control: no-cache, max-age=0, must-revalidate
+>  < Content-Type: application/x-git-upload-pack-advertisement
+> -<
+>  > POST /smart/repo.git/git-upload-pack HTTP/1.1
+> +> Accept: */*
+>  > Accept-Encoding: deflate, gzip
+>  > Content-Type: application/x-git-upload-pack-request
+>  > Accept: application/x-git-upload-pack-response
+
+The first delta is a missing blank line between requests.  I probably
+can work around that with some sort of sed hackery and its likely
+caused by a different libcurl version.
+
+The second delta is libcurl sending *two* Accept headers to the
+server.  The first was set by the library as "*/*", but the second
+was set by git-remote-curl.  Here your libcurl is just plain *wrong*.
+The application has said "I only support one content type, this one"
+and the library still went and told the server "I accept anything
+you have, just give it to me!".
+
+I'm not sure what to do about this breakage in curl.  We may have
+to relax how we use HTTP since at least one version of libcurl
+can't get this minor detail right.
+
+>  > Content-Length: xxx
+> 
+> +> 0073want 1937bb05802e1973cc2e437c13e9f1845941b785
+> multi_ack_detailed side-band-64k thin-pack no-progress ofs-delta
+> +> 00000009done
+
+Hmmph.  Your libcurl also included the POST body in the verbose
+message.
+
 -- 
-1.6.5.2
+Shawn.
