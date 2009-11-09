@@ -1,93 +1,114 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Git drawbacks?
-Date: Tue, 10 Nov 2009 00:06:31 +0300
-Message-ID: <20091109210631.GJ27126@dpotapov.dyndns.org>
-References: <loom.20091106T160709-387@post.gmane.org> <32541b130911060849s2d8f13f5sb9b8390f075f8d15@mail.gmail.com> <loom.20091106T180313-750@post.gmane.org> <32541b130911060951q3358ce9ahe28fb0cf902853f2@mail.gmail.com> <alpine.DEB.2.00.0911061051540.3216@asgard.lang.hm> <loom.20091109T084539-720@post.gmane.org> <20091109154816.GH27126@dpotapov.dyndns.org> <loom.20091109T170054-451@post.gmane.org> <28c656e20911091047r353e9451hd856b99541fbd5ff@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: pulling git -- version confusion
+Date: Mon, 09 Nov 2009 13:58:46 -0800
+Message-ID: <7vzl6vqs15.fsf@alter.siamese.dyndns.org>
+References: <f46c52560911082214x81ae8beya139a8bcb3cbcf2a@mail.gmail.com>
+ <fabb9a1e0911082237x462b1203v724b51e309a2d89@mail.gmail.com>
+ <f46c52560911082345y71eb12c9w114b799d70720dc6@mail.gmail.com>
+ <fabb9a1e0911082351o326b205aic205552faae4e4da@mail.gmail.com>
+ <f46c52560911090524l51140858sdde29d76e2cfed49@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: B Smith-Mannschott <bsmith.occs@gmail.com>, git@vger.kernel.org
-To: Dmitry Smirnov <divis1969@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 09 22:06:41 2009
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
+To: Rustom Mody <rustompmody@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 09 22:59:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7bRf-00009b-SO
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 22:06:40 +0100
+	id 1N7cGO-00076N-Ee
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 22:59:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754388AbZKIVG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2009 16:06:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754259AbZKIVG2
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 16:06:28 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:33375 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754149AbZKIVG1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Nov 2009 16:06:27 -0500
-Received: by bwz27 with SMTP id 27so3928375bwz.21
-        for <git@vger.kernel.org>; Mon, 09 Nov 2009 13:06:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=onEQWwJEfK1ObjBmMs1Dq2K2l4u3kv5s6otNkrZHg64=;
-        b=wLvOrToy3gbcUAXl0kQoKIuPlwveV8RJVIS4PSYHobHlurQbEywWcza7yPRgBgYU0X
-         qgQaBi53hO8xPyhxLJA1m21RQBLuLOtLFdVsmcUrRgnxcuoXMkGtUqXv64GJ8hZXA86H
-         QjrzLPD8L0btmBQjzm/Ws9fwrr36bJSnXJRi8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=cVN0qNOD6h0PVFm16DPb+O/obeoy8VeLnvXGBK/Vm9wXeargdn0FZG90jcxuEikA07
-         3VHaxN/IPaIPNF2sGWsS4GBAIrvFcfUUxAfbG9oJGxdrBfy6vsVdGwDGcvEMlISaM011
-         dzHzW5lE9hkPOblcIH4FpmoV1ADG3qHWhPMgM=
-Received: by 10.103.80.25 with SMTP id h25mr3302493mul.15.1257800792234;
-        Mon, 09 Nov 2009 13:06:32 -0800 (PST)
-Received: from localhost ([91.78.51.65])
-        by mx.google.com with ESMTPS id 23sm227519mun.1.2009.11.09.13.06.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 09 Nov 2009 13:06:31 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <28c656e20911091047r353e9451hd856b99541fbd5ff@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754755AbZKIV6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2009 16:58:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753863AbZKIV6x
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 16:58:53 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33975 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750964AbZKIV6w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2009 16:58:52 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 989847ABDA;
+	Mon,  9 Nov 2009 16:58:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=C/aQfi4SBM4yl+dGollOCVx+QhU=; b=L208c3
+	tcth/TDYWbbDP0zf63liXyYEWyIjwXZWk5RgXgMMInhzOC8MJziTPr8vlItXMHMz
+	080vSLuR6VfA9GTsynWrWKxNb3CZXsJLWx05awvBCMqHDcpYxiwLFc3UW4wtMPXX
+	1XQr1Z8Oe+/RXDeyolcezfThsDLggIQNxrjy0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XR21cNJ8J5ixg1bAdnx6LzaPa//a+1sU
+	AZhyGINMFyp98stONs9xKmyqJRUkWZ93jbqCl9I2YmZBrBGn+ZGE+j57a8bS7uON
+	jq3Rnfem9H1qtVTEPF2txJNqmwHEwH4CxnVKlR9Rt71PIIgIe6ZYgQtrRm6aREo0
+	oXnKoHPJfoE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 688A97ABD9;
+	Mon,  9 Nov 2009 16:58:54 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A7BE57ABD8; Mon,  9 Nov
+ 2009 16:58:48 -0500 (EST)
+In-Reply-To: <f46c52560911090524l51140858sdde29d76e2cfed49@mail.gmail.com>
+ (Rustom Mody's message of "Mon\, 9 Nov 2009 18\:54\:52 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1292B50E-CD7B-11DE-9A69-7B3EEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132523>
 
-On Mon, Nov 09, 2009 at 07:47:08PM +0100, B Smith-Mannschott wrote:
-> 
-> You don't have to wait to comitting to your own branches, but do make
-> sure to run your usual builds and tests before pushing or asking
-> another to pull changes from you.
+Rustom Mody <rustompmody@gmail.com> writes:
 
-Yes, it is one most useful feature of Git that you can commit (save)
-your changes immediately but amend them later. This helps a lot to
-make changes smaller, cleaner and easier to review.
+> On Mon, Nov 9, 2009 at 1:21 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+>> On Mon, Nov 9, 2009 at 08:45, Rustom Mody <rustompmody@gmail.com> wrote:
+>>> Gives me
+>>> fatal: ambiguous argument 'origin/master': unknown revision or path
+>>> not in the working tree.
+>>> Use '--' to separate paths from revisions
+>>
+>> Well, as what remote do you have upstream configured?
+>>
+>> What is the output of
+>> $ git config -l
+>
+> gives me
+>
+> core.safecrlf=true
+> user.email=<my email>
+> user.name=<my name>
+> core.repositoryformatversion=0
+> core.filemode=true
+> gui.geometry=885x450+0+27 207 192
+>
+> So theres no remote?
+> But .git/remotes/origin has
+>
+> URL: git://git.kernel.org/pub/scm/git/git.git
+> Pull: refs/heads/master:refs/heads/origin
+> Pull: refs/heads/maint:refs/heads/maint
+> Pull: refs/heads/next:refs/heads/next
+> Pull: refs/heads/html:refs/heads/html
+> Pull: refs/heads/pu:refs/heads/pu
+> Pull: refs/heads/todo:refs/heads/todo
+> Pull: refs/heads/man:refs/heads/man
 
-With many other VCS, a typical policy is that you do not commit your
-changes unless you have finished and tested them. But it means that
-your changes are not committed and stored only in the work tree for
-a long time. Moreover, when you eventually decide that they are good
-enough to commit, you will produce a huge patch, which will be difficult
-to review or to bisect history later.
+That's a layout that was default before 1.5.0, I think.  3 years is an eon
+in git timescale.
 
-With Git you do not have to worry about testing when you can commit your
-changes. Typically I would commit some my changes as I progress to my
-goal, but later I will review all commits. Probably, squash some changes
-with fixes, clean up some other, add better explanations of what is done
-and why, etc... But I do not have to worry about all those trifles as
-I write code to see if some feature is worth or not, if this solution
-works or I should try something else...
+People giving advice based on modern git experience would say things like
+"origin/master", but in your layout that ref that keeps track of where the
+'master' branch at the remote repository is is not called 'origin/master',
+but simply 'origin'.
 
-So, you can always commit your changes as your progress to your goal and
-review amend them later before publishing. This means that you can have
-as many work-in-progress branches as you wish, and you do not need a
-separate work tree for each of them -- everything can be stored in the
-repository, and you can go to another computer, issue 'git fetch' and
-continue your work at the exact point where you left it. So, it is very
-flexible.
+So instead of
 
+> Try either:
+> $ git checkout master
+> $ git reset --hard origin/master
 
-Dmitry
+that Sverre gave you, in your repository you would do:
+
+    $ git checkout master
+    $ git reset --hard origin
