@@ -1,80 +1,106 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH RFC] builtin-push: add --delete as syntactic sugar for 
-	:foo
-Date: Mon, 9 Nov 2009 18:20:09 +0100
-Message-ID: <fabb9a1e0911090920y70ca37a6h85cb38e97976bb59@mail.gmail.com>
-References: <20091109130935.2bea7771@perceptron> <7v8wefy6pi.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>,
-	Git ML <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 09 18:20:40 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/3] http-backend: Fix symbol clash on AIX 5.3
+Date: Mon,  9 Nov 2009 10:10:35 -0800
+Message-ID: <1257790237-30850-1-git-send-email-spearce@spearce.org>
+Cc: Mike Ralphson <mike.ralphson@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 09 19:10:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7Xuu-00079C-CO
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 18:20:36 +0100
+	id 1N7YhS-0007ma-H2
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 19:10:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755071AbZKIRUZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Nov 2009 12:20:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754799AbZKIRUZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 12:20:25 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:48659 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754750AbZKIRUY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Nov 2009 12:20:24 -0500
-Received: by bwz27 with SMTP id 27so3691565bwz.21
-        for <git@vger.kernel.org>; Mon, 09 Nov 2009 09:20:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=WS9aJTG7iIMwAvLhXB3XLW53dkJntku3wIz7ck1pRdg=;
-        b=S+vQHRX2lwR3EIcsqpYcy1anTw0S/rl+5SjMM5KddUOwHCIuHroYquGyYY7K5v3uRq
-         OhHiLphFCNgMXOlfsE7lMZA/7hHNMfnIOJVqwEF62nLDC6uY8UAxvWkqBOoLrOG8EB4r
-         9O7K1JaJQujO6mhByJ0HW4j4V+YdAdjpVFBck=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=mR7j7KNe/gietZYwT52N7JCpgnfop9nccaWrlfMVWaDW3fJ6BEQsZTh0P0VKT+C9QQ
-         OmJYPYcZkH30SwyfDU++thJIZ5+2NooEHPLeZoC0UH1Xe36RbgmWG0i/45hj0gKeIvo+
-         daLy9vf8k6txCvYSb5KUpyWVPAVwgAGKuEBPA=
-Received: by 10.216.90.11 with SMTP id d11mr907650wef.187.1257787229124; Mon, 
-	09 Nov 2009 09:20:29 -0800 (PST)
-In-Reply-To: <7v8wefy6pi.fsf@alter.siamese.dyndns.org>
+	id S1752942AbZKISKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2009 13:10:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752062AbZKISKd
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 13:10:33 -0500
+Received: from george.spearce.org ([209.20.77.23]:39664 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751326AbZKISKc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2009 13:10:32 -0500
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 717B0381FE; Mon,  9 Nov 2009 18:10:38 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 01E85380E7
+	for <git@vger.kernel.org>; Mon,  9 Nov 2009 18:10:37 +0000 (UTC)
+X-Mailer: git-send-email 1.6.5.2.351.g09432
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132499>
 
-Heya,
-
-On Mon, Nov 9, 2009 at 17:59, Junio C Hamano <gitster@pobox.com> wrote:
-> Jan Kr=FCger <jk@jk.gs> writes:
->> Specifically, --delete will prepend a colon to all colon-less refspe=
-cs
->> given on the command line.
+Mike says:
+> > +static void send_file(const char *the_type, const char *name)
+> > +{
 >
-> Will it barf and error out if there is any colon-ful one? =A0I think =
-it
-> should. =A0I was about to write "I guess it could be argued both ways=
-", but
-> after thinking about it for 5 seconds I do not see a sane way to expl=
-ain a
-> command line "push origin --delete one two:three".
+> I think a symbol clash here is responsible for a build breakage in
+> next on AIX 5.3:
+>
+> CC http-backend.o
+> http-backend.c:213: error: conflicting types for `send_file'
+> /usr/include/sys/socket.h:676: error: previous declaration of `send_file'
+> gmake: *** [http-backend.o] Error 1
 
-Did we not have this discussion not 3 months ago and decided it was a b=
-ad idea?
+So we rename the function send_local_file().
 
-  http://thread.gmane.org/gmane.comp.version-control.git/125894
+Reported-by: Mike Ralphson <mike.ralphson@gmail.com>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ http-backend.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
 
---=20
-Cheers,
-
-Sverre Rabbelier
+diff --git a/http-backend.c b/http-backend.c
+index 9021266..646e910 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -209,7 +209,7 @@ static void send_strbuf(const char *type, struct strbuf *buf)
+ 	safe_write(1, buf->buf, buf->len);
+ }
+ 
+-static void send_file(const char *the_type, const char *name)
++static void send_local_file(const char *the_type, const char *name)
+ {
+ 	const char *p = git_path("%s", name);
+ 	size_t buf_alloc = 8192;
+@@ -247,28 +247,28 @@ static void get_text_file(char *name)
+ {
+ 	select_getanyfile();
+ 	hdr_nocache();
+-	send_file("text/plain", name);
++	send_local_file("text/plain", name);
+ }
+ 
+ static void get_loose_object(char *name)
+ {
+ 	select_getanyfile();
+ 	hdr_cache_forever();
+-	send_file("application/x-git-loose-object", name);
++	send_local_file("application/x-git-loose-object", name);
+ }
+ 
+ static void get_pack_file(char *name)
+ {
+ 	select_getanyfile();
+ 	hdr_cache_forever();
+-	send_file("application/x-git-packed-objects", name);
++	send_local_file("application/x-git-packed-objects", name);
+ }
+ 
+ static void get_idx_file(char *name)
+ {
+ 	select_getanyfile();
+ 	hdr_cache_forever();
+-	send_file("application/x-git-packed-objects-toc", name);
++	send_local_file("application/x-git-packed-objects-toc", name);
+ }
+ 
+ static int http_config(const char *var, const char *value, void *cb)
+-- 
+1.6.5.2.351.g09432
