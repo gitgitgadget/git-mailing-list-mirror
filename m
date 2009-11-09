@@ -1,72 +1,75 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: Re: [RFC/PATCH 4/4] Re-implement 'git remote update' using 'git 
-	fetch'
-Date: Mon, 9 Nov 2009 07:37:48 +0100
-Message-ID: <6672d0160911082237p4645b8d3n8f667b8fc7c80732@mail.gmail.com>
-References: <4AF6E865.1030900@gmail.com>
-	 <76718490911081643w46e34858kd82270be0482f8b9@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH v3 08/12] Allow helper to map private ref names into 
+	normal names
+Date: Mon, 9 Nov 2009 07:42:43 +0100
+Message-ID: <fabb9a1e0911082242k5950d780i584a4714e384e007@mail.gmail.com>
+References: <1257547966-14603-1-git-send-email-srabbelier@gmail.com> 
+	<1257547966-14603-3-git-send-email-srabbelier@gmail.com> <1257547966-14603-4-git-send-email-srabbelier@gmail.com> 
+	<1257547966-14603-5-git-send-email-srabbelier@gmail.com> <1257547966-14603-6-git-send-email-srabbelier@gmail.com> 
+	<1257547966-14603-7-git-send-email-srabbelier@gmail.com> <1257547966-14603-8-git-send-email-srabbelier@gmail.com> 
+	<1257547966-14603-9-git-send-email-srabbelier@gmail.com> <alpine.LNX.2.00.0911061755360.14365@iabervon.org> 
+	<fabb9a1e0911061519j6d64ff50v9b0cefe61965fbbc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 09 07:37:58 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johan Herland <johan@herland.net>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Nov 09 07:43:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7Nsy-0001ul-8C
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 07:37:56 +0100
+	id 1N7Ny1-00039J-Ne
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 07:43:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752600AbZKIGho convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Nov 2009 01:37:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751724AbZKIGho
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 01:37:44 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:64005 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751335AbZKIGho convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Nov 2009 01:37:44 -0500
-Received: by bwz27 with SMTP id 27so3104000bwz.21
-        for <git@vger.kernel.org>; Sun, 08 Nov 2009 22:37:48 -0800 (PST)
+	id S1752813AbZKIGm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2009 01:42:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752664AbZKIGm7
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 01:42:59 -0500
+Received: from ey-out-2122.google.com ([74.125.78.26]:27302 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752191AbZKIGm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2009 01:42:58 -0500
+Received: by ey-out-2122.google.com with SMTP id 25so102643eya.19
+        for <git@vger.kernel.org>; Sun, 08 Nov 2009 22:43:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NMo2MMhNB73Zr06ZGCGK9l9Z+ogj5/TwraLMhBorZqk=;
-        b=lkw+sULsFYBzj5hkvhhrjOX82NqHmBh7KgnDDoYkTzne5UXEiK+dzPYReajYrnvmPZ
-         AqhK8Qjxh1jQJOq5nXWKjesow/M2q2rrX35LVLgirL9FBajnz/u+/ig0Dyj9qEGr77oW
-         z8Z2FNI+IfzBD9jmHZAm5fC3DJNL4G6/6G9Kg=
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=B2mD1XVKQQ9DjHcl3rAosQrtYu+RkhCgDQySqoIsRDs=;
+        b=TOwjFn48WbaJefTH0L26bh9uOGM1mq8ctpYdgYGqnm9x3TuSiWBx9u+gdsaf+V42+8
+         osd3XiPmAgCP0rpsncjCwCS35iwz6F63ib59YNOvKDMTG0d75ZErGec5/ZMbvQy/swzl
+         2kmXG2f4wMSb4pAT+oxX+6V7gEOMAKBNaMjf8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=D8A7XhkdTAAEv73UB8q7hkTBcmYL+vVudabVYaVulPmXbdK00nzOhWF/rfZmx9MP+j
-         NXTxovGnADI/wWluZ0nSw24ZdMFh5T9hCk/I6PelENSGxnVVjGzbZx+YuiYkdKaI1sAx
-         Tei63rCeY+rtxDyByGg6Fuh85Qjvyh7pKQVrQ=
-Received: by 10.204.15.22 with SMTP id i22mr1945538bka.13.1257748668529; Sun, 
-	08 Nov 2009 22:37:48 -0800 (PST)
-In-Reply-To: <76718490911081643w46e34858kd82270be0482f8b9@mail.gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=YoFq9JjsPuMhKJ/vQgHvkSDjxTVV88O/BtYK3J4DBOgn7fX8Dqp0uxxMaoLpD7xqo+
+         3XznXbjC5JxbNKj1n1eKcgO5Jy7CUPuPBwIoweDpe/iNn8miB+BfmnE+NkbR05x2Utpi
+         C8DBlPqqk1pf7/7GXw4MTRz8wY15+5pIktsWs=
+Received: by 10.216.87.3 with SMTP id x3mr122321wee.132.1257748983129; Sun, 08 
+	Nov 2009 22:43:03 -0800 (PST)
+In-Reply-To: <fabb9a1e0911061519j6d64ff50v9b0cefe61965fbbc@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132444>
 
-2009/11/9 Jay Soffian <jaysoffian@gmail.com>:
-> 2009/11/8 Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>:
->> In order to not duplicate functionality, re-implement 'git remote
->> update' in terms of 'git fetch'.
+Heya,
+
+On Sat, Nov 7, 2009 at 00:19, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> On Sat, Nov 7, 2009 at 00:12, Daniel Barkalow <barkalow@iabervon.org> wrote:
+>> At the very least, it needs documentation and memory leaks fixed (the
+>> refspec strings read from the helper, and the refspec structs and array on
+>> freeing the helper data).
 >
-> Junio, I guess I'll wait for this to hit pu and then rebase my fetch
-> --prune changes on top of it?
+> Please send follow-ups against [0] and I will include them in the next round :).
 
-It has hit pu now.
+It's in next now, so please send follow-ups against sr/vcs-helper.
 
-If you'll rebase and finish your patch series, I can base my final
-patch in my series on your changes, because that patch will need a
-fetch that supports --prune in order to support 'git remote update --pr=
-une'.
+-- 
+Cheers,
 
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+Sverre Rabbelier
