@@ -1,78 +1,86 @@
-From: Jacob Helwig <jacob.helwig@gmail.com>
-Subject: Re: Git drawbacks?
-Date: Mon, 9 Nov 2009 08:21:28 -0800
-Message-ID: <8c9a060911090821h678ace9bg978c185bda94e3f4@mail.gmail.com>
-References: <loom.20091106T160709-387@post.gmane.org> <32541b130911060849s2d8f13f5sb9b8390f075f8d15@mail.gmail.com> 
-	<loom.20091106T180313-750@post.gmane.org> <32541b130911060951q3358ce9ahe28fb0cf902853f2@mail.gmail.com> 
-	<alpine.DEB.2.00.0911061051540.3216@asgard.lang.hm> <loom.20091109T084539-720@post.gmane.org> 
-	<8c9a060911090634p4e036208mfb3160eb4c4430e9@mail.gmail.com> 
-	<loom.20091109T165620-587@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 08/12] Allow helper to map private ref names into 
+ normal names
+Date: Mon, 09 Nov 2009 08:44:24 -0800
+Message-ID: <7vhbt3y7fb.fsf@alter.siamese.dyndns.org>
+References: <1257547966-14603-1-git-send-email-srabbelier@gmail.com>
+ <1257547966-14603-3-git-send-email-srabbelier@gmail.com>
+ <1257547966-14603-4-git-send-email-srabbelier@gmail.com>
+ <1257547966-14603-5-git-send-email-srabbelier@gmail.com>
+ <1257547966-14603-6-git-send-email-srabbelier@gmail.com>
+ <1257547966-14603-7-git-send-email-srabbelier@gmail.com>
+ <1257547966-14603-8-git-send-email-srabbelier@gmail.com>
+ <1257547966-14603-9-git-send-email-srabbelier@gmail.com>
+ <alpine.LNX.2.00.0911061755360.14365@iabervon.org>
+ <fabb9a1e0911061519j6d64ff50v9b0cefe61965fbbc@mail.gmail.com>
+ <fabb9a1e0911082242k5950d780i584a4714e384e007@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Dmitry Smirnov <divis1969@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 09 17:21:58 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johan Herland <johan@herland.net>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 09 17:44:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7X06-0002Rd-9K
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 17:21:54 +0100
+	id 1N7XMD-0005jh-4k
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 17:44:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753085AbZKIQVn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Nov 2009 11:21:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751537AbZKIQVn
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 11:21:43 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:58342 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751066AbZKIQVm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Nov 2009 11:21:42 -0500
-Received: by pwi3 with SMTP id 3so702296pwi.21
-        for <git@vger.kernel.org>; Mon, 09 Nov 2009 08:21:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=V/rLfd5Y1NkEfNt0oRt8mh6EyuQBwN9Id9PqBs47jZo=;
-        b=SO+5AJW2iwQ6ULKEPEAWpo7ygtqPaC3GWtWIFrflWlM3PqESA1NwvJAJqXO39kYrDy
-         FzO6cjRM9ZmesJTFCJ9WG0JJZawZbFStWsekHa7+AEink2rLAqdj12NCrDJtgd1H/u9E
-         YJpmYoKEUnyVZ8SYNhSQJl7b+HJjP88qwsjdQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=q+RadEsQIeFYXCFPIit81Ag+U2615fUVKT6AlkaYqJ5BQ+jxqcXUhtVoUmV+tNc0U9
-         QrQkwtyqoPdv1RbYl5OZ/nMHya8hnzKSaJE/soKmC4tZqYycjI1GiY9v31HX7PkYhlB3
-         tTm6ktu9OtnJ1TbPYQ1ovGitSklV4hSkKDJFo=
-Received: by 10.140.172.15 with SMTP id u15mr275264rve.294.1257783708078; Mon, 
-	09 Nov 2009 08:21:48 -0800 (PST)
-In-Reply-To: <loom.20091109T165620-587@post.gmane.org>
+	id S1751849AbZKIQoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2009 11:44:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751259AbZKIQod
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 11:44:33 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55662 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750964AbZKIQod (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2009 11:44:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 04D107AAA5;
+	Mon,  9 Nov 2009 11:44:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PztPbqK03H24F7W/fcsztEXanag=; b=D/KKNj
+	/Ko2HsAI0DDB49VZHzWlf9xhMiCp+pwcw/Yy8TO1tnm7OE8vV/dhJpKHK2yyZcmp
+	aCmbwNmd02GrIu4kIuL+uwIGKhSRlm9i4u5Q1DU4qYiRw2k1Ou2dCYYpYpsTV8oi
+	tWDvLKesvjOyVV9AU3x7T3KbvojzzRq+TV+j4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GAERlT85DK047ksDr3H7dOZqOhAQRaJX
+	0oWNkubDuGQHPH5KlZsyyS+OEhv4KcdVMrEUDBv+k0s9g/eew7qYbzbcjW4U1mwp
+	I2u9w4UXSlNAg+MlRi+B+zD1yN1prNoPK2oxOE8nXfeHhOQbZo+ZD1xjAmU9U8VS
+	4grN7xnlD/4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B2EC27AA9B;
+	Mon,  9 Nov 2009 11:44:32 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A94687AA96; Mon,  9 Nov
+ 2009 11:44:26 -0500 (EST)
+In-Reply-To: <fabb9a1e0911082242k5950d780i584a4714e384e007@mail.gmail.com>
+ (Sverre Rabbelier's message of "Mon\, 9 Nov 2009 07\:42\:43 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 2820BD0C-CD4F-11DE-BCB3-7B3EEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132493>
 
-On Mon, Nov 9, 2009 at 07:59, Dmitry Smirnov <divis1969@gmail.com> wrot=
-e:
-> Jacob Helwig <jacob.helwig <at> gmail.com> writes:
->
->> It does have a few caveats, however. =C2=A0If you have the same bran=
-ch
->> checked out in two different working copies created using
->>...
->> place on your machine, you'll never notice, thuogh.
->
->
-> So, i cannot recover from this situation by upmerging to the new head=
-?
->
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-If you haven't actually made any changes in the second checkout of the
-branch, then recovery is a simple reset --hard.  If you have made any
-changes in that working copy, then recovery is a bit more complicated,
-and it's probably best if I leave that explanation up to someone else,
-since I'm very careful to avoid this situation in the first place, and
-have never actually had to recover from it.
+> Heya,
+>
+> On Sat, Nov 7, 2009 at 00:19, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+>> On Sat, Nov 7, 2009 at 00:12, Daniel Barkalow <barkalow@iabervon.org> wrote:
+>>> At the very least, it needs documentation and memory leaks fixed (the
+>>> refspec strings read from the helper, and the refspec structs and array on
+>>> freeing the helper data).
+>>
+>> Please send follow-ups against [0] and I will include them in the next round :).
+>
+> It's in next now, so please send follow-ups against sr/vcs-helper.
+
+Do you mean 'pu' or 'next'?
