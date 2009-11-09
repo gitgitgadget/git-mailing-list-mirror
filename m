@@ -1,118 +1,107 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH v3 4/4] Add explicit Cygwin check to guard WIN32 header inclusion
-Date: Mon, 09 Nov 2009 19:31:24 +0000
-Message-ID: <4AF86E0C.4080001@ramsay1.demon.co.uk>
+From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
+Subject: [PATCH 0/5] Re-implement 'git remote update' using 'git fetch'
+Date: Mon, 09 Nov 2009 21:08:52 +0100
+Message-ID: <4AF876D4.5010207@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Marius Storm-Olsen <mstormo@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 09 20:35:27 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 09 21:09:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7a1P-0008LR-7C
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 20:35:27 +0100
+	id 1N7aY6-0007iM-Lj
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 21:09:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752673AbZKITfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2009 14:35:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751773AbZKITfF
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 14:35:05 -0500
-Received: from anchor-post-2.mail.demon.net ([195.173.77.133]:41490 "EHLO
-	anchor-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752186AbZKITfE (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Nov 2009 14:35:04 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-2.mail.demon.net with esmtp (Exim 4.69)
-	id 1N7a16-0004qG-lk; Mon, 09 Nov 2009 19:35:09 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1752937AbZKIUJC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Nov 2009 15:09:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752639AbZKIUJB
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 15:09:01 -0500
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:65151 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751808AbZKIUJA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2009 15:09:00 -0500
+Received: by ewy3 with SMTP id 3so3510617ewy.37
+        for <git@vger.kernel.org>; Mon, 09 Nov 2009 12:09:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:content-type
+         :content-transfer-encoding;
+        bh=ULJAjtsD2mqCLoLr1m+ropuxs/s2/DsrQihL/6Xfb7U=;
+        b=BsxG8bWniHFu4reXJiK837BZH3cZ6xm/wvJZ9DGBd5uez4smJvuPpZfmC0Ksn3KOC2
+         y8UdczXXRZwR+6MiYg6cRXIp6uHTiZG7bAltUORBf4rsZVdy/ECWR8HAeCwm+gFjuMuD
+         Bcpw2HmZ50dKCWdTn+BzSp+JlYuVVPwIDRGUY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=TX4Pe+JrdY4DNbb1bbHvBD0glZq/ZPQg7Ex3ny9Bjmu8K851hkKI8i2O1xfu+AGm7Q
+         SA0AKh23s3kLwXgLMT+Biqw4sZCby0xIFh44CiDfGY7KAdy3L3Pr4ksAMEqiGBrbqY11
+         oTYdz4Rfk9jZYIAY4VQa09L9D0KHHgOANIJYY=
+Received: by 10.213.24.22 with SMTP id t22mr3802077ebb.59.1257797335194;
+        Mon, 09 Nov 2009 12:08:55 -0800 (PST)
+Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
+        by mx.google.com with ESMTPS id 7sm68214eyg.25.2009.11.09.12.08.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 09 Nov 2009 12:08:53 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132513>
 
-Since commit 435bdf8c ("Make usage of windows.h lean and mean",
-16-9-2009), the amount of code potentially including the WIN32
-API header files has greatly increased. In particular, the Cygwin
-build is at greater risk of inadvertently including WIN32 code
-within preprocessor sections protected by the WIN32 or _WIN32
-macros.
+Here is the re-roll of my patch series for extending
+the capabilities of 'git fetch' so that it can be used
+for re-implementing 'git remote update'.
 
-The previous commit message, along with comments elsewhere, assert
-that the WIN32 macro is not defined on Cygwin. Currently, this is
-true for the cygwin build. However, the cygwin platform can be
-used to develop WIN32 GUI, WIN32 console, and POSIX applications.
-Indeed it is possible to create applications which use a mix of
-the WIN32 API and POSIX code (eg git!).
+Since Jay Soffian is working on implementing 'git fetch
+--prune', I have not attempted to implement it myself.
+Therefore, 'git fetch update' in the final patch still
+silently ignores the --prune option.
 
-Unlike native WIN32 compilers, gcc on cygwin does not automatically
-define the _WIN32 macro. However, as soon as you include the
-<windows.h> header file, the _WIN32 and WIN32 macros are defined.
+I have made the following changes compared to the previous
+version of the series:
 
-In order to reduce the risk of problems in the future, we protect
-the inclusion of the windows header with an explicit check for
-__CYGWIN__. Also, we move the other use of the <windows.h> header
-from compat/win32.h to compat/cygwin.c
+* Updated the usage strings in builtin_fetch.c.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
+* Added test cases for testing the new functionality in
+  'git fetch'.
 
-Changes since v2:
-    - removed indentation from the #if-#endif block
+* Updated the documentation.
 
-I hope you don't mind, but I've only sent this patch, rather than
-re-send the whole series. If you would like a complete re-send, just
-let me know.
+* Added a new test case for 'git remote update --prune'.
+  (Since all tests case succeeded even though 'git
+  remote update' didn't handle --prune correctly, there
+  was clearly a missing test case.) In the final commit,
+  I marked that new test case as a known breakage, so
+  that the test suite will still pass.
 
-ATB,
-Ramsay Jones
+* Some corrections and improvements of the commit
+  messages.
 
- compat/cygwin.c   |    1 +
- compat/win32.h    |    3 ---
- git-compat-util.h |    2 +-
- 3 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/compat/cygwin.c b/compat/cygwin.c
-index b4a51b9..6695515 100644
---- a/compat/cygwin.c
-+++ b/compat/cygwin.c
-@@ -1,5 +1,6 @@
- #define WIN32_LEAN_AND_MEAN
- #include "../git-compat-util.h"
-+#include <windows.h>
- #include "win32.h"
- #include "../cache.h" /* to read configuration */
- 
-diff --git a/compat/win32.h b/compat/win32.h
-index 8ce9104..a7ed72b 100644
---- a/compat/win32.h
-+++ b/compat/win32.h
-@@ -2,9 +2,6 @@
- #define WIN32_H
- 
- /* common Win32 functions for MinGW and Cygwin */
--#ifndef WIN32         /* Not defined by Cygwin */
--#include <windows.h>
--#endif
- 
- static inline int file_attr_to_st_mode (DWORD attr)
- {
-diff --git a/git-compat-util.h b/git-compat-util.h
-index ef60803..0cd2693 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -65,7 +65,7 @@
- #define _NETBSD_SOURCE 1
- #define _SGI_SOURCE 1
- 
--#ifdef WIN32 /* Both MinGW and MSVC */
-+#if defined(_WIN32) && !defined(__CYGWIN__) /* Both MinGW and MSVC */
- #define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
- #include <winsock2.h>
- #include <windows.h>
--- 
-1.6.5
+Bj=C3=B6rn Gustavsson (5):
+  Teach the --all option to 'git fetch'
+  Teach the --multiple option to 'git fetch'
+  Add the configuration option skipFetchAll
+  Add missing test for 'git remote update --prune'
+  Re-implement 'git remote update' using 'git fetch'
+
+ Documentation/config.txt           |    8 ++-
+ Documentation/fetch-options.txt    |    9 ++
+ Documentation/git-fetch.txt        |   14 +++-
+ Documentation/pull-fetch-param.txt |    7 ++
+ builtin-fetch.c                    |  160 ++++++++++++++++++++++++++++=
+++++----
+ builtin-remote.c                   |   86 ++++++-------------
+ remote.c                           |    3 +-
+ t/t5505-remote.sh                  |   11 +++
+ t/t5506-remote-groups.sh           |   21 ++++-
+ t/t5514-fetch-multiple.sh          |  154 ++++++++++++++++++++++++++++=
+++++++
+ 10 files changed, 389 insertions(+), 84 deletions(-)
+ create mode 100755 t/t5514-fetch-multiple.sh
