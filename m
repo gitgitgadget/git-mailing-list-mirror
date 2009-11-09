@@ -1,81 +1,87 @@
-From: Tarmigan <tarmigan+git@gmail.com>
-Subject: Re: [RFC PATCH 3/3] t5551-http-fetch: Work around broken Accept 
-	header in libcurl
-Date: Mon, 9 Nov 2009 10:37:52 -0800
-Message-ID: <905315640911091037i5e99c719rf754db7c95f0b069@mail.gmail.com>
-References: <1257790237-30850-1-git-send-email-spearce@spearce.org> 
-	<1257790237-30850-3-git-send-email-spearce@spearce.org>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: question: connecting to multiple remote svn projects
+Date: Mon, 9 Nov 2009 13:43:46 -0500
+Message-ID: <32541b130911091043k78ac009dmb49ecdb0beaa597f@mail.gmail.com>
+References: <hd1nv2$79e$1@ger.gmane.org> <32541b130911061151q68ddcc58w209acf28c5eec2f@mail.gmail.com> 
+	<hd8smd$79e$2@ger.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Nov 09 19:38:20 2009
+To: Dave Rodgman <dav1dr@eml.cc>
+X-From: git-owner@vger.kernel.org Mon Nov 09 19:45:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7Z87-00042l-30
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 19:38:19 +0100
+	id 1N7ZDq-0007eU-7X
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 19:44:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751461AbZKISiI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Nov 2009 13:38:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbZKISiH
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 13:38:07 -0500
-Received: from mail-pz0-f188.google.com ([209.85.222.188]:39796 "EHLO
-	mail-pz0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750928AbZKISiG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Nov 2009 13:38:06 -0500
-Received: by pzk26 with SMTP id 26so2276324pzk.4
-        for <git@vger.kernel.org>; Mon, 09 Nov 2009 10:38:12 -0800 (PST)
+	id S1751913AbZKISoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2009 13:44:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751821AbZKISoB
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 13:44:01 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:58862 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751682AbZKISoA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2009 13:44:00 -0500
+Received: by yxe17 with SMTP id 17so2799705yxe.33
+        for <git@vger.kernel.org>; Mon, 09 Nov 2009 10:44:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=tWifyZvzwzCkD+WtAL95KUkRZbwAP0OQthLzOFypdE4=;
-        b=Ughdgtw9RjYiNAE5qSC+hdUnCD1lFQX5TT9b0aQ7E+ROqRQ8clr51LRDq4v3kb9IUt
-         k9jHNcrmKorLZ2CYUEBe98lzMZXWRH2weIbQybySKqlFO8jZU7Pw5v3QOBQTFvTx4y8x
-         4KbcPgW9/pOiP1m4blWpPw0HHFJHnL+0YLugU=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=hwLG6g1JwU7clAbGvqXb1ujyeahMV4Yd0LYgD6n3C8I=;
+        b=VXNzC2l/CPvE/ohNoeY3rYJI5fwwtfI6xhg2etJgW678/LEwuBDY2kpRFpIpsEYfLn
+         qaGy/K6xEvyVimaeq4w/Zc4tPj1dDjh6j3RuXx5Et7cBHLMRtsAppqwPDi5dGUv/yuFK
+         MqKJIeFlYX1IZMw5GUayjdGBSEBpdJQwApy9w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=QzN0sm36tnWGGjksxRVJlfmwU6C4GxAnYzNYatkztoq6Zr8xElab26m6vSM3bMbcZt
-         t6hUjXd8T1R+6Wxda28r+JLPsZ6tg1uUjQOKHaNhKPc3Lob52hpRljUhigXencbVH65y
-         IV2X0MzCW29v60S6hiMsAtVEHsnz9H/ZxB1x4=
-Received: by 10.142.247.5 with SMTP id u5mr892034wfh.44.1257791892064; Mon, 09 
-	Nov 2009 10:38:12 -0800 (PST)
-In-Reply-To: <1257790237-30850-3-git-send-email-spearce@spearce.org>
-X-Google-Sender-Auth: 2613fc5998f08f69
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=COxRrl++LB5NcIpHuKIRrl/kWVdNUeYe0NEJcnys/o/fD5Pnl3eTDgxNX/kt1qHHFB
+         y7jWJ1kbOZQaXwn+dPE/tcIuz4Qsuw5MmSA2hvXzgZDTAP6FfGMjG34X9CClmnvXheWx
+         9rBO7I1jdicIta1GGtK4A3C1fAjNdJ9W0pmbs=
+Received: by 10.150.107.4 with SMTP id f4mr13872562ybc.286.1257792246078; Mon, 
+	09 Nov 2009 10:44:06 -0800 (PST)
+In-Reply-To: <hd8smd$79e$2@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132506>
 
-On Mon, Nov 9, 2009 at 10:10 AM, Shawn O. Pearce <spearce@spearce.org> =
-wrote:
-> Unfortunately at least one version of libcurl has a bug causing
-> it to include "Accept: */*" in the same POST request where we have
-> already asked for "Accept: application/x-git-upload-pack-response".
->
-> This is a bug in libcurl, not Git, or our test vector. =A0The
-> application has explicitly asked the server for a single content
-> type, but libcurl has mistakenly also told the server the client
-> application will accept */*, which is any content type.
->
-> Based on the libcurl change log, this "Accept: */*" header bug
-> may have been fixed in version 7.18.1 released March 30, 2008:
->
-> =A0http://curl.haxx.se/changes.html#7_18_1
->
-> Rather than require users to upgrade libcurl we change the test
-> vector to trim this line out of the 2nd request.
->
-> Reported-by: Tarmigan <tarmigan+git@gmail.com>
+On Mon, Nov 9, 2009 at 5:59 AM, Dave Rodgman <dav1dr@eml.cc> wrote:
+> As far as I can understand, git-submodule pulls in a specific commit,
+> as does git subtree? I've experimented a little but with not much success.
 
-Tested-by: Tarmigan <tarmigan+git@gmail.com>
+Well, they both pull in a specific commit *and* all the history
+leading up to it, although the two of them do it in slightly different
+ways.
 
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> I want "git svn rebase" (or some equivalent command, or series of
+> commands) to update the contents of module1/work to the latest commit
+> into this branch, and similarly "git svn dcommit" should also commit into
+> module1, module2, etc. Basically, I want my working copy to have the same
+> functionality as if moduleX/work was the actual layout in subversion. I'm
+> using git as a client for a svn repository, rather than doing a one-time
+> import. Is this possible?
+
+Yes.  Both tools will work for two-way svn import/export, although
+submodules will probably be a bit more convenient.
+
+Essentially, you create one branch (and one git-svn remote entry) for
+each svn subproject, and one branch for the combined project.  In the
+combined project, your .gitmodules should use '.' as the submodule
+repository path (since all your submodule objects are in the same
+local repo).
+
+Then you 'git svn fetch' to retrieve the latest from each svn project.
+
+Then, in each submodule, you can 'git pull .. git-svn-branchname' to
+get the latest stuff from git-svn for that branch.
+
+Then, in the combined project, you 'git commit' to lock in those commits.
+
+It's a little screwy, but it works :)
+
+Avery
