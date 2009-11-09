@@ -1,127 +1,131 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [BUG] unpack-objects abnormal exit when pushing
-Date: Mon, 09 Nov 2009 12:56:19 +0100
-Message-ID: <vpqhbt3ap3w.fsf@bauges.imag.fr>
-References: <vpqeio8eou4.fsf@bauges.imag.fr>
+From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
+Subject: [PATCH RFC] builtin-push: add --delete as syntactic sugar for :foo
+Date: Mon, 9 Nov 2009 13:09:35 +0100
+Message-ID: <20091109130935.2bea7771@perceptron>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 09 12:59:17 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 09 13:09:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7Stw-0003if-RP
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 12:59:17 +0100
+	id 1N7T4A-0007nz-AE
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 13:09:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753248AbZKIL7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2009 06:59:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbZKIL7C
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 06:59:02 -0500
-Received: from imag.imag.fr ([129.88.30.1]:47864 "EHLO imag.imag.fr"
+	id S1754836AbZKIMJi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Nov 2009 07:09:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754820AbZKIMJi
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 07:09:38 -0500
+Received: from zoidberg.org ([88.198.6.61]:37075 "EHLO cthulhu.zoidberg.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751014AbZKIL7B (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Nov 2009 06:59:01 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id nA9BuJ5i011529
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 9 Nov 2009 12:56:21 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1N7Sr5-0007B0-7O; Mon, 09 Nov 2009 12:56:19 +0100
-In-Reply-To: <vpqeio8eou4.fsf@bauges.imag.fr> (Matthieu Moy's message of "Sun\, 08 Nov 2009 21\:36\:19 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 09 Nov 2009 12:56:21 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1754492AbZKIMJh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Nov 2009 07:09:37 -0500
+Received: from perceptron (xdsl-78-35-153-14.netcologne.de [::ffff:78.35.153.14])
+  (IDENT: unknown, AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by cthulhu.zoidberg.org with esmtp; Mon, 09 Nov 2009 13:09:41 +0100
+  id 004D01FF.4AF80685.0000615A
+X-Mailer: Claws Mail 3.7.3 (GTK+ 2.18.3; i486-pc-linux-gnu)
+X-Obscure-Spam: http://music-jk.net/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132458>
 
-Hi again,
+Refspecs without a source side have been reported as confusing by many.
+As an alternative, this adds support for commands like:
 
-I just found a way to reproduce the problem using plain SSH, and not
-Git:
+    git push origin --delete somebranch
 
-$ ssh localhost cat < random.bin | wc
-    249    1460   65536
-$ cat < random.bin | wc
-    796    4545  204800
+Specifically, --delete will prepend a colon to all colon-less refspecs
+given on the command line.
 
-So, sshd is broken on this machine, and I don't think Git is the one
-to blame.
+Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
+---
+Since I consider this extension pure syntactic sugar, it doesn't change
+the underlying transport code. As such it's a relatively non-invasive
+change.
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+One might imagine a different implementation that supports combining
+--delete with --all and/or --tags, but perhaps it's better if people
+are forced to do that kind of thing manually.
 
-> Hi,
->
-> I'm hitting a bug when git-push-ing to a Linux PPC machine. In
-> general, pushing works well, but pushing some particular commits
-> breaks reproducibly with :
->
-> fatal: early EOF
-> error: unpack failed: unpack-objects abnormal exit
-> To ssh://localhost//home/perms/moy/prive/dest
->  ! [remote rejected] master -> master (n/a (unpacker error))
->
-> I've put the guilty files on my website and wrote a reproduction
-> script:
->
-> #!/bin/sh
->
-> rm -fr source dest
-> git init source
-> git init --bare dest
-> dest=$PWD/dest
-> cd source
-> echo foo > bar.txt
-> git add .
-> git commit -m init
-> git push ssh://localhost/$dest master
-> wget 'http://www-verimag.imag.fr/~moy/tmp/git-bug/Conception Manual.docx'
-> wget 'http://www-verimag.imag.fr/~moy/tmp/git-bug/Extreme Programming.doc'
-> git add .
-> git commit -m "bug"
-> git push ssh://localhost/$dest master
->
-> The full output is attached (the error message for the last push is
-> given above). The machine on which I get this (let's call it "A")
-> says :
->
-> $ ssh -Version
-> OpenSSH_4.3p2, OpenSSL 0.9.8e-fips-rhel5 01 Jul 2008
-> $ uname -a
-> Linux A 2.6.18-128.7.1.el5 #1 SMP Wed Aug 19 04:08:13 EDT 2009 ppc64 ppc64 ppc64 GNU/Linux
-> $ cat /etc/redhat-release                                                                                                                                           
-> Red Hat Enterprise Linux Server release 5.4 (Tikanga)
-> (it's a 32-bit distribution although the machine is 64bits)
-> $ git --version
-> git version 1.6.5.2
-> (compiled myself, "make test" passes)
->
-> According to my experiments, the problem is on the receiver side. If I
-> do the same as above, with source/ and dest/ directories on two
-> different machines, then if source/ in on A and dest/ anywhere else,
-> it works, and if dest/ is on machine A, I get the same error.
->
-> If I push using "file://" instead of "ssh://", then everything works
-> well.
->
-> If instead of push-ing, I go to dest/ and do a fetch, then it works
-> well too.
->
-> Does anyone have any idea on what's going on?
->
-> If anyone has a machine similar to mine (ppc64), can he/she run my
-> reproduction script and tell me if the bug happens?
->
-> Thanks a lot,
+ builtin-push.c        |   15 +++++++++++++++
+ t/t5516-fetch-push.sh |    6 ++++++
+ 2 files changed, 21 insertions(+), 0 deletions(-)
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/builtin-push.c b/builtin-push.c
+index 8631c06..4ae9166 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -15,6 +15,7 @@ static const char * const push_usage[] =3D {
+ };
+=20
+ static int thin;
++static int deleterefs;
+ static const char *receivepack;
+=20
+ static const char **refspec;
+@@ -44,6 +45,14 @@ static void set_refspecs(const char **refs, int nr)
+ 			strcat(tag, refs[i]);
+ 			ref =3D tag;
+ 		}
++		if (deleterefs && !strchr(ref, ':')) {
++			char *delref;
++			int len =3D strlen(refs[i] + 1);
++			delref =3D xmalloc(len);
++			strcpy(delref, ":");
++			strcat(delref, refs[i]);
++			ref =3D delref;
++		}
+ 		add_refspec(ref);
+ 	}
+ }
+@@ -181,6 +190,7 @@ int cmd_push(int argc, const char **argv, const cha=
+r *prefix)
+ 		OPT_BIT( 0 , "all", &flags, "push all refs", TRANSPORT_PUSH_ALL),
+ 		OPT_BIT( 0 , "mirror", &flags, "mirror all refs",
+ 			    (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE)),
++		OPT_BOOLEAN( 0, "delete", &deleterefs, "delete refs"),
+ 		OPT_BOOLEAN( 0 , "tags", &tags, "push tags (can't be used with --all=
+ or --mirror)"),
+ 		OPT_BIT('n' , "dry-run", &flags, "dry run", TRANSPORT_PUSH_DRY_RUN),
+ 		OPT_BIT( 0,  "porcelain", &flags, "machine-readable output", TRANSPO=
+RT_PUSH_PORCELAIN),
+@@ -193,6 +203,11 @@ int cmd_push(int argc, const char **argv, const ch=
+ar *prefix)
+=20
+ 	argc =3D parse_options(argc, argv, prefix, options, push_usage, 0);
+=20
++	if (deleterefs && (tags || (flags & (TRANSPORT_PUSH_ALL | TRANSPORT_P=
+USH_MIRROR))))
++		die("--delete is incompatible with --all, --mirror and --tags");
++	if (deleterefs && argc < 2)
++		die("--delete doesn't make sense without any refs");
++
+ 	if (tags)
+ 		add_refspec("refs/tags/*");
+=20
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 6889a53..aa1450a 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -546,6 +546,12 @@ test_expect_success 'allow deleting an invalid rem=
+ote ref' '
+=20
+ '
+=20
++test_expect_success 'allow deleting a ref using --delete' '
++	mk_test heads/master &&
++	git push testrepo --delete master &&
++	(cd testrepo && test_must_fail git rev-parse --verify refs/heads/mast=
+er)
++'
++
+ test_expect_success 'warn on push to HEAD of non-bare repository' '
+ 	mk_test heads/master
+ 	(cd testrepo &&
+--=20
+1.6.5.2.155.gbb47.dirty
