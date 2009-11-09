@@ -1,89 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 08/12] Allow helper to map private ref names into 
- normal names
-Date: Mon, 09 Nov 2009 12:32:44 -0800
-Message-ID: <7vk4xzsakz.fsf@alter.siamese.dyndns.org>
-References: <1257547966-14603-1-git-send-email-srabbelier@gmail.com>
- <1257547966-14603-5-git-send-email-srabbelier@gmail.com>
- <1257547966-14603-6-git-send-email-srabbelier@gmail.com>
- <1257547966-14603-7-git-send-email-srabbelier@gmail.com>
- <1257547966-14603-8-git-send-email-srabbelier@gmail.com>
- <1257547966-14603-9-git-send-email-srabbelier@gmail.com>
- <alpine.LNX.2.00.0911061755360.14365@iabervon.org>
- <fabb9a1e0911061519j6d64ff50v9b0cefe61965fbbc@mail.gmail.com>
- <fabb9a1e0911082242k5950d780i584a4714e384e007@mail.gmail.com>
- <7vhbt3y7fb.fsf@alter.siamese.dyndns.org>
- <fabb9a1e0911090910g4745325l842cdb91e4d9485c@mail.gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: Git drawbacks?
+Date: Tue, 10 Nov 2009 00:06:31 +0300
+Message-ID: <20091109210631.GJ27126@dpotapov.dyndns.org>
+References: <loom.20091106T160709-387@post.gmane.org> <32541b130911060849s2d8f13f5sb9b8390f075f8d15@mail.gmail.com> <loom.20091106T180313-750@post.gmane.org> <32541b130911060951q3358ce9ahe28fb0cf902853f2@mail.gmail.com> <alpine.DEB.2.00.0911061051540.3216@asgard.lang.hm> <loom.20091109T084539-720@post.gmane.org> <20091109154816.GH27126@dpotapov.dyndns.org> <loom.20091109T170054-451@post.gmane.org> <28c656e20911091047r353e9451hd856b99541fbd5ff@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johan Herland <johan@herland.net>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 09 21:33:09 2009
+Cc: B Smith-Mannschott <bsmith.occs@gmail.com>, git@vger.kernel.org
+To: Dmitry Smirnov <divis1969@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 09 22:06:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7avC-0001pO-72
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 21:33:06 +0100
+	id 1N7bRf-00009b-SO
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 22:06:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753948AbZKIUcz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2009 15:32:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753967AbZKIUcy
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 15:32:54 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47989 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753898AbZKIUcy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Nov 2009 15:32:54 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 595C99920F;
-	Mon,  9 Nov 2009 15:32:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9BsNIJ0ijHglo6QxnDrIEKs+FJY=; b=AIzMpH
-	eL1W85vfovJZp1xE+ndZzM6M4VDogRvm2uwqyNN0IfSKNIC8OI8v9M+yHLNvrPKQ
-	T4RXH4Qyb4RkrLx0ciAiMJuw+AaHYSks+OKttVD6aIXug7NyyQFavxvbIbyaRP8R
-	7Ji99Euxo82ij2XM1r7T3PBUWQJMQPp63jBW0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ht/JP18xAOXwuN5/CnaFlOlKNTJjf+Jt
-	ITj/KQpHNvOSPWfhcRJgcAfAFzgrIihpyHJXcRWzokkixd1BDZIcukiW7KIp/Jdx
-	RTfLhyILJv5FMVGOr3dNfEIPGpguJHmxgl699E6Tf6mdSsf/W1xpJ71A1f74PqV7
-	K6idAIJRnts=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 17E619920B;
-	Mon,  9 Nov 2009 15:32:54 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E32399920A; Mon,  9 Nov 2009
- 15:32:45 -0500 (EST)
-In-Reply-To: <fabb9a1e0911090910g4745325l842cdb91e4d9485c@mail.gmail.com>
- (Sverre Rabbelier's message of "Mon\, 9 Nov 2009 18\:10\:31 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0EC4E80E-CD6F-11DE-AB4A-BD45BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1754388AbZKIVG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2009 16:06:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754259AbZKIVG2
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 16:06:28 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:33375 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754149AbZKIVG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2009 16:06:27 -0500
+Received: by bwz27 with SMTP id 27so3928375bwz.21
+        for <git@vger.kernel.org>; Mon, 09 Nov 2009 13:06:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=onEQWwJEfK1ObjBmMs1Dq2K2l4u3kv5s6otNkrZHg64=;
+        b=wLvOrToy3gbcUAXl0kQoKIuPlwveV8RJVIS4PSYHobHlurQbEywWcza7yPRgBgYU0X
+         qgQaBi53hO8xPyhxLJA1m21RQBLuLOtLFdVsmcUrRgnxcuoXMkGtUqXv64GJ8hZXA86H
+         QjrzLPD8L0btmBQjzm/Ws9fwrr36bJSnXJRi8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=cVN0qNOD6h0PVFm16DPb+O/obeoy8VeLnvXGBK/Vm9wXeargdn0FZG90jcxuEikA07
+         3VHaxN/IPaIPNF2sGWsS4GBAIrvFcfUUxAfbG9oJGxdrBfy6vsVdGwDGcvEMlISaM011
+         dzHzW5lE9hkPOblcIH4FpmoV1ADG3qHWhPMgM=
+Received: by 10.103.80.25 with SMTP id h25mr3302493mul.15.1257800792234;
+        Mon, 09 Nov 2009 13:06:32 -0800 (PST)
+Received: from localhost ([91.78.51.65])
+        by mx.google.com with ESMTPS id 23sm227519mun.1.2009.11.09.13.06.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 09 Nov 2009 13:06:31 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <28c656e20911091047r353e9451hd856b99541fbd5ff@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132522>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+On Mon, Nov 09, 2009 at 07:47:08PM +0100, B Smith-Mannschott wrote:
+> 
+> You don't have to wait to comitting to your own branches, but do make
+> sure to run your usual builds and tests before pushing or asking
+> another to pull changes from you.
 
-> Heya,
->
-> On Mon, Nov 9, 2009 at 17:44, Junio C Hamano <gitster@pobox.com> wrote:
->> Sverre Rabbelier <srabbelier@gmail.com> writes:
->>> It's in next now, so please send follow-ups against sr/vcs-helper.
->>
->> Do you mean 'pu' or 'next'?
->
-> Sorry, my hands did not type what my mind intended, I meant to say
-> 'pu', apologies!
+Yes, it is one most useful feature of Git that you can commit (save)
+your changes immediately but amend them later. This helps a lot to
+make changes smaller, cleaner and easier to review.
 
-Fine---mistakes happen; it made me worried for a while.
+With many other VCS, a typical policy is that you do not commit your
+changes unless you have finished and tested them. But it means that
+your changes are not committed and stored only in the work tree for
+a long time. Moreover, when you eventually decide that they are good
+enough to commit, you will produce a huge patch, which will be difficult
+to review or to bisect history later.
 
-So either follow-up, squash-in or replacement would be fine.
- 
+With Git you do not have to worry about testing when you can commit your
+changes. Typically I would commit some my changes as I progress to my
+goal, but later I will review all commits. Probably, squash some changes
+with fixes, clean up some other, add better explanations of what is done
+and why, etc... But I do not have to worry about all those trifles as
+I write code to see if some feature is worth or not, if this solution
+works or I should try something else...
+
+So, you can always commit your changes as your progress to your goal and
+review amend them later before publishing. This means that you can have
+as many work-in-progress branches as you wish, and you do not need a
+separate work tree for each of them -- everything can be stored in the
+repository, and you can go to another computer, issue 'git fetch' and
+continue your work at the exact point where you left it. So, it is very
+flexible.
+
+
+Dmitry
