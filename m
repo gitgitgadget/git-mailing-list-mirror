@@ -1,120 +1,92 @@
-From: "Philippe Bruhat (BooK)" <book@cpan.org>
-Subject: [PATCH] Define $PERL_PATH in test-lib.sh
-Date: Tue, 10 Nov 2009 11:46:51 +0100
-Message-ID: <1257850011-7544-1-git-send-email-book@cpan.org>
-Cc: "Philippe Bruhat (BooK)" <book@cpan.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 10 12:11:42 2009
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Define $PERL_PATH in test-lib.sh
+Date: Tue, 10 Nov 2009 07:23:15 -0500
+Message-ID: <20091110122315.GA15906@coredump.intra.peff.net>
+References: <1257850011-7544-1-git-send-email-book@cpan.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Philippe Bruhat (BooK)" <book@cpan.org>
+X-From: git-owner@vger.kernel.org Tue Nov 10 13:23:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7odP-0007oJ-UJ
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Nov 2009 12:11:40 +0100
+	id 1N7pl4-0006EB-OH
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Nov 2009 13:23:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753319AbZKJLL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2009 06:11:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753249AbZKJLL1
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Nov 2009 06:11:27 -0500
-Received: from mail-out3.booking.com ([91.195.237.20]:33646 "EHLO
-	mail-out3.booking.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751386AbZKJLL0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Nov 2009 06:11:26 -0500
-X-Greylist: delayed 1480 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Nov 2009 06:11:26 EST
-Received: from corpds-102.ams4.corp.booking.com ([10.196.68.83])
-	by mtx-101.ams4.prod.booking.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1N7oFP-0003o9-Ao; Tue, 10 Nov 2009 11:46:51 +0100
-Received: from ams4-mail-03.ams4.corp.booking.com ([10.196.68.31])
-	by corpds-102.ams4.corp.booking.com with esmtp (Exim 4.69)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1N7oFP-000074-9E; Tue, 10 Nov 2009 11:46:51 +0100
-Received: from plop (bkbastion-01.corp.lhr1.booking.com [10.146.90.100])
-	by ams4-mail-03.ams4.corp.booking.com (Postfix) with ESMTP id 23D76EF80B9;
-	Tue, 10 Nov 2009 11:46:51 +0100 (CET)
-Received: from book by plop with local (Exim 4.69)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1N7oFP-0001y9-6K; Tue, 10 Nov 2009 11:46:51 +0100
-X-Mailer: git-send-email 1.6.0.3.517.g759a
+	id S1752940AbZKJMX0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2009 07:23:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751838AbZKJMX0
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Nov 2009 07:23:26 -0500
+Received: from peff.net ([208.65.91.99]:47614 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751386AbZKJMXZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Nov 2009 07:23:25 -0500
+Received: (qmail 5666 invoked by uid 107); 10 Nov 2009 12:27:14 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 10 Nov 2009 07:27:14 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Nov 2009 07:23:15 -0500
+Content-Disposition: inline
+In-Reply-To: <1257850011-7544-1-git-send-email-book@cpan.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132561>
 
-The main Makefile defines PERL_PATH as the perl to use in the shebang
-line of git*.perl commands. This ensures this will be the perl used
-to run the tests (in case another perl appears in $PATH before the one
-defined in $PERL_PATH)
+On Tue, Nov 10, 2009 at 11:46:51AM +0100, Philippe Bruhat (BooK) wrote:
 
-Signed-off-by: Philippe Bruhat (BooK) <book@cpan.org>
----
- t/t9400-git-cvsserver-server.sh |    2 +-
- t/t9401-git-cvsserver-crlf.sh   |    2 +-
- t/t9700-perl-git.sh             |    4 ++--
- t/test-lib.sh                   |    2 ++
- 4 files changed, 6 insertions(+), 4 deletions(-)
+> The main Makefile defines PERL_PATH as the perl to use in the shebang
+> line of git*.perl commands. This ensures this will be the perl used
+> to run the tests (in case another perl appears in $PATH before the one
+> defined in $PERL_PATH)
 
-diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
-index 64f947d..dc710f8 100755
---- a/t/t9400-git-cvsserver-server.sh
-+++ b/t/t9400-git-cvsserver-server.sh
-@@ -20,7 +20,7 @@ then
-     say 'skipping git-cvsserver tests, cvs not found'
-     test_done
- fi
--perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
-+$PERL_PATH -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
-     say 'skipping git-cvsserver tests, Perl SQLite interface unavailable'
-     test_done
- }
-diff --git a/t/t9401-git-cvsserver-crlf.sh b/t/t9401-git-cvsserver-crlf.sh
-index aca40c1..c9e3dba 100755
---- a/t/t9401-git-cvsserver-crlf.sh
-+++ b/t/t9401-git-cvsserver-crlf.sh
-@@ -57,7 +57,7 @@ then
-     say 'skipping git-cvsserver tests, perl not available'
-     test_done
- fi
--perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
-+$PERL_PATH -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
-     say 'skipping git-cvsserver tests, Perl SQLite interface unavailable'
-     test_done
- }
-diff --git a/t/t9700-perl-git.sh b/t/t9700-perl-git.sh
-index 4eb7d3f..3354e18 100755
---- a/t/t9700-perl-git.sh
-+++ b/t/t9700-perl-git.sh
-@@ -11,7 +11,7 @@ if ! test_have_prereq PERL; then
- 	test_done
- fi
- 
--perl -MTest::More -e 0 2>/dev/null || {
-+$PERL_PATH -MTest::More -e 0 2>/dev/null || {
- 	say "Perl Test::More unavailable, skipping test"
- 	test_done
- }
-@@ -48,6 +48,6 @@ test_expect_success \
- 
- test_external_without_stderr \
-     'Perl API' \
--    perl "$TEST_DIRECTORY"/t9700/test.pl
-+    $PERL_PATH "$TEST_DIRECTORY"/t9700/test.pl
- 
- test_done
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index f2ca536..54dd4d5 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -730,6 +730,8 @@ esac
- 
- test -z "$NO_PERL" && test_set_prereq PERL
- 
-+test -z "$NO_PERL" && test -z "$PERL_PATH" && export PERL_PATH=/usr/bin/perl
-+
- # test whether the filesystem supports symbolic links
- ln -s x y 2>/dev/null && test -h y 2>/dev/null && test_set_prereq SYMLINKS
- rm -f y
--- 
-1.6.0.3.517.g759a
+I think this "the perl used to run the tests" needs to be clarified in
+the commit message.  There are really three ways we use perl in the
+tests:
+
+  1. To run to the git-* scripts themselves.
+
+  2. To run a test snippet of perl as if we were a git-* script.
+
+  3. To run random perl helper functions.
+
+We already use PERL_PATH for (1). I don't think there is much point in
+worrying about (3). If the perl in your PATH is so broken that it can't
+be used for simple helpers, then you should fix your PATH.
+
+Your patch seems to just fix (2), which I think is sane. But I wanted to
+note it, because when I read your commit message, I wasn't sure which
+you were doing.
+
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -730,6 +730,8 @@ esac
+>  
+>  test -z "$NO_PERL" && test_set_prereq PERL
+>  
+> +test -z "$NO_PERL" && test -z "$PERL_PATH" && export PERL_PATH=/usr/bin/perl
+> +
+>  # test whether the filesystem supports symbolic links
+>  ln -s x y 2>/dev/null && test -h y 2>/dev/null && test_set_prereq SYMLINKS
+>  rm -f y
+
+Will this work if I just have PERL_PATH in my config.mak in the root
+directory? Should we be adding PERL_PATH to the generated
+GIT-BUILD-OPTIONS file in the root, which gets sourced by test-lib?
+
+Something like the following (completely untested) patch?
+
+diff --git a/Makefile b/Makefile
+index a10a60c..b9a8145 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1643,6 +1643,7 @@ GIT-CFLAGS: .FORCE-GIT-CFLAGS
+ # and the first level quoting from the shell that runs "echo".
+ GIT-BUILD-OPTIONS: .FORCE-GIT-BUILD-OPTIONS
+ 	@echo SHELL_PATH=\''$(subst ','\'',$(SHELL_PATH_SQ))'\' >$@
++	@echo PERL_PATH=\''$(subst ','\'',$(PERL_PATH_SQ))'\' >$@
+ 	@echo TAR=\''$(subst ','\'',$(subst ','\'',$(TAR)))'\' >>$@
+ 	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@
+ 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@
