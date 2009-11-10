@@ -1,67 +1,80 @@
-From: Peter Zijlstra <peterz@infradead.org>
-Subject: Re: [RFC, PATCH] git send-email: Make --no-chain-reply-to the
- default
-Date: Tue, 10 Nov 2009 08:32:32 +0100
-Message-ID: <1257838352.21088.5.camel@twins>
-References: <1257786206-9208-1-git-send-email-mitake@dcl.info.waseda.ac.jp>
-	 <1257789555.4108.348.camel@laptop>  <20091110040847.GC29454@elte.hu>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: [PATCH v2 0/4] perf bench: Common option for specifying style
+ formatting
+Date: Tue, 10 Nov 2009 09:01:35 +0100
+Message-ID: <20091110080135.GA32322@elte.hu>
+References: <1257808802-9420-1-git-send-email-mitake@dcl.info.waseda.ac.jp>
+ <20091110035812.GB29454@elte.hu>
+ <20091110.165102.386189748263321818.mitake@dcl.info.waseda.ac.jp>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Tue Nov 10 08:31:41 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: linux-kernel@vger.kernel.org, a.p.zijlstra@chello.nl,
+	paulus@samba.org
+To: Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp>, git@vger.kernel.org
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1753346AbZKJIBm@vger.kernel.org Tue Nov 10 09:02:10 2009
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1753346AbZKJIBm@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7lCW-0000ol-V1
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Nov 2009 08:31:41 +0100
+	id 1N7lg1-0002v6-9h
+	for glk-linux-kernel-3@lo.gmane.org; Tue, 10 Nov 2009 09:02:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751516AbZKJHb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2009 02:31:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459AbZKJHb3
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Nov 2009 02:31:29 -0500
-Received: from bombadil.infradead.org ([18.85.46.34]:41382 "EHLO
-	bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751431AbZKJHb3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Nov 2009 02:31:29 -0500
-Received: from e53227.upc-e.chello.nl ([213.93.53.227] helo=twins)
-	by bombadil.infradead.org with esmtpsa (Exim 4.69 #1 (Red Hat Linux))
-	id 1N7lCO-0007Tc-2D; Tue, 10 Nov 2009 07:31:32 +0000
-Received: by twins (Postfix, from userid 1000)
-	id 32EE818002432; Tue, 10 Nov 2009 08:32:33 +0100 (CET)
-In-Reply-To: <20091110040847.GC29454@elte.hu>
-X-Mailer: Evolution 2.26.1 
-Sender: git-owner@vger.kernel.org
+	id S1753346AbZKJIBm (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 10 Nov 2009 03:01:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752827AbZKJIBm
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Tue, 10 Nov 2009 03:01:42 -0500
+Received: from mx2.mail.elte.hu ([157.181.151.9]:48915 "EHLO mx2.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753036AbZKJIBl (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 10 Nov 2009 03:01:41 -0500
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1N7lfV-0003oQ-KN
+	from <mingo@elte.hu>; Tue, 10 Nov 2009 09:01:42 +0100
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 718FD3E22E0; Tue, 10 Nov 2009 09:01:36 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20091110.165102.386189748263321818.mitake@dcl.info.waseda.ac.jp>
+User-Agent: Mutt/1.5.20 (2009-08-17)
+Received-SPF: neutral (mx2.mail.elte.hu: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-SpamScore: 0.0
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=0.0 required=5.9 tests=none autolearn=no SpamAssassin version=3.2.5
+	_SUMMARY_
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132542>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132543>
 
-On Tue, 2009-11-10 at 05:08 +0100, Ingo Molnar wrote:
-> (moved from lkml to the Git list)
-> 
-> * Peter Zijlstra <peterz@infradead.org> wrote:
-> 
-> > >                            Mailer: 
-> > > git-send-email 1.6.5.2
-> > 
-> > Please teach your git-send-email thing to use --no-chain-reply-to.
-> 
-> about half of every patch series that gets sent to me on lkml is 
-> unreadable in my email client due to the default threading that 
-> git-send-email does. It looks like this:
-> 
-> 28685 r T Nov 05 Hitoshi Mitake  (  31) [PATCH v5 0/7] Adding general performance benchmarki
-> 28686   T Nov 05 Hitoshi Mitake  (  31) +->[PATCH v5 1/7] Adding new directory and header fo
-> 28687   T Nov 05 Hitoshi Mitake  ( 368) | +->[PATCH v5 2/7] sched-messaging.c: benchmark for
-> 28688   T Nov 05 Hitoshi Mitake  ( 148) | | +->[PATCH v5 3/7] sched-pipe.c: benchmark for pi
-> 28689   T Nov 05 Hitoshi Mitake  ( 149) | | | +->[PATCH v5 4/7] builtin-bench.c: General fra
-> 28690   T Nov 05 Hitoshi Mitake  (  24) | | | | +->[PATCH v5 5/7] Modifying builtin.h for ne
-> 28691   T Nov 05 Hitoshi Mitake  (  25) | | | | | +->[PATCH v5 6/7] Modyfing perf.c for subc
-> 28692   T Nov 05 Hitoshi Mitake  (  30) | | | | | | +->[PATCH v5 7/7] Modyfing Makefile to b
 
-Do what I do and flame the sender and have them repost.
+* Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp> wrote:
 
-I simply won't even attempt to read crap send like that.
+> And I have a question.
+> In tools/perf/command-list.txt, there is the word "mainporcelain".
+> What does this mean?
+
+tools/perf/ inherited the command-list.txt code from the Git project:
+
+  git://git.kernel.org/pub/scm/git/git.git
+
+in Git talk, 'porcelain' is the pretty stuff humans use. 'plumbing' is 
+the lowlevel stuff humans dont get to see.
+
+'mainporcelain' are the major commands you get listed when you type 
+'perf' (or 'git').
+
+( i've Cc:-ed the Git list as i never saw any real formal definition for
+  this anywhere, maybe i got this wrong :-)
+
+> Of course I searched this word on my dictionary, but cannot got an answer.
+> I'm preparing the initial document for perf-bench.
+> Can I add perf-bench with mainporcelain to command-list.txt?
+
+yeah, i'd suggest to do that - that will make 'perf bench' show up in 
+'perf' output.
+
+	Ingo
