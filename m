@@ -1,90 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC, PATCH] git send-email: Make --no-chain-reply-to the
- default
-Date: Mon, 09 Nov 2009 22:05:01 -0800
-Message-ID: <7vpr7qgbjm.fsf@alter.siamese.dyndns.org>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: [RFC, PATCH] git send-email: Make --no-chain-reply-to the default
+Date: Tue, 10 Nov 2009 08:19:27 +0100
+Message-ID: <20091110071927.GB11942@elte.hu>
 References: <1257786206-9208-1-git-send-email-mitake@dcl.info.waseda.ac.jp>
- <1257789555.4108.348.camel@laptop> <20091110040847.GC29454@elte.hu>
- <76718490911092112v4d1e7761ue98def756ed0d93b@mail.gmail.com>
- <20091110052211.GK7897@elte.hu>
+ <1257789555.4108.348.camel@laptop>
+ <20091110040847.GC29454@elte.hu>
+ <7v4op3gd6f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>, git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Tue Nov 10 07:05:35 2009
+Cc: Peter Zijlstra <peterz@infradead.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 10 08:19:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7jr7-00073f-PO
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Nov 2009 07:05:30 +0100
+	id 1N7l0y-0005EY-6i
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Nov 2009 08:19:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750999AbZKJGFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2009 01:05:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750935AbZKJGFI
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Nov 2009 01:05:08 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35188 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750934AbZKJGFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Nov 2009 01:05:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F4027A91B;
-	Tue, 10 Nov 2009 01:05:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IZzD13LZfaPqs67uBr8e2UdBPpo=; b=hSJQq8
-	nZC6NLdHbdNEKoWeFtNRVIewC8xUsACNCX7DG8lRJ9YjVZ0aaApRCEMtMwO98GUf
-	kLkREn0XVTJIaL5jXosKVAxB2KugdmGlrKeVRZ+Ibl6RpWzIwW83sgHR9jZwYXUQ
-	8SoM6/D8W7xxDMcT6Zczd8Xmr6t0sfM/G6E3E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J09k/bc6NXtFFo/iYZoawhS7xhKkpBN1
-	KezFwkbPrviGQkUkAJh5LujoHC+vpg7jcP8Y0AEQuQsVVPQEDj/QIciX7yedIks7
-	2giBNllvYxuoCxZuFI1ikl04Jdj5nBayQGiP1b+J4dJYpdGYUOCbfHA9gK51G17v
-	Hf02EbFcHwI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D86D97A91A;
-	Tue, 10 Nov 2009 01:05:07 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB4F97A919; Tue, 10 Nov
- 2009 01:05:02 -0500 (EST)
-In-Reply-To: <20091110052211.GK7897@elte.hu> (Ingo Molnar's message of "Tue\,
- 10 Nov 2009 06\:22\:11 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FF4E8880-CDBE-11DE-878F-7B3EEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751424AbZKJHTa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2009 02:19:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751265AbZKJHT3
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Nov 2009 02:19:29 -0500
+Received: from mx3.mail.elte.hu ([157.181.1.138]:36391 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751034AbZKJHT3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Nov 2009 02:19:29 -0500
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1N7l0m-00069g-2b
+	from <mingo@elte.hu>; Tue, 10 Nov 2009 08:19:32 +0100
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 78B543E22F5; Tue, 10 Nov 2009 08:19:23 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7v4op3gd6f.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-08-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.5
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132541>
 
-Ingo Molnar <mingo@elte.hu> writes:
 
-> +1 for putting it into a .1.6.x stable branch too. (Unless there's a 
-> case where the recursive threading is actually useful and is being 
-> relied on.)
+* Junio C Hamano <gitster@pobox.com> wrote:
 
-As I wrote in the LKML message when that patch was made (please see my
-other message for the URL to the archive), my assessment of this issue is
-that it would have been the right thing to do if we were doing this now
-without any existing users, but nobody really cares deeply enough either
-way to warrant fast tracking the schedule we promised back in August.
+> [Footnote]
+> 
+> *1* To spell it out...  The people who are in the "hate chain-reply-to 
+> very much" camp would have already done their own configuration to get 
+> the behaviour they want by now, so changing the default would not help 
+> them much, while potentially hurting "love chain-reply-to" people who 
+> have been content because they got what they wanted without setting 
+> any configuration.
 
-It would take a bit stronger nudging than "unless there is a case against
-changing the default because it is being relied on", as I know that people
-who rely on would not speak up for a long time.  We already saw that it
-took 6 month between Feb 2009 to Aug 2009 for people who wanted to change
-the default to notice and complain that the change they were promised did
-not happen ;-).
+Stupid question: i researched the Git mailing list archive (and read the 
+link you provided) and found no arguments (at all) in favor of the 
+nested chaining. Are you aware of any?
 
-Some people will complain when we switch the default to no-chain-reply-to
-in the 1.7.0 release.  I am willing to take flak from them and defend the
-change.
+And i dont 'hate' it - i am just the one suffering from it as a 
+maintainer. _I_ can certainly fix my scripts as you suggest above, but 
+that is not my problem: my problem are the many people sending 
+first-time Git based patch series to me (and there's quite a few of 
+them) always, in every single case, get it wrong.
 
-But I am not convinced that this deserves to be fast-tracked to the 1.6.x
-series.  We gave them until 1.7.0 and I have no good answer to "why didn't
-you wait as you promised?"  I'd rather avoid telling them that "that is
-how kernel people wanted it, and sorry, their wish trumps yours." if I
-can.
+The ones not using Git (using Quilt for example) and sending me series 
+get it right in pretty much every case.
+
+So i can see it when developers start using Git to submit patches - in 
+each and every case - the discussion threading is all messed up ;-)
+
+These people dont 'do their own configuration' - they are mostly newbies 
+or developrs new to Git workflows. And the first reaction they get from 
+their upstream maintainer counterpart is some grumbling about the 
+threading. Not good, me thinks ;-)
+
+	Ingo
