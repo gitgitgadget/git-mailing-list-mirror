@@ -1,65 +1,71 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: Git drawbacks?
-Date: Tue, 10 Nov 2009 17:20:43 +0100
-Message-ID: <hdc3ss$nnr$1@ger.gmane.org>
-References: <32541b130911060849s2d8f13f5sb9b8390f075f8d15@mail.gmail.com> <loom.20091106T180313-750@post.gmane.org> <32541b130911060951q3358ce9ahe28fb0cf902853f2@mail.gmail.com> <alpine.DEB.2.00.0911061051540.3216@asgard.lang.hm> <loom.20091109T084539-720@post.gmane.org> <20091109154816.GH27126@dpotapov.dyndns.org> <loom.20091109T170054-451@post.gmane.org> <28c656e20911091047r353e9451hd856b99541fbd5ff@mail.gmail.com> <20091109210631.GJ27126@dpotapov.dyndns.org> <loom.20091110T093334-810@post.gmane.org> <20091110140428.GL27126@dpotapov.dyndns.org> <loom.20091110T154312-665@post.gmane.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: git replace woes: dirty stat with clean workdir
+Date: Tue, 10 Nov 2009 17:21:12 +0100
+Message-ID: <4AF992F8.8010309@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 10 17:21:24 2009
+Cc: Christian Couder <chriscool@tuxfamily.org>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 10 17:21:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7tT9-0001ZD-7b
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Nov 2009 17:21:23 +0100
+	id 1N7tTK-0001e6-8Y
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Nov 2009 17:21:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756871AbZKJQVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2009 11:21:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756835AbZKJQVM
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Nov 2009 11:21:12 -0500
-Received: from lo.gmane.org ([80.91.229.12]:47747 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756833AbZKJQVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Nov 2009 11:21:11 -0500
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1N7tSu-0001RK-Dy
-	for git@vger.kernel.org; Tue, 10 Nov 2009 17:21:08 +0100
-Received: from 93-34-221-20.ip51.fastwebnet.it ([93.34.221.20])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 10 Nov 2009 17:21:08 +0100
-Received: from bonzini by 93-34-221-20.ip51.fastwebnet.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 10 Nov 2009 17:21:08 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 93-34-221-20.ip51.fastwebnet.it
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.4pre) Gecko/20091014 Fedora/3.0-2.8.b4.fc11 Lightning/1.0pre Thunderbird/3.0b4
-In-Reply-To: <loom.20091110T154312-665@post.gmane.org>
+	id S1756876AbZKJQVR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2009 11:21:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756858AbZKJQVR
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Nov 2009 11:21:17 -0500
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:46800 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756835AbZKJQVQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Nov 2009 11:21:16 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id DD047BED24;
+	Tue, 10 Nov 2009 11:21:21 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 10 Nov 2009 11:21:21 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:content-type:content-transfer-encoding; s=smtpout; bh=MF58EehFmEPWAFjx0KT93duszVQ=; b=YW0A97shuzmUD46RJskvGsTLFA/3uBylxzsMKDD76o4Wk2OKJf4xeAY+r5qTIDgOfBP4+rAO+8VIosMUaIAg9Q3OeLZiUKm5FywYPSnntR8V5WEUIGSiZExQTBXPqJQCXZOHlcr24eoGxR51snkjzSsuupPYYe8DhR4zlp22B5A=
+X-Sasl-enc: NEvU+OHoGNk3mPhi5q7wJhJb6YIPTajdb9xooIp6Oziv 1257870080
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5011F4AAF95;
+	Tue, 10 Nov 2009 11:21:20 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091110 Lightning/1.0pre Shredder/3.0pre
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132576>
 
-On 11/10/2009 03:54 PM, Dmitry Smirnov wrote:
-> This is a cool feature, but it contradicts to my understanding of VCS.
+Hi there,
 
-Not really.  As long as the history is not public, nobody will notice.
+when cooking up a "warning example" for git replace (don't draw
+premature conclusions when there are replaced objects) I came across the
+following problem: git status seems to compare the work dir with the
+tree of HEAD, not the replacing tree. Even deleting the index does not help.
 
-It is basically the same as using a centralized svn repository 
-(corresponding to public branches) and quilt for private patch queues. 
-You can push and pop patches as much as you want in quilt, and you can 
-rewrite history as much as you want in git private branches.
+[ The example also shows that we need a way to specify
+--no-replace-objects for gitk. Would easier if gitk really where git
+something. ]
 
-Now I'm not very proficient with quilt, but if I understood it right, 
-git is much easier to do because you use only one tool and thus you can 
-rely on the same algorithms for merging and conflict reporting also in 
-the case of private branches.  I've certainly done some insane 
-reordering of patches and it worked like a charm; also, git keeps a log 
-of the states so it takes a single "git diff" invocation to check that 
-the end result of a reorganization is the same as what you started from.
+Michael
 
-Paolo
+#!/bin/sh
+rm -Rf rtest &&
+mkdir rtest &&
+cd rtest &&
+git init &&
+echo > comment &&
+git add comment &&
+git commit -m "empty comment" &&
+echo nice > "comment" &&
+git commit -am "nice comment" &&
+echo ugly > "comment" &&
+git commit -am "to be discarded" &&
+git replace HEAD^^{tree} HEAD^{tree} &&
+git reset --hard HEAD^ &&
+git log -p &&
+git st
