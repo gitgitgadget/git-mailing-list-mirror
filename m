@@ -1,76 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 4/4] Add explicit Cygwin check to guard WIN32 header
- inclusion
-Date: Mon, 09 Nov 2009 14:25:09 -0800
-Message-ID: <7vd43rpc8q.fsf@alter.siamese.dyndns.org>
-References: <4AF86E0C.4080001@ramsay1.demon.co.uk>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: [RFC, PATCH] git send-email: Make --no-chain-reply-to the default
+Date: Tue, 10 Nov 2009 05:08:47 +0100
+Message-ID: <20091110040847.GC29454@elte.hu>
+References: <1257786206-9208-1-git-send-email-mitake@dcl.info.waseda.ac.jp>
+ <1257789555.4108.348.camel@laptop>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marius Storm-Olsen <mstormo@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Mon Nov 09 23:25:31 2009
+To: Peter Zijlstra <peterz@infradead.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 10 05:09:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7cfy-0002LQ-ID
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Nov 2009 23:25:30 +0100
+	id 1N7i2R-0006Of-JN
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Nov 2009 05:09:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754316AbZKIWZR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2009 17:25:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754240AbZKIWZQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 17:25:16 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54670 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754134AbZKIWZP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Nov 2009 17:25:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F41E17AEE9;
-	Mon,  9 Nov 2009 17:25:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WxyqAoE95c94JliMeD6fF1l3qls=; b=v1vKHz
-	10Qi+Utx3s6EL/wBaTZqI6PeEgNH/Rji6HXN7EnJk9a4Y4282f+I1V/VdTJk0zyc
-	Zu8XU5mL3PPeeybF+PHHMImycVZqbHKdJltdiS1zuDP17ufG6Q4UN9AwXsNolQqV
-	ZWbBM1UuoK/yGvo4tDyj+6LWeT0+bsICUv/Fc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=K8BasrRL/NcTxaBkhv0GFhVr2WdylkCt
-	THpzL5Wbfv/oaNYiEjscWUiITsPYiWcQT3q0BMbRR+YGmUgR6PdmYi9sbZpNUvco
-	ZBDihQBq6ar5cBg5tKqHcAIBhoL0msnF3uw//Nw+vQacPBYEfd9hTzl6udIRWq0I
-	JjCJGgUK92g=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B4CEE7AEE2;
-	Mon,  9 Nov 2009 17:25:16 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF5BA7AEDB; Mon,  9 Nov
- 2009 17:25:11 -0500 (EST)
-In-Reply-To: <4AF86E0C.4080001@ramsay1.demon.co.uk> (Ramsay Jones's message
- of "Mon\, 09 Nov 2009 19\:31\:24 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C1B4E130-CD7E-11DE-AF9A-7B3EEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755444AbZKJEIu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2009 23:08:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755329AbZKJEIt
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Nov 2009 23:08:49 -0500
+Received: from mx3.mail.elte.hu ([157.181.1.138]:55073 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752976AbZKJEIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2009 23:08:49 -0500
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1N7i2G-0002cR-76
+	from <mingo@elte.hu>; Tue, 10 Nov 2009 05:08:52 +0100
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 2D6CE3E22F5; Tue, 10 Nov 2009 05:08:44 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <1257789555.4108.348.camel@laptop>
+User-Agent: Mutt/1.5.20 (2009-08-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.5
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132526>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-> Changes since v2:
->     - removed indentation from the #if-#endif block
->
-> I hope you don't mind, but I've only sent this patch, rather than
-> re-send the whole series. If you would like a complete re-send, just
-> let me know.
+(moved from lkml to the Git list)
 
-No, I don't mind "replace only this one out of the four-patch series" at
-all as long as what's being replaced is marked clearly enough (which you
-did in this case).
+* Peter Zijlstra <peterz@infradead.org> wrote:
 
-But I thought J6t had problems with what this particular patch does, not
-how the patch was indented?  So I'd wait for more comments and hopefully
-an Ack from him before touching this one.
+> >                            Mailer: 
+> > git-send-email 1.6.5.2
+> 
+> Please teach your git-send-email thing to use --no-chain-reply-to.
+
+about half of every patch series that gets sent to me on lkml is 
+unreadable in my email client due to the default threading that 
+git-send-email does. It looks like this:
+
+28685 r T Nov 05 Hitoshi Mitake  (  31) [PATCH v5 0/7] Adding general performance benchmarki
+28686   T Nov 05 Hitoshi Mitake  (  31) +->[PATCH v5 1/7] Adding new directory and header fo
+28687   T Nov 05 Hitoshi Mitake  ( 368) | +->[PATCH v5 2/7] sched-messaging.c: benchmark for
+28688   T Nov 05 Hitoshi Mitake  ( 148) | | +->[PATCH v5 3/7] sched-pipe.c: benchmark for pi
+28689   T Nov 05 Hitoshi Mitake  ( 149) | | | +->[PATCH v5 4/7] builtin-bench.c: General fra
+28690   T Nov 05 Hitoshi Mitake  (  24) | | | | +->[PATCH v5 5/7] Modifying builtin.h for ne
+28691   T Nov 05 Hitoshi Mitake  (  25) | | | | | +->[PATCH v5 6/7] Modyfing perf.c for subc
+28692   T Nov 05 Hitoshi Mitake  (  30) | | | | | | +->[PATCH v5 7/7] Modyfing Makefile to b
+
+and with 10 or more patches it's an absolute pain as threading depth 
+increases. Furthermore, the subject lines are not aligned vertically, 
+making it very hard to see the general shortlog-alike structure of the 
+series, at a glance. Plus i dont even _see_ the title over a certain 
+depth, as i run out of screen real estate.
+
+So ... the question would be ... could git-send-email flip its default 
+please, via the patch below? Am i missing something subtle about why 
+this default was chosen?
+
+	Ingo
+
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index a0279de..ff00940 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -188,7 +188,7 @@ my (@suppress_cc);
+ 
+ my %config_bool_settings = (
+     "thread" => [\$thread, 1],
+-    "chainreplyto" => [\$chain_reply_to, 1],
++    "chainreplyto" => [\$chain_reply_to, 0],
+     "suppressfrom" => [\$suppress_from, undef],
+     "signedoffbycc" => [\$signed_off_by_cc, undef],
+     "signedoffcc" => [\$signed_off_by_cc, undef],      # Deprecated
