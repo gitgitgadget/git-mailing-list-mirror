@@ -1,67 +1,70 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 20/24] http-fetch: add missing initialization of argv0_path
-Date: Tue, 10 Nov 2009 22:56:08 +0100
-Message-ID: <200911102256.08627.j6t@kdbg.org>
-References: <20091109150235.GA23871@progeny.tock> <1257779104-23884-20-git-send-email-jrnieder@gmail.com> <7vpr7q6sw8.fsf@alter.siamese.dyndns.org>
+From: Pascal Obry <pascal@obry.net>
+Subject: git-svn problem with v1.6.5
+Date: Tue, 10 Nov 2009 23:23:58 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <4AF9E7FE.3060701@obry.net>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 10 22:56:34 2009
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 10 23:24:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7yhQ-0007Ko-VY
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Nov 2009 22:56:29 +0100
+	id 1N7z8G-00033d-4L
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Nov 2009 23:24:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758449AbZKJV4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2009 16:56:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758440AbZKJV4I
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Nov 2009 16:56:08 -0500
-Received: from [93.83.142.38] ([93.83.142.38]:61183 "EHLO dx.sixt.local"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1758426AbZKJV4H (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Nov 2009 16:56:07 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id B32D419F5EA;
-	Tue, 10 Nov 2009 22:56:08 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <7vpr7q6sw8.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1757510AbZKJWXm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2009 17:23:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757384AbZKJWXm
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Nov 2009 17:23:42 -0500
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:38135 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754373AbZKJWXl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Nov 2009 17:23:41 -0500
+Received: by ewy3 with SMTP id 3so567382ewy.37
+        for <git@vger.kernel.org>; Tue, 10 Nov 2009 14:23:46 -0800 (PST)
+Received: by 10.213.2.73 with SMTP id 9mr779119ebi.21.1257891825655;
+        Tue, 10 Nov 2009 14:23:45 -0800 (PST)
+Received: from ?192.168.0.100? (AVelizy-154-1-81-24.w86-205.abo.wanadoo.fr [86.205.111.24])
+        by mx.google.com with ESMTPS id 28sm2710558eyg.6.2009.11.10.14.23.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 10 Nov 2009 14:23:45 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132601>
 
-On Dienstag, 10. November 2009, Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> > Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> > ---
->
-> Why do you have inclusion of "exec_cmd.h" in [19/24]?  As far as I can
-> tell, nothing you do in that patch depends on it.
->
-> According to c6dfb39 (remote-curl: add missing initialization of
-> argv0_path, 2009-10-13), this patch is necessary (and you must include
-> "exec_cmd.h") on MinGW, regardless of the "give help upon -h" topic.
->
-> I think this should be ejected from your series go directly to 'maint', or
-> am I mistaken?
 
-You are right.
+Hello,
 
-This command (in bash):
+A git-svn mirror is created using Git v1.6.4. When I copy this mirror 
+into another machine which is using v1.6.5 I get the following error:
 
-comm <(git grepc -l main\( *.c) <(git grepc -l extract_argv0 *.c)
+$ git svn rebase
+fatal: Invalid revision range 
+d2cf08bb67e4b7da33a250127aab784f1f2f58d3..refs/remotes/svn/trunk
+rev-list --pretty=raw --no-color --reverse 
+d2cf08bb67e4b7da33a250127aab784f1f2f58d3..refs/remotes/svn/trunk --: 
+command returned error: 128
 
-shows programs in the 1st column that have main(), but do not call 
-git_extract_argv0_path. One remaining candidate is show-index.c, but its only 
-call-out is sha1_to_hex(), which doesn't use any other services.
+Using v1.6.4 instead I have no problem. Any idea to track this problem down?
 
-http-fetch.c is the only file that needs this patch.
+Thanks.
 
--- Hannes
+Pascal.
+
+-- 
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
