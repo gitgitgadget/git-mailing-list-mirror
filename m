@@ -1,85 +1,63 @@
-From: Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp>
-Subject: Re: [PATCH v2 0/4] perf bench: Common option for specifying style
- formatting
-Date: Tue, 10 Nov 2009 17:23:57 +0900 (JST)
-Message-ID: <20091110.172357.877383598482614594.mitake@dcl.info.waseda.ac.jp>
-References: <20091110035812.GB29454@elte.hu>
-	<20091110.165102.386189748263321818.mitake@dcl.info.waseda.ac.jp>
-	<20091110080135.GA32322@elte.hu>
+From: Dmitry Smirnov <divis1969@gmail.com>
+Subject: Re: Git drawbacks?
+Date: Tue, 10 Nov 2009 08:31:48 +0000 (UTC)
+Message-ID: <loom.20091110T092404-595@post.gmane.org>
+References: <loom.20091106T160709-387@post.gmane.org> <32541b130911060849s2d8f13f5sb9b8390f075f8d15@mail.gmail.com> <loom.20091106T180313-750@post.gmane.org> <32541b130911060951q3358ce9ahe28fb0cf902853f2@mail.gmail.com> <alpine.DEB.2.00.0911061051540.3216@asgard.lang.hm> <loom.20091109T084539-720@post.gmane.org> <20091109154816.GH27126@dpotapov.dyndns.org> <loom.20091109T170054-451@post.gmane.org> <20091109183404.GI27126@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org,
-	a.p.zijlstra@chello.nl, paulus@samba.org
-To: mingo@elte.hu
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1754879AbZKJIXz@vger.kernel.org Tue Nov 10 09:24:18 2009
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1754879AbZKJIXz@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 10 09:32:22 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N7m1P-0002EI-Pu
-	for glk-linux-kernel-3@lo.gmane.org; Tue, 10 Nov 2009 09:24:16 +0100
+	id 1N7m9G-00054i-5x
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Nov 2009 09:32:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754879AbZKJIXz (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 10 Nov 2009 03:23:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754796AbZKJIXy
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Tue, 10 Nov 2009 03:23:54 -0500
-Received: from ns.dcl.info.waseda.ac.jp ([133.9.216.194]:59790 "EHLO
-	ns.dcl.info.waseda.ac.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754780AbZKJIXy (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 10 Nov 2009 03:23:54 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by ns.dcl.info.waseda.ac.jp (Postfix) with ESMTP id 6CC2DBB6D31;
-	Tue, 10 Nov 2009 17:23:59 +0900 (JST)
-X-Virus-Scanned: amavisd-new at dcl.info.waseda.ac.jp
-Received: from ns.dcl.info.waseda.ac.jp ([127.0.0.1])
-	by localhost (ns.dcl.info.waseda.ac.jp [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dPQC9nm6gmDu; Tue, 10 Nov 2009 17:23:59 +0900 (JST)
-Received: from localhost (fw-cisco.dcl.info.waseda.ac.jp [133.9.216.204])
-	by ns.dcl.info.waseda.ac.jp (Postfix) with ESMTP id 0A6B0BB6D2C;
-	Tue, 10 Nov 2009 17:23:59 +0900 (JST)
-In-Reply-To: <20091110080135.GA32322@elte.hu>
-X-Mailer: Mew version 5.2 on Emacs 22.2 / Mule 5.0 (SAKAKI)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1752773AbZKJIcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2009 03:32:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752613AbZKJIcJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Nov 2009 03:32:09 -0500
+Received: from lo.gmane.org ([80.91.229.12]:44831 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752549AbZKJIcI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Nov 2009 03:32:08 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1N7m96-00051z-Hw
+	for git@vger.kernel.org; Tue, 10 Nov 2009 09:32:12 +0100
+Received: from 212.92.145.7 ([212.92.145.7])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Nov 2009 09:32:12 +0100
+Received: from divis1969 by 212.92.145.7 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Nov 2009 09:32:12 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 212.92.145.7 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/3.0.195.27 Safari/532.0)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132549>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132550>
 
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: [PATCH v2 0/4] perf bench: Common option for specifying style formatting
-Date: Tue, 10 Nov 2009 09:01:35 +0100
+Dmitry Potapov <dpotapov <at> gmail.com> writes:
+ 
+> Yes, but then I do not see any reason to do any time consuming building
+> and testing in the working tree. I create a snapshot of the interesting
+> version using 'git archive' and then run build&test on it... In this
+> way, I can make sure that the archive I deliver is tested properly. If
+> you do your testing in the working tree, sometimes uncommitted or some
+> other files that are left over from previous builds may affect result.
+> So, if it takes considerable time anyhow, why do not do clean build and
+> test? And if you worry about compilation time, you can use ccache.
 
-> 
-> * Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp> wrote:
-> 
-> > And I have a question.
-> > In tools/perf/command-list.txt, there is the word "mainporcelain".
-> > What does this mean?
-> 
-> tools/perf/ inherited the command-list.txt code from the Git project:
-> 
->   git://git.kernel.org/pub/scm/git/git.git
-> 
-> in Git talk, 'porcelain' is the pretty stuff humans use. 'plumbing' is 
-> the lowlevel stuff humans dont get to see.
-> 
-> 'mainporcelain' are the major commands you get listed when you type 
-> 'perf' (or 'git').
-
-Thanks, I got it!
-
-> 
-> ( i've Cc:-ed the Git list as i never saw any real formal definition for
->   this anywhere, maybe i got this wrong :-)
-> 
-> > Of course I searched this word on my dictionary, but cannot got an answer.
-> > I'm preparing the initial document for perf-bench.
-> > Can I add perf-bench with mainporcelain to command-list.txt?
-> 
-> yeah, i'd suggest to do that - that will make 'perf bench' show up in 
-> 'perf' output.
-
-I'll describe perf bench as mainporcelain command, thanks.
+It is not clear for me. Yes, I have to get some fixed version to reproduce
+the bug reported by someone. Then I need to fix it and commit the change 
+back (on the head). Also, it is obvious to reproduce the issue and 
+test the fix on the tip. Can do this with 'git archive'?
+BTW, doesn't 'git archive' sync to some version that I probably already 
+have in other clone? ;-)
