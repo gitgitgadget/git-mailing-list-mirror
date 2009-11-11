@@ -1,92 +1,97 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: git-svn problem with v1.6.5
-Date: Wed, 11 Nov 2009 22:55:40 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <4AFB32DC.50505@obry.net>
-References: <4AF9E7FE.3060701@obry.net> <32541b130911101428t50038cfcsf37e3ea9edb26f64@mail.gmail.com> <4AFA91BB.7050402@obry.net> <32541b130911111141n7b029b1ep68656d2eb39be3c7@mail.gmail.com> <4AFB1756.7090708@obry.net> <20091111202201.GA10351@dcvr.yhbt.net> <20091111203413.GA9648@dcvr.yhbt.net>
-Reply-To: pascal@obry.net
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: Re: Working on merged branches whilst seeing current master
+Date: Wed, 11 Nov 2009 22:57:27 +0100
+Message-ID: <20091111215727.GK27518@vidovic>
+References: <1257959806206-3987667.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Avery Pennarun <apenwarr@gmail.com>, adambrewster@gmail.com,
-	git list <git@vger.kernel.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Nov 11 22:55:36 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+To: rhlee <richard@webdezign.co.uk>
+X-From: git-owner@vger.kernel.org Wed Nov 11 22:57:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8LA5-0003NJ-QH
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 22:55:34 +0100
+	id 1N8LCH-0004Yl-5G
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 22:57:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759321AbZKKVzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 16:55:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759299AbZKKVzW
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 16:55:22 -0500
-Received: from ey-out-2122.google.com ([74.125.78.25]:60201 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759291AbZKKVzU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 16:55:20 -0500
-Received: by ey-out-2122.google.com with SMTP id 9so378840eyd.19
-        for <git@vger.kernel.org>; Wed, 11 Nov 2009 13:55:24 -0800 (PST)
-Received: by 10.213.0.131 with SMTP id 3mr3001632ebb.68.1257976524385;
-        Wed, 11 Nov 2009 13:55:24 -0800 (PST)
-Received: from ?192.168.0.100? (AVelizy-154-1-81-24.w86-205.abo.wanadoo.fr [86.205.111.24])
-        by mx.google.com with ESMTPS id 10sm1481741eyd.47.2009.11.11.13.55.23
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 11 Nov 2009 13:55:23 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
-In-Reply-To: <20091111203413.GA9648@dcvr.yhbt.net>
+	id S1759108AbZKKV53 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 16:57:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759291AbZKKV52
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 16:57:28 -0500
+Received: from gv-out-0910.google.com ([216.239.58.191]:2509 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758868AbZKKV52 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 16:57:28 -0500
+Received: by gv-out-0910.google.com with SMTP id r4so215543gve.37
+        for <git@vger.kernel.org>; Wed, 11 Nov 2009 13:57:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=6jPXFwSUwzi2Iv0qLkasmIrv8rAe8iCTQIXOKRgBGmA=;
+        b=HJ2h9R5mtuc1w07ock0ez34ALbmX5PLdjeMm1KoG8qIdGqUzNZ7MC1TI1mhbD5eN14
+         uS6sjCgRel005KP0GB0t2YHbVZMDjkRDky3zRUq5/TpM/ma22LTn38SrzLBp9NM9Op8M
+         Jc8FX3/P1MD76LmiaZrvy99fqYL65u7aWQNYc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=wUmzgHmE0u5VKybzdEiiqLwun0vlAtjkISpb3josgXJoAJHcHCd0bfCiP0+XPlYKIZ
+         rQhgeLxdHw09aK6RrG6n4MYq7UGaBzh05JqS4bMnP8YE+TMiobphlmugupDA+VkcFQHW
+         pI240Hvm2ilyuRVO48oAmGjVmdFWqQgsYUmx4=
+Received: by 10.213.55.70 with SMTP id t6mr7162899ebg.11.1257976650890;
+        Wed, 11 Nov 2009 13:57:30 -0800 (PST)
+Received: from @ (91-165-129-166.rev.libertysurf.net [91.165.129.166])
+        by mx.google.com with ESMTPS id 7sm1495816eyg.41.2009.11.11.13.57.29
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 11 Nov 2009 13:57:29 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1257959806206-3987667.post@n2.nabble.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132709>
 
+The 11/11/09, rhlee wrote:
+> 
+> I use branches for features. I have a branch and I merged it into my master
+> branch as I thought it was finished. But it turns out I wasn't and so I need
+> to work on it again.
+> 
+> I have made some more changes (branches and merges) on master. So what I
+> should do is checkout that branch, work on it committing along the way and
+> then merge it again onto my master branch.
+> 
+> However I though I am working on a feature branch I want to be also working
+> from the master branch as reference.
 
-Eric,
+If the feature branch is merged to the mainline, it should really mean
+that the feature is ready : the feature branch life stop here. This also
+means that if you see that this feature was not as ready as you thought,
+you have to restart a _new_ feature branch off of the mainline.
 
-> Also, any chance you have multiple refs with "trunk" in the basename?
->
->   git rev-parse --symbolic --all | grep '/trunk'
+That's why there is the "next" branch in the git releases process. This
+way, we can test the feature branches without touching master for some
+time.
 
-This reports:
+>                                      Yes I know I probably should not be
+> working like this. My branches should be wholly independent. But I doing web
+> development not kernel development so there is much less modularity and
+> branches/features have a tendency to creep into one another.
 
-$ git rev-parse --symbolic --all | grep '/trunk'
-refs/remotes/svn/trunk
+This should not be the case. Modularity in the release process and the
+development strategy is not tied to "what I am developing". I'm doing
+some web development too and have no difficulty around this point.
 
-> It could be a backwards compatibility issue with git svn looking
-> in multiple places for trunk.
+> Or should I just create a new branch? But if I do this there is no link
+> between the old and new branch.
 
-But I have multiple trunk:
-
-$ ls .git/svn/svn/trunk/
-./  ../  .rev_map.936e1b1b-40f2-da11-902a-00137254ae57  unhandled.log
-
-$ ls  .git/svn/refs/remotes/svn/trunk/
-./  ../  .rev_map.936e1b1b-40f2-da11-902a-00137254ae57  unhandled.log
-
-Removing all the .rev_map* fix the problem.
-
-Removing only the one in .git/svn/refs/remotes/svn/trunk/ fix the 
-problem too.
-
-> With Adam's commit, it'll try $GIT_DIR/svn/refs/remotes/trunk/* first
-> Then it'll try $GIT_DIR/svn/trunk/* as a fallback.
-
-Does this means that it was looking first in $GIT_DIR/svn/trunk/* 
-before? And the confusion come because now it is looking in 
-$GIT_DIR/svn/refs/remotes/trunk/* first?
-
-Pascal.
+Yes, feature branches have no reason to live after they are merged to
+the mainline.
 
 -- 
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|    http://www.obry.net  -  http://v2p.fr.eu.org
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
+Nicolas Sebrecht
