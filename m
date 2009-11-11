@@ -1,142 +1,99 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 0/2] user-manual: new "getting started" section
-Date: Thu, 12 Nov 2009 01:15:11 +0200
-Message-ID: <94a0d4530911111515q643e263bn3adc6b47cd968d3d@mail.gmail.com>
-References: <1256377489-16719-1-git-send-email-felipe.contreras@gmail.com>
-	 <7vy6n065os.fsf@alter.siamese.dyndns.org>
-	 <7vr5ss64e5.fsf@alter.siamese.dyndns.org>
-	 <94a0d4530910241316r3fc4136emd036d18aa45a4192@mail.gmail.com>
-	 <7vy6n02mrk.fsf@alter.siamese.dyndns.org>
-	 <94a0d4530910250243k4cbc3c18l5e018a05e5afdb2d@mail.gmail.com>
-	 <20091025111438.GA11252@progeny.tock>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: [ANNOUNCE] GIT 1.6.5.2
+Date: Wed, 11 Nov 2009 18:18:51 -0500
+Message-ID: <20091111231851.GT31109@inocybe.localdomain>
+References: <7vljiypw9s.fsf@alter.siamese.dyndns.org>
+ <m3ljicsrg0.fsf@localhost.localdomain>
+ <20091111215952.GR31109@inocybe.localdomain>
+ <7vfx8kn1h7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Hannu Koivisto <azure@iki.fi>, Jeff King <peff@peff.net>,
-	Wincent Colaiuta <win@wincent.com>,
-	Matthias Lederhofer <matled@gmx.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 12 00:15:24 2009
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="GTjM2GI4zMe3xHZ5"
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 12 00:19:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8MPJ-0001jf-0n
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 00:15:21 +0100
+	id 1N8MSu-0003Hm-IO
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 00:19:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759598AbZKKXPI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Nov 2009 18:15:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759508AbZKKXPI
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 18:15:08 -0500
-Received: from mail-iw0-f178.google.com ([209.85.223.178]:52149 "EHLO
-	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759464AbZKKXPG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Nov 2009 18:15:06 -0500
-Received: by iwn8 with SMTP id 8so1342229iwn.33
-        for <git@vger.kernel.org>; Wed, 11 Nov 2009 15:15:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=WZ7qj8gKJj35QME1zdzXwddY1u9PmBJ1UZk/VEPrBHs=;
-        b=bTzAI0R9uXx6VbTyipCE8Grnm3vpBqeFZf6fyYQZ4vQaO8Xw0ac20qUyQhbx6UGCXF
-         dH2vGJ0G3PgXyStYPckg2qLKw9xHLT1emT3ZNaxL0f4qkcJKpd28DGXK4I6EuELdG+I8
-         VpAgdywWXOWqrxtgfLiAOsn30ECDLP+MnTqDA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=PbWOhlU/Nm5Rx2yjeD3J9Rh+KB6ZTR+aZwhjT54bCY79HXA3gn4ErgG+S+MEh2siWo
-         27AoqyRoHY3zagHiKHQCbFgw6yP50HOA87OANyouVMFmEN7cbzHyLqogH0ScGDKlNVxU
-         zSzlHNKcHDTXm6/28ruqBLMDrqwQLzgZ37iVc=
-Received: by 10.231.170.201 with SMTP id e9mr598246ibz.15.1257981311497; Wed, 
-	11 Nov 2009 15:15:11 -0800 (PST)
-In-Reply-To: <20091025111438.GA11252@progeny.tock>
+	id S1759597AbZKKXSy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 18:18:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759561AbZKKXSy
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 18:18:54 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39330 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759551AbZKKXSx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 18:18:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 90DF87D384;
+	Wed, 11 Nov 2009 18:18:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+	:cc:subject:message-id:references:mime-version:content-type
+	:in-reply-to; s=sasl; bh=8/Om6MkQcfs8aZu+4UdooFj5P6w=; b=MEgT9wG
+	xeWbmEqdy6qSnYIkMq2HMmmA3IyFjY69I5FxjjKC2FEi8WWZfDNdusv5n7Xee+1B
+	8NIWIa1NnTdrsPAp76JUAuwzsc2viT8lrtuqvakg1KY5Us9OslVU4OhHu8J6V5wQ
+	2/OG4ytQpoOEWOtxs0VosfxWbHYdGbGw5+oY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+	:subject:message-id:references:mime-version:content-type
+	:in-reply-to; q=dns; s=sasl; b=Z1HfqrgWSkeu5bTWRcgArovuREbgYofmb
+	Ov9vJw18JPBfBbtjICGCzy1LTHtbA6DI87BDntH+Nc7O9VqhfZOnxM0Rkv3C3F4X
+	nlh4rYJ8lFg9cquXtRBDkoMNgyLs5y3VZP8ktMgP2xevMY0S0ltfGB5mZqUX0i+2
+	Q92zsbU+kU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CB6F7D380;
+	Wed, 11 Nov 2009 18:18:55 -0500 (EST)
+Received: from inocybe.localdomain (unknown [98.117.251.177]) (using TLSv1
+ with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF8A97D37E; Wed, 11 Nov
+ 2009 18:18:52 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vfx8kn1h7.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Pobox-Relay-ID: 9506BE10-CF18-11DE-BAF8-9F3FEE7EF46B-09356542!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132719>
 
-On Sun, Oct 25, 2009 at 1:14 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Felipe Contreras wrote:
->> Supposing that color.ui is 'auto' by default,
->
-> Should it be? =C2=A0I think it would not be too hard to detect a colo=
-r
-> terminal by checking $TERM. =C2=A0Are many people bothered by color? =
-=C2=A0Do we
-> need some way to make it more obvious how to turn color _off_?
 
-I think it should be.
+--GTjM2GI4zMe3xHZ5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> No, but "improving" needs "changing", and the discussion I see is
->> biased towards "not changing".
-> [...]
->> I don't think the user manual is achieving that purpose. I don't kno=
-w
->> if it's the user manual's fault, or git's UI. Both areas need a lot =
-of
->> improvement (as the git user survey suggests), and I've tried to
->> improve both with a lot resistance in both. So I'm not very hopeful
->> anymore.
->
-> I hope you have not misunderstood. =C2=A0I cannot speak for everyone =
-else
-> here, but I know I am happier when (1) fixes match problems to be
-> solved in a documented way and (2) fixes do not unnecessarily break
-> unrelated habits. =C2=A0One way to bring this about is to justify eac=
-h
-> change by explaining what real problem it will solve and how it avoid=
-s
-> collateral damage. =C2=A0Without that justification, a change is inde=
-ed
-> dangerous and might be worth resisting until it gets clarified. =C2=A0=
-But
-> this is not meant to prevent fixes from occuring at all.
+Junio C Hamano wrote:
+> Thanks; will try.  Will that have adverse effect when instsalled to
+> FC11 by the way?
 
-Well. I've sent many patches, and gone through several iterations.
-After fixing all outstanding issues, addressing all the comments, and
-getting several "I like this" votes, Junio suddenly decides he doesn't
-like the initial changes at all and doesn't provide any way forward.
-
-I don't see how that's an environment that fosters changes.
-
-> Could you list some UI patches that were overlooked or not properly
-> addressed? =C2=A0Maybe people just forgot about them or were waiting =
-for an
-> updated version, or maybe the problems some solve weren=E2=80=99t art=
-iculated
-> clearly yet. =C2=A0I would be glad to help out in any way I can.
-
-=46or example there have been many attempts to bring the 'git stage' to
-foreground of the UI; right now it's kind of hidden and many people
-don't even realize it's there. Even simplistic attempts as
-standardizing --index, --cache and so on into --stage have failed
-miserably.
-
-Again, there doesn't seem to be a path forward. Perhaps the git's
-stage will remain an obscure feature of git forever. (all the input
-from git user's survey points out that people are not really using it)
-
->> Judging from the luck I've had pushing even the simplest
->> changes I don't think it will improve much more, unfortunately.
->
-> Even the simplest changes can be hard. =C2=A0But I hope they do not a=
-mount
-> to nothing. =C2=A0I hope at the very least the git-config manual page=
- will
-> improve...
-
-What I mean is: if the simplest changes are *impossible*, then there's
-barely any hope of progress.
-
-Cheers.
+None that I am aware of (aside from using a less secure file digest
+algorith, of course :).  I've installed packages built that way on
+Fedora 12 systems without issue.
 
 --=20
-=46elipe Contreras
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Blessed are they who can laugh at themselves for they shall never
+cease to be amused.
+
+
+--GTjM2GI4zMe3xHZ5
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iQFDBAEBCAAtBQJK+0ZWJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
+bXouYXNjAAoJEEMlk4u+rwzj8RgH/17FnvsibvcyvFP4xUnuHH9lgXEYs0Vpj4mu
+CIcgjNGcetqBDBTs2/uNGrYB+mQpV6uL//9nOmcJomWyDZLH9yDyI7an/BRM59yD
+d8FHo9zKA8wGAPogxgVr9qrZr9w5IRHXgXjO4cuFxpDx2A3eF3fDjGKgfdGLiPYW
+UG+AN8OD42cLXEEFhukb+3Ptn/FUAaduk4l6zDK7xCsFfZe1nRERCBnN62U2XNYv
+X0I0Nw0+4LtlN5XNdg4jolzQyK9LeKkP3O+6PCNRBI7bvq5NJR0UFl8BgsXfxImT
+NbEDxRl1goMoXqmb7TFIQRusO5QT2lm/SXt9QHx8+onMIwY8Xzo=
+=GNtB
+-----END PGP SIGNATURE-----
+
+--GTjM2GI4zMe3xHZ5--
