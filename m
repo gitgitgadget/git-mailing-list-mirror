@@ -1,89 +1,76 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] gitk: Add ability to define an alternate temporary directory
-Date: Tue, 10 Nov 2009 17:49:08 -0800
-Message-ID: <1257904149-44381-1-git-send-email-davvid@gmail.com>
+Subject: [PATCH] gitk: Document the $GITK_TMPDIR variable
+Date: Tue, 10 Nov 2009 17:49:09 -0800
+Message-ID: <1257904149-44381-2-git-send-email-davvid@gmail.com>
+References: <1257904149-44381-1-git-send-email-davvid@gmail.com>
 Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
 To: paulus@samba.org
-X-From: git-owner@vger.kernel.org Wed Nov 11 02:49:26 2009
+X-From: git-owner@vger.kernel.org Wed Nov 11 02:49:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N82Kr-0000k1-Lh
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 02:49:26 +0100
+	id 1N82L4-0000oj-9e
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 02:49:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756523AbZKKBtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2009 20:49:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756506AbZKKBtN
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Nov 2009 20:49:13 -0500
-Received: from mail-yw0-f202.google.com ([209.85.211.202]:35399 "EHLO
-	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756490AbZKKBtM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Nov 2009 20:49:12 -0500
-Received: by ywh40 with SMTP id 40so580740ywh.33
-        for <git@vger.kernel.org>; Tue, 10 Nov 2009 17:49:18 -0800 (PST)
+	id S1756549AbZKKBtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2009 20:49:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756537AbZKKBtW
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Nov 2009 20:49:22 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:45361 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756506AbZKKBtV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Nov 2009 20:49:21 -0500
+Received: by yxe17 with SMTP id 17so577013yxe.33
+        for <git@vger.kernel.org>; Tue, 10 Nov 2009 17:49:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=r+N1Agcg2df6QXPaRKHWeDdAMC3wf11yLrRvQ1zwFe4=;
-        b=lo7nyS6nSqqrQdm16/WJYTyfwdglEMUBF0giiVuWTiG4g6GB8HqfKZBROcrDLukek5
-         bKpqdH2XfvTCpb8dJIvg0flhGJqNTMgxY3hKWgoEyOjkfzCPKCp+qb+7MabJp2bFFWPZ
-         2dyQvCiUM6wuT9RhoZOAs6YhwDwmfdP6xLM4M=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=7Dpaqvj2OL/jwR4LoCxsAVgPGWT7IVEYcitfey9VOsk=;
+        b=VbtJA7LHAbcXWMPz/R044NM6FFyVcVErbeR0WO7yYysj4FKtkGDtmoucSfYdrLmRDn
+         BWU/EGaLGETrQDJuivqawom8E4c2YVWpz6Kyzw0bdB2gJxPTJqrHCvPRLsIORbWIWa4m
+         NlyZOOKqQcZuv81YjOaJIqA2WXO1w4Q7+reVE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=cgRgZiRRQKGGb3VAAoxHZyRCUqc4EPQNJzycdYV5ZSJNEy/8FZjt31b/bRn9+BpX5q
-         Gea8i+hSOpVIQJ9rUp6iuHrLrqVja2PF/7/T4Ut8u/JHzEXysgCa4Cdfbd4NkrzUTQFf
-         xbOWj5DNN/SDdpMK+fi1QJ637fEO9tn8bmmns=
-Received: by 10.150.80.16 with SMTP id d16mr1673887ybb.0.1257904158357;
-        Tue, 10 Nov 2009 17:49:18 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=u3MDgroy7rHl6zzzvW2gdVlnwsWm91TCVFc/ZOuZt72kFlobe6eJgqzRqKYEjYIRuS
+         CATTc7TOPp7dbC1frBSGbBAqP1KTTgOLulQwl5enyMJmXXDqMhJLzlJTRrFVdgIPazGt
+         JEJ4/NzHjvprDPp6KStM6phyxK9pUY8GAypSM=
+Received: by 10.150.56.1 with SMTP id e1mr1568171yba.225.1257904167062;
+        Tue, 10 Nov 2009 17:49:27 -0800 (PST)
 Received: from localhost (wdas-1.disneyanimation.com [12.188.26.1])
-        by mx.google.com with ESMTPS id 15sm579053gxk.0.2009.11.10.17.49.17
+        by mx.google.com with ESMTPS id 13sm613690gxk.9.2009.11.10.17.49.26
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 10 Nov 2009 17:49:17 -0800 (PST)
+        Tue, 10 Nov 2009 17:49:26 -0800 (PST)
 X-Mailer: git-send-email 1.6.5.2.180.gc5b3e
+In-Reply-To: <1257904149-44381-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132609>
-
-gitk fails to show diffs when browsing a repository for which
-we have read-only access.  This is due to gitk's assumption
-that the current directory is always writable.
-
-This teaches gitk to honor the GITK_TMPDIR environment
-variable.  This allows users to override the default location
-used for writing temporary files.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132610>
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- gitk |   10 +++++++---
- 1 files changed, 7 insertions(+), 3 deletions(-)
+ Documentation/gitk.txt |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-diff --git a/gitk b/gitk
-index db5ec54..9139ace 100755
---- a/gitk
-+++ b/gitk
-@@ -3170,11 +3170,15 @@ proc flist_hl {only} {
- }
+diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
+index cf465cb..7e184f3 100644
+--- a/Documentation/gitk.txt
++++ b/Documentation/gitk.txt
+@@ -100,6 +100,11 @@ Files
+ Gitk creates the .gitk file in your $HOME directory to store preferences
+ such as display options, font, and colors.
  
- proc gitknewtmpdir {} {
--    global diffnum gitktmpdir gitdir
-+    global diffnum env gitktmpdir gitdir
- 
-     if {![info exists gitktmpdir]} {
--	set gitktmpdir [file join [file dirname $gitdir] \
--			    [format ".gitk-tmp.%s" [pid]]]
-+	if {[info exists env(GITK_TMPDIR)]} {
-+	    set tmpdir $env(GITK_TMPDIR)
-+	} else {
-+	    set tmpdir [file dirname $gitdir]
-+	}
-+	set gitktmpdir [file join $tmpdir [format ".gitk-tmp.%s" [pid]]]
- 	if {[catch {file mkdir $gitktmpdir} err]} {
- 	    error_popup "[mc "Error creating temporary directory %s:" $gitktmpdir] $err"
- 	    unset gitktmpdir
++Environment Variables
++---------------------
++Gitk honors the $GITK_TMPDIR environment when creating temporary
++files and directories.
++
+ SEE ALSO
+ --------
+ 'qgit(1)'::
 -- 
 1.6.5.2.180.gc5b3e
