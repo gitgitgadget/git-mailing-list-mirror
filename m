@@ -1,50 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: t5541-http-push hanging
-Date: Wed, 11 Nov 2009 07:50:25 -0800
-Message-ID: <20091111155025.GN11919@spearce.org>
-References: <B17AB159-E217-4E1F-BEA3-97E5892C13F4@gernhardtsoftware.com>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: Move repository from OS X to Windows
+Date: Wed, 11 Nov 2009 16:53:12 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <4AFADDE8.7080109@obry.net>
+References: <4AFABCF8.9060601@syntevo.com>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Wed Nov 11 16:50:40 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Thomas Singer <thomas.singer@syntevo.com>
+X-From: git-owner@vger.kernel.org Wed Nov 11 16:53:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8FSp-0002DP-CB
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 16:50:31 +0100
+	id 1N8FVJ-0003et-Tx
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 16:53:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757434AbZKKPuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 10:50:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757389AbZKKPuU
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 10:50:20 -0500
-Received: from george.spearce.org ([209.20.77.23]:47589 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756348AbZKKPuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 10:50:19 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 701FD381FC; Wed, 11 Nov 2009 15:50:25 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <B17AB159-E217-4E1F-BEA3-97E5892C13F4@gernhardtsoftware.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1757495AbZKKPwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 10:52:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756348AbZKKPwy
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 10:52:54 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:46505 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754149AbZKKPwy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 10:52:54 -0500
+Received: by ey-out-2122.google.com with SMTP id 9so291506eyd.19
+        for <git@vger.kernel.org>; Wed, 11 Nov 2009 07:52:59 -0800 (PST)
+Received: by 10.213.103.83 with SMTP id j19mr6590581ebo.31.1257954777579;
+        Wed, 11 Nov 2009 07:52:57 -0800 (PST)
+Received: from ?192.168.0.100? (AVelizy-154-1-81-24.w86-205.abo.wanadoo.fr [86.205.111.24])
+        by mx.google.com with ESMTPS id 10sm443041eyz.11.2009.11.11.07.52.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 11 Nov 2009 07:52:56 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
+In-Reply-To: <4AFABCF8.9060601@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132667>
 
-Brian Gernhardt <brian@gernhardtsoftware.com> wrote:
-> brian@hermes httpd (master)$ cat error.log 
-> [Wed Nov 11 06:19:39 2009] [notice] Apache/2.2.13 (Unix) configured -- resuming normal operations
-> [Wed Nov 11 06:19:39 2009] [error] [client 127.0.0.1] git-http-backend(59490) malloc: *** error for object 0x100200340: incorrect checksum for freed object - object was probably modified after being freed.
-> [Wed Nov 11 06:19:39 2009] [error] [client 127.0.0.1] *** set a breakpoint in malloc_error_break to debug
-> [Wed Nov 11 06:19:40 2009] [error] [client 127.0.0.1] Premature end of script headers: git-http-backend
-> [Wed Nov 11 06:24:23 2009] [notice] caught SIGTERM, shutting down--
+Thomas,
 
-Yikes, looks like git-http-backend corrupted its heap.
+> I've cloned a very large repository on OS X and want to move that to Windows
+> (trying to avoid to clone the repository a second time). What steps should I
+> do to make it working (currently, I'm getting an error on pull/merge that
+> "Entry 'foo' is not uptodate. Cannot merge.")?
 
-Is this by any chance Mac OS X ?
+Is that a git-svn clone?
+
+Otherwise I do not see why you avoid a second clone. Cloning from your 
+windows machine the OSX repo won't be slower than cloning from the 
+original repo? Or I missed something...
+
+If you are speaking about a git-svn clone, I understand. In this case I 
+generally I just rsync the .git directory from one machine to the other:
+
+    $ mkdir project
+    $ cd project
+    $ rsync -a machine:/path/to/project/.git .
+    $ git reset --hard HEAD
+
+And you are done.
+
+Pascal.
 
 -- 
-Shawn.
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
