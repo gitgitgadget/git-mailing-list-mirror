@@ -1,74 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Consensus on "Git"
-Date: Wed, 11 Nov 2009 01:36:45 -0800
-Message-ID: <7vy6mdqu6q.fsf@alter.siamese.dyndns.org>
+Date: Wed, 11 Nov 2009 04:36:56 -0500
+Message-ID: <20091111093656.GB17422@sigill.intra.peff.net>
 References: <ee77f5c20911110032r65a60653sfeef34e3de07d17e@mail.gmail.com>
  <7v8wedv3a3.fsf@alter.siamese.dyndns.org>
  <20091111092731.GA17422@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	David Symonds <dsymonds@gmail.com>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 11 10:37:04 2009
+Content-Type: text/plain; charset=utf-8
+Cc: David Symonds <dsymonds@gmail.com>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 11 10:37:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N89dP-0000YJ-UW
+	id 1N89dQ-0000YJ-Ei
 	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 10:37:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753470AbZKKJgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 04:36:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753372AbZKKJgw
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 04:36:52 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41341 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751985AbZKKJgw (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755831AbZKKJgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 04:36:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753372AbZKKJgz
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 04:36:55 -0500
+Received: from peff.net ([208.65.91.99]:45968 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753369AbZKKJgw (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 11 Nov 2009 04:36:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 237E87CE61;
-	Wed, 11 Nov 2009 04:36:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ORKE9xf+ZC13XqMy8TuPcEN3VBs=; b=S+fsHH
-	eyBtpeugoFyAxU8zTXozbk8A4Kc+OSkviOyMotDffAHfIMumxamyDFF2LT6PnxpY
-	ggBa7Y6nul18J00X1Df088RR2x1yuuTbGJVxpKICyXIxyCAuoBn/SaXvsiJhGV9H
-	m6QvaZKJsTHdLWg0ghQ4Yx04PcyAS+0q4IMT4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=era2bkZ8RhBTQpDucb7FXabHZrHKiMv4
-	zgoR2iQhGwgQgr/qaAL9yEUR+XVsK42m6lxhiaIv3IrfaAhrmieAGbx9LG+4ps0X
-	8gQi7eynjb40eFFaJgPYkAp2qXzv+2ExtaeZGTMZrGCzO6yR7iJFFZyDCnqCLNKL
-	JYEq0/MWHo0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E2CCF7CE60;
-	Wed, 11 Nov 2009 04:36:51 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1EB567CE5F; Wed, 11 Nov
- 2009 04:36:46 -0500 (EST)
-In-Reply-To: <20091111092731.GA17422@sigill.intra.peff.net> (Jeff King's
- message of "Wed\, 11 Nov 2009 04\:27\:31 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: BDEC75CC-CEA5-11DE-88D2-7B3EEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+Received: (qmail 11558 invoked by uid 107); 11 Nov 2009 09:40:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 11 Nov 2009 04:40:44 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Nov 2009 04:36:56 -0500
+Content-Disposition: inline
+In-Reply-To: <20091111092731.GA17422@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132633>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Nov 11, 2009 at 04:27:31AM -0500, Jeff King wrote:
 
-> Except for the title of every set of release notes, which all start
-> with:
->
->   GIT vX.Y.Z Release Notes
->
-> ? :)
+> For a fun (ab)use of blame, you can see who wrote each of David's
+> suspect lines with:
+> 
+>    git grep -n "\bGIT\b" |
+>    while IFS=: read file line junk; do
+>      git blame -f -L $line,$line $file
+>    done |
+>    less
+> 
+> Many of them are variables (e.g., \b gets rid of "_", but we still have
+> "-", so GIT-VERSION and such are still there). Many others are the title
+> of the "GIT" section of the manpages. But there are some legitimate
+> uses, too. Many of them blame to quite a long time ago, though (e.g.,
+> Documentation/everyday.txt has two uses by you in 2005).
 
-Yeah these were copied from release to release and I do not pay much
-attention to the minute details of how my tools I wrote long time ago
-spells things ;-)
+BTW, here is a much better grep (still a few false positives, but most
+lines are meanginful):
 
-Perhaps I should update my scripts to generate them.
+   git grep -n -E "(^|[^A-Z_-])GIT($|[^A-Z_-])" |
+   grep -v ':GIT$' |
+   while IFS=: read file line junk; do
+     git blame -f -L $line,$line $file
+   done |
+   less
+
+You can really see that most of the uses of GIT are ancient. I wonder if
+we should downcase the few that are in user-visible error messages. I
+will let somebody else spend their time on such a conversion if they
+want, though. I've already spent enough on this. :)
+
+-Peff
