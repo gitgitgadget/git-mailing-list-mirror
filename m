@@ -1,182 +1,158 @@
-From: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
-Subject: Unhelpful "branch.master.remote = <nickname>" advice?
-Date: Wed, 11 Nov 2009 14:22:36 +0100
-Organization: www.AvatarAcademy.nl
-Message-ID: <1257945756.26362.79.camel@heerbeest>
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: Re: P4 Sync problem
+Date: Wed, 11 Nov 2009 14:54:23 +0100
+Message-ID: <1a6be5fa0911110554u7c3a04c8hf50100b784b63c7a@mail.gmail.com>
+References: <loom.20091110T145046-137@post.gmane.org>
+	 <1a6be5fa0911110043i63b5c032s7924f9f1cdfe32ee@mail.gmail.com>
+	 <loom.20091111T100646-406@post.gmane.org>
+	 <1a6be5fa0911110400l1fe931afmbb53ceba8704e029@mail.gmail.com>
+	 <loom.20091111T131837-901@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-xK3v8gOjVHrvCmiUeIHy"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 11 14:54:15 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Dmitry Smirnov <divis1969@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 11 14:54:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8DeI-0005eH-Na
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 14:54:15 +0100
+	id 1N8DeZ-0005mX-7X
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 14:54:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753381AbZKKNyD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 08:54:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752388AbZKKNyD
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 08:54:03 -0500
-Received: from edu-smtp-01.edutel.nl ([88.159.1.221]:58667 "EHLO
-	edu-smtp-01.edutel.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751845AbZKKNyB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 08:54:01 -0500
-X-Greylist: delayed 1884 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Nov 2009 08:54:01 EST
-Received: from heerbeest (unknown [88.159.206.46])
-	by edu-smtp-01.edutel.nl (Postfix) with ESMTP id AF86D67E7B;
-	Wed, 11 Nov 2009 14:22:41 +0100 (CET)
-Received: from [127.0.0.1] (heerbeest [127.0.0.1])
-	by heerbeest (Postfix) with ESMTP id F2ACDDC1AC;
-	Wed, 11 Nov 2009 14:22:36 +0100 (CET)
-X-Mailer: Evolution 2.28.1 
+	id S1754417AbZKKNyU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Nov 2009 08:54:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753569AbZKKNyT
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 08:54:19 -0500
+Received: from gv-out-0910.google.com ([216.239.58.190]:25893 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752388AbZKKNyT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Nov 2009 08:54:19 -0500
+Received: by gv-out-0910.google.com with SMTP id r4so54640gve.37
+        for <git@vger.kernel.org>; Wed, 11 Nov 2009 05:54:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=QCYi7ETIBJ4aT+bqEj0WXb+c5T3HTYTzMUe6qCatdL4=;
+        b=xZWLCiq3dTWurTHBlVA/rLBf0UHQthyRWAsK04oPReoHG9gBmayzGf7q1fFljqduZD
+         4q7bpqwEaWTFKzbbNigPBnFgtYgnlX2+4/ljQiijjm308ZDh1ueQ5CrfacwzkByFhvQF
+         XR34ctPOngBna/EGbHXfVSL1RpFsysA1pM2N8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=BIPrFMIcTQs11clTM0gEIphVi4GN6JKvp+UTDGOC+quTw+KxbUqPfjzVblZYmu2C2L
+         BXlzccD6zA17aQq+hzzjv6/b+7BFubRP3O/8hOyoEkAXQmCx74pwU5cc8Qg9rjMJC2KL
+         7eyolKe9+XuONsJLM5UkhLc6zwAiGWObYnqvE=
+Received: by 10.239.163.222 with SMTP id q30mr138079hbd.128.1257947663180; 
+	Wed, 11 Nov 2009 05:54:23 -0800 (PST)
+In-Reply-To: <loom.20091111T131837-901@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132654>
 
+On Wed, Nov 11, 2009 at 1:39 PM, Dmitry Smirnov <divis1969@gmail.com> w=
+rote:
+> Tor Arvid Lund <torarvid <at> gmail.com> writes:
+>
+>
+>> Well, I see what you're trying to do, but I would not want to see th=
+at
+>> patch in the official script, because some (most?) people (myself, a=
+t
+>> least) use git-p4 to clone single projects out of a perforce depot
+>> that may contain many projects. I do this myself by doing:
+>>
+>> git p4 clone //depot/path/to/projectX <at> all
+>>
+>> I usually use one clientspec in perforce, and I do not want to chang=
+e
+>> that... With your patch, I would be in trouble since my clientspec
+>> contains "//depot/..." (followed by a lot of lines starting with '-'=
+)
+>
+> Well, does this mean that if you try to sync the client in perforce (=
+visual or
+> command line), you will sync all the projects?
 
---=-xK3v8gOjVHrvCmiUeIHy
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
+Yes, but I generally try to not use perforce, but git instead :-)
 
-Hi,
+> In that case, git p4 will require significant effort to satisfy both =
+of us :-)
+> Unfortunatly, it seems I'm in minory group of git-p4 users...
 
-git pull -r*) URL says:
+I don't know, but if I were to guess, then yes, you probably are... If
+you have a complex perforce client spec setup, then there may of
+course be problems that git-p4 might not solve for you. Since nobody
+has volunteered to implement the features you describe yet, I believe
+that most of us git-p4 users have fairly simple client spec setups.
 
-    If you often merge with the same branch, you may want to
-    configure the following variables in your configuration
-    file:
+=46or me, most projects in p4 are such that I can give one root
+directory to "git p4 sync", and it works for me. I of course have
+several git projects that sync from the same p4 server (only with
+different root dirs). In cases where you have dependencies between
+such projects, you should maybe read about git submodules - or maybe
+googles "repo" script (search for "google repo git"). I don't know
+much about any of these, other than 'they exist, and seemingly try to
+solve such issues' :-/
 
-        branch.master.remote = <nickname>
-        branch.master.merge = <remote-ref>
-        remote.<nickname>.url = <url>
-        remote.<nickname>.fetch = <refspec>
+> i would propose to use both command-line arguments and a client spec
+> to create a correct filter of what should be synced/cloned.
+> BTW, it looks this script does not honor neither the order of paths
+> in the spec (which can be important) nor mapping of the files to a lo=
+cal tree.
 
-and after cut-and-pasting that into .git/config, replacing
-<foo> with values, I get
+When you have a client spec like:
 
-    $ git pull -r http://github.com/../../master
-    fatal: bad config file line 17 in .git/config
+//depot/A/...
+-//depot/A/B/...
+//depot/A/B/C/...
 
-where line 17 is [without any indentation]
+=2E.. git-p4 sorts these paths by length. For a given filename, it find=
+s
+the longest path that matches that files directory, and if that path
+starts with a '-', the file is not synced (for a file
+"//depot/A/B/myfile.c" it gets a match on "-//depot/A/B/...", and
+myfile.c is not synced, but the file "//depot/A/B/C/myotherfile.c" it
+matches "//depot/A/B/C/...")
 
-    branch.master.remote = eddy
+Do you have an example that shows how it might fail?
 
-This is with git version version 1.6.3.3
+And no, git-p4 does not care about the local mappings, it reads only
+the server part.
 
-Greetings,
-Jan.  -- who just finds out the uninstall target is missing?!?
-	 See attached.
+-Tor Arvid-
 
-*) I've been wondering why GIT lacks a "update", ie
-   pull-without-merge command.  You almost never want
-   to git pull /without/ -r?
-
--- 
-Jan Nieuwenhuizen <janneke@gnu.org> | GNU LilyPond - The music typesetter
-Avatar®: http://AvatarAcademy.nl    | http://lilypond.org
-
---=-xK3v8gOjVHrvCmiUeIHy
-Content-Disposition: attachment; filename*0=0001-Makefile-add-uninstall-target.-Fixes-elementary-good.pat; filename*1=ch
-Content-Type: text/x-patch; name="0001-Makefile-add-uninstall-target.-Fixes-elementary-good.patch"; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-
->From 5b5107e2887b11cab3a391bd550d30c7df68242f Mon Sep 17 00:00:00 2001
-From: Jan Nieuwenhuizen <janneke@gnu.org>
-Date: Wed, 11 Nov 2009 14:19:00 +0100
-Subject: [PATCH] Makefile: add uninstall target.  Fixes elementary good cleaning manners.
-
-   * Modified     Makefile
-   * Modified     gitk-git/Makefile
-   * Modified     perl/Makefile
-   * Modified     templates/Makefile
----
- Makefile           |   18 +++++++++++++++++-
- gitk-git/Makefile  |    2 ++
- perl/Makefile      |    2 +-
- templates/Makefile |    5 +++++
- 4 files changed, 25 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 5d5976f..135c3ac 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1781,7 +1781,23 @@ quick-install-man:
- quick-install-html:
- 	$(MAKE) -C Documentation quick-install-html
- 
-+bindir_PROGRAMS = git$X git-upload-pack$X git-receive-pack$X git-upload-archive$X git-shell$X git-cvsserver
- 
-+uninstall:
-+ifndef NO_TCLTK
-+	$(MAKE) -C gitk-git uninstall
-+	$(MAKE) -C git-gui gitexecdir='$(gitexec_instdir_SQ)' uninstall
-+endif
-+ifndef NO_PERL
-+	$(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' uninstall
-+endif
-+	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' uninstall
-+	$(RM) $(ALL_PROGRAMS:%='$(DESTDIR_SQ)$(gitexec_instdir_SQ)'/%)
-+	$(RM) $(BUILT_INS:%='$(DESTDIR_SQ)$(gitexec_instdir_SQ)'/%)
-+	$(RM) $(OTHER_PROGRAMS:%='$(DESTDIR_SQ)$(gitexec_instdir_SQ)'/%)
-+	-rmdir -p '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
-+	$(RM) $(bindir_PROGRAMS:%='$(DESTDIR_SQ)$(bindir_SQ)'/%)
-+	-rmdir -p '$(DESTDIR_SQ)$(bindir_SQ)'
- 
- ### Maintainer's dist rules
- 
-@@ -1857,7 +1873,7 @@ ifndef NO_TCLTK
- endif
- 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-GUI-VARS GIT-BUILD-OPTIONS
- 
--.PHONY: all install clean strip
-+.PHONY: all install uninstall clean strip
- .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_modern_shell
- .PHONY: .FORCE-GIT-VERSION-FILE TAGS tags cscope .FORCE-GIT-CFLAGS
- .PHONY: .FORCE-GIT-BUILD-OPTIONS
-diff --git a/gitk-git/Makefile b/gitk-git/Makefile
-index e1b6045..d68f19a 100644
---- a/gitk-git/Makefile
-+++ b/gitk-git/Makefile
-@@ -47,6 +47,8 @@ install:: all
- uninstall::
- 	$(foreach p,$(ALL_MSGFILES), $(RM) '$(DESTDIR_SQ)$(msgsdir_SQ)'/$(notdir $p) &&) true
- 	$(RM) '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
-+	-rmdir -p '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
-+	-rmdir -p '$(DESTDIR_SQ)$(msgsdir_SQ)'
- 
- clean::
- 	$(RM) gitk-wish po/*.msg
-diff --git a/perl/Makefile b/perl/Makefile
-index 4ab21d6..25fc304 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -10,7 +10,7 @@ ifndef V
- 	QUIET = @
- endif
- 
--all install instlibdir: $(makfile)
-+all install instlibdir uninstall: $(makfile)
- 	$(QUIET)$(MAKE) -f $(makfile) $@
- 
- clean:
-diff --git a/templates/Makefile b/templates/Makefile
-index 408f013..f4048d9 100644
---- a/templates/Makefile
-+++ b/templates/Makefile
-@@ -51,3 +51,8 @@ install: all
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(template_instdir_SQ)'
- 	(cd blt && $(TAR) cf - .) | \
- 	(cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && umask 022 && $(TAR) xof -)
-+
-+uninstall:
-+	-(cd blt && find . -type f) | (cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && xargs $(RM))
-+	-(cd blt && find . -mindepth 1 -type d) | (cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && xargs rmdir)
-+	-rmdir -p '$(DESTDIR_SQ)$(template_instdir_SQ)'
--- 
-1.6.3.3
-
-
---=-xK3v8gOjVHrvCmiUeIHy--
+>> If you want to fix it, you might want to rename clientSpecDirs to
+>> clientSpecEntries or something like that.
+>
+> For now, I just commented out two lines in the run() procedure:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0#if not p.endswith("/"):
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 =C2=A0p +=3D "/"
+>
+>> Btw... Am I understanding correctly what it is you wish to accomplis=
+h?
+>> I'm guessing that you have a perforce server with a client spec set
+>> up, and you want to sync everything on the entire server according t=
+o
+>> that client spec?
+>
+> yes. Client spec completely defines the project layout for me.
+> It contains paths to some components that are mapped to the
+> client working tree.
+> Just if your CS contain
+>
+> //depot/path/to/projectX/... //CLIENT/...
+>
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
