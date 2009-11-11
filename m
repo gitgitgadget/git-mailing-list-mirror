@@ -1,71 +1,105 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn problem with v1.6.5
-Date: Wed, 11 Nov 2009 20:34:13 +0000
-Message-ID: <20091111203413.GA9648@dcvr.yhbt.net>
-References: <4AF9E7FE.3060701@obry.net> <32541b130911101428t50038cfcsf37e3ea9edb26f64@mail.gmail.com> <4AFA91BB.7050402@obry.net> <32541b130911111141n7b029b1ep68656d2eb39be3c7@mail.gmail.com> <4AFB1756.7090708@obry.net> <20091111202201.GA10351@dcvr.yhbt.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] Clarify documentation on the "ours" merge strategy.
+Date: Wed, 11 Nov 2009 21:35:24 +0100
+Message-ID: <200911112135.25839.trast@student.ethz.ch>
+References: <alpine.DEB.1.00.0911031047510.4985@pacific.mpi-cbg.de> <200911111411.nABEBfox031023@ds9.cixit.se> <2faad3050911110713y4e33c7d2h21ad42efe4fd70b3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Avery Pennarun <apenwarr@gmail.com>, adambrewster@gmail.com,
-	git list <git@vger.kernel.org>
-To: Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Wed Nov 11 21:34:33 2009
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Peter Krefting <peter@softwolves.pp.se>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?utf-8?q?Bj=C3=B6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+To: Baz <brian.ewins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 11 21:36:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8Jtb-0005fn-8h
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 21:34:27 +0100
+	id 1N8Jvj-0006mW-8w
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 21:36:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758843AbZKKUeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 15:34:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758844AbZKKUeJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 15:34:09 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:46535 "EHLO dcvr.yhbt.net"
+	id S1757358AbZKKUg0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 15:36:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757320AbZKKUg0
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 15:36:26 -0500
+Received: from gwse.ethz.ch ([129.132.178.238]:45279 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758843AbZKKUeI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 15:34:08 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id 330721F605;
-	Wed, 11 Nov 2009 20:34:14 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20091111202201.GA10351@dcvr.yhbt.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1750970AbZKKUgZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 15:36:25 -0500
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 11 Nov
+ 2009 21:36:31 +0100
+Received: from thomas.localnet (84.74.103.245) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 11 Nov
+ 2009 21:36:09 +0100
+User-Agent: KMail/1.12.3 (Linux/2.6.27.29-0.1-default; KDE/4.3.3; x86_64; ; )
+In-Reply-To: <2faad3050911110713y4e33c7d2h21ad42efe4fd70b3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132698>
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> Pascal Obry <pascal@obry.net> wrote:
-> > I do not see something under .git/refs/* (only empty directories).
-> >
-> > The project has been imported using something like this:
-> >
-> >  $ git svn clone --prefix=svn/ svn+ssh://server/path \
-> > 	--revision=580:HEAD \
-> > 	--trunk=trunk/project \
-> > 	--tags=tags/project \
-> > 	--branches=branches/project \
-> > 	--branches="branches/global/*/project" project
+Baz wrote:
+> 2009/11/11 Peter Krefting <peter@softwolves.pp.se>:
+> >  ours::
+> >        This resolves any number of heads, but the result of the
+> > -       merge is always the current branch head.  It is meant to
+> > +       merge is always the current branch head, discarding any
+> > +       changes on the merged branch.  It is meant to
 > 
-> It looks like you didn't use any of the weird[1] options that make it
-> unsafe to clobber the rev_maps.  Can you try removing all the .rev_map.*
-> files in $GIT_DIR/svn and running "git svn fetch" to rebuild them?
+> I think part of the problem is that it is unclear what the "current
+> branch head" means when used in a rebase, and hence when this text is
+> included in the help for git-rebase and git-pull.
+[...]
+> Perhaps something more in the way of an explicit warning?
 > 
-> [1] --no-metadata, --use-svm-props
+> ours::
+>          This resolves any number of heads, but the result of the
+>          merge is always the current branch head, discarding any
+>          changes on the merged branch.  It is meant to
+>          be used to supersede old development history of side
+>          branches. Note that when rebasing, the branch you are
+>          rebasing onto is the "current branch head", and using this
+>          strategy will lose all of your changes - unlikely to be what
+>          you wanted to do.
 
-Also, any chance you have multiple refs with "trunk" in the basename?
+I'd much rather see this explained in the description of the rebase
+-m/-s options since it (the swap) applies to all uses of 'git rebase
+-m'.  Perhaps with an extra (but short) note in the "ours"
+description, like so:
 
- git rev-parse --symbolic --all | grep '/trunk'
-
-It could be a backwards compatibility issue with git svn looking
-in multiple places for trunk.
-
-With Adam's commit, it'll try $GIT_DIR/svn/refs/remotes/trunk/* first
-Then it'll try $GIT_DIR/svn/trunk/* as a fallback.
+diff --git i/Documentation/git-rebase.txt w/Documentation/git-rebase.txt
+index 33e0ef1..181947c 100644
+--- i/Documentation/git-rebase.txt
++++ w/Documentation/git-rebase.txt
+@@ -228,6 +228,10 @@ OPTIONS
+ 	Use merging strategies to rebase.  When the recursive (default) merge
+ 	strategy is used, this allows rebase to be aware of renames on the
+ 	upstream side.
+++
++Note that in a rebase merge (hence merge conflict), the sides are
++swapped: "theirs" is the to-be-applied patch, and "ours" is the so-far
++rebased series, starting with <upstream>.
+ 
+ -s <strategy>::
+ --strategy=<strategy>::
+diff --git i/Documentation/merge-strategies.txt w/Documentation/merge-strategies.txt
+index 4365b7e..0cae1be 100644
+--- i/Documentation/merge-strategies.txt
++++ w/Documentation/merge-strategies.txt
+@@ -33,6 +33,9 @@ ours::
+ 	merge is always the current branch head.  It is meant to
+ 	be used to supersede old development history of side
+ 	branches.
+++
++Because the sides in a rebase are swapped, using this strategy with
++git-rebase is never a good idea.
+ 
+ subtree::
+ 	This is a modified recursive strategy. When merging trees A and
 
 -- 
-Eric Wong
+Thomas Rast
+trast@{inf,student}.ethz.ch
