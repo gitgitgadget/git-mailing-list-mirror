@@ -1,70 +1,144 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Reece Dunn <msclrhd@googlemail.com>
 Subject: Re: Consensus on "Git"
-Date: Wed, 11 Nov 2009 01:06:44 -0800
-Message-ID: <7v8wedv3a3.fsf@alter.siamese.dyndns.org>
+Date: Wed, 11 Nov 2009 09:21:26 +0000
+Message-ID: <3f4fd2640911110121y17f0d78boadf803502e04475d@mail.gmail.com>
 References: <ee77f5c20911110032r65a60653sfeef34e3de07d17e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git <git@vger.kernel.org>
 To: David Symonds <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 11 10:07:12 2009
+X-From: git-owner@vger.kernel.org Wed Nov 11 10:21:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N89AM-0000t6-8E
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 10:07:02 +0100
+	id 1N89OR-0006zZ-Vr
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 10:21:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751690AbZKKJGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 04:06:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbZKKJGu
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 04:06:50 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59455 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751061AbZKKJGt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 04:06:49 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E12917CC81;
-	Wed, 11 Nov 2009 04:06:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cnswaszNsA1GBA4XIGjq3zwIIW4=; b=yV59J7
-	cjkgukge3RjepmyNba/r2MwZzYm9QzdPZQse/THEj6EDX/TOH+5S3E7HtGKJK3Mg
-	oktN5BicNPAHA6VrY/oxeWOeUuV100/vh8bU8/ZcyJ5fi9nFd04QRYVMHd9/WR40
-	9gGvl5PUNGhLfgCMkSIyIY4fkjTXVHSSvv69U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qQ6ghG2OKmo5YA4+YbXs4DjUNw1N4ovt
-	kti4o6+xx6wgYRwDZH+u8om/jUuDrYbvvz2n745V/ra92C/UTsLzPe4U5jCG2V6U
-	+K+QMXvyO7CqP/Q5jVY53/IWP5/1RpfeAvi/+vmTorUs0pMzkpoMNkzhbzlkIzBl
-	IBVvKCX4baY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C28227CC80;
-	Wed, 11 Nov 2009 04:06:50 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8190C7CC7F; Wed, 11 Nov
- 2009 04:06:46 -0500 (EST)
+	id S1753259AbZKKJVX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Nov 2009 04:21:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753073AbZKKJVX
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 04:21:23 -0500
+Received: from mail-vw0-f192.google.com ([209.85.212.192]:60127 "EHLO
+	mail-vw0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753001AbZKKJVV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Nov 2009 04:21:21 -0500
+Received: by vws30 with SMTP id 30so262294vws.33
+        for <git@vger.kernel.org>; Wed, 11 Nov 2009 01:21:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=IouP42hqDwciVsJn78Z6XqTOMq/WZzLZ23qvRFkXq84=;
+        b=RLmpO9D29T/z+kyuqAN8DJ0XA9g+rC7zvtVUh7t8TKo2jGdjSlsDY/Ere/S28InuJp
+         5LiIVoFKgm1u7p2Lw17WWqtM/rirIzmuYfBUfsyF0ZbJAtAUKMgsh6TW/ojTvquzYfC8
+         pezw4kSdZqaTI3VmasFuSHJRrM84QxQqEZBXk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=sJTP1TCjWq8qGJNzpPPXSgEWlBUWhZDo+cgzmAj4ztqwvONdfXG1Bt4iwdeUJIFLEq
+         7/EbgTFZe7uR7dtSe3sY2hOzW6LxwLsrKvUwINwvUpQWviK50K7Qpn9s2TcSV903D6Q4
+         wuCPv5Ypg5ZNS1PQbJeIf58O2YUkYR8HV4rEU=
+Received: by 10.220.125.7 with SMTP id w7mr1537163vcr.14.1257931286126; Wed, 
+	11 Nov 2009 01:21:26 -0800 (PST)
 In-Reply-To: <ee77f5c20911110032r65a60653sfeef34e3de07d17e@mail.gmail.com>
- (David Symonds's message of "Wed\, 11 Nov 2009 19\:32\:30 +1100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8C5D2370-CEA1-11DE-88DF-7B3EEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132629>
 
-David Symonds <dsymonds@gmail.com> writes:
-
+2009/11/11 David Symonds <dsymonds@gmail.com>:
+> Hi folks,
+>
 > Is there consensus on "Git" being the standard capitalisation, versus
-> "GIT"?
+> "GIT"? I only really see "git" and "Git" on the mailing list and in
+> most external documentation and websites (e.g. git-scm.com and
+> github.com), but git's source tells a different picture:
+>
+> $ cat *.[ch] | egrep -o '\bG[Ii][Tt]\b' | sort | uniq -c
+> =A036 GIT
+> =A0 7 Git
+> $ cat Documentation/* 2> /dev/null | egrep -o '\bG[Ii][Tt]\b' | sort =
+| uniq -c
+> =A0284 GIT
+> =A0155 Git
 
-I am not a consensus, but from day 1, Linus talked about "git" (all
-lowercase) and "Git" was used only when it came at the beginning of a
-sentence (an usual English capitalization rule) or in a section or book
-title where all words (except prepositions such as "in", "on") are
-capitalized, and I try to mimick it myself for consistency.
+All upper case in the sources and documentation will mean that it is
+either an environment variable (e.g. GIT_INSTALL_DIR as Sverre has
+noted), and for preprocessor constants/definitions.
 
-As a corollary, unless I spell all the other words in capital to SHOUT, I
-never write GIT.
+However, those are not what you are searching for. I.e.
+
+$ grep -P '\bGIT\b' *.[ch]
+builtin-apply.c:	 * We have read "GIT binary patch\n"; what follows is =
+a line
+builtin-apply.c:		static const char git_binary[] =3D "GIT binary patch\=
+n";
+builtin-cat-file.c: * GIT - The information manager from hell
+builtin-check-ref-format.c: * GIT - The information manager from hell
+builtin-commit-tree.c: * GIT - The information manager from hell
+builtin-diff-files.c: * GIT - The information manager from hell
+builtin-init-db.c: * GIT - The information manager from hell
+builtin-ls-tree.c: * GIT - The information manager from hell
+builtin-mktree.c: * GIT - the stupid content tracker
+builtin-read-tree.c: * GIT - The information manager from hell
+builtin-update-index.c: * GIT - The information manager from hell
+builtin-write-tree.c: * GIT - The information manager from hell
+config.c: * GIT - The information manager from hell
+date.c: * GIT - The information manager from hell
+diff.c:	fprintf(file, "GIT binary patch\n");
+diff-delta.c: * Rewritten for GIT by Nicolas Pitre <nico@fluxnic.net>,
+(C) 2005-2007
+fast-import.c:     # GIT does not permit ':' in ref or tag strings.
+fast-import.c:  path    ::=3D # GIT style file path, e.g. "a/b/c";
+fast-import.c:  ref     ::=3D # GIT ref name, e.g.
+"refs/heads/MOZ_GECKO_EXPERIMENT";
+fast-import.c:  tag     ::=3D # GIT tag name, e.g. "FIREFOX_1_5";
+fast-import.c:  sha1exp ::=3D # Any valid GIT SHA1 expression;
+fast-import.c:  name  ::=3D # valid GIT author/committer name;
+fast-import.c:  email ::=3D # valid GIT author/committer email;
+fast-import.c:  tz    ::=3D # GIT style timezone;
+fast-import.c:		die("Branch name doesn't conform to GIT standards: %s",=
+ name);
+hash-object.c: * GIT - The information manager from hell
+progress.c: * Simple text-based progress display module for GIT
+read-cache.c: * GIT - The information manager from hell
+read-cache.c: * cache, ie the parts that aren't tracked by GIT, and onl=
+y used
+sha1_file.c: * GIT - The information manager from hell
+sha1_file.c:				     " (try upgrading GIT to a newer version)",
+sha1_file.c:		return error("file %s is not a GIT packfile", p->pack_nam=
+e);
+sha1_file.c:			" supported (try upgrading GIT to a newer version)",
+trace.c: * GIT - The information manager from hell
+usage.c: * GIT - The information manager from hell
+var.c: * GIT - The information manager from hell
+
+And selected extracts from:
+
+$ grep -P '\bGIT\b' Documentation/*
+Documentation/asciidoc.conf:# Show GIT link as: <command>(<section>);
+if section is defined, else just show
+Documentation/everyday.txt:Everyday GIT With 20 Commands Or So
+Documentation/everyday.txt:My typical GIT day.::
+Documentation/git-tools.txt:   providing generally smoother user
+experience than the "raw" Core GIT
+Documentation/git-tools.txt:   is now in core GIT.
+Documentation/git-tools.txt:   pg is a shell script wrapper around GIT
+to help the user manage a set of
+Documentation/git-tools.txt:   Stacked GIT provides a quilt-like patch
+management functionality in the
+Documentation/git-tools.txt:   GIT environment. You can easily manage
+your patches in the scope of GIT
+Documentation/git-tools.txt:   gitk is a simple Tk GUI for browsing
+history of GIT repositories easily.
+Documentation/git-tools.txt:   GITweb provides full-fledged web
+interface for GIT repositories.
+Documentation/git-tag.txt:GIT
+Documentation/RelNotes-1.6.1.txt:GIT v1.6.1 Release Notes
+
+- Reece
