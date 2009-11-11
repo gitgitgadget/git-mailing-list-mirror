@@ -1,63 +1,66 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v5 1/2] filter-branch: stop special-casing $filter_subdir
- argument
-Date: Wed, 11 Nov 2009 09:58:43 +0100
-Message-ID: <4AFA7CC3.6020500@viscovery.net>
-References: <4AE945D0.5030403@viscovery.net> <0280836a32983c848bbb0e3b441be256d3c8f4fa.1257885121.git.trast@student.ethz.ch> <4AFA7624.5040400@viscovery.net> <4AFA7B9A.4090005@viscovery.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Consensus on "Git"
+Date: Wed, 11 Nov 2009 10:02:25 +0100
+Message-ID: <fabb9a1e0911110102p3f8d005el1269b8cabfaad86e@mail.gmail.com>
+References: <ee77f5c20911110032r65a60653sfeef34e3de07d17e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Nov 11 09:58:58 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>
+To: David Symonds <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 11 10:02:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N892X-0005ok-W2
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 09:58:58 +0100
+	id 1N896N-0007VB-8C
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 10:02:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751257AbZKKI6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 03:58:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751080AbZKKI6r
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 03:58:47 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:3954 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750991AbZKKI6r (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 03:58:47 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1N892K-0007VX-6d; Wed, 11 Nov 2009 09:58:51 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 072116D9; Wed, 11 Nov 2009 09:58:43 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <4AFA7B9A.4090005@viscovery.net>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1751925AbZKKJCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 04:02:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751870AbZKKJCn
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 04:02:43 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:29566 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751787AbZKKJCl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 04:02:41 -0500
+Received: by ey-out-2122.google.com with SMTP id 9so197743eyd.19
+        for <git@vger.kernel.org>; Wed, 11 Nov 2009 01:02:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=lpG+doHgIq0DMxg+hUHjpnGGNIeFaRvU0bDXqknFZRc=;
+        b=n18Cda/HYXaeW9NvlGLctLTFT2UzXqlMPrM+x2OTXJVai6e5+jiDGng/NM68PZa2p5
+         qjoXumo8T3ANnmWaxnoY1vr2lqaB+7a5logjNJFftAzXrWE65Hz0Zhw8CAn7XI6xD6y3
+         5oz26uxVygVTlQOsTt8CiQKyVPV1hHRbjU7RE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=KAv4MM0oYCUiB0bFhuQ9DKa58hTYboRhn9fGSVzbq0pQYIdCo+goe4imEPhuEpcC3W
+         jrpegHDX8d42BMMEihsKIqFcBcNq1faWIZ1GwzlBpNJ0uGSxKDPzfqgSOwPv/G6FZ433
+         B4v12lSZN1t7KxHTQGc4M/vlicEQ3+VrJ/HGs=
+Received: by 10.216.93.4 with SMTP id k4mr367135wef.155.1257930165453; Wed, 11 
+	Nov 2009 01:02:45 -0800 (PST)
+In-Reply-To: <ee77f5c20911110032r65a60653sfeef34e3de07d17e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132627>
 
-Johannes Sixt schrieb:
-> --- a/git-filter-branch.sh
-> +++ b/git-filter-branch.sh
-> @@ -266,7 +266,7 @@
-> 
->  # we need "--" only if there are no path arguments in $@
->  nonrevs=$(git rev-parse --no-revs "$@") || exit
-> -dashdash=${nonrevs+"--"}
-> +test -z "$nonrevs" && dashdash=-- || dashdash=
->  rev_args=$(git rev-parse --revs-only "$@")
-> 
->  case "$filter_subdir" in
+Heya,
 
-Arrgh! I should have indented these lines so that they
-do not count as patch text.
+On Wed, Nov 11, 2009 at 09:32, David Symonds <dsymonds@gmail.com> wrote:
+> Is there consensus on "Git" being the standard capitalisation, versus
+> "GIT"? I only really see "git" and "Git" on the mailing list and in
+> most external documentation and websites (e.g. git-scm.com and
+> github.com), but git's source tells a different picture:
 
-Sorry.
+Definitely "Git" or "git", the source code ones are probably from
+variable names, something like "GIT_INSTALL_DIR" and whatnot.
 
--- Hannes
+-- 
+Cheers,
+
+Sverre Rabbelier
