@@ -1,70 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Consensus on "Git"
-Date: Wed, 11 Nov 2009 10:33:20 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0911111028040.19111@intel-tinevez-2-302>
+Date: Wed, 11 Nov 2009 01:36:45 -0800
+Message-ID: <7vy6mdqu6q.fsf@alter.siamese.dyndns.org>
 References: <ee77f5c20911110032r65a60653sfeef34e3de07d17e@mail.gmail.com>
+ <7v8wedv3a3.fsf@alter.siamese.dyndns.org>
+ <20091111092731.GA17422@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git <git@vger.kernel.org>
-To: David Symonds <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 11 10:34:50 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Symonds <dsymonds@gmail.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 11 10:37:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N89Zx-0006Hl-Vg
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 10:33:30 +0100
+	id 1N89dP-0000YJ-UW
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 10:37:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753008AbZKKJdT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 04:33:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753002AbZKKJdS
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 04:33:18 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34080 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751621AbZKKJdS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 04:33:18 -0500
-Received: (qmail invoked by alias); 11 Nov 2009 09:33:22 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp023) with SMTP; 11 Nov 2009 10:33:22 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18UQj4fqRMUhje+IwJUGkaXQqCUF5h4/4PL2IyZdN
-	7MJuqw/D34Pxlq
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <ee77f5c20911110032r65a60653sfeef34e3de07d17e@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1753470AbZKKJgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 04:36:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753372AbZKKJgw
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 04:36:52 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41341 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751985AbZKKJgw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 04:36:52 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 237E87CE61;
+	Wed, 11 Nov 2009 04:36:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ORKE9xf+ZC13XqMy8TuPcEN3VBs=; b=S+fsHH
+	eyBtpeugoFyAxU8zTXozbk8A4Kc+OSkviOyMotDffAHfIMumxamyDFF2LT6PnxpY
+	ggBa7Y6nul18J00X1Df088RR2x1yuuTbGJVxpKICyXIxyCAuoBn/SaXvsiJhGV9H
+	m6QvaZKJsTHdLWg0ghQ4Yx04PcyAS+0q4IMT4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=era2bkZ8RhBTQpDucb7FXabHZrHKiMv4
+	zgoR2iQhGwgQgr/qaAL9yEUR+XVsK42m6lxhiaIv3IrfaAhrmieAGbx9LG+4ps0X
+	8gQi7eynjb40eFFaJgPYkAp2qXzv+2ExtaeZGTMZrGCzO6yR7iJFFZyDCnqCLNKL
+	JYEq0/MWHo0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E2CCF7CE60;
+	Wed, 11 Nov 2009 04:36:51 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1EB567CE5F; Wed, 11 Nov
+ 2009 04:36:46 -0500 (EST)
+In-Reply-To: <20091111092731.GA17422@sigill.intra.peff.net> (Jeff King's
+ message of "Wed\, 11 Nov 2009 04\:27\:31 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: BDEC75CC-CEA5-11DE-88D2-7B3EEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132632>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-On Wed, 11 Nov 2009, David Symonds wrote:
+> Except for the title of every set of release notes, which all start
+> with:
+>
+>   GIT vX.Y.Z Release Notes
+>
+> ? :)
 
-> Is there consensus on "Git" being the standard capitalisation, versus
-> "GIT"?
+Yeah these were copied from release to release and I do not pay much
+attention to the minute details of how my tools I wrote long time ago
+spells things ;-)
 
-There is definitely no consensus.
-
-Personally, I started to capitalize it as a reaction to business types 
-(apparently you have to turn in your sense of humor when you get an MBA), 
-who were not happy with the abbreviation "global information tracker" 
-(which would merit an all-capitalization a la CVS) [*1*], let alone with 
-the connotation as a British slang word.
-
-Yes, in Open Source, we are used to crude, geeky humor, some of us even 
-accept blunt mails, but we are embedded in a world that is called 
-"reality".
-
-In my experience, in this world it is much easier to tell people that your 
-program is called "Git" ("could have been John, either") and be done with 
-the questions.
-
-Ciao,
-Dscho
-
-Footnote *1*: I tried once to reinterpret GIT as meaning "Git Is 
-Terrific", but that did not fly too well. :-)
+Perhaps I should update my scripts to generate them.
