@@ -1,86 +1,65 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Consensus on "Git"
-Date: Wed, 11 Nov 2009 16:37:51 +0100
-Message-ID: <4AFADA4F.5060403@drmicha.warpmail.net>
-References: <ee77f5c20911110032r65a60653sfeef34e3de07d17e@mail.gmail.com>	<alpine.DEB.1.00.0911111028040.19111@intel-tinevez-2-302> <87y6mdyuoo.fsf@iki.fi>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: t5541-http-push hanging
+Date: Wed, 11 Nov 2009 23:47:33 +0800
+Message-ID: <be6fef0d0911110747k219e1fe0l7bd19bbc58b5ea3e@mail.gmail.com>
+References: <B17AB159-E217-4E1F-BEA3-97E5892C13F4@gernhardtsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	David Symonds <dsymonds@gmail.com>, git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Wed Nov 11 16:38:06 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Brian Gernhardt <brian@gernhardtsoftware.com>
+X-From: git-owner@vger.kernel.org Wed Nov 11 16:47:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8FGn-0003pP-Pf
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 16:38:06 +0100
+	id 1N8FQ3-0000h5-Fp
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 16:47:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753266AbZKKPhz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Nov 2009 10:37:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752536AbZKKPhy
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 10:37:54 -0500
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:44485 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751768AbZKKPhy (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Nov 2009 10:37:54 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 66D1FB440A;
-	Wed, 11 Nov 2009 10:37:59 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Wed, 11 Nov 2009 10:37:59 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=ltC7pYQsaEAlsL9YnDv9ejC5qSY=; b=TRV9CtNlnd91rBetISHu6AuAPj0napM031mCJaGL0j1utp+mS66mHgT8Ayj3bdW4MUhsTMh25nu3yfCqOoNzzDkx0aXAFR0RkdJEGwbjP1a8c5MEixCPff0ELRLW+o6ES5fF1/YBPfttS//yUTF+j+hOABai54b9o/OSwIp1jco=
-X-Sasl-enc: LhbRRNGDVwcuWqfs+h8pzzvMy0EGDB0rUR8ql1JGpcHE 1257953879
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 7C8F5217B2;
-	Wed, 11 Nov 2009 10:37:58 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091111 Lightning/1.0pre Shredder/3.0pre
-In-Reply-To: <87y6mdyuoo.fsf@iki.fi>
+	id S1757435AbZKKPr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 10:47:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756987AbZKKPr2
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 10:47:28 -0500
+Received: from mail-iw0-f178.google.com ([209.85.223.178]:49092 "EHLO
+	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753125AbZKKPr2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 10:47:28 -0500
+Received: by iwn8 with SMTP id 8so997297iwn.33
+        for <git@vger.kernel.org>; Wed, 11 Nov 2009 07:47:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=mLrCY43TOvrEs+N3AzoKpd/Z13+Vnd0AbQJBlxEk9DI=;
+        b=gm1r99al+ypcrYxu10daTUcpwQJMXYVmaslKtkb2BIGypQT8JDhviMQYT1jDi7Tk59
+         WkWAq72X+8N36XR4skJtBbCR2tgJiHZXWpYIgqvgPifGXYFMrv4XJFOpB/8+zghA5kLD
+         2QaIJvQgnnGYc5tFxqBYa1o9YcgtlaehXt4Ok=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=R56zWh7388JbDy9U+TzUJSVxd5S4uA6drSNmRGLI+oKhZq8PMbFw1OzzeEP2kYJYJ1
+         El+uU1s2+gWJv7BrwD3XyMpPNdFA2YATZkJH36xf0guz74K4coWDYneGc7wjDNNXlZ1u
+         luS/bcHEpiv6tJmphyYXFOMe5N1J/syzutApE=
+Received: by 10.231.157.131 with SMTP id b3mr561133ibx.19.1257954453344; Wed, 
+	11 Nov 2009 07:47:33 -0800 (PST)
+In-Reply-To: <B17AB159-E217-4E1F-BEA3-97E5892C13F4@gernhardtsoftware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132665>
 
-Teemu Likonen venit, vidit, dixit 11.11.2009 15:58:
-> On 2009-11-11 10:33 (+0100), Johannes Schindelin wrote:
->=20
->> Yes, in Open Source, we are used to crude, geeky humor, some of us
->> even accept blunt mails, but we are embedded in a world that is call=
-ed
->> "reality".
->>
->> In my experience, in this world it is much easier to tell people tha=
-t
->> your program is called "Git" ("could have been John, either") and be
->> done with the questions.
->=20
-> Yes, that=E2=80=99s how the language works.
+Hi,
 
-And why Dick Cheney was allowed to keep his name ;)
+On Wed, Nov 11, 2009 at 2:28 PM, Brian Gernhardt
+<brian@gernhardtsoftware.com> wrote:
+> error: RPC failed; result=22, HTTP code = 500
+> ^CFATAL: Unexpected exit with code 130
 
-> Proper nouns are capitalized, so in
-> plain text the name of this program should always be written =E2=80=9C=
-Git=E2=80=9D. Only
-> in command examples it is =E2=80=9Cgit=E2=80=9D.
->=20
-> Sometimes people mix proper nouns and logos/brands. Proper nouns are
-> under the rules of the language. For example, I can=E2=80=99t go tell=
-ing people
-> that my name must be written =E2=80=9CteEMu=E2=80=9D because I don=E2=
-=80=99t own Finnish.
+looks like an apache/http-backend issue. What version of apache are you running?
 
-Given that reasoning, we should really use "Git" whenever the program o=
-r
-project name is meant. Is that something we can reach concensus on?
+Also, are you running out of the 'next' branch?
 
-> In logos the brands=E2=80=99 owner can try to be funny and cool and d=
-ifferent
-> and write anything they want (like =E2=80=9Cg=C9=A8T=E2=80=9D or =E2=80=
-=9CG=C4=ABT=E2=80=9D).
-
-Nice!
-
-Michael
+-- 
+Cheers,
+Ray Chuan
