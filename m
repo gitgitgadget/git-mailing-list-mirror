@@ -1,101 +1,61 @@
-From: Daniele Segato <daniele.bilug@gmail.com>
-Subject: Locally manage user/branch setting files without pushing them 
-	remotely
-Date: Wed, 11 Nov 2009 13:01:26 +0100
-Message-ID: <9accb4400911110401g5c44d011u50cafcfe736a2ec6@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v5 1/2] filter-branch: stop special-casing $filter_subdir
+ argument
+Date: Wed, 11 Nov 2009 13:10:43 +0100
+Message-ID: <4AFAA9C3.5080402@viscovery.net>
+References: <4AE945D0.5030403@viscovery.net> <4AFA7624.5040400@viscovery.net> <4AFA7B9A.4090005@viscovery.net> <200911111124.52340.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 11 13:01:37 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Nov 11 13:10:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8BtF-0007Os-06
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 13:01:33 +0100
+	id 1N8C2I-0003I3-6e
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 13:10:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757406AbZKKMBW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 07:01:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757384AbZKKMBW
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 07:01:22 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:41543 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757383AbZKKMBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 07:01:21 -0500
-Received: by bwz27 with SMTP id 27so906423bwz.21
-        for <git@vger.kernel.org>; Wed, 11 Nov 2009 04:01:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=odzrv3yIPAX8t5NR+TWkr6wCOV7pbF84gpKOrCHz8Mg=;
-        b=lr40n4tz62vvcETadQV4tB2gbxPxYGNc6I93OuW+9HERi768xHjm9i5zQFJJHFEHSs
-         ymCThFWiyiGwqHsHwElrVDVHV3/siNyzDHKZOO+X8aNl6rMOLmXdId4HqeYCobx1M7Ah
-         sfLK4WuTKzzudLRUL6DrLNzdT0TOEhhs79AcQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=pfKK9FlTnf8FFuxFhwy9KaY90lQ0unbpZtwZmPPMExNG+qMt+C3Cz7HhxrulOcYxR4
-         LPusaprizJiTFUS2xRKKYBWJFBkj+tANbTWW0hhfOSvGr3kPXuuhRerBWWwXMCYKwWd8
-         5eVdwjcfdq8xdnmroteQc8R9kcF9hUTKBaubM=
-Received: by 10.204.24.71 with SMTP id u7mr1388864bkb.35.1257940886049; Wed, 
-	11 Nov 2009 04:01:26 -0800 (PST)
+	id S1757414AbZKKMKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 07:10:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756862AbZKKMKl
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 07:10:41 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:8179 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755318AbZKKMKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 07:10:41 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1N8C27-00083u-OK; Wed, 11 Nov 2009 13:10:43 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 6678710541; Wed, 11 Nov 2009 13:10:43 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <200911111124.52340.trast@student.ethz.ch>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132645>
 
-Hi,
+Thomas Rast schrieb:
+> Johannes Sixt wrote:
+>> Furthermore, --subdirectory-filter supplies its own '--', and if the user
+>> provided one himself, such as in
+>>
+>>   git filter-branch --subdirectory-filter subdir -- --all -- subdir/file
+>>
+>> 	an extra '--' was used as path filter in the call to git-rev-list that
+>> determines the commits that shall be rewritten.
+> 
+> There's some stray space here that should probably also be removed.
 
-I had a situation I don't know how to manage with Git.
+Oh, right. Junio, you can pick up the 2-patch series from
 
-The project has a lot of setting that are really binded to the user
-and should not go pushed in a remote repository (example: database
-connections parameters / filesystem paths)
-We have a .template file for those settings but the actual settings
-are really binded to the user environment.
-I added those files to the .gitignore but now I can't keep an history
-of them and I can't use different version of them in different
-branches.
+  git://repo.or.cz/git/mingw/j6t.git filter-branch
 
-I tell you what's the real situation but I will simplify things a
-little, suppose I only have two branches: master and experiments.
-
-I've a java application and some ANT script to automatizations like
-compiling, packaging and deploying stuffs.
-
-On my system I had two application servers and two databases one for
-"master" and the other for "experiment".
-There is a property files with the path of the two application servers
-and the parameters to connect at the DB.
-
-The ant script automatically deploy on the right application server
-and automatically set the properties to connect at the right database.
-
-This allow me to clean my experimantal database everytimes I need to
-and start over by a clean situation and keep the "master" one
-populated with all the data so I can do stress test/update procedures
-test and so on...
-
-At the moment I manually modify that property files when I checkout
-one of the two branches and I need to deploy it to test or whatever.
-
-
-
-Is there a way with Git to automatically switch that file when i
-switch through branches?
-It would be really perfect if I could also keep version of that file
-so that when I checkout an old commit I had the options I was using
-when I was testing that commit.
-
-Ideally that means that should be some files that are kept within each
-commit but they are not pushed to a remote repository.
-(Even if i'm talking about pushing I'm using git-svn because my
-company still use SVN as versioning system so I don't push but i do
-git svn dcommit when committing on a remote repository)
-
-How do you manage situation like this?
-
-thanks,
-Daniele
+-- Hannes
