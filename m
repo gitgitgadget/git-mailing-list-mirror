@@ -1,86 +1,102 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: BUG: git rebase -i -p silently looses commits
-Date: Wed, 11 Nov 2009 18:32:42 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0911111804520.19111@intel-tinevez-2-302>
-References: <20091104214611.GL9139@dr-wily.mit.edu>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: excerpts from tomorrow's "What's cooking" draft
+Date: Wed, 11 Nov 2009 18:57:24 +0100
+Message-ID: <fabb9a1e0911110957k599ac3dfmd1a44a0499c72b2d@mail.gmail.com>
+References: <7vbpj9s8vk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Constantine Plotnikov <constantine.plotnikov@gmail.com>,
-	git@vger.kernel.org
-To: Greg Price <price@ksplice.com>
-X-From: git-owner@vger.kernel.org Wed Nov 11 18:33:40 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junio@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Nov 11 18:57:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8H4c-0006C1-11
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 18:33:38 +0100
+	id 1N8HS4-0002aE-2R
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 18:57:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758240AbZKKRcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 12:32:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758087AbZKKRcn
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 12:32:43 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52880 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758086AbZKKRcm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 12:32:42 -0500
-Received: (qmail invoked by alias); 11 Nov 2009 17:32:44 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp055) with SMTP; 11 Nov 2009 18:32:44 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/XIKE/S5vXtM9SQ0Js/64zKgFUHcKr164V5evouq
-	+Mkf27GbSYJrCa
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20091104214611.GL9139@dr-wily.mit.edu>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1757828AbZKKR5l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Nov 2009 12:57:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757697AbZKKR5k
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 12:57:40 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:60201 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757510AbZKKR5k convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Nov 2009 12:57:40 -0500
+Received: by bwz27 with SMTP id 27so1281337bwz.21
+        for <git@vger.kernel.org>; Wed, 11 Nov 2009 09:57:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=W6W0Q4CmuDEB2uIwBmJF8GNvzfrqEVkijwsWIi6gPWw=;
+        b=O3zU8W4JBNqhlPE7MAl619TGI3LdTz9bdhw4svTGKnpyGrEBI8jDh6bV/+DkE8XY69
+         7BK1IjqovS+6ysRYk8a5kdY1WhtMhLLUwaQB5qmDBEtmx7tE3eEngpc4i/TSJkZJxhAj
+         CVwfK6pKtSWkEZdoF60l4obVajKvXbW6DTiDw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=N8Q6FzjCTFum1F969qFCFXEB/8OVlm8QMX5ujUXofPfHgyB52M70ML0y5NP+/zACP1
+         KdD8for5eAajrPfjLyglZBi31gvi9eQp8QXNfYWVRV/u0JaXOhsEUp2WSdwQYaIX2eqs
+         akr8F0NLBYncfFVccsDyy+FSqUmEvPpPjxKlw=
+Received: by 10.216.93.4 with SMTP id k4mr547718wef.155.1257962264382; Wed, 11 
+	Nov 2009 09:57:44 -0800 (PST)
+In-Reply-To: <7vbpj9s8vk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132681>
 
-Hi,
+Heya,
 
-On Wed, 4 Nov 2009, Greg Price wrote:
+On Wed, Nov 11, 2009 at 10:34, Junio C Hamano <junio@pobox.com> wrote:
+> * sr/gfi-options (2009-09-06) 6 commits.
+> =A0- fast-import: test the new option command
+> =A0- ...
+> =A0- fast-import: put option parsing code in separate functions
+>
+> It seemed to be moving again soon, but nothing has happened yet...
 
-> On Mon, 2 Nov 2009, Johannes Schindelin wrote:
-> > Having said that, I worked for some time on fixing this issue, and I 
-> > actually run a version of rebase -i -p here that allows reordering 
-> > commits, but it is far from stable (and due to GSoC and day-job 
-> > obligations, I had no time to work on it in months).
-> 
-> I'm interested in this topic too.  Some weeks ago I took your
-> rebase-i-p branch from January and rebased it onto the latest release;
-> it's at
->   git://repo.or.cz/git/price.git rebase-i-p
-> and now based on v1.6.5.2.  I fixed a few bugs and added a feature,
-> and it's the version I run day to day.
+I ran out of git time due to the start of my uni's next quarter, this
+is next on my to-do list though, as my remote helper depends on it.
 
-That is very interesting!
+> * sr/vcs-helper (2009-11-06) 12 commits
+> =A0- Add Python support library for remote helpers
+> =A0- ...
+> =A0- Fix memory leak in helper method for disconnect
+>
+> Re-rolled series that contains Daniel's and Johan's.
+> Any comments? =A0Is everybody happy?
 
-However, for rebase-i-p to have a chance to be accepted, I think a few 
-things are necessary still (this is all from memory, so please take 
-everything with a grain of salt):
+Daniel, are you going to send a follow-up to the memory-leaking patch?
+If not, this needs to stay out of next until I have time to do so. My
+gitdir patch might need to be evicted as it is connected to
+sr/gfi-options which is not yet done. Also, we need to update the
+documentation, but I think we can at least start cooking it in next
+without these documentation updates?
 
-- reorder the series to have the -i fixes first, the new commands next, 
-  and then the changes to the actual -p mode
+> * ks/precompute-completion (2009-10-26) 3 commits.
+> =A0(merged to 'next' on 2009-10-28 at cd5177f)
+> =A0+ completion: ignore custom merge strategies when pre-generating
+> =A0(merged to 'next' on 2009-10-22 at f46a28a)
+> =A0+ bug: precomputed completion includes scripts sources
+> =A0(merged to 'next' on 2009-10-14 at adf722a)
+> =A0+ Speedup bash completion loading
+>
+> What's the status of this thing? =A0Last time I polled the list I had=
+ an
+> impression that it was not quite ready...
 
-- rework the mark stuff so that 'todo' works properly, and then change the 
-  system to use ':<name>' style bookmarks.
+Does the current version require me to 'cd contrib/completion && make'
+each time we update completion? If so, that's a (very annoying)
+regression that needs to be fixed before it's merged to master IMHO.
 
-- fix that nasty bug which makes one revision not pass the tests (I forgot 
-  which one, but it should be in the TODOs)
+--=20
+Cheers,
 
-- add proper handling for the case when a patch has been applied in 
-  upstream already, but was not correctly identified as that by 
-  --cherry-pick (well, this TODO is actually not really related to rebase 
-  -i -p, but something I deeply care about)
-
-Unfortunately, I am getting more and more deprived of Git time budget 
-these days, so that I cannot seem to find a few hours to at least restart 
-my efforts.
-
-Ciao,
-Dscho
+Sverre Rabbelier
