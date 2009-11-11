@@ -1,87 +1,63 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: t5541-http-push hanging
-Date: Wed, 11 Nov 2009 01:28:05 -0500
-Message-ID: <B17AB159-E217-4E1F-BEA3-97E5892C13F4@gernhardtsoftware.com>
-Mime-Version: 1.0 (Apple Message framework v1077)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 11 07:28:16 2009
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: git-svn problem with v1.6.5
+Date: Wed, 11 Nov 2009 09:11:20 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <4AFA71A8.8020100@obry.net>
+References: <4AF9E7FE.3060701@obry.net> <4AFA3751.7000709@vilain.net>
+Reply-To: pascal@obry.net
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Wed Nov 11 09:11:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N86gg-0000dB-B8
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 07:28:14 +0100
+	id 1N88IN-0003hq-87
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 09:11:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326AbZKKG2E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 01:28:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751987AbZKKG2E
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 01:28:04 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:39246 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752372AbZKKG2D convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Nov 2009 01:28:03 -0500
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id CA32F1FFC087; Wed, 11 Nov 2009 06:27:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [10.10.10.10] (cpe-67-240-172-169.rochester.res.rr.com [67.240.172.169])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id 511A61FFC06B
-	for <git@vger.kernel.org>; Wed, 11 Nov 2009 06:27:55 +0000 (UTC)
-X-Mailer: Apple Mail (2.1077)
+	id S1756827AbZKKILD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 03:11:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756661AbZKKILC
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 03:11:02 -0500
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:62760 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755249AbZKKILB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 03:11:01 -0500
+Received: by ewy3 with SMTP id 3so889552ewy.37
+        for <git@vger.kernel.org>; Wed, 11 Nov 2009 00:11:06 -0800 (PST)
+Received: by 10.213.1.5 with SMTP id 5mr6179826ebd.71.1257927066103;
+        Wed, 11 Nov 2009 00:11:06 -0800 (PST)
+Received: from ?192.168.0.100? (AVelizy-154-1-81-24.w86-205.abo.wanadoo.fr [86.205.111.24])
+        by mx.google.com with ESMTPS id 23sm3542694eya.4.2009.11.11.00.11.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 11 Nov 2009 00:11:04 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
+In-Reply-To: <4AFA3751.7000709@vilain.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132618>
 
-My build script for git has been hanging at t5541.2 and I haven't had the tuits to discover why.  Here's what I've gotten so far, in case anyone can figure it out faster:
+Sam,
 
-$ ./t5541-http-push.sh -v
-Initialized empty Git repository in /Users/brian/dev/git/t/trash directory.t5541-http-push/.git/
-* expecting success: 
-	cd "$ROOT_PATH" &&
-	mkdir test_repo &&
-	cd test_repo &&
-	git init &&
-	: >path1 &&
-	git add path1 &&
-	test_tick &&
-	git commit -m initial &&
-	cd - &&
-	git clone --bare test_repo test_repo.git &&
-	cd test_repo.git &&
-	git config http.receivepack true &&
-	ORIG_HEAD=$(git rev-parse --verify HEAD) &&
-	cd - &&
-	mv test_repo.git "$HTTPD_DOCUMENT_ROOT_PATH"
+> Did you copy the entire directory across using rsync/tar/etc or 'git
+> clone' ?
 
-Initialized empty Git repository in /Users/brian/dev/git/t/trash directory.t5541-http-push/test_repo/.git/
-[master (root-commit) 0c973ae] initial
- 0 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 path1
-/Users/brian/dev/git/t/trash directory.t5541-http-push
-Initialized empty Git repository in /Users/brian/dev/git/t/trash directory.t5541-http-push/test_repo.git/
-/Users/brian/dev/git/t/trash directory.t5541-http-push
-*   ok 1: setup remote repository
+I did a rsync of the .git directory so I expect all refs to be there.
 
-* expecting success: 
-	cd "$ROOT_PATH" &&
-	git clone $HTTPD_URL/smart/test_repo.git test_repo_clone
+Pascal.
 
-Initialized empty Git repository in /Users/brian/dev/git/t/trash directory.t5541-http-push/test_repo_clone/.git/
-error: RPC failed; result=22, HTTP code = 500
-^CFATAL: Unexpected exit with code 130
+-- 
 
-brian@hermes t (master)$ cd trash\ directory.t5541-http-push/httpd/
-brian@hermes httpd (master)$ cat error.log 
-[Wed Nov 11 06:19:39 2009] [notice] Apache/2.2.13 (Unix) configured -- resuming normal operations
-[Wed Nov 11 06:19:39 2009] [error] [client 127.0.0.1] git-http-backend(59490) malloc: *** error for object 0x100200340: incorrect checksum for freed object - object was probably modified after being freed.
-[Wed Nov 11 06:19:39 2009] [error] [client 127.0.0.1] *** set a breakpoint in malloc_error_break to debug
-[Wed Nov 11 06:19:40 2009] [error] [client 127.0.0.1] Premature end of script headers: git-http-backend
-[Wed Nov 11 06:24:23 2009] [notice] caught SIGTERM, shutting down
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
