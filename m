@@ -1,176 +1,96 @@
-From: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
-Subject: Re: Unhelpful "branch.master.remote = <nickname>" advice?
-Date: Wed, 11 Nov 2009 20:34:12 +0100
-Organization: www.AvatarAcademy.nl
-Message-ID: <1257968052.26362.155.camel@heerbeest>
-References: <1257945756.26362.79.camel@heerbeest>
-	 <48B54636-1825-48B3-BECD-4150A55B013F@dbservice.com>
-	 <1257965806.26362.132.camel@heerbeest>
-	 <D6B0AE61-6CA3-4F79-BB50-B8795415BAB7@dbservice.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: git-svn problem with v1.6.5
+Date: Wed, 11 Nov 2009 14:41:32 -0500
+Message-ID: <32541b130911111141n7b029b1ep68656d2eb39be3c7@mail.gmail.com>
+References: <4AF9E7FE.3060701@obry.net> <32541b130911101428t50038cfcsf37e3ea9edb26f64@mail.gmail.com> 
+	<4AFA91BB.7050402@obry.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Wed Nov 11 20:34:27 2009
+Cc: Eric Wong <normalperson@yhbt.net>, adambrewster@gmail.com,
+	git list <git@vger.kernel.org>
+To: pascal@obry.net
+X-From: git-owner@vger.kernel.org Wed Nov 11 20:42:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8IxW-0001NC-4f
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 20:34:26 +0100
+	id 1N8J4u-0005Ny-A9
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 20:42:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758651AbZKKTeP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Nov 2009 14:34:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758622AbZKKTeO
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 14:34:14 -0500
-Received: from edu-smtp-01.edutel.nl ([88.159.1.221]:57932 "EHLO
-	edu-smtp-01.edutel.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758594AbZKKTeO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 14:34:14 -0500
-Received: from heerbeest (unknown [88.159.206.46])
-	by edu-smtp-01.edutel.nl (Postfix) with ESMTP id 4C37D67C59;
-	Wed, 11 Nov 2009 20:34:18 +0100 (CET)
-Received: from [127.0.0.1] (heerbeest [127.0.0.1])
-	by heerbeest (Postfix) with ESMTP id D1D9ADC1AC;
-	Wed, 11 Nov 2009 20:34:12 +0100 (CET)
-In-Reply-To: <D6B0AE61-6CA3-4F79-BB50-B8795415BAB7@dbservice.com>
-X-Mailer: Evolution 2.28.1 
+	id S1758551AbZKKTlr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Nov 2009 14:41:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758574AbZKKTlr
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 14:41:47 -0500
+Received: from mail-yw0-f202.google.com ([209.85.211.202]:62521 "EHLO
+	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758557AbZKKTlq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Nov 2009 14:41:46 -0500
+Received: by ywh40 with SMTP id 40so1268603ywh.33
+        for <git@vger.kernel.org>; Wed, 11 Nov 2009 11:41:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=N7cIEzoks/CX3rsqkrERD2TZ6VMmhyrsUwrPds1eTIA=;
+        b=WqrAMu8fDkHEJuKt8TPKFWdMYstpTkONl4Wlvp0zUcWhnldP5acm/o3J8la8S9BpiD
+         rQvOUrLXb1Lub7H2XMVz6sjB2EP0t35R2HxCO3mGRu7t+xn3PICkHEzUZEE0UZRMS/uG
+         +hP75dfrBR8oRbhHfn6zOzLWoXpURVF5grJR4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=tuThJ+XGf2JFsWapH6X0umVtTdFaXBd6hfY0WnW2FEOC++FBDSkPlEXW8v6r78Yvgi
+         RdKsvT/mJuxKGoAkiEq9Fevdh8cwzFLIXnqkcmgjMSkg1sPaAXJT/uTNxsJ6Vw/cFBXA
+         UBf7Skk7CdZiDV7oQZwDCKn+QTO/E/nSJhpkU=
+Received: by 10.150.236.17 with SMTP id j17mr3450688ybh.229.1257968512079; 
+	Wed, 11 Nov 2009 11:41:52 -0800 (PST)
+In-Reply-To: <4AFA91BB.7050402@obry.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132691>
 
-Op woensdag 11-11-2009 om 20:10 uur [tijdzone +0100], schreef Tomas
-Carnecky:
-> On Nov 11, 2009, at 7:56 PM, Jan Nieuwenhuizen wrote:
+On Wed, Nov 11, 2009 at 5:28 AM, Pascal Obry <pascal@obry.net> wrote:
+>> Avery wrote:
+>> Is d2cf08bb67e4b7da33a250127aab784f1f2f58d3 a valid revision? =A0(gi=
+t
+>> log d2cf08bb67e4b7da33a250127aab784f1f2f58d3).
+>
+> No.
 
-Hi Tomas,
+Well, that's bad news.  Does "git log --all --parents | grep
+d2cf08bb67e4b7da33a250127aab784f1f2f58d3" reveal any places that refer
+to it?
 
-> You used this:
-> $ git config branch.master.remote =3D <something>
-> Do you see the difference between that and what I posted?
+It sounds a bit like your git-svn thinks something maps on to that
+commit id, but a previous 'git gc' or something has thrown it away.
+However, that doesn't explain why earlier git versions don't have this
+problem.
 
-Sure, I now know what syntax you and the advise mean.  However,
-I'm just pointing out that the git pull advise makes no sense,
-however way you try to interpret it?
+>> You could try using git bisect to figure out which exact commit to
+>> git.git created the problem.
+>
+> I wanted to avoid that :) Anyway, here is the culprit:
+>
+> commit 6f5748e14cc5bb0a836b649fb8e2d6a5eb166f1d
+> Author: Adam Brewster <adambrewster@gmail.com>
+> Date: =A0 Tue Aug 11 23:14:27 2009 -0400
+>
+>   svn: allow branches outside of refs/remotes
+[...]
+>
+> But frankly I'm no expert on Perl... I fear that I won't be able to d=
+ebug
+> that!
 
-> > I think it might be more helpful if this text said
-> > configuration file and gave a usable configuration file
-> > snippet, or alternatively said git config, and gave usable
-> > git config commands.
->=20
-> Feel free to send a patch ;)
+If you retrieve the latest version of git and then git revert the
+above commit, does that fix the problem, at least?
 
-[just maybe, if my uninstall patch goes in easily, but]
+Is it possible you have some weird branches outside of the
+refs/remotes tree (either in .git itself, or in .git/refs/*) that you
+forgot about, and which the new version of git-svn is finding somehow?
 
-=46irst I need to know what the new advise should be.  As you
-can see below, I'm still confused.
-
-I was hoping someone would say: Ah blast!  That was me,
-stupid: Fixed in master :-)  And everything would make
-sense and work.
-
-> branch.master.remote has two different values, git doesn't know which=
- =20
-> remote to use.
-
-Well, it can see that there already is a value for branch.master.remote
-defined, and it /still/ advises to add one.  It also uses <nickname>,
-which suggests there could be multiple values?
-
-=46or all I know, pull can only handle one nickname and it shouldn't
-give this advise at all?
-
-> Do you want to pull from origin or eddy?
-
-I'm publishing on origin -- that's what the original clone was
-from.  Also, I use it to update from most often, when I work
-from different locations.  All fine.
-
-Now this Eddy guy says: pull from here.  I try it and get
-this advise.  So, I'd like to have
-
-   git pull  # use origin by default
-   git pull eddy # pull from eddy's url
-
-> I would =20
-> recommend only keeping one [branch "master"] section and edit it =20
-> appropriately.
-
-Yes, I tried that and came up with
-
-    [branch "master"]
-	    remote =3D origin
-	    merge =3D refs/heads/master
-    [remote "origin"]
-	    url =3D git@github.com:janneke/gub.git
-	    fetch =3D +refs/heads/*:refs/remotes/origin/*
-    # advise from git pull, using <nickname> =3D eddy
-    #        branch.master.remote =3D <nickname>
-    #        branch.master.merge =3D <remote-ref>
-    #        remote.<nickname>.url =3D <url>
-    #        remote.<nickname>.fetch =3D <refspec>
-    #[branch "master"]
-    #	remote =3D eddy # ignore branch.master.remote advise
-    #	merge =3D refs/heads/master
-    [remote "eddy"]
-	    url =3D http://github.com/epronk/gub.git
-	    fetch =3D +refs/heads/*:refs/remotes/origin/*
-
-This /seems/ to work.  However, I still get this
-
-    $ git pull -r
-    From git@github.com:janneke/gub
-     + 7bb5905...8ff38da master     -> origin/master  (forced update)
-    First, rewinding head to replay your work on top of it...
-    Fast-forwarded master to 8ff38da0a7013a891de18a0b7bec12b9d1fa6637.
-    20:25:55 janneke@peder:~/vc/gub
-
-[looks okay]
-
-    $ git pull -r eddy
-    From http://github.com/epronk/gub
-     + 8ff38da...7bb5905 master     -> origin/master  (forced update)
-[looks fine too, but still continues with]
-    You asked me to pull without telling me which branch you
-    want to merge with, and 'branch.master.merge' in
-    your configuration file does not tell me either.	Please
-    specify which branch you want to merge on the command line and
-    try again (e.g. 'git pull <repository> <refspec>').
-    See git-pull(1) for details.
-
-    If you often merge with the same branch, you may want to
-    configure the following variables in your configuration
-    file:
-
-	branch.master.remote =3D <nickname>
-	branch.master.merge =3D <remote-ref>
-	remote.<nickname>.url =3D <url>
-	remote.<nickname>.fetch =3D <refspec>
-
-    See git-config(1) for details.
-    [1]20:26:01 janneke@peder:~/vc/gub
-    $=20
-
-so I'm still missing something?
-
-> Is 'git pull -r' not short enough for you?
-
-It's more of a usability thing.  It annoys me that the most
-used functionality needs a command line option.  Worse however,
-is that people [myself included] tend to forget that "-r",
-and our logs have lots of these ugly, unnecessary
-
-    c377994 Merge branch 'master' of ssh+git://git.sv.gnu.org/srv/git/l=
-ilypond
-
-Also, we need to explain this to all newcomers.
-
-Jan.
-
---=20
-Jan Nieuwenhuizen <janneke@gnu.org> | GNU LilyPond - The music typesett=
-er
-Avatar=C2=AE: http://AvatarAcademy.nl    | http://lilypond.org
+Avery
