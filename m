@@ -1,76 +1,86 @@
-From: rhlee <richard@webdezign.co.uk>
-Subject: Working on merged branches whilst seeing current master
-Date: Wed, 11 Nov 2009 09:16:46 -0800 (PST)
-Message-ID: <1257959806206-3987667.post@n2.nabble.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: BUG: git rebase -i -p silently looses commits
+Date: Wed, 11 Nov 2009 18:32:42 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0911111804520.19111@intel-tinevez-2-302>
+References: <20091104214611.GL9139@dr-wily.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 11 18:16:55 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Constantine Plotnikov <constantine.plotnikov@gmail.com>,
+	git@vger.kernel.org
+To: Greg Price <price@ksplice.com>
+X-From: git-owner@vger.kernel.org Wed Nov 11 18:33:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8GoQ-0005Vt-Q4
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 18:16:55 +0100
+	id 1N8H4c-0006C1-11
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 18:33:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757879AbZKKRQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 12:16:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757875AbZKKRQm
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 12:16:42 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:52549 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756940AbZKKRQm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 12:16:42 -0500
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1N8GoI-0005BA-6p
-	for git@vger.kernel.org; Wed, 11 Nov 2009 09:16:46 -0800
-X-Nabble-From: rhlee <richard@webdezign.co.uk>
+	id S1758240AbZKKRcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 12:32:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758087AbZKKRcn
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 12:32:43 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52880 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758086AbZKKRcm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 12:32:42 -0500
+Received: (qmail invoked by alias); 11 Nov 2009 17:32:44 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp055) with SMTP; 11 Nov 2009 18:32:44 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/XIKE/S5vXtM9SQ0Js/64zKgFUHcKr164V5evouq
+	+Mkf27GbSYJrCa
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20091104214611.GL9139@dr-wily.mit.edu>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132679>
 
+Hi,
 
-Hi again gits,
+On Wed, 4 Nov 2009, Greg Price wrote:
 
-I think my current query is somewhat related to my previous issue of
-"Preserving branches after merging on ancestor" that you help me with last
-time (many thanks).
+> On Mon, 2 Nov 2009, Johannes Schindelin wrote:
+> > Having said that, I worked for some time on fixing this issue, and I 
+> > actually run a version of rebase -i -p here that allows reordering 
+> > commits, but it is far from stable (and due to GSoC and day-job 
+> > obligations, I had no time to work on it in months).
+> 
+> I'm interested in this topic too.  Some weeks ago I took your
+> rebase-i-p branch from January and rebased it onto the latest release;
+> it's at
+>   git://repo.or.cz/git/price.git rebase-i-p
+> and now based on v1.6.5.2.  I fixed a few bugs and added a feature,
+> and it's the version I run day to day.
 
-I use branches for features. I have a branch and I merged it into my master
-branch as I thought it was finished. But it turns out I wasn't and so I need
-to work on it again.
+That is very interesting!
 
-I have made some more changes (branches and merges) on master. So what I
-should do is checkout that branch, work on it committing along the way and
-then merge it again onto my master branch.
+However, for rebase-i-p to have a chance to be accepted, I think a few 
+things are necessary still (this is all from memory, so please take 
+everything with a grain of salt):
 
-However I though I am working on a feature branch I want to be also working
-from the master branch as reference. Yes I know I probably should not be
-working like this. My branches should be wholly independent. But I doing web
-development not kernel development so there is much less modularity and
-branches/features have a tendency to creep into one another. If you want to
-get and idea of my workflow see my thread last week "Preserving branches
-after merging on ancestor".
+- reorder the series to have the -i fixes first, the new commands next, 
+  and then the changes to the actual -p mode
 
-So how do I work again on a branch that has been preiously merged whilst
-"seeing" the current changes on the master or another branch?
+- rework the mark stuff so that 'todo' works properly, and then change the 
+  system to use ':<name>' style bookmarks.
 
-Is this a bad idea first of all. Should I change my workflow instead?
+- fix that nasty bug which makes one revision not pass the tests (I forgot 
+  which one, but it should be in the TODOs)
 
-If I do try to do this I guess I got several ways.
+- add proper handling for the case when a patch has been applied in 
+  upstream already, but was not correctly identified as that by 
+  --cherry-pick (well, this TODO is actually not really related to rebase 
+  -i -p, but something I deeply care about)
 
-I think I could pull(?) or merge the changes so far from the master branch
-into the feature branch. But this seems like an uneccesary duplication.
+Unfortunately, I am getting more and more deprived of Git time budget 
+these days, so that I cannot seem to find a few hours to at least restart 
+my efforts.
 
-Or should I just create a new branch? But if I do this there is no link
-between the old and new branch.
-
-Richard
--- 
-View this message in context: http://n2.nabble.com/Working-on-merged-branches-whilst-seeing-current-master-tp3987667p3987667.html
-Sent from the git mailing list archive at Nabble.com.
+Ciao,
+Dscho
