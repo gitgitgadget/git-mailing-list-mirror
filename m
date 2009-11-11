@@ -1,89 +1,73 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: excerpts from tomorrow's "What's cooking" draft
-Date: Wed, 11 Nov 2009 14:50:22 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0911111408380.16711@xanadu.home>
-References: <7vbpj9s8vk.fsf@alter.siamese.dyndns.org>
- <20091111184215.GG27518@vidovic>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Unhelpful "branch.master.remote = <nickname>" advice?
+Date: Wed, 11 Nov 2009 11:54:45 -0800
+Message-ID: <7vvdhgon0a.fsf@alter.siamese.dyndns.org>
+References: <1257945756.26362.79.camel@heerbeest>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Nov 11 20:50:58 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
+X-From: git-owner@vger.kernel.org Wed Nov 11 20:54:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8JDD-0001Ms-O0
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 20:50:40 +0100
+	id 1N8JHO-0003n3-Lc
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 20:54:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758818AbZKKTuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 14:50:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758816AbZKKTuT
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 14:50:19 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:13639 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758633AbZKKTuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 14:50:17 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KSY007GYN3YA4F0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 11 Nov 2009 14:50:22 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20091111184215.GG27518@vidovic>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1758803AbZKKTyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 14:54:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758633AbZKKTyr
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 14:54:47 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54014 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758520AbZKKTyq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 14:54:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 024DB981D5;
+	Wed, 11 Nov 2009 14:54:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5DXJAwdqroPOyh/L4o9YJsqleJw=; b=pIYJAQ
+	wquI/wMqiiJcHoJ0PtBuAzCDSGkmIabZXQ2iLMBluhhxZ5IG2BTusXwTIOZZg/bF
+	H8bFp3X3UGZ4Jn3N+K3ZZ5C/VJKB+bJgUGlPgXLtmqGh8IMOJVKl43i9+vrixvhA
+	n4enl3JV08t/xzjIYYzDi3ifF88ASr1LkH7rc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YLmOFvMX+PnnQSthKfKbjBxLDqVLWeyM
+	gKAIzljs9uAFO1HGbWzKHgcQCKR/9HB5W8V15h9vk0DMyqv8IR/ORTbdBuYaoU6f
+	vddXLPhKmAbLKbZiotlMwBx64TZb4NDix7MaKLuABtPtryG75JiYWAdgOfhLWR03
+	KL30GzrV2ls=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D5DAD981D4;
+	Wed, 11 Nov 2009 14:54:49 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D2504981D2; Wed, 11 Nov 2009
+ 14:54:46 -0500 (EST)
+In-Reply-To: <1257945756.26362.79.camel@heerbeest> (Jan Nieuwenhuizen's
+ message of "Wed\, 11 Nov 2009 14\:22\:36 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1217B430-CEFC-11DE-938A-B888BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132694>
 
-On Wed, 11 Nov 2009, Nicolas Sebrecht wrote:
+Jan Nieuwenhuizen <janneke-list@xs4all.nl> writes:
 
-> A bit OT, I've noticed the following output today:
-> 
->   % git clone git://repo.or.cz/girocco.git
->   Initialized empty Git repository in /home/nicolas/dev/official_packages/girocco/.git/
->   remote: Counting objects: 3017, done.
->   g objects: 100% (994/994), done.
->   remote: Total 3017 (delta 1911), reused 2988 (delta 1896)
->   Receiving objects: 100% (3017/3017), 403.99 KiB | 309 KiB/s, done.
->   Resolving deltas: 100% (1911/1911), done.
->   %
-> 
-> Notice the "g " at the begining at the 3th line. This is reproducible.
+> *) I've been wondering why GIT lacks a "update", ie
+>    pull-without-merge command.  You almost never want
+>    to git pull /without/ -r?
 
-I get much worse:
+"You almost never want to git pull w/o --rebase" is incorrect, and you
+cannot draw any conclusion from that statement.
 
-Initialized empty Git repository in /home/nico/git/girocco/.git/
-remote: Counting objects: 3017, done.
-remote: Compressing objects:   5% (50/994)   Receiving objects:   3% (91/3017)
-remote: Compressing objects:  15% (150/994) Receiving objects:   7% (212/3017)
-remote: Compressing oReceiving objects:  14% (423/3017), 76.00 KiB | 135 KiB/s
-remote: Compressing objects:  35Receiving objects:  16% (483/3017), 76.00 KiB |
-remote: Compressing objects:  38% (378/994)Receiving objects:  17% (513/3017), 7
-remote: Compressing objectReceiving objects:  20% (604/3017), 76.00 KiB | 135 Ki
-remote: Compressing objects:  48% (47Receiving objects:  22% (664/3017), 76.00 K
-remote: Compressing objects:  5Receiving objects:  23% (694/3017), 76.00 KiB | 1
-remote: Compressing objects:  Receiving objects:  25% (755/3017), 76.00 KiB | 13
-remote: Compressing objects:  84% (835/99Receiving objects:  26% (785/3017), 76.
-remote: Compressing objeReceiving objects:  33% (996/3017), 76.00 KiB | 135 KiB/
-remote: Compressing objects:  94% (Receiving objects:  36% (1087/3017), 76.00 Ki
-remote: Compressing objects:  97% (965/994)   Receiving objects:  39% (1177/3017
-g objects: 100% (994/994), done.
-remote: Total 3017 (delta 1911), reused 2988 (delta 1896)
-Receiving objects: 100% (3017/3017), 403.99 KiB | 335 KiB/s, done.
-Resolving deltas: 100% (1911/1911), done.
+I never want to run "git pull --rebase" myself, not in this project, nor
+at work.  On the other hand, I always run "git pull --rebase" while
+working on another OSS project that I am only following (I'm holding onto
+a few private patches until they get applied).
 
-According to strace, data from sideband channel #2 (prefixed with 
-"remote: ") pertaining to object compression is printed way after pack 
-data has already started to arrive locally.  This is really weird.
-
-And this occurs only when fetching from repo.or.cz and not from 
-git.kernel.org for example.  So there is something to investigate on the 
-server side.  Pasky: anything you changed in your git installation 
-lately?
-
-
-Nicolas
+So even the same person never uses --rebase or always uses --rebase,
+depending on how he interacts with the repository on the other side,
