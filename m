@@ -1,69 +1,71 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: [PATCH] Clarify documentation on the "ours" merge strategy.
-Date: Wed, 11 Nov 2009 15:03:32 +0100
-Message-ID: <200911111411.nABEBfox031023@ds9.cixit.se>
-References: <alpine.DEB.1.00.0911031047510.4985@pacific.mpi-cbg.de>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Thomas Rast <trast@student.ethz.ch>,
-	=?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 11 15:22:09 2009
+From: Dmitry Smirnov <divis1969@gmail.com>
+Subject: Re: P4 Sync problem
+Date: Wed, 11 Nov 2009 14:57:46 +0000 (UTC)
+Message-ID: <loom.20091111T154425-182@post.gmane.org>
+References: <loom.20091110T145046-137@post.gmane.org>  <1a6be5fa0911110043i63b5c032s7924f9f1cdfe32ee@mail.gmail.com>  <loom.20091111T100646-406@post.gmane.org>  <1a6be5fa0911110400l1fe931afmbb53ceba8704e029@mail.gmail.com>  <loom.20091111T131837-901@post.gmane.org> <1a6be5fa0911110554u7c3a04c8hf50100b784b63c7a@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 11 15:58:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8E57-0002Ft-OK
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 15:21:58 +0100
+	id 1N8EeI-0005NP-DR
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 15:58:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755621AbZKKOVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 09:21:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754979AbZKKOVp
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 09:21:45 -0500
-Received: from upper-gw.cixit.se ([92.43.32.133]:53798 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754800AbZKKOVp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 09:21:45 -0500
-X-Greylist: delayed 600 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Nov 2009 09:21:45 EST
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id nABEBfDl031024
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 11 Nov 2009 15:11:41 +0100
-Received: (from peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) id nABEBfox031023;
-	Wed, 11 Nov 2009 15:11:41 +0100
-In-Reply-To: <alpine.DEB.1.00.0911031047510.4985@pacific.mpi-cbg.de>
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Wed, 11 Nov 2009 15:11:41 +0100 (CET)
+	id S1756723AbZKKO6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 09:58:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756616AbZKKO6G
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 09:58:06 -0500
+Received: from lo.gmane.org ([80.91.229.12]:49289 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756544AbZKKO6F (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 09:58:05 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1N8Ee8-0005J3-Fg
+	for git@vger.kernel.org; Wed, 11 Nov 2009 15:58:08 +0100
+Received: from 212.92.145.7 ([212.92.145.7])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Nov 2009 15:58:08 +0100
+Received: from divis1969 by 212.92.145.7 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Nov 2009 15:58:08 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 212.92.145.7 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/3.0.195.27 Safari/532.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132660>
 
-Make it clear that the merge strategy will discard all changes made to
-the branch being merged, and not just avoid creating merge conflicts.
----
- Documentation/merge-strategies.txt |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+Tor Arvid Lund <torarvid <at> gmail.com> writes:
 
-> If you want to use any merge strategy, you must understand what it does
-> first.
+> //depot/A/...
+> -//depot/A/B/...
+> //depot/A/B/C/...
+> 
+> ... git-p4 sorts these paths by length. For a given filename, it finds
+> the longest path that matches that files directory, and if that path
+> starts with a '-', the file is not synced (for a file
+> "//depot/A/B/myfile.c" it gets a match on "-//depot/A/B/...", and
+> myfile.c is not synced, but the file "//depot/A/B/C/myotherfile.c" it
+> matches "//depot/A/B/C/...")
+> 
+> Do you have an example that shows how it might fail?
 
-Indeed. Perhaps this clarification will help the next poor soul that tries
-doing what I tried?
+According to the P4 User's Guide 
+(http://www.perforce.com/perforce/doc.091/manuals/p4guide/02_config.html#1066090) 
+Perforce prefer later mapping if there is a conflict.
 
-diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-index 4365b7e..a340dc9 100644
---- a/Documentation/merge-strategies.txt
-+++ b/Documentation/merge-strategies.txt
-@@ -30,7 +30,8 @@ octopus::
- 
- ours::
- 	This resolves any number of heads, but the result of the
--	merge is always the current branch head.  It is meant to
-+	merge is always the current branch head, discarding any
-+	changes on the merged branch.  It is meant to
- 	be used to supersede old development history of side
- 	branches.
- 
--- 
-1.6.4
+So, if you switch paths:
+-//depot/A/B/...
+//depot/A/...
+perforce will sync all the the files. Of course, this is not a very 
+useful case.  
+I suppose the order is not important until mapping are implemented...
