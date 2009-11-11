@@ -1,101 +1,143 @@
-From: Tor Arvid Lund <torarvid@gmail.com>
-Subject: Re: P4 Sync problem
-Date: Wed, 11 Nov 2009 09:43:42 +0100
-Message-ID: <1a6be5fa0911110043i63b5c032s7924f9f1cdfe32ee@mail.gmail.com>
-References: <loom.20091110T145046-137@post.gmane.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH v5 1/2] filter-branch: stop special-casing $filter_subdir
+ argument
+Date: Wed, 11 Nov 2009 09:53:46 +0100
+Message-ID: <4AFA7B9A.4090005@viscovery.net>
+References: <4AE945D0.5030403@viscovery.net> <0280836a32983c848bbb0e3b441be256d3c8f4fa.1257885121.git.trast@student.ethz.ch> <4AFA7624.5040400@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Dmitry Smirnov <divis1969@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 11 09:43:53 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Nov 11 09:54:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N88nt-0007nU-Nv
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 09:43:50 +0100
+	id 1N88xn-0003ha-N8
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 09:54:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751423AbZKKIni convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Nov 2009 03:43:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751405AbZKKIni
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 03:43:38 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:39878 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750966AbZKKInh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Nov 2009 03:43:37 -0500
-Received: by bwz27 with SMTP id 27so781120bwz.21
-        for <git@vger.kernel.org>; Wed, 11 Nov 2009 00:43:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=OAxUenw3tp4fIL2bRRf2m7ecrjcgxNwN3CNjBmZybGA=;
-        b=qNCA3QV1bw6HxzyaYW0dus23bABhL8rWiSvH6fzSVb8VMglPN2Bffq6qkJ1BibAbFc
-         WF7TCNGFVY1rHClS+lxsyhaPBUFOUxDHWOXB8CaGMrdf9znobQ3tR4bgxfJMgPtLmzQI
-         D6ZHx6KcLOJwNkIE6D8aJyeK1LcT3xOUXvQyk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=uR3hXwOQds2DYZy2zOti7Y0jz//JMVg/1SIi4L2zGj8CYQUVMOc76JARMgLYtUh3iF
-         3GOdxctsYG9UdAsx0fowcWJYIzc+CI2yDEp3qMr42qRtL9T/VVLrV2OxSfMSQ84Xx5Oy
-         sr28d8L/jmyjvsWOTwQ+mtfPLwCE343Fu2zRs=
-Received: by 10.239.139.143 with SMTP id t15mr126446hbt.92.1257929022308; Wed, 
-	11 Nov 2009 00:43:42 -0800 (PST)
-In-Reply-To: <loom.20091110T145046-137@post.gmane.org>
+	id S1751643AbZKKIxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 03:53:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751585AbZKKIxw
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 03:53:52 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:62487 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750935AbZKKIxv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 03:53:51 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1N88xW-0000wh-MK; Wed, 11 Nov 2009 09:53:54 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 786846D9; Wed, 11 Nov 2009 09:53:46 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <4AFA7624.5040400@viscovery.net>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132624>
 
-On Tue, Nov 10, 2009 at 2:56 PM, Dmitry Smirnov <divis1969@gmail.com> w=
-rote:
-> Hi,
->
-> I'm trying to import Perfoce client into Git repository.
-> I had configured git-p4.clent=3DMYCLIENT and git-p4.useclientspec=3Dt=
-rue.
->
-> When runnign git p4 sync --verbose I got the follwing:
->
-> c:\p4\views\Git\p4client>git p4 sync --verbose
-<snip>
-> Traceback (most recent call last):
-> =C2=A0File "/usr/sbin/git-core//git-p4", line 1929, in ?
-> =C2=A0 =C2=A0main()
-> =C2=A0File "/usr/sbin/git-core//git-p4", line 1924, in main
-> =C2=A0 =C2=A0if not cmd.run(args):
-> =C2=A0File "/usr/sbin/git-core//git-p4", line 1676, in run
-> =C2=A0 =C2=A0changes =3D p4ChangesForPaths(self.depotPaths, self.chan=
-geRange)
-> =C2=A0File "/usr/sbin/git-core//git-p4", line 442, in p4ChangesForPat=
-hs
-> =C2=A0 =C2=A0assert depotPaths
-> AssertionError
+From: Thomas Rast <trast@student.ethz.ch>
 
-Hi. So - I think the problem is that git-p4 doesn't understand what it
-is you want to sync. The git-p4.useclientspec flag was created for the
-purpose where your perforce depot may look like this:
+Handling $filter_subdir in the usual way requires a separate case at
+every use, because the variable is empty when unused.
 
-//depot/project1
-//depot/project1/source_code
-//depot/project1/documentation
-//depot/project1/some_large_collection_of_binaries
+Furthermore, --subdirectory-filter supplies its own '--', and if the user
+provided one himself, such as in
 
-Then - if I set up my client spec like:
+  git filter-branch --subdirectory-filter subdir -- --all -- subdir/file
 
-//depot/...
--//depot/project1/some_large_collection_of_binaries
+	an extra '--' was used as path filter in the call to git-rev-list that
+determines the commits that shall be rewritten.
 
-=2E.. and do
+To keep the argument handling sane, we filter $@ to contain only the
+non-revision arguments, and store all revisions in $ref_args.  The
+$ref_args are easy to handle since only the SHA1s are needed; the
+actual branch names have already been stored in $tempdir/heads at this
+point.
 
-git p4 sync //depot/project1@all
+An extra separating -- is only required if the user did not provide
+any non-revision arguments, as the latter disambiguate the
+$filter_subdir following after them (or fail earlier because they are
+ambiguous themselves).
 
-=2E.. it should get all project1 files except the
-"some_large_collection_of_binaries" subdirectory (provided that you
-have set the git-p4.client and git-p4.useclientspec).
+Thanks to Johannes Sixt for suggesting this solution.
 
--Tor Arvid-
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+Johannes Sixt schrieb:
+> I'll submit a replacement patch.
+
+Here it is. The interdiff to your version is merely
+
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -266,7 +266,7 @@
+
+ # we need "--" only if there are no path arguments in $@
+ nonrevs=$(git rev-parse --no-revs "$@") || exit
+-dashdash=${nonrevs+"--"}
++test -z "$nonrevs" && dashdash=-- || dashdash=
+ rev_args=$(git rev-parse --revs-only "$@")
+
+ case "$filter_subdir" in
+
+and I changed the commit message in the way I announced it.
+
+-- Hannes
+
+ git-filter-branch.sh |   22 +++++++++++++++-------
+ 1 files changed, 15 insertions(+), 7 deletions(-)
+
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index a480d6f..ed3db7d 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -257,15 +257,24 @@ git read-tree || die "Could not seed the index"
+ # map old->new commit ids for rewriting parents
+ mkdir ../map || die "Could not create map/ directory"
+
++# we need "--" only if there are no path arguments in $@
++nonrevs=$(git rev-parse --no-revs "$@") || exit
++test -z "$nonrevs" && dashdash=-- || dashdash=
++rev_args=$(git rev-parse --revs-only "$@")
++
+ case "$filter_subdir" in
+ "")
+-	git rev-list --reverse --topo-order --default HEAD \
+-		--parents --simplify-merges "$@"
++	eval set -- "$(git rev-parse --sq --no-revs "$@")"
+ 	;;
+ *)
+-	git rev-list --reverse --topo-order --default HEAD \
+-		--parents --simplify-merges "$@" -- "$filter_subdir"
+-esac > ../revs || die "Could not get the commits"
++	eval set -- "$(git rev-parse --sq --no-revs "$@" $dashdash \
++		"$filter_subdir")"
++	;;
++esac
++
++git rev-list --reverse --topo-order --default HEAD \
++	--parents --simplify-merges $rev_args "$@" > ../revs ||
++	die "Could not get the commits"
+ commits=$(wc -l <../revs | tr -d " ")
+
+ test $commits -eq 0 && die "Found nothing to rewrite"
+@@ -356,8 +365,7 @@ then
+ 	do
+ 		sha1=$(git rev-parse "$ref"^0)
+ 		test -f "$workdir"/../map/$sha1 && continue
+-		ancestor=$(git rev-list --simplify-merges -1 \
+-				$ref -- "$filter_subdir")
++		ancestor=$(git rev-list --simplify-merges -1 "$ref" "$@")
+ 		test "$ancestor" && echo $(map $ancestor) >> "$workdir"/../map/$sha1
+ 	done < "$tempdir"/heads
+ fi
+-- 
+1.6.5.rc2.47.g49402
