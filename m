@@ -1,77 +1,63 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: Move repository from OS X to Windows
-Date: Wed, 11 Nov 2009 09:08:35 -0800
-Message-ID: <20091111170833.GB45475@gmail.com>
-References: <4AFABCF8.9060601@syntevo.com>
+From: Emmanuel Trillaud <etrillaud@gmail.com>
+Subject: Re: gitk : french translation
+Date: Wed, 11 Nov 2009 18:10:48 +0100
+Message-ID: <9f50533b0911110910gbe01ee7x5d92cc0b70c3b63f@mail.gmail.com>
+References: <20091111001050.GC27518@vidovic>
+	 <g1w6apsyubgonjhsvjUYAxe124vaj_firegpg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Thomas Singer <thomas.singer@syntevo.com>
-X-From: git-owner@vger.kernel.org Wed Nov 11 18:09:08 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Maximilien Noal <noal.maximilien@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Nicolas Pitre <nico@fluxnic.net>, Guy Brand <gb@unistra.fr>,
+	Git Mailing List <git@vger.kernel.org>
+To: Thomas Moulard <thomas.moulard@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 11 18:10:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8Ggs-0001V8-Un
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 18:09:07 +0100
+	id 1N8Gid-0002PS-M0
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 18:10:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757992AbZKKRId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 12:08:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757987AbZKKRId
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 12:08:33 -0500
-Received: from mail-pz0-f188.google.com ([209.85.222.188]:62242 "EHLO
-	mail-pz0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757943AbZKKRIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 12:08:32 -0500
-Received: by pzk26 with SMTP id 26so861840pzk.4
-        for <git@vger.kernel.org>; Wed, 11 Nov 2009 09:08:38 -0800 (PST)
+	id S1757987AbZKKRKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 12:10:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757921AbZKKRKo
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 12:10:44 -0500
+Received: from mail-fx0-f221.google.com ([209.85.220.221]:37143 "EHLO
+	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757904AbZKKRKn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 12:10:43 -0500
+Received: by fxm21 with SMTP id 21so1241116fxm.21
+        for <git@vger.kernel.org>; Wed, 11 Nov 2009 09:10:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=wxUXmiAMMy/fBOLVcKwl7lLh2LrQk7gWJBj+agsezrw=;
-        b=Z4ORRukt6tNakdMucnPNkpUFAuKKdegc6vWvnEJWuZXMRUZvoRK280l140nneLYBpa
-         BPHhb/RutO+yms4m8xmOACjUq5WQgnxHRhhh+uBjb+R7uHdhWcy/IWawSKRoZI+H+Z7C
-         NEvbIelfZv/wYwVFHDmse+WbBv9sguXl/swG8=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=YRxlekWT6SeVJPXcl8tK0PBMugu/c/MwWSZ1v5J+194=;
+        b=RXYxrzLqzizoaB9IyU3dEswiVFs4OWdXSEaxxi5wF7yipxKuwxZ1IeZt40Q+ahNAG6
+         Cccqc8S8ycC8HFt7gPbPkFM9pEj/Q/PnGKK3GI7GSHhv4VIEiA2L339TiPJqYG8AJWK5
+         Ie/iJajDBC3srsNff1qPXtsE0CyyCqLxincww=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=fjZwRQnLh8BXCm7I/eVyD2srUxhDgbpQmcTH+eU3l76Hd3HPcaRZU/OsRVrlQoErEq
-         rNjHHlCdTCHPKsvgJl3BbW3+yo9D0O7+oabHO/Gy2lBHSrPCEd4u76AhuECa1Cq8keuk
-         UXsbVPZzxCQLLC5ZdMUdSXRhZ86h9VhcmV3m8=
-Received: by 10.114.33.30 with SMTP id g30mr2434368wag.214.1257959318184;
-        Wed, 11 Nov 2009 09:08:38 -0800 (PST)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 23sm1114639pzk.0.2009.11.11.09.08.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 11 Nov 2009 09:08:37 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4AFABCF8.9060601@syntevo.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=iNMY3BJcjUZ5tMGgkc62EAWTPAL9hKUaHhusFxdeE3mdh0zx66zBwsB3VmI9ekt/ji
+         wxaTSXZKuh/GTu+fDvQ7F7Bk+QcoMbVJS51zfLg61SZiptwQxX95HB9yl7eon5IZvmcY
+         n34EKv4zEmOUTvakoCuGjnRVYEQa4igZ3uayE=
+Received: by 10.216.91.69 with SMTP id g47mr531208wef.167.1257959448421; Wed, 
+	11 Nov 2009 09:10:48 -0800 (PST)
+In-Reply-To: <g1w6apsyubgonjhsvjUYAxe124vaj_firegpg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132677>
 
-On Wed, Nov 11, 2009 at 02:32:40PM +0100, Thomas Singer wrote:
-> Hi,
-> 
-> I've cloned a very large repository on OS X and want to move that to Windows
-> (trying to avoid to clone the repository a second time). What steps should I
-> do to make it working (currently, I'm getting an error on pull/merge that
-> "Entry 'foo' is not uptodate. Cannot merge.")?
+Thank you, Nicolas & Thomas for your reviews and suggestions. I will
+submit a new version of the translation tonight or tomorow depending
+on the time I have.
 
+Best Regards
 
-Check the git documentation for "core.filemode" and "core.autocrlf".
-
-My guess is that you need to set core.filemode false.
-If it's not that then look into core.autocrlf.
-
-
-Good luck,
-
--- 
-		David
+Emmanuel T
