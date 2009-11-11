@@ -1,109 +1,92 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: commit log encoding [Was: [PATCH 1/2] tree-wide: fix typos
-	"offest" -> "offset"]
-Date: Wed, 11 Nov 2009 15:13:43 +0100
-Message-ID: <20091111141342.GA1849@pengutronix.de>
-References: <1256757064-13669-1-git-send-email-u.kleine-koenig@pengutronix.de> <alpine.LSU.2.00.0911021600530.4203@wotan.suse.de> <20091103081447.GA20204@pengutronix.de> <alpine.LSU.2.00.0911031144300.9988@wotan.suse.de> <20091111114206.GA19652@pengutronix.de> <alpine.LSU.2.00.0911111318260.15039@wotan.suse.de>
+From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
+Subject: Re: Unhelpful "branch.master.remote = <nickname>" advice?
+Date: Wed, 11 Nov 2009 15:13:38 +0100
+Message-ID: <20091111151338.3df1faa7@perceptron>
+References: <1257945756.26362.79.camel@heerbeest>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jiri Kosina <jkosina@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Nov 11 15:13:54 2009
+To: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
+X-From: git-owner@vger.kernel.org Wed Nov 11 15:13:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8DxJ-0006gL-Ks
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 15:13:53 +0100
+	id 1N8DxK-0006gL-5l
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 15:13:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756661AbZKKONj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Nov 2009 09:13:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756112AbZKKONi
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 09:13:38 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:60935 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755695AbZKKONi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 09:13:38 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1N8Dx9-0003Wd-Dm; Wed, 11 Nov 2009 15:13:43 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1N8Dx9-0007MQ-2Q; Wed, 11 Nov 2009 15:13:43 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.LSU.2.00.0911111318260.15039@wotan.suse.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1756862AbZKKONl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 09:13:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756745AbZKKONk
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 09:13:40 -0500
+Received: from zoidberg.org ([88.198.6.61]:45254 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756197AbZKKONj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 09:13:39 -0500
+Received: from perceptron (xdsl-78-35-135-64.netcologne.de [::ffff:78.35.135.64])
+  (IDENT: unknown, AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by cthulhu.zoidberg.org with esmtp; Wed, 11 Nov 2009 15:13:43 +0100
+  id 004D0121.4AFAC697.00000535
+In-Reply-To: <1257945756.26362.79.camel@heerbeest>
+X-Mailer: Claws Mail 3.7.3 (GTK+ 2.18.3; i486-pc-linux-gnu)
+X-Obscure-Spam: http://music-jk.net/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132657>
 
-On Wed, Nov 11, 2009 at 01:19:32PM +0100, Jiri Kosina wrote:
-> On Wed, 11 Nov 2009, Uwe Kleine-K=C3=B6nig wrote:
->=20
-> > > Thanks for noticing, I had a bug in my git charset config for qui=
-te some=20
-> > > time. Fixed it now.
-> > Now my name is latin1 encoded.  It should be utf-8, doesn't it?
->=20
-> It's not latin1, it's iso-8859-2
-=46or my name it makes no difference.
+Hi,
 
->                                   which is what I use on my terminals=
-=2E
-> And git can handle that fine too (it stores the encoding together wit=
-h the=20
-> commit).
-Ah, OK, that's news to me, but you're right.  I have here:
+> git pull -r*) URL says: [...]
+>         branch.master.remote = <nickname>
+> and after cut-and-pasting that into .git/config, replacing
+> <foo> with values, I get [...]
+>     fatal: bad config file line 17 in .git/config
+> where line 17 is [without any indentation]
+>     branch.master.remote = eddy
 
-	~/gsrc/linux-2.6$ git cat-file commit 30ff0743f88a70f52a4de5ea5bcb1fd2=
-9bcfab2d
-	tree 6121d35bb2606878be636e897fa77cd51804d724
-	parent 916b7c73db593510d5c38706be2f2888981747ee
-	author Uwe Kleine-K=EF=BF=BDnig <u.kleine-koenig@pengutronix.de> 12567=
-57064 +0100
-	committer Jiri Kosina <jkosina@suse.cz> 1257780224 +0100
-	encoding ISO-8859-2
+The confusion is that while you can set values with this syntax if
+you're using git config (git config branch.master.remote <some value>),
+they're written differently in actual config files:
 
-	tree-wide: fix typos "couter" -> "counter"
+  [branch "master"]
+  remote = <nickname>
+  merge = <remote-ref>
+  
+  [remote "<nickname>"]
+  url = <url>
+  fetch = <refspec>
 
-	This patch was generated by
+I can't think of a message of comparable length that would make this
+clearer, though.
 
-		git grep -E -i -l 'couter' | xargs -r perl -p -i -e 's/couter/counter=
-/'
+> Jan.  -- who just finds out the uninstall target is missing?!?
+> 	 See attached.
 
-	Signed-off-by: Uwe Kleine-K=EF=BF=BDnig <u.kleine-koenig@pengutronix.d=
-e>
-	Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+I have no comments about the patch contents themselves, but please read
+Documentation/SubmittingPatches. Most importantly, patches are
+usually sent inline here, and without a signoff line they can't be
+accepted for inclusion in the official repository.
 
-So the remaining question is: Does the encoding specified in the
-encoding "header" also apply to the other headers?
+> *) I've been wondering why GIT lacks a "update", ie
+>    pull-without-merge command.  You almost never want
+>    to git pull /without/ -r?
 
-If yes[1] then there's a bug in git-shortlog
+-r stands for "rebase", i.e. it makes git pull use rebase instead of
+merge. Rebase has certain problematic implications for decentralized
+development, which is why it should only really be used in specific
+circumstances (for rebasing commits that haven't been published in any
+way yet).
 
-	~/gsrc/linux-2.6$ git shortlog linus/master..trivial/for-next | grep U=
-we
-	Uwe Kleine-K=EF=BF=BDnig (5):
+"You" may almost never want to use git pull without rebase, but "many
+others" do, and very often. Personally, I donn't recall a single
+occasion where I have used git pull --rebase (not counting git-svn
+stuff).
 
-(with linus/master =3D 799dd75b1a8380a967c929a4551895788c374b31,
-trivial/for-next =3D 4030ec040a0e21fe9953da70eaa59ee7b4f2297b).
-=20
-Best regards
-Uwe
+Anyway, look at config options branch.autosetuprebase and
+branch.<nickname>.rebase to see how you can make pull use rebase by
+default.
 
-[1] git log linus/master..trivial/for-next looks OK, so I suspect it
-does apply.
-
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=C3=B6nig  =
-          |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
+-Jan
