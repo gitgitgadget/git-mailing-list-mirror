@@ -1,71 +1,69 @@
-From: Dmitry Smirnov <divis1969@gmail.com>
-Subject: Re: P4 Sync problem
-Date: Wed, 11 Nov 2009 14:57:46 +0000 (UTC)
-Message-ID: <loom.20091111T154425-182@post.gmane.org>
-References: <loom.20091110T145046-137@post.gmane.org>  <1a6be5fa0911110043i63b5c032s7924f9f1cdfe32ee@mail.gmail.com>  <loom.20091111T100646-406@post.gmane.org>  <1a6be5fa0911110400l1fe931afmbb53ceba8704e029@mail.gmail.com>  <loom.20091111T131837-901@post.gmane.org> <1a6be5fa0911110554u7c3a04c8hf50100b784b63c7a@mail.gmail.com>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: Consensus on "Git"
+Date: Wed, 11 Nov 2009 16:58:47 +0200
+Message-ID: <87y6mdyuoo.fsf@iki.fi>
+References: <ee77f5c20911110032r65a60653sfeef34e3de07d17e@mail.gmail.com>
+	<alpine.DEB.1.00.0911111028040.19111@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 11 15:58:18 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Symonds <dsymonds@gmail.com>, git <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 11 15:59:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8EeI-0005NP-DR
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 15:58:18 +0100
+	id 1N8EfA-0005qc-7E
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 15:59:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756723AbZKKO6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 09:58:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756616AbZKKO6G
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 09:58:06 -0500
-Received: from lo.gmane.org ([80.91.229.12]:49289 "EHLO lo.gmane.org"
+	id S1756844AbZKKO7B convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Nov 2009 09:59:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756616AbZKKO7A
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 09:59:00 -0500
+Received: from mta-out.inet.fi ([195.156.147.13]:33873 "EHLO kirsi1.inet.fi"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756544AbZKKO6F (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 09:58:05 -0500
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1N8Ee8-0005J3-Fg
-	for git@vger.kernel.org; Wed, 11 Nov 2009 15:58:08 +0100
-Received: from 212.92.145.7 ([212.92.145.7])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Nov 2009 15:58:08 +0100
-Received: from divis1969 by 212.92.145.7 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Nov 2009 15:58:08 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 212.92.145.7 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/3.0.195.27 Safari/532.0)
+	id S1756544AbZKKO7A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 09:59:00 -0500
+Received: from mithlond.arda.local (84.251.132.215) by kirsi1.inet.fi (8.5.014)
+        id 4A77672B03C3C8F5; Wed, 11 Nov 2009 16:59:03 +0200
+Received: from dtw by mithlond.arda.local with local (Exim 4.69)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1N8Eem-00017n-5O; Wed, 11 Nov 2009 16:58:48 +0200
+In-Reply-To: <alpine.DEB.1.00.0911111028040.19111@intel-tinevez-2-302>
+	(Johannes Schindelin's message of "Wed, 11 Nov 2009 10:33:20 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132661>
 
-Tor Arvid Lund <torarvid <at> gmail.com> writes:
+On 2009-11-11 10:33 (+0100), Johannes Schindelin wrote:
 
-> //depot/A/...
-> -//depot/A/B/...
-> //depot/A/B/C/...
-> 
-> ... git-p4 sorts these paths by length. For a given filename, it finds
-> the longest path that matches that files directory, and if that path
-> starts with a '-', the file is not synced (for a file
-> "//depot/A/B/myfile.c" it gets a match on "-//depot/A/B/...", and
-> myfile.c is not synced, but the file "//depot/A/B/C/myotherfile.c" it
-> matches "//depot/A/B/C/...")
-> 
-> Do you have an example that shows how it might fail?
+> Yes, in Open Source, we are used to crude, geeky humor, some of us
+> even accept blunt mails, but we are embedded in a world that is calle=
+d
+> "reality".
+>
+> In my experience, in this world it is much easier to tell people that
+> your program is called "Git" ("could have been John, either") and be
+> done with the questions.
 
-According to the P4 User's Guide 
-(http://www.perforce.com/perforce/doc.091/manuals/p4guide/02_config.html#1066090) 
-Perforce prefer later mapping if there is a conflict.
+Yes, that=E2=80=99s how the language works. Proper nouns are capitalize=
+d, so in
+plain text the name of this program should always be written =E2=80=9CG=
+it=E2=80=9D. Only
+in command examples it is =E2=80=9Cgit=E2=80=9D.
 
-So, if you switch paths:
--//depot/A/B/...
-//depot/A/...
-perforce will sync all the the files. Of course, this is not a very 
-useful case.  
-I suppose the order is not important until mapping are implemented...
+Sometimes people mix proper nouns and logos/brands. Proper nouns are
+under the rules of the language. For example, I can=E2=80=99t go tellin=
+g people
+that my name must be written =E2=80=9CteEMu=E2=80=9D because I don=E2=80=
+=99t own Finnish.
+
+In logos the brands=E2=80=99 owner can try to be funny and cool and dif=
+ferent
+and write anything they want (like =E2=80=9Cg=C9=A8T=E2=80=9D or =E2=80=
+=9CG=C4=ABT=E2=80=9D).
