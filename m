@@ -1,84 +1,80 @@
-From: Dmitry Smirnov <divis1969@gmail.com>
-Subject: Re: Git drawbacks?
-Date: Wed, 11 Nov 2009 10:21:18 +0000 (UTC)
-Message-ID: <loom.20091111T105932-300@post.gmane.org>
-References: <loom.20091106T160709-387@post.gmane.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v5 1/2] filter-branch: stop special-casing $filter_subdir argument
+Date: Wed, 11 Nov 2009 11:24:49 +0100
+Message-ID: <200911111124.52340.trast@student.ethz.ch>
+References: <4AE945D0.5030403@viscovery.net> <4AFA7624.5040400@viscovery.net> <4AFA7B9A.4090005@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 11 11:21:59 2009
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Nov 11 11:26:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8AKp-00053b-0I
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 11:21:55 +0100
+	id 1N8AOp-0006iq-RP
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 11:26:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754025AbZKKKVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 05:21:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753380AbZKKKVo
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 05:21:44 -0500
-Received: from lo.gmane.org ([80.91.229.12]:54558 "EHLO lo.gmane.org"
+	id S1753361AbZKKKZx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 05:25:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751685AbZKKKZx
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 05:25:53 -0500
+Received: from gwse.ethz.ch ([129.132.178.237]:28223 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753361AbZKKKVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 05:21:43 -0500
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1N8AKc-0004xw-2S
-	for git@vger.kernel.org; Wed, 11 Nov 2009 11:21:42 +0100
-Received: from 212.92.145.7 ([212.92.145.7])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Nov 2009 11:21:42 +0100
-Received: from divis1969 by 212.92.145.7 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Nov 2009 11:21:42 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 212.92.145.7 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/3.0.195.27 Safari/532.0)
+	id S1751300AbZKKKZw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 05:25:52 -0500
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 11 Nov
+ 2009 11:25:57 +0100
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 11 Nov
+ 2009 11:25:35 +0100
+User-Agent: KMail/1.12.3 (Linux/2.6.27.29-0.1-default; KDE/4.3.3; x86_64; ; )
+In-Reply-To: <4AFA7B9A.4090005@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132637>
 
-Dmitry Smirnov <divis1969 <at> gmail.com> writes:
+Johannes Sixt wrote in the other reply:
+> I thought that the intention to give an extra path argument is to reduce
+> the number of commits that remain in the rewritten history. But by giving
+> --subdirectory-filter, the path filter actually loosened, and many more
+> commits are rewritten.
 
+Right, I had a thinko there, the path filter adds up as an "or", so
+filtering for paths outside the subdir loosens it (and filtering for
+more paths inside doesn't make a difference).
 
-Ok, I have heard a lot of perfect words about Git. I'm almost on your side :-)
+> Since your intention to write this patch is actually to implement
+> --remap-to-ancestor, I suggest that we defer the question whether the
+> above use-case makes sense, and only rewrite this particular paragraph in
+> the commit message to point out the real bug:
 
-Just need some advice on (small for Git, I hope) problem. 
-I'm trying to import P4 depot into Git (for mirroring purpose).
-It seems a non-trivial task with the current git-p4 script.
-Perhaps, I had selected a wrong way: i'm trying to import some client.
+Agreed.
 
-In fact, as I said in previous mails, typically I have few similar clients.
-So, maybe it is simpler to import some set of branches (which I suppose a little 
-bit simpler with git-p4).
+Johannes Sixt wrote:
+> Furthermore, --subdirectory-filter supplies its own '--', and if the user
+> provided one himself, such as in
+> 
+>   git filter-branch --subdirectory-filter subdir -- --all -- subdir/file
+> 
+> 	an extra '--' was used as path filter in the call to git-rev-list that
+> determines the commits that shall be rewritten.
 
-Unfortunaley, the directory structure of the depot differs from client's (i.e. 
-working tree differs from repository tree).
-For example,
-//depot/component/version could be mapped to the 
-<root_of_working_tree>/component.
+There's some stray space here that should probably also be removed.
 
-Thus if I import //depot/component/version1 and //depot/component/version2
-as is, I should be able to checkout either version1 or version2.
-Note that there could be few components in the same working tree:
+> Here it is. The interdiff to your version is merely
+[...]
+>  # we need "--" only if there are no path arguments in $@
+>  nonrevs=$(git rev-parse --no-revs "$@") || exit
+> -dashdash=${nonrevs+"--"}
+> +test -z "$nonrevs" && dashdash=-- || dashdash=
 
-//depot/component1/version1 (mapped to <root>/component1)
-//depot/component2/versionX (mapped to <root>/component2)
-//depot/component3/versionY (mapped to <root>/component3)
+Ack.
 
-With Perforce, there could also be a more complex mappings, but maybe we will 
-discuss it later).
-
-Is there any way to make this mapping with Git? Should I invent some kind of 
-tool like 'repo' or there is a simpler way?
-
-
-Dmitry
-
- 
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
