@@ -1,64 +1,82 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: Re: t5541-http-push hanging
-Date: Wed, 11 Nov 2009 11:53:24 -0500
-Message-ID: <9D004E6C-52FF-441D-82A6-8D002401703A@gernhardtsoftware.com>
-References: <B17AB159-E217-4E1F-BEA3-97E5892C13F4@gernhardtsoftware.com> <be6fef0d0911110747k219e1fe0l7bd19bbc58b5ea3e@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1077)
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: Re: gitk : french translation
+Date: Wed, 11 Nov 2009 17:59:23 +0100
+Message-ID: <20091111165923.GE27518@vidovic>
+References: <20091111001050.GC27518@vidovic> <g1w6apsyubgonjhsvjUYAxe124vaj_firegpg@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Git List <git@vger.kernel.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 11 17:53:53 2009
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Emmanuel Trillaud <etrillaud@gmail.com>,
+	Maximilien Noal <noal.maximilien@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Nicolas Pitre <nico@fluxnic.net>, Guy Brand <gb@unistra.fr>,
+	Git Mailing List <git@vger.kernel.org>
+To: Thomas Moulard <thomas.moulard@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 11 17:59:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8GRz-0001zb-20
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 17:53:43 +0100
+	id 1N8GXg-0005GI-Dm
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 17:59:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758085AbZKKQxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 11:53:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758025AbZKKQxW
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 11:53:22 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:54524 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757903AbZKKQxV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Nov 2009 11:53:21 -0500
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id EF2731FFC087; Wed, 11 Nov 2009 16:53:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [10.10.10.10] (cpe-67-240-172-169.rochester.res.rr.com [67.240.172.169])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id AC5741FFC06B;
-	Wed, 11 Nov 2009 16:53:21 +0000 (UTC)
-In-Reply-To: <be6fef0d0911110747k219e1fe0l7bd19bbc58b5ea3e@mail.gmail.com>
-X-Mailer: Apple Mail (2.1077)
+	id S1757857AbZKKQ7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 11:59:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757839AbZKKQ7Y
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 11:59:24 -0500
+Received: from qw-out-2122.google.com ([74.125.92.24]:60120 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757838AbZKKQ7X (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 11:59:23 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so248278qwe.37
+        for <git@vger.kernel.org>; Wed, 11 Nov 2009 08:59:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=MOmszqNlODwgyQTxSJndsMFhD+rRoHhHvUOYCuZJJ2E=;
+        b=HXBcQsuRFK/ZtHHEs++CtnbGU1niPa/2DJOAzYyeb2X2VfkXrsg0nZ6QURWR8nPVsM
+         OESaZegiVy6tWIEcar06MCgQ7rGwI5USUzdJx7p8zToA1ph2WW8GYNOWhZzd4BT0zaMZ
+         Xc+nxu1LB4FYvxF46CIoexeWYY02NYGfoQBk0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=nUTxHeT7VXUmHPI2YSxrmuVy63Y582eRwyeaEHF8H14mjHuCvVQpszJkxvg630chKQ
+         c8Tugx0eaIcRnDaJREWjGBlwhKqolqulNlC8jlZmm4+7ziiR3EI6byCNu1xU6r45a3zg
+         XlSxsSbcXuIDTLdzxfsCnmcp9jK50HmEQ+nPM=
+Received: by 10.213.96.202 with SMTP id i10mr6624716ebn.99.1257958768441;
+        Wed, 11 Nov 2009 08:59:28 -0800 (PST)
+Received: from @ (91-164-133-202.rev.libertysurf.net [91.164.133.202])
+        by mx.google.com with ESMTPS id 10sm655285eyd.23.2009.11.11.08.59.25
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 11 Nov 2009 08:59:26 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <g1w6apsyubgonjhsvjUYAxe124vaj_firegpg@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132674>
 
+The 11/11/09, Thomas Moulard wrote:
+> 2009/11/11 Nicolas Sebrecht <nicolas.s.dev@gmx.fr>:
+> > The 10/11/09, Emmanuel Trillaud wrote:
+> >
+> >> +#: gitk:1793 gitk:1817 gitk:3916 gitk:8786 gitk:10322 gitk:10498
+> >> +msgid "OK"
+> >> +msgstr "OK"
+> >
+> > This one should not be required.
+>
+> In that case, how do you differentiate untranslated sentences from
+> translated sentences which have identical translations?
 
-On Nov 11, 2009, at 10:47 AM, Tay Ray Chuan wrote:
+I don't try because I don't need to. If a sentence is not translated,
+translators understand it doesn't need a translation if the translation
+is identical.
 
-> On Wed, Nov 11, 2009 at 2:28 PM, Brian Gernhardt
-> <brian@gernhardtsoftware.com> wrote:
->> error: RPC failed; result=22, HTTP code = 500
->> ^CFATAL: Unexpected exit with code 130
-> 
-> looks like an apache/http-backend issue. What version of apache are you running?
-
-It's Apache 2.2.13 on Mac OS X 10.6.2
-
-> Also, are you running out of the 'next' branch?
-
-Yes.  That particular build was v1.6.5.2-372-gc05027d
-
-However I've been seeing it for a couple days.
-
-~~ Brian
+-- 
+Nicolas Sebrecht
