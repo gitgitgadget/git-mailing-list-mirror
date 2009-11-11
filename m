@@ -1,152 +1,142 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: ks/precompute-completion
-Date: Wed, 11 Nov 2009 16:08:32 -0600
-Message-ID: <20091111220832.GA31620@progeny.tock>
-References: <7vbpj9s8vk.fsf@alter.siamese.dyndns.org>
- <fabb9a1e0911110957k599ac3dfmd1a44a0499c72b2d@mail.gmail.com>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: [ANNOUNCE] GIT 1.6.5.2
+Date: Wed, 11 Nov 2009 16:59:52 -0500
+Message-ID: <20091111215952.GR31109@inocybe.localdomain>
+References: <7vljiypw9s.fsf@alter.siamese.dyndns.org>
+ <m3ljicsrg0.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <junio@pobox.com>,
-	Stephen Boyd <bebarino@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Kirill Smelkov <kirr@mns.spb.ru>
-X-From: git-owner@vger.kernel.org Wed Nov 11 22:59:03 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 11 23:00:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8LDL-00055n-NK
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 22:58:56 +0100
+	id 1N8LEe-0005ll-Mz
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Nov 2009 23:00:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759458AbZKKV6Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Nov 2009 16:58:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759465AbZKKV6X
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 16:58:23 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:53737 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759459AbZKKV6V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 16:58:21 -0500
-Received: by bwz27 with SMTP id 27so1532956bwz.21
-        for <git@vger.kernel.org>; Wed, 11 Nov 2009 13:58:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=zp8qnHX6ZXVMISbSJhzyMaAzSXZz9FrW1CouO5nfPz4=;
-        b=YUxYrqtk6zLQ06zwG23PhKmIPcWXW94v8m6SckVThrQEXFGId0Xsn/fo1vnhr4yjgs
-         fJEQBetU46XYEvOIrUvxsFFcpMMu2N3qbVr+zEOtbh/Wt611lup9Bbkb2x0WMqAegRvT
-         MdDTn+GmDR8JANO4OlwKgo62A1qM6+HOdsZY8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=ZNpOpJa9teNObQF+13unOZY2aR6gdL2c71RocfPmlfZuvWQpBKmIPHK+YzuKWz1sk5
-         cMbWLayE3dY4qVcU9YB6BbTakFzipyNFDdhgj704MIkbajxKHeZuSFJRKpRXpMjpo2Mb
-         Dlyi4+9Iq2uI5AVqleU9QZFNdewapK9rcbE5w=
-Received: by 10.216.88.146 with SMTP id a18mr665583wef.56.1257976706021;
-        Wed, 11 Nov 2009 13:58:26 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id t12sm292288gvd.7.2009.11.11.13.58.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 11 Nov 2009 13:58:24 -0800 (PST)
+	id S1759478AbZKKV7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 16:59:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759338AbZKKV7z
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 16:59:55 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57783 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759325AbZKKV7y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 16:59:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DB7AF7CB44;
+	Wed, 11 Nov 2009 16:59:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+	:cc:subject:message-id:references:mime-version:content-type
+	:in-reply-to; s=sasl; bh=0VRMeua/JP6EO/XnDP23bkh7o2s=; b=qBK1+bA
+	4K9E1jdL6NMNJFdzbNwFNWcTZqGA2Y5LlVcjdrZAFKixNQC/02ty2QuvQSidkRsg
+	Ppr+/3JpAfKW4UH71R3uPTv64MiYGYGVaxZVBjH2ZPnQgk1i60P82bOwBZjiaAss
+	ZuJo83HvXIMm+SEvCNEZydf8fUTyR7WfCuXo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+	:subject:message-id:references:mime-version:content-type
+	:in-reply-to; q=dns; s=sasl; b=ojLG8+98x6qav2IZTLXq1FFJv+oIsOxse
+	Nm++2RezQSuWvSzwaxOtpPHgwqziPwY6oXlYUA2kL+SBOhVjjnxeillbw4TOGLcq
+	XIAFuehTW6PMOPSOHj4VOsuK4rgdO6tbzlrr4+GLjuPuhEKp50Sq2m9t9ifeJeRY
+	8RgoTCg3Vk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B17837CB3F;
+	Wed, 11 Nov 2009 16:59:56 -0500 (EST)
+Received: from inocybe.localdomain (unknown [98.117.251.177]) (using TLSv1
+ with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1ABF07CB3E; Wed, 11 Nov
+ 2009 16:59:54 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <fabb9a1e0911110957k599ac3dfmd1a44a0499c72b2d@mail.gmail.com>
+In-Reply-To: <m3ljicsrg0.fsf@localhost.localdomain>
 User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Pobox-Relay-ID: 8C863FF0-CF0D-11DE-9D96-9F3FEE7EF46B-09356542!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132711>
 
-Hi,
-
->> * ks/precompute-completion (2009-10-26) 3 commits.
->> =C2=A0(merged to 'next' on 2009-10-28 at cd5177f)
->> =C2=A0+ completion: ignore custom merge strategies when pre-generati=
-ng
->> =C2=A0(merged to 'next' on 2009-10-22 at f46a28a)
->> =C2=A0+ bug: precomputed completion includes scripts sources
->> =C2=A0(merged to 'next' on 2009-10-14 at adf722a)
->> =C2=A0+ Speedup bash completion loading
+Jakub Narebski wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> The RPM binary packages for a few architectures are found in:
 >>
->> What's the status of this thing? =C2=A0Last time I polled the list I=
- had an
->> impression that it was not quite ready...
+>>   RPMS/$arch/git-*-1.6.5.2-1.fc9.$arch.rpm	(RPM)
+>
+> I tried to install git from source RPM... and failed:
+>
+>   $ rpmbuild --rebuild git-1.6.5.2-1.fc11.src.rpm
+>   Installing git-1.6.5.2-1.fc11.src.rpm
+>   warning: user junio does not exist - using root
+>   warning: group junio does not exist - using root
+>   error: unpacking of archive failed on file
+>     /home/local/builddir/SOURCES/git-1.6.5.2.tar.gz;
+>     4afb1f6a: cpio: MD5 sum mismatch
+>   error: git-1.6.5.2-1.fc11.src.rpm cannot be installed
+>
+> Error messages are line wrapped for better readibility.
+>
+> Redownloading the file didn't help
+>
+>   $ ls -l git-1.6.5.2-1.fc11.src.rpm
+>   -rw-r--r--  1 jnareb users 2713416 Oct 26 03:59 git-1.6.5.2-1.fc11.src.rpm
+>   $ md5sum git-1.6.5.2-1.fc11.src.rpm
+>   9f89a01b65e1b8e8934c3a2252064632  git-1.6.5.2-1.fc11.src.rpm
 
-As a distro user, I don=E2=80=99t think I would be able to use it until=
- there
-is a command to update the installed completion, to call after adding
-a new git command to my $PATH.  This could mean:
+It looks like the kernel.org builders are now using Fedora 11 to
+create the packages.  Unfortunately, there were backward-incompatible
+changes in rpm.  Stronger hashes are now used and older rpm versions
+do not understand these, leading to the error you got.
 
- - git-completion.bash.generate learns to read the .in file and
-   write the completion script to arbitrary paths (or just always
-   uses stdin and stdout?)
+I don't know what the process is for creating the rpm's, but if it's
+under Junio's control, a fix to create packages which can be read by
+older rpm versions would be to add:
 
- - distros install git-completion.bash.{generate,in} to /usr/share/git-=
-core
+    --define "_source_filedigest_algorithm md5" \
+    --define "_binary_filedigest_algorithm md5"
 
- - distros install a simple completion script to /etc/bash_completion.d
-   that passes the buck, e.g.
+to the rpmbuild invocation.
 
--- %< --
-# bash completion support for core Git.
-#
-# Run update-git-completion to generate these files.
-#
-__git_user_completion=3D~/.cache/git-core/git-completion.bash
-__git_system_completion=3D/var/cache/git-core/git-completion.bash
+Perhaps like this (I didn't test this, though the defines are what we
+use in Fedora to create packages on Fedora >= 11 for building on
+CentOS and older releases):
 
-if test -r "$__git_user_completion"
-then
-	. "$__git_user_completion"
-elif test -r "$__git_system_completion"
-then
-	. "$__git_system_completion"
-fi
--- >% --
+-- >8 --
+From: Todd Zullinger <tmz@pobox.com>
+Subject: [PATCH] Makefile: Ensure rpm packages can be read by older rpm versions
 
- - new update-git-completion script, something like this:
+The kernel.org hosts where the packages are built are now using Fedora
+11, which defaults to sha256 for file digests instead of md5.  Older
+versions of rpm can not handle these packages.  Tell rpmbuild to use md5
+file digests for better compatibility.
 
--- %< --
-#!/bin/sh
-USAGE=3D"update-git-completion {--system | --user | <filename>}"
-datadir=3D/usr/share/git-core
-die() {
-	echo >&2 "$*"
-	exit 1
-}
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
+ Makefile |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-if ! test $# -eq 1
-then
-	die "usage: $USAGE"
-fi
+diff --git a/Makefile b/Makefile
+index 5d5976f..35f5294 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1806,7 +1806,10 @@ dist: git.spec git-archive$(X) configure
+ 	gzip -f -9 $(GIT_TARNAME).tar
+ 
+ rpm: dist
+-	$(RPMBUILD) -ta $(GIT_TARNAME).tar.gz
++	$(RPMBUILD) \
++		--define "_source_filedigest_algorithm md5" \
++		--define "_binary_filedigest_algorithm md5" \
++		-ta $(GIT_TARNAME).tar.gz
+ 
+ htmldocs = git-htmldocs-$(GIT_VERSION)
+ manpages = git-manpages-$(GIT_VERSION)
+-- 
+1.6.5.2
 
-if test "$1" =3D "--system"
-then
-	output=3D/var/cache/git-core/git-completion.bash
-elif test "$1" =3D "--user"
-then
-	output=3D$HOME/.cache/git-core/git-completion.bash
-else
-	output=3D$1
-fi
-
-rm -f "$output+" || die "cannot remove $output+"
-sh "$datadir"/git-completion.bash.generate \
-	< "$datadir"/git-completion.bash.in \
-	> "$output+" || die "failed to generate completion script"
-bash -n "$output+" || {
-	rm -f "$output+"
-	die "generated script fails syntax check"
-}
-mv -f "$output+" "$output" || {
-	rm -f "$output+"
-	die "failed to install completion script"
-}
--- >% --
-
-Thoughts?
+-- 
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Does it follow that I reject all authority? Perish the thought. In the
+matter of boots, I defer to the authority of the boot-maker.
+    -- Mikhail Bakunin
