@@ -1,114 +1,92 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: Git in next is broken
-Date: Thu, 12 Nov 2009 22:45:37 +0000 (GMT)
-Message-ID: <alpine.LNX.2.00.0911122239150.6967@reaper.quantumfyre.co.uk>
-References: <alpine.LFD.2.00.0911121513470.16711@xanadu.home> <4AFC8960.9090808@lsrfire.ath.cx>
+From: Toby Allsopp <toby.allsopp@navman.co.nz>
+Subject: [PATCH 2/2] git-svn: handle SVN merges from revisions past the tip of the branch
+Date: Fri, 13 Nov 2009 09:18:48 +1300
+Message-ID: <871vk35o86.fsf@navakl084.mitacad.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: Nicolas Pitre <nico@fluxnic.net>, git@vger.kernel.org
-To: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu Nov 12 23:52:29 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Sam Vilain <sam.vilain@catalyst.net.nz>,
+	Eric Wong <normalperson@yhbt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 13 00:30:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8iWh-0007YW-Ss
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 23:52:28 +0100
+	id 1N8j7f-0007Yn-Bj
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 00:30:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754801AbZKLWwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Nov 2009 17:52:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754791AbZKLWwP
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 17:52:15 -0500
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:48144 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754771AbZKLWwP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Nov 2009 17:52:15 -0500
-Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id BA792372266
-	for <git@vger.kernel.org>; Thu, 12 Nov 2009 22:52:19 +0000 (GMT)
-Received: (qmail 26826 invoked by uid 103); 12 Nov 2009 22:45:37 +0000
-Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
- (clamdscan: 0.95.2/10016. spamassassin: 3.2.1. perlscan: 2.05st.  
- Clear:RC:1(212.159.54.234):. 
- Processed in 0.055858 secs); 12 Nov 2009 22:45:37 -0000
-Received: from reaper.quantumfyre.co.uk (212.159.54.234)
-  by neutron.quantumfyre.co.uk with SMTP; 12 Nov 2009 22:45:37 +0000
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <4AFC8960.9090808@lsrfire.ath.cx>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1755199AbZKLXa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Nov 2009 18:30:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755161AbZKLXa2
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 18:30:28 -0500
+Received: from ip-58-28-171-25.wxnz.net ([58.28.171.25]:57855 "EHLO
+	AKLEXFE01.mitacad.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755156AbZKLXa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Nov 2009 18:30:27 -0500
+X-Greylist: delayed 913 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Nov 2009 18:30:27 EST
+Received: from AKLEXVS01.mitacad.com ([10.112.5.36]) by AKLEXFE01.mitacad.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 13 Nov 2009 12:15:40 +1300
+Received: from navakl084.mitacad.com.navman.co.nz ([10.112.8.86]) by AKLEXVS01.mitacad.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 13 Nov 2009 12:15:39 +1300
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.50 (gnu/linux)
+X-OriginalArrivalTime: 12 Nov 2009 23:15:39.0263 (UTC) FILETIME=[0C4400F0:01CA63EE]
+X-TM-AS-Product-Ver: SMEX-8.0.0.1181-6.000.1038-17006.000
+X-TM-AS-Result: No-0.037400-8.000000-31
+X-TM-AS-User-Approved-Sender: No
+X-TM-AS-User-Blocked-Sender: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132804>
 
-On Thu, 12 Nov 2009, Ren? Scharfe wrote:
+When recording the revisions that it has merged, SVN sets the top
+revision to be the latest revision in the repository, which is not
+necessarily a revision on the branch that is being merged from.  When
+it is not on the branch, git-svn fails to add the extra parent to
+represent the merge because it relies on finding the commit on the
+branch that corresponds to the top of the SVN merge range.
 
-> Nicolas Pitre schrieb:
->> Simply issuing a "git fetch" in my copy of git.git makes glibc complain
->> with this:
->>
->> *** glibc detected *** git: corrupted double-linked list: 0x0000000000974180 ***
->>
->> The gdb backtrace is:
->>
->> (gdb) bt
->> #0  0x0000003c76632f05 in raise () from /lib64/libc.so.6
->> #1  0x0000003c76634a73 in abort () from /lib64/libc.so.6
->> #2  0x0000003c76672438 in __libc_message () from /lib64/libc.so.6
->> #3  0x0000003c76677ec8 in malloc_printerr () from /lib64/libc.so.6
->> #4  0x0000003c7667a23e in _int_free () from /lib64/libc.so.6
->> #5  0x0000003c7667a486 in free () from /lib64/libc.so.6
->> #6  0x0000000000493f3f in ref_remove_duplicates (ref_map=0x7562b0)
->>     at remote.c:756
->> #7  0x0000000000424afc in get_ref_map () at builtin-fetch.c:165
->> #8  do_fetch () at builtin-fetch.c:644
->> #9  cmd_fetch (argc=<value optimized out>, argv=0x7fffffffe6a0,
->>     prefix=<value optimized out>) at builtin-fetch.c:754
->> #10 0x0000000000403d83 in run_builtin () at git.c:251
->> #11 handle_internal_command (argc=1, argv=0x7fffffffe6a0) at git.c:396
->> #12 0x0000000000403f2d in run_argv () at git.c:438
->> #13 main (argc=1, argv=0x7fffffffe6a0) at git.c:509
->>
->> Bisection reveals the following culprit:
->>
->> commit 73cf0822b2a4ffa7ad559d1f0772e39718fc7776
->> Author: Julian Phillips <julian@quantumfyre.co.uk>
->> Date:   Sun Oct 25 21:28:11 2009 +0000
->>
->>     remote: Make ref_remove_duplicates faster for large numbers of refs
->
-> Can't reproduce because I don't know how to create duplicate refs, but does
-> the following help?
->
->
-> remote.c |    2 ++
-> 1 files changed, 2 insertions(+), 0 deletions(-)
->
-> diff --git a/remote.c b/remote.c
-> index 4f9f0cc..10cc985 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -754,6 +754,8 @@ void ref_remove_duplicates(struct ref *ref_map)
-> 			prev->next = ref_map->next;
-> 			free(ref_map->peer_ref);
-> 			free(ref_map);
-> +			ref_map = next;
+In order to correctly handle this case, we look for the maximum
+revision less than or equal to the top of the SVN merge range that is
+actually on the branch being merged from.
 
-You don't need this line (this is taken care of in the for(...)).
+Signed-off-by: Toby Allsopp <toby.allsopp@navman.co.nz>
+---
+ git-svn.perl             |    7 +++++--
+ t/t9151-svn-mergeinfo.sh |    2 +-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-> +			continue;
-
-Ack. This one however, you do need.  Good catch.
-
-> 		}
->
-> 		item = string_list_insert(ref_map->peer_ref->name, &refs);
->
-
+diff --git a/git-svn.perl b/git-svn.perl
+index 6a3b501..27fbe30 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2950,8 +2950,11 @@ sub find_extra_svn_parents {
+ 			my $bottom_commit =
+ 				$gs->rev_map_get($bottom, $self->ra_uuid) ||
+ 				$gs->rev_map_get($bottom+1, $self->ra_uuid);
+-			my $top_commit =
+-				$gs->rev_map_get($top, $self->ra_uuid);
++			my $top_commit;
++			for (; !$top_commit && $top >= $bottom; --$top) {
++				$top_commit =
++					$gs->rev_map_get($top, $self->ra_uuid);
++			}
+ 
+ 			unless ($top_commit and $bottom_commit) {
+ 				warn "W:unknown path/rev in svn:mergeinfo "
+diff --git a/t/t9151-svn-mergeinfo.sh b/t/t9151-svn-mergeinfo.sh
+index 0d42c84..f57daf4 100755
+--- a/t/t9151-svn-mergeinfo.sh
++++ b/t/t9151-svn-mergeinfo.sh
+@@ -19,7 +19,7 @@ test_expect_success 'represent svn merges without intervening commits' "
+ 	[ `git cat-file commit HEAD^1 | grep parent | wc -l` -eq 2 ]
+ 	"
+ 
+-test_expect_failure 'represent svn merges with intervening commits' "
++test_expect_success 'represent svn merges with intervening commits' "
+ 	[ `git cat-file commit HEAD | grep parent | wc -l` -eq 2 ]
+ 	"
+ 
 -- 
-Julian
-
-  ---
-Punishment becomes ineffective after a certain point.  Men become insensitive.
- 		-- Eneg, "Patterns of Force", stardate 2534.7
+1.6.5.2.155.gbb47.dirty
