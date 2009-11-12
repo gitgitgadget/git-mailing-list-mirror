@@ -1,82 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-pull.sh: overhaul error handling when no
- candidates are found
-Date: Thu, 12 Nov 2009 10:06:26 -0500
-Message-ID: <20091112150626.GA24848@coredump.intra.peff.net>
-References: <1257945756.26362.79.camel@heerbeest>
- <48B54636-1825-48B3-BECD-4150A55B013F@dbservice.com>
- <1257965806.26362.132.camel@heerbeest>
- <D6B0AE61-6CA3-4F79-BB50-B8795415BAB7@dbservice.com>
- <1257968052.26362.155.camel@heerbeest>
- <AC99BA30-A36D-4798-8E7D-9D69EFE99D55@dbservice.com>
- <1258035449.26362.273.camel@heerbeest>
- <20091112155310.7836c388@perceptron>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: Re: Working on merged branches whilst seeing current master
+Date: Thu, 12 Nov 2009 16:14:25 +0100
+Message-ID: <20091112151425.GD25398@vidovic>
+References: <1257959806206-3987667.post@n2.nabble.com> <20091111215727.GK27518@vidovic> <1258037862366-3993313.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jan Nieuwenhuizen <janneke-list@xs4all.nl>,
-	Tomas Carnecky <tom@dbservice.com>,
-	git list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Thu Nov 12 16:06:47 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+To: rhlee <richard@webdezign.co.uk>
+X-From: git-owner@vger.kernel.org Thu Nov 12 16:14:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8bG2-0001TK-PC
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 16:06:47 +0100
+	id 1N8bNi-0005jc-Cj
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 16:14:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753109AbZKLPGg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Nov 2009 10:06:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753094AbZKLPGf
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 10:06:35 -0500
-Received: from peff.net ([208.65.91.99]:55213 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752882AbZKLPGf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Nov 2009 10:06:35 -0500
-Received: (qmail 22206 invoked by uid 107); 12 Nov 2009 15:10:27 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 12 Nov 2009 10:10:27 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Nov 2009 10:06:26 -0500
+	id S1752935AbZKLPO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Nov 2009 10:14:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752061AbZKLPO3
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 10:14:29 -0500
+Received: from qw-out-2122.google.com ([74.125.92.24]:45907 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751825AbZKLPO3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Nov 2009 10:14:29 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so433126qwe.37
+        for <git@vger.kernel.org>; Thu, 12 Nov 2009 07:14:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=kjdRh/WQfs+RGrmo2pHNuP5zwhf782rEYRhEd3aY1Fc=;
+        b=svkzcYYWmZjz8rZJF6wIY3rdMkf4TLR+FCzOlc7W1dwcT+WXql8qt72CUXiyQ3mAoW
+         fIYgY6s9UIof+hN0hD2OjBlIB1HuhgVu3CJCfeSpvcRvY4If5Fo2i5GJKOe2967Y63v1
+         tDGdObdbZqweLneyXrKZi3RkEdSCLYPrp1IIY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=i+QMgqW9v3aE00b8w368oyZrzmj/vkpo+DRJs6md0z5fPtciJn0UofdaBNgf2XIMOY
+         CrN1/mE7p0HKw5GsMiJkVkSGUIiP/SY8IamdCbxAAuUkuwcN6G4csgflqnwZq91U0TQR
+         C8NgeMG81w4mgItRxxfnZNjYBjePHOHq1bu8M=
+Received: by 10.213.26.140 with SMTP id e12mr7541838ebc.0.1258038873978;
+        Thu, 12 Nov 2009 07:14:33 -0800 (PST)
+Received: from @ (91-165-129-166.rev.libertysurf.net [91.165.129.166])
+        by mx.google.com with ESMTPS id 7sm3800682eyb.8.2009.11.12.07.14.28
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 12 Nov 2009 07:14:30 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20091112155310.7836c388@perceptron>
+In-Reply-To: <1258037862366-3993313.post@n2.nabble.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132773>
 
-On Thu, Nov 12, 2009 at 03:53:10PM +0100, Jan Kr=C3=BCger wrote:
+The 12/11/09, rhlee wrote:
+> Nicolas Sebrecht-3 wrote:
+> > 
+> >>                                      Yes I know I probably should not be
+> >> working like this. My branches should be wholly independent. But I doing
+> >> web
+> >> development not kernel development so there is much less modularity and
+> >> branches/features have a tendency to creep into one another.
+> > 
+> > This should not be the case. Modularity in the release process and the
+> > development strategy is not tied to "what I am developing". I'm doing
+> > some web development too and have no difficulty around this point.
+> 
+> Just to clarify. Do you mean that this should not be the case that you get
+> feature creep in branches or the fact that this happens does interfere with
+> your release process/development strategy.
 
-> * The longish error message displayed when the user uses "git pull" b=
-ut
->   has no remote/merge/rebase lines configured for the current branch
->   contains example configuration to remedy the situation... but the
->   example uses a rather invalid syntax, using the dotted syntax "git
->   config" accepts, but also "=3D" separators which are used in the co=
-nfig
->   file format. It also implies that this syntax is valid in git confi=
-g
->   files. This changes the example to use valid config file syntax.
+I mean that the independency of the feature branches is mostly relying
+on "what do I (as a developer) commit in this branch", which is really
+tied to "how to write nice atomic commits" (easily reversible, etc).
 
-Personally, I would go the other way: give them something they can cut
-and paste on the command line, like:
+This must be applicable whatever the product/software you're working on
+and it is applicable for web development too.
 
-  git config branch.${curr_branch}.merge ${upstream#refs/heads/}
-
-> +	if [ true =3D "$rebase" ]; then
-> +		op_type=3Drebase
-> +		op_prep=3Dagainst
-> +	else
-> +		op_type=3Dmerge
-> +		op_prep=3Dwith
-> +	fi
-> +
->  	curr_branch=3D${curr_branch#refs/heads/}
-> -	upstream=3D$(git config "branch.$curr_branch.merge")
-> +	upstream=3D$(git config "branch.$curr_branch.$op_type")
-
-Isn't branch.*.rebase a boolean value?
-
--Peff
+-- 
+Nicolas Sebrecht
