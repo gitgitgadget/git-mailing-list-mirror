@@ -1,64 +1,82 @@
-From: skillzero@gmail.com
-Subject: Re: [PATCHv3] Add branch management for releases to gitworkflows
-Date: Thu, 12 Nov 2009 12:08:14 -0800
-Message-ID: <2729632a0911121208r1f51cf9ewb0bc23e757275f30@mail.gmail.com>
-References: <1258055164-11876-1-git-send-email-rocketraman@fastmail.fm>
-	 <1258055164-11876-2-git-send-email-rocketraman@fastmail.fm>
+From: Kaz Kylheku <kkylheku@gmail.com>
+Subject: Tracked file suddenly disappeared just prior to commit.
+Date: Thu, 12 Nov 2009 12:10:05 -0800
+Message-ID: <3f43f78b0911121210h4771984cqed561ca5d8c2d859@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com
-To: rocketraman@fastmail.fm
-X-From: git-owner@vger.kernel.org Thu Nov 12 21:08:25 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 12 21:16:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8fxu-0000jQ-0X
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 21:08:22 +0100
+	id 1N8g5M-0004aj-2n
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 21:16:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754218AbZKLUIL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Nov 2009 15:08:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754201AbZKLUIK
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 15:08:10 -0500
-Received: from mail-iw0-f178.google.com ([209.85.223.178]:39609 "EHLO
-	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753441AbZKLUIJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Nov 2009 15:08:09 -0500
-Received: by iwn8 with SMTP id 8so2059388iwn.33
-        for <git@vger.kernel.org>; Thu, 12 Nov 2009 12:08:14 -0800 (PST)
+	id S1754254AbZKLUPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Nov 2009 15:15:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754420AbZKLUPw
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 15:15:52 -0500
+Received: from mail-yw0-f202.google.com ([209.85.211.202]:39503 "EHLO
+	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754445AbZKLUPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Nov 2009 15:15:52 -0500
+Received: by ywh40 with SMTP id 40so657160ywh.33
+        for <git@vger.kernel.org>; Thu, 12 Nov 2009 12:15:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=rlPBKTMIZTRJXxzDGu5x+BiD/ZN6pHmblojIB8pzpls=;
-        b=JGjORXRccFvhzUlZxKYmmzG5Jj5/F00ZhLFlkLP7DkwTHP2ckWLXQxxUJHBx1uHQTR
-         rjE1+KqHEu6FyFuaRyfNBse2drqbqWo10JswKzmfkSuxSqbnjQxsVVXrIV+WRok1sSDq
-         POIYGxIuQd/h9azqphaFCAn00oEOvZH/mGlg4=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=h/GIYj+Au67ixAjzvYIqZt2eWA576sjPe5CB26JKnGQ=;
+        b=QEt6pyEhXmpiFen1eMDnPieNG69MxvNYwIZgjWYHAQ2S+zTDTKF054CZsbw0LdW9AG
+         +qrN9VRxfZ2Q29aWb3g3yLZrrlgtrdt6SOxKrFJIWr/nvWdsvODH7IxSxpVMoHe/zbLl
+         kGlqaiEJXcwVUSpYaiAPu4omVLlccdu/5aJV0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=DPA9M8ANRYjCxdVcpyWQS3i5APOWEfE/6dY2zkTH4sMlQa7kyIbig7S3mSbINv20K7
-         fc3nFC+1EwiwsmBIU5zaQRX00n3GxsVwUImwI2Gu8I5j9nGNggO+n1n9A2pGkplriuvs
-         NNq5BAzaYdBD89FJx8QdC/AJ0LmQQtImHVVK8=
-Received: by 10.231.21.157 with SMTP id j29mr316403ibb.28.1258056494428; Thu, 
-	12 Nov 2009 12:08:14 -0800 (PST)
-In-Reply-To: <1258055164-11876-2-git-send-email-rocketraman@fastmail.fm>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=fxRlmaeniJihCTv+gbEXSR8n19K8vnlHS6e/QsUToQa6kGY2rvVbvCOLwaxsIjRsUh
+         2UO7ylGRqdHukBwRnhQeGtLv5VhSw3/3U7T4ILleVasNwkCE2RgJ7VNZjw69d9akoXF7
+         2N4Btsm5fU6AUknFGPZxQjLDG2My9LLROr5v0=
+Received: by 10.150.129.25 with SMTP id b25mr6009575ybd.308.1258056605622; 
+	Thu, 12 Nov 2009 12:10:05 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132797>
 
-> +.Update maint to new release
-> +[caption="Recipe: "]
-> +=====================================
-> +* `git branch -f next master`
-> +* `git merge ai/topic_in_next1`
-> +* `git merge ai/topic_in_next2`
+I am running git 1.6.5rc2 on a somewhat dated system (RH EL 4, i686).
 
-Shouldn't that be something like "Update next to new release" instead
-of "maint"?
+The working copy is on an NFS mount from ``Big File Server used by Lots of
+People''.
 
-Should it also have 'git checkout next' after the branch command so
-it's on next before merging?
+I ran ``git diff > diffs'' to capture some work. I was then editing the
+ChangeLog file, making comments based on the diffs.  I had modified two files:
+a C source file and its corresponding header. I spent maybe ten minutes doing
+up the ChangeLog entry for these changes.
+
+Then I quit the editor and ran ``git commit -a''.
+
+In the commit comment, I saw git's shocking report that the C file had been
+deleted! Apparently, I am about to commit a deletion of the file I hacked on!
+So I emptied the comment to abort the commit.  I listed the
+directory and surely enough, the file was gone.
+
+For a split second I thought that I lost the changes, but then I realized I had
+the diff in the "diffs" file, so I recovered with a ``git checkout'', followed
+by a patch. Phew!
+
+How could that have happened? I haven't seen issues like this with the
+NFS server at all. The file hadn't been recently created, and it hadn't been
+touched for 12 hours since I made the changes.
+
+Could another user have deleted the file as a prank?  In this insecure
+environment, you can impersonate another user to get around
+directory permissions. It can't be logically ruled out that someone
+was messing with my working copy.
+
+I checked my bash history as well as the command history in Vim, but could find
+no traces of any accidental delete command, or any command which might lead to
+deletion. It all points to either git, the NFS server, or a prankster.
+
+Strange!
