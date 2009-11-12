@@ -1,64 +1,65 @@
-From: =?ISO-8859-1?Q?Lu=EDs_Sousa?= <llsousa@ualg.pt>
-Subject: Idea for git-touch
-Date: Thu, 12 Nov 2009 16:15:07 +0000
-Message-ID: <4AFC348B.4000202@ualg.pt>
+From: rhlee <richard@webdezign.co.uk>
+Subject: Re: Working on merged branches whilst seeing current master
+Date: Thu, 12 Nov 2009 08:49:22 -0800 (PST)
+Message-ID: <1258044562803-3994102.post@n2.nabble.com>
+References: <1257959806206-3987667.post@n2.nabble.com> <20091111215727.GK27518@vidovic> <1258030118389-3992599.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 12 17:45:41 2009
+X-From: git-owner@vger.kernel.org Thu Nov 12 17:49:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8cng-0003RN-IK
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 17:45:36 +0100
+	id 1N8crQ-0005qE-VN
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 17:49:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753145AbZKLQpY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Nov 2009 11:45:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752955AbZKLQpY
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 11:45:24 -0500
-Received: from smtp3.ualg.pt ([193.136.224.6]:40177 "EHLO smtp3.ualg.pt"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752280AbZKLQpX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Nov 2009 11:45:23 -0500
-X-Greylist: delayed 1801 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Nov 2009 11:45:23 EST
-Received: from localhost (smtp3.ualg.pt [127.0.0.1])
-	by smtp3.ualg.pt (Postfix) with ESMTP id D10521685A
-	for <git@vger.kernel.org>; Thu, 12 Nov 2009 16:15:25 +0000 (WET)
-Received: from smtp3.ualg.pt ([127.0.0.1])
- by localhost (host.domain.tld [127.0.0.1]) (amavisd-maia, port 10024)
- with ESMTP id 32172-06 for <git@vger.kernel.org>;
- Thu, 12 Nov 2009 16:15:24 +0000 (WET)
-Received: from [193.136.224.174] (unknown [193.136.224.174])
-	by smtp3.ualg.pt (Postfix) with ESMTP id 9A3C716781
-	for <git@vger.kernel.org>; Thu, 12 Nov 2009 16:15:24 +0000 (WET)
-User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
-X-Virus-Scanned: Maia Mailguard 1.0.2a
+	id S1753473AbZKLQtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Nov 2009 11:49:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753470AbZKLQtR
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 11:49:17 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:38370 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752729AbZKLQtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Nov 2009 11:49:17 -0500
+Received: from tervel.nabble.com ([192.168.236.150])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
+	id 1N8crK-0007JT-QD
+	for git@vger.kernel.org; Thu, 12 Nov 2009 08:49:22 -0800
+In-Reply-To: <1258030118389-3992599.post@n2.nabble.com>
+X-Nabble-From: rhlee <richard@webdezign.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132782>
 
-Hi all,
 
-I have been using GIT for several time and I love it.
 
-I normally do commits when something works or on the end of the day,=20
-just to record what have doing. On other day, when I consider that is=20
-done/working I do a rebase -i squashing everything on one commit. The=20
-date of that commit will be preserved and is the date of the first=20
-commit. Then I do a git-reset HEAD~1, git-add . and git-commit with the=
-=20
-same message to have the current date.
+Tim Mazid wrote:
+> 
+> Actually, there's no reason you couldn't just 'git reset HEAD^' once you
+> realise that the branch isn't ready. If you want to see the changes from
+> master, you could just merge that into your branch. If you just want to
+> see the content in master, you could use gitk or gitg, which allows you to
+> view files at any commit.
+> 
+> Personally, I merge master into my branches, test and check, and fix, then
+> merge the branch into master. This sometimes results in a fast-forward, if
+> you haven't made changes to master. If you don't like that, you can always
+> use the --no-ff option, though.
+> 
 
-A nice functionality was a git-touch that did the commands before.
+I don't think 'git reset HEAD^' would work in my case as that only goes back
+one commit. I may have made many other changes on the master branch that I
+want to keep.
 
-Best regards and keep the good work,
-Lu=EDs Sousa
-
-P.S.: While writing this message I realize that is easy to accomplish a=
-=20
-git-touch doing a bash script, but probably is a good idea to share.
+By merging from master into your branch, like you said, you get a nice graph
+view that shows what you've brought into your branch from master since you
+last left off. But doesn't this goes against the idea that branches should
+be independent, by bringing in changes from master?
+-- 
+View this message in context: http://n2.nabble.com/Working-on-merged-branches-whilst-seeing-current-master-tp3987667p3994102.html
+Sent from the git mailing list archive at Nabble.com.
