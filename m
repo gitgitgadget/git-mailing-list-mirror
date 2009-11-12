@@ -1,84 +1,64 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: Re: Working on merged branches whilst seeing current master
-Date: Thu, 12 Nov 2009 16:14:25 +0100
-Message-ID: <20091112151425.GD25398@vidovic>
-References: <1257959806206-3987667.post@n2.nabble.com> <20091111215727.GK27518@vidovic> <1258037862366-3993313.post@n2.nabble.com>
+From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
+Subject: Re: [PATCH] git-pull.sh: overhaul error handling when no 
+ candidates are found
+Date: Thu, 12 Nov 2009 16:25:58 +0100
+Message-ID: <20091112162558.6b1c4a43@perceptron>
+References: <1257945756.26362.79.camel@heerbeest>
+	<48B54636-1825-48B3-BECD-4150A55B013F@dbservice.com>
+	<1257965806.26362.132.camel@heerbeest>
+	<D6B0AE61-6CA3-4F79-BB50-B8795415BAB7@dbservice.com>
+	<1257968052.26362.155.camel@heerbeest>
+	<AC99BA30-A36D-4798-8E7D-9D69EFE99D55@dbservice.com>
+	<1258035449.26362.273.camel@heerbeest>
+	<20091112155310.7836c388@perceptron>
+	<20091112150626.GA24848@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-To: rhlee <richard@webdezign.co.uk>
-X-From: git-owner@vger.kernel.org Thu Nov 12 16:14:46 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Jan Nieuwenhuizen <janneke-list@xs4all.nl>,
+	Tomas Carnecky <tom@dbservice.com>,
+	git list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 12 16:26:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8bNi-0005jc-Cj
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 16:14:42 +0100
+	id 1N8bYl-0003Ew-Pk
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 16:26:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752935AbZKLPO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Nov 2009 10:14:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752061AbZKLPO3
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 10:14:29 -0500
-Received: from qw-out-2122.google.com ([74.125.92.24]:45907 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751825AbZKLPO3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Nov 2009 10:14:29 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so433126qwe.37
-        for <git@vger.kernel.org>; Thu, 12 Nov 2009 07:14:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=kjdRh/WQfs+RGrmo2pHNuP5zwhf782rEYRhEd3aY1Fc=;
-        b=svkzcYYWmZjz8rZJF6wIY3rdMkf4TLR+FCzOlc7W1dwcT+WXql8qt72CUXiyQ3mAoW
-         fIYgY6s9UIof+hN0hD2OjBlIB1HuhgVu3CJCfeSpvcRvY4If5Fo2i5GJKOe2967Y63v1
-         tDGdObdbZqweLneyXrKZi3RkEdSCLYPrp1IIY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=i+QMgqW9v3aE00b8w368oyZrzmj/vkpo+DRJs6md0z5fPtciJn0UofdaBNgf2XIMOY
-         CrN1/mE7p0HKw5GsMiJkVkSGUIiP/SY8IamdCbxAAuUkuwcN6G4csgflqnwZq91U0TQR
-         C8NgeMG81w4mgItRxxfnZNjYBjePHOHq1bu8M=
-Received: by 10.213.26.140 with SMTP id e12mr7541838ebc.0.1258038873978;
-        Thu, 12 Nov 2009 07:14:33 -0800 (PST)
-Received: from @ (91-165-129-166.rev.libertysurf.net [91.165.129.166])
-        by mx.google.com with ESMTPS id 7sm3800682eyb.8.2009.11.12.07.14.28
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 12 Nov 2009 07:14:30 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1258037862366-3993313.post@n2.nabble.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752768AbZKLPZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Nov 2009 10:25:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752685AbZKLPZ4
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 10:25:56 -0500
+Received: from zoidberg.org ([88.198.6.61]:43248 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752426AbZKLPZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Nov 2009 10:25:55 -0500
+Received: from perceptron (xdsl-78-35-170-176.netcologne.de [::ffff:78.35.170.176])
+  (IDENT: unknown, AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by cthulhu.zoidberg.org with esmtp; Thu, 12 Nov 2009 16:26:00 +0100
+  id 004D0152.4AFC2908.00000756
+In-Reply-To: <20091112150626.GA24848@coredump.intra.peff.net>
+X-Mailer: Claws Mail 3.7.3 (GTK+ 2.18.3; i486-pc-linux-gnu)
+X-Obscure-Spam: http://music-jk.net/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132774>
 
-The 12/11/09, rhlee wrote:
-> Nicolas Sebrecht-3 wrote:
-> > 
-> >>                                      Yes I know I probably should not be
-> >> working like this. My branches should be wholly independent. But I doing
-> >> web
-> >> development not kernel development so there is much less modularity and
-> >> branches/features have a tendency to creep into one another.
-> > 
-> > This should not be the case. Modularity in the release process and the
-> > development strategy is not tied to "what I am developing". I'm doing
-> > some web development too and have no difficulty around this point.
-> 
-> Just to clarify. Do you mean that this should not be the case that you get
-> feature creep in branches or the fact that this happens does interfere with
-> your release process/development strategy.
+> Personally, I would go the other way: give them something they can cut
+> and paste on the command line, like:
 
-I mean that the independency of the feature branches is mostly relying
-on "what do I (as a developer) commit in this branch", which is really
-tied to "how to write nice atomic commits" (easily reversible, etc).
+A matter of taste, I suppose. The user has to edit the lines anyway
+since they contain placeholders.
 
-This must be applicable whatever the product/software you're working on
-and it is applicable for web development too.
+> Isn't branch.*.rebase a boolean value?
 
--- 
-Nicolas Sebrecht
+Argh! Of course it is. Note to self: don't write patches in a hurry.
+Disregard everything I said. I thought I was seeing incorrect behavior
+in what Jan (N.) reported...
+
+Jan
