@@ -1,165 +1,162 @@
-From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
-Subject: [PATCH] git-pull.sh: overhaul error handling when no candidates are
- found
-Date: Thu, 12 Nov 2009 15:53:10 +0100
-Message-ID: <20091112155310.7836c388@perceptron>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Unhelpful "branch.master.remote = <nickname>" advice?
+Date: Thu, 12 Nov 2009 15:56:35 +0100
+Message-ID: <20091112145635.GA6721@atjola.homenet>
 References: <1257945756.26362.79.camel@heerbeest>
-	<48B54636-1825-48B3-BECD-4150A55B013F@dbservice.com>
-	<1257965806.26362.132.camel@heerbeest>
-	<D6B0AE61-6CA3-4F79-BB50-B8795415BAB7@dbservice.com>
-	<1257968052.26362.155.camel@heerbeest>
-	<AC99BA30-A36D-4798-8E7D-9D69EFE99D55@dbservice.com>
-	<1258035449.26362.273.camel@heerbeest>
+ <48B54636-1825-48B3-BECD-4150A55B013F@dbservice.com>
+ <1257965806.26362.132.camel@heerbeest>
+ <D6B0AE61-6CA3-4F79-BB50-B8795415BAB7@dbservice.com>
+ <1257968052.26362.155.camel@heerbeest>
+ <AC99BA30-A36D-4798-8E7D-9D69EFE99D55@dbservice.com>
+ <1258035449.26362.273.camel@heerbeest>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tomas Carnecky <tom@dbservice.com>, git list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
+Cc: Tomas Carnecky <tom@dbservice.com>, git list <git@vger.kernel.org>
 To: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
-X-From: git-owner@vger.kernel.org Thu Nov 12 15:53:25 2009
+X-From: git-owner@vger.kernel.org Thu Nov 12 15:56:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8b34-0002eP-Ml
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 15:53:23 +0100
+	id 1N8b6N-0004Nl-LY
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 15:56:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752883AbZKLOxK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Nov 2009 09:53:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752861AbZKLOxJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 09:53:09 -0500
-Received: from zoidberg.org ([88.198.6.61]:40084 "EHLO cthulhu.zoidberg.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752750AbZKLOxI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Nov 2009 09:53:08 -0500
-Received: from perceptron (xdsl-78-35-170-176.netcologne.de [::ffff:78.35.170.176])
-  (IDENT: unknown, AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-  by cthulhu.zoidberg.org with esmtp; Thu, 12 Nov 2009 15:53:12 +0100
-  id 004D0190.4AFC2158.0000441E
+	id S1753031AbZKLO4g convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Nov 2009 09:56:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752882AbZKLO4g
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 09:56:36 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55820 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752861AbZKLO4f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Nov 2009 09:56:35 -0500
+Received: (qmail invoked by alias); 12 Nov 2009 14:56:39 -0000
+Received: from i59F574F9.versanet.de (EHLO atjola.homenet) [89.245.116.249]
+  by mail.gmx.net (mp055) with SMTP; 12 Nov 2009 15:56:39 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19n/cEOcvFnAf42GwJtgcxKh22I40jxanc3ylMUOB
+	v2ZFDi72JmieT+
+Content-Disposition: inline
 In-Reply-To: <1258035449.26362.273.camel@heerbeest>
-X-Mailer: Claws Mail 3.7.3 (GTK+ 2.18.3; i486-pc-linux-gnu)
-X-Obscure-Spam: http://music-jk.net/
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132769>
 
-* The longish error message displayed when the user uses "git pull" but
-  has no remote/merge/rebase lines configured for the current branch
-  contains example configuration to remedy the situation... but the
-  example uses a rather invalid syntax, using the dotted syntax "git
-  config" accepts, but also "=3D" separators which are used in the conf=
-ig
-  file format. It also implies that this syntax is valid in git config
-  files. This changes the example to use valid config file syntax.
-
-* When git pull --rebase is used, error_on_no_merge_candidates still
-  thinks we're trying to merge, so the resulting message talks about
-  merge all the time, and the function looks at the "branch.foo.merge"
-  setting rather than the "branch.foo.rebase" setting, and so even tend=
-s
-  to output the wrong message for the rebase case. This makes both the
-  setting verification and the message depend on the mode of operation.
-
-Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
----
-I tried to pick this apart into several patches but couldn't really
-find any decent way of separating the changes. It should address all of
-the confusion already identified plus some additional confusion, though=
-=2E
-
-I'll admit that the dynamification of the messages is a bit crude.
-
- git-pull.sh |   43 ++++++++++++++++++++++++++-----------------
- 1 files changed, 26 insertions(+), 17 deletions(-)
-
-diff --git a/git-pull.sh b/git-pull.sh
-index 37f3d93..906c827 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -91,45 +91,54 @@ error_on_no_merge_candidates () {
- 		esac
- 	done
+On 2009.11.12 15:17:29 +0100, Jan Nieuwenhuizen wrote:
+> Op woensdag 11-11-2009 om 21:32 uur [tijdzone +0100], schreef Tomas
+> Carnecky:
+>=20
+> Hi Tomas,
+>=20
+> > It didn't tell you to copy'n'paste the whole lines to a git-config(=
+1) =20
+> > commandline. But I do see that the output can be confusing for some=
+one =20
+> > not familiar with the git configuration files/git-config.
+>=20
+> Once I get this to work, I'll send a patch for it.
+>=20
+> > I don't know the relationship between you and eddy, but usually you=
+ =20
+> > shouldn't rebase (=3Drewrite) eddies commits. That also means you'd=
+ have =20
+> > to live with the merge commits.
+>=20
+> Hmm, okay.
+>=20
+> > I see your mistake. Both the origin and eddy remote write to the sa=
+me =20
+> > namespace (refs/remotes/origin/*), and that's also why you get (for=
+ce =20
+> > update) below
+>=20
+> Ah, that makes sense.
+>=20
+> > . Change the fetch line of remote.eddy.fetch to +refs/heads/*:refs/=
 =20
-+	if [ true =3D "$rebase" ]; then
-+		op_type=3Drebase
-+		op_prep=3Dagainst
-+	else
-+		op_type=3Dmerge
-+		op_prep=3Dwith
-+	fi
-+
- 	curr_branch=3D${curr_branch#refs/heads/}
--	upstream=3D$(git config "branch.$curr_branch.merge")
-+	upstream=3D$(git config "branch.$curr_branch.$op_type")
- 	remote=3D$(git config "branch.$curr_branch.remote")
-=20
- 	if [ $# -gt 1 ]; then
--		echo "There are no candidates for merging in the refs that you just =
-fetched."
-+		echo "There are no candidates for using the refs that you just fetch=
-ed."
- 		echo "Generally this means that you provided a wildcard refspec whic=
-h had no"
- 		echo "matches on the remote end."
- 	elif [ $# -gt 0 ] && [ "$1" !=3D "$remote" ]; then
- 		echo "You asked to pull from the remote '$1', but did not specify"
--		echo "a branch to merge. Because this is not the default configured =
-remote"
-+		echo "a branch to use. Because this is not the default configured re=
-mote"
- 		echo "for your current branch, you must specify a branch on the comm=
-and line."
- 	elif [ -z "$curr_branch" ]; then
- 		echo "You are not currently on a branch, so I cannot use any"
--		echo "'branch.<branchname>.merge' in your configuration file."
--		echo "Please specify which branch you want to merge on the command"
-+		echo "'branch.<branchname>.$op_type' in your configuration file."
-+		echo "Please specify which branch you want to use on the command"
- 		echo "line and try again (e.g. 'git pull <repository> <refspec>')."
- 		echo "See git-pull(1) for details."
- 	elif [ -z "$upstream" ]; then
- 		echo "You asked me to pull without telling me which branch you"
--		echo "want to merge with, and 'branch.${curr_branch}.merge' in"
--		echo "your configuration file does not tell me either.	Please"
--		echo "specify which branch you want to merge on the command line and=
-"
-+		echo "want to $op_type $op_prep, and 'branch.${curr_branch}.$op_type=
-' in"
-+		echo "your configuration file does not tell me either. Please"
-+		echo "specify which branch you want to use on the command line and"
- 		echo "try again (e.g. 'git pull <repository> <refspec>')."
- 		echo "See git-pull(1) for details."
- 		echo
--		echo "If you often merge with the same branch, you may want to"
--		echo "configure the following variables in your configuration"
--		echo "file:"
-+		echo "If you often $op_type $op_prep the same branch, you may want t=
-o"
-+		echo "use something like the following in your configuration file:"
- 		echo
--		echo "    branch.${curr_branch}.remote =3D <nickname>"
--		echo "    branch.${curr_branch}.merge =3D <remote-ref>"
--		echo "    remote.<nickname>.url =3D <url>"
--		echo "    remote.<nickname>.fetch =3D <refspec>"
-+		echo "    [branch \"${curr_branch}\"]"
-+		echo "    remote =3D <nickname>"
-+		echo "    $op_type =3D <remote-ref>"
-+		echo "    [remote \"<nickname>\"]"
-+		echo "    url =3D <url>"
-+		echo "    fetch =3D <refspec>"
- 		echo
- 		echo "See git-config(1) for details."
- 	else
--		echo "Your configuration specifies to merge the ref '${upstream#refs=
-/heads/}' from the"
--		echo "remote, but no such ref was fetched."
-+		echo "Your configuration specifies to $op_type $op_prep the ref '${u=
-pstream#refs/heads/}'"
-+		echo "from the remote, but no such ref was fetched."
- 	fi
- 	exit 1
- }
---=20
-1.6.5.2.156.g89436
+> > remotes/eddy/*. After that both command (pull -r / pull -r eddy) =20
+> > should work (I hope).
+>=20
+> Okay, so now I have
+>=20
+>     [branch "master"]
+> 	    remote =3D origin
+> 	    merge =3D refs/heads/master
+>     [remote "origin"]
+> 	    url =3D git@github.com:janneke/gub.git
+> 	    fetch =3D +refs/heads/*:refs/remotes/origin/*
+>     # advise from git pull, using <nickname> =3D eddy
+>     #        branch.master.remote =3D <nickname>
+>     #        branch.master.merge =3D <remote-ref>
+>     #        remote.<nickname>.url =3D <url>
+>     #        remote.<nickname>.fetch =3D <refspec>
+>     #[branch "master"]
+>     #	remote =3D eddy
+>     #	merge =3D refs/heads/master
+>     [remote "eddy"]
+> 	    url =3D http://github.com/epronk/gub.git
+>     #use remote.eddy.fetch to +refs/heads/*:refs/remotes/eddy/*.
+> 	    fetch =3D +refs/heads/*:refs/remotes/eddy/*
+>=20
+> It looked promising, but still get
+>=20
+>     15:00:20 janneke@peder:~/vc/gub
+>     $ git pull -r --verbose
+>     From git@github.com:janneke/gub
+>      =3D [up to date]      lilypond-release-branch -> origin/lilypond=
+-release-branch
+>      =3D [up to date]      master     -> origin/master
+>     Current branch master is up to date.
+
+That used the configured defaults.
+
+>     15:00:26 janneke@peder:~/vc/gub
+>     $ git pull -r --verbose eddy
+>     From http://github.com/epronk/gub
+>      =3D [up to date]      lilypond-release-branch -> eddy/lilypond-r=
+elease-branch
+>      =3D [up to date]      master     -> eddy/master
+
+This one got arguments, so it didn't use defaults.
+
+If you want "git pull" to use the "eddy" remote, then set
+branch.<name>.remote to eddy, not to origin.
+
+
+And as a sidenote:
+Using "git pull --rebase" with more than one upstream is most of the
+time a very bad idea.
+
+Let's say we have:
+
+A---B---C---D (master)
+     \   \
+      \   E---F---G (origin's master)
+       \
+        H---I---J (eddy's master)
+
+Now you do "git pull --rebase origin master", which results in:
+
+                      D' (master)
+                     /
+A---B---C---E---F---G (origin's master)
+     \
+      H---I---J (eddy's master)
+
+And then you do "git pull eddy master", which will now rebase history
+that is not yours:
+
+A---B---C---E---F---G (origin's master)
+     \
+      H---I---J (eddy's master)
+               \
+                C'--E'--F'--G'--D' (master)
+
+IOW, you get one hell of a mess.
+
+Bj=F6rn
