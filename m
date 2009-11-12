@@ -1,77 +1,123 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-pull.sh: overhaul error handling when no
- candidates are found
-Date: Thu, 12 Nov 2009 10:28:49 -0500
-Message-ID: <20091112152849.GA25352@coredump.intra.peff.net>
-References: <1257945756.26362.79.camel@heerbeest>
- <48B54636-1825-48B3-BECD-4150A55B013F@dbservice.com>
- <1257965806.26362.132.camel@heerbeest>
- <D6B0AE61-6CA3-4F79-BB50-B8795415BAB7@dbservice.com>
- <1257968052.26362.155.camel@heerbeest>
- <AC99BA30-A36D-4798-8E7D-9D69EFE99D55@dbservice.com>
- <1258035449.26362.273.camel@heerbeest>
- <20091112155310.7836c388@perceptron>
- <20091112150626.GA24848@coredump.intra.peff.net>
- <20091112162558.6b1c4a43@perceptron>
+From: Matt Schoen <mtschoen@gmail.com>
+Subject: Re: get git not to care about permissions
+Date: Thu, 12 Nov 2009 10:47:30 -0500
+Message-ID: <3cf217d80911120747k116d3747g75dc60f17e00127@mail.gmail.com>
+References: <26268938.post@talk.nabble.com>
+	 <76c5b8580911111327k43daece9s2e71d0a2b8adcebd@mail.gmail.com>
+	 <76c5b8580911111334p76232995qbd6bf6b06d250854@mail.gmail.com>
+	 <76c5b8580911120728j2f9995basb554b0a493a364bf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jan Nieuwenhuizen <janneke-list@xs4all.nl>,
-	Tomas Carnecky <tom@dbservice.com>,
-	git list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Thu Nov 12 16:29:13 2009
+Cc: git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 12 16:47:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8bbi-0004jT-3s
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 16:29:10 +0100
+	id 1N8btZ-00068G-UU
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 16:47:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752986AbZKLP27 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Nov 2009 10:28:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752981AbZKLP27
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 10:28:59 -0500
-Received: from peff.net ([208.65.91.99]:52514 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752979AbZKLP26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Nov 2009 10:28:58 -0500
-Received: (qmail 22357 invoked by uid 107); 12 Nov 2009 15:32:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 12 Nov 2009 10:32:50 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Nov 2009 10:28:49 -0500
-Content-Disposition: inline
-In-Reply-To: <20091112162558.6b1c4a43@perceptron>
+	id S1753195AbZKLPr0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Nov 2009 10:47:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753061AbZKLPr0
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 10:47:26 -0500
+Received: from mail-yw0-f202.google.com ([209.85.211.202]:63260 "EHLO
+	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752832AbZKLPrZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Nov 2009 10:47:25 -0500
+Received: by ywh40 with SMTP id 40so385005ywh.33
+        for <git@vger.kernel.org>; Thu, 12 Nov 2009 07:47:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=O4VnIBtG+ySns/wXBl66U1CH81VkPxs61y38CxEn/EI=;
+        b=sL8rySfnNSIS/f3l1vJXC46D/pL5s6oooJ6xrNwCLMPUnN1t4UyKQulAbHJrgHu8lt
+         HKqZB2uMDm3M85ACk4dlhlJVvCRoLZzd4eJa4I0MVdXbNqfsXfA3On77+3E9NCjKeuP6
+         szW8a7mh7iHUrJopUxQt++8YOnZUxGN2aOGXM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=HKz40zmYaEUW8FPSawYcnYzQoYcfNTVHbAS674/VGKsBsI1Eeje4cVEOr6KyNO/UhE
+         /oMnKSCVyf5g+VZn1eC8WdJgWjCgIuXHIlkI8KQ2cYFfnyAhhrJSQYeEvFUabT5NSt6i
+         aweEwPO2+aGi9vKrXzEtr+REOLjPuHVsM6g48=
+Received: by 10.101.3.1 with SMTP id f1mr2856546ani.85.1258040850385; Thu, 12 
+	Nov 2009 07:47:30 -0800 (PST)
+In-Reply-To: <76c5b8580911120728j2f9995basb554b0a493a364bf@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132777>
 
-On Thu, Nov 12, 2009 at 04:25:58PM +0100, Jan Kr=C3=BCger wrote:
+Thanks for the tip, Eugene, but I'm not sure if this helps me.
 
-> > Personally, I would go the other way: give them something they can =
-cut
-> > and paste on the command line, like:
->=20
-> A matter of taste, I suppose. The user has to edit the lines anyway
-> since they contain placeholders.
+I'm trying to set up the repo on a shared directory, which isn't
+actually on a physical computer (NetApp is basically a
+data-server-in-a-box, and as such I do not directly interface with
+it).  Thus, I must access the directory over the school network, which
+uses Kerberos security.  I think it is this restriction that is giving
+git its issues.
 
-Oh, true. I was thinking we filled them in with the right values, but o=
-f
-course we don't know what those values are (if we did, we wouldn't be
-bugging the user...). So ignore what I said.
-
-> > Isn't branch.*.rebase a boolean value?
->=20
-> Argh! Of course it is. Note to self: don't write patches in a hurry.
-> Disregard everything I said. I thought I was seeing incorrect behavio=
-r
-> in what Jan (N.) reported...
-
-If it makes you feel better, the reason I noticed your error so quickly
-is that I made the _exact_ same one while doing a patch in that area a
-month or two ago.
-
--Peff
+On Thu, Nov 12, 2009 at 10:28 AM, Eugene Sajine <euguess@gmail.com> wro=
+te:
+>>>
+>>> On Nov 9, 2009 11:06 AM, "sconeman" <schoen@bu.edu> wrote:
+>>>
+>>>
+>>> Hello,
+>>>
+>>> I'm trying to set up git on a NetApp drive at my school, BU. =A0The=
+ NetApp
+>>> shares are configured with Windows permissions, and I forget the sp=
+ecifics
+>>> (which I can figure out if needed) about why this is the case, but =
+basically
+>>> the deal is that if true UNIX permissions were to be used, Windows =
+wouldn't
+>>> be able to read the drive. =A0As such, and because we use the Kerbe=
+ros
+>>> ticketing system, the permissions for the drive are set up such tha=
+t the
+>>> owners (myself and my team members) have full permissions, but nobo=
+dy else
+>>> does. =A0Git doesn't like this and won't even create a bare reposit=
+ory. =A0Is
+>>> there any way I can get git to ignore permissions and just do what =
+it needs
+>>> to do?
+>>>
+>>> Thanks in advance for the help!
+>>>
+>>> -Matt
+>> --
+> On Wed, Nov 11, 2009 at 4:34 PM, Eugene Sajine <euguess@gmail.com> wr=
+ote:
+>> Hi,
+>>
+>> I had almost similar issue - bare repos in my case should be set up =
+under
+>> user which only few guys are having password from. So what I did is =
+just a
+>> small program which creates the bare repo locally and makes secure c=
+opy to
+>> this user home. All authentication is hidden from the end user. Then=
+ users
+>> can access their repos via git protocol. Ialso fillthe repo with som=
+e
+>> additional info for cgit.
+>>
+>> Eugene
+>
+> BTW I'm using "git clone --bare" in this process, so if you have a
+> repo with working copy you can create a bare one separately, put it o=
+n
+> the server and then connect to it via "git remote add"
+>
+> Eugene
+>
+>
