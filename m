@@ -1,67 +1,110 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: t5541-http-push hanging
-Date: Wed, 11 Nov 2009 20:26:45 -0800
-Message-ID: <20091112042645.GO11919@spearce.org>
-References: <B17AB159-E217-4E1F-BEA3-97E5892C13F4@gernhardtsoftware.com>
+Subject: [PATCH] http-backend: Fix bad treatment of uintmax_t in
+	Content-Length
+Date: Wed, 11 Nov 2009 20:42:41 -0800
+Message-ID: <20091112044240.GP11919@spearce.org>
+References: <7vzl6wz36r.fsf@alter.siamese.dyndns.org> <905315640911100910r5116779eh24796fa5788f4aef@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Thu Nov 12 05:26:54 2009
+Cc: Tarmigan <tarmigan+git@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 12 05:43:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8RGm-0000I8-01
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 05:26:52 +0100
+	id 1N8RXE-0005fk-6l
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 05:43:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759970AbZKLE0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2009 23:26:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759942AbZKLE0k
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 23:26:40 -0500
-Received: from george.spearce.org ([209.20.77.23]:52176 "EHLO
+	id S932163AbZKLEmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2009 23:42:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932159AbZKLEmg
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Nov 2009 23:42:36 -0500
+Received: from george.spearce.org ([209.20.77.23]:36167 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756514AbZKLE0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2009 23:26:39 -0500
+	with ESMTP id S932158AbZKLEmf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2009 23:42:35 -0500
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id 891C7E0005; Thu, 12 Nov 2009 04:26:45 +0000 (UTC)
+	id 164EAE0005; Thu, 12 Nov 2009 04:42:41 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <B17AB159-E217-4E1F-BEA3-97E5892C13F4@gernhardtsoftware.com>
+In-Reply-To: <905315640911100910r5116779eh24796fa5788f4aef@mail.gmail.com>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132735>
 
-Brian Gernhardt <brian@gernhardtsoftware.com> wrote:
-> My build script for git has been hanging at t5541.2 and I haven't had the tuits to discover why.  Here's what I've gotten so far, in case anyone can figure it out faster:
-...
-> Initialized empty Git repository in /Users/brian/dev/git/t/trash directory.t5541-http-push/test_repo_clone/.git/
-> error: RPC failed; result=22, HTTP code = 500
-> ^CFATAL: Unexpected exit with code 130
-...
-> 
-> [Wed Nov 11 06:19:39 2009] [error] [client 127.0.0.1] git-http-backend(59490) malloc: *** error for object 0x100200340: incorrect checksum for freed object - object was probably modified after being freed.
-> [Wed Nov 11 06:19:39 2009] [error] [client 127.0.0.1] *** set a breakpoint in malloc_error_break to debug
-> [Wed Nov 11 06:19:40 2009] [error] [client 127.0.0.1] Premature end of script headers: git-http-backend
+Our Content-Length needs to report an off_t, which could be larger
+precision than size_t on this system (e.g. 32 bit binary built with
+64 bit large file support).
 
-Probably caused by a missing cast:
+We also shouldn't be passing a size_t parameter to printf when
+we've used PRIuMAX as the format specifier.
 
+Fix both issues by using uintmax_t for the hdr_int() routine,
+allowing strbuf's size_t to automatically upcast, and off_t to
+always fit.
+
+Also fixed the copy loop we use inside of send_local_file(), we never
+actually updated the size variable so we might as well not use it.
+
+Reported-by: Tarmigan <tarmigan+git@gmail.com>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+
+  Tarmigan <tarmigan+git@gmail.com> wrote:
+  > unhappy.  Curl returns 18 (CURLE_PARTIAL_FILE), the test takes a long
+  > time to fail, and the "out" file looks OK (compared to a linux machine
+  > where the test passes) expect for "Content-Length: 37847251812411".
+  > 
+  > Digging into it a bit more with gdb, the call to hdr_int() in
+  > http-backend.c looks OK, but then something goes wrong in
+  > format_write().  Hmmm it looks like my setup does not like PRIuMAX
+  > with size_t, which puts some garbage in the upper bytes of
+
+  Yup, only the right fix is to keep using PRIuMAX... patch below.
+  
+ http-backend.c |    9 +++------
+ 1 files changed, 3 insertions(+), 6 deletions(-)
 
 diff --git a/http-backend.c b/http-backend.c
-index f8ea9d7..957e4ef 100644
+index f8ea9d7..7f48406 100644
 --- a/http-backend.c
 +++ b/http-backend.c
-@@ -136,7 +136,7 @@ static void hdr_str(const char *name, const char *value)
- 
- static void hdr_int(const char *name, size_t value)
- {
--	format_write(1, "%s: %" PRIuMAX "\r\n", name, value);
-+	format_write(1, "%s: %" PRIuMAX "\r\n", name, (uintmax_t)value);
+@@ -134,7 +134,7 @@ static void hdr_str(const char *name, const char *value)
+ 	format_write(1, "%s: %s\r\n", name, value);
  }
  
- static void hdr_date(const char *name, unsigned long when)
-
+-static void hdr_int(const char *name, size_t value)
++static void hdr_int(const char *name, uintmax_t value)
+ {
+ 	format_write(1, "%s: %" PRIuMAX "\r\n", name, value);
+ }
+@@ -216,7 +216,6 @@ static void send_local_file(const char *the_type, const char *name)
+ 	char *buf = xmalloc(buf_alloc);
+ 	int fd;
+ 	struct stat sb;
+-	size_t size;
+ 
+ 	fd = open(p, O_RDONLY);
+ 	if (fd < 0)
+@@ -224,14 +223,12 @@ static void send_local_file(const char *the_type, const char *name)
+ 	if (fstat(fd, &sb) < 0)
+ 		die_errno("Cannot stat '%s'", p);
+ 
+-	size = xsize_t(sb.st_size);
+-
+-	hdr_int(content_length, size);
++	hdr_int(content_length, sb.st_size);
+ 	hdr_str(content_type, the_type);
+ 	hdr_date(last_modified, sb.st_mtime);
+ 	end_headers();
+ 
+-	while (size) {
++	for (;;) {
+ 		ssize_t n = xread(fd, buf, buf_alloc);
+ 		if (n < 0)
+ 			die_errno("Cannot read '%s'", p);
 -- 
-Shawn.
+1.6.5.2.351.g09432
