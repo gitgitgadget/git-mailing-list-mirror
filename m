@@ -1,64 +1,107 @@
-From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
-Subject: Re: [PATCH] git-pull.sh: overhaul error handling when no 
- candidates are found
-Date: Thu, 12 Nov 2009 16:25:58 +0100
-Message-ID: <20091112162558.6b1c4a43@perceptron>
-References: <1257945756.26362.79.camel@heerbeest>
-	<48B54636-1825-48B3-BECD-4150A55B013F@dbservice.com>
-	<1257965806.26362.132.camel@heerbeest>
-	<D6B0AE61-6CA3-4F79-BB50-B8795415BAB7@dbservice.com>
-	<1257968052.26362.155.camel@heerbeest>
-	<AC99BA30-A36D-4798-8E7D-9D69EFE99D55@dbservice.com>
-	<1258035449.26362.273.camel@heerbeest>
-	<20091112155310.7836c388@perceptron>
-	<20091112150626.GA24848@coredump.intra.peff.net>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: get git not to care about permissions
+Date: Thu, 12 Nov 2009 10:28:57 -0500
+Message-ID: <76c5b8580911120728j2f9995basb554b0a493a364bf@mail.gmail.com>
+References: <26268938.post@talk.nabble.com>
+	 <76c5b8580911111327k43daece9s2e71d0a2b8adcebd@mail.gmail.com>
+	 <76c5b8580911111334p76232995qbd6bf6b06d250854@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jan Nieuwenhuizen <janneke-list@xs4all.nl>,
-	Tomas Carnecky <tom@dbservice.com>,
-	git list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 12 16:26:10 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: sconeman <schoen@bu.edu>
+X-From: git-owner@vger.kernel.org Thu Nov 12 16:29:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8bYl-0003Ew-Pk
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 16:26:09 +0100
+	id 1N8bbh-0004jT-Je
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 16:29:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752768AbZKLPZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Nov 2009 10:25:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752685AbZKLPZ4
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 10:25:56 -0500
-Received: from zoidberg.org ([88.198.6.61]:43248 "EHLO cthulhu.zoidberg.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752426AbZKLPZz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Nov 2009 10:25:55 -0500
-Received: from perceptron (xdsl-78-35-170-176.netcologne.de [::ffff:78.35.170.176])
-  (IDENT: unknown, AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-  by cthulhu.zoidberg.org with esmtp; Thu, 12 Nov 2009 16:26:00 +0100
-  id 004D0152.4AFC2908.00000756
-In-Reply-To: <20091112150626.GA24848@coredump.intra.peff.net>
-X-Mailer: Claws Mail 3.7.3 (GTK+ 2.18.3; i486-pc-linux-gnu)
-X-Obscure-Spam: http://music-jk.net/
+	id S1752930AbZKLP2x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Nov 2009 10:28:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752851AbZKLP2x
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 10:28:53 -0500
+Received: from mail-iw0-f178.google.com ([209.85.223.178]:49870 "EHLO
+	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752816AbZKLP2w convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Nov 2009 10:28:52 -0500
+Received: by iwn8 with SMTP id 8so1823986iwn.33
+        for <git@vger.kernel.org>; Thu, 12 Nov 2009 07:28:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=g958nzyYZvAXQY9mCEemxeC6l3sNtFzW6LExZXMXAfA=;
+        b=YdWVNld1oLJFWvXrw1KoUCu13iM9pcUE0QmjETv8aSGXcmnkMvcfmKYXm0muys/EyR
+         djWN0ViXQOkbnPxmrY7jaebcWwzLoF1zx81hRO79hz6gLbeoHMRqFp330+MG4LzB9SEE
+         SHujTWaHQJAGcJWr40mDeheHCTf3HFDC0VC4o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=xLZ0RMoSPM+YsR/YhuyBYqWmuDBAVHdM5YDrG2qzlWkawqk7MqpIFhc8kh4sp9xrH1
+         bmpOwLfv01kK55HiBPbXufXtr2nhDF2L9T+gdhfb+nCgvf24nltuvotJkX/cbgGuFHPt
+         YM0MP0lG4yrSrhZ+K7cPwb0j1ve7dAp21s97A=
+Received: by 10.231.168.131 with SMTP id u3mr385503iby.26.1258039737651; Thu, 
+	12 Nov 2009 07:28:57 -0800 (PST)
+In-Reply-To: <76c5b8580911111334p76232995qbd6bf6b06d250854@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132775>
 
-> Personally, I would go the other way: give them something they can cut
-> and paste on the command line, like:
+>>
+>> On Nov 9, 2009 11:06 AM, "sconeman" <schoen@bu.edu> wrote:
+>>
+>>
+>> Hello,
+>>
+>> I'm trying to set up git on a NetApp drive at my school, BU. =C2=A0T=
+he NetApp
+>> shares are configured with Windows permissions, and I forget the spe=
+cifics
+>> (which I can figure out if needed) about why this is the case, but b=
+asically
+>> the deal is that if true UNIX permissions were to be used, Windows w=
+ouldn't
+>> be able to read the drive. =C2=A0As such, and because we use the Ker=
+beros
+>> ticketing system, the permissions for the drive are set up such that=
+ the
+>> owners (myself and my team members) have full permissions, but nobod=
+y else
+>> does. =C2=A0Git doesn't like this and won't even create a bare repos=
+itory. =C2=A0Is
+>> there any way I can get git to ignore permissions and just do what i=
+t needs
+>> to do?
+>>
+>> Thanks in advance for the help!
+>>
+>> -Matt
+> --
+On Wed, Nov 11, 2009 at 4:34 PM, Eugene Sajine <euguess@gmail.com> wrot=
+e:
+> Hi,
+>
+> I had almost similar issue - bare repos in my case should be set up u=
+nder
+> user which only few guys are having password from. So what I did is j=
+ust a
+> small program which creates the bare repo locally and makes secure co=
+py to
+> this user home. All authentication is hidden from the end user. Then =
+users
+> can access their repos via git protocol. Ialso fillthe repo with some
+> additional info for cgit.
+>
+> Eugene
 
-A matter of taste, I suppose. The user has to edit the lines anyway
-since they contain placeholders.
+BTW I'm using "git clone --bare" in this process, so if you have a
+repo with working copy you can create a bare one separately, put it on
+the server and then connect to it via "git remote add"
 
-> Isn't branch.*.rebase a boolean value?
-
-Argh! Of course it is. Note to self: don't write patches in a hurry.
-Disregard everything I said. I thought I was seeing incorrect behavior
-in what Jan (N.) reported...
-
-Jan
+Eugene
