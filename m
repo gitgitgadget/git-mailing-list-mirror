@@ -1,70 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] gitk: Add ability to define an alternate temporary
- directory
-Date: Thu, 12 Nov 2009 03:35:59 -0500
-Message-ID: <20091112083559.GB17552@coredump.intra.peff.net>
-References: <1257904149-44381-1-git-send-email-davvid@gmail.com>
- <4AFA368F.207@vilain.net>
- <20091111040715.GA44672@gmail.com>
- <7vr5s5y8n8.fsf@alter.siamese.dyndns.org>
- <20091111164451.GA45475@gmail.com>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: git-svn problem with v1.6.5
+Date: Thu, 12 Nov 2009 10:03:06 +0100
+Message-ID: <a2633edd0911120103y688a2b2ah2c33c47de195ee81@mail.gmail.com>
+References: <4AF9E7FE.3060701@obry.net>
+	 <32541b130911111141n7b029b1ep68656d2eb39be3c7@mail.gmail.com>
+	 <4AFB1756.7090708@obry.net> <20091111202201.GA10351@dcvr.yhbt.net>
+	 <20091111203413.GA9648@dcvr.yhbt.net> <4AFB32DC.50505@obry.net>
+	 <20091111224454.GA16178@dcvr.yhbt.net> <4AFBADA9.3060401@obry.net>
+	 <20091112071121.GA569@dcvr.yhbt.net>
+	 <a2633edd0911120011u34d69100p1565ab5bf96a7709@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Sam Vilain <sam@vilain.net>,
-	paulus@samba.org, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 12 09:36:22 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Avery Pennarun <apenwarr@gmail.com>, adambrewster@gmail.com,
+	git list <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Nov 12 10:03:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8VAD-0003XU-MN
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 09:36:22 +0100
+	id 1N8VaN-0005Pv-Az
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 10:03:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751673AbZKLIgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Nov 2009 03:36:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbZKLIgI
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 03:36:08 -0500
-Received: from peff.net ([208.65.91.99]:34287 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751322AbZKLIgH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Nov 2009 03:36:07 -0500
-Received: (qmail 20079 invoked by uid 107); 12 Nov 2009 08:39:59 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 12 Nov 2009 03:39:59 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Nov 2009 03:35:59 -0500
-Content-Disposition: inline
-In-Reply-To: <20091111164451.GA45475@gmail.com>
+	id S1752344AbZKLJDF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Nov 2009 04:03:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752176AbZKLJDE
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 04:03:04 -0500
+Received: from mail-fx0-f221.google.com ([209.85.220.221]:52628 "EHLO
+	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752130AbZKLJDD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Nov 2009 04:03:03 -0500
+Received: by fxm21 with SMTP id 21so1960399fxm.21
+        for <git@vger.kernel.org>; Thu, 12 Nov 2009 01:03:06 -0800 (PST)
+Received: by 10.204.36.202 with SMTP id u10mr2777816bkd.196.1258016586324; 
+	Thu, 12 Nov 2009 01:03:06 -0800 (PST)
+In-Reply-To: <a2633edd0911120011u34d69100p1565ab5bf96a7709@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132749>
 
-On Wed, Nov 11, 2009 at 08:44:53AM -0800, David Aguilar wrote:
+Eric,
 
-> gitk writes file@commit and file@commit^ to temporary files
-> and diffs them using an external diff tool.
-> 
-> Shall I reroll with s/GITK_TMPDIR/TMPDIR/ ?
+> Will review the procedure for filtering branches :(
 
-gitk seems to use a very predictable temp filename (".gitk-tmp.$PID").
-Have you checked that you are not introducing any security holes by
-creating that predictable filename in a publicly writable tmpdir?
+A quick review does not show something obviously wrong on my side.
 
-It looks like it always tries to "mkdir" the file. Does tcl's mkdir
-function barf on an existing directory? If so, then I think we may be
-safe from the naive:
+The commit on the rewritten repo has a different sha-1 which is
+expected. So to me it seems that after a filter-branch on a git-svn
+repo it is mandatory to recreate all .rev_map*? Is that right? Is so,
+this is the missing piece in the procedure on my side.
 
-  tmp=.gitk-tmp.`pidof_other_users_gitk`
-  mkdir $tmp
-  ln -s /file/for/other/user/to/destroy /tmp/1
+Pascal.
 
-attack. And I think we are not susceptible to races because we fail if
-the mkdir fails (instead of doing something stupid like stat followed
-by mkdir).
+-- 
 
-But it has been a long time since I thought about /tmp security, so I
-may be forgetting something.
-
--Peff
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
