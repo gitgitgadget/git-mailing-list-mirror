@@ -1,84 +1,70 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCHv2] Update gitworkflows man page to include release workflow
-Date: Thu, 12 Nov 2009 09:27:13 +0100
-Message-ID: <200911120927.16764.trast@student.ethz.ch>
-References: <1257869339-15999-1-git-send-email-rocketraman@fastmail.fm> <1257869339-15999-2-git-send-email-rocketraman@fastmail.fm>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] gitk: Add ability to define an alternate temporary
+ directory
+Date: Thu, 12 Nov 2009 03:35:59 -0500
+Message-ID: <20091112083559.GB17552@coredump.intra.peff.net>
+References: <1257904149-44381-1-git-send-email-davvid@gmail.com>
+ <4AFA368F.207@vilain.net>
+ <20091111040715.GA44672@gmail.com>
+ <7vr5s5y8n8.fsf@alter.siamese.dyndns.org>
+ <20091111164451.GA45475@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: <rocketraman@fastmail.fm>
-X-From: git-owner@vger.kernel.org Thu Nov 12 09:28:27 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Sam Vilain <sam@vilain.net>,
+	paulus@samba.org, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 12 09:36:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8V2Z-0000QU-Ap
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 09:28:27 +0100
+	id 1N8VAD-0003XU-MN
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Nov 2009 09:36:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752524AbZKLI2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Nov 2009 03:28:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752468AbZKLI2P
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 03:28:15 -0500
-Received: from gwse.ethz.ch ([129.132.178.237]:32622 "EHLO gwse.ethz.ch"
+	id S1751673AbZKLIgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Nov 2009 03:36:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbZKLIgI
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 03:36:08 -0500
+Received: from peff.net ([208.65.91.99]:34287 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752215AbZKLI2O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Nov 2009 03:28:14 -0500
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 12 Nov
- 2009 09:28:19 +0100
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 12 Nov
- 2009 09:28:00 +0100
-User-Agent: KMail/1.12.3 (Linux/2.6.27.29-0.1-default; KDE/4.3.3; x86_64; ; )
-In-Reply-To: <1257869339-15999-2-git-send-email-rocketraman@fastmail.fm>
+	id S1751322AbZKLIgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Nov 2009 03:36:07 -0500
+Received: (qmail 20079 invoked by uid 107); 12 Nov 2009 08:39:59 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 12 Nov 2009 03:39:59 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Nov 2009 03:35:59 -0500
+Content-Disposition: inline
+In-Reply-To: <20091111164451.GA45475@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132748>
 
-Here's my promised review of the whole patch.  Much of the text fits
-my understanding of what's actually going on, but Junio will have the
-final word on what he actually does (or what a sensible simplification
-might be).
+On Wed, Nov 11, 2009 at 08:44:53AM -0800, David Aguilar wrote:
 
-rocketraman@fastmail.fm wrote:
-> +The current maintenance branch is optionally copied to another branch
-> +named with the older release version number (e.g. maint-X.Y.(Z-1)
-> +where X.Y.Z is the previous release). This allows for further
-> +maintenance releases on the older codebase.
+> gitk writes file@commit and file@commit^ to temporary files
+> and diffs them using an external diff tool.
+> 
+> Shall I reroll with s/GITK_TMPDIR/TMPDIR/ ?
 
-The use of Z-1 confused me; I guess by "previous release" you mean
-"the release we just tagged in the last step".  Otherwise the maint
-version number would come out wrong.
+gitk seems to use a very predictable temp filename (".gitk-tmp.$PID").
+Have you checked that you are not introducing any security holes by
+creating that predictable filename in a publicly writable tmpdir?
 
-> +.Update maint to new release
-> +[caption="Recipe: "]
-> +=====================================
-> +* `git checkout maint`
-> +* `git merge master`
-> +=====================================
-> +
-> +This updates 'maint' from 'master', while preserving the 'maint'
-> +reflog.
+It looks like it always tries to "mkdir" the file. Does tcl's mkdir
+function barf on an existing directory? If so, then I think we may be
+safe from the naive:
 
-I agree with what Junio said in the other mail: it's important at this
-point that this was a fast-forward.  (If it's not, master could be
-missing some fixes made on maint.)
+  tmp=.gitk-tmp.`pidof_other_users_gitk`
+  mkdir $tmp
+  ln -s /file/for/other/user/to/destroy /tmp/1
 
-> +An alternative approach to updating the 'maint' branch is to run
-> +
-> +  $ git branch -f maint master
+attack. And I think we are not susceptible to races because we fail if
+the mkdir fails (instead of doing something stupid like stat followed
+by mkdir).
 
-In my book the alternative approach is
+But it has been a long time since I thought about /tmp security, so I
+may be forgetting something.
 
-  git branch -m maint maint-X.Y.(Z-1)
-  git branch maint master
-
-I'd rather not teach users to play with loaded guns, much less in a
-"good examples of workflows" manpage.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+-Peff
