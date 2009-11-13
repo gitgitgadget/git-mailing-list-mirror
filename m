@@ -1,74 +1,53 @@
-From: Marc Strapetz <marc.strapetz@syntevo.com>
-Subject: Re: git status internals and line endings
-Date: Fri, 13 Nov 2009 12:01:01 +0100
-Message-ID: <4AFD3C6D.3010008@syntevo.com>
-References: <4AFC70CE.5020106@syntevo.com>	 <20091113001547.GB28836@sigill.intra.peff.net>	 <4AFD1414.6030907@syntevo.com> <40aa078e0911130104v6acdecedxf629c5ef35a62740@mail.gmail.com>
+From: Curt Sampson <cjs@cynic.net>
+Subject: Re: Bug: "git svn clone" does not honor svn.authorsfile setting
+Date: Fri, 13 Nov 2009 23:02:17 +0900
+Message-ID: <20091113140217.GY19475@poetic.cynic.net>
+References: <20091110130913.GR19475@poetic.cynic.net> <fabb9a1e0911100524p2cf3f2ebp698ecb50fc53f8e9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Fri Nov 13 12:01:10 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 13 15:02:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8ttu-0006nf-Dy
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 12:01:10 +0100
+	id 1N8wjM-0002R6-14
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 15:02:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756031AbZKMLA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Nov 2009 06:00:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755993AbZKMLA6
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Nov 2009 06:00:58 -0500
-Received: from syntevo.com ([85.214.39.145]:45084 "EHLO syntevo.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753835AbZKMLA6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Nov 2009 06:00:58 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1]) with ESMTP id 22B0C37C9B4
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <40aa078e0911130104v6acdecedxf629c5ef35a62740@mail.gmail.com>
-X-Enigmail-Version: 0.96.0
+	id S1754087AbZKMOCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Nov 2009 09:02:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753924AbZKMOCO
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Nov 2009 09:02:14 -0500
+Received: from static-122-103-239-153.ng-fam.svips.gol.ne.jp ([122.103.239.153]:64342
+	"EHLO priv.dyadic.cynic.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753288AbZKMOCO (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Nov 2009 09:02:14 -0500
+Received: by priv.dyadic.cynic.net (Postfix, from userid 1765)
+	id 32BBF2A242; Fri, 13 Nov 2009 23:02:17 +0900 (JST)
+Content-Disposition: inline
+In-Reply-To: <fabb9a1e0911100524p2cf3f2ebp698ecb50fc53f8e9@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132834>
 
-> In order to make changes to core.autocrlf effective, you need to
-> delete .git/index and perform a hard reset:
-> $ rm .git/index
-> $ git reset --hard
+On 2009-11-10 14:24 +0100 (Tue), Sverre Rabbelier wrote:
 
-This solved my problem. Thank you!
+> Please don't. It is custom on the git list to always keep those who
+> are involved in the conversation cc-ed, adding a Reply-to makes this
+> difficult.
 
---
-Best regards,
-Marc Strapetz
-=============
-syntevo GmbH
-http://www.syntevo.com
-http://blog.syntevo.com
+If you're running your list without munging Reply-to, congratulations
+to you. I'll avoid it from now on on this list. However, it's the case
+that for many, many lists out there, if I did not include myself in a
+Reply-to, the list would set the Reply-to to the list, and most MUAs
+would automatically exclude me from the reply.
 
-
-
-Erik Faye-Lund wrote:
-> On Fri, Nov 13, 2009 at 9:08 AM, Marc Strapetz
-> <marc.strapetz@syntevo.com> wrote:
->>> Sounds like the core.autocrlf setting (see "git help config"), which I
->>> believe is set by default on Windows.
->> I have checked both $GIT_DIR/config and ~/.gitconfig and autocrlf has
->> not been set. I have then set autocrlf = false for the Windows
->> repository and still the file didn't show up as modified. On Linux, I've
->> added autocrlf = true (resp. autocrlf = input) for the repository and
->> still the file shows up as modified. Not that I don't like this
->> behavior, but I don't understand it :) Windows Git version is 1.6.5.1,
->> Linux version is 1.6.3.3.
->>
-> 
-> In order to make changes to core.autocrlf effective, you need to
-> delete .git/index and perform a hard reset:
-> $ rm .git/index
-> $ git reset --hard
-> 
-> Did you do this before checking if the files were modified?
-> 
+cjs
+-- 
+Curt Sampson       <cjs@starling-software.com>        +81 90 7737 2974
+           Functional programming in all senses of the word:
+                   http://www.starling-software.com
