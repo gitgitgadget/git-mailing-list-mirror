@@ -1,53 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git status internals and line endings
-Date: Thu, 12 Nov 2009 19:15:47 -0500
-Message-ID: <20091113001547.GB28836@sigill.intra.peff.net>
-References: <4AFC70CE.5020106@syntevo.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH 2/2] git-svn: handle SVN merges from revisions past the
+ tip of the branch
+Date: Fri, 13 Nov 2009 13:47:24 +1300
+Message-ID: <4AFCAC9C.9020305@vilain.net>
+References: <871vk35o86.fsf@navakl084.mitacad.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Marc Strapetz <marc.strapetz@syntevo.com>
-X-From: git-owner@vger.kernel.org Fri Nov 13 01:15:58 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Toby Allsopp <toby.allsopp@navman.co.nz>
+X-From: git-owner@vger.kernel.org Fri Nov 13 01:47:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8jpT-0000PP-TT
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 01:15:56 +0100
+	id 1N8kKD-0003Cv-Vl
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 01:47:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755910AbZKMAPp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Nov 2009 19:15:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755908AbZKMAPo
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 19:15:44 -0500
-Received: from peff.net ([208.65.91.99]:46346 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755815AbZKMAPo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Nov 2009 19:15:44 -0500
-Received: (qmail 24649 invoked by uid 107); 13 Nov 2009 00:19:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 12 Nov 2009 19:19:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Nov 2009 19:15:47 -0500
-Content-Disposition: inline
-In-Reply-To: <4AFC70CE.5020106@syntevo.com>
+	id S1755097AbZKMArX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Nov 2009 19:47:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754840AbZKMArX
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 19:47:23 -0500
+Received: from bertrand.catalyst.net.nz ([202.78.240.40]:54535 "EHLO
+	mail.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754821AbZKMArW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Nov 2009 19:47:22 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail.catalyst.net.nz (Postfix) with ESMTP id 616543227A;
+	Fri, 13 Nov 2009 13:47:26 +1300 (NZDT)
+X-Virus-Scanned: Debian amavisd-new at catalyst.net.nz
+Received: from mail.catalyst.net.nz ([127.0.0.1])
+	by localhost (bertrand.catalyst.net.nz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zbTZ0ftDLEES; Fri, 13 Nov 2009 13:47:25 +1300 (NZDT)
+Received: from [IPv6:2404:130:0:1000:21d:7dff:fe90:5fe0] (unknown [IPv6:2404:130:0:1000:21d:7dff:fe90:5fe0])
+	(Authenticated sender: samv)
+	by mail.catalyst.net.nz (Postfix) with ESMTPSA id 153523212A;
+	Fri, 13 Nov 2009 13:47:25 +1300 (NZDT)
+User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
+In-Reply-To: <871vk35o86.fsf@navakl084.mitacad.com>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132807>
 
-On Thu, Nov 12, 2009 at 09:32:14PM +0100, Marc Strapetz wrote:
+Toby Allsopp wrote:
+> When recording the revisions that it has merged, SVN sets the top
+> revision to be the latest revision in the repository, which is not
+> necessarily a revision on the branch that is being merged from.  When
+> it is not on the branch, git-svn fails to add the extra parent to
+> represent the merge because it relies on finding the commit on the
+> branch that corresponds to the top of the SVN merge range.
 
-> On Linux, file1 and file3 are reported as modified -- as I would expect.
-> The surprise is on Windows: here only file1 is reported as modified. Why
-> not file3? Btw, 'git hash-object file3' reports the same SHA as for the
-> LF-only content in the repository (not so on Linux, as expected).
-> 
-> Is this some special handling on Windows (and possibly on Mac OS)? In
-> this case, can someone please point me to the corresponding code part?
-> Thanks for any comments regarding this topic.
+I thought, "that sounds like he's repeating himself, wait a sec..."
 
-Sounds like the core.autocrlf setting (see "git help config"), which I
-believe is set by default on Windows.
+> -test_expect_failure 'represent svn merges with intervening commits' "
+> +test_expect_success 'represent svn merges with intervening commits' "
+>  	[ `git cat-file commit HEAD | grep parent | wc -l` -eq 2 ]
+>  	"
 
--Peff
+So you made a failing test and then added the implementation for it?
+Interesting strategy :).  I'd probably not repeat the same sentence
+twice though.
+
+Thanks for contributing this.  There might be other bugs too, especially
+when upstream has a more complicated merge hierarchy ... apparently svn
+tends to get it wrong, so checking for all commits might not work in
+that case.
+
+It would be nice if "dcommit" could make these commits, too...
+
+Sam
