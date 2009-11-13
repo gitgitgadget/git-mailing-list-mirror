@@ -1,116 +1,137 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH] Update 'git remote' usage and man page to match.
-Date: Thu, 12 Nov 2009 20:15:34 -0500
-Message-ID: <32c343770911121715l7507b2d5j8c6cf8cccd1f1a61@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] git-pull.sh --rebase: overhaul error handling when
+ no candidates are found
+Date: Thu, 12 Nov 2009 22:07:54 -0600
+Message-ID: <20091113040754.GA3255@progeny.tock>
+References: <1257945756.26362.79.camel@heerbeest>
+ <48B54636-1825-48B3-BECD-4150A55B013F@dbservice.com>
+ <1257965806.26362.132.camel@heerbeest>
+ <D6B0AE61-6CA3-4F79-BB50-B8795415BAB7@dbservice.com>
+ <1257968052.26362.155.camel@heerbeest>
+ <AC99BA30-A36D-4798-8E7D-9D69EFE99D55@dbservice.com>
+ <1258035449.26362.273.camel@heerbeest>
+ <20091112155310.7836c388@perceptron>
+ <20091112150626.GA24848@coredump.intra.peff.net>
+ <20091112170814.1858aba4@perceptron>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Nov 13 02:16:42 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Jan Nieuwenhuizen <janneke-list@xs4all.nl>,
+	Tomas Carnecky <tom@dbservice.com>,
+	git list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jan =?iso-8859-1?Q?Kr=FCger?= <jk@jk.gs>
+X-From: git-owner@vger.kernel.org Fri Nov 13 04:57:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8kmG-0004aj-Q3
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 02:16:41 +0100
+	id 1N8nI9-0008HK-CK
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 04:57:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754519AbZKMBPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Nov 2009 20:15:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754473AbZKMBPa
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 20:15:30 -0500
-Received: from mail-fx0-f221.google.com ([209.85.220.221]:63870 "EHLO
-	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754412AbZKMBPa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Nov 2009 20:15:30 -0500
-Received: by fxm21 with SMTP id 21so2938674fxm.21
-        for <git@vger.kernel.org>; Thu, 12 Nov 2009 17:15:34 -0800 (PST)
+	id S1755485AbZKMD5e convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Nov 2009 22:57:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755456AbZKMD5d
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 22:57:33 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:63223 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755339AbZKMD5c (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Nov 2009 22:57:32 -0500
+Received: by yxe17 with SMTP id 17so2613029yxe.33
+        for <git@vger.kernel.org>; Thu, 12 Nov 2009 19:57:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=zNC8725WF4X5ZL+D/a1u+c55nW8kCZwmDFdO7i4iUCM=;
-        b=luGKgmtZ6Qjn5EAzkbjrSMAQWib48zUyESCRh1ARVhIONsfo/xiwJYHcc4jfSHzQ63
-         LCQ1kgUzO06umlRMsM4MzHsU9CjDo/EbFUwml+WFqhGwoglQrZa5ELjKZYx7Jf3AMgt1
-         aYPPh44Dwl+WIIoGQQT07a2DXxwPYyzAJi8+k=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=c++fIhPV+Mtq8/JlgGg9uBhEQ0G4ZuFQWhQQSVUtwOg=;
+        b=kJ+t7rhHQJ8gm0IPx5wr/RJdKnWAlePv1P/tdpTUuFxPTnH+Ne59z0FAc/dcn+v7NF
+         5mAtXpNgcuDjwG7NWkh/aBs1rWRWUed81o8AMjtzcOE33EA2+Q7fWG8msMykBUfqS/kI
+         Hq2w+YoByMujUr/DGXtoEp5WEzGm1/BBx4XD4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=KFj6ac05FSm31ey8Ytc31MHlHP+PUgF07Q+ngx1cyLYpNVl+gMcGeICU2i8Mb7SOZG
-         KYaYYiXAXJb2hdIo2LMEd8M9hySCJkExfSxsuB0ppzIwT42rJqb0Poe/viLY+QyKfEN6
-         IVCxco4DiDYpFD/uUB54Nih2T1nq13kuLof18=
-Received: by 10.216.86.142 with SMTP id w14mr1149339wee.74.1258074934739; Thu, 
-	12 Nov 2009 17:15:34 -0800 (PST)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=GO+m5GUFz4ZIZ8yCrH2vtGtFq3s2y2aTc+Xlk2C98ajs6lgNLhSjh5zQn+iHFr8qpC
+         SIKFpBXKiDm4Uzo1sZ16oEqT7QNduWKRxB6Dkld2OICPhsbuXBgSt6Bs4m8JZ26dU5ti
+         IYcKUgd1Anlhmj9W0iTyhoSIg5+GeWivvn81U=
+Received: by 10.101.179.5 with SMTP id g5mr4171601anp.89.1258084658401;
+        Thu, 12 Nov 2009 19:57:38 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 39sm159489yxd.27.2009.11.12.19.57.36
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 12 Nov 2009 19:57:37 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20091112170814.1858aba4@perceptron>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132814>
 
-This commit:
+Jan Kr=C3=BCger wrote:
 
-1) Removes documentation of '--verbose' from the synopsis portion
-of the usage string since it is a general option.
+> Subject: [PATCH v2] git-pull.sh --rebase: overhaul error handling whe=
+n no candidates are found
 
-2) Removes the 'remote' option from 'git remote update' in the
-man page.  This option had already been removed from the usage
-string in the code, but the man page was not updated to match.
+s/error handling/error message/. :)
 
-Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
----
+> --- a/git-pull.sh
+> +++ b/git-pull.sh
+> @@ -91,45 +91,56 @@ error_on_no_merge_candidates () {
+[...]
+>  	if [ $# -gt 1 ]; then
+> -		echo "There are no candidates for merging in the refs that you jus=
+t fetched."
+> +		echo "There are no candidates for using the refs that you just fet=
+ched."
+>  		echo "Generally this means that you provided a wildcard refspec wh=
+ich had no"
+>  		echo "matches on the remote end."
 
-This is a resend of the patch at:
-http://article.gmane.org/gmane.comp.version-control.git/132732
+This sounds a little awkward to me, maybe because all the remote refs
+are being used to populate the remotes/<remote>/* hierarchy.
 
-I forgot to include 'gitster at pobox dot com' on the original patch.
-No changes were made to the patch itself.
+I=E2=80=99m trying to come up with an alternative wording, but it is ha=
+rd:
 
-Sorry for the noise.
+ * Merging and rebasing are about incorporating the remote history
+   into our own, so how about something like "... no candidates for
+   incorporating from the refs ..."? =20
 
- Documentation/git-remote.txt |    4 ++--
- builtin-remote.c             |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ * Maybe one is using 'git pull' to update.  "There are no
+   candidates to use for an update among the refs that you just
+   fetched."
 
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index 82a3d29..32ff95b 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -9,14 +9,14 @@ git-remote - manage set of tracked repositories
- SYNOPSIS
- --------
- [verse]
--'git remote' [-v | --verbose]
-+'git remote'
- 'git remote add' [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>
- 'git remote rename' <old> <new>
- 'git remote rm' <name>
- 'git remote set-head' <name> [-a | -d | <branch>]
- 'git remote show' [-n] <name>
- 'git remote prune' [-n | --dry-run] <name>
--'git remote update' [-p | --prune] [group | remote]...
-+'git remote update' [-p | --prune] [group]...
+ * Or: "There are no upstreams to local branches among the refs that
+   you just fetched."
 
- DESCRIPTION
- -----------
-diff --git a/builtin-remote.c b/builtin-remote.c
-index 0777dd7..3756e91 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -8,14 +8,14 @@
- #include "refs.h"
+I like the third of these best, but I hope you can do better.
 
- static const char * const builtin_remote_usage[] = {
--	"git remote [-v | --verbose]",
-+	"git remote",
- 	"git remote add [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>",
- 	"git remote rename <old> <new>",
- 	"git remote rm <name>",
- 	"git remote set-head <name> [-a | -d | <branch>]",
- 	"git remote show [-n] <name>",
- 	"git remote prune [-n | --dry-run] <name>",
--	"git remote [-v | --verbose] update [-p | --prune] [group]",
-+	"git remote update [-p | --prune] [group]",
- 	NULL
- };
+>  	elif [ $# -gt 0 ] && [ "$1" !=3D "$remote" ]; then
+>  		echo "You asked to pull from the remote '$1', but did not specify"
+> -		echo "a branch to merge. Because this is not the default configure=
+d remote"
+> +		echo "a branch to use. Because this is not the default configured =
+remote"
 
--- 
-1.6.5.2.180.gc5b3e.dirty
+Maybe just "... did not specify a branch."?
+
+>  		echo "for your current branch, you must specify a branch on the co=
+mmand line."
+>  	elif [ -z "$curr_branch" ]; then
+>  		echo "You are not currently on a branch, so I cannot use any"
+>  		echo "'branch.<branchname>.merge' in your configuration file."
+> -		echo "Please specify which branch you want to merge on the command=
+"
+> +		echo "Please specify which branch you want to use on the command"
+
+s/branch/remote branch/?  The reader might worry that the command is
+going to try to re-attach his HEAD.
+
+The rest of your patch looks good to me.  Thanks for working on this.
+
+Jonathan
