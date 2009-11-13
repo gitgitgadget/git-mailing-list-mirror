@@ -1,50 +1,54 @@
 From: Curt Sampson <cjs@cynic.net>
 Subject: Re: Bug: "git svn clone" does not honor svn.authorsfile setting
-Date: Fri, 13 Nov 2009 23:02:17 +0900
-Message-ID: <20091113140217.GY19475@poetic.cynic.net>
-References: <20091110130913.GR19475@poetic.cynic.net> <fabb9a1e0911100524p2cf3f2ebp698ecb50fc53f8e9@mail.gmail.com>
+Date: Fri, 13 Nov 2009 23:06:31 +0900
+Message-ID: <20091113140631.GZ19475@poetic.cynic.net>
+References: <20091110130913.GR19475@poetic.cynic.net> <4AFA3D04.3050109@vilain.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 13 15:02:29 2009
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Fri Nov 13 15:06:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8wjM-0002R6-14
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 15:02:28 +0100
+	id 1N8wnN-0004Rg-JK
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 15:06:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754087AbZKMOCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Nov 2009 09:02:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753924AbZKMOCO
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Nov 2009 09:02:14 -0500
-Received: from static-122-103-239-153.ng-fam.svips.gol.ne.jp ([122.103.239.153]:64342
+	id S1754090AbZKMOG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Nov 2009 09:06:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753357AbZKMOG0
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Nov 2009 09:06:26 -0500
+Received: from static-122-103-239-153.ng-fam.svips.gol.ne.jp ([122.103.239.153]:64341
 	"EHLO priv.dyadic.cynic.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753288AbZKMOCO (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Nov 2009 09:02:14 -0500
+	by vger.kernel.org with ESMTP id S1752774AbZKMOG0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Nov 2009 09:06:26 -0500
 Received: by priv.dyadic.cynic.net (Postfix, from userid 1765)
-	id 32BBF2A242; Fri, 13 Nov 2009 23:02:17 +0900 (JST)
+	id B2B3E2A242; Fri, 13 Nov 2009 23:06:31 +0900 (JST)
 Content-Disposition: inline
-In-Reply-To: <fabb9a1e0911100524p2cf3f2ebp698ecb50fc53f8e9@mail.gmail.com>
+In-Reply-To: <4AFA3D04.3050109@vilain.net>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132835>
 
-On 2009-11-10 14:24 +0100 (Tue), Sverre Rabbelier wrote:
+On 2009-11-11 17:26 +1300 (Wed), Sam Vilain wrote:
 
-> Please don't. It is custom on the git list to always keep those who
-> are involved in the conversation cc-ed, adding a Reply-to makes this
-> difficult.
+> Does moving the line:
+> 
+> command_oneline('config', 'svn.authorsfile', $_authors) if $_authors;
+> 
+> Immediately prior to the "fetch_all" line before it fix the problem? It
+> looks strange for it to set it afterwards...
 
-If you're running your list without munging Reply-to, congratulations
-to you. I'll avoid it from now on on this list. However, it's the case
-that for many, many lists out there, if I did not include myself in a
-Reply-to, the list would set the Reply-to to the list, and most MUAs
-would automatically exclude me from the reply.
+That looks plausible to me, having had a quick look at the source, but
+keep in mind I've already spent about 45 minutes debugging this problem
+and figuring out how to file a bug report. I don't really have the time
+at the moment to learn how to build and test new versions of git, unless
+someone wants to walk me through it. I expect it would take rather less
+time for someone in the know just to do the test.
 
 cjs
 -- 
