@@ -1,137 +1,114 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] git-pull.sh --rebase: overhaul error handling when
- no candidates are found
-Date: Thu, 12 Nov 2009 22:07:54 -0600
-Message-ID: <20091113040754.GA3255@progeny.tock>
-References: <1257945756.26362.79.camel@heerbeest>
- <48B54636-1825-48B3-BECD-4150A55B013F@dbservice.com>
- <1257965806.26362.132.camel@heerbeest>
- <D6B0AE61-6CA3-4F79-BB50-B8795415BAB7@dbservice.com>
- <1257968052.26362.155.camel@heerbeest>
- <AC99BA30-A36D-4798-8E7D-9D69EFE99D55@dbservice.com>
- <1258035449.26362.273.camel@heerbeest>
- <20091112155310.7836c388@perceptron>
- <20091112150626.GA24848@coredump.intra.peff.net>
- <20091112170814.1858aba4@perceptron>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: Git in next is broken
+Date: Thu, 12 Nov 2009 23:50:22 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0911122345450.16711@xanadu.home>
+References: <alpine.LFD.2.00.0911121513470.16711@xanadu.home>
+ <4AFC8960.9090808@lsrfire.ath.cx>
+ <alpine.LNX.2.00.0911122239150.6967@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	Jan Nieuwenhuizen <janneke-list@xs4all.nl>,
-	Tomas Carnecky <tom@dbservice.com>,
-	git list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jan =?iso-8859-1?Q?Kr=FCger?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Fri Nov 13 04:57:46 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Fri Nov 13 05:50:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8nI9-0008HK-CK
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 04:57:45 +0100
+	id 1N8o7C-00076b-PR
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 05:50:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755485AbZKMD5e convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Nov 2009 22:57:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755456AbZKMD5d
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 22:57:33 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:63223 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755339AbZKMD5c (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Nov 2009 22:57:32 -0500
-Received: by yxe17 with SMTP id 17so2613029yxe.33
-        for <git@vger.kernel.org>; Thu, 12 Nov 2009 19:57:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=c++fIhPV+Mtq8/JlgGg9uBhEQ0G4ZuFQWhQQSVUtwOg=;
-        b=kJ+t7rhHQJ8gm0IPx5wr/RJdKnWAlePv1P/tdpTUuFxPTnH+Ne59z0FAc/dcn+v7NF
-         5mAtXpNgcuDjwG7NWkh/aBs1rWRWUed81o8AMjtzcOE33EA2+Q7fWG8msMykBUfqS/kI
-         Hq2w+YoByMujUr/DGXtoEp5WEzGm1/BBx4XD4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=GO+m5GUFz4ZIZ8yCrH2vtGtFq3s2y2aTc+Xlk2C98ajs6lgNLhSjh5zQn+iHFr8qpC
-         SIKFpBXKiDm4Uzo1sZ16oEqT7QNduWKRxB6Dkld2OICPhsbuXBgSt6Bs4m8JZ26dU5ti
-         IYcKUgd1Anlhmj9W0iTyhoSIg5+GeWivvn81U=
-Received: by 10.101.179.5 with SMTP id g5mr4171601anp.89.1258084658401;
-        Thu, 12 Nov 2009 19:57:38 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 39sm159489yxd.27.2009.11.12.19.57.36
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 12 Nov 2009 19:57:37 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20091112170814.1858aba4@perceptron>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755819AbZKMEuT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Nov 2009 23:50:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755611AbZKMEuS
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Nov 2009 23:50:18 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:8206 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755475AbZKMEuR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Nov 2009 23:50:17 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KT100CJC6RYNIB0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 12 Nov 2009 23:50:22 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <alpine.LNX.2.00.0911122239150.6967@reaper.quantumfyre.co.uk>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132815>
 
-Jan Kr=C3=BCger wrote:
+On Thu, 12 Nov 2009, Julian Phillips wrote:
 
-> Subject: [PATCH v2] git-pull.sh --rebase: overhaul error handling whe=
-n no candidates are found
+> On Thu, 12 Nov 2009, Ren? Scharfe wrote:
+> 
+> > Nicolas Pitre schrieb:
+> > > Simply issuing a "git fetch" in my copy of git.git makes glibc complain
+> > > with this:
+> > > 
+> > > *** glibc detected *** git: corrupted double-linked list:
+> > > 0x0000000000974180 ***
+> > > 
+> > > The gdb backtrace is:
+> > > 
+> > > (gdb) bt
+> > > #0  0x0000003c76632f05 in raise () from /lib64/libc.so.6
+> > > #1  0x0000003c76634a73 in abort () from /lib64/libc.so.6
+> > > #2  0x0000003c76672438 in __libc_message () from /lib64/libc.so.6
+> > > #3  0x0000003c76677ec8 in malloc_printerr () from /lib64/libc.so.6
+> > > #4  0x0000003c7667a23e in _int_free () from /lib64/libc.so.6
+> > > #5  0x0000003c7667a486 in free () from /lib64/libc.so.6
+> > > #6  0x0000000000493f3f in ref_remove_duplicates (ref_map=0x7562b0)
+> > >     at remote.c:756
+> > > #7  0x0000000000424afc in get_ref_map () at builtin-fetch.c:165
+> > > #8  do_fetch () at builtin-fetch.c:644
+> > > #9  cmd_fetch (argc=<value optimized out>, argv=0x7fffffffe6a0,
+> > >     prefix=<value optimized out>) at builtin-fetch.c:754
+> > > #10 0x0000000000403d83 in run_builtin () at git.c:251
+> > > #11 handle_internal_command (argc=1, argv=0x7fffffffe6a0) at git.c:396
+> > > #12 0x0000000000403f2d in run_argv () at git.c:438
+> > > #13 main (argc=1, argv=0x7fffffffe6a0) at git.c:509
+> > > 
+> > > Bisection reveals the following culprit:
+> > > 
+> > > commit 73cf0822b2a4ffa7ad559d1f0772e39718fc7776
+> > > Author: Julian Phillips <julian@quantumfyre.co.uk>
+> > > Date:   Sun Oct 25 21:28:11 2009 +0000
+> > > 
+> > >     remote: Make ref_remove_duplicates faster for large numbers of refs
+> > 
+> > Can't reproduce because I don't know how to create duplicate refs, but does
+> > the following help?
 
-s/error handling/error message/. :)
+Nope.
 
-> --- a/git-pull.sh
-> +++ b/git-pull.sh
-> @@ -91,45 +91,56 @@ error_on_no_merge_candidates () {
-[...]
->  	if [ $# -gt 1 ]; then
-> -		echo "There are no candidates for merging in the refs that you jus=
-t fetched."
-> +		echo "There are no candidates for using the refs that you just fet=
-ched."
->  		echo "Generally this means that you provided a wildcard refspec wh=
-ich had no"
->  		echo "matches on the remote end."
+> > remote.c |    2 ++
+> > 1 files changed, 2 insertions(+), 0 deletions(-)
+> > 
+> > diff --git a/remote.c b/remote.c
+> > index 4f9f0cc..10cc985 100644
+> > --- a/remote.c
+> > +++ b/remote.c
+> > @@ -754,6 +754,8 @@ void ref_remove_duplicates(struct ref *ref_map)
+> > 			prev->next = ref_map->next;
+> > 			free(ref_map->peer_ref);
+> > 			free(ref_map);
+> > +			ref_map = next;
+> 
+> You don't need this line (this is taken care of in the for(...)).
+> 
+> > +			continue;
+> 
+> Ack. This one however, you do need.  Good catch.
 
-This sounds a little awkward to me, maybe because all the remote refs
-are being used to populate the remotes/<remote>/* hierarchy.
+Without the "ref_map = next" there is no change: glibc still complains 
+about corruption and abort the execution.  With the "ref_map = next" 
+then git simply segfaults.
 
-I=E2=80=99m trying to come up with an alternative wording, but it is ha=
-rd:
+I simply have zero time to investigate the issue myself now 
+unfortunately.
 
- * Merging and rebasing are about incorporating the remote history
-   into our own, so how about something like "... no candidates for
-   incorporating from the refs ..."? =20
 
- * Maybe one is using 'git pull' to update.  "There are no
-   candidates to use for an update among the refs that you just
-   fetched."
-
- * Or: "There are no upstreams to local branches among the refs that
-   you just fetched."
-
-I like the third of these best, but I hope you can do better.
-
->  	elif [ $# -gt 0 ] && [ "$1" !=3D "$remote" ]; then
->  		echo "You asked to pull from the remote '$1', but did not specify"
-> -		echo "a branch to merge. Because this is not the default configure=
-d remote"
-> +		echo "a branch to use. Because this is not the default configured =
-remote"
-
-Maybe just "... did not specify a branch."?
-
->  		echo "for your current branch, you must specify a branch on the co=
-mmand line."
->  	elif [ -z "$curr_branch" ]; then
->  		echo "You are not currently on a branch, so I cannot use any"
->  		echo "'branch.<branchname>.merge' in your configuration file."
-> -		echo "Please specify which branch you want to merge on the command=
-"
-> +		echo "Please specify which branch you want to use on the command"
-
-s/branch/remote branch/?  The reader might worry that the command is
-going to try to re-attach his HEAD.
-
-The rest of your patch looks good to me.  Thanks for working on this.
-
-Jonathan
+Nicolas
