@@ -1,57 +1,56 @@
-From: Curt Sampson <cjs@cynic.net>
-Subject: Re: Bug: "git svn clone" does not honor svn.authorsfile setting
-Date: Fri, 13 Nov 2009 23:06:31 +0900
-Message-ID: <20091113140631.GZ19475@poetic.cynic.net>
-References: <20091110130913.GR19475@poetic.cynic.net> <4AFA3D04.3050109@vilain.net>
+From: "michele" <michele@mailc.net>
+Subject: Re: send an email with logs after push
+Date: Fri, 13 Nov 2009 15:18:06 +0100
+Message-ID: <1258121886.28608.1345063845@webmail.messagingengine.com>
+References: <1258101999.17624.1345023113@webmail.messagingengine.com><a2633edd0911130055y199955a2n93888b03c5f9b985@mail.gmail.com>
+ <vpqocn6iu4l.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Fri Nov 13 15:06:41 2009
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 13 15:18:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8wnN-0004Rg-JK
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 15:06:37 +0100
+	id 1N8wyt-0001pP-Aq
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 15:18:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754090AbZKMOG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Nov 2009 09:06:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753357AbZKMOG0
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Nov 2009 09:06:26 -0500
-Received: from static-122-103-239-153.ng-fam.svips.gol.ne.jp ([122.103.239.153]:64341
-	"EHLO priv.dyadic.cynic.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752774AbZKMOG0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Nov 2009 09:06:26 -0500
-Received: by priv.dyadic.cynic.net (Postfix, from userid 1765)
-	id B2B3E2A242; Fri, 13 Nov 2009 23:06:31 +0900 (JST)
-Content-Disposition: inline
-In-Reply-To: <4AFA3D04.3050109@vilain.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755583AbZKMOSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Nov 2009 09:18:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754942AbZKMOSC
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Nov 2009 09:18:02 -0500
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:58156 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755136AbZKMOSB (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Nov 2009 09:18:01 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 2995EBF84A
+	for <git@vger.kernel.org>; Fri, 13 Nov 2009 09:18:06 -0500 (EST)
+Received: from kvm1.messagingengine.com ([10.202.2.121])
+  by compute1.internal (MEProxy); Fri, 13 Nov 2009 09:18:06 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:from:to:mime-version:content-transfer-encoding:content-type:in-reply-to:references:subject:date; s=smtpout; bh=/kZv0r+liKylS/1/wmY27Ik/0nk=; b=ugxfWr2JKyr16s9r7Rtm8uq+cgiXVy+/bXPhfmUCDqRXVHFYA7Ig1FoTAIsmJsO8KLG35C5zBuFYn4ez6cSZ2anKZgVA24E6u/37DuyX1qxzGVzVGkpe+nIBkWhDNKY/fkYeN/Cy6rtevyvoytYnRPPRLAviST+Z9pGUnUUmvNI=
+Received: by kvm1.messagingengine.com (Postfix, from userid 99)
+	id 1DE9A438; Fri, 13 Nov 2009 09:18:06 -0500 (EST)
+X-Sasl-Enc: oZ3VS8FwGd/Uep2GdI1EViomgiUVCxjQBVAySPi62jRn 1258121886
+X-Mailer: MessagingEngine.com Webmail Interface
+In-Reply-To: <vpqocn6iu4l.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132836>
 
-On 2009-11-11 17:26 +1300 (Wed), Sam Vilain wrote:
+On Fri, 13 Nov 2009 11:42 +0100, "Matthieu Moy"
+<Matthieu.Moy@grenoble-inp.fr> wrote:
 
-> Does moving the line:
-> 
-> command_oneline('config', 'svn.authorsfile', $_authors) if $_authors;
-> 
-> Immediately prior to the "fetch_all" line before it fix the problem? It
-> looks strange for it to set it afterwards...
+> See also post-receive-email in git/contrib/hooks/, probably installed
 
-That looks plausible to me, having had a quick look at the source, but
-keep in mind I've already spent about 45 minutes debugging this problem
-and figuring out how to file a bug report. I don't really have the time
-at the moment to learn how to build and test new versions of git, unless
-someone wants to walk me through it. I expect it would take rather less
-time for someone in the know just to do the test.
+Thank you for your suggestions. I've added a new post-receive hook using
+the code from post-receive-email. The hook is executable and is placed
+in the remote directory. The push is made from my local pc via ssh, but
+after the push nothing seems to happen: the hook is not executed on the
+server side. It does not depend from the code inside the hook: even the
+unique "touch foobar" command does not work. Where do I have to look?
 
-cjs
--- 
-Curt Sampson       <cjs@starling-software.com>        +81 90 7737 2974
-           Functional programming in all senses of the word:
-                   http://www.starling-software.com
+Thanks
