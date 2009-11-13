@@ -1,98 +1,88 @@
-From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-Subject: git am and CRLF files
-Date: Fri, 13 Nov 2009 10:44:47 +0100
-Organization: ATLAS Elektronik GmbH
-Message-ID: <4AFD2A8F.7000806@atlas-elektronik.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Speed up bash completion loading
+Date: Fri, 13 Nov 2009 04:29:55 -0600
+Message-ID: <20091113102955.GA8531@progeny.tock>
+References: <7vbpj9s8vk.fsf@alter.siamese.dyndns.org>
+ <fabb9a1e0911110957k599ac3dfmd1a44a0499c72b2d@mail.gmail.com>
+ <20091111220832.GA31620@progeny.tock>
+ <4AFCFF50.5080401@gmail.com>
+ <20091113070652.GA3907@progeny.tock>
+ <4AFD06CD.7090003@gmail.com>
+ <20091113085028.GA4804@progeny.tock>
+ <20091113090343.GA5355@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 13 11:09:54 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kirill Smelkov <kirr@mns.spb.ru>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <junio@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 13 11:20:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8t6G-0005QC-JG
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 11:09:52 +0100
+	id 1N8tFy-0004Ma-WF
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 11:19:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755774AbZKMKJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Nov 2009 05:09:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755752AbZKMKJg
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Nov 2009 05:09:36 -0500
-Received: from lxsrv96.atlas.de ([194.156.172.86]:41161 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755741AbZKMKJf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Nov 2009 05:09:35 -0500
-X-Greylist: delayed 1476 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Nov 2009 05:09:34 EST
-Received: from VSSRV01.atlas.de (vssrv01.atlas.de [10.200.101.18])
-	by mail96.atlas.de (Postfix) with ESMTP id 9B78D138F3
-	for <git@vger.kernel.org>; Fri, 13 Nov 2009 10:45:02 +0100 (CET)
-X-AuditID: 0ac86512-000000d4000005bc-6d-4afd2a9d4ad4
-Received: from mgsrv01.atlas.de ([10.200.101.16]) by VSSRV01.atlas.de with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 13 Nov 2009 10:45:01 +0100
-Received: from mgsrv01.atlas.de (localhost [127.0.0.1])
-	by mail01-int.atlas.de (Postfix) with ESMTP id 9812227172
-	for <git@vger.kernel.org>; Fri, 13 Nov 2009 10:45:01 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mgsrv01.atlas.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=5.0 tests=ALL_TRUSTED,BAYES_50
-	autolearn=disabled version=3.2.5
-Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
-	by mail01.atlas.de (Postfix) with ESMTP id 892612716A
-	for <git@vger.kernel.org>; Fri, 13 Nov 2009 10:45:01 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
-X-Enigmail-Version: 0.96.0
-X-Brightmail-Tracker: AAAAAA==
+	id S1755703AbZKMKTo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Nov 2009 05:19:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755585AbZKMKTn
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Nov 2009 05:19:43 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:64494 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755234AbZKMKTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Nov 2009 05:19:42 -0500
+Received: by yxe17 with SMTP id 17so2772239yxe.33
+        for <git@vger.kernel.org>; Fri, 13 Nov 2009 02:19:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ilY+SJ6AaoLO+2+ZrAGhG9F1urTTxLymSqEiyKplsB0=;
+        b=OkfwwsUbCK9GF0Q+m87xEpNIcS0/H0glFmomwEvZP2pp7AQ9KHNMGDrtHI30LOgJOJ
+         VtDztQfdfrnJvSCoxRZENginLORoOXg+YW6FpecC88NEiOLW3qrhrWGcr3ZwZZRMp2Xo
+         pPFIhjQJRwxmnb5MlUeT0JIgLhBC9CxwKWPys=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=UTsi7v/kyery4N3GEvGVCwXHaD9trtih3JH2FYVYvSNfjOuUFxKiD3BXIPhY+FqsXc
+         s2sXWGze9kQSutwpWWuV8NJD3OHcYdOsH4Mc5yBi2omdoDnh7/6Gs7TYXk7Z9eq7UT2r
+         j81hnocSiD4vlBKlQSjiRAHJWUmVYvY4XGzKk=
+Received: by 10.101.152.38 with SMTP id e38mr4401140ano.117.1258107575898;
+        Fri, 13 Nov 2009 02:19:35 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 21sm402618yxe.37.2009.11.13.02.19.34
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 13 Nov 2009 02:19:35 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20091113090343.GA5355@progeny.tock>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132830>
 
-Hi there.
-I have:
+Jonathan Nieder wrote:
+> @@ -1545,7 +1540,8 @@ _git_config ()
+>  	pager.*)
+>  		local pfx=3D"${cur%.*}."
+>  		cur=3D"${cur#*.}"
+> -		__gitcomp "$(__git_all_commands)" "$pfx" "$cur"
+> +		__git_compute_all_commands
+> +		__gitcomp "__git_all_commands" "$pfx" "$cur"
+>  		return
+>  		;;
+>  	remote.*.*)
 
-$ git version
-git version 1.6.5.1.1367.gcd48
+s/__git_all_commands/\$__git_all_commands/
 
-$ git config --get core.autocrlf
-false
+Yikes.  Next patch I=E2=80=99ll let sit for a day.
 
-A repository with some UNIX (LF) and some Windows (CRLF) files.
-(and no: I will not change the files. My editors handle CRLF and LF correctly)
-
-My problem:
-
-'git am' can't handle changes in CRLF files because the patch
-gets converted (by git mailsplit) to contain only LF.
-
-Which is wrong IMHO.
-
-git-am on my msysgit version looks like this (lines: 214++)
-
-<---------->
-split_patches () {
-	case "$patch_format" in
-	mbox)
-		case "$rebasing" in
-		'')
-			keep_cr= ;;
-		?*)
-			keep_cr=--keep-cr ;;
-		esac
-		git mailsplit -d"$prec" -o"$dotest" -b $keep_cr -- "$@" > "$dotest/last" ||
-		clean_abort
-		;;
-<---------->
-
-The '--keep-cr' flags is passed to git mailsplit when git am is in 'rebasing' mode.
-By looking through git-am I found that I can pass "--rebasing" to git am to get my
-patch applied correctly.
-But why is git am behaving that way ?
-
-Puzzled,
-
-Stefan
--- 
-----------------------------------------------------------------
-/dev/random says: I'm dangerous when I know what I'm doing.
+Good night,
+Jonathan
