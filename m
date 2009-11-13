@@ -1,75 +1,76 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: Git in next is broken
-Date: Fri, 13 Nov 2009 11:54:30 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0911131152120.16711@xanadu.home>
-References: <alpine.LFD.2.00.0911121513470.16711@xanadu.home>
- <4AFC8960.9090808@lsrfire.ath.cx>
- <alpine.LNX.2.00.0911122239150.6967@reaper.quantumfyre.co.uk>
- <alpine.LFD.2.00.0911122345450.16711@xanadu.home>
- <alpine.LNX.2.00.0911130910150.17726@reaper.quantumfyre.co.uk>
+From: Jeff Epler <jepler@unpythonic.net>
+Subject: cherry-pick vs submodule, conflicts
+Date: Fri, 13 Nov 2009 12:05:12 -0600
+Message-ID: <20091113180512.GA29783@unpythonic.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Fri Nov 13 17:54:39 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 13 19:05:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N8zPz-0005a0-2B
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 17:54:39 +0100
+	id 1N90Wb-0005c4-1R
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Nov 2009 19:05:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755601AbZKMQy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Nov 2009 11:54:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755318AbZKMQyZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Nov 2009 11:54:25 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:16083 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753924AbZKMQyZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Nov 2009 11:54:25 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KT20082G4AUUD00@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 13 Nov 2009 11:54:30 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LNX.2.00.0911130910150.17726@reaper.quantumfyre.co.uk>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1756624AbZKMSFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Nov 2009 13:05:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755541AbZKMSFV
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Nov 2009 13:05:21 -0500
+Received: from dsl.unpythonic.net ([206.222.212.217]:43643 "EHLO
+	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751917AbZKMSFU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Nov 2009 13:05:20 -0500
+Received: by unpythonic.net (Postfix, from userid 1000)
+	id 09D971148EA; Fri, 13 Nov 2009 12:05:12 -0600 (CST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132839>
 
-On Fri, 13 Nov 2009, Julian Phillips wrote:
+A fellow git user of mine encountered an unexpected problem cherry-
+picking from one branch to another.  The conflict was 'added by us: sub'
+and I created a small program that leads to the same message.
 
-> On Thu, 12 Nov 2009, Nicolas Pitre wrote:
-> 
-> > Without the "ref_map = next" there is no change: glibc still complains
-> > about corruption and abort the execution.  With the "ref_map = next"
-> > then git simply segfaults.
-> 
-> I was half right about "ref_map = next", I had forgotten about setting prev in
-> the for(...).  For me, the following fixes it on MacOS (I don't have time to
-> test on Linux right now):
-> 
-> diff --git a/remote.c b/remote.c
-> index 4f9f0cc..6195a58 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -754,6 +754,8 @@ void ref_remove_duplicates(struct ref *ref_map)
->                         prev->next = ref_map->next;
->                         free(ref_map->peer_ref);
->                         free(ref_map);
-> +                       ref_map = prev; // Keep the same prev.
-> +                       continue;
->                 }
-> 
->                 item = string_list_insert(ref_map->peer_ref->name, &refs);
+#!/bin/bash
+# This script demonstrates that it doesn't work to cherry-pick when some (not
+# even touched) path is a submodule in HEAD but a regular subdirectory in the
+# branch being picked from.
+#
+# Furthermore, when using 'git mergetool', the (desired?) action 'c'
+# gives the error "fatal: unable to stat 'sub': No such file or directory".
+#
+# The behavior is essentially the same on
+# git version 1.6.3.3
+# git version 1.6.5.rc1.49.ge970
+#
+# maybe this is related to
+# http://kerneltrap.org/mailarchive/git/2007/7/7/250935
+# but the case must be extended to cover submodules?
 
-Yep, this fixes it for me on Linux too.  Please resend to Junio with my 
-ACK.
-
-
-Nicolas
+set -e
+BASEDIR=$(pwd)
+rm -rf main sub &&
+mkdir sub main &&
+(cd sub && git init && touch y && git add y && git commit -my) &&
+                                        # make a submodule
+cd ../main &&
+git init &&
+touch x; git add x &&
+git commit -mx &&                       # initial commit
+git branch b &&
+mkdir sub &&                            # on master, make sub a subdir
+touch sub/y; git add sub/y &&
+git commit -my &&
+echo 1 > x &&
+git commit -mx1 -a &&                   # and create a second commit
+CHERRY=$(git rev-parse HEAD) &&         # which is a tasty cherry
+git checkout b &&
+git submodule add file://$BASEDIR/sub sub &&
+git submodule update &&
+git commit -my &&                       # on brach, make sub a submodule
+! git cherry-pick $CHERRY &&            # pull second commit from master
+git status                              # what happened?
