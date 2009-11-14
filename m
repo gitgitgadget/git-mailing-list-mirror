@@ -1,80 +1,75 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH] git-add.txt: fix formatting of --patch section
-Date: Fri, 13 Nov 2009 17:45:46 -0800
-Message-ID: <1258163146-15595-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 14 02:46:19 2009
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH] Re: Clarify documentation on the "ours" merge strategy.
+Date: Sat, 14 Nov 2009 11:12:59 +0900
+Message-ID: <20091114111259.6117@nanako3.lavabit.com>
+References: <alpine.DEB.1.00.0911031047510.4985@pacific.mpi-cbg.de>
+	<7vskckn5b4.fsf@alter.siamese.dyndns.org>
+	<20091111213049.GJ27518@vidovic>
+	<200911120037.11901.trast@student.ethz.ch>
+	<7vvdhggote.fsf@alter.siamese.dyndns.org>
+	<alpine.DEB.2.00.0911121034580.8825@ds9.cixit.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Baz <brian.ewins@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	<Johannes.Schindelin@gmx.de>, <B.Steinbrink@gmx.de>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Sat Nov 14 03:16:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N97iV-00063Y-I7
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Nov 2009 02:46:19 +0100
+	id 1N98BV-0006CW-U5
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Nov 2009 03:16:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753379AbZKNBpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Nov 2009 20:45:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753145AbZKNBpp
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Nov 2009 20:45:45 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:35679 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753107AbZKNBpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Nov 2009 20:45:45 -0500
-Received: by yxe17 with SMTP id 17so3451755yxe.33
-        for <git@vger.kernel.org>; Fri, 13 Nov 2009 17:45:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=QbrKjuz4uvszmHeAbXMU2BnjFL7FlxsMVKSpkChvlyg=;
-        b=muiUqaPXwxM0huY+yaEMYcWJg8keDbBI/g8WOV2Ty5728dV1j2/eSm8y+31UhOwdSW
-         J1VL0OAoq64w16veWtNAomiVEuzmjPLIuLg719micM1p7X9pziv7qyLXkVsuyJE7+fJe
-         ANpogj4FTP5xTVQdmfq5WKuVRyi7MJaAGb32k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=BD0NUEskc3UeB1k/h9qANPDiIjWKbOBE7b33KrukQDZHUnLyY4NaOgQtVhZuw/T/Xo
-         +Zc4vYRyzj/uNGjCspdh/qd0cyQ+3PMSOkB/d0Ho+KIZgVRNNd3dhZgT0yoqH/G8QWrL
-         KO9lJyY3cMNBiXs1FyjyGYC0JZgaQTkz/Bxhg=
-Received: by 10.150.214.11 with SMTP id m11mr8027016ybg.130.1258163150316;
-        Fri, 13 Nov 2009 17:45:50 -0800 (PST)
-Received: from earth (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
-        by mx.google.com with ESMTPS id 20sm168538ywh.47.2009.11.13.17.45.48
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 13 Nov 2009 17:45:49 -0800 (PST)
-Received: by earth (sSMTP sendmail emulation); Fri, 13 Nov 2009 17:45:46 -0800
-X-Mailer: git-send-email 1.6.5.2.155.gbb47
+	id S1754708AbZKNCQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Nov 2009 21:16:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753952AbZKNCQF
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Nov 2009 21:16:05 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:34034 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753567AbZKNCQE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Nov 2009 21:16:04 -0500
+Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
+	by karen.lavabit.com (Postfix) with ESMTP id CF7DF11B8AD;
+	Fri, 13 Nov 2009 20:16:07 -0600 (CST)
+Received: from 6820.lavabit.com (customer-148-233-239-23.uninet.net.mx [148.233.239.23])
+	by lavabit.com with ESMTP id KHX6JFG0AUE6; Fri, 13 Nov 2009 20:16:07 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=GCP4HJ+n9udO/wR3MAoFwkfEbkSrJvaLY9H8AYQw0aShMVnKozerSaFwOLuV/7zEPLI4ynAWTgbGmcOeSOsQ1sbzEsZQupEeGSThMWYace+DcpcvMa6sMgR1DYRwKQc7PxmwDxhpC/RmZxcYKO8nFL6OGltKhJKCnleTfBO5gDM=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <alpine.DEB.2.00.0911121034580.8825@ds9.cixit.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132856>
 
-Extra paragraphs should be prefixed with a plus sign.
+Quoting Peter Krefting <peter@softwolves.pp.se>
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
- Documentation/git-add.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+> The web tree checkout script uses rebase to avoid introducing merge
+> commits every time the blog comment is updated, as it in 99 % of cases
+> is unrelated to any other changes found in the central repo.
+>
+> In the few cases where the blog comment update from the web tree
+> conflicts with a change in the central repo, I want the "git pull
+> --rebase" call to overwrite any changes in the central repo with my
+> changes in the web tree (meaning that I would later have to manually
+> re-delete the spam comments, but I can live with that).
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 45ebf87..e93e606 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -76,10 +76,10 @@ OPTIONS
- 	work tree and add them to the index. This gives the user a chance
- 	to review the difference before adding modified contents to the
- 	index.
--
--	This effectively runs ``add --interactive``, but bypasses the
--	initial command menu and directly jumps to `patch` subcommand.
--	See ``Interactive mode'' for details.
-++
-+This effectively runs `add --interactive`, but bypasses the
-+initial command menu and directly jumps to the `patch` subcommand.
-+See ``Interactive mode'' for details.
- 
- -e, \--edit::
- 	Open the diff vs. the index in an editor and let the user
+That sounds like "-Xours" merge option that was discussed some time 
+ago. See
+
+    http://thread.gmane.org/gmane.comp.version-control.git/76650/focus=89021
+
+I remember that Junio and Petr were against it because it would 
+encourage a bad workflow. Dscho was against the syntax used to 
+pass the options also.
+
 -- 
-1.6.5.2.155.gbb47
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
