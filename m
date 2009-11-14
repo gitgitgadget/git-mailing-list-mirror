@@ -1,104 +1,59 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] Speed up bash completion loading
-Date: Sat, 14 Nov 2009 15:43:03 +0100
-Message-ID: <20091114144303.GA31540@neumann>
-References: <7vbpj9s8vk.fsf@alter.siamese.dyndns.org>
-	<fabb9a1e0911110957k599ac3dfmd1a44a0499c72b2d@mail.gmail.com>
-	<20091111220832.GA31620@progeny.tock> <4AFCFF50.5080401@gmail.com>
-	<20091113070652.GA3907@progeny.tock> <4AFD06CD.7090003@gmail.com>
-	<20091113085028.GA4804@progeny.tock>
-	<20091113090343.GA5355@progeny.tock> <4AFDC4F3.1050607@gmail.com>
-	<20091114110141.GB1829@progeny.tock>
+From: Victor Engmark <victor.engmark@gmail.com>
+Subject: git svn fetch loses data
+Date: Sat, 14 Nov 2009 18:07:32 +0100
+Message-ID: <7d4f41f50911140907n285d72dcp7bbe802900f8bae5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen Boyd <bebarino@gmail.com>,
-	Kirill Smelkov <kirr@mns.spb.ru>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <junio@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 14 15:43:22 2009
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 14 18:07:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9JqQ-0007nW-Kx
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Nov 2009 15:43:19 +0100
+	id 1N9M69-0004Z8-2x
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Nov 2009 18:07:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752814AbZKNOnG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Nov 2009 09:43:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752646AbZKNOnG
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Nov 2009 09:43:06 -0500
-Received: from moutng.kundenserver.de ([212.227.17.8]:53636 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752446AbZKNOnF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Nov 2009 09:43:05 -0500
-Received: from [127.0.1.1] (p5B1301DB.dip0.t-ipconnect.de [91.19.1.219])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0MgI6w-1Mlcoo2iyk-00NnuL; Sat, 14 Nov 2009 15:43:07 +0100
-Content-Disposition: inline
-In-Reply-To: <20091114110141.GB1829@progeny.tock>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Provags-ID: V01U2FsdGVkX1/tS7Wrhb5MoefZhpaLUuNpcMAjMn88aYyqISf
- RrRtJFt95/h9rSPR8U1fsLFeCodY6A5OPsNSDB6fp67SPutjcQ
- Mhdsefr5LmvCmrJagY/tQ==
+	id S1755255AbZKNRH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Nov 2009 12:07:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755211AbZKNRH2
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Nov 2009 12:07:28 -0500
+Received: from mail-fx0-f221.google.com ([209.85.220.221]:54441 "EHLO
+	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755086AbZKNRH2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Nov 2009 12:07:28 -0500
+Received: by fxm21 with SMTP id 21so1471353fxm.21
+        for <git@vger.kernel.org>; Sat, 14 Nov 2009 09:07:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=GqBWwDHk3/KqFIxswUPtjNdIyAQaOrbPob12qEVvu7Y=;
+        b=AsCrglkXJ4oYoQ0TCwwSRpXc4EE1iAs21DDL91eGCjFUd7sWW2VaD+uUGXZXutddQd
+         PKaUxdTchoRHgWJb23Bd21gTpxSisNzmIEto0UW1I96gfpQBj6uOfu38UtfzBPGknaR0
+         D+Hs5LkRGkNViJo2iwclZqcQCt5yYRWqfEFac=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=AAKvolXjfwjYYLKP4uVuKZSC2VReqQlWpotVh0GZD2lP/SRiQWJBC1CBF3+z3mpC+K
+         CYbuJLXN7I/dn8sqcYULKTleTGMut9vRrOlrjK/okSl9oswQzE7bnehC1ovUvtHiiY95
+         zKSNP7AX0wQxJhi89luXiAIqJ8hV1w/fkB+r4=
+Received: by 10.216.91.73 with SMTP id g51mr381647wef.68.1258218452443; Sat, 
+	14 Nov 2009 09:07:32 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132875>
 
-Hi,
+Hi all,
 
+I've been trying to move from Subversion to Git for a couple days now,
+and I can't get git svn to get all my data. The progress so far is
+explained at <http://l0b0.wordpress.com/2009/11/14/n-way-git-synchronization-with-extra-cheese/>.
+git svn fetch doesn't report any errors, and goes through the entire
+repository as regular as anything, but at the end about half of the
+root directories are missing. Even the file modified by the last
+commit is not there at all. Any ideas why this is?
 
-On Sat, Nov 14, 2009 at 05:01:41AM -0600, Jonathan Nieder wrote:
-> Stephen Boyd wrote:
->=20
-> > I see a small problem, but it can be fixed in another patch. git
-> > merge -s <TAB><TAB> the first time when you're not in a git
-> > directory will make git merge -s <TAB><TAB> after never complete
-> > correctly even in a git directory.
->=20
-> Not good.  I think the sanest thing to do is avoid caching the merge
-> strategy list entirely.  Listing merge strategies takes about 100 ms
-> here, which is short enough not to be annoying.
->=20
-> > I guess this become more serious
-> > if git isn't in your path initially and you do git <TAB><TAB> and
-> > then git becomes part of your path and you try again. Here you lose
-> > porcelain completion. This is probably never going to happen though=
-,
-> > right?
->=20
-> Right, if this happened to me I would not be too surprised.  A simila=
-r
-> problem occurs when someone installs a new git subcommand in the
-> middle of a session.  Starting a new session fixes the completion, bu=
-t
-> should the completion script do something to help people before then?
->=20
-> It could provide a shell function with a slightly friendlier name tha=
-n
-> "__git_compute_porcelain_commands" for the user to invoke explicitly.
->=20
-> It could retry "git help -a" each time completion was needed if it
-> gave no results last time (i.e. use "${__git_all_commands:=3D" instea=
-d
-> of "${__git_all_commands=3D").  This would help with the missing git
-> problem (which seems unusual), but not the missing git-svn.
->=20
-> Maybe it could detect signs of user frustration (repeated attempts to
-> complete the same thing?) and add to the frustration by silently
-> fixing the cache.
-
-Why?  Don't get overly creative here, the command
-
-  . /path/to/git-completion.bash
-
-already does that, plus it fixes the merge strategy completion issue,
-and it's friendly enough for the users.
-
-
-Best,
-G=E1bor
+-- 
+Victor Engmark
