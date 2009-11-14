@@ -1,77 +1,74 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
+From: Nanako Shiraishi <nanako3@lavabit.com>
 Subject: Re: [PATCHv3] Add branch management for releases to gitworkflows
-Date: Sat, 14 Nov 2009 09:59:44 +0100
-Message-ID: <6672d0160911140059r78dda7bbvbd3cc67828dc4322@mail.gmail.com>
+Date: Sat, 14 Nov 2009 18:01:23 +0900
+Message-ID: <20091114180123.6117@nanako3.lavabit.com>
 References: <1258055164-11876-1-git-send-email-rocketraman@fastmail.fm>
-	 <1258055164-11876-2-git-send-email-rocketraman@fastmail.fm>
-	 <20091114071946.6117@nanako3.lavabit.com>
-	 <4AFDE421.5050307@fastmail.fm>
-	 <20091114081040.6117@nanako3.lavabit.com>
-	 <4AFE41AF.8050802@fastmail.fm>
+	<1258055164-11876-2-git-send-email-rocketraman@fastmail.fm>
+	<20091114071946.6117@nanako3.lavabit.com>
+	<4AFDE421.5050307@fastmail.fm>
+	<20091114081040.6117@nanako3.lavabit.com>
+	<4AFE41AF.8050802@fastmail.fm>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
-	trast@student.ethz.ch, gitster@pobox.com
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, trast@student.ethz.ch, gitster@pobox.com
 To: Raman Gupta <rocketraman@fastmail.fm>
-X-From: git-owner@vger.kernel.org Sat Nov 14 10:00:38 2009
+X-From: git-owner@vger.kernel.org Sat Nov 14 10:02:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9EUn-0005l0-Uy
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Nov 2009 10:00:38 +0100
+	id 1N9EWq-0006Ol-Q3
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Nov 2009 10:02:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754662AbZKNI7k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Nov 2009 03:59:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754470AbZKNI7k
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Nov 2009 03:59:40 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:43098 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751439AbZKNI7j convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Nov 2009 03:59:39 -0500
-Received: by bwz27 with SMTP id 27so4207776bwz.21
-        for <git@vger.kernel.org>; Sat, 14 Nov 2009 00:59:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=TUchJ+0HdoNcWhC5y+cAQtR+ErKY4i7efqL7Al7RLJE=;
-        b=ao0jubPblnH4QzRceODX12vseF/EFYv8M0ley+fOccwX26HEDfZ+VYcbqgnQxYyvoo
-         iNrHmpNnGynSJC0gspCzjVSFd9aCiG5v0RuxBbR0G2MfYCru2ckMDEceHppbNH3wn6oj
-         7FqshskNLJdBIXHBmPCMaeyupYXgWLATSnqo4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=nsSispi1AlCuRhUKBKZkUPVpKK8/JaFCLS+psRoh47t111K4m+tN9AR7lYY09s8xny
-         HZl9T+QOQJ6Wwmneq7Kzv5gpgMTicvRC4dRErPgYUmkxlZvP9nxInLbAesLhhtE82dQt
-         ziQEj5Otv8LT5Nb6+w8imgK6T6DWcw6huxDQc=
-Received: by 10.204.48.131 with SMTP id r3mr1316995bkf.195.1258189184244; Sat, 
-	14 Nov 2009 00:59:44 -0800 (PST)
+	id S1754689AbZKNJB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Nov 2009 04:01:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754680AbZKNJB1
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Nov 2009 04:01:27 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:40328 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754470AbZKNJB0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Nov 2009 04:01:26 -0500
+Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
+	by karen.lavabit.com (Postfix) with ESMTP id 9304F11B8B8;
+	Sat, 14 Nov 2009 03:01:30 -0600 (CST)
+Received: from 6995.lavabit.com (customer-148-233-239-23.uninet.net.mx [148.233.239.23])
+	by lavabit.com with ESMTP id QP8G7PK2F9SE; Sat, 14 Nov 2009 03:01:30 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=ohsTTR/VBya4C/mHo7o/jaNVfJnKEYMWFrBmygtULhlU3F0xicRoEBeIOV7OAy+QJx1gQhYvAPp0EPm81BVO0mN1aHqPL66U2SjnxLaXH3sB0qIG7E9JZs0iYwF+S5cQpZ6N/+IKLQ46DvrrapL2Z93GCVPBwD9oeHAMHGObFeU=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
 In-Reply-To: <4AFE41AF.8050802@fastmail.fm>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132864>
 
-On Sat, Nov 14, 2009 at 6:35 AM, Raman Gupta <rocketraman@fastmail.fm> =
-wrote:
->
-> Ok, another dumb question: since you have now submitted a patch on to=
-p
+Quoting Raman Gupta <rocketraman@fastmail.fm>
+
+> Ok, another dumb question: since you have now submitted a patch on top
 > of my patch, what is the proper etiquette for proceeding? Who
 > maintains this patch series until it is committed? Since your patch
 > applies on top of mine I can't really make any more changes without
 > affecting your patch right? I can't find any guidance in the
 > SubmittingPatches document.
 
-I can't answer the questions about proper etiquette, but you *can* do
-more changes
-if you first apply Nanako's patch on top of your previous changes.
+What usually happens is that we wait now.
 
-/Bj=C3=B6rn
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+In this case we are in agreement that it is a good idea to apply 
+both of our patches (mine was only repeating what Junio said in 
+his comments), so if I were you, I would anticipate that Junio 
+would apply both of them and start preparing incremental updates 
+on top of them now, and send them when the patches appear in his 
+'pu' branch.
+
+Junio has gone quiet for the past few days; maybe he is too busy
+to read or respond to either of our patch. Instead of preparing 
+the final text you write in the document in a patch format, it 
+may be a better to bring up your ideas here and discuss them 
+first. What changes do you have in mind? I think the new section 
+now already is in a reasonable shape.
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
