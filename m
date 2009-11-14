@@ -1,120 +1,107 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Speed up bash completion loading
-Date: Sat, 14 Nov 2009 13:33:00 -0600
-Message-ID: <20091114193300.GA1856@progeny.tock>
-References: <fabb9a1e0911110957k599ac3dfmd1a44a0499c72b2d@mail.gmail.com>
- <20091111220832.GA31620@progeny.tock>
- <4AFCFF50.5080401@gmail.com>
- <20091113070652.GA3907@progeny.tock>
- <4AFD06CD.7090003@gmail.com>
- <20091113085028.GA4804@progeny.tock>
- <20091113090343.GA5355@progeny.tock>
- <4AFDC4F3.1050607@gmail.com>
- <20091114110141.GB1829@progeny.tock>
- <20091114144303.GA31540@neumann>
+From: Simon Strandgaard <neoneye@gmail.com>
+Subject: git gc - out of memory
+Date: Sat, 14 Nov 2009 20:26:00 +0100
+Message-ID: <df1390cc0911141126w1a0c5691p83885053a73f829@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen Boyd <bebarino@gmail.com>,
-	Kirill Smelkov <kirr@mns.spb.ru>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <junio@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sat Nov 14 20:22:43 2009
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 14 20:26:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9OCk-00063t-9Q
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Nov 2009 20:22:38 +0100
+	id 1N9OG8-0007IE-HY
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Nov 2009 20:26:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751349AbZKNTWZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Nov 2009 14:22:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbZKNTWZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Nov 2009 14:22:25 -0500
-Received: from mail-gx0-f226.google.com ([209.85.217.226]:60008 "EHLO
-	mail-gx0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751259AbZKNTWY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Nov 2009 14:22:24 -0500
-Received: by gxk26 with SMTP id 26so3941255gxk.1
-        for <git@vger.kernel.org>; Sat, 14 Nov 2009 11:22:29 -0800 (PST)
+	id S1751395AbZKNTZ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Nov 2009 14:25:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751386AbZKNTZ5
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Nov 2009 14:25:57 -0500
+Received: from mail-fx0-f221.google.com ([209.85.220.221]:48835 "EHLO
+	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751259AbZKNTZ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Nov 2009 14:25:57 -0500
+Received: by fxm21 with SMTP id 21so1541535fxm.21
+        for <git@vger.kernel.org>; Sat, 14 Nov 2009 11:26:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=Q+v1Mrcd60EaG5u4d+JfPytgsJWqnL81mYK1cWE9VEc=;
-        b=uCE0crtU2ZFY0vJm7KvX/mW0D9rj7aGhRP4I4x/hte1/5evHX12D83elXZYNBoOGc5
-         mxt/L4F52GfAuHBiZPrs2otcwaF5etehRkh9C0g/e+XdOVxNEYiOe7js8CoDDjjrI5vX
-         IT9dRYBBQ2VSqJo+4mUpcyumFxH7QVVd5Tu+A=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=yIAwjU80SMl3B7uZ8t457/oZIXnt+Y9/mEX08Ggp4Jo=;
+        b=hfrjqrl5i5xohSf5TfS1RS0TydSD/TPf0anZ0nTcFhnW5OU3eqN9RHd31sQwYQ917P
+         oupupA8+JWVfR/Kje1pNhDHHh1Jt71qbAinTlXNUvs949gnQszKE4Q+watBQKN/Micon
+         ulRtaMeXGBKqJfGOb4f8xbKoQp8hWjpYuWDAs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=jfZb0CqbRNVLe1F+vCL+4Q8EM+Kaqd+zUSh6Q4sAaLgvyOHaOsNK+aIP3huE7/m2vN
-         YRp5MkAJXI9gKNpabAaSuOMjtFbHQK9TY9xr2kafAX/QVKc7uCxLdWuS88R8Yczu/1cY
-         QGMiszCAeEHBgPTuhJtu1sM+A+3Rr6pI9McSs=
-Received: by 10.150.30.10 with SMTP id d10mr10323562ybd.341.1258226549862;
-        Sat, 14 Nov 2009 11:22:29 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 15sm2478257gxk.8.2009.11.14.11.22.28
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 14 Nov 2009 11:22:29 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20091114144303.GA31540@neumann>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=iRiG7bQjsVn0xqnGlwnUE3SXN55GClRsvX+ldRIgRuCMyxmXAjuX3Y4lilpr/avgh7
+         fEzsoF8ZTMtoTJRma/merleCprNRfSZFnO/aCCcD5s9H/V46qGHmNta6XLTFEREZmvad
+         oH+wyeK4oiEW3kq66mF6PkdKhEpGNKWU9V42M=
+Received: by 10.216.87.81 with SMTP id x59mr1959057wee.147.1258226760026; Sat, 
+	14 Nov 2009 11:26:00 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132881>
 
-Hi G=E1bor,
+My bare repository is on an OpenBSD machine.
+I was unaware of the importance of git gc until today
+after investigating a problem with "git pull".
+So there hasn't been run git gc on the repository ever.
 
-SZEDER G=E1bor wrote:
+The biggest file in the repository is a 45 mb file.
+The repository size is near 2 gb.
 
-> Why?  Don't get overly creative here, the command
->=20
->   . /path/to/git-completion.bash
->=20
-> already does that, plus it fixes the merge strategy completion issue,
-> and it's friendly enough for the users.
+What can I do?
 
-Sounds like a good approach.  Squashing this in should get that
-working again.
+$ git gc
+Counting objects: 5934, done.
+warning: suboptimal pack - out of memory
+fatal: Out of memory, malloc failed8)
+error: failed to run repack
+$ git --version
+git version 1.6.5.2
+$ uname -a
+OpenBSD amiga.opcoders.com 4.3 GENERIC#698 i386
+$ ulimit -a
+time(cpu-seconds)    unlimited
+file(blocks)         unlimited
+coredump(blocks)     unlimited
+data(kbytes)         524288
+stack(kbytes)        4096
+lockedmem(kbytes)    662576
+memory(kbytes)       1985524
+nofiles(descriptors) 128
+processes            64
+$ du -ks myrepository.git
+1859538 myrepository.git
+$
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-In this patch, I assume the merge strategy list is not being cached
-any more.  Something like this would allow recovering from the merge
-strategy completion issue, but the victim would have to notice what
-went wrong first.
 
- contrib/completion/git-completion.bash |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 634941f..ae39373 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -495,6 +495,7 @@ __git_list_all_commands ()
- 	done
- }
-=20
-+unset __git_all_commands
- __git_compute_all_commands ()
- {
- 	: ${__git_all_commands=3D$(__git_list_all_commands)}
-@@ -586,6 +587,7 @@ __git_list_porcelain_commands ()
- 	done
- }
-=20
-+unset __git_porcelain_commands
- __git_compute_porcelain_commands ()
- {
- 	__git_compute_all_commands
---=20
-1.6.5.2
+Below is the "git pull" problem I'm having. I think its caused
+by the former problem. When pulling it dies because of malloc failure.
+
+prompt> git pull
+remote: Counting objects: 280, done.
+remote: fatal: Out of memory, malloc failed
+error: git upload-pack: git-pack-objects died with error.
+fatal: git upload-pack: aborting due to possible repository corruption
+on the remote side.
+remote: aborting due to possible repository corruption on the remote side.
+fatal: protocol error: bad pack header
+prompt> git --version
+git version 1.6.5.2
+prompt> uname -a
+Darwin pidgin.local 9.8.0 Darwin Kernel Version 9.8.0: Wed Jul 15
+16:55:01 PDT 2009; root:xnu-1228.15.4~1/RELEASE_I386 i386 i386
+prompt> sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.5.8
+BuildVersion:   9L31a
+prompt>
+
+
+Kind regards
+Simon Strandgaard - http://gdtoolbox.com/
