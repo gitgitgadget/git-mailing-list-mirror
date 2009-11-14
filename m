@@ -1,88 +1,120 @@
-From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Subject: [PATCH] cvsserver doc: database generally can not be reproduced consistently
-Date: Sat, 14 Nov 2009 11:39:36 -0700
-Message-ID: <1258223976-4044-1-git-send-email-mmogilvi_git@miniinfo.net>
-Cc: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Nov 14 19:46:15 2009
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Speed up bash completion loading
+Date: Sat, 14 Nov 2009 13:33:00 -0600
+Message-ID: <20091114193300.GA1856@progeny.tock>
+References: <fabb9a1e0911110957k599ac3dfmd1a44a0499c72b2d@mail.gmail.com>
+ <20091111220832.GA31620@progeny.tock>
+ <4AFCFF50.5080401@gmail.com>
+ <20091113070652.GA3907@progeny.tock>
+ <4AFD06CD.7090003@gmail.com>
+ <20091113085028.GA4804@progeny.tock>
+ <20091113090343.GA5355@progeny.tock>
+ <4AFDC4F3.1050607@gmail.com>
+ <20091114110141.GB1829@progeny.tock>
+ <20091114144303.GA31540@neumann>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stephen Boyd <bebarino@gmail.com>,
+	Kirill Smelkov <kirr@mns.spb.ru>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <junio@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sat Nov 14 20:22:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9NdV-00016N-QN
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Nov 2009 19:46:14 +0100
+	id 1N9OCk-00063t-9Q
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Nov 2009 20:22:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751265AbZKNSqC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Nov 2009 13:46:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751206AbZKNSqB
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Nov 2009 13:46:01 -0500
-Received: from qmta15.emeryville.ca.mail.comcast.net ([76.96.27.228]:33567
-	"EHLO QMTA15.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751192AbZKNSqB (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Nov 2009 13:46:01 -0500
-X-Greylist: delayed 346 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Nov 2009 13:46:00 EST
-Received: from OMTA05.emeryville.ca.mail.comcast.net ([76.96.30.43])
-	by QMTA15.emeryville.ca.mail.comcast.net with comcast
-	id 56Vu1d0080vp7WLAF6gMTF; Sat, 14 Nov 2009 18:40:21 +0000
-Received: from mmogilvi.homeip.net ([24.8.125.243])
-	by OMTA05.emeryville.ca.mail.comcast.net with comcast
-	id 56gL1d00A5FCJCg8R6gLke; Sat, 14 Nov 2009 18:40:21 +0000
-Received: from localhost.localdomain (bean [192.168.30.96])
-	by mmogilvi.homeip.net (Postfix) with ESMTP id 0E63189114;
-	Sat, 14 Nov 2009 11:40:19 -0700 (MST)
-X-Mailer: git-send-email 1.6.4.GIT
+	id S1751349AbZKNTWZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Nov 2009 14:22:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbZKNTWZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Nov 2009 14:22:25 -0500
+Received: from mail-gx0-f226.google.com ([209.85.217.226]:60008 "EHLO
+	mail-gx0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751259AbZKNTWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Nov 2009 14:22:24 -0500
+Received: by gxk26 with SMTP id 26so3941255gxk.1
+        for <git@vger.kernel.org>; Sat, 14 Nov 2009 11:22:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=Q+v1Mrcd60EaG5u4d+JfPytgsJWqnL81mYK1cWE9VEc=;
+        b=uCE0crtU2ZFY0vJm7KvX/mW0D9rj7aGhRP4I4x/hte1/5evHX12D83elXZYNBoOGc5
+         mxt/L4F52GfAuHBiZPrs2otcwaF5etehRkh9C0g/e+XdOVxNEYiOe7js8CoDDjjrI5vX
+         IT9dRYBBQ2VSqJo+4mUpcyumFxH7QVVd5Tu+A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=jfZb0CqbRNVLe1F+vCL+4Q8EM+Kaqd+zUSh6Q4sAaLgvyOHaOsNK+aIP3huE7/m2vN
+         YRp5MkAJXI9gKNpabAaSuOMjtFbHQK9TY9xr2kafAX/QVKc7uCxLdWuS88R8Yczu/1cY
+         QGMiszCAeEHBgPTuhJtu1sM+A+3Rr6pI9McSs=
+Received: by 10.150.30.10 with SMTP id d10mr10323562ybd.341.1258226549862;
+        Sat, 14 Nov 2009 11:22:29 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 15sm2478257gxk.8.2009.11.14.11.22.28
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 14 Nov 2009 11:22:29 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20091114144303.GA31540@neumann>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132880>
 
-A regenerated git-cvsserver database is at risk of having different
-CVS revision numbers from an incrementally updated database.  Mention
-this in the the documentation, and remove an erroneous statement
-to the contrary.
+Hi G=E1bor,
 
-Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+SZEDER G=E1bor wrote:
+
+> Why?  Don't get overly creative here, the command
+>=20
+>   . /path/to/git-completion.bash
+>=20
+> already does that, plus it fixes the merge strategy completion issue,
+> and it's friendly enough for the users.
+
+Sounds like a good approach.  Squashing this in should get that
+working again.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Documentation/git-cvsserver.txt |   19 +++++++++++++++----
- 1 files changed, 15 insertions(+), 4 deletions(-)
+In this patch, I assume the merge strategy list is not being cached
+any more.  Something like this would allow recovering from the merge
+strategy completion issue, but the victim would have to notice what
+went wrong first.
 
-diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-index 785779e..99a7c14 100644
---- a/Documentation/git-cvsserver.txt
-+++ b/Documentation/git-cvsserver.txt
-@@ -182,10 +182,9 @@ Database Backend
- ----------------
- 
- 'git-cvsserver' uses one database per git head (i.e. CVS module) to
--store information about the repository for faster access. The
--database doesn't contain any persistent data and can be completely
--regenerated from the git repository at any time. The database
--needs to be updated (i.e. written to) after every commit.
-+store information about the repository to maintain consistent
-+CVS revision numbers. The database needs to be
-+updated (i.e. written to) after every commit.
- 
- If the commit is done directly by using `git` (as opposed to
- using 'git-cvsserver') the update will need to happen on the
-@@ -204,6 +203,18 @@ write so it might not be enough to grant the users using
- 'git-cvsserver' write access to the database file without granting
- them write access to the directory, too.
- 
-+The database can not be reliably regenerated in a
-+consistent form after the branch it is tracking has changed.
-+Example: For merged branches, 'git-cvsserver' only tracks
-+one branch of development, and after a 'git-merge' an
-+incrementally updated database may track a different branch
-+than a database regenerated from scratch, causing inconsistent
-+CVS revision numbers. `git-cvsserver` has no way of knowing which
-+branch it would have picked if it had been run incrementally
-+pre-merge. So if you have to fully or partially (from old
-+backup) regenerate the database, you should be suspicious
-+of pre-existing CVS sandboxes.
-+
- You can configure the database backend with the following
- configuration variables:
- 
--- 
-1.6.4.GIT
+ contrib/completion/git-completion.bash |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 634941f..ae39373 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -495,6 +495,7 @@ __git_list_all_commands ()
+ 	done
+ }
+=20
++unset __git_all_commands
+ __git_compute_all_commands ()
+ {
+ 	: ${__git_all_commands=3D$(__git_list_all_commands)}
+@@ -586,6 +587,7 @@ __git_list_porcelain_commands ()
+ 	done
+ }
+=20
++unset __git_porcelain_commands
+ __git_compute_porcelain_commands ()
+ {
+ 	__git_compute_all_commands
+--=20
+1.6.5.2
