@@ -1,97 +1,77 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git svn: read global+system config for clone+init
-Date: Sat, 14 Nov 2009 14:50:40 -0800
-Message-ID: <20091114225040.GA5165@dcvr.yhbt.net>
-References: <20091110130913.GR19475@poetic.cynic.net> <20091114223930.GA10176@dcvr.yhbt.net>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: Question about "git pull --rebase"
+Date: Sun, 15 Nov 2009 08:16:49 +0900
+Message-ID: <20091115081649.6117@nanako3.lavabit.com>
+References: <38b2ab8a0911141239w2bab7277o66350bc742d985dd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Curt Sampson <cjs@cynic.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 14 23:50:50 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: Francis Moreau <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 15 00:24:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9RSD-0002sh-Hc
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Nov 2009 23:50:49 +0100
+	id 1N9Ryc-0004rH-0i
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 00:24:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751599AbZKNWuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Nov 2009 17:50:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751441AbZKNWuf
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Nov 2009 17:50:35 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:47119 "EHLO dcvr.yhbt.net"
+	id S1751618AbZKNXT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Nov 2009 18:19:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751607AbZKNXT5
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Nov 2009 18:19:57 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:59816 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751218AbZKNWuf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Nov 2009 17:50:35 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1796E1F5FC;
-	Sat, 14 Nov 2009 22:50:41 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20091114223930.GA10176@dcvr.yhbt.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751353AbZKNXT4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Nov 2009 18:19:56 -0500
+Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
+	by karen.lavabit.com (Postfix) with ESMTP id C5D3911B7E0;
+	Sat, 14 Nov 2009 17:20:02 -0600 (CST)
+Received: from 8727.lavabit.com (customer-148-233-239-23.uninet.net.mx [148.233.239.23])
+	by lavabit.com with ESMTP id E4FK32B3703L; Sat, 14 Nov 2009 17:20:02 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=ouztZ9v+hZBUjqrakHqGTetPtqLhXMt1xXs8a03R1WdnOj63VvsZtbA2zl4zq7QPeT8EbPb43x8W6W7lzrpP1JxT2HmMTsN3bS7a9jzX4HwHeg7erd1ExQqBXHqcAh31JZW3EpqbYfZ/fEMOzEi4QJXeS55g3tipO/1cDB3efY8=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <38b2ab8a0911141239w2bab7277o66350bc742d985dd@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132894>
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> Hi Curt,
-> 
-> Thanks for the bug report, the following patch should fix
-> the bug.  Also pullable from git://git.bogomips.org/git-svn
+Quoting Francis Moreau <francis.moro@gmail.com>
 
-It took me a while (possibly due to low caffeine levels) to make a
-failing (automated) test case, but I've also pushed this out as
-well.
+> Let's say I'm on a branch called 'foo'.
+> ...
+>     $ git pull --rebase origin master:foo
 
->From e2f8617b266e320fd58ab584cae2ebe9906daaac Mon Sep 17 00:00:00 2001
-From: Eric Wong <normalperson@yhbt.net>
-Date: Sat, 14 Nov 2009 14:43:20 -0800
-Subject: [PATCH] git svn: add authorsfile test case for ~/.gitconfig
+With this command line, you are asking:
 
-The commit for:
-    git svn: read global+system config for clone+init
+ 1) Please first fetch master from origin and update the local 
+    'foo' with it, but please fail if this doesn't fast forward;
 
-Initially lacked a test case because the author was unable to
-reproduce it under his test environment, this adds it.
+ 2) If the first step was successful, please rebase the current 
+    branch on top of that commit.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- t/t9130-git-svn-authors-file.sh |   23 +++++++++++++++++++++++
- 1 files changed, 23 insertions(+), 0 deletions(-)
+If your current branch 'foo' doesn't fast forward, the first step 
+should fail, and that is the failure you saw.
 
-diff --git a/t/t9130-git-svn-authors-file.sh b/t/t9130-git-svn-authors-file.sh
-index f5abdb3..134411e 100755
---- a/t/t9130-git-svn-authors-file.sh
-+++ b/t/t9130-git-svn-authors-file.sh
-@@ -91,4 +91,27 @@ test_expect_success 'fetch continues after authors-file is fixed' '
- 	)
- 	'
- 
-+test_expect_success 'fresh clone with svn.authors-file in config' '
-+	(
-+		rm -r "$GIT_DIR" &&
-+		test x = x"$(git config svn.authorsfile)" &&
-+		HOME="`pwd`" &&
-+		export HOME &&
-+		test_config="$HOME"/.gitconfig &&
-+		unset GIT_CONFIG_NOGLOBAL &&
-+		unset GIT_DIR &&
-+		unset GIT_CONFIG &&
-+		git config --global \
-+		  svn.authorsfile "$HOME"/svn-authors &&
-+		test x"$HOME"/svn-authors = x"$(git config svn.authorsfile)" &&
-+		git svn clone "$svnrepo" gitconfig.clone &&
-+		cd gitconfig.clone &&
-+		nr_ex=$(git log | grep "^Author:.*example.com" | wc -l) &&
-+		nr_rev=$(git rev-list HEAD | wc -l) &&
-+		test $nr_rev -eq $nr_ex
-+	)
-+'
-+
-+test_debug 'GIT_DIR=gitconfig.clone/.git git log'
-+
- test_done
+Your request doesn't make any sense. The first step would succeed 
+only when your 'foo' doesn't have anything to replay on 'master' 
+from origin, and the second step either isn't executed (when 'foo' 
+has some commits), or it doesn't do anything (when 'foo' doesn't 
+have any commit).
+
+>     $ git pull --rebase origin master
+
+With this command line, you are asking:
+
+ 1) Please first fetch master from origin, but don't store it anywhere;
+
+ 2) Then on top of that fetched commit, please rebase the current branch.
+
+That is a much saner request.
+
 -- 
-Eric Wong
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
