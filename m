@@ -1,76 +1,63 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: Re: [RFC] format-patch: Ensure that author and commit time are not 
-	lost
-Date: Sun, 15 Nov 2009 23:16:09 +0100
-Message-ID: <6672d0160911151416u7e8858f4k1591f1c1482cabb8@mail.gmail.com>
-References: <4B000141.5070503@gmail.com>
-	 <7vzl6nfqkx.fsf@alter.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: What's cooking in git.git (Nov 2009, #03; Sun, 15)
+Date: Sun, 15 Nov 2009 17:26:51 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.0911151711170.14365@iabervon.org>
+References: <7vtywwm6i4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 15 23:16:20 2009
+X-From: git-owner@vger.kernel.org Sun Nov 15 23:27:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9nON-00060F-O2
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 23:16:20 +0100
+	id 1N9nYh-0001Cd-94
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 23:26:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752019AbZKOWQH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Nov 2009 17:16:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751881AbZKOWQG
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 17:16:06 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:36099 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751775AbZKOWQF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Nov 2009 17:16:05 -0500
-Received: by bwz27 with SMTP id 27so5107766bwz.21
-        for <git@vger.kernel.org>; Sun, 15 Nov 2009 14:16:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=htB0X2LqZiGlc4oSIP5A7/FeamSJt4rIpbjQ33pEnQM=;
-        b=P9jU3M6hYcYAQru7nhy3keEpv7JRkgz7vkfg88XYsnR91h5lXrO+ZNadjmptN8676/
-         fikrenjC/ihB/0wHmzQn1qqfvd34jEHlh5SowCW0iLKzBt8qY3tQ6UkJlbazCUnPEvJK
-         BdQozpCWbZzc1FMlhmTB99V8aZGKex3vNSh9s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=uZ0xMziHnMp8Zt35m4EXGzsuXJwDjt6yTKo6gjesTKeFSliTE8znwoyZv+7z3Nzjb8
-         r2vylTRU5o0qb8BuOVoyXE+wGXEUcswAcCQAufGiuTKvYhM8Sa29KNJtIS+tG+J8Cboy
-         7AyMycJYQLi5MYEat8c2jQGRmc8sOEtVSEhqc=
-Received: by 10.204.8.155 with SMTP id h27mr3269613bkh.55.1258323369818; Sun, 
-	15 Nov 2009 14:16:09 -0800 (PST)
-In-Reply-To: <7vzl6nfqkx.fsf@alter.siamese.dyndns.org>
+	id S1751404AbZKOW0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Nov 2009 17:26:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751305AbZKOW0q
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 17:26:46 -0500
+Received: from iabervon.org ([66.92.72.58]:51043 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751285AbZKOW0p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Nov 2009 17:26:45 -0500
+Received: (qmail 2968 invoked by uid 1000); 15 Nov 2009 22:26:51 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 15 Nov 2009 22:26:51 -0000
+In-Reply-To: <7vtywwm6i4.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132970>
 
-2009/11/15 Junio C Hamano <gitster@pobox.com>:
+On Sun, 15 Nov 2009, Junio C Hamano wrote:
 
-> I think you are addressing a very valid issue, but I suspect that you=
- are
-> doing so at a wrong place in the "patch mail-out" workflow.
-[...]
-> This new function is not about "Is the _sender_ the same as the autho=
-r?",
-> but is about "Is the person who is running format-patch the same as t=
-he
-> author?".  There is a big difference.
+> * sr/vcs-helper (2009-11-06) 12 commits
+>  - Add Python support library for remote helpers
+>  - Basic build infrastructure for Python scripts
+>  - Allow helpers to request the path to the .git directory
+>  - Allow helpers to report in "list" command that the ref is unchanged
+>  - Allow helper to map private ref names into normal names
+>  - Add support for "import" helper command
+>  - Allow specifying the remote helper in the url
+>  - Add a config option for remotes to specify a foreign vcs
+>  - Allow fetch to modify refs
+>  - Use a function to determine whether a remote is valid
+>  - Allow programs to not depend on remotes having urls
+>  - Fix memory leak in helper method for disconnect
+> 
+> Re-rolled series that contains Daniel's and Johan's.
+> Any comments?  Is everybody happy?
 
-Yes, I kind of suspected that my solution would not
-be general enough to suit all users and workflows.
+My initial cleanup for "Allow helper to map private ref names into normal 
+names" was wrong (and the original was supposed to be RFC, and isn't 
+signed-off); I identified the bug he reported in it, but haven't gotten 
+positive test results from him yet, and the series obviously needs a 
+proper version rolled in before it goes into next.
 
-Thanks for the feedback.
-
-/Bj=C3=B6rn
-
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+	-Daniel
+*This .sig left intentionally blank*
