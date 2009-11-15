@@ -1,78 +1,74 @@
-From: "Steven J. Murdoch" <git+Steven.Murdoch@cl.cam.ac.uk>
-Subject: Preserving empty directories when doing a git-svn clone/rebase
-Date: Sun, 15 Nov 2009 02:06:05 +0000
-Message-ID: <20091115020605.GE15966@cl.cam.ac.uk>
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: Re: [PATCH] Update 'git remote' usage and man page to match.
+Date: Sat, 14 Nov 2009 23:34:00 -0500
+Message-ID: <32c343770911142034j6cf10e36jbd031c49119973c8@mail.gmail.com>
+References: <32c343770911121715l7507b2d5j8c6cf8cccd1f1a61@mail.gmail.com>
+	 <20091114071948.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: normalperson@yhbt.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 15 03:56:06 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Sun Nov 15 05:34:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9VHa-00036b-A7
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 03:56:06 +0100
+	id 1N9Woc-0007JE-B5
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 05:34:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751706AbZKOCzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Nov 2009 21:55:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751683AbZKOCzz
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Nov 2009 21:55:55 -0500
-Received: from mta2.cl.cam.ac.uk ([128.232.0.14]:56479 "EHLO mta2.cl.cam.ac.uk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751583AbZKOCzy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Nov 2009 21:55:54 -0500
-X-Greylist: delayed 2994 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Nov 2009 21:55:54 EST
-Received: from alport.cl.cam.ac.uk ([128.232.9.64])
-	by mta2.cl.cam.ac.uk with esmtp (Exim 3.092 #1)
-	id 1N9UVC-0002Ns-00; Sun, 15 Nov 2009 02:06:06 +0000
-Received: from sjm217 by alport.cl.cam.ac.uk with local (Exim 4.69)
-	(envelope-from <sjm217@cl.cam.ac.uk>)
-	id 1N9UVB-0007E0-Ji; Sun, 15 Nov 2009 02:06:05 +0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751812AbZKOEd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Nov 2009 23:33:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751796AbZKOEd5
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Nov 2009 23:33:57 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:52693 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751787AbZKOEd5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Nov 2009 23:33:57 -0500
+Received: by ey-out-2122.google.com with SMTP id 9so662702eyd.5
+        for <git@vger.kernel.org>; Sat, 14 Nov 2009 20:34:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=+GvyjF065OdIrhMJuZtErz1mg5mhhRPEtVaczDZnSPw=;
+        b=b0gK8y+g+Y4cQXBBDnBoQYxNbuBFmqhdPJV+GRQIEBCP6LznE0sgEYmEFVbIo8hRco
+         h6b+m3dW1u+NEeZNH2oTV4YWFvQB+oN17ooz7oEjArHtAtoQgiNrQsp1AIayZIrTaWGZ
+         SwOpNdiLXsGR3/lNuv+53VieZXElyBS4SFsjs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=ATvWU95DTEn5Wok7RmB6la3jt52/hMBC3B/tZUyhibGbANcV2nqfOyc8HGgEEdy8WO
+         GIpXd+jBogEtS8bwUy4QRe+yOc8Mj4BAXxeXs9x6Vs1cHGcUmq62mknweak4oRt8edNM
+         ZQ0KocsSprB9QpknmWRG4sgCCo3gvuUk9y4YI=
+Received: by 10.216.90.133 with SMTP id e5mr561608wef.23.1258259640967; Sat, 
+	14 Nov 2009 20:34:00 -0800 (PST)
+In-Reply-To: <20091114071948.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132908>
 
-When git-svn clones a Subversion repository, any empty directories
-appear to be silently dropped (tested using git version 1.6.5.2 on Mac
-OS X Snow Leopard). This causes problems for using git with software
-projects which depend on Subversion's ability to track empty
-directories. I was recently caught out by this, and it was difficult
-to debug what had gone wrong.
+On Fri, Nov 13, 2009 at 5:19 PM, Nanako Shiraishi <nanako3@lavabit.com> wrote:
+>
+> The second change is good but why do you remove -v from the
+> synopsis section? Why is it a good idea? Manual pages for
+> many other commands list --verbose in their synopsis section.
+>
 
-Would it be possible to change git-svn to handle this case? Since git
-doesn't have the ability to track empty directories, probably the
-simplest thing to do would be to automatically add a file (e.g.
-.gitignore) to any empty directories. In theory this could cause
-problems, but I would think the chances of this are far lower than
-with the current behaviour.
+After checking other git operations (fetch, pull, clone, commit, merge, etc)
+I found that none of these other commands document '-v' in the synopsis.
 
-I think this feature would help projects in which some contributors
-are transitioning to git. It would especially be useful to novice
-users of git, who are not aware of the potential problems with having
-empty directories.
+With that in mind, I wondered why it had been listed for 'git remote'.  My best
+guess is that only some of the 'git remote' subcommands are affected by '-v'.
+However, to me it still seems better to only mention it as a general option.
+That way if subcommands add/remote support for '-v', the usage string
+and man page don't need to be updated.
 
-I see there was a discussion in 2006:
- http://kerneltrap.org/mailarchive/git/2006/11/29/231586
+Please note that even with the change, '-v' is still printed as one of the
+general options in the usage string.  I simply removed it from the synopsis
+section.
 
-However, since then I haven't seen any updates. The rationale behind
-the original request still seems applicable today:
-
- "I think there are many potential git users out there who are
- currently svn users.  And git-svn is a really nice way to get started,
- but this sort of stumbling block could really turn people off.  For
- example, it made me look pretty dumb when I carelessly complained to
- my colleague about his code not working and then it turns out to be
- because my super-advanced scm tool "messed things up"."
-  (git-svn and empty directories in svn (was: [PATCH 1.2/2 (fixed)]
-   git-svn: fix output reporting from the delta fetcher))
-
-Thanks,
-Steven Murdoch.
-
--- 
-http://www.cl.cam.ac.uk/users/sjm217/
+Thank for reviewing,
+Tim
