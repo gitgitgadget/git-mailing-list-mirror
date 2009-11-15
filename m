@@ -1,65 +1,70 @@
-From: Alejandro Riveira <ariveira@gmail.com>
-Subject: Re: git gc - out of memory
-Date: Sun, 15 Nov 2009 14:44:29 +0000 (UTC)
-Message-ID: <hdp44d$4ml$1@ger.gmane.org>
-References: <df1390cc0911141126w1a0c5691p83885053a73f829@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Bugs ignoring submodules?
+Date: Sun, 15 Nov 2009 16:57:22 +0200
+Message-ID: <94a0d4530911150657y6692a531hed99230c0d9dc315@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 15 15:45:42 2009
+X-From: git-owner@vger.kernel.org Sun Nov 15 15:57:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9gMG-0007M6-Vq
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 15:45:41 +0100
+	id 1N9gXj-0003NK-SS
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 15:57:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753188AbZKOOou convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Nov 2009 09:44:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753183AbZKOOou
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 09:44:50 -0500
-Received: from lo.gmane.org ([80.91.229.12]:59030 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753154AbZKOOou (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Nov 2009 09:44:50 -0500
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1N9gLW-00074C-Hz
-	for git@vger.kernel.org; Sun, 15 Nov 2009 15:44:54 +0100
-Received: from 139.red-83-44-221.dynamicip.rima-tde.net ([83.44.221.139])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 15 Nov 2009 15:44:54 +0100
-Received: from ariveira by 139.red-83-44-221.dynamicip.rima-tde.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 15 Nov 2009 15:44:54 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 139.red-83-44-221.dynamicip.rima-tde.net
-User-Agent: Pan/0.132 (Waxed in Black)
+	id S1752146AbZKOO5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Nov 2009 09:57:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751771AbZKOO5R
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 09:57:17 -0500
+Received: from mail-iw0-f178.google.com ([209.85.223.178]:57268 "EHLO
+	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751752AbZKOO5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Nov 2009 09:57:16 -0500
+Received: by iwn8 with SMTP id 8so3682417iwn.33
+        for <git@vger.kernel.org>; Sun, 15 Nov 2009 06:57:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=fi3SkZMlGUkykF0RA/8bbCZlmf6DF7fRRg/tryElth8=;
+        b=ICfl8nKE4mDsZWAh/sBVYSDW9Mmb4lmibmda2y8tTM2sCjH5ViniHVKgkjjdxrlKBa
+         yVQQZiP6D7V0twU5REfxfXVl1/gSFH5U+sq0h8YGHgP8YWFgFxTB0A444ItuJ7H3X4Qg
+         EtWB1qsgPIoreQ1cEa5fpdstiN7BtO6eGcMzA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=FTSN6SodrgnKR5a7T271jVVjyyflejSFdUun+rX5mVYWi5NFY8ua3Uxb0Me7E1gATF
+         9Gapo8s9968EWh2FBG4UdL99/k3qdyIeEsspZf5/Kwpb3PBKNiri5QioTHlCnUIMRzZJ
+         R+caYL11zevH74EmLqjpcaQosJvSQ79hdtJMA=
+Received: by 10.231.73.131 with SMTP id q3mr3652213ibj.6.1258297042093; Sun, 
+	15 Nov 2009 06:57:22 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132944>
 
-El Sat, 14 Nov 2009 20:26:00 +0100, Simon Strandgaard escribi=C3=B3:
+Hi,
 
-> My bare repository is on an OpenBSD machine. I was unaware of the
-> importance of git gc until today after investigating a problem with "=
-git
-> pull". So there hasn't been run git gc on the repository ever.
->=20
-> The biggest file in the repository is a 45 mb file. The repository si=
-ze
-> is near 2 gb.
->=20
-> What can I do?
+I'm trying to format patches ignoring changes in the submodules, and
+so far everything I've tried is failing, which I think points to
+multiple bugs. I'm using 1.6.5.2.
 
-run =C2=AB git repack -adf --window=3Dmemory =C2=BB on the repo where m=
-emory is
-escaled apropiately for your machine ?
+First I tried:
+% git format-patch --ignore-submodules
 
-See =C2=AB git help repack =C2=BB
+That ignores the submodules, all right, but still generates an empty
+patch, just like 'git log' shows no diff.
 
-Regards;
+Then I tried:
+% git log <committish> -- $(git ls-files -x <submodule>)
+
+But the submodule is still listed:
+% git ls-files --exclude=common | grep ^common
+common
+
+These are bugs, right? Is there some other recommendation?
+
+-- 
+Felipe Contreras
