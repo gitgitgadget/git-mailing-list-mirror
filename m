@@ -1,75 +1,97 @@
-From: "Todd A. Jacobs" <nospam@codegnome.org>
-Subject: PEBKAC or bug: unable to create path-like branch names
-Date: Sat, 14 Nov 2009 21:02:27 -0800
-Message-ID: <20091115050227.GD5934@penguin.codegnome.org>
-References: <20091115020605.GE15966@cl.cam.ac.uk>
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Re: PEBKAC or bug: unable to create path-like branch names
+Date: Sat, 14 Nov 2009 21:36:47 -0800
+Message-ID: <8c9a060911142136s68a08892ifa27989f3a5bfdfb@mail.gmail.com>
+References: <20091115020605.GE15966@cl.cam.ac.uk> <20091115050227.GD5934@penguin.codegnome.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 15 06:31:04 2009
+X-From: git-owner@vger.kernel.org Sun Nov 15 06:37:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9XhX-0001hk-F5
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 06:31:03 +0100
+	id 1N9Xnn-00035o-4n
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 06:37:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510AbZKOF03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Nov 2009 00:26:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751246AbZKOF03
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 00:26:29 -0500
-Received: from que11.charter.net ([209.225.8.21]:44287 "EHLO que11.charter.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751040AbZKOF02 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Nov 2009 00:26:28 -0500
-X-Greylist: delayed 1200 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Nov 2009 00:26:28 EST
-Received: from imp11 ([10.20.200.11]) by mta31.charter.net
-          (InterMail vM.7.09.02.04 201-2219-117-106-20090629) with ESMTP
-          id <20091115050233.GSID1847.mta31.charter.net@imp11>
-          for <git@vger.kernel.org>; Sun, 15 Nov 2009 00:02:33 -0500
-Received: from penguin.codegnome.org ([71.83.124.90])
-	by imp11 with smtp.charter.net
-	id 5H2W1d00k1x8DgP05H2Xzt; Sun, 15 Nov 2009 00:02:33 -0500
-X-Authority-Analysis: v=1.0 c=1 a=Fqhl-99eDMQA:10 a=XAp8FidPmn3MsDcnCpoA:9
- a=7Plf3_CqZ4y6zw8U5lYA:7 a=IbcJrlwZQ-VjB1f33FSWqmD-rKMA:4
-Received: by penguin.codegnome.org (Postfix, from userid 1000)
-	id E076237CBC; Sat, 14 Nov 2009 21:02:28 -0800 (PST)
-Received: by penguin.codegnome.org (tmda-sendmail, from uid 1000);
-	Sat, 14 Nov 2009 21:02:28 -0800
-Content-Disposition: inline
-In-Reply-To: <20091115020605.GE15966@cl.cam.ac.uk>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Delivery-Agent: TMDA/1.1.12 (Macallan)
-Mail-Followup-To: git@vger.kernel.org
+	id S1751628AbZKOFhD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Nov 2009 00:37:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751547AbZKOFhC
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 00:37:02 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:58823 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751376AbZKOFhB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Nov 2009 00:37:01 -0500
+Received: by pwi3 with SMTP id 3so2708478pwi.21
+        for <git@vger.kernel.org>; Sat, 14 Nov 2009 21:37:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        bh=qLQwp76biXDn5+JPWn3rwY3yvR4hr4wUrEvZ0L787wQ=;
+        b=dz9aLSfJYFUdcrvSnzOzTzZMEYP+Tsoyj+KcLA1F/5zKX/NhkzKQ9sSzA9XFN7VkKW
+         W0AxIxEDKJQ7P03wq79xiLySRZV7IpqIKleHqvEtEkgP5WYJHbGDGJ9APl/lkRG8deZZ
+         OzQkkEN+59O6oMsXVSyjg5xT7VVMcicJx97tM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        b=hPdmE+AjspP6JHbMGoo6ln7MIqPKEFC7IoADrZnAK7Mrh77oJI1vGLxW6xAyS85BVj
+         72Yv8aLKidAIOp0zunFz3To+EPAEDVW/gwkT/e3ZNdt7s0DTxEd4jlk1Ncp+Pr2KlIFr
+         7bcIQBZEMfpixamBcCPAJeDHpNjeMMLKMl+Lg=
+Received: by 10.140.143.19 with SMTP id q19mr356719rvd.17.1258263427074; Sat, 
+	14 Nov 2009 21:37:07 -0800 (PST)
+In-Reply-To: <20091115050227.GD5934@penguin.codegnome.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132910>
 
-I want to create a nested feature branch, but git keeps complaining if I
-nest more than one level deep:
+On Sat, Nov 14, 2009 at 21:02, Todd A. Jacobs <nospam@codegnome.org> wr=
+ote:
+> I want to create a nested feature branch, but git keeps complaining i=
+f I
+> nest more than one level deep:
+>
+> =C2=A0 =C2=A0$ git checkout -b dev/feature/foo
+> =C2=A0 =C2=A0error: unable to resolve reference refs/heads/dev/featur=
+e/foo:
+> =C2=A0 =C2=A0Not a directory
+> =C2=A0 =C2=A0fatal: Failed to lock ref for update: Not a directory
+>
+> Based on my reading of the manual pages, it seems like I should be ab=
+le
+> to nest branch names as long as it conforms to certain rules. I read
+> git-branch(1), which points me to git-check-ref-format(1), which seem=
+s
+> to say that the rules are being followed.
+>
+> On the other hand, running:
+>
+> =C2=A0 =C2=A0$ git check-ref-format foo; echo $?
+>
+> always results in a non-zero error code, even with a literal 'foo' as=
+ a
+> branch name, so clearly it isn't saying what I think it's saying.
+> *shrug*
+>
+> Can someone provide a little clarity here?
+>
+> --
+> "Oh, look: rocks!"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0-- Doctor Who, "Destiny of the Daleks"
+>
 
-    $ git checkout -b dev/feature/foo
-    error: unable to resolve reference refs/heads/dev/feature/foo:
-    Not a directory
-    fatal: Failed to lock ref for update: Not a directory
+What version of git are you using?  git checkout -b foo/bar/baz works
+for me on 1.6.5.2.  As far as git check-ref-format, it works (returns
+0) if I do 'refs/heads/foo', but returns 1 on 'foo'.  This makes
+sense, given rule 2 from the manpage: They must contain at least one
+/. This enforces the presence of a category like heads/, tags/ etc.
+but the actual names are not restricted.
 
-Based on my reading of the manual pages, it seems like I should be able
-to nest branch names as long as it conforms to certain rules. I read
-git-branch(1), which points me to git-check-ref-format(1), which seems
-to say that the rules are being followed.
+Hope this helps.
 
-On the other hand, running:
-
-    $ git check-ref-format foo; echo $?
-
-always results in a non-zero error code, even with a literal 'foo' as a
-branch name, so clearly it isn't saying what I think it's saying.
-*shrug*
-
-Can someone provide a little clarity here?
-
--- 
-"Oh, look: rocks!"
-	-- Doctor Who, "Destiny of the Daleks"
+-Jacob
