@@ -1,70 +1,118 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Bugs ignoring submodules?
-Date: Sun, 15 Nov 2009 16:57:22 +0200
-Message-ID: <94a0d4530911150657y6692a531hed99230c0d9dc315@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCHv3] Add branch management for releases to gitworkflows
+Date: Sun, 15 Nov 2009 18:07:13 +0100
+Message-ID: <200911151807.15726.trast@student.ethz.ch>
+References: <1258055164-11876-1-git-send-email-rocketraman@fastmail.fm> <1258055164-11876-2-git-send-email-rocketraman@fastmail.fm> <20091114071946.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 15 15:57:32 2009
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, <gitster@pobox.com>
+To: Nanako Shiraishi <nanako3@lavabit.com>, <rocketraman@fastmail.fm>
+X-From: git-owner@vger.kernel.org Sun Nov 15 18:08:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9gXj-0003NK-SS
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 15:57:32 +0100
+	id 1N9iaS-0007Eg-WD
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 18:08:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752146AbZKOO5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Nov 2009 09:57:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751771AbZKOO5R
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 09:57:17 -0500
-Received: from mail-iw0-f178.google.com ([209.85.223.178]:57268 "EHLO
-	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751752AbZKOO5Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Nov 2009 09:57:16 -0500
-Received: by iwn8 with SMTP id 8so3682417iwn.33
-        for <git@vger.kernel.org>; Sun, 15 Nov 2009 06:57:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=fi3SkZMlGUkykF0RA/8bbCZlmf6DF7fRRg/tryElth8=;
-        b=ICfl8nKE4mDsZWAh/sBVYSDW9Mmb4lmibmda2y8tTM2sCjH5ViniHVKgkjjdxrlKBa
-         yVQQZiP6D7V0twU5REfxfXVl1/gSFH5U+sq0h8YGHgP8YWFgFxTB0A444ItuJ7H3X4Qg
-         EtWB1qsgPIoreQ1cEa5fpdstiN7BtO6eGcMzA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=FTSN6SodrgnKR5a7T271jVVjyyflejSFdUun+rX5mVYWi5NFY8ua3Uxb0Me7E1gATF
-         9Gapo8s9968EWh2FBG4UdL99/k3qdyIeEsspZf5/Kwpb3PBKNiri5QioTHlCnUIMRzZJ
-         R+caYL11zevH74EmLqjpcaQosJvSQ79hdtJMA=
-Received: by 10.231.73.131 with SMTP id q3mr3652213ibj.6.1258297042093; Sun, 
-	15 Nov 2009 06:57:22 -0800 (PST)
+	id S1752524AbZKORIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Nov 2009 12:08:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752413AbZKORIQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 12:08:16 -0500
+Received: from gwse.ethz.ch ([129.132.178.238]:31033 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752307AbZKORIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Nov 2009 12:08:16 -0500
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Sun, 15 Nov
+ 2009 18:08:22 +0100
+Received: from thomas.localnet (129.132.210.10) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Sun, 15 Nov
+ 2009 18:07:58 +0100
+User-Agent: KMail/1.12.3 (Linux/2.6.27.37-0.1-default; KDE/4.3.3; x86_64; ; )
+In-Reply-To: <20091114071946.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132945>
 
-Hi,
+Nanako Shiraishi wrote:
+> Quoting rocketraman@fastmail.fm
+> > Add a basic introduction to the branch management undertaken during a
+> > git.git release
+[...]
+> Here are some corrections that can be applied on top of your change.
 
-I'm trying to format patches ignoring changes in the submodules, and
-so far everything I've tried is failing, which I think points to
-multiple bugs. I'm using 1.6.5.2.
+At the bottom there are some more corrections on top of your combined
+patches.  At this point I would prefer to squash everything into a
+single patch, but if you want to keep them separate I can come up with
+a commit message.
 
-First I tried:
-% git format-patch --ignore-submodules
+All but the last change are just intended to "sound nicer".  Since I'm
+not a native speaker either (I'm not sure any have commented in the
+threads so far), it would probably be nice to get some additional
+comments.
 
-That ignores the submodules, all right, but still generates an empty
-patch, just like 'git log' shows no diff.
+As for the last hunk, I felt it was misleading to state 'pu' uses the
+same process as 'next' immediately after mentioning the "next will be
+rewound shortly" messages that Junio sends out.  Such a message is
+never required for 'pu' because (as is already explained in the
+manpage) the "contract" is that the maintainer may rewind it anytime
+he likes.
 
-Then I tried:
-% git log <committish> -- $(git ls-files -x <submodule>)
+Apart from that, I'm not entirely happy with the way the "release" and
+"maint, after a feature release" sections are tangled yet.  There are
+several forward and backward references between them.  I see that you
+are trying to drive home the point that maint needs to be contained in
+master.  Can't we just deal with that in the "feature release"
+section?
 
-But the submodule is still listed:
-% git ls-files --exclude=common | grep ^common
-common
-
-These are bugs, right? Is there some other recommendation?
-
--- 
-Felipe Contreras
+-- 8< --
+diff --git i/Documentation/gitworkflows.txt w/Documentation/gitworkflows.txt
+index 2a9329f..490346c 100644
+--- i/Documentation/gitworkflows.txt
++++ w/Documentation/gitworkflows.txt
+@@ -225,8 +225,8 @@ should first make sure that condition holds.
+ git log master..maint
+ =====================================
+ 
+-There should be no commit listed from this command (otherwise, check
+-out 'master' and merge 'maint' into it).
++This command should not list any commits.  Otherwise, check out
++'master' and merge 'maint' into it.
+ 
+ Then you can tag the tip of
+ 'master' with a tag indicating the release version.
+@@ -241,15 +241,15 @@ Similarly, for a maintenance release, 'maint' is tracking the commits
+ to be released. Therefore, simply replace 'master' above with
+ 'maint'.
+ 
+-You need to push the new tag to a public git server,
+-at the same time you push the updated 'master' or 'maint',
+-if you are making a maintenance release. (see
+-"DISTRIBUTED WORKFLOWS" below). This push makes the tag available to
++You need to push the new tag to a public git server
++when you push the updated 'master' (or 'maint',
++if you are making a maintenance release).  See
++"DISTRIBUTED WORKFLOWS" below. This makes the tag available to
+ others tracking your project. The push could also trigger a
+ post-update hook to perform release-related items such as building
+ release tarballs and preformatted documentation pages.  You may want
+-to wait this push-out before you update your 'maint' branch (see the
+-next section).
++to defer the push until after you have updated your 'maint' branch
++(see the next section).
+ 
+ 
+ Maintenance branch management after a feature release
+@@ -319,8 +319,6 @@ so.
+ If you do this, then you should make a public announcement indicating
+ that 'next' was rewound and rebuilt.
+ 
+-The same process may be followed for 'pu'.
+-
+ 
+ DISTRIBUTED WORKFLOWS
+ ---------------------
