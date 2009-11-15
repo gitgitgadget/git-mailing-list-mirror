@@ -1,74 +1,75 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [PATCH] Update 'git remote' usage and man page to match.
-Date: Sat, 14 Nov 2009 23:34:00 -0500
-Message-ID: <32c343770911142034j6cf10e36jbd031c49119973c8@mail.gmail.com>
-References: <32c343770911121715l7507b2d5j8c6cf8cccd1f1a61@mail.gmail.com>
-	 <20091114071948.6117@nanako3.lavabit.com>
+From: "Todd A. Jacobs" <nospam@codegnome.org>
+Subject: PEBKAC or bug: unable to create path-like branch names
+Date: Sat, 14 Nov 2009 21:02:27 -0800
+Message-ID: <20091115050227.GD5934@penguin.codegnome.org>
+References: <20091115020605.GE15966@cl.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Sun Nov 15 05:34:19 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 15 06:31:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9Woc-0007JE-B5
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 05:34:18 +0100
+	id 1N9XhX-0001hk-F5
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 06:31:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751812AbZKOEd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Nov 2009 23:33:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751796AbZKOEd5
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Nov 2009 23:33:57 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:52693 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751787AbZKOEd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Nov 2009 23:33:57 -0500
-Received: by ey-out-2122.google.com with SMTP id 9so662702eyd.5
-        for <git@vger.kernel.org>; Sat, 14 Nov 2009 20:34:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=+GvyjF065OdIrhMJuZtErz1mg5mhhRPEtVaczDZnSPw=;
-        b=b0gK8y+g+Y4cQXBBDnBoQYxNbuBFmqhdPJV+GRQIEBCP6LznE0sgEYmEFVbIo8hRco
-         h6b+m3dW1u+NEeZNH2oTV4YWFvQB+oN17ooz7oEjArHtAtoQgiNrQsp1AIayZIrTaWGZ
-         SwOpNdiLXsGR3/lNuv+53VieZXElyBS4SFsjs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=ATvWU95DTEn5Wok7RmB6la3jt52/hMBC3B/tZUyhibGbANcV2nqfOyc8HGgEEdy8WO
-         GIpXd+jBogEtS8bwUy4QRe+yOc8Mj4BAXxeXs9x6Vs1cHGcUmq62mknweak4oRt8edNM
-         ZQ0KocsSprB9QpknmWRG4sgCCo3gvuUk9y4YI=
-Received: by 10.216.90.133 with SMTP id e5mr561608wef.23.1258259640967; Sat, 
-	14 Nov 2009 20:34:00 -0800 (PST)
-In-Reply-To: <20091114071948.6117@nanako3.lavabit.com>
+	id S1751510AbZKOF03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Nov 2009 00:26:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751246AbZKOF03
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 00:26:29 -0500
+Received: from que11.charter.net ([209.225.8.21]:44287 "EHLO que11.charter.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751040AbZKOF02 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Nov 2009 00:26:28 -0500
+X-Greylist: delayed 1200 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Nov 2009 00:26:28 EST
+Received: from imp11 ([10.20.200.11]) by mta31.charter.net
+          (InterMail vM.7.09.02.04 201-2219-117-106-20090629) with ESMTP
+          id <20091115050233.GSID1847.mta31.charter.net@imp11>
+          for <git@vger.kernel.org>; Sun, 15 Nov 2009 00:02:33 -0500
+Received: from penguin.codegnome.org ([71.83.124.90])
+	by imp11 with smtp.charter.net
+	id 5H2W1d00k1x8DgP05H2Xzt; Sun, 15 Nov 2009 00:02:33 -0500
+X-Authority-Analysis: v=1.0 c=1 a=Fqhl-99eDMQA:10 a=XAp8FidPmn3MsDcnCpoA:9
+ a=7Plf3_CqZ4y6zw8U5lYA:7 a=IbcJrlwZQ-VjB1f33FSWqmD-rKMA:4
+Received: by penguin.codegnome.org (Postfix, from userid 1000)
+	id E076237CBC; Sat, 14 Nov 2009 21:02:28 -0800 (PST)
+Received: by penguin.codegnome.org (tmda-sendmail, from uid 1000);
+	Sat, 14 Nov 2009 21:02:28 -0800
+Content-Disposition: inline
+In-Reply-To: <20091115020605.GE15966@cl.cam.ac.uk>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Delivery-Agent: TMDA/1.1.12 (Macallan)
+Mail-Followup-To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132909>
 
-On Fri, Nov 13, 2009 at 5:19 PM, Nanako Shiraishi <nanako3@lavabit.com> wrote:
->
-> The second change is good but why do you remove -v from the
-> synopsis section? Why is it a good idea? Manual pages for
-> many other commands list --verbose in their synopsis section.
->
+I want to create a nested feature branch, but git keeps complaining if I
+nest more than one level deep:
 
-After checking other git operations (fetch, pull, clone, commit, merge, etc)
-I found that none of these other commands document '-v' in the synopsis.
+    $ git checkout -b dev/feature/foo
+    error: unable to resolve reference refs/heads/dev/feature/foo:
+    Not a directory
+    fatal: Failed to lock ref for update: Not a directory
 
-With that in mind, I wondered why it had been listed for 'git remote'.  My best
-guess is that only some of the 'git remote' subcommands are affected by '-v'.
-However, to me it still seems better to only mention it as a general option.
-That way if subcommands add/remote support for '-v', the usage string
-and man page don't need to be updated.
+Based on my reading of the manual pages, it seems like I should be able
+to nest branch names as long as it conforms to certain rules. I read
+git-branch(1), which points me to git-check-ref-format(1), which seems
+to say that the rules are being followed.
 
-Please note that even with the change, '-v' is still printed as one of the
-general options in the usage string.  I simply removed it from the synopsis
-section.
+On the other hand, running:
 
-Thank for reviewing,
-Tim
+    $ git check-ref-format foo; echo $?
+
+always results in a non-zero error code, even with a literal 'foo' as a
+branch name, so clearly it isn't saying what I think it's saying.
+*shrug*
+
+Can someone provide a little clarity here?
+
+-- 
+"Oh, look: rocks!"
+	-- Doctor Who, "Destiny of the Daleks"
