@@ -1,83 +1,119 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-pull.sh --rebase: overhaul error handling when no
- candidates are found
-Date: Sun, 15 Nov 2009 01:08:26 -0800
-Message-ID: <7vy6m8qho5.fsf@alter.siamese.dyndns.org>
-References: <1257945756.26362.79.camel@heerbeest>
- <48B54636-1825-48B3-BECD-4150A55B013F@dbservice.com>
- <1257965806.26362.132.camel@heerbeest>
- <D6B0AE61-6CA3-4F79-BB50-B8795415BAB7@dbservice.com>
- <1257968052.26362.155.camel@heerbeest>
- <AC99BA30-A36D-4798-8E7D-9D69EFE99D55@dbservice.com>
- <1258035449.26362.273.camel@heerbeest> <20091112155310.7836c388@perceptron>
- <20091112150626.GA24848@coredump.intra.peff.net>
- <20091112170814.1858aba4@perceptron>
+Subject: Re: [PATCH] Update 'git remote' usage and man page to match.
+Date: Sun, 15 Nov 2009 01:08:42 -0800
+Message-ID: <7vr5s0qhnp.fsf@alter.siamese.dyndns.org>
+References: <32c343770911121715l7507b2d5j8c6cf8cccd1f1a61@mail.gmail.com>
+ <20091114071948.6117@nanako3.lavabit.com>
+ <32c343770911142034j6cf10e36jbd031c49119973c8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	Jan Nieuwenhuizen <janneke-list@xs4all.nl>,
-	Tomas Carnecky <tom@dbservice.com>,
-	git list <git@vger.kernel.org>
-To: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Sun Nov 15 10:08:48 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, gitster@pobox.com,
+	git@vger.kernel.org
+To: Tim Henigan <tim.henigan@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 15 10:09:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9b6G-0001fg-Ev
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 10:08:48 +0100
+	id 1N9b6T-0001k5-8O
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 10:09:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752407AbZKOJIg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Nov 2009 04:08:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752371AbZKOJIg
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 04:08:36 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55094 "EHLO
+	id S1752426AbZKOJIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Nov 2009 04:08:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752416AbZKOJIs
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 04:08:48 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47126 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752324AbZKOJIe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Nov 2009 04:08:34 -0500
+	with ESMTP id S1752412AbZKOJIr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Nov 2009 04:08:47 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0BDFF7F3E4;
-	Sun, 15 Nov 2009 04:08:40 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 08971991F2;
+	Sun, 15 Nov 2009 04:08:53 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=vdcxNhCivIv/5EWipdrp2MVOk
-	OY=; b=JxyQ97fZEYVEeckOKRQeekPyeQWWOO/XQ1CBY7O12E4G1cDj+2wGLvpof
-	GAs4PvwTLeZxMGBqszVMoUSVD+9BAubicRH43TdgIG7DjgyOFXcbG8TPfcsSNtNZ
-	gP4nebHqa32A6Haggu7Z3/eZytXStBcBRf2n99oKDqS7GpZ3Lk=
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=yxtXhXN2QG8l3z2hjUAyzJ0dUoM=; b=x6ra92h1Z7wVNaqToFlYAiV
+	hWUwEkRNhjWCzn6B8z6OVIGvdY18K4MAsEotdApfkOUjmeiGuEolBNvNy01wi+0s
+	ZerYWadSFfF1I22bUj45fXq4xBCNzNK9WjvfRz3Q5ktc58apcWHtVops23TwbRUo
+	yGbvly1RM0A95kEU+DGk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=buohbo5Nyuo/pbNPIRM
-	9G1/TtuwGTkPCqWYQuL4bSaptpTTM63KZTbOHHFEIt0ZMlcnQqLjlVj8HDKRWyRk
-	djO0Octb6ickWHq2Zp36NRMKAiekUDv/GaVE5UR2rIwwGTBZQmy9ux47+oT6peXE
-	8zUjkJeEtV86nKMgdh73FIW8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E4427F3E3;
-	Sun, 15 Nov 2009 04:08:34 -0500 (EST)
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=pB110aJ7VkXjrAXqkCuwqtRLQQ4YAimMeeV5rerAnr8DDMz5C
+	uP55bBk5BTx4+/hTiDSL9oZ+cR0kK8nVXjXTrygfTMVU1PO+w1BK72pSg1NOKmPu
+	ugZ73mMg/lnEg9CIK8U/cz+2z61Y5Qgqw0i6BZew9TcJHx6tnUSEEkAQnU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CCF51991F1;
+	Sun, 15 Nov 2009 04:08:49 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 235017F3E2; Sun, 15 Nov
- 2009 04:08:27 -0500 (EST)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4E8E6991EF; Sun, 15 Nov 2009
+ 04:08:44 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7390617C-D1C6-11DE-B8C6-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7CF6D2FA-D1C6-11DE-87C5-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132919>
 
-Jan Kr=C3=BCger <jk@jk.gs> writes:
+Tim Henigan <tim.henigan@gmail.com> writes:
 
-> So this still uses config file syntax, but the erroneous check for
-> using the "rebase" setting is gone. Instead, if --rebase is in effect=
-,
-> include "rebase =3D true" in the sample config snippet.
+> On Fri, Nov 13, 2009 at 5:19 PM, Nanako Shiraishi <nanako3@lavabit.com> wrote:
+>>
+>> The second change is good but why do you remove -v from the
+>> synopsis section? Why is it a good idea? Manual pages for
+>> many other commands list --verbose in their synopsis section.
+>>
+>
+> After checking other git operations (fetch, pull, clone, commit, merge, etc)
+> I found that none of these other commands document '-v' in the synopsis.
+>
+> With that in mind, I wondered why it had been listed for 'git remote'.  My best
+> guess is that only some of the 'git remote' subcommands are affected by '-v'.
+> However, to me it still seems better to only mention it as a general option.
+> That way if subcommands add/remote support for '-v', the usage string
+> and man page don't need to be updated.
+>
+> Please note that even with the change, '-v' is still printed as one of the
+> general options in the usage string.  I simply removed it from the synopsis
+> section.
 
-Will queue.
+You noticed a good issue to address.  That is, "git remote -h" output
+looks Ok but "git remote add -h" and friends show way suboptimal help.
+The current output looks like:
 
-I've been ill and didn't follow the discussion very closely, so perhaps
-there may still some minor disagreements in the details I didn't catch?
+    $ git remote add -h
+    usage: git remote [-v | --verbose]
+       or: git remote add [-t <branch>] [-m <master>] [-f] [--mirror] <name>
+       <url>
+       or: git remote rename <old> <new>
+       or: git remote rm <name>
+       or: git remote set-head <name> [-a | -d | <branch>]
+       or: git remote show [-n] <name>
+       or: git remote prune [-n | --dry-run] <name>
+       or: git remote [-v | --verbose] update [-p | --prune] [group]
 
-Just in case, I'll queue it on 'pu' for now.
+    add specific options
+        -f, --fetch           fetch the remote branches
+        -t, --track <branch>  branch(es) to track
+        -m, --master <branch>
+                              master branch
+        --mirror              no separate remotes
 
-Thanks.
+As the user already knows "add" is the subcommand she is interested in,
+this is insane.
+
+My preference is:
+
+ (1) to drop your change to the synopsis section ("git remote -v" is a
+     valid way to get more verbose information, isn't it?);
+
+ (2) to keep the current output of "git remote -h";
+
+ (3) to drop the general description section altogether from "git remote
+     add -h" output;
+
+I think this is related to a bigger issue of how we generally would want
+to show help in response to "-h", and also in the manual pages.
+
+  http://thread.gmane.org/gmane.comp.version-control.git/129399/focus=129424
+  http://thread.gmane.org/gmane.comp.version-control.git/129906/focus=130646
