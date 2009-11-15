@@ -1,129 +1,65 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: Re: Question about "git pull --rebase"
-Date: Sun, 15 Nov 2009 15:34:23 +0100
-Message-ID: <m2my2noo0g.fsf@gmail.com>
-References: <38b2ab8a0911141239w2bab7277o66350bc742d985dd@mail.gmail.com>
-	<4AFF3D4D.7000308@gmail.com>
+From: Alejandro Riveira <ariveira@gmail.com>
+Subject: Re: git gc - out of memory
+Date: Sun, 15 Nov 2009 14:44:29 +0000 (UTC)
+Message-ID: <hdp44d$4ml$1@ger.gmane.org>
+References: <df1390cc0911141126w1a0c5691p83885053a73f829@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johan 't Hart <johanthart@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 15 15:34:34 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 15 15:45:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9gBU-0002jY-So
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 15:34:33 +0100
+	id 1N9gMG-0007M6-Vq
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Nov 2009 15:45:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753124AbZKOOeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Nov 2009 09:34:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbZKOOeV
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 09:34:21 -0500
-Received: from mail-fx0-f221.google.com ([209.85.220.221]:63683 "EHLO
-	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752950AbZKOOeU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Nov 2009 09:34:20 -0500
-Received: by fxm21 with SMTP id 21so1893616fxm.21
-        for <git@vger.kernel.org>; Sun, 15 Nov 2009 06:34:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:references
-         :date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        bh=HkSt8qFxUwkmoptP0yhiLXXXCmiG2toqmHjZNyB9Dh0=;
-        b=fJe+SV3ur8ZvYCm7LbwpOCYwsyhh6+dV3ZKt+iHPLDaJrXE3wCEgYR0oyRltGupL3j
-         kbXIAQ2MRTSaYXg8mUsmDvc7jppxOwMLNwwGnFT3B9JOZV93BYdGJ6OwabkwU8l3vR8+
-         IHh/B4FkIMyDAMVmrT7ygQgjycAS/yik3+HLA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        b=UHJUrieAoAA+ORK5xMWuJs00O1hDf8T/DsC0Yi0VpRMM1vb++RkR08oFfcWZj6QxNQ
-         stXB2nSgeFwnGWOBQPkBRRr/4K1/V9P7NuJ/Gw8uXTIxyuLNJGMwRzyEia3QwJ2l7zt1
-         G3A9HyTfLf0OwIHOS6i91huyd/gXnWhKx66Jw=
-Received: by 10.216.88.15 with SMTP id z15mr2267330wee.113.1258295665912;
-        Sun, 15 Nov 2009 06:34:25 -0800 (PST)
-Received: from localhost (au213-1-82-235-205-153.fbx.proxad.net [82.235.205.153])
-        by mx.google.com with ESMTPS id 5sm2864436eyf.10.2009.11.15.06.34.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 15 Nov 2009 06:34:24 -0800 (PST)
-In-Reply-To: <4AFF3D4D.7000308@gmail.com> (Johan t. Hart's message of "Sun, 15
-	Nov 2009 00:29:17 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.50 (gnu/linux)
+	id S1753188AbZKOOou convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Nov 2009 09:44:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753183AbZKOOou
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 09:44:50 -0500
+Received: from lo.gmane.org ([80.91.229.12]:59030 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753154AbZKOOou (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Nov 2009 09:44:50 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1N9gLW-00074C-Hz
+	for git@vger.kernel.org; Sun, 15 Nov 2009 15:44:54 +0100
+Received: from 139.red-83-44-221.dynamicip.rima-tde.net ([83.44.221.139])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 15 Nov 2009 15:44:54 +0100
+Received: from ariveira by 139.red-83-44-221.dynamicip.rima-tde.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 15 Nov 2009 15:44:54 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 139.red-83-44-221.dynamicip.rima-tde.net
+User-Agent: Pan/0.132 (Waxed in Black)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132943>
 
-Johan 't Hart <johanthart@gmail.com> writes:
+El Sat, 14 Nov 2009 20:26:00 +0100, Simon Strandgaard escribi=C3=B3:
 
-> Francis Moreau schreef:
->> hello,
->>
->> Let's say I'm on a branch called 'foo'.
->>
->> I tried to rebase this branch by using 'git pull --rebase'.
->>
->> I first tried the following command:
->>
->>     $ git pull --rebase origin master:foo
->>     remote: Counting objects: 5, done.
->>     remote: Total 3 (delta 0), reused 0 (delta 0)
->>     Unpacking objects: 100% (3/3), done.
->>     From /dev/shm/git/A
->>     ! [rejected]        master     -> foo  (non fast forward)
->
-> When using a refspec, you usually mean to update a remote tracking
-> branch, like refs/remotes/origin/master. Internally the refspec
-> parameter is passed to git fetch, which fast-forwards your local
-> tracking branch to match the remote branch.
->
-> With this command, you make git clear you want to fast-forward your
-> branch refs/foo to match the remotes master branch, and then rebase
-> your current branch on that foo branch.
->
-> Foo probably is also your current branch. So what you probably want is
-> to fetch the remotes master branch and rebase your current branch foo
-> on it. You could do it this way:
->
->> Then I tried:
->>
->>     $ git pull --rebase origin master
->>
->> which worked.
->
-> This does not update any remote tracking branches, but it will rebase
-> your foo branch on the remote master branch (which is what you want)
-> It could also be done with:
->
-> git pull --rebase origin master:origin/master
->
-> This will also update your remote tracking branch
-> refs/remotes/origin/master to match the master branch on the remote
-> repo. Your foo branch will then be rebased onto it.
->
->>
->> Reading the man git-pull I would assume the 2 commands are equivalent
->> but obviously they're not.
->>
->> So the question is: why ?
->
-> So, thats why :) They're not the same. Many words... Hope you
-> understand... I hope I understood it well too..?
->
+> My bare repository is on an OpenBSD machine. I was unaware of the
+> importance of git gc until today after investigating a problem with "=
+git
+> pull". So there hasn't been run git gc on the repository ever.
+>=20
+> The biggest file in the repository is a 45 mb file. The repository si=
+ze
+> is near 2 gb.
+>=20
+> What can I do?
 
-Looks like you did :)
+run =C2=AB git repack -adf --window=3Dmemory =C2=BB on the repo where m=
+emory is
+escaled apropiately for your machine ?
 
-I've been somehow confused by the git-pull man page, which says:
+See =C2=AB git help repack =C2=BB
 
-  A parameter <ref> without a colon is equivalent to <ref>: when
-  pulling/fetching, so it merges <ref> into the current branch without
-  storing the remote branch anywhere locally
-
-So I thought that both of the commands were equivalent for 'git pull
---rebase'.
-
-Thanks for the explanation.
--- 
-Francis
+Regards;
