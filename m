@@ -1,71 +1,92 @@
-From: =?ISO-8859-15?Q?Lu=EDs_Sousa?= <llsousa@ualg.pt>
-Subject: Re: Idea for git-touch
-Date: Mon, 16 Nov 2009 10:57:43 +0000
-Message-ID: <4B013027.3040508@ualg.pt>
-References: <4AFC348B.4000202@ualg.pt>	<20091112180132.5819f963@perceptron>	<4AFC4051.5030607@ualg.pt> <20091112180841.001ae651@perceptron> <4AFC421D.1090509@ualg.pt> <4AFD26ED.4020602@op5.se>
+From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
+Subject: Re: git am and CRLF files
+Date: Mon, 16 Nov 2009 12:15:44 +0100
+Organization: ATLAS Elektronik GmbH
+Message-ID: <4B013460.2030406@atlas-elektronik.com>
+References: <4AFD2A8F.7000806@atlas-elektronik.com> <4B01004A.8060600@atlas-elektronik.com> <20091116195036.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Mon Nov 16 11:58:16 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Mon Nov 16 12:16:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9zHj-0004z8-Pm
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 11:58:16 +0100
+	id 1N9zZ8-0003or-Jk
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 12:16:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752583AbZKPK5v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Nov 2009 05:57:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752468AbZKPK5u
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 05:57:50 -0500
-Received: from smtp3.ualg.pt ([193.136.224.6]:44519 "EHLO smtp3.ualg.pt"
+	id S1751802AbZKPLQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 06:16:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751699AbZKPLQA
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 06:16:00 -0500
+Received: from lxsrv96.atlas.de ([194.156.172.86]:49078 "EHLO mail96.atlas.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751839AbZKPK5u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 05:57:50 -0500
-Received: from localhost (smtp3.ualg.pt [127.0.0.1])
-	by smtp3.ualg.pt (Postfix) with ESMTP id D985E1679F;
-	Mon, 16 Nov 2009 10:57:51 +0000 (WET)
-Received: from smtp3.ualg.pt ([127.0.0.1])
- by localhost (host.domain.tld [127.0.0.1]) (amavisd-maia, port 10024)
- with ESMTP id 25640-03; Mon, 16 Nov 2009 10:57:50 +0000 (WET)
-Received: from [193.136.224.174] (unknown [193.136.224.174])
-	by smtp3.ualg.pt (Postfix) with ESMTP id 2C7E716790;
-	Mon, 16 Nov 2009 10:57:49 +0000 (WET)
-User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
-In-Reply-To: <4AFD26ED.4020602@op5.se>
-X-Virus-Scanned: Maia Mailguard 1.0.2a
+	id S1751645AbZKPLQA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 06:16:00 -0500
+Received: from VSSRV01.atlas.de (vssrv01.atlas.de [10.200.101.18])
+	by mail96.atlas.de (Postfix) with ESMTP id 57994138A2
+	for <git@vger.kernel.org>; Mon, 16 Nov 2009 12:16:02 +0100 (CET)
+X-AuditID: 0ac86512-000000d4000005bc-5c-4b013472176d
+Received: from mgsrv01.atlas.de ([10.200.101.16]) by VSSRV01.atlas.de with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 16 Nov 2009 12:16:02 +0100
+Received: from mgsrv01.atlas.de (localhost [127.0.0.1])
+	by mail01-int.atlas.de (Postfix) with ESMTP id 2697127174;
+	Mon, 16 Nov 2009 12:16:02 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mgsrv01.atlas.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.8 required=5.0 tests=ALL_TRUSTED,BAYES_50
+	autolearn=disabled version=3.2.5
+Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
+	by mail01.atlas.de (Postfix) with ESMTP id 1986527172;
+	Mon, 16 Nov 2009 12:16:02 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
+In-Reply-To: <20091116195036.6117@nanako3.lavabit.com>
+X-Enigmail-Version: 0.96.0
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133001>
 
-Andreas Ericsson wrote:
-> On 11/12/2009 06:13 PM, Lu=EDs Sousa wrote:
->> Yeah, but still need some copy&paste of message :)
->>
->> Jan Kr=FCger wrote:
->>> On Thu, 12 Nov 2009 17:05:21 +0000, Lu=EDs Sousa <llsousa@ualg.pt> =
-wrote:
->>>> But still preserves the original date, isn't it?
+On 11/16/2009 11:50 AM, Nanako Shiraishi wrote:
+> Quoting Stefan Naewe <stefan.naewe@atlas-elektronik.com>
+> 
+>>> A repository with some UNIX (LF) and some Windows (CRLF) files.
+>>> (and no: I will not change the files. My editors handle CRLF and LF correctly)
 >>>
->>> Yes, and I just remembered that, too. Sorry. Today is not my day.
+>>> My problem:
 >>>
->>> Even so, you can still save one command:
->>>
->>> git reset --soft HEAD^
->>> git commit
->>>
->
+>>> 'git am' can't handle changes in CRLF files because the patch
+>>> gets converted (by git mailsplit) to contain only LF.
+>>> Stefan
+>> Does anyone have any comment on this ?
+> 
+> This was done very much on purpose.
+> 
+> The "am" command is meant to handle e-mailed patches, and traditionally
+> mails are known to clobber carriage returns.
+> 
+> See commit c2ca1d79dbd54b06a05e5d14a897699e59dc9f9f
+> 
+>     Allow mailsplit (and hence git-am) to handle mails with CRLF line-endings
+>     
+>     It is not that uncommon to have mails with DOS line-ending, notably
+>     Thunderbird and web mailers like Gmail (when saving what they call
+>     "original" message).  So modify mailsplit to convert CRLF line-endings to
+>     just LF.
+> 
 
-Thanks, but still preserves timestamp.
+I've noticed that.
+But converting everything just breaks git am for CRLF files, doesn't it ?
+Wouldn't it be possible (and sensible) to not convert the diff text, but
+only the rest (mail text, headers, etc.) ?
 
-> Make that
->
->    git reset --soft HEAD^ && git commit -C ORIG_HEAD
->
-> and you won't have to bother with copy-pasting.
->
+Regards,
+
+Stefan
+-- 
+----------------------------------------------------------------
+/dev/random says: Change is inevitable, except from a vending machine.
