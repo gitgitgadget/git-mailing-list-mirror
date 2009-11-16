@@ -1,103 +1,73 @@
-From: Liu Yubao <yubao.liu@gmail.com>
-Subject: Re: how to make gitk to use specified history information
-Date: Mon, 16 Nov 2009 16:38:41 +0800
-Message-ID: <4B010F91.5010208@gmail.com>
-References: <4B01049A.5090402@gmail.com> <loom.20091116T090441-576@post.gmane.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] Document git-svn's first-parent rule
+Date: Mon, 16 Nov 2009 11:15:17 +0100
+Message-ID: <ea845c8757a629d692bb6cd3827887f0e811c044.1258366486.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 16 09:37:41 2009
+Content-Type: text/plain
+Cc: Eric Wong <normalperson@yhbt.net>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 16 11:16:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9x5g-0004x6-Jq
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 09:37:40 +0100
+	id 1N9ydF-0002SX-PJ
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 11:16:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751825AbZKPIhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 03:37:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbZKPIhJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 03:37:09 -0500
-Received: from mail-yw0-f202.google.com ([209.85.211.202]:59965 "EHLO
-	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750856AbZKPIhI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 03:37:08 -0500
-Received: by ywh40 with SMTP id 40so2886061ywh.33
-        for <git@vger.kernel.org>; Mon, 16 Nov 2009 00:37:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=glls3+XIlu6bzbzccDQ7Ehfr3LEP2eS2B6ixmZHPWm4=;
-        b=CDKHyaUiAACgjYdtZTb+LrPBGV5YlKx2sN8vBPDGW+O0sNC5jmVQBlmIBBOIsN9xc3
-         PKNzWptS8tqUZfwCOZEXKoKb9YUM9yh3hmpRo8jHsTffzmzL55W6qCe1VOswV7PX2jWE
-         mHBTSWju2vaasMJYAjAEWzMQUy0yWKoQndd/c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=kbCfec+cYAGLj/olbj91FHd1wyRy9c5zpb21rvnvxcMez1vMV3y2l6d938UkWHJ3ai
-         dGq3Bw6zKIK+R5lXM6wRlWGO4OiEahiDD9ANeW2zHqIVjF3qjIysPBIGOPflzTRWCWav
-         gaJfv6723mdjj1HoXzKqrDQxZBe5T96/vuDVM=
-Received: by 10.150.19.5 with SMTP id 5mr4204945ybs.103.1258360632276;
-        Mon, 16 Nov 2009 00:37:12 -0800 (PST)
-Received: from ?10.64.1.88? ([211.157.41.194])
-        by mx.google.com with ESMTPS id 22sm39496ywh.0.2009.11.16.00.37.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 16 Nov 2009 00:37:11 -0800 (PST)
-User-Agent: Mozilla-Thunderbird 2.0.0.22 (X11/20091109)
-In-Reply-To: <loom.20091116T090441-576@post.gmane.org>
+	id S1752136AbZKPKQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 05:16:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751901AbZKPKQM
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 05:16:12 -0500
+Received: from gwse.ethz.ch ([129.132.178.237]:19387 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751911AbZKPKQM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 05:16:12 -0500
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Mon, 16 Nov
+ 2009 11:16:16 +0100
+Received: from localhost.localdomain (129.132.210.143) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Mon, 16 Nov
+ 2009 11:16:02 +0100
+X-Mailer: git-send-email 1.6.5.2.427.ge73cb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132994>
 
-Eric Raible wrote:
-> Liu Yubao <yubao.liu <at> gmail.com> writes:
-> 
->> I want to obtain an outline of history information, for example:
->>
->>   a - b - c - d - h -i -j
->>    \         /
->>     e- f - g
->>
->> I simplify the graph like this:
->>
->>   a - c - d - j
->>     \    /
->>       g
-> 
-> "gitk --simplify-by-decoration"?
-> 
-> - Eric
-> 
-Thanks, but that gets "a - g - j" which isn't what I want.
-(g and j are heads of two branches).
+git-svn has the following rule to detect the SVN base for its
+operations: find the first git-svn-id line reachable through
+first-parent ancestry.  IOW,
 
-The command sequence to produce that full revision graph:
+  git log --grep=^git-svn-id: --first-parent -1
 
-#!/bin/bash
-d=/tmp/t$$
-rm -rf $d && mkdir $d && cd $d || exit 1
+Document this, as it is very important when using merges with git-svn.
 
-doit () {
-  for s in $@; do
-    echo $s >> a.txt 
-    git add a.txt
-    git commit -q -m $s
-  done
-}
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ Documentation/git-svn.txt |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
 
-git init
-doit a b c
-git checkout -b t HEAD~2
-doit e f g
-git checkout master
-git merge t
-doit d h i j
-
-gitk &
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 1812890..6da4151 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -735,6 +735,16 @@ merges you've made.  Furthermore, if you merge or pull from a git branch
+ that is a mirror of an SVN branch, 'dcommit' may commit to the wrong
+ branch.
+ 
++If you do merge, note the following rule: 'git svn dcommit' will
++attempt to commit on top of the SVN commit named in
++------------------------------------------------------------------------
++git log --grep=^git-svn-id: --first-parent -1
++------------------------------------------------------------------------
++You 'must' therefore ensure that the most recent commit of the branch
++you want to dcommit to is the 'first' parent of the merge.  Chaos will
++ensue otherwise, especially if the first parent is an older commit on
++the same SVN branch.
++
+ 'git clone' does not clone branches under the refs/remotes/ hierarchy or
+ any 'git svn' metadata, or config.  So repositories created and managed with
+ using 'git svn' should use 'rsync' for cloning, if cloning is to be done
+-- 
+1.6.5.2.427.ge73cb
