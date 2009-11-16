@@ -1,79 +1,85 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Git graph with branch labels for all paths in text environment
-Date: Mon, 16 Nov 2009 16:27:46 +0100
-Message-ID: <4B016F72.7000001@drmicha.warpmail.net>
-References: <1258373038892-4011651.post@n2.nabble.com>	<adf1fd3d0911160423q4e21126dm37be7838f0ce8379@mail.gmail.com> <19201.21478.127959.431877@lisa.zopyra.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/2] diffcore-break optimizations
+Date: Mon, 16 Nov 2009 10:53:32 -0500
+Message-ID: <20091116155331.GA30719@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>,
-	rhlee <richard@webdezign.co.uk>, git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Mon Nov 16 16:29:10 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 16 16:54:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NA3Vg-0007G9-PG
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 16:28:57 +0100
+	id 1NA3tp-00053P-LG
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 16:53:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752883AbZKPP2k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Nov 2009 10:28:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752865AbZKPP2j
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 10:28:39 -0500
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:42350 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752845AbZKPP2j (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Nov 2009 10:28:39 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id D525EC0B73;
-	Mon, 16 Nov 2009 10:28:44 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 16 Nov 2009 10:28:44 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=s09gQujasgvLETrq87GWz+hsFdg=; b=XrmZ217y1NQ0mkeDMqwVFvnBw5InYjKIzsCm3EZpn8WXFXTBRTsxlTDfuT+yMJ7Owjf1/gz2zsdrT1sAlZ3493SrBAz+nmUiksc2q0ahm3L5P5hQGvNwLdQy01PBy0yWXxPYbTk145R+e/ccSgKbKzjixaRqsOObi/xY6w14hLs=
-X-Sasl-enc: v8kAmb2oUOr7EvSVVooaN7XaSaaZAuooK5SJcA6iB3C7 1258385324
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 024AD9C56;
-	Mon, 16 Nov 2009 10:28:43 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091116 Lightning/1.0pre Shredder/3.0.1pre
-In-Reply-To: <19201.21478.127959.431877@lisa.zopyra.com>
+	id S1753293AbZKPPxb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 10:53:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753274AbZKPPxa
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 10:53:30 -0500
+Received: from peff.net ([208.65.91.99]:54013 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753240AbZKPPxa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 10:53:30 -0500
+Received: (qmail 16939 invoked by uid 107); 16 Nov 2009 15:57:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 16 Nov 2009 10:57:21 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Nov 2009 10:53:32 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133011>
 
-Bill Lear venit, vidit, dixit 16.11.2009 14:30:
-> On Monday, November 16, 2009 at 13:23:10 (+0100) Santi B=E9jar writes=
-:
->> On Mon, Nov 16, 2009 at 1:03 PM, rhlee <richard@webdezign.co.uk> wro=
-te:
->>> Is there anyway to to view a text based git grah that shows all pat=
-hs with
->>> the branch labels? Like a on gitk but ncurses based?
->>
->> For third-party tools you can check:
->>
->> http://git-scm.com/tools
->=20
-> Anything that can print this?:
->=20
->                                        H---I---J topicB
->                                       /
->                              E---F---G  topicA
->                             /
->                A---B---C---D  master
->=20
-> I've always liked the text-based format that keeps things in-line, as
-> above.  Very readable.  I thought someone on this list posted
-> something about a tool that could produce such graphs from
-> reasonably-sized git repos.  Anyone have such a thing?
+On one of my more ridiculously gigantic repositories, I recently tried
+to make a commit that ran git out of memory while trying to commit. The
+repository has about 3 gigabytes of data, and I made a small-ish change
+to every file. Pathological, yes, but I think we can do better than
+chugging for 5 minutes and dying.
 
-You really mean horizontally? I know those wide screen monitors are
-becoming ubiquitious, but still...
+The culprit turned out to be memory usage in diffcore-break, which is on
+by default for "git status" (and for the "git commit" template message).
+It wants to have every changed blob in memory at once, which is just
+silly.
 
-Or are you more after the "in-line" part in the sense that "each branch
-is on its line"? This is a bit difficult to define, though (the graph
-above is linear, e.g.).
+The patches are:
 
-Michael
+  [1/2]: diffcore-break: free filespec data as we go
+
+  This addresses the memory consumption issue. If you have enough
+  memory, it doesn't actually yield a speed improvement, but nor does it
+  show any slowdown for practical workloads.
+
+  There is a theoretical slowdown when doing -B -M, because the rename
+  phase has to re-fetch the blobs from the object store. However, I
+  wasn't able to measure any slowdown for real-world cases (like "git
+  log --summary -M -B >/dev/null" on git.git).
+
+  I did manage to produce the slowdown on a pathological case: ten
+  20-megabyte files, each copied with a slight modification to another
+  file, and then replaced with totally different contents (so each one
+  will be broken and then trigger an inexact rename). That diff went
+  from 16s to 17s.
+
+  But I improved that and more with the next optimization.
+
+  [2/2]: diffcore-break: save cnt_data for other phases
+
+  We already do this in rename detection, and since they use the same
+  data format, there is little reason not to do so. My pathological case
+  above went from 17s down to 12s. I wasn't able to detect any speedup
+  or slowdown for sane cases.
+
+  So I doubt anybody will even notice this, but I think since we can
+  address pathological cases, we might as well (and as you will see, the
+  code change is quite small).
+
+All of that being said, I was able to do my commit, but I still had to
+wait five minutes for it to chug through 3G of data. :) I am tempted to
+add a "quick" mode to git-commit, but perhaps such a ridiculous case is
+rare enough not to worry about. I worked around it by writing my commit
+message separately and using "git commit -F".
+
+-Peff
