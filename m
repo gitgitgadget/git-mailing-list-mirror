@@ -1,219 +1,341 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] gitk: Use git-difftool for external diffs
-Date: Sun, 15 Nov 2009 19:12:06 -0800
-Message-ID: <1258341126-2108-1-git-send-email-davvid@gmail.com>
-Cc: peff@peff.net, sam@vilain.net, git@vger.kernel.org,
-	David Aguilar <davvid@gmail.com>
-To: paulus@samba.org
-X-From: git-owner@vger.kernel.org Mon Nov 16 04:12:32 2009
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Preserving empty directories when doing a git-svn clone/rebase
+Date: Sun, 15 Nov 2009 19:32:16 -0800
+Message-ID: <20091116033216.GA16092@dcvr.yhbt.net>
+References: <20091115020605.GE15966@cl.cam.ac.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Steven J. Murdoch" <git+Steven.Murdoch@cl.cam.ac.uk>
+X-From: git-owner@vger.kernel.org Mon Nov 16 04:33:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9s10-0001Ul-MX
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 04:12:31 +0100
+	id 1N9sL5-0006ug-Op
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 04:33:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752468AbZKPDMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Nov 2009 22:12:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752191AbZKPDMU
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 22:12:20 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:38769 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752431AbZKPDMR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Nov 2009 22:12:17 -0500
-Received: by yxe17 with SMTP id 17so4389292yxe.33
-        for <git@vger.kernel.org>; Sun, 15 Nov 2009 19:12:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=T59Z+FLiLC3Qi/2eDjBsrez+G+AamyVJOnXH0h+ikic=;
-        b=Zrzn0w37z3xguYseRVDHHzgJ0ti/mykz2NXkx3st9zzUOM5q2OhMCRP6j53yLOWwQX
-         iavesjEVsax4myCz9KP7IWSculbSx6s5pxFcH/8A0QiKA/eJne0lUl0isOcVcbIxHCQX
-         cEhDJ4OAi0M9urzCgpMMnnGBgkbqBta1IP4pk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=s2tr08jaGurQDgPUlIWT+wnf1KwRl889bksB81v5TywVXfv5Tt7Q+apT80tvqd4HjZ
-         5PIbMWKRJD1/UwgQ/ccuIKgVnf8YMSw6LSDtUDYGFM1DQm9YXlaoyPFBIw0kNtLfMYLT
-         KM48hjOGJ6t6/RB1UMwkMCeWUD5gGU4Yh6eRc=
-Received: by 10.90.37.36 with SMTP id k36mr1159536agk.111.1258341142303;
-        Sun, 15 Nov 2009 19:12:22 -0800 (PST)
-Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 9sm1237774yxf.23.2009.11.15.19.12.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 15 Nov 2009 19:12:21 -0800 (PST)
-X-Mailer: git-send-email 1.6.5.2.180.gc5b3e
+	id S1751613AbZKPDcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Nov 2009 22:32:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751246AbZKPDcN
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Nov 2009 22:32:13 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:34136 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751161AbZKPDcL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Nov 2009 22:32:11 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 022981F679;
+	Mon, 16 Nov 2009 03:32:16 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20091115020605.GE15966@cl.cam.ac.uk>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132984>
 
-This teaches gitk about git-difftool.  A benefit of this change is
-that gitk's external diff now works with read-only repositories.
+"Steven J. Murdoch" <git+Steven.Murdoch@cl.cam.ac.uk> wrote:
+> When git-svn clones a Subversion repository, any empty directories
+> appear to be silently dropped (tested using git version 1.6.5.2 on Mac
+> OS X Snow Leopard). This causes problems for using git with software
+> projects which depend on Subversion's ability to track empty
+> directories. I was recently caught out by this, and it was difficult
+> to debug what had gone wrong.
+> 
+> Would it be possible to change git-svn to handle this case? Since git
+> doesn't have the ability to track empty directories, probably the
+> simplest thing to do would be to automatically add a file (e.g.
+> .gitignore) to any empty directories. In theory this could cause
+> problems, but I would think the chances of this are far lower than
+> with the current behaviour.
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
+Hi Steven,
+
+The problem is that some git-svn using folks have started using
+.gitignore to create empty directories on their own.  Dealing with
+conflicts like this is very problematic because we have to know
+if the .gitignore file is supposed to be committed up to SVN or
+not (it can be quite expensive to check).
+
+Attempting to deal with mismatching the information stored in the git
+index and SVN nearly made my head explode when I tried to implement
+svn:externals support via git submodules.  Fortunately I stopped in
+time, but the mental scars still remain.
+
+> I think this feature would help projects in which some contributors
+> are transitioning to git. It would especially be useful to novice
+> users of git, who are not aware of the potential problems with having
+> empty directories.
+> 
+> I see there was a discussion in 2006:
+>  http://kerneltrap.org/mailarchive/git/2006/11/29/231586
+> 
+> However, since then I haven't seen any updates. The rationale behind
+> the original request still seems applicable today:
+> 
+>  "I think there are many potential git users out there who are
+>  currently svn users.  And git-svn is a really nice way to get started,
+>  but this sort of stumbling block could really turn people off.  For
+>  example, it made me look pretty dumb when I carelessly complained to
+>  my colleague about his code not working and then it turns out to be
+>  because my super-advanced scm tool "messed things up"."
+>   (git-svn and empty directories in svn (was: [PATCH 1.2/2 (fixed)]
+>    git-svn: fix output reporting from the delta fetcher))
+
+Shortly afterwards, git svn started logging unhandled information into
+unhandled.log files.  I hoped that somebody would write a parser for
+those log files to be able to recreate useful information from them.
+Since I'm lazy, forgetful and absent-minded, I never got around to it
+until now.
+
+Let me know how it works and if the "git svn mkdirs" command name makes
+sense.  Thanks for reminding me :)
+
+>From 023675791988373beab921ad3ada115b2c224edf Mon Sep 17 00:00:00 2001
+From: Eric Wong <normalperson@yhbt.net>
+Date: Sun, 15 Nov 2009 18:57:16 -0800
+Subject: [PATCH] git svn: attempt to create empty dirs on clone+rebase
+
+Attempt to parse unhandled.log files for empty_dir statements
+and make a best effort attempt to recreate empty directories
+on fresh clones and rebase.
+
+This cannot affect "normal" git commands like "checkout" or
+"reset", so users switching between branches in a single working
+directory should use the new "git svn mkdirs" command after
+switching branches.
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
+ Documentation/git-svn.txt                |    7 +++
+ git-svn.perl                             |   45 ++++++++++++++++
+ t/t9115-git-svn-dcommit-funky-renames.sh |    4 +-
+ t/t9146-git-svn-empty-dirs.sh            |   85 ++++++++++++++++++++++++++++++
+ 4 files changed, 139 insertions(+), 2 deletions(-)
+ create mode 100755 t/t9146-git-svn-empty-dirs.sh
 
-The diffstat alone makes me happy.
-
- gitk |   83 ++++--------------------------------------------------------------
- 1 files changed, 5 insertions(+), 78 deletions(-)
-
-diff --git a/gitk b/gitk
-index db5ec54..881ef95 100755
---- a/gitk
-+++ b/gitk
-@@ -2520,7 +2520,7 @@ proc savestuff {w} {
-     global viewname viewfiles viewargs viewargscmd viewperm nextviewnum
-     global cmitmode wrapcomment datetimeformat limitdiffs
-     global colors uicolor bgcolor fgcolor diffcolors diffcontext selectbgcolor
--    global autoselect extdifftool perfile_attrs markbgcolor
-+    global autoselect perfile_attrs markbgcolor
-     global hideremotes
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 1812890..db00ed4 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -320,6 +320,13 @@ Any other arguments are passed directly to 'git log'
+ 	directories.  The output is suitable for appending to
+ 	the $GIT_DIR/info/exclude file.
  
-     if {$stuffsaved} return
-@@ -2554,7 +2554,6 @@ proc savestuff {w} {
- 	puts $f [list set markbgcolor $markbgcolor]
- 	puts $f [list set diffcontext $diffcontext]
- 	puts $f [list set selectbgcolor $selectbgcolor]
--	puts $f [list set extdifftool $extdifftool]
- 	puts $f [list set perfile_attrs $perfile_attrs]
- 
- 	puts $f "set geometry(main) [wm geometry .]"
-@@ -3204,31 +3203,10 @@ proc save_file_from_commit {filename output what} {
-     return $output
++'mkdirs'::
++	Attempts to recreate empty directories that core git cannot track
++	based on information in $GIT_DIR/svn/<refname>/unhandled.log files.
++	Empty directories are automatically recreated when using
++	"git svn clone" and "git svn rebase", so "mkdirs" is intended
++	for use after commands like "git checkout" or "git reset".
++
+ 'commit-diff'::
+ 	Commits the diff of two tree-ish arguments from the
+ 	command-line.  This command does not rely on being inside an `git svn
+diff --git a/git-svn.perl b/git-svn.perl
+index ea922ac..ab0a8dd 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -168,6 +168,9 @@ my %cmd = (
+ 			     'Create a .gitignore per svn:ignore',
+ 			     { 'revision|r=i' => \$_revision
+ 			     } ],
++	'mkdirs' => [ \&cmd_mkdirs ,
++	              "recreate empty directories after a checkout",
++	              { 'revision|r=i' => \$_revision } ],
+         'propget' => [ \&cmd_propget,
+ 		       'Print the value of a property on a file or directory',
+ 		       { 'revision|r=i' => \$_revision } ],
+@@ -769,6 +772,7 @@ sub cmd_rebase {
+ 		$_fetch_all ? $gs->fetch_all : $gs->fetch;
+ 	}
+ 	command_noisy(rebase_cmd(), $gs->refname);
++	$gs->mkemptydirs;
  }
  
--proc external_diff_get_one_file {diffid filename diffdir} {
--    global nullid nullid2 nullfile
--    global gitdir
--
--    if {$diffid == $nullid} {
--        set difffile [file join [file dirname $gitdir] $filename]
--	if {[file exists $difffile]} {
--	    return $difffile
--	}
--	return $nullfile
--    }
--    if {$diffid == $nullid2} {
--        set difffile [file join $diffdir "\[index\] [file tail $filename]"]
--        return [save_file_from_commit :$filename $difffile index]
--    }
--    set difffile [file join $diffdir "\[$diffid\] [file tail $filename]"]
--    return [save_file_from_commit $diffid:$filename $difffile \
--	       "revision $diffid"]
--}
--
- proc external_diff {} {
-     global nullid nullid2
-     global flist_menu_file
-     global diffids
--    global extdifftool
- 
-     if {[llength $diffids] == 1} {
-         # no reference commit given
-@@ -3249,23 +3227,9 @@ proc external_diff {} {
-         set diffidto [lindex $diffids 1]
-     }
- 
--    # make sure that several diffs wont collide
--    set diffdir [gitknewtmpdir]
--    if {$diffdir eq {}} return
--
--    # gather files to diff
--    set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
--    set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
--
--    if {$difffromfile ne {} && $difftofile ne {}} {
--        set cmd [list [shellsplit $extdifftool] $difffromfile $difftofile]
--        if {[catch {set fl [open |$cmd r]} err]} {
--            file delete -force $diffdir
--            error_popup "$extdifftool: [mc "command failed:"] $err"
--        } else {
--            fconfigure $fl -blocking 0
--            filerun $fl [list delete_at_eof $fl $diffdir]
--        }
-+    set cmd {git difftool --no-prompt $diffidfrom $diffidto -- $flist_menu_file}
-+    if {[catch {eval exec $cmd &} err]} {
-+        error_popup "[mc "git difftool: command failed:"] $err"
-     }
+ sub cmd_show_ignore {
+@@ -830,6 +834,12 @@ sub cmd_create_ignore {
+ 	});
  }
  
-@@ -3557,19 +3521,6 @@ proc read_line_source {fd inst} {
-     return 0
++sub cmd_mkdirs {
++	my ($url, $rev, $uuid, $gs) = working_head_info('HEAD');
++	$gs ||= Git::SVN->new;
++	$gs->mkemptydirs($_revision);
++}
++
+ sub canonicalize_path {
+ 	my ($path) = @_;
+ 	my $dot_slash_added = 0;
+@@ -1196,6 +1206,7 @@ sub post_fetch_checkout {
+ 	command_noisy(qw/read-tree -m -u -v HEAD HEAD/);
+ 	print STDERR "Checked out HEAD:\n  ",
+ 	             $gs->full_url, " r", $gs->last_rev, "\n";
++	$gs->mkemptydirs($gs->last_rev);
  }
  
--# delete $dir when we see eof on $f (presumably because the child has exited)
--proc delete_at_eof {f dir} {
--    while {[gets $f line] >= 0} {}
--    if {[eof $f]} {
--	if {[catch {close $f} err]} {
--	    error_popup "[mc "External diff viewer failed:"] $err"
--	}
--	file delete -force $dir
--	return 0
--    }
--    return 1
--}
--
- # Functions for adding and removing shell-type quoting
- 
- proc shellquote {str} {
-@@ -10446,7 +10397,7 @@ proc doprefs {} {
-     global maxwidth maxgraphpct
-     global oldprefs prefstop showneartags showlocalchanges
-     global uicolor bgcolor fgcolor ctext diffcolors selectbgcolor markbgcolor
--    global tabstop limitdiffs autoselect extdifftool perfile_attrs
-+    global tabstop limitdiffs autoselect perfile_attrs
-     global hideremotes
- 
-     set top .gitkprefs
-@@ -10498,15 +10449,6 @@ proc doprefs {} {
- 	-font optionfont -variable perfile_attrs
-     grid x $top.lattr -sticky w
- 
--    entry $top.extdifft -textvariable extdifftool
--    frame $top.extdifff
--    label $top.extdifff.l -text [mc "External diff tool" ] -font optionfont \
--	-padx 10
--    button $top.extdifff.b -text [mc "Choose..."] -font optionfont \
--	-command choose_extdiff
--    pack $top.extdifff.l $top.extdifff.b -side left
--    grid x $top.extdifff $top.extdifft -sticky w
--
-     label $top.cdisp -text [mc "Colors: press to choose"]
-     grid $top.cdisp - -sticky w -pady 10
-     label $top.ui -padx 40 -relief sunk -background $uicolor
-@@ -10566,15 +10508,6 @@ proc doprefs {} {
-     bind $top <Visibility> "focus $top.buts.ok"
+ sub complete_svn_url {
+@@ -2724,6 +2735,34 @@ sub do_fetch {
+ 	$self->make_log_entry($rev, \@parents, $ed);
  }
  
--proc choose_extdiff {} {
--    global extdifftool
--
--    set prog [tk_getOpenFile -title [mc "External diff tool"] -multiple false]
--    if {$prog ne {}} {
--	set extdifftool $prog
--    }
--}
--
- proc choosecolor {v vi w x cmd} {
-     global $v
++sub mkemptydirs {
++	my ($self, $r) = @_;
++	my %empty_dirs = ();
++
++	open my $fh, '<', "$self->{dir}/unhandled.log" or return;
++	binmode $fh or croak "binmode: $!";
++	while (<$fh>) {
++		if (defined $r && /^r(\d+)$/) {
++			last if $1 > $r;
++		} elsif (/^  \+empty_dir: (.+)$/) {
++			$empty_dirs{$1} = 1;
++		} elsif (/^  \-empty_dir: (.+)$/) {
++			delete $empty_dirs{$1};
++		}
++	}
++	close $fh;
++	foreach my $d (sort keys %empty_dirs) {
++		$d = uri_decode($d);
++		next if -d $d;
++		if (-e _) {
++			warn "$d exists but is not a directory\n";
++		} else {
++			print "creating empty directory: $d\n";
++			mkpath([$d]);
++		}
++	}
++}
++
+ sub get_untracked {
+ 	my ($self, $ed) = @_;
+ 	my @out;
+@@ -3556,6 +3595,12 @@ sub uri_encode {
+ 	$f
+ }
  
-@@ -11100,12 +11033,6 @@ set datetimeformat "%Y-%m-%d %H:%M:%S"
- set autoselect 1
- set perfile_attrs 0
++sub uri_decode {
++	my ($f) = @_;
++	$f =~ s#%([0-9a-fA-F]{2})#chr(hex($1))#eg;
++	$f
++}
++
+ sub remove_username {
+ 	$_[0] =~ s{^([^:]*://)[^@]+@}{$1};
+ }
+diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn-dcommit-funky-renames.sh
+index 9be7aef..767799e 100755
+--- a/t/t9115-git-svn-dcommit-funky-renames.sh
++++ b/t/t9115-git-svn-dcommit-funky-renames.sh
+@@ -19,7 +19,7 @@ test_expect_success 'init and fetch repository' '
+ 	'
  
--if {[tk windowingsystem] eq "aqua"} {
--    set extdifftool "opendiff"
--} else {
--    set extdifftool "meld"
--}
--
- set colors {green red blue magenta darkgrey brown orange}
- set uicolor grey85
- set bgcolor white
+ test_expect_success 'create file in existing ugly and empty dir' '
+-	mkdir "#{bad_directory_name}" &&
++	mkdir -p "#{bad_directory_name}" &&
+ 	echo hi > "#{bad_directory_name}/ foo" &&
+ 	git update-index --add "#{bad_directory_name}/ foo" &&
+ 	git commit -m "new file in ugly parent" &&
+@@ -37,7 +37,7 @@ test_expect_success 'rename pretty file' '
+ 	git update-index --add pretty &&
+ 	git commit -m "pretty :x" &&
+ 	git svn dcommit &&
+-	mkdir regular_dir_name &&
++	mkdir -p regular_dir_name &&
+ 	git mv pretty regular_dir_name/pretty &&
+ 	git commit -m "moved pretty file" &&
+ 	git svn dcommit
+diff --git a/t/t9146-git-svn-empty-dirs.sh b/t/t9146-git-svn-empty-dirs.sh
+new file mode 100755
+index 0000000..5948544
+--- /dev/null
++++ b/t/t9146-git-svn-empty-dirs.sh
+@@ -0,0 +1,85 @@
++#!/bin/sh
++#
++# Copyright (c) 2009 Eric Wong
++
++test_description='git svn creates empty directories'
++. ./lib-git-svn.sh
++
++test_expect_success 'initialize repo' '
++	for i in a b c d d/e d/e/f "weird file name"
++	do
++		svn_cmd mkdir -m "mkdir $i" "$svnrepo"/"$i"
++	done
++'
++
++test_expect_success 'clone' 'git svn clone "$svnrepo" cloned'
++
++test_expect_success 'empty directories exist' '
++	(
++		cd cloned &&
++		for i in a b c d d/e d/e/f "weird file name"
++		do
++			if ! test -d "$i"
++			then
++				echo >&2 "$i does not exist"
++				exit 1
++			fi
++		done
++	)
++'
++
++test_expect_success 'more emptiness' '
++	svn_cmd mkdir -m "bang bang"  "$svnrepo"/"! !"
++'
++
++test_expect_success 'git svn rebase creates empty directory' '
++	( cd cloned && git svn rebase )
++	test -d cloned/"! !"
++'
++
++test_expect_success 'git svn mkdirs recreates empty directories' '
++	(
++		cd cloned &&
++		rm -r * &&
++		git svn mkdirs &&
++		for i in a b c d d/e d/e/f "weird file name" "! !"
++		do
++			if ! test -d "$i"
++			then
++				echo >&2 "$i does not exist"
++				exit 1
++			fi
++		done
++	)
++'
++
++test_expect_success 'git svn mkdirs -r works' '
++	(
++		cd cloned &&
++		rm -r * &&
++		git svn mkdirs -r7 &&
++		for i in a b c d d/e d/e/f "weird file name"
++		do
++			if ! test -d "$i"
++			then
++				echo >&2 "$i does not exist"
++				exit 1
++			fi
++		done
++
++		if test -d "! !"
++		then
++			echo >&2 "$i should not exist"
++			exit 1
++		fi
++
++		git svn mkdirs -r8 &&
++		if ! test -d "! !"
++		then
++			echo >&2 "$i not exist"
++			exit 1
++		fi
++	)
++'
++
++test_done
 -- 
-1.6.5.2.180.gc5b3e
+Eric Wong
