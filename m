@@ -1,79 +1,130 @@
 From: "Philippe Bruhat (BooK)" <book@cpan.org>
-Subject: Re: [PATCH] Define $PERL_PATH in test-lib.sh
-Date: Tue, 17 Nov 2009 00:48:49 +0100
-Message-ID: <20091116234849.GA3608@plop>
-References: <1257850011-7544-1-git-send-email-book@cpan.org>
- <20091110122315.GA15906@coredump.intra.peff.net>
- <7v639cqhh6.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 17 00:49:11 2009
+Subject: [PATCH] Make sure $PERL_PATH is defined when the test suite is run.
+Date: Tue, 17 Nov 2009 00:53:20 +0100
+Message-ID: <1258415600-4656-1-git-send-email-book@cpan.org>
+References: <20091116234849.GA3608@plop>
+Cc: "Philippe Bruhat (BooK)" <book@cpan.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 17 00:53:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NABJl-0000hm-So
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 00:49:10 +0100
+	id 1NABNz-0002Rz-2c
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 00:53:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754780AbZKPXs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 18:48:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754774AbZKPXs5
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 18:48:57 -0500
-Received: from mail-out3.booking.com ([91.195.237.20]:50951 "EHLO
-	mail-out3.booking.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754728AbZKPXs5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 18:48:57 -0500
-Received: from corpds-102.ams4.corp.booking.com ([10.196.68.83])
-	by mtx-101.ams4.prod.booking.com with esmtps (TLSv1:AES256-SHA:256)
+	id S1754683AbZKPXxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 18:53:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754630AbZKPXxR
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 18:53:17 -0500
+Received: from mail-out4.booking.com ([91.195.237.21]:39124 "EHLO
+	mail-out4.booking.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754588AbZKPXxQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 18:53:16 -0500
+Received: from corpds-101.ams4.corp.booking.com ([10.196.68.22])
+	by mtx-102.ams4.prod.booking.com with esmtps (TLSv1:AES256-SHA:256)
 	(Exim 4.69)
 	(envelope-from <philippe.bruhat@free.fr>)
-	id 1NABJR-0006Uv-RR; Tue, 17 Nov 2009 00:48:49 +0100
+	id 1NABNp-0004u7-Bq; Tue, 17 Nov 2009 00:53:21 +0100
 Received: from ams4-mail-03.ams4.corp.booking.com ([10.196.68.31])
-	by corpds-102.ams4.corp.booking.com with esmtp (Exim 4.69)
+	by corpds-101.ams4.corp.booking.com with esmtp (Exim 4.69)
 	(envelope-from <philippe.bruhat@free.fr>)
-	id 1NABJR-0006Vi-PM; Tue, 17 Nov 2009 00:48:49 +0100
+	id 1NABNp-0004zt-9n; Tue, 17 Nov 2009 00:53:21 +0100
 Received: from plop (bkbastion-01.corp.lhr1.booking.com [10.146.90.100])
-	by ams4-mail-03.ams4.corp.booking.com (Postfix) with ESMTP id 82BEBEF8005;
-	Tue, 17 Nov 2009 00:48:49 +0100 (CET)
+	by ams4-mail-03.ams4.corp.booking.com (Postfix) with ESMTP id 26172EF8005;
+	Tue, 17 Nov 2009 00:53:21 +0100 (CET)
 Received: from book by plop with local (Exim 4.69)
 	(envelope-from <philippe.bruhat@free.fr>)
-	id 1NABJR-0001Aa-6D; Tue, 17 Nov 2009 00:48:49 +0100
-Content-Disposition: inline
-In-Reply-To: <7v639cqhh6.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id 1NABNo-0001DY-TM; Tue, 17 Nov 2009 00:53:20 +0100
+X-Mailer: git-send-email 1.6.0.3.517.g759a
+In-Reply-To: <20091116234849.GA3608@plop>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133040>
 
-On Sun, Nov 15, 2009 at 01:12:37AM -0800, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Tue, Nov 10, 2009 at 11:46:51AM +0100, Philippe Bruhat (BooK) wrote:
-> > (snip)
-> > Will this work if I just have PERL_PATH in my config.mak in the root
-> > directory? Should we be adding PERL_PATH to the generated
-> > GIT-BUILD-OPTIONS file in the root, which gets sourced by test-lib?
-> >
-> > Something like the following (completely untested) patch?
-> 
-> Philippe, could you please help getting this topic unstuck with a "it
-> works" or "it doesn't and here is a better solution"?
-> 
+Some test scripts run Perl scripts as if they were git-* scripts, and
+thus need to use the same perl that will be put in the shebang line of
+git*.perl commands. $PERL_PATH therefore needs to be used instead of
+a bare "perl".
 
-I took Jeff's patch the main Makefile, removed my patch to test-lib.sh,
-and it worked. That is to say, the test suite failed on the perl tests
-when the first perl in the PATH was my local perl without Error.pm
-installed. With the changes, the test suite passed, even with my local
-perl first in the PATH.
+The tests can fail if another perl is found in $PATH before the one
+defined in $PERL_PATH.
 
-Patch with a reworked commit message follows.
+Example test failure caused by this: the perl defined in $PERL_PATH has
+Error.pm installed, and therefore the Git.pm's Makefile.PL doesn't install
+the private copy. The perl from $PATH doesn't have Error.pm installed, and
+all git*.perl scripts invoked during the test will fail loading Error.pm.
 
+Makefile patch by Jeff King <peff@peff.net>.
+
+Signed-off-by: Philippe Bruhat (BooK) <book@cpan.org>
+---
+ Makefile                        |    1 +
+ t/t9400-git-cvsserver-server.sh |    2 +-
+ t/t9401-git-cvsserver-crlf.sh   |    2 +-
+ t/t9700-perl-git.sh             |    4 ++--
+ 4 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 35f5294..8e8f981 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1633,6 +1633,7 @@ GIT-CFLAGS: .FORCE-GIT-CFLAGS
+ # and the first level quoting from the shell that runs "echo".
+ GIT-BUILD-OPTIONS: .FORCE-GIT-BUILD-OPTIONS
+ 	@echo SHELL_PATH=\''$(subst ','\'',$(SHELL_PATH_SQ))'\' >$@
++	@echo PERL_PATH=\''$(subst ','\'',$(PERL_PATH_SQ))'\' >$@
+ 	@echo TAR=\''$(subst ','\'',$(subst ','\'',$(TAR)))'\' >>$@
+ 	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@
+ 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@
+diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+index 64f947d..dc710f8 100755
+--- a/t/t9400-git-cvsserver-server.sh
++++ b/t/t9400-git-cvsserver-server.sh
+@@ -20,7 +20,7 @@ then
+     say 'skipping git-cvsserver tests, cvs not found'
+     test_done
+ fi
+-perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
++$PERL_PATH -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
+     say 'skipping git-cvsserver tests, Perl SQLite interface unavailable'
+     test_done
+ }
+diff --git a/t/t9401-git-cvsserver-crlf.sh b/t/t9401-git-cvsserver-crlf.sh
+index aca40c1..c9e3dba 100755
+--- a/t/t9401-git-cvsserver-crlf.sh
++++ b/t/t9401-git-cvsserver-crlf.sh
+@@ -57,7 +57,7 @@ then
+     say 'skipping git-cvsserver tests, perl not available'
+     test_done
+ fi
+-perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
++$PERL_PATH -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
+     say 'skipping git-cvsserver tests, Perl SQLite interface unavailable'
+     test_done
+ }
+diff --git a/t/t9700-perl-git.sh b/t/t9700-perl-git.sh
+index 4eb7d3f..3354e18 100755
+--- a/t/t9700-perl-git.sh
++++ b/t/t9700-perl-git.sh
+@@ -11,7 +11,7 @@ if ! test_have_prereq PERL; then
+ 	test_done
+ fi
+ 
+-perl -MTest::More -e 0 2>/dev/null || {
++$PERL_PATH -MTest::More -e 0 2>/dev/null || {
+ 	say "Perl Test::More unavailable, skipping test"
+ 	test_done
+ }
+@@ -48,6 +48,6 @@ test_expect_success \
+ 
+ test_external_without_stderr \
+     'Perl API' \
+-    perl "$TEST_DIRECTORY"/t9700/test.pl
++    $PERL_PATH "$TEST_DIRECTORY"/t9700/test.pl
+ 
+ test_done
 -- 
- Philippe Bruhat (BooK)
-
- The truly stupid always find a way to create disaster.
-                                                (Moral from Groo #10 (Image))
+1.6.0.3.517.g759a
