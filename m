@@ -1,64 +1,127 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Git graph with branch labels for all paths in text environment
-Date: Mon, 16 Nov 2009 07:30:14 -0600
-Message-ID: <19201.21478.127959.431877@lisa.zopyra.com>
-References: <1258373038892-4011651.post@n2.nabble.com>
-	<adf1fd3d0911160423q4e21126dm37be7838f0ce8379@mail.gmail.com>
+From: Lorenzo Bettini <bettini@dsi.unifi.it>
+Subject: Re: pushing remote branches
+Date: Mon, 16 Nov 2009 16:27:32 +0100
+Message-ID: <hdrr1e$oub$1@ger.gmane.org>
+References: <hdneuv$nc8$2@ger.gmane.org>	 <2e24e5b90911141645n59680856ja21f2f3c7063f7c0@mail.gmail.com>	 <hdoko1$s78$1@ger.gmane.org> <2e24e5b90911150304i1472ed13k6c60611ef2e9ba19@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: rhlee <richard@webdezign.co.uk>, git@vger.kernel.org
-To: Santi B=?iso-8859-1?B?6Q==?=jar <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Mon Nov 16 14:31:20 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 16 16:28:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NA1f4-0002Xw-6G
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 14:30:30 +0100
+	id 1NA3VP-00074I-Jo
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 16:28:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752676AbZKPNaP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Nov 2009 08:30:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752561AbZKPNaP
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 08:30:15 -0500
-Received: from 75-27-130-60.lightspeed.austtx.sbcglobal.net ([75.27.130.60]:53019
-	"EHLO zopyra.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752401AbZKPNaO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Nov 2009 08:30:14 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id nAGDUIb07130;
-	Mon, 16 Nov 2009 07:30:18 -0600
-In-Reply-To: <adf1fd3d0911160423q4e21126dm37be7838f0ce8379@mail.gmail.com>
-X-Mailer: VM 8.0.11 under Emacs 21.1.1 (i686-pc-linux-gnu)
+	id S1752842AbZKPP21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 10:28:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752790AbZKPP20
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 10:28:26 -0500
+Received: from lo.gmane.org ([80.91.229.12]:60067 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751634AbZKPP20 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 10:28:26 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NA3Uz-0006kP-6P
+	for git@vger.kernel.org; Mon, 16 Nov 2009 16:28:13 +0100
+Received: from nat2.di.unito.it ([130.192.156.245])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 16 Nov 2009 16:28:13 +0100
+Received: from bettini by nat2.di.unito.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 16 Nov 2009 16:28:13 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: nat2.di.unito.it
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+In-Reply-To: <2e24e5b90911150304i1472ed13k6c60611ef2e9ba19@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133009>
 
-On Monday, November 16, 2009 at 13:23:10 (+0100) Santi B=E9jar writes:
->On Mon, Nov 16, 2009 at 1:03 PM, rhlee <richard@webdezign.co.uk> wrote=
-:
->> Is there anyway to to view a text based git grah that shows all path=
-s with
->> the branch labels? Like a on gitk but ncurses based?
->
->For third-party tools you can check:
->
->http://git-scm.com/tools
+Sitaram Chamarty wrote:
+> 
+>> Thus, if I had
+>>
+>> [remote "origin"]
+>>            fetch = +refs/heads/*:refs/remotes/origin/*
+>>            url = git@...
+>> [branch "master"]
+>>            remote = origin
+>>            merge = refs/heads/master
+>> [branch "experiments"]
+>>            remote = origin
+>>            merge = refs/heads/experiments
+>>
+>> instead of
+>>
+>> [remote "origin"]
+>>            fetch = +refs/heads/*:refs/remotes/origin/*
+>>            url = git://...
+>> [branch "master"]
+>>            remote = origin
+>>            merge = refs/heads/master
+>> [branch "experiments"]
+>>            remote = origin
+>>            merge = refs/heads/experiments
+>>
+>> I would have been able to push also to branch experiments?   Without having
+>> to add
+>>
+>> [remote "experiments"]
+>>            url = git@...
+>>            fetch = +refs/heads/experiments:refs/remotes/experiments/experiments
+>>
+>> ?
+> 
+> (by the way: do you mean refs/remotes/origin/experiments in that last
+> line above?)
+> 
 
-Anything that can print this?:
+no, it's just like I wrote it...
 
-                                       H---I---J topicB
-                                      /
-                             E---F---G  topicA
-                            /
-               A---B---C---D  master
+you mean in
 
-I've always liked the text-based format that keeps things in-line, as
-above.  Very readable.  I thought someone on this list posted
-something about a tool that could produce such graphs from
-reasonably-sized git repos.  Anyone have such a thing?
+[remote "experiments"]
+         url = git@gitorious.org...
+         fetch = 
++refs/heads/experiments:refs/remotes/experiments/experiments
+
+or in
+
+[branch "experiments"]
+         remote = origin
+         merge = refs/heads/experiments
 
 
-Bill
+?
+
+> Anyway to answer your question, I do not see the refspec line as the issue
+> here, but the URL for the repo, which determines how you access it.
+
+so this would have been enough:
+
+ >> [remote "origin"]
+ >>            fetch = +refs/heads/*:refs/remotes/origin/*
+ >>            url = git://...
+ >> [branch "master"]
+ >>            remote = origin
+ >>            merge = refs/heads/master
+ >> [branch "experiments"]
+ >>            remote = origin
+ >>            merge = refs/heads/experiments
+
+?
+
+thanks
+	Lorenzo
+
+-- 
+Lorenzo Bettini, PhD in Computer Science, DI, Univ. Torino
+HOME: http://www.lorenzobettini.it MUSIC: http://www.purplesucker.com
+BLOGS: http://tronprog.blogspot.com  http://longlivemusic.blogspot.com
