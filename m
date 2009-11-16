@@ -1,102 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] http-backend: Fix access beyond end of string.
-Date: Sun, 15 Nov 2009 22:12:31 -0800
-Message-ID: <7viqdb0zhs.fsf@alter.siamese.dyndns.org>
-References: <1258233058-2348-1-git-send-email-tarmigan+git@gmail.com>
- <20091116013654.GX11919@spearce.org>
- <20091116045532.GC14664@coredump.intra.peff.net>
+From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
+Subject: Re: git am and CRLF files
+Date: Mon, 16 Nov 2009 08:33:30 +0100
+Organization: ATLAS Elektronik GmbH
+Message-ID: <4B01004A.8060600@atlas-elektronik.com>
+References: <4AFD2A8F.7000806@atlas-elektronik.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Tarmigan Casebolt <tarmigan+git@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Nov 16 07:12:53 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 16 08:35:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9upX-0000MY-I3
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 07:12:51 +0100
+	id 1N9w64-000888-7g
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 08:34:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752015AbZKPGMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 01:12:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751740AbZKPGMj
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 01:12:39 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:65139 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751276AbZKPGMi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 01:12:38 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D566D808BE;
-	Mon, 16 Nov 2009 01:12:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oQmf2PeqnJcQH00pfcVWZVZ9pwA=; b=A4PJcd
-	rOiGLIejSPANpWemCHDSABUIRwE+CwFbwXwNyqCXLCLm43UlU9h9f4aSGZUJJNSD
-	QtD/NKIS9GbG2ru95znwGoBHI3OmPZdbc5bqGvuC8LoFxGoXJLLXCWtfSKWPJziV
-	Zawt02rCiQUmOZRvjW1JNDYIQaEJzkLIPwa/o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=De7rW83kYW9UD2aaToZr7eD2tBL7soUl
-	WUEKmUTEbfdYkh0OlYZ9Z0zTvrp7OdEOwlQOiPE36/BRhYtHgYL0Pxs0NqONJTVl
-	CbiCgB4wUL2ug2xxnfsA9VI7SYHquj1KDbeVKsW9ha856Zc8u1o6pRGALho/qg0E
-	We/JXrR/XpQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A760808BD;
-	Mon, 16 Nov 2009 01:12:39 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 44A30808BC; Mon, 16 Nov
- 2009 01:12:33 -0500 (EST)
-In-Reply-To: <20091116045532.GC14664@coredump.intra.peff.net> (Jeff King's
- message of "Sun\, 15 Nov 2009 23\:55\:32 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0B0D27FA-D277-11DE-8571-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1750995AbZKPHdq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 02:33:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750779AbZKPHdq
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 02:33:46 -0500
+Received: from lxsrv96.atlas.de ([194.156.172.86]:35865 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750747AbZKPHdq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 02:33:46 -0500
+Received: from VSSRV01.atlas.de (vssrv01.atlas.de [10.200.101.18])
+	by mail96.atlas.de (Postfix) with ESMTP id 3D8A21389C
+	for <git@vger.kernel.org>; Mon, 16 Nov 2009 08:33:48 +0100 (CET)
+X-AuditID: 0ac86512-00000094000005bc-65-4b01005c4915
+Received: from mgsrv01.atlas.de ([10.200.101.16]) by VSSRV01.atlas.de with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 16 Nov 2009 08:33:48 +0100
+Received: from mgsrv01.atlas.de (localhost [127.0.0.1])
+	by mail01-int.atlas.de (Postfix) with ESMTP id 1DAD427172
+	for <git@vger.kernel.org>; Mon, 16 Nov 2009 08:33:48 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mgsrv01.atlas.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.8 required=5.0 tests=ALL_TRUSTED,BAYES_50
+	autolearn=disabled version=3.2.5
+Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
+	by mail01.atlas.de (Postfix) with ESMTP id 145842716A
+	for <git@vger.kernel.org>; Mon, 16 Nov 2009 08:33:48 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
+In-Reply-To: <4AFD2A8F.7000806@atlas-elektronik.com>
+X-Enigmail-Version: 0.96.0
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132988>
 
-Jeff King <peff@peff.net> writes:
+On 11/13/2009 10:44 AM, Stefan Naewe wrote:
+> Hi there.
+> I have:
+> 
+> $ git version
+> git version 1.6.5.1.1367.gcd48
+> 
+> $ git config --get core.autocrlf
+> false
+> 
+> A repository with some UNIX (LF) and some Windows (CRLF) files.
+> (and no: I will not change the files. My editors handle CRLF and LF correctly)
+> 
+> My problem:
+> 
+> 'git am' can't handle changes in CRLF files because the patch
+> gets converted (by git mailsplit) to contain only LF.
+> 
+> Which is wrong IMHO.
+> 
+> git-am on my msysgit version looks like this (lines: 214++)
+> 
+> <---------->
+> split_patches () {
+> 	case "$patch_format" in
+> 	mbox)
+> 		case "$rebasing" in
+> 		'')
+> 			keep_cr= ;;
+> 		?*)
+> 			keep_cr=--keep-cr ;;
+> 		esac
+> 		git mailsplit -d"$prec" -o"$dotest" -b $keep_cr -- "$@" > "$dotest/last" ||
+> 		clean_abort
+> 		;;
+> <---------->
+> 
+> The '--keep-cr' flags is passed to git mailsplit when git am is in 'rebasing' mode.
+> By looking through git-am I found that I can pass "--rebasing" to git am to get my
+> patch applied correctly.
+> But why is git am behaving that way ?
+> 
+> Puzzled,
+> 
+> Stefan
 
-> On Sun, Nov 15, 2009 at 05:36:54PM -0800, Shawn O. Pearce wrote:
-> ...
->> Shouldn't this instead be:
->> 
->> diff --git a/http-backend.c b/http-backend.c
->> index 9021266..16ec635 100644
->> --- a/http-backend.c
->> +++ b/http-backend.c
->> @@ -626,7 +626,7 @@ int main(int argc, char **argv)
->>  			}
->>  
->>  			cmd = c;
->> -			cmd_arg = xmalloc(n);
->> +			cmd_arg = xmalloc(n + 1);
->>  			strncpy(cmd_arg, dir + out[0].rm_so + 1, n);
->>  			cmd_arg[n] = '\0';
->>  			dir[out[0].rm_so] = 0;
->> 
->> The cmd_arg string was simply allocated too small.  Your fix is
->> terminating the string one character too short which would cause
->> get_loose_object and get_pack_file to break.
->
-> Actually, from my reading, I think his fix is right, because you trim
-> the first character during the strncpy (using "out[0].rm_so + 1").
+Does anyone have any comment on this ?
 
-Your regexps all start with leading "/", and rm_so+1 points at the
-character after the slash; the intention being that you would copy
-the rest of the matched sequence without the leading "/".
+Regards,
 
-So allocating n = rm_eo - rm_so is Ok.  It counts the space for
-terminating NUL.  But copying "up to n bytes" using strncpy(), only to NUL
-terminate immediately later, is dubious.  You would want to copy only n-1
-bytes.  I.e.
-
-	n = out[0].rm_eo - out[0].rm_so; /* allocation */
-        ... validate and fail invalid method ...
-        cmd_arg = xmalloc(n);
-        memcpy(cmd_arg, dir + out[0].rm_so + 1, n-1);
-        cmd_arg[n-1] = '\0';
+Stefan
+-- 
+----------------------------------------------------------------
+/dev/random says: Microsoft Windows... a virus with mouse support.
