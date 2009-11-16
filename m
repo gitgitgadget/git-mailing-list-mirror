@@ -1,104 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] rebase: refuse to rebase with -s ours
-Date: Mon, 16 Nov 2009 11:57:05 -0800
-Message-ID: <7vpr7ip7ji.fsf@alter.siamese.dyndns.org>
-References: <cover.1258309432.git.trast@student.ethz.ch>
- <efd7770d166a97481e8e31e407b9c2da02a341e5.1258309432.git.trast@student.ethz.ch> <alpine.DEB.1.00.0911161333470.4985@pacific.mpi-cbg.de>
+Subject: Re: pushing remote branches
+Date: Mon, 16 Nov 2009 12:05:13 -0800
+Message-ID: <7vlji6p75y.fsf@alter.siamese.dyndns.org>
+References: <hdneuv$nc8$2@ger.gmane.org>
+ <2e24e5b90911141645n59680856ja21f2f3c7063f7c0@mail.gmail.com>
+ <hdoko1$s78$1@ger.gmane.org>
+ <2e24e5b90911150304i1472ed13k6c60611ef2e9ba19@mail.gmail.com>
+ <hdrr1e$oub$1@ger.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Baz <brian.ewins@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 16 20:57:32 2009
+Cc: git@vger.kernel.org
+To: Lorenzo Bettini <bettini@dsi.unifi.it>
+X-From: git-owner@vger.kernel.org Mon Nov 16 21:05:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NA7hb-0004bF-NR
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 20:57:32 +0100
+	id 1NA7pK-0007y2-NM
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 21:05:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753437AbZKPT5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 14:57:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753402AbZKPT5U
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 14:57:20 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63897 "EHLO
+	id S1751805AbZKPUFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 15:05:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752181AbZKPUFR
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 15:05:17 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39536 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752545AbZKPT5T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 14:57:19 -0500
+	with ESMTP id S1752121AbZKPUFQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 15:05:16 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 28FD080AF6;
-	Mon, 16 Nov 2009 14:57:23 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D27C59DE43;
+	Mon, 16 Nov 2009 15:05:20 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3r9YJAyowcrycBlBBrtKtr33fF0=; b=T/7tmI
-	NVqFfs/sQDyVbz+5zPJtkVYjyTA9mVHSTZ2k3mIOoMFWI03idLbP3KlUn/wnqQqE
-	Yg9/ZpYeHP2VF49tj9kuyam63/xz64rlmbpASgUtcj3BjJI6iLNCkVBN0QCu1E+f
-	M0YTNWtJqNerogI3y0H1td4ekO7oCnzSmZLdI=
+	:content-type; s=sasl; bh=y83kvhd6YPz41rt3IqmEUmhKKkc=; b=rLvhMj
+	OoZ9rX19oJL8eIMAHquIOmjY4/YZyXj+PIOJ05umyPiiyAs+WJccyDzbw+Lmt8dj
+	AoHrm0r3oL04sCRsLut1KjX6Rh4jGNIvaTRxWGPenGQm1vx0eJity/MFub5Um5tG
+	KQhNnWwLPCYhWcGxcC5cGFC42UqhJDJm7Jmqg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I6XTAAcyZoFbxvJAdRwQMdSAvCP10Lw2
-	gEyFFVm914Sgni8lUWgsPZkMUtSmvrDjd8DSKgqza6orKLjeIcOR1MRXis9eQ9jw
-	Lx+K/Btspu2SQjyAarirXPcFaqxXF+xaLNyDZHGPofrp0ufpoCiLXXl+gQM7CmN3
-	461kNpECI7U=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AE6B180AF5;
-	Mon, 16 Nov 2009 14:57:15 -0500 (EST)
+	:content-type; q=dns; s=sasl; b=bY9sAXHNGupqNvBLEVVtLFLVkuK7/zDy
+	46Vq4YQya/xXnGPj6JphQkheAbmWrpA8b6kzDZNvdhfSLCtcLTfDmLxV7bj8mGIs
+	ZHptjJCcVhmpthiPJFvuDAAJIJ8Riomv9Cskr94ejkJ473UAlngj2qujR8k9EfjK
+	N8GG53tKX78=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B1A1D9DE42;
+	Mon, 16 Nov 2009 15:05:18 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78CE480AF4; Mon, 16 Nov
- 2009 14:57:07 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0911161333470.4985@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Mon\, 16 Nov 2009 13\:35\:13 +0100
- \(CET\)")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B3B2B9DE40; Mon, 16 Nov 2009
+ 15:05:15 -0500 (EST)
+In-Reply-To: <hdrr1e$oub$1@ger.gmane.org> (Lorenzo Bettini's message of
+ "Mon\, 16 Nov 2009 16\:27\:32 +0100")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3D17BEAE-D2EA-11DE-861E-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5CFBCE3A-D2EB-11DE-8C3F-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133023>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Lorenzo Bettini <bettini@dsi.unifi.it> writes:
 
-> On Sun, 15 Nov 2009, Thomas Rast wrote:
+>> Anyway to answer your question, I do not see the refspec line as the issue
+>> here, but the URL for the repo, which determines how you access it.
 >
->> Using the "ours" strategy with rebase just discards all changes, turning 
->> <branch> into <upstream> (or <newbase> if given).  This is unlikely to 
->> be what the user wants, so simply refuse to do it.
+> so this would have been enough:
 >
-> "Unlikely" or "impossible"?
+>>> [remote "origin"]
+>>>            fetch = +refs/heads/*:refs/remotes/origin/*
+>>>            url = git://...
+>>> [branch "master"]
+>>>            remote = origin
+>>>            merge = refs/heads/master
+>>> [branch "experiments"]
+>>>            remote = origin
+>>>            merge = refs/heads/experiments
 
-It is more like "very likely to be a mistake".
+Because "git://" is almost always read-only, you wouldn't be able to push
+back to the origin with that configuration.  If you are only following the
+project that is perfectly fine.
 
-Our tradition has been to give them long enough rope, but the recent trend
-is to consider ourselves experienced enough with various git workflows to
-be capable of identifying not just "cannot possibly a meaningful request"
-but also "almost always a mistake" cases, and tighten the rope to help
-people from stumbling, I think.
+Otherwise, either use "git@..." in remote.origin.url to use git-over-ssh
+in both directions, or you can use pushurl if you have recent enough
+version of git, like:
 
-But it needs more careful thought to avoid forbidding useful use cases,
-and your input is hugely appreciated if you have doubts (even better, an
-example of useful use case that will become impossible).
+    [remote "origin"]
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        url = git://...
+        pushurl = git@...
 
-> Besides, I find it rather arbitrary that the "ours" strategy is refused, 
-> but none of the user-provided merge strategies.  IOW disallowing "ours" 
-> may very well foster unreasonable expectations.
-
-I cannot read this quite clearly.  Unreasonable expectations being...?
-
- * "ours" is disallowed but anything else including user-provided ones are
-   Ok, so we are allowed to circumvent this restriction by adding a
-   synonym for "ours" as a user-defined one, and are encouraged to do
-   so. ---that is a wrong message to send.  Is that what you mean?
-
- * strategy X, unlike "ours", is allowed, so users will have rights to
-   expect use of X as a rebase strategy would yield useful result, but
-   that is wrong---Dscho knows that merge strategy X (I cannot read which
-   one you had in mind if this is what you are talking about) does not
-   work well in this and that cases.  Is this what you mean, and if so
-   what is X?
-
-Perhaps you had something other than the above two in mind?
+When you primed your repository with "git clone git://...", it would be
+nice if "clone" added a "corresponding" pushurl for you.  But ... part of
+the two lines are often different, depending on how hosting site is
+organized, so unfortunately "clone" cannot do so.
