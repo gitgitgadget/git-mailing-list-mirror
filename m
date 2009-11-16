@@ -1,95 +1,133 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: pushing remote branches
-Date: Mon, 16 Nov 2009 12:05:13 -0800
-Message-ID: <7vlji6p75y.fsf@alter.siamese.dyndns.org>
-References: <hdneuv$nc8$2@ger.gmane.org>
- <2e24e5b90911141645n59680856ja21f2f3c7063f7c0@mail.gmail.com>
- <hdoko1$s78$1@ger.gmane.org>
- <2e24e5b90911150304i1472ed13k6c60611ef2e9ba19@mail.gmail.com>
- <hdrr1e$oub$1@ger.gmane.org>
+Subject: Re: [PATCH 2/2] diffcore-break: save cnt_data for other phases
+Date: Mon, 16 Nov 2009 13:20:00 -0800
+Message-ID: <7vvdhanp4v.fsf@alter.siamese.dyndns.org>
+References: <20091116155331.GA30719@coredump.intra.peff.net>
+ <20091116160202.GB30777@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Lorenzo Bettini <bettini@dsi.unifi.it>
-X-From: git-owner@vger.kernel.org Mon Nov 16 21:05:41 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 16 22:20:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NA7pK-0007y2-NM
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 21:05:31 +0100
+	id 1NA8zm-0006fH-BC
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 22:20:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751805AbZKPUFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 15:05:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752181AbZKPUFR
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 15:05:17 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39536 "EHLO
+	id S1751788AbZKPVUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 16:20:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751567AbZKPVUD
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 16:20:03 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49222 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752121AbZKPUFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 15:05:16 -0500
+	with ESMTP id S1751501AbZKPVUC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 16:20:02 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D27C59DE43;
-	Mon, 16 Nov 2009 15:05:20 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 596BA9E825;
+	Mon, 16 Nov 2009 16:20:07 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y83kvhd6YPz41rt3IqmEUmhKKkc=; b=rLvhMj
-	OoZ9rX19oJL8eIMAHquIOmjY4/YZyXj+PIOJ05umyPiiyAs+WJccyDzbw+Lmt8dj
-	AoHrm0r3oL04sCRsLut1KjX6Rh4jGNIvaTRxWGPenGQm1vx0eJity/MFub5Um5tG
-	KQhNnWwLPCYhWcGxcC5cGFC42UqhJDJm7Jmqg=
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=dDkGV/wpBgIly752MDba0uQrqmI=; b=VqjL01RpsLwUACMvWJjaAaC
+	4KXWYzmtH41SJuNcyBtZlv1paZZWx87z77g5M70S6m4XR9deU5oLd/hK29DYCwD6
+	sVAwY7gg1+MpUks8ZtEZgmqNrNq09AVj2shjFzFJvKmMvIX6q+britAZyXKZ730P
+	S0NC8S+MphpCYQUvSp70=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bY9sAXHNGupqNvBLEVVtLFLVkuK7/zDy
-	46Vq4YQya/xXnGPj6JphQkheAbmWrpA8b6kzDZNvdhfSLCtcLTfDmLxV7bj8mGIs
-	ZHptjJCcVhmpthiPJFvuDAAJIJ8Riomv9Cskr94ejkJ473UAlngj2qujR8k9EfjK
-	N8GG53tKX78=
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=h4Heru6kGlkZqMtk+soT/3Q6JNt6ztrdPDMETy0EzPMVgkcpG
+	bcT7rTaZo+pLV4l10NfUvVbWP59zy/pq3W+blfOF1DoWHP235Dwvk6JNhSyaJo3i
+	32NerRIezt1vbtCYGPGmvu/pczt1JCvjjIyIbKkU0tsvmnN/RPyBItW1ZA=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B1A1D9DE42;
-	Mon, 16 Nov 2009 15:05:18 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 387AF9E824;
+	Mon, 16 Nov 2009 16:20:05 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B3B2B9DE40; Mon, 16 Nov 2009
- 15:05:15 -0500 (EST)
-In-Reply-To: <hdrr1e$oub$1@ger.gmane.org> (Lorenzo Bettini's message of
- "Mon\, 16 Nov 2009 16\:27\:32 +0100")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 16A6A9E821; Mon, 16 Nov 2009
+ 16:20:01 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5CFBCE3A-D2EB-11DE-8C3F-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: CF23109A-D2F5-11DE-BD2C-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133024>
 
-Lorenzo Bettini <bettini@dsi.unifi.it> writes:
+Jeff King <peff@peff.net> writes:
 
->> Anyway to answer your question, I do not see the refspec line as the issue
->> here, but the URL for the repo, which determines how you access it.
+> The "break" phase works by counting changes between two
+> blobs with the same path. We do this by splitting the file
+> into chunks (or lines for text oriented files) and then
+> keeping a count of chunk hashes.
 >
-> so this would have been enough:
+> The "rename" phase counts changes between blobs at two
+> different paths. However, it uses the exact same set of
+> chunk hashes (which are immutable for a given sha1).
 >
->>> [remote "origin"]
->>>            fetch = +refs/heads/*:refs/remotes/origin/*
->>>            url = git://...
->>> [branch "master"]
->>>            remote = origin
->>>            merge = refs/heads/master
->>> [branch "experiments"]
->>>            remote = origin
->>>            merge = refs/heads/experiments
+> The rename phase can therefore use the same hash data as
+> break. Unfortunately, we were throwing this data away after
+> computing it in the break phase. This patch instead attaches
+> it to the filespec and lets it live through the rename
+> phase, working under the assumption that most of the time
+> that breaks are being computed, renames will be too.
 
-Because "git://" is almost always read-only, you wouldn't be able to push
-back to the origin with that configuration.  If you are only following the
-project that is perfectly fine.
+The change looks correct, but I initially got worried about your change
+interacts badly with this part in estimate_similarity() around line 176:
 
-Otherwise, either use "git@..." in remote.origin.url to use git-over-ssh
-in both directions, or you can use pushurl if you have recent enough
-version of git, like:
+	if (!src->cnt_data && diff_populate_filespec(src, 0))
+		return 0;
+	if (!dst->cnt_data && diff_populate_filespec(dst, 0))
+		return 0;
 
-    [remote "origin"]
-        fetch = +refs/heads/*:refs/remotes/origin/*
-        url = git://...
-        pushurl = git@...
+I think the reason why it (not your patch but the original code) felt a
+bit brittle is because the above if() statements know too much about the
+internal of d-c-c (namely, it never looks at src->data when src->cnt_data
+is already available, so it is safe to leave src->data NULL).
 
-When you primed your repository with "git clone git://...", it would be
-nice if "clone" added a "corresponding" pushurl for you.  But ... part of
-the two lines are often different, depending on how hosting site is
-organized, so unfortunately "clone" cannot do so.
+The same logic suggests that the loop to build the matrix in
+diffcore_rename() could free two->data at the end of the innermost loop.
+
+We currently loop this way (around ll. 505-530):
+
+	for each two (i.e. rename destination candidate):
+        	for each one (i.e. rename source candidate):
+                	compute and record how similar one and two are
+			free one->data
+		free two->data
+
+After computing how similar "one" and something else is only once, we have
+one->cnt_data so we won't need one->data (the same fact is exploited by
+your patch for optimization), and that is why freeing one->data in the
+innermost loop does not result in constant re-reading of the same blob
+data when we iterate more than one rename destination.  But the same logic
+applies to "two" and we should be able to free the blob data early to
+reduce the memory pressure.
+
+I dunno if it would give us measurable performance benefit, though.
+
+Here is the idea on top of your patch, but I think it can be applied
+independently.
+
+ diffcore-rename.c |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 63ac998..875ca81 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -523,10 +523,13 @@ void diffcore_rename(struct diff_options *options)
+ 			this_src.dst = i;
+ 			this_src.src = j;
+ 			record_if_better(m, &this_src);
++			/*
++			 * Once we run estimate_similarity, 
++			 * We do not need the text anymore.
++			 */
+ 			diff_free_filespec_blob(one);
++			diff_free_filespec_blob(two);
+ 		}
+-		/* We do not need the text anymore */
+-		diff_free_filespec_blob(two);
+ 		dst_cnt++;
+ 	}
+ 
