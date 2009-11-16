@@ -1,204 +1,116 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] RFC Allow case insensitive search flag with git-grep
- for fixed-strings
-Date: Mon, 16 Nov 2009 11:25:33 -0500
-Message-ID: <20091116162533.GA30737@coredump.intra.peff.net>
-References: <B7C4E16C-B15D-4A7B-873A-B6BD0FDAD8C8@gmail.com>
- <20091116195050.6117@nanako3.lavabit.com>
+From: Ian Hobson <ian@ianhobson.co.uk>
+Subject: Advice/help needed
+Date: Mon, 16 Nov 2009 16:27:35 +0000
+Message-ID: <4B017D77.6060505@ianhobson.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Brian Collins <bricollins@gmail.com>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Mon Nov 16 17:25:53 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 16 17:27:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NA4Of-0004ib-Lf
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 17:25:46 +0100
+	id 1NA4Qf-0005rU-Su
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 17:27:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752830AbZKPQZc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 11:25:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752413AbZKPQZc
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 11:25:32 -0500
-Received: from peff.net ([208.65.91.99]:34598 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751827AbZKPQZb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 11:25:31 -0500
-Received: (qmail 17147 invoked by uid 107); 16 Nov 2009 16:29:23 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 16 Nov 2009 11:29:23 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Nov 2009 11:25:33 -0500
-Content-Disposition: inline
-In-Reply-To: <20091116195050.6117@nanako3.lavabit.com>
+	id S1752524AbZKPQ1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 11:27:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752285AbZKPQ1i
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 11:27:38 -0500
+Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:19069 "EHLO
+	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751827AbZKPQ1h (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Nov 2009 11:27:37 -0500
+Received: from aamtaout02-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout03-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20091116162734.NKJP17277.mtaout03-winn.ispmail.ntl.com@aamtaout02-winn.ispmail.ntl.com>
+          for <git@vger.kernel.org>; Mon, 16 Nov 2009 16:27:34 +0000
+Received: from jupiter.ianhobson.co.uk ([86.12.69.89])
+          by aamtaout02-winn.ispmail.ntl.com
+          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
+          id <20091116162734.QNNM21638.aamtaout02-winn.ispmail.ntl.com@jupiter.ianhobson.co.uk>
+          for <git@vger.kernel.org>; Mon, 16 Nov 2009 16:27:34 +0000
+Received: (qmail 8947 invoked by uid 453); 16 Nov 2009 16:27:32 -0000
+X-Virus-Checked: Checked by ClamAV on ianhobson.co.uk
+Received: from bobgriffiths.leda.hcs (HELO [192.168.0.12]) (192.168.0.12)
+    by ianhobson.co.uk (qpsmtpd/0.40) with ESMTP; Mon, 16 Nov 2009 16:27:32 +0000
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+X-Cloudmark-Analysis: v=1.0 c=1 a=RSyqUlKGgLE1rDCvk3MA:9 a=6aQn318UP8BW6rACUIYA:7 a=BTgng9JRT6wIwVoYLXUjdqS2CgYA:4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133015>
 
-On Mon, Nov 16, 2009 at 07:50:50PM +0900, Nanako Shiraishi wrote:
+Hi all,
 
-> Quoting Brian Collins <bricollins@gmail.com>
-> 
-> > You will have to excuse me, this is my first patch and I don't know if
-> > this is the right place to post this. Apologies in advance if I'm in
-> > the wrong place.
-> >
-> > git-grep currently throws an error when you combine the -F and -i
-> > flags. This isn't in line with how GNU grep handles it. This patch
-> > allows the simultaneous use of those flags.
-> 
-> Junio, may I ask what happened to this patch?
+I am trying to switch to GIT (from SVN), and have become sorely 
+confused. I am not sure of the best way to solve the problem I have, 
+(nor how to actually implement a solution when one is chosen).
 
-I think I owed it another review.
+I am building a web application in php. There are  2 (soon to be four) 
+versions each slightly different for different customers. Each needs 
+testing when installed in "/" and "/dir" on the web site.
 
-I just looked it over and the idea and implementation look sane to me.
-There were a few minor problems with the submission:
+So far I have one system that in installed in a git repo on a Linux VM 
+with a share. This way I can develop in windows where I am familiar, 
+serve the files under linux (to match the production environment) and 
+run unit tests using phpUnit. The test files are all in a sub-directory 
+of the main directory. The application is served from a directory in the 
+website, so I could have different directories for different purposes, 
+but I have not had to use this yet.
 
-  1. The patch was line-wrapped; I had to de-munge it manually to apply.
+Before release, I fetch and merge the files into a second installation 
+under windows, where I can serve it from the root. This forms a second 
+level of test. I release by copying the files with FTP (so that test 
+files and the GIT repo don't go on the production server).
 
-  2. The original submission had cover-letter material mixed in with the
-     commit message. The follow-up version had no commit message at all.
+This arrangement only works because I have been able to set up the 
+configuration files, database users and similar so they are all the same 
+on each installation. With 4 similar versions this will no longer be 
+possible.
 
-  3. No signed-off-by. Brian, can you please acknowledge the DCO with a
-     signoff?
+What I want to be able to do is control all 4 versions in the same 
+manner, keep all file - common, different and test - in git, and have 
+checkout worry about changing versions.
 
-  4. The patch introduced some stray trailing whitespace.
+My thoughts are to have 4 branches, one for each customer. 99% of all 
+changes will be needed by all (or at least most)
+of the customers (P,W,S and E). How can I make a change to master and 
+then use git to apply those changes to the four branches, without losing 
+the differences between branches?
 
-  5. There were a few style fixups, like omitting braces for a
-     single-line conditional.
+For example (if this is the best way) go from this
+O-----O-----A-----B-----C  (master)
+  \----P
+   \---W
+    \--S
+     \-E
 
-To save Junio time, here is a version that fixes all of those things. I
-think it's probably worth applying to 'next'.
+to first this, where D is the net effect of A B and C  (this is for ease 
+of reading logs, and commit messages),
+O-----O-----D  (head) 
+  \----P
+   \---W
+    \--S
+     \-E
 
--- >8 --
-From: Brian Collins <bricollins@gmail.com>
-Date: Fri, 6 Nov 2009 01:22:35 -0800
-Subject: [PATCH] RFC Allow case insensitive search flag with git-grep for fixed-strings
+and then to this, (without editing all the files four times?)
+O-----O-----D  (head)
+  \----P-----D'
+   \---W----D''
+    \--S-----D'''
+     \-E-----D''''
 
-git-grep currently throws an error when you combine the -F
-and -i flags.  This isn't in line with how GNU grep handles
-it. This patch allows the simultaneous use of those flags.
+Or would I be better having 4 repositories, one for each customer? Then 
+I need to pull changes and cherry pick the changes I want for each 
+customer?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin-grep.c  |    8 +++++---
- grep.c          |   13 ++++++++++---
- grep.h          |    2 ++
- t/t7002-grep.sh |    9 +++++++++
- 4 files changed, 26 insertions(+), 6 deletions(-)
+I am the only developer, so the processes need to be simple so I am not 
+faced with sorting out my own errors! :)
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 1df25b0..a2616fc 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -367,7 +367,7 @@ static int external_grep(struct grep_opt *opt, const char **paths, int cached)
- 		push_arg("-h");
- 	if (opt->regflags & REG_EXTENDED)
- 		push_arg("-E");
--	if (opt->regflags & REG_ICASE)
-+	if (opt->caseless)
- 		push_arg("-i");
- 	if (opt->binary == GREP_BINARY_NOMATCH)
- 		push_arg("-I");
-@@ -706,8 +706,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		OPT_GROUP(""),
- 		OPT_BOOLEAN('v', "invert-match", &opt.invert,
- 			"show non-matching lines"),
--		OPT_BIT('i', "ignore-case", &opt.regflags,
--			"case insensitive matching", REG_ICASE),
-+		OPT_BOOLEAN('i', "ignore-case", &opt.caseless,
-+			"case insensitive matching"),
- 		OPT_BOOLEAN('w', "word-regexp", &opt.word_regexp,
- 			"match patterns only at word boundaries"),
- 		OPT_SET_INT('a', "text", &opt.binary,
-@@ -830,6 +830,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		external_grep_allowed = 0;
- 	if (!opt.pattern_list)
- 		die("no pattern given.");
-+	if (!opt.fixed && opt.caseless)
-+		opt.regflags |= REG_ICASE;
- 	if ((opt.regflags != REG_NEWLINE) && opt.fixed)
- 		die("cannot mix --fixed-strings and regexp");
- 	compile_grep_patterns(&opt);
-diff --git a/grep.c b/grep.c
-index 5d162da..bbb0d18 100644
---- a/grep.c
-+++ b/grep.c
-@@ -41,6 +41,7 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- 	int err;
- 
- 	p->word_regexp = opt->word_regexp;
-+	p->caseless = opt->caseless;
- 
- 	if (opt->fixed || is_fixed(p->pattern))
- 		p->fixed = 1;
-@@ -262,9 +263,15 @@ static void show_name(struct grep_opt *opt, const char *name)
- 	printf("%s%c", name, opt->null_following_name ? '\0' : '\n');
- }
- 
--static int fixmatch(const char *pattern, char *line, regmatch_t *match)
-+
-+static int fixmatch(const char *pattern, char *line, int caseless, regmatch_t *match)
- {
--	char *hit = strstr(line, pattern);
-+	char *hit;
-+	if (caseless)
-+		hit = strcasestr(line, pattern);
-+	else
-+		hit = strstr(line, pattern);
-+
- 	if (!hit) {
- 		match->rm_so = match->rm_eo = -1;
- 		return REG_NOMATCH;
-@@ -326,7 +333,7 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
- 
-  again:
- 	if (p->fixed)
--		hit = !fixmatch(p->pattern, bol, pmatch);
-+		hit = !fixmatch(p->pattern, bol, p->caseless, pmatch);
- 	else
- 		hit = !regexec(&p->regexp, bol, 1, pmatch, eflags);
- 
-diff --git a/grep.h b/grep.h
-index f6eecc6..24b7d44 100644
---- a/grep.h
-+++ b/grep.h
-@@ -32,6 +32,7 @@ struct grep_pat {
- 	enum grep_header_field field;
- 	regex_t regexp;
- 	unsigned fixed:1;
-+	unsigned caseless:1;
- 	unsigned word_regexp:1;
- };
- 
-@@ -64,6 +65,7 @@ struct grep_opt {
- 	regex_t regexp;
- 	int linenum;
- 	int invert;
-+	int caseless;
- 	int status_only;
- 	int name_only;
- 	int unmatch_name_only;
-diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
-index ae5290a..24a9445 100755
---- a/t/t7002-grep.sh
-+++ b/t/t7002-grep.sh
-@@ -411,4 +411,13 @@ test_expect_success 'grep from a subdirectory to search wider area (2)' '
- 	)
- '
- 
-+cat >expected <<EOF
-+hello.c:	return 0;
-+EOF
-+
-+test_expect_success 'grep -Fi' '
-+	git grep -Fi rEtUrN >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
--- 
-1.6.5.2.187.g29317
+Regards
+
+Ian
