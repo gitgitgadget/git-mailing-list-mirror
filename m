@@ -1,55 +1,63 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: [PATCH] RFC Allow case insensitive search flag with git-grep
- for 	fixed-strings
-Date: Mon, 16 Nov 2009 12:00:12 -0600
-Message-ID: <UENI3LuferIx-aKjVXiKMWqGarArdQQZ0OBA6OkGt_JEiX2iS4H8Wg@cipher.nrlssc.navy.mil>
-References: <B7C4E16C-B15D-4A7B-873A-B6BD0FDAD8C8@gmail.com>	 <20091116195050.6117@nanako3.lavabit.com>	 <20091116162533.GA30737@coredump.intra.peff.net> <d1c0fbfa0911160858k2cdd35bfvf27df2a5c97348ad@mail.gmail.com>
+From: Matt Di Pasquale <liveloveprosper@gmail.com>
+Subject: git multisite setup
+Date: Mon, 16 Nov 2009 13:18:36 -0500
+Message-ID: <13f0168a0911161018r6fc67d29n781cca670a66815b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Brian Collins <bricollins@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 16 19:07:50 2009
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 16 19:19:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NA5zO-0004pW-4i
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 19:07:46 +0100
+	id 1NA6AK-0002QD-NE
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 19:19:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752283AbZKPSHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 13:07:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752197AbZKPSHe
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 13:07:34 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:34471 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751993AbZKPSHd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 13:07:33 -0500
-X-Greylist: delayed 438 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Nov 2009 13:07:33 EST
-Received: by mail.nrlssc.navy.mil id nAGI0COm024619; Mon, 16 Nov 2009 12:00:12 -0600
-In-Reply-To: <d1c0fbfa0911160858k2cdd35bfvf27df2a5c97348ad@mail.gmail.com>
-X-OriginalArrivalTime: 16 Nov 2009 18:00:12.0625 (UTC) FILETIME=[A4C33C10:01CA66E6]
+	id S1751985AbZKPSSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 13:18:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751893AbZKPSSw
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 13:18:52 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:60519 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751825AbZKPSSv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 13:18:51 -0500
+Received: by bwz27 with SMTP id 27so5949407bwz.21
+        for <git@vger.kernel.org>; Mon, 16 Nov 2009 10:18:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=V/GpinM1NQq1PSbykPlynmMPUSW4WnjvEVRH3BD694Q=;
+        b=YIRg0FwK7NtYXNyscV+Mcoo4Jl2gcHSeZ76DjqujZkiQEsb9KUsuTpCYnf1hxrm91m
+         W5BGNRl1aMIkEcVLiZz+jJMcn2YZ/XUqMcAQMLkktgvnkeYnKy4ogzSStNk7foKXkgAk
+         tGVf04jzEJ5lObCX1TUGmdmuajI59mzErZaiA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=PAbyHNox2b2PAHaUaUoJTQv/W3qJeUTKSwJETwF7DGVXAxUiTOXrt+cw3tHRnRb200
+         WBJj/lFx0Nh7SOshGzuIyoTkIcXel3sDmQjpcjWl5ZfC/sqlH9Zckom3Xp7tkwYf5WYx
+         2Wel/DeN2tjvjHTEsZe3mobMyy6cjyE7On6tY=
+Received: by 10.216.89.135 with SMTP id c7mr1538169wef.62.1258395536147; Mon, 
+	16 Nov 2009 10:18:56 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133021>
 
-Brian Collins wrote:
->>  1. The patch was line-wrapped; I had to de-munge it manually to apply.
-> 
-> Ugh, does gmail do this?
+Hi,
+In my sites folder i have folders for different sites of mine:
+example.com example2.com, and i also have generic files like an
+includes dir and a .htaccess file that all sites use. what is the best
+way to track the generic files and the different sites?
 
-In my experience, yes.
+i was thinking each site has its own .git repo. and then make a .git
+repo for my sites folder but ignore the individual sites dirs.
+actually that's what i'm doing now.
 
-There's a section in Documentation/SubmittingPatches about using the imap
-interface to upload patches into gmail's "Drafts" folder.  SubmittingPatches
-then says to "Go to your Gmail account, open the Drafts folder, and find the
-patch email, fill in the To: and CC: fields and send away".  I tried that
-once and the gmail web interface still introduced new lines.  Either I'm doing
-something wrong, or that document should be changed to clarify that the web
-interface cannot be used even if the patch is uploaded to the Drafts folder
-via imap.
+should i use submodules? i don't really understand submodules and the
+examples i saw did not cover nested folders
 
--brandon
+Thanks!
+
+matt
