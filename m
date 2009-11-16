@@ -1,191 +1,149 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Expand ~ and ~user in core.excludesfile, commit.template
-Date: Mon, 16 Nov 2009 14:49:26 -0800
-Message-ID: <7v3a4enkzt.fsf@alter.siamese.dyndns.org>
-References: <1258366060-27966-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 0/2] user-manual: new "getting started" section
+Date: Tue, 17 Nov 2009 00:52:37 +0200
+Message-ID: <94a0d4530911161452xe82858el322a1985341bf13c@mail.gmail.com>
+References: <1256377489-16719-1-git-send-email-felipe.contreras@gmail.com>
+	 <7vy6n065os.fsf@alter.siamese.dyndns.org>
+	 <7vr5ss64e5.fsf@alter.siamese.dyndns.org>
+	 <94a0d4530910241316r3fc4136emd036d18aa45a4192@mail.gmail.com>
+	 <7vy6n02mrk.fsf@alter.siamese.dyndns.org>
+	 <94a0d4530910250243k4cbc3c18l5e018a05e5afdb2d@mail.gmail.com>
+	 <20091025111438.GA11252@progeny.tock>
+	 <94a0d4530911111515q643e263bn3adc6b47cd968d3d@mail.gmail.com>
+	 <4AFBF18E.7070906@drmicha.warpmail.net>
+	 <20091114060600.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Karl Chen <quarl@quarl.org>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Nov 16 23:49:51 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Hannu Koivisto <azure@iki.fi>, Jeff King <peff@peff.net>,
+	Wincent Colaiuta <win@wincent.com>,
+	Matthias Lederhofer <matled@gmx.net>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Mon Nov 16 23:53:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAAON-0001rq-CA
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 23:49:51 +0100
+	id 1NAARv-0003S7-Hp
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 23:53:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754556AbZKPWtd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 17:49:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754385AbZKPWtd
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 17:49:33 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56612 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752121AbZKPWtc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 17:49:32 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FA7880C63;
-	Mon, 16 Nov 2009 17:49:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AufBk+gLO3fDbZ/qTIEQqQNeIFU=; b=UqEYeC
-	Hq6t/Og+q+ddvKkfuIF9bneWIXRRb1Oy4SbuYSqmlmL3PyW8vQMJQGegP1idG8Ma
-	q5US79/RVwG1k1VNP1AnX/fK0AuJKJ74T/PBkG4DxG+imyHzn/4fyO62mOx1f003
-	OO5UzqOpp22Y2FqMsb91CUnuHIsruxE1Qjc5I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ylAG+NttsojqWFsLzUXH2aTCoc+Hx88I
-	279sXx6xX+JN109X1A99dVq1AGP+bk6YF4gQlcc2+ngh0Nght6wCfe9nV/kZ+Htb
-	CHCrvuWlF1X5p9cdCjJNuoaiv1fefOSJiB40l1qsycLnKMD62mMT6R99A6+v9Nyw
-	vqD1wa7/ehs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 01FF480C62;
-	Mon, 16 Nov 2009 17:49:31 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D7F9D80C5E; Mon, 16 Nov
- 2009 17:49:27 -0500 (EST)
-In-Reply-To: <1258366060-27966-1-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Mon\, 16 Nov 2009 11\:07\:40 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4E00E034-D302-11DE-9F5C-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754652AbZKPWwh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Nov 2009 17:52:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754640AbZKPWwf
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 17:52:35 -0500
+Received: from mail-iw0-f178.google.com ([209.85.223.178]:43106 "EHLO
+	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754579AbZKPWwb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Nov 2009 17:52:31 -0500
+Received: by iwn8 with SMTP id 8so4620278iwn.33
+        for <git@vger.kernel.org>; Mon, 16 Nov 2009 14:52:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9WEkE/nGjtWwUe7e9tgAs08RmuaCzeYcTUYUXehF8kI=;
+        b=GNpZPuQS1iJb+TmwEcK+HgwaL0OHfCc77ze3yE7ZdUld4m6B44FTIxdiM5RInRk3I5
+         YPlkstvMO5xcSgjr7/zwBCb4K7VYx1XpZqk6rb2JHJOAy/qADy1Z8pgaBGMyPLPZ7wWS
+         C58aLK/+dBVB2ZOu++YTnLCg/kWlnDTy9LfQA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=DoSmzEphT9TDTLEC+EfiRSk7Tcr/KQLT7s3j0w7DItEfLQVEHG2757DPoXqty8+hFX
+         wEwswL4N2uP0fx8YncgD/BkITpk1qhtIK5XuEqgZH4+lAUXuK+wgJsIiwc/kylaeUzcn
+         YN7xO71TouwJHu/W/seJP0+X8CErRm8E2oqtg=
+Received: by 10.231.161.138 with SMTP id r10mr713735ibx.34.1258411957228; Mon, 
+	16 Nov 2009 14:52:37 -0800 (PST)
+In-Reply-To: <20091114060600.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133033>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+On Fri, Nov 13, 2009 at 11:06 PM, Nanako Shiraishi <nanako3@lavabit.com=
+> wrote:
+> Quoting Michael J Gruber <git@drmicha.warpmail.net>
+>> If you care to go back to that discussion you see that there is good
+>> reason for having both --cached and --index. They are different. "gi=
+t
+>> help cli" explains this nicely.
+>
+> The need to support both options in the same command (eg. apply) mean=
+s
+> that anybody who says "I don't like 'index' nor 'cache'; why don't we
+> change them all to 'stage'" doesn't understand the issue.
+>
+> But that doesn't mean "apply --cached" vs "apply --index" is the best
+> way to let the users specify which operation is requested. I don't
+> think Felipe seriously wants to change them to --gogo vs --dance, but
+> if he made a more constructive proposal, instead of making such a
+> comment whose intended effect is only to annoy people, we may see
+> an improved UI at the end. =C2=A0Proposing "--index-only" vs "--index=
+-too"
+> or even "--stage-only" vs "--stage-too" would have helped him appear
+> to be more serious and constructive and I think your expression
+> "mismatching participants" was a great way to say this.
 
-> My version is made a bit simpler by using strbuf for string
-> manipulation in expand_user_path.
+Right, your explanation is more clear: the fact that we need both
+doesn't mean we cannot use the term "stage". As to "constructive
+proposal" I deliberately tried to avoid them in case somebody tried to
+disregard it as bike-shedding, and move on. What I'm trying to do is
+bring up the issue that the stage is not user friendly.
 
-Nice to see people keeping track of issues that we tried to address but
-didn't complete.
+> There was a similar discussion about "diff --cached". The command
+> compares two things and the current syntax relies on counting the
+> number of treeish on the command line to specify what these two thing=
+s
+> are, and sometimes people are confused which way the comparison occur=
+s.
+>
+> =C2=A0* If you have two treeish, it compares the two treeish. Specifi=
+cally,
+> =C2=A0 it shows the change to make one treeish into the other treeish=
+=2E
+>
+> =C2=A0* If you have one treeish, it compares the treeish with working=
+ tree
+> =C2=A0 or the index (it shows the change to make the treeish into wor=
+king
+> =C2=A0 tree or the index). You need --cached to choose the "index", a=
+nd
+> =C2=A0 this can safely be aliased to --staged.
+>
+> =C2=A0* If you have zero treeish, it compares the index with working =
+tree
+> =C2=A0 (it shows the change to make the index into working tree).
+>
+> But it is also possible to have an alternate syntax to explicitly say
+> what you are comparing with what. Perhaps these may make it unnecessa=
+ry
+> to remember which way the comparison occurs:
+>
+> =C2=A0git diff --tree-vs-staged HEAD
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0same as "git diff --cached HEAD"
+> =C2=A0git diff --staged-vs-tree HEAD
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0same as "git diff -R --cached HEAD"
+>
+> =C2=A0git diff --staged-vs-working
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0same as "git diff"
+> =C2=A0git diff --working-vs-staged
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0same as "git diff -R"
+>
+> =C2=A0git diff --tree-vs-working HEAD
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0same as "git diff HEAD"
+> =C2=A0git diff --working-vs-tree HEAD
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0same as "git diff -R HEAD"
 
-> I'm not sure I fully adressed Junio's point here:
+I like David K=C3=A5gedal's suggestion more:
+http://kerneltrap.org/mailarchive/git/2008/10/29/3857134
 
-We'll see ;-)
+Cheers.
 
-> I'm just copying back into the static buffer to let enter_repo() do
-> the same string manipulation as it used to do (concatenate with .git
-> suffixes). I think the whole enter_repo could use strbuf instead of
-> static buffers, but that's a different point (probably made easier by
-> my patch).
-
-> diff --git a/config.c b/config.c
-> index c644061..0fcc4ce 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -351,6 +351,15 @@ int git_config_string(const char **dest, const char *var, const char *value)
->  	return 0;
->  }
->  
-> +int git_config_pathname(const char **dest, const char *var, const char *value) {
-> +	if (!value)
-> +		return config_error_nonbool(var);
-> +	*dest = expand_user_path(value);
-> +	if (!*dest)
-> +		die("Failed to expand user dir in: '%s'", value);
-> +	return 0;
-> +}
-> +
-
-> @@ -207,43 +208,49 @@ int validate_headref(const char *path)
->  	return -1;
->  }
->  
-> -static char *user_path(char *buf, char *path, int sz)
-> +static inline struct passwd *getpw_str(const char *username, size_t len)
->  {
-> +	if (len == 0)
-> +		return getpwuid(getuid());
-> +
->  	struct passwd *pw;
-
-Decl-after-statement.
-
-Do you need this special case of passing a zero-length string (not NULL
-pointer as a string) to getpw_str() to grab the current user?  Which
-codepath is this needed?
-
-> +	char *username_z = xmalloc(len + 1);
-> +	memcpy(username_z, username, len);
-> +	username_z[len] = '\0';
-> +	pw = getpwnam(username_z);
-> +	free(username_z);
-> +	return pw;
-> +}
-
-> +/*
-> + * Return a string with ~ and ~user expanded via getpw*.  If buf != NULL, then
-> + * it is a newly allocated string. Returns NULL on getpw failure or if
-> + * path is NULL.
-> + */
-> +char *expand_user_path(const char *path)
-> +{
-> +	struct strbuf user_path = STRBUF_INIT;
-> +	char * first_slash = strchrnul(path, '/');
-> +	char * to_copy;
-
-Style: "char *first_slash"
-
-Should't "to_copy" be initialized to "path" here?  What do you copy when
-path[0] is '/'?
-
-> +	if (path == NULL)
-> +		goto return_null;
-> +
-> +	if (path[0] == '~') {
-> +		const char *username = path + 1;
-> +		size_t username_len = first_slash - username;
-> +		struct passwd *pw = getpw_str(username, username_len);
-> +		if (!pw)
-> +			goto return_null;
-> +		strbuf_add(&user_path, pw->pw_dir, strlen(pw->pw_dir));
-> +		to_copy = first_slash;
-> +	} else if (path[0] != '/') {
-> +		to_copy = path;
->  	}
-> -	return buf;
-> +	strbuf_add(&user_path, to_copy, strlen(to_copy));
-> +	return strbuf_detach(&user_path, NULL);
-> +return_null:
-> +	strbuf_release(&user_path);
-> +	return NULL;
->  }
-
-
-
->  /*
-> @@ -291,8 +298,17 @@ char *enter_repo(char *path, int strict)
->  		if (PATH_MAX <= len)
->  			return NULL;
->  		if (path[0] == '~') {
-> -			if (!user_path(used_path, path, PATH_MAX))
-> +			char *newpath = expand_user_path(path);
-> +			if (!newpath || (PATH_MAX - 10 < strlen(newpath))) {
-> +				if (path != newpath)
-> +					free(newpath);
-
-Your expand_user_path() never returns the original, no?
-
->  				return NULL;
-> +			}
-> +			/* Copy back into the static buffer. A pity
-> +			   since newpath was not bounded, but other
-> +			   branches of the if are limited by PATH_MAX
-> +			   anyway. */
-> +			strcpy(used_path, newpath); free(newpath);
->  			strcpy(validated_path, path);
->  			path = used_path;
->  		}
-
-Heh, in a sense you _did_ address my point by punting, but that is Ok.  As
-you said earlier that would be a good topic of a separate patch.
-
-	/*
-         * By the way, we write our
-         * multi-line comments like
-         * this.
-         */
+--=20
+=46elipe Contreras
