@@ -1,59 +1,61 @@
-From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
 Subject: Re: git am and CRLF files
-Date: Mon, 16 Nov 2009 12:15:44 +0100
-Organization: ATLAS Elektronik GmbH
-Message-ID: <4B013460.2030406@atlas-elektronik.com>
-References: <4AFD2A8F.7000806@atlas-elektronik.com> <4B01004A.8060600@atlas-elektronik.com> <20091116195036.6117@nanako3.lavabit.com>
+Date: Mon, 16 Nov 2009 12:43:36 +0100
+Message-ID: <40aa078e0911160343k41393197s56d26576bcbfbe90@mail.gmail.com>
+References: <4AFD2A8F.7000806@atlas-elektronik.com>
+	 <4B01004A.8060600@atlas-elektronik.com>
+	 <20091116195036.6117@nanako3.lavabit.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Mon Nov 16 12:16:16 2009
+X-From: git-owner@vger.kernel.org Mon Nov 16 12:43:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9zZ8-0003or-Jk
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 12:16:14 +0100
+	id 1N9zzl-0006Ea-U9
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 12:43:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751802AbZKPLQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 06:16:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751699AbZKPLQA
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 06:16:00 -0500
-Received: from lxsrv96.atlas.de ([194.156.172.86]:49078 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751645AbZKPLQA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 06:16:00 -0500
-Received: from VSSRV01.atlas.de (vssrv01.atlas.de [10.200.101.18])
-	by mail96.atlas.de (Postfix) with ESMTP id 57994138A2
-	for <git@vger.kernel.org>; Mon, 16 Nov 2009 12:16:02 +0100 (CET)
-X-AuditID: 0ac86512-000000d4000005bc-5c-4b013472176d
-Received: from mgsrv01.atlas.de ([10.200.101.16]) by VSSRV01.atlas.de with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 16 Nov 2009 12:16:02 +0100
-Received: from mgsrv01.atlas.de (localhost [127.0.0.1])
-	by mail01-int.atlas.de (Postfix) with ESMTP id 2697127174;
-	Mon, 16 Nov 2009 12:16:02 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mgsrv01.atlas.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=5.0 tests=ALL_TRUSTED,BAYES_50
-	autolearn=disabled version=3.2.5
-Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
-	by mail01.atlas.de (Postfix) with ESMTP id 1986527172;
-	Mon, 16 Nov 2009 12:16:02 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
+	id S1752313AbZKPLnc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 06:43:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752255AbZKPLnc
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 06:43:32 -0500
+Received: from mail-fx0-f221.google.com ([209.85.220.221]:61387 "EHLO
+	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752019AbZKPLnb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 06:43:31 -0500
+Received: by fxm21 with SMTP id 21so2572885fxm.21
+        for <git@vger.kernel.org>; Mon, 16 Nov 2009 03:43:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=3NwAPI4KdAY35SNYs23VorJpEJGqjrp7lhMifG4+6KE=;
+        b=u1k/vg5p5nQCXCs8jby+0e3In9Uipr6W/oyF11dnw1nYmFoMt4YVOYO7Qhkfv/wPea
+         Zbb8y9k7vHY8z3QWs82y4XBS4uu/fiGfEGW++CZtUBiWSchFduCk1eeKtkome3NQNXVX
+         /HbgfV7SkZHXfI/VSpUoomPGASaBNW8YO8qW4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        b=L97Xj6F3eXZYVjpftduwMBKlUvLVFu6uVRsLhr0UMrnhmV6EcJCEo8GYMt6lYAxX9/
+         cf5zs0wW8CoXh+uxGNv4lni64LToey3996p+8dI+Cam8sU11mYMGFxv9QVOcita8oGqQ
+         A/Nz7NsnoXots+d8w0Hu0mZT4Wo10k4sgOl2E=
+Received: by 10.216.87.140 with SMTP id y12mr1900504wee.4.1258371816222; Mon, 
+	16 Nov 2009 03:43:36 -0800 (PST)
 In-Reply-To: <20091116195036.6117@nanako3.lavabit.com>
-X-Enigmail-Version: 0.96.0
-X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133002>
 
-On 11/16/2009 11:50 AM, Nanako Shiraishi wrote:
+On Mon, Nov 16, 2009 at 11:50 AM, Nanako Shiraishi <nanako3@lavabit.com> wrote:
 > Quoting Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-> 
+>
 >>> A repository with some UNIX (LF) and some Windows (CRLF) files.
 >>> (and no: I will not change the files. My editors handle CRLF and LF correctly)
 >>>
@@ -61,32 +63,30 @@ On 11/16/2009 11:50 AM, Nanako Shiraishi wrote:
 >>>
 >>> 'git am' can't handle changes in CRLF files because the patch
 >>> gets converted (by git mailsplit) to contain only LF.
+>>
 >>> Stefan
+>>
 >> Does anyone have any comment on this ?
-> 
+>
 > This was done very much on purpose.
-> 
+>
 > The "am" command is meant to handle e-mailed patches, and traditionally
 > mails are known to clobber carriage returns.
-> 
-> See commit c2ca1d79dbd54b06a05e5d14a897699e59dc9f9f
-> 
->     Allow mailsplit (and hence git-am) to handle mails with CRLF line-endings
->     
->     It is not that uncommon to have mails with DOS line-ending, notably
->     Thunderbird and web mailers like Gmail (when saving what they call
->     "original" message).  So modify mailsplit to convert CRLF line-endings to
->     just LF.
-> 
+>
 
-I've noticed that.
-But converting everything just breaks git am for CRLF files, doesn't it ?
-Wouldn't it be possible (and sensible) to not convert the diff text, but
-only the rest (mail text, headers, etc.) ?
+According to RFC 5322, email messages use CRLF as the
+newline-sequence. In order to be able to distinguish between CRLF and
+LF in an e-mail patch, the message needs to be use some
+transfer-encoding that preserves newline style (like base64).
 
-Regards,
+Perhaps this would be better fixed by having format-patch (or prehaps
+the MUA ?) base64-encode the message body if the file contains
+non-LF-newlines, and normalizing CRLF to LF before transport-decoding?
+Or does some MUAs transport-decode before storing the message to disk?
 
-Stefan
+I realize this might make it a bit tricky to review patches that
+contains CRLF-newlines before mailing them out, but perhaps inspecting
+the format-patch output is the wrong place to do this?
+
 -- 
-----------------------------------------------------------------
-/dev/random says: Change is inevitable, except from a vending machine.
+Erik "kusma" Faye-Lund
