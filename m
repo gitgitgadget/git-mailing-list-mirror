@@ -1,84 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] format-patch: Ensure that author and commit time are not
- lost
-Date: Mon, 16 Nov 2009 00:20:41 -0500
-Message-ID: <20091116052041.GD14664@coredump.intra.peff.net>
-References: <4B000141.5070503@gmail.com>
- <7vzl6nfqkx.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] http-backend: Fix access beyond end of string.
+Date: Sun, 15 Nov 2009 22:12:31 -0800
+Message-ID: <7viqdb0zhs.fsf@alter.siamese.dyndns.org>
+References: <1258233058-2348-1-git-send-email-tarmigan+git@gmail.com>
+ <20091116013654.GX11919@spearce.org>
+ <20091116045532.GC14664@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?QmrDtnJu?= Gustavsson <bgustavsson@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 16 06:20:50 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Tarmigan Casebolt <tarmigan+git@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 16 07:12:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N9u1B-0002qB-AT
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 06:20:49 +0100
+	id 1N9upX-0000MY-I3
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 07:12:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751670AbZKPFUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 00:20:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750823AbZKPFUh
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 00:20:37 -0500
-Received: from peff.net ([208.65.91.99]:38035 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750761AbZKPFUh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 00:20:37 -0500
-Received: (qmail 14338 invoked by uid 107); 16 Nov 2009 05:24:30 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 16 Nov 2009 00:24:30 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Nov 2009 00:20:41 -0500
-Content-Disposition: inline
-In-Reply-To: <7vzl6nfqkx.fsf@alter.siamese.dyndns.org>
+	id S1752015AbZKPGMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 01:12:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751740AbZKPGMj
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 01:12:39 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:65139 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751276AbZKPGMi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 01:12:38 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D566D808BE;
+	Mon, 16 Nov 2009 01:12:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oQmf2PeqnJcQH00pfcVWZVZ9pwA=; b=A4PJcd
+	rOiGLIejSPANpWemCHDSABUIRwE+CwFbwXwNyqCXLCLm43UlU9h9f4aSGZUJJNSD
+	QtD/NKIS9GbG2ru95znwGoBHI3OmPZdbc5bqGvuC8LoFxGoXJLLXCWtfSKWPJziV
+	Zawt02rCiQUmOZRvjW1JNDYIQaEJzkLIPwa/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=De7rW83kYW9UD2aaToZr7eD2tBL7soUl
+	WUEKmUTEbfdYkh0OlYZ9Z0zTvrp7OdEOwlQOiPE36/BRhYtHgYL0Pxs0NqONJTVl
+	CbiCgB4wUL2ug2xxnfsA9VI7SYHquj1KDbeVKsW9ha856Zc8u1o6pRGALho/qg0E
+	We/JXrR/XpQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A760808BD;
+	Mon, 16 Nov 2009 01:12:39 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 44A30808BC; Mon, 16 Nov
+ 2009 01:12:33 -0500 (EST)
+In-Reply-To: <20091116045532.GC14664@coredump.intra.peff.net> (Jeff King's
+ message of "Sun\, 15 Nov 2009 23\:55\:32 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0B0D27FA-D277-11DE-8571-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/132987>
 
-On Sun, Nov 15, 2009 at 01:03:42PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> I would expect the right solution would be to give send-email an ability
-> to either (1) use "Sender:" to record the operator of the MUA while
-> keeping "From: " taken from the payload, or (2) duplicate "From: " as an
-> in-body header when it sends out.
+> On Sun, Nov 15, 2009 at 05:36:54PM -0800, Shawn O. Pearce wrote:
+> ...
+>> Shouldn't this instead be:
+>> 
+>> diff --git a/http-backend.c b/http-backend.c
+>> index 9021266..16ec635 100644
+>> --- a/http-backend.c
+>> +++ b/http-backend.c
+>> @@ -626,7 +626,7 @@ int main(int argc, char **argv)
+>>  			}
+>>  
+>>  			cmd = c;
+>> -			cmd_arg = xmalloc(n);
+>> +			cmd_arg = xmalloc(n + 1);
+>>  			strncpy(cmd_arg, dir + out[0].rm_so + 1, n);
+>>  			cmd_arg[n] = '\0';
+>>  			dir[out[0].rm_so] = 0;
+>> 
+>> The cmd_arg string was simply allocated too small.  Your fix is
+>> terminating the string one character too short which would cause
+>> get_loose_object and get_pack_file to break.
+>
+> Actually, from my reading, I think his fix is right, because you trim
+> the first character during the strncpy (using "out[0].rm_so + 1").
 
-I agree that send-email is the "right" place for this functionality in
-the git toolchain. And indeed, it already does (2):
+Your regexps all start with leading "/", and rm_so+1 points at the
+character after the slash; the intention being that you would copy
+the rest of the matched sequence without the leading "/".
 
-  $ sed -ne '/$author ne $sender/,+1p' git-send-email.perl
-          if (defined $author and $author ne $sender) {
-                          $message = "From: $author\n\n$message";
+So allocating n = rm_eo - rm_so is Ok.  It counts the space for
+terminating NUL.  But copying "up to n bytes" using strncpy(), only to NUL
+terminate immediately later, is dubious.  You would want to copy only n-1
+bytes.  I.e.
 
-That being said, like you, I usually pull the patches directly from
-format-patch into my MUA, and I fix up the headers manually. I suspect
-there are many others who do the same thing. And each of us has to
-either handle this case manually, or write our own munging code
-ourselves for our particular setup.
-
-So in that sense, even though format-patch is not the right place, it
-may be useful for it to give tool support to people who do not use the
-"format-patch to send-email" workflow. In other words, I would be
-happy if my short glue shell-script became:
-
-  git format-patch --stdout --sender-is-me "$@" >mbox &&
-  mutt -f mbox
-
-and this just handled the case properly, without me having to parse the
-From header of each message and munge the messages in my script.
-
-The arguments against it are:
-
-  1. It is polluting format-patch with MUA cruft.
-
-  2. --sender-is-me (besides being a terrible name) may not be
-     expressive enough. You might want --sender=... depending on the
-     setup of the calling script.
-
-Honestly, though, I send few enough patches made by other people that I
-have never found it to be a huge burden. This would be a minor
-convenience to have.
-
--Peff
+	n = out[0].rm_eo - out[0].rm_so; /* allocation */
+        ... validate and fail invalid method ...
+        cmd_arg = xmalloc(n);
+        memcpy(cmd_arg, dir + out[0].rm_so + 1, n-1);
+        cmd_arg[n-1] = '\0';
