@@ -1,116 +1,105 @@
-From: Ian Hobson <ian@ianhobson.co.uk>
-Subject: Advice/help needed
-Date: Mon, 16 Nov 2009 16:27:35 +0000
-Message-ID: <4B017D77.6060505@ianhobson.co.uk>
+From: Yann Simon <yann.simon.fr@gmail.com>
+Subject: Re: Advice/help needed
+Date: Mon, 16 Nov 2009 17:40:10 +0100
+Message-ID: <551f769b0911160840k6ea274e9q33de777fac7cec70@mail.gmail.com>
+References: <4B017D77.6060505@ianhobson.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 16 17:27:50 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Ian Hobson <ian@ianhobson.co.uk>
+X-From: git-owner@vger.kernel.org Mon Nov 16 17:40:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NA4Qf-0005rU-Su
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 17:27:50 +0100
+	id 1NA4d7-0004Jp-HW
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Nov 2009 17:40:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752524AbZKPQ1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 11:27:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752285AbZKPQ1i
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 11:27:38 -0500
-Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:19069 "EHLO
-	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751827AbZKPQ1h (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Nov 2009 11:27:37 -0500
-Received: from aamtaout02-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout03-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20091116162734.NKJP17277.mtaout03-winn.ispmail.ntl.com@aamtaout02-winn.ispmail.ntl.com>
-          for <git@vger.kernel.org>; Mon, 16 Nov 2009 16:27:34 +0000
-Received: from jupiter.ianhobson.co.uk ([86.12.69.89])
-          by aamtaout02-winn.ispmail.ntl.com
-          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
-          id <20091116162734.QNNM21638.aamtaout02-winn.ispmail.ntl.com@jupiter.ianhobson.co.uk>
-          for <git@vger.kernel.org>; Mon, 16 Nov 2009 16:27:34 +0000
-Received: (qmail 8947 invoked by uid 453); 16 Nov 2009 16:27:32 -0000
-X-Virus-Checked: Checked by ClamAV on ianhobson.co.uk
-Received: from bobgriffiths.leda.hcs (HELO [192.168.0.12]) (192.168.0.12)
-    by ianhobson.co.uk (qpsmtpd/0.40) with ESMTP; Mon, 16 Nov 2009 16:27:32 +0000
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-X-Cloudmark-Analysis: v=1.0 c=1 a=RSyqUlKGgLE1rDCvk3MA:9 a=6aQn318UP8BW6rACUIYA:7 a=BTgng9JRT6wIwVoYLXUjdqS2CgYA:4
+	id S1753396AbZKPQkH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Nov 2009 11:40:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753387AbZKPQkG
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 11:40:06 -0500
+Received: from gv-out-0910.google.com ([216.239.58.184]:38411 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753372AbZKPQkF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Nov 2009 11:40:05 -0500
+Received: by gv-out-0910.google.com with SMTP id r4so657292gve.37
+        for <git@vger.kernel.org>; Mon, 16 Nov 2009 08:40:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=inyRD5BpickM642UBZ82d4y/GqyXi1vlL19fLZaIuA4=;
+        b=KU/md5nS/Ydm1fy0GthL26B5Y1Z0854MnKC7jTDVP70xHN5zmrCMHhzp7/BT6Gts4q
+         7+TqCKQlqcgcmV3yLU0dEpmb7WN3hsfVgadYl9d5XgGIaWfG/1sr8MM+CB1HB/uR6hqo
+         4pgRAw92tGEwWNadIvLTguZm8hl1QKRL3gSVs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Jb1m6Np0WCb56EnjPsgwtlMqI7iWP5r+/QzqRtTSYLUYJdoit6jMcsh+J0Vv3JJP82
+         tjtrW/IUlvxYRGy1pHN5ujqvG36GL9cN33VsPUI0NUL3R9HnCMX5FnblCQ7BYYo+f69d
+         iAL8nY6lmG9/by6+0rzq74ISfA8WQR4wC8p1Y=
+Received: by 10.216.85.134 with SMTP id u6mr474246wee.213.1258389610375; Mon, 
+	16 Nov 2009 08:40:10 -0800 (PST)
+In-Reply-To: <4B017D77.6060505@ianhobson.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133016>
 
-Hi all,
+2009/11/16 Ian Hobson <ian@ianhobson.co.uk>:
+> My thoughts are to have 4 branches, one for each customer. 99% of all
+> changes will be needed by all (or at least most)
+> of the customers (P,W,S and E). How can I make a change to master and=
+ then
+> use git to apply those changes to the four branches, without losing t=
+he
+> differences between branches?
+>
+> For example (if this is the best way) go from this
+> O-----O-----A-----B-----C =C2=A0(master)
+> =C2=A0\----P
+> =C2=A0\---W
+> =C2=A0 \--S
+> =C2=A0 =C2=A0\-E
+>
+> to first this, where D is the net effect of A B and C =C2=A0(this is =
+for ease of
+> reading logs, and commit messages),
+> O-----O-----D =C2=A0(head) =C2=A0\----P
+> =C2=A0\---W
+> =C2=A0 \--S
+> =C2=A0 =C2=A0\-E
+>
+> and then to this, (without editing all the files four times?)
+> O-----O-----D =C2=A0(head)
+> =C2=A0\----P-----D'
+> =C2=A0\---W----D''
+> =C2=A0 \--S-----D'''
+> =C2=A0 =C2=A0\-E-----D''''
 
-I am trying to switch to GIT (from SVN), and have become sorely 
-confused. I am not sure of the best way to solve the problem I have, 
-(nor how to actually implement a solution when one is chosen).
+What I would do is:
+- one branch for the common
+- one branch for each customer, which contains the specific
+differences compare to the common branch
 
-I am building a web application in php. There are  2 (soon to be four) 
-versions each slightly different for different customers. Each needs 
-testing when installed in "/" and "/dir" on the web site.
+You could program on the common branch.
+When you are ready, you can checkout each specific branch and rebase
+on the common branch.
+=46or example:
+$ git checkout common
+edit, test, commit
+$ git checkout client1
+$ git rebase common
+$ git checkout client2
+$ git rebase common
 
-So far I have one system that in installed in a git repo on a Linux VM 
-with a share. This way I can develop in windows where I am familiar, 
-serve the files under linux (to match the production environment) and 
-run unit tests using phpUnit. The test files are all in a sub-directory 
-of the main directory. The application is served from a directory in the 
-website, so I could have different directories for different purposes, 
-but I have not had to use this yet.
+Another solution is to have a branch for each customer, to commit on
+one branch, and to cherry-pick this last commit on all the other
+branches.
 
-Before release, I fetch and merge the files into a second installation 
-under windows, where I can serve it from the root. This forms a second 
-level of test. I release by copying the files with FTP (so that test 
-files and the GIT repo don't go on the production server).
-
-This arrangement only works because I have been able to set up the 
-configuration files, database users and similar so they are all the same 
-on each installation. With 4 similar versions this will no longer be 
-possible.
-
-What I want to be able to do is control all 4 versions in the same 
-manner, keep all file - common, different and test - in git, and have 
-checkout worry about changing versions.
-
-My thoughts are to have 4 branches, one for each customer. 99% of all 
-changes will be needed by all (or at least most)
-of the customers (P,W,S and E). How can I make a change to master and 
-then use git to apply those changes to the four branches, without losing 
-the differences between branches?
-
-For example (if this is the best way) go from this
-O-----O-----A-----B-----C  (master)
-  \----P
-   \---W
-    \--S
-     \-E
-
-to first this, where D is the net effect of A B and C  (this is for ease 
-of reading logs, and commit messages),
-O-----O-----D  (head) 
-  \----P
-   \---W
-    \--S
-     \-E
-
-and then to this, (without editing all the files four times?)
-O-----O-----D  (head)
-  \----P-----D'
-   \---W----D''
-    \--S-----D'''
-     \-E-----D''''
-
-Or would I be better having 4 repositories, one for each customer? Then 
-I need to pull changes and cherry pick the changes I want for each 
-customer?
-
-I am the only developer, so the processes need to be simple so I am not 
-faced with sorting out my own errors! :)
-
-Regards
-
-Ian
+Yann
