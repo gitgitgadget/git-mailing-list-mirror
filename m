@@ -1,73 +1,81 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: Re: git multisite setup
-Date: Tue, 17 Nov 2009 01:13:20 +0100
-Message-ID: <20091117001320.GA13074@vidovic>
-References: <13f0168a0911161018r6fc67d29n781cca670a66815b@mail.gmail.com>
+From: "Philippe Bruhat (BooK)" <philippe.bruhat@free.fr>
+Subject: Re: [PATCH] Make sure $PERL_PATH is defined when the test suite is
+ run.
+Date: Tue, 17 Nov 2009 01:17:01 +0100
+Message-ID: <20091117001701.GB3608@plop>
+References: <20091116234849.GA3608@plop>
+ <1258415600-4656-1-git-send-email-book@cpan.org>
+ <7v1vjym2oq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-To: Matt Di Pasquale <liveloveprosper@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 17 01:13:36 2009
+Cc: "Philippe Bruhat (BooK)" <book@cpan.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 17 01:17:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NABhO-0001Oc-V8
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 01:13:35 +0100
+	id 1NABkx-0002bd-9S
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 01:17:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754818AbZKQANY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 19:13:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754730AbZKQANY
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 19:13:24 -0500
-Received: from ey-out-2122.google.com ([74.125.78.25]:48470 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754517AbZKQANX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 19:13:23 -0500
-Received: by ey-out-2122.google.com with SMTP id 9so2107188eyd.19
-        for <git@vger.kernel.org>; Mon, 16 Nov 2009 16:13:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=vd0DRUaaTB3jPwVz2vzkdghWAVBj2Ct9fC1hptNDkr4=;
-        b=g2sNlsFcXD+EJqLlZaq5CDQU3qZvoR72596mysIuV/bBLQsFinrwBmVYggrbD202C3
-         gsxl2K0iK+E0WGuRVARpD805ZN8pBSXlppJwoXF3DC7z7NkADaYuiVipg3R7ZGqKyuRz
-         Ip3RK/EbrLjmWgUKjHjSd1Dj6PUAWyaWPIfig=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=irNUEyZRmo9LdYYp52VMNnlNZKjIsb4Cvyg/8xPDcNLmN6bFjDM47FATCxBeR+u8zX
-         HZIv7iMz/OpVyB8WQpUYDTkeFf4gKistAoGj3nXw+tBT1SSNDBUuVv8Jfa2RofbTX+hy
-         M6p42kWPmO6uomA7oTeDruiaZliJ47sCUNlTc=
-Received: by 10.213.110.206 with SMTP id o14mr2182003ebp.6.1258416808700;
-        Mon, 16 Nov 2009 16:13:28 -0800 (PST)
-Received: from @ (91-164-137-149.rev.libertysurf.net [91.164.137.149])
-        by mx.google.com with ESMTPS id 7sm2336026eyg.41.2009.11.16.16.13.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 16 Nov 2009 16:13:26 -0800 (PST)
+	id S1754741AbZKQARD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 19:17:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754629AbZKQARC
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 19:17:02 -0500
+Received: from mail-out3.booking.com ([91.195.237.20]:45602 "EHLO
+	mail-out3.booking.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754594AbZKQARB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 19:17:01 -0500
+Received: from corpds-102.ams4.corp.booking.com ([10.196.68.83])
+	by mtx-101.ams4.prod.booking.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <philippe.bruhat@free.fr>)
+	id 1NABkk-0002I9-0B; Tue, 17 Nov 2009 01:17:02 +0100
+Received: from ams4-mail-03.ams4.corp.booking.com ([10.196.68.31])
+	by corpds-102.ams4.corp.booking.com with esmtp (Exim 4.69)
+	(envelope-from <philippe.bruhat@free.fr>)
+	id 1NABkj-0002R6-UO; Tue, 17 Nov 2009 01:17:01 +0100
+Received: from plop (bkbastion-01.corp.lhr1.booking.com [10.146.90.100])
+	by ams4-mail-03.ams4.corp.booking.com (Postfix) with ESMTP id B906CEF8005;
+	Tue, 17 Nov 2009 01:17:01 +0100 (CET)
+Received: from book by plop with local (Exim 4.69)
+	(envelope-from <philippe.bruhat@free.fr>)
+	id 1NABkj-0001NL-Gl; Tue, 17 Nov 2009 01:17:01 +0100
 Content-Disposition: inline
-In-Reply-To: <13f0168a0911161018r6fc67d29n781cca670a66815b@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <7v1vjym2oq.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133044>
 
-The 16/11/09, Matt Di Pasquale wrote:
-
-> In my sites folder i have folders for different sites of mine:
-> example.com example2.com, and i also have generic files like an
-> includes dir and a .htaccess file that all sites use. what is the best
-> way to track the generic files and the different sites?
+On Mon, Nov 16, 2009 at 04:10:13PM -0800, Junio C Hamano wrote:
+> "Philippe Bruhat (BooK)" <book@cpan.org> writes:
 > 
-> i was thinking each site has its own .git repo. and then make a .git
-> repo for my sites folder but ignore the individual sites dirs.
-> actually that's what i'm doing now.
+> > diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+> > index 64f947d..dc710f8 100755
+> > --- a/t/t9400-git-cvsserver-server.sh
+> > +++ b/t/t9400-git-cvsserver-server.sh
+> > @@ -20,7 +20,7 @@ then
+> >      say 'skipping git-cvsserver tests, cvs not found'
+> >      test_done
+> >  fi
+> > -perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
+> > +$PERL_PATH -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
+> >      say 'skipping git-cvsserver tests, Perl SQLite interface unavailable'
+> >      test_done
+> >  }
+> 
+> Shouldn't these $PERL_PATH all be quoted inside double-quotes?
 
-This looks good to me. Why would you like to change?
+I have no idea. I assume it's to protect against paths with a space in
+them, so yes, probably.
+
+Amending my patch and sending again.
 
 -- 
-Nicolas Sebrecht
+ Philippe Bruhat (BooK)
+
+ When you double-cross a friend, you triple-cross yourself.
+                                     (Moral from Groo The Wanderer #8 (Epic))
