@@ -1,52 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] RFC Allow case insensitive search flag with git-grep
- for fixed-strings
-Date: Tue, 17 Nov 2009 02:38:45 -0500
-Message-ID: <20091117073845.GC4007@coredump.intra.peff.net>
-References: <B7C4E16C-B15D-4A7B-873A-B6BD0FDAD8C8@gmail.com>
- <20091116195050.6117@nanako3.lavabit.com>
- <7vocn2m48d.fsf@alter.siamese.dyndns.org>
- <7v639am2uq.fsf@alter.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] Document git-svn's first-parent rule
+Date: Mon, 16 Nov 2009 23:42:08 -0800
+Message-ID: <20091117074208.GA337@dcvr.yhbt.net>
+References: <ea845c8757a629d692bb6cd3827887f0e811c044.1258366486.git.trast@student.ethz.ch> <20091116231455.GA13460@dcvr.yhbt.net> <7vd43his6n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Brian Collins <bricollins@gmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 17 08:38:53 2009
+X-From: git-owner@vger.kernel.org Tue Nov 17 08:42:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAIeI-0004ZD-NZ
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 08:38:51 +0100
+	id 1NAIhh-0005fr-BG
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 08:42:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755851AbZKQHij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2009 02:38:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755842AbZKQHij
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 02:38:39 -0500
-Received: from peff.net ([208.65.91.99]:32823 "EHLO peff.net"
+	id S1755854AbZKQHmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2009 02:42:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755853AbZKQHmG
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 02:42:06 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:33969 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755839AbZKQHij (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2009 02:38:39 -0500
-Received: (qmail 21817 invoked by uid 107); 17 Nov 2009 07:42:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 17 Nov 2009 02:42:33 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Nov 2009 02:38:45 -0500
+	id S1755749AbZKQHmF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2009 02:42:05 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B55C1F509;
+	Tue, 17 Nov 2009 07:42:09 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <7v639am2uq.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vd43his6n.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133072>
 
-On Mon, Nov 16, 2009 at 04:06:37PM -0800, Junio C Hamano wrote:
-
-> By the way, I would suggest updating the test like the attached.
+Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
 > 
-> By looking for rEtUrN, you will catch a bug that breaks "-i"-ness
-> of the grep, but your test does not catch breakages in "-F"-ness.
+> > Thomas Rast <trast@student.ethz.ch> wrote:
+> >> git-svn has the following rule to detect the SVN base for its
+> >> operations: find the first git-svn-id line reachable through
+> >> first-parent ancestry.  IOW,
+> >> 
+> >>   git log --grep=^git-svn-id: --first-parent -1
+> >> 
+> >> Document this, as it is very important when using merges with git-svn.
+> >> 
+> >> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> >
+> > Thanks Thomas,
+> >
+> > Acked-by: Eric Wong <normalperson@yhbt.net>
+> 
+> Thanks; is it a good time to pull from your bogomips repository to get
+> accumulated changes?
 
-Your change looks good to me.
+Now is, I just pushed to it:
 
--Peff
+Eric Wong (3):
+      git svn: read global+system config for clone+init
+      git svn: add authorsfile test case for ~/.gitconfig
+      git svn: attempt to create empty dirs on clone+rebase
+
+Thomas Rast (1):
+      Document git-svn's first-parent rule
+
+Toby Allsopp (1):
+      git svn: handle SVN merges from revisions past the tip of the branch
+
+HEAD=ce45a45f24cc7b3ccc7f6ebcd0025559b4421bda
+
+-- 
+Eric Wong
