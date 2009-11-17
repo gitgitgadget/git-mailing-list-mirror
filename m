@@ -1,108 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] RFC Allow case insensitive search flag with git-grep for
- fixed-strings
-Date: Mon, 16 Nov 2009 16:06:37 -0800
-Message-ID: <7v639am2uq.fsf@alter.siamese.dyndns.org>
-References: <B7C4E16C-B15D-4A7B-873A-B6BD0FDAD8C8@gmail.com>
- <20091116195050.6117@nanako3.lavabit.com>
- <7vocn2m48d.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] Make sure $PERL_PATH is defined when the test suite is
+ run.
+Date: Mon, 16 Nov 2009 16:10:13 -0800
+Message-ID: <7v1vjym2oq.fsf@alter.siamese.dyndns.org>
+References: <20091116234849.GA3608@plop>
+ <1258415600-4656-1-git-send-email-book@cpan.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Brian Collins <bricollins@gmail.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 17 01:06:56 2009
+Cc: git@vger.kernel.org
+To: "Philippe Bruhat \(BooK\)" <book@cpan.org>
+X-From: git-owner@vger.kernel.org Tue Nov 17 01:10:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NABax-0007Ql-77
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 01:06:55 +0100
+	id 1NABeR-0000Fv-23
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 01:10:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754793AbZKQAGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 19:06:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754770AbZKQAGn
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 19:06:43 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51635 "EHLO
+	id S1754997AbZKQAKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 19:10:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754843AbZKQAKR
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 19:10:17 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50575 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754769AbZKQAGm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 19:06:42 -0500
+	with ESMTP id S1754818AbZKQAKQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 19:10:16 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B4E48039E;
-	Mon, 16 Nov 2009 19:06:48 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CF7AC9F826;
+	Mon, 16 Nov 2009 19:10:19 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xIk6YUPzy1tXg3wp6FvC/gSUKOg=; b=x6ERJ4
-	mLrgxoMjgJlR49sOiaoG4ixNv5M8OPhgz93NTj1FAe++e4s8vfeJJZh+rfvLpV+X
-	HGLdT8okT3NpT7itQqAKrDsz+YH5FVKdtaLjt2IvBchwuMm+kYu99KChvD7Ex49V
-	lHsC1mJKASsLNrZx9UuJxULosBW0OVmw/94Uk=
+	:content-type; s=sasl; bh=yYhCOR60Ekds2JvIFsXGMAJLC1k=; b=MYH8RK
+	jY2InvHIldCfQReP7TjEc4kRSAY8i+NOqHoE/eKlRzLnjmkWyEyRbKZgkX7s3F2I
+	H7nMuCjwilMShPCnkG9cB72njXkhrVZY9k38ak8Zo0hyFrDhqgUEmsquuI5kBk8U
+	i5xRLsYj5EEjt5b7M0hbJrEZg1VWkMPi0Ay20=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AQ/MjZPGzPO/dU3DlgYpRHWu3GcQFaVs
-	JcdyYh0KkBPhfv3kZBndB/CZCH1NCHvPhG/mvq8j8XVFQW2uCC8qtPnvY+h6qF9t
-	Myr5Udvd8Z+sI2x8riyRkIbOkaY/SE1V7tyyBz9/RqLg7gncz0I5Awr0/vQTfpYh
-	szdXG763qw0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E4A7B8039D;
-	Mon, 16 Nov 2009 19:06:43 -0500 (EST)
+	:content-type; q=dns; s=sasl; b=Wr+ax2yC5DT4BD40hiryYrp8NvWCJ4q7
+	+OzgJy/JrE0RmDFOf5kByoGcZRpf4YsNOjWGLbbl0/RzVIaPGGdM0O3QrXI+SaJW
+	aWU8mMK7oXOZjJNIWcIDpZIV9WKD+1M8NE2msdYlNiIOlNHqwtL1pDaHQ7gdv3J6
+	jpGuk8LMUCA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AFC959F825;
+	Mon, 16 Nov 2009 19:10:17 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D831680399; Mon, 16 Nov
- 2009 19:06:38 -0500 (EST)
-In-Reply-To: <7vocn2m48d.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon\, 16 Nov 2009 15\:36\:50 -0800")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 933D09F824; Mon, 16 Nov 2009
+ 19:10:14 -0500 (EST)
+In-Reply-To: <1258415600-4656-1-git-send-email-book@cpan.org> (Philippe
+ Bruhat's message of "Tue\, 17 Nov 2009 00\:53\:20 +0100")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 16D7A83A-D30D-11DE-A068-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 962D634A-D30D-11DE-9004-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133042>
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Philippe Bruhat (BooK)" <book@cpan.org> writes:
 
-> We got sidetracked into a larger picture issues of how to allow platform
-> ports to selectively call out to external grep depending on the feature
-> set supported by the external grep implementations.
->
-> Later I looked at the original patch, the patch text looked fine (except
-> that I would have called the field "ignorecase", not "caseless"), but it
-> wasn't signed off and did not have usable log message.
->
-> And then I forgot ;-)
->
-> Thanks for a reminder, and thanks Jeff for a resend.
+> diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+> index 64f947d..dc710f8 100755
+> --- a/t/t9400-git-cvsserver-server.sh
+> +++ b/t/t9400-git-cvsserver-server.sh
+> @@ -20,7 +20,7 @@ then
+>      say 'skipping git-cvsserver tests, cvs not found'
+>      test_done
+>  fi
+> -perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
+> +$PERL_PATH -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
+>      say 'skipping git-cvsserver tests, Perl SQLite interface unavailable'
+>      test_done
+>  }
 
-By the way, I would suggest updating the test like the attached.
-
-By looking for rEtUrN, you will catch a bug that breaks "-i"-ness
-of the grep, but your test does not catch breakages in "-F"-ness.
-
-I am also tempted to add --no-ext-grep to this test, but that would be a
-separate fix when it becomes necessary, I guess.
-
-diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
-index 87b47dd..35a1e7a 100755
---- a/t/t7002-grep.sh
-+++ b/t/t7002-grep.sh
-@@ -14,6 +14,7 @@ int main(int argc, const char **argv)
- {
- 	printf("Hello world.\n");
- 	return 0;
-+	/* char ?? */
- }
- EOF
- 
-@@ -346,11 +347,11 @@ test_expect_success 'grep from a subdirectory to search wider area (2)' '
- '
- 
- cat >expected <<EOF
--hello.c:	return 0;
-+hello.c:int main(int argc, const char **argv)
- EOF
- 
- test_expect_success 'grep -Fi' '
--	git grep -Fi rEtUrN >actual &&
-+	git grep -Fi "CHAR *" >actual &&
- 	test_cmp expected actual
- '
- 
+Shouldn't these $PERL_PATH all be quoted inside double-quotes?
