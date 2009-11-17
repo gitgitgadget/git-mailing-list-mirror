@@ -1,88 +1,89 @@
-From: Sylvain Rabot <sylvain@abstraction.fr>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Make Gitweb behave like Apache mod_userdir
-Date: Tue, 17 Nov 2009 20:56:11 +0100
-Message-ID: <7fce93be0911171156h3af4c7e6i93407db5bcab7059@mail.gmail.com>
+Date: Tue, 17 Nov 2009 12:15:28 -0800
+Message-ID: <7vhbssewm7.fsf@alter.siamese.dyndns.org>
 References: <7fce93be0911150204h259b7424md251c54186d05b7d@mail.gmail.com>
-	 <200911171458.56047.jnareb@gmail.com>
-	 <7fce93be0911170751r6d51ae7bn20fd593741b3eba6@mail.gmail.com>
-	 <200911171912.40658.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
-	Luben Tuikov <ltuikov@yahoo.com>, "J.H." <warthog9@kernel.org>,
-	git <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 17 20:56:46 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
+To: Sylvain Rabot <sylvain@abstraction.fr>
+X-From: git-owner@vger.kernel.org Tue Nov 17 21:15:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAUA6-0004MI-Et
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 20:56:26 +0100
+	id 1NAUSt-0005N3-4a
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 21:15:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756153AbZKQT4H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Nov 2009 14:56:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755583AbZKQT4H
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 14:56:07 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:63216 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755571AbZKQT4G convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Nov 2009 14:56:06 -0500
-Received: by yxe17 with SMTP id 17so369792yxe.33
-        for <git@vger.kernel.org>; Tue, 17 Nov 2009 11:56:11 -0800 (PST)
-Received: by 10.101.106.24 with SMTP id i24mr2148435anm.102.1258487771111; 
-	Tue, 17 Nov 2009 11:56:11 -0800 (PST)
-X-Originating-IP: [80.13.22.90]
-In-Reply-To: <200911171912.40658.jnareb@gmail.com>
+	id S1752049AbZKQUPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2009 15:15:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752014AbZKQUPe
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 15:15:34 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47344 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751542AbZKQUPe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2009 15:15:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 720969FFA4;
+	Tue, 17 Nov 2009 15:15:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7Xk2XazCQ0LkeyTIItUCbpUn/fE=; b=XODBh/
+	hejn5eSxk7ykZ9gW8o9m48MBBzsEnCoUreLleF7Lcvviii28QOKal0yZSIG2Ze+u
+	ExXOLYli7HYUUudB2oZsavEC+0HJNXIrXMEenTUxbc0J0ryW2llhouyz1aGZONzL
+	W788u1QD1tdgwZLw+jTLxvGV8f5Foqv1CW2xQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qqGXCIfGGemGUMQjQLNJppB7NOcFnQaj
+	HdTv9PPzIhOS+s88Lzp4DqfKLKIb0UvLCXq00HgCvbMSEeG72Vq1VmI7gJqNojdO
+	N6P2KslZOB+KgFSu76PHbRNXxRRBJ9/zfSvRxrOkNzvux1P5mRVEPK2vBnN3JBHJ
+	7HVCPj64tiM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 426909FFA0;
+	Tue, 17 Nov 2009 15:15:35 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B93F59FF9F; Tue, 17 Nov 2009
+ 15:15:30 -0500 (EST)
+In-Reply-To: <7fce93be0911150204h259b7424md251c54186d05b7d@mail.gmail.com>
+ (Sylvain Rabot's message of "Sun\, 15 Nov 2009 11\:04\:03 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F6DF7AE0-D3B5-11DE-A7F0-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133100>
 
-On Tue, Nov 17, 2009 at 19:12, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Tue, 17 Nov 2009, Sylvain Rabot wrote:
->> On Tue, Nov 17, 2009 at 14:58, Jakub Narebski <jnareb@gmail.com> wro=
-te:
->
->> > The description is a bit lacking. =A0Where user should put theirs =
-git
->> > repositories, or symbolic links to git repositories?
->>
->> As I said It's only configuration so It depends of your server
->> architecture. If admin of the server decides he allows users to brow=
-se
->> via gitweb their private/public repos which are linked in
->> /home/*/.gitweb or anything else he has to modify the environmental
->> variable in the rewrite rule according to his wish.
->
-> So in described configuration, to make repository visible user would =
-have
-> to put repository, or symbolic link to repository (or .git/ directory=
- of
-> the repository) in ~/gitweb/ directory (just like one would need to p=
-ut
-> HTML files in ~/public_html/ or ~/WWW/ to have them visible as web si=
-te),
-> isn't it?
->
+Sylvain Rabot <sylvain@abstraction.fr> writes:
 
-That's right.
+> +If you want gitweb to act a bit like UserDir mod in apache, knowing, http://<host>/~<user> 
+> +will list all git repos of <user> located in a special directory in his home (/home/<user>/gitweb/), 
+> +do the following steps :
+> +
+> +Add this to the VirtualHost section of your apache configuration file :
+> +
+> +   RewriteRule ^/~([^\/]+)/?$  /cgi-bin/gitweb.cgi [QSA,E=GITWEB_PROJECTROOT:/home/$1/gitweb/,L,PT]
+> +
+> +Modify your gitweb.conf file, located at /etc/gitweb.conf in this example, with :
+> +
+> +   $projectroot = $ENV{'GITWEB_PROJECTROOT'} || "/path/to/the/defaul/project/root"; 
+> +
+> +Thus, each user with a gitweb folder in his home will be able to browse it with gitweb.
+> +/!\ The gitweb folder and user's home folder must be readable by the webserver user.
 
->> > How it would look like in gitweb?
->>
->> What do you mean ?
->
-> How would example gitweb URL to repository look like?
+Wouldn't it be a good idea to somehow make this work well together with
+the --user-path feature of git-daemon?
 
-http://repo.or.cz/ -> list the main GITWEB_PROJECTROOT (e.g.: /pub/scm)
-http://repo.or.cz/~user -> list /home/user/gitweb
-http://repo.or.cz/~user2 -> list /home/user2/gitweb
-=2E..
+Perhaps the recommended name given in the example shouldn't be ~/gitweb,
+but more like ~/public_git, as this is like ~/public_html but for git
+repositories.  Then the end users will browse
 
->
-> --
-> Jakub Narebski
-> Poland
->
+	http://my.site/~gitster/public_git/git.git
+
+and gitweb can be told to show
+
+	clone URL: git://my.site/~gitster/public_git/git.git
+
+on the page.  If the site administrator runs git-daemon with --user-path
+set to public_git, everything will work seamlessly, no?
