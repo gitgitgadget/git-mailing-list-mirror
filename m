@@ -1,65 +1,68 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 1/2] replace: use a GIT_NO_REPLACE_OBJECTS env variable
-Date: Tue, 17 Nov 2009 08:42:18 +0100
-Message-ID: <4B0253DA.1090003@viscovery.net>
-References: <20091117051125.3588.91072.chriscool@tuxfamily.org>
+From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+Subject: Re: [PATCH] Doc: mention the crlf attribute in config autocrlf section
+Date: Tue, 17 Nov 2009 00:43:31 -0700
+Message-ID: <20091117074330.GA2813@comcast.net>
+References: <1258223700-4009-1-git-send-email-mmogilvi_git@miniinfo.net> <20091116195048.6117@nanako3.lavabit.com> <20091117035945.GA1728@comcast.net> <7v7htpirmy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	bill lam <cbill.lam@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Paul Mackerras <paulus@samba.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Nov 17 08:42:44 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 17 08:43:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAIhv-0005lU-A5
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 08:42:35 +0100
+	id 1NAIix-00068R-W1
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 08:43:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755873AbZKQHmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2009 02:42:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755420AbZKQHmT
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 02:42:19 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:15693 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755272AbZKQHmS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2009 02:42:18 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NAIhf-00030U-34; Tue, 17 Nov 2009 08:42:19 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id C3F6010541; Tue, 17 Nov 2009 08:42:18 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <20091117051125.3588.91072.chriscool@tuxfamily.org>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1755883AbZKQHn2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2009 02:43:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755875AbZKQHn2
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 02:43:28 -0500
+Received: from qmta12.emeryville.ca.mail.comcast.net ([76.96.27.227]:56651
+	"EHLO QMTA12.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755834AbZKQHn1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Nov 2009 02:43:27 -0500
+Received: from OMTA19.emeryville.ca.mail.comcast.net ([76.96.30.76])
+	by QMTA12.emeryville.ca.mail.comcast.net with comcast
+	id 67ij1d0031eYJf8AC7jaMy; Tue, 17 Nov 2009 07:43:34 +0000
+Received: from mmogilvi.homeip.net ([24.8.125.243])
+	by OMTA19.emeryville.ca.mail.comcast.net with comcast
+	id 67jZ1d0015FCJCg017jZlb; Tue, 17 Nov 2009 07:43:34 +0000
+Received: by mmogilvi.homeip.net (Postfix, from userid 501)
+	id 8CACC89115; Tue, 17 Nov 2009 00:43:31 -0700 (MST)
+Content-Disposition: inline
+In-Reply-To: <7v7htpirmy.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.4i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133074>
 
-Christian Couder schrieb:
-> diff --git a/git.c b/git.c
-> index bd2c5fe..7f7d73d 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -89,6 +89,9 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
->  				*envchanged = 1;
->  		} else if (!strcmp(cmd, "--no-replace-objects")) {
->  			read_replace_refs = 0;
-> +			setenv(NO_REPLACE_OBJECTS_ENVIRONMENT, "", 1);
+On Mon, Nov 16, 2009 at 10:37:09PM -0800, Junio C Hamano wrote:
+> How about this?  I didn't touch the patch text (other than dropping
+> trailing whitespaces).
+> 
+> commit ff68668695486b72b5f06146eddf85b70841088a
+> Author: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+> Date:   Sat Nov 14 11:35:00 2009 -0700
+> 
+>     core.autocrlf documentation: mention the crlf attribute
+>     
+>     The description of the configuration variable is obsolete and
+>     wrong (saying only file content is used), not just incomplete.
+>     It has used the attribute mechanism for a long time.
+>     
+>     The documentation of gitattributes mentions the core.autocrlf
+>     configuration variable in its description of crlf attribute.
+>     Refer to the gitattributes documentation from here as well.
+>     
+>     Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-It is safer to set to a non-empty string, e.g., "1".
+Looks good.  Sorry about the extra space in the patch text;
+stripping it sounds good as well.
 
-I think this variable should be added to the list in connect.c around line
-630 so that it does not propagate to the remote end.
-
--- Hannes
+--
+Matthew Ogilvie   [mmogilvi_git@miniinfo.net]
