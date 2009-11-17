@@ -1,82 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] ls-tree: migrate to parse-options
-Date: Mon, 16 Nov 2009 22:22:00 -0800
-Message-ID: <7vpr7hisc7.fsf@alter.siamese.dyndns.org>
-References: <1258173248-31059-1-git-send-email-bebarino@gmail.com>
- <1258173248-31059-3-git-send-email-bebarino@gmail.com>
+Subject: Re: [PATCH] Expand ~ and ~user in core.excludesfile, commit.template
+Date: Mon, 16 Nov 2009 22:22:21 -0800
+Message-ID: <7viqd9isbm.fsf@alter.siamese.dyndns.org>
+References: <1258366060-27966-1-git-send-email-Matthieu.Moy@imag.fr>
+ <m3k4xqc9qj.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 17 07:22:18 2009
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	Karl Chen <quarl@quarl.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 17 07:22:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAHSD-0005CM-OB
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 07:22:18 +0100
+	id 1NAHSX-0005IJ-Bh
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 07:22:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753404AbZKQGWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2009 01:22:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753179AbZKQGWE
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 01:22:04 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61043 "EHLO
+	id S1753436AbZKQGW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2009 01:22:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753423AbZKQGW0
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 01:22:26 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41435 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752998AbZKQGWD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2009 01:22:03 -0500
+	with ESMTP id S1752697AbZKQGWZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2009 01:22:25 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 297D89F41A;
-	Tue, 17 Nov 2009 01:22:07 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F1D480EDD;
+	Tue, 17 Nov 2009 01:22:32 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=c/NDzTQIR7WknHARlH1+cCx6c2o=; b=m97Hd46WGuhfzndid92AmPD
-	I3PGZmZ4ZiYDv5pAq1G9vGHwXGaNSPMuAC2fOjrH+VJ+sQx/poTa9OBNgY2r/Uvk
-	OmFSjwKiPOaC3BFce/pLQ7VxsiI1LdzRain/6uDU+13MIXtc2vePZHqfx2S3aj/1
-	buGapKMUCqWjKh7kLSMQ=
+	sasl; bh=zmTtZW5kG+C2c39yo421s8ReTLA=; b=nXUmwy6VWnpd/2nSNnWh0kk
+	jhyfdjn1CWh+X7M9vtmIHatwoh6i/ah2i5n0F0hix3JBHDRP/2N6/Kvk0OpDSiAl
+	fVvFdCcxnqTsahuDF45x99Wz4BZyLicSpNnCav8dIEq8dwZKAxYcsKDoSB8KYmbO
+	fjUu7O7UXZgNetsQ50nQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=xp2etqv/XRQqLldm7VEr8M70jYItLz2zGDx97j5yip9qWPOJI
-	L96U7qUKcGcETBrovzNDvdzEEEw4Mm9eSBgJ4Tlz8SNGYub84uI3FuFZEu00jVx6
-	1D9dw2PmcVL/UFibojD82mmy3U7Rhro4bwF53iU4ZsQT70k0z8co9yqktc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 083F99F419;
-	Tue, 17 Nov 2009 01:22:05 -0500 (EST)
+	dns; s=sasl; b=G2bSNlLd8qQSUE2VQ7ZWULwHAqDspfQEBaJq1Nb8b/2kGoiPR
+	CgVTnhE4cRzVi/7G5xmjdlKZ0k0+SiRQpSzawj+bWDugPR6ppgBgBVJ4R27Li0in
+	jX19mS5KSMer1JwE6U5xBM6SupsYF92A3cbeMIy2cnDEqjjbkzzdNKFyg0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C771980EDC;
+	Tue, 17 Nov 2009 01:22:27 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E52949F418; Tue, 17 Nov 2009
- 01:22:01 -0500 (EST)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E195F80EDB; Tue, 17 Nov
+ 2009 01:22:22 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 86760676-D341-11DE-AFFA-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 940C4CAA-D341-11DE-A3EA-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133062>
 
-Thanks.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-As parse-options infrastructure gives much better per-option help text,
-there is not much point to keep the list of options that can go stale
-in the usage text.
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> index d1e2120..c37b51d 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -380,7 +380,8 @@ Common unit suffixes of 'k', 'm', or 'g' are supported.
+>>  core.excludesfile::
+>>  	In addition to '.gitignore' (per-directory) and
+>>  	'.git/info/exclude', git looks into this file for patterns
+>> -	of files which are not meant to be tracked.  See
+>> +	of files which are not meant to be tracked.  "~" and "~user"
+>> +	are expanded to the user's home directory.  See
+>>  	linkgit:gitignore[5].
+>>  
+>>  core.editor::
+>
+> It would be nice to have an option to git-config which would do such
+> expansion, as a separate type similar to --int and --bool, e.g.:
+>
+>   git config --path section.key
+>
+> so that not only core.excludesfile could use this new feature, but for
+> example also core.worktree, commit.template, gitcvs.logfile,
+> mailmap.file, and perhaps also *.receivepack and *.uploadpack
 
-I'd squash this to yours.  Ok?
-
----
- builtin-ls-tree.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-ls-tree.c b/builtin-ls-tree.c
-index 04408df..14a913a 100644
---- a/builtin-ls-tree.c
-+++ b/builtin-ls-tree.c
-@@ -24,7 +24,7 @@ static int chomp_prefix;
- static const char *ls_tree_prefix;
- 
- static const  char * const ls_tree_usage[] = {
--	"git ls-tree [-d] [-r] [-t] [-l | --long] [-z] [--name-only] [--name-status] [--full-name] [--full-tree] [--abbrev[=<n>]] <tree-ish> [path...]",
-+	"git ls-tree <options> <tree-ish> [path...]",
- 	NULL
- };
- 
--- 
-1.6.5.3.283.g4b054
+What should "git config -l" do for these (and core.excludesfile)?
