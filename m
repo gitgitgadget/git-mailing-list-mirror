@@ -1,76 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Document git-svn's first-parent rule
-Date: Mon, 16 Nov 2009 22:25:20 -0800
-Message-ID: <7vd43his6n.fsf@alter.siamese.dyndns.org>
-References: <ea845c8757a629d692bb6cd3827887f0e811c044.1258366486.git.trast@student.ethz.ch> <20091116231455.GA13460@dcvr.yhbt.net>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 1/2] t3101: test more ls-tree options
+Date: Mon, 16 Nov 2009 22:26:09 -0800
+Message-ID: <4B024201.2010400@gmail.com>
+References: <1258173248-31059-1-git-send-email-bebarino@gmail.com> <1258173248-31059-2-git-send-email-bebarino@gmail.com> <7vws1piscw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Nov 17 07:25:37 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 17 07:26:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAHVQ-0006VU-22
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 07:25:36 +0100
+	id 1NAHW8-00075O-EZ
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 07:26:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753464AbZKQGZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2009 01:25:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752901AbZKQGZY
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 01:25:24 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61546 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752697AbZKQGZX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2009 01:25:23 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C56209F445;
-	Tue, 17 Nov 2009 01:25:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5q8EgiLn8/vSywYI8330hKBwg6g=; b=V5EW00
-	bW0jToOvYLs8oO4gZlQq5EDvJtEQ3jcX0pArRpqL3mhVh9ROC6LskC2OCou5Q7T5
-	2246H/ShZimGZx5zf6N52SmcrO2HBg/ODCEF6EIGrZa1Te687wmPQD49fPhTOwCU
-	jfp9yCv9OL/WZ0BGvXcitk+dVUC5GE4e7n6FM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nJDFIkaG01Wndf5YI/N1aJVQMvhfmtU3
-	Kkd1AmSzq2isDNwlrYwPCsXWzLIOsEKMyA9mYawRLEDd2D98zkF0R512AJ5DboTF
-	izgKlwF0qHuxXOo+dRAMYpW0215yqSMkWC71KvtiLRngNzefkJdEZnz8AZM5jm0u
-	aMN0grlUvX8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 94D569F444;
-	Tue, 17 Nov 2009 01:25:26 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 55ED79F441; Tue, 17 Nov 2009
- 01:25:22 -0500 (EST)
-In-Reply-To: <20091116231455.GA13460@dcvr.yhbt.net> (Eric Wong's message of
- "Mon\, 16 Nov 2009 15\:14\:55 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FE9C179E-D341-11DE-B745-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753478AbZKQG0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2009 01:26:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753475AbZKQG0I
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 01:26:08 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:53235 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752901AbZKQG0H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2009 01:26:07 -0500
+Received: by yxe17 with SMTP id 17so575474yxe.33
+        for <git@vger.kernel.org>; Mon, 16 Nov 2009 22:26:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=vemsigyrhLHCTYjeIuC7EMtdPUGT5UVmmxbW0O1XDuM=;
+        b=sX/q52dgqK/5ocyb+cbBr+8kMdEbcXEJqi59R8tFD4LXDc2hIeEljuzDV+zVKnP3A3
+         1FewiMN8hsPGIjaCrCzgsPUb2xCWTKgTvmz85y/TN5JO3diQpW8VPRMuIlNXzNbTt2Mz
+         HqyYp99Ob/Ad4GFxfMYF6DOrnDkQyg/VXxckg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=suAPekykZd+jwIVTKy7EfJHBmAZtZBcqv9osecRhvxgk54K+Sj8uuIfJ+VfkQEcvGV
+         opnwkjyToIgGz0BXr4O6jfbMBEfOOIq3bfmDUyS0uhbYex9URFwGRWl9LZ4etBh+boEJ
+         JTNyThoKRXe7bZatHxO7YdzUjGHIABfYWDrCs=
+Received: by 10.90.45.11 with SMTP id s11mr6343078ags.72.1258439173400;
+        Mon, 16 Nov 2009 22:26:13 -0800 (PST)
+Received: from ?192.168.0.5? (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
+        by mx.google.com with ESMTPS id 21sm2004205yxe.19.2009.11.16.22.26.11
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 16 Nov 2009 22:26:12 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (X11/20091026)
+In-Reply-To: <7vws1piscw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133064>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Junio C Hamano wrote:
+> Thanks.  I'd squash this patch in for the following reasons; Ok?
 
-> Thomas Rast <trast@student.ethz.ch> wrote:
->> git-svn has the following rule to detect the SVN base for its
->> operations: find the first git-svn-id line reachable through
->> first-parent ancestry.  IOW,
->> 
->>   git log --grep=^git-svn-id: --first-parent -1
->> 
->> Document this, as it is very important when using merges with git-svn.
->> 
->> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
->
-> Thanks Thomas,
->
-> Acked-by: Eric Wong <normalperson@yhbt.net>
+Looks good. Thanks.
 
-Thanks; is it a good time to pull from your bogomips repository to get
-accumulated changes?
+I figured reusing the test_output function would be a bad idea.
