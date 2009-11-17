@@ -1,69 +1,92 @@
-From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Subject: Re: [PATCH] Doc: mention the crlf attribute in config autocrlf section
-Date: Mon, 16 Nov 2009 20:59:45 -0700
-Message-ID: <20091117035945.GA1728@comcast.net>
-References: <1258223700-4009-1-git-send-email-mmogilvi_git@miniinfo.net> <20091116195048.6117@nanako3.lavabit.com>
+From: Frank Li <lznuaa@gmail.com>
+Subject: [ANNOUNCE] for TortoiseGit 1.2.1.0
+Date: Mon, 16 Nov 2009 22:17:16 -0600
+Message-ID: <1976ea660911162017v4fcdcf01l92dda17da622258a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Tue Nov 17 05:00:28 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org,
+	tortoisegit-dev <tortoisegit-dev@googlegroups.com>,
+	tortoisegit-users@googlegroups.com,
+	tortoisegit-announce@googlegroups.com
+X-From: git-owner@vger.kernel.org Tue Nov 17 05:17:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAFEx-0008RB-6b
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 05:00:27 +0100
+	id 1NAFVk-0005qH-4E
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 05:17:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753568AbZKQEAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 23:00:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753367AbZKQEAI
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 23:00:08 -0500
-Received: from qmta03.emeryville.ca.mail.comcast.net ([76.96.30.32]:40364 "EHLO
-	QMTA03.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753172AbZKQEAI (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Nov 2009 23:00:08 -0500
-Received: from OMTA21.emeryville.ca.mail.comcast.net ([76.96.30.88])
-	by QMTA03.emeryville.ca.mail.comcast.net with comcast
-	id 63fl1d0061u4NiLA340DHZ; Tue, 17 Nov 2009 04:00:15 +0000
-Received: from mmogilvi.homeip.net ([24.8.125.243])
-	by OMTA21.emeryville.ca.mail.comcast.net with comcast
-	id 63zr1d0035FCJCg8h3zyWY; Tue, 17 Nov 2009 04:00:06 +0000
-Received: by mmogilvi.homeip.net (Postfix, from userid 501)
-	id 03B8089115; Mon, 16 Nov 2009 20:59:46 -0700 (MST)
-Content-Disposition: inline
-In-Reply-To: <20091116195048.6117@nanako3.lavabit.com>
-User-Agent: Mutt/1.5.4i
+	id S1754011AbZKQERL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Nov 2009 23:17:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753824AbZKQERL
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 23:17:11 -0500
+Received: from qw-out-2122.google.com ([74.125.92.24]:30616 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753808AbZKQERK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Nov 2009 23:17:10 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so1237198qwe.37
+        for <git@vger.kernel.org>; Mon, 16 Nov 2009 20:17:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=288np/PEuoSOxU8H44XVN19YBUUviZA6Mnci3OGqass=;
+        b=L71y3hsRX2+nXUEOZC0mNXWyjaBN6W2eGvYbJka2kXtMLdEQkuGyor4k4Ec4OYcx7d
+         yB97u5X5ORSmw7xqJ4JaM/iT1fllK1Sbnc3b17WRCgp5Yw6+XH1rRci+J49NNrBWgXB3
+         0z4fzUoNuK+igVITYAFiI06Q+96h6NpHIlVnk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=r2fi8HnxyiXWKjRdrsPKu/5EyouU2/6P4VkLpZXyqqgsulD8nm/bXEOnMcb8CK6+bG
+         K04PC84IKYlsboaLipfC8gYj/fmMDRi41gG+BCOyMalKoWjMoAtIM0b8sPSh4vFKc2ca
+         cMMZnrpWccpWTj4BwxRk2mQlhvwvWvzYrY6HA=
+Received: by 10.224.39.144 with SMTP id g16mr5280139qae.260.1258431436073; 
+	Mon, 16 Nov 2009 20:17:16 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133056>
 
-On Mon, Nov 16, 2009 at 07:50:48PM +0900, Nanako Shiraishi wrote:
-> Quoting Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-> 
-> > The reverse reference has long existed, and the autocrlf description
-> > was actually obsolete and wrong (saying only file content is used),
-> > not just incomplete.
-> 
-> What do you mean by "reverse reference"?
-> 
+http://tortoisegit.googlecode.com/files/TortoiseGit-1.2.1.0-32bit.msi
+http://tortoisegit.googlecode.com/files/TortoiseGit-1.2.1.0-64bit.msi
 
-I'm refering to the fact that the "crlf" section of
-Documentation/gitattributes.txt mentions core.autocrlf,
-which is in the opposite (reverse) direction as this new reference
-I'm adding.
+=3D Release 1.2.1.0 =3D
+=3D=3D Features =3D=3D
+=A0* Add color success and fail at ProgressDlg
 
-The crlf section has a much more thorough description of
-the various knobs and settings and how they interact.  But
-I just checked, and although the gitattributes crlf section
-describes core.autocrlf in reasonable detail, it does not have an
-actual link (reference?) to git-config or the core.autocrlf
-section.  So the commit message isn't as clear as it could be.
+=A0* Log Dialog
+=A0 Show work copy to log dialog. User can commit change at log dialog.
+=A0 Easy to compare with working copy difference
 
-Do I need to resubmit the patch, in order to rephrase the commit
-message?
+=A0* Allow Alt+O in commit dialog for OK
 
---
-Matthew Ogilvie   [mmogilvi_git@miniinfo.net]
+=A0* Sync Dialog remote URL support save history
+
+=A0* Add remote branch and current branch at proptery page
+
+=A0* Add no-commit option at merge dialog
+
+=A0* Enable IBugTraqProvide CheckCommit and OnCommitFinished
+
+=3D=3D Bug Fix =3D=3D
+=A0* Fixed issue #219: Blame Error when git repository is at root
+directory and path use "/"
+=A0* Fixed issue #214: installer inserts unused or faulty registry key
+=A0* Fixed issue #179: Log dialog lacks information about changed files
+=A0* Fixed issue #209: High CPU usage in tortoiseproc.exe & limit line =
+number
+=A0* Fixed issue #212: Disable the "Select items automaticlly" option
+has no effect to commit files dialog
+=A0* Fixed issue #209: High CPU usage in tortoiseproc.exe & Append text
+to edit ctrl
+=A0* Fixed Issue #203: =A0Remote URL select box in sync dialog is not
+populated with remotes.
+=A0* Fixed Issue #208: =A0During push (from context menu), branches
+missing from drop down list.
+=A0* Fixed issue #86: Globally sets HOME affecting third-party
+applications (GNU Emacs)
+=A0* Fixed issue #188: Add Git Properties tab into Windows File Propert=
+ies
