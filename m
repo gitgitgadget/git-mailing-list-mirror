@@ -1,130 +1,108 @@
-From: "Philippe Bruhat (BooK)" <book@cpan.org>
-Subject: [PATCH] Make sure $PERL_PATH is defined when the test suite is run.
-Date: Tue, 17 Nov 2009 00:53:20 +0100
-Message-ID: <1258415600-4656-1-git-send-email-book@cpan.org>
-References: <20091116234849.GA3608@plop>
-Cc: "Philippe Bruhat (BooK)" <book@cpan.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 17 00:53:31 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] RFC Allow case insensitive search flag with git-grep for
+ fixed-strings
+Date: Mon, 16 Nov 2009 16:06:37 -0800
+Message-ID: <7v639am2uq.fsf@alter.siamese.dyndns.org>
+References: <B7C4E16C-B15D-4A7B-873A-B6BD0FDAD8C8@gmail.com>
+ <20091116195050.6117@nanako3.lavabit.com>
+ <7vocn2m48d.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Brian Collins <bricollins@gmail.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 17 01:06:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NABNz-0002Rz-2c
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 00:53:31 +0100
+	id 1NABax-0007Ql-77
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 01:06:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754683AbZKPXxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 18:53:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754630AbZKPXxR
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 18:53:17 -0500
-Received: from mail-out4.booking.com ([91.195.237.21]:39124 "EHLO
-	mail-out4.booking.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754588AbZKPXxQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 18:53:16 -0500
-Received: from corpds-101.ams4.corp.booking.com ([10.196.68.22])
-	by mtx-102.ams4.prod.booking.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1NABNp-0004u7-Bq; Tue, 17 Nov 2009 00:53:21 +0100
-Received: from ams4-mail-03.ams4.corp.booking.com ([10.196.68.31])
-	by corpds-101.ams4.corp.booking.com with esmtp (Exim 4.69)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1NABNp-0004zt-9n; Tue, 17 Nov 2009 00:53:21 +0100
-Received: from plop (bkbastion-01.corp.lhr1.booking.com [10.146.90.100])
-	by ams4-mail-03.ams4.corp.booking.com (Postfix) with ESMTP id 26172EF8005;
-	Tue, 17 Nov 2009 00:53:21 +0100 (CET)
-Received: from book by plop with local (Exim 4.69)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1NABNo-0001DY-TM; Tue, 17 Nov 2009 00:53:20 +0100
-X-Mailer: git-send-email 1.6.0.3.517.g759a
-In-Reply-To: <20091116234849.GA3608@plop>
+	id S1754793AbZKQAGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 19:06:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754770AbZKQAGn
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 19:06:43 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51635 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754769AbZKQAGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 19:06:42 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B4E48039E;
+	Mon, 16 Nov 2009 19:06:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xIk6YUPzy1tXg3wp6FvC/gSUKOg=; b=x6ERJ4
+	mLrgxoMjgJlR49sOiaoG4ixNv5M8OPhgz93NTj1FAe++e4s8vfeJJZh+rfvLpV+X
+	HGLdT8okT3NpT7itQqAKrDsz+YH5FVKdtaLjt2IvBchwuMm+kYu99KChvD7Ex49V
+	lHsC1mJKASsLNrZx9UuJxULosBW0OVmw/94Uk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AQ/MjZPGzPO/dU3DlgYpRHWu3GcQFaVs
+	JcdyYh0KkBPhfv3kZBndB/CZCH1NCHvPhG/mvq8j8XVFQW2uCC8qtPnvY+h6qF9t
+	Myr5Udvd8Z+sI2x8riyRkIbOkaY/SE1V7tyyBz9/RqLg7gncz0I5Awr0/vQTfpYh
+	szdXG763qw0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E4A7B8039D;
+	Mon, 16 Nov 2009 19:06:43 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D831680399; Mon, 16 Nov
+ 2009 19:06:38 -0500 (EST)
+In-Reply-To: <7vocn2m48d.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon\, 16 Nov 2009 15\:36\:50 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 16D7A83A-D30D-11DE-A068-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133041>
 
-Some test scripts run Perl scripts as if they were git-* scripts, and
-thus need to use the same perl that will be put in the shebang line of
-git*.perl commands. $PERL_PATH therefore needs to be used instead of
-a bare "perl".
+Junio C Hamano <gitster@pobox.com> writes:
 
-The tests can fail if another perl is found in $PATH before the one
-defined in $PERL_PATH.
+> We got sidetracked into a larger picture issues of how to allow platform
+> ports to selectively call out to external grep depending on the feature
+> set supported by the external grep implementations.
+>
+> Later I looked at the original patch, the patch text looked fine (except
+> that I would have called the field "ignorecase", not "caseless"), but it
+> wasn't signed off and did not have usable log message.
+>
+> And then I forgot ;-)
+>
+> Thanks for a reminder, and thanks Jeff for a resend.
 
-Example test failure caused by this: the perl defined in $PERL_PATH has
-Error.pm installed, and therefore the Git.pm's Makefile.PL doesn't install
-the private copy. The perl from $PATH doesn't have Error.pm installed, and
-all git*.perl scripts invoked during the test will fail loading Error.pm.
+By the way, I would suggest updating the test like the attached.
 
-Makefile patch by Jeff King <peff@peff.net>.
+By looking for rEtUrN, you will catch a bug that breaks "-i"-ness
+of the grep, but your test does not catch breakages in "-F"-ness.
 
-Signed-off-by: Philippe Bruhat (BooK) <book@cpan.org>
----
- Makefile                        |    1 +
- t/t9400-git-cvsserver-server.sh |    2 +-
- t/t9401-git-cvsserver-crlf.sh   |    2 +-
- t/t9700-perl-git.sh             |    4 ++--
- 4 files changed, 5 insertions(+), 4 deletions(-)
+I am also tempted to add --no-ext-grep to this test, but that would be a
+separate fix when it becomes necessary, I guess.
 
-diff --git a/Makefile b/Makefile
-index 35f5294..8e8f981 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1633,6 +1633,7 @@ GIT-CFLAGS: .FORCE-GIT-CFLAGS
- # and the first level quoting from the shell that runs "echo".
- GIT-BUILD-OPTIONS: .FORCE-GIT-BUILD-OPTIONS
- 	@echo SHELL_PATH=\''$(subst ','\'',$(SHELL_PATH_SQ))'\' >$@
-+	@echo PERL_PATH=\''$(subst ','\'',$(PERL_PATH_SQ))'\' >$@
- 	@echo TAR=\''$(subst ','\'',$(subst ','\'',$(TAR)))'\' >>$@
- 	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@
- 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@
-diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
-index 64f947d..dc710f8 100755
---- a/t/t9400-git-cvsserver-server.sh
-+++ b/t/t9400-git-cvsserver-server.sh
-@@ -20,7 +20,7 @@ then
-     say 'skipping git-cvsserver tests, cvs not found'
-     test_done
- fi
--perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
-+$PERL_PATH -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
-     say 'skipping git-cvsserver tests, Perl SQLite interface unavailable'
-     test_done
+diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
+index 87b47dd..35a1e7a 100755
+--- a/t/t7002-grep.sh
++++ b/t/t7002-grep.sh
+@@ -14,6 +14,7 @@ int main(int argc, const char **argv)
+ {
+ 	printf("Hello world.\n");
+ 	return 0;
++	/* char ?? */
  }
-diff --git a/t/t9401-git-cvsserver-crlf.sh b/t/t9401-git-cvsserver-crlf.sh
-index aca40c1..c9e3dba 100755
---- a/t/t9401-git-cvsserver-crlf.sh
-+++ b/t/t9401-git-cvsserver-crlf.sh
-@@ -57,7 +57,7 @@ then
-     say 'skipping git-cvsserver tests, perl not available'
-     test_done
- fi
--perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
-+$PERL_PATH -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
-     say 'skipping git-cvsserver tests, Perl SQLite interface unavailable'
-     test_done
- }
-diff --git a/t/t9700-perl-git.sh b/t/t9700-perl-git.sh
-index 4eb7d3f..3354e18 100755
---- a/t/t9700-perl-git.sh
-+++ b/t/t9700-perl-git.sh
-@@ -11,7 +11,7 @@ if ! test_have_prereq PERL; then
- 	test_done
- fi
+ EOF
  
--perl -MTest::More -e 0 2>/dev/null || {
-+$PERL_PATH -MTest::More -e 0 2>/dev/null || {
- 	say "Perl Test::More unavailable, skipping test"
- 	test_done
- }
-@@ -48,6 +48,6 @@ test_expect_success \
+@@ -346,11 +347,11 @@ test_expect_success 'grep from a subdirectory to search wider area (2)' '
+ '
  
- test_external_without_stderr \
-     'Perl API' \
--    perl "$TEST_DIRECTORY"/t9700/test.pl
-+    $PERL_PATH "$TEST_DIRECTORY"/t9700/test.pl
+ cat >expected <<EOF
+-hello.c:	return 0;
++hello.c:int main(int argc, const char **argv)
+ EOF
  
- test_done
--- 
-1.6.0.3.517.g759a
+ test_expect_success 'grep -Fi' '
+-	git grep -Fi rEtUrN >actual &&
++	git grep -Fi "CHAR *" >actual &&
+ 	test_cmp expected actual
+ '
+ 
