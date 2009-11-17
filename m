@@ -1,79 +1,95 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 0/2] user-manual: new "getting started" section
-Date: Tue, 17 Nov 2009 18:53:43 +0100
-Message-ID: <vpqpr7havh4.fsf@bauges.imag.fr>
-References: <1256377489-16719-1-git-send-email-felipe.contreras@gmail.com>
-	<7vy6n065os.fsf@alter.siamese.dyndns.org>
-	<7vr5ss64e5.fsf@alter.siamese.dyndns.org>
-	<94a0d4530910241316r3fc4136emd036d18aa45a4192@mail.gmail.com>
-	<7vy6n02mrk.fsf@alter.siamese.dyndns.org>
-	<94a0d4530910250243k4cbc3c18l5e018a05e5afdb2d@mail.gmail.com>
-	<20091025111438.GA11252@progeny.tock>
-	<94a0d4530911111515q643e263bn3adc6b47cd968d3d@mail.gmail.com>
-	<4AFBF18E.7070906@drmicha.warpmail.net>
-	<20091114060600.6117@nanako3.lavabit.com>
-	<94a0d4530911161452xe82858el322a1985341bf13c@mail.gmail.com>
-	<20091117210625.6117@nanako3.lavabit.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Make Gitweb behave like Apache mod_userdir
+Date: Tue, 17 Nov 2009 19:12:39 +0100
+Message-ID: <200911171912.40658.jnareb@gmail.com>
+References: <7fce93be0911150204h259b7424md251c54186d05b7d@mail.gmail.com> <200911171458.56047.jnareb@gmail.com> <7fce93be0911170751r6d51ae7bn20fd593741b3eba6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Hannu Koivisto <azure@iki.fi>, Jeff King <peff@peff.net>,
-	Wincent Colaiuta <win@wincent.com>,
-	Matthias Lederhofer <matled@gmx.net>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Tue Nov 17 18:54:45 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
+	Luben Tuikov <ltuikov@yahoo.com>, "J.H." <warthog9@kernel.org>,
+	git <git@vger.kernel.org>
+To: Sylvain Rabot <sylvain@abstraction.fr>
+X-From: git-owner@vger.kernel.org Tue Nov 17 19:12:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NASGI-0006y6-V4
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 18:54:43 +0100
+	id 1NASXw-0007qI-4t
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 19:12:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753997AbZKQRy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2009 12:54:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753697AbZKQRy2
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 12:54:28 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:46149 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752278AbZKQRy2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2009 12:54:28 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id nAHHqgPY023199
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 17 Nov 2009 18:52:42 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NASFM-0005Y4-3W; Tue, 17 Nov 2009 18:53:44 +0100
-In-Reply-To: <20091117210625.6117@nanako3.lavabit.com> (Nanako Shiraishi's message of "Tue\, 17 Nov 2009 21\:06\:25 +0900")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 17 Nov 2009 18:52:43 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: nAHHqgPY023199
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1259085164.85269@QKOMcBwlN/Banzrz/e8sQg
+	id S1753055AbZKQSMn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Nov 2009 13:12:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752816AbZKQSMn
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 13:12:43 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:56564 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752723AbZKQSMm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2009 13:12:42 -0500
+Received: by bwz27 with SMTP id 27so210605bwz.21
+        for <git@vger.kernel.org>; Tue, 17 Nov 2009 10:12:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=xOb6s7HglpkeUPr4IYcxedmtB58fYhfka2VQR0/DhbY=;
+        b=YJ5KnUJkfYnKVjGFAePn3d8ZcdHRuPOtM8J/pZO0tRREXS/dPHU3tHAw6NwF4D/2Wn
+         CbtGblR4o2OvdSEjp3YDm/mAoMpEOjImAgIoV7Y8icpDa8iUYcLo3vZO90GRYegvcDs6
+         43MgPDC2HvuTouPxLXHNlAPYsxaiJ5Gid9KjA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=HwaopicYULD3EoQ4jflOi+qR5bFuAw5DrMQYrNcSoWPuQuXhmUxL5oV2FDmoXGb3eS
+         Zp+NL2XPPhyEq9tUqWD7yBNfhY/qn3GMQVCYGT98KlY3DBybcIcZ4yj4U55KWmyvEiwJ
+         G0CiAvA2+pdM3LXqF5tdhxxG2bVqKLmTbO2vs=
+Received: by 10.223.20.85 with SMTP id e21mr1694267fab.25.1258481567198;
+        Tue, 17 Nov 2009 10:12:47 -0800 (PST)
+Received: from ?192.168.1.13? (abwu104.neoplus.adsl.tpnet.pl [83.8.244.104])
+        by mx.google.com with ESMTPS id 14sm418246bwz.9.2009.11.17.10.12.43
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 17 Nov 2009 10:12:44 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7fce93be0911170751r6d51ae7bn20fd593741b3eba6@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133095>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+On Tue, 17 Nov 2009, Sylvain Rabot wrote:
+> On Tue, Nov 17, 2009 at 14:58, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
 
-> I don't see how you can make them sanely be usable to 
-> other commands like "git log v1.0.0..WORKTREE".
+> > The description is a bit lacking. =A0Where user should put theirs g=
+it
+> > repositories, or symbolic links to git repositories?
+>=20
+> As I said It's only configuration so It depends of your server
+> architecture. If admin of the server decides he allows users to brows=
+e
+> via gitweb their private/public repos which are linked in
+> /home/*/.gitweb or anything else he has to modify the environmental
+> variable in the rewrite rule according to his wish.
 
-See what gitk is showing you when you have uncommited changes. You
-have some kind of "pseudo-commits" on top of your history for the
-index and the worktree. "git log v1.0.0..WORKTREE" could very well be
-a text-mode version of what's already in gitk.
+So in described configuration, to make repository visible user would ha=
+ve
+to put repository, or symbolic link to repository (or .git/ directory o=
+f
+the repository) in ~/gitweb/ directory (just like one would need to put
+HTML files in ~/public_html/ or ~/WWW/ to have them visible as web site=
+),
+isn't it?
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> > How it would look like in gitweb?
+>=20
+> What do you mean ?
+
+How would example gitweb URL to repository look like?
+
+--=20
+Jakub Narebski
+Poland
