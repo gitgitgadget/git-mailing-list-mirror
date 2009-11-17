@@ -1,130 +1,81 @@
-From: "Philippe Bruhat (BooK)" <book@cpan.org>
-Subject: [PATCH] Make sure $PERL_PATH is defined when the test suite is run.
-Date: Tue, 17 Nov 2009 01:20:06 +0100
-Message-ID: <1258417206-5406-1-git-send-email-book@cpan.org>
-References: <7v1vjym2oq.fsf@alter.siamese.dyndns.org>
-Cc: "Philippe Bruhat (BooK)" <book@cpan.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 17 01:20:35 2009
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: Re: git multisite setup
+Date: Tue, 17 Nov 2009 01:50:40 +0100
+Message-ID: <20091117005005.GC13074@vidovic>
+References: <13f0168a0911161018r6fc67d29n781cca670a66815b@mail.gmail.com> <20091117001320.GA13074@vidovic> <13f0168a0911161617o56757488n45328714fb1d3bea@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
+To: Matt Di Pasquale <liveloveprosper@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 17 01:51:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NABoA-0003ah-0q
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 01:20:34 +0100
+	id 1NACHx-0005LY-Pm
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 01:51:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755283AbZKQAUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2009 19:20:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755265AbZKQAUD
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 19:20:03 -0500
-Received: from mail-out3.booking.com ([91.195.237.20]:55551 "EHLO
-	mail-out3.booking.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755177AbZKQAUB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2009 19:20:01 -0500
-Received: from corpds-102.ams4.corp.booking.com ([10.196.68.83])
-	by mtx-101.ams4.prod.booking.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1NABni-0002jz-MM; Tue, 17 Nov 2009 01:20:06 +0100
-Received: from ams4-mail-03.ams4.corp.booking.com ([10.196.68.31])
-	by corpds-102.ams4.corp.booking.com with esmtp (Exim 4.69)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1NABni-0002tb-KI; Tue, 17 Nov 2009 01:20:06 +0100
-Received: from plop (bkbastion-01.corp.lhr1.booking.com [10.146.90.100])
-	by ams4-mail-03.ams4.corp.booking.com (Postfix) with ESMTP id 6FDBAEF8005;
-	Tue, 17 Nov 2009 01:20:06 +0100 (CET)
-Received: from book by plop with local (Exim 4.69)
-	(envelope-from <philippe.bruhat@free.fr>)
-	id 1NABni-0001Q9-6X; Tue, 17 Nov 2009 01:20:06 +0100
-X-Mailer: git-send-email 1.6.0.3.517.g759a
-In-Reply-To: <7v1vjym2oq.fsf@alter.siamese.dyndns.org>
+	id S1754933AbZKQAuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2009 19:50:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754571AbZKQAuv
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Nov 2009 19:50:51 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:18173 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754517AbZKQAuu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2009 19:50:50 -0500
+Received: by ey-out-2122.google.com with SMTP id 9so2115149eyd.19
+        for <git@vger.kernel.org>; Mon, 16 Nov 2009 16:50:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=tdp8s7Kvq8Iq/cth1mc3h4b6GMTvPMfU1cf/suCgHwo=;
+        b=LtWcGEwtdQAMJPMCJmwwSCgUcHpru3JncNEEMtW9BsHXqj4bILW4LucXcVqHUuOWi+
+         77wBjcDJIW2KC+lPsZK1hVDzH+q1PzMJEXAkEDwbKABKom7pyvU/zk9oh1G3aO/g18GZ
+         zwk0547xDna/Wh8UYBMhKKU+y401X19P3gaKQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=rZl8+KWZzfIZxZXRGyUC5xFVbvQgYqPnSyhwy3Zdz+UiNHgJWBf8qB5MVlf+/Vrdpn
+         UdqK0Dj8GzP56VZyOy6tnR5VeNdm3ohA/JY0vcn6LzluWT3xTWLFYqkeudUOna7tJPoR
+         5N+V54GI5tsPvEsGlXQEmm1iE/4ekOl440pRM=
+Received: by 10.213.0.135 with SMTP id 7mr1365021ebb.65.1258419055290;
+        Mon, 16 Nov 2009 16:50:55 -0800 (PST)
+Received: from @ (91-164-137-149.rev.libertysurf.net [91.164.137.149])
+        by mx.google.com with ESMTPS id 28sm331041eye.1.2009.11.16.16.50.52
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 16 Nov 2009 16:50:53 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <13f0168a0911161617o56757488n45328714fb1d3bea@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133047>
 
-Some test scripts run Perl scripts as if they were git-* scripts, and
-thus need to use the same perl that will be put in the shebang line of
-git*.perl commands. $PERL_PATH therefore needs to be used instead of
-a bare "perl".
+[ Please, don't top-post nor whole quote. ]
 
-The tests can fail if another perl is found in $PATH before the one
-defined in $PERL_PATH.
+The 16/11/09, Matt Di Pasquale wrote:
 
-Example test failure caused by this: the perl defined in $PERL_PATH has
-Error.pm installed, and therefore the Git.pm's Makefile.PL doesn't install
-the private copy. The perl from $PATH doesn't have Error.pm installed, and
-all git*.perl scripts invoked during the test will fail loading Error.pm.
+>                                       the specific git repos aren't
+> coordinated to the generic one. but that's fine so far since i haven't
+> had to jump around to different commits and the generic has stayed
+> pretty much the same.
 
-Makefile patch by Jeff King <peff@peff.net>.
+I'm not sure to understand exactly what kind of coordination you expect
+exactly (because you don't describe what you'd like that much), but
+submodule could be what you need, yes.
 
-Signed-off-by: Philippe Bruhat (BooK) <book@cpan.org>
----
- Makefile                        |    1 +
- t/t9400-git-cvsserver-server.sh |    2 +-
- t/t9401-git-cvsserver-crlf.sh   |    2 +-
- t/t9700-perl-git.sh             |    4 ++--
- 4 files changed, 5 insertions(+), 4 deletions(-)
+FMHO, the best way to check if you need it is to try it. For a good
+start, I guess you'll need to change your approach on "what depends of
+what". I think you should consider the _common_ part to be the
+_dependency_; as a consequence, it should be the submodule used in the
+other repositories. AFAIR, submodule was originaly designed to make our
+life easier with libraries. It may fit to your needs too but again, the
+best thing to do is to try.
 
-diff --git a/Makefile b/Makefile
-index 35f5294..8e8f981 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1633,6 +1633,7 @@ GIT-CFLAGS: .FORCE-GIT-CFLAGS
- # and the first level quoting from the shell that runs "echo".
- GIT-BUILD-OPTIONS: .FORCE-GIT-BUILD-OPTIONS
- 	@echo SHELL_PATH=\''$(subst ','\'',$(SHELL_PATH_SQ))'\' >$@
-+	@echo PERL_PATH=\''$(subst ','\'',$(PERL_PATH_SQ))'\' >$@
- 	@echo TAR=\''$(subst ','\'',$(subst ','\'',$(TAR)))'\' >>$@
- 	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@
- 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@
-diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
-index 64f947d..c2ec3cb 100755
---- a/t/t9400-git-cvsserver-server.sh
-+++ b/t/t9400-git-cvsserver-server.sh
-@@ -20,7 +20,7 @@ then
-     say 'skipping git-cvsserver tests, cvs not found'
-     test_done
- fi
--perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
-+"$PERL_PATH" -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
-     say 'skipping git-cvsserver tests, Perl SQLite interface unavailable'
-     test_done
- }
-diff --git a/t/t9401-git-cvsserver-crlf.sh b/t/t9401-git-cvsserver-crlf.sh
-index aca40c1..40637d6 100755
---- a/t/t9401-git-cvsserver-crlf.sh
-+++ b/t/t9401-git-cvsserver-crlf.sh
-@@ -57,7 +57,7 @@ then
-     say 'skipping git-cvsserver tests, perl not available'
-     test_done
- fi
--perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
-+"$PERL_PATH" -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
-     say 'skipping git-cvsserver tests, Perl SQLite interface unavailable'
-     test_done
- }
-diff --git a/t/t9700-perl-git.sh b/t/t9700-perl-git.sh
-index 4eb7d3f..96a2e55 100755
---- a/t/t9700-perl-git.sh
-+++ b/t/t9700-perl-git.sh
-@@ -11,7 +11,7 @@ if ! test_have_prereq PERL; then
- 	test_done
- fi
- 
--perl -MTest::More -e 0 2>/dev/null || {
-+"$PERL_PATH" -MTest::More -e 0 2>/dev/null || {
- 	say "Perl Test::More unavailable, skipping test"
- 	test_done
- }
-@@ -48,6 +48,6 @@ test_expect_success \
- 
- test_external_without_stderr \
-     'Perl API' \
--    perl "$TEST_DIRECTORY"/t9700/test.pl
-+    $PERL_PATH "$TEST_DIRECTORY"/t9700/test.pl
- 
- test_done
 -- 
-1.6.0.3.517.g759a
+Nicolas Sebrecht
