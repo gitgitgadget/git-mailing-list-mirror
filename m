@@ -1,82 +1,88 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: bash completion on 4.0 broken?
-Date: Tue, 17 Nov 2009 10:54:50 +0100
-Message-ID: <4B0272EA.5020708@drmicha.warpmail.net>
-References: <4B0246C7.6020401@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE] GIT 1.6.5.3
+Date: Tue, 17 Nov 2009 02:25:13 -0800 (PST)
+Message-ID: <m3fx8dcuug.fsf@localhost.localdomain>
+References: <7v4ootltzm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 17 10:56:05 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 17 11:30:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAKmy-0001I0-Kc
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 10:55:56 +0100
+	id 1NALKT-0005gj-48
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 11:30:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754525AbZKQJzo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2009 04:55:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754487AbZKQJzo
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 04:55:44 -0500
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:43454 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754306AbZKQJzn (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Nov 2009 04:55:43 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 88B73BFC7B;
-	Tue, 17 Nov 2009 04:55:49 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 17 Nov 2009 04:55:49 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=vXOaLf3fsdsn9C0BjX7haz91vHg=; b=ewhxI2hy7980cno9Rey4myH9mfYevl+/khJ0NCm/tIhqw6tV6fHwdAcU/nBnZ5diAa1UOUqcjTFM9PyzWvmwmJQ9S+OF66pngjUSP46w3Vhs93zJ2RPXqsR/0hp8INRUkIR+mBn2+TBNn1Ynp9jmA7y+IH5zBxuPLE5BTLgI3oM=
-X-Sasl-enc: 4I6o1VnF2Cl6Nrp8nlSk7USBHsMqxxyMrVaslUfXOW/X 1258451749
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id BC3154B21B9;
-	Tue, 17 Nov 2009 04:55:48 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091116 Lightning/1.0pre Shredder/3.0.1pre
-In-Reply-To: <4B0246C7.6020401@gmail.com>
+	id S1753890AbZKQKaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2009 05:30:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753612AbZKQKaV
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 05:30:21 -0500
+Received: from mail-bw0-f223.google.com ([209.85.218.223]:54391 "EHLO
+	mail-bw0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753549AbZKQKaU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2009 05:30:20 -0500
+X-Greylist: delayed 310 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Nov 2009 05:30:20 EST
+Received: by bwz23 with SMTP id 23so6779023bwz.29
+        for <git@vger.kernel.org>; Tue, 17 Nov 2009 02:30:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=AM4b0lpXEhR2nmabrDdTfmLw7/HtdeFfUzBShrBMXCA=;
+        b=oF00V2cyib+av2F0+uVKY+6npiUkZA8HNIL/Ia4RjK7feqoEZNxWQeKnwb3TchPkB3
+         9wFrIg6CvG/YQgxxdZx7u5CjoF1nntp1SEEorZvrMQCaCL9bwN0N3MwWoPMKOAuikKiV
+         sEeXgOt8RggD8HWVlDmykoDrDGfJn95n6UhdY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=YtUkbZ1ud4PpRwpsXqr0C5zT31mJxb0/IidqBccu7jHN7HJEs1J+40pbz1sA/pSzRu
+         J7ps8Q8U1jz0jNclaeW8CMDa3AsQ2zWwwdQP/1RfIXZC1YjKu6egqLQdZWOKw5x58ROd
+         zZ5qSjz23S3SLMuBwDzVa3LS3JJ4XoSu0dnfw=
+Received: by 10.204.3.14 with SMTP id 14mr11140621bkl.128.1258453514345;
+        Tue, 17 Nov 2009 02:25:14 -0800 (PST)
+Received: from localhost.localdomain (abwu104.neoplus.adsl.tpnet.pl [83.8.244.104])
+        by mx.google.com with ESMTPS id 12sm5947321fks.8.2009.11.17.02.25.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 17 Nov 2009 02:25:13 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id nAHAOecC016861;
+	Tue, 17 Nov 2009 11:24:50 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id nAHAOOrL016854;
+	Tue, 17 Nov 2009 11:24:24 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7v4ootltzm.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133086>
 
-Stephen Boyd venit, vidit, dixit 17.11.2009 07:46:
-> When I try
-> 
->     git show --pretty=<TAB><TAB>
-> 
-> I get a list of filenames and not the list of pretty formats.
-> 
-> I've debugged a little and see that the cur variable in _git_show () is 
-> set to '=' when it should be '--pretty='. So it looks like something is 
-> causing the command line to be split weirdly. Looking at the bash 
-> NEWS[1] for 4.0 I see
-> 
-> i.  The programmable completion code now uses the same set of characters as
->     readline when breaking the command line into a list of words.
-> 
-> 
-> which causes me to believe this is why it's broken now. I've tried 
-> removing '=' from COMP_WORDBREAKS and that shows the list of formats 
-> correctly, but then causes the entire '--pretty=' to be replaced with 
-> the selected format.
-> 
-> Anyone else seeing the same problem or is my system just b0rked?
-> 
-> $ bash --version
-> GNU bash, version 4.0.35(2)-release (x86_64-pc-linux-gnu)
-> 
-> References:
-> [1] http://tiswww.case.edu/php/chet/bash/NEWS
+Junio C Hamano <gitster@pobox.com> writes:
 
-Ouch, just when I decided to use completion rather than a bunch of
-aliases it stops working. B0rked here 0ls0 on Fedora 12 (with git.git's
-next):
+> The RPM binary packages for a few architectures are found in:
+> 
+>   RPMS/$arch/git-*-1.6.5.3-1.fc9.$arch.rpm	(RPM)
 
-GNU bash, Version 4.0.33(1)-release (x86_64-redhat-linux-gnu)
+It's RPMS/$arch/git-*-1.6.5.3-1.fc11.$arch.rpm	(RPM)
+ 
+> Git v1.6.5.3 Release Notes
+> ==========================
+> 
+> Fixes since v1.6.5.2
+> --------------------
 
-Command name completion and prompt magic do work.
+>  * Packages generated on newer FC were unreadable by older versions of
+>    RPM as the new default is to use stronger hash.
 
-Michael
+Thanks.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
