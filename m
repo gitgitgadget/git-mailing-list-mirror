@@ -1,79 +1,56 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Expand ~ and ~user in core.excludesfile, commit.template
-Date: Tue, 17 Nov 2009 09:53:52 +0100
-Message-ID: <vpqpr7hpm5b.fsf@bauges.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Expand ~ and ~user in core.excludesfile,
+ commit.template
+Date: Tue, 17 Nov 2009 03:56:03 -0500
+Message-ID: <20091117085603.GB4928@coredump.intra.peff.net>
 References: <1258366060-27966-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20091117073426.GB4007@coredump.intra.peff.net>
+ <20091117073426.GB4007@coredump.intra.peff.net>
+ <vpqpr7hpm5b.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Karl Chen <quarl@quarl.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 17 09:54:47 2009
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Nov 17 09:56:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAJpm-0004Ey-Sh
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 09:54:47 +0100
+	id 1NAJrK-0004rU-K5
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Nov 2009 09:56:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753312AbZKQIyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2009 03:54:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753243AbZKQIyS
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 03:54:18 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:37093 "EHLO shiva.imag.fr"
+	id S1753243AbZKQIz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2009 03:55:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753084AbZKQIz6
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 03:55:58 -0500
+Received: from peff.net ([208.65.91.99]:57883 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752824AbZKQIyR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2009 03:54:17 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id nAH8qYfE011342
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 17 Nov 2009 09:52:34 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NAJou-0003IH-PC; Tue, 17 Nov 2009 09:53:52 +0100
-In-Reply-To: <20091117073426.GB4007@coredump.intra.peff.net> (Jeff King's message of "Tue\, 17 Nov 2009 02\:34\:26 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 17 Nov 2009 09:52:34 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: nAH8qYfE011342
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1259052755.42151@G42YE22Df5Sq2aFAtlGaWw
+	id S1752697AbZKQIz6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2009 03:55:58 -0500
+Received: (qmail 22211 invoked by uid 107); 17 Nov 2009 08:59:52 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 17 Nov 2009 03:59:52 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Nov 2009 03:56:03 -0500
+Content-Disposition: inline
+In-Reply-To: <vpqpr7hpm5b.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133080>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Nov 17, 2009 at 09:53:52AM +0100, Matthieu Moy wrote:
 
-> On Mon, Nov 16, 2009 at 11:07:40AM +0100, Matthieu Moy wrote:
->
->> +	of files which are not meant to be tracked.  "~" and "~user"
->> +	are expanded to the user's home directory.  See
->>  	linkgit:gitignore[5].
->
-> Reading this, it is not clear to me if:
->
->   1. "~" and "~user" are expanded to the home directory of "user", where
->      "user" is the user running git
->
-> or
->
->   2. "~" is expanded to the home directory of the user running git, and
->      an arbitrary "~user" is expanded to that user's home directory.
->
-> I would expect (2), since that is how everything else works.
+> Yes. "user" in the sentence is either the user running Git or the same
+> string as "user" in "~user". I'm not against your proposal, but I'm
+> afraid we're making the sentence uselessly heavy, since, as you say,
+> this ~ and ~user convention is widely spread, and I hardly imagine
+> someone interpreting the sentence as "if you say ~foo, it will expand
+> to the home directory of bar".
 
-Yes. "user" in the sentence is either the user running Git or the same
-string as "user" in "~user". I'm not against your proposal, but I'm
-afraid we're making the sentence uselessly heavy, since, as you say,
-this ~ and ~user convention is widely spread, and I hardly imagine
-someone interpreting the sentence as "if you say ~foo, it will expand
-to the home directory of bar".
+I didn't think it would expand ~foo to the home directory of bar. I
+thought that it might _only_ accept ~bar, and not ~foo.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+If I'm the only one confused, then we can drop it. But if not, I don't
+think it is much more work to be precise.
+
+-Peff
