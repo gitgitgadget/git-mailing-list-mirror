@@ -1,86 +1,88 @@
-From: Jeff King <peff@peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: git-mailinfo doesn't stop parsing at the end of the header
-Date: Wed, 18 Nov 2009 12:24:24 -0500
-Message-ID: <20091118172424.GA24416@coredump.intra.peff.net>
+Date: Wed, 18 Nov 2009 09:46:43 -0800 (PST)
+Message-ID: <m3bpizd8ua.fsf@localhost.localdomain>
 References: <aa2993680911180620g151d8a07t11144d150cd6e29e@mail.gmail.com>
- <20091118155154.GA15184@coredump.intra.peff.net>
- <aa2993680911180911o7e3af804m4ebdc20096baa609@mail.gmail.com>
+	<20091118155154.GA15184@coredump.intra.peff.net>
+	<aa2993680911180911o7e3af804m4ebdc20096baa609@mail.gmail.com>
+	<20091118172424.GA24416@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Philip Hofstetter <phofstetter@sensational.ch>
-X-From: git-owner@vger.kernel.org Wed Nov 18 18:24:37 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Philip Hofstetter <phofstetter@sensational.ch>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 18 18:47:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAoGi-00041U-Qe
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 18:24:37 +0100
+	id 1NAocO-0006zF-DI
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 18:47:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757967AbZKRRYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2009 12:24:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757880AbZKRRYV
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 12:24:21 -0500
-Received: from peff.net ([208.65.91.99]:60305 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757879AbZKRRYU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2009 12:24:20 -0500
-Received: (qmail 31165 invoked by uid 107); 18 Nov 2009 17:28:15 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 18 Nov 2009 12:28:15 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Nov 2009 12:24:24 -0500
-Content-Disposition: inline
-In-Reply-To: <aa2993680911180911o7e3af804m4ebdc20096baa609@mail.gmail.com>
+	id S1758112AbZKRRqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2009 12:46:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758089AbZKRRqm
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 12:46:42 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:49243 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758074AbZKRRqk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2009 12:46:40 -0500
+Received: by bwz27 with SMTP id 27so1390342bwz.21
+        for <git@vger.kernel.org>; Wed, 18 Nov 2009 09:46:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=Bxbt2QEu2/0/NPOB0PohKNF5ubY2sVJXuIT+JuXBGjU=;
+        b=jEL0DNFOahqjuOomm5Hi7IcxndqGuwm2CkKPUb0hE89FbkIUJ6zIigIc3lGUmXD7Jc
+         JMoaP7hJcIbHhwO4GIA66ee86L1Y+qud9HsDkRDZJpBAJVbPchRRo8BxonifrrlYzin2
+         WhVKqlE9BQkamWeXPxnuLFA6bRnAcV+a+LvkE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=pVtbmGQyxvQ4jLIxaI0uODsvFR0iRhcQq5UnuPb2ACQNnAn0zviGCQa+AiOtZtTuLW
+         pDlshoEA2vJCtaxmD+F+n7X0GkfhOGd4r+vm74E5w0akTgYTtFCLqgU/GAsqyUeHkOlp
+         Ovqx2tEG52F8ZxamYWsUOqeEMAGhOtV8PzSKQ=
+Received: by 10.204.156.18 with SMTP id u18mr4085028bkw.102.1258566405909;
+        Wed, 18 Nov 2009 09:46:45 -0800 (PST)
+Received: from localhost.localdomain (abwj15.neoplus.adsl.tpnet.pl [83.8.233.15])
+        by mx.google.com with ESMTPS id 16sm120881bwz.3.2009.11.18.09.46.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 18 Nov 2009 09:46:43 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id nAIHkekd020098;
+	Wed, 18 Nov 2009 18:46:40 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id nAIHkcnt020094;
+	Wed, 18 Nov 2009 18:46:38 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20091118172424.GA24416@coredump.intra.peff.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133193>
 
-On Wed, Nov 18, 2009 at 06:11:36PM +0100, Philip Hofstetter wrote:
+Jeff King <peff@peff.net> writes:
 
-> > As I explained above, there is a reason, but I don't think it's rude to
-> > have either of those lines. You were, after all, writing a commit
-> > message, not an email (and even if you were, it is a failure of the
-> > storage format if it can't represent your data correctly). So I think
-> > git is to blame here.
-> 
-> IMHO, another workable solution would be to reject a commit that later
-> can't be handled. That way the current attempts at getting an email
-> address can remain intact and the (much more) unlikely case that
-> somebody begins the commit message with from: will be caught before
-> damage is done.
+> I also think "git commit" would not be the right time for such a
+> feature. The problem is not that you have this text in your commit
+> message. The problem is that the "format-patch | am" transport is lossy.
+> You would do better to have format-patch say "Ah, this is going to
+> create a bogus email address" and somehow quote it appropriately.
 
-I'm not sure I like that solution for a few reasons:
+Doesn't mbox format have some way of escaping "From:" (or is it "From ")?
+If I remember correctly it uses ">From " or something for that.
+git-format-patch could do this also (perhaps only with --rebasing
+option).
 
-  1. It creates a bad user experience. You are not unreasonable for
-     wanting to put some specific text in your commit message. Having
-     git come back and say "oops, I might get confused by this later"
-     just seems like an annoyance to the user.
+P.S. As git-format-patch / git-am have hidden --rebasing option,
+perhaps git-mailinfo should have it as well (even if it is called
+--strict).
 
-  2. Mailinfo has to deal with data created by older versions of git. So
-     in your case, the rebase was a bomb waiting to go off. If we can
-     fix it so that an existing bomb doesn't go off, rather than not
-     creating the bomb in the first place, then we are better off.
-
-  3. Commit has to know about rules for mailinfo, even versions of
-     mailinfo that will exist in the future. Probably the rules aren't
-     going to change much, but it is a weakness.
-
-  4. Commit messages can come from other places than "git commit". What
-     should we do with a commit message like this that is imported from
-     SVN? Reject the import? Munge the message?
-
-Of course all of that presupposes that we can correctly handle the
-existing data after the fact. Even with my patch, you still can't write
-"From: foo@example.com" as the first line of your commit body. But that
-is, IMHO, getting even more unlikely than your "From:" (which already
-seems fairly unlikely).
-
-I also think "git commit" would not be the right time for such a
-feature. The problem is not that you have this text in your commit
-message. The problem is that the "format-patch | am" transport is lossy.
-You would do better to have format-patch say "Ah, this is going to
-create a bogus email address" and somehow quote it appropriately.
-
--Peff
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
