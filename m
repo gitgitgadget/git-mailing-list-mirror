@@ -1,71 +1,62 @@
-From: Intland Software <marketing@intland.com>
-Subject: Re: [ANNOUNCE] codeBeamer MR - Easy ACL for Git
-Date: Wed, 18 Nov 2009 14:19:13 +0100
-Message-ID: <4B03F451.4050709@intland.com>
-References: <4B03B153.1020302@intland.com> <20091118120936.GL17748@machine.or.cz>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Hey - A Conceptual Simplication....
+Date: Wed, 18 Nov 2009 14:30:11 +0100
+Message-ID: <200911181430.13537.trast@student.ethz.ch>
+References: <005a01ca684e$71a1d710$54e58530$@com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Nov 18 14:29:35 2009
+Cc: <git@vger.kernel.org>, <torvalds@osdl.org>
+To: George Dennie <gdennie@pospeople.com>
+X-From: git-owner@vger.kernel.org Wed Nov 18 14:31:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAkbG-0004tH-HG
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 14:29:34 +0100
+	id 1NAkd3-0005fT-Uh
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 14:31:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756983AbZKRN3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2009 08:29:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756395AbZKRN3W
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 08:29:22 -0500
-Received: from mail01d.mail.t-online.hu ([84.2.42.6]:49377 "EHLO
-	mail01d.mail.t-online.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756676AbZKRN3V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2009 08:29:21 -0500
-X-Greylist: delayed 612 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Nov 2009 08:29:21 EST
-Received: from [192.168.1.65] (dsl4E5C0B13.pool.t-online.hu [78.92.11.19])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail01d.mail.t-online.hu (Postfix) with ESMTPSA id 30A397586C2;
-	Wed, 18 Nov 2009 14:18:33 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <20091118120936.GL17748@machine.or.cz>
-X-DCC-mail.t-online.hu-Metrics: mail01d.mail.t-online.hu 32711; Body=2 Fuz1=2
-	Fuz2=2
+	id S1757018AbZKRNbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2009 08:31:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756988AbZKRNbO
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 08:31:14 -0500
+Received: from gwse.ethz.ch ([129.132.178.238]:46403 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751534AbZKRNbN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2009 08:31:13 -0500
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 18 Nov
+ 2009 14:31:18 +0100
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 18 Nov
+ 2009 14:30:57 +0100
+User-Agent: KMail/1.12.3 (Linux/2.6.27.37-0.1-default; KDE/4.3.3; x86_64; ; )
+In-Reply-To: <005a01ca684e$71a1d710$54e58530$@com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133170>
 
-  Thanks for your comments, Petr.
+George Dennie wrote:
+>
+> Instead, Git is treating a manually maintained list of files within the
+> working tree as the versioned document, this list being initialized and
+> manually amended by the "Git add/rm/mv" commands, etc. 
 
-Petr Baudis wrote:
->> LEARN MORE & DOWNLOAD
->> More details, screenshots and downloads:
->> http://www.intland.com/products/cb-mr/overview.html
-> 
-> Interesting, thank you for the announcement; it would be good to note
-> that it's not open-source.
-  That's right, codeBeamer MR is not open source.
-  More precisely: parts of the source code are actually open, including
-the wiki plugins and the remote clients, for instance. The core source
-is closed, because the same core is also used in our commercial offerings, and
-our commercial license doesn't (currently) allow publishing the
-complete code. We have quite some large customers from the defense space
-that would not be happy if we opened everything ;)
+This feature is called the "index", and is not merely a list of the
+files, but also their content.  Please read
 
-  We are currently in the midst of rethinking our licensing scheme
-in general, to make things more liberal or to set up some kind of a
-dual license.
+  http://tomayko.com/writings/the-thing-about-git
 
-> I think a lot of people wonder now, how does this compare to existing
-> solutions; from your announcement I thought it's something like
-> Gitosis/Gitolite, but in fact it seems more similar to Gitorious or
-> GitHub (if it was publicly available, of course); perhaps it would be
-> good idea to present comparison to these on the project homepage.
-  Good point. More on this later.
----
-  Intland
+for a nice explanation why this is a good and useful thing.
+
+> 	"Git commit -x"   -- performs a "Git add ." then a "Git commit"
+> 	"Git checkout -x" -- that clean the working tree prior to perform a checkout
+
+That would require supernaturally good maintenance of your .gitignore
+to avoid adding or (worse) nuking files by accident.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
