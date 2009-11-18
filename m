@@ -1,19 +1,13 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v4 11/12] Basic build infrastructure for Python scripts
-Date: Wed, 18 Nov 2009 02:42:31 +0100
-Message-ID: <1258508552-20752-12-git-send-email-srabbelier@gmail.com>
+Subject: [PATCH v4 04/12] Allow fetch to modify refs
+Date: Wed, 18 Nov 2009 02:42:24 +0100
+Message-ID: <1258508552-20752-5-git-send-email-srabbelier@gmail.com>
 References: <1258508552-20752-1-git-send-email-srabbelier@gmail.com>
  <1258508552-20752-2-git-send-email-srabbelier@gmail.com>
  <1258508552-20752-3-git-send-email-srabbelier@gmail.com>
  <1258508552-20752-4-git-send-email-srabbelier@gmail.com>
- <1258508552-20752-5-git-send-email-srabbelier@gmail.com>
- <1258508552-20752-6-git-send-email-srabbelier@gmail.com>
- <1258508552-20752-7-git-send-email-srabbelier@gmail.com>
- <1258508552-20752-8-git-send-email-srabbelier@gmail.com>
- <1258508552-20752-9-git-send-email-srabbelier@gmail.com>
- <1258508552-20752-10-git-send-email-srabbelier@gmail.com>
- <1258508552-20752-11-git-send-email-srabbelier@gmail.com>
-Cc: Johan Herland <johan@herland.net>
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
 To: Git List <git@vger.kernel.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Daniel Barkalow <barkalow@iabervon.org>,
@@ -23,152 +17,221 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAZar-0000vW-Od
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 02:44:26 +0100
+	id 1NAZap-0000vW-4P
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 02:44:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756849AbZKRBnl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2009 20:43:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756845AbZKRBnk
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 20:43:40 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:60684 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756721AbZKRBni (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2009 20:43:38 -0500
-Received: by mail-bw0-f227.google.com with SMTP id 27so622806bwz.21
-        for <git@vger.kernel.org>; Tue, 17 Nov 2009 17:43:44 -0800 (PST)
+	id S1756830AbZKRBnb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2009 20:43:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756828AbZKRBnb
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Nov 2009 20:43:31 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:40383 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756775AbZKRBn2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2009 20:43:28 -0500
+Received: by ey-out-2122.google.com with SMTP id 25so5818eya.19
+        for <git@vger.kernel.org>; Tue, 17 Nov 2009 17:43:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=jmFUIR8pIpGj9C3E7bzb6sta17IDihzA5mqJHfYeDf4=;
-        b=fI8Jg451qw1WCCH3ypZOw1E/CiLWhFaVUP9CYfDQgx0jmmGgMc5/z3L4a7mcpC2lAS
-         ZWo2fzEVichGprhpyN7tJliUOE+y9qpQccYryH9TqUx0uISr8PRs9EqK9ZZqxqTp26ls
-         +G1R+P4GCrHA02BxgxuUH6PsofL7Y03BXZTC4=
+        bh=QDLDkttillFbfl44h0RLvKG7yz0GiIq1B6P/Q4bKjOQ=;
+        b=YNySOxqUrSsJt+lXDWRqdCuoIQj03g9ImgzKv9X3ViB2iprpjG/tjG1Y0NQlrX/E/l
+         kAm8+PzyroEhqiQXEEDpr9zsy0RSQ2id9AX+KHUoA/4fxbbFlQv4gmSrIOef/WYssDZj
+         4i8AQKj40UhHCP8cH0ZF1lxIhVgIAln0/D9IM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=jJ4iFW8WawrcwwG15ztOKw7NcbnJ8oiw4PyFLc3G9EsxSk2CN+zyxeYm1StL+OU/kC
-         oBExnIfQqfMFSJLnuC8eniOR3ZOjijDJ4hJlLLFt1qEo5dHiOOmTHphO4uUDkp3mgemG
-         VglDz7/9rciWPXR9WYvltMxW4dCbG4p9cXowY=
-Received: by 10.216.88.8 with SMTP id z8mr2457wee.109.1258508623892;
-        Tue, 17 Nov 2009 17:43:43 -0800 (PST)
+        b=p4bbtmtQeZAoUSw4TmvdpwK4XxvLeD7W+CssfARApGe7xwvAqBjrjnfZvHxV+wuPB4
+         ZDUF29E2NOFcPQYYsjJ8slqfEVPZXgq8gaRHXqOM7j20qSOMPMY94Jx9LPVlDX6DiVuf
+         o7RfKomHGzquY2yUCvYRwbmOVhOsMisE4krAc=
+Received: by 10.213.0.138 with SMTP id 10mr3023485ebb.12.1258508613503;
+        Tue, 17 Nov 2009 17:43:33 -0800 (PST)
 Received: from localhost.localdomain (ip138-114-211-87.adsl2.static.versatel.nl [87.211.114.138])
-        by mx.google.com with ESMTPS id 28sm2372670eye.3.2009.11.17.17.43.42
+        by mx.google.com with ESMTPS id 28sm2372670eye.3.2009.11.17.17.43.32
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 17 Nov 2009 17:43:43 -0800 (PST)
+        Tue, 17 Nov 2009 17:43:32 -0800 (PST)
 X-Mailer: git-send-email 1.6.5.3.164.g07b0c
-In-Reply-To: <1258508552-20752-11-git-send-email-srabbelier@gmail.com>
+In-Reply-To: <1258508552-20752-4-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133130>
 
-From: Johan Herland <johan@herland.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
 
-This patch adds basic boilerplate support (based on corresponding Perl
-sections) for enabling the building and installation Python scripts.
+This allows the transport to use the null sha1 for a ref reported to
+be present in the remote repository to indicate that a ref exists but
+its actual value is presently unknown and will be set if the objects
+are fetched.
 
-There are currently no Python scripts being built, and when Python
-scripts are added in future patches, their building and installation
-can be disabled by defining NO_PYTHON.
+Also adds documentation to the API to specify exactly what the methods
+should do and how they should interpret arguments.
 
-Signed-off-by: Johan Herland <johan@herland.net>
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
 ---
 
 	Unchanged.
 
- Makefile      |   13 +++++++++++++
- configure.ac  |    3 +++
- t/test-lib.sh |    1 +
- 3 files changed, 17 insertions(+), 0 deletions(-)
+ builtin-clone.c    |    3 ++-
+ transport-helper.c |    4 ++--
+ transport.c        |   13 +++++++------
+ transport.h        |   41 +++++++++++++++++++++++++++++++++++++++--
+ 4 files changed, 50 insertions(+), 11 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 35f5294..ed027df 100644
---- a/Makefile
-+++ b/Makefile
-@@ -168,6 +168,8 @@ all::
- #
- # Define NO_PERL if you do not want Perl scripts or libraries at all.
- #
-+# Define NO_PYTHON if you do not want Python scripts or libraries at all.
-+#
- # Define NO_TCLTK if you do not want Tcl/Tk GUI.
- #
- # The TCL_PATH variable governs the location of the Tcl interpreter
-@@ -312,6 +314,7 @@ LIB_H =
- LIB_OBJS =
- PROGRAMS =
- SCRIPT_PERL =
-+SCRIPT_PYTHON =
- SCRIPT_SH =
- TEST_PROGRAMS =
+diff --git a/builtin-clone.c b/builtin-clone.c
+index caf3025..5df8b0f 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -362,9 +362,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	const char *repo_name, *repo, *work_tree, *git_dir;
+ 	char *path, *dir;
+ 	int dest_exists;
+-	const struct ref *refs, *remote_head, *mapped_refs;
++	const struct ref *refs, *remote_head;
+ 	const struct ref *remote_head_points_at;
+ 	const struct ref *our_head_points_at;
++	struct ref *mapped_refs;
+ 	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT;
+ 	struct strbuf branch_top = STRBUF_INIT, reflog_msg = STRBUF_INIT;
+ 	struct transport *transport = NULL;
+diff --git a/transport-helper.c b/transport-helper.c
+index e24fcbb..53d8f08 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -75,7 +75,7 @@ static int release_helper(struct transport *transport)
+ }
  
-@@ -349,6 +352,7 @@ SCRIPT_PERL += git-svn.perl
+ static int fetch_with_fetch(struct transport *transport,
+-			    int nr_heads, const struct ref **to_fetch)
++			    int nr_heads, struct ref **to_fetch)
+ {
+ 	struct child_process *helper = get_helper(transport);
+ 	FILE *file = xfdopen(helper->out, "r");
+@@ -99,7 +99,7 @@ static int fetch_with_fetch(struct transport *transport,
+ }
  
- SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
- 	  $(patsubst %.perl,%,$(SCRIPT_PERL)) \
-+	  $(patsubst %.py,%,$(SCRIPT_PYTHON)) \
- 	  git-instaweb
+ static int fetch(struct transport *transport,
+-		 int nr_heads, const struct ref **to_fetch)
++		 int nr_heads, struct ref **to_fetch)
+ {
+ 	struct helper_data *data = transport->data;
+ 	int i, count;
+diff --git a/transport.c b/transport.c
+index 4987555..e882991 100644
+--- a/transport.c
++++ b/transport.c
+@@ -204,7 +204,7 @@ static struct ref *get_refs_via_rsync(struct transport *transport, int for_push)
+ }
  
- # Empty...
-@@ -402,8 +406,12 @@ endif
- ifndef PERL_PATH
- 	PERL_PATH = /usr/bin/perl
- endif
-+ifndef PYTHON_PATH
-+	PYTHON_PATH = /usr/bin/python
-+endif
+ static int fetch_objs_via_rsync(struct transport *transport,
+-				int nr_objs, const struct ref **to_fetch)
++				int nr_objs, struct ref **to_fetch)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct child_process rsync;
+@@ -408,7 +408,7 @@ static struct ref *get_refs_from_bundle(struct transport *transport, int for_pus
+ }
  
- export PERL_PATH
-+export PYTHON_PATH
+ static int fetch_refs_from_bundle(struct transport *transport,
+-			       int nr_heads, const struct ref **to_fetch)
++			       int nr_heads, struct ref **to_fetch)
+ {
+ 	struct bundle_transport_data *data = transport->data;
+ 	return unbundle(&data->header, data->fd);
+@@ -486,7 +486,7 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
+ }
  
- LIB_FILE=libgit.a
- XDIFF_LIB=xdiff/lib.a
-@@ -1315,6 +1323,10 @@ ifeq ($(PERL_PATH),)
- NO_PERL=NoThanks
- endif
+ static int fetch_refs_via_pack(struct transport *transport,
+-			       int nr_heads, const struct ref **to_fetch)
++			       int nr_heads, struct ref **to_fetch)
+ {
+ 	struct git_transport_data *data = transport->data;
+ 	char **heads = xmalloc(nr_heads * sizeof(*heads));
+@@ -929,16 +929,17 @@ const struct ref *transport_get_remote_refs(struct transport *transport)
+ 	return transport->remote_refs;
+ }
  
-+ifeq ($(PYTHON_PATH),)
-+NO_PYTHON=NoThanks
-+endif
+-int transport_fetch_refs(struct transport *transport, const struct ref *refs)
++int transport_fetch_refs(struct transport *transport, struct ref *refs)
+ {
+ 	int rc;
+ 	int nr_heads = 0, nr_alloc = 0, nr_refs = 0;
+-	const struct ref **heads = NULL;
+-	const struct ref *rm;
++	struct ref **heads = NULL;
++	struct ref *rm;
+ 
+ 	for (rm = refs; rm; rm = rm->next) {
+ 		nr_refs++;
+ 		if (rm->peer_ref &&
++		    !is_null_sha1(rm->old_sha1) &&
+ 		    !hashcmp(rm->peer_ref->old_sha1, rm->old_sha1))
+ 			continue;
+ 		ALLOC_GROW(heads, nr_heads + 1, nr_alloc);
+diff --git a/transport.h b/transport.h
+index c14da6f..503db11 100644
+--- a/transport.h
++++ b/transport.h
+@@ -18,11 +18,48 @@ struct transport {
+ 	int (*set_option)(struct transport *connection, const char *name,
+ 			  const char *value);
+ 
++	/**
++	 * Returns a list of the remote side's refs. In order to allow
++	 * the transport to try to share connections, for_push is a
++	 * hint as to whether the ultimate operation is a push or a fetch.
++	 *
++	 * If the transport is able to determine the remote hash for
++	 * the ref without a huge amount of effort, it should store it
++	 * in the ref's old_sha1 field; otherwise it should be all 0.
++	 **/
+ 	struct ref *(*get_refs_list)(struct transport *transport, int for_push);
+-	int (*fetch)(struct transport *transport, int refs_nr, const struct ref **refs);
 +
- QUIET_SUBDIR0  = +$(MAKE) -C # space to separate -C and subdir
- QUIET_SUBDIR1  =
++	/**
++	 * Fetch the objects for the given refs. Note that this gets
++	 * an array, and should ignore the list structure.
++	 *
++	 * If the transport did not get hashes for refs in
++	 * get_refs_list(), it should set the old_sha1 fields in the
++	 * provided refs now.
++	 **/
++	int (*fetch)(struct transport *transport, int refs_nr, struct ref **refs);
++
++	/**
++	 * Push the objects and refs. Send the necessary objects, and
++	 * then, for any refs where peer_ref is set and
++	 * peer_ref->new_sha1 is different from old_sha1, tell the
++	 * remote side to update each ref in the list from old_sha1 to
++	 * peer_ref->new_sha1.
++	 *
++	 * Where possible, set the status for each ref appropriately.
++	 *
++	 * The transport must modify new_sha1 in the ref to the new
++	 * value if the remote accepted the change. Note that this
++	 * could be a different value from peer_ref->new_sha1 if the
++	 * process involved generating new commits.
++	 **/
+ 	int (*push_refs)(struct transport *transport, struct ref *refs, int flags);
+ 	int (*push)(struct transport *connection, int refspec_nr, const char **refspec, int flags);
  
-@@ -1362,6 +1374,7 @@ prefix_SQ = $(subst ','\'',$(prefix))
++	/** get_refs_list(), fetch(), and push_refs() can keep
++	 * resources (such as a connection) reserved for futher
++	 * use. disconnect() releases these resources.
++	 **/
+ 	int (*disconnect)(struct transport *connection);
+ 	char *pack_lockfile;
+ 	signed verbose : 2;
+@@ -74,7 +111,7 @@ int transport_push(struct transport *connection,
  
- SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
- PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
-+PYTHON_PATH_SQ = $(subst ','\'',$(PYTHON_PATH))
- TCLTK_PATH_SQ = $(subst ','\'',$(TCLTK_PATH))
+ const struct ref *transport_get_remote_refs(struct transport *transport);
  
- LIBS = $(GITLIBS) $(EXTLIBS)
-diff --git a/configure.ac b/configure.ac
-index b09b8e4..84b6cf4 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -233,6 +233,9 @@ GIT_ARG_SET_PATH(shell)
- # Define PERL_PATH to provide path to Perl.
- GIT_ARG_SET_PATH(perl)
- #
-+# Define PYTHON_PATH to provide path to Python.
-+GIT_ARG_SET_PATH(python)
-+#
- # Define ZLIB_PATH to provide path to zlib.
- GIT_ARG_SET_PATH(zlib)
- #
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index f2ca536..0b991db 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -729,6 +729,7 @@ case $(uname -s) in
- esac
- 
- test -z "$NO_PERL" && test_set_prereq PERL
-+test -z "$NO_PYTHON" && test_set_prereq PYTHON
- 
- # test whether the filesystem supports symbolic links
- ln -s x y 2>/dev/null && test -h y 2>/dev/null && test_set_prereq SYMLINKS
+-int transport_fetch_refs(struct transport *transport, const struct ref *refs);
++int transport_fetch_refs(struct transport *transport, struct ref *refs);
+ void transport_unlock_pack(struct transport *transport);
+ int transport_disconnect(struct transport *transport);
+ char *transport_anonymize_url(const char *url);
 -- 
 1.6.5.3.164.g07b0c
