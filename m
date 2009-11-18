@@ -1,227 +1,93 @@
-From: Jeff King <peff@peff.net>
+From: Philip Hofstetter <phofstetter@sensational.ch>
 Subject: Re: git-mailinfo doesn't stop parsing at the end of the header
-Date: Wed, 18 Nov 2009 11:42:08 -0500
-Message-ID: <20091118164208.GB15184@coredump.intra.peff.net>
-References: <aa2993680911180620g151d8a07t11144d150cd6e29e@mail.gmail.com>
- <20091118155154.GA15184@coredump.intra.peff.net>
+Date: Wed, 18 Nov 2009 18:11:36 +0100
+Message-ID: <aa2993680911180911o7e3af804m4ebdc20096baa609@mail.gmail.com>
+References: <aa2993680911180620g151d8a07t11144d150cd6e29e@mail.gmail.com> 
+	<20091118155154.GA15184@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Philip Hofstetter <phofstetter@sensational.ch>
-X-From: git-owner@vger.kernel.org Wed Nov 18 17:42:29 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 18 18:12:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAnbr-0008Ht-NG
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 17:42:24 +0100
+	id 1NAo4f-0006Hv-5e
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 18:12:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757809AbZKRQmH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2009 11:42:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757783AbZKRQmH
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 11:42:07 -0500
-Received: from peff.net ([208.65.91.99]:48080 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757731AbZKRQmG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2009 11:42:06 -0500
-Received: (qmail 30989 invoked by uid 107); 18 Nov 2009 16:46:00 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 18 Nov 2009 11:46:00 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Nov 2009 11:42:08 -0500
-Content-Disposition: inline
+	id S1757878AbZKRRLx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Nov 2009 12:11:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757846AbZKRRLx
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 12:11:53 -0500
+Received: from mail.sensational.ch ([195.226.6.199]:54500 "EHLO
+	mail.sensational.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757816AbZKRRLx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Nov 2009 12:11:53 -0500
+Received: from [209.85.222.181] (helo=mail-pz0-f181.google.com)
+	by mail.sensational.ch with esmtp (Exim 4.50)
+	id 1NAo4T-0000Zm-MJ
+	for git@vger.kernel.org; Wed, 18 Nov 2009 18:11:57 +0100
+Received: by pzk11 with SMTP id 11so866909pzk.14
+        for <git@vger.kernel.org>; Wed, 18 Nov 2009 09:11:56 -0800 (PST)
+Received: by 10.140.140.2 with SMTP id n2mr656806rvd.36.1258564316109; Wed, 18 
+	Nov 2009 09:11:56 -0800 (PST)
 In-Reply-To: <20091118155154.GA15184@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133191>
 
-On Wed, Nov 18, 2009 at 10:51:54AM -0500, Jeff King wrote:
+Hello,
 
-> So the problem is slightly less severe; the body of your commit message
-> has to _start_ with "From:". Still, it is awfully ugly to hit a parsing
-> ambiguity like this when you are trying to do something as simple as
-> rebase.
-> 
-> Some solutions I can think of are:
-> 
->   1. Improve the header-finding heuristic to actually look for something
->      more sane, like "From:.*<.*@.*>" (I don't recall off the top of my
->      head which other headers we handle in this position. Probably
->      Date, too).
-> 
->   2. Give mailinfo a "--strict" mode to indicate that it is directly
->      parsing the output of format-patch, and not some random email. Use
->      --strict when invoking "git am" via "git rebase".
+On Wed, Nov 18, 2009 at 4:51 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Nov 18, 2009 at 03:20:48PM +0100, Philip Hofstetter wrote:
 
-Solution (2) seemed like a lot of work, so here is the relatively small
-solution (1). I think looking for <.*@.*> is too restrictive, as people
-may be using:
+> =A01. Improve the header-finding heuristic to actually look for somet=
+hing
+> =A0 =A0 more sane, like "From:.*<.*@.*>" (I don't recall off the top =
+of my
+> =A0 =A0 head which other headers we handle in this position. Probably
+> =A0 =A0 Date, too).
 
-  From: bare@example.com
+or at least don't prefer obviously invalid data over valid data that
+has already been seen.
 
-which should remain valid. I just look for an '@' instead.
+> =A02. Give mailinfo a "--strict" mode to indicate that it is directly
+> =A0 =A0 parsing the output of format-patch, and not some random email=
+=2E Use
+> =A0 =A0 --strict when invoking "git am" via "git rebase".
 
-Note that this validation also applies to actual headers. Should we turn
-it off for them? As it is, it breaks t3400, which uses a bogus email
-address. I suppose we should probably preserve such bogosities if they
-are in the official headers.
+That would solve the problem too, though it feels like adding yet
+another switch to guard against one specific issue. The purpose behind
+options like this tends to get forgotten over time.
 
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index c90cd31..6d69ef3 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -275,6 +275,17 @@ static inline int cmp_header(const struct strbuf *line, const char *hdr)
- 			line->buf[len] == ':' && isspace(line->buf[len + 1]);
- }
- 
-+static int validate_header(const char *header, const struct strbuf *data)
-+{
-+	if (!strcmp(header, "From"))
-+		return !!strchr(data->buf, '@');
-+	if (!strcmp(header, "Date")) {
-+		char buf[50];
-+		return parse_date(data->buf, buf, sizeof(buf)) >= 0;
-+	}
-+	return 1;
-+}
-+
- static int check_header(const struct strbuf *line,
- 				struct strbuf *hdr_data[], int overwrite)
- {
-@@ -289,8 +300,10 @@ static int check_header(const struct strbuf *line,
- 			 */
- 			strbuf_add(&sb, line->buf + len + 2, line->len - len - 2);
- 			decode_header(&sb);
--			handle_header(&hdr_data[i], &sb);
--			ret = 1;
-+			if (validate_header(header[i], &sb)) {
-+				ret = 1;
-+				handle_header(&hdr_data[i], &sb);
-+			}
- 			goto check_header_out;
- 		}
- 	}
-diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-index 0279d07..be06e0f 100755
---- a/t/t5100-mailinfo.sh
-+++ b/t/t5100-mailinfo.sh
-@@ -11,7 +11,7 @@ test_expect_success 'split sample box' \
- 	'git mailsplit -o. "$TEST_DIRECTORY"/t5100/sample.mbox >last &&
- 	last=`cat last` &&
- 	echo total is $last &&
--	test `cat last` = 14'
-+	test `cat last` = 16'
- 
- check_mailinfo () {
- 	mail=$1 opt=$2
-diff --git a/t/t5100/info0015 b/t/t5100/info0015
-new file mode 100644
-index 0000000..c4d8d77
---- /dev/null
-+++ b/t/t5100/info0015
-@@ -0,0 +1,5 @@
-+Author: A U Thor
-+Email: a.u.thor@example.com
-+Subject: check bogus body header (from)
-+Date: Fri, 9 Jun 2006 00:44:16 -0700
-+
-diff --git a/t/t5100/info0016 b/t/t5100/info0016
-new file mode 100644
-index 0000000..f4857d4
---- /dev/null
-+++ b/t/t5100/info0016
-@@ -0,0 +1,5 @@
-+Author: A U Thor
-+Email: a.u.thor@example.com
-+Subject: check bogus body header (date)
-+Date: Fri, 9 Jun 2006 00:44:16 -0700
-+
-diff --git a/t/t5100/msg0015 b/t/t5100/msg0015
-new file mode 100644
-index 0000000..be5115b
---- /dev/null
-+++ b/t/t5100/msg0015
-@@ -0,0 +1,3 @@
-+From: bogosity
-+  - a list
-+  - of stuff
-diff --git a/t/t5100/msg0016 b/t/t5100/msg0016
-new file mode 100644
-index 0000000..1063f51
---- /dev/null
-+++ b/t/t5100/msg0016
-@@ -0,0 +1,4 @@
-+Date: bogus
-+
-+and some content
-+
-diff --git a/t/t5100/patch0015 b/t/t5100/patch0015
-new file mode 100644
-index 0000000..ad64848
---- /dev/null
-+++ b/t/t5100/patch0015
-@@ -0,0 +1,8 @@
-+---
-+diff --git a/foo b/foo
-+index e69de29..d95f3ad 100644
-+--- a/foo
-++++ b/foo
-+@@ -0,0 +1 @@
-++content
-+
-diff --git a/t/t5100/patch0016 b/t/t5100/patch0016
-new file mode 100644
-index 0000000..ad64848
---- /dev/null
-+++ b/t/t5100/patch0016
-@@ -0,0 +1,8 @@
-+---
-+diff --git a/foo b/foo
-+index e69de29..d95f3ad 100644
-+--- a/foo
-++++ b/foo
-+@@ -0,0 +1 @@
-++content
-+
-diff --git a/t/t5100/sample.mbox b/t/t5100/sample.mbox
-index 13fa4ae..de10312 100644
---- a/t/t5100/sample.mbox
-+++ b/t/t5100/sample.mbox
-@@ -650,3 +650,36 @@ index b0b5d8f..461c47e 100644
-  		convert_to_utf8(line, charset.buf);
- -- 
- 1.6.4.1
-+From nobody Mon Sep 17 00:00:00 2001
-+From: A U Thor <a.u.thor@example.com>
-+Subject: check bogus body header (from)
-+Date: Fri, 9 Jun 2006 00:44:16 -0700
-+
-+From: bogosity
-+  - a list
-+  - of stuff
-+---
-+diff --git a/foo b/foo
-+index e69de29..d95f3ad 100644
-+--- a/foo
-++++ b/foo
-+@@ -0,0 +1 @@
-++content
-+
-+From nobody Mon Sep 17 00:00:00 2001
-+From: A U Thor <a.u.thor@example.com>
-+Subject: check bogus body header (date)
-+Date: Fri, 9 Jun 2006 00:44:16 -0700
-+
-+Date: bogus
-+
-+and some content
-+
-+---
-+diff --git a/foo b/foo
-+index e69de29..d95f3ad 100644
-+--- a/foo
-++++ b/foo
-+@@ -0,0 +1 @@
-++content
-+
+> As I explained above, there is a reason, but I don't think it's rude =
+to
+> have either of those lines. You were, after all, writing a commit
+> message, not an email (and even if you were, it is a failure of the
+> storage format if it can't represent your data correctly). So I think
+> git is to blame here.
+
+IMHO, another workable solution would be to reject a commit that later
+can't be handled. That way the current attempts at getting an email
+address can remain intact and the (much more) unlikely case that
+somebody begins the commit message with from: will be caught before
+damage is done.
+
+So, just check that from-line for a valid email address at commit
+time. If it is, ok. If not, treat it as an error and inform the user
+that an invalid email address was given in the commit message.
+
+Also, the error message by rebase (which is actually the message
+printed by am) could have been a bit more helpful. If am fails during
+a rebase, rebase could explicitly tell which commit am failed at. The
+output I got made me suspect the problem to be in the first commit (as
+that was the last one printed) when in fact it was in the second one
+(which was not printed).
+
+But that's just nit-picking.
+
+Philip
