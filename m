@@ -1,127 +1,88 @@
-From: Jason Sewall <jasonsewall@gmail.com>
-Subject: Re: Hey - A Conceptual Simplication....
-Date: Wed, 18 Nov 2009 08:31:42 -0500
-Message-ID: <31e9dd080911180531r1f693d7bi3d9408ef8219cce0@mail.gmail.com>
-References: <005a01ca684e$71a1d710$54e58530$@com>
+From: Yaroslav Halchenko <debian@onerussian.com>
+Subject: Re: git-svn of both trunk and tags while having no access to the
+ 'parent' of those
+Date: Wed, 18 Nov 2009 08:32:05 -0500
+Message-ID: <20091118133205.GB17964@onerussian.com>
+References: <20091117025945.GE17964@onerussian.com>
+ <4B03B7D3.8050905@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, torvalds@osdl.org
-To: George Dennie <gdennie@pospeople.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 14:31:51 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Nov 18 14:32:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAkdS-0005sA-Pa
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 14:31:51 +0100
+	id 1NAkdp-00062l-4o
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 14:32:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757030AbZKRNbi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Nov 2009 08:31:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757026AbZKRNbi
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 08:31:38 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:20566 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757022AbZKRNbh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Nov 2009 08:31:37 -0500
-Received: by fg-out-1718.google.com with SMTP id d23so2231946fga.1
-        for <git@vger.kernel.org>; Wed, 18 Nov 2009 05:31:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=txhL2abyBdyb1EbOqkkBy5yfObNOCkZlF5m0yDcshk0=;
-        b=uJ/7PLkxhhf90Ar5pg4gwEYbzKcAuwfGCvf9GRYP5zh+JM4Bd4QzOuchZjjcDbJ0ON
-         e0Ex6GkaHYxv6mzr+y5J5C/486O0Ss4U8dZwkiU8c2eRpLsOIVO8vtcIyiSah+12L2ba
-         425kEmm5KAcLl59HHvHeuX/lCW1iArflkrqMc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=txKssnCpBgystXFrpDg3E1NIbhUyovlN9KkL6/y6Zpe2I7yDaOqL/B8kydadv0PgZo
-         EKCSQN2d4XkjtJQqv3wp+PYK+s+Kjzuq3lTouQyckS6Xk0HY91e6SQbwPggTcqjCFJ1v
-         F3kUwhvsVoWe1lab6R1YlDrgrAwlfBnqErwvw=
-Received: by 10.216.89.129 with SMTP id c1mr319975wef.35.1258551102810; Wed, 
-	18 Nov 2009 05:31:42 -0800 (PST)
-In-Reply-To: <005a01ca684e$71a1d710$54e58530$@com>
+	id S1757040AbZKRNcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2009 08:32:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757035AbZKRNcA
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 08:32:00 -0500
+Received: from washoe.dartmouth.edu ([129.170.30.229]:54043 "EHLO
+	smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757033AbZKRNb7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2009 08:31:59 -0500
+Received: from smtp.onerussian.com ([192.168.100.6] helo=washoe.onerussian.com)
+	by smtp.onerussian.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <yoh@onerussian.com>)
+	id 1NAkdh-0002wx-D0; Wed, 18 Nov 2009 08:32:05 -0500
+Received: from yoh by washoe.onerussian.com with local (Exim 4.69)
+	(envelope-from <yoh@onerussian.com>)
+	id 1NAkdh-0002wu-7n; Wed, 18 Nov 2009 08:32:05 -0500
+Content-Disposition: inline
+In-Reply-To: <4B03B7D3.8050905@drmicha.warpmail.net>
+X-URL: http://www.onerussian.com
+X-Image-Url: http://www.onerussian.com/img/yoh.png
+X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
+X-fingerprint: 3BB6 E124 0643 A615 6F00  6854 8D11 4563 75C0 24C8
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: 192.168.100.6
+X-SA-Exim-Rcpt-To: git@drmicha.warpmail.net, git@vger.kernel.org
+X-SA-Exim-Mail-From: yoh@onerussian.com
+X-SA-Exim-Scanned: No (on smtp.onerussian.com); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133172>
 
-On Wed, Nov 18, 2009 at 7:55 AM, George Dennie <gdennie@pospeople.com> =
-wrote:
->
-> In particular, why is Git not treating the entire working tree as the
-> versioned document (qualified of course by the .gitignore file).
->
-> Instead, Git is treating a manually maintained list of files within t=
-he
-> working tree as the versioned document, this list being initialized a=
-nd
-> manually amended by the "Git add/rm/mv" commands, etc.
 
-Isn't fastidiously maintaining a .gitignore file to contain everything
-you *don't* want in the project more confusing than explicitly
-specifying things you *do* want in the project?
+On Wed, 18 Nov 2009, Michael J Gruber wrote:
 
-> The result is conceptual complexity and rather counter-intuitive beha=
-vior.
-> For example, adding and renaming files outside of Git is not consider=
-ed
-> editing the version until you subsequently do a "Git Add ." Contrast =
-that
-> with editing or deleting files outside of Git. Yet adding and renamin=
-g files
-> and folders is a significant part of substantive projects, especially=
- in the
-> early stages and experimental branches.
->
-> Granted, this is not a big deal functionally, but what is being lost =
-is
-> conceptual simplicity (and consistency, in my book) and conceptual
-> simplicity is a key value point, if not THE key.
+> > git svn clone --prefix=upstream-svn/ -T trunk -t releases http://domain.com/svnrepo svnrepo.gitsvn
 
-In fact, it's a big deal in functionality, but the utility is in being
-able to to specify exactly what I want to be part of each commit. One
-of git's great features is the ability to specify *exactly* what you
-want to be part of each commit, down to the line. This means that each
-commit can be extremely fine grained and represent specific bug fixes
-and or features.
+> Your problem description seems to match perfectly with the description
+> of the "--no-minimize-url" option in git svn's man page. I'm sure it's
+> worth a try.
 
-If you have a bunch of debugging code sitting around in your working
-tree after you've tracked down a problem, you don't want to commit all
-of those printfs, etc. - you want to commit the fix. This has
-ramifications from making diffs of history cleaner to making git
-bisect actually useful.
+;-) oh I did I did ;)
+I've used
 
-> Also can we augment checkout to totally CLEAN the working directory p=
-rior to
-> a restore. If necessary we can augment .gitignore to stipulate those =
-files
-> or folders that should be excluded from the cleaning. This suggestion=
- is in
-> recognition of the fact that if you =C2=A0are not versioning the file=
-, it is
-> typically trash; which becomes the case when the entire working treat=
- is
-> treated as the versioned document.
+git svn clone --no-minimize-url --prefix=upstream-svn/ -T trunk -t releases  http://domain.com/svnrepo/trunk svnrepo.gitsvn
 
-This is even worse. It's already pretty easy to trash your working
-directory by reflexively typing git checkout -f, and you want to
+that initialized repository, went through a lengthy list of 
 
-> Consequently, I recommend the following new commands:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0"Git commit -x" =C2=A0 -- performs a "Git =
-add ." then a "Git commit"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0"Git checkout -x" -- that clean the workin=
-g tree prior to perform a
-> checkout
+trace: built-in: git 'config' 'svn-remote.svn.tags-maxRev' '...'
 
-I see that Jan has replied with some loaded guns, *ahem* aliases. Go
-ahead and use them, but I recommend you look at the diffs in git.git
-or some other repository that takes advantage of making commits as
-compact as possible, and learn how to use git add -p.
+with last command reported
 
-Jason
+trace: built-in: git 'gc' '--auto'
+
+and resulted in nothing being cloned/checked out or even a single ref.
+The only file under .git besides the ones created by git init
+
+./svn/refs/remotes/upstream-svn/trunk/.rev_map.33fb83da-1015-0410-9b9b-96027f9a4af8
+
+and if I omitted trunk/ from url -- the same story of needed
+authentication
+
+-- 
+Yaroslav O. Halchenko
+Postdoctoral Fellow,   Department of Psychological and Brain Sciences
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
+WWW:   http://www.linkedin.com/in/yarik        
