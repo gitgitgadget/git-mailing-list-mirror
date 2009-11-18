@@ -1,94 +1,86 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] describe: do not use unannotated tag even if exact match
-Date: Wed, 18 Nov 2009 14:32:26 +0100
-Message-ID: <985ab43f219852a6d5dc302424fd1c012e19a09e.1258551042.git.trast@student.ethz.ch>
+From: Benjamin Kramer <benny.kra@googlemail.com>
+Subject: [PATCH RESEND] Explicitly truncate bswap operand to uint32_t
+Date: Wed, 18 Nov 2009 14:53:27 +0100
+Message-ID: <4B03FC57.5000506@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 14:33:40 2009
+X-From: git-owner@vger.kernel.org Wed Nov 18 14:53:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAkfC-0006gj-Uj
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 14:33:39 +0100
+	id 1NAkyi-00086v-B2
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 14:53:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756963AbZKRNd1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2009 08:33:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753691AbZKRNd1
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 08:33:27 -0500
-Received: from gwse.ethz.ch ([129.132.178.237]:35794 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753158AbZKRNd0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2009 08:33:26 -0500
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 18 Nov
- 2009 14:33:32 +0100
-Received: from localhost.localdomain (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 18 Nov
- 2009 14:33:11 +0100
-X-Mailer: git-send-email 1.6.5.3.381.gfeb7e
+	id S1757086AbZKRNx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2009 08:53:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757082AbZKRNx2
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 08:53:28 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:65154 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757022AbZKRNx2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2009 08:53:28 -0500
+Received: by bwz27 with SMTP id 27so1138406bwz.21
+        for <git@vger.kernel.org>; Wed, 18 Nov 2009 05:53:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:content-type
+         :content-transfer-encoding;
+        bh=lvTOnkz10OOwP+rr843hgb2r2st8REMeX2O0E4sdoUM=;
+        b=XlWnZ1hWZKrczxJQN4pepU96Xt2+UN+kVhqUI+rEAIAxU3EfvXWWw8URIasOsQKHLr
+         PWBlM0lIe+d3QJdmfqaee/nQAWH8IR7ZPsbZFxFZmVH9hBM6cUdFYFbxaR+9iMsJYL1o
+         om6teaFKQ64nFHRYq9/2ykKgK4vQsZUic55as=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=qFoHsWOfjz3MeFjLRRhczK0OKeGmy2tg8Hi7FU2o1Im4/kqkKaUdH8RjSZaFRTPJJw
+         rgUZoK9tpdCMmSnUezMmP7FykjVzWfG8SFxXdkMfyFBi1d4TnjtScq3I/k1F7awpnzIz
+         T4wA5e4Hgh67Vt5XHJg4WUE1oSaYgdfRi53Ds=
+Received: by 10.204.162.137 with SMTP id v9mr1237821bkx.60.1258552413118;
+        Wed, 18 Nov 2009 05:53:33 -0800 (PST)
+Received: from kallisti.local (p5B01EDE4.dip.t-dialin.net [91.1.237.228])
+        by mx.google.com with ESMTPS id 28sm183626fkx.59.2009.11.18.05.53.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 18 Nov 2009 05:53:31 -0800 (PST)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.1) Gecko/20090715 Thunderbird/3.0b3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133174>
 
-4d23660 (describe: when failing, tell the user about options that
-work, 2009-10-28) forgot to update the shortcut path where the code
-detected and used a possible exact match.  This means that an
-unannotated tag on HEAD would be used by 'git describe'.
+There are some places in git where a long is passed to htonl/ntohl. llvm
+doesn't support matching operands of different bitwidths intentionally.
+This patch fixes the build with llvm-gcc (and clang) on x86_64.
 
-Guard this code path against the new circumstances, where unannotated
-tags can be present in ->util even if we're not actually planning to
-use them.
-
-While there, also add some tests for --all.
-
-Reported by 'yashi' on IRC.
-
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+Signed-off-by: Benjamin Kramer <benny.kra@googlemail.com>
 ---
- builtin-describe.c  |    2 +-
- t/t6120-describe.sh |    6 ++++++
- 2 files changed, 7 insertions(+), 1 deletions(-)
+Any comments on this patch?
 
-diff --git a/builtin-describe.c b/builtin-describe.c
-index d4efb10..71be2a9 100644
---- a/builtin-describe.c
-+++ b/builtin-describe.c
-@@ -200,7 +200,7 @@ static void describe(const char *arg, int last_one)
- 		die("%s is not a valid '%s' object", arg, commit_type);
+See also:
+* http://llvm.org/bugs/show_bug.cgi?id=3373
+* http://lkml.org/lkml/2009/1/23/261
+
+ compat/bswap.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/compat/bswap.h b/compat/bswap.h
+index 279e0b4..f3b8c44 100644
+--- a/compat/bswap.h
++++ b/compat/bswap.h
+@@ -24,7 +24,7 @@ static inline uint32_t default_swab32(uint32_t val)
+ 	if (__builtin_constant_p(x)) { \
+ 		__res = default_swab32(x); \
+ 	} else { \
+-		__asm__("bswap %0" : "=r" (__res) : "0" (x)); \
++		__asm__("bswap %0" : "=r" (__res) : "0" ((uint32_t)(x))); \
+ 	} \
+ 	__res; })
  
- 	n = cmit->util;
--	if (n) {
-+	if (n && (tags || all || n->prio == 2)) {
- 		/*
- 		 * Exact match to an existing ref.
- 		 */
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index c050f94..065dead 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -92,12 +92,18 @@ check_describe A-* HEAD^
- check_describe D-* HEAD^^
- check_describe A-* HEAD^^2
- check_describe B HEAD^^2^
-+check_describe D-* HEAD^^^
- 
- check_describe c-* --tags HEAD
- check_describe c-* --tags HEAD^
- check_describe e-* --tags HEAD^^
- check_describe c-* --tags HEAD^^2
- check_describe B --tags HEAD^^2^
-+check_describe e --tags HEAD^^^
-+
-+check_describe heads/master --all HEAD
-+check_describe tags/c-* --all HEAD^
-+check_describe tags/e --all HEAD^^^
- 
- check_describe B-0-* --long HEAD^^2^
- check_describe A-3-* --long HEAD^^2
 -- 
-1.6.5.3.381.gfeb7e
+1.6.5.3.149.g9aa3
