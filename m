@@ -1,73 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Give the hunk comment its own color
-Date: Wed, 18 Nov 2009 09:23:21 -0500
-Message-ID: <20091118142320.GA1220@coredump.intra.peff.net>
-References: <1258543836-799-1-git-send-email-bert.wesarg@googlemail.com>
+From: Yaroslav Halchenko <debian@onerussian.com>
+Subject: Re: git-svn of both trunk and tags while having no access to the
+ 'parent' of those
+Date: Wed, 18 Nov 2009 09:23:32 -0500
+Message-ID: <20091118142332.GC17964@onerussian.com>
+References: <20091117025945.GE17964@onerussian.com>
+ <4B03B7D3.8050905@drmicha.warpmail.net>
+ <20091118133205.GB17964@onerussian.com>
+ <4B03FD29.3090001@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 15:23:30 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Nov 18 15:23:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAlRR-00064c-GF
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 15:23:29 +0100
+	id 1NAlRg-0006D8-7L
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 15:23:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757117AbZKROXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2009 09:23:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757104AbZKROXR
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 09:23:17 -0500
-Received: from peff.net ([208.65.91.99]:35087 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757083AbZKROXR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2009 09:23:17 -0500
-Received: (qmail 30245 invoked by uid 107); 18 Nov 2009 14:27:12 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 18 Nov 2009 09:27:12 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Nov 2009 09:23:21 -0500
+	id S1757155AbZKROX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2009 09:23:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757135AbZKROX1
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 09:23:27 -0500
+Received: from washoe.dartmouth.edu ([129.170.30.229]:37061 "EHLO
+	smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757129AbZKROX1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2009 09:23:27 -0500
+Received: from smtp.onerussian.com ([192.168.100.6] helo=washoe.onerussian.com)
+	by smtp.onerussian.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <yoh@onerussian.com>)
+	id 1NAlRU-0004r9-Ol; Wed, 18 Nov 2009 09:23:32 -0500
+Received: from yoh by washoe.onerussian.com with local (Exim 4.69)
+	(envelope-from <yoh@onerussian.com>)
+	id 1NAlRU-0004r6-Id; Wed, 18 Nov 2009 09:23:32 -0500
 Content-Disposition: inline
-In-Reply-To: <1258543836-799-1-git-send-email-bert.wesarg@googlemail.com>
+In-Reply-To: <4B03FD29.3090001@drmicha.warpmail.net>
+X-URL: http://www.onerussian.com
+X-Image-Url: http://www.onerussian.com/img/yoh.png
+X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
+X-fingerprint: 3BB6 E124 0643 A615 6F00  6854 8D11 4563 75C0 24C8
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: 192.168.100.6
+X-SA-Exim-Rcpt-To: git@drmicha.warpmail.net, git@vger.kernel.org
+X-SA-Exim-Mail-From: yoh@onerussian.com
+X-SA-Exim-Scanned: No (on smtp.onerussian.com); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133178>
 
-On Wed, Nov 18, 2009 at 12:30:36PM +0100, Bert Wesarg wrote:
 
-> Insired by the coloring of quilt.
-> 
-> Introduce a separate color for the hunk comment part, i.e. the current
-> function.  Whitespace between hunk header and hunk comment is now
-> printed as plain.
-> 
-> The current default is magenta. But I'm not settled on this. My
-> favorite would be bold yellow.
+On Wed, 18 Nov 2009, Michael J Gruber wrote:
+> > git svn clone --no-minimize-url --prefix=upstream-svn/ -T trunk -t releases  http://domain.com/svnrepo/trunk svnrepo.gitsvn
+> Is the trunk really at svnrepo/trunk/trunk?
+nope... it is just svnrepo/trunk but if I set url to point to parent --
+git svn seeks authentication right away
 
-I don't see any reason not to add this, as it is simply introducing one
-extra knob to tweak for people who care. However, after some
-experimentation, I found that I don't personally really like it. I ended
-up wanting it set to the same color as the hunk header.
+> I would try both
+> git svn clone --no-minimize-url --prefix=upstream-svn/ -T trunk -t
+> releases  http://domain.com/svnrepo/ svnrepo.gitsvn
 
-I wonder how hard it would be to make it backwards-compatible; that is,
-to inherit the color value of the hunk header (be it the original or one
-set by the user) unless the func color is set by the user. But maybe
-that is over-engineering. It is not like we are breaking scripts, and it
-is not that hard for people to see the new behavior and then tweak their
-config if they don't like it.
+asks for authentication since there is no public access to
+http://domain.com/svnrepo/
 
--Peff
+> and also the seemingly equivalent
 
-PS I almost complained about your default of "magenta" as the same as
-the meta color before I remembered that magenta meta is a personal
-setting I use. Personally I find the bold meta color to be distractingly
-ugly. Blaming it, the default seems to come from Linus, who even in his
-commit message (50f575f) seems to indicate that it is somewhat arbitrary
-(mostly just dropping the purple from the bold purple).
+> git svn clone --no-minimize-url --prefix=upstream-svn/ -T
+> http://domain.com/svnrepo/trunk -t http://domain.com/svnrepo/releases
+> svnrepo.gitsvn
+seems to not work since it wants url as a parameter 
 
-I'm not sure what is the best way to arrive at a default color for
-something like this. Arguing about it really is almost the definition of
-bikeshedding.  Maybe next year's git survey should contain a special
-section on colors, and majority should rule.  :)
+Bad URL passed to RA layer: Illegal repository URL svnrepo.gitsvn  at /usr/lib/git-core/git-svn line 940
+
+> Also, I assume you can svn list http://domain.com/svnrepo/trunk and
+> http://domain.com/svnrepo/releases ;)
+yeap -- I can list both of those but not their parent.
+
+
+-- 
+Yaroslav O. Halchenko
+Postdoctoral Fellow,   Department of Psychological and Brain Sciences
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
+WWW:   http://www.linkedin.com/in/yarik        
