@@ -1,163 +1,109 @@
-From: Jason Sewall <jasonsewall@gmail.com>
-Subject: Re: Hey - A Conceptual Simplication....
-Date: Wed, 18 Nov 2009 14:52:06 -0500
-Message-ID: <31e9dd080911181152h665d5d9dr5c0736c0ca3234c1@mail.gmail.com>
-References: <005a01ca684e$71a1d710$54e58530$@com>
-	 <20091118142512.1313744e@perceptron>
-	 <008401ca6880$33d7e550$9b87aff0$@com>
-	 <m37htnd3kb.fsf@localhost.localdomain>
+From: Philip Hofstetter <phofstetter@sensational.ch>
+Subject: Re: git-mailinfo doesn't stop parsing at the end of the header
+Date: Wed, 18 Nov 2009 20:57:16 +0100
+Message-ID: <aa2993680911181157y750eae95sc2932b03d938d6fb@mail.gmail.com>
+References: <aa2993680911180620g151d8a07t11144d150cd6e29e@mail.gmail.com> 
+	<20091118155154.GA15184@coredump.intra.peff.net> <aa2993680911180911o7e3af804m4ebdc20096baa609@mail.gmail.com> 
+	<20091118172424.GA24416@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: George Dennie <gdennie@pospeople.com>,
-	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 20:52:20 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 18 20:58:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAqZf-000422-EG
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 20:52:19 +0100
+	id 1NAqfA-0006sD-4k
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 20:58:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758449AbZKRTwD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2009 14:52:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758373AbZKRTwD
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 14:52:03 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:58274 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758284AbZKRTwB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2009 14:52:01 -0500
-Received: by bwz27 with SMTP id 27so1524823bwz.21
-        for <git@vger.kernel.org>; Wed, 18 Nov 2009 11:52:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=w4ldAGyUlrDLovXMdq/4VQ3N7Gu2NRLHN7iqqFkyEPA=;
-        b=mFgJNZ4kzXHegDt8kW+DMkIJMtzGDiG5g//GtPGhRUmLT06AsI8rmdrRwdMj5jiUA+
-         6J4iqrOPO6WWFHtTyu34Ot59N3mTuS1MtiK1XzYYX7fdBbxpxbCH72VpMK3NFVarxj7Z
-         puEMr//dNRkLi5kY+g5/Jz/zl223c/3KDdCIk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=njXa3Sa1iOSSCz5WUZGUaxyE8eQ4+ymZ3JsoWdaHIXzw6p/Bu2f3pPoLHu4SWLGM7B
-         i3eY2kjipaYtbcIEKUpV/XqggJtG80ro+5GMaQpXyhaoZUarBMI1jLxedTKPUolghU+g
-         MkIRxYKuXbPZl8FiogYu8Z+XrM1flT5k8+gaU=
-Received: by 10.216.90.203 with SMTP id e53mr1556989wef.28.1258573926495; Wed, 
-	18 Nov 2009 11:52:06 -0800 (PST)
-In-Reply-To: <m37htnd3kb.fsf@localhost.localdomain>
+	id S1758521AbZKRT5f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Nov 2009 14:57:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758517AbZKRT5e
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 14:57:34 -0500
+Received: from mail.sensational.ch ([195.226.6.199]:54980 "EHLO
+	mail.sensational.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758512AbZKRT5d convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Nov 2009 14:57:33 -0500
+Received: from [209.85.216.192] (helo=mail-px0-f192.google.com)
+	by mail.sensational.ch with esmtp (Exim 4.50)
+	id 1NAqeo-0002DH-1q
+	for git@vger.kernel.org; Wed, 18 Nov 2009 20:57:38 +0100
+Received: by pxi30 with SMTP id 30so969905pxi.14
+        for <git@vger.kernel.org>; Wed, 18 Nov 2009 11:57:36 -0800 (PST)
+Received: by 10.141.41.21 with SMTP id t21mr647610rvj.93.1258574256157; Wed, 
+	18 Nov 2009 11:57:36 -0800 (PST)
+In-Reply-To: <20091118172424.GA24416@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133198>
 
-Sorry for the 2x post, George; forgot to include the list in my reply....
+Hello,
 
-On Wed, Nov 18, 2009 at 1:51 PM, George Dennie <gdennie@pospeople.com> wrote:
-[some cleanup of quote line wrapping]
-> Jason Sewall wrote...
->> If you have a bunch of debugging code sitting around in your
->> working tree after you've tracked down a problem, you don't want to
->> commit all of those printfs, etc. - you want to commit the
->> fix. This has ramifications from making diffs of history cleaner to
->> making git bisect actually useful.
+On Wed, Nov 18, 2009 at 6:24 PM, Jeff King <peff@peff.net> wrote:
 
-> One of the concerns I have with the manual pick-n-commit is that you
-> can forget a file or two. Consequently, unless you do a clean
-> checkout and test of the commit, you don't know that your
-> publishable version even compiles.  It seems safer to commit the
-> entirety of your work in its working state and then do a clean
-> checkout from a dedicated publishable branch and manually merge the
-> changes in that, test, and commit.
+> =A01. It creates a bad user experience. You are not unreasonable for
+> =A0 =A0 wanting to put some specific text in your commit message. Hav=
+ing
+> =A0 =A0 git come back and say "oops, I might get confused by this lat=
+er"
+> =A0 =A0 just seems like an annoyance to the user.
 
-I find git status very useful in preparing a commit; untracked (and
-'un-ignored') files are listed right there and I can if there are new
-source files that are not present but not tracked.  You could even add
-a 'pre-commit hook' to make sure that you don't have any untracked *.c
-(or whatever) files before you actually make the commit.
+agreed, though it's not that bad: when learning git, you will be
+confronted with the fact that the commit message has a few things that
+are special (well. it's doesn't break git, but the first line should
+be < 56 chars in length for example).
 
-As to 'publishable' version, it's probably a good idea to run 'make
-distcheck' or the equivalent before making a release anyway.
+Not being able to have From: lines in them that are not describing an
+author would then just be one of them.
 
-> It seems the intuitive model is to treat version control as applying
-> to the whole document, not parts of it. In this respect the document
-> is defined by the IDE, namely the entire solution, warts and
-> all. When you start selectively saving parts of the document then
-> you are doing two things, versioning and publishing; and at the same
-> time. This was a critical flaw in older version control approaches
-> because the software solution document is a file system sub-tree.
+> =A02. Mailinfo has to deal with data created by older versions of git=
+=2E So
+> =A0 =A0 in your case, the rebase was a bomb waiting to go off. If we =
+can
+> =A0 =A0 fix it so that an existing bomb doesn't go off, rather than n=
+ot
+> =A0 =A0 creating the bomb in the first place, then we are better off.
 
-I find this leads to big, shapeless commits and, as I mentioned
-before, it seriously limits the utility of 'git bisect'.  I also fail
-to see how 'selectively saving parts of the document' is versioning
-and publishing - what is the publishing part?  The act of committing
-is one thing (and 'saving parts of the document' is one conceivable
-name for it) and publishing another.  Your workflow may vary, but
-before actually 'publishing' (perhaps pushing out to a public repo, or
-merging into a public branch), it's probably a good idea to test the
-code with whatever system you use anyway.
+This is a very good point. I didn't quite think about that.
 
-> What you termed the debugging/printf's I would treat as a
-> distinctions between a debug vs. a release version that may be
-> suitably delineated by #define's or preferably separate unit tests
-> assemblies. If I must prune prior to committing; however, then it
-> seems reverting spurious printf's may offer a more reliable and
-> automatable technique than ensuring that I have added all the new
-> class files, resource files, text files, sub projects, etc; that may
-> constitute the "fix." Once so selectively reverted I can test and
-> commit such a publishable version.
+> =A04. Commit messages can come from other places than "git commit". W=
+hat
+> =A0 =A0 should we do with a commit message like this that is imported=
+ from
+> =A0 =A0 SVN? Reject the import? Munge the message?
 
-What if you are hacking away and make changes to several parts of the
-code at once?  Making the commits as fine-grained as possible makes it
-easier to cherry-pick, bisect, and understand the history.
+I would leave that to the tool that does the import. Probably it would
+have to munge it. Yes.
 
-As to debugging code, I admit I sometimes will use git gui or git add
--p to stage just what I want and then put whatever is 'left over' in a
-branch that I might use again later if another bug comes up.  Then I
-can reset --hard my 'working' branch and the debugging code is gone.
+I DO see though that implementing the check at commit time would lead
+to problems popping up at other places.
 
-> Jason Sewell wrote...
->>  Isn't fastidiously maintaining a .gitignore file to contain
->> everything you *don't* want in the project more confusing than
->> explicitly specifying things you *do* want in the project?
->
-> This is git ignore for "cleaning prior to a check" and git ignore
-> for "adding to index" and is not an either or. You would specify
-> what you don't want to version tracked as normal but you can also
-> stipulate what you don't want to be deleted during a clean restore
-> (which should otherwise completely wipe the folder prior to
-> restoring a specific commit). This would permit embedding
-> non-version elements within the version tree for whatever reason you
-> find necessary.
+> Of course all of that presupposes that we can correctly handle the
+> existing data after the fact. Even with my patch, you still can't wri=
+te
+> "From: foo@example.com" as the first line of your commit body. But th=
+at
 
-Perhaps I don't understand your scheme, but it sounds like you're
-advocating 2 .gitignores:
+can't you? IMHO it would just attribute the commit to foo@example.com
+which can be an equally bad, if not worse thing (I'm saying that
+without the needed knowledge about git internals to really be sure, so
+take this with a grain of salt)
 
-* .gitignore_track; with everything you don't automatically staged but
- which can be trashed by your cleaning checkout
-* .gitignore_keep; with things you don't want staged but which
-  shouldn't be deleted by git during cleaning
+I just have a bad feeling about trying out heuristics to see whether
+thing thing after from: is an email address or not as email addresses
+are notoriously hard to detect.
 
-That seems even more confusing.  I'm actually having trouble seeing
-why you want this untracked-file nuking checkout at all.  Care to give
-an example?
+Typing a commit message and applying a patch from an email should be
+separate things and should be handled separately. Currently they are
+not and this is what's causing the problem in the first place.
 
-> Thomas Rast wrote...
->> That would require supernaturally good maintenance of your
->> .gitignore to
-> avoid adding or (worse) nuking files by accident.
->
-> On the contrary, the approach would all but eliminate the
-> possibility of loss of data since you would not manually (and
-> therefore error prone-ingly) pruning until after a commit. In fact,
-> one might default automatic commits (if required) prior to checkouts
-> or at least an alert system when uncommitted changes exists.
+Maybe that --strict thing is actually a good thing in the long run,
+even though I don't quite like it either :-)
 
-Who is pruning after a commit?  Once nice thing about checkout is that
-it will refuse to move to a different commit if there are files that
-will get trashed.  Then you can say 'oops, I should stash/commit/nuke
-that stuff before I change HEAD.
+Interesting problem to have though.
 
-Jason
+Philip
