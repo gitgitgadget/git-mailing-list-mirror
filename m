@@ -1,53 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [RFC PATCH 1/6] gitweb: Hyperlink committags in a commit
- message by regex matching
-Date: Wed, 18 Nov 2009 09:26:36 +0100
-Message-ID: <20091118082636.GE12890@machine.or.cz>
-References: <200906221318.19598.jnareb@gmail.com>
- <1258525350-5528-1-git-send-email-marcel@oak.homeunix.org>
- <1258525350-5528-2-git-send-email-marcel@oak.homeunix.org>
+From: Intland Software <marketing@intland.com>
+Subject: [ANNOUNCE] codeBeamer MR - Easy ACL for Git
+Date: Wed, 18 Nov 2009 09:33:23 +0100
+Message-ID: <4B03B153.1020302@intland.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Francis Galiegue <fge@one2team.net>
-To: "Marcel M. Cary" <marcel@oak.homeunix.org>
-X-From: git-owner@vger.kernel.org Wed Nov 18 09:27:42 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 18 09:39:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAfsA-0005jC-LS
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 09:26:42 +0100
+	id 1NAg4y-0006tZ-FF
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 09:39:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752343AbZKRI0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2009 03:26:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752329AbZKRI0b
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 03:26:31 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:35275 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751732AbZKRI0b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2009 03:26:31 -0500
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 888A386201C; Wed, 18 Nov 2009 09:26:36 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <1258525350-5528-2-git-send-email-marcel@oak.homeunix.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753125AbZKRIjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2009 03:39:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752602AbZKRIjo
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 03:39:44 -0500
+Received: from mail01a.mail.t-online.hu ([84.2.40.6]:59578 "EHLO
+	mail01a.mail.t-online.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752485AbZKRIjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2009 03:39:44 -0500
+X-Greylist: delayed 382 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Nov 2009 03:39:43 EST
+Received: from [192.168.1.65] (dsl4E5C0B13.pool.t-online.hu [78.92.11.19])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail01a.mail.t-online.hu (Postfix) with ESMTPSA id 70156798411
+	for <git@vger.kernel.org>; Wed, 18 Nov 2009 09:32:37 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+X-DCC-mail.t-online.hu-Metrics: mail01a.mail.t-online.hu 32711; Body=1 Fuz1=1
+	Fuz2=1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133155>
 
-On Tue, Nov 17, 2009 at 10:22:25PM -0800, Marcel M. Cary wrote:
-> +			# Avoid matching punctuation that might immediately follow
-> +			# a url, is not part of the url, and is allowed in urls,
-> +			# like a full-stop ('.').
-> +			'pattern' => qr!(https?|ftps?|git|ssh|ssh+git|sftp|smb|webdavs?|
-> +			                 nfs|irc|nntp|rsync)
-> +			                ://[-_a-zA-Z0-9\@/&=+~#<>;%:.?]+
-> +			                   [-_a-zA-Z0-9\@/&=+~#<>]!x,
+codeBeamer MR is a new tool for teams working with Git, and striving for
+fast repository management and easy access control management.
+Setting up and maintaining ACL on top of Git is not trivial. With this
+web based tool, you can *save a lot of boring and error-prone maintainenace
+work*, and spend your time rather with coding.
 
-You meant ssh\+git here. ;-)
+FEATURES
+* Starts and close projects and repositories in just seconds
+* Project-, group-, and role-based administration across multiple repositories
+* ACL on directory level
+* SSH authentication
+* Lightweight wiki, issue tracking and project management facilities
+* Web based
+* Remote API
 
-				Petr "Pasky" Baudis
+PRICE?
+It is *free* (as in beer). No expiration.
+
+LEARN MORE & DOWNLOAD
+More details, screenshots and downloads:
+http://www.intland.com/products/cb-mr/overview.html
