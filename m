@@ -1,109 +1,100 @@
-From: Philip Hofstetter <phofstetter@sensational.ch>
-Subject: Re: git-mailinfo doesn't stop parsing at the end of the header
-Date: Wed, 18 Nov 2009 20:57:16 +0100
-Message-ID: <aa2993680911181157y750eae95sc2932b03d938d6fb@mail.gmail.com>
-References: <aa2993680911180620g151d8a07t11144d150cd6e29e@mail.gmail.com> 
-	<20091118155154.GA15184@coredump.intra.peff.net> <aa2993680911180911o7e3af804m4ebdc20096baa609@mail.gmail.com> 
-	<20091118172424.GA24416@coredump.intra.peff.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Hey - A Conceptual Simplication....
+Date: Wed, 18 Nov 2009 12:36:17 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0911181224110.2793@localhost.localdomain>
+References: <005a01ca684e$71a1d710$54e58530$@com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 18 20:58:01 2009
+To: George Dennie <gdennie@pospeople.com>
+X-From: git-owner@vger.kernel.org Wed Nov 18 21:37:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAqfA-0006sD-4k
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 20:58:00 +0100
+	id 1NArHq-0000TV-2u
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 21:37:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758521AbZKRT5f convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Nov 2009 14:57:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758517AbZKRT5e
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 14:57:34 -0500
-Received: from mail.sensational.ch ([195.226.6.199]:54980 "EHLO
-	mail.sensational.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758512AbZKRT5d convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Nov 2009 14:57:33 -0500
-Received: from [209.85.216.192] (helo=mail-px0-f192.google.com)
-	by mail.sensational.ch with esmtp (Exim 4.50)
-	id 1NAqeo-0002DH-1q
-	for git@vger.kernel.org; Wed, 18 Nov 2009 20:57:38 +0100
-Received: by pxi30 with SMTP id 30so969905pxi.14
-        for <git@vger.kernel.org>; Wed, 18 Nov 2009 11:57:36 -0800 (PST)
-Received: by 10.141.41.21 with SMTP id t21mr647610rvj.93.1258574256157; Wed, 
-	18 Nov 2009 11:57:36 -0800 (PST)
-In-Reply-To: <20091118172424.GA24416@coredump.intra.peff.net>
+	id S932450AbZKRUhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2009 15:37:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932443AbZKRUhV
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 15:37:21 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:50079 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932436AbZKRUhP (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Nov 2009 15:37:15 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id nAIKaHSD020985
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 18 Nov 2009 12:36:18 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id nAIKaHvW014917;
+	Wed, 18 Nov 2009 12:36:17 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <005a01ca684e$71a1d710$54e58530$@com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.46 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133199>
 
-Hello,
 
-On Wed, Nov 18, 2009 at 6:24 PM, Jeff King <peff@peff.net> wrote:
 
-> =A01. It creates a bad user experience. You are not unreasonable for
-> =A0 =A0 wanting to put some specific text in your commit message. Hav=
-ing
-> =A0 =A0 git come back and say "oops, I might get confused by this lat=
-er"
-> =A0 =A0 just seems like an annoyance to the user.
+On Wed, 18 Nov 2009, George Dennie wrote:
+> 
+> The Git model does not seem to go far enough conceptually, for some
+> unexplainable reason...
 
-agreed, though it's not that bad: when learning git, you will be
-confronted with the fact that the commit message has a few things that
-are special (well. it's doesn't break git, but the first line should
-be < 56 chars in length for example).
+Others already mentioned this, but the concept you missed is the git 
+'index', which is actually very central (it is actually the first part of 
+git written, before even the object database) but is something that most 
+people who get started with git can (and do) ignore.
 
-Not being able to have From: lines in them that are not describing an
-author would then just be one of them.
+Now, admittedly, for casual use it's not always clear _why_ the index is 
+so central, so the fact that you overlooked it is certainly easy to 
+understand. Just take my word for it: to truly understand git, you do need 
+to understand the index.
 
-> =A02. Mailinfo has to deal with data created by older versions of git=
-=2E So
-> =A0 =A0 in your case, the rebase was a bomb waiting to go off. If we =
-can
-> =A0 =A0 fix it so that an existing bomb doesn't go off, rather than n=
-ot
-> =A0 =A0 creating the bomb in the first place, then we are better off.
+You can ignore it for a long time, because one of the primary reasons for 
+it existing is about performance. That happens to be a primary goal of 
+git, of course, but some people always think it's "just performance". It's 
+way more fundamental than that.
 
-This is a very good point. I didn't quite think about that.
+So the way you can start getting used to the index is to think of it as a 
+way to avoid having to do a full 'readdir()' on the whole tree to figure 
+out what is in there, and avoiding having to read all the files to check 
+that their contents still match.
 
-> =A04. Commit messages can come from other places than "git commit". W=
-hat
-> =A0 =A0 should we do with a commit message like this that is imported=
- from
-> =A0 =A0 SVN? Reject the import? Munge the message?
+Of course, if that was _all_ the index did, it could be seen purely as a 
+cache, and have no semantic visibility at all. And that's not the case: 
+the index does have real semantic visibility.
 
-I would leave that to the tool that does the import. Probably it would
-have to munge it. Yes.
+The first time you'll see it is when you decide to stage your changes in 
+parts. The index is what allows you to _not_ always commit all your 
+changes exactly because git keeps track of something more than _just_ your 
+whole current working tree.
 
-I DO see though that implementing the check at commit time would lead
-to problems popping up at other places.
+A special case (but a really useful one) of the "staging your changes in 
+parts" is when you do merges. Now, most people don't do merges like I do 
+(what, average of 5 merges per day, day in and day out), so most people 
+don't care quite as deeply as I do, but if you ever do a merge where 99% 
+merged cleanly, and 1% did not (which is the common case for conflicts), 
+you'll really understand why having a system that keeps track of the parts 
+that merged cleanly is _critical_. 
 
-> Of course all of that presupposes that we can correctly handle the
-> existing data after the fact. Even with my patch, you still can't wri=
-te
-> "From: foo@example.com" as the first line of your commit body. But th=
-at
+So for merges, the index keeps track of what merged cleanly, and what 
+didn't, and what the original state for the not-clean stuff was. And as 
+somebody who probably does more merges than likely any other human in the 
+history of the world, I can state with some authority that any source 
+control model that doesn't have this is fundamentally broken.
 
-can't you? IMHO it would just attribute the commit to foo@example.com
-which can be an equally bad, if not worse thing (I'm saying that
-without the needed knowledge about git internals to really be sure, so
-take this with a grain of salt)
+So the index is really _really_ important. Even if you can ignore it most 
+of the time. And the index is why you don't have a model of "always just 
+track the exact tree state".
 
-I just have a bad feeling about trying out heuristics to see whether
-thing thing after from: is an email address or not as email addresses
-are notoriously hard to detect.
-
-Typing a commit message and applying a patch from an email should be
-separate things and should be handled separately. Currently they are
-not and this is what's causing the problem in the first place.
-
-Maybe that --strict thing is actually a good thing in the long run,
-even though I don't quite like it either :-)
-
-Interesting problem to have though.
-
-Philip
+			Linus
