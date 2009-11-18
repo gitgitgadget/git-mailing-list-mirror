@@ -1,86 +1,93 @@
-From: Benjamin Kramer <benny.kra@googlemail.com>
-Subject: [PATCH RESEND] Explicitly truncate bswap operand to uint32_t
-Date: Wed, 18 Nov 2009 14:53:27 +0100
-Message-ID: <4B03FC57.5000506@googlemail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git-svn of both trunk and tags while having no access to the
+ 'parent' of those
+Date: Wed, 18 Nov 2009 14:56:57 +0100
+Message-ID: <4B03FD29.3090001@drmicha.warpmail.net>
+References: <20091117025945.GE17964@onerussian.com> <4B03B7D3.8050905@drmicha.warpmail.net> <20091118133205.GB17964@onerussian.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 14:53:50 2009
+Cc: git@vger.kernel.org
+To: Yaroslav Halchenko <debian@onerussian.com>
+X-From: git-owner@vger.kernel.org Wed Nov 18 14:58:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAkyi-00086v-B2
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 14:53:48 +0100
+	id 1NAl2o-0001wm-Jb
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 14:58:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757086AbZKRNx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2009 08:53:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757082AbZKRNx2
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 08:53:28 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:65154 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757022AbZKRNx2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2009 08:53:28 -0500
-Received: by bwz27 with SMTP id 27so1138406bwz.21
-        for <git@vger.kernel.org>; Wed, 18 Nov 2009 05:53:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=lvTOnkz10OOwP+rr843hgb2r2st8REMeX2O0E4sdoUM=;
-        b=XlWnZ1hWZKrczxJQN4pepU96Xt2+UN+kVhqUI+rEAIAxU3EfvXWWw8URIasOsQKHLr
-         PWBlM0lIe+d3QJdmfqaee/nQAWH8IR7ZPsbZFxFZmVH9hBM6cUdFYFbxaR+9iMsJYL1o
-         om6teaFKQ64nFHRYq9/2ykKgK4vQsZUic55as=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=qFoHsWOfjz3MeFjLRRhczK0OKeGmy2tg8Hi7FU2o1Im4/kqkKaUdH8RjSZaFRTPJJw
-         rgUZoK9tpdCMmSnUezMmP7FykjVzWfG8SFxXdkMfyFBi1d4TnjtScq3I/k1F7awpnzIz
-         T4wA5e4Hgh67Vt5XHJg4WUE1oSaYgdfRi53Ds=
-Received: by 10.204.162.137 with SMTP id v9mr1237821bkx.60.1258552413118;
-        Wed, 18 Nov 2009 05:53:33 -0800 (PST)
-Received: from kallisti.local (p5B01EDE4.dip.t-dialin.net [91.1.237.228])
-        by mx.google.com with ESMTPS id 28sm183626fkx.59.2009.11.18.05.53.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 18 Nov 2009 05:53:31 -0800 (PST)
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.1) Gecko/20090715 Thunderbird/3.0b3
+	id S1757101AbZKRN5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2009 08:57:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757080AbZKRN5u
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 08:57:50 -0500
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:40650 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756988AbZKRN5u (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Nov 2009 08:57:50 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id EC496C0D69;
+	Wed, 18 Nov 2009 08:57:55 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 18 Nov 2009 08:57:55 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=CVsmoNq8fpY5y/XZ9xGinh4SNOI=; b=PL3q5b5pp77cU/jUb1zEpakI2miKsRTN54ho0m9H9iZuswtfNfFUBo6eUAjafe3wEjVW+FdvsYTGTvaepAhvNlDMXkNbwJoovWon6zTQG+LlbGil+DePjHxtJgwaJxLJaRBjYeQbAKttRty0yRc8EloA7tRvgZriXNEG1wtby5Q=
+X-Sasl-enc: 3peKyWSuws+sUM6YFijeJ4LRRocttoJP3pAsNU/Xy1WO 1258552675
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5CAC54B2F21;
+	Wed, 18 Nov 2009 08:57:55 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091116 Lightning/1.0pre Shredder/3.0.1pre
+In-Reply-To: <20091118133205.GB17964@onerussian.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133175>
 
-There are some places in git where a long is passed to htonl/ntohl. llvm
-doesn't support matching operands of different bitwidths intentionally.
-This patch fixes the build with llvm-gcc (and clang) on x86_64.
+Yaroslav Halchenko venit, vidit, dixit 18.11.2009 14:32:
+> 
+> On Wed, 18 Nov 2009, Michael J Gruber wrote:
+> 
+>>> git svn clone --prefix=upstream-svn/ -T trunk -t releases http://domain.com/svnrepo svnrepo.gitsvn
+> 
+>> Your problem description seems to match perfectly with the description
+>> of the "--no-minimize-url" option in git svn's man page. I'm sure it's
+>> worth a try.
+> 
+> ;-) oh I did I did ;)
+> I've used
+> 
+> git svn clone --no-minimize-url --prefix=upstream-svn/ -T trunk -t releases  http://domain.com/svnrepo/trunk svnrepo.gitsvn
 
-Signed-off-by: Benjamin Kramer <benny.kra@googlemail.com>
----
-Any comments on this patch?
+Is the trunk really at svnrepo/trunk/trunk?
 
-See also:
-* http://llvm.org/bugs/show_bug.cgi?id=3373
-* http://lkml.org/lkml/2009/1/23/261
+> that initialized repository, went through a lengthy list of 
+> 
+> trace: built-in: git 'config' 'svn-remote.svn.tags-maxRev' '...'
+> 
+> with last command reported
+> 
+> trace: built-in: git 'gc' '--auto'
+> 
+> and resulted in nothing being cloned/checked out or even a single ref.
+> The only file under .git besides the ones created by git init
+> 
+> ./svn/refs/remotes/upstream-svn/trunk/.rev_map.33fb83da-1015-0410-9b9b-96027f9a4af8
+> 
+> and if I omitted trunk/ from url -- the same story of needed
+> authentication
 
- compat/bswap.h |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I would try both
 
-diff --git a/compat/bswap.h b/compat/bswap.h
-index 279e0b4..f3b8c44 100644
---- a/compat/bswap.h
-+++ b/compat/bswap.h
-@@ -24,7 +24,7 @@ static inline uint32_t default_swab32(uint32_t val)
- 	if (__builtin_constant_p(x)) { \
- 		__res = default_swab32(x); \
- 	} else { \
--		__asm__("bswap %0" : "=r" (__res) : "0" (x)); \
-+		__asm__("bswap %0" : "=r" (__res) : "0" ((uint32_t)(x))); \
- 	} \
- 	__res; })
- 
--- 
-1.6.5.3.149.g9aa3
+git svn clone --no-minimize-url --prefix=upstream-svn/ -T trunk -t
+releases  http://domain.com/svnrepo/ svnrepo.gitsvn
+
+and also the seemingly equivalent
+
+git svn clone --no-minimize-url --prefix=upstream-svn/ -T
+http://domain.com/svnrepo/trunk -t http://domain.com/svnrepo/releases
+svnrepo.gitsvn
+
+Also, I assume you can svn list http://domain.com/svnrepo/trunk and
+http://domain.com/svnrepo/releases ;)
+
+Michael
