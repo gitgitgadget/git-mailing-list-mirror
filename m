@@ -1,167 +1,85 @@
-From: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
-Subject: [PATCH] Makefile: add uninstall target.  Fixes elementary good
- cleaning manners.
-Date: Wed, 18 Nov 2009 13:29:49 +0100
-Organization: www.AvatarAcademy.nl
-Message-ID: <1258547389.25909.101.camel@heerbeest>
-References: <1257945756.26362.79.camel@heerbeest>
-	 <48B54636-1825-48B3-BECD-4150A55B013F@dbservice.com>
+From: "George Dennie" <gdennie@pospeople.com>
+Subject: Hey - A Conceptual Simplication....
+Date: Wed, 18 Nov 2009 07:55:45 -0500
+Message-ID: <005a01ca684e$71a1d710$54e58530$@com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 13:30:26 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <torvalds@osdl.org>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 18 14:02:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAjg0-000482-Fq
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 13:30:24 +0100
+	id 1NAkB4-00017H-7L
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 14:02:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752271AbZKRM3w convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Nov 2009 07:29:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751638AbZKRM3w
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 07:29:52 -0500
-Received: from edu-smtp-02.edutel.nl ([88.159.1.222]:50758 "EHLO
-	edu-smtp-02.edutel.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751496AbZKRM3v (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2009 07:29:51 -0500
-Received: from heerbeest (unknown [88.159.206.46])
-	by edu-smtp-02.edutel.nl (Postfix) with ESMTP id 82632121D37;
-	Wed, 18 Nov 2009 13:29:54 +0100 (CET)
-Received: from [127.0.0.1] (heerbeest [127.0.0.1])
-	by heerbeest (Postfix) with ESMTP id 19A66DC1AC;
-	Wed, 18 Nov 2009 13:29:50 +0100 (CET)
-In-Reply-To: <48B54636-1825-48B3-BECD-4150A55B013F@dbservice.com>
-X-Mailer: Evolution 2.28.1 
+	id S1756570AbZKRNCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2009 08:02:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756563AbZKRNCS
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 08:02:18 -0500
+Received: from smtp116.rog.mail.re2.yahoo.com ([68.142.225.232]:39410 "HELO
+	smtp116.rog.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1756361AbZKRNCS (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Nov 2009 08:02:18 -0500
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Nov 2009 08:02:17 EST
+Received: (qmail 45470 invoked from network); 18 Nov 2009 12:55:44 -0000
+Received: from CPE001cf04d66c9-CM0012c9a0913a.cpe.net.cable.rogers.com (gdennie@99.244.179.211 with login)
+        by smtp116.rog.mail.re2.yahoo.com with SMTP; 18 Nov 2009 04:55:44 -0800 PST
+X-Yahoo-SMTP: zge3jO.swBAK2Pj1ZBh8nVciRpiiK2CUUeAJch.zCNP5zAk-
+X-YMail-OSG: JTxlG3MVM1lYbeRMPewwZ2zH5ywu9oFwAGcHsEoyoH_sG72NV.ewi5PzlE9lvK8rJQ--
+X-Yahoo-Newman-Property: ymail-3
+X-Mailer: Microsoft Office Outlook 12.0
+thread-index: AcpoTklAycCzarlGRSOH+haHVPN0YA==
+Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133166>
 
-Op woensdag 11-11-2009 om 15:08 uur [tijdzone +0100], schreef Tomas
-Carnecky:
+A Clean checkout command might be...
 
-> > Greetings,
-> > Jan.  -- who just finds out the uninstall target is missing?!?
-> > 	 See attached.
->=20
-> Next time please send patches inline, it's easier to review them that=
- =20
-> way.
+The Git model does not seem to go far enough conceptually, for some
+unexplainable reason...
 
-Sorry.  Let me retry that.  See below.
+In particular, why is Git not treating the entire working tree as the
+versioned document (qualified of course by the .gitignore file). 
 
-Greetings,
-Jan.
+Instead, Git is treating a manually maintained list of files within the
+working tree as the versioned document, this list being initialized and
+manually amended by the "Git add/rm/mv" commands, etc. 
 
---=20
-Jan Nieuwenhuizen <janneke@gnu.org> | GNU LilyPond - The music typesett=
-er
-Avatar=C2=AE: http://AvatarAcademy.nl    | http://lilypond.org
->From f260a4dcf0b42088eb1da74aee49f49ac4b0c55b Mon Sep 17 00:00:00 2001
-=46rom: Jan Nieuwenhuizen <janneke@gnu.org>
-Date: Wed, 11 Nov 2009 14:19:00 +0100
-Subject: [PATCH] Makefile: add uninstall target.  Fixes elementary good=
- cleaning manners.
+The result is conceptual complexity and rather counter-intuitive behavior.
+For example, adding and renaming files outside of Git is not considered
+editing the version until you subsequently do a "Git Add ." Contrast that
+with editing or deleting files outside of Git. Yet adding and renaming files
+and folders is a significant part of substantive projects, especially in the
+early stages and experimental branches.
 
-   * Modified     Makefile
-   * Modified     gitk-git/Makefile
-   * Modified     perl/Makefile
-   * Modified     templates/Makefile
+Granted, this is not a big deal functionally, but what is being lost is
+conceptual simplicity (and consistency, in my book) and conceptual
+simplicity is a key value point, if not THE key.
 
-Signed-off-by: Jan Nieuwenhuizen <janneke@gnu.org>
----
- Makefile           |   18 +++++++++++++++++-
- gitk-git/Makefile  |    2 ++
- perl/Makefile      |    2 +-
- templates/Makefile |    5 +++++
- 4 files changed, 25 insertions(+), 2 deletions(-)
+Also can we augment checkout to totally CLEAN the working directory prior to
+a restore. If necessary we can augment .gitignore to stipulate those files
+or folders that should be excluded from the cleaning. This suggestion is in
+recognition of the fact that if you  are not versioning the file, it is
+typically trash; which becomes the case when the entire working treat is
+treated as the versioned document.
 
-diff --git a/Makefile b/Makefile
-index 5d5976f..135c3ac 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1781,7 +1781,23 @@ quick-install-man:
- quick-install-html:
- 	$(MAKE) -C Documentation quick-install-html
-=20
-+bindir_PROGRAMS =3D git$X git-upload-pack$X git-receive-pack$X git-upl=
-oad-archive$X git-shell$X git-cvsserver
-=20
-+uninstall:
-+ifndef NO_TCLTK
-+	$(MAKE) -C gitk-git uninstall
-+	$(MAKE) -C git-gui gitexecdir=3D'$(gitexec_instdir_SQ)' uninstall
-+endif
-+ifndef NO_PERL
-+	$(MAKE) -C perl prefix=3D'$(prefix_SQ)' DESTDIR=3D'$(DESTDIR_SQ)' uni=
-nstall
-+endif
-+	$(MAKE) -C templates DESTDIR=3D'$(DESTDIR_SQ)' uninstall
-+	$(RM) $(ALL_PROGRAMS:%=3D'$(DESTDIR_SQ)$(gitexec_instdir_SQ)'/%)
-+	$(RM) $(BUILT_INS:%=3D'$(DESTDIR_SQ)$(gitexec_instdir_SQ)'/%)
-+	$(RM) $(OTHER_PROGRAMS:%=3D'$(DESTDIR_SQ)$(gitexec_instdir_SQ)'/%)
-+	-rmdir -p '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
-+	$(RM) $(bindir_PROGRAMS:%=3D'$(DESTDIR_SQ)$(bindir_SQ)'/%)
-+	-rmdir -p '$(DESTDIR_SQ)$(bindir_SQ)'
-=20
- ### Maintainer's dist rules
-=20
-@@ -1857,7 +1873,7 @@ ifndef NO_TCLTK
- endif
- 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-GUI-VARS GIT-BUILD-OPTIONS
-=20
--.PHONY: all install clean strip
-+.PHONY: all install uninstall clean strip
- .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_moder=
-n_shell
- .PHONY: .FORCE-GIT-VERSION-FILE TAGS tags cscope .FORCE-GIT-CFLAGS
- .PHONY: .FORCE-GIT-BUILD-OPTIONS
-diff --git a/gitk-git/Makefile b/gitk-git/Makefile
-index e1b6045..d68f19a 100644
---- a/gitk-git/Makefile
-+++ b/gitk-git/Makefile
-@@ -47,6 +47,8 @@ install:: all
- uninstall::
- 	$(foreach p,$(ALL_MSGFILES), $(RM) '$(DESTDIR_SQ)$(msgsdir_SQ)'/$(not=
-dir $p) &&) true
- 	$(RM) '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
-+	-rmdir -p '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
-+	-rmdir -p '$(DESTDIR_SQ)$(msgsdir_SQ)'
-=20
- clean::
- 	$(RM) gitk-wish po/*.msg
-diff --git a/perl/Makefile b/perl/Makefile
-index 4ab21d6..25fc304 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -10,7 +10,7 @@ ifndef V
- 	QUIET =3D @
- endif
-=20
--all install instlibdir: $(makfile)
-+all install instlibdir uninstall: $(makfile)
- 	$(QUIET)$(MAKE) -f $(makfile) $@
-=20
- clean:
-diff --git a/templates/Makefile b/templates/Makefile
-index 408f013..f4048d9 100644
---- a/templates/Makefile
-+++ b/templates/Makefile
-@@ -51,3 +51,8 @@ install: all
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(template_instdir_SQ)'
- 	(cd blt && $(TAR) cf - .) | \
- 	(cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && umask 022 && $(TAR) xof =
--)
-+
-+uninstall:
-+	-(cd blt && find . -type f) | (cd '$(DESTDIR_SQ)$(template_instdir_SQ=
-)' && xargs $(RM))
-+	-(cd blt && find . -mindepth 1 -type d) | (cd '$(DESTDIR_SQ)$(templat=
-e_instdir_SQ)' && xargs rmdir)
-+	-rmdir -p '$(DESTDIR_SQ)$(template_instdir_SQ)'
---=20
-1.6.3.3
+Consequently, I recommend the following new commands:
+	"Git commit -x"   -- performs a "Git add ." then a "Git commit"
+	"Git checkout -x" -- that clean the working tree prior to perform a
+checkout
+
+P.S.
+Great your work.
+
+George Dennie, BMath
+The Point Of Sale People
+www.pospeople.com
+BUS: 416-496-2921
+FAX: 416-496-9496
