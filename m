@@ -1,71 +1,72 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] Give the hunk comment its own color
-Date: Wed, 18 Nov 2009 12:57:33 +0100
-Message-ID: <36ca99e90911180357p929b642jada9f4afc81e99d8@mail.gmail.com>
-References: <1258543836-799-1-git-send-email-bert.wesarg@googlemail.com>
-	 <be6fef0d0911180344ld31237et533cfa8832ea0c6c@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [ANNOUNCE] codeBeamer MR - Easy ACL for Git
+Date: Wed, 18 Nov 2009 13:09:36 +0100
+Message-ID: <20091118120936.GL17748@machine.or.cz>
+References: <4B03B153.1020302@intland.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 12:57:41 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Intland Software <marketing@intland.com>
+X-From: git-owner@vger.kernel.org Wed Nov 18 13:09:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAjAK-0007t2-Gb
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 12:57:40 +0100
+	id 1NAjM0-0004Mf-IF
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 13:09:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751491AbZKRL53 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2009 06:57:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751452AbZKRL53
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 06:57:29 -0500
-Received: from mail-fx0-f221.google.com ([209.85.220.221]:33293 "EHLO
-	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751426AbZKRL52 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2009 06:57:28 -0500
-Received: by fxm21 with SMTP id 21so1072409fxm.21
-        for <git@vger.kernel.org>; Wed, 18 Nov 2009 03:57:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=EvZYZvd4JERTmV3rlfz+yT23EcpI8FwH5Xb+Lul/NmE=;
-        b=aoBmPEmO4QKFEpyIYJhkW7jqTMXg+k/tzUmH2qd3tT0ycofFWEdlk3SB08gbPJyt8h
-         VwTX+9R6Bs6nvbKvfCqlyRtEZrPuQBrUCfd4Fe1ScCXHag9yCTS95aTjVc/JeYe5SENa
-         YpQykjHOF3pk5tdQvjLcgeGXBpG4+/hEe9lns=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=LcoqLm8Vi9uEEm/Gca7SoTwlGYea+arEPsfxMea5vUitXr2kopzopanlBqanHvY4RJ
-         Qo5blb4XzW2a/Zz/yA/miTAe5pMJir+huBuJ1fCYs9eB0oosOqeVWQuSs0B/kVeh5yg2
-         +6RahdikusYUU6hzQG5tRLcfh8Q16iO9FHTOA=
-Received: by 10.223.14.140 with SMTP id g12mr1236284faa.50.1258545453059; Wed, 
-	18 Nov 2009 03:57:33 -0800 (PST)
-In-Reply-To: <be6fef0d0911180344ld31237et533cfa8832ea0c6c@mail.gmail.com>
+	id S1756260AbZKRMJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2009 07:09:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752892AbZKRMJc
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 07:09:32 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:55415 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752602AbZKRMJc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2009 07:09:32 -0500
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 67EF686201C; Wed, 18 Nov 2009 13:09:36 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <4B03B153.1020302@intland.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133164>
 
-On Wed, Nov 18, 2009 at 12:44, Tay Ray Chuan <rctay89@gmail.com> wrote:
-> Hi,
->
-> On Wed, Nov 18, 2009 at 7:30 PM, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
->> Insired by the coloring of quilt.
->
-> s/Insired/Inspired/?
-Sure.
+On Wed, Nov 18, 2009 at 09:33:23AM +0100, Intland Software wrote:
+> codeBeamer MR is a new tool for teams working with Git, and striving for
+> fast repository management and easy access control management.
+> Setting up and maintaining ACL on top of Git is not trivial. With this
+> web based tool, you can *save a lot of boring and error-prone maintainenace
+> work*, and spend your time rather with coding.
+> 
+> FEATURES
+> * Starts and close projects and repositories in just seconds
+> * Project-, group-, and role-based administration across multiple repositories
+> * ACL on directory level
+> * SSH authentication
+> * Lightweight wiki, issue tracking and project management facilities
+> * Web based
+> * Remote API
+> 
+> PRICE?
+> It is *free* (as in beer). No expiration.
+> 
+> LEARN MORE & DOWNLOAD
+> More details, screenshots and downloads:
+> http://www.intland.com/products/cb-mr/overview.html
 
-I also forgot to update the test suit.
+Interesting, thank you for the announcement; it would be good to note
+that it's not open-source.
 
-New patch follows.
+I think a lot of people wonder now, how does this compare to existing
+solutions; from your announcement I thought it's something like
+Gitosis/Gitolite, but in fact it seems more similar to Gitorious or
+GitHub (if it was publicly available, of course); perhaps it would be
+good idea to present comparison to these on the project homepage.
 
-Bert
->
-> --
-> Cheers,
-> Ray Chuan
->
+-- 
+				Petr "Pasky" Baudis
+A lot of people have my books on their bookshelves.
+That's the problem, they need to read them. -- Don Knuth
