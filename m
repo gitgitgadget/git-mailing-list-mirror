@@ -1,100 +1,108 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Hey - A Conceptual Simplication....
-Date: Wed, 18 Nov 2009 12:36:17 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0911181224110.2793@localhost.localdomain>
-References: <005a01ca684e$71a1d710$54e58530$@com>
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: Re: th/remote-usage
+Date: Wed, 18 Nov 2009 16:28:33 -0500
+Message-ID: <32c343770911181328v6d61967bna165f08b9e58d5be@mail.gmail.com>
+References: <7v7hto46ce.fsf@alter.siamese.dyndns.org>
+	 <20091118114808.GA13346@progeny.tock>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: George Dennie <gdennie@pospeople.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 21:37:59 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 18 22:29:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NArHq-0000TV-2u
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 21:37:58 +0100
+	id 1NAs5U-0008Ra-KL
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 22:29:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932450AbZKRUhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2009 15:37:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932443AbZKRUhV
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 15:37:21 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:50079 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932436AbZKRUhP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Nov 2009 15:37:15 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id nAIKaHSD020985
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 18 Nov 2009 12:36:18 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id nAIKaHvW014917;
-	Wed, 18 Nov 2009 12:36:17 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <005a01ca684e$71a1d710$54e58530$@com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.46 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1757299AbZKRV23 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Nov 2009 16:28:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757288AbZKRV23
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 16:28:29 -0500
+Received: from mail-fx0-f221.google.com ([209.85.220.221]:61689 "EHLO
+	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757068AbZKRV22 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Nov 2009 16:28:28 -0500
+Received: by mail-fx0-f221.google.com with SMTP id 21so1687803fxm.21
+        for <git@vger.kernel.org>; Wed, 18 Nov 2009 13:28:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=HgCiQGT/0EQAjn7VsyDFssjCgNQWAwZu+olomhX3cD8=;
+        b=b6h0bzoyIXTTmy/K6WCGH+Fd7koFyHRsMVASHOplmOzRq5lbG8IqMVA4u0rQXns1JQ
+         2R4167lmef2mtM3P3aTppi+vSzOEbDvkMqAnAD83s2fw3upPJ7Za9fOzBPLCQ6IMWSpW
+         mAWDRVeKCkdsQN2X8mxLJhpkpULve4qIi0h/4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=hG184q9qy/M1czeTZc2MSX+ld7JRkJSA2GJzqlmydEc9MbjdJOeSaM+nDEak4RN9uQ
+         99+yqt5wSMeRn/JPcVKLEYlu4n8469pPYFhs5vukE/skdJcm07f8Ll3ilfh5if31oSKP
+         65BgB5OwbGixouoy8E5aVHIUBjXcPowrTrATA=
+Received: by 10.216.90.13 with SMTP id d13mr790868wef.130.1258579714133; Wed, 
+	18 Nov 2009 13:28:34 -0800 (PST)
+In-Reply-To: <20091118114808.GA13346@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133200>
+
+Hi and thanks for your review.
+
+On Wed, Nov 18, 2009 at 6:48 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Junio C Hamano wrote:
+>> [New Topics]
+>>
+>> * th/remote-usage (2009-11-16) 1 commit.
+>> =C2=A0- git remote: Separate usage strings for subcommands
+>
+> Glancing at pu^2, I had two small nitpicks: [<options>...] is five
+> characters longer than strictly necessary
+
+I based my patch on what I found in other builtin functions (such
+as push and diff).  That being said, I don't think that either my
+original patch or your updated version is completely correct.
+The choices seem to be:
+  (1) [<options>...]:  My original based on my interpretation of
+      IEEE 1003.1. [1]
+  (2) [options]: Your proposal, which drops both the '<>' and '...'.
+  (3) <options>:  Used in builtin-diff.c.  Which does not show
+      that the options are -- optional.
+  (4) [<options>]: What I now believe is correct (based on the
+      current implementation of builtin-push.c).  This drops the
+      '...' which IEEE 1003.1 defines as allowing multiple options
+      to be specified, but it conforms to the conventions in other
+      commands.
+
+There does not (yet) seem to be consistency in how options
+are presented.  My current plan is to change the patch to
+use choice #4, but if Junio has a chance to comment, I will
+of course defer to his decision.
+
+I will send an updated patch that implements choice #4 as
+soon as I can (should be within the next 12 hours).
 
 
+> and the argument to git
+> remote set-head is not actually optional.
 
-On Wed, 18 Nov 2009, George Dennie wrote:
-> 
-> The Git model does not seem to go far enough conceptually, for some
-> unexplainable reason...
+This was obviously an oversight on my part.  I will include the
+fix in the next version.
 
-Others already mentioned this, but the concept you missed is the git 
-'index', which is actually very central (it is actually the first part of 
-git written, before even the object database) but is something that most 
-people who get started with git can (and do) ignore.
 
-Now, admittedly, for casual use it's not always clear _why_ the index is 
-so central, so the fact that you overlooked it is certainly easy to 
-understand. Just take my word for it: to truly understand git, you do need 
-to understand the index.
+=2E..and from your second email:
+> Another option would be to make the strings into static
+> variables.
 
-You can ignore it for a long time, because one of the primary reasons for 
-it existing is about performance. That happens to be a primary goal of 
-git, of course, but some people always think it's "just performance". It's 
-way more fundamental than that.
+Thanks for the analysis, but I don't plan to include this change
+unless specifically requested.
 
-So the way you can start getting used to the index is to think of it as a 
-way to avoid having to do a full 'readdir()' on the whole tree to figure 
-out what is in there, and avoiding having to read all the files to check 
-that their contents still match.
 
-Of course, if that was _all_ the index did, it could be seen purely as a 
-cache, and have no semantic visibility at all. And that's not the case: 
-the index does have real semantic visibility.
-
-The first time you'll see it is when you decide to stage your changes in 
-parts. The index is what allows you to _not_ always commit all your 
-changes exactly because git keeps track of something more than _just_ your 
-whole current working tree.
-
-A special case (but a really useful one) of the "staging your changes in 
-parts" is when you do merges. Now, most people don't do merges like I do 
-(what, average of 5 merges per day, day in and day out), so most people 
-don't care quite as deeply as I do, but if you ever do a merge where 99% 
-merged cleanly, and 1% did not (which is the common case for conflicts), 
-you'll really understand why having a system that keeps track of the parts 
-that merged cleanly is _critical_. 
-
-So for merges, the index keeps track of what merged cleanly, and what 
-didn't, and what the original state for the not-clean stuff was. And as 
-somebody who probably does more merges than likely any other human in the 
-history of the world, I can state with some authority that any source 
-control model that doesn't have this is fundamentally broken.
-
-So the index is really _really_ important. Even if you can ignore it most 
-of the time. And the index is why you don't have a model of "always just 
-track the exact tree state".
-
-			Linus
+[1]: http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap12.=
+html
