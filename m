@@ -1,7 +1,7 @@
 From: Greg Price <price@MIT.EDU>
-Subject: [PATCH 6/6] rebase --rewrite-refs: tests
-Date: Sun, 24 Jan 2010 21:28:48 -0500
-Message-ID: <ab6d17ba0ea919e0f873597b60d6c7e9a43460c8.1309133817.git.greg@quora.com>
+Subject: [PATCH 2/6] pretty: Add %D for script-friendly decoration
+Date: Wed, 18 Nov 2009 18:22:17 -0500
+Message-ID: <9d9e18b8c062380025f52a6ff992fae51a17f5d1.1309133817.git.greg@quora.com>
 References: <cover.1309133817.git.greg@quora.com>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
@@ -11,131 +11,128 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QazuQ-0006H7-KY
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Jun 2011 02:42:38 +0200
+	id 1QazuR-0006H7-4g
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Jun 2011 02:42:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756060Ab1F0AkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jun 2011 20:40:08 -0400
-Received: from DMZ-MAILSEC-SCANNER-1.MIT.EDU ([18.9.25.12]:42836 "EHLO
-	dmz-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756055Ab1F0AkE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Jun 2011 20:40:04 -0400
-X-AuditID: 1209190c-b7c65ae00000117c-0d-4e07d03a0c1b
+	id S1756039Ab1F0AlP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jun 2011 20:41:15 -0400
+Received: from DMZ-MAILSEC-SCANNER-2.MIT.EDU ([18.9.25.13]:51276 "EHLO
+	dmz-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755507Ab1F0Ajo (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Jun 2011 20:39:44 -0400
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Sun, 26 Jun 2011 20:39:44 EDT
+X-AuditID: 1209190d-b7bdeae0000004f8-55-4e07cfd2c2a1
 Received: from mailhub-auth-2.mit.edu ( [18.7.62.36])
-	by dmz-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 15.18.04476.A30D70E4; Sun, 26 Jun 2011 20:35:06 -0400 (EDT)
+	by dmz-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 6A.DA.01272.2DFC70E4; Sun, 26 Jun 2011 20:33:22 -0400 (EDT)
 Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id p5R0Z1gR001631;
-	Sun, 26 Jun 2011 20:35:01 -0400
+	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id p5R0YfI1001610;
+	Sun, 26 Jun 2011 20:34:41 -0400
 Received: from localhost (DR-WILY.MIT.EDU [18.181.0.233])
 	(authenticated bits=0)
         (User authenticated as price@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p5R0Z0pF019058;
-	Sun, 26 Jun 2011 20:35:00 -0400 (EDT)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p5R0Ye8m019005;
+	Sun, 26 Jun 2011 20:34:41 -0400 (EDT)
 In-Reply-To: <cover.1309133817.git.greg@quora.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAIsWRmVeSWpSXmKPExsUixG6nomt1gd3PYMNlRYuuK91MFg29V5gd
-	mDwuXlL2+LxJLoApissmJTUnsyy1SN8ugSvj+fvTTAXnBCtWrrrB0sDYyNfFyMEhIWAi8WSu
-	SBcjJ5ApJnHh3nq2LkYuDiGBfYwS3VuOMoEkhAQ2MEq0tJtDJL4wShyf+J0NIqEucbPtECOE
-	rSOx79AhdgjbSuLy+mNQcUOJJ0fvgMV5BUIkrny6xgiymFPASOJlowJMyf0LTWAj2QQUJH7M
-	X8cMYosIqElMbDvEAmIzC4hLrJt7HmwMi4CqxL32XrDbhIF6L55awzaBUXABI8MqRtmU3Crd
-	3MTMnOLUZN3i5MS8vNQiXUO93MwSvdSU0k2MoIDjlOTZwfjmoNIhRgEORiUe3gcJ7H5CrIll
-	xZW5hxglOZiURHlFzwOF+JLyUyozEosz4otKc1KLDzFKcDArifC+CwPK8aYkVlalFuXDpKQ5
-	WJTEecu9//sKCaQnlqRmp6YWpBbBZGU4OJQkeINAhgoWpaanVqRl5pQgpJk4OEGG8wANDwWp
-	4S0uSMwtzkyHyJ9iVJQS510NkhAASWSU5sH1whLCK0ZxoFeEeQ+DVPEAkwlc9yugwUxAg/su
-	s4EMLklESEk1MM6Ln63C1XPWo4klXaX/xVFZS6f5T1pr0hpj0q9c27T8ueLfmiQjQ1X2W4Ke
-	4UfU94fc7QnZ4WJwsuGbQ63EFVPjSwf6axYeFY09lbhv9RdZEbHtvIsmGR7+Yifplqr7iYX5
-	Ytbtf2IP9u5q4TtXZv/W6Ph99ibvo6ZdyTzBz7YyMCp/143eq8RSnJFoqMVcVJwI 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixG6nonvpPLufwb+rRhZdV7qZLBp6rzA7
+	MHlcvKTs8XmTXABTFJdNSmpOZllqkb5dAlfG/fZDrAWHxCsebr3A3MA4SbiLkZNDQsBEYsOT
+	fewQtpjEhXvr2boYuTiEBPYxStzefpMdwtnAKDF90kQWCOcLo8SG7/tZQVqEBNQlbrYdYoSw
+	dSQmrnwMVMQBZFtJ9DyzhggbSjw5egdsA69AiMS7jb+ZQEo4BYwkXjYqwJTcv9DEBmKzCShI
+	/Ji/jhnEFhFQk5jYdogFxGYWEJdYN/c82BgWAVWJd8/Wg9UICzhJ/H+0lWUCo+ACRoZVjLIp
+	uVW6uYmZOcWpybrFyYl5ealFukZ6uZkleqkppZsYQSHHKcm7g/HdQaVDjAIcjEo8vI8S2P2E
+	WBPLiitzDzFKcjApifKKAgNWiC8pP6UyI7E4I76oNCe1+BCjBAezkgjvuzCgHG9KYmVValE+
+	TEqag0VJnFfN+7+vkEB6YklqdmpqQWoRTFaGg0NJgjcIZKhgUWp6akVaZk4JQpqJgxNkOA/Q
+	8FCQGt7igsTc4sx0iPwpRkUpcV5tkIQASCKjNA+uF5YSXjGKA70izCsIUsUDTCdw3a+ABjMB
+	De67zAYyuCQRISXVwKjmXnHDLPCjiPcr/XAvK24/6wdaSjsyF6/V6Zn5K1S0x0ujdPaP+Kvr
+	P5o4myp3+kbLRtls1L3y++aev93+229/WuO3O7X5xp7IuzcLvC3qYvT2hS3JnbdW8Raf9cmS
+	2nMc/6fbMNlO89k99y3jxvXLVHgZd1p8U+lZfZ+n74VuKqeK+B6DT0osxRmJhlrM 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176342>
+
+When in a script or porcelain one wants to identify what refs point to
+which commits in a series, the functionality of 'git log --decorate'
+is extremely useful.  This is available with the %d format code in a
+form optimized for humans, but for scripts a more raw format is better.
+Make such a format available through a new format code %D.
 
 Signed-off-by: Greg Price <price@mit.edu>
 ---
- t/t3420-rebase-ref.sh |   75 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 75 insertions(+), 0 deletions(-)
- create mode 100644 t/t3420-rebase-ref.sh
+ Documentation/pretty-formats.txt |    1 +
+ pretty.c                         |   33 +++++++++++++++++++++++++--------
+ 2 files changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/t/t3420-rebase-ref.sh b/t/t3420-rebase-ref.sh
-new file mode 100644
-index 0000000..601a434
---- /dev/null
-+++ b/t/t3420-rebase-ref.sh
-@@ -0,0 +1,75 @@
-+#!/bin/sh
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 561cc9f..217f11b 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -124,6 +124,7 @@ The placeholders are:
+ - '%ct': committer date, UNIX timestamp
+ - '%ci': committer date, ISO 8601 format
+ - '%d': ref names, like the --decorate option of linkgit:git-log[1]
++- '%D': full ref names, like the --decorate=full option of linkgit:git-log[1]
+ - '%e': encoding
+ - '%s': subject
+ - '%f': sanitized subject line, suitable for a filename
+diff --git a/pretty.c b/pretty.c
+index f45eb54..0c7e723 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -776,21 +776,35 @@ static void parse_commit_message(struct format_commit_context *c)
+ 	c->commit_message_parsed = 1;
+ }
+ 
+-static void format_decoration(struct strbuf *sb, const struct commit *commit)
 +
-+test_description='git rebase --rewrite-refs'
++static void format_decoration(struct strbuf *sb, const struct commit *commit,
++			      int decoration_style, const char *affixes[3])
+ {
+ 	struct name_decoration *d;
+-	const char *prefix = " (";
++	const char *affix = affixes[0];
+ 
+-	load_ref_decorations(DECORATE_SHORT_REFS);
++	load_ref_decorations(decoration_style);
+ 	d = lookup_decoration(&name_decoration, &commit->object);
+ 	while (d) {
+-		strbuf_addstr(sb, prefix);
+-		prefix = ", ";
++		strbuf_addstr(sb, affix);
++		affix = affixes[1];
+ 		strbuf_addstr(sb, d->name);
+ 		d = d->next;
+ 	}
+-	if (prefix[0] == ',')
+-		strbuf_addch(sb, ')');
++	if (affix == affixes[1])
++		strbuf_addstr(sb, affixes[2]);
++}
 +
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY/lib-rebase.sh"
-+set_fake_editor
++static void format_decoration_short(struct strbuf *sb, const struct commit *commit)
++{
++	const char *affixes[3] = {" (", ", ", ")"};
++	format_decoration(sb, commit, DECORATE_SHORT_REFS, affixes);
++}
 +
-+#      part1  part2 topic
-+#	 |	|     |
-+#	 v	v     v
-+#  A-----C------D-----E
-+#   \
-+#    B <--master
-+
-+test_expect_success setup '
-+	test_commit A &&
-+	git branch topic &&
-+	test_commit B &&
-+	git checkout topic &&
-+	test_commit C &&
-+	git branch part1 &&
-+	test_commit D
-+	git branch part2 &&
-+	test_commit E
-+'
-+
-+test_expect_success 'rebase --rewrite-heads' '
-+	git reset --hard &&
-+	git checkout topic &&
-+	git reset --hard E &&
-+
-+	git rebase --rewrite-heads master &&
-+	git rev-parse part1 >actual &&
-+	git rev-parse HEAD~2 >expected &&
-+	test_cmp expected actual &&
-+	git rev-parse part2 >actual &&
-+	git rev-parse HEAD~1 >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'rebase --rewrite-refs' '
-+	git reset --hard &&
-+	git update-ref refs/heads/part1 C &&
-+	git update-ref refs/heads/part2 D &&
-+	git checkout topic &&
-+	git reset --hard E &&
-+
-+	git rebase --rewrite-refs=refs/heads/part2 master &&
-+	git rev-parse part1 >actual &&
-+	git rev-parse C >expected &&
-+	test_cmp expected actual &&
-+	git rev-parse part2 >actual &&
-+	git rev-parse HEAD~1 >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'ref in TODO followed by rebase --abort' '
-+	git reset --hard &&
-+	git update-ref refs/heads/part1 C &&
-+	git update-ref refs/heads/part2 D &&
-+	git checkout topic &&
-+	git reset --hard E &&
-+
-+	FAKE_LINES="1 2 edit 3 4 5" git rebase -i --rewrite-heads master &&
-+	git rev-parse part1 >actual &&
-+	git rev-parse HEAD^ >expected &&
-+	test_cmp expected actual &&
-+	git rebase --abort &&
-+	git rev-parse part1 >actual &&
-+	git rev-parse C >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_done
++static void format_decoration_full(struct strbuf *sb, const struct commit *commit)
++{
++	const char *affixes[3] = {"", " ", ""};
++	format_decoration(sb, commit, DECORATE_FULL_REFS, affixes);
+ }
+ 
+ static void strbuf_wrap(struct strbuf *sb, size_t pos,
+@@ -947,7 +961,10 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
+ 		strbuf_addstr(sb, get_revision_mark(NULL, commit));
+ 		return 1;
+ 	case 'd':
+-		format_decoration(sb, commit);
++		format_decoration_short(sb, commit);
++		return 1;
++	case 'D':
++		format_decoration_full(sb, commit);
+ 		return 1;
+ 	case 'g':		/* reflog info */
+ 		switch(placeholder[1]) {
 -- 
 1.7.5.4
