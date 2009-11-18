@@ -1,79 +1,71 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Makefile: add uninstall target.  Fixes elementary good cleaning manners.
-Date: Wed, 18 Nov 2009 14:28:31 +0100
-Message-ID: <vpqr5rwdksg.fsf@bauges.imag.fr>
-References: <1257945756.26362.79.camel@heerbeest>
-	<48B54636-1825-48B3-BECD-4150A55B013F@dbservice.com>
-	<1258547389.25909.101.camel@heerbeest>
+From: Intland Software <marketing@intland.com>
+Subject: Re: [ANNOUNCE] codeBeamer MR - Easy ACL for Git
+Date: Wed, 18 Nov 2009 14:19:13 +0100
+Message-ID: <4B03F451.4050709@intland.com>
+References: <4B03B153.1020302@intland.com> <20091118120936.GL17748@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tomas Carnecky <tom@dbservice.com>, git@vger.kernel.org
-To: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
-X-From: git-owner@vger.kernel.org Wed Nov 18 14:29:14 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed Nov 18 14:29:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAkas-0004gl-NC
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 14:29:11 +0100
+	id 1NAkbG-0004tH-HG
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 14:29:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756800AbZKRN27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2009 08:28:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756676AbZKRN27
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 08:28:59 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:50233 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755544AbZKRN26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2009 08:28:58 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id nAIDRSxT004542
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 18 Nov 2009 14:27:28 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NAkaG-0002m1-Fd; Wed, 18 Nov 2009 14:28:32 +0100
-In-Reply-To: <1258547389.25909.101.camel@heerbeest> (Jan Nieuwenhuizen's message of "Wed\, 18 Nov 2009 13\:29\:49 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 18 Nov 2009 14:27:28 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: nAIDRSxT004542
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1259155649.4069@gZ4IpZBvhlYtvMnX/JP4Tw
+	id S1756983AbZKRN3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2009 08:29:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756395AbZKRN3W
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 08:29:22 -0500
+Received: from mail01d.mail.t-online.hu ([84.2.42.6]:49377 "EHLO
+	mail01d.mail.t-online.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756676AbZKRN3V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2009 08:29:21 -0500
+X-Greylist: delayed 612 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Nov 2009 08:29:21 EST
+Received: from [192.168.1.65] (dsl4E5C0B13.pool.t-online.hu [78.92.11.19])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail01d.mail.t-online.hu (Postfix) with ESMTPSA id 30A397586C2;
+	Wed, 18 Nov 2009 14:18:33 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+In-Reply-To: <20091118120936.GL17748@machine.or.cz>
+X-DCC-mail.t-online.hu-Metrics: mail01d.mail.t-online.hu 32711; Body=2 Fuz1=2
+	Fuz2=2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133169>
 
-Jan Nieuwenhuizen <janneke-list@xs4all.nl> writes:
+  Thanks for your comments, Petr.
 
-> Sorry.  Let me retry that.  See below.
+Petr Baudis wrote:
+>> LEARN MORE & DOWNLOAD
+>> More details, screenshots and downloads:
+>> http://www.intland.com/products/cb-mr/overview.html
+> 
+> Interesting, thank you for the announcement; it would be good to note
+> that it's not open-source.
+  That's right, codeBeamer MR is not open source.
+  More precisely: parts of the source code are actually open, including
+the wiki plugins and the remote clients, for instance. The core source
+is closed, because the same core is also used in our commercial offerings, and
+our commercial license doesn't (currently) allow publishing the
+complete code. We have quite some large customers from the defense space
+that would not be happy if we opened everything ;)
 
-Please, read Documentation/SubmittingPatches 
+  We are currently in the midst of rethinking our licensing scheme
+in general, to make things more liberal or to set up some kind of a
+dual license.
 
->>From f260a4dcf0b42088eb1da74aee49f49ac4b0c55b Mon Sep 17 00:00:00 2001
-> From: Jan Nieuwenhuizen <janneke@gnu.org>
-> Date: Wed, 11 Nov 2009 14:19:00 +0100
-> Subject: [PATCH] Makefile: add uninstall target.  Fixes elementary good cleaning manners.
->
->    * Modified     Makefile
->    * Modified     gitk-git/Makefile
->    * Modified     perl/Makefile
->    * Modified     templates/Makefile
-
-Git knows better than you which files are modified by a commit, so
-it's counter-productive to rewrite by hand this list in the commit
-message. This place is the place to explain _why_ your change is good
-(to convince the maintainer to apply it in git.git in particular).
-
->  Makefile           |   18 +++++++++++++++++-
->  gitk-git/Makefile  |    2 ++
->  perl/Makefile      |    2 +-
->  templates/Makefile |    5 +++++
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> I think a lot of people wonder now, how does this compare to existing
+> solutions; from your announcement I thought it's something like
+> Gitosis/Gitolite, but in fact it seems more similar to Gitorious or
+> GitHub (if it was publicly available, of course); perhaps it would be
+> good idea to present comparison to these on the project homepage.
+  Good point. More on this later.
+---
+  Intland
