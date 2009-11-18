@@ -1,88 +1,83 @@
-From: Yaroslav Halchenko <debian@onerussian.com>
-Subject: Re: git-svn of both trunk and tags while having no access to the
- 'parent' of those
-Date: Wed, 18 Nov 2009 09:23:32 -0500
-Message-ID: <20091118142332.GC17964@onerussian.com>
-References: <20091117025945.GE17964@onerussian.com>
- <4B03B7D3.8050905@drmicha.warpmail.net>
- <20091118133205.GB17964@onerussian.com>
- <4B03FD29.3090001@drmicha.warpmail.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2009, #04; Tue, 17)
+Date: Wed, 18 Nov 2009 21:43:31 +0700
+Message-ID: <fcaeb9bf0911180643w5e659340jd845aa202e6feca3@mail.gmail.com>
+References: <7v7hto46ce.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Nov 18 15:23:45 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 18 15:44:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NAlRg-0006D8-7L
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 15:23:44 +0100
+	id 1NAlm8-0008VF-4e
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Nov 2009 15:44:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757155AbZKROX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2009 09:23:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757135AbZKROX1
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 09:23:27 -0500
-Received: from washoe.dartmouth.edu ([129.170.30.229]:37061 "EHLO
-	smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757129AbZKROX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2009 09:23:27 -0500
-Received: from smtp.onerussian.com ([192.168.100.6] helo=washoe.onerussian.com)
-	by smtp.onerussian.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <yoh@onerussian.com>)
-	id 1NAlRU-0004r9-Ol; Wed, 18 Nov 2009 09:23:32 -0500
-Received: from yoh by washoe.onerussian.com with local (Exim 4.69)
-	(envelope-from <yoh@onerussian.com>)
-	id 1NAlRU-0004r6-Id; Wed, 18 Nov 2009 09:23:32 -0500
-Content-Disposition: inline
-In-Reply-To: <4B03FD29.3090001@drmicha.warpmail.net>
-X-URL: http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: 3BB6 E124 0643 A615 6F00  6854 8D11 4563 75C0 24C8
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: 192.168.100.6
-X-SA-Exim-Rcpt-To: git@drmicha.warpmail.net, git@vger.kernel.org
-X-SA-Exim-Mail-From: yoh@onerussian.com
-X-SA-Exim-Scanned: No (on smtp.onerussian.com); SAEximRunCond expanded to false
+	id S1757515AbZKROn2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2009 09:43:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757510AbZKROn1
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Nov 2009 09:43:27 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:38780 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757389AbZKROn0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2009 09:43:26 -0500
+Received: by pwi3 with SMTP id 3so723538pwi.21
+        for <git@vger.kernel.org>; Wed, 18 Nov 2009 06:43:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=abmlUHqPcTKmDkQfYlKbz+k06jQgptimG9zH3FxZXZs=;
+        b=Hu8q/TOKwM+yF09gWDTOsUEHVwcXmirUFHVOO/x1g1skWNR7NcojC0Nr4OjArcPRt0
+         /uIGfEQ66SfH+Rn/tuoGb/9g09XNM7HriIZk2AE6i2NZBC5mYgEeGMfQrCRNrFZBX75r
+         g71UO8h5e9h4YXc5HX5Bojm/FoJmQRKjk9Rjo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=r3iMhhwdFur6Znpl3giQr7Q8WuqmFl4kMy3YtWwqAmF2Cz7hkp5ZHQzPFhkdmXdOeg
+         BOEsQWDqi1QHcpBd6BVRRamsNPSflsefDqFvrO08UkIOgZbjL1BtGADaJjS1mmgYAtY8
+         S3++tbzYd6k58+//BNJhG2z+B/1QMq+wr6psU=
+Received: by 10.114.237.30 with SMTP id k30mr12487300wah.102.1258555411918; 
+	Wed, 18 Nov 2009 06:43:31 -0800 (PST)
+In-Reply-To: <7v7hto46ce.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133179>
 
+On 11/18/09, Junio C Hamano <gitster@pobox.com> wrote:
+>  * nd/sparse (2009-08-20) 19 commits.
+>   - sparse checkout: inhibit empty worktree
+>   - Add tests for sparse checkout
+>   - read-tree: add --no-sparse-checkout to disable sparse checkout support
+>   - unpack-trees(): ignore worktree check outside checkout area
+>   - unpack_trees(): apply $GIT_DIR/info/sparse-checkout to the final index
+>   - unpack-trees(): "enable" sparse checkout and load $GIT_DIR/info/sparse-checkout
+>   - unpack-trees.c: generalize verify_* functions
+>   - unpack-trees(): add CE_WT_REMOVE to remove on worktree alone
+>   - Introduce "sparse checkout"
+>   - dir.c: export excluded_1() and add_excludes_from_file_1()
+>   - excluded_1(): support exclude files in index
+>   - unpack-trees(): carry skip-worktree bit over in merged_entry()
+>   - Read .gitignore from index if it is skip-worktree
+>   - Avoid writing to buffer in add_excludes_from_file_1()
+>   - Teach Git to respect skip-worktree bit (writing part)
+>   - Teach Git to respect skip-worktree bit (reading part)
+>   - Introduce "skip-worktree" bit in index, teach Git to get/set this bit
+>   - Add test-index-version
+>   - update-index: refactor mark_valid() in preparation for new options
+>
+>  The latest update I didn't look at very closely but I had an impression
+>  that it was touching very generic codepath that would affect non sparse
+>  cases, iow the patch looked very scary (the entire series already is).
 
-On Wed, 18 Nov 2009, Michael J Gruber wrote:
-> > git svn clone --no-minimize-url --prefix=upstream-svn/ -T trunk -t releases  http://domain.com/svnrepo/trunk svnrepo.gitsvn
-> Is the trunk really at svnrepo/trunk/trunk?
-nope... it is just svnrepo/trunk but if I set url to point to parent --
-git svn seeks authentication right away
-
-> I would try both
-> git svn clone --no-minimize-url --prefix=upstream-svn/ -T trunk -t
-> releases  http://domain.com/svnrepo/ svnrepo.gitsvn
-
-asks for authentication since there is no public access to
-http://domain.com/svnrepo/
-
-> and also the seemingly equivalent
-
-> git svn clone --no-minimize-url --prefix=upstream-svn/ -T
-> http://domain.com/svnrepo/trunk -t http://domain.com/svnrepo/releases
-> svnrepo.gitsvn
-seems to not work since it wants url as a parameter 
-
-Bad URL passed to RA layer: Illegal repository URL svnrepo.gitsvn  at /usr/lib/git-core/git-svn line 940
-
-> Also, I assume you can svn list http://domain.com/svnrepo/trunk and
-> http://domain.com/svnrepo/releases ;)
-yeap -- I can list both of those but not their parent.
-
-
+I wonder if there is any other approach for sparse checkout? I'll see
+if I can improve it, but with a series touching unpack logic, diff
+core, .gitattributes/.gitignore, it's hard to get it right and
+obvious.
 -- 
-Yaroslav O. Halchenko
-Postdoctoral Fellow,   Department of Psychological and Brain Sciences
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik        
+Duy
