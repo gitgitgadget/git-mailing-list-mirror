@@ -1,76 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Using `git tag -l` to get non-matching tags
-Date: Thu, 19 Nov 2009 10:18:15 -0800
-Message-ID: <7v1vjubcpk.fsf@alter.siamese.dyndns.org>
-References: <c115fd3c0911190949x2f32d1cbw26f3260f12d43a6e@mail.gmail.com>
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: Re: [PATCH v4] git remote: Separate usage strings for subcommands
+Date: Thu, 19 Nov 2009 13:58:57 -0500
+Message-ID: <32c343770911191058x7be7d34ascc3564064b880213@mail.gmail.com>
+References: <4B04B4A2.8090001@gmail.com>
+	 <20091119124040.6117@nanako3.lavabit.com>
+	 <32c343770911190651w3f1ac9b6i2d3b1a62a032489f@mail.gmail.com>
+	 <7vlji2bd23.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Tim Visher <tim.visher@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 19 19:18:44 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, jrnieder@gmail.com,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 19 19:59:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBBac-0005dR-Jf
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Nov 2009 19:18:42 +0100
+	id 1NBCDm-0008JR-SC
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Nov 2009 19:59:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754143AbZKSSSR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2009 13:18:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754059AbZKSSSQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 13:18:16 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44714 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754003AbZKSSSP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2009 13:18:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EED1D7F183;
-	Thu, 19 Nov 2009 13:18:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; s=sasl; bh=MNPErwQUukakNg0GgoRkyoZDLrE=; b=n2FBNe
-	VnOi/ZSBAzVkFBiCH0ZL852tGrmQ6NHmRCQYTrL/lkLtcqWl6HJiunESVb5RorB/
-	J6pVF209sGK5zHlkFY9zsfV6RpHx4p+9ZujlxZjgEHjxxt5R+0Cc6R0Ju/plsK+a
-	l/Dx4McsrMQ8xmBI8r9+buOeBlyq4rAWSdHtg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=q0BG7eGeozUxZb3vj9KxCj9FVCHkdkvb
-	O16ZAft6X4EmfDUiZbHqOHQvo4fR4hibUniqa2n/EOkKjKR+KEBe2Vk5HI+oiJG5
-	TAlT5CJjlnZB4vaFUMSUgHedyJ1+pCKPmP5jF7T+DbuoOVs89jV/iFIQuGs1F9Ha
-	PIrbbzuWkPQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CD12C7F17E;
-	Thu, 19 Nov 2009 13:18:19 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F21B7F172; Thu, 19 Nov
- 2009 13:18:17 -0500 (EST)
-In-Reply-To: <c115fd3c0911190949x2f32d1cbw26f3260f12d43a6e@mail.gmail.com>
- (Tim Visher's message of "Thu\, 19 Nov 2009 12\:49\:13 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EA46447A-D537-11DE-8B17-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753978AbZKSS66 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Nov 2009 13:58:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753964AbZKSS65
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 13:58:57 -0500
+Received: from mail-fx0-f221.google.com ([209.85.220.221]:45191 "EHLO
+	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753704AbZKSS65 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Nov 2009 13:58:57 -0500
+Received: by fxm21 with SMTP id 21so2753207fxm.21
+        for <git@vger.kernel.org>; Thu, 19 Nov 2009 10:59:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=uDvgLB8t+AnmRvKPcyT35Y3wbgnJ62v3VdIy2WeGTH4=;
+        b=JP+VnBPJG59j4G56+vRNQDUc96huVR65CyEAHPgeEEc6ye6WLteLTQJBKA7uxzxvbH
+         JjLE9equQH4ZZcgyPUQmhRHvbgeG+iC8LEXGUK7QybzR3k1dSoesLfo4gjNZ64prNBH4
+         SpkvnzCTwRjXGUrn9ta1edIBWoMLkYytWTGrw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=c0pCbyDGiQboyn6yC9uP0jEfxZ6x77U9Dzrt9/XInn92TH5ny+/l69cKt4+KxAeUrs
+         +zXGw8jydeIHe2NyADAs49g+ixImOMm6FJfnjsiMSCL9mDoykGy1ilgRZPcrZDbRgZya
+         Qfn46so3BVd3i02q+PpLqcspWPofBz7XfRUn0=
+Received: by 10.216.91.12 with SMTP id g12mr114540wef.33.1258657141949; Thu, 
+	19 Nov 2009 10:59:01 -0800 (PST)
+In-Reply-To: <7vlji2bd23.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133243>
 
-Tim Visher <tim.visher@gmail.com> writes:
+On Thu, Nov 19, 2009 at 1:10 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Tim Henigan <tim.henigan@gmail.com> writes:
+>
+>> The original version of this patch [1] left the contents of the usag=
+e
+>> strings intact. =C2=A0However, Junio expressed a preference to chang=
+e
+>> them to use the generic <options>. =C2=A0See this thread for the
+>> discussion [2].
+>>
+>> [1] http://article.gmane.org/gmane.comp.version-control.git/133048/
+>> [2] http://thread.gmane.org/gmane.comp.version-control.git/132968/fo=
+cus=3D133050
+>
+> Sorry, but I think you misunderstood what I meant, then. =C2=A0in [2]=
+, I said...
 
-> I'm trying to use `git tag -l` to get non-matching tags.  I can't find
-> anywhere in the documentation describing what is allowed in the tag
-> pattern.
+=2E.. snip ...
 
-As a general guideline, refs are matched using glob not regexp and given
-to fnmatch(3).
+>    ... the options list is used to reproduce the information in a maj=
+or part
+>    of that string already.  So I would prefer builtin_remote_add_usag=
+e[] to
+>    be something like:
+>
+>        "git remote add [<options>...] <name> <url>"
+>
+> I meant that we want to change "remote add -h" to show this here; and=
+ the
+> reason why I doubted "the value of reusing option string" was because=
+ I
+> wanted to do so without touching the concise list of the subcommands =
+and
+> their options given by "remote -h".  Otherwise, it would have made pe=
+rfect
+> sense to use preprocessor macros to share the two identical strings.
 
-Who are you in your first sentence?
+Okay, I believe I understand now, but let's test that theory ;)
 
-If you are an end user typing from the terminal trying to list tags
-excluding some, the answer would be "piping to 'grep -v'".
+Using the 'add' subcommand as an example, the desired output is:
 
-If you are writing a tool that uses git, the tool uses a part of tag
-namespace for its own use, and the tool is trying to enumerate end-user
-tags by excluding the ones it uses for its own use, then the answer would
-be "do not use 'git tag' in Porcelain---use 'git for-each-ref' and filter
-its output yourself".
+Output of 'git remote -h':
+    "git remote [-v | --verbose]"
+    "git remote add [-t <branch>] [-m <master>] [-f] [--mirror] <name> =
+<url>"
+    etc.
+
+Output of 'git remote add -h':
+    "git remote add [<options>...] <name> <url>"
+    followed by the detailed description given by 'parse_options()'.
+
+Text in 'man git-remote':
+    "git remote add [-t <branch>] [-m <master>] [-f] [--mirror] <name> =
+<url>"
+    with the options explained in detail later in the file.
+
+Thanks for your patience,
+Tim
