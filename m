@@ -1,119 +1,81 @@
-From: "George Dennie" <gdennie@pospeople.com>
-Subject: RE: Hey - A Conceptual Simplication....
-Date: Thu, 19 Nov 2009 15:12:35 -0500
-Message-ID: <00d401ca6954$a29fa020$e7dee060$@com>
-References: <005a01ca684e$71a1d710$54e58530$@com> <20091118142512.1313744e@perceptron> <008401ca6880$33d7e550$9b87aff0$@com> <m37htnd3kb.fsf@localhost.localdomain> <31e9dd080911181152h665d5d9dr5c0736c0ca3234c1@mail.gmail.com> <009401ca68bc$7e4b12b0$7ae13810$@com> <20091119074226.GA23304@atjola.homenet>
+From: Greg Price <price@ksplice.com>
+Subject: [PATCH] Documentation: undocument gc'd function graph_release()
+Date: Thu, 19 Nov 2009 15:58:29 -0500
+Message-ID: <1ac2d430911191258l39579cb9ve06bc3657ac577f0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <B.Steinbrink@gmx.de>, "'Jason Sewall'" <jasonsewall@gmail.com>,
-	"'Jakub Narebski'" <jnareb@gmail.com>,
-	=?iso-8859-1?Q?'Jan_Kr=FCger'?= <jk@jk.gs>, <torvalds@osdl.org>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 19 21:12:42 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 19 21:58:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBDMw-0002mn-0A
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Nov 2009 21:12:42 +0100
+	id 1NBE5M-0007Y9-BY
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Nov 2009 21:58:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754411AbZKSUMb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Nov 2009 15:12:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754203AbZKSUMa
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 15:12:30 -0500
-Received: from smtp107.rog.mail.re2.yahoo.com ([68.142.225.205]:30216 "HELO
-	smtp107.rog.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1754083AbZKSUMa convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2009 15:12:30 -0500
-Received: (qmail 71454 invoked from network); 19 Nov 2009 20:12:35 -0000
-Received: from CPE001cf04d66c9-CM0012c9a0913a.cpe.net.cable.rogers.com (gdennie@99.244.179.211 with login)
-        by smtp107.rog.mail.re2.yahoo.com with SMTP; 19 Nov 2009 12:12:35 -0800 PST
-X-Yahoo-SMTP: zge3jO.swBAK2Pj1ZBh8nVciRpiiK2CUUeAJch.zCNP5zAk-
-X-YMail-OSG: ElDR7NUVM1k_ge6MsVpdl_apbe.hpS73tbg06ze7WQgnWM3_SYRcltSVMHZ7rUasJg--
-X-Yahoo-Newman-Property: ymail-3
-In-Reply-To: <20091119074226.GA23304@atjola.homenet>
-X-Mailer: Microsoft Office Outlook 12.0
-thread-index: Acpo76blr9W/aHqeTcmq62gpDZzGiAAH2n+w
-Content-Language: en-us
+	id S1753299AbZKSU6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2009 15:58:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753035AbZKSU6Z
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 15:58:25 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:47130 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752792AbZKSU6Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2009 15:58:24 -0500
+Received: by ey-out-2122.google.com with SMTP id 4so119418eyf.19
+        for <git@vger.kernel.org>; Thu, 19 Nov 2009 12:58:29 -0800 (PST)
+Received: by 10.213.0.198 with SMTP id 6mr1973044ebc.84.1258664309317; Thu, 19 
+	Nov 2009 12:58:29 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133254>
 
-Thanks Jakub Narebski and Bj=F6rn Steinbrink...Nice description Bj=F6rn=
-=2E
+graph_release() was removed in 064bfbd.  Cut it from the API
+documentation and a comment.
 
-I think an important piece of conceptual information missing from the d=
-ocs
-is a concise list of the conceptual properties defining the context of =
-the
-working tree, index, and repository during normal use. This itemization
-would go far in explaining the synergies between the various commands.=20
+Signed-off-by: Greg Price <price@ksplice.com>
+---
+ Documentation/technical/api-history-graph.txt |    5 -----
+ graph.h                                       |    1 -
+ 2 files changed, 0 insertions(+), 6 deletions(-)
 
-=46unctionally, all the commands merely manipulate these properties. If=
- these
-properties were summarize in context one would expect that would repres=
-ent a
-very complete functional model of Git. A user could review the descript=
-ion
-figure what they wanted to do and then find the command(s) to accomplis=
-h it.
+diff --git a/Documentation/technical/api-history-graph.txt
+b/Documentation/technical/api-history-graph.txt
+index d66e61b..d6fc90a 100644
+--- a/Documentation/technical/api-history-graph.txt
++++ b/Documentation/technical/api-history-graph.txt
+@@ -11,9 +11,6 @@ Core functions:
 
+ * `graph_init()` creates a new `struct git_graph`
 
-Presently this knowledge is accreted over time as oppose to merely bein=
-g
-read and in the space of a few minutes "groked" (of course it could be =
-that
-I am particularly limited :).
+-* `graph_release()` destroys a `struct git_graph`, and frees the memory
+-  associated with it.
+-
+ * `graph_update()` moves the graph to a new commit.
 
-=46or example, towards a functional model, is this close? (note: all
-properties can be blank/empty)...
+ * `graph_next_line()` outputs the next line of the graph into a strbuf.  It
+@@ -134,8 +131,6 @@ while ((commit = get_revision(opts)) != NULL) {
+ 			putchar(opts->diffopt.line_termination);
+ 	}
+ }
+-
+-graph_release(graph);
+ ------------
 
-REPOSITORIES
-	Collection of Commits
-	Collection of Branches
-		-- collection of commits without children
-		-- as a result each commits either augments
-		-- and existing branch or creates a new one
-	Master Branch
-		-- typically the publishable development history
+ Sample output
+diff --git a/graph.h b/graph.h
+index bc30d68..b82ae87 100644
+--- a/graph.h
++++ b/graph.h
+@@ -6,7 +6,6 @@ struct git_graph;
 
-INDEX
-	Collections of Parent/Merge Commits
-		-- the commit will use all these as its parent
+ /*
+  * Create a new struct git_graph.
+- * The graph should be freed with graph_release() when no longer needed.
+  */
+ struct git_graph *graph_init(struct rev_info *opt);
 
-	Staged Commit=20
-		-- these changes are shown relative to the working tree
-
-	Default Branch
-		-- the history the staged commit is suppose to augment
-
-	Collection of Stashes
-		-- these are not copies of the working tree since they
-		-- only contain "versioned" files/folders and so is not
-		-- a backup
-
-WORKING_TREE
-	Collection of Files and Folders
-=09
-
-As far as I can tell, the working tree is not suppose to be stateful, b=
-ut it
-seems the commands treat it as such.
-
-What is interesting is that branches serve to encourage a serialized vi=
-ew of
-commits. More than structure, they are like books in a library narratin=
-g a
-development story. Consequently, and interestingly, they are as much th=
-e
-purpose of the repository as the commits they organize...which is
-interesting.
-
-
-Again, thanks for your patients.
-
-George.
+-- 
+1.6.5.2.37.ge17fd.dirty
