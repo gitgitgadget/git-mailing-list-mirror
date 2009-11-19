@@ -1,111 +1,61 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] git remote: Separate usage strings for subcommands
-Date: Thu, 19 Nov 2009 10:10:44 -0800
-Message-ID: <7vlji2bd23.fsf@alter.siamese.dyndns.org>
-References: <4B04B4A2.8090001@gmail.com>
- <20091119124040.6117@nanako3.lavabit.com>
- <32c343770911190651w3f1ac9b6i2d3b1a62a032489f@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2009, #04; Tue, 17)
+Date: Thu, 19 Nov 2009 10:11:09 -0800
+Message-ID: <7veinubd1e.fsf@alter.siamese.dyndns.org>
+References: <7v7hto46ce.fsf@alter.siamese.dyndns.org>
+ <4B03B315.2080407@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, jrnieder@gmail.com,
-	git@vger.kernel.org
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 19 19:11:05 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Nov 19 19:11:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBBTD-0001mX-8Y
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Nov 2009 19:11:03 +0100
+	id 1NBBTY-0001xR-Py
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Nov 2009 19:11:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753567AbZKSSKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2009 13:10:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753526AbZKSSKu
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 13:10:50 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39333 "EHLO
+	id S1753177AbZKSSLN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2009 13:11:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752376AbZKSSLN
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 13:11:13 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46632 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752866AbZKSSKu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2009 13:10:50 -0500
+	with ESMTP id S1752131AbZKSSLM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2009 13:11:12 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CA897F04F;
-	Thu, 19 Nov 2009 13:10:55 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E4F219F74A;
+	Thu, 19 Nov 2009 13:11:16 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=h0jXI5Lb7RBEl8Bs4dEuIx00Er4=; b=jgbI3TQdtnxV+n6LXVIvJ65
-	7yFA/M8sUdV/I4EQGsGsXYcElT6VC2zesG9RQaQlDz+XaX/H34aDUDZ+5kXUrNMC
-	VbjXxFx2VrS3EZMC8A3zMV6ukaWLC1fhptjukpKBIAQ3TWAFyoyoRZHWdWY0XFQp
-	2GiyxDJLoO6rvGRuavmE=
+	sasl; bh=5q9HY87rrrXOkjEdm6xIGUEJCjU=; b=AlQI/dEWClbADWLIGiIlUj5
+	8qrHxXpLZx4fRAm/iSZKbv1Oeepc6kSxKXs1Dg0edCLFH9BT5OlZwQSnJtIR7uSp
+	5LP6KRP//8qyEz3OebbuT0hvnY+Szb6jCO/ZN+/spzh4jq65dF+Pcp8fgP/D+ZLL
+	pzUNE/s6wE/wDuu9GbM0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=NQnEzHwbW0+Txg+NqAph49B+wKvZn5+NzjfmsrH/EwfVXWUAd
-	eRLv9xWKIoKUarIgZT/BqPxvOG0gdnyQ9j++jz+RD8mijkFLXsrz1e6y2oUxHyGW
-	ae9IHZb56ZXANze9D6c3bHDgABUaULytYgxI+pwu7iwaf/Gd4rZz7DWNp0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2DAB77F04C;
-	Thu, 19 Nov 2009 13:10:51 -0500 (EST)
+	dns; s=sasl; b=nl4gf2gjV1k0xgAxlyzkxeOFgwkqxUr4X6xEbD97aPzyWDN7A
+	xQL2GVp7iSyphnug6MIIdUsuVh42UG+dWYRtLoe9oxSyfgshiLnl8Lw0YImkG7rW
+	6wfYSlkObJv7+UpVjZQ9aC85FBmisZHCgNt2D/ivNpLFc7xtT1xbuEKwbE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C259A9F743;
+	Thu, 19 Nov 2009 13:11:14 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A1657F043; Thu, 19 Nov
- 2009 13:10:45 -0500 (EST)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8CD599F73A; Thu, 19 Nov 2009
+ 13:11:10 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: DEDB8BC8-D536-11DE-87DE-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: ECEBC6F6-D536-11DE-AC4B-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133240>
 
-Tim Henigan <tim.henigan@gmail.com> writes:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> The original version of this patch [1] left the contents of the usage
-> strings intact.  However, Junio expressed a preference to change
-> them to use the generic <options>.  See this thread for the
-> discussion [2].
->
-> [1] http://article.gmane.org/gmane.comp.version-control.git/133048/
-> [2] http://thread.gmane.org/gmane.comp.version-control.git/132968/focus=133050
+> Ramsay suggested to drop the one at the tip, and I agree. The other two
+> patches are good.
 
-Sorry, but I think you misunderstood what I meant, then.  in [2], I said...
-
-    > ... hunk to remove literal strings from builtin_remote_usage[] 
-    > ... and replace them with REMOTE_BARE_USAGE, REMOTE_ADD_USAGE
-
-    I am not sure about the value of reusing option string like this, and for
-
-Here, please note that I was objecting to the use of _the same string_ in
-both contexts ("reusing").
-
-    all other subcommands the same comment applies.  For example, in the case
-    of "remote add -h", you would use
-
-    "git remote add [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>"
-
-    from REMOTE_ADD_USAGE, but ...
-
-    > ... hunk to give the builtin_remote_add_usage[] that  uses the same
-    > ... REMOTE_ADD_USAGE to parse_options() 
-
-    ... the options list is used to reproduce the information in a major part
-    of that string already.  So I would prefer builtin_remote_add_usage[] to
-    be something like:
-
-        "git remote add [<options>...] <name> <url>"
-
-I meant that we want to change "remote add -h" to show this here; and the
-reason why I doubted "the value of reusing option string" was because I
-wanted to do so without touching the concise list of the subcommands and
-their options given by "remote -h".  Otherwise, it would have made perfect
-sense to use preprocessor macros to share the two identical strings.
-
-In your response to my above comment, you indicated that you wanted to do
-the [<options>] thing as a separate patch (your original patch spelled
-options in full).  I took it to mean that you would do that only for the
-subcommand help, and did not respond, because
-
- (1) doing that to the subcommand help would be a good idea anyway; and
-
- (2) you will realize what I said in the message about "the value of
-     reusing option string" was correct when you see the end result, which
-     will regress "remote -h" output.
-
-In this case, unfortunately (2) didn't happen before Nana pointed it out.
+Thanks; will drop one and queue the rest to 'next'.
