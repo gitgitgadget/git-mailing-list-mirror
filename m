@@ -1,79 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 0/2] jn/gitweb-blame fixes
-Date: Fri, 20 Nov 2009 00:05:08 +0100
-Message-ID: <200911200005.08841.jnareb@gmail.com>
-References: <1258659887-5244-1-git-send-email-bebarino@gmail.com>
+From: Phil Miller <mille121@illinois.edu>
+Subject: Name/documentation on git-log --full-diff is insufficient
+Date: Thu, 19 Nov 2009 17:26:33 -0600
+Message-ID: <81f018ac0911191526o1cfa8e56r79f8db33256a4e9c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 20 00:05:19 2009
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 20 00:27:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBG3y-0003sJ-HO
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 00:05:18 +0100
+	id 1NBGP2-0004WE-VQ
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 00:27:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757845AbZKSXFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2009 18:05:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757843AbZKSXFF
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 18:05:05 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:63995 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756686AbZKSXFD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2009 18:05:03 -0500
-Received: by bwz27 with SMTP id 27so2941524bwz.21
-        for <git@vger.kernel.org>; Thu, 19 Nov 2009 15:05:08 -0800 (PST)
+	id S1754835AbZKSX0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2009 18:26:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754568AbZKSX0t
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 18:26:49 -0500
+Received: from mail-fx0-f221.google.com ([209.85.220.221]:39684 "EHLO
+	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753053AbZKSX0t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2009 18:26:49 -0500
+Received: by fxm21 with SMTP id 21so3036213fxm.21
+        for <git@vger.kernel.org>; Thu, 19 Nov 2009 15:26:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=5OXvB8tRJLaHj/lKJr1cpqZBFzG0E/7JWFM0fEKvvcI=;
-        b=bj37GNIzJBD1w2t1Gd0NloaX6Q5h8VrCg0x9a//R6FB66dIaLw7ShL3MnehjUTi2v+
-         rISx2NQApB+5tYhg8uB7sR4u86hpBYU8kV2ZRQYc/BIR5Gqg9vY8KqP7RWzIFPTKbjzf
-         hfWIIQNLxdeHllZI24oFbPmA5JKZEb02XAhUY=
+        h=domainkey-signature:mime-version:sender:received:from:date
+         :x-google-sender-auth:message-id:subject:to:content-type;
+        bh=oWIkgAtNABtwkbZV6ATFrrI/qZL4bf8Ph/zymJkCbRs=;
+        b=VTvpGPRygxzHnZHbljap5jgjWl5++2FPIyE256+6s+EtWoKf171J1BwLS6ffWzvDkW
+         K/tBeo0AMi8VUcBatF6fzqj5EQlHQPB12prWkRvT1wWj9DlGBEMSC8sOqj8U1VAHCd23
+         AxoeggXpPOJAfsQKwZSTjzrvD5idydzMvCKAk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=wAx8oCpujs6D0NV8key299xrA3QL6lYXqoZut3IgxG7hKQF/3FcZ4st7pI1178rKuF
-         s7RJDcFzATl8yynz6AKzcvNXnnhGYFWjymogDs75iGJyUrdFC8RhGLfkXDk4c0yy5wK0
-         WwxucqkeOErdw+b0xe99LyrNEe+N2+ermGOrw=
-Received: by 10.204.143.153 with SMTP id v25mr607657bku.116.1258671908539;
-        Thu, 19 Nov 2009 15:05:08 -0800 (PST)
-Received: from ?192.168.1.13? (abvw68.neoplus.adsl.tpnet.pl [83.8.220.68])
-        by mx.google.com with ESMTPS id 15sm368447fxm.14.2009.11.19.15.05.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 19 Nov 2009 15:05:07 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1258659887-5244-1-git-send-email-bebarino@gmail.com>
-Content-Disposition: inline
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type;
+        b=FUsuhN+iUG4hgBv9wStmLAfQ62PrlmLBPEi4ahTaDrjVJFKS7CqmUe0u98/ausJQhD
+         t6Zd+CAPBocqPnrk6RZFbyNk5tYQeLFNdHYSK2mf2dAC/u/2aXU898JRwT7a1rYlJv/b
+         zSYdpAczbebN0lh2QTgMJyS7AmL4rY8WG1ido=
+Received: by 10.216.85.213 with SMTP id u63mr206273wee.15.1258673214153; Thu, 
+	19 Nov 2009 15:26:54 -0800 (PST)
+X-Google-Sender-Auth: bf96c54dbe76fd9c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133267>
 
-On Thu, 19 Nov 2009, Stephen Boyd wrote:
+I've been trying for a few days to figure out how to see all the files
+touched in all the commits that changed a particular path. I just
+discovered that that 'git log --full-diff --stat path' gives me the
+complete list of files changed in the displayed commits, and not just
+the files matching path. Reading the documentation, I figured that it
+either only applied when running 'git log -p' or that it implied the
+'-p', neither of which was desirable.
 
-> This series is based on next's jn/gitweb-blame branch.
-> 
-> I was trying out the incremental blame and noticed it didn't work each 
-> time. The first patch fixes the crashing I experience when blaming
-> gitweb.perl (ironic ;-)
-> 
-> The second patch fixes a visible bug I see in Firefox. Although I assume
-> on other browsers it's not a problem? I haven't tested it on others so I
-> can't be sure.
+Thus, I'd suggest a couple potential improvements:
+1. Expand the manual text to clarify that --full-diff really means
+'tell me about all of the files in the commits that I see' regardless
+of what information (a list of files, a diffstat, or a full diff) is
+being printed about those files
+2. Add a synonym with a more general name. Something like --all-files
+would be close to the mark, though there are probably other more
+suitable names.
 
-Thanks for working on this.  Also it is nice to have incremental blame
-tested for another browser, beside Mozilla 1.17.2 and Konqueror 3.5.3
+Phil
 
--- 
-Jakub Narebski
-Poland
+PS: I sent in a patch for git-cvsserver a week ago, and have seen no
+response or action on it. Is there something I should have done
+differently?
+http://article.gmane.org/gmane.comp.version-control.git/132789
