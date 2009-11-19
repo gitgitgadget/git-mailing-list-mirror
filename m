@@ -1,90 +1,68 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Rakotomandimby Mihamina <mihamina@gulfsat.mg>
 Subject: Re: [ANNOUNCE] codeBeamer MR - Easy ACL for Git
-Date: Thu, 19 Nov 2009 02:43:46 -0800 (PST)
-Message-ID: <m33a4adcbu.fsf@localhost.localdomain>
-References: <4B03B153.1020302@intland.com>
-	<20091118120936.GL17748@machine.or.cz> <4B03F451.4050709@intland.com>
-	<alpine.DEB.2.00.0911182205590.5646@asgard.lang.hm>
-	<4B0518A3.90903@intland.com>
+Date: Thu, 19 Nov 2009 14:39:22 +0300
+Message-ID: <4B052E6A.7000701@gulfsat.mg>
+References: <4B03B153.1020302@intland.com> <20091118120936.GL17748@machine.or.cz> <4B03F451.4050709@intland.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: david@lang.hm, Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Intland Software <marketing@intland.com>
-X-From: git-owner@vger.kernel.org Thu Nov 19 11:43:57 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 19 12:48:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NB4UW-0006EP-8X
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Nov 2009 11:43:56 +0100
+	id 1NB5Uf-0003fe-Ex
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Nov 2009 12:48:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757510AbZKSKnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2009 05:43:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757434AbZKSKnn
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 05:43:43 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:55886 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755337AbZKSKnm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2009 05:43:42 -0500
-Received: by bwz27 with SMTP id 27so2158868bwz.21
-        for <git@vger.kernel.org>; Thu, 19 Nov 2009 02:43:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=2DGJdEkfiIXxJuapDZ3yKI+S9prK+K80tsiLXVrZKPQ=;
-        b=i+LjxKZd8thXCbLtWuXRQtPJ/3lr6JCFMD88waQ5CIz73o/x6SZjyLIw1/Lgr8amRQ
-         UnMq3DJCTqXNDmcI8UZSoG0tqex3O8lE/k4/uhUVrZ5UzZehsfsgkByJ4ey53m6C+J9/
-         3ZJdfZCCBhY5YXlRsPuXQde+ZVxYKwQ5p4vK8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=VzDZKhX6uR7GxMXO/3UJvG9wfAqbtNsxmXgCmaRiLrMED8GQATv5VUx7sT8PDwDhkI
-         rCigx3y56H6GW/MY2QbfqA+5uNN+LU4kpRtGZ00AEfo/VPHVtzROoMt2T5JmRucu4tTM
-         3BdyNdlC9B8zFgIH2itai+lSbjCP3QIfgd0lw=
-Received: by 10.204.34.20 with SMTP id j20mr91625bkd.57.1258627426829;
-        Thu, 19 Nov 2009 02:43:46 -0800 (PST)
-Received: from localhost.localdomain (abvd116.neoplus.adsl.tpnet.pl [83.8.201.116])
-        by mx.google.com with ESMTPS id 16sm95522bwz.15.2009.11.19.02.43.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 19 Nov 2009 02:43:46 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id nAJAhcsT032108;
-	Thu, 19 Nov 2009 11:43:39 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id nAJAhYZn032104;
-	Thu, 19 Nov 2009 11:43:34 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4B0518A3.90903@intland.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752029AbZKSLrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2009 06:47:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751985AbZKSLrr
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 06:47:47 -0500
+Received: from static-104-61.blueline.mg ([41.204.104.61]:47381 "EHLO
+	smtp-out.malagasy.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751527AbZKSLrq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2009 06:47:46 -0500
+X-Greylist: delayed 493 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Nov 2009 06:47:45 EST
+Received: from camel.malagasy.com (camel2.malagasy.com [41.204.120.141])
+	by smtp-out.malagasy.com (Postfix) with ESMTP id 7785A8C2E8
+	for <git@vger.kernel.org>; Thu, 19 Nov 2009 14:42:43 +0300 (EAT)
+Received: from localhost (spamassassin.malagasy.com [41.204.104.47])
+	by camel.malagasy.com (Postfix) with ESMTP id 9E81DFE9E
+	for <git@vger.kernel.org>; Thu, 19 Nov 2009 14:39:31 +0300 (EAT)
+X-Virus-Scanned: par antivirus.malagasy.com
+X-Spam-Flag: NO
+X-Spam-Score: -2.701
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.701 required=7 tests=[AWL=-0.102, BAYES_00=-2.599]
+Received: from camel.malagasy.com ([41.204.104.34])
+	by localhost (spamassassin.malagasy.com [41.204.104.47]) (amavisd-new, port 10024)
+	with ESMTP id Jt681yNb8-Pr for <git@vger.kernel.org>;
+	Thu, 19 Nov 2009 14:42:37 +0300 (EAT)
+Received: from rktmb (sysadmin-cnc.malagasy.com [41.204.104.9])
+	by camel.malagasy.com (Postfix) with ESMTP id 7C935FEB1
+	for <git@vger.kernel.org>; Thu, 19 Nov 2009 14:39:22 +0300 (EAT)
+Received: from localhost ([127.0.0.1])
+	by rktmb with esmtp (Exim 4.69)
+	(envelope-from <mihamina@gulfsat.mg>)
+	id 1NB5MB-0004oN-74
+	for git@vger.kernel.org; Thu, 19 Nov 2009 14:39:23 +0300
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091116 Shredder/3.0.1pre
+In-Reply-To: <4B03F451.4050709@intland.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133225>
 
-Intland Software <marketing@intland.com> writes:
+11/18/2009 04:19 PM, Intland Software::
+> We have quite some large customers from the defense space
+> that would not be happy if we opened everything
 
-> david@lang.hm wrote:
-
->>> our commercial license doesn't (currently) allow publishing the
->>> complete code. We have quite some large customers from the defense space
->>> that would not be happy if we opened everything ;)
->>
->> are you sure? did you see the recent memo about OpenSource by the
->> DOD?
->
->   Can you direct us to an URL please? Thanks.
-
-Indirect links:
- * "New DoD memo on Open Source Software" (David A. Wheeler)
-   http://www.dwheeler.com/blog/2009/10/27/#dod-oss-2009
- * "Notes about the DoD and OSS memo" (David A. Wheeler)
-   http://www.dwheeler.com/blog/2009/10/28/#dod-oss-2009-notes
+I think they are just dumb.
+But they pay you, so let's just say it's OK. :-)
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+       Architecte Informatique chez Blueline/Gulfsat:
+    Administration Systeme, Recherche & Developpement
+                                    +261 33 11 207 36
