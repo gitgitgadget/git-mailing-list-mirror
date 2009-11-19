@@ -1,68 +1,102 @@
-From: david@lang.hm
-Subject: Re: [ANNOUNCE] codeBeamer MR - Easy ACL for Git
-Date: Wed, 18 Nov 2009 22:06:33 -0800 (PST)
-Message-ID: <alpine.DEB.2.00.0911182205590.5646@asgard.lang.hm>
-References: <4B03B153.1020302@intland.com> <20091118120936.GL17748@machine.or.cz> <4B03F451.4050709@intland.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Intland Software <marketing@intland.com>
-X-From: git-owner@vger.kernel.org Thu Nov 19 07:06:50 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/2] Documentation: fix typos and spelling in replace
+	documentation
+Date: Thu, 19 Nov 2009 07:13:15 +0100
+Message-ID: <20091119061317.3581.2135.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	bill lam <cbill.lam@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Paul Mackerras <paulus@samba.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 19 07:20:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NB0AL-0006SL-Ia
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Nov 2009 07:06:49 +0100
+	id 1NB0Nj-0001dc-4k
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Nov 2009 07:20:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751454AbZKSGGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2009 01:06:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751359AbZKSGGf
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 01:06:35 -0500
-Received: from mail.lang.hm ([64.81.33.126]:33342 "EHLO bifrost.lang.hm"
+	id S1751668AbZKSGUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2009 01:20:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751553AbZKSGUI
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 01:20:08 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:57345 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751315AbZKSGGe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2009 01:06:34 -0500
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id nAJ66X79021492;
-	Wed, 18 Nov 2009 22:06:33 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <4B03F451.4050709@intland.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1750921AbZKSGUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2009 01:20:07 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id AD19E818087;
+	Thu, 19 Nov 2009 07:20:04 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 41367818096;
+	Thu, 19 Nov 2009 07:20:01 +0100 (CET)
+X-git-sha1: b6bd50a5610d0c2f077055b3ce43a88e9c132aa9 
+X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133213>
 
-On Wed, 18 Nov 2009, Intland Software wrote:
+This patch fix a missing "s" at the end of an occurence of
+"--no-replace-objects" and, while at it, it also improves spelling
+and rendering.
 
-> More precisely: parts of the source code are actually open, including
-> the wiki plugins and the remote clients, for instance. The core source
-> is closed, because the same core is also used in our commercial offerings, 
-> and
-> our commercial license doesn't (currently) allow publishing the
-> complete code. We have quite some large customers from the defense space
-> that would not be happy if we opened everything ;)
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Documentation/git-replace.txt |   21 +++++++++++----------
+ 1 files changed, 11 insertions(+), 10 deletions(-)
 
-are you sure? did you see the recent memo about OpenSource by the DOD?
+	This is a fix that could go into 'maint'.
 
-David Lang
-
-> We are currently in the midst of rethinking our licensing scheme
-> in general, to make things more liberal or to set up some kind of a
-> dual license.
->
->> I think a lot of people wonder now, how does this compare to existing
->> solutions; from your announcement I thought it's something like
->> Gitosis/Gitolite, but in fact it seems more similar to Gitorious or
->> GitHub (if it was publicly available, of course); perhaps it would be
->> good idea to present comparison to these on the project homepage.
-> Good point. More on this later.
-> ---
-> Intland
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
+index 8adc1ef..69f704f 100644
+--- a/Documentation/git-replace.txt
++++ b/Documentation/git-replace.txt
+@@ -17,31 +17,32 @@ DESCRIPTION
+ Adds a 'replace' reference in `.git/refs/replace/`
+ 
+ The name of the 'replace' reference is the SHA1 of the object that is
+-replaced. The content of the replace reference is the SHA1 of the
++replaced. The content of the 'replace' reference is the SHA1 of the
+ replacement object.
+ 
+-Unless `-f` is given, the replace reference must not yet exist in
++Unless `-f` is given, the 'replace' reference must not yet exist in
+ `.git/refs/replace/` directory.
+ 
+-Replace references will be used by default by all git commands except
+-those doing reachability traversal (prune, pack transfer and fsck).
++Replacement references will be used by default by all git commands
++except those doing reachability traversal (prune, pack transfer and
++fsck).
+ 
+-It is possible to disable use of replacement refs for any command
+-using the --no-replace-objects option just after "git".
++It is possible to disable use of replacement references for any
++command using the `--no-replace-objects` option just after 'git'.
+ 
+-For example if commit "foo" has been replaced by commit "bar":
++For example if commit 'foo' has been replaced by commit 'bar':
+ 
+ ------------------------------------------------
+-$ git --no-replace-object cat-file commit foo
++$ git --no-replace-objects cat-file commit foo
+ ------------------------------------------------
+ 
+-show information about commit "foo", while:
++shows information about commit 'foo', while:
+ 
+ ------------------------------------------------
+ $ git cat-file commit foo
+ ------------------------------------------------
+ 
+-show information about commit "bar".
++shows information about commit 'bar'.
+ 
+ OPTIONS
+ -------
+-- 
+1.6.5.1.gaf97d
