@@ -1,79 +1,55 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [PATCH v4] git remote: Separate usage strings for subcommands
-Date: Thu, 19 Nov 2009 09:51:18 -0500
-Message-ID: <32c343770911190651w3f1ac9b6i2d3b1a62a032489f@mail.gmail.com>
-References: <4B04B4A2.8090001@gmail.com>
-	 <20091119124040.6117@nanako3.lavabit.com>
+From: Intland Software <marketing@intland.com>
+Subject: Re: [ANNOUNCE] codeBeamer MR - Easy ACL for Git
+Date: Thu, 19 Nov 2009 16:22:02 +0100
+Message-ID: <4B05629A.5020500@intland.com>
+References: <4B03B153.1020302@intland.com> <20091118120936.GL17748@machine.or.cz> <4B054D0A.5030802@intland.com> <200911191502.00005.trast@student.ethz.ch> <4B05588B.5080501@intland.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, jrnieder@gmail.com,
-	git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Nov 19 15:51:28 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Nov 19 16:22:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NB8M1-00077J-M7
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Nov 2009 15:51:26 +0100
+	id 1NB8pm-0006MG-5x
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Nov 2009 16:22:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752749AbZKSOvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2009 09:51:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752261AbZKSOvO
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 09:51:14 -0500
-Received: from gv-out-0910.google.com ([216.239.58.191]:58123 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751966AbZKSOvN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2009 09:51:13 -0500
-Received: by gv-out-0910.google.com with SMTP id r4so397232gve.37
-        for <git@vger.kernel.org>; Thu, 19 Nov 2009 06:51:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=P41YGkyQOqVb8QqbR1t/gS1LqLSHVc+CFOctsTQoEuM=;
-        b=uS1gJi593/NqHF9lvjsUaUd2X9dleNeDvcD6+Cj9Lr/ACx9nPCYzvCtb1hpHkwae1x
-         aAFCILmJKRkqfgg+3WrWOoszHQSGqs4QNagnKs1B0wby7jRZE8AcSWv7LOvytz7++Etd
-         4FxLipGpEcgzftbM3MFXl+sceJK42NIwk1zok=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=chdCYMX63EklJiMoeM8arigseuYPRHoHoFuLrFrFCS4AOcrs12KBBzTt/MYy2EfIu1
-         sHbQmGZGPEREZJz19XbMAkJg4BZ29vstW7WuGFPcovF69+h8/bbEFEPugU3759cQlRiX
-         Tgfd9KTSZfGXaoDlctu76kixpbzaOuEVo2zuM=
-Received: by 10.216.93.1 with SMTP id k1mr15974wef.151.1258642278221; Thu, 19 
-	Nov 2009 06:51:18 -0800 (PST)
-In-Reply-To: <20091119124040.6117@nanako3.lavabit.com>
+	id S1756233AbZKSPV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2009 10:21:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756168AbZKSPV5
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 10:21:57 -0500
+Received: from mail01a.mail.t-online.hu ([84.2.40.6]:54402 "EHLO
+	mail01a.mail.t-online.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756161AbZKSPV5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2009 10:21:57 -0500
+Received: from [192.168.1.65] (dsl4E5C0E4F.pool.t-online.hu [78.92.14.79])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail01a.mail.t-online.hu (Postfix) with ESMTPSA id 51BFF797B30;
+	Thu, 19 Nov 2009 16:21:12 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+In-Reply-To: <4B05588B.5080501@intland.com>
+X-DCC-mail.t-online.hu-Metrics: mail01a.mail.t-online.hu 32711; Body=3 Fuz1=3
+	Fuz2=3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133231>
 
-On Wed, Nov 18, 2009 at 10:40 PM, Nanako Shiraishi <nanako3@lavabit.com> wrote:
-> Quoting Tim Henigan <tim.henigan@gmail.com>
->
->> When the usage string for a subcommand must be printed,
->> only print the information relevant to that command.
->
-> I think this is a huge improvement.
->
-> Often people look at this part of the manual page to quickly remind
-> themselves what options are available, and it is better to keep the
-> current text. Some manual pages have to use [options...] when there
-> are too many to list, but each subcommand of git-remote doesn't have
-> that many options.
-
-... snip ...
-
-> For the same reason, I don't think this is a good change, if these
-> lines are used to show the first lines of 'git-remote -h' output.
-
-The original version of this patch [1] left the contents of the usage
-strings intact.  However, Junio expressed a preference to change
-them to use the generic <options>.  See this thread for the
-discussion [2].
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/133048/
-[2] http://thread.gmane.org/gmane.comp.version-control.git/132968/focus=133050
+ > Thomas Rast wrote:
+ >> Intland Software wrote:
+ >>> * MR against GitHub & Gitorious
+ >>> Probably the most significant difference is that MR is available as
+ >>> free download
+ >>
+ >> Umm... unlike Gitorious, you mean:
+ >>
+ >>   http://gitorious.org/gitorious
+ >>   http://gitorious.org/gitorious/mainline/blobs/master/LICENSE
+I'm sorry, you're right: Gitorious is also available as download.
+Thanks for spotting it, Thomas.
+---
+Intland
