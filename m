@@ -1,225 +1,390 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Hey - A Conceptual Simplication....
-Date: Thu, 19 Nov 2009 08:42:34 +0100
-Message-ID: <20091119074226.GA23304@atjola.homenet>
-References: <005a01ca684e$71a1d710$54e58530$@com>
- <20091118142512.1313744e@perceptron>
- <008401ca6880$33d7e550$9b87aff0$@com>
- <m37htnd3kb.fsf@localhost.localdomain>
- <31e9dd080911181152h665d5d9dr5c0736c0ca3234c1@mail.gmail.com>
- <009401ca68bc$7e4b12b0$7ae13810$@com>
+From: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <luksan@gmail.com>
+Subject: [PATCH v2] git am/mailinfo: Don't look at in-body headers when rebasing
+Date: Thu, 19 Nov 2009 09:51:36 +0100
+Message-ID: <4B050718.8070506@gmail.com>
+References: <aa2993680911180620g151d8a07t11144d150cd6e29e@mail.gmail.com> 	<20091118155154.GA15184@coredump.intra.peff.net> <20091118164208.GB15184@coredump.intra.peff.net> 	<4B0478ED.30306@gmail.com> <aa2993680911181547p4cbbf12cq74b482f63e59d007@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: 'Jason Sewall' <jasonsewall@gmail.com>,
-	'Jakub Narebski' <jnareb@gmail.com>,
-	'Jan =?iso-8859-1?Q?Kr=FCger'?= <jk@jk.gs>, git@vger.kernel.org
-To: George Dennie <gdennie@pospeople.com>
-X-From: git-owner@vger.kernel.org Thu Nov 19 08:42:52 2009
+Cc: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <luksan@gmail.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Philip Hofstetter <phofstetter@sensational.ch>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 19 09:59:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NB1fE-0000Sc-NV
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Nov 2009 08:42:49 +0100
+	id 1NB2rV-0003c0-JT
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Nov 2009 09:59:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753131AbZKSHmg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Nov 2009 02:42:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752752AbZKSHmg
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 02:42:36 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60217 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752864AbZKSHmf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2009 02:42:35 -0500
-Received: (qmail invoked by alias); 19 Nov 2009 07:42:38 -0000
-Received: from i59F54809.versanet.de (EHLO atjola.homenet) [89.245.72.9]
-  by mail.gmx.net (mp058) with SMTP; 19 Nov 2009 08:42:38 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18TMdBmJYYT6SELNZXssqk82ZhWap83zYtghePJ3q
-	5BjEpM9JBi4q58
-Content-Disposition: inline
-In-Reply-To: <009401ca68bc$7e4b12b0$7ae13810$@com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
+	id S1754228AbZKSI7U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Nov 2009 03:59:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754028AbZKSI7T
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 03:59:19 -0500
+Received: from atum.ita.chalmers.se ([129.16.4.148]:37034 "EHLO
+	atum.ita.chalmers.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753282AbZKSI7S (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2009 03:59:18 -0500
+X-Greylist: delayed 464 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Nov 2009 03:59:18 EST
+Received: from [192.168.0.85] (153.29.227.87.static.kba.siw.siwnet.net [87.227.29.153])
+	(Authenticated sender: lukass)
+	by mail.chalmers.se (Postfix) with ESMTP id 6455E7677;
+	Thu, 19 Nov 2009 09:51:39 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (X11/20091019)
+In-Reply-To: <aa2993680911181547p4cbbf12cq74b482f63e59d007@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133216>
 
-On 2009.11.18 21:03:31 -0500, George Dennie wrote:
-> Jason Sewell wrote....
-> > I find this leads to big, shapeless commits and, as I mentioned
-> > before, it seriously limits the utility of 'git bisect'.  I also
-> > fail to see how 'selectively saving parts of the document' is
-> > versioning and publishing - what is the publishing part?  The act o=
-f
-> > committing is one thing (and 'saving...
->=20
-> The notion of a shapeless commit is curious. Intuitively, I consider =
-a
-> commit as capturing the state of my work at a transactional boundary
-> (i.e. a successful unit test...or even lunch break). However, your
-> characterization of "shape" suggest that you are constructing
-> something other than the immediate functionality of the software.
-> Consequently, your software document is not really the solution files
-> alone but also this commit history that you meticulously craft.=20
+When we are rebasing we know that the header lines in the
+patch are good and that we don't need to pick up any headers
+from the body of the patch.
 
-Your "lunch break" as a transaction boundary is a great example of
-something that probably most people on this list would consider to
-create commits that need rewriting before publishing them. Let's take a=
-n
-extreme example:
+This makes it possible to rebase commits whose commit message
+start with "From" or "Date".
 
-You work on adding a feature to some webmail site that adds colors to
-the mail being displayed, using different colors for the headers, quote=
-d
-sections and the text from the sender. The colors should be configurabl=
-e
-by the user.
+Test vectors by Jeff King.
 
-*work*
-git commit -m "Go for a coffee"
-*work*
-git commit -m "Lunch break"
-*work*
-git commit -m "Meeting"
-*work*
-git commit -m "Time to go home"
+Signed-off-by: Lukas Sandstr=F6m <luksan@gmail.com>
+---
 
-*come back to work*
-*work*
-git commit -m "Finished the mail coloring support"
-
-This gives you:
-
-* Finished the mail coloring support
-|
-* Time to go home
-|
-* Meeting
-|
-* Lunch break
-|
-* Go for a coffee
-
-Such a history is basically completely useless. It's (ab)using the VCS
-as a plain code dump. In a week, you'll be able to see that you had a
-meeting that day, but it doesn't tell you anything about what you did t=
-o
-the project. And even with less "insane" commit messages, the
-"transactional boundaries" are totally arbitrary. They're aligned to
-things you did that have absolutely nothing to do with the stuff you're
-tracking in your VCS.
-
-A far more useful history might look like this:
-
-* Colorize quoted text in a mail, depending on its quoting depth
-|
-* Parse mails into a tree structure to represent sections of quoted tex=
-t
-|
-* Colorize mail headers
-|
-* Add support for the user to change the colors used for mails
-|
-* Add configuration variable for the colors used for mails
-
-
-At each step, something functionally changed about the software. The
-commit messages tell you something about how the software evolved. And
-if you get bogus values for the colors in the configuration, you can be
-90% sure, by only looking at the commit messages, that you have a bug i=
-n
-the "Add support for the user to change the colors ..." commit, and not
-in one of the others. So you can run "git show $that_commit" to see the
-diff of the changes you made in that commit and quickly check them for
-your bug.
-
-And while that's not sooo useful for commits that added new
-functionality, it's extremely useful for commits that just made small
-changes to existing functionality. Finding a bug in a large piece of
-code (say 2000 lines) isn't trivial. But if you know that a commit that
-changed 5 lines in that code is responsible for the breakage, all you
-have to do is to identify the faulty change, which is a lot easier.
-
-And with a large history, where it's not obvious in which commit
-something got broken, "git bisect" can help to quickly find the bad
-commit. Now consider "git bisect" finding your "Lunch break" commit.
-Looking at the commit message tells nothing. The diff is pretty much
-arbitrary, might be huge. Not much help. Finding the "Add support for
-the user to change the colors ..." commit already tells you something
-just because of the commit message. And the diff is about just one
-specific change. It's all nicely separated, and that's a huge value.
-
-Using git and producing nice commits is about _documenting_ the history
-of your code. And having small, self-contained and well separated
-commits is key to that.
-
-
-And the index can be a great help with that. Given the above example,
-you might already have some code to use the configured colors, just for
-testing, so things aren't so boring. Maybe even some hack-up of the
-code you'll be using later. If that part of the code would be committed
-right away, you'd mess up your commit, because it wouldn't be about a
-single change anymore, but would also have your testing code in there.
-Bad.
-
-But you don't want to throw the testing code away either, because it's
-useful right now, and you might need it later, because it might evolve
-into the final code used for the actual coloring. So, what now? You hav=
-e
-code that you want to commit, and some code you don't want to commit,
-and which needs to go away temporarily, so you can test without it. No
-problem, here comes the index.
-
-Say you have:
-config.c     # Has changes for the colors
-show_mail.c  # Has changes to use the colors
-whatever.c   # Has some changes for both
-
-You do:
-git add config.c       # Add to the index
-git add -p whatever.c  # Only add some hunks to the index
-
-So now the index has what you want to commit, and the working tree stil=
-l
-has everything.
-
-git stash save --keep-index
-
-Now your working tree and index only have the things you want to commit=
+Argh. I just realized that the change to t5100 in the previous patch
+doesn't actually test the new option, since I forgot to change the
++		if test -f "$TEST_DIRECTORY"/t5100/msg$mail--use-first-header
+line to "--no-inbody-headers", after my first attempt at an option name=
 =2E
-You run your unit tests, everythings fine. You commit and get a nice
-clean commit, for which you write a useful commit message.
 
-git stash pop
+This time I checked that the tests actually fail when the test is broke=
+n.
+Still passes, just one line changed since the previous version.
 
-You've got your changes back that you didn't want to commit just yet,
-and you can continue working.
+/Lukas
 
+ builtin-mailinfo.c                   |    5 +++++
+ git-am.sh                            |   13 ++++++++++---
+ t/t5100-mailinfo.sh                  |    6 +++++-
+ t/t5100/info0015                     |    5 +++++
+ t/t5100/info0015--no-inbody-headers  |    5 +++++
+ t/t5100/info0016                     |    5 +++++
+ t/t5100/info0016--no-inbody-headers  |    5 +++++
+ t/t5100/msg0015                      |    2 ++
+ t/t5100/msg0015--no-inbody-headers   |    3 +++
+ t/t5100/msg0016                      |    2 ++
+ t/t5100/msg0016--no-inbody-headers   |    4 ++++
+ t/t5100/patch0015                    |    8 ++++++++
+ t/t5100/patch0015--no-inbody-headers |    8 ++++++++
+ t/t5100/patch0016                    |    8 ++++++++
+ t/t5100/patch0016--no-inbody-headers |    8 ++++++++
+ t/t5100/sample.mbox                  |   33 ++++++++++++++++++++++++++=
++++++++
+ 16 files changed, 116 insertions(+), 4 deletions(-)
+ create mode 100644 t/t5100/info0015
+ create mode 100644 t/t5100/info0015--no-inbody-headers
+ create mode 100644 t/t5100/info0016
+ create mode 100644 t/t5100/info0016--no-inbody-headers
+ create mode 100644 t/t5100/msg0015
+ create mode 100644 t/t5100/msg0015--no-inbody-headers
+ create mode 100644 t/t5100/msg0016
+ create mode 100644 t/t5100/msg0016--no-inbody-headers
+ create mode 100644 t/t5100/patch0015
+ create mode 100644 t/t5100/patch0015--no-inbody-headers
+ create mode 100644 t/t5100/patch0016
+ create mode 100644 t/t5100/patch0016--no-inbody-headers
 
-Another use-case I have found for myself is to use the index to separat=
-e
-reviewed and not-yet-reviewed changes. Before I commit, I always review
-the diff of the things I'm going to commit. So I start out with "git
-diff" and start reading. When I finished reviewing a file, I can do "gi=
-t
-add $that_file", so the diff for that file will no longer be shown by
-"git diff". That nicely cuts down the size of the "git diff" output to
-things I'm still interested in. Quite useful when you are forced to do =
-a
-large commit, because you did some refactoring. If I find a bug during
-the review, I can fix that and re-run "git diff", which will only show
-changes to me that I didn't declare as "good" already by adding them to
-the index.
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index c90cd31..a81526e 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -26,6 +26,7 @@ static struct strbuf charset =3D STRBUF_INIT;
+ static int patch_lines;
+ static struct strbuf **p_hdr_data, **s_hdr_data;
+ static int use_scissors;
++static int use_inbody_headers =3D 1;
 
+ #define MAX_HDR_PARSED 10
+ #define MAX_BOUNDARIES 5
+@@ -771,6 +772,8 @@ static int handle_commit_msg(struct strbuf *line)
+ 		return 0;
 
-Sure, it takes some pratice and discipline to generate a nice, useful
-history. But that's not much different from writing code. Others will
-hate you for writing unreadable spaghetti code, and so will they hate
-you for producing a useless history that tells them that you had lunch,
-instead of telling them what you did to the code ;-)
+ 	if (still_looking) {
++		if (!use_inbody_headers)
++			still_looking =3D 0;
+ 		strbuf_ltrim(line);
+ 		if (!line->len)
+ 			return 0;
+@@ -1033,6 +1036,8 @@ int cmd_mailinfo(int argc, const char **argv, con=
+st char *prefix)
+ 			use_scissors =3D 1;
+ 		else if (!strcmp(argv[1], "--no-scissors"))
+ 			use_scissors =3D 0;
++		else if (!strcmp(argv[1], "--no-inbody-headers"))
++			use_inbody_headers =3D 0;
+ 		else
+ 			usage(mailinfo_usage);
+ 		argc--; argv++;
+diff --git a/git-am.sh b/git-am.sh
+index c132f50..96869a2 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -289,7 +289,7 @@ split_patches () {
+ prec=3D4
+ dotest=3D"$GIT_DIR/rebase-apply"
+ sign=3D utf8=3Dt keep=3D skip=3D interactive=3D resolved=3D rebasing=3D=
+ abort=3D
+-resolvemsg=3D resume=3D scissors=3D
++resolvemsg=3D resume=3D scissors=3D no_inbody_headers=3D
+ git_apply_opt=3D
+ committer_date_is_author_date=3D
+ ignore_date=3D
+@@ -322,7 +322,7 @@ do
+ 	--abort)
+ 		abort=3Dt ;;
+ 	--rebasing)
+-		rebasing=3Dt threeway=3Dt keep=3Dt scissors=3Df ;;
++		rebasing=3Dt threeway=3Dt keep=3Dt scissors=3Df no_inbody_headers=3D=
+t ;;
+ 	-d|--dotest)
+ 		die "-d option is no longer supported.  Do not use."
+ 		;;
+@@ -448,6 +448,7 @@ else
+ 	echo "$utf8" >"$dotest/utf8"
+ 	echo "$keep" >"$dotest/keep"
+ 	echo "$scissors" >"$dotest/scissors"
++	echo "$no_inbody_headers" >"$dotest/no_inbody_headers"
+ 	echo "$GIT_QUIET" >"$dotest/quiet"
+ 	echo 1 >"$dotest/next"
+ 	if test -n "$rebasing"
+@@ -495,6 +496,12 @@ t)
+ f)
+ 	scissors=3D--no-scissors ;;
+ esac
++if test "$(cat "$dotest/no_inbody_headers")" =3D t
++then
++	no_inbody_headers=3D--no-inbody-headers
++else
++	no_inbody_headers=3D
++fi
+ if test "$(cat "$dotest/quiet")" =3D t
+ then
+ 	GIT_QUIET=3Dt
+@@ -549,7 +556,7 @@ do
+ 	# by the user, or the user can tell us to do so by --resolved flag.
+ 	case "$resume" in
+ 	'')
+-		git mailinfo $keep $scissors $utf8 "$dotest/msg" "$dotest/patch" \
++		git mailinfo $keep $no_inbody_headers $scissors $utf8 "$dotest/msg" =
+"$dotest/patch" \
+ 			<"$dotest/$msgnum" >"$dotest/info" ||
+ 			stop_here $this
 
-Bj=F6rn
+diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
+index 0279d07..ebc36c1 100755
+--- a/t/t5100-mailinfo.sh
++++ b/t/t5100-mailinfo.sh
+@@ -11,7 +11,7 @@ test_expect_success 'split sample box' \
+ 	'git mailsplit -o. "$TEST_DIRECTORY"/t5100/sample.mbox >last &&
+ 	last=3D`cat last` &&
+ 	echo total is $last &&
+-	test `cat last` =3D 14'
++	test `cat last` =3D 16'
+
+ check_mailinfo () {
+ 	mail=3D$1 opt=3D$2
+@@ -30,6 +30,10 @@ do
+ 		if test -f "$TEST_DIRECTORY"/t5100/msg$mail--scissors
+ 		then
+ 			check_mailinfo $mail --scissors
++		fi &&
++		if test -f "$TEST_DIRECTORY"/t5100/msg$mail--no-inbody-headers
++		then
++			check_mailinfo $mail --no-inbody-headers
+ 		fi
+ 	'
+ done
+diff --git a/t/t5100/info0015 b/t/t5100/info0015
+new file mode 100644
+index 0000000..0114f10
+--- /dev/null
++++ b/t/t5100/info0015
+@@ -0,0 +1,5 @@
++Author:
++Email:
++Subject: check bogus body header (from)
++Date: Fri, 9 Jun 2006 00:44:16 -0700
++
+diff --git a/t/t5100/info0015--no-inbody-headers b/t/t5100/info0015--no=
+-inbody-headers
+new file mode 100644
+index 0000000..c4d8d77
+--- /dev/null
++++ b/t/t5100/info0015--no-inbody-headers
+@@ -0,0 +1,5 @@
++Author: A U Thor
++Email: a.u.thor@example.com
++Subject: check bogus body header (from)
++Date: Fri, 9 Jun 2006 00:44:16 -0700
++
+diff --git a/t/t5100/info0016 b/t/t5100/info0016
+new file mode 100644
+index 0000000..38ccd0d
+--- /dev/null
++++ b/t/t5100/info0016
+@@ -0,0 +1,5 @@
++Author: A U Thor
++Email: a.u.thor@example.com
++Subject: check bogus body header (date)
++Date: bogus
++
+diff --git a/t/t5100/info0016--no-inbody-headers b/t/t5100/info0016--no=
+-inbody-headers
+new file mode 100644
+index 0000000..f4857d4
+--- /dev/null
++++ b/t/t5100/info0016--no-inbody-headers
+@@ -0,0 +1,5 @@
++Author: A U Thor
++Email: a.u.thor@example.com
++Subject: check bogus body header (date)
++Date: Fri, 9 Jun 2006 00:44:16 -0700
++
+diff --git a/t/t5100/msg0015 b/t/t5100/msg0015
+new file mode 100644
+index 0000000..9577238
+--- /dev/null
++++ b/t/t5100/msg0015
+@@ -0,0 +1,2 @@
++- a list
++  - of stuff
+diff --git a/t/t5100/msg0015--no-inbody-headers b/t/t5100/msg0015--no-i=
+nbody-headers
+new file mode 100644
+index 0000000..be5115b
+--- /dev/null
++++ b/t/t5100/msg0015--no-inbody-headers
+@@ -0,0 +1,3 @@
++From: bogosity
++  - a list
++  - of stuff
+diff --git a/t/t5100/msg0016 b/t/t5100/msg0016
+new file mode 100644
+index 0000000..0d9adad
+--- /dev/null
++++ b/t/t5100/msg0016
+@@ -0,0 +1,2 @@
++and some content
++
+diff --git a/t/t5100/msg0016--no-inbody-headers b/t/t5100/msg0016--no-i=
+nbody-headers
+new file mode 100644
+index 0000000..1063f51
+--- /dev/null
++++ b/t/t5100/msg0016--no-inbody-headers
+@@ -0,0 +1,4 @@
++Date: bogus
++
++and some content
++
+diff --git a/t/t5100/patch0015 b/t/t5100/patch0015
+new file mode 100644
+index 0000000..ad64848
+--- /dev/null
++++ b/t/t5100/patch0015
+@@ -0,0 +1,8 @@
++---
++diff --git a/foo b/foo
++index e69de29..d95f3ad 100644
++--- a/foo
+++++ b/foo
++@@ -0,0 +1 @@
+++content
++
+diff --git a/t/t5100/patch0015--no-inbody-headers b/t/t5100/patch0015--=
+no-inbody-headers
+new file mode 100644
+index 0000000..ad64848
+--- /dev/null
++++ b/t/t5100/patch0015--no-inbody-headers
+@@ -0,0 +1,8 @@
++---
++diff --git a/foo b/foo
++index e69de29..d95f3ad 100644
++--- a/foo
+++++ b/foo
++@@ -0,0 +1 @@
+++content
++
+diff --git a/t/t5100/patch0016 b/t/t5100/patch0016
+new file mode 100644
+index 0000000..ad64848
+--- /dev/null
++++ b/t/t5100/patch0016
+@@ -0,0 +1,8 @@
++---
++diff --git a/foo b/foo
++index e69de29..d95f3ad 100644
++--- a/foo
+++++ b/foo
++@@ -0,0 +1 @@
+++content
++
+diff --git a/t/t5100/patch0016--no-inbody-headers b/t/t5100/patch0016--=
+no-inbody-headers
+new file mode 100644
+index 0000000..ad64848
+--- /dev/null
++++ b/t/t5100/patch0016--no-inbody-headers
+@@ -0,0 +1,8 @@
++---
++diff --git a/foo b/foo
++index e69de29..d95f3ad 100644
++--- a/foo
+++++ b/foo
++@@ -0,0 +1 @@
+++content
++
+diff --git a/t/t5100/sample.mbox b/t/t5100/sample.mbox
+index 13fa4ae..de10312 100644
+--- a/t/t5100/sample.mbox
++++ b/t/t5100/sample.mbox
+@@ -650,3 +650,36 @@ index b0b5d8f..461c47e 100644
+  		convert_to_utf8(line, charset.buf);
+ --
+ 1.6.4.1
++From nobody Mon Sep 17 00:00:00 2001
++From: A U Thor <a.u.thor@example.com>
++Subject: check bogus body header (from)
++Date: Fri, 9 Jun 2006 00:44:16 -0700
++
++From: bogosity
++  - a list
++  - of stuff
++---
++diff --git a/foo b/foo
++index e69de29..d95f3ad 100644
++--- a/foo
+++++ b/foo
++@@ -0,0 +1 @@
+++content
++
++From nobody Mon Sep 17 00:00:00 2001
++From: A U Thor <a.u.thor@example.com>
++Subject: check bogus body header (date)
++Date: Fri, 9 Jun 2006 00:44:16 -0700
++
++Date: bogus
++
++and some content
++
++---
++diff --git a/foo b/foo
++index e69de29..d95f3ad 100644
++--- a/foo
+++++ b/foo
++@@ -0,0 +1 @@
+++content
++
+--=20
+1.6.4.4
