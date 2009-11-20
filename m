@@ -1,65 +1,79 @@
-From: Jeenu V <jeenuv@gmail.com>
-Subject: Ambiguous ref names
-Date: Fri, 20 Nov 2009 15:48:44 +0530
-Message-ID: <5195c8760911200218v5b75d690hbaaf00b44c8df6af@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Ambiguous ref names
+Date: Fri, 20 Nov 2009 02:26:42 -0800
+Message-ID: <7vzl6h3319.fsf@alter.siamese.dyndns.org>
+References: <5195c8760911200218v5b75d690hbaaf00b44c8df6af@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 20 11:19:11 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeenu V <jeenuv@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 20 11:26:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBQa6-0003lm-Nb
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 11:19:11 +0100
+	id 1NBQhf-0007Bm-1B
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 11:26:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751820AbZKTKS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2009 05:18:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751774AbZKTKS7
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 05:18:59 -0500
-Received: from mail-vw0-f192.google.com ([209.85.212.192]:61005 "EHLO
-	mail-vw0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751005AbZKTKS6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2009 05:18:58 -0500
-Received: by vws30 with SMTP id 30so877040vws.33
-        for <git@vger.kernel.org>; Fri, 20 Nov 2009 02:19:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:content-type;
-        bh=9y2HyaAQ2dtZEzblgSsKhYFiZtdLH2kn1q7otTlQiFw=;
-        b=QA+XCMylJ3nXo/U5vMSeH14yqsOccexZcXItjtALlGGWwoaqQk5ra5QMeRGGHvh8kM
-         AfcJoIcf1Ks4lrtCLBpSYY2q+eF5naMTMqQuFAXMoyWUUeU8zKjDY6zPsHE/iuOkUqfQ
-         R278mrojZIQkPwKj2V0dTNOYRdTGiG6VqIap4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=TL54jOyWK/hEV18VmGSuXyF/5HrN/IbskwjwYpYn7ESP+zGskO1FGUoPAcAhbQBmCP
-         LQKig8Y40WQuZLFTmB1PdDaq6n/CVsotheHVPQu9rJs3YqfwzvS+9kQj3Zi1l4UMpzSD
-         Eklh+XBRl8EtSNisYczLjCKqXeJWmgEozsjBs=
-Received: by 10.220.122.35 with SMTP id j35mr1471813vcr.106.1258712344491; 
-	Fri, 20 Nov 2009 02:19:04 -0800 (PST)
+	id S1752110AbZKTK0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2009 05:26:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752057AbZKTK0q
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 05:26:46 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33614 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751910AbZKTK0q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2009 05:26:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A72C881E06;
+	Fri, 20 Nov 2009 05:26:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=loOmhOSUMAU9Ek2/H1MmUoowExA=; b=a2sLZe
+	O06CarpB8ODDawOjBhiMuBaC/hrbgKBkdeYH7xBUhcIxV9GkA9p0PSzxm1XwoA9K
+	dE8fLGz6tdz4FTv8sE+EB7WyFtydeDlkKIvEPMQnhvePmPEH54zlmiksKeBrSbgw
+	8xIpOFZ/mn5SaAuCmmCGdmVXW6pKgjwefAqtw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=voX7idbyUTxh6TU2U0zxPSDre2suSAt9
+	9e6qBjW7mKX+TUojS5Qyh3GqIg7lUkrmuRnb9f+Zi0zrvKpDfe2dGWkq3nghkBmD
+	cJ9XkN/8YUn33T/uKSEneZ1+vTIdQihnX32plFvEDZa+rG7EgQXxMkF2GObDU8pZ
+	rXz5UfQpbL0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8464D81E05;
+	Fri, 20 Nov 2009 05:26:47 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A2D1681E04; Fri, 20 Nov
+ 2009 05:26:44 -0500 (EST)
+In-Reply-To: <5195c8760911200218v5b75d690hbaaf00b44c8df6af@mail.gmail.com>
+ (Jeenu V.'s message of "Fri\, 20 Nov 2009 15\:48\:44 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3522E110-D5BF-11DE-B4A7-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133325>
 
-Hi,
+Jeenu V <jeenuv@gmail.com> writes:
 
-I'm re-posting this from the git-users Google Groups:
+> If I've two branches a.b.c and a.b.c.d, why does 'git checkout'
+> complains about ambiguous ref names?
 
-If I've two branches a.b.c and a.b.c.d, why does 'git checkout'
-complains about ambiguous ref names? For example, if I'm in a.b.c.d,
+Because it doesn't???
 
-896 $ git checkout a.b.c
-warning: refname 'a.b.c' is ambiguous.
-Switched to branch "a.b.c"
+    : demo; git init
+    Initialized empty Git repository in /var/tmp/gomi/twelve/.git/
+    : demo/master; >f
+    : demo/master; git add f
+    : demo/master; git commit -a -m 'initial'
+    [master (root-commit) cb1d5f2] initial
+     0 files changed, 0 insertions(+), 0 deletions(-)
+     create mode 100644 f
+    : demo/master; git branch a.b.c
+    : demo/master; git branch a.b.c.d
+    : demo/master; git checkout a.b.c
+    Switched to branch 'a.b.c'
 
-Is this some kind of a side effect of commit abbreviation? If so is
-this kind of branch naming considered unsafe? Is there a way to make
-git accept ref names verbatim, even if there's potential operation
-that'd fail because of ambiguity?
-
--- 
-:J
+It could be that you have a tag and a branch that are both named a.b.c,
+though.
