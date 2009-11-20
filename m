@@ -1,73 +1,67 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: Name/documentation on git-log --full-diff is insufficient
-Date: Fri, 20 Nov 2009 09:19:00 -0500
-Message-ID: <32c343770911200619i38009e2fy5067a301be3fc313@mail.gmail.com>
-References: <81f018ac0911191526o1cfa8e56r79f8db33256a4e9c@mail.gmail.com>
-	 <20091120140138.GB23718@genesis.frugalware.org>
+From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
+Subject: Re: [PATCH] let core.excludesfile default to ~/.gitignore.
+Date: Fri, 20 Nov 2009 15:30:06 +0100
+Organization: ATLAS Elektronik GmbH
+Message-ID: <4B06A7EE.2090801@atlas-elektronik.com>
+References: <1258723430-31684-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Phil Miller <mille121@illinois.edu>,
-	Git Mailing List <git@vger.kernel.org>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Nov 20 15:19:22 2009
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri Nov 20 15:30:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBUKM-000609-L8
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 15:19:10 +0100
+	id 1NBUV8-0003ID-3g
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 15:30:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753256AbZKTOS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2009 09:18:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216AbZKTOS4
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 09:18:56 -0500
-Received: from mail-fx0-f221.google.com ([209.85.220.221]:56819 "EHLO
-	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752222AbZKTOS4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2009 09:18:56 -0500
-Received: by fxm21 with SMTP id 21so3721063fxm.21
-        for <git@vger.kernel.org>; Fri, 20 Nov 2009 06:19:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=yIS/ld0jXF0KSTSF2EHRf/LfMKEc50QmU8e5YrhJDFk=;
-        b=dDXDBgsTW3XeYXx7h3RNIvc/GXPej8wfznKjnEEt7g6h3yYy5OKfDIpmJJ+J3zIqH1
-         FaDE4Y/nBPDjAarDfZUBpGrzTVTGqy1tkJlV3mPr/70sPanEWJR168HrkrSkPQlAmZZm
-         gpKA9OnziYli1pt5e3464rTZeNlxF3S5xef3g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=D/ls5Vt+3yp57HXLV7WgmJDWLjZnmFczKEiR6bL4uBdLxOJ8kiqv8/XkIqCPlgBURd
-         Nig/88VccPekwaET05xDJtuVoV2PmxnmzTkREUFJQIpAyAAoIvUSNuJ/mpR1UaMlXUQj
-         O1BdlcjZFaqS9iWKZQCRldsoVpWFmsxTav9jw=
-Received: by 10.216.90.74 with SMTP id d52mr448631wef.51.1258726741296; Fri, 
-	20 Nov 2009 06:19:01 -0800 (PST)
-In-Reply-To: <20091120140138.GB23718@genesis.frugalware.org>
+	id S1753351AbZKTOaD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2009 09:30:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752656AbZKTOaD
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 09:30:03 -0500
+Received: from lxsrv96.atlas.de ([194.156.172.86]:51064 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752296AbZKTOaB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2009 09:30:01 -0500
+Received: from VSSRV01.atlas.de (vssrv01.atlas.de [10.200.101.18])
+	by mail96.atlas.de (Postfix) with ESMTP id CCC08138A9
+	for <git@vger.kernel.org>; Fri, 20 Nov 2009 15:30:06 +0100 (CET)
+X-AuditID: 0ac86512-00000094000005bc-c1-4b06a7ee5022
+Received: from mgsrv01.atlas.de ([10.200.101.16]) by VSSRV01.atlas.de with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 20 Nov 2009 15:30:06 +0100
+Received: from mgsrv01.atlas.de (localhost [127.0.0.1])
+	by mail01-int.atlas.de (Postfix) with ESMTP id 3042127172;
+	Fri, 20 Nov 2009 15:30:06 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mgsrv01.atlas.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.6 required=5.0 tests=ALL_TRUSTED,BAYES_50,
+	SUBJECT_FUZZY_TION autolearn=disabled version=3.2.5
+Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
+	by mail01.atlas.de (Postfix) with ESMTP id 20F662716A;
+	Fri, 20 Nov 2009 15:30:06 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
+In-Reply-To: <1258723430-31684-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Enigmail-Version: 0.96.0
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133348>
 
-On Fri, Nov 20, 2009 at 9:01 AM, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> On Thu, Nov 19, 2009 at 05:26:33PM -0600, Phil Miller <mille121@illinois.edu> wrote:
->> PS: I sent in a patch for git-cvsserver a week ago, and have seen no
->> response or action on it. Is there something I should have done
->> differently?
->
-> From MaintNotes:
->
-> "If you sent a patch that you did not hear from anybody for three days,
-> that is a very good indication that it was dropped on the floor ---
-> please do not hesitate to remind me."
+On 11/20/2009 2:23 PM, Matthieu Moy wrote:
+> It seems this is the value most users set, so let's make it the default.
 
-...also as noted in 'Documentation/SubmittingPatches':
-   - Patches should be placed inline in your email rather than attached.
-   - Patches should be addressed to both:
-       * gitster@pobox.com
-       * git@vger.kernel.org
+I like the idea but would suggest to use ~/.gitexcludes instead.
+That way it doesn't clash with .gitignore if your $HOME is 
+under git-control.
 
-You should also double-check your patch against the rest of the
-guidelines in 'SubmittingPatches', to be sure it will apply cleanly.
+Regards
+
+Stefan
+-- 
+----------------------------------------------------------------
+/dev/random says: INTERLACE: To tie two boots together.
