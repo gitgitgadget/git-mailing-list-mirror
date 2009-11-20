@@ -1,64 +1,185 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH 0/2] jn/gitweb-blame fixes
-Date: Thu, 19 Nov 2009 17:00:39 -0800
-Message-ID: <4B05EA37.7060704@gmail.com>
-References: <1258659887-5244-1-git-send-email-bebarino@gmail.com> <200911200005.08841.jnareb@gmail.com>
+From: Tim Mazid <timmazid@hotmail.com>
+Subject: Re: Headless tags don't have a follows or precedes?
+Date: Thu, 19 Nov 2009 17:07:46 -0800 (PST)
+Message-ID: <1258679266168-4035472.post@n2.nabble.com>
+References: <1257067898626-3926483.post@n2.nabble.com> <4AEEA96F.7080609@drmicha.warpmail.net> <1257167247221-3931674.post@n2.nabble.com> <4AEF009E.5060005@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 20 02:00:48 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 20 02:08:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBHrj-0000E4-TD
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 02:00:48 +0100
+	id 1NBHyg-0002ej-CH
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 02:07:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756800AbZKTBAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2009 20:00:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756718AbZKTBAg
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 20:00:36 -0500
-Received: from mail-gx0-f226.google.com ([209.85.217.226]:33536 "EHLO
-	mail-gx0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755544AbZKTBAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2009 20:00:35 -0500
-Received: by mail-gx0-f226.google.com with SMTP id 26so2592150gxk.1
-        for <git@vger.kernel.org>; Thu, 19 Nov 2009 17:00:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=2qK0hvnfnzmxIDLv92v1zg1/5qn2xBz7wWEfHFtlnxc=;
-        b=hTCCG54OJxg3MHiQYeIJeepdclzxeBqv8GA1/On7gcYZRjGodG6Lns6SMMFIPRP6Zc
-         Bu71sHSU9YrRtpBEqs+K7tCDx1YeEMc8wizHuWWQFRYMTKEokcu/UcsYC5sEcpGdsQc1
-         jJMheW1/2TgspQWnTwZ+/kDR4qjKtaS7FQavk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=UV6og5Gy2okSPL3s/t/jIinvok8rc0q53Q268yRnfiNuU89uiSKAGN6waQ0fWzo/dU
-         +Cr7fF93s7zF9c0BmHxaINH7Tkys81m2V05vqQEwq1b8ZzdjDqq/FGuuqH0W5+PA16+R
-         RDlTCPcjH5vTuC2wx7iCwmMNtOxs9kHVoYp4A=
-Received: by 10.150.236.17 with SMTP id j17mr1377338ybh.229.1258678842255;
-        Thu, 19 Nov 2009 17:00:42 -0800 (PST)
-Received: from ?192.168.0.5? (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
-        by mx.google.com with ESMTPS id 22sm379821ywh.30.2009.11.19.17.00.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 19 Nov 2009 17:00:41 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (X11/20091026)
-In-Reply-To: <200911200005.08841.jnareb@gmail.com>
+	id S1756921AbZKTBHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2009 20:07:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756963AbZKTBHl
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 20:07:41 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:39696 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754842AbZKTBHk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2009 20:07:40 -0500
+Received: from tervel.nabble.com ([192.168.236.150])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
+	id 1NBHyU-0000VC-5b
+	for git@vger.kernel.org; Thu, 19 Nov 2009 17:07:46 -0800
+In-Reply-To: <4AEF009E.5060005@drmicha.warpmail.net>
+X-Nabble-From: Tim Mazid <timmazid@hotmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133274>
 
-Jakub Narebski wrote:
->
-> Thanks for working on this.  Also it is nice to have incremental blame
-> tested for another browser, beside Mozilla 1.17.2 and Konqueror 3.5.3
 
-For those following along, Opera-10.10 has been tested and works.
+Hey list,
+
+I was just wondering if there were any updates to this?
+
+Also, I believe I forgot to mention the gitk version, it's 1.6.5.3-1.
+
+Cheers,
+Tim.
+
+
+Michael J Gruber-2 wrote:
+> 
+> Tim Mazid venit, vidit, dixit 02.11.2009 14:07:
+>> Michael J Gruber-2 wrote:
+>>>
+>>> Would would help:
+>>>
+>>> - saying you're talking about gitk/git view/whatever it is you're
+>>> "clicking" on
+>>>
+>> My apologies, yes, in gitk.
+>> 
+> 
+> Now we only need the version... but we'll see if current versions
+> reproduce it.
+> 
+>> Michael J Gruber-2 wrote:
+>>>
+>>> - providing a minimal example others can reproduce. That would be one
+>>> where a tag on a detached head (assuming that's what you mean) has no
+>>> precedes/follow but a tag "on a branch" does have that info
+>>>
+>> 
+>> Example (unless specified, commands as entered into bash)
+> 
+> Great example, thanks!
+> 
+>> 
+>> mkdir temp
+>> cd temp
+>> git init
+>> gitk --all &
+>> git commit --allow-empty -m '1'
+>> git tag v1
+>> git commit --allow-empty -m '1.1'
+>> git tag v1.1
+>> git commit --allow-empty -m '1.2'
+>> git tag v1.2
+>> (in gitk, press ctrl+f5; all follows and precedes info is there)
+>> git checkout v1.1
+>> git commit --allow-empty -m '1.1.1'
+>> git tag v1.1.1
+>> (in gitk, press f5; follows and precedes info missing for v1.1 and
+>> v1.1.1)
+> 
+> For me, v1.1.1 has no info and v1.1 is missing v1.1.1 in its precedes.
+> 
+>> (close gitk)
+>> gitk --all &
+>> (info still missing)
+>> git commit --allow-empty -m '1.1.2'
+>> git tag v1.1.2
+>> (in gitk, press f5, info still missing)
+> 
+> v1.1.1 and v1.1.2 missing all follow/precede info.
+> 
+>> git checkout master
+>> git commit --allow-empty -m '1.3'
+>> git tag v1.3
+>> (in gitk, press f5, info still missing)
+> 
+> Now, even v1.3 is missing its follows and v1.2 its precedes, even though
+> they've got nothing to do with the "detached branch".
+> 
+>> git commit --allow-empty -m '1.4'
+>> git tag v1.4
+>> (in gitk, press f5, info still missing)
+>> git checkout -b temp v1.2
+>> git commit --allow-empty -m '1.2.1'
+>> git tag v1.2.1
+>> (in gitk, press f5, info still missing)
+>> git checkout master
+>> git branch -D temp
+>> git commit --allow-empty -m '1.5'
+>> git tag v1.5
+>> (in gitk, press f5, info still missing)
+>> 
+>> 
+>> In the end, the only follows/precedes info is:
+>> v1: precedes v1.1
+>> v1.1: follows v1, precedes v1.2
+>> v1.2: follows v1.1
+>> All the rest is missing.
+> 
+> So basically, all connectivity which has been created after detaching
+> the head is missing, even that which has been created on a "proper
+> branch", which means (to me) it has nothing to do with git's revision
+> parsing (such as missing out on lightweight tags on detached heads).
+> 
+> I looked at the gitk code and got the expected result: no clue (tcl/tk
+> doesn't tick my fancy). gitk's parsing of ancestry relations seems to be
+> done completely in tcl (rather then relaying a lot to git-rev-parse,
+> which may not be efficient here). So I'll take the liberty to cc the
+> main gitk guy. A few more notes:
+> 
+> After generating v1.1.1 (which misses "follows"), .git/gitk.cache has
+> this (\n added for clarity):
+> 
+> 1 1\n
+> 6bfcf857ceef0507bb50ee17302c1d068b697540
+> b67f4651e49a33ee8cc77157e4e51d1e635a7c0d
+> {540abf2b75aec7ccbd8c0413863a018fc1c1eb37
+> b67f4651e49a33ee8cc77157e4e51d1e635a7c0d}\n
+> 1\n
+> 
+> If I move that out of the way and rerun gitk, everything's in apple pie
+> order, and the cache file is:
+> 
+> 1 3\n
+> 2fd83b12ccea07c88f5998aa6303003ef1e4858b
+> 540abf2b75aec7ccbd8c0413863a018fc1c1eb37
+> 540abf2b75aec7ccbd8c0413863a018fc1c1eb37\n
+> 6bfcf857ceef0507bb50ee17302c1d068b697540
+> 540abf2b75aec7ccbd8c0413863a018fc1c1eb37
+> 540abf2b75aec7ccbd8c0413863a018fc1c1eb37\n
+> 540abf2b75aec7ccbd8c0413863a018fc1c1eb37
+> b67f4651e49a33ee8cc77157e4e51d1e635a7c0d
+> b67f4651e49a33ee8cc77157e4e51d1e635a7c0d\n
+> 1\n
+> 
+> Unsurprisingly, v1.1.2 (committed & tagged on a detached head) trips
+> things up again, moving gitk.cache out of the way helps again.
+> 
+> Surprisingly, v1.3 (committed and tagged on a checked out branch) trips
+> things up again, moving... helps again.
+> 
+> Paul, I hope you can make sense of this. Something in gitk.cache
+> prevents gitk from rescanning for new children, an empty cache gets it
+> right, but only until the next run.
+> 
+> Michael
+> 
+
+-- 
+View this message in context: http://n2.nabble.com/Headless-tags-don-t-have-a-follows-or-precedes-tp3926483p4035472.html
+Sent from the git mailing list archive at Nabble.com.
