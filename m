@@ -1,118 +1,149 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] gitk: Use git-difftool for external diffs
-Date: Fri, 20 Nov 2009 10:55:24 -0800
-Message-ID: <20091120185522.GC56351@gmail.com>
-References: <1258341126-2108-1-git-send-email-davvid@gmail.com>
- <19205.2531.205062.980468@cargo.ozlabs.ibm.com>
- <20091119193913.GA25410@gmail.com>
- <19205.50406.91209.309984@cargo.ozlabs.ibm.com>
- <7vhbsp7htq.fsf@alter.siamese.dyndns.org>
+From: Tarmigan <tarmigan+git@gmail.com>
+Subject: Re: [PATCH 2/2] t/lib-http.sh: Enable httpd tests by default.
+Date: Fri, 20 Nov 2009 11:03:13 -0800
+Message-ID: <905315640911201103w6d1da86duf41a53537672be8e@mail.gmail.com>
+References: <1258680123-28684-1-git-send-email-tarmigan+git@gmail.com> 
+	<1258680123-28684-2-git-send-email-tarmigan+git@gmail.com> 
+	<7vd43d7hdo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Paul Mackerras <paulus@samba.org>, peff@peff.net, sam@vilain.net,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, peff@peff.net, jaysoffian@gmail.com,
+	drizzd@aon.at, spearce@spearce.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 20 19:55:50 2009
+X-From: git-owner@vger.kernel.org Fri Nov 20 20:03:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBYe2-0000d6-Hh
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 19:55:46 +0100
+	id 1NBYlf-0004GZ-9z
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 20:03:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754004AbZKTSzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2009 13:55:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753928AbZKTSzf
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 13:55:35 -0500
-Received: from ey-out-2122.google.com ([74.125.78.27]:52425 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753896AbZKTSze (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2009 13:55:34 -0500
-Received: by ey-out-2122.google.com with SMTP id 4so445250eyf.19
-        for <git@vger.kernel.org>; Fri, 20 Nov 2009 10:55:39 -0800 (PST)
+	id S1754749AbZKTTD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2009 14:03:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753969AbZKTTD1
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 14:03:27 -0500
+Received: from mail-px0-f204.google.com ([209.85.216.204]:50707 "EHLO
+	mail-px0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753928AbZKTTD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2009 14:03:27 -0500
+Received: by pxi42 with SMTP id 42so1962889pxi.5
+        for <git@vger.kernel.org>; Fri, 20 Nov 2009 11:03:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=gsxSdk3Fx76VJGJ0qUXWBc4MqCfxDyF8/8/a3lStwrk=;
-        b=t9qRLJs8IuYMoyX1TMclKKdgE4HHxekHnMXUyF5BKJZke4dT6c4jtP/wgxUTkrij0u
-         nRIS6WRmjU8PZIDPwUGkY459VqNGRVAOFmzLABImsjSKBaTzk+2MhjPiqWBNzqu68Bu8
-         RVxJmiwijxQWlNPFWn2SIq8u3wewWA0HfN9OQ=
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type;
+        bh=b2c/uqVcISJk3kRFC0Ni7SsO+UbWH6Kjq2GZ7fu4S2c=;
+        b=xIiSKMBemsEM9RQwwKz8ACMhTgy1JfF9ltr0qu/XMtaLjGNooraA27rP/AxgsyoQTt
+         MFl73/PHgu0W3Hu6p9fAG+sgka2VEXqzsOB/j3xFX7tWv9WZtVNYo9IfiLpCKVLlwzOC
+         z9alja/WzYggnf//YDQrQq8w4E66WTaCTdzXE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=GRvE6pr2E6g+SbLL2UvrJpqKXpJmxsRoiPjelxL8dyHCDdVF0jKRqiBD9GrlvQDmZV
-         RvCuHiErYzPWOseaEnTkl0Ab2Zo9dwD8mjCORX19gseUBpNR0EKZNLiXCqS5k2S2sJnj
-         aW+nfi0OsHEvyAHYpBWc6GPJ+bp5J7YSyT25g=
-Received: by 10.213.3.140 with SMTP id 12mr563133ebn.20.1258743339815;
-        Fri, 20 Nov 2009 10:55:39 -0800 (PST)
-Received: from gmail.com (wdas-1.disneyanimation.com [12.188.26.1])
-        by mx.google.com with ESMTPS id 10sm439814eyd.37.2009.11.20.10.55.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 20 Nov 2009 10:55:38 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vhbsp7htq.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        b=wNQodJjpIxBehOlJaS9oazKLBXxSH2NR4YUYeis8Uy+4qtXU7Eoe9zzTQSX6afOC8L
+         e6wsZ4tneW+r3MCfzURkyi3n9vbT6hbp0DXmdRFRFSUSAbtYSmYRAQeYky637P0BVTEG
+         nNNQmgfs9vCvU3afmzuG7/wVysR02mkHXmrO0=
+Received: by 10.143.24.40 with SMTP id b40mr192106wfj.0.1258743813160; Fri, 20 
+	Nov 2009 11:03:33 -0800 (PST)
+In-Reply-To: <7vd43d7hdo.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: d42897ecbebec70e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133366>
 
-On Thu, Nov 19, 2009 at 11:53:37PM -0800, Junio C Hamano wrote:
-> Paul Mackerras <paulus@samba.org> writes:
-> 
-> > I have no problem with using git difftool if the underlying git is new
-> > enough, I just don't want gitk to explode when it isn't.
-> 
-> I somehow doubt there are many users who use pre 1.6.3 git but keep their
-> gitk separately updated to very recent version, so personally I wouldn't
-> worry too much about this.
-> 
-> > Also, I don't think we should remove the ability for the user to
-> > choose which external diff tool to use.
-> 
-> This is a larger concern.  Does "difftool" allow use of an arbitrary tool
-> like how gitk does (I have a suspicion that it is not as flexible)?
+On Fri, Nov 20, 2009 at 12:03 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Tarmigan <tarmigan+git@gmail.com> writes:
+>
+>> With smart http, git over http is likely to become much more common.
+>> To increase testing of smart http, enable the http tests by default.
+>
+> Sorry, but no test that listens to network ports should be enabled by
+> default; otherwise it will break automated, unattended tests people have
+> already set up randomly, depending on when the port happens to be
+> available for use by the tests.
 
-difftool supports arbitrary tools through configuration.
-For arbitrary tools we set difftool.$name.cmd and
-diff.tool = $name.
+Is this the only concern or are there security or other issues as well?
 
-If gitk were to have a difftool paradigm then it might
-be nice to have a text field mapped to the diff.tool variable.
-The patch didn't address the diff.tool configuration variable
-so that's a concern if we are to pursue difftool further.
+If that is the only concern, we could have the tests automatically
+fall back to listening on a different port.  Even if we didn't, if
+httpd cannot startup because it can't bind to the port, the http tests
+say
+* skipping test, web server setup failed
+and exit with test_done before any of the tests actually fail.
 
-The argument in favor of difftool is one of user
-expectations.  From a user's POV it ~seems~ desirable for
-gitk to honor difftool configurations.  The easiest way for
-gitk to do that is to use git-difftool and not worry about
-the details of how arbitrary tools are setup.
+Here's a patch (cut-n-paste so it will probably be munged) for
+discussion of the port-fallback idea.  If httpd cannot bind to 5541,
+it tries 15541 etc.  You can test this by running "nc -l 5541 &"
+before the test.  If this approach might be acceptable, I can send a
+properly formatted patch.
 
-Later work could be done to provide UI for setting up
-arbitrary tools inside of gitk.  My gut feeling
-is that gitk isn't a git config editor.
+Comments?
 
-This is why the difftool patch took the minimalist approach.
-It trusts the user to have things configured to their
-liking and trusts git-difftool to do the right thing
-when no such configuration exists.
+Thanks,
+Tarmigan
 
-I think it's a question of whether this is something we'd
-want to change.  It certainly doesn't bother me either way.
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index 797a2d6..a8eb6fa 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -77,7 +77,7 @@ prepare_httpd() {
 
-I might be the only person who'd notice such small details
-so my vote-in-code is with my v2 $TMPDIR patch until someone
-else thinks that using difftool inside of gitk is a good idea.
+        if test -n "$LIB_HTTPD_SSL"
+        then
+-               HTTPD_URL=https://127.0.0.1:$LIB_HTTPD_PORT
++               HTTPD_URL=https://127.0.0.1
 
-At which point I would probably pursue it with the minimalist
-approach first and then gradually add UI for the pertinent
-git config variables.
+                RANDFILE_PATH="$HTTPD_ROOT_PATH"/.rnd openssl req \
+                        -config "$TEST_PATH/ssl.cnf" \
+@@ -88,7 +88,7 @@ prepare_httpd() {
+                export GIT_SSL_NO_VERIFY
+                HTTPD_PARA="$HTTPD_PARA -DSSL"
+        else
+-               HTTPD_URL=http://127.0.0.1:$LIB_HTTPD_PORT
++               HTTPD_URL=http://127.0.0.1
+        fi
 
-Just my .02,
+        if test -n "$LIB_HTTPD_DAV" -o -n "$LIB_HTTPD_SVN"
+@@ -109,16 +109,29 @@ start_httpd() {
 
--- 
-		David
+        trap 'code=$?; stop_httpd; (exit $code); die' EXIT
+
+-       "$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
+-               -f "$TEST_PATH/apache.conf" $HTTPD_PARA \
+-               -c "Listen 127.0.0.1:$LIB_HTTPD_PORT" -k start \
+-               >&3 2>&4
+-       if test $? -ne 0
+-       then
+-               say "skipping test, web server setup failed"
+-               trap 'die' EXIT
+-               test_done
+-       fi
++       while true
++       do
++               "$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
++                       -f "$TEST_PATH/apache.conf" $HTTPD_PARA \
++                       -c "Listen 127.0.0.1:$LIB_HTTPD_PORT" -k start \
++                       >&3 2>&4
++               if test $? -ne 0
++               then
++                       if test $LIB_HTTPD_PORT -gt 40000
++                       then
++                               say "skipping test, web server setup failed"
++                               trap 'die' EXIT
++                               test_done
++                       fi
++                       LIB_HTTPD_PORT=$(($LIB_HTTPD_PORT + 10000))
++                       say "trying port $LIB_HTTPD_PORT"
++                       continue
++               else
++                       break
++               fi
++       done
++
++       HTTPD_URL="$HTTPD_URL:$LIB_HTTPD_PORT"
+ }
+
+ stop_httpd() {
