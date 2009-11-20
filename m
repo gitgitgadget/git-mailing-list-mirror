@@ -1,189 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/3] Make --stdin option to "log" family read also pathspecs
-Date: Fri, 20 Nov 2009 03:25:15 -0800
-Message-ID: <1258716315-2213-4-git-send-email-gitster@pobox.com>
-References: <1258716315-2213-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 20 12:26:08 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Android needs repo, Chrome needs gclient. Neither work. What
+ does  that say about git?
+Date: Fri, 20 Nov 2009 12:31:43 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0911201229080.4985@pacific.mpi-cbg.de>
+References: <2d707e8c-2561-470c-beba-c81e16ac441c@k17g2000yqh.googlegroups.com> <65e170e70911200251q2ec5ec87rc37577dddfd3317d@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Adrian May <adrian.alexander.may@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 20 12:27:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBRcp-0004lQ-T7
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 12:26:04 +0100
+	id 1NBRee-0005Un-Sc
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 12:27:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752756AbZKTLZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2009 06:25:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751869AbZKTLZ0
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 06:25:26 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56807 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751891AbZKTLZR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2009 06:25:17 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8D21F9FE46
-	for <git@vger.kernel.org>; Fri, 20 Nov 2009 06:25:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=HtGk
-	eG0fpL/5es+O2M7vuwmvkNc=; b=s9M+A4ZJhhWbhrd2/1Fs1Mxj+JO2Aer6pC9b
-	cUS0hWxzzHmj+V+vPAkQSN+25Pl518/iNdG0p9iFEMvZEBLOmDa7OVxKeEcIczEz
-	BWgvpP/jBiII6mjKX64yDVvCqfmIEDY18LqSKwODG6wIkQoOXSdCBglrift6acDy
-	N3S1jR4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=KaFQ4N
-	iitlVVW3QqriZZNseIxIAmc3niTXTin4GNVCTulAAoXyl5UugXPQRzCu3Poz3xr2
-	hlM+/OwnEDLroeIW9KuWaypx6huAWcZHd6ucPbK/N81V9jq4nQ50bKfVGcdYRdQE
-	RKamj0+6V5ud2p2lXrz9KSM4QDCtctVqQvDEQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8994E9FE45
-	for <git@vger.kernel.org>; Fri, 20 Nov 2009 06:25:23 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C5C039FE44 for
- <git@vger.kernel.org>; Fri, 20 Nov 2009 06:25:22 -0500 (EST)
-X-Mailer: git-send-email 1.6.5.3.342.g14bb9
-In-Reply-To: <1258716315-2213-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 64DE8474-D5C7-11DE-BA9A-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1751891AbZKTL1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2009 06:27:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751667AbZKTL1p
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 06:27:45 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55918 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750907AbZKTL1p (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2009 06:27:45 -0500
+Received: (qmail invoked by alias); 20 Nov 2009 11:27:50 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp018) with SMTP; 20 Nov 2009 12:27:50 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/sDdQaDVfsmQnxJN1OKyfCttx2ysY9wY4ijwWgOm
+	MwZKHmoceSSf9A
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <65e170e70911200251q2ec5ec87rc37577dddfd3317d@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133337>
 
-Similar to the command line arguments, after giving zero or more revs, you can
-feed a line "--" and then feed pathspecs one at a time.
+Hi,
 
-With this
+On Fri, 20 Nov 2009, Adrian May wrote:
 
-	(
-		echo ^maint
-		echo --
-		echo Documentation
-	) | git log --stat --oneline --stdin master -- t
+> Git is just plain wrong, because you can't split or merge repositories
+> or pull subtrees of them.
 
-lists commits that touch Documentation/ or t/ between maint and master.
+You are plain wrong, because that is possible.  Did you maybe forget to do 
+your homework before coming here and shouting around as if you were right?
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- revision.c |   72 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 files changed, 68 insertions(+), 4 deletions(-)
+> It doesn't have the kind of triggers you need to assert change control 
+> either, and these bolt-on scripts are just making life messy.
 
-diff --git a/revision.c b/revision.c
-index 4410a45..8750c20 100644
---- a/revision.c
-+++ b/revision.c
-@@ -953,9 +953,38 @@ int handle_revision_arg(const char *arg, struct rev_info *revs,
- 	return 0;
- }
- 
--static void read_revisions_from_stdin(struct rev_info *revs)
-+static void read_pathspec_from_stdin(struct rev_info *revs, struct strbuf *sb, const char ***prune_data)
-+{
-+	const char **prune = *prune_data;
-+	int prune_nr;
-+	int prune_alloc;
-+
-+	/* count existing ones */
-+	if (!prune)
-+		prune_nr = 0;
-+	else
-+		for (prune_nr = 0; prune[prune_nr]; prune_nr++)
-+			;
-+	prune_alloc = prune_nr; /* not really, but we do not know */
-+
-+	while (strbuf_getwholeline(sb, stdin, '\n') != EOF) {
-+		int len = sb->len;
-+		if (len && sb->buf[len - 1] == '\n')
-+			sb->buf[--len] = '\0';
-+		ALLOC_GROW(prune, prune_nr+1, prune_alloc);
-+		prune[prune_nr++] = xstrdup(sb->buf);
-+	}
-+	if (prune) {
-+		ALLOC_GROW(prune, prune_nr+1, prune_alloc);
-+		prune[prune_nr] = NULL;
-+	}
-+	*prune_data = prune;
-+}
-+
-+static void read_revisions_from_stdin(struct rev_info *revs, const char ***prune)
- {
- 	struct strbuf sb;
-+	int seen_dashdash = 0;
- 
- 	strbuf_init(&sb, 1000);
- 	while (strbuf_getwholeline(&sb, stdin, '\n') != EOF) {
-@@ -964,11 +993,18 @@ static void read_revisions_from_stdin(struct rev_info *revs)
- 			sb.buf[--len] = '\0';
- 		if (!len)
- 			break;
--		if (sb.buf[0] == '-')
-+		if (sb.buf[0] == '-') {
-+			if (len == 2 && sb.buf[1] == '-') {
-+				seen_dashdash = 1;
-+				break;
-+			}
- 			die("options not supported in --stdin mode");
-+		}
- 		if (handle_revision_arg(sb.buf, revs, 0, 1))
- 			die("bad revision '%s'", sb.buf);
- 	}
-+	if (seen_dashdash)
-+		read_pathspec_from_stdin(revs, &sb, prune);
- 	strbuf_release(&sb);
- }
- 
-@@ -1220,6 +1256,34 @@ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
- 	ctx->argc -= n;
- }
- 
-+static void append_prune_data(const char ***prune_data, const char **av)
-+{
-+	const char **prune = *prune_data;
-+	int prune_nr;
-+	int prune_alloc;
-+
-+	if (!prune) {
-+		*prune_data = av;
-+		return;
-+	}
-+
-+	/* count existing ones */
-+	for (prune_nr = 0; prune[prune_nr]; prune_nr++)
-+		;
-+	prune_alloc = prune_nr; /* not really, but we do not know */
-+
-+	while (*av) {
-+		ALLOC_GROW(prune, prune_nr+1, prune_alloc);
-+		prune[prune_nr++] = *av;
-+		av++;
-+	}
-+	if (prune) {
-+		ALLOC_GROW(prune, prune_nr+1, prune_alloc);
-+		prune[prune_nr] = NULL;
-+	}
-+	*prune_data = prune;
-+}
-+
- /*
-  * Parse revision information, filling in the "rev_info" structure,
-  * and removing the used arguments from the argument list.
-@@ -1294,7 +1358,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 				}
- 				if (read_from_stdin++)
- 					die("--stdin given twice?");
--				read_revisions_from_stdin(revs);
-+				read_revisions_from_stdin(revs, &prune_data);
- 				continue;
- 			}
- 
-@@ -1322,7 +1386,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 			for (j = i; j < argc; j++)
- 				verify_filename(revs->prefix, argv[j]);
- 
--			prune_data = argv + i;
-+			append_prune_data(&prune_data, argv + i);
- 			break;
- 		}
- 	}
--- 
-1.6.5.3.342.g14bb9
+To the contrary, these "bolt-on scripts" are superior to other solutions, 
+because they give the savvy user freedom to do _anything_ a program can 
+do.
+
+> Will somebody please finish git itself instead of working around it, or 
+> use a source control system that's up to the job.
+
+You obviously do not understand Open Source.  If you have an itch, scratch 
+it, or pay somebody to scratch it for you.
+
+> PS: In both cases, I had problems pulling the code.
+
+If you had problems pulling the code, there are two possible sources of 
+problems: the program or a PEBCAK.
+
+Ciao,
+Dscho
+
+P.S.: Feels fine to vent for me, too.
