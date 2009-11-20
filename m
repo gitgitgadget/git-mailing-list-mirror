@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [RFC/PATCHv8 01/10] Notes API: get_commit_notes() -> format_note() +
- remove the commit restriction
-Date: Fri, 20 Nov 2009 02:39:05 +0100
-Message-ID: <1258681154-2167-2-git-send-email-johan@herland.net>
+Subject: [RFC/PATCHv8 05/10] Notes API: for_each_note(): Traverse the entire
+ notes tree with a callback
+Date: Fri, 20 Nov 2009 02:39:09 +0100
+Message-ID: <1258681154-2167-6-git-send-email-johan@herland.net>
 References: <1258681154-2167-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -14,26 +14,26 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBIU0-0004ED-QP
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 02:40:21 +0100
+	id 1NBIU1-0004ED-TI
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 02:40:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756723AbZKTBjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2009 20:39:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757277AbZKTBjf
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 20:39:35 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:61751 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1756379AbZKTBjd (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Nov 2009 20:39:33 -0500
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+	id S1757358AbZKTBjj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2009 20:39:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757336AbZKTBjj
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 20:39:39 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:58297 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1757247AbZKTBjf (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Nov 2009 20:39:35 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KTD000QWWM0F7A0@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Fri, 20 Nov 2009 02:39:36 +0100 (MET)
+ with ESMTP id <0KTD00MNZWM5SE10@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 20 Nov 2009 02:39:41 +0100 (MET)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KTD00D7NWLXUY10@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Fri, 20 Nov 2009 02:39:36 +0100 (MET)
+ git@vger.kernel.org; Fri, 20 Nov 2009 02:39:41 +0100 (MET)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.11.20.12721
 X-Mailer: git-send-email 1.6.4.304.g1365c.dirty
@@ -42,189 +42,163 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133283>
 
-There is really no reason why only commit objects can be annotated. By
-changing the struct commit parameter to get_commit_notes() into a sha1 we
-gain the ability to annotate any object type. To reflect this in the function
-naming as well, we rename get_commit_notes() to format_note().
-
-This patch also fixes comments and variable names throughout notes.c as a
-consequence of the removal of the unnecessary 'commit' restriction.
+This includes a first attempt at creating an optimal fanout scheme (which
+is calculated on-the-fly, while traversing).
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- notes.c  |   33 ++++++++++++++++-----------------
- notes.h  |   11 ++++++++++-
- pretty.c |    8 ++++----
- 3 files changed, 30 insertions(+), 22 deletions(-)
+ notes.c |  101 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ notes.h |   17 ++++++++++
+ 2 files changed, 118 insertions(+), 0 deletions(-)
 
 diff --git a/notes.c b/notes.c
-index 50a4672..0f7082f 100644
+index 2196a5f..9581b98 100644
 --- a/notes.c
 +++ b/notes.c
-@@ -1,5 +1,4 @@
- #include "cache.h"
--#include "commit.h"
- #include "notes.h"
- #include "refs.h"
- #include "utf8.h"
-@@ -25,10 +24,10 @@ struct int_node {
- /*
-  * Leaf nodes come in two variants, note entries and subtree entries,
-  * distinguished by the LSb of the leaf node pointer (see above).
-- * As a note entry, the key is the SHA1 of the referenced commit, and the
-+ * As a note entry, the key is the SHA1 of the referenced object, and the
-  * value is the SHA1 of the note object.
-  * As a subtree entry, the key is the prefix SHA1 (w/trailing NULs) of the
-- * referenced commit, using the last byte of the key to store the length of
-+ * referenced object, using the last byte of the key to store the length of
-  * the prefix. The value is the SHA1 of the tree object containing the notes
-  * subtree.
-  */
-@@ -211,7 +210,7 @@ static void note_tree_insert(struct int_node *tree, unsigned char n,
- 				if (concatenate_notes(l->val_sha1,
- 						entry->val_sha1))
- 					die("failed to concatenate note %s "
--					    "into note %s for commit %s",
-+					    "into note %s for object %s",
- 					    sha1_to_hex(entry->val_sha1),
- 					    sha1_to_hex(l->val_sha1),
- 					    sha1_to_hex(l->key_sha1));
-@@ -299,7 +298,7 @@ static int get_sha1_hex_segment(const char *hex, unsigned int hex_len,
- static void load_subtree(struct leaf_node *subtree, struct int_node *node,
- 		unsigned int n)
- {
--	unsigned char commit_sha1[20];
-+	unsigned char object_sha1[20];
- 	unsigned int prefix_len;
- 	void *buf;
- 	struct tree_desc desc;
-@@ -312,23 +311,23 @@ static void load_subtree(struct leaf_node *subtree, struct int_node *node,
- 
- 	prefix_len = subtree->key_sha1[19];
- 	assert(prefix_len * 2 >= n);
--	memcpy(commit_sha1, subtree->key_sha1, prefix_len);
-+	memcpy(object_sha1, subtree->key_sha1, prefix_len);
- 	while (tree_entry(&desc, &entry)) {
- 		int len = get_sha1_hex_segment(entry.path, strlen(entry.path),
--				commit_sha1 + prefix_len, 20 - prefix_len);
-+				object_sha1 + prefix_len, 20 - prefix_len);
- 		if (len < 0)
- 			continue; /* entry.path is not a SHA1 sum. Skip */
- 		len += prefix_len;
- 
- 		/*
--		 * If commit SHA1 is complete (len == 20), assume note object
--		 * If commit SHA1 is incomplete (len < 20), assume note subtree
-+		 * If object SHA1 is complete (len == 20), assume note object
-+		 * If object SHA1 is incomplete (len < 20), assume note subtree
- 		 */
- 		if (len <= 20) {
- 			unsigned char type = PTR_TYPE_NOTE;
- 			struct leaf_node *l = (struct leaf_node *)
- 				xcalloc(sizeof(struct leaf_node), 1);
--			hashcpy(l->key_sha1, commit_sha1);
-+			hashcpy(l->key_sha1, object_sha1);
- 			hashcpy(l->val_sha1, entry.sha1);
- 			if (len < 20) {
- 				l->key_sha1[19] = (unsigned char) len;
-@@ -342,12 +341,12 @@ static void load_subtree(struct leaf_node *subtree, struct int_node *node,
- 
- static void initialize_notes(const char *notes_ref_name)
- {
--	unsigned char sha1[20], commit_sha1[20];
-+	unsigned char sha1[20], object_sha1[20];
- 	unsigned mode;
- 	struct leaf_node root_tree;
- 
--	if (!notes_ref_name || read_ref(notes_ref_name, commit_sha1) ||
--	    get_tree_entry(commit_sha1, "", sha1, &mode))
-+	if (!notes_ref_name || read_ref(notes_ref_name, object_sha1) ||
-+	    get_tree_entry(object_sha1, "", sha1, &mode))
- 		return;
- 
- 	hashclr(root_tree.key_sha1);
-@@ -355,9 +354,9 @@ static void initialize_notes(const char *notes_ref_name)
- 	load_subtree(&root_tree, &root_node, 0);
+@@ -339,6 +339,101 @@ static void load_subtree(struct leaf_node *subtree, struct int_node *node,
+ 	free(buf);
  }
  
--static unsigned char *lookup_notes(const unsigned char *commit_sha1)
-+static unsigned char *lookup_notes(const unsigned char *object_sha1)
++/*
++ * Determine optimal on-disk fanout for this part of the notes tree
++ *
++ * Given a (sub)tree and the level in the internal tree structure, determine
++ * whether or not the given existing fanout should be expanded for this
++ * (sub)tree.
++ *
++ * Values of the 'fanout' variable:
++ * - 0: No fanout (all notes are stored directly in the root notes tree)
++ * - 1: 2/38 fanout
++ * - 2: 2/2/36 fanout
++ * - 3: 2/2/2/34 fanout
++ * etc.
++ */
++static unsigned char determine_fanout(struct int_node *tree, unsigned char n,
++		unsigned char fanout)
++{
++	/*
++	 * The following is a simple heuristic that works well in practice:
++	 * For each even-numbered 16-tree level (remember that each on-disk
++	 * fanout level corresponds to two 16-tree levels), peek at all 16
++	 * entries at that tree level. If any of them are subtree entries, then
++	 * there are likely plenty of notes below this level, so we return an
++	 * incremented fanout immediately. Otherwise, we return an incremented
++	 * fanout only if all of the entries at this level are int_nodes.
++	 */
++	unsigned int i;
++	if ((n % 2) || (n > 2 * fanout))
++		return fanout;
++	for (i = 0; i < 16; i++) {
++		switch(GET_PTR_TYPE(tree->a[i])) {
++		case PTR_TYPE_SUBTREE:
++			return fanout + 1;
++		case PTR_TYPE_INTERNAL:
++			continue;
++		default:
++			return fanout;
++		}
++	}
++	return fanout + 1;
++}
++
++static void construct_path_with_fanout(const unsigned char *sha1,
++		unsigned char fanout, char *path)
++{
++	unsigned int i = 0, j = 0;
++	const char *hex_sha1 = sha1_to_hex(sha1);
++	assert(fanout < 20);
++	while (fanout) {
++		path[i++] = hex_sha1[j++];
++		path[i++] = hex_sha1[j++];
++		path[i++] = '/';
++		fanout--;
++	}
++	strcpy(path + i, hex_sha1 + j);
++}
++
++static int for_each_note_helper(struct int_node *tree, unsigned char n,
++		unsigned char fanout, each_note_fn fn, void *cb_data)
++{
++	unsigned int i;
++	void *p;
++	int ret = 0;
++	struct leaf_node *l;
++	static char path[40 + 19 + 1];  /* hex SHA1 + 19 * '/' + NUL */
++
++	fanout = determine_fanout(tree, n, fanout);
++	for (i = 0; i < 16; i++) {
++redo:
++		p = tree->a[i];
++		switch(GET_PTR_TYPE(p)) {
++		case PTR_TYPE_INTERNAL:
++			/* recurse into int_node */
++			ret = for_each_note_helper(
++				CLR_PTR_TYPE(p), n + 1, fanout, fn, cb_data);
++			break;
++		case PTR_TYPE_SUBTREE:
++			/* unpack subtree and resume traversal */
++			l = (struct leaf_node *) CLR_PTR_TYPE(p);
++			tree->a[i] = NULL;
++			load_subtree(l, tree, n);
++			free(l);
++			goto redo;
++		case PTR_TYPE_NOTE:
++			l = (struct leaf_node *) CLR_PTR_TYPE(p);
++			construct_path_with_fanout(l->key_sha1, fanout, path);
++			ret = fn(l->key_sha1, l->val_sha1, path, cb_data);
++			break;
++		}
++		if (ret)
++			return ret;
++	}
++	return 0;
++}
++
+ void init_notes(const char *notes_ref, int flags)
  {
--	struct leaf_node *found = note_tree_find(&root_node, 0, commit_sha1);
-+	struct leaf_node *found = note_tree_find(&root_node, 0, object_sha1);
- 	if (found)
- 		return found->val_sha1;
- 	return NULL;
-@@ -370,7 +369,7 @@ void free_notes(void)
- 	initialized = 0;
+ 	unsigned char sha1[20], object_sha1[20];
+@@ -386,6 +481,12 @@ const unsigned char *get_note(const unsigned char *object_sha1)
+ 	return found ? found->val_sha1 : NULL;
  }
  
--void get_commit_notes(const struct commit *commit, struct strbuf *sb,
-+void format_note(const unsigned char *object_sha1, struct strbuf *sb,
- 		const char *output_encoding, int flags)
++int for_each_note(each_note_fn fn, void *cb_data)
++{
++	assert(initialized);
++	return for_each_note_helper(&root_node, 0, 0, fn, cb_data);
++}
++
+ void free_notes(void)
  {
- 	static const char utf8[] = "utf-8";
-@@ -389,7 +388,7 @@ void get_commit_notes(const struct commit *commit, struct strbuf *sb,
- 		initialized = 1;
- 	}
- 
--	sha1 = lookup_notes(commit->object.sha1);
-+	sha1 = lookup_notes(object_sha1);
- 	if (!sha1)
- 		return;
- 
+ 	note_tree_free(&root_node);
 diff --git a/notes.h b/notes.h
-index a1421e3..d745ed1 100644
+index 21a8930..f67bae8 100644
 --- a/notes.h
 +++ b/notes.h
-@@ -4,10 +4,19 @@
+@@ -28,6 +28,23 @@ void add_note(const unsigned char *object_sha1,
+ /* Get the note object SHA1 containing the note data for the given object */
+ const unsigned char *get_note(const unsigned char *object_sha1);
+ 
++/*
++ * Invoke the specified callback function for each note
++ *
++ * If the callback returns nonzero, the note walk is aborted, and the return
++ * value from the callback is returned from for_each_note().
++ *
++ * IMPORTANT: The callback function is NOT allowed to change the notes tree.
++ * In other words, the following functions can NOT be invoked (on the current
++ * notes tree) from within the callback:
++ * - add_note()
++ * - free_notes()
++ */
++typedef int each_note_fn(const unsigned char *object_sha1,
++		const unsigned char *note_sha1, const char *note_tree_path,
++		void *cb_data);
++int for_each_note(each_note_fn fn, void *cb_data);
++
  /* Free (and de-initialize) the internal notes tree structure */
  void free_notes(void);
  
-+/* Flags controlling how notes are formatted */
- #define NOTES_SHOW_HEADER 1
- #define NOTES_INDENT 2
- 
--void get_commit_notes(const struct commit *commit, struct strbuf *sb,
-+/*
-+ * Fill the given strbuf with the notes associated with the given object.
-+ *
-+ * If the internal notes structure is not initialized, it will be auto-
-+ * initialized to the default value (see documentation for init_notes() above).
-+ *
-+ * 'flags' is a bitwise combination of the above formatting flags.
-+ */
-+void format_note(const unsigned char *object_sha1, struct strbuf *sb,
- 		const char *output_encoding, int flags);
- 
- #endif
-diff --git a/pretty.c b/pretty.c
-index 5661cba..771d186 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -775,8 +775,8 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 		}
- 		return 0;	/* unknown %g placeholder */
- 	case 'N':
--		get_commit_notes(commit, sb, git_log_output_encoding ?
--			     git_log_output_encoding : git_commit_encoding, 0);
-+		format_note(commit->object.sha1, sb, git_log_output_encoding ?
-+			    git_log_output_encoding : git_commit_encoding, 0);
- 		return 1;
- 	}
- 
-@@ -1057,8 +1057,8 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
- 		strbuf_addch(sb, '\n');
- 
- 	if (fmt != CMIT_FMT_ONELINE)
--		get_commit_notes(commit, sb, encoding,
--				 NOTES_SHOW_HEADER | NOTES_INDENT);
-+		format_note(commit->object.sha1, sb, encoding,
-+			    NOTES_SHOW_HEADER | NOTES_INDENT);
- 
- 	free(reencoded);
- }
 -- 
 1.6.4.304.g1365c.dirty
