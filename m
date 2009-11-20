@@ -1,109 +1,191 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] let core.excludesfile default to ~/.gitignore.
-Date: Fri, 20 Nov 2009 14:23:50 +0100
-Message-ID: <1258723430-31684-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Nov 20 14:24:07 2009
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [ANNOUNCE] tig-0.15
+Date: Fri, 20 Nov 2009 14:31:17 +0100
+Message-ID: <20091120133117.GA26917@diku.dk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 20 14:31:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBTT4-0003gE-QW
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 14:24:07 +0100
+	id 1NBTaZ-0007AY-Co
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 14:31:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753263AbZKTNXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2009 08:23:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753256AbZKTNXz
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 08:23:55 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:38394 "EHLO rominette.imag.fr"
+	id S1753305AbZKTNbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2009 08:31:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753268AbZKTNbO
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 08:31:14 -0500
+Received: from mgw1.diku.dk ([130.225.96.91]:37867 "EHLO mgw1.diku.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752905AbZKTNXy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2009 08:23:54 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id nAKDMgY1002550
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 20 Nov 2009 14:22:42 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NBTSq-0007Ik-21; Fri, 20 Nov 2009 14:23:52 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NBTSp-0008Fl-Vt; Fri, 20 Nov 2009 14:23:51 +0100
-X-Mailer: git-send-email 1.6.5.2.152.gbbe9e
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 20 Nov 2009 14:22:42 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: nAKDMgY1002550
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1259328163.46784@uTL9tx29sljq0j9baKaLkw
+	id S1752936AbZKTNbN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2009 08:31:13 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 4C2D152C3BB
+	for <git@vger.kernel.org>; Fri, 20 Nov 2009 14:31:19 +0100 (CET)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ba+zZeWyB7Pl for <git@vger.kernel.org>;
+	Fri, 20 Nov 2009 14:31:17 +0100 (CET)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 35C6952C3BA
+	for <git@vger.kernel.org>; Fri, 20 Nov 2009 14:31:17 +0100 (CET)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP id 6BF1A6DF835
+	for <git@vger.kernel.org>; Fri, 20 Nov 2009 14:27:56 +0100 (CET)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id 1FE81E301; Fri, 20 Nov 2009 14:31:17 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133344>
 
-It seems this is the value most users set, so let's make it the default.
+Hello,
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-A funny experiment:
+After a long time of silence, here is a brand new version of tig with
+changes that has accummulated since version 0.14.1. It mainly brings
+minor improvements for tweaking tig usage via keybindings and options.
 
-http://www.google.com/search?q=core.excludesfile+-%22~/.gitignore%22
-Results 1 - 10 of about 3,890 for core.excludesfile -"~/.gitignore"
+Thanks to everybody who provided patches.
 
-http://www.google.com/search?q=core.excludesfile+%22~/.gitignore%22
-Results 1 - 10 of about 7,990 for core.excludesfile "~/.gitignore"
+What is tig?
+------------
+Tig is an ncurses-based text-mode interface for git. It functions mainly
+as a git repository browser, but can also assist in staging changes for
+commit at chunk level and act as a pager for output from various git
+commands.
 
-So, most of the time someone mentions core.excludesfile on the web,
-~/.gitignore is mentionned right after.
+ - Homepage:	http://jonas.nitro.dk/tig/
+ - Manual:	http://jonas.nitro.dk/tig/manual.html
+ - Tarballs:	http://jonas.nitro.dk/tig/releases/
+ - Git URL:	git://repo.or.cz/tig.git 
+ - Gitweb:	http://repo.or.cz/w/tig.git
 
+Release notes
+-------------
+Incompatibilities:
 
-I'd have expected a place near config.c to set the default value for
-any config variable, but I can't find such thing, so I guess the
-caller is the one that should set the default, which is what I do in
-the patch.
+ - Setting the cursor color no longer automatically sets the text to
+   bold. The old 'lazy' behavior was a bug.
+ - Remove check for git-repo-config, which was officially deprecated in
+   git version 1.5.4. The configure script no longer depends on git
+   being installed.
 
- Documentation/config.txt |    1 +
- dir.c                    |    9 ++++++++-
- 2 files changed, 9 insertions(+), 1 deletions(-)
+Improvements:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 39d1226..0c55e52 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -384,6 +384,7 @@ core.excludesfile::
- 	of files which are not meant to be tracked.  "~/" is expanded
- 	to the value of `$HOME` and "~user/" to the specified user's
- 	home directory.  See linkgit:gitignore[5].
-+	Default: ~/.gitignore.
- 
- core.editor::
- 	Commands such as `commit` and `tag` that lets you edit
-diff --git a/dir.c b/dir.c
-index d0999ba..dcea6ad 100644
---- a/dir.c
-+++ b/dir.c
-@@ -914,9 +914,16 @@ void setup_standard_excludes(struct dir_struct *dir)
- 
- 	dir->exclude_per_dir = ".gitignore";
- 	path = git_path("info/exclude");
-+	if (!excludes_file) {
-+		const char *home = getenv("HOME");
-+		char *user_gitignore = malloc(strlen(home) + strlen("/.gitignore") + 1);
-+		strcpy(user_gitignore, home);
-+		strcat(user_gitignore, "/.gitignore");
-+		excludes_file = user_gitignore;
-+	}
- 	if (!access(path, R_OK))
- 		add_excludes_from_file(dir, path);
--	if (excludes_file && !access(excludes_file, R_OK))
-+	if (!access(excludes_file, R_OK))
- 		add_excludes_from_file(dir, excludes_file);
- }
- 
+ - Provide the manual as a man page named tigmanual(7).
+ - Add ability to toggle between showing shorter dates (without time
+   info) and relative dates. Use 'D' to toggle between date formats.
+ - Show the active (instead of the default) keybindings in the help
+   view. Furthermore, honor the keymap when suggesting actions in the
+   help messages.
+ - Add branch view for choosing which branch to display in the main
+   view. Bound to 'H' by default.
+ - Tree view: show entry to parent directory ('..') when running from
+   subdirectory.
+ - Tree view: sort entries by name, date or author. Toggling is bound to
+   'i' by default, with 'I' controlling whether or not to sort in
+   ascending order.
+ - Make height of the lower view in a split view configurable by setting
+   the 'split-view-height' variable to a number or a percentage.
+   Defaults to 2/3 of the total view height.
+ - Allow multiple text attributes for color commands:
+
+	color cursor white blue underline bold
+
+Bug fixes:
+
+ - Blame view: fix loading of blame data when opened from the tree view
+   and CWD is not the repo root. (Debian bug 540766)
+ - Tree view: fix searching.
+
+Change summary
+--------------
+The diffstat and log summary for changes made in this release.
+
+ .gitignore          |    1 +
+ INSTALL             |   40 +-
+ Makefile            |   13 +-
+ NEWS                |   39 ++
+ TODO                |    3 -
+ VERSION             |    2 +-
+ configure.ac        |    7 -
+ contrib/aspell.dict |    8 +-
+ manual.txt          |  249 ++++----
+ tig.1.txt           |    2 +-
+ tig.c               | 1549 ++++++++++++++++++++++++++++++-------------
+ tigmanual.7.txt     |   20 +
+ tigrc.5.txt         |  365 +++++------
+ 13 files changed, 1497 insertions(+), 801 deletions(-)
+
+Giuseppe Bilotta (2):
+      Fix previous/next with branch+main view
+      Predefined external command: git commit
+
+Ingmar Vanhassel (1):
+      Makefile: Fix typo in 157ebf54
+
+Jeff King (1):
+      Add missing NULL in blame_grep
+
+Jonas Fonseca (40):
+      Add small cache for author names to reduce memory foot-print
+      Reduce memory and startup time by storing author times as time_t
+      Simplify searching in view lines by defining grep_text utility
+      Define a tree_grep and fixing searching
+      Make the granular allocators more customizable using macros
+      Remove the need for alloc variables
+      Define an allocator for run requests
+      Update the current branch information when reloading all references
+      Fix a potential problem with reading tokens larger then BUFSIZ
+      Add primitive branch view
+      Minor fix to always sort even if allocation fails in get_refs
+      Use temporary variable in refs loop in main_draw
+      Branch view: fix loading to handle when two branches have same commit
+      Add support for sorting tree entries by name, date or author
+      Add support for sorting branch entries by name, date and author
+      Fix reloading of references to not cause access to freed memory
+      Restore the branch view position after refreshing
+      Add simple support for showing menues and use it for showing option menu
+      Use menus with the commit subject to present selectable commit parents
+      Fix memory allocation check in open_commit_parent_menu
+      Manual: document that :<number> jumps to the line number
+      Remove macros which are only used for default option values
+      Allow multiple text attributes for color commands
+      Build with asciidoc-8.4.5
+      Show the active (instead of the default) keybindings in the help view
+      Merge remote branch 'samb/short-dates'
+      NEWS: Mention date-shorten feature
+      Add support for displaying relative dates
+      Fix draw_date to not format anything when time arg is NULL
+      Fix loading of blame data when opened from the tree view
+      NEWS: Improve bug fix description
+      Update asciidoc table syntax to the one supported by version 8.4.4
+      tigmanual(7): provide the manual as a man page
+      Remove build dependency on git from the configure script
+      begin_update: simplify control flow
+      run_io_dir: take dir argument
+      run_io_rd_dir: obsolete by switching call sites to run_io_rd_dir
+      io_open: take path as a vararg format
+      Status view: special case revert of unmerged entries with no physical file
+      tig-0.15
+
+Samuel Bronson (1):
+      Add an option (and toggle) for shortening the date column by skipping the time.
+
+Sebastian Harl (1):
+      Fixed some uninitialized variable warnings
+
+Tilo Schwarz (1):
+      Make height of split view configurable
+
+bill lam (1):
+      Fix whitespace
+
 -- 
-1.6.5.2.152.gbbe9e
+Jonas Fonseca
