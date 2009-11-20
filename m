@@ -1,74 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] t/lib-http.sh: Enable httpd tests by default.
-Date: Fri, 20 Nov 2009 12:56:28 -0800
-Message-ID: <7vtywovrsz.fsf@alter.siamese.dyndns.org>
-References: <1258680123-28684-1-git-send-email-tarmigan+git@gmail.com>
- <1258680123-28684-2-git-send-email-tarmigan+git@gmail.com>
- <7vd43d7hdo.fsf@alter.siamese.dyndns.org>
- <905315640911201103w6d1da86duf41a53537672be8e@mail.gmail.com>
- <20091120201116.GA19131@localhost>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3] gitk: add --no-replace-objects option
+Date: Fri, 20 Nov 2009 22:15:11 +0100
+Message-ID: <200911202215.11974.chriscool@tuxfamily.org>
+References: <20091120194046.4469.53971.chriscool@tuxfamily.org> <200911202142.39520.chriscool@tuxfamily.org> <7v1vjsx6f5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tarmigan <tarmigan+git@gmail.com>, git@vger.kernel.org,
-	peff@peff.net, jaysoffian@gmail.com, spearce@spearce.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Fri Nov 20 21:56:51 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	bill lam <cbill.lam@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Paul Mackerras <paulus@samba.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 20 22:13:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBaXB-0004Cs-Oy
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 21:56:50 +0100
+	id 1NBamu-0002Qp-NQ
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 22:13:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755239AbZKTU4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2009 15:56:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754895AbZKTU4i
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 15:56:38 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56171 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754533AbZKTU4h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2009 15:56:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 356629E0F4;
-	Fri, 20 Nov 2009 15:56:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=B2QrKd7qBoJ6w4306P0w4Cw0q9M=; b=lvV3gE7YBzUyzx8eu7dgooC
-	0DJM57U/Q+tA72mtmUQhCQxRPOkiO+zz6EQ07+ocHeDd+zUhrtuV93q8XKHzeZR7
-	Bn2e5xKUkqu+4eA8pJqzPZU8oS7KKp/Vc5bwWeEAynVgnewAHJzGubVDDhg6Gvkn
-	n0VKhCuL5392qXfuLm/I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=nuddbWJ+OpEmJ0/nQp/9GzczKjRNsXcnfkW6CVSEjUqkQ0Og8
-	/qGMJ02iJfWNLEMb2HoVCKwXradgKMX3pf9eQPxSmUu8JyiCNE+eNaSmaVAR7xCL
-	fxKbPDfDwczYvfVNAvwaJFqaotFfFhioRVfW8AR9pPTgJfOcJA6mos6WYI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CDFFA9E0F0;
-	Fri, 20 Nov 2009 15:56:37 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C36D79E0EF; Fri, 20 Nov 2009
- 15:56:29 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 31EE887A-D617-11DE-9EDD-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1754580AbZKTVMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2009 16:12:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754551AbZKTVMw
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 16:12:52 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:55197 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754151AbZKTVMw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2009 16:12:52 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 33909818174;
+	Fri, 20 Nov 2009 22:12:49 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 4D1BA818050;
+	Fri, 20 Nov 2009 22:12:47 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7v1vjsx6f5.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133381>
 
-Clemens Buchacher <drizzd@aon.at> writes:
-
-> On Fri, Nov 20, 2009 at 11:03:13AM -0800, Tarmigan wrote:
+On vendredi 20 novembre 2009, Junio C Hamano wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> >> I wonder if this switch deserves run-time flippability, though...
+> >
+> > The following patch in master added run-time flippability to many
+> > commands:
 >
->> Here's a patch (cut-n-paste so it will probably be munged) for
->> discussion of the port-fallback idea.  If httpd cannot bind to 5541,
->> it tries 15541 etc.
->
-> I would prefer if we skip the test right away.
+> What I meant was not that.  I was wondering if the user wants to flip
+> from the gitk GUI without restarting gitk.
 
-Retrying is a different issue, and when tests are enabled I think it is Ok
-to retry all you want.
+Ah ok, yes this would be nice. But anyway I think the current patch is a 
+first good step.
 
-But I don't want to see them enabled unless the user explicitly told us
-to.
+Thanks,
+Christian.
