@@ -1,56 +1,100 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [spf:guess] Re: git-svn not fetching all revisions
-Date: Fri, 20 Nov 2009 17:12:10 +1300
-Message-ID: <4B06171A.10801@vilain.net>
-References: <4AF9AC1A.5000100@better.se> <4AFA36F0.6070501@vilain.net> <4B0534FF.5040001@better.se>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: [ANNOUNCE] codeBeamer MR - Easy ACL for Git
+Date: Fri, 20 Nov 2009 10:26:32 +0530
+Message-ID: <2e24e5b90911192056t706071ble163a53741017ef@mail.gmail.com>
+References: <4B03B153.1020302@intland.com>
+	 <20091118120936.GL17748@machine.or.cz> <4B054D0A.5030802@intland.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Marcus Better <marcus@better.se>
-X-From: git-owner@vger.kernel.org Fri Nov 20 05:12:39 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Intland Software <marketing@intland.com>
+X-From: git-owner@vger.kernel.org Fri Nov 20 05:56:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBKrM-00054v-Vt
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 05:12:37 +0100
+	id 1NBLXz-0007b5-NH
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 05:56:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758274AbZKTEMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2009 23:12:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758262AbZKTEMX
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 23:12:23 -0500
-Received: from bertrand.catalyst.net.nz ([202.78.240.40]:43278 "EHLO
-	mail.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756718AbZKTEMW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2009 23:12:22 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail.catalyst.net.nz (Postfix) with ESMTP id D080C3255E;
-	Fri, 20 Nov 2009 17:12:11 +1300 (NZDT)
-X-Virus-Scanned: Debian amavisd-new at catalyst.net.nz
-Received: from mail.catalyst.net.nz ([127.0.0.1])
-	by localhost (bertrand.catalyst.net.nz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9H8ZqHegjrZn; Fri, 20 Nov 2009 17:12:11 +1300 (NZDT)
-Received: from [IPv6:2404:130:0:1000:21d:7dff:fe90:5fe0] (unknown [IPv6:2404:130:0:1000:21d:7dff:fe90:5fe0])
-	(Authenticated sender: samv)
-	by mail.catalyst.net.nz (Postfix) with ESMTPSA id 4EAED323E7;
-	Fri, 20 Nov 2009 17:12:11 +1300 (NZDT)
-User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
-In-Reply-To: <4B0534FF.5040001@better.se>
-X-Enigmail-Version: 0.95.0
+	id S1754601AbZKTE41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2009 23:56:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754504AbZKTE40
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 23:56:26 -0500
+Received: from mail-pz0-f171.google.com ([209.85.222.171]:39877 "EHLO
+	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754489AbZKTE40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2009 23:56:26 -0500
+Received: by pzk1 with SMTP id 1so2145855pzk.33
+        for <git@vger.kernel.org>; Thu, 19 Nov 2009 20:56:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=SYCGvRc+KVglNVG9ov/CNgwNd7LXwjSSltBcfVFqzQA=;
+        b=a60Hzet/Nxw994JeFFN/9m1DLFIzYYZfZA3IM7SwhSPHT7VK0aUK5Fjqd8q9L1shnp
+         3Z6+FEFUC7We0AyI6UN2L7wEaGEGISCtNy19LXVJygLUaUXq4VnID+7TMuVVgCUuUn8A
+         gDs7VBkewWzlR9M5U6ikdh5WQKTMQchRK3FVk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=DauJSdxdkBlrpkDdBu71VTQajKT9iKfmzmdT8ZIu3XXcHqCm7A0kb75mSI8pLO4Sj+
+         nBGcr/xegZJXv+daXEjvyHqzI0P4Hd+oVKtWADoIk0qH6bWGm5dIPPA5P5YASX2fCuhd
+         AX9SneTLBi8tVy3sy3xHERD7ODj4n7n1iJbdc=
+Received: by 10.115.67.10 with SMTP id u10mr1274402wak.203.1258692992477; Thu, 
+	19 Nov 2009 20:56:32 -0800 (PST)
+In-Reply-To: <4B054D0A.5030802@intland.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133305>
 
-Marcus Better wrote:
-> Ok, that works, but how can I now sync with the svn repository with git
-> svn rebase/dcommit? I think the filter-branch rewriting confuses git-svn.
+On Thu, Nov 19, 2009 at 7:20 PM, Intland Software <marketing@intland.com> wrote:
+> Petr Baudis wrote:
+>>
+>> I think a lot of people wonder now, how does this compare to existing
+>> solutions; from your announcement I thought it's something like
+>> Gitosis/Gitolite, but in fact it seems more similar to Gitorious or
+>> GitHub (if it was publicly available, of course); perhaps it would be
 >
+> All right, some quick comparisons with codeBeamer Managed Repository (MR).
+>
+> * MR against Gitosis
 
-A quick hint: git-svn only relies on the last piece of metadata it can
-see in 'git log'; so make sure that one looks right and you should be
-fine...
+I think you meant "versus" :-)
 
-Sam
+> In terms of access control, MR has the concept of "role", and it makes our
+> security model more fine grained. Permissions can be set by role. One user
+> account can have multiple roles. Roles are project-dependent. When you add a
+> group to a project, you can assign multiple roles to the group (which is
+> equivalent with assigning those roles to each group member one by one).
+> On the other hand, MR has a much broader scope than Gitosis. MR helps you to
+> manage your repos, to track your tasks/bugs/issues, to follow commit
+> activities, to browse repos in the web, can be extended using its APIs, etc.
+> (And you don't have to install and maintain Git extensions for this.)
+
+> * MR against Gitolite
+> Pretty much the same applies here as well.
+
+Conceptually, gitolite can do the roles stuff you mentioned,
+if I understood it correctly.  Of course, gitolite's access
+config is in plain text.
+
+The web-based control, issue tracking, etc., are all on a
+different plane from what gitosis/gitolite aim to be.  So
+much so that I might even disagree with Pasky on the need to
+mention these two products in your website.  Here's one
+perspective (in round figures):
+
+gitolite:   1600 lines of shell+perl, 1600 lines of doc
+gitosis:    3300 lines of python
+MR:         150 MB binary download
+
+I don't honestly see any way to even *begin* to compare :-)
+
+You should stick to gitorious, github, and -- here's a new
+one for you -- indefero.
+
+-- 
+Sitaram
