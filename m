@@ -1,46 +1,55 @@
-From: Intland Software <marketing@intland.com>
-Subject: Re: [ANNOUNCE] codeBeamer MR - Easy ACL for Git
-Date: Fri, 20 Nov 2009 09:24:26 +0100
-Message-ID: <4B06523A.4020004@intland.com>
-References: <4B03B153.1020302@intland.com> <20091118120936.GL17748@machine.or.cz> <4B054D0A.5030802@intland.com> <2e24e5b90911192056t706071ble163a53741017ef@mail.gmail.com> <20091120074702.GW12890@machine.or.cz>
+From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
+Subject: Re: Default history simplification
+Date: Fri, 20 Nov 2009 09:55:37 +0100
+Message-ID: <20091120095537.1909f6b6@perceptron>
+References: <ae09c2a40911191530y626dd035q90de0212e0b4b6d8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Nov 20 09:24:34 2009
+Cc: git <git@vger.kernel.org>
+To: Tommy Wang <subscription@august8.net>
+X-From: git-owner@vger.kernel.org Fri Nov 20 09:56:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBOnB-0007nL-NF
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 09:24:34 +0100
+	id 1NBPIH-0002TF-Jy
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 09:56:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754811AbZKTIYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2009 03:24:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754646AbZKTIYW
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 03:24:22 -0500
-Received: from mail02d.mail.t-online.hu ([84.2.42.7]:55188 "EHLO
-	mail02d.mail.t-online.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754568AbZKTIYW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2009 03:24:22 -0500
-Received: from [192.168.1.65] (dsl4E5C0E4F.pool.t-online.hu [78.92.14.79])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail02d.mail.t-online.hu (Postfix) with ESMTPSA id 45DD7759175;
-	Fri, 20 Nov 2009 09:23:54 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <20091120074702.GW12890@machine.or.cz>
-X-DCC-mail.t-online.hu-Metrics: mail02d.mail.t-online.hu 32711; Body=3 Fuz1=3
-	Fuz2=3
+	id S1753487AbZKTI4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2009 03:56:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752476AbZKTI4H
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 03:56:07 -0500
+Received: from zoidberg.org ([88.198.6.61]:33087 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752270AbZKTI4F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2009 03:56:05 -0500
+Received: from perceptron (pC19EBA05.dip.t-dialin.net [::ffff:193.158.186.5])
+  (AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by cthulhu.zoidberg.org with esmtp; Fri, 20 Nov 2009 09:56:08 +0100
+  id 004D0117.4B0659A9.00006A90
+In-Reply-To: <ae09c2a40911191530y626dd035q90de0212e0b4b6d8@mail.gmail.com>
+X-Mailer: Claws Mail 3.7.3 (GTK+ 2.18.3; i486-pc-linux-gnu)
+X-Obscure-Spam: http://music-jk.net/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133316>
 
-Petr Baudis wrote:
-> Looks like this suddenly is a very popular area. High competition is good!
-  Absolutely agreed!
----
-  Intland
+Hi,
+
+Tommy Wang <subscription@august8.net> wrote:
+> [...] I would love to simply use the rev-list built-in to
+> do my work for me; but I fear that I may have much too many path
+> limiters than the linux command-line can handle (which if I'm correct,
+> can only take so many arguments).
+
+On my system, "only so many arguments" means about two megabytes worth
+of command line. On several operating systems, "getconf ARG_MAX" can
+tell you the approximate limit (which I think includes the space for
+environment variables).
+
+I don't really have any comments about the other things you said.
+
+Jan
