@@ -1,136 +1,75 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2] gitk: Honor TMPDIR when viewing diffs externally
-Date: Thu, 19 Nov 2009 17:27:02 -0800
-Message-ID: <1258680422-42179-1-git-send-email-davvid@gmail.com>
-Cc: peff@peff.net, sam@vilain.net, git@vger.kernel.org,
-	David Aguilar <davvid@gmail.com>
-To: paulus@samba.org
-X-From: git-owner@vger.kernel.org Fri Nov 20 02:27:18 2009
+Subject: [PATCH] submodule.c: Squelch a "use before assignment" warning
+Date: Thu, 19 Nov 2009 17:33:05 -0800
+Message-ID: <1258680785-42235-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Nov 20 02:33:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBIHN-0000AO-7P
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 02:27:17 +0100
+	id 1NBIND-0002AD-Gt
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 02:33:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754071AbZKTB1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2009 20:27:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753017AbZKTB1F
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 20:27:05 -0500
-Received: from mail-yw0-f202.google.com ([209.85.211.202]:57779 "EHLO
-	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753702AbZKTB1E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2009 20:27:04 -0500
-Received: by ywh40 with SMTP id 40so1870935ywh.33
-        for <git@vger.kernel.org>; Thu, 19 Nov 2009 17:27:09 -0800 (PST)
+	id S1754962AbZKTBdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2009 20:33:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754418AbZKTBdH
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 20:33:07 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:40897 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754394AbZKTBdF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2009 20:33:05 -0500
+Received: by yxe17 with SMTP id 17so2566063yxe.33
+        for <git@vger.kernel.org>; Thu, 19 Nov 2009 17:33:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer;
-        bh=vOq41WX7xH1Xk27uYgKOIJEGJHwLsEUFwQU4aDX9fYE=;
-        b=IC1nDhLJFio8PI7bX+ggX1F3cfMPiH4pko+DDvKH7LL2gA1LfrQAsL9taAsAiCP/t6
-         mk7nWHRmvIc3NdtqQbP0GVEhXPnvO223ikBPc5N4/Se1alcRGxPPgGQQCyLXsHVT1Qkh
-         L4TkgYyRqzUBITERusvM/3bkW9ZZsx1XacbRc=
+        bh=AthU57izvvDkpkuzEuh/6GKl9Fc77pTQa1azLATjujY=;
+        b=hoMKfT3dQafC1kQSaIPbW47nCw3VWE9MA3Y278iW4NvoJJwBOF/DICWaD6QrIJBFOR
+         F5gdclyHaCQObi6PxoVAUrjldkisQ1dxdSXh/NB0F/6ltu3iJe2ANaHhALLzwuxPNl8p
+         H+gFEBJHfA4DWPqNUlBaL+VTFW9KdyROiJxb0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        b=OuoonD6gqBWonKOEnuatrhYd1i80Dx7mhu4F80orhwD4sTX1zYdAK+9vvmW8U8TYaB
-         32byxwu1d2QqzCkE4QHOdTg0E7QNAgQI/DGxbcmNoYvs7ZHEHy6QRD2ABghaxmC6qqKV
-         7insBpjFg/i0u4dBdTDK3c4+ci8u8pumbAUAA=
-Received: by 10.101.128.12 with SMTP id f12mr1433139ann.36.1258680429449;
-        Thu, 19 Nov 2009 17:27:09 -0800 (PST)
+        b=Mrg/3GumDPs9e11BBGAhyCd1dWmabqGLi/h0DAiu1PErEz/B354p3huitxtaSyfch/
+         d7KptQPbGJ2Zu240ZUs0sCUkEETRGlk8vIOFOJ+YCYynxVaMNnJPc7KeaoMHuPpx9gWz
+         0PVLW4RSq+k4xQ3/JTUxYN6Tcb1wGLNYECac0=
+Received: by 10.101.17.17 with SMTP id u17mr1321328ani.167.1258680791147;
+        Thu, 19 Nov 2009 17:33:11 -0800 (PST)
 Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 36sm518551yxh.13.2009.11.19.17.27.08
+        by mx.google.com with ESMTPS id 7sm519476yxd.44.2009.11.19.17.33.10
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 19 Nov 2009 17:27:08 -0800 (PST)
+        Thu, 19 Nov 2009 17:33:10 -0800 (PST)
 X-Mailer: git-send-email 1.6.5.3.171.ge36e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133278>
 
-gitk's external diff fails when browsing read-only repositories.
-This is due to gitk's assumption that the current directory is
-always writable.  By honoring TMPDIR we avoid this problem and
-allow users to define the location used for temporary files.
+i686-apple-darwin9-gcc-4.0.1 (GCC) 4.0.1 (Apple Inc. build 5493) compiler
+(and probably others) mistakenly thinks variable 'right' is used
+before assigned.  Work it around by giving it a fake initialization.
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
+ submodule.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-This version of the patch is more careful to ensure that
-the temporary files and directories created by gitk are not
-easily predictable.
-
- gitk |   29 ++++++++++++++++++-----------
- 1 files changed, 18 insertions(+), 11 deletions(-)
-
-diff --git a/gitk b/gitk
-index 364c7a8..84ea8a9 100755
---- a/gitk
-+++ b/gitk
-@@ -3292,17 +3292,21 @@ proc flist_hl {only} {
-     set gdttype [mc "touching paths:"]
- }
- 
-+proc randstr {} {
-+    global initial_rand
-+    return [format "%f" [expr rand() + $initial_rand]]
-+}
-+
- proc gitknewtmpdir {} {
--    global diffnum gitktmpdir gitdir
-+    global diffnum gitktmpdir gitdir env
- 
-     if {![info exists gitktmpdir]} {
--	set gitktmpdir [file join [file dirname $gitdir] \
--			    [format ".gitk-tmp.%s" [pid]]]
--	if {[catch {file mkdir $gitktmpdir} err]} {
--	    error_popup "[mc "Error creating temporary directory %s:" $gitktmpdir] $err"
--	    unset gitktmpdir
--	    return {}
-+	if {[info exists env(TMPDIR)]} {
-+	    set tmpdir $env(TMPDIR)
-+	} else {
-+	    set tmpdir [file dirname $gitdir]
- 	}
-+	set gitktmpdir [file join $tmpdir ".gitk-tmp.[pid].[randstr]"]
- 	set diffnum 0
-     }
-     incr diffnum
-@@ -3339,10 +3343,12 @@ proc external_diff_get_one_file {diffid filename diffdir} {
- 	return $nullfile
-     }
-     if {$diffid == $nullid2} {
--        set difffile [file join $diffdir "\[index\] [file tail $filename]"]
-+        set difffile [file join $diffdir \
-+	       "\[index-[randstr]\] [file tail $filename]"]
-         return [save_file_from_commit :$filename $difffile index]
-     }
--    set difffile [file join $diffdir "\[$diffid\] [file tail $filename]"]
-+    set difffile [file join $diffdir \
-+	       "\[$diffid-[randstr]\] [file tail $filename]"]
-     return [save_file_from_commit $diffid:$filename $difffile \
- 	       "revision $diffid"]
- }
-@@ -8525,8 +8531,8 @@ proc diffcommits {a b} {
-     global diffcontext diffids blobdifffd diffinhdr
- 
-     set tmpdir [gitknewtmpdir]
--    set fna [file join $tmpdir "commit-[string range $a 0 7]"]
--    set fnb [file join $tmpdir "commit-[string range $b 0 7]"]
-+    set fna [file join $tmpdir "commit-[string range $a 0 7]-[randstr]"]
-+    set fnb [file join $tmpdir "commit-[string range $b 0 7]-[randstr]"]
-     if {[catch {
- 	exec git diff-tree -p --pretty $a >$fna
- 	exec git diff-tree -p --pretty $b >$fnb
-@@ -11321,6 +11327,7 @@ if {[tk windowingsystem] eq "aqua"} {
-     set textfont {Courier 9}
-     set uifont {Helvetica 9 bold}
- }
-+set initial_rand [expr srand([clock scan now])]
- set tabstop 8
- set findmergefiles 0
- set maxgraphpct 50
+diff --git a/submodule.c b/submodule.c
+index 461faf0..0145a62 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -38,7 +38,7 @@ void show_submodule_summary(FILE *f, const char *path,
+ 		const char *del, const char *add, const char *reset)
+ {
+ 	struct rev_info rev;
+-	struct commit *commit, *left = left, *right;
++	struct commit *commit, *left = left, *right = NULL;
+ 	struct commit_list *merge_bases, *list;
+ 	const char *message = NULL;
+ 	struct strbuf sb = STRBUF_INIT;
 -- 
 1.6.5.3.171.ge36e
