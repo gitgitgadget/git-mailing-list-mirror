@@ -1,67 +1,88 @@
-From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-Subject: Re: [PATCH] let core.excludesfile default to ~/.gitignore.
-Date: Fri, 20 Nov 2009 15:30:06 +0100
-Organization: ATLAS Elektronik GmbH
-Message-ID: <4B06A7EE.2090801@atlas-elektronik.com>
-References: <1258723430-31684-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/3] "log --stdin" updates
+Date: Fri, 20 Nov 2009 09:40:30 -0500
+Message-ID: <20091120144030.GB5419@coredump.intra.peff.net>
+References: <1258716315-2213-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"gitster@pobox.com" <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Nov 20 15:30:19 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 20 15:40:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBUV8-0003ID-3g
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 15:30:18 +0100
+	id 1NBUfC-0008Ko-Pf
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 15:40:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753351AbZKTOaD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2009 09:30:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752656AbZKTOaD
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 09:30:03 -0500
-Received: from lxsrv96.atlas.de ([194.156.172.86]:51064 "EHLO mail96.atlas.de"
+	id S1753355AbZKTOk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2009 09:40:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753284AbZKTOk2
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 09:40:28 -0500
+Received: from peff.net ([208.65.91.99]:43400 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752296AbZKTOaB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2009 09:30:01 -0500
-Received: from VSSRV01.atlas.de (vssrv01.atlas.de [10.200.101.18])
-	by mail96.atlas.de (Postfix) with ESMTP id CCC08138A9
-	for <git@vger.kernel.org>; Fri, 20 Nov 2009 15:30:06 +0100 (CET)
-X-AuditID: 0ac86512-00000094000005bc-c1-4b06a7ee5022
-Received: from mgsrv01.atlas.de ([10.200.101.16]) by VSSRV01.atlas.de with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 20 Nov 2009 15:30:06 +0100
-Received: from mgsrv01.atlas.de (localhost [127.0.0.1])
-	by mail01-int.atlas.de (Postfix) with ESMTP id 3042127172;
-	Fri, 20 Nov 2009 15:30:06 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mgsrv01.atlas.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.6 required=5.0 tests=ALL_TRUSTED,BAYES_50,
-	SUBJECT_FUZZY_TION autolearn=disabled version=3.2.5
-Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
-	by mail01.atlas.de (Postfix) with ESMTP id 20F662716A;
-	Fri, 20 Nov 2009 15:30:06 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
-In-Reply-To: <1258723430-31684-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Enigmail-Version: 0.96.0
-X-Brightmail-Tracker: AAAAAA==
+	id S1753216AbZKTOk1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2009 09:40:27 -0500
+Received: (qmail 25751 invoked by uid 107); 20 Nov 2009 14:44:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 20 Nov 2009 09:44:23 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Nov 2009 09:40:30 -0500
+Content-Disposition: inline
+In-Reply-To: <1258716315-2213-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133349>
 
-On 11/20/2009 2:23 PM, Matthieu Moy wrote:
-> It seems this is the value most users set, so let's make it the default.
+On Fri, Nov 20, 2009 at 03:25:12AM -0800, Junio C Hamano wrote:
 
-I like the idea but would suggest to use ~/.gitexcludes instead.
-That way it doesn't clash with .gitignore if your $HOME is 
-under git-control.
+> These three come on top of 61ab67a (Teach --stdin option to "log" family,
+> 2009-11-03), which gave "--stdin" to the log family of commands (e.g. log,
+> rev-list).  The earlier patch allowed you to feed only the revs (which was
+> what gitk originally wanted), but after zero or more revs (one rev per
+> line), you can now feed a line that consists of "--" and then pathspecs
+> (one path per line).
 
-Regards
+This looks like a good API feature, though I am curious about the
+missing "4/3" that was the motivation (of course, with a feature
+like this, it may be for your out-of-git script, but as I said, I am
+curious :) ). Is it a response to
 
-Stefan
--- 
-----------------------------------------------------------------
-/dev/random says: INTERLACE: To tie two boots together.
+  http://article.gmane.org/gmane.comp.version-control.git/133268
+
+?
+
+The implementation looks good from my cursory reading. Tests and docs
+are of course missing. We don't seem to have any rev-list --stdin tests
+already. Maybe even something as simple as:
+
+  git rev-list HEAD -- file >expect &&
+  (echo HEAD; echo --; echo file) | git rev-list --stdin >actual &&
+  test_cmp expect actual
+
+For docs, maybe squash this in (it mentions the pathspecs, but also
+loosens --stdin to be available for "git log" and friends, which should
+have been part of 61ab67a).
+
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index bf66116..b44fdd9 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -243,12 +243,14 @@ endif::git-rev-list[]
+ 	Pretend as if all the refs in `$GIT_DIR/refs/remotes` are listed
+ 	on the command line as '<commit>'.
+ 
+-ifdef::git-rev-list[]
+ --stdin::
+ 
+ 	In addition to the '<commit>' listed on the command
+-	line, read them from the standard input.
++	line, read them from the standard input. If a '--' separator is
++	seen, stop reading commits and start reading paths to limit the
++	result.
+ 
++ifdef::git-rev-list[]
+ --quiet::
+ 
+ 	Don't print anything to standard output.  This form
