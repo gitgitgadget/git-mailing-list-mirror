@@ -1,102 +1,112 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] git remote: Separate usage strings for subcommands
-Date: Fri, 20 Nov 2009 01:36:46 -0800
-Message-ID: <7vskc95yhd.fsf@alter.siamese.dyndns.org>
-References: <4B04B4A2.8090001@gmail.com>
- <20091119124040.6117@nanako3.lavabit.com>
- <32c343770911190651w3f1ac9b6i2d3b1a62a032489f@mail.gmail.com>
- <7vlji2bd23.fsf@alter.siamese.dyndns.org>
- <32c343770911191058x7be7d34ascc3564064b880213@mail.gmail.com>
+Subject: Re: [RFC/PATCHv8 00/10] git notes
+Date: Fri, 20 Nov 2009 01:44:48 -0800
+Message-ID: <7vk4xl5y3z.fsf@alter.siamese.dyndns.org>
+References: <1258681154-2167-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, jrnieder@gmail.com,
-	git@vger.kernel.org
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 20 10:37:07 2009
+Cc: git@vger.kernel.org, spearce@spearce.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Nov 20 10:45:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBPvO-00032w-Eo
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 10:37:06 +0100
+	id 1NBQ36-0006Fn-AP
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 10:45:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752649AbZKTJgy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2009 04:36:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752203AbZKTJgy
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 04:36:54 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49773 "EHLO
+	id S1753384AbZKTJow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2009 04:44:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753102AbZKTJow
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 04:44:52 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46440 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751913AbZKTJgw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2009 04:36:52 -0500
+	with ESMTP id S1751698AbZKTJov (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2009 04:44:51 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7D1649F64D;
-	Fri, 20 Nov 2009 04:36:58 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 05A6B81BA5;
+	Fri, 20 Nov 2009 04:44:57 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=HVq2sybykHOWkOKfDCgCBZTvyCk=; b=qujtQhg0xwwdRFTXP7WkMpL
-	40vFaeMI6ECMTTaTj/2/d0pseca3nY7ruUK+cNbKMBI8+ubnugZAKxzb0kBoaVrT
-	ouNKRo3JXpMOiS24gGuKtcVngK9hOHWj20hqFPRIu0qkODSZc5619IRAPtQErnkr
-	3dH7pCeXnEJSS30mORvA=
+	sasl; bh=1iziGk9d3XuRkXzztSMiF3BqIAE=; b=I5nMauNUcG7tTnVOk8hKsyM
+	4y41xyoAjH/KEwhN+yiV2sIHdMNwnnOdy8cwa3wI8SbPLFwN6m3fdcl+qfXCHKfw
+	2idES0lOYQj1IFNVvGgo5IkHWeQ7y8tNt/WMH38362A4kMdZG9wWNiEk6SERfbbS
+	9u3FJwBxcr8BaBM4zzYs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=sqjnMRFxXOoayWAxDoP+YAR8Fh8/DI1PyUWmJlRd6LQcru8oV
-	UpxfuXi/Rk1oVGnd2nPQzxwcIFJ8FascB02B350IzZH7sVU2XanSkQbf+EVHQNvl
-	fhRrnotvBZJsjlgXeNfUarWEn0pq1u7R2tal85fQ43eraMYMYbtwddHEpI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3E8E49F64B;
-	Fri, 20 Nov 2009 04:36:54 -0500 (EST)
+	dns; s=sasl; b=W45m+WYSkiAgLxpxYv4KUAyP+wwv8M1B7juEMzwWVVRjTBwZa
+	4yiwp5t3R7oFGKjm02jjwOI7YZQrZbMGlLVECQ5DvQLl6eLP+uPW3dbFrxVE/p25
+	PTgXkhLWLCdIqFa5EhO2S+cFa2/lXaiYsaQaC2Jw8boe0VlNTlkctsxHCA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A9A9B81BA4;
+	Fri, 20 Nov 2009 04:44:53 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B19DF9F64A; Fri, 20 Nov 2009
- 04:36:48 -0500 (EST)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B27A781BA3; Fri, 20 Nov
+ 2009 04:44:49 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3D0525CA-D5B8-11DE-B285-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 5ACAF5C0-D5B9-11DE-906F-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133320>
 
-Tim Henigan <tim.henigan@gmail.com> writes:
+Johan Herland <johan@herland.net> writes:
 
-> Using the 'add' subcommand as an example, the desired output is:
+> Here is the 8th iteration of the git-notes series. Changes in this
+> iteration are as follows:
 >
-> Output of 'git remote -h':
->     "git remote [-v | --verbose]"
->     "git remote add [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>"
->     etc.
+> Changes to existing patches:
+> - Rebased onto current 'next', dropping the early part of this series
+>   which has now been merged to 'next'.
+> - Patch 8 (was patch 22): Major rewrite of fast-import's notes handling
+>   code based on comments from Shawn.
 >
-> Output of 'git remote add -h':
->     "git remote add [<options>...] <name> <url>"
->     followed by the detailed description given by 'parse_options()'.
+> New patches:
+> - Patch 9: Rename t9301 to t9350, to make room for more fast-import tests
+> - Patch 10: More fast-import tests
 >
-> Text in 'man git-remote':
->     "git remote add [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>"
->     with the options explained in detail later in the file.
->
-> Thanks for your patience,
+> TODO:
+> - Builtin-ify git-notes shell script to take advantage of notes API
+> - Garbage collect notes whose referenced object is unreachable (gc_notes())
+> - Handle note objects that are not blobs, but trees
 
-I think the above looks good; thank _you_ for your patience.
+Thanks.
 
-I often wonder if we want to add to the parse-options library a function
-that takes a "const struct option *" and some other unspecified hints, and
-fills a strbuf with a one-line description, e.g.
+While I try my best not to break other people's patches while applying, I
+prefer to see a re-rolled series based on the same commit while replacing
+an existing series, unless the re-roll truly depends on the newer base, so
+that people can more easily see what got updated.
 
-    "[-t <branch>] [-m <master>] [-f] [--mirror]"
+So here is what I did tonight.
 
-I expect we would eventually want to handle something like (this example
-is from "git push"):
+Step 0.  Apply as you specified on top of 'next'
 
-    "[--all | --mirror | --tags] [-n | --dry-run]"
+    $ git checkout next^0
+    $ git am -s your-10-patches
+    $ M=$(git describe)
 
-and walking elements in a "struct option" one by one wouldn't give us
-enough information to group all/mirror/tags in "one of these" brackets,
-and that is what I mean by "some other unspecified hints".  Obviously we
-could do the "[-n|--dry-run]" with existing information.
+Step 1.  Rebase back to the bottom of the old series
 
-A helper function like that may make things a bit easier.  parse_options()
-may need to take a custom callback function of some sort so that you can
-override what parse_options_usage() does when responding to "remote -h"
-and generate the list of subcommands and their options on the fly, though.
+    $ git checkout next...jh/notes
+    $ git rebase --onto HEAD next $M
+    $ N=$(git describe)
 
-But that is all outside the scope of this particular patch.
+Step 2.  Compare old and new series
+
+    $ git show-branch jh/notes HEAD
+    $ for i in 7 6 5 4 3 2 1 0
+      do
+        git diff jh/notes~$i HEAD~$(( $i + 2 ))
+      done
+    $ make -j test
+
+Step 3.  Make sure the result is what you intended to feed me.
+
+    $ git merge next
+    $ git diff $M
+
+Step 4.  Replace the tip of jh/notes
+
+    $ git branch -f jh/notes $N
