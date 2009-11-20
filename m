@@ -1,89 +1,136 @@
-From: Tarmigan Casebolt <tarmigan+git@gmail.com>
-Subject: [PATCH 2/2] t/lib-http.sh: Enable httpd tests by default.
-Date: Thu, 19 Nov 2009 17:22:03 -0800
-Message-ID: <1258680123-28684-2-git-send-email-tarmigan+git@gmail.com>
-References: <1258680123-28684-1-git-send-email-tarmigan+git@gmail.com>
-Cc: peff@peff.net, jaysoffian@gmail.com, drizzd@aon.at,
-	gitster@pobox.com, spearce@spearce.org,
-	Tarmigan Casebolt <tarmigan+git@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 20 02:23:01 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH v2] gitk: Honor TMPDIR when viewing diffs externally
+Date: Thu, 19 Nov 2009 17:27:02 -0800
+Message-ID: <1258680422-42179-1-git-send-email-davvid@gmail.com>
+Cc: peff@peff.net, sam@vilain.net, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>
+To: paulus@samba.org
+X-From: git-owner@vger.kernel.org Fri Nov 20 02:27:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBIDC-0007O3-7Q
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 02:22:58 +0100
+	id 1NBIHN-0000AO-7P
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 02:27:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757181AbZKTBWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2009 20:22:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757161AbZKTBWp
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 20:22:45 -0500
-Received: from mail-pz0-f171.google.com ([209.85.222.171]:46607 "EHLO
-	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756718AbZKTBWp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2009 20:22:45 -0500
-Received: by pzk1 with SMTP id 1so2037116pzk.33
-        for <git@vger.kernel.org>; Thu, 19 Nov 2009 17:22:51 -0800 (PST)
+	id S1754071AbZKTB1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2009 20:27:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753017AbZKTB1F
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Nov 2009 20:27:05 -0500
+Received: from mail-yw0-f202.google.com ([209.85.211.202]:57779 "EHLO
+	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753702AbZKTB1E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2009 20:27:04 -0500
+Received: by ywh40 with SMTP id 40so1870935ywh.33
+        for <git@vger.kernel.org>; Thu, 19 Nov 2009 17:27:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=Xtu4DXvoK2++tVLhme+kmnR3vJGRztok8/dbp0TSv2I=;
-        b=c9nqt1kSDTWIZK+mD/ixDGqjNc//JPOqNjg6uC4RHFI1UdhtPzORb4JhVE4AKa/3VW
-         /Zpk5ZlI1VDSpfGT2K/3pwnYk7A2jvBuYqroMwHLKqTaWwNEdJ702CWBIpeH0b4v4Af7
-         pHcebX/zfkEcSPnME6dqZUDSgG0fmJ1Jw8L8E=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=vOq41WX7xH1Xk27uYgKOIJEGJHwLsEUFwQU4aDX9fYE=;
+        b=IC1nDhLJFio8PI7bX+ggX1F3cfMPiH4pko+DDvKH7LL2gA1LfrQAsL9taAsAiCP/t6
+         mk7nWHRmvIc3NdtqQbP0GVEhXPnvO223ikBPc5N4/Se1alcRGxPPgGQQCyLXsHVT1Qkh
+         L4TkgYyRqzUBITERusvM/3bkW9ZZsx1XacbRc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        b=XXtvwfx6YHdUaXsqlk662CDDs1m9tBEAIAN3vBwn+PlllUB3IGsG7WVjqlWchId3yb
-         p6taMlUi7uVI3s2vhV0BGV786nn0z1bsUk3+WTlicWaFJK7LVxpsjP22vK3EmDm934qJ
-         A0llPVaWucRxHDPqUqxnXrhjJgZ94PqCzYfUk=
-Received: by 10.115.101.18 with SMTP id d18mr856632wam.191.1258680171337;
-        Thu, 19 Nov 2009 17:22:51 -0800 (PST)
-Received: from localhost.localdomain (host-98-127-69-228.bln-mt.client.bresnan.net [98.127.69.228])
-        by mx.google.com with ESMTPS id 20sm681601pxi.11.2009.11.19.17.22.49
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 19 Nov 2009 17:22:50 -0800 (PST)
-X-Mailer: git-send-email 1.6.5
-In-Reply-To: <1258680123-28684-1-git-send-email-tarmigan+git@gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=OuoonD6gqBWonKOEnuatrhYd1i80Dx7mhu4F80orhwD4sTX1zYdAK+9vvmW8U8TYaB
+         32byxwu1d2QqzCkE4QHOdTg0E7QNAgQI/DGxbcmNoYvs7ZHEHy6QRD2ABghaxmC6qqKV
+         7insBpjFg/i0u4dBdTDK3c4+ci8u8pumbAUAA=
+Received: by 10.101.128.12 with SMTP id f12mr1433139ann.36.1258680429449;
+        Thu, 19 Nov 2009 17:27:09 -0800 (PST)
+Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id 36sm518551yxh.13.2009.11.19.17.27.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 19 Nov 2009 17:27:08 -0800 (PST)
+X-Mailer: git-send-email 1.6.5.3.171.ge36e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133277>
 
-With smart http, git over http is likely to become much more common.
-To increase testing of smart http, enable the http tests by default.
+gitk's external diff fails when browsing read-only repositories.
+This is due to gitk's assumption that the current directory is
+always writable.  By honoring TMPDIR we avoid this problem and
+allow users to define the location used for temporary files.
 
-If we cannot detect httpd, we still skip these tests, so it should not
-cause problems on platforms where we cannot run the tests.
-
-Signed-off-by: Tarmigan Casebolt <tarmigan+git@gmail.com>
+Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- t/lib-httpd.sh |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index 6b86353..db537b4 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -3,11 +3,12 @@
- # Copyright (c) 2008 Clemens Buchacher <drizzd@aon.at>
- #
+This version of the patch is more careful to ensure that
+the temporary files and directories created by gitk are not
+easily predictable.
+
+ gitk |   29 ++++++++++++++++++-----------
+ 1 files changed, 18 insertions(+), 11 deletions(-)
+
+diff --git a/gitk b/gitk
+index 364c7a8..84ea8a9 100755
+--- a/gitk
++++ b/gitk
+@@ -3292,17 +3292,21 @@ proc flist_hl {only} {
+     set gdttype [mc "touching paths:"]
+ }
  
--if test -z "$GIT_TEST_HTTPD"
-+if test -n "$NO_GIT_TEST_HTTPD"
- then
--	say "skipping test, network testing disabled by default"
--	say "(define GIT_TEST_HTTPD to enable)"
-+	say "Skipping http tests because NO_GIT_TEST_HTTPD is defined"
- 	test_done
-+else
-+	say "Define NO_GIT_TEST_HTTPD to disable http testing"
- fi
++proc randstr {} {
++    global initial_rand
++    return [format "%f" [expr rand() + $initial_rand]]
++}
++
+ proc gitknewtmpdir {} {
+-    global diffnum gitktmpdir gitdir
++    global diffnum gitktmpdir gitdir env
  
- HTTPD_PARA=""
+     if {![info exists gitktmpdir]} {
+-	set gitktmpdir [file join [file dirname $gitdir] \
+-			    [format ".gitk-tmp.%s" [pid]]]
+-	if {[catch {file mkdir $gitktmpdir} err]} {
+-	    error_popup "[mc "Error creating temporary directory %s:" $gitktmpdir] $err"
+-	    unset gitktmpdir
+-	    return {}
++	if {[info exists env(TMPDIR)]} {
++	    set tmpdir $env(TMPDIR)
++	} else {
++	    set tmpdir [file dirname $gitdir]
+ 	}
++	set gitktmpdir [file join $tmpdir ".gitk-tmp.[pid].[randstr]"]
+ 	set diffnum 0
+     }
+     incr diffnum
+@@ -3339,10 +3343,12 @@ proc external_diff_get_one_file {diffid filename diffdir} {
+ 	return $nullfile
+     }
+     if {$diffid == $nullid2} {
+-        set difffile [file join $diffdir "\[index\] [file tail $filename]"]
++        set difffile [file join $diffdir \
++	       "\[index-[randstr]\] [file tail $filename]"]
+         return [save_file_from_commit :$filename $difffile index]
+     }
+-    set difffile [file join $diffdir "\[$diffid\] [file tail $filename]"]
++    set difffile [file join $diffdir \
++	       "\[$diffid-[randstr]\] [file tail $filename]"]
+     return [save_file_from_commit $diffid:$filename $difffile \
+ 	       "revision $diffid"]
+ }
+@@ -8525,8 +8531,8 @@ proc diffcommits {a b} {
+     global diffcontext diffids blobdifffd diffinhdr
+ 
+     set tmpdir [gitknewtmpdir]
+-    set fna [file join $tmpdir "commit-[string range $a 0 7]"]
+-    set fnb [file join $tmpdir "commit-[string range $b 0 7]"]
++    set fna [file join $tmpdir "commit-[string range $a 0 7]-[randstr]"]
++    set fnb [file join $tmpdir "commit-[string range $b 0 7]-[randstr]"]
+     if {[catch {
+ 	exec git diff-tree -p --pretty $a >$fna
+ 	exec git diff-tree -p --pretty $b >$fnb
+@@ -11321,6 +11327,7 @@ if {[tk windowingsystem] eq "aqua"} {
+     set textfont {Courier 9}
+     set uifont {Helvetica 9 bold}
+ }
++set initial_rand [expr srand([clock scan now])]
+ set tabstop 8
+ set findmergefiles 0
+ set maxgraphpct 50
 -- 
-1.6.5.52.g35487
+1.6.5.3.171.ge36e
