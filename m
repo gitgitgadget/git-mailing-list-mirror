@@ -1,77 +1,124 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 1/2] merge-recursive: point the user to commit when file would be overwritten.
-Date: Fri, 20 Nov 2009 16:59:26 +0100
-Message-ID: <1258732767-12741-2-git-send-email-Matthieu.Moy@imag.fr>
-References: <1258732767-12741-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 20 17:03:49 2009
+From: Phil Miller <mille121@illinois.edu>
+Subject: [PATCH/resend] CVS Server: Support reading base and roots from 
+	environment
+Date: Fri, 20 Nov 2009 10:05:44 -0600
+Message-ID: <81f018ac0911200805g55bd1607u651334c1ed7f1303@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Git Maintainer <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 20 17:06:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBVxO-0000zs-WA
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 17:03:35 +0100
+	id 1NBW01-0002DG-Tt
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 17:06:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754007AbZKTQDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2009 11:03:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753889AbZKTQDF
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 11:03:05 -0500
-Received: from imag.imag.fr ([129.88.30.1]:41322 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753887AbZKTQDC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2009 11:03:02 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id nAKFxZt1006338
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 20 Nov 2009 16:59:35 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NBVtW-0001Mf-Nu; Fri, 20 Nov 2009 16:59:34 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NBVtW-0003KO-Mp; Fri, 20 Nov 2009 16:59:34 +0100
-X-Mailer: git-send-email 1.6.5.3.435.g5f2e3.dirty
-In-Reply-To: <1258732767-12741-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 20 Nov 2009 16:59:35 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1754100AbZKTQGD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2009 11:06:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754086AbZKTQGD
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 11:06:03 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:25504 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754082AbZKTQGA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2009 11:06:00 -0500
+Received: by fg-out-1718.google.com with SMTP id d23so151478fga.1
+        for <git@vger.kernel.org>; Fri, 20 Nov 2009 08:06:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=weabWXmacfK3n2hWLirQNF587lIyBp88ElqlP6XpbCE=;
+        b=tGR9Xkg/+h/cqyxZGWehdlDOfRDdno0rjh1pg680laiNlNi1mDtZoCPyWUD0R5/LBt
+         1xpojSYPGuSPRkXNHSraYvcJbsOtGaSZx5GgWTMW3IjOZsFKKRTZpZ+bhI8jhnlkD2FQ
+         2XgRD9DuSTpjpcRXsRmUoWz43MCKmUw+Y9HLg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:cc:content-type;
+        b=N0VKByIkgcFl0Trd5fWSb7qrwCO9XKOJzbocf6Dtd2ruMrhQ6OesTfGMjZM25i7cyh
+         goKR4z+vBgiJSM0/TZui/g596by/s002cqoAS4Usrh2fOxZd/EA0Lanl1xPT8SWmd8Nx
+         mlpWqH/2ZbSOocQAYeYHeAMyzzjZzOjsrvUeE=
+Received: by 10.216.88.71 with SMTP id z49mr462418wee.90.1258733164739; Fri, 
+	20 Nov 2009 08:06:04 -0800 (PST)
+X-Google-Sender-Auth: ec6cf0adb31623f9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133357>
 
-The commit-before-pull is well accepted in the DVCS community, but is
-confusing some new users. This should get them back in the right way when
-the problem occurs.
+The Gitosis single-account Git/ssh hosting system runs git commands
+through git-shell after confirming that the connecting user is
+authorized to access the requested repository. This works well for
+upload-pack and receive-pack, which take a repository argument through
+git-shell. This doesn't work so well for `cvs server', which is passed
+through literally, with no arguments. Allowing arguments risks
+sneaking in `--export-all', so that restriction should be maintained.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Despite that, passing a list of repository roots is necessary for
+per-user access control by the hosting software, and passing a base
+path improves usability without weakening security. Thus,
+git-cvsserver needs to come up with these values at runtime by some
+other means. Since git-shell preserves the environment for other
+purposes, the environment can carry these arguments as well.
+
+Thus, modify git-cvsserver to read $GIT_CVSSERVER_{BASE_PATH,ROOTS} in
+the absence of equivalent command line arguments.
+
+Signed-off-by: Phil Miller <mille121@illinois.edu>
 ---
- merge-recursive.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+ git-cvsserver.perl |   21 ++++++++++++++++++++-
+ 1 files changed, 20 insertions(+), 1 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index f55b7eb..d5e0819 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -172,9 +172,11 @@ static int git_merge_trees(int index_only,
- 	struct unpack_trees_options opts;
- 	static const struct unpack_trees_error_msgs msgs = {
- 		/* would_overwrite */
--		"Your local changes to '%s' would be overwritten by merge.  Aborting.",
-+		"Your local changes to '%s' would be overwritten by merge.  Aborting:\n"
-+		"Please, commit your changes or stash them before you can merge.",
- 		/* not_uptodate_file */
--		"Your local changes to '%s' would be overwritten by merge.  Aborting.",
-+		"Your local changes to '%s' would be overwritten by merge.  Aborting:\n"
-+		"Please, commit your changes or stash them before you can merge.",
- 		/* not_uptodate_dir */
- 		"Updating '%s' would lose untracked files in it.  Aborting.",
- 		/* would_lose_untracked */
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 6dc45f5..9e58d2a 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -104,6 +104,7 @@ $log->info("--------------- STARTING -----------------");
+ my $usage =
+     "Usage: git cvsserver [options] [pserver|server] [<directory> ...]\n".
+     "    --base-path <path>  : Prepend to requested CVSROOT\n".
++    "                          Can be read from GIT_CVSSERVER_BASE_PATH\n".
+     "    --strict-paths      : Don't allow recursing into subdirectories\n".
+     "    --export-all        : Don't check for gitcvs.enabled in config\n".
+     "    --version, -V       : Print version information and exit\n".
+@@ -111,7 +112,8 @@ my $usage =
+     "\n".
+     "<directory> ... is a list of allowed directories. If no directories\n".
+     "are given, all are allowed. This is an additional restriction, gitcvs\n".
+-    "access still needs to be enabled by the gitcvs.enabled config option.\n";
++    "access still needs to be enabled by the gitcvs.enabled config option.\n".
++    "Alternately, these directories may be specified in
+GIT_CVSSERVER_ROOTS.\n";
+
+ my @opts = ( 'help|h|H', 'version|V',
+ 	     'base-path=s', 'strict-paths', 'export-all' );
+@@ -148,6 +150,23 @@ if ($state->{'export-all'} &&
+!@{$state->{allowed_roots}}) {
+     die "--export-all can only be used together with an explicit whitelist\n";
+ }
+
++# Environment handling for running under git-shell
++if ($ENV{GIT_CVSSERVER_BASE_PATH}) {
++    if ($state->{'base-path'}) {
++	die "Cannot specify base path both ways.\n";
++    }
++    my $base_path = $ENV{GIT_CVSSERVER_BASE_PATH};
++    $state->{'base-path'} = $base_path;
++    $log->debug("Picked up base path '$base_path' from environment.\n");
++}
++if ($ENV{GIT_CVSSERVER_ROOTS}) {
++    if (@{$state->{allowed_roots}}) {
++	die "Cannot specify roots both ways: @ARGV\n";
++    }
++    my @allowed_root = split(',', $ENV{GIT_CVSSERVER_ROOTS});
++    $state->{allowed_roots} = [ @allowed_root ];
++}
++
+ # if we are called with a pserver argument,
+ # deal with the authentication cat before entering the
+ # main loop
 -- 
-1.6.5.3.435.g5f2e3.dirty
+1.5.6.3
