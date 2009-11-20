@@ -1,120 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] gitk: add --no-replace-objects option
-Date: Fri, 20 Nov 2009 12:04:39 -0800
-Message-ID: <7vocmxvu7c.fsf@alter.siamese.dyndns.org>
-References: <20091120194046.4469.53971.chriscool@tuxfamily.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH 2/2] t/lib-http.sh: Enable httpd tests by default.
+Date: Fri, 20 Nov 2009 21:11:16 +0100
+Message-ID: <20091120201116.GA19131@localhost>
+References: <1258680123-28684-1-git-send-email-tarmigan+git@gmail.com> <1258680123-28684-2-git-send-email-tarmigan+git@gmail.com> <7vd43d7hdo.fsf@alter.siamese.dyndns.org> <905315640911201103w6d1da86duf41a53537672be8e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	bill lam <cbill.lam@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Paul Mackerras <paulus@samba.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Nov 20 21:05:10 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	peff@peff.net, jaysoffian@gmail.com, spearce@spearce.org
+To: Tarmigan <tarmigan+git@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 20 21:11:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBZjB-0007BN-Vl
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 21:05:10 +0100
+	id 1NBZpc-0001hu-12
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Nov 2009 21:11:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753526AbZKTUE4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2009 15:04:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753299AbZKTUE4
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 15:04:56 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45735 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753297AbZKTUEz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2009 15:04:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BED5813FE;
-	Fri, 20 Nov 2009 15:05:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4lf3OxWqJDkpy/hM9I8b5/9WmIw=; b=h3Jtwm
-	myoPYk80ePt8SOYzX5Vcp2hEOpTyw5x2uLexf0k4xA844FN73xFg6/WNtEYcTVxk
-	62ky6t82xs8kkSMRt+mMHa84JGEsXYp26lxXU4r0wM+syfWm6DS5QXWEiyA8CMtC
-	zBTfk7OGgKoDriIH8VeLDDurSgCyBKfndKGcs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cLkM9J/zsCHySlJFOIKKn81dLHuXzocJ
-	6W/ws3tARdYWIURI7kYLFJvgUrycHH+SKiTtAyKw/WUmGUNZT2fSH1bdE7YsoMcE
-	qFjzzpWItll2vvVaZqg+3cnvIaRMaGABCgdEc1QNF2gQM9BL1164jk7Lqt0qL5zH
-	8FjJezgntyY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 75C16813FC;
-	Fri, 20 Nov 2009 15:04:51 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B330813F9; Fri, 20 Nov
- 2009 15:04:41 -0500 (EST)
-In-Reply-To: <20091120194046.4469.53971.chriscool@tuxfamily.org> (Christian
- Couder's message of "Fri\, 20 Nov 2009 20\:40\:45 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F666BB6C-D60F-11DE-9A37-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752736AbZKTULg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2009 15:11:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752456AbZKTULg
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Nov 2009 15:11:36 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:39534 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751652AbZKTULf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2009 15:11:35 -0500
+Received: by bwz27 with SMTP id 27so3733223bwz.21
+        for <git@vger.kernel.org>; Fri, 20 Nov 2009 12:11:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=ZY2dUs4bNJtQcG1ohxvsJyYsjcK+2XDaUxlFYdSuztQ=;
+        b=QvJ2aJLHFDVaezbTeIunA2tiOoWnT+27D5nnovP0fARzsdIASa94JEpi0tCK4JeFVS
+         DfkUK/A/18rzxuoggBjuhChR4Y0iZ3J1sD785Y+SbKpBm0ahQ9nXPuMq/4ehTKnBHyL9
+         Eb9SxLcokahPQ0vf8HuKf1aZ2MJqxEGLXjJgc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=s/ZnV0IBhsFIWx8C4N5b22vz2yDljprC5+/3UjH+9s/0wF+HgtCZ1zTjb1fL+gnkON
+         cJ6AqGBXiXF7ds1doxoBSrYyOnQduGwbtlAg0hPklxNaJTcxxEntc+mZ///xxQsTR3KB
+         IQkz8n8t02Jal2aR20FpMBMc335WKQgbuc084=
+Received: by 10.204.25.5 with SMTP id x5mr1796470bkb.166.1258747900687;
+        Fri, 20 Nov 2009 12:11:40 -0800 (PST)
+Received: from darc.lan (p549A4DE7.dip.t-dialin.net [84.154.77.231])
+        by mx.google.com with ESMTPS id 13sm660484fxm.13.2009.11.20.12.11.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 20 Nov 2009 12:11:39 -0800 (PST)
+Received: from drizzd by darc.lan with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1NBZp6-00052l-C8; Fri, 20 Nov 2009 21:11:16 +0100
+Content-Disposition: inline
+In-Reply-To: <905315640911201103w6d1da86duf41a53537672be8e@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133373>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On Fri, Nov 20, 2009 at 11:03:13AM -0800, Tarmigan wrote:
 
-> This option simply sets the GIT_NO_REPLACE_OBJECTS environment
-> variable, and that is enough to make gitk ignore replace refs.
+> Here's a patch (cut-n-paste so it will probably be munged) for
+> discussion of the port-fallback idea.  If httpd cannot bind to 5541,
+> it tries 15541 etc.
 
-This is a much less interesting implementation detail than everything else
-you should talk about the new feature you are adding; why is it the first
-sentence of the message?
+I would prefer if we skip the test right away. If we really want to try
+different ports, we should first check that the port really is the problem.
+Otherwise, the test will uselessly retry several times. Apache 2 writes
 
-> The GIT_NO_REPLACE_OBJECTS is set to "1" instead of "" as it is
-> safer on some platforms, thanks to Johannes Sixt and Michael J
-> Gruber.
+ (98)Address already in use: make_sock: could not bind to address
+ 127.0.0.1:5541
 
-And this is even less interesting.
+to stderr, which we could use to detect that error condition. But other web
+servers are bound to behave differently.
 
-> Replace refs are useful to change some git objects after they
-> have started to be shared between different repositories. One
-> might want to ignore them to see the original state.
-
-This is what the reader needs to see to understand why this patch is
-worthy of consideration.  It is a minor offense that the paragraph does
-not end with "... original state, and --no-replace-objects option can be
-used from the command line to do so", but this could be excused if this is
-made the first paragraph in the message, close to the subject.
-
-I wonder if this switch deserves run-time flippability, though...
-
-> Tested-by: Michael J Gruber <git@drmicha.warpmail.net>
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  gitk-git/gitk |    5 ++++-
->  1 files changed, 4 insertions(+), 1 deletions(-)
->
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index a0214b7..c586b93 100644
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -128,7 +128,7 @@ proc unmerged_files {files} {
->  }
->  
->  proc parseviewargs {n arglist} {
-> -    global vdatemode vmergeonly vflags vdflags vrevs vfiltered vorigargs
-> +    global vdatemode vmergeonly vflags vdflags vrevs vfiltered vorigargs env
->  
->      set vdatemode($n) 0
->      set vmergeonly($n) 0
-> @@ -208,6 +208,9 @@ proc parseviewargs {n arglist} {
->  		# git rev-parse doesn't understand --merge
->  		lappend revargs --gitk-symmetric-diff-marker MERGE_HEAD...HEAD
->  	    }
-> +	    "--no-replace-objects" {
-> +		set env(GIT_NO_REPLACE_OBJECTS) "1"
-> +	    }
->  	    "-*" {
->  		# Other flag arguments including -<n>
->  		if {[string is digit -strict [string range $arg 1 end]]} {
-> -- 
-> 1.6.5.1.gaf97d
+Clemens
