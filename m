@@ -1,69 +1,61 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH/RFC 0/3] git rerere unresolve file
-Date: Sat, 21 Nov 2009 19:58:40 +0100
-Message-ID: <200911211958.40872.j6t@kdbg.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: How to make git diff-* ignore some patterns?
+Date: Sat, 21 Nov 2009 19:07:38 +0100
+Message-ID: <20091121180738.GA14919@atjola.homenet>
+References: <4B0817EE.1040000@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 21 21:51:35 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Dirk =?iso-8859-1?Q?S=FCsserott?= <newsletter@dirk.my1.cc>
+X-From: git-owner@vger.kernel.org Sat Nov 21 21:52:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBwsF-00041R-NI
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 21:48:04 +0100
+	id 1NBws4-00041R-Sq
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 21:47:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753934AbZKUS6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Nov 2009 13:58:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753907AbZKUS6r
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 13:58:47 -0500
-Received: from [93.83.142.38] ([93.83.142.38]:62813 "EHLO dx.sixt.local"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753373AbZKUS6q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Nov 2009 13:58:46 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id ECE6E19F694;
-	Sat, 21 Nov 2009 19:58:40 +0100 (CET)
-User-Agent: KMail/1.9.10
+	id S1756709AbZKUSHk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Nov 2009 13:07:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756663AbZKUSHj
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 13:07:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43498 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756699AbZKUSHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Nov 2009 13:07:37 -0500
+Received: (qmail invoked by alias); 21 Nov 2009 18:07:42 -0000
+Received: from i59F575EF.versanet.de (EHLO atjola.homenet) [89.245.117.239]
+  by mail.gmx.net (mp011) with SMTP; 21 Nov 2009 19:07:42 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18iMooxpVkiZlE2XSnO9Twu9Sqb4B3qAEB66Vcp3H
+	x/Gpwo/nGkOxTK
 Content-Disposition: inline
+In-Reply-To: <4B0817EE.1040000@dirk.my1.cc>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133405>
 
-When you commit an incorrect conflict resolution, git rerere gets in the way: 
-rerere clear only clears cache entries of not yet resolved conflicts. But 
-there is no other way to remove an incorrect resolution short of purging the 
-whole rr-cache.
+On 2009.11.21 17:40:14 +0100, Dirk S=FCsserott wrote:
+> is there a way to tell "git diff-index" to ignore some special
+> patterns, such that /^-- Dump completed on .*$/ is NOT recognized as
+> a difference and "git diff-index" returns 0 if that's the only
+> difference?
 
-This series implements 'git rerere unresolve' that removes a recorded 
-resolution.
+If you don't mind losing that line, you could use a clean filter via
+=2Egitattributes:
 
-This is RFC for two reasons:
+echo '*.sql filter=3Dmysql_dump' >> .gitattributes
+git config filter.mysql_dump.clean "sed -e '/^-- Dump completed on .*$/=
+d'"
 
-- It changes the contents of MERGE_RR in a way that *may* interfer in unwanted 
-ways with older versions that do not understand unresolve.
+That way, git will filter all *.sql paths through that sed command
+before storing them as blobs, dropping that "Dump completed" line from
+the data stored in the repo.
 
-- rerere unresolve also restores the conflict regions. I'm not sure whether 
-this is good because there is 'git checkout --conflict=merge file' that does 
-it in a better way. See the commit message of patch 3.
-
-If rerere unresolve does *not* restore conflict regions (and record the result 
-as preimage right away) we are facing a problem: When the resolution is 
-committed, the postimage has differences from the preimage that are not 
-related to the conflict. This may inhibit reusing the resolution later when 
-the file has new changes.
-
-Johannes Sixt (3):
-  rerere: keep a list of resolved files in MERGE_RR
-  rerere: make recording of the preimage reusable
-  git rerere unresolve file...
-
- Documentation/git-rerere.txt |   10 +++-
- builtin-rerere.c             |   13 +++-
- rerere.c                     |  153 ++++++++++++++++++++++++++++++++++-------
- rerere.h                     |    4 +-
- 4 files changed, 148 insertions(+), 32 deletions(-)
+Bj=F6rn
