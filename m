@@ -1,104 +1,107 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] send-email: new 'add-envelope' option
-Date: Sat, 21 Nov 2009 19:43:30 +0200
-Message-ID: <1258825410-28592-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 21 21:53:33 2009
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: How to make git diff-* ignore some patterns?
+Date: Sat, 21 Nov 2009 18:31:35 +0100
+Message-ID: <4B0823F7.7030607@drmicha.warpmail.net>
+References: <4B0817EE.1040000@dirk.my1.cc>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+X-From: git-owner@vger.kernel.org Sat Nov 21 21:55:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBwrt-00041R-Q7
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 21:47:42 +0100
+	id 1NBwrq-00041R-QD
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 21:47:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756557AbZKURne (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Nov 2009 12:43:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756552AbZKURnd
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 12:43:33 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:34791 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756546AbZKURnd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Nov 2009 12:43:33 -0500
-Received: by ewy19 with SMTP id 19so573774ewy.21
-        for <git@vger.kernel.org>; Sat, 21 Nov 2009 09:43:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=sAQfNovw4+vWqHG873cBC1ghvQoWfYcpJODJ5PMWogc=;
-        b=Qh+4UTh4AliHI07G3uBHkjRIWomHPo9KKhMf85PkQGcRgRK847iT94SUfEYFmWgNGo
-         D8BF4IuOKM4DQIr7SQPxWbwRlnYQpexrHcMyyXlOFqyEjXIskcvquULtOw55yIIpt6xo
-         3Lz6+PJkF2R3vkGTQ1TsLt+f17YRrtial2btU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=O1a4NG/n0xXxER1vxQjuzCFVq3VVhqxmKh7x3EQLbXrePqq5IxjDIdBLQa7r4/mfjj
-         XlM5Cf2dNOMNPxe9WVgO8/DS9bO9iUdjUf8oPZtgkm+ZzUDvN2dNqZPlu1RKRIN5aiKI
-         IpEb6jTeLDhkwkJiHs9keRXpb6l7mlfxS8mp4=
-Received: by 10.213.100.65 with SMTP id x1mr2746075ebn.67.1258825418357;
-        Sat, 21 Nov 2009 09:43:38 -0800 (PST)
-Received: from localhost (74.Red-80-24-4.staticIP.rima-tde.net [80.24.4.74])
-        by mx.google.com with ESMTPS id 10sm649061eyz.23.2009.11.21.09.43.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 21 Nov 2009 09:43:36 -0800 (PST)
-X-Mailer: git-send-email 1.6.5.3.1.ga9388c
+	id S1756551AbZKURbi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Nov 2009 12:31:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756546AbZKURbi
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 12:31:38 -0500
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:43951 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756523AbZKURbi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Nov 2009 12:31:38 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 365A8BFC6A;
+	Sat, 21 Nov 2009 12:31:44 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Sat, 21 Nov 2009 12:31:44 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=dmTHwDo2QvKaPiM8OC1E6j2ZM04=; b=CBSzrVV+C4HM54h9AbH2aL16yCLzzRkgZinuSvT3fRkmdVbB8OWjVXDexK3l0k0Qooj/2vPXjy+hRJv3KTodwCQyQ6biP9cZgF0yY0bEgFmKFLw4+D2sNZL7I15uY+3IacBNDmenJR1AUaDYHZVVTsxM+wGfuM3B1pZQVKDPZVY=
+X-Sasl-enc: EKfaDX8QZ9qE/LXvK0cZK3Inb3aIBxFE7LZkBvgfg8c6 1258824703
+Received: from localhost.localdomain (p5DCC12E4.dip0.t-ipconnect.de [93.204.18.228])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 78D79BA64;
+	Sat, 21 Nov 2009 12:31:43 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091116 Lightning/1.0pre Shredder/3.0.1pre
+In-Reply-To: <4B0817EE.1040000@dirk.my1.cc>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133408>
 
-Some MTAs make smart decisions based on the 'from' envelope (i.e. msmtp)
+Dirk S=FCsserott venit, vidit, dixit 21.11.2009 17:40:
+> Hi list,
+>=20
+> is there a way to tell "git diff-index" to ignore some special patter=
+ns,=20
+> such that /^-- Dump completed on .*$/ is NOT recognized as a differen=
+ce=20
+> and "git diff-index" returns 0 if that's the only difference?
+>=20
+>      -- Dirk
+>=20
+> <Background>
+> I have a mySQL database which I backup daily using mysqldump (cronjob=
+).
+> The result is a text file (*.sql) with all the "create" and "insert"
+> statements and some metadata.
+> I used to use tar and gzip to backup these files and got a huge
+> collection of backups in the last tree years (500+ MB).
+> Then I switched to Git and recorded only the diffs between day X and =
+day
+> X-1. My repository shrunk to 16 MB for the very same data, which was =
+great!
+>=20
+> My database doesn't change every day, but I backup it anway and store=
+=20
+> the backup files with Git and a cronjob. It does:
+>=20
+> ---------------
+> mysqldump ... -r <backupfile> # that's the output file ;-)
+> git add <backupfile>
+> if ! git diff-index --quiet HEAD --; then
+>      git commit -m "Backup of <database> at <timestamp>"
+> fi
+> ---------------
+>=20
+> This way, a new commit is only done when the backupfile has changed. =
+So=20
+> far, so perfect.
+> A few days ago my web hoster (where the database actually resides)=20
+> changed the mySQL version.
+> mysqldump now writes "-- Dump completed on <timestamp>" to the file a=
+nd=20
+> Git correctly recognizes this as a change and my script creates a new=
+=20
+> commit. Every day, even if only that line has changed.
+>=20
+> I'd like to skip these commits if only the "Dump completed" line has=20
+> changed.
+> </Background>
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- git-send-email.perl |   10 ++++++++--
- 1 files changed, 8 insertions(+), 2 deletions(-)
+Is the dump guaranteed to be in a specific order? If yes then this
+procedure makes sense. (pdfs etc. are problematic because of reordering=
+=2E)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index a0279de..92bf491 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -140,6 +140,7 @@ my (@to,@cc,@initial_cc,@bcclist,@xh,
- 	$author,$sender,$smtp_authpass,$annotate,$compose,$time);
- 
- my $envelope_sender;
-+my $envelope_from;
- 
- # Example reply to:
- #$initial_reply_to = ''; #<20050203173208.GA23964@foobar.com>';
-@@ -208,6 +209,7 @@ my %config_settings = (
-     "aliasesfile" => \@alias_files,
-     "suppresscc" => \@suppress_cc,
-     "envelopesender" => \$envelope_sender,
-+    "envelopefrom" => \$envelope_from,
-     "multiedit" => \$multiedit,
-     "confirm"   => \$confirm,
-     "from" => \$sender,
-@@ -265,6 +267,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
- 		    "confirm=s" => \$confirm,
- 		    "dry-run" => \$dry_run,
- 		    "envelope-sender=s" => \$envelope_sender,
-+		    "envelope-from" => \$envelope_from,
- 		    "thread!" => \$thread,
- 		    "validate!" => \$validate,
- 		    "format-patch!" => \$format_patch,
-@@ -861,10 +864,13 @@ X-Mailer: git-send-email $gitversion
- 
- 	my @sendmail_parameters = ('-i', @recipients);
- 	my $raw_from = $sanitized_sender;
--	$raw_from = $envelope_sender if (defined $envelope_sender);
-+	if (defined $envelope_sender) {
-+		$raw_from = $envelope_sender;
-+		$envelope_from = 1;
-+	}
- 	$raw_from = extract_valid_address($raw_from);
- 	unshift (@sendmail_parameters,
--			'-f', $raw_from) if(defined $envelope_sender);
-+			'-f', $raw_from) if(defined $envelope_from);
- 
- 	if ($needs_confirm && !$dry_run) {
- 		print "\n$header\n";
--- 
-1.6.5.3.1.ga9388c
+You can either egrep -v through the output of git diff-index, or define
+a diff driver: set an attribute, say "dumpdiff", for dump files (see
+gitattributes) and define diff driver as
+git config diff.dumpdiff.textconv =3D dumpdiff.sh
+where dumpdiff.sh is "egrep -v ...". You may need to call diff-index
+with --ext-diff. I haven't tried, though ;)
+
+Cheers,
+Michael
