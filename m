@@ -1,66 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] send-email: new 'add-envelope' option
-Date: Sat, 21 Nov 2009 14:36:00 -0500
-Message-ID: <20091121193600.GA3296@coredump.intra.peff.net>
-References: <1258825410-28592-1-git-send-email-felipe.contreras@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH/RFC 0/3] git rerere unresolve file
+Date: Sat, 21 Nov 2009 19:58:40 +0100
+Message-ID: <200911211958.40872.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 21 21:51:22 2009
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 21 21:51:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBwsT-00041R-EY
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 21:48:17 +0100
+	id 1NBwsF-00041R-NI
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 21:48:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756800AbZKUTgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Nov 2009 14:36:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756624AbZKUTgA
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 14:36:00 -0500
-Received: from peff.net ([208.65.91.99]:50784 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756536AbZKUTf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Nov 2009 14:35:59 -0500
-Received: (qmail 1718 invoked by uid 107); 21 Nov 2009 19:39:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 21 Nov 2009 14:39:56 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Nov 2009 14:36:00 -0500
+	id S1753934AbZKUS6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Nov 2009 13:58:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753907AbZKUS6r
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 13:58:47 -0500
+Received: from [93.83.142.38] ([93.83.142.38]:62813 "EHLO dx.sixt.local"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753373AbZKUS6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Nov 2009 13:58:46 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id ECE6E19F694;
+	Sat, 21 Nov 2009 19:58:40 +0100 (CET)
+User-Agent: KMail/1.9.10
 Content-Disposition: inline
-In-Reply-To: <1258825410-28592-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133404>
 
-On Sat, Nov 21, 2009 at 07:43:30PM +0200, Felipe Contreras wrote:
+When you commit an incorrect conflict resolution, git rerere gets in the way: 
+rerere clear only clears cache entries of not yet resolved conflicts. But 
+there is no other way to remove an incorrect resolution short of purging the 
+whole rr-cache.
 
-> Some MTAs make smart decisions based on the 'from' envelope (i.e. msmtp)
+This series implements 'git rerere unresolve' that removes a recorded 
+resolution.
 
-So my first thought was "how in the world is this different from setting
-the envelope sender?"
+This is RFC for two reasons:
 
-Reading the code, it seems:
+- It changes the contents of MERGE_RR in a way that *may* interfer in unwanted 
+ways with older versions that do not understand unresolve.
 
-> -	$raw_from = $envelope_sender if (defined $envelope_sender);
-> +	if (defined $envelope_sender) {
-> +		$raw_from = $envelope_sender;
-> +		$envelope_from = 1;
-> +	}
->  	$raw_from = extract_valid_address($raw_from);
->  	unshift (@sendmail_parameters,
-> -			'-f', $raw_from) if(defined $envelope_sender);
-> +			'-f', $raw_from) if(defined $envelope_from);
+- rerere unresolve also restores the conflict regions. I'm not sure whether 
+this is good because there is 'git checkout --conflict=merge file' that does 
+it in a better way. See the commit message of patch 3.
 
-that this is a boolean to mean "use the from address as the envelope
-sender".
+If rerere unresolve does *not* restore conflict regions (and record the result 
+as preimage right away) we are facing a problem: When the resolution is 
+committed, the postimage has differences from the preimage that are not 
+related to the conflict. This may inhibit reusing the resolution later when 
+the file has new changes.
 
-It was of course all the more confusing for not being documented at all,
-but even if documented, --envelope-from is IMHO confusingly similar to
---envelope-sender. Maybe --use-from-in-envelope would be a better name?
+Johannes Sixt (3):
+  rerere: keep a list of resolved files in MERGE_RR
+  rerere: make recording of the preimage reusable
+  git rerere unresolve file...
 
-And of course, your patch is missing docs and tests.
-
--Peff
+ Documentation/git-rerere.txt |   10 +++-
+ builtin-rerere.c             |   13 +++-
+ rerere.c                     |  153 ++++++++++++++++++++++++++++++++++-------
+ rerere.h                     |    4 +-
+ 4 files changed, 148 insertions(+), 32 deletions(-)
