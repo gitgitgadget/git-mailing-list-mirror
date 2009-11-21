@@ -1,132 +1,96 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] gitk: Use git-difftool for external diffs
-Date: Sat, 21 Nov 2009 13:47:17 -0800
-Message-ID: <A2458D5A-DBAD-4F74-B166-92BEEB162418@gmail.com>
-References: <1258341126-2108-1-git-send-email-davvid@gmail.com> <19205.2531.205062.980468@cargo.ozlabs.ibm.com> <20091119193913.GA25410@gmail.com> <19205.50406.91209.309984@cargo.ozlabs.ibm.com> <7vhbsp7htq.fsf@alter.siamese.dyndns.org> <20091120185522.GC56351@gmail.com> <7veinsx6lj.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (iPhone Mail 7D11)
-Content-Type: text/plain;
-	charset=us-ascii;
-	format=flowed;
-	delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>, "peff@peff.net" <peff@peff.net>,
-	"sam@vilain.net" <sam@vilain.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"markus.heidelberg@web.de" <markus.heidelberg@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 21 22:47:33 2009
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2] Let core.excludesfile default to ~/.gitexcludes.
+Date: Sat, 21 Nov 2009 23:00:32 +0100
+Message-ID: <1258840832-22130-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <4B06A7EE.2090801@atlas-elektronik.com>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Nov 21 23:03:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBxno-0008TK-MD
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 22:47:33 +0100
+	id 1NBy3L-0000Gu-LE
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 23:03:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756791AbZKUVrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Nov 2009 16:47:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756699AbZKUVrU
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 16:47:20 -0500
-Received: from mail-gx0-f226.google.com ([209.85.217.226]:37742 "EHLO
-	mail-gx0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756683AbZKUVrT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Nov 2009 16:47:19 -0500
-Received: by gxk26 with SMTP id 26so3866128gxk.1
-        for <git@vger.kernel.org>; Sat, 21 Nov 2009 13:47:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:references:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:x-mailer
-         :mime-version:subject:date:cc;
-        bh=ABJrvZN/IQUx9sd04RLnhfMY8rOd3w4BO3JSu71kLyI=;
-        b=XuodcXAD4AetR6CYUIvjTgx4if+vxzAEa9vPnoeGudPui5xILavnjTweI4yMmIyjFi
-         EhkCO9++9nDIAuS/T6KPB6A8m8lJzQGul+VQq8X2CwsfOeuMwbes/1urQJesiMhHi32B
-         hYH5EnCbk/E7C0cWsOg8UpOQ0r8FJ2DFQuQ80=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=references:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:x-mailer:mime-version:subject:date:cc;
-        b=YLD7C/qw8jll29hm3WethHa64FF9eYwDc3/QJfxYEbu1trjbdcqNoy1If06MEB8RUz
-         4YF/vxrnUEF1Sv3bqiopRu2nUyYn98HadAStbQrpvUZAQrOjToNv2zYkswiCp5nvTVq+
-         Lks0yGWoFhTHt+ZXWXPrBoe5bDV480G+gksjc=
-Received: by 10.150.110.23 with SMTP id i23mr5250310ybc.345.1258840044990;
-        Sat, 21 Nov 2009 13:47:24 -0800 (PST)
-Received: from ?192.168.1.3? (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 6sm992644ywc.9.2009.11.21.13.47.21
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 21 Nov 2009 13:47:23 -0800 (PST)
-In-Reply-To: <7veinsx6lj.fsf@alter.siamese.dyndns.org>
-X-Mailer: iPhone Mail (7D11)
+	id S1756839AbZKUWDT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Nov 2009 17:03:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756828AbZKUWDT
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 17:03:19 -0500
+Received: from imag.imag.fr ([129.88.30.1]:43241 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756821AbZKUWDS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Nov 2009 17:03:18 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id nALM0heU023071
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 21 Nov 2009 23:00:44 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1NBy0Z-0004rx-ML; Sat, 21 Nov 2009 23:00:43 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1NBy0Z-0005mB-LJ; Sat, 21 Nov 2009 23:00:43 +0100
+X-Mailer: git-send-email 1.6.5.3.435.g5f2e3.dirty
+In-Reply-To: <4B06A7EE.2090801@atlas-elektronik.com>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sat, 21 Nov 2009 23:00:44 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133415>
 
-On Nov 20, 2009, at 12:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Most users will set it to ~/.gitsomething. ~/.gitignore would conflict
+with per-directory ignore file if ~/ is managed by Git, so ~/.gitexcludes
+is a sane default.
 
-> I do not read Tcl very well but I am guessing that in gitk you specify
->>>
->>
-> what tool to run (e.g. "frobanodiff -z"), gitk feeds you two temporary
-> files on the filesystem to compare (e.g. "frobanodiff -z $tmp1  
-> $tmp2"),
-> and your command line is responsible for giving satisfying diff  
-> experience
-> to the end user.
->
-> I see three possible approaches:
->
-> * Teach "git-difftool" a mode to compare two arbitrary files on the
->   filesytem, and set that as "External Diff" command that takes the
->   filenames as extra two parameters, just like any other "External  
-> Diff"
->   programs given to gitk does.  This is the least palatable, as it  
-> won't
->   solve the read-only repository issue at all (it only allows you the
->   logic to choose the configured difftool backend program).
->
-> * Instead of disabling the traditional "External Diff" and taking it  
-> over
->   like your patch did, add a new codepath for "Difftool" that feeds  
-> the
->   commit IDs and paths the way git-difftool expects.  The user can use
->   both, and the issue of read-only repository is solved when  
-> "Difftool"
->   is used (but not "External Diff").
->
-> * Take over "External Diff" codepath exactly like your patch did, but
->   teach "git-difftool" a new command line option to name an  
-> unconfigured
->   external program that takes two filenames.  When "External Diff"
->   program is *not* configured in gitk, the command line to invoke
->   difftool would be exactly as in your patch, i.e. "difftool --no- 
-> prompt
->   $from $to -- $path".  Otherwise, when gitk is configured to use an
->   external program, e.g. "frobanodiff -z", for "External Diff", you  
-> pass
->   that command line to "git-difftool" via that new option, e.g.
->
->     difftool --no-prompt --extcmd="frobanodiff -z" $from $to -- $path
->
->   Then difftool is responsible for preparing the two necessary  
-> temporary
->   files out of the given information ($from/$to/$path) and feeding  
-> them
->   to "frobanodiff -z" command line.
->
->   Maybe such --extcmd support already exists in difftool, in which  
-> case
->   my earlier suspicion that difftool is not as flexible would be  
-> false.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Change since v1 : just changed gitignore -> gitexcludes.
 
-Sounds good.  Adding --extcmd should be nice and straightforward.   
-Markus mentioned the need for a diff.guitool variable that would be  
-tested for in the gitk case so it sounds like having a --gui option to  
-let difftool know to do that should then cover all the bases.
+ Documentation/config.txt |    1 +
+ dir.c                    |    9 ++++++++-
+ 2 files changed, 9 insertions(+), 1 deletions(-)
 
-It's looking like we'll have ourselves a small difftool patch series  
-soon.  Thanks all,
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 39d1226..13871a6 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -384,6 +384,7 @@ core.excludesfile::
+ 	of files which are not meant to be tracked.  "~/" is expanded
+ 	to the value of `$HOME` and "~user/" to the specified user's
+ 	home directory.  See linkgit:gitignore[5].
++	Default: ~/.gitexcludes.
+ 
+ core.editor::
+ 	Commands such as `commit` and `tag` that lets you edit
+diff --git a/dir.c b/dir.c
+index d0999ba..cf3d8b4 100644
+--- a/dir.c
++++ b/dir.c
+@@ -914,9 +914,16 @@ void setup_standard_excludes(struct dir_struct *dir)
+ 
+ 	dir->exclude_per_dir = ".gitignore";
+ 	path = git_path("info/exclude");
++	if (!excludes_file) {
++		const char *home = getenv("HOME");
++		char *user_gitignore = malloc(strlen(home) + strlen("/.gitexcludes") + 1);
++		strcpy(user_gitignore, home);
++		strcat(user_gitignore, "/.gitexcludes");
++		excludes_file = user_gitignore;
++	}
+ 	if (!access(path, R_OK))
+ 		add_excludes_from_file(dir, path);
+-	if (excludes_file && !access(excludes_file, R_OK))
++	if (!access(excludes_file, R_OK))
+ 		add_excludes_from_file(dir, excludes_file);
+ }
+ 
 -- 
-         David 
-  
+1.6.5.3.435.g5f2e3.dirty
