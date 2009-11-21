@@ -1,85 +1,141 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Default history simplification
-Date: Fri, 20 Nov 2009 22:37:07 -0800
-Message-ID: <7v8we0s7sc.fsf@alter.siamese.dyndns.org>
-References: <ae09c2a40911191530y626dd035q90de0212e0b4b6d8@mail.gmail.com>
- <20091120095537.1909f6b6@perceptron>
+From: Tony Maserati <abletony84@gmail.com>
+Subject: Help creating script that mass-pulls Git(Hub) repos
+Date: Sat, 21 Nov 2009 11:25:20 +0100
+Message-ID: <dc191bcd0911210225k3cf946c6k54f1287c818af5a8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tommy Wang <subscription@august8.net>, git <git@vger.kernel.org>
-To: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Sat Nov 21 07:37:41 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 21 11:25:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBjbH-0000Kj-M3
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 07:37:40 +0100
+	id 1NBn9l-00032T-UO
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 11:25:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750960AbZKUGhM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Nov 2009 01:37:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750926AbZKUGhL
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 01:37:11 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64406 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750861AbZKUGhK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Nov 2009 01:37:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8B22EA073B;
-	Sat, 21 Nov 2009 01:37:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=jKuwRiOp2d+U
-	Ngy6mekmgHHch60=; b=GWjZ2GIGhSKSHpr01AaAeYp3z5gn9BUGb54JqAd6sXP4
-	+sVCrOOX96NYrty1ZiLonoSTIwiGcZLM6f4iUH6XC75WEY/LTaE+PKgo6ykeCXpt
-	0GSlfOhVDaGboQgCVQ4naYRUDmGpq8jIIdrdH6C089U1SQnN1o1qIB0acWgEKe0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ffJyA9
-	8eQcWSXFrr8vjpXQtSvtCJoo/xy6YtitASSdH2TVP1XsXc2/l1OkVeVKhCGT0hed
-	wpp98ebaRk2TJEqZLDeRXbmu3mMcQmV2DXBuNCIWa9LV7PREXW0w9EHL1qHyl37y
-	ShWOCzIse0eHylM4Pb2AJ++f8x9dr++0804WY=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5BA8CA073A;
-	Sat, 21 Nov 2009 01:37:13 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2FB14A0739; Sat, 21 Nov 2009
- 01:37:08 -0500 (EST)
-In-Reply-To: <20091120095537.1909f6b6@perceptron> ("Jan =?utf-8?Q?Kr=C3=BC?=
- =?utf-8?Q?ger=22's?= message of "Fri\, 20 Nov 2009 09\:55\:37 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4D86EFE0-D668-11DE-B719-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1752446AbZKUKZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Nov 2009 05:25:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751901AbZKUKZP
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 05:25:15 -0500
+Received: from mail-iw0-f178.google.com ([209.85.223.178]:56130 "EHLO
+	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751831AbZKUKZO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Nov 2009 05:25:14 -0500
+Received: by iwn8 with SMTP id 8so3094838iwn.33
+        for <git@vger.kernel.org>; Sat, 21 Nov 2009 02:25:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=kPJdMOK+IUh3IfsHHblFPSzUygi2aK2De4vMQtwmsak=;
+        b=hDNe9Gld2zvK1WLQEGoYXO1BAxhmqwmvkzjmsxoecj1v8hohrIXl28hbPW3VWKlKkM
+         MnH9jweWJci33wlYBBXmHU4aZ6zXaCOmtqcCiTs3PKwC2S7rngUbL2oKXaiZBsd6Jqn7
+         yszdw7drgI5c39rmt5oDOb/G4Tl+45POeUis8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=sE5wVMpjc/CfpX0wVQ2OO1bzdNB3R5P7C7QaxcG+ivj+/3IrRCIYkt6/JDgiUF9jkK
+         sLLveJOHGr5J52HpJix0Rlp2sGuzgh7rhUAI6xFRbeKCCk2Pm04c0Ef2u036vKYgve+s
+         ITst5PMJf3xZD6SQaH/tUE/Y2fIaypDkeENMQ=
+Received: by 10.231.6.79 with SMTP id 15mr5479141iby.36.1258799120592; Sat, 21 
+	Nov 2009 02:25:20 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133393>
 
-Jan Kr=C3=BCger <jk@jk.gs> writes:
+Hi,
 
-> Tommy Wang <subscription@august8.net> wrote:
->> [...] I would love to simply use the rev-list built-in to
->> do my work for me; but I fear that I may have much too many path
->> limiters than the linux command-line can handle (which if I'm correc=
-t,
->> can only take so many arguments).
->
-> On my system, "only so many arguments" means about two megabytes wort=
-h
-> of command line.
+I got a bunch of repos I've cloned off GitHub and I'm looking for the
+best way to keep them all up to date.
 
-Good point.
+I got a working zsh script, but it lacks some stuff. For instance I
+think it'd be neat if it could output the difference between the
+commit dates as oppose to those long hashes. And if it could initiate
+the pull only when necessary. Other ideas are welcome.
 
-The command line limitation, even if it is very small, shouldn't be a
-problem if Tommy is interested in recreating exactly what rev-list does=
-=2E
+Does anybody have any suggestions to how I might complete or otherwise
+improve the below scripts? Thanks in advance.
 
-If his tool that drives rev-list or log from the command line cannot wo=
-rk
-because his request overflows the command line, the same request will
-overflow the command line for rev-list or log, so they wouldn't work
-either.
+Here's the working version:
 
-=46or a more serious answer, see the other thread ;-).
+abletony84$ cat pull_all.sh
+
+#!/usr/bin/env zsh
+
+for folder in $PWD/**/.git(:h); do
+
+  cd $folder
+
+  git pull
+
+done
+
+-
+
+This script lacks a proper if clause, and shows hashes instead of dates:
+
+abletony84$ cat pull_all2.sh
+
+#!/usr/bin/env zsh
+
+for folder in $PWD/**/.git(:h); do
+
+  cd $folder
+
+  if this repo needs an update; then # git ls-remote has been suggested
+
+    old=$(git rev-parse HEAD)
+
+    git pull >& /dev/null
+
+    new=$(git rev-parse HEAD)
+
+    echo "$folder: $old -> $new"
+
+  else
+
+    echo "$folder: nothing to do"
+
+  fi
+
+done
+
+-
+
+A slightly different approach, even more incomplete than the previous:
+
+abletony84$ cat pull_all3.sh
+
+#!/usr/bin/env zsh
+
+for folder in $PWD/**/.git(:h); do
+
+  cd $folder
+
+  if repo still exists at github; then
+
+    git fetch >& /dev/null
+
+    if a merge is needed; then
+
+      git merge >& /dev/null
+
+      echo "$folder: date_of_last_current_commit -> date_of_last_new_comit"
+
+    else
+
+      echo "$folder: nothing to do"
+
+    fi
+
+  fi
+
+done
+
+-
+
+Thanks again!
+
+Tony
