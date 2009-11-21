@@ -1,73 +1,66 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH v2] git-count-objects: Fix a disk-space under-estimate on
- Cygwin
-Date: Fri, 20 Nov 2009 23:27:11 +0000
-Message-ID: <4B0725CF.8030805@ramsay1.demon.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] send-email: new 'add-envelope' option
+Date: Sat, 21 Nov 2009 14:36:00 -0500
+Message-ID: <20091121193600.GA3296@coredump.intra.peff.net>
+References: <1258825410-28592-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 21 21:51:17 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 21 21:51:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBwsE-00041R-Mz
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 21:48:03 +0100
+	id 1NBwsT-00041R-EY
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 21:48:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753499AbZKUSys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Nov 2009 13:54:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753373AbZKUSys
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 13:54:48 -0500
-Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:49890 "EHLO
-	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753219AbZKUSyr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Nov 2009 13:54:47 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1NBv6i-000356-p6; Sat, 21 Nov 2009 18:54:53 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1756800AbZKUTgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Nov 2009 14:36:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756624AbZKUTgA
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 14:36:00 -0500
+Received: from peff.net ([208.65.91.99]:50784 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756536AbZKUTf7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Nov 2009 14:35:59 -0500
+Received: (qmail 1718 invoked by uid 107); 21 Nov 2009 19:39:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 21 Nov 2009 14:39:56 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Nov 2009 14:36:00 -0500
+Content-Disposition: inline
+In-Reply-To: <1258825410-28592-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133403>
 
+On Sat, Nov 21, 2009 at 07:43:30PM +0200, Felipe Contreras wrote:
 
-On Cygwin, the st_blocks field in 'struct stat' counts in blocks
-of st_blksize bytes. At least on NTFS, the st_blksize field is
-not 512 bytes, as required by the code, which leads to an under
-estimate of the disk-space used.
+> Some MTAs make smart decisions based on the 'from' envelope (i.e. msmtp)
 
-Setting the build variable NO_ST_BLOCKS_IN_STRUCT_STAT, switches
-to an algorithm that only uses the st_size field to compute the
-disk-space estimate.
+So my first thought was "how in the world is this different from setting
+the envelope sender?"
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
+Reading the code, it seems:
 
-Changed since v1:
-    - a commit message!
-    - removed comment.
+> -	$raw_from = $envelope_sender if (defined $envelope_sender);
+> +	if (defined $envelope_sender) {
+> +		$raw_from = $envelope_sender;
+> +		$envelope_from = 1;
+> +	}
+>  	$raw_from = extract_valid_address($raw_from);
+>  	unshift (@sendmail_parameters,
+> -			'-f', $raw_from) if(defined $envelope_sender);
+> +			'-f', $raw_from) if(defined $envelope_from);
 
-ATB,
-Ramsay Jones
+that this is a boolean to mean "use the from address as the envelope
+sender".
 
- Makefile |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+It was of course all the more confusing for not being documented at all,
+but even if documented, --envelope-from is IMHO confusingly similar to
+--envelope-sender. Maybe --use-from-in-envelope would be a better name?
 
-diff --git a/Makefile b/Makefile
-index 5d5976f..8902dba 100644
---- a/Makefile
-+++ b/Makefile
-@@ -783,6 +783,7 @@ ifeq ($(uname_O),Cygwin)
- 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
- 	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
- 	OLD_ICONV = UnfortunatelyYes
-+	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
- 	# There are conflicting reports about this.
- 	# On some boxes NO_MMAP is needed, and not so elsewhere.
- 	# Try commenting this out if you suspect MMAP is more efficient
--- 
-1.6.5
+And of course, your patch is missing docs and tests.
+
+-Peff
