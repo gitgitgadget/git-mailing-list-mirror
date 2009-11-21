@@ -1,89 +1,93 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: [ANNOUNCE] codeBeamer MR - Easy ACL for Git
-Date: Sat, 21 Nov 2009 18:42:53 +0530
-Message-ID: <2e24e5b90911210512g5ec26307te63d10912a7906fb@mail.gmail.com>
-References: <4B03B153.1020302@intland.com>
-	 <20091118120936.GL17748@machine.or.cz> <4B054D0A.5030802@intland.com>
-	 <2e24e5b90911192056t706071ble163a53741017ef@mail.gmail.com>
-	 <20091120074702.GW12890@machine.or.cz>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [ANNOUNCE] tig-0.15
+Date: Sat, 21 Nov 2009 08:59:23 -0500
+Message-ID: <2c6b72b30911210559v561fd3d8s1e4ad70a8c94cf68@mail.gmail.com>
+References: <20091120133117.GA26917@diku.dk> <20091120135004.GA3919@debian.b2j> 
+	<2c6b72b30911200755l16b306cey16efb42fe9ba27da@mail.gmail.com> 
+	<20091120162543.GB3919@debian.b2j> <2c6b72b30911201829i52ffa022qff827bdf317ad447@mail.gmail.com> 
+	<20091121035858.GC3919@debian.b2j>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Intland Software <marketing@intland.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Nov 21 14:13:43 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: bill lam <cbill.lam@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 21 14:59:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBpmY-0001Vz-7L
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 14:13:42 +0100
+	id 1NBqVJ-00018C-Br
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 14:59:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753505AbZKUNMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Nov 2009 08:12:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753281AbZKUNMs
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 08:12:48 -0500
-Received: from mail-px0-f204.google.com ([209.85.216.204]:59295 "EHLO
-	mail-px0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751487AbZKUNMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Nov 2009 08:12:47 -0500
-Received: by pxi42 with SMTP id 42so2356170pxi.5
-        for <git@vger.kernel.org>; Sat, 21 Nov 2009 05:12:54 -0800 (PST)
+	id S1754459AbZKUN7i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Nov 2009 08:59:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754339AbZKUN7i
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 08:59:38 -0500
+Received: from mail-iw0-f178.google.com ([209.85.223.178]:61438 "EHLO
+	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752762AbZKUN7h convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Nov 2009 08:59:37 -0500
+Received: by iwn8 with SMTP id 8so3148222iwn.33
+        for <git@vger.kernel.org>; Sat, 21 Nov 2009 05:59:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=QYNACDfKaeXMS6SdUTVz8ea0h1/oKsjEHSi+rfMnYCc=;
-        b=D/PxhWo+diTyViQTa9eTvGzPxOFULoyAPIKzhMlSoLGPaAZua+Di2fXqTjGD43/rey
-         zPdjhNAdB6B3gZ1oCnxqeN10kQvvAk5iloSWz1l2R4rI/Dmx3lDMWHU0VPLaeSN+vu+O
-         bUTugm6ZQSh3w2iTBlDftV2yoSWpUr1Teuhg4=
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=iIrMmjt6h5DygILWtMTSRhaO1UibAeCrWSHn6BXyaME=;
+        b=YbpZ0vSw77dV9umJ1Nv2+XqQ+zQJJR8fkCAB56Sqy7BkoVrKR7HXXL7pSFVCn2kLsL
+         PX6Ht4EzSgk7Hl9e0Nc9HZJO4tpyOgaMXA3MjnBkaGjls96BiqIbfVV4/5vYjL5MCMbq
+         5r56R0jeIW8eV2fy8kcqOkezS2KafUaQUP+hU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=u6u7oWeeL2LbLAmFlc5kbFNO3jamzEMocork8s0j+5sFREQzH8TPx1EFaMVPH2IMTJ
-         r4hPgexOP6PWhaXlM+lGn6iYjb3zXggNikekp7d2nrc1nv+CXFihW/Hd5wYq2Q+Bgg4A
-         5P080oLikCSiPiEYjcxswsbQObKZ4jrOOgLuI=
-Received: by 10.114.187.7 with SMTP id k7mr3801526waf.106.1258809173921; Sat, 
-	21 Nov 2009 05:12:53 -0800 (PST)
-In-Reply-To: <20091120074702.GW12890@machine.or.cz>
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=xvsgqn7J8iNX5K0RtlWPoOz7OV7DYJkTMYdSrQbPuthfFlgG/qVsHdqnOOTssAzevF
+         OVhvz1064X0ZPkfQeC2Y/+Or88GQvUZNKKlUNicmUFjCvHrX4IotCMt57psxWqAL/THf
+         kJhUK2ZVLjadB3zbnmCVXF+2Lvnm2f3mr/KrI=
+Received: by 10.231.121.69 with SMTP id g5mr2607280ibr.44.1258811983099; Sat, 
+	21 Nov 2009 05:59:43 -0800 (PST)
+In-Reply-To: <20091121035858.GC3919@debian.b2j>
+X-Google-Sender-Auth: 673f8e6903cced61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133394>
 
-On Fri, Nov 20, 2009 at 1:17 PM, Petr Baudis <pasky@suse.cz> wrote:
-
-> I brought Gitosis/Gitolite up because I got the impression that MR was
-> marketed primarily as a Git ACL tool, the other things being sort of
-> mirror; maybe my impession was wrong, but I still think the comparison
-> in ACL capabilities is useful.
-
-Sorry; didn't mean to imply you were wrong about that...
-
-But the bulk of MR is probably the web based stuff, wiki, issues etc.,
-which means gitolite is way on the other side of the spectrum, so it
-felt like any comparision is moot, and used the code/binary sizes to
-highlight that.
-
-But you said just the ACL capabilities... set me thinking...
-
-Intland: do you have a page that describes your role based ACL stuff a
-little more?  I have a feeling that, modulo it all being in one text
-file, gitolite can probably come close :-)
-
->> You should stick to gitorious, github, and -- here's a new
->> one for you -- indefero.
+On Fri, Nov 20, 2009 at 22:58, bill lam <cbill.lam@gmail.com> wrote:
+> On Fri, 20 Nov 2009, Jonas Fonseca wrote:
+>> On Fri, Nov 20, 2009 at 11:25, bill lam <cbill.lam@gmail.com> wrote:
+>> > On Fri, 20 Nov 2009, Jonas Fonseca wrote:
+>> >> install-release-doc-man:
+>> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0for doc in $(MANDOC); do \
+>> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0git checko=
+ut origin/release $$doc; \
+>> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0done
+>> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0$(MAKE) install-doc-man
+>> >
+>> > Thanks it works. =C2=A0Could you also commit this to git?
+>>
+>> Done, but using git-checkout-index ...
+> the line
+> =C2=A0git read-tree release
+> raised error perhaps I didn't checkout a branch for it, replacing it
+> with
+> =C2=A0 git read-tree origin/relase
+> or
+> =C2=A0 git read-tree remotes/origin/relase
 >
-> Hmm, I didn't even know about this one, thanks for the pointer. Looks
-> like this suddenly is a very popular area. High competition is good!
+> seems working.
 
-Oh yeah, and indefero is actually looking pretty good -- I know some
-guys at $DAYJOB looking at it very seriously.
+Ah, stupid me.
 
-> (BTW, if you don't care about wikis and issue tracking, but you do care
-> about simplicity and light-weightness, you should best stick to Girocco!
-> ;-)
+> Another question, while it can open a file with editor in tree-view, =
+I
+> cannot find in tigmanual how to directly save a file. =C2=A0Any idea?
 
-:-)  yes it is nice, but again, at $DAYJOB access control (even to
-view projects) is a big deal.  A very big deal, actually...!
+There is no such action/keybinding. I guess it should be easy to
+extend the current functionality to query for a file name and save to
+that instead of a temporary file.
+
+--=20
+Jonas Fonseca
