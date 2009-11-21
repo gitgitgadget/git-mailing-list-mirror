@@ -1,100 +1,132 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Per file configurable eol-style transformations with Git?
-Date: Sat, 21 Nov 2009 13:18:16 -0800 (PST)
-Message-ID: <m3tywnbmpj.fsf@localhost.localdomain>
-References: <9ED0EB52C33C41209726C6F4DB7FC194@helium>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: "Alexander Veit" <alexander.veit@gmx.net>
-X-From: git-owner@vger.kernel.org Sat Nov 21 22:19:42 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] gitk: Use git-difftool for external diffs
+Date: Sat, 21 Nov 2009 13:47:17 -0800
+Message-ID: <A2458D5A-DBAD-4F74-B166-92BEEB162418@gmail.com>
+References: <1258341126-2108-1-git-send-email-davvid@gmail.com> <19205.2531.205062.980468@cargo.ozlabs.ibm.com> <20091119193913.GA25410@gmail.com> <19205.50406.91209.309984@cargo.ozlabs.ibm.com> <7vhbsp7htq.fsf@alter.siamese.dyndns.org> <20091120185522.GC56351@gmail.com> <7veinsx6lj.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (iPhone Mail 7D11)
+Content-Type: text/plain;
+	charset=us-ascii;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Paul Mackerras <paulus@samba.org>, "peff@peff.net" <peff@peff.net>,
+	"sam@vilain.net" <sam@vilain.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"markus.heidelberg@web.de" <markus.heidelberg@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 21 22:47:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBxLd-0000rG-1o
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 22:18:25 +0100
+	id 1NBxno-0008TK-MD
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 22:47:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754032AbZKUVSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Nov 2009 16:18:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753955AbZKUVSN
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 16:18:13 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:45739 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753875AbZKUVSM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Nov 2009 16:18:12 -0500
-Received: by bwz27 with SMTP id 27so4188167bwz.21
-        for <git@vger.kernel.org>; Sat, 21 Nov 2009 13:18:17 -0800 (PST)
+	id S1756791AbZKUVrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Nov 2009 16:47:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756699AbZKUVrU
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 16:47:20 -0500
+Received: from mail-gx0-f226.google.com ([209.85.217.226]:37742 "EHLO
+	mail-gx0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756683AbZKUVrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Nov 2009 16:47:19 -0500
+Received: by gxk26 with SMTP id 26so3866128gxk.1
+        for <git@vger.kernel.org>; Sat, 21 Nov 2009 13:47:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=yi/QIWofQTPmdnwNMnyBGBWUiFBu+V7jTwDK2052j4w=;
-        b=V4eRtulb82yhQm6nIPWp3YTHWU9I6/yBjtsONBuZa665AImT2WB/RMlMHwnn8kG63T
-         0XdL7gonxBB+cPWZCfay0L7+fGgx7Go9Vld2B7FwweO9f/abN5jEFS1qn1CKE843zSMZ
-         IFEId3QCdEi9DM3+tO1qYbGR5zAVHJQkUJOvU=
+        h=domainkey-signature:received:received:references:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:x-mailer
+         :mime-version:subject:date:cc;
+        bh=ABJrvZN/IQUx9sd04RLnhfMY8rOd3w4BO3JSu71kLyI=;
+        b=XuodcXAD4AetR6CYUIvjTgx4if+vxzAEa9vPnoeGudPui5xILavnjTweI4yMmIyjFi
+         EhkCO9++9nDIAuS/T6KPB6A8m8lJzQGul+VQq8X2CwsfOeuMwbes/1urQJesiMhHi32B
+         hYH5EnCbk/E7C0cWsOg8UpOQ0r8FJ2DFQuQ80=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=dVRe4G+oQUMvZMp4iNmzTvROrSWGg+ShRxFH1nrb/CEdOXqTtOnreS13QXACpmaek8
-         rqLrXNx2S0tL+XJGZ0WsiY+PMp2HHMRGwyDXbyAyWy2LL49GxCjNuPchUsYplTK0/ewp
-         bv7sZkmiJtJK1YnIY5tboChY9ErA/0gOT+CXc=
-Received: by 10.204.15.16 with SMTP id i16mr2918265bka.72.1258838296944;
-        Sat, 21 Nov 2009 13:18:16 -0800 (PST)
-Received: from localhost.localdomain (abvz69.neoplus.adsl.tpnet.pl [83.8.223.69])
-        by mx.google.com with ESMTPS id 13sm732847bwz.10.2009.11.21.13.18.15
+        h=references:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:x-mailer:mime-version:subject:date:cc;
+        b=YLD7C/qw8jll29hm3WethHa64FF9eYwDc3/QJfxYEbu1trjbdcqNoy1If06MEB8RUz
+         4YF/vxrnUEF1Sv3bqiopRu2nUyYn98HadAStbQrpvUZAQrOjToNv2zYkswiCp5nvTVq+
+         Lks0yGWoFhTHt+ZXWXPrBoe5bDV480G+gksjc=
+Received: by 10.150.110.23 with SMTP id i23mr5250310ybc.345.1258840044990;
+        Sat, 21 Nov 2009 13:47:24 -0800 (PST)
+Received: from ?192.168.1.3? (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id 6sm992644ywc.9.2009.11.21.13.47.21
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 21 Nov 2009 13:18:16 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id nALLJ59R015273;
-	Sat, 21 Nov 2009 22:19:06 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id nALLJ4nd015270;
-	Sat, 21 Nov 2009 22:19:05 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <9ED0EB52C33C41209726C6F4DB7FC194@helium>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Sat, 21 Nov 2009 13:47:23 -0800 (PST)
+In-Reply-To: <7veinsx6lj.fsf@alter.siamese.dyndns.org>
+X-Mailer: iPhone Mail (7D11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133414>
 
-"Alexander Veit" <alexander.veit@gmx.net> writes:
+On Nov 20, 2009, at 12:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> we have projects that contain text files that need to
-> have different end-of-line sequences, depending on the
-> type of file, and depending on the operating system where
-> they are checked out.
-> 
-> There are files that have
-> 
->  - LF line breaks on each platform,
->  - CR LF line breaks on each platform, or
->  - either LF or CR LF line breaks, depending on the
->    platform's native end-of-line style.
-> 
-> With Subversion, the correct behaviour in checkouts, commits,
-> diffs, or merges can easily be achieved by setting the appropriate
-> svn:eol-style [*].
-> 
-> As I understand the Git documentation there's no such concept as a
-> repository end-of-line style, or as an end-of-line transformation
-> between repository and working copy.
-> 
-> So I wonder if it is possible to mimic Subversion's end-of-line handling
-> with Git, especially for the svn:eol-style=native.
+> I do not read Tcl very well but I am guessing that in gitk you specify
+>>>
+>>
+> what tool to run (e.g. "frobanodiff -z"), gitk feeds you two temporary
+> files on the filesystem to compare (e.g. "frobanodiff -z $tmp1  
+> $tmp2"),
+> and your command line is responsible for giving satisfying diff  
+> experience
+> to the end user.
+>
+> I see three possible approaches:
+>
+> * Teach "git-difftool" a mode to compare two arbitrary files on the
+>   filesytem, and set that as "External Diff" command that takes the
+>   filenames as extra two parameters, just like any other "External  
+> Diff"
+>   programs given to gitk does.  This is the least palatable, as it  
+> won't
+>   solve the read-only repository issue at all (it only allows you the
+>   logic to choose the configured difftool backend program).
+>
+> * Instead of disabling the traditional "External Diff" and taking it  
+> over
+>   like your patch did, add a new codepath for "Difftool" that feeds  
+> the
+>   commit IDs and paths the way git-difftool expects.  The user can use
+>   both, and the issue of read-only repository is solved when  
+> "Difftool"
+>   is used (but not "External Diff").
+>
+> * Take over "External Diff" codepath exactly like your patch did, but
+>   teach "git-difftool" a new command line option to name an  
+> unconfigured
+>   external program that takes two filenames.  When "External Diff"
+>   program is *not* configured in gitk, the command line to invoke
+>   difftool would be exactly as in your patch, i.e. "difftool --no- 
+> prompt
+>   $from $to -- $path".  Otherwise, when gitk is configured to use an
+>   external program, e.g. "frobanodiff -z", for "External Diff", you  
+> pass
+>   that command line to "git-difftool" via that new option, e.g.
+>
+>     difftool --no-prompt --extcmd="frobanodiff -z" $from $to -- $path
+>
+>   Then difftool is responsible for preparing the two necessary  
+> temporary
+>   files out of the given information ($from/$to/$path) and feeding  
+> them
+>   to "frobanodiff -z" command line.
+>
+>   Maybe such --extcmd support already exists in difftool, in which  
+> case
+>   my earlier suspicion that difftool is not as flexible would be  
+> false.
 
-See `crlf` attribute, which can be set, unset, unspecified, set to
-"input", and used together with core.autocrlf ("true", "false", "input")
-and core.safecrlf.  Attributes can be set per path (using globbing
-patterns) in .gitattributes file in tree, or in .git/info/attributes
-(per repository).
+Sounds good.  Adding --extcmd should be nice and straightforward.   
+Markus mentioned the need for a diff.guitool variable that would be  
+tested for in the gitk case so it sounds like having a --gui option to  
+let difftool know to do that should then cover all the bases.
 
-HTH
+It's looking like we'll have ourselves a small difftool patch series  
+soon.  Thanks all,
+
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+         David 
+  
