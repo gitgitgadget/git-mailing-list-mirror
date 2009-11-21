@@ -1,118 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 0/2] jn/gitweb-blame fixes
-Date: Sat, 21 Nov 2009 15:56:50 +0100
-Message-ID: <200911211556.52175.jnareb@gmail.com>
-References: <1258659887-5244-1-git-send-email-bebarino@gmail.com> <4B06157B.10203@gmail.com> <200911210132.44649.jnareb@gmail.com>
+From: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
+Subject: Re: Help creating script that mass-pulls Git(Hub) repos
+Date: Sat, 21 Nov 2009 09:18:22 -0600
+Message-ID: <20091121151822.GA8155@bluemoon.alumni.iitm.ac.in>
+References: <dc191bcd0911210225k3cf946c6k54f1287c818af5a8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 21 15:56:26 2009
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="EeQfGwPcQSOJBaQU"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 21 16:28:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBrNv-0004AC-5N
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 15:56:23 +0100
+	id 1NBrtK-0001l2-9Z
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 16:28:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754793AbZKUO4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Nov 2009 09:56:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754533AbZKUO4J
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 09:56:09 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:55248 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754783AbZKUO4I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Nov 2009 09:56:08 -0500
-Received: by bwz27 with SMTP id 27so4057199bwz.21
-        for <git@vger.kernel.org>; Sat, 21 Nov 2009 06:56:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=tluyShH03M2XSP7kFehOL8GQRTJ73exRBIEOl2B5meQ=;
-        b=Y6MU1oixijq8o1qoj4x6pnQntc35uoKyWsniwibp6mO6siwkVcyLTUC+sK3rYSDO5F
-         xQvvsLW8RSD1HXvcTrx8IAG5bZk/I8E1UGJRQcwH8CPuzHWKhqX7+6PVFu818niowghk
-         3PzgUFAULeV8lc7s0t7aRJi2H5BGsojGxv+hc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=iXOJzVDILaMbPxozJpJy4eocd7y8bvdkwtv5PCSOJClNBSXKtKfbWbFezcgADBW/TP
-         o7mLWbuo19vSpe72rSClTaANSFTzhrFG1nJfuplplAwYwUpXwO4PbabCJj3bhL4F1FWD
-         aP/qg0hmHWqugBw5mZr7uFbDjRThuStSGj8U4=
-Received: by 10.204.20.82 with SMTP id e18mr2608028bkb.168.1258815372385;
-        Sat, 21 Nov 2009 06:56:12 -0800 (PST)
-Received: from ?192.168.1.13? (abvw56.neoplus.adsl.tpnet.pl [83.8.220.56])
-        by mx.google.com with ESMTPS id 16sm674472bwz.7.2009.11.21.06.56.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 21 Nov 2009 06:56:10 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200911210132.44649.jnareb@gmail.com>
+	id S1756502AbZKUP17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Nov 2009 10:27:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756488AbZKUP15
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 10:27:57 -0500
+Received: from ironclad.mail.utexas.edu ([146.6.25.7]:16201 "EHLO
+	ironclad.mail.utexas.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752607AbZKUP1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Nov 2009 10:27:55 -0500
+X-Greylist: delayed 577 seconds by postgrey-1.27 at vger.kernel.org; Sat, 21 Nov 2009 10:27:55 EST
+X-IronPort-MID: 2853615
+Received: from wb3-a.mail.utexas.edu ([128.83.126.138])
+  by ironclad.mail.utexas.edu with ESMTP; 21 Nov 2009 09:18:23 -0600
+Received: (qmail 2933 invoked from network); 21 Nov 2009 15:18:22 -0000
+Received: from user-0ccsu42.cable.mindspring.com (HELO bluemoon.WORKGROUP) (a.kumar@24.206.120.130)
+  by wb3.mail.utexas.edu with (RC4-SHA encrypted) ESMTPSA; 21 Nov 2009 15:18:22 -0000
+Received: from kumar by bluemoon.WORKGROUP with local (Exim 4.69)
+	(envelope-from <a.kumar@alumni.iitm.ac.in>)
+	id 1NBrjC-0002GI-7m
+	for git@vger.kernel.org; Sat, 21 Nov 2009 09:18:22 -0600
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <dc191bcd0911210225k3cf946c6k54f1287c818af5a8@mail.gmail.com>
+X-OS: Linux bluemoon 2.6.32-rc5 x86_64
+X-Operating-System: Linux bluemoon 2.6.32-rc5 x86_64
+X-Editor: GNU Emacs 22.3.1
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133397>
 
-On Sat, 21 Nov 2009, Jakub Narebski wrote:
 
-> * Testing it with IE8 (Internet Explorer 8.0.6001.18702) page loading stops
->   at 0%, at the very beginning on startBlame() function
-> 
->   IE8 shows that it finds the following errors:
-> 
->   * "firstChild is null or not an object"
->     line: 565, char:4
-> 
->       a_sha1.firstChild.data = commit.sha1.substr(0, 8);
-> 
->     It might be caused by the fact that firstChild for this case should be
->     text node containing of pure whitespace:
->        <a href=""> </a>
->     Perhaps IE8 simplifies it in "compatibility view" mode
+--EeQfGwPcQSOJBaQU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This bug (be it in gitweb.js or in IE8) is fixed by the following patch:
+On Sat, Nov 21, 2009 at 11:25:20AM +0100, Tony Maserati wrote:
+> Hi,
+>=20
+> I got a bunch of repos I've cloned off GitHub and I'm looking for the
+> best way to keep them all up to date.
 
--- 8< --
-diff --git i/gitweb/gitweb.js w/gitweb/gitweb.js
-index 200ec5a..c1e425c 100644
---- i/gitweb/gitweb.js
-+++ w/gitweb/gitweb.js
-@@ -562,7 +562,12 @@ function handleLine(commit, group) {
- 			td_sha1.rowSpan = group.numlines;
- 
- 			a_sha1.href = projectUrl + 'a=commit;h=' + commit.sha1;
--			a_sha1.firstChild.data = commit.sha1.substr(0, 8);
-+			if (a_sha1.firstChild) {
-+				a_sha1.firstChild.data = commit.sha1.substr(0, 8);
-+			} else {
-+				a_sha1.appendChild(
-+					document.createTextNode(commit.sha1.substr(0, 8)));
-+			}
- 			if (group.numlines >= 2) {
- 				var fragment = document.createDocumentFragment();
- 				var br   = document.createElement("br");
--- >8 --
+Would mr help?
 
-> 
->  * "Unspecified error" (twice)
->    line: 777, char:2
-> 
->      if (xhr.readyState === 3 && xhr.status !== 200) {
->      	return;
->      }
-> 
->    I don't know what might be the source of error here; I suspect that the
->    error position mentioned by IE8 is bogus.
+http://kitenet.net/~joey/code/mr/
 
-But I have no idea how to fix this.  "Unspecified error" isn't very 
-helpful...
+Kumar
+--=20
+Kumar Appaiah
 
--- 
-Jakub Narebski
-Poland
+--EeQfGwPcQSOJBaQU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQIcBAEBCgAGBQJLCAS+AAoJEHqPSei2NIC+bdYQALK6UM9wo4UC4a866x2SvC5k
+XYtrRRaPEdxc2NbV1BAOhpRn5KGGeIdcLcngDjlZaIfewVjzC5iM1RuOXpSem7p9
+PjWPiuSswPM8wxrZr6CszsGNHFqI+mHO/gpslkLOziRHeoV3h+8GmAnUZL8MUVr7
+j4+Dxaa7dPTNTQzkihwUM8XJ/SoLbzt1qFyvE7YEzpiGS0BavYzmYNbQ6SGACItT
+VOqmZM2pB+IA1vsV6VlOTYJ/jlQdi6CzEYDpxczTanbfbI+JGqEn3+wKVRf6YB7l
+QV9f6inup+h43mN9vNieSVozNiFExNm8BRGN55afYlw9FLiYKHZ7Fjs9a6N1ETXk
+jCCaNDXXzOmERKVxD3JvMDeyrXMAs1ErtLWWsGCha4S5PzT0yHcpGQHn3g7LzZAb
+vobz4XbySbO0MjsNmLic9CcETnduLsIJkjbDY5aK3UO3PAC6n+q4kAiRBJfW8dRW
+Vlc31MZtGbq+yXUPGLoVk0m988rCfurUFO/2ysueJJW35aUcT3DVbI5uMqhfGSwN
+eVChhdNeQoH2fE6jhxW4VsV6/4O7nOk3uusshUY5wg/J1NKTwXpwvRS+P+Rjz4tn
+jysOvXnk6CCZdyZJ3o+6hycfS06RLwjtB3xHikcDA7CI3MueVy0JlRZyfKJZg5Is
+0DfiWvv1/pScKWdHYTyi
+=q5ck
+-----END PGP SIGNATURE-----
+
+--EeQfGwPcQSOJBaQU--
