@@ -1,141 +1,89 @@
-From: Tony Maserati <abletony84@gmail.com>
-Subject: Help creating script that mass-pulls Git(Hub) repos
-Date: Sat, 21 Nov 2009 11:25:20 +0100
-Message-ID: <dc191bcd0911210225k3cf946c6k54f1287c818af5a8@mail.gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: [ANNOUNCE] codeBeamer MR - Easy ACL for Git
+Date: Sat, 21 Nov 2009 18:42:53 +0530
+Message-ID: <2e24e5b90911210512g5ec26307te63d10912a7906fb@mail.gmail.com>
+References: <4B03B153.1020302@intland.com>
+	 <20091118120936.GL17748@machine.or.cz> <4B054D0A.5030802@intland.com>
+	 <2e24e5b90911192056t706071ble163a53741017ef@mail.gmail.com>
+	 <20091120074702.GW12890@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 21 11:25:30 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Intland Software <marketing@intland.com>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sat Nov 21 14:13:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBn9l-00032T-UO
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 11:25:30 +0100
+	id 1NBpmY-0001Vz-7L
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 14:13:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752446AbZKUKZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Nov 2009 05:25:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751901AbZKUKZP
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 05:25:15 -0500
-Received: from mail-iw0-f178.google.com ([209.85.223.178]:56130 "EHLO
-	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751831AbZKUKZO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Nov 2009 05:25:14 -0500
-Received: by iwn8 with SMTP id 8so3094838iwn.33
-        for <git@vger.kernel.org>; Sat, 21 Nov 2009 02:25:20 -0800 (PST)
+	id S1753505AbZKUNMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Nov 2009 08:12:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753281AbZKUNMs
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 08:12:48 -0500
+Received: from mail-px0-f204.google.com ([209.85.216.204]:59295 "EHLO
+	mail-px0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751487AbZKUNMr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Nov 2009 08:12:47 -0500
+Received: by pxi42 with SMTP id 42so2356170pxi.5
+        for <git@vger.kernel.org>; Sat, 21 Nov 2009 05:12:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=kPJdMOK+IUh3IfsHHblFPSzUygi2aK2De4vMQtwmsak=;
-        b=hDNe9Gld2zvK1WLQEGoYXO1BAxhmqwmvkzjmsxoecj1v8hohrIXl28hbPW3VWKlKkM
-         MnH9jweWJci33wlYBBXmHU4aZ6zXaCOmtqcCiTs3PKwC2S7rngUbL2oKXaiZBsd6Jqn7
-         yszdw7drgI5c39rmt5oDOb/G4Tl+45POeUis8=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=QYNACDfKaeXMS6SdUTVz8ea0h1/oKsjEHSi+rfMnYCc=;
+        b=D/PxhWo+diTyViQTa9eTvGzPxOFULoyAPIKzhMlSoLGPaAZua+Di2fXqTjGD43/rey
+         zPdjhNAdB6B3gZ1oCnxqeN10kQvvAk5iloSWz1l2R4rI/Dmx3lDMWHU0VPLaeSN+vu+O
+         bUTugm6ZQSh3w2iTBlDftV2yoSWpUr1Teuhg4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=sE5wVMpjc/CfpX0wVQ2OO1bzdNB3R5P7C7QaxcG+ivj+/3IrRCIYkt6/JDgiUF9jkK
-         sLLveJOHGr5J52HpJix0Rlp2sGuzgh7rhUAI6xFRbeKCCk2Pm04c0Ef2u036vKYgve+s
-         ITst5PMJf3xZD6SQaH/tUE/Y2fIaypDkeENMQ=
-Received: by 10.231.6.79 with SMTP id 15mr5479141iby.36.1258799120592; Sat, 21 
-	Nov 2009 02:25:20 -0800 (PST)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=u6u7oWeeL2LbLAmFlc5kbFNO3jamzEMocork8s0j+5sFREQzH8TPx1EFaMVPH2IMTJ
+         r4hPgexOP6PWhaXlM+lGn6iYjb3zXggNikekp7d2nrc1nv+CXFihW/Hd5wYq2Q+Bgg4A
+         5P080oLikCSiPiEYjcxswsbQObKZ4jrOOgLuI=
+Received: by 10.114.187.7 with SMTP id k7mr3801526waf.106.1258809173921; Sat, 
+	21 Nov 2009 05:12:53 -0800 (PST)
+In-Reply-To: <20091120074702.GW12890@machine.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133394>
 
-Hi,
+On Fri, Nov 20, 2009 at 1:17 PM, Petr Baudis <pasky@suse.cz> wrote:
 
-I got a bunch of repos I've cloned off GitHub and I'm looking for the
-best way to keep them all up to date.
+> I brought Gitosis/Gitolite up because I got the impression that MR was
+> marketed primarily as a Git ACL tool, the other things being sort of
+> mirror; maybe my impession was wrong, but I still think the comparison
+> in ACL capabilities is useful.
 
-I got a working zsh script, but it lacks some stuff. For instance I
-think it'd be neat if it could output the difference between the
-commit dates as oppose to those long hashes. And if it could initiate
-the pull only when necessary. Other ideas are welcome.
+Sorry; didn't mean to imply you were wrong about that...
 
-Does anybody have any suggestions to how I might complete or otherwise
-improve the below scripts? Thanks in advance.
+But the bulk of MR is probably the web based stuff, wiki, issues etc.,
+which means gitolite is way on the other side of the spectrum, so it
+felt like any comparision is moot, and used the code/binary sizes to
+highlight that.
 
-Here's the working version:
+But you said just the ACL capabilities... set me thinking...
 
-abletony84$ cat pull_all.sh
+Intland: do you have a page that describes your role based ACL stuff a
+little more?  I have a feeling that, modulo it all being in one text
+file, gitolite can probably come close :-)
 
-#!/usr/bin/env zsh
+>> You should stick to gitorious, github, and -- here's a new
+>> one for you -- indefero.
+>
+> Hmm, I didn't even know about this one, thanks for the pointer. Looks
+> like this suddenly is a very popular area. High competition is good!
 
-for folder in $PWD/**/.git(:h); do
+Oh yeah, and indefero is actually looking pretty good -- I know some
+guys at $DAYJOB looking at it very seriously.
 
-  cd $folder
+> (BTW, if you don't care about wikis and issue tracking, but you do care
+> about simplicity and light-weightness, you should best stick to Girocco!
+> ;-)
 
-  git pull
-
-done
-
--
-
-This script lacks a proper if clause, and shows hashes instead of dates:
-
-abletony84$ cat pull_all2.sh
-
-#!/usr/bin/env zsh
-
-for folder in $PWD/**/.git(:h); do
-
-  cd $folder
-
-  if this repo needs an update; then # git ls-remote has been suggested
-
-    old=$(git rev-parse HEAD)
-
-    git pull >& /dev/null
-
-    new=$(git rev-parse HEAD)
-
-    echo "$folder: $old -> $new"
-
-  else
-
-    echo "$folder: nothing to do"
-
-  fi
-
-done
-
--
-
-A slightly different approach, even more incomplete than the previous:
-
-abletony84$ cat pull_all3.sh
-
-#!/usr/bin/env zsh
-
-for folder in $PWD/**/.git(:h); do
-
-  cd $folder
-
-  if repo still exists at github; then
-
-    git fetch >& /dev/null
-
-    if a merge is needed; then
-
-      git merge >& /dev/null
-
-      echo "$folder: date_of_last_current_commit -> date_of_last_new_comit"
-
-    else
-
-      echo "$folder: nothing to do"
-
-    fi
-
-  fi
-
-done
-
--
-
-Thanks again!
-
-Tony
+:-)  yes it is nice, but again, at $DAYJOB access control (even to
+view projects) is a big deal.  A very big deal, actually...!
