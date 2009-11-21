@@ -1,93 +1,118 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [ANNOUNCE] tig-0.15
-Date: Sat, 21 Nov 2009 08:59:23 -0500
-Message-ID: <2c6b72b30911210559v561fd3d8s1e4ad70a8c94cf68@mail.gmail.com>
-References: <20091120133117.GA26917@diku.dk> <20091120135004.GA3919@debian.b2j> 
-	<2c6b72b30911200755l16b306cey16efb42fe9ba27da@mail.gmail.com> 
-	<20091120162543.GB3919@debian.b2j> <2c6b72b30911201829i52ffa022qff827bdf317ad447@mail.gmail.com> 
-	<20091121035858.GC3919@debian.b2j>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/2] jn/gitweb-blame fixes
+Date: Sat, 21 Nov 2009 15:56:50 +0100
+Message-ID: <200911211556.52175.jnareb@gmail.com>
+References: <1258659887-5244-1-git-send-email-bebarino@gmail.com> <4B06157B.10203@gmail.com> <200911210132.44649.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: bill lam <cbill.lam@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 21 14:59:58 2009
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 21 15:56:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NBqVJ-00018C-Br
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 14:59:57 +0100
+	id 1NBrNv-0004AC-5N
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Nov 2009 15:56:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754459AbZKUN7i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Nov 2009 08:59:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754339AbZKUN7i
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 08:59:38 -0500
-Received: from mail-iw0-f178.google.com ([209.85.223.178]:61438 "EHLO
-	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752762AbZKUN7h convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Nov 2009 08:59:37 -0500
-Received: by iwn8 with SMTP id 8so3148222iwn.33
-        for <git@vger.kernel.org>; Sat, 21 Nov 2009 05:59:43 -0800 (PST)
+	id S1754793AbZKUO4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Nov 2009 09:56:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754533AbZKUO4J
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Nov 2009 09:56:09 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:55248 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754783AbZKUO4I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Nov 2009 09:56:08 -0500
+Received: by bwz27 with SMTP id 27so4057199bwz.21
+        for <git@vger.kernel.org>; Sat, 21 Nov 2009 06:56:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=iIrMmjt6h5DygILWtMTSRhaO1UibAeCrWSHn6BXyaME=;
-        b=YbpZ0vSw77dV9umJ1Nv2+XqQ+zQJJR8fkCAB56Sqy7BkoVrKR7HXXL7pSFVCn2kLsL
-         PX6Ht4EzSgk7Hl9e0Nc9HZJO4tpyOgaMXA3MjnBkaGjls96BiqIbfVV4/5vYjL5MCMbq
-         5r56R0jeIW8eV2fy8kcqOkezS2KafUaQUP+hU=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=tluyShH03M2XSP7kFehOL8GQRTJ73exRBIEOl2B5meQ=;
+        b=Y6MU1oixijq8o1qoj4x6pnQntc35uoKyWsniwibp6mO6siwkVcyLTUC+sK3rYSDO5F
+         xQvvsLW8RSD1HXvcTrx8IAG5bZk/I8E1UGJRQcwH8CPuzHWKhqX7+6PVFu818niowghk
+         3PzgUFAULeV8lc7s0t7aRJi2H5BGsojGxv+hc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=xvsgqn7J8iNX5K0RtlWPoOz7OV7DYJkTMYdSrQbPuthfFlgG/qVsHdqnOOTssAzevF
-         OVhvz1064X0ZPkfQeC2Y/+Or88GQvUZNKKlUNicmUFjCvHrX4IotCMt57psxWqAL/THf
-         kJhUK2ZVLjadB3zbnmCVXF+2Lvnm2f3mr/KrI=
-Received: by 10.231.121.69 with SMTP id g5mr2607280ibr.44.1258811983099; Sat, 
-	21 Nov 2009 05:59:43 -0800 (PST)
-In-Reply-To: <20091121035858.GC3919@debian.b2j>
-X-Google-Sender-Auth: 673f8e6903cced61
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=iXOJzVDILaMbPxozJpJy4eocd7y8bvdkwtv5PCSOJClNBSXKtKfbWbFezcgADBW/TP
+         o7mLWbuo19vSpe72rSClTaANSFTzhrFG1nJfuplplAwYwUpXwO4PbabCJj3bhL4F1FWD
+         aP/qg0hmHWqugBw5mZr7uFbDjRThuStSGj8U4=
+Received: by 10.204.20.82 with SMTP id e18mr2608028bkb.168.1258815372385;
+        Sat, 21 Nov 2009 06:56:12 -0800 (PST)
+Received: from ?192.168.1.13? (abvw56.neoplus.adsl.tpnet.pl [83.8.220.56])
+        by mx.google.com with ESMTPS id 16sm674472bwz.7.2009.11.21.06.56.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 21 Nov 2009 06:56:10 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200911210132.44649.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133396>
 
-On Fri, Nov 20, 2009 at 22:58, bill lam <cbill.lam@gmail.com> wrote:
-> On Fri, 20 Nov 2009, Jonas Fonseca wrote:
->> On Fri, Nov 20, 2009 at 11:25, bill lam <cbill.lam@gmail.com> wrote:
->> > On Fri, 20 Nov 2009, Jonas Fonseca wrote:
->> >> install-release-doc-man:
->> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0for doc in $(MANDOC); do \
->> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0git checko=
-ut origin/release $$doc; \
->> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0done
->> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0$(MAKE) install-doc-man
->> >
->> > Thanks it works. =C2=A0Could you also commit this to git?
->>
->> Done, but using git-checkout-index ...
-> the line
-> =C2=A0git read-tree release
-> raised error perhaps I didn't checkout a branch for it, replacing it
-> with
-> =C2=A0 git read-tree origin/relase
-> or
-> =C2=A0 git read-tree remotes/origin/relase
->
-> seems working.
+On Sat, 21 Nov 2009, Jakub Narebski wrote:
 
-Ah, stupid me.
+> * Testing it with IE8 (Internet Explorer 8.0.6001.18702) page loading stops
+>   at 0%, at the very beginning on startBlame() function
+> 
+>   IE8 shows that it finds the following errors:
+> 
+>   * "firstChild is null or not an object"
+>     line: 565, char:4
+> 
+>       a_sha1.firstChild.data = commit.sha1.substr(0, 8);
+> 
+>     It might be caused by the fact that firstChild for this case should be
+>     text node containing of pure whitespace:
+>        <a href=""> </a>
+>     Perhaps IE8 simplifies it in "compatibility view" mode
 
-> Another question, while it can open a file with editor in tree-view, =
-I
-> cannot find in tigmanual how to directly save a file. =C2=A0Any idea?
+This bug (be it in gitweb.js or in IE8) is fixed by the following patch:
 
-There is no such action/keybinding. I guess it should be easy to
-extend the current functionality to query for a file name and save to
-that instead of a temporary file.
+-- 8< --
+diff --git i/gitweb/gitweb.js w/gitweb/gitweb.js
+index 200ec5a..c1e425c 100644
+--- i/gitweb/gitweb.js
++++ w/gitweb/gitweb.js
+@@ -562,7 +562,12 @@ function handleLine(commit, group) {
+ 			td_sha1.rowSpan = group.numlines;
+ 
+ 			a_sha1.href = projectUrl + 'a=commit;h=' + commit.sha1;
+-			a_sha1.firstChild.data = commit.sha1.substr(0, 8);
++			if (a_sha1.firstChild) {
++				a_sha1.firstChild.data = commit.sha1.substr(0, 8);
++			} else {
++				a_sha1.appendChild(
++					document.createTextNode(commit.sha1.substr(0, 8)));
++			}
+ 			if (group.numlines >= 2) {
+ 				var fragment = document.createDocumentFragment();
+ 				var br   = document.createElement("br");
+-- >8 --
 
---=20
-Jonas Fonseca
+> 
+>  * "Unspecified error" (twice)
+>    line: 777, char:2
+> 
+>      if (xhr.readyState === 3 && xhr.status !== 200) {
+>      	return;
+>      }
+> 
+>    I don't know what might be the source of error here; I suspect that the
+>    error position mentioned by IE8 is bogus.
+
+But I have no idea how to fix this.  "Unspecified error" isn't very 
+helpful...
+
+-- 
+Jakub Narebski
+Poland
