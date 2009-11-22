@@ -1,80 +1,170 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git svn: always reuse existing remotes on fetch
-Date: Sun, 22 Nov 2009 15:39:54 -0800
-Message-ID: <20091122233954.GA23448@dcvr.yhbt.net>
-References: <20091117025945.GE17964@onerussian.com> <4B03B7D3.8050905@drmicha.warpmail.net> <20091118133205.GB17964@onerussian.com> <4B03FD29.3090001@drmicha.warpmail.net> <20091118142332.GC17964@onerussian.com> <4B040D95.9040901@drmicha.warpmail.net> <20091119095307.GA30423@dcvr.yhbt.net> <20091120204723.GB30423@dcvr.yhbt.net>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] log --format: document %w
+Date: Mon, 23 Nov 2009 00:46:34 +0100
+Message-ID: <4B09CD5A.4070401@lsrfire.ath.cx>
+References: <4B0963A3.4060804@lsrfire.ath.cx> <7vzl6eiiyx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
-	Yaroslav Halchenko <debian@onerussian.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 23 00:40:07 2009
+X-From: git-owner@vger.kernel.org Mon Nov 23 00:46:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCM2I-0007yy-Tm
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 00:40:07 +0100
+	id 1NCM8i-0001Zz-Au
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 00:46:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755861AbZKVXjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Nov 2009 18:39:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755742AbZKVXjs
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 18:39:48 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:39732 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755767AbZKVXjr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Nov 2009 18:39:47 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CCD71F605;
-	Sun, 22 Nov 2009 23:39:54 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20091120204723.GB30423@dcvr.yhbt.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755839AbZKVXqc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Nov 2009 18:46:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755790AbZKVXqc
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 18:46:32 -0500
+Received: from india601.server4you.de ([85.25.151.105]:49539 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753808AbZKVXqc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Nov 2009 18:46:32 -0500
+Received: from [10.0.1.101] (p57B7C097.dip.t-dialin.net [87.183.192.151])
+	by india601.server4you.de (Postfix) with ESMTPSA id 1A0022F8051;
+	Mon, 23 Nov 2009 00:46:37 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <7vzl6eiiyx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133465>
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> so there's apparently a bug in our handling of
-> svn-remote != "svn" somewhere...
+Junio C Hamano schrieb:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>=20
+>> I'm not especially proud of the triple negative in that note.  How t=
+o say it
+>> better, yet concise?
+>> +- '%w([<w>[,<i1>[,<i2>]]])': switch line wrapping, like the -w opti=
+on of
+>> +  linkgit:git-shortlog[1].  NOTE: Color placeholders (`%C*`) are no=
+t
+>> +  recognized as having no width, so they should not be put into wra=
+pped
+>> +  sections.
+>=20
+> "The code miscounts the width of '%C*' color placeholders"?
+>=20
+> Perhaps somebody in the codepath leading to pick_one_utf8_char() in u=
+tf8.c
+> can be made aware of them?
+>=20
+> utf8_width() is called from many places (has one caller outside utf8.=
+c as
+> well).  It is given a pointer to a pointer that points at the current
+> position in a string, and is responsible for picking up one logical l=
+etter
+> advancing the given pointer to skip over that letter, and returning t=
+he
+> display width of that one letter.  The function wants the string to b=
+e
+> encoded in utf-8 and signals by putting NULL in the pointer when it
+> detects the input string is not.
+>=20
+> Picking up one logical letter is done by pick_one_utf8_char(), which =
+is a
+> nicely written generic "We are at the character boundary of a potenti=
+ally
+> multi-byte utf-8 string; pick the first character" implementation, an=
+d we
+> wouldn't want to contaminate that with escape sequence logic---we mig=
+ht
+> want to reuse it in other codepaths where we have no reason to expect=
+ any
+> escape sequences.
+>=20
+> So perhaps we can introduce is_esc_sequence(s, r, w) that
+>=20
+>  - returns true if we are at the beginning of an esc-sequence;
+>  - skips the sequence just like utf8_width() does with s and r; and
+>  - counts the width of the sequence and returns it in *w
+>=20
+> The implementation of the is_esc_sequence() could be to only detect t=
+he
+> color sequence (if the sequence has things like cursor-position contr=
+ol
+> then we are already lost, as calling "utf8_width()" on such a string =
+does
+> not make much sense anyway) and report zero-width.
+>=20
+> I dunno.
+>=20
+> diff --git a/utf8.c b/utf8.c
+> index 5c18f0c..d45e75f 100644
+> --- a/utf8.c
+> +++ b/utf8.c
+> @@ -241,7 +241,12 @@ invalid:
+>   */
+>  int utf8_width(const char **start, size_t *remainder_p)
+>  {
+> -	ucs_char_t ch =3D pick_one_utf8_char(start, remainder_p);
+> +	ucs_char_t ch;
+> +	int w;
+> +
+> +	if (is_esc_sequence(start, remainder_p, &w))
+> +		return w;
+> +	ch =3D pick_one_utf8_char(start, remainder_p);
+>  	if (!*start)
+>  		return 0;
+>  	return git_wcwidth(ch);
 
->From 4d0157d6995925ea55ff181ea94d058583333f90 Mon Sep 17 00:00:00 2001
-From: Eric Wong <normalperson@yhbt.net>
-Date: Sun, 22 Nov 2009 12:37:06 -0800
-Subject: [PATCH] git svn: always reuse existing remotes on fetch
+I think utf8_width() is too generic for that; we shouldn't teach it ter=
+minal
+control details.  Something like this?  It keeps it all local to
+strbuf_add_wrapped_text(); ignoring display mode escape codes in there =
+can be
+justified with its purpose.
 
-The internal no_reuse_existing flag is set to allow initializing
-multiple remotes with the same URL, common with SVM users.
+ utf8.c |   23 ++++++++++++++++++++++-
+ 1 files changed, 22 insertions(+), 1 deletions(-)
 
-Unfortunately, this flag caused misbehavior when used
-with the -R command-line flag for fetching.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 2746895..7f7a56f 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -428,6 +428,7 @@ sub cmd_fetch {
- 	if (@_ > 1) {
- 		die "Usage: $0 fetch [--all] [--parent] [svn-remote]\n";
- 	}
-+	$Git::SVN::no_reuse_existing = undef;
- 	if ($_fetch_parent) {
- 		my ($url, $rev, $uuid, $gs) = working_head_info('HEAD');
- 		unless ($gs) {
-@@ -956,6 +957,7 @@ sub cmd_multi_init {
+diff --git a/utf8.c b/utf8.c
+index 5c18f0c..fcc0aeb 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -298,6 +298,21 @@ static void print_spaces(struct strbuf *buf, int c=
+ount)
+ 	strbuf_write(buf, s, count);
  }
- 
- sub cmd_multi_fetch {
-+	$Git::SVN::no_reuse_existing = undef;
- 	my $remotes = Git::SVN::read_all_remotes();
- 	foreach my $repo_id (sort keys %$remotes) {
- 		if ($remotes->{$repo_id}->{url}) {
--- 
-Eric Wong
+=20
++/* XXX: this handles display mode sequences, only.  Do we need more? *=
+/
++static size_t esc_sequence_len(const char *s)
++{
++	const char *p =3D s;
++	if (*p++ !=3D '\033')
++		return 0;
++	if (*p++ !=3D '[')
++		return 0;
++	while (isdigit(*p) || *p =3D=3D ';')
++		p++;
++	if (*p++ !=3D 'm')
++		return 0;
++	return p - s;
++}
++
+ /*
+  * Wrap the text, if necessary. The variable indent is the indent for =
+the
+  * first line, indent2 is the indent for all other lines.
+@@ -329,7 +344,13 @@ int strbuf_add_wrapped_text(struct strbuf *buf,
+ 	}
+=20
+ 	for (;;) {
+-		char c =3D *text;
++		char c;
++		size_t skip;
++
++		while ((skip =3D esc_sequence_len(text)))
++			text +=3D skip;
++
++		c =3D *text;
+ 		if (!c || isspace(c)) {
+ 			if (w < width || !space) {
+ 				const char *start =3D bol;
