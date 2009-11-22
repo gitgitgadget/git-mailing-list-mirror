@@ -1,88 +1,82 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH/RFC 0/3] git rerere unresolve file
-Date: Sun, 22 Nov 2009 15:19:54 +0100
-Message-ID: <200911221519.55658.j6t@kdbg.org>
-References: <200911211958.40872.j6t@kdbg.org> <7v6393mfqz.fsf@alter.siamese.dyndns.org>
+From: bill lam <cbill.lam@gmail.com>
+Subject: how to suppress progress percentage in git-push
+Date: Sun, 22 Nov 2009 22:53:53 +0800
+Message-ID: <20091122145352.GA3941@debian.b2j>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 22 15:20:22 2009
+Content-Type: text/plain; charset=iso-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Nov 22 15:54:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCDIa-0006wT-OJ
-	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 15:20:21 +0100
+	id 1NCDpP-0002WY-1X
+	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 15:54:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755128AbZKVOUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Nov 2009 09:20:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754913AbZKVOUD
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 09:20:03 -0500
-Received: from [93.83.142.38] ([93.83.142.38]:64137 "EHLO dx.sixt.local"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753980AbZKVOUC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Nov 2009 09:20:02 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id EB38D19F694;
-	Sun, 22 Nov 2009 15:19:55 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <7v6393mfqz.fsf@alter.siamese.dyndns.org>
+	id S1754580AbZKVOyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Nov 2009 09:54:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754317AbZKVOx7
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 09:53:59 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:65203 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754150AbZKVOx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Nov 2009 09:53:59 -0500
+Received: by pwi3 with SMTP id 3so2950677pwi.21
+        for <git@vger.kernel.org>; Sun, 22 Nov 2009 06:54:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=28mvCTE3X+fStNpfxQ9zr0cLuXx/2OeuYK9rvpgr1HA=;
+        b=fczg4ODpkdHDvboUxBo7rHorP/uuND3B3LPVxshP+0LXS2qQ2YR1YfByeLd4q1Vj4C
+         s/S7wLd7yU7vyvZSDrWPRyx3BaqYV5Zcv6UzIwNEdKU0dCOMg9uQkcwwx7Ctvs0qy8+2
+         P9UERyASzrKWrEhUi/hsdsM4MJisX6jQAJtkU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=Yiv921CgFOl5UrZCTidJXchZMupAtR3tFASf+tN4wWBF+bB3fngQin5i5l/w2m8GDY
+         bNxKnchVs9qeFZDX/AxevdNFm9afkhzRaZ1BR8A2ALCKiYQEmIPl73KSU6WGbVkgxIpy
+         26CZJEOObbSFjNad+iQ+jxClxiEjxeQhFpWRA=
+Received: by 10.115.80.14 with SMTP id h14mr6269442wal.133.1258901644882;
+        Sun, 22 Nov 2009 06:54:04 -0800 (PST)
+Received: from localhost (pcd406002.netvigator.com [203.218.196.2])
+        by mx.google.com with ESMTPS id 20sm444960pxi.7.2009.11.22.06.54.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 22 Nov 2009 06:54:04 -0800 (PST)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133433>
 
-On Sonntag, 22. November 2009, Junio C Hamano wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> > ... But
-> > there is no other way to remove an incorrect resolution short of purging
-> > the whole rr-cache.
->
-> No, no no, no.  You do not have to.
+I set crontab to push to another computer for backup. It sent
+confirmation email after finished.  It looked like
 
-Oh, yeah, I know. But even for people who know how to drive plumbing commands, 
-this:
+Counting objects: 1
+Counting objects: 9, done.
+Delta compression using up to 2 threads.
+Compressing objects:  20% (1/5)
+Compressing objects:  40% (2/5)
+Compressing objects:  60% (3/5)
+Compressing objects:  80% (4/5)
+Compressing objects: 100% (5/5)
+Compressing objects: 100% (5/5), done.
+Writing objects:  20% (1/5)
+Writing objects:  40% (2/5)
+Writing objects:  60% (3/5)
+Writing objects:  80% (4/5)
+Writing objects: 100% (5/5)
+Writing objects: 100% (5/5), 549 bytes, done.
+Total 5 (delta 3), reused 0 (delta 0)
 
-> "ls -t1 .git/rr-cache/*/thisimage | head"
-> would be one way to manually find out which one it is.
+Often the list of progress % can be a page long.  I want output but
+not those percentage progress status.  Will that be possible?
 
-does not count as "you can" in my book. ;) It assumes that there are at most a 
-handful conflicted files. In my case, for example, I have to fix a merge 
-where there are ~100 conflicted files.
-
->  * Then the user tells rerere that "this is the corrected resolution",
->    perhaps
->
->    $ git rerere update Documentation/git-commit.txt
->
->    This will
->
->    - Internally recompute the original conflicted state, i.e. run
->      "checkout --conflict=merge Documentation/git-commit.txt" in-core;
->
->    - feed it to rerere.c::handle_file() to learn the conflict hash;
->
->    - read the user's updated resolution from the work tree, and update
->      "postimage" with it.
->
-> ...
->
-> The "forget" subcommand may be useful, but the real implementation should
-> be the first half of the "update", iow, recreate conflict in-core in order
-> to compute the conflict hash, and drop existing "postimage", without
-> replacing it from the work tree.  We should leave it up to the user using
-> "checkout --conflict" to reproduce the conflict in the work tree.
-
-Thank you for your elaborate feedback and the guidelines about how to move 
-forward.
-
-I actually think that 'forget' should be the primary subcommand. Because after 
-the postimage was purged, the next implicit or explicit 'git rerere' will 
-record the resolution anyway. I'll see what I can do.
-
--- Hannes
+-- 
+regards,
+====================================================
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
