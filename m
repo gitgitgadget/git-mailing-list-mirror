@@ -1,78 +1,88 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] send-email: new 'add-envelope' option
-Date: Sun, 22 Nov 2009 14:37:04 +0200
-Message-ID: <94a0d4530911220437l5386b36ds4ef06dc66cc11bcc@mail.gmail.com>
-References: <1258825410-28592-1-git-send-email-felipe.contreras@gmail.com>
-	 <20091121193600.GA3296@coredump.intra.peff.net>
-	 <94a0d4530911211159l1fadad0ldb0d760439ceb57@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH/RFC 0/3] git rerere unresolve file
+Date: Sun, 22 Nov 2009 15:19:54 +0100
+Message-ID: <200911221519.55658.j6t@kdbg.org>
+References: <200911211958.40872.j6t@kdbg.org> <7v6393mfqz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 22 13:37:11 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 22 15:20:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCBgk-0003HJ-H6
-	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 13:37:10 +0100
+	id 1NCDIa-0006wT-OJ
+	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 15:20:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754859AbZKVMg7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Nov 2009 07:36:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754837AbZKVMg6
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 07:36:58 -0500
-Received: from mail-gx0-f226.google.com ([209.85.217.226]:62552 "EHLO
-	mail-gx0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754542AbZKVMg6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Nov 2009 07:36:58 -0500
-Received: by gxk26 with SMTP id 26so4147010gxk.1
-        for <git@vger.kernel.org>; Sun, 22 Nov 2009 04:37:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=ElrbutsHVw1cZrVge73pEkLHGYhIIzr8LL8DJxn3wsk=;
-        b=ni/eHQWGmuN8GXRmuhcYJTrELexLQFfklCJ8VApF33fkGSpkWanb/0b4ghoThLUQh4
-         HFKdV6StLkQNs4sWPHVkrXhG+crdZPiIzy3Fhj3EVZ5fILHW7t/z2hknHad/2cOeIJO6
-         ijGPDVy0cWYaVo9CqrIGOHm09HOl2l4cU5rpc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=gCSHQO/GrxL7PGKVBVz9ICEJ/elz3TyzAJ+zKCQ3wokyfvAotdclk2JDKxbxU6EOvx
-         emQ2MS1VKQ3HRK7/1wv9xB2cxEl8Tk5KqaoVEcS3J4LIncV+LwMkbdrVHdZa4wtcKH9F
-         EvpXTHCiNccHxElFHu+zn91adiovrKSR9KR8U=
-Received: by 10.231.160.143 with SMTP id n15mr1538390ibx.54.1258893424204; 
-	Sun, 22 Nov 2009 04:37:04 -0800 (PST)
-In-Reply-To: <94a0d4530911211159l1fadad0ldb0d760439ceb57@mail.gmail.com>
+	id S1755128AbZKVOUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Nov 2009 09:20:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754913AbZKVOUD
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 09:20:03 -0500
+Received: from [93.83.142.38] ([93.83.142.38]:64137 "EHLO dx.sixt.local"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753980AbZKVOUC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Nov 2009 09:20:02 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id EB38D19F694;
+	Sun, 22 Nov 2009 15:19:55 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <7v6393mfqz.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133432>
 
-On Sat, Nov 21, 2009 at 9:59 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Sat, Nov 21, 2009 at 9:36 PM, Jeff King <peff@peff.net> wrote:
->> --envelope-from is IMHO confusingly similar to
->> --envelope-sender. Maybe --use-from-in-envelope would be a better name?
+On Sonntag, 22. November 2009, Junio C Hamano wrote:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> > ... But
+> > there is no other way to remove an incorrect resolution short of purging
+> > the whole rr-cache.
 >
-> Ok. I don't have any opinion on the name.
+> No, no no, no.  You do not have to.
 
-I thought a bit more about this, and in the end what we really want is
-to add the sender envelope. The most typical case would be to use the
-'from' address, but we should be able to override it (we do both by
-using --envelope-sender).
+Oh, yeah, I know. But even for people who know how to drive plumbing commands, 
+this:
 
-So here are other options.
+> "ls -t1 .git/rr-cache/*/thisimage | head"
+> would be one way to manually find out which one it is.
 
-a) --add-envelope: add the sender envelope, by default it would be the
-'from' address, but could be overridden by --envelope-sender.
+does not count as "you can" in my book. ;) It assumes that there are at most a 
+handful conflicted files. In my case, for example, I have to fix a merge 
+where there are ~100 conflicted files.
 
-b) --envelope-sender="" or "auto": this would require minimal changes
-but looks a bit strange.
+>  * Then the user tells rerere that "this is the corrected resolution",
+>    perhaps
+>
+>    $ git rerere update Documentation/git-commit.txt
+>
+>    This will
+>
+>    - Internally recompute the original conflicted state, i.e. run
+>      "checkout --conflict=merge Documentation/git-commit.txt" in-core;
+>
+>    - feed it to rerere.c::handle_file() to learn the conflict hash;
+>
+>    - read the user's updated resolution from the work tree, and update
+>      "postimage" with it.
+>
+> ...
+>
+> The "forget" subcommand may be useful, but the real implementation should
+> be the first half of the "update", iow, recreate conflict in-core in order
+> to compute the conflict hash, and drop existing "postimage", without
+> replacing it from the work tree.  We should leave it up to the user using
+> "checkout --conflict" to reproduce the conflict in the work tree.
 
-Any thoughts?
+Thank you for your elaborate feedback and the guidelines about how to move 
+forward.
 
--- 
-Felipe Contreras
+I actually think that 'forget' should be the primary subcommand. Because after 
+the postimage was purged, the next implicit or explicit 'git rerere' will 
+record the resolution anyway. I'll see what I can do.
+
+-- Hannes
