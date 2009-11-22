@@ -1,147 +1,102 @@
 From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
-Subject: [PATCH 1/4] Clarify and correct -z
-Date: Sun, 22 Nov 2009 20:43:20 +0100
-Message-ID: <4B099458.6000909@gmail.com>
+Subject: [PATCH 2/4] apply: apply works outside a repository
+Date: Sun, 22 Nov 2009 20:43:42 +0100
+Message-ID: <4B09946E.6050409@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 22 20:43:34 2009
+X-From: git-owner@vger.kernel.org Sun Nov 22 20:43:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCILL-0005q2-Fh
-	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 20:43:31 +0100
+	id 1NCILe-0005v3-It
+	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 20:43:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753778AbZKVTnS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Nov 2009 14:43:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753565AbZKVTnR
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 14:43:17 -0500
+	id S1753968AbZKVTni convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Nov 2009 14:43:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753846AbZKVTni
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 14:43:38 -0500
 Received: from mail-ew0-f219.google.com ([209.85.219.219]:52054 "EHLO
 	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753486AbZKVTnR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Nov 2009 14:43:17 -0500
-Received: by ewy19 with SMTP id 19so1206009ewy.21
-        for <git@vger.kernel.org>; Sun, 22 Nov 2009 11:43:22 -0800 (PST)
+	with ESMTP id S1753838AbZKVTnh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Nov 2009 14:43:37 -0500
+Received: by mail-ew0-f219.google.com with SMTP id 19so1206009ewy.21
+        for <git@vger.kernel.org>; Sun, 22 Nov 2009 11:43:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from
          :user-agent:mime-version:to:cc:subject:content-type
          :content-transfer-encoding;
-        bh=QT7qspC/Rp969oamTi44aveYfkBFGp7oKMh3cnjlAfM=;
-        b=SV+5DGLx3YDPMoQkyKL+nMmzPArVfDlIQa1J4p43ge5H4KSCcx12XkORVHWmq9Aoq0
-         8hjNb1YTtRNtpOEPTPNwpNj/NF1T/VH5hfmE7THyHESc01bqOxGO68YuDukYyawCu598
-         xIGHEW984yOBCbSIgPXbKbmaC2IeNaCyNORMg=
+        bh=2mLJl27hyfmx5KL2R5PKvS2FivduJrzvpFMRwIhs//Q=;
+        b=u8U5MKiP+wMkq44mPIotYSAr672qaRSDS2cEZZUlLkcS22nL24Oha9ObfljdL9oFYX
+         Q+QM1Ibn/kkHztMFtr7/jRrv4uJJNuFznVpjNPb6OV+UGnaOoHREA3qNKH11XuwVMrRb
+         dHzhsEETUOD8qegW5G4W78OI5VB7lrM3yfxZI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :content-type:content-transfer-encoding;
-        b=DG655UWlBxIrLtjVOXTttsy1yKFhPYA6oOQgdxrmKzQTaDzc8P1uMAi8xhZa2p28ZM
-         sJW0mBXXKj49GtcqnuUcwr1SwBDyNh4SQLHRvOneNXwUBCJlsQAHTtwbXd0pp3CFxIlw
-         oPbxLHYGIgVurzpejdmQMqGlsFfU0RWPzPkV4=
-Received: by 10.216.90.131 with SMTP id e3mr1227440wef.69.1258919002239;
-        Sun, 22 Nov 2009 11:43:22 -0800 (PST)
+        b=rnwYOlVDEHXyBLNIqitqp3PLbZijfSJ0exKMMtaeu6VwgUj7dFK+4q3fvwpmDUgF2P
+         2dBK7HPuWNg6IRvq4mHl9uFZY4cjLfR3GPEc612Wq3LVvzCrj86Koa0WajUmBlXiy7Kf
+         UlEsLbAcpwoPRCvrtDlET5CUfJRyJR4ZrwDgM=
+Received: by 10.213.23.151 with SMTP id r23mr3828319ebb.63.1258919023832;
+        Sun, 22 Nov 2009 11:43:43 -0800 (PST)
 Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
-        by mx.google.com with ESMTPS id 28sm483725eye.11.2009.11.22.11.43.21
+        by mx.google.com with ESMTPS id 10sm872171eyz.7.2009.11.22.11.43.43
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 22 Nov 2009 11:43:21 -0800 (PST)
+        Sun, 22 Nov 2009 11:43:43 -0800 (PST)
 User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133452>
 
-The description for -z is too vague and general for the
-apply, diff*, and log commands.
+The documentation for 'git apply' talks about applying a
+patch/diff to the index and to the working tree, which seems
+to imply that it will not work outside a git repository.
 
-Change the description of -z for 'git log' to note that
-commits will be separated by NULs.
+Actually 'git patch' works outside a repository (which can
+be useful especially for applying binary or rename patches that
+the standard "patch" utility cannot handle), so the documentation
+should mention it.
 
-Change the description of -z for 'git diff*' and 'git apply'
-to note that it applies to the --numstat option, and for
-'git diff*' also for --raw option.
-
-Also correct the description of the "munging" of pathanmes that
-takes place in the absence of -z for the 'git diff*' and
-'git apply' commands, namely that apart from the characters mentioned,
-double quotes will also be escaped and that the pathname will be
-enclosed in double quotes if any characters are escaped.
+Thanks to Junio for suggesting better wording.
 
 Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
 ---
-The original documentation for -z in diff-options.txt says:
+ Documentation/git-apply.txt |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
 
-"Also output from commands such as `git-log` will be delimited
-with NUL between commits."
-
-I am not sure about "such as git-log". What other command would
-that be? In my patch, I have assumed that only 'git log' behaves
-in that way (i.e. that it is the only command -z will change
-the behavior of even when no other options are given).
-
-
- Documentation/diff-options.txt |   17 ++++++++++++++---
- Documentation/git-apply.txt    |   12 +++++++-----
- 2 files changed, 21 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
-s.txt
-index 2b37193..18366b1 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -85,10 +85,21 @@ ifndef::git-format-patch[]
- endif::git-format-patch[]
-=20
- ifndef::git-format-patch[]
-+
- -z::
--	NUL-line termination on output.  This affects the `--raw`
--	output field terminator.  Also output from commands such
--	as `git-log` will be delimited with NUL between commits.
-+ifndef::git-log[]
-+	When `--raw` or `--numstat` has been given, do not munge
-+	pathnames and use NULs as output field terminators.
-++
-+Without this option, each pathname output will have TAB, LF, double qu=
-otes,
-+and backslash characters replaced with `\t`, `\n`, `\"`, and `\\`,
-+respectively, and the pathname will be enclosed in double quotes if
-+any of those replacements occurred.
-+endif::git-log[]
-+
-+ifdef::git-log[]
-+	Separate the commits with NULs instead of with new newlines.
-+endif::git-log[]
-=20
- --name-only::
- 	Show only names of changed files.
 diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index 5ee8c91..0156ca9 100644
+index 0156ca9..0c55ca9 100644
 --- a/Documentation/git-apply.txt
 +++ b/Documentation/git-apply.txt
-@@ -87,11 +87,13 @@ the information is read from the current index inst=
-ead.
- 	rejected hunks in corresponding *.rej files.
+@@ -3,7 +3,7 @@ git-apply(1)
 =20
- -z::
--	When showing the index information, do not munge paths,
--	but use NUL terminated machine readable format.  Without
--	this flag, the pathnames output will have TAB, LF, and
--	backslash characters replaced with `\t`, `\n`, and `\\`,
--	respectively.
-+	When `--numstat` has been given, do not munge pathnames,
-+	but use a NUL-terminated machine-readable format.
-++
-+Without this option, each pathname output will have TAB, LF, double qu=
-otes,
-+and backslash characters replaced with `\t`, `\n`, `\"`, and `\\`,
-+respectively, and the pathname will be enclosed in double quotes if
-+any of those replacements occurred.
+ NAME
+ ----
+-git-apply - Apply a patch on a git index file and/or a working tree
++git-apply - Apply a patch to files and/or to the index
 =20
- -p<n>::
- 	Remove <n> leading slashes from traditional diff paths. The
+=20
+ SYNOPSIS
+@@ -20,8 +20,11 @@ SYNOPSIS
+=20
+ DESCRIPTION
+ -----------
+-Reads supplied 'diff' output and applies it on a git index file
+-and a work tree.
++Reads the supplied diff output (i.e. "a patch") and applies it to file=
+s.
++With the `--index` option the patch is also applied to the index, and
++with the `--cache` option the patch is only applied to the index.
++Without these options, the command applies the patch only to files,
++and does not require them to be in a git repository.
+=20
+ OPTIONS
+ -------
 --=20
 1.6.5.3.298.g39add
