@@ -1,92 +1,109 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] apply: apply works outside a repository
-Date: Sun, 22 Nov 2009 09:28:59 -0800
-Message-ID: <7v3a46ii3o.fsf@alter.siamese.dyndns.org>
-References: <4B0964A1.2040302@gmail.com>
+Subject: Re: [PATCH] send-email: new 'add-envelope' option
+Date: Sun, 22 Nov 2009 09:54:10 -0800
+Message-ID: <7v6392h2d9.fsf@alter.siamese.dyndns.org>
+References: <1258825410-28592-1-git-send-email-felipe.contreras@gmail.com>
+ <20091121193600.GA3296@coredump.intra.peff.net>
+ <94a0d4530911211159l1fadad0ldb0d760439ceb57@mail.gmail.com>
+ <7v1vjrmfjw.fsf@alter.siamese.dyndns.org>
+ <94a0d4530911220403w7238dab7saf18830a89f2add5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Bj=C3=B6rn?= Gustavsson <bgustavsson@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 22 18:29:26 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 22 18:54:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCGFZ-0001S7-Jk
-	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 18:29:25 +0100
+	id 1NCGdl-0001LR-LP
+	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 18:54:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755567AbZKVR3F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Nov 2009 12:29:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755550AbZKVR3C
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 12:29:02 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37694 "EHLO
+	id S1755526AbZKVRyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Nov 2009 12:54:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755442AbZKVRyO
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 12:54:14 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58649 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755519AbZKVR3A convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Nov 2009 12:29:00 -0500
+	with ESMTP id S1755431AbZKVRyN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Nov 2009 12:54:13 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 68C68A0D4C;
-	Sun, 22 Nov 2009 12:29:06 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8ADE982DC4;
+	Sun, 22 Nov 2009 12:54:19 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=GT0Jz9VN1uMJVYnZ1RkMl0ZmR
-	yM=; b=Jai1CRL7SxgdTXFIsFk9MvdKArY+4RX7XoYcJqUy1rVWv9PPtrqc6CNnl
-	x4luRpxXfshSfqTbpBybOqtgrGetlYHbPeZ3jTEP0wOG2OZiC08A6AC96iHb1lp2
-	Bw94OxcKhd1BCtCcDr9GYo/pTo3lyB2Fm+9xKVt2Ns+LXvz9EY=
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=l+XS7Qe/96ofZygihVnL4+8utb4=; b=SYIAn+
+	scrHv6p/OMPcpNiJMkamAalz+PZTxop4yVuHuk34Ty+e1BbxskUkUKCeCwPEKTWf
+	YQnTVeCFcZzjjJrZ+D2Nt2nMvJmZetTSDK6tlH2vSiodKzBg0NiRBXIarRxKaNmT
+	Blh6rH+DhYmD3Ll94fqNNnc+ElYH8NRWEtbro=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=Xuol/+ZiDfx9WatnMab
-	HpW3OBneIe1CENQiMbZlaVl2PGfIRqlV+MhudaSzSxGKgPDJL01J1QxkD/OLdPqQ
-	nEeM3cvFSBeZ63ygTKPzJv+VNklXGN1+5C9dJ+0wxYeDg7kWx/cLVHRx4dZAAzMk
-	dVVi0TuSVVmQ8I9HAlDYDvBU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 474A6A0D4B;
-	Sun, 22 Nov 2009 12:29:04 -0500 (EST)
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HHnl+kxpZDrlErj34fSlO4JDSws0tTYG
+	tUxf2GK3I9UqDBJiZWBRi4oKVrQGXtbCcQKnm1ziMylatXFWUDdNZNHCTvKwNPA3
+	Ndh7XsytlpA2yXIpyTOBpFbVqZFq+AplyjzkQnWddeEGJA0Gn1aB9X9yRS44I/lQ
+	IZkYGK0DW58=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 251F282DC3;
+	Sun, 22 Nov 2009 12:54:16 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 54C39A0D48; Sun, 22 Nov 2009
- 12:29:00 -0500 (EST)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 39DBC82DC2; Sun, 22 Nov
+ 2009 12:54:12 -0500 (EST)
+In-Reply-To: <94a0d4530911220403w7238dab7saf18830a89f2add5@mail.gmail.com>
+ (Felipe Contreras's message of "Sun\, 22 Nov 2009 14\:03\:01 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 87DD0B78-D78C-11DE-B43A-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 0D0100C2-D790-11DE-B128-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133449>
 
-Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> The documentation for 'git apply' talks about applying a
-> patch/diff to the index and to the working tree, which seems
-> to imply that it will not work outside a git repository.
+> Maybe I should wait until somebody adds the tests to --envelope-sender
+> before pushing this patch.
 
-Thanks.  I think the headline should also be reworded.  It currently
-reads:
+You can say that if you want to be difficult to work with, or you can be
+that somebody yourself and make a difference.
 
-    Apply a patch on a git index file and/or a working tree
+Let me show you that we can be constructive for a change ;-)
 
-but historically and still in real life practices, when you use apply (=
-as
-opposed to am), you apply primarily to the files and optionally to the
-index, so this should read something like:
+How about something trivial like this?
 
-    Apply a patch to files and/or to the index
+-- >8 --
+Subject: [PATCH] t9001: test --envelope-sender option of send-email
 
-We could say "to files in the work tree", but that would give a wrong
-impression that the files we talk about must be in a directory that is
-part of the work tree of some repository, so it probably is better with=
-out
-it.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t9001-send-email.sh |   17 +++++++++++++++++
+ 1 files changed, 17 insertions(+), 0 deletions(-)
 
-The same comment applies to the beginning of the DESCRIPTION section.  =
-I
-actually think your added text should reword the current two-liner ther=
-e,
-instead of being added at the bottom.  Here is my attempt.
-
-    Reads supplied diff output (iow "a patch"), and applies it to files=
-=2E
-    With --index (--cache) options, the patch is also (only) applied to
-    the index respectively.  Without these options, the command applies
-    the patch only to files, and does not require them to be in a git
-    repository.
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 84a7f03..004e81c 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -95,6 +95,23 @@ test_expect_success \
+     'Verify commandline' \
+     'test_cmp expected commandline1'
+ 
++test_expect_success 'Send patches with --envelope-sender' '
++    clean_fake_sendmail &&
++     git send-email --envelope-sender="Patch Contributer <patch@example.com>" --suppress-cc=sob --from="Example <nobody@example.com>" --to=nobody@example.com --smtp-server="$(pwd)/fake.sendmail" $patches 2>errors
++'
++
++cat >expected <<\EOF
++!patch@example.com!
++!-i!
++!nobody@example.com!
++!author@example.com!
++!one@example.com!
++!two@example.com!
++EOF
++test_expect_success \
++    'Verify commandline' \
++    'test_cmp expected commandline1'
++
+ cat >expected-show-all-headers <<\EOF
+ 0001-Second.patch
+ (mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
