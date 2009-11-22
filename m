@@ -1,85 +1,88 @@
-From: Rafal Rusin <rafal.rusin@gmail.com>
-Subject: 'error: unable to set permission to './objects/...'
-Date: Sun, 22 Nov 2009 21:02:12 +0100
-Message-ID: <9bbf67fa0911221202r605de38coc2496b1f09123725@mail.gmail.com>
+From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
+Subject: [PATCH] Fix truncated usage messages
+Date: Sun, 22 Nov 2009 22:19:53 +0100
+Message-ID: <4B09AAF9.5000102@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=0015175dd9c64bd3130478fb2f47
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 22 21:02:28 2009
+X-From: git-owner@vger.kernel.org Sun Nov 22 22:20:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCIdg-0003BV-7K
-	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 21:02:28 +0100
+	id 1NCJqj-0006NQ-Uf
+	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 22:20:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753696AbZKVUCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Nov 2009 15:02:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753136AbZKVUCI
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 15:02:08 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:35541 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752480AbZKVUCH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Nov 2009 15:02:07 -0500
-Received: by bwz27 with SMTP id 27so4531437bwz.21
-        for <git@vger.kernel.org>; Sun, 22 Nov 2009 12:02:12 -0800 (PST)
+	id S1755734AbZKVVTu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Nov 2009 16:19:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755730AbZKVVTu
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 16:19:50 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:39935 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755649AbZKVVTt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Nov 2009 16:19:49 -0500
+Received: by ewy19 with SMTP id 19so1265961ewy.21
+        for <git@vger.kernel.org>; Sun, 22 Nov 2009 13:19:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=NUtuT5lf2uWPDlZLmrcbYJah0LZy/kDCKABs+BXMMLk=;
-        b=xBHphGPZI+WsN07KahvPfXWyNZnuaA7KlUenkDx5GDBTKZZuRM9YGvNq57E6vpMgV8
-         g9xyOEY+ebY5TjCi68I4nX5h+U+FMQgUEzzdE9V1R+kc0BHFqMjBwq4hBItaMLP0UGwX
-         ywuygB5G5id4UvwoFKPvWf/p5lkjBBq1iNotU=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:content-type
+         :content-transfer-encoding;
+        bh=F/koeU0sPGb2hem5wpfyhF1bjzjEZej+RjDnxJpalrs=;
+        b=iUDge23JsiE8mhtHuTvEHCl54AMkMxhRolemkQI5m/Yo268TMdOFudlUiCLWC4yvbt
+         5fqG9c1+3/pGHv9mTx07PDwM5S4TWQRvrqsqrdsUjrg6gu4KSDzTJ1eHgbYhCeHyhEia
+         zzF6Q334TLL909LxZ7MohLVyvcy8zUzz8amdc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=KRaqC3gX2KbAy/qayj21FmWY2dWszyfaoPMinWF1j8aNKY59iYAOao0g82FoqhLFBX
-         wGBipw3KTMAo86urC6vtVurmetXBS65HO+DrQJXqbKHZbnmBsGDJS+MewGKKi0O4LyZt
-         dGnV9LP1MM212xraaM6TEuLgZMO3c9ZCHkbXU=
-Received: by 10.204.150.76 with SMTP id x12mr3954189bkv.30.1258920132465; Sun, 
-	22 Nov 2009 12:02:12 -0800 (PST)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=bHRTeEOxa8glJ/AyEpZInfIKRgYwQWGe20FgTQYJq40mMI7ZFgC4Y2nya2IXH6TZab
+         ywG5nkV463f1yhbeqhSRooyj/jJwdgoKZM8AVjvT9IovnjSzWW99KxCEhKGB4GsknhBZ
+         NPVTxvt2MCRS29Z9v5GxrWJS1+w1Y9MsxI3cE=
+Received: by 10.213.0.142 with SMTP id 14mr3939339ebb.49.1258924795109;
+        Sun, 22 Nov 2009 13:19:55 -0800 (PST)
+Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
+        by mx.google.com with ESMTPS id 28sm889197eyg.4.2009.11.22.13.19.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 22 Nov 2009 13:19:54 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133456>
 
---0015175dd9c64bd3130478fb2f47
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+The usage messages for some commands (such as 'git diff-tree')
+are truncated because they don't fit in a fixed buffer of
+1024 bytes.
 
-Hello,
+It would be tempting to eliminate the buffer and the problem once
+and for all by doing the output in three steps, but doing so could
+(according to commit d048a96e) increase the likelyhood of messing
+up the display.
 
-I'm hosting git repository on filesystem with 'chmod <some-file>'
-causing permission denied error (it's smbfs mounted directory),
-When I was doing push to such repo using file:// protocol, I got
-following error:
-error: unable to set permission to './objects/...'
+So we just increase the size of the buffer.
 
-I did a small fix to sha1_file.c (patch in attachment) and git now
-warns when unable to chmod, and continues push. This resolved problem.
-What do you think about applying it?
+Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
+---
+ usage.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Regards,
+diff --git a/usage.c b/usage.c
+index e307e01..79856a2 100644
+--- a/usage.c
++++ b/usage.c
+@@ -7,7 +7,7 @@
+=20
+ static void report(const char *prefix, const char *err, va_list params=
+)
+ {
+-	char msg[1024];
++	char msg[4096];
+ 	vsnprintf(msg, sizeof(msg), err, params);
+ 	fprintf(stderr, "%s%s\n", prefix, msg);
+ }
 --=20
-Rafa=C5=82 Rusin
-http://rrusin.blogspot.com
-http://www.touk.pl
-http://top.touk.pl
-
---0015175dd9c64bd3130478fb2f47
-Content-Type: text/x-diff; charset=US-ASCII; name="permission.patch"
-Content-Disposition: attachment; filename="permission.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_g2c8e1cr0
-
-ZGlmZiAtLWdpdCBhL3NoYTFfZmlsZS5jIGIvc2hhMV9maWxlLmMKaW5kZXggNGVhMGIxOC4uMzA1
-ZTc1MSAxMDA2NDQKLS0tIGEvc2hhMV9maWxlLmMKKysrIGIvc2hhMV9maWxlLmMKQEAgLTIyNzIs
-OCArMjI3Miw5IEBAIGludCBtb3ZlX3RlbXBfdG9fZmlsZShjb25zdCBjaGFyICp0bXBmaWxlLCBj
-b25zdCBjaGFyICpmaWxlbmFtZSkKIAl9CiAKIG91dDoKLQlpZiAoc2V0X3NoYXJlZF9wZXJtKGZp
-bGVuYW1lLCAoU19JRlJFR3wwNDQ0KSkpCi0JCXJldHVybiBlcnJvcigidW5hYmxlIHRvIHNldCBw
-ZXJtaXNzaW9uIHRvICclcyciLCBmaWxlbmFtZSk7CisJaWYgKHNldF9zaGFyZWRfcGVybShmaWxl
-bmFtZSwgKFNfSUZSRUd8MDQ0NCkpKSB7CisJCXdhcm5pbmcoInVuYWJsZSB0byBzZXQgcGVybWlz
-c2lvbiB0byAnJXMnIiwgZmlsZW5hbWUpOworICAgIH0KIAlyZXR1cm4gMDsKIH0KIAo=
---0015175dd9c64bd3130478fb2f47--
+1.6.5.3.298.g39add
