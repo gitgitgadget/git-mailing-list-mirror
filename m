@@ -1,68 +1,91 @@
-From: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: Re: How to make git diff-* ignore some patterns?
-Date: Sun, 22 Nov 2009 16:51:49 +0100
-Message-ID: <4B095E15.9040209@dirk.my1.cc>
-References: <4B0817EE.1040000@dirk.my1.cc> <20091121180738.GA14919@atjola.homenet>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] unset GREP_OPTIONS in test-lib.sh
+Date: Sun, 22 Nov 2009 16:58:09 +0100
+Message-ID: <4B095F91.8030305@lsrfire.ath.cx>
+References: <1258560919-28054-1-git-send-email-bert.wesarg@googlemail.com> <7v1vjvebem.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>, git@drmicha.warpmail.net
-To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Nov 22 16:51:59 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 22 16:58:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCEjG-0008Dr-O1
-	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 16:51:59 +0100
+	id 1NCEpT-00028J-1g
+	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 16:58:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755214AbZKVPvr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Nov 2009 10:51:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755182AbZKVPvq
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 10:51:46 -0500
-Received: from smtprelay04.ispgateway.de ([80.67.31.38]:54268 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755136AbZKVPvq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Nov 2009 10:51:46 -0500
-Received: from [84.176.75.20] (helo=[192.168.2.100])
-	by smtprelay04.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1NCEj8-0002F7-2z; Sun, 22 Nov 2009 16:51:50 +0100
+	id S1754834AbZKVP6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Nov 2009 10:58:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754175AbZKVP6K
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 10:58:10 -0500
+Received: from india601.server4you.de ([85.25.151.105]:43748 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753884AbZKVP6J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Nov 2009 10:58:09 -0500
+Received: from [10.0.1.101] (p57B7F129.dip.t-dialin.net [87.183.241.41])
+	by india601.server4you.de (Postfix) with ESMTPSA id 439DD2F8051;
+	Sun, 22 Nov 2009 16:58:14 +0100 (CET)
 User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <20091121180738.GA14919@atjola.homenet>
-X-Df-Sender: 757646
+In-Reply-To: <7v1vjvebem.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133435>
 
-Am 21.11.2009 19:07 schrieb Bj=F6rn Steinbrink:
-> On 2009.11.21 17:40:14 +0100, Dirk S=FCsserott wrote:
->> is there a way to tell "git diff-index" to ignore some special
->> patterns, such that /^-- Dump completed on .*$/ is NOT recognized as
->> a difference and "git diff-index" returns 0 if that's the only
->> difference?
->=20
-> If you don't mind losing that line, you could use a clean filter via
-> .gitattributes:
->=20
-> echo '*.sql filter=3Dmysql_dump' >> .gitattributes
-> git config filter.mysql_dump.clean "sed -e '/^-- Dump completed on .*=
-$/d'"
->=20
-> That way, git will filter all *.sql paths through that sed command
-> before storing them as blobs, dropping that "Dump completed" line fro=
-m
-> the data stored in the repo.
->=20
-> Bj=F6rn
->=20
+Junio C Hamano schrieb:
+> Do we kill that environment variable when we call out to external grep in
+> grep.c?  If not, we should.  An alternative is to teach our internal one
+> to also honor it, but I personally do not find it too attractive to mimic
+> the design mistake of GREP_OPTIONS myself.
 
-Thank you Bj=F6rn and Michael,
+We don't.  Here's a patch with a simple test case that makes git grep
+unset GREP_OPTIONS before it calls the external grep.
 
-Your suggestions were really helpful. I decided to use Bj=F6rn's 'clean
-filter' approach. It works great.
+While we're at it, also unset GREP_COLOR and GREP_COLORS in case
+colouring is not enabled, to be on the safe side.  The presence of
+these variables alone is not sufficient to trigger coloured output with
+GNU grep, but other implementations may behave differently.
 
--- Dirk
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ builtin-grep.c  |    4 ++++
+ t/t7002-grep.sh |    5 +++++
+ 2 files changed, 9 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 01be9bf..9a9e3fc 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -433,7 +433,11 @@ static int external_grep(struct grep_opt *opt, const char **paths, int cached)
+ 
+ 		if (opt->color_external && strlen(opt->color_external) > 0)
+ 			push_arg(opt->color_external);
++	} else {
++		unsetenv("GREP_COLOR");
++		unsetenv("GREP_COLORS");
+ 	}
++	unsetenv("GREP_OPTIONS");
+ 
+ 	hit = 0;
+ 	argc = nr;
+diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
+index ae5290a..dd0da6c 100755
+--- a/t/t7002-grep.sh
++++ b/t/t7002-grep.sh
+@@ -213,6 +213,11 @@ test_expect_success 'grep -e A --and --not -e B' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'grep should ignore GREP_OPTIONS' '
++	GREP_OPTIONS=-v git grep " mmap bar\$" >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'grep -f, non-existent file' '
+ 	test_must_fail git grep -f patterns
+ '
+-- 
+1.6.5.3
