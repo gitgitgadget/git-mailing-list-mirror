@@ -1,69 +1,68 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: 'error: unable to set permission to './objects/...'
-Date: Sun, 22 Nov 2009 23:09:00 +0100
-Message-ID: <20091122220900.GO23718@genesis.frugalware.org>
-References: <9bbf67fa0911221202r605de38coc2496b1f09123725@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] merge-recursive: point the user to commit when file would be overwritten.
+Date: Sun, 22 Nov 2009 23:09:45 +0100
+Message-ID: <vpqr5rqi53q.fsf@bauges.imag.fr>
+References: <1258732767-12741-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1258732767-12741-2-git-send-email-Matthieu.Moy@imag.fr>
+	<7vskc9vzqg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="bLgs+aUf1UT65bBm"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Rafal Rusin <rafal.rusin@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 22 23:09:08 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 22 23:12:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCKcF-0005Gu-Ob
-	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 23:09:08 +0100
+	id 1NCKfU-0006hT-3W
+	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 23:12:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752745AbZKVWI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Nov 2009 17:08:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752599AbZKVWI4
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 17:08:56 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:49917 "EHLO virgo.iok.hu"
+	id S1753390AbZKVWMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Nov 2009 17:12:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752748AbZKVWMQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 17:12:16 -0500
+Received: from imag.imag.fr ([129.88.30.1]:48750 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752380AbZKVWIz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Nov 2009 17:08:55 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id AA04658098;
-	Sun, 22 Nov 2009 23:09:00 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 7198644951;
-	Sun, 22 Nov 2009 23:09:00 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 616BA1240012; Sun, 22 Nov 2009 23:09:00 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <9bbf67fa0911221202r605de38coc2496b1f09123725@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752599AbZKVWMQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Nov 2009 17:12:16 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id nAMM9kS9021074
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 22 Nov 2009 23:09:46 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NCKcr-0004FU-V7; Sun, 22 Nov 2009 23:09:46 +0100
+In-Reply-To: <7vskc9vzqg.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 20 Nov 2009 10\:05\:11 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 22 Nov 2009 23:09:46 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133458>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---bLgs+aUf1UT65bBm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>
+>> The commit-before-pull is well accepted in the DVCS community, but is
+>> confusing some new users. This should get them back in the right way when
+>> the problem occurs.
+>>
+>> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+>
+> Don't these extra lines warrant "advice.*" option?
 
-On Sun, Nov 22, 2009 at 09:02:12PM +0100, Rafal Rusin <rafal.rusin@gmail.com> wrote:
-> I did a small fix to sha1_file.c (patch in attachment) and git now
-> warns when unable to chmod, and continues push. This resolved problem.
-> What do you think about applying it?
+I was thinking this would be overkill for a one-line advice, but it
+doesn't harm to provide the option. I'll resend the patch with it
+(it's not _as_ straightforward as it seems to be since the initial
+structure is static in the function, but still reasonable).
 
-Please read Documentation/SubmittingPatches, patches should be sent
-inline and with a Signed-off-by line.
-
---bLgs+aUf1UT65bBm
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAksJtnwACgkQe81tAgORUJaAmQCfZI/BUVMCSmRwOh+DelA29EnF
-+OUAoJH9DdzEOW69LYGUcXY270cu6nco
-=2s1I
------END PGP SIGNATURE-----
-
---bLgs+aUf1UT65bBm--
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
