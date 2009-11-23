@@ -1,74 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: how to suppress progress percentage in git-push
-Date: Mon, 23 Nov 2009 18:05:47 +0100
-Message-ID: <20091123170547.GC26996@machine.or.cz>
-References: <20091122145352.GA3941@debian.b2j>
- <20091123145959.GA13138@sigill.intra.peff.net>
- <20091123155043.GA28963@machine.or.cz>
- <20091123164319.GA23011@sigill.intra.peff.net>
-Mime-Version: 1.0
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: Re: [PATCH 1/2] http-backend: Fix access beyond end of string.
+Date: Mon, 23 Nov 2009 12:20:07 -0500
+Message-ID: <9201C178-AABF-4320-B7B0-FEE841300E69@gernhardtsoftware.com>
+References: <1258233058-2348-1-git-send-email-tarmigan+git@gmail.com> <20091116013654.GX11919@spearce.org> <20091116045532.GC14664@coredump.intra.peff.net> <7viqdb0zhs.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1077)
 Content-Type: text/plain; charset=us-ascii
-Cc: bill lam <cbill.lam@gmail.com>, Nicolas Pitre <nico@fluxnic.net>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Nov 23 18:06:18 2009
+Content-Transfer-Encoding: 8BIT
+Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
+	Tarmigan Casebolt <tarmigan+git@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 23 18:20:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCcMd-0003iq-GR
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 18:06:11 +0100
+	id 1NCcaT-0001cN-SS
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 18:20:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752570AbZKWRFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Nov 2009 12:05:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752451AbZKWRFn
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 12:05:43 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:53741 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751593AbZKWRFm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Nov 2009 12:05:42 -0500
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 5C31F125A0EC; Mon, 23 Nov 2009 18:05:47 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20091123164319.GA23011@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752784AbZKWRUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Nov 2009 12:20:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752812AbZKWRUH
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 12:20:07 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:46319 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752262AbZKWRUG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Nov 2009 12:20:06 -0500
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 6CC261FFC087; Mon, 23 Nov 2009 17:20:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [10.10.10.10] (cpe-67-240-172-169.rochester.res.rr.com [67.240.172.169])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id C243A1FFC06B;
+	Mon, 23 Nov 2009 17:20:06 +0000 (UTC)
+In-Reply-To: <7viqdb0zhs.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133511>
 
-On Mon, Nov 23, 2009 at 11:43:19AM -0500, Jeff King wrote:
-> On Mon, Nov 23, 2009 at 04:50:43PM +0100, Petr Baudis wrote:
-> 
-> > On Mon, Nov 23, 2009 at 10:00:00AM -0500, Jeff King wrote:
-> > > The patch for (1) would look something like what's below.  It's simpler,
-> > > but it does change the semantics; anyone who was relying on
-> > > --all-progress to turn on progress unconditionally would need to now
-> > > also use --progress. However, turning on progress unconditionally is
-> > > usually an error (the except is if you are piping output in real-time to
-> > > the user and need to overcome the isatty check).
-> > 
-> > I'm actually doing exactly that in the mirrorproj.cgi of Girocco, so I
-> > would be unhappy if I would have to go through creating ptys or whatever
-> > now. Maybe conditioning this by an environment variable?
-> 
-> You wouldn't need to do anything that drastic. You would just need to
-> pass "--progress --all-progress" instead of only --all-progress. But you
-> have provided the data point that such a change would break at least one
-> user.
-> 
-> We could also leave --all-progress as-is and add new option to mean "if
-> you are already doing progress, do all progress".
 
-Hmm, maybe I'm confused - I just call
+On Nov 16, 2009, at 1:12 AM, Junio C Hamano wrote:
 
-	git remote update
+> 	n = out[0].rm_eo - out[0].rm_so; /* allocation */
+>        ... validate and fail invalid method ...
+>        cmd_arg = xmalloc(n);
+>        memcpy(cmd_arg, dir + out[0].rm_so + 1, n-1);
+>        cmd_arg[n-1] = '\0';
 
-and don't pass any progress switches - would your change still affect
-me? Can I pass --progress to `git remote update`?
+I just thought I'd point out that this change (committed as 48aec1b) fixed the problem I was having with t5541-http-push (and a couple others) hanging.  Looks like that one extra byte was overwriting something that malloc/free wanted to keep intact on OS X.
 
--- 
-				Petr "Pasky" Baudis
-A lot of people have my books on their bookshelves.
-That's the problem, they need to read them. -- Don Knuth
+~~ Brian
