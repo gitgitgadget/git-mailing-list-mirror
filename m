@@ -1,73 +1,65 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: how to suppress progress percentage in git-push
-Date: Mon, 23 Nov 2009 14:28:48 -0500
-Message-ID: <20091123192848.GB1607@coredump.intra.peff.net>
+Subject: Re: [PATCH] pack-objects: split implications of --all-progress
+ from progress activation
+Date: Mon, 23 Nov 2009 14:32:42 -0500
+Message-ID: <20091123193242.GA3140@coredump.intra.peff.net>
 References: <20091122145352.GA3941@debian.b2j>
  <20091123145959.GA13138@sigill.intra.peff.net>
  <20091123155043.GA28963@machine.or.cz>
  <20091123164319.GA23011@sigill.intra.peff.net>
- <20091123170547.GC26996@machine.or.cz>
+ <alpine.LFD.2.00.0911231221320.2059@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: bill lam <cbill.lam@gmail.com>, Nicolas Pitre <nico@fluxnic.net>,
-	git <git@vger.kernel.org>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Nov 23 20:28:59 2009
+Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
+	bill lam <cbill.lam@gmail.com>, git <git@vger.kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Mon Nov 23 20:32:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCeam-0002Q3-DD
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 20:28:56 +0100
+	id 1NCeeW-00043D-OV
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 20:32:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754499AbZKWT2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Nov 2009 14:28:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753990AbZKWT2o
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 14:28:44 -0500
-Received: from peff.net ([208.65.91.99]:53023 "EHLO peff.net"
+	id S1754457AbZKWTci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Nov 2009 14:32:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754294AbZKWTch
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 14:32:37 -0500
+Received: from peff.net ([208.65.91.99]:49404 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752501AbZKWT2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Nov 2009 14:28:43 -0500
-Received: (qmail 4350 invoked by uid 107); 23 Nov 2009 19:33:13 -0000
+	id S1754234AbZKWTch (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Nov 2009 14:32:37 -0500
+Received: (qmail 4391 invoked by uid 107); 23 Nov 2009 19:37:07 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 23 Nov 2009 14:33:13 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Nov 2009 14:28:48 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 23 Nov 2009 14:37:07 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Nov 2009 14:32:42 -0500
 Content-Disposition: inline
-In-Reply-To: <20091123170547.GC26996@machine.or.cz>
+In-Reply-To: <alpine.LFD.2.00.0911231221320.2059@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133528>
 
-On Mon, Nov 23, 2009 at 06:05:47PM +0100, Petr Baudis wrote:
+On Mon, Nov 23, 2009 at 12:43:50PM -0500, Nicolas Pitre wrote:
 
-> > You wouldn't need to do anything that drastic. You would just need to
-> > pass "--progress --all-progress" instead of only --all-progress. But you
-> > have provided the data point that such a change would break at least one
-> > user.
-> > 
-> > We could also leave --all-progress as-is and add new option to mean "if
-> > you are already doing progress, do all progress".
+> Currently the --all-progress flag is used to use force progress display 
+> during the writing object phase even if output goes to stdout which is 
+> primarily the case during a push operation.  This has the unfortunate 
+> side effect of forcing progress display even if stderr is not a 
+> terminal.
 > 
-> Hmm, maybe I'm confused - I just call
+> Let's introduce the --all-progress-implied argument which has the same 
+> intent except for actually forcing the activation of any progress 
+> display.  With this, progress display will be automatically inhibited 
+> whenever stderr is not a terminal, or full progress display will be 
+> included otherwise.  This should let people use 'git push' within a cron 
+> job without filling their logs with useless percentage displays.
 > 
-> 	git remote update
-> 
-> and don't pass any progress switches - would your change still affect
-> me? Can I pass --progress to `git remote update`?
+> Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
 
-Oh, I misunderstood; I thought you were calling pack-objects directly.
-So you are actually relying on the "even though isatty(2) is not true,
-we always print progress messages" behavior? I think that behavior is
-buggy. It hurts everybody pushing via cron, and it violates the usual
-rule for when we show progress messages.
+Thanks,
 
-I don't think you can get a --progress pushed all the way down to the
-pack-objects in this case; we would need to add code to override the
-isatty check.
-
-That being said, your example of "remote update" means you are dealing
-with fetch, and we are not touching the fetch code path at all.
+Tested-by: Jeff King <peff@peff.net>
 
 -Peff
