@@ -1,62 +1,70 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2 v2] user-manual: Document that "git merge" doesn't
- like uncommited changes.
-Date: Sun, 22 Nov 2009 16:08:17 -0800
-Message-ID: <7vpr7aayry.fsf@alter.siamese.dyndns.org>
-References: <1258732767-12741-1-git-send-email-Matthieu.Moy@imag.fr>
- <1258928778-32419-2-git-send-email-Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH RESEND] Explicitly truncate bswap operand to uint32_t
+Date: Sun, 22 Nov 2009 16:16:58 -0800
+Message-ID: <7vfx86aydh.fsf@alter.siamese.dyndns.org>
+References: <4B03FC57.5000506@googlemail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Nov 23 01:08:36 2009
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
+To: Benjamin Kramer <benny.kra@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 23 01:17:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCMTr-00009a-Eh
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 01:08:35 +0100
+	id 1NCMcK-0002Qy-1G
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 01:17:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755884AbZKWAIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Nov 2009 19:08:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755855AbZKWAIW
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 19:08:22 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60371 "EHLO
+	id S1751626AbZKWARE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Nov 2009 19:17:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751133AbZKWARE
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 19:17:04 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34485 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753918AbZKWAIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Nov 2009 19:08:22 -0500
+	with ESMTP id S1750772AbZKWARC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Nov 2009 19:17:02 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EFFF828D0;
-	Sun, 22 Nov 2009 19:08:26 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B1B74A0BD2;
+	Sun, 22 Nov 2009 19:17:07 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pQrbVQb/xWbX3kobDOQaXaIUMSw=; b=YAJ2VU
-	gnMzvmkEjIlT5Safd1oZk0/0x8FEfNLpmmLJPy4Hxbqr4kEZES/whP/F8m4IAFwb
-	hEKrIxUADockWbfdazEjEmpDiqbLH3IMQO+oTxoCKHVQco0WcDS7xDOMTpfy+fJH
-	RbrvtoLh1x/Ybq7Ld1jm8t85lxj5GXNsCqesI=
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=hq8HMjIab/4XRtcUkZlLNOqWlXs=; b=QXfZ3Sw3jlRoStRaPiiEPmQ
+	Kb68g5uUFLj8mHlz6YEZABvlIHKtLG0gltLmZfpBdkdgMtyL+568G7OxUOJFWbc0
+	Ybu4N1Oy8uhdNhpW0IY3wrxmBEnpGr9+et9JALXRzGBV7Fs6887pFsaMH5qCB7Th
+	qZ+luWYQjk8RoUNrBf+c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=chqWSd4OM9slzo0W3wItK3ViRgtPYMhg
-	JTgCjDES9yAs45Qp/pV7WDZlAphYjWzB3YofgYjlPSw3gkHpGfgezPaGMKbMjSYD
-	7XJuX4voBOpxapejiIkH6QwUAY8kLYJlJsYLXzUyt7kt73MvilZukQ3Cu6IEPs4B
-	oJFd1wmRZBA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A5D1B828CF;
-	Sun, 22 Nov 2009 19:08:21 -0500 (EST)
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=srO0ZN5lAomQwdsBCmFRz0oCPnvTEAy51O34VIYGqxxZcoWMB
+	mBnCry0QRncUwOXfqSicKwZm2wKwf6AcKxpfpB47PoWnj2tmeIGMRnfD00zjVot4
+	pXz6L3HTft+mKxu+KNqm6JFPcqSk5katBQ2R3E/9FUW/RRJrq3JSuFoxco=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 82B12A0BCE;
+	Sun, 22 Nov 2009 19:17:04 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A4E90828CE; Sun, 22 Nov
- 2009 19:08:18 -0500 (EST)
-In-Reply-To: <1258928778-32419-2-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Sun\, 22 Nov 2009 23\:26\:18 +0100")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 54AE0A0BCD; Sun, 22 Nov 2009
+ 19:17:00 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4F96034A-D7C4-11DE-A291-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8739AECC-D7C5-11DE-A559-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133471>
 
-Looks much nicer; thanks.
+Benjamin Kramer <benny.kra@googlemail.com> writes:
 
-Will queue.
+> There are some places in git where a long is passed to htonl/ntohl. llvm
+> doesn't support matching operands of different bitwidths intentionally.
+> This patch fixes the build with llvm-gcc (and clang) on x86_64.
+>
+> Signed-off-by: Benjamin Kramer <benny.kra@googlemail.com>
+> ---
+> Any comments on this patch?
+
+My vague recollection is that the response was "we do not mind it per-se,
+unless it ends up in an ugly change; but we would prefer if you go fix
+your compiler", but maybe I read it on lkml not here?
+
+Also my vague recollection is that the kernel folks took that patch in the
+end, so I think it is Ok for us to take this patch, too.
