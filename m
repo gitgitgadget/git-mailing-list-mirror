@@ -1,63 +1,110 @@
-From: rhlee <richard@webdezign.co.uk>
-Subject: Re: Git graph with branch labels for all paths in text environment
-Date: Mon, 23 Nov 2009 01:56:27 -0800 (PST)
-Message-ID: <1258970187042-4050140.post@n2.nabble.com>
-References: <1258373038892-4011651.post@n2.nabble.com> <2c6b72b30911210950m7f90f210saf3c32c1a3cbdebe@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: What's cooking in git.git (Nov 2009, #05; Sun, 22)
+Date: Mon, 23 Nov 2009 10:59:57 +0100
+Message-ID: <200911231059.58233.johan@herland.net>
+References: <7vhbsl935q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 23 10:56:35 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 23 11:00:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCVer-0000yf-Fe
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 10:56:33 +0100
+	id 1NCViU-0002DB-AP
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 11:00:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756239AbZKWJ4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Nov 2009 04:56:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756145AbZKWJ4V
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 04:56:21 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:43578 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755704AbZKWJ4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Nov 2009 04:56:20 -0500
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1NCVel-0004vR-1Z
-	for git@vger.kernel.org; Mon, 23 Nov 2009 01:56:27 -0800
-In-Reply-To: <2c6b72b30911210950m7f90f210saf3c32c1a3cbdebe@mail.gmail.com>
-X-Nabble-From: rhlee <richard@webdezign.co.uk>
+	id S1756475AbZKWKAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Nov 2009 05:00:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756455AbZKWKAE
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 05:00:04 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:44506 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756417AbZKWKAD (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Nov 2009 05:00:03 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KTK00JI73S53280@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 23 Nov 2009 11:00:05 +0100 (MET)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KTK00EDY3S2P320@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 23 Nov 2009 11:00:05 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.11.23.94526
+User-Agent: KMail/1.12.3 (Linux/2.6.31-ARCH; KDE/4.3.3; x86_64; ; )
+In-reply-to: <7vhbsl935q.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133494>
 
-
-
-Jonas Fonseca wrote:
+On Monday 23 November 2009, Junio C Hamano wrote:
+> * jh/notes (2009-11-20) 10 commits
+>  - Add more testcases to test fast-import of notes
+>  - Rename t9301 to t9350, to make room for more fast-import tests
+>  - fast-import: Proper notes tree manipulation using the notes API
+>  - Refactor notes concatenation into a flexible interface for combining notes
+>  - Notes API: Allow multiple concurrent notes trees with new struct notes_tree
+>  - Notes API: for_each_note(): Traverse the entire notes tree with a callback
+>  - Notes API: get_note(): Return the note annotating the given object
+>  - Notes API: add_note(): Add note objects to the internal notes tree structure
+>  - Notes API: init_notes(): Initialize the notes tree from the given notes ref
+>  - Notes API: get_commit_notes() -> format_note() + remove the commit restriction
 > 
-> You can browse all branches by using: tig --all
+> Early part has been lived in 'next' for a while and has graduated.  This
+> is a reroll of the remainder.  Is everybody happy with merging this to
+> 'next'?
+
+I really want an Ack from Shawn on the fast-import patch (patch 8/10)
+before putting this in 'next'. The rest of the series is good AFAICS,
+although there might be some changes needed if I need to rework the
+fast-import patch.
+
+> I saw some checkpatch style violations, but didn't find anything
+> objectionable in the logic.
+
+Ok. I fixed most of them locally, but there are still some remaining in
+fast-import.c, where I'd rather follow fast-import.c's existing style,
+which seems to disagree somewhat with checkpatch.
+
+The style fixes will be part of the next iteration (which will also
+include the rebase back onto the early part of the jh/notes series).
+I'll wait for Shawn's comments before resending, though.
+
+> [...]
+>
+> * sr/vcs-helper (2009-11-18) 12 commits
+>  - Add Python support library for remote helpers
+>  - Basic build infrastructure for Python scripts
+>  - Allow helpers to report in "list" command that the ref is unchanged
+>  - Fix various memory leaks in transport-helper.c
+>  - Allow helper to map private ref names into normal names
+>  - Add support for "import" helper command
+>  - Allow specifying the remote helper in the url
+>  - Add a config option for remotes to specify a foreign vcs
+>  - Allow fetch to modify refs
+>  - Use a function to determine whether a remote is valid
+>  - Allow programs to not depend on remotes having urls
+>  - Fix memory leak in helper method for disconnect
 > 
+> Replaced again.  Is everybody happy with merging this to 'next'?
 
-Thanks this great as this saves me from quitting tig to view all branch
-histories.
+Yep, assuming Daniel is happy with the transport layer parts.
 
+For the record, you can add this to the last patch of the series:
 
-Jonas Fonseca wrote:
-> 
-> However, the graph drawing is rather poor for complex git histories.
-> 
-
-I'm working on 3-4 current branches and it's fine for me.
+Signed-off-by: Johan Herland <johan@herland.net>
 
 
-Thanks,
+Have fun! :)
 
-Richard
+...Johan
+
 -- 
-View this message in context: http://n2.nabble.com/Git-graph-with-branch-labels-for-all-paths-in-text-environment-tp4011651p4050140.html
-Sent from the git mailing list archive at Nabble.com.
+Johan Herland, <johan@herland.net>
+www.herland.net
