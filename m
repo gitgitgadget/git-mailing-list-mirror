@@ -1,101 +1,303 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: OS X and umlauts in file names
-Date: Mon, 23 Nov 2009 15:31:52 -0800 (PST)
-Message-ID: <m3pr78bywe.fsf@localhost.localdomain>
-References: <4B0ABA42.1060103@syntevo.com>
-	<200911231845.04325.trast@student.ethz.ch>
-	<4B0AD02E.1040408@syntevo.com>
-	<alpine.DEB.1.00.0911231916510.4897@intel-tinevez-2-302>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] unset GREP_OPTIONS in test-lib.sh
+Date: Mon, 23 Nov 2009 15:52:32 -0800
+Message-ID: <7v4ooku7cv.fsf@alter.siamese.dyndns.org>
+References: <1258560919-28054-1-git-send-email-bert.wesarg@googlemail.com>
+ <7v1vjvebem.fsf@alter.siamese.dyndns.org> <4B095F91.8030305@lsrfire.ath.cx>
+ <20091123112221.GA7175@sajinet.com.pe>
+ <7vtywlyu43.fsf@alter.siamese.dyndns.org> <4B0B185B.4090305@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Singer <thomas.singer@syntevo.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Nov 24 00:32:09 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Carlo Marcelo Arenas Belon <carenas@sajinet.com.pe>,
+	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Nov 24 00:53:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCiO7-0006yu-N2
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 00:32:08 +0100
+	id 1NCiiM-0006fw-IF
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 00:53:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757328AbZKWXbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Nov 2009 18:31:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757116AbZKWXbu
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 18:31:50 -0500
-Received: from mail-bw0-f223.google.com ([209.85.218.223]:45049 "EHLO
-	mail-bw0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756978AbZKWXbs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Nov 2009 18:31:48 -0500
-Received: by bwz23 with SMTP id 23so5823740bwz.29
-        for <git@vger.kernel.org>; Mon, 23 Nov 2009 15:31:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=fjA8jAa3AbfUlPMY62oixT98miAVCXY/6efyX/wyKLo=;
-        b=MSGvADR4t7EbOjuwdo6xQ/wUOhhgl1kfdRMO0ocKPrQJThhd88m0dMPMcyCQG0S4sU
-         gGjZhg5mlMgSYB95ha2dAYpt9l+D+vUffJ1e6qnf5UvZfJXSZreeATMPgp8l8GPfZzBZ
-         bUSvrkxBeSJ9oQudT66jinuR0FU3LsbRgXkek=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=Aj+R2xUELdbtEV0pU623222CFmldS1d2IxnYbUhmy2Y9oNytJq8qDNncOX7ywIW0Uq
-         013UxZH8h+P8+k6uqry+bJGn9DzAdLDfPlOOVr4iD7fi+rg+mJR9bic6javF1wwoPGZk
-         4FJi5gWOJNPCoIIXqTOQ/4yOc6noz6XOOMWag=
-Received: by 10.204.13.215 with SMTP id d23mr5613486bka.18.1259019113700;
-        Mon, 23 Nov 2009 15:31:53 -0800 (PST)
-Received: from localhost.localdomain (abvk170.neoplus.adsl.tpnet.pl [83.8.208.170])
-        by mx.google.com with ESMTPS id 16sm1265975bwz.7.2009.11.23.15.31.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 23 Nov 2009 15:31:52 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id nANNWgPX014913;
-	Tue, 24 Nov 2009 00:32:44 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id nANNWdTQ014909;
-	Tue, 24 Nov 2009 00:32:39 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <alpine.DEB.1.00.0911231916510.4897@intel-tinevez-2-302>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1757267AbZKWXwo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Nov 2009 18:52:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757002AbZKWXwo
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 18:52:44 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48016 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753226AbZKWXwn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Nov 2009 18:52:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B52DDA1D56;
+	Mon, 23 Nov 2009 18:52:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=mBGGeiqPzC5R
+	cBnowEhaqADCuC4=; b=xK0aT1lKCtRMZY7wKA9luQTAKdXVzaZ9KFZbNKMJLsrL
+	HW3eqGD6fYQLgmX6EWe4j88+NlRc5n8lkWELE5qyDNubK7aTN2gxLLZMr3IWBd4z
+	mSMv7GWZqk8jNjvVYBImDbGTU8kxRzUahZBWCSHlpvrSI6s5Zsu3SyivACsfZoc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=yV3/gE
+	T7PI3+K43u2AuOoKI5CiLCV1NEmezNc88fuT6p26R55yyJE+BGLSa/qGvaf14pjo
+	rQO8pbv/OtaiMkaCle8SuN8lBKwINbLE5T325UClIW7Mrjs3LzTSj4GBG87k+qr4
+	IIIjyTTAt7ojhl9wX5T2yO92Cmx1mQwOgaxiY=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 76A02A1D51;
+	Mon, 23 Nov 2009 18:52:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 782CAA1D4E; Mon, 23 Nov 2009
+ 18:52:34 -0500 (EST)
+In-Reply-To: <4B0B185B.4090305@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of "Tue\, 24 Nov 2009 00\:18\:51 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 48FF0DF2-D88B-11DE-B58C-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133544>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-> On Mon, 23 Nov 2009, Thomas Singer wrote:
-> 
-> > Basically, getting it "somehow" to work on OS X is just one minor step. 
-> > IMHO Git should standardize on file names in the repository and do the 
-> > platform-specific conversion independent of any locale setting, if 
-> > needed.
-> 
-> That is contrary to the design of Git which honors content (byte-wise!) as 
-> much as possible, and treats file names very much as content.
-> 
-> There were beginnings of supporting OSX' brain-damaged filename mangling, 
-> but an obnoxious OSX fan worked very hard on trying to defend the OSX 
-> design and to decry Git's respect for the raw bytes on this list, so hard 
-> that even the nicest developers had no fun working on this issue anymore.
-> 
-> This little background may help you understand why there is no solution 
-> implemented in Git yet.  And maybe quite a few developers are reluctant to 
-> discuss the issue and possible solutions due to said sad story, too.
+> Yes, but what about git commands that are implemented as shell script=
+s
+> and use grep?  Something like the following patch?
+>
+> We'd need to run this from time to time to make sure no new grep call=
+s
+> creep in:
+>
+>    git grep -L "unset GREP_OPTIONS" -- $(git grep -l "grep" git-*.sh)
 
-To be more exact the problem is not that MacOS X uses denormalized
-form (does file mangling).  This would be the problem only in
-cross-platform development (where some developers would work from
-different operating system).
+Hmm, but "bisect run" runs user's script and it may want to see
+GREP_OPTIONS from the environment, no?  Same for any of the hooks that =
+am
+and rebase might want to run.
 
-The problem is that the name under which Git creates file is different
-from the name MacOS X lists file (in readdir etc.).
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+
+ git-sh-setup.sh            |   14 ++++++++++++++
+ git-am.sh                  |    4 ++--
+ git-bisect.sh              |    4 ++--
+ git-filter-branch.sh       |    2 +-
+ git-instaweb.sh            |    8 ++++----
+ git-rebase--interactive.sh |   10 +++++-----
+ git-rebase.sh              |    2 +-
+ git-submodule.sh           |    6 +++---
+ 8 files changed, 32 insertions(+), 18 deletions(-)
+
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index c41c2f7..2b2afa6 100755
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -114,6 +114,20 @@ git_editor() {
+ 	eval "${GIT_EDITOR:=3Dvi}" '"$@"'
+ }
+=20
++sane_grep () {
++	GREP_OPTIONS=3D \
++	GREP_COLOR=3D \
++	GREP_COLORS=3D \
++	LC_ALL=3DC grep "$@"
++}
++
++sane_egrep () {
++	GREP_OPTIONS=3D \
++	GREP_COLOR=3D \
++	GREP_COLORS=3D \
++	LC_ALL=3DC egrep "$@"
++}
++
+ is_bare_repository () {
+ 	git rev-parse --is-bare-repository
+ }
+diff --git a/git-am.sh b/git-am.sh
+index c132f50..b49f26a 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -205,7 +205,7 @@ check_patch_format () {
+ 			# and see if it looks like that they all begin with the
+ 			# header field names...
+ 			sed -n -e '/^$/q' -e '/^[ 	]/d' -e p "$1" |
+-			LC_ALL=3DC egrep -v '^[!-9;-~]+:' >/dev/null ||
++			sane_egrep -v '^[!-9;-~]+:' >/dev/null ||
+ 			patch_format=3Dmbox
+ 		fi
+ 	} < "$1" || clean_abort
+@@ -554,7 +554,7 @@ do
+ 			stop_here $this
+=20
+ 		# skip pine's internal folder data
+-		grep '^Author: Mail System Internal Data$' \
++		sane_grep '^Author: Mail System Internal Data$' \
+ 			<"$dotest"/info >/dev/null &&
+ 			go_next && continue
+=20
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 6f6f039..0c422d5 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -393,7 +393,7 @@ bisect_run () {
+=20
+       cat "$GIT_DIR/BISECT_RUN"
+=20
+-      if grep "first bad commit could be any of" "$GIT_DIR/BISECT_RUN"=
+ \
++      if sane_grep "first bad commit could be any of" "$GIT_DIR/BISECT=
+_RUN" \
+ 		> /dev/null; then
+ 	  echo >&2 "bisect run cannot continue any more"
+ 	  exit $res
+@@ -405,7 +405,7 @@ bisect_run () {
+ 	  exit $res
+       fi
+=20
+-      if grep "is the first bad commit" "$GIT_DIR/BISECT_RUN" > /dev/n=
+ull; then
++      if sane_grep "is the first bad commit" "$GIT_DIR/BISECT_RUN" > /=
+dev/null; then
+ 	  echo "bisect run success"
+ 	  exit 0;
+       fi
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index a480d6f..8ef1bde 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -457,7 +457,7 @@ if [ "$filter_tag_name" ]; then
+ 				git mktag) ||
+ 				die "Could not create new tag object for $ref"
+ 			if git cat-file tag "$ref" | \
+-			   grep '^-----BEGIN PGP SIGNATURE-----' >/dev/null 2>&1
++			   sane_grep '^-----BEGIN PGP SIGNATURE-----' >/dev/null 2>&1
+ 			then
+ 				warn "gpg signature stripped from tag object $sha1t"
+ 			fi
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index d96eddb..84805c6 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -41,7 +41,7 @@ resolve_full_httpd () {
+ 	case "$httpd" in
+ 	*apache2*|*lighttpd*)
+ 		# ensure that the apache2/lighttpd command ends with "-f"
+-		if ! echo "$httpd" | grep -- '-f *$' >/dev/null 2>&1
++		if ! echo "$httpd" | sane_grep -- '-f *$' >/dev/null 2>&1
+ 		then
+ 			httpd=3D"$httpd -f"
+ 		fi
+@@ -297,8 +297,8 @@ EOF
+=20
+ 	# check to see if Dennis Stosberg's mod_perl compatibility patch
+ 	# (<20060621130708.Gcbc6e5c@leonov.stosberg.net>) has been applied
+-	if test -f "$module_path/mod_perl.so" && grep 'MOD_PERL' \
+-				"$GIT_DIR/gitweb/gitweb.cgi" >/dev/null
++	if test -f "$module_path/mod_perl.so" &&
++	   sane_grep 'MOD_PERL' "$GIT_DIR/gitweb/gitweb.cgi" >/dev/null
+ 	then
+ 		# favor mod_perl if available
+ 		cat >> "$conf" <<EOF
+@@ -316,7 +316,7 @@ EOF
+ 		# plain-old CGI
+ 		resolve_full_httpd
+ 		list_mods=3D$(echo "$full_httpd" | sed "s/-f$/-l/")
+-		$list_mods | grep 'mod_cgi\.c' >/dev/null 2>&1 || \
++		$list_mods | sane_grep 'mod_cgi\.c' >/dev/null 2>&1 || \
+ 		echo "LoadModule cgi_module $module_path/mod_cgi.so" >> "$conf"
+ 		cat >> "$conf" <<EOF
+ AddHandler cgi-script .cgi
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 23ded48..6268e76 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -106,8 +106,8 @@ mark_action_done () {
+ 	sed -e 1q < "$TODO" >> "$DONE"
+ 	sed -e 1d < "$TODO" >> "$TODO".new
+ 	mv -f "$TODO".new "$TODO"
+-	count=3D$(grep -c '^[^#]' < "$DONE")
+-	total=3D$(($count+$(grep -c '^[^#]' < "$TODO")))
++	count=3D$(sane_grep -c '^[^#]' < "$DONE")
++	total=3D$(($count+$(sane_grep -c '^[^#]' < "$TODO")))
+ 	if test "$last_count" !=3D "$count"
+ 	then
+ 		last_count=3D$count
+@@ -147,7 +147,7 @@ die_abort () {
+ }
+=20
+ has_action () {
+-	grep '^[^#]' "$1" >/dev/null
++	sane_grep '^[^#]' "$1" >/dev/null
+ }
+=20
+ pick_one () {
+@@ -731,7 +731,7 @@ first and then run 'git rebase --continue' again."
+ 			git rev-list $REVISIONS |
+ 			while read rev
+ 			do
+-				if test -f "$REWRITTEN"/$rev -a "$(grep "$rev" "$DOTEST"/not-cherr=
+y-picks)" =3D ""
++				if test -f "$REWRITTEN"/$rev -a "$(sane_grep "$rev" "$DOTEST"/not-=
+cherry-picks)" =3D ""
+ 				then
+ 					# Use -f2 because if rev-list is telling us this commit is
+ 					# not worthwhile, we don't want to track its multiple heads,
+@@ -739,7 +739,7 @@ first and then run 'git rebase --continue' again."
+ 					# be rebasing on top of it
+ 					git rev-list --parents -1 $rev | cut -d' ' -s -f2 > "$DROPPED"/$r=
+ev
+ 					short=3D$(git rev-list -1 --abbrev-commit --abbrev=3D7 $rev)
+-					grep -v "^[a-z][a-z]* $short" <"$TODO" > "${TODO}2" ; mv "${TODO}=
+2" "$TODO"
++					sane_grep -v "^[a-z][a-z]* $short" <"$TODO" > "${TODO}2" ; mv "${=
+TODO}2" "$TODO"
+ 					rm "$REWRITTEN"/$rev
+ 				fi
+ 			done
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 6ec155c..0ec4355 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -467,7 +467,7 @@ orig_head=3D$branch
+ mb=3D$(git merge-base "$onto" "$branch")
+ if test "$upstream" =3D "$onto" && test "$mb" =3D "$onto" &&
+ 	# linear history?
+-	! (git rev-list --parents "$onto".."$branch" | grep " .* ") > /dev/nu=
+ll
++	! (git rev-list --parents "$onto".."$branch" | sane_grep " .* ") > /d=
+ev/null
+ then
+ 	if test -z "$force_rebase"
+ 	then
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 0462e52..b7ccd12 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -57,7 +57,7 @@ resolve_relative_url ()
+ #
+ module_list()
+ {
+-	git ls-files --error-unmatch --stage -- "$@" | grep '^160000 '
++	git ls-files --error-unmatch --stage -- "$@" | sane_grep '^160000 '
+ }
+=20
+ #
+@@ -567,7 +567,7 @@ cmd_summary() {
+ 	cd_to_toplevel
+ 	# Get modified modules cared by user
+ 	modules=3D$(git $diff_cmd $cached --raw $head -- "$@" |
+-		egrep '^:([0-7]* )?160000' |
++		sane_egrep '^:([0-7]* )?160000' |
+ 		while read mod_src mod_dst sha1_src sha1_dst status name
+ 		do
+ 			# Always show modules deleted or type-changed (blob<->module)
+@@ -581,7 +581,7 @@ cmd_summary() {
+ 	test -z "$modules" && return
+=20
+ 	git $diff_cmd $cached --raw $head -- $modules |
+-	egrep '^:([0-7]* )?160000' |
++	sane_egrep '^:([0-7]* )?160000' |
+ 	cut -c2- |
+ 	while read mod_src mod_dst sha1_src sha1_dst status name
+ 	do
