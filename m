@@ -1,72 +1,65 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] pack-objects: split implications of --all-progress
- from  progress activation
-Date: Mon, 23 Nov 2009 19:12:06 +0100
-Message-ID: <20091123181206.GD26996@machine.or.cz>
-References: <20091122145352.GA3941@debian.b2j>
- <20091123145959.GA13138@sigill.intra.peff.net>
- <20091123155043.GA28963@machine.or.cz>
- <20091123164319.GA23011@sigill.intra.peff.net>
- <alpine.LFD.2.00.0911231221320.2059@xanadu.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: OS X and umlauts in file names
+Date: Mon, 23 Nov 2009 19:23:01 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0911231916510.4897@intel-tinevez-2-302>
+References: <4B0ABA42.1060103@syntevo.com> <200911231845.04325.trast@student.ethz.ch> <4B0AD02E.1040408@syntevo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	bill lam <cbill.lam@gmail.com>, git <git@vger.kernel.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Mon Nov 23 19:12:31 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Thomas Singer <thomas.singer@syntevo.com>
+X-From: git-owner@vger.kernel.org Mon Nov 23 19:23:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCdOl-0007Tq-4l
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 19:12:27 +0100
+	id 1NCdZA-0003f6-P5
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 19:23:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754673AbZKWSMD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Nov 2009 13:12:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754617AbZKWSMD
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 13:12:03 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:59815 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754608AbZKWSMC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Nov 2009 13:12:02 -0500
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 33721125A0EC; Mon, 23 Nov 2009 19:12:06 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0911231221320.2059@xanadu.home>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753235AbZKWSXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Nov 2009 13:23:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753200AbZKWSXA
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 13:23:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60621 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753062AbZKWSW7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Nov 2009 13:22:59 -0500
+Received: (qmail invoked by alias); 23 Nov 2009 18:23:03 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp054) with SMTP; 23 Nov 2009 19:23:03 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Psypl0n8PM7nnNuHIGUR+4qgCTY4MBYB7UlFN7W
+	RRk3tB8iKaehvu
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <4B0AD02E.1040408@syntevo.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133519>
 
-On Mon, Nov 23, 2009 at 12:43:50PM -0500, Nicolas Pitre wrote:
-> Currently the --all-progress flag is used to use force progress display 
-> during the writing object phase even if output goes to stdout which is 
-> primarily the case during a push operation.  This has the unfortunate 
-> side effect of forcing progress display even if stderr is not a 
-> terminal.
-> 
-> Let's introduce the --all-progress-implied argument which has the same 
-> intent except for actually forcing the activation of any progress 
-> display.  With this, progress display will be automatically inhibited 
-> whenever stderr is not a terminal, or full progress display will be 
-> included otherwise.  This should let people use 'git push' within a cron 
-> job without filling their logs with useless percentage displays.
-> 
-> Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
+Hi,
 
-Ok, but what is currently the way to force the old behaviour? I believe
-that should be also part of the commit message.
+On Mon, 23 Nov 2009, Thomas Singer wrote:
 
-Naive deduction fails:
+> Basically, getting it "somehow" to work on OS X is just one minor step. 
+> IMHO Git should standardize on file names in the repository and do the 
+> platform-specific conversion independent of any locale setting, if 
+> needed.
 
-	$ git remote update --progress
-	error: unknown option `progress'
+That is contrary to the design of Git which honors content (byte-wise!) as 
+much as possible, and treats file names very much as content.
 
-Thanks,
+There were beginnings of supporting OSX' brain-damaged filename mangling, 
+but an obnoxious OSX fan worked very hard on trying to defend the OSX 
+design and to decry Git's respect for the raw bytes on this list, so hard 
+that even the nicest developers had no fun working on this issue anymore.
 
--- 
-				Petr "Pasky" Baudis
-A lot of people have my books on their bookshelves.
-That's the problem, they need to read them. -- Don Knuth
+This little background may help you understand why there is no solution 
+implemented in Git yet.  And maybe quite a few developers are reluctant to 
+discuss the issue and possible solutions due to said sad story, too.
+
+Ciao,
+Dscho
