@@ -1,73 +1,152 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 0/2] http fixes
-Date: Mon, 23 Nov 2009 11:03:47 +0800
-Message-ID: <20091123110347.d47728f8.rctay89@gmail.com>
+From: Adrian May <adrian.alexander.may@gmail.com>
+Subject: Re: Android needs repo, Chrome needs gclient. Neither work. What does 
+	that say about git?
+Date: Mon, 23 Nov 2009 12:11:29 +0800
+Message-ID: <65e170e70911222011l776a6aean7bd75f072a806616@mail.gmail.com>
+References: <2d707e8c-2561-470c-beba-c81e16ac441c@k17g2000yqh.googlegroups.com>
+	 <65e170e70911200251q2ec5ec87rc37577dddfd3317d@mail.gmail.com>
+	 <alpine.DEB.1.00.0911201229080.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Martin =?ISO-8859-1?Q?Storsj=F6?= <martin@martin.st>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 23 04:12:21 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org, chromium-discuss@googlegroups.com
+X-From: git-owner@vger.kernel.org Mon Nov 23 05:18:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCPLg-0001ni-IV
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 04:12:20 +0100
+	id 1NCQNU-0002Bj-8k
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 05:18:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756160AbZKWDMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Nov 2009 22:12:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756157AbZKWDMI
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 22:12:08 -0500
-Received: from mail-yw0-f182.google.com ([209.85.211.182]:59863 "EHLO
-	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756155AbZKWDMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Nov 2009 22:12:07 -0500
-X-Greylist: delayed 508 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Nov 2009 22:12:07 EST
-Received: by ywh12 with SMTP id 12so4802317ywh.21
-        for <git@vger.kernel.org>; Sun, 22 Nov 2009 19:12:13 -0800 (PST)
+	id S1756239AbZKWEQv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Nov 2009 23:16:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756233AbZKWEQu
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 23:16:50 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:63568 "EHLO
+	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756202AbZKWEQt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Nov 2009 23:16:49 -0500
+X-Greylist: delayed 326 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Nov 2009 23:16:49 EST
+Received: by iwn1 with SMTP id 1so363204iwn.33
+        for <git@vger.kernel.org>; Sun, 22 Nov 2009 20:16:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:x-mailer:mime-version:content-type
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
          :content-transfer-encoding;
-        bh=ZwqtCX8DOLLhSfdmzgAlcLuG6EY355mddmnNyeLzNJ4=;
-        b=G0Xa/nEIN8TiHu0sBDTpzUdf5xVzYVMXuHggJqKi8dFVQf2PRW8bTp1hBJP87uJ/gj
-         famaqBQBBggkbsvowQHls8cjcZOo1YgVDp8eKQhY2grIHC+DNvIbVJD1gMwbfxv6Yjc0
-         EDQUvfsTJdOUMIwXjQbd94QQp7/c8u5z0wf1I=
+        bh=6FhGQ/uYTGQsH94f0pGbYvhV3Q4PlqqAleoEOhOWjfo=;
+        b=BAExU6Sof261wIC2K73oVH3xw6dkMubdy0pm14zTinrkpF7+c3f1VlU0Ls2A0xFLEE
+         0z5BaIh3BMOJjSZ4kd+Drv952kDUQbtZ7i2KIt16mgn0FqMr9rh7/CR1A0Ol8Mrs4LAT
+         436Xc1e8oKOk3InQAdUWWpxr1ccuura2ed9ck=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:x-mailer:mime-version
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :content-type:content-transfer-encoding;
-        b=kEb6QPfxGmE4Uwy53WikDsamClbs1TeBqljPyn7st2GJaN8F5oxdrNB0lCYdcL4lJ8
-         TxZ5YoeWi5GpEaCapaypQmN+J1UtvU+FI0Y9yt+absuHUObNCIjhVcqZ20YKFfHrhO+9
-         XVTqTMbg8ZV6KShEUGrAdZNnVzw2p+3uwM1q4=
-Received: by 10.151.94.35 with SMTP id w35mr7489125ybl.194.1258945434876;
-        Sun, 22 Nov 2009 19:03:54 -0800 (PST)
-Received: from your-cukc5e3z5n (cm164.zeta152.maxonline.com.sg [116.87.152.164])
-        by mx.google.com with ESMTPS id 7sm1328111ywc.51.2009.11.22.19.03.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 22 Nov 2009 19:03:54 -0800 (PST)
-X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
+        b=w3LZ6K+a2K0M5CYjP1Pnt27rSbCGjjla8eGf6cyu3A8SG4NglQi1KAjMWiH8c3PHsE
+         o0vIG1Rboy7fYZvXjgtu6piOAlRL0T/NVJ3LzHbHw6dUIHMpg9n7YDFPFCS/3dKhdotw
+         eByCTSd6YgIMm9fqoJyaMIOhD6DHGT2668XX4=
+Received: by 10.231.26.131 with SMTP id e3mr1669596ibc.0.1258949489381; Sun, 
+	22 Nov 2009 20:11:29 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0911201229080.4985@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133479>
 
-Patch 1 ("Do curl option disabling before enabling new options"):
-  This is a workaround for a fairly recent curl issue that affected
-  versions up to 7.19.4.
+>> Git is just plain wrong, because you can't split or merge repositori=
+es
+>> or pull subtrees of them.
+>
+> You are plain wrong, because that is possible. =C2=A0Did you maybe fo=
+rget to do
+> your homework before coming here and shouting around as if you were r=
+ight?
 
-Patch 2 ("remote-curl.c: fix rpc_out()"):
-  Fixes issues that affect chunked encoding.
+So it is. Fair enough, I stand corrected. That was my single biggest
+gripe about git so it's nice to know it's there.
 
- http-push.c   |    2 +-
- remote-curl.c |   19 ++++++++++++-------
- 2 files changed, 13 insertions(+), 8 deletions(-)
+> To the contrary, these "bolt-on scripts" are superior to other soluti=
+ons,
+> because they give the savvy user freedom to do _anything_ a program c=
+an
+> do.
+> Your complaing have the same sense as complaining that gcc does not
+> include functionality of Makefile, because you just can't manage
+> larger projects without it (or equivalent).
 
---
-Cheers,
-Ray Chuan
+Well, these scripts, whatever git is written in and pretty much
+everything else in sight is a Turing machine, so anything could, in
+theory, do anything. But nevertheless, I think everybody agrees that
+certain functions belong in certain places, even if they disagree
+about where. I'd wager that 'make' belongs outside of gcc because it
+also drives other compilers, things like yacc, post-build steps, etc.
+OTOH I think producing browse info is a long-standing ommission from
+gcc that should never have been done externally in things like ctags
+and cscope, because the compiler has to do 90% of the work required
+anyway and because it's the compiler's opinion that counts.
+
+As for gclient and repo, without pretending to be an expert on what
+they actually do, I'm getting a strong gut feeling that if what I'm
+trying to do is pull or push code, then that's about as close as you
+can get to a definition of source control's central purpose. In the
+days of cvs or svn, I'd expect to use the source control for that. How
+come git needs help? Basically, my point is that these scripts should
+be the roadmap for git itself, because those are the functions people
+had to add to their git-based set-up in the real world. Also because
+the implementations would probably be simpler, more robust and more
+general if they were in git.
+
+> these "bolt-on scripts" give the savvy user freedom
+
+Actually, I think their purpose is precisely the opposite: to regiment
+the ordinary developer into following their process. So having that
+code under the developer's control is a weakness.
+
+As for pulling subtrees, I guess it's sensible for the code managers
+to declare which subtrees are likely to work on their own by making
+them repositories. I believe you can also link lots of repositories
+together to make a huge combo-repository, so I don't understand why
+android doesn't use that instead of having this script to iterate over
+them all. Maybe they started before the split/merge thing got written
+(it would have been risky to try and get it right first time if they
+couldn't rearrange them later.)
+
+>> It doesn't have the kind of triggers you
+>> need to assert change control either, and these bolt-on scripts are
+>> just making life messy.
+>Can you elaborate?
+
+Well, I believe that repo is largely about asserting their code
+integration process. It knows who to send your changes to for review.
+But now that I think about it, I guess git does that as a first
+principle. If I push to your repo, you get to review it before it goes
+in and in the meantime I shouldn't be surprised that our repos look
+different. So what the hell do they write those scripts for? Does
+anybody around here know if they actually need them or not?
+Unfortunately their list doesn't seem to be taking my post.
+
+> If you had problems pulling the code, there are two possible sources =
+of
+> problems: the program or a PEBCAK.
+
+Well, the repo thing eventually got fixed: it was committing suicide
+at the first sign of server load. I don't know what gclient's problem
+is, but my personal opinion is that the *root* problem is the
+existence of the scripts at all. In both cases, there's not much room
+for pebcak in the instructions.
+
+> You obviously do not understand Open Source.  If you have an itch, sc=
+ratch
+> it, or pay somebody to scratch it for you.
+
+I know, but I'm actually supposed to be getting on with my real job
+instead of sticking my nose into other peoples' problems like this. I
+might also argue that making suggestions is some kind of contribution,
+at least if the value of the suggestion outweighs the distraction of
+everybody having to read it to find out whether it's any use or not,
+which may or may not be the case here. Either way, I also have a
+budget for distractions and it doesn't allow for getting my brain
+around the git source code.
+
+Adrian.
