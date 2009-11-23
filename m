@@ -1,101 +1,77 @@
-From: "Steven J. Murdoch" <git+Steven.Murdoch@cl.cam.ac.uk>
-Subject: git-apply fails on creating a new file, with both -p and
-	--directory specified
-Date: Mon, 23 Nov 2009 19:45:24 +0000
-Message-ID: <20091123194523.GZ15966@cl.cam.ac.uk>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] send-email: new 'add-envelope' option
+Date: Mon, 23 Nov 2009 22:13:10 +0200
+Message-ID: <94a0d4530911231213k6ec3d4f4hb7bc293b8ddf92e8@mail.gmail.com>
+References: <1258825410-28592-1-git-send-email-felipe.contreras@gmail.com>
+	 <20091121193600.GA3296@coredump.intra.peff.net>
+	 <94a0d4530911211159l1fadad0ldb0d760439ceb57@mail.gmail.com>
+	 <7v1vjrmfjw.fsf@alter.siamese.dyndns.org>
+	 <94a0d4530911220403w7238dab7saf18830a89f2add5@mail.gmail.com>
+	 <7v6392h2d9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 23 20:45:35 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 23 21:13:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCeqq-00018A-RO
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 20:45:33 +0100
+	id 1NCfHj-0004fj-0D
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 21:13:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755527AbZKWTpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Nov 2009 14:45:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755022AbZKWTpU
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 14:45:20 -0500
-Received: from mta2.cl.cam.ac.uk ([128.232.0.14]:47531 "EHLO mta2.cl.cam.ac.uk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755294AbZKWTpT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Nov 2009 14:45:19 -0500
-Received: from alport.cl.cam.ac.uk ([128.232.9.64])
-	by mta2.cl.cam.ac.uk with esmtp (Exim 3.092 #1)
-	id 1NCeqi-0001ZB-00; Mon, 23 Nov 2009 19:45:24 +0000
-Received: from sjm217 by alport.cl.cam.ac.uk with local (Exim 4.69)
-	(envelope-from <sjm217@cl.cam.ac.uk>)
-	id 1NCeqi-00014x-3j; Mon, 23 Nov 2009 19:45:24 +0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1756597AbZKWUNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Nov 2009 15:13:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756014AbZKWUNG
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 15:13:06 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:64345 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755990AbZKWUNF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Nov 2009 15:13:05 -0500
+Received: by yxe17 with SMTP id 17so5025853yxe.33
+        for <git@vger.kernel.org>; Mon, 23 Nov 2009 12:13:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=9NF+y28mapNG+VFWNRC8HySD3xbfaF+8nYxW4SzfoDY=;
+        b=qqa046AqrgqtkY1YSpp1DE01wS/LqDI1sg89Qg3WdhlC1Oqw0hvdJE3YGk5H6JRv95
+         N9F7hFMO8vdM/QAndA7ivckAPrqoEUZyNZCiEr9soOv+X+CVSk9C2vAi9T2O5UaiKQNM
+         u1N/HhxAwtsv5prF+QL4Mwfi/A6+I58VtXGCw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=q/kq4y9MfuDpVvZJpeoCDS0srl3WiuEK23WTqolZKZL6Ubou0F+SmiZAwdxFMr1x0D
+         auJpxhZEG7fL9PlM1jnbEyJiIvjkIGrIwC2wGwHMI9dz+S4u/yeZAjx5ENQ9P1OA1D4u
+         KHTGF3jh5VitZHMOUOzTZKOGSGTeuCgzF4E80=
+Received: by 10.231.120.136 with SMTP id d8mr3253503ibr.14.1259007191038; Mon, 
+	23 Nov 2009 12:13:11 -0800 (PST)
+In-Reply-To: <7v6392h2d9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133531>
 
-While trying to apply a patch from one repository (created by
-git-format-patch), to another (using git-am), git fails with:
+On Sun, Nov 22, 2009 at 7:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> You can say that if you want to be difficult to work with, or you can be
+> that somebody yourself and make a difference.
 
-"fatal: git apply: bad git-diff - inconsistent new filename on line X"
+Being difficult to work with goes both ways. You as a maintainer are
+entitled to say "I won't accept this without test cases", and I as a
+contributor am entitled to say "I'm not going to do that". Since I'm
+doing this on my free time I'd rather work on the things I like, which
+doesn't include writing test cases from scratch, primarily because I'm
+not familiar with them.
 
-This appears to be because I was both using -p to strip some path
-components, and --directory to add different ones in. Only creating
-new files was affected.
+> Let me show you that we can be constructive for a change ;-)
+>
+> How about something trivial like this?
 
-This was the case in git 1.6.5.2, and also the development version
-1.6.6.rc0.15.g4fa80. I have tested this on MacOS X Snow Leopard.
+Looks good to me, but again, that doesn't say much.
 
-This appears related to the bug discussed in:
-  http://marc.info/?l=git&m=122237537312597&w=2
-in which the following fix was posted:
-  http://git.kernel.org/?p=git/git.git;a=commitdiff;h=969c877506cf8cc760c7b251fef6c5b6850bfc19
-
-I have included a patch below to the test cases, which currently fails
-but, if I understand correctly, should succeed.
-
-Steven Murdoch.
-
--- >8 --
-Test git-apply creating a new file, combining --directory and -p flags
-
-Signed-off-by: Steven Murdoch <Steven.Murdoch@cl.cam.ac.uk>
----
- t/t4128-apply-root.sh |   17 +++++++++++++++++
- 1 files changed, 17 insertions(+), 0 deletions(-)
-
-diff --git a/t/t4128-apply-root.sh b/t/t4128-apply-root.sh
-index 8f6aea4..6cc741a 100755
---- a/t/t4128-apply-root.sh
-+++ b/t/t4128-apply-root.sh
-@@ -58,6 +58,23 @@ test_expect_success 'apply --directory (new file)' '
- '
- 
- cat > patch << EOF
-+diff --git a/c/newfile2 b/c/newfile2
-+new file mode 100644
-+index 0000000..d95f3ad
-+--- /dev/null
-++++ b/c/newfile2
-+@@ -0,0 +1 @@
-++content
-+EOF
-+
-+test_expect_success 'apply --directory -p (new file)' '
-+	git reset --hard initial &&
-+	git apply -p2 --directory=some/sub/dir/ --index patch &&
-+	test content = $(git show :some/sub/dir/newfile2) &&
-+	test content = $(cat some/sub/dir/newfile2)
-+'
-+
-+cat > patch << EOF
- diff --git a/delfile b/delfile
- deleted file mode 100644
- index d95f3ad..0000000
--- 
-1.6.5.2
+Cheers.
 
 -- 
-http://www.cl.cam.ac.uk/users/sjm217/
+Felipe Contreras
