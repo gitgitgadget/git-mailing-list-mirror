@@ -1,111 +1,64 @@
-From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
-Subject: [PATCH] Fix over-simplified documentation for 'git log -z'
-Date: Mon, 23 Nov 2009 08:40:24 +0100
-Message-ID: <4B0A3C68.3010000@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/2] user-manual: Document that "git merge" doesn't like uncommited changes.
+Date: Mon, 23 Nov 2009 08:51:07 +0100
+Message-ID: <vpqd439he6s.fsf@bauges.imag.fr>
+References: <1258732767-12741-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1258732767-12741-3-git-send-email-Matthieu.Moy@imag.fr>
+	<7vk4xlvtib.fsf@alter.siamese.dyndns.org>
+	<vpqljhyi4oi.fsf@bauges.imag.fr>
+	<7vy6lyaz9b.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 23 08:40:35 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 23 08:55:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCTXG-0004BA-ID
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 08:40:35 +0100
+	id 1NCTly-0000SX-0r
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 08:55:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754875AbZKWHkV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Nov 2009 02:40:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752884AbZKWHkV
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 02:40:21 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:52166 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752804AbZKWHkU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Nov 2009 02:40:20 -0500
-Received: by ewy19 with SMTP id 19so1542458ewy.21
-        for <git@vger.kernel.org>; Sun, 22 Nov 2009 23:40:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=ribRoSQHm9yoCes+fsvwnOcNYhTRlaYCYrK/f8Ab8VQ=;
-        b=SKLK8JHEw11hsdXJAMUTtypMZ0FmA1lTiLI1ow3RFvdwNO5O0fEz1GN7gZ/zllVizm
-         TA1tLIRa1BzlR06H110X+c0tLhZ8swYGgdd4DRnYqjceob9dfKma3qMhfpa/W6Le9lXk
-         MmyO9/3ntiBPoF5TB3pO4tOhnCs36M8koFDWA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=VwNxQEFLJsiOOXP7SGpinfPBZn23yAFXGvGZNGlXTT6n6zDFUajf8z1aL+Nez/bJrY
-         dmhTxV6ksmB5esBtQKmh41wZWL9P6XaRSZi+3BkZyVQapq5tRlULvPxr9quYwaBDiHZK
-         rUMxOe9kf2cGahtYbjQ4TbWeYzGDx6aaHrH1I=
-Received: by 10.216.90.65 with SMTP id d43mr1500635wef.41.1258962025705;
-        Sun, 22 Nov 2009 23:40:25 -0800 (PST)
-Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
-        by mx.google.com with ESMTPS id 5sm582839eyf.0.2009.11.22.23.40.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 22 Nov 2009 23:40:25 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
+	id S1751984AbZKWHze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Nov 2009 02:55:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751910AbZKWHze
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 02:55:34 -0500
+Received: from imag.imag.fr ([129.88.30.1]:46512 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751524AbZKWHze (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Nov 2009 02:55:34 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id nAN7p8mB000255
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 23 Nov 2009 08:51:08 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NCThU-000800-01; Mon, 23 Nov 2009 08:51:08 +0100
+In-Reply-To: <7vy6lyaz9b.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Sun\, 22 Nov 2009 15\:57\:52 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 23 Nov 2009 08:51:08 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133488>
 
-In commit 64485b4a, the documentation for 'git log -z' was
-simplified too much. The -z option actually changes the behavior
-of 'git log' in two ways: commits will be ended with a NUL
-instead of a LF (correctly documented) and the --raw and
---numstat will have NUL as field terminators (omitted in
-the documentation for 'git log').
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
----
-I wrongly assumed that 'git log' ignores the --raw
-and --numstat options, because I tested it in a repository
-with only merge commits. They do have an effect for
-plain commits, and consequently -z will modify their
-behavior for 'git log' too.
+> 	The work tree is overwritten by the result of the
+>         merge when this combining is done cleanly, and the result is
+>         committed. Otherwise it is
+> 	overwritten by a half-merged results when this combining results
 
-This patch applies on 'next'.
+I thought of something like this, but this is slightly incorrect in
+case of fast-forward (Git doesn't "commit", but "reuses" a commit), so
+I prefered making a separate paragraph.
 
- Documentation/diff-options.txt |   12 +++++++-----
- 1 files changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
-s.txt
-index 18366b1..8707d0e 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -87,19 +87,21 @@ endif::git-format-patch[]
- ifndef::git-format-patch[]
-=20
- -z::
-+ifdef::git-log[]
-+	Separate the commits with NULs instead of with new newlines.
-++
-+Also, when `--raw` or `--numstat` has been given, do not munge
-+pathnames and use NULs as output field terminators.
-+endif::git-log[]
- ifndef::git-log[]
- 	When `--raw` or `--numstat` has been given, do not munge
- 	pathnames and use NULs as output field terminators.
-+endif::git-log[]
- +
- Without this option, each pathname output will have TAB, LF, double qu=
-otes,
- and backslash characters replaced with `\t`, `\n`, `\"`, and `\\`,
- respectively, and the pathname will be enclosed in double quotes if
- any of those replacements occurred.
--endif::git-log[]
--
--ifdef::git-log[]
--	Separate the commits with NULs instead of with new newlines.
--endif::git-log[]
-=20
- --name-only::
- 	Show only names of changed files.
---=20
-1.6.5.3.298.g39add
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
