@@ -1,150 +1,113 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git svn: strip leading path when making empty dirs
-Date: Sun, 22 Nov 2009 18:21:36 -0800
-Message-ID: <20091123022136.GA1055@dcvr.yhbt.net>
-References: <20091122134638.GA12233@atjola.homenet> <20091122232504.GA28127@dcvr.yhbt.net> <20091122235248.GA17418@atjola.homenet>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH 1/2] Do curl option disabling before enabling new options
+Date: Mon, 23 Nov 2009 11:03:28 +0800
+Message-ID: <20091123110328.748fcf09.rctay89@gmail.com>
+References: <Pine.LNX.4.64.0904142200130.7479@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 23 03:21:44 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Martin =?ISO-8859-1?Q?Storsj=F6?= <martin@martin.st>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 23 04:03:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCOYi-0005h0-GA
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 03:21:44 +0100
+	id 1NCPDP-000862-0V
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 04:03:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756130AbZKWCVb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Nov 2009 21:21:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756096AbZKWCVa
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 21:21:30 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:34116 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754373AbZKWCVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Nov 2009 21:21:30 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E9721F682;
-	Mon, 23 Nov 2009 02:21:36 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20091122235248.GA17418@atjola.homenet>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754541AbZKWDDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Nov 2009 22:03:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754349AbZKWDDb
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 22:03:31 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:53656 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753002AbZKWDDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Nov 2009 22:03:30 -0500
+Received: by yxe17 with SMTP id 17so4373616yxe.33
+        for <git@vger.kernel.org>; Sun, 22 Nov 2009 19:03:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:in-reply-to:references:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=+OQbkVE0wtlgreQ4wXKKXWRzxweGnnW/axLxQwoNA98=;
+        b=W7BWU8pXxmHFl112F16TGA1JwWCBXy/1K1p9/iITb5Q9tCNA3owPTrjVSyoQlmebD9
+         JWCdLLrc78PgdcUu19HppoR36s43irP6XsARY/zy6uUKybmN8sWfW+Z9pHgr3wn3/7ew
+         NhKcZLC1c+zU7IFv1VvE5v7JRxsklyOnIRmsA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        b=N3eeVUMLKiqX5Ar7t7F8a0ayH/DeUwV4ItgEjx1RL4W70ssf3EfyfIgW9ehHKINi9Y
+         FG9FpNxMsvtlNHhT2k4DBihrotcg+zw1yDkndB8pfckMPdUAlES51crewgDaTH0Ex9+f
+         qvxROwBLQc4rdt9rBGlZhhCi6Rf6Fvqp3G0nQ=
+Received: by 10.150.129.39 with SMTP id b39mr7535568ybd.91.1258945416312;
+        Sun, 22 Nov 2009 19:03:36 -0800 (PST)
+Received: from your-cukc5e3z5n (cm164.zeta152.maxonline.com.sg [116.87.152.164])
+        by mx.google.com with ESMTPS id 20sm1335411ywh.17.2009.11.22.19.03.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 22 Nov 2009 19:03:35 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0904142200130.7479@localhost.localdomain>
+X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133476>
 
-Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> wrote:
-> Argh, yeah, I messed that patch up, the test only failed because I al=
-so
-> messed up this line, adding the trunk prefix there, too. Fixed patch
-> below.
->=20
-> SVN Repo layout:
->=20
-> /
-> |
-> |---trunk
-> |   |
-> ... |---foo/ # Empty
->     |
->     |---bar/
->         |
->         somefile
->=20
-> with "git svn clone -s svn://host/path/to/repo you get:
->=20
-> .git
-> bar/
-> bar/somefile
-> trunk/foo # This should be just foo/
->=20
-> i.e. the empty directories have their path relative to the repo root,
-> instead of relative to the directory the git branch is associated wit=
-h.
->=20
-> Sorry for the messed up first patch.
+From: =?ISO-8859-15?Q?Martin_Storsj=F6?= <martin@martin.st>
 
-No worries, thanks for the bug report and test case.  My brain's been
-completely fried lately so I was completely confused :x
-Anyways this should fix it:
+This works around a bug in curl versions up to 7.19.4, where
+disabling the CURLOPT_NOBODY option sets the internal state
+incorrectly considering that CURLOPT_PUT was enabled earlier.
 
-     Also pushed out to git://git.bogomips.org/git-svn:
-	Eric Wong (2):
-	      git svn: always reuse existing remotes on fetch
-	      git svn: strip leading path when making empty dirs
+The bug is discussed at http://curl.haxx.se/bug/view.cgi?id=2727981
+and is corrected in the latest version of curl in CVS.
 
-=46rom 9be30eed61993a6f2d04a1609723e64e7632a64e Mon Sep 17 00:00:00 200=
-1
-=46rom: Eric Wong <normalperson@yhbt.net>
-Date: Sun, 22 Nov 2009 18:11:32 -0800
-Subject: [PATCH] git svn: strip leading path when making empty dirs
-MIME-Version: 1.0
-Content-Type: text/plain; charset=3DUTF-8
-Content-Transfer-Encoding: 8bit
+This bug usually has no impact on git, but may surface if using
+multi-pass authentication methods.
 
-Since unhandled.log stores paths relative to the repository
-root, we need to strip out leading path components if the
-directories we're tracking are not the repository root.
-
-Reported-by: Bj=F6rn Steinbrink
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+Signed-off-by: Martin Storsjo <martin@martin.st>
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
- git-svn.perl                  |    3 +++
- t/t9146-git-svn-empty-dirs.sh |   23 +++++++++++++++++++++++
- 2 files changed, 26 insertions(+), 0 deletions(-)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 7f7a56f..957d44e 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2752,8 +2752,11 @@ sub mkemptydirs {
- 		}
- 	}
- 	close $fh;
-+
-+	my $strip =3D qr/\A\Q$self->{path}\E(?:\/|$)/;
- 	foreach my $d (sort keys %empty_dirs) {
- 		$d =3D uri_decode($d);
-+		$d =3D~ s/$strip//;
- 		next if -d $d;
- 		if (-e _) {
- 			warn "$d exists but is not a directory\n";
-diff --git a/t/t9146-git-svn-empty-dirs.sh b/t/t9146-git-svn-empty-dirs=
-=2Esh
-index 5948544..70c52c1 100755
---- a/t/t9146-git-svn-empty-dirs.sh
-+++ b/t/t9146-git-svn-empty-dirs.sh
-@@ -82,4 +82,27 @@ test_expect_success 'git svn mkdirs -r works' '
- 	)
- '
-=20
-+test_expect_success 'initialize trunk' '
-+	for i in trunk trunk/a trunk/"weird file name"
-+	do
-+		svn_cmd mkdir -m "mkdir $i" "$svnrepo"/"$i"
-+	done
-+'
-+
-+test_expect_success 'clone trunk' 'git svn clone -s "$svnrepo" trunk'
-+
-+test_expect_success 'empty directories in trunk exist' '
-+	(
-+		cd trunk &&
-+		for i in a "weird file name"
-+		do
-+			if ! test -d "$i"
-+			then
-+				echo >&2 "$i does not exist"
-+				exit 1
-+			fi
-+		done
-+	)
-+'
-+
- test_done
---=20
-Eric Wong
+  Squashed in another potential trigger for this bug in remote-curl.c,
+  introduced in 'next'.
+
+ http-push.c   |    2 +-
+ remote-curl.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/http-push.c b/http-push.c
+index f10803a..295f1fb 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -408,10 +408,10 @@ static void start_put(struct transfer_request *request)
+ 	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &request->buffer);
+ #endif
+ 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
++	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
+ 	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_PUT);
+ 	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 1);
+ 	curl_easy_setopt(slot->curl, CURLOPT_PUT, 1);
+-	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
+ 	curl_easy_setopt(slot->curl, CURLOPT_URL, request->url);
+
+ 	if (start_active_slot(slot)) {
+diff --git a/remote-curl.c b/remote-curl.c
+index 4f28c22..69eaf58 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -356,8 +356,8 @@ static int post_rpc(struct rpc_state *rpc)
+ 	slot = get_active_slot();
+ 	slot->results = &results;
+
+-	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
+ 	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
++	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
+ 	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
+ 	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "");
+
+--
+1.6.4.4
