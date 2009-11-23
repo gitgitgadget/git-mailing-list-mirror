@@ -1,54 +1,64 @@
-From: Thomas Singer <thomas.singer@syntevo.com>
-Subject: OS X and umlauts in file names
-Date: Mon, 23 Nov 2009 17:37:22 +0100
-Message-ID: <4B0ABA42.1060103@syntevo.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: how to suppress progress percentage in git-push
+Date: Mon, 23 Nov 2009 11:43:19 -0500
+Message-ID: <20091123164319.GA23011@sigill.intra.peff.net>
+References: <20091122145352.GA3941@debian.b2j>
+ <20091123145959.GA13138@sigill.intra.peff.net>
+ <20091123155043.GA28963@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 23 17:37:25 2009
+Content-Type: text/plain; charset=utf-8
+Cc: bill lam <cbill.lam@gmail.com>, Nicolas Pitre <nico@fluxnic.net>,
+	git <git@vger.kernel.org>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Nov 23 17:43:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCbum-00070A-Ia
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 17:37:24 +0100
+	id 1NCc0g-0001br-KA
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Nov 2009 17:43:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755438AbZKWQhJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Nov 2009 11:37:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755258AbZKWQhJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 11:37:09 -0500
-Received: from syntevo.com ([85.214.39.145]:35855 "EHLO syntevo.com"
+	id S1754551AbZKWQnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Nov 2009 11:43:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754077AbZKWQnP
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 11:43:15 -0500
+Received: from peff.net ([208.65.91.99]:54053 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754898AbZKWQhI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Nov 2009 11:37:08 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1]) with ESMTP id E9F7937C7B5
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-X-Enigmail-Version: 0.96.0
+	id S1754009AbZKWQnO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Nov 2009 11:43:14 -0500
+Received: (qmail 3384 invoked by uid 107); 23 Nov 2009 16:47:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 23 Nov 2009 11:47:44 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Nov 2009 11:43:19 -0500
+Content-Disposition: inline
+In-Reply-To: <20091123155043.GA28963@machine.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133508>
 
-I'm on an English OS X 10.6.2 and I created a sample file with umlauts =
-in
-its name (=DCberl=E4nge.txt). When I try to stage the file in the termi=
-nal, I
-can't complete the file name by typing the =DC and hitting the tab key,=
- but I
-can complete it by typing an U and hitting the tab key. Unfortunately, =
-after
-executing
+On Mon, Nov 23, 2009 at 04:50:43PM +0100, Petr Baudis wrote:
 
- git stage =DCberl=E4nge.txt
+> On Mon, Nov 23, 2009 at 10:00:00AM -0500, Jeff King wrote:
+> > The patch for (1) would look something like what's below.  It's simpler,
+> > but it does change the semantics; anyone who was relying on
+> > --all-progress to turn on progress unconditionally would need to now
+> > also use --progress. However, turning on progress unconditionally is
+> > usually an error (the except is if you are piping output in real-time to
+> > the user and need to overcome the isatty check).
+> 
+> I'm actually doing exactly that in the mirrorproj.cgi of Girocco, so I
+> would be unhappy if I would have to go through creating ptys or whatever
+> now. Maybe conditioning this by an environment variable?
 
-I invoked
+You wouldn't need to do anything that drastic. You would just need to
+pass "--progress --all-progress" instead of only --all-progress. But you
+have provided the data point that such a change would break at least one
+user.
 
- git status
+We could also leave --all-progress as-is and add new option to mean "if
+you are already doing progress, do all progress".
 
-and it still shows the file as new file. Should I set some environment
-variable to be able to work with files containing umlauts in the name?
-
-Thanks in advance,
-Tom
+-Peff
