@@ -1,120 +1,82 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] Documentation: update descriptions of revision options
-	related to '--bisect'
-Date: Tue, 24 Nov 2009 07:54:44 +0100
-Message-ID: <20091124065445.4002.9082.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 24 08:08:15 2009
+From: Karl Wiberg <kha@treskal.com>
+Subject: Re: [PATCH RFC] git-send-email --expand-aliases
+Date: Tue, 24 Nov 2009 08:12:17 +0100
+Message-ID: <b8197bcb0911232312l251dfbc9va671388cfb7fe57b@mail.gmail.com>
+References: <20091123221628.GE26810@ldl.fc.hp.com>
+	 <7v6390sqhz.fsf@alter.siamese.dyndns.org>
+	 <20091124004554.GA27643@ldl.fc.hp.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Alex Chiang <achiang@hp.com>,
+	Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 24 08:12:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCpVW-0006Ov-Jk
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 08:08:14 +0100
+	id 1NCpZZ-0007Yt-EY
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 08:12:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758010AbZKXHIB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2009 02:08:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758006AbZKXHIB
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 02:08:01 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:34522 "EHLO smtp3-g21.free.fr"
+	id S1758030AbZKXHMO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Nov 2009 02:12:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758011AbZKXHMO
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 02:12:14 -0500
+Received: from mail1.space2u.com ([62.20.1.135]:41016 "EHLO mail1.space2u.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757957AbZKXHIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2009 02:08:00 -0500
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 026908180CC;
-	Tue, 24 Nov 2009 08:08:00 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 6E6B781811B;
-	Tue, 24 Nov 2009 08:07:57 +0100 (CET)
-X-git-sha1: cf5d5541012bac0a1b9b2082e3ea0c15559b0d69 
-X-Mailer: git-mail-commits v0.5.2
+	id S1758006AbZKXHMN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Nov 2009 02:12:13 -0500
+Received: from mail-bw0-f223.google.com (mail-bw0-f223.google.com [209.85.218.223])
+	(authenticated bits=0)
+	by mail1.space2u.com (8.14.3/8.14.3) with ESMTP id nAO7CB16030300
+	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NOT)
+	for <git@vger.kernel.org>; Tue, 24 Nov 2009 08:12:11 +0100
+Received: by bwz23 with SMTP id 23so6023120bwz.29
+        for <git@vger.kernel.org>; Mon, 23 Nov 2009 23:12:17 -0800 (PST)
+Received: by 10.204.3.219 with SMTP id 27mr5796800bko.127.1259046737419; Mon, 
+	23 Nov 2009 23:12:17 -0800 (PST)
+In-Reply-To: <20091124004554.GA27643@ldl.fc.hp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133562>
 
-In commit ad3f9a7 (Add '--bisect' revision machinery argument) the
-'--bisect' option was added to easily pass bisection refs to commands
-using the revision machinery.
+On Tue, Nov 24, 2009 at 1:45 AM, Alex Chiang <achiang@hp.com> wrote:
 
-This patch updates the documentation of the related options to describe
-the new behavior.
+> * Junio C Hamano <gitster@pobox.com>:
+>
+> > If you are changing StGit to call git-send-email anyway, why not
+> > arrange stgit to call git-send-email to send the message out
+> > instead, instead of sending messages on its own?
+>
+> Yeah, I thought about that as I was poking around further in StGit
+> to figure out how it would be calling git-send-email. ;)
+>
+> > I imagine the internal implementation of stg mail would work
+> > something like:
+> >
+> > =C2=A0 =C2=A0 prepare messages to send out
+> > =C2=A0 =C2=A0 call git-send-email and have it send them
+> >
+> > What am I missing?
+>
+> My lack of familiarity with StGit internals. ;)
+>
+> Your suggestion is much better. I'll take a closer look at StGit and
+> see how feasible it is.
+>
+> Unless Catalin has strong objections?
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/rev-list-options.txt |   39 ++++++++++++++++++++++++-----------
- 1 files changed, 27 insertions(+), 12 deletions(-)
+I think that sounds like a splendid idea. It would be interesting to
+see just how thin a wrapper around git send-email (and format-patch)
+stg mail could become, without sacrificing features anyone actually
+uses. The main complication could be stg mail's templates.
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index b44fdd9..1f57aed 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -243,6 +243,15 @@ endif::git-rev-list[]
- 	Pretend as if all the refs in `$GIT_DIR/refs/remotes` are listed
- 	on the command line as '<commit>'.
- 
-+ifndef::git-rev-list[]
-+--bisect::
-+
-+	Pretend as if the bad bisection ref `$GIT_DIR/refs/bisect/bad`
-+	was listed and as if it was followed by `--not` and the good
-+	bisection refs `$GIT_DIR/refs/bisect/good-*` on the command
-+	line.
-+endif::git-rev-list[]
-+
- --stdin::
- 
- 	In addition to the '<commit>' listed on the command
-@@ -538,7 +547,11 @@ Bisection Helpers
- --bisect::
- 
- Limit output to the one commit object which is roughly halfway between
--the included and excluded commits. Thus, if
-+included and excluded commits. Note that the bad bisection ref
-+`$GIT_DIR/refs/bisect/bad` is added to the included commits (if it
-+exists) and the good bisection refs `$GIT_DIR/refs/bisect/good-*` are
-+added to the excluded commits (if they exist). Thus, supposing there
-+are no refs in `$GIT_DIR/refs/bisect/`, if
- 
- -----------------------------------------------------------------------
- 	$ git rev-list --bisect foo ^bar ^baz
-@@ -558,22 +571,24 @@ one.
- 
- --bisect-vars::
- 
--This calculates the same as `--bisect`, but outputs text ready
--to be eval'ed by the shell. These lines will assign the name of
--the midpoint revision to the variable `bisect_rev`, and the
--expected number of commits to be tested after `bisect_rev` is
--tested to `bisect_nr`, the expected number of commits to be
--tested if `bisect_rev` turns out to be good to `bisect_good`,
--the expected number of commits to be tested if `bisect_rev`
--turns out to be bad to `bisect_bad`, and the number of commits
--we are bisecting right now to `bisect_all`.
-+This calculates the same as `--bisect`, except that refs in
-+`$GIT_DIR/refs/bisect/` are not used, and except that this outputs
-+text ready to be eval'ed by the shell. These lines will assign the
-+name of the midpoint revision to the variable `bisect_rev`, and the
-+expected number of commits to be tested after `bisect_rev` is tested
-+to `bisect_nr`, the expected number of commits to be tested if
-+`bisect_rev` turns out to be good to `bisect_good`, the expected
-+number of commits to be tested if `bisect_rev` turns out to be bad to
-+`bisect_bad`, and the number of commits we are bisecting right now to
-+`bisect_all`.
- 
- --bisect-all::
- 
- This outputs all the commit objects between the included and excluded
- commits, ordered by their distance to the included and excluded
--commits. The farthest from them is displayed first. (This is the only
--one displayed by `--bisect`.)
-+commits. Refs in `$GIT_DIR/refs/bisect/` are not used. The farthest
-+from them is displayed first. (This is the only one displayed by
-+`--bisect`.)
- +
- This is useful because it makes it easy to choose a good commit to
- test when you want to avoid to test some of them for some reason (they
--- 
-1.6.5.1.gaf97d
+Catalin, how wedded are you to those? ;-)
+
+--=20
+Karl Wiberg, kha@treskal.com
+   subrabbit.wordpress.com
+   www.treskal.com/kalle
