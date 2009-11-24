@@ -1,94 +1,89 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v3] remote-curl.c: fix rpc_out()
-Date: Tue, 24 Nov 2009 10:31:30 +0800
-Message-ID: <20091124103130.e1bdf09f.rctay89@gmail.com>
-References: <20091124095508.d6312ab0.rctay89@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: how to suppress progress percentage in git-push
+Date: Mon, 23 Nov 2009 22:07:42 -0500
+Message-ID: <20091124030742.GA32029@coredump.intra.peff.net>
+References: <20091122145352.GA3941@debian.b2j>
+ <20091123145959.GA13138@sigill.intra.peff.net>
+ <alpine.LFD.2.00.0911231043310.2059@xanadu.home>
+ <20091124011339.GA18003@debian.b2j>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	paulfred <paul.fredrickson@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 24 03:31:55 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>, git <git@vger.kernel.org>
+To: bill lam <cbill.lam@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 24 04:08:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NClC4-0004I8-0N
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 03:31:52 +0100
+	id 1NCll0-0005fc-FN
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 04:07:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757572AbZKXCbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Nov 2009 21:31:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757507AbZKXCbe
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 21:31:34 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:53181 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757410AbZKXCbe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Nov 2009 21:31:34 -0500
-Received: by yxe17 with SMTP id 17so5311822yxe.33
-        for <git@vger.kernel.org>; Mon, 23 Nov 2009 18:31:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:in-reply-to:references:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=QNix701sQtNNj046bZBdjR07r4exARV7gLEDCNu8W/g=;
-        b=jBCScaXMU+/udBhRILCkKhKnYqJirG9YOL0qDU4E8SbTJlOlDBBA5FbOqEzO0SJvQk
-         wjvEJxGFbrV3SkYr8N0GNmX2lZSoMMRbrfTKa5M4+qEPg8T3+6rNfm8Qdjme20jTpu9T
-         ruy/I4Xd98IbWZthh598+/0T4ZxCpM21BFPkU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        b=JXWsFHp9CrwyyGqQHTVDzDeU2BvRC5CcyBKzHj+AFG7OBKeR8eybpTxY2AWHX01L4a
-         gO0+XUYFV5YTpBpX9ElKwo0HI+AmTpRm2LqhRDJmkN06Yk3rrB3gLAlk8g3u30f12i2R
-         jpfkSj0fFtQX4y3gxwArbosM/bMLnUm0NVOZQ=
-Received: by 10.91.19.13 with SMTP id w13mr7413610agi.120.1259029900632;
-        Mon, 23 Nov 2009 18:31:40 -0800 (PST)
-Received: from your-cukc5e3z5n (cm164.zeta152.maxonline.com.sg [116.87.152.164])
-        by mx.google.com with ESMTPS id 4sm2186998yxd.52.2009.11.23.18.31.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 23 Nov 2009 18:31:40 -0800 (PST)
-In-Reply-To: <20091124095508.d6312ab0.rctay89@gmail.com>
-X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1757844AbZKXDHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Nov 2009 22:07:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757838AbZKXDHi
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 22:07:38 -0500
+Received: from peff.net ([208.65.91.99]:34965 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757817AbZKXDHi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Nov 2009 22:07:38 -0500
+Received: (qmail 6612 invoked by uid 107); 24 Nov 2009 03:12:07 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 23 Nov 2009 22:12:07 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Nov 2009 22:07:42 -0500
+Content-Disposition: inline
+In-Reply-To: <20091124011339.GA18003@debian.b2j>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133557>
 
-Remove the extraneous semicolon (';') at the end of the if statement
-that allowed the code in its block to execute regardless of the
-condition.
+On Tue, Nov 24, 2009 at 09:13:39AM +0800, bill lam wrote:
 
-This fixes pushing to a smart http backend with chunked encoding.
+> On Mon, 23 Nov 2009, Nicolas Pitre wrote:
+> > Then, during the pack-objects process, there are 3 phases: counting 
+> > objects, compressing objects, and writing objects.  However in the fetch 
+> 
+> during git-gc it shows yet another progress 
+> 
+> Removing duplicate objects: 100% (256/256), done.
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+Thanks, this doesn't seem to have been guarded at all (but since it is
+on a 2-second delay, you have to have quite a lot of loose objects or a
+slow disk to trigger it).
+
+We should apply the patch below to keep things consistent.
+
+I also checked every other call to start_progress; everything else seems
+to be guarded. Most of them were easy to trace to an isatty check,
+though the one in unpack-trees is influenced by o->verbose_update. That
+in turn usually corresponds to a quiet option, though merge does seem to
+use it unconditionally. Maybe that should be tweaked, too?
+
+-- >8 --
+Subject: [PATCH] prune-packed: only show progress when stderr is a tty
+
+This matches the behavior of other git programs, and helps
+keep cruft out of things like cron job output.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
-
-  Reworded the part on code execution, so that it doesn't say "the code
-  doesn't execute", but rather "the code always executes".
-
-  Thanks to Paul for spotting that.
-
- remote-curl.c |    2 +-
+ builtin-prune-packed.c |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index 69eaf58..a331bae 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -307,7 +307,7 @@ static size_t rpc_out(void *ptr, size_t eltsize,
- 		rpc->len = avail;
- 	}
-
--	if (max < avail);
-+	if (max < avail)
- 		avail = max;
- 	memcpy(ptr, rpc->buf + rpc->pos, avail);
- 	rpc->pos += avail;
---
-1.6.4.4
+diff --git a/builtin-prune-packed.c b/builtin-prune-packed.c
+index be99eb0..f9463de 100644
+--- a/builtin-prune-packed.c
++++ b/builtin-prune-packed.c
+@@ -71,7 +71,7 @@ void prune_packed_objects(int opts)
+ 
+ int cmd_prune_packed(int argc, const char **argv, const char *prefix)
+ {
+-	int opts = VERBOSE;
++	int opts = isatty(2) ? VERBOSE : 0;
+ 	const struct option prune_packed_options[] = {
+ 		OPT_BIT('n', "dry-run", &opts, "dry run", DRY_RUN),
+ 		OPT_NEGBIT('q', "quiet", &opts, "be quiet", VERBOSE),
+-- 
+1.6.6.rc0.249.g9b4cf.dirty
