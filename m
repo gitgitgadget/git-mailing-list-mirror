@@ -1,120 +1,99 @@
-From: Marc Fournier <marc.fournier@camptocamp.com>
-Subject: git-subtree: directory mismatch
-Date: Tue, 24 Nov 2009 20:53:53 +0100
-Message-ID: <20091124195353.GA16627@lonquimay.wrk.lsn.camptocamp.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Android needs repo, Chrome needs gclient. Neither work. What
+ does  that say about git?
+Date: Tue, 24 Nov 2009 15:45:42 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.0911241441520.14365@iabervon.org>
+References: <2d707e8c-2561-470c-beba-c81e16ac441c@k17g2000yqh.googlegroups.com>  <65e170e70911200251q2ec5ec87rc37577dddfd3317d@mail.gmail.com>  <alpine.DEB.1.00.0911201229080.4985@pacific.mpi-cbg.de>  <65e170e70911222011l776a6aean7bd75f072a806616@mail.gmail.com>
+  <20091123135817.GB2532@thunk.org> <65e170e70911231948l3b032dbeu7c99b65ce3ec97ff@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 24 21:22:48 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: tytso@mit.edu, git@vger.kernel.org,
+	chromium-discuss@googlegroups.com
+To: Adrian May <adrian.alexander.may@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 24 21:45:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ND1uR-0004hE-In
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 21:22:47 +0100
+	id 1ND2Gj-000655-6i
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 21:45:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932779AbZKXUWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2009 15:22:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932718AbZKXUWg
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 15:22:36 -0500
-Received: from c2cpc15.camptocamp.com ([128.179.66.15]:47875 "EHLO
-	mail.camptocamp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932570AbZKXUWf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2009 15:22:35 -0500
-X-Greylist: delayed 1725 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Nov 2009 15:22:35 EST
-Received: from lonquimay.localdomain (c2cpc3.camptocamp.com [128.179.66.4])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.camptocamp.com (Postfix) with ESMTP id 37CF18063E;
-	Tue, 24 Nov 2009 21:53:54 +0100 (CET)
-Received: by lonquimay.localdomain (Postfix, from userid 1000)
-	id D45AEAE139; Tue, 24 Nov 2009 20:53:53 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932827AbZKXUpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Nov 2009 15:45:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932746AbZKXUph
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 15:45:37 -0500
+Received: from iabervon.org ([66.92.72.58]:44360 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932732AbZKXUph (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2009 15:45:37 -0500
+Received: (qmail 31732 invoked by uid 1000); 24 Nov 2009 20:45:42 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 24 Nov 2009 20:45:42 -0000
+In-Reply-To: <65e170e70911231948l3b032dbeu7c99b65ce3ec97ff@mail.gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133592>
 
-Hi,
+On Tue, 24 Nov 2009, Adrian May wrote:
 
-I've come across this weird behaviour using git-subtree: when updating a
-directory created by git-subtree, the content of some (almost) random
-neighbour directory gets replaced, instead of the directory specified by
-"git-subtree --prefix".
+> > If you don't have bolt-on scripts, and you move that into the the core
+> > SCM, then you force *all* projects to use whatever workflow was
+> > decided as being the One True Way of doing things as seen by the SCM
+> > designer.  So the question is whether the SCM *should* regiment all
+> > projects into following the SCM's designers idea of the One True
+> > Workflow.
+> 
+> Of course I'd want the workflow configurable by whoever controls the
+> main repository. I couldn't possibly suggest that all git projects
+> need the same workflow. The number of developers can vary by five
+> orders of magnitude - that calls for different workflow models.
+> 
+> > Git's approach is to say that it will be fairly flexible about
+> > dictating workflow --- who pushs to whom; whether there is a single
+> > "star" repository topology, or something that is more flexible, etc.
+> > You seem to hate this flexibility, because it makes life harder until
+> > you set up these bolt-on scripts.  But that's what many of us like
+> > about git; that it doesn't force us (the project lead) into a single
+> > way of doing things.
+> 
+> Leaving aside topology, I suppose we can agree that the subject
+> divides into two aspects: offering the developer some optional tools,
+> and asserting control over what gets commited to the official repo.
+> Perhaps we can also agree that the former belongs under the control of
+> the developer and the latter should be in the PM's hands. You seem to
+> have opinions about which of these two aspects is more or less
+> important, and to what extent git suffices, but I don't. I assume that
+> the project manager has his own opinions about both aspects and I'm
+> observing two big projects that independantly have augmented git's
+> features with their own scripts. Their docs talk about both aspects,
+> especially repo's, but they are entirely implemented in
+> developer-overridable scripts. So any repo functions to do with the
+> second aspect are either features that git needs to grow, or bits of
+> the git manual that the repo designer didn't read. I'd kinda like to
+> know which.
 
+Repo (and gclient, which claims to be for SVN) seems to be mostly about 
+the fact that nothing really handles submodules (independant projects that 
+are also parts of larger projects) well. This is a known flaw with git, 
+but it's unclear as to whether repo does better. It's probably best to let 
+them work out a set of semantics which a real-world, full-scale project is 
+happy with, and consider adopting it for native submodules when there's 
+real-world positive experience behind it.
 
-mkdir /tmp/testrepo
-cd /tmp/testrepo
-git init .
-mkdir -p modules/cognac/{manifests,files}
-mkdir -p modules/cognac/manifests/{classes,definitions}
-touch modules/cognac/README modules/cognac/manifests/classes/foo.pp
-modules/cognac/manifests/definitions/bar.pp modules/cognac/files/blabla
-git add modules/
-git commit -m "test"
+The other main thing I see repo doing is interfacing with gerrit, where 
+your pushes get redirected, and there are a million review branches you 
+can find on a web site, and where the server for a push is different from 
+the best server for a mainline fetch. Some of this is probably worth 
+having natively, but there's still the case of wanting to fetch a review 
+branch based on understanding stuff about gerrit. This is similar to 
+wanting to get a SVN revision out of bugzilla; you really want a tool 
+that's particular to the integration of the systems you're using, not 
+stuff built into your version control system. That said, if the submodule 
+stuff were taken care of, Google could provide a git-review program, and 
+do everything within the "git ..." wrapper instead of as an outer script.
 
-git remote add mapserver git://github.com/camptocamp/puppet-mapserver.git
-git remote update
-git-subtree add --prefix modules/mapserver 97f5985b # an older commit
-
-# So far so good, I have 2 subdirectories in modules/ with completely
-# different content.
-
-# Then, the content of modules/cognac/ gets completely replaced by the
-# content of HEAD from git://github.com/camptocamp/puppet-mapserver.git.
-# modules/mapserver still contains the content of commit 97f5985b.
-
-git-subtree pull --prefix modules/mapserver mapserver master
-
->From git://github.com/camptocamp/puppet-mapserver
- * branch            master     -> FETCH_HEAD
-Removing modules/cognac/files/blabla
-Removing modules/cognac/manifests/classes/foo.pp
-Removing modules/cognac/manifests/definitions/bar.pp
-Merge made by subtree.
- modules/cognac/files/apt-preferences               |    3 +
- modules/cognac/files/epsg.C2C                      | 5445 ++++++++++++++++++++
- modules/cognac/files/epsg.legacy                   | 5445 ++++++++++++++++++++
- modules/cognac/files/epsg.minimal                  |   14 +
- modules/cognac/files/etc/apt/preferences-20070910  |    3 +
- modules/cognac/files/etc/apt/preferences-20080225  |   35 +
- modules/cognac/files/etc/apt/preferences-v5-2      |   35 +
- modules/cognac/manifests/classes/epsg.pp           |   21 +
- .../cognac/manifests/classes/mapserver-debian.pp   |   82 +
- modules/cognac/manifests/classes/v5.pp             |   46 +
- modules/cognac/manifests/init.pp                   |    8 +
- 11 files changed, 11137 insertions(+), 0 deletions(-)
- create mode 100644 modules/cognac/files/apt-preferences
- delete mode 100644 modules/cognac/files/blabla
- create mode 100755 modules/cognac/files/epsg.C2C
- create mode 100755 modules/cognac/files/epsg.legacy
- create mode 100644 modules/cognac/files/epsg.minimal
- create mode 100644 modules/cognac/files/etc/apt/preferences-20070910
- create mode 100644 modules/cognac/files/etc/apt/preferences-20080225
- create mode 100644 modules/cognac/files/etc/apt/preferences-v5-2
- create mode 100644 modules/cognac/manifests/classes/epsg.pp
- delete mode 100644 modules/cognac/manifests/classes/foo.pp
- create mode 100644 modules/cognac/manifests/classes/mapserver-debian.pp
- create mode 100644 modules/cognac/manifests/classes/v5.pp
- delete mode 100644 modules/cognac/manifests/definitions/bar.pp
- create mode 100644 modules/cognac/manifests/init.pp
-
-I was not able to reproduce this bug in any of the following cases:
- - if the README file wasn't empty
- - if modules/cognac is renamed to something else
- - if modules/cognac doesn't have the same sub-directories than
-   modules/mapserver
-
-This bug happens using git 1.5.5.6 as well as 1.6.5. It seems to happen
-when git-subtree calls "git merge -s subtree".
-
-Maybe something is broken in this puppet-mapserver.git repository I use ?
-I've encountered the same problem with other directories too.
-
-Any idea ?
-
-Thanks !
-Marc
+	-Daniel
+*This .sig left intentionally blank*
