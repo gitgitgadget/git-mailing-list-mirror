@@ -1,85 +1,91 @@
-From: Karl Wiberg <kha@treskal.com>
-Subject: Re: [PATCH RFC] git-send-email --expand-aliases
-Date: Tue, 24 Nov 2009 20:08:13 +0100
-Message-ID: <b8197bcb0911241108mc0d6297h48d3c7bc69acc8e5@mail.gmail.com>
-References: <20091123221628.GE26810@ldl.fc.hp.com>
-	 <7v6390sqhz.fsf@alter.siamese.dyndns.org>
-	 <20091124004554.GA27643@ldl.fc.hp.com>
-	 <b8197bcb0911232312l251dfbc9va671388cfb7fe57b@mail.gmail.com>
-	 <b0943d9e0911240243m13730f0bw34f2f18cf41f9079@mail.gmail.com>
-	 <20091124184629.GB27418@ldl.fc.hp.com>
+From: Peter van der Does <peter@ourvirtualhome.com>
+Subject: Re: git tag listing order
+Date: Tue, 24 Nov 2009 14:24:28 -0500
+Message-ID: <20091124142428.514564d6@montecarlo.grandprix.int>
+References: <20091124105609.0980e796@montecarlo.grandprix.int>
+	<20091124185947.GA24409@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Alex Chiang <achiang@hp.com>
-X-From: git-owner@vger.kernel.org Tue Nov 24 20:08:23 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 24 20:24:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ND0kR-0004jX-47
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 20:08:23 +0100
+	id 1ND10H-0003vx-Nm
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 20:24:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933922AbZKXTIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2009 14:08:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933841AbZKXTIL
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 14:08:11 -0500
-Received: from mail1.space2u.com ([62.20.1.135]:62340 "EHLO mail1.space2u.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933824AbZKXTIL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2009 14:08:11 -0500
-Received: from mail-bw0-f227.google.com (mail-bw0-f227.google.com [209.85.218.227])
-	(authenticated bits=0)
-	by mail1.space2u.com (8.14.3/8.14.3) with ESMTP id nAOJ7x6j001157
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NOT)
-	for <git@vger.kernel.org>; Tue, 24 Nov 2009 20:07:59 +0100
-Received: by bwz27 with SMTP id 27so6311587bwz.21
-        for <git@vger.kernel.org>; Tue, 24 Nov 2009 11:08:15 -0800 (PST)
-Received: by 10.204.5.207 with SMTP id 15mr6532575bkw.89.1259089695833; Tue, 
-	24 Nov 2009 11:08:15 -0800 (PST)
-In-Reply-To: <20091124184629.GB27418@ldl.fc.hp.com>
+	id S1758199AbZKXTY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Nov 2009 14:24:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758164AbZKXTY2
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 14:24:28 -0500
+Received: from bellona.lunarservers.com ([74.50.21.190]:45370 "EHLO
+	bellona.lunarservers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758168AbZKXTY2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2009 14:24:28 -0500
+Received: from c-69-248-103-68.hsd1.nj.comcast.net ([69.248.103.68] helo=monza.grandprix.int)
+	by bellona.lunarservers.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <peter@ourvirtualhome.com>)
+	id 1ND104-0000ud-M9
+	for git@vger.kernel.org; Tue, 24 Nov 2009 11:24:32 -0800
+Received: from montecarlo.grandprix.int (unknown [192.168.1.102])
+	by monza.grandprix.int (Postfix) with ESMTPA id F00EA101FCD
+	for <git@vger.kernel.org>; Tue, 24 Nov 2009 14:24:30 -0500 (EST)
+In-Reply-To: <20091124185947.GA24409@coredump.intra.peff.net>
+X-Mailer: Claws Mail 3.7.3 (GTK+ 2.18.3; i486-pc-linux-gnu)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bellona.lunarservers.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - ourvirtualhome.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133589>
 
-On Tue, Nov 24, 2009 at 7:46 PM, Alex Chiang <achiang@hp.com> wrote:
+On Tue, 24 Nov 2009 14:00:23 -0500
+Jeff King <peff@peff.net> wrote:
 
-> * Catalin Marinas <catalin.marinas@gmail.com>:
->
-> > If there are no other users of the stg mail templates, I'm happy
-> > to let them go. Otherwise, we can replace the sendmail with
-> > git-send-email in stgit.
-> >
-> > It seems that git-format-patch and git-send-email have all the
-> > features stgit has. We would need to keep some of the interactive
-> > options like --edit-cover and --edit-patches since we use
-> > git-format-patch and git-send-email in one go.
->
-> So, is this something you (or Karl) plan on doing? Or should I take
-> a crack at it?
+> On Tue, Nov 24, 2009 at 10:56:09AM -0500, Peter van der Does wrote:
+> 
+> > I'm using git 1.6.5.3 on Ubuntu and was wondering if there is a way
+> > to list tags in order of when they were added to the tree, instead
+> > of alphabetical?
+> 
+> You can use for-each-ref with its sort option:
+> 
+>   git for-each-ref --sort=taggerdate --format='%(refname:short)'
+> refs/tags
+> 
+> Though note that unannotated tags will have no taggerdate, and will
+> all sort to the front of the list. To exclude them, I think you'd
+> have to use a special format to grep and sort yourself. Something
+> like:
+> 
+>   git for-each-ref \
+>     --format='%(taggerdate:iso8601) %(refname:short)' refs/tags |
+>     grep -v '^ ' |
+>     sort |
+>     cut -d' ' -f4-
+> 
+> -Peff
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-I wasn't planning to do it, at least. I haven't had much time for
-StGit lately, but when I do there are other things I was planning to
-fix before this.
-
-If you feel like trying, please go ahead. I'll be happy to assist.
-
-> I don't mind doing the work, but it will definitely take me longer
-> than it would take you.
->
-> All I was doing was trying to get stg mail to understand my mutt
-> aliases. ;)
-
-Yeah, sorry about that. ;-)
-
-Seriously, though, doing just what you started out wanting to do would
-be fine too. If you decide to do the larger project, it shouldn't be
-because we made you feel you had to.
+Thanks for the info, just what I was looking for.
 
 -- 
-Karl Wiberg, kha@treskal.com
-   subrabbit.wordpress.com
-   www.treskal.com/kalle
+Peter van der Does
+
+GPG key: E77E8E98
+Twitter: @petervanderdoes
+git Ubuntu Packages:
+http://blog.avirtualhome.com/git-packages-for-ubuntu/
