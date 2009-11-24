@@ -1,108 +1,127 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2009, #05; Sun, 22)
-Date: Tue, 24 Nov 2009 02:53:48 -0800 (PST)
-Message-ID: <m3ljhwb3d6.fsf@localhost.localdomain>
-References: <7vhbsl935q.fsf@alter.siamese.dyndns.org>
+From: Jim Meyering <meyering@redhat.com>
+Subject: [PATCH] mailinfo: remove [PATCH...] prefix from Subject regardless of length
+Date: Tue, 24 Nov 2009 11:58:07 +0100
+Message-ID: <874ookp4u8.fsf@meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 24 11:54:20 2009
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 24 11:59:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCt2I-0007xf-Gb
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 11:54:18 +0100
+	id 1NCt6E-0001io-6k
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 11:58:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932787AbZKXKxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2009 05:53:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932786AbZKXKxp
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 05:53:45 -0500
-Received: from mail-bw0-f223.google.com ([209.85.218.223]:33235 "EHLO
-	mail-bw0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932784AbZKXKxo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2009 05:53:44 -0500
-Received: by bwz23 with SMTP id 23so6161795bwz.29
-        for <git@vger.kernel.org>; Tue, 24 Nov 2009 02:53:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=RqRAEJaJ8FzJi2TvEpw3fXbaFf1VqOZVYQS0ttkOVXM=;
-        b=m89dkusz3lQB2xPVH+P/vsReJTvecod3RJasZjuldwJEusyyjSoeQhtxoq8+dJSfTz
-         gfc+pLFaz8rc7BQ6JRoZcYPlrSGjyDMCsgfiRMtgMYIX4Cv9xW1jaI3VbI193Y4TdmkV
-         Qd/0sKRVUekQvaB+zf5hqdwSEyTgjDCxJHbh0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=AhI2RVX0NvMHHyQLhV2kPHwOje5TQQVeXwYfpVXUQjvJxO9T+hUzi/VB4iX0rYWg0R
-         K17dU9AihXAw0ylb1cPzRc9MG0HfqlYZVUYuZlEMCI7jL0EHWD8csglTZDWUPXUmro7H
-         0JCfns22Yej5ay4xauNfAowXRd8VgrDgJ/xDc=
-Received: by 10.204.26.130 with SMTP id e2mr5948457bkc.144.1259060029819;
-        Tue, 24 Nov 2009 02:53:49 -0800 (PST)
-Received: from localhost.localdomain (abvk170.neoplus.adsl.tpnet.pl [83.8.208.170])
-        by mx.google.com with ESMTPS id 15sm1354993bwz.8.2009.11.24.02.53.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Nov 2009 02:53:48 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id nAOArjHs022568;
-	Tue, 24 Nov 2009 11:53:45 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id nAOArfJS022565;
-	Tue, 24 Nov 2009 11:53:41 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vhbsl935q.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S932588AbZKXK6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Nov 2009 05:58:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932485AbZKXK6J
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 05:58:09 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:57852 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932208AbZKXK6I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2009 05:58:08 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id BCECC81819B
+	for <git@vger.kernel.org>; Tue, 24 Nov 2009 11:58:10 +0100 (CET)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id DAB928180B8
+	for <git@vger.kernel.org>; Tue, 24 Nov 2009 11:58:07 +0100 (CET)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 6383521452; Tue, 24 Nov 2009 11:58:07 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133573>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> * jn/gitweb-blame (2009-11-19) 6 commits.
->  - gitweb.js: fix null object exception in initials calculation
->  - gitweb: Minify gitweb.js if JSMIN is defined
->  - gitweb: Create links leading to 'blame_incremental' using JavaScript
->   (merged to 'next' on 2009-10-11 at 73c4a83)
->  + gitweb: Colorize 'blame_incremental' view during processing
->  + gitweb: Incremental blame (using JavaScript)
->  + gitweb: Add optional "time to generate page" info in footer
-> 
-> Ajax-y blame, with a few recent fixes.
+Before this change, a [...] prefix would be removed only as long as
+its length did not exceed 2/3 of the subject length.  Now, when the
+bracketed quantity starts with PATCH, it is removed unconditionally.
+Otherwise, the existing behavior remains unchanged.
 
-Unfortunately current version does not work with IE8 (reported by
-Stephen Boyd); it stops at the very beginning of JavaScript blaming
-with the two JavaScript errors:
+While with a bare "PATCH M/N" prefix, this inconsistency shows up only
+on a subject of length 2 or 1 (assuming one-digit M and N), if you set
+format.subjectprefix to the name of a project or sub-project, the
+minimum affected length may be substantially larger.
 
-- "firstChild is null or not an object", caused by the fact that
-  '<a href=""> </a>' element doesn't have firstChild which is text
-  node with space as contents in DOM.  This can be easily worked
-  around.
+Contrast the behavior before:
 
-- "Unspecified error" (twice (sic!) for the same line), which
-  I have currently no idea how to fix; it points to the following
-  line:
+  for i in 1234 123 12 1 ''; do echo 'Subject: [PATCH 1/1] '$i \
+    | git mailinfo m p | head -1; done
+  Subject: 1234
+  Subject: 123
+  Subject: [PATCH 1/1] 12
+  Subject: [PATCH 1/1] 1
+  Subject: [PATCH 1/1]
 
-       if (xhr.readyState === 3 && xhr.status !== 200) {
+and after this change:
 
-> * pb/gitweb-no-project-list (2009-11-06) 3 commits.
->  . gitweb: Polish the content tags support
->  . gitweb: Support for no project list on gitweb front page
->  . gitweb: Refactor project list routines
-> 
-> I picked these up but didn't queue as Warthog9's comments made certain
-> amount of sense to me.
+  for i in 1234 123 12 1 ''; do echo 'Subject: [PATCH 1/1] '$i \
+    | ./git mailinfo m p | head -1; done
+  Subject: 1234
+  Subject: 123
+  Subject: 12
+  Subject: 1
+  Subject:
 
-I'd like to see at least refactoring project list subroutine:
-currently printing list of projects is entangled with filtering
-said list; IMHO filtering list of projects should be done upfront.
+Along the way, I added a "const" to indicate that the "header"
+array itself is constant.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Signed-off-by: Jim Meyering <meyering@redhat.com>
+---
+ builtin-mailinfo.c  |   10 ++++++++--
+ t/t5100-mailinfo.sh |    9 +++++++++
+ 2 files changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index 3c4f075..f07bca6 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -237,9 +237,15 @@ static void cleanup_subject(struct strbuf *subject)
+ 			strbuf_remove(subject, 0, 1);
+ 			continue;
+ 		case '[':
++			/* If there's a [...] enclosed prefix, always remove
++			   it when it starts with "PATCH".  If it does not
++			   start with PATCH, remove the bracketed quantity
++			   only as long as that removes no more than 2/3 of
++			   the length.  */
+ 			if ((pos = strchr(subject->buf, ']'))) {
+ 				remove = pos - subject->buf;
+-				if (remove <= (subject->len - remove) * 2) {
++				if (remove <= (subject->len - remove) * 2
++				    || !prefixcmp (subject->buf + 1, "PATCH")) {
+ 					strbuf_remove(subject, 0, remove + 1);
+ 					continue;
+ 				}
+@@ -265,7 +271,7 @@ static void cleanup_space(struct strbuf *sb)
+ }
+
+ static void decode_header(struct strbuf *line);
+-static const char *header[MAX_HDR_PARSED] = {
++static const char *const header[MAX_HDR_PARSED] = {
+ 	"From","Subject","Date",
+ };
+
+diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
+index ebc36c1..86fb116 100755
+--- a/t/t5100-mailinfo.sh
++++ b/t/t5100-mailinfo.sh
+@@ -89,4 +89,13 @@ test_expect_success 'mailinfo on from header without name works' '
+
+ '
+
++test_expect_success 'mailinfo strips [PATCH... even on very short Subject' '
++
++	printf "Subject: [PATCH 1/1] ..\n" > in &&
++	printf "Subject: ..\n\n" > expect &&
++	git mailinfo /dev/null /dev/null < in > out &&
++	test_cmp expect out
++
++'
++
+ test_done
+--
+1.6.6.rc0.236.ge0b94
