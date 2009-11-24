@@ -1,99 +1,66 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Android needs repo, Chrome needs gclient. Neither work. What
- does  that say about git?
-Date: Tue, 24 Nov 2009 15:45:42 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.0911241441520.14365@iabervon.org>
-References: <2d707e8c-2561-470c-beba-c81e16ac441c@k17g2000yqh.googlegroups.com>  <65e170e70911200251q2ec5ec87rc37577dddfd3317d@mail.gmail.com>  <alpine.DEB.1.00.0911201229080.4985@pacific.mpi-cbg.de>  <65e170e70911222011l776a6aean7bd75f072a806616@mail.gmail.com>
-  <20091123135817.GB2532@thunk.org> <65e170e70911231948l3b032dbeu7c99b65ce3ec97ff@mail.gmail.com>
+From: "Liebich, Wolfgang" <wolfgang.liebich@siemens-enterprise.com>
+Subject: What is the best way to synchronize two *bare* repositories with
+ each other?
+Date: Tue, 24 Nov 2009 22:19:27 +0100
+Message-ID: <7FF082147E322048955113B6CB87A7C0081731C659@MCHP058A.global-ad.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: tytso@mit.edu, git@vger.kernel.org,
-	chromium-discuss@googlegroups.com
-To: Adrian May <adrian.alexander.may@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 24 21:45:51 2009
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 24 22:34:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ND2Gj-000655-6i
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 21:45:49 +0100
+	id 1ND320-00007f-Vl
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 22:34:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932827AbZKXUpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2009 15:45:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932746AbZKXUph
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 15:45:37 -0500
-Received: from iabervon.org ([66.92.72.58]:44360 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932732AbZKXUph (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2009 15:45:37 -0500
-Received: (qmail 31732 invoked by uid 1000); 24 Nov 2009 20:45:42 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 24 Nov 2009 20:45:42 -0000
-In-Reply-To: <65e170e70911231948l3b032dbeu7c99b65ce3ec97ff@mail.gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S934252AbZKXVe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Nov 2009 16:34:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934213AbZKXVe0
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 16:34:26 -0500
+Received: from m0019.fra.mmp.de.bt.com ([62.180.227.30]:34980 "EHLO
+	ms02.m0019.fra.mmp.de.bt.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S934008AbZKXVeY convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2009 16:34:24 -0500
+X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Nov 2009 16:34:24 EST
+Received: from senmx11-mx ([62.134.46.9] [62.134.46.9]) by ms02.m0020.fra.mmp.de.bt.com with ESMTP id BT-MMP-113072 for git@vger.kernel.org; Tue, 24 Nov 2009 22:19:28 +0100
+Received: from MCHP064A.global-ad.net (unknown [172.29.37.63])
+	by senmx11-mx (Server) with ESMTP id BB3CD1EB81E8
+	for <git@vger.kernel.org>; Tue, 24 Nov 2009 22:19:28 +0100 (CET)
+Received: from MCHP058A.global-ad.net ([172.29.37.55]) by
+ MCHP064A.global-ad.net ([172.29.37.63]) with mapi; Tue, 24 Nov 2009 22:19:28
+ +0100
+Thread-Topic: What is the best way to synchronize two *bare* repositories
+ with each other?
+Thread-Index: AQHKbUvNIFxCHKLzWUiehVhWShe3qg==
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: de-DE, en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133593>
 
-On Tue, 24 Nov 2009, Adrian May wrote:
+Hi,
+Let's say I have two bare git repositories, bareA and bareB.
+I also have a third non-bare repo, lets call it workA. Coworkers also have their working repositories, they all
+synchronize back to repoA.
+My work repo can only synchronize directly with repoB.
+What is the best way to keep repoA and repoB synchronized to each other?
 
-> > If you don't have bolt-on scripts, and you move that into the the core
-> > SCM, then you force *all* projects to use whatever workflow was
-> > decided as being the One True Way of doing things as seen by the SCM
-> > designer.  So the question is whether the SCM *should* regiment all
-> > projects into following the SCM's designers idea of the One True
-> > Workflow.
-> 
-> Of course I'd want the workflow configurable by whoever controls the
-> main repository. I couldn't possibly suggest that all git projects
-> need the same workflow. The number of developers can vary by five
-> orders of magnitude - that calls for different workflow models.
-> 
-> > Git's approach is to say that it will be fairly flexible about
-> > dictating workflow --- who pushs to whom; whether there is a single
-> > "star" repository topology, or something that is more flexible, etc.
-> > You seem to hate this flexibility, because it makes life harder until
-> > you set up these bolt-on scripts.  But that's what many of us like
-> > about git; that it doesn't force us (the project lead) into a single
-> > way of doing things.
-> 
-> Leaving aside topology, I suppose we can agree that the subject
-> divides into two aspects: offering the developer some optional tools,
-> and asserting control over what gets commited to the official repo.
-> Perhaps we can also agree that the former belongs under the control of
-> the developer and the latter should be in the PM's hands. You seem to
-> have opinions about which of these two aspects is more or less
-> important, and to what extent git suffices, but I don't. I assume that
-> the project manager has his own opinions about both aspects and I'm
-> observing two big projects that independantly have augmented git's
-> features with their own scripts. Their docs talk about both aspects,
-> especially repo's, but they are entirely implemented in
-> developer-overridable scripts. So any repo functions to do with the
-> second aspect are either features that git needs to grow, or bits of
-> the git manual that the repo designer didn't read. I'd kinda like to
-> know which.
+I solved that by defining (in the "config" file of repoB) a remote section for repoA,
+and I "fetch" from repoA by issuing "git remote update repoA", and I push back via
+"git push --all repoA".
 
-Repo (and gclient, which claims to be for SVN) seems to be mostly about 
-the fact that nothing really handles submodules (independant projects that 
-are also parts of larger projects) well. This is a known flaw with git, 
-but it's unclear as to whether repo does better. It's probably best to let 
-them work out a set of semantics which a real-world, full-scale project is 
-happy with, and consider adopting it for native submodules when there's 
-real-world positive experience behind it.
+This strange setup is necessary because of the security setup (my home development machine is not directly
+connected with the company intranet).
 
-The other main thing I see repo doing is interfacing with gerrit, where 
-your pushes get redirected, and there are a million review branches you 
-can find on a web site, and where the server for a push is different from 
-the best server for a mainline fetch. Some of this is probably worth 
-having natively, but there's still the case of wanting to fetch a review 
-branch based on understanding stuff about gerrit. This is similar to 
-wanting to get a SVN revision out of bugzilla; you really want a tool 
-that's particular to the integration of the systems you're using, not 
-stuff built into your version control system. That said, if the submodule 
-stuff were taken care of, Google could provide a git-review program, and 
-do everything within the "git ..." wrapper instead of as an outer script.
+Is this a good way to solve that problem, or are there better methods?
 
-	-Daniel
-*This .sig left intentionally blank*
+Ciao,
+- Wolfgang
