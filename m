@@ -1,109 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] grep: --full-tree
-Date: Tue, 24 Nov 2009 00:56:32 -0800
-Message-ID: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [PATCH RFC] git-send-email --expand-aliases
+Date: Tue, 24 Nov 2009 10:43:44 +0000
+Message-ID: <b0943d9e0911240243m13730f0bw34f2f18cf41f9079@mail.gmail.com>
+References: <20091123221628.GE26810@ldl.fc.hp.com>
+	 <7v6390sqhz.fsf@alter.siamese.dyndns.org>
+	 <20091124004554.GA27643@ldl.fc.hp.com>
+	 <b8197bcb0911232312l251dfbc9va671388cfb7fe57b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 24 09:57:05 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alex Chiang <achiang@hp.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Karl Wiberg <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Nov 24 11:44:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCrCh-00073G-PR
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 09:56:56 +0100
+	id 1NCssK-0003rJ-0x
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 11:44:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932316AbZKXI4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2009 03:56:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932277AbZKXI4h
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 03:56:37 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60127 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932216AbZKXI4h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2009 03:56:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8159C82462;
-	Tue, 24 Nov 2009 03:56:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=YUbZ
-	SHvM4LVRMufIZmtaH9agnEY=; b=jXaRoi9Rnf9lmgoZWd/XM7wlgTS0yavzcghC
-	6Bve1y58A2shcRGqNznkueDhi5vXD4ibG03wktVIZ73EnGv6H7l0S5L2gEJRGJ2s
-	MDacv9dvU+Q8V4+wtEocdZlYR1U/8lr1QSGiZ+apL+A79t9htuLPs0KAnIn7/i4F
-	uXbNz9Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=ok6
-	IX2aepC23t0sksn0a6O/F6BZWacaj/4LvyNmq2CZaVvppZjGR+pSb2PGl7t/F6Ww
-	no5qG1OiTxMicZHLzlkWZK9euLEpbgFyUq7UMuGHS5wZ/X8Vp/hwk+ElmDX3YAUA
-	8mwdx5Hp6ZnVgNuEVLsiOI2kTnw9q9HyFAUt5Dms=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6229782460;
-	Tue, 24 Nov 2009 03:56:40 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 987458245E; Tue, 24 Nov
- 2009 03:56:34 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 47E777A0-D8D7-11DE-A4FA-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932760AbZKXKnl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Nov 2009 05:43:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932757AbZKXKnk
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 05:43:40 -0500
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:47400 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932741AbZKXKni convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Nov 2009 05:43:38 -0500
+Received: by fxm5 with SMTP id 5so5632046fxm.28
+        for <git@vger.kernel.org>; Tue, 24 Nov 2009 02:43:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=RPSZbymZF/pEjXtERouobMZx3oZN48XQRw9IwuJRue4=;
+        b=j1K43ZQpKGp3ATzBnJU1Iuh1fxYnm8PrLFuW2c/vAT60/1GB7JbPXPVQB7FlJcva8E
+         0LF3W/eho9qFgHTfFRnMMbQBrYXmz5GX4K6LfVTk71x5fe8Wcya5E9sAmB4TCEn5XI7p
+         BPYJwfHRjVbDG29VaHQ81ELl09uOpV80YaEEA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=QTpsTCfb9DiYa6DShkhkwKiJitydwDadVW2VSVrY+X5BmRIe4PQITO+DRULVyJYzvk
+         o0w73JbAEGeC2/6M5Wllb+cfjkOCpLii+Y4OV99P2GleQf8LQhl3wtg+Jo337BEGvy5t
+         QeHM1w7MsP84lbhk2RidRcXs+nPStHUAgFKgA=
+Received: by 10.223.110.39 with SMTP id l39mr910220fap.3.1259059424441; Tue, 
+	24 Nov 2009 02:43:44 -0800 (PST)
+In-Reply-To: <b8197bcb0911232312l251dfbc9va671388cfb7fe57b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133571>
 
-While working inside a deep subdirectory, it sometimes is necessary to
-find a string you see in a file you are working on from the files in the
-entire project.  This is especially true when you are dipping your toe
-into an unfamiliar project.
+2009/11/24 Karl Wiberg <kha@treskal.com>:
+> On Tue, Nov 24, 2009 at 1:45 AM, Alex Chiang <achiang@hp.com> wrote:
+>
+>> * Junio C Hamano <gitster@pobox.com>:
+>>
+>> > If you are changing StGit to call git-send-email anyway, why not
+>> > arrange stgit to call git-send-email to send the message out
+>> > instead, instead of sending messages on its own?
+>>
+>> Yeah, I thought about that as I was poking around further in StGit
+>> to figure out how it would be calling git-send-email. ;)
+>>
+>> > I imagine the internal implementation of stg mail would work
+>> > something like:
+>> >
+>> > =A0 =A0 prepare messages to send out
+>> > =A0 =A0 call git-send-email and have it send them
+>> >
+>> > What am I missing?
+>>
+>> My lack of familiarity with StGit internals. ;)
+>>
+>> Your suggestion is much better. I'll take a closer look at StGit and
+>> see how feasible it is.
+>>
+>> Unless Catalin has strong objections?
+>
+> I think that sounds like a splendid idea. It would be interesting to
+> see just how thin a wrapper around git send-email (and format-patch)
+> stg mail could become, without sacrificing features anyone actually
+> uses. The main complication could be stg mail's templates.
+>
+> Catalin, how wedded are you to those? ;-)
 
-By default, "git grep" limits its search space to the current directory
-and below (i.e. as if "-r ." is specified), and it is rather cumbersome to
-repeat ../ as many times as necessary.  This new option tells "git grep"
-not to limit the search space to the current directory.
+Historically, I think "stg mail" was implemented before git-send-email
+existed. It was also a good way to check who's using stgit for sending
+patches :-) (the message-id).
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+I use templates to send patches to the ARM Linux gatekeeper via a
+patch management system which only accepts patches formatted in a
+certain way (things improved a bit recently and the format was
+relaxed). But I find myself mostly sending pull requests these days,
+so that's not a critical feature for me.
 
- * In http://article.gmane.org/gmane.comp.version-control.git/111717, I
-   once argued in the opposite way, but I think it is Ok to aim for making
-   the default --full-tree in the longer run (cf. $gmane/127885).  This is
-   the first step in that direction.
+If there are no other users of the stg mail templates, I'm happy to
+let them go. Otherwise, we can replace the sendmail with
+git-send-email in stgit.
 
-   I am not sure if there can be a sane way to flip the default without
-   hurting existing scripts and users.  Backward compatibility always is
-   a pain.
+It seems that git-format-patch and git-send-email have all the
+features stgit has. We would need to keep some of the interactive
+options like --edit-cover and --edit-patches since we use
+git-format-patch and git-send-email in one go.
 
- builtin-grep.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 761799d..5787f35 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -693,6 +693,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- {
- 	int hit = 0;
- 	int cached = 0;
-+	int full_tree = 0;
- 	int external_grep_allowed = 1;
- 	int seen_dashdash = 0;
- 	struct grep_opt opt;
-@@ -732,6 +733,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		OPT_BIT('H', NULL, &opt.pathname, "show filenames", 1),
- 		OPT_NEGBIT(0, "full-name", &opt.relative,
- 			"show filenames relative to top directory", 1),
-+		OPT_BIT(0, "full-tree", &full_tree,
-+			"search from the top of the tree", 1),
- 		OPT_BOOLEAN('l', "files-with-matches", &opt.name_only,
- 			"show only filenames instead of matching lines"),
- 		OPT_BOOLEAN(0, "name-only", &opt.name_only,
-@@ -862,7 +865,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 
- 	if (i < argc)
- 		paths = get_pathspec(prefix, argv + i);
--	else if (prefix) {
-+	else if (prefix && !full_tree) {
- 		paths = xcalloc(2, sizeof(const char *));
- 		paths[0] = prefix;
- 		paths[1] = NULL;
--- 
-1.6.6.rc0.47.g1fdffa.dirty
+--=20
+Catalin
