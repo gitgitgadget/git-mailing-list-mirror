@@ -1,128 +1,78 @@
-From: Adrian May <adrian.alexander.may@gmail.com>
-Subject: Re: Android needs repo, Chrome needs gclient. Neither work. What does 
-	that say about git?
-Date: Tue, 24 Nov 2009 11:48:09 +0800
-Message-ID: <65e170e70911231948l3b032dbeu7c99b65ce3ec97ff@mail.gmail.com>
-References: <2d707e8c-2561-470c-beba-c81e16ac441c@k17g2000yqh.googlegroups.com>
-	 <65e170e70911200251q2ec5ec87rc37577dddfd3317d@mail.gmail.com>
-	 <alpine.DEB.1.00.0911201229080.4985@pacific.mpi-cbg.de>
-	 <65e170e70911222011l776a6aean7bd75f072a806616@mail.gmail.com>
-	 <20091123135817.GB2532@thunk.org>
+From: bill lam <cbill.lam@gmail.com>
+Subject: commit --quiet option
+Date: Tue, 24 Nov 2009 13:16:22 +0800
+Message-ID: <20091124051622.GB18003@debian.b2j>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, chromium-discuss@googlegroups.com
-To: tytso@mit.edu
-X-From: git-owner@vger.kernel.org Tue Nov 24 04:48:18 2009
+Content-Type: text/plain; charset=iso-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 24 06:16:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCmO1-0007rI-Aj
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 04:48:17 +0100
+	id 1NCnlY-0003Hb-Is
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 06:16:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757891AbZKXDsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Nov 2009 22:48:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757884AbZKXDsF
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Nov 2009 22:48:05 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:45704 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757882AbZKXDsD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Nov 2009 22:48:03 -0500
-Received: by iwn1 with SMTP id 1so221695iwn.33
-        for <git@vger.kernel.org>; Mon, 23 Nov 2009 19:48:09 -0800 (PST)
+	id S1750883AbZKXFQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Nov 2009 00:16:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750744AbZKXFQX
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 00:16:23 -0500
+Received: from mail-pz0-f188.google.com ([209.85.222.188]:45026 "EHLO
+	mail-pz0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750741AbZKXFQX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2009 00:16:23 -0500
+Received: by pzk26 with SMTP id 26so4387371pzk.4
+        for <git@vger.kernel.org>; Mon, 23 Nov 2009 21:16:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=sBJ9Rw2aJDpFsWb9S2eDTei4x2+KIKh4fJUCM7wmtuI=;
-        b=Oxj2Dxe6mvoawzXlMgFxRvmXmURDJJgkAzjGstJEEzbQfqQjNHGG/8r4E3BDS9t6OB
-         MAfmOfNVHMHNtL1TwGxvyf3YvQwg5DzM8njmlXWPItGH717mNklkhmqxWa7UJJJO2cti
-         I289AfjhNX6p9b1HABPlZs3unJK7vUPGyl4/g=
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=FeV4F1I/NRm+Ov7M2RRcPDExp65rEfAgwolGzp0fC9E=;
+        b=jNE1PEspC3R7XTUiYcoFNHH/a+9zxVOBmJxR24W25ig3fkcBW4HIDfYkcEkNJsDmJq
+         ce4Pf2ouyNp9CvHRXN6MRnNr0dmCYBzOuyMVLuw7PPI5mCP1LmIZlh5vZ5Fyp1m1Y1xK
+         PvuzrQgUX+4Pe3fB1fdEhGz/zHLwQuQG8ly/A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=PErRZ/fbwrf2VZX3E0w43qyzD+Z8OdoMvtzDwitO6TkN3R+R8EBCqQOZathgeQrvGw
-         jr3S2v5MiVs43rzgTwyy17/qr3erBrPMfzEWW5NneHamuQMKzsqW/2zThzzvOPjLmgTP
-         4ZScQVsO2tuPijF/w4AhIzIv/2dTi4p9GDV5U=
-Received: by 10.231.1.22 with SMTP id 22mr13367ibd.56.1259034489480; Mon, 23 
-	Nov 2009 19:48:09 -0800 (PST)
-In-Reply-To: <20091123135817.GB2532@thunk.org>
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=bE6mjSFcu1W/9dfSljk4a93NfzK/cQllhxMixAKVpnF6GH1BEw3csH2Oo7zS1xLSit
+         E1xqI3AtIaTGBVQH0P9AUgFyh/FHByZt+6oWzQmxi5TYF5RWFcQHcBbZFKGsvPHojMQv
+         pyA81QmSPntFDh8RGGejoSkGMW37rrohmbxek=
+Received: by 10.115.98.11 with SMTP id a11mr11099001wam.130.1259039789208;
+        Mon, 23 Nov 2009 21:16:29 -0800 (PST)
+Received: from localhost (pcd589021.netvigator.com [218.102.121.21])
+        by mx.google.com with ESMTPS id 21sm3017956pxi.0.2009.11.23.21.16.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 23 Nov 2009 21:16:28 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133559>
 
-> If you don't have bolt-on scripts, and you move that into the the core
-> SCM, then you force *all* projects to use whatever workflow was
-> decided as being the One True Way of doing things as seen by the SCM
-> designer.  So the question is whether the SCM *should* regiment all
-> projects into following the SCM's designers idea of the One True
-> Workflow.
+In git version 1.6.6.rc0.15.g4fa8a0 using the --quiet option it still show some
+output.  Is that intended?  Specifically I would like to exclude message about
+the untracked files when using --quite option.
 
-Of course I'd want the workflow configurable by whoever controls the
-main repository. I couldn't possibly suggest that all git projects
-need the same workflow. The number of developers can vary by five
-orders of magnitude - that calls for different workflow models.
+$ git commit -q -m commit
+# On branch master
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#       modified:   .git-completion.bash
+#       modified:   bin/mirrorgit
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       a123
+no changes added to commit (use "git add" and/or "git commit -a")
 
-> Git's approach is to say that it will be fairly flexible about
-> dictating workflow --- who pushs to whom; whether there is a single
-> "star" repository topology, or something that is more flexible, etc.
-> You seem to hate this flexibility, because it makes life harder until
-> you set up these bolt-on scripts.  But that's what many of us like
-> about git; that it doesn't force us (the project lead) into a single
-> way of doing things.
-
-Leaving aside topology, I suppose we can agree that the subject
-divides into two aspects: offering the developer some optional tools,
-and asserting control over what gets commited to the official repo.
-Perhaps we can also agree that the former belongs under the control of
-the developer and the latter should be in the PM's hands. You seem to
-have opinions about which of these two aspects is more or less
-important, and to what extent git suffices, but I don't. I assume that
-the project manager has his own opinions about both aspects and I'm
-observing two big projects that independantly have augmented git's
-features with their own scripts. Their docs talk about both aspects,
-especially repo's, but they are entirely implemented in
-developer-overridable scripts. So any repo functions to do with the
-second aspect are either features that git needs to grow, or bits of
-the git manual that the repo designer didn't read. I'd kinda like to
-know which.
-
-Returning to topology, I think that also divides up similarly. The PM
-can't forbid you and me from casually swapping diffs back and forth,
-but he can dictate who we are supposed to submit our final candidate
-to for review. The very existence of a PM, who controls a subset of
-the repositories in the world, already implies a star topology, and I
-think pretty much everybody is using distributed source control in
-this way, at least when it comes down to *controlling* anything.
-People may also be causally bouncing diffs around, but that's not
-control, it's communication. I've got a one-man project on github
-which I edit from two locations, and even on that scale I find myself
-working star-fashion because either computer might have junk
-experiments in progress, but I only push to github if it's meaningful
-and tidy.
-
-That reminds me of a slightly different question: if a longer
-experiment that I have committed several stages of turns out to be a
-blind alley, I'd like to go back a few steps on main, declare
-everything after that to be a side branch that I'll probably never use
-again, and continue on main with my next attempt. Is that possible? I
-know that I can just start a new branch from the before the bad
-experiment, but if that happens a lot, the name of my current main
-branch would be changing all the time, and I think that's bad. I
-suspect what I want is possible, but I'm not sure how to do it.
-
-> As far as my wanting to impose a particular regimen on my project's
-> developers, I've never been a big fan of the Bondage and Discpline
-> school of software engineering.  They can use whatever workflow they
-> like; they just have to deliver patches that are clean.  If they are,
-> I'll pull from their repository.  If they aren't, I won't.
-
-Repo talks a lot about automating the workflow that leads to precisely
-that decision. They evidently want something more evolved than
-somebody simply having a look at the code. I'm not sure what they
-want, but I'm pretty sure it's none of the developer's business.
-
-Adrian.
+-- 
+regards,
+====================================================
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
