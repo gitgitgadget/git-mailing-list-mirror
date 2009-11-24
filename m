@@ -1,160 +1,106 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] send-email: new 'add-envelope' option
-Date: Tue, 24 Nov 2009 19:28:09 +0200
-Message-ID: <94a0d4530911240928w4f97cfa7of86b0d8676eb59db@mail.gmail.com>
-References: <1258825410-28592-1-git-send-email-felipe.contreras@gmail.com>
-	 <20091121193600.GA3296@coredump.intra.peff.net>
-	 <94a0d4530911211159l1fadad0ldb0d760439ceb57@mail.gmail.com>
-	 <94a0d4530911220437l5386b36ds4ef06dc66cc11bcc@mail.gmail.com>
-	 <7v7htice04.fsf@alter.siamese.dyndns.org>
+From: Alex Chiang <achiang@hp.com>
+Subject: Re: [PATCH RFC] git-send-email --expand-aliases
+Date: Tue, 24 Nov 2009 11:46:29 -0700
+Message-ID: <20091124184629.GB27418@ldl.fc.hp.com>
+References: <20091123221628.GE26810@ldl.fc.hp.com> <7v6390sqhz.fsf@alter.siamese.dyndns.org> <20091124004554.GA27643@ldl.fc.hp.com> <b8197bcb0911232312l251dfbc9va671388cfb7fe57b@mail.gmail.com> <b0943d9e0911240243m13730f0bw34f2f18cf41f9079@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 24 18:28:19 2009
+Cc: Karl Wiberg <kha@treskal.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 24 19:47:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCzBa-0007K0-36
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 18:28:18 +0100
+	id 1ND0Pl-00031b-Nm
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 19:47:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933498AbZKXR2F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Nov 2009 12:28:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933481AbZKXR2E
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 12:28:04 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:50384 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933457AbZKXR2E convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Nov 2009 12:28:04 -0500
-Received: by iwn1 with SMTP id 1so636281iwn.33
-        for <git@vger.kernel.org>; Tue, 24 Nov 2009 09:28:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4cQXc71JiVAxbxJ+gEkRWgmpl4LNBqerV544tp4bECY=;
-        b=Mvq+M+MO5/MNtg+OIVzKYtw4qPpt3hLDPEtwGUHWfiOwcyKE+Cp87YM2nqWM0ji6H1
-         8tbfnrrTcXvIGD8T+d6jM2WPvT5Y4yMHspwKv+7RXFErESsMd10b7Na3t/ShiGC7jxo3
-         DxBgzc9ByhlHxnOk/18c3cI/6t1+6vZMuKfJU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=c0frYyCvSoGHnEwKlKKB9lpJe1QlaPAYaaWbulXUcQwishbZUsCDWFZ8Dmeucr8BPR
-         l4V84cgrou44sbPA7efudp+hiIP4rMEYVLmig2UHrbQbK42mVZwz/shI0UQ+9jI1uXko
-         4Y9g2XTvY7B0gi/GkxWAdfJAN1e00sSBD9/1g=
-Received: by 10.231.158.205 with SMTP id g13mr337448ibx.30.1259083689203; Tue, 
-	24 Nov 2009 09:28:09 -0800 (PST)
-In-Reply-To: <7v7htice04.fsf@alter.siamese.dyndns.org>
+	id S933834AbZKXSqu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Nov 2009 13:46:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933807AbZKXSqu
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 13:46:50 -0500
+Received: from g6t0187.atlanta.hp.com ([15.193.32.64]:28721 "EHLO
+	g6t0187.atlanta.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933785AbZKXSqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2009 13:46:49 -0500
+Received: from g5t0030.atlanta.hp.com (g5t0030.atlanta.hp.com [16.228.8.142])
+	by g6t0187.atlanta.hp.com (Postfix) with ESMTP id 8D4F1282E6;
+	Tue, 24 Nov 2009 18:46:55 +0000 (UTC)
+Received: from ldl (linux.corp.hp.com [15.11.146.101])
+	by g5t0030.atlanta.hp.com (Postfix) with ESMTP id 564D6141CD;
+	Tue, 24 Nov 2009 18:46:30 +0000 (UTC)
+Received: from localhost (ldl.fc.hp.com [127.0.0.1])
+	by ldl (Postfix) with ESMTP id 0B8AFCF000D;
+	Tue, 24 Nov 2009 11:46:30 -0700 (MST)
+Received: from ldl ([127.0.0.1])
+	by localhost (ldl.fc.hp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id wTtLXWoeYxdc; Tue, 24 Nov 2009 11:46:29 -0700 (MST)
+Received: by ldl (Postfix, from userid 17609)
+	id EACE4CF0007; Tue, 24 Nov 2009 11:46:29 -0700 (MST)
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0911240243m13730f0bw34f2f18cf41f9079@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133585>
 
-On Mon, Nov 23, 2009 at 1:54 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->> a) --add-envelope: add the sender envelope, by default it would be t=
-he
->> 'from' address, but could be overridden by --envelope-sender.
->
-> I do not think the latter half of this description makes much sense, =
-as
-> the existing --envelope-sender=3D<this-address> alone already says "a=
-dd this
-> envelope sender".
+* Catalin Marinas <catalin.marinas@gmail.com>:
+> 2009/11/24 Karl Wiberg <kha@treskal.com>:
+> > On Tue, Nov 24, 2009 at 1:45 AM, Alex Chiang <achiang@hp.com> wrote=
+:
+> >> * Junio C Hamano <gitster@pobox.com>:
+> >> > I imagine the internal implementation of stg mail would work
+> >> > something like:
+> >> >
+> >> > =A0 =A0 prepare messages to send out
+> >> > =A0 =A0 call git-send-email and have it send them
+> >> >
+> >> > What am I missing?
+> >>
+> >> Your suggestion is much better. I'll take a closer look at StGit a=
+nd
+> >> see how feasible it is.
+> >>
+> >> Unless Catalin has strong objections?
+> >
+> > I think that sounds like a splendid idea. It would be interesting t=
+o
+> > see just how thin a wrapper around git send-email (and format-patch=
+)
+> > stg mail could become, without sacrificing features anyone actually
+> > uses. The main complication could be stg mail's templates.
+> >
+> > Catalin, how wedded are you to those? ;-)
+>=20
+> Historically, I think "stg mail" was implemented before git-send-emai=
+l
+> existed. It was also a good way to check who's using stgit for sendin=
+g
+> patches :-) (the message-id).
 
---envelope-sender=3Dfoo@bar.com would imply --add-envelope.
+Heh, I like looking at that too. ;)
+=20
+> If there are no other users of the stg mail templates, I'm happy to
+> let them go. Otherwise, we can replace the sendmail with
+> git-send-email in stgit.
+>=20
+> It seems that git-format-patch and git-send-email have all the
+> features stgit has. We would need to keep some of the interactive
+> options like --edit-cover and --edit-patches since we use
+> git-format-patch and git-send-email in one go.
 
-> It is unfortunate that we cannot sanely have an option that takes an
-> optional string argument from the command line. =C2=A0Ideally, if we =
-can
-> specify --envelope-sender without any argument, we could make it to m=
-ean
-> "pretend as if the 'from' address is given to this option", but that =
-would
-> make the command line pasing ambiguous, so we would need an extra opt=
-ion
-> like this one. =C2=A0"--envelope-sender=3Dfrom" might be a more intui=
-tive way to
-> say this, though.
+So, is this something you (or Karl) plan on doing? Or should I
+take a crack at it?
 
-I agree, but --envelope-sender=3Dfrom looks a bit strange to me.
+I don't mind doing the work, but it will definitely take me
+longer than it would take you.
 
->> b) --envelope-sender=3D"" or "auto": this would require minimal chan=
-ges
->> but looks a bita strange.
->
-> An explicit empty string does look very strange, but I do not think a
-> magic word like "auto" (or "from") that cannot sanely be your envelop=
-e
-> sender address is a bad idea.
+All I was doing was trying to get stg mail to understand my mutt
+aliases. ;)
 
-I think "auto" is the least worst option right now.
-
->> Any thoughts?
->
-> It is much easier to work on the configuration front, by the way, and=
- I
-> expect people who regularly interact with multiple projects to apprec=
-iate
-> this feature would configure their send-email once and forget about i=
-t, so
-> the command line clunkiness might not be such a big issue.
->
-> A user who works with more than one projects with different identity =
-known
-> to each project would use $HOME/.gitconfig and send-email configurati=
-on
-> identity feature to set "sendemail.<identity>.from" and friends in th=
-ere,
-> while setting sendemail.identity configuration in .git/config for eac=
-h
-> project, so being able to say "use whatever 'from' as the envelope se=
-nder"
-> once in $HOME/.gitconfig would be convenient.
->
-> So I could have in $HOME/.gitconfig:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0[sendemail]
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0; used as a bo=
-olean to say "use from"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0envelopesender
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0[sendemail.git]
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0from =3D Junio=
- C Hamano <gitster@pobox.com>
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0to =3D git mai=
-ling list <git@vger.kernel.org>
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0[sendemail.frotz]
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0from =3D Junio=
- C Hamano <frotzster@example.xz>
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0to =3D frotz m=
-ailing list <frotz@example.xz>
->
-> and then in my {git,frotz}.git/.git/config would have
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0[sendemail] =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 [sendemail]
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0identity =3D g=
-it =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0identi=
-ty =3D frotz
->
-> respectively. =C2=A0Without your patch, in $HOME/.gitconfig, I wouldn=
-'t have
-> the global sendemail.envelopesender but have separate individual
-> configuration variables sendemail.{git,frotz}.envelopesender defined.
-
-I also thought about having an identity (profile) for sendmail; it
-would be very useful to specify the smtp server, aliases file, and
-from address that multiple repositories can share and can be easily
-changed (working for my company vs working for myself).
-
-However, even in this case I would like to have a global option to add
-the sender automatically from the 'from' address.
-
---=20
-=46elipe Contreras
+Thanks,
+/ac
