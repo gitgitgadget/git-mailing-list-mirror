@@ -1,78 +1,55 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: commit --quiet option
-Date: Tue, 24 Nov 2009 13:16:22 +0800
-Message-ID: <20091124051622.GB18003@debian.b2j>
+From: Mark Blakeney <markb@berlios.de>
+Subject: Re: gitk does not show path file list
+Date: Tue, 24 Nov 2009 05:36:37 +0000 (UTC)
+Message-ID: <loom.20091124T060334-836@post.gmane.org>
+References: <33e2b2760911170409q4cbdad8ay83ae5c941bc5ff95@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 24 06:16:42 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 24 06:37:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCnlY-0003Hb-Is
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 06:16:40 +0100
+	id 1NCo5Z-0000re-BH
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Nov 2009 06:37:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750883AbZKXFQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2009 00:16:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750744AbZKXFQX
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 00:16:23 -0500
-Received: from mail-pz0-f188.google.com ([209.85.222.188]:45026 "EHLO
-	mail-pz0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750741AbZKXFQX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2009 00:16:23 -0500
-Received: by pzk26 with SMTP id 26so4387371pzk.4
-        for <git@vger.kernel.org>; Mon, 23 Nov 2009 21:16:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=FeV4F1I/NRm+Ov7M2RRcPDExp65rEfAgwolGzp0fC9E=;
-        b=jNE1PEspC3R7XTUiYcoFNHH/a+9zxVOBmJxR24W25ig3fkcBW4HIDfYkcEkNJsDmJq
-         ce4Pf2ouyNp9CvHRXN6MRnNr0dmCYBzOuyMVLuw7PPI5mCP1LmIZlh5vZ5Fyp1m1Y1xK
-         PvuzrQgUX+4Pe3fB1fdEhGz/zHLwQuQG8ly/A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=bE6mjSFcu1W/9dfSljk4a93NfzK/cQllhxMixAKVpnF6GH1BEw3csH2Oo7zS1xLSit
-         E1xqI3AtIaTGBVQH0P9AUgFyh/FHByZt+6oWzQmxi5TYF5RWFcQHcBbZFKGsvPHojMQv
-         pyA81QmSPntFDh8RGGejoSkGMW37rrohmbxek=
-Received: by 10.115.98.11 with SMTP id a11mr11099001wam.130.1259039789208;
-        Mon, 23 Nov 2009 21:16:29 -0800 (PST)
-Received: from localhost (pcd589021.netvigator.com [218.102.121.21])
-        by mx.google.com with ESMTPS id 21sm3017956pxi.0.2009.11.23.21.16.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 23 Nov 2009 21:16:28 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-08-17)
+	id S1754538AbZKXFhB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Nov 2009 00:37:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753485AbZKXFhB
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Nov 2009 00:37:01 -0500
+Received: from lo.gmane.org ([80.91.229.12]:38832 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752619AbZKXFhA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2009 00:37:00 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NCo5J-0000m2-Cb
+	for git@vger.kernel.org; Tue, 24 Nov 2009 06:37:05 +0100
+Received: from 124-171-204-125.dyn.iinet.net.au ([124.171.204.125])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Nov 2009 06:37:00 +0100
+Received: from markb by 124-171-204-125.dyn.iinet.net.au with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Nov 2009 06:37:00 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 124.171.204.125 (Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/532.5 (KHTML, like Gecko) Chrome/4.0.249.4 Safari/532.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133560>
 
-In git version 1.6.6.rc0.15.g4fa8a0 using the --quiet option it still show some
-output.  Is that intended?  Specifically I would like to exclude message about
-the untracked files when using --quite option.
+This seems to me to be a straight out bug but given I've had no response here
+and  given this is such a simple issue then I guess it's not a bug and I'm just
+missing something? Please somebody, why does gitk (usually) not show the subset
+list of files affected when you give it a path?
 
-$ git commit -q -m commit
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#       modified:   .git-completion.bash
-#       modified:   bin/mirrorgit
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       a123
-no changes added to commit (use "git add" and/or "git commit -a")
+E.g. If I am in a src dir then "gitk ." does not list files. Neither does "gitk
+$PWD" nor "gitk ../src". However "cd ..; git src" does list files!?
 
--- 
-regards,
-====================================================
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
+Is there a more appropriate forum/list for git newcomers?
