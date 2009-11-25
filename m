@@ -1,104 +1,156 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-subtree: directory mismatch
-Date: Wed, 25 Nov 2009 11:31:59 -0800
-Message-ID: <7v7htexuxc.fsf@alter.siamese.dyndns.org>
-References: <20091124195353.GA16627@lonquimay.wrk.lsn.camptocamp.com>
- <32541b130911241348s21e21fb8n12edf374e6a3c309@mail.gmail.com>
- <20091125080812.6117@nanako3.lavabit.com>
- <32541b130911251028h6db240d5yd171fa4941ef14ba@mail.gmail.com>
+Subject: Re: [PATCH] grep: --full-tree
+Date: Wed, 25 Nov 2009 11:32:40 -0800
+Message-ID: <7vws1ewgbr.fsf@alter.siamese.dyndns.org>
+References: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
+ <4B0D2E19.6020100@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Marc Fournier <marc.fournier@camptocamp.com>,
-	git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 20:32:22 2009
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Nov 25 20:33:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDNbB-00037V-ON
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 20:32:22 +0100
+	id 1NDNbx-0003Tm-Eo
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 20:33:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759540AbZKYTcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 14:32:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759528AbZKYTcI
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 14:32:08 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55110 "EHLO
+	id S1759573AbZKYTcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 14:32:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759572AbZKYTcm
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 14:32:42 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40291 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759493AbZKYTcH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 14:32:07 -0500
+	with ESMTP id S1759543AbZKYTcl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 14:32:41 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7473EA1139;
-	Wed, 25 Nov 2009 14:32:11 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AB07482B06;
+	Wed, 25 Nov 2009 14:32:46 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yRrPDSLJWLHh/OT12zIVxhNFBZk=; b=yI2ZJc
-	zFgqZKn40I/89DSPfo3H1jse8SDFQmKsnjiXVMUc+Jvaz8R4xAO+nPNVD95o125F
-	aSPf940PzoaDAIsGPIHNVoEflEwjxW1eM/9TVV6XZ8ozj3FgSt7yYSMuw5Q/BTuQ
-	LpwnZWvhqdtPXykczdrx5GeRSgXq0MnQR1y8s=
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=AUXh5+N6hzO5lfYVJR7M3xpqBYc=; b=PxAxNsQFVmXbRkXC8FIJ5sn
+	wadD1s9TWXplCaApcyVqfG89pll82bFIOxDxc1+mKED6fVr/yr+1qJI5lwRFpf2o
+	Zhq6pF/1cWZKif5h/z25JA2uJ1+aw2rmG/ACQR2R9WEkSwmNg9m88kbrfZa+YWi9
+	gsGPyUrZQzC8ODGFN5Do=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=orgZpVaUCDaQ/vT3tz55I9QsmyESqur+
-	Qm5Ps3sALRXI9GDRFEBDjtW8wMeh0EzgaS6/CpVr/0Es8M3HHpJM1dh8Nva3tOPv
-	HQ3mgcJfilbZ5Ry0WrbbquPt0Lhk3NYtF47Na2boyqm7zFUUk4QMy3pFu4VAQdyw
-	1NuZF97nbD8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 35E29A1138;
-	Wed, 25 Nov 2009 14:32:07 -0500 (EST)
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=cgdPSmJJNjp8SYJDmDY5FObnw2K4CRZ0LpmvfnaW/04JaDDDG
+	1TmdybmHBpa+QAoW95q8RvJUV2/frd2rG+I+Rpj6u4D1sU9saUqwlFz57hzyWW0T
+	z82OdDlmZWFi7Q8/9ZMycpncadQhw2VdqYBgc5Yuzv6+HOBGHfr1FVD9CA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 877B582B04;
+	Wed, 25 Nov 2009 14:32:44 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7DF57A1136; Wed, 25 Nov 2009
- 14:32:01 -0500 (EST)
-In-Reply-To: <32541b130911251028h6db240d5yd171fa4941ef14ba@mail.gmail.com>
- (Avery Pennarun's message of "Wed\, 25 Nov 2009 13\:28\:52 -0500")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9EB182AFE; Wed, 25 Nov
+ 2009 14:32:41 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 37AB9696-D9F9-11DE-8253-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 4DED9BC0-D9F9-11DE-80C4-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133661>
 
-Avery Pennarun <apenwarr@gmail.com> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
->> Probably you can save time by using what was already done
->>
->> http://thread.gmane.org/gmane.comp.version-control.git/76650/focus=89021
+> Junio C Hamano venit, vidit, dixit 24.11.2009 09:56:
+>> While working inside a deep subdirectory, it sometimes is necessary to
+>> find a string you see in a file you are working on from the files in the
+>> entire project.  This is especially true when you are dipping your toe
+>> into an unfamiliar project.
+>> 
+>> By default, "git grep" limits its search space to the current directory
+>> and below (i.e. as if "-r ." is specified), and it is rather cumbersome to
+>> repeat ../ as many times as necessary.  This new option tells "git grep"
+>> not to limit the search space to the current directory.
+>> 
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>> 
+>>  * In http://article.gmane.org/gmane.comp.version-control.git/111717, I
+>>    once argued in the opposite way, but I think it is Ok to aim for making
+>>    the default --full-tree in the longer run (cf. $gmane/127885).  This is
+>>    the first step in that direction.
+>> 
+>>    I am not sure if there can be a sane way to flip the default without
+>>    hurting existing scripts and users.  Backward compatibility always is
+>>    a pain.
 >
-> Hi Nanako,
+> On a related note, I had planned for a while now to go through the
+> commands and check for inconsistencies w.r.t. to subdir default. For
+> example, ls-files behaves like grep, whereas status is different. We
+> already had discussions about the commit:path notation from a subdir. (I
+> don't remember the outcome.) Of course, defaulting status differently
+> could be dangerous. Having --full-tree as default for all commands and
+> requiring an explicit "." sounds safer for all commands and not overly
+> inconvenient. (I remember once wondering where my committed files are,
+> looking at git ls-files output from a subdir.)
 >
-> I've read through the thread (I do remember skimming it awhile ago)
-> but can't find patches for the syntax actually under discussion.
+> I think we should make this behavior as uniform across commands as
+> possible. Do we have a time frame for 1.7.0 within which one should
+> achieve such incompatible changes?
 
-I very much prefer gmane threading when following discussion over all the
-other mail archives, but this shows one thing I really dislike about it.
+I do not think there is such a consensus for a blanket change like that.
 
-It is not easy to find a near-by thread when looking at an old article,
-and you have to be willing to bisect the page number at the right hand
-side of the web UI.  Often a patch series is posted as a separate thread
-after a discussion reaches conclusion or identifies an issue to solve, and
-the real patch series lives in a near-by thread.  Very inconvenient.
+If you are starting a discussion to build one for a particular change (not
+necessarily the one you mentioned above) now, you are way too late for
+1.7.0.  The changes scheduled for 1.7.0 were glitches we have known for
+quite some time, and more importantly had a concensus on _how_ they should
+be handled long before 1.6.3 (May 6, 2009), and the most importantly, the
+steps in the transition plan since then have already been executing.
 
-I don't know how Nana digs up older discussion; maybe she knows better
-ways.
+ - The plan for "git push" changes were already announced in 1.6.3, and
+   the first step of transition was implemented there.
 
-In my primary repository, I have an archive of mothballed branches kept
-with this alias:
+ - We already had consensus for changing the default "send-email"
+   threading behaviour before 1.6.2 and it was scheduled to happen in
+   1.6.3 but has been deferred until now.
 
-    [alias]
-    hold = "!sh -c 'git update-ref refs/hold/$1 refs/heads/$1 && git branch -D $1' -"
+ - For a long time, it has been known that it is confusing and unexpected
+   to users that "git status" is a synonym for "git commit --dry-run".
+   The plan to make "git status" different from "git commit --dry-run" has
+   been done in mid August this year.
 
-and found this series in there.  It applies to v1.6.0-rc0~245 (no, I won't
-be rebasing this myself---I don't have time for that while preparing for
-the pre-release feature freeze).
+ - For a long time, "git diff" considered -b/-w options are only for
+   controlling generation of patch text, and these options didn't affect
+   the exit status (when run with --exit-code) nor suppress the patch
+   header lines (i.e. "diff --git").  This could be argued as a bug (the
+   same way as "some commands are relative to cwd by default and others
+   are relative to the whole tree" can be), but it doesn't mean we can
+   blame user's scripts for relying on the bug and change the semantics
+   all of sudden.  We had been cooking the change since May 2009 and
+   announcements were in all issues of "What's cooking" since Aug 2009 for
+   this change.
 
-    f7713ce Document that merge strategies can now take their own options
-    7eda236 Make "subtree" part more orthogonal to the rest of merge-recursive.
-    e416d61 Teach git-pull to pass -X<option> to git-merge
-    09f7d22 Teach git-merge to pass -X<option> to the backend strategy module
-    904288c git-merge-recursive-{ours,theirs}
-    e0aafb4 git-merge-file --ours, --theirs
-    -d3e977b Merge branch 'maint'
+Also, please do not confuse 1.7.0 with a license for "I do not like this
+and that, screw backward compatibility, and change things as if we were
+building git from scratch without any existing users".  We need a solid
+transition plan to ease the pain for existing scripts and users.
 
-Look at http://github.com/gitster/git/commits/jc/merge-theirs/
+As to ls-files, I haven't seen any good proposal of a smooth transition
+plan (like what we laid out for a few semantic changes for "git push" for
+1.7.0), if we were to eventually change it, and I personally do not think
+there can be a smooth transition for that particular command.  It is used
+as a very low level building block for people's scripts, and I don't think
+of a way to change its fundamental behaviour without causing people a lot
+of extra work.  I doubt you can easily build a concensus that the benefit
+of "consistency" is worth it for such a change.
+
+    Side note.  What we _could_ do is to make ls-files less (much less)
+    necessary at the UI level for you to _type_ from the command line.
+    Enumerate in what situations you used the command, think about the
+    reason for each of occasions why you used it (e.g. "after a conflicted
+    merge I wanted to find out which paths are still unresolved and
+    'ls-files -u' was the most convenient way"), and eliminate the reason
+    (e.g. "add a new (option to 'merge'|command) that reports the needed
+    information in much more readable way than 'ls-files -u' does).
+
+The same applies to "$treeish:$path" syntax.
+
+It may be convenient if there were to specify "I want to name the path in
+HEAD~47 that corresponds to this file in the directory I am currently in."
+But that does not necessarily mean we should change the semantics and
+break existing users.  One way to satisfy the wish without breaking
+existing users would be to start accepting "$treeish:./$relative".
