@@ -1,95 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb.js: Harden setting blamed commit info in incremental blame
-Date: Wed, 25 Nov 2009 15:36:07 +0100
-Message-ID: <200911251536.08993.jnareb@gmail.com>
-References: <1258659887-5244-1-git-send-email-bebarino@gmail.com> <200911250145.16472.jnareb@gmail.com> <4B0CAC2E.1060105@gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] grep: --full-tree
+Date: Wed, 25 Nov 2009 15:56:49 +0100
+Message-ID: <fabb9a1e0911250656k31229c42jd79fb94c1a619e59@mail.gmail.com>
+References: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 15:36:23 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 25 15:57:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDIyk-0004xc-Vm
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 15:36:23 +0100
+	id 1NDJIz-000614-Hq
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 15:57:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758607AbZKYOgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 09:36:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758541AbZKYOgK
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 09:36:10 -0500
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:48501 "EHLO
-	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758456AbZKYOgJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 09:36:09 -0500
-Received: by fxm5 with SMTP id 5so7025274fxm.28
-        for <git@vger.kernel.org>; Wed, 25 Nov 2009 06:36:15 -0800 (PST)
+	id S1753101AbZKYO5F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Nov 2009 09:57:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752974AbZKYO5E
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 09:57:04 -0500
+Received: from mail-vw0-f192.google.com ([209.85.212.192]:47989 "EHLO
+	mail-vw0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751531AbZKYO5D convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Nov 2009 09:57:03 -0500
+Received: by vws30 with SMTP id 30so2143293vws.33
+        for <git@vger.kernel.org>; Wed, 25 Nov 2009 06:57:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=ZvupP1U5WZpocCAjfZlKWrv12PFTvqA/0/J/3JqYpTA=;
-        b=ZNQlWhmh8tg1yb/rgDUG+8UY3QsoZ2Tn0RnWFmVfsXtvDiKHhP5z4v5YRR0bL0gIIf
-         iJvtjOlQ6xuFLdYV4GBQeGGPbJHWdgka6W/nUrgPVUvXcjc38KgLPrOVDRZsyFzwLd5k
-         SYQQT5ycY2aAUm1DJuJ4TR0UOucFNm0g87HI0=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=89pKD1Se2F3YWfw0PeKYEMy2Sy/4TMeCYZZC32N5B5A=;
+        b=mRC/J317zuTgKtFXDUDjrShXb0bugkKBQ1BZcxkWvI+gsi6fQQdn6cAm+jpva4wU7G
+         Yw0OV9G+pbtg0t6G8D2gLnQqgw0YEfTNWStGIWtcdxuSt38pyRYbgDDcpwSIW1zvcXYx
+         cPpdDejU3hya5TgE5snzkxy/5V2bGn9c0c0wk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=k214N8nqfq5ZQ5cCCPipk8GQRN2KgWbfL2UNsk6MINQCPW/1NDa6p4oapaG5FRFqY8
-         /85igKyVAZh6iCxT1HS2PEW6Wt+uIdcQIdXyocTRwFocZZ9tHJcOJMUlFUgH5VScUPSn
-         iVhZwMkNcvAucU9U3vNLSRMrOJeWsqZ6DJ7bU=
-Received: by 10.103.86.38 with SMTP id o38mr3355220mul.114.1259159774953;
-        Wed, 25 Nov 2009 06:36:14 -0800 (PST)
-Received: from ?192.168.1.13? (abvf67.neoplus.adsl.tpnet.pl [83.8.203.67])
-        by mx.google.com with ESMTPS id j10sm560894muh.26.2009.11.25.06.36.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 25 Nov 2009 06:36:12 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4B0CAC2E.1060105@gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=DcjHHhatQ/ZC/8PE46IBGF5Eh+wjWlCl89GLdzIDaS1cBDaj6DepshqH0w/vqBiEaW
+         mDpsvbv8WYmRfDqDVyFk9/UhxyR9LJdSkigdzALLUXvSSWVYIpTXypGHSQb0qQMerjpq
+         MAPUM3pb+MGArUfkWGzDjny0LWG0oojJRvjK8=
+Received: by 10.220.121.144 with SMTP id h16mr9273216vcr.53.1259161029124; 
+	Wed, 25 Nov 2009 06:57:09 -0800 (PST)
+In-Reply-To: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133646>
 
-On Wed, 25 Nov 2009 05:01, Stephen Boyd wrote:
-> Jakub Narebski wrote:
-> >
-> > Debugging this is serious PITA.  After fix below it appears that this bug
-> > is some intermittent bug, depending on XMLHttpRequest timing.  It more
-> > often than not (at least when I tried to debug it using build-in IE8
-> > debugger) works correctly for the folowing files: README, GIT-VERSION-GEN,
-> > revision.c (once even it did fail when first running for given file, and
-> > then running correctly when reloading from debugger; fun it is not).
-> >
-> > It does consistently fail for gitweb/gitweb.perl... but when I tried
-> > to debug it IE8 would hang up when trying to use debugger (with around
-> > 600MB available RAM).  Perhaps somebody else would have more luck...
-> 
-> Interesting. I don't have time to look into this until early December, 
-> but if it's still around then I'll take a look. I wonder if IE6 or IE7 
-> works (I don't think everyone is on version 8 yet).
+Heya,
 
-Well, the one time I was able to run debugger (F12, select 'Script', select
-'gitweb.js') with error occurring and without IE hanging (for README file)
-it did show an error for the following line:
+On Tue, Nov 24, 2009 at 09:56, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> =A0 I am not sure if there can be a sane way to flip the default with=
+out
+> =A0 hurting existing scripts and users. =A0Backward compatibility alw=
+ays is
+> =A0 a pain.
 
-  if (xhr.readyState === 3 && xhr.status !== 200) {
+I regularly rely on this behavior in my usage of git grep. For
+example, the Melange project has this layout:
+-- app
+-- app/soc
+-- app/django
+-- app/... etc
+-- scripts
+-- tests
+-- thirdparty
 
-When I checked 'xhr' object, it has "Unknown error" as contents of 
-xhr.statusText field and as contents of xhr.status (sic!), which should
-be a number: HTTP status code.
+I almost always want only results from "app/soc", so when I run git
+grep I do so from within "app/soc" to make sure I don't get false
+positives from the many external sources we have.
 
-Unfortunately I had to take a break... and I was not able to reproduce this
-(without hanging web browser: "program not responding") since then...
+Just chiming in for the "want to keep the current behavior" camp :).
 
--- 
-Jakub Narebski
-Poland
+PS: I don't mind having to set a config variable to keep the current
+behavior though.
+
+--=20
+Cheers,
+
+Sverre Rabbelier
