@@ -1,76 +1,105 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Git repository mesh?
-Date: Wed, 25 Nov 2009 12:54:32 +0100
-Message-ID: <vpqy6lues5j.fsf@bauges.imag.fr>
-References: <fcaeb9bf0911242007t1294bddej87b48691ea283e21@mail.gmail.com>
-	<vpqaaybf37f.fsf@bauges.imag.fr>
-	<fcaeb9bf0911250000u395c0153q43c8c7a60ca9b876@mail.gmail.com>
+From: Nick Woolley <nickwoolley@yahoo.co.uk>
+Subject: cvsexportcommit dies when applying an (empty) merge commit
+Date: Wed, 25 Nov 2009 11:59:22 +0000
+Message-ID: <4B0D1C1A.60707@yahoo.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 12:54:47 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 25 12:59:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDGSN-0002Tl-4q
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 12:54:47 +0100
+	id 1NDGX4-0004dG-Af
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 12:59:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934471AbZKYLyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 06:54:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934397AbZKYLyf
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 06:54:35 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:53307 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934241AbZKYLye (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 06:54:34 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id nAPBqnfw020329
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 25 Nov 2009 12:52:49 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NDGS9-0006ys-1B; Wed, 25 Nov 2009 12:54:33 +0100
-In-Reply-To: <fcaeb9bf0911250000u395c0153q43c8c7a60ca9b876@mail.gmail.com> (Nguyen Thai Ngoc Duy's message of "Wed\, 25 Nov 2009 15\:00\:28 +0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 25 Nov 2009 12:52:50 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: nAPBqnfw020329
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1259754772.2416@Uak0Wb+tk8NFSCwlgVxNlg
+	id S1758761AbZKYL7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 06:59:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758751AbZKYL7U
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 06:59:20 -0500
+Received: from udon.noodlefactory.co.uk ([80.68.88.167]:46213 "EHLO
+	udon.noodlefactory.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758588AbZKYL7S (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 06:59:18 -0500
+Received: from 87-194-154-6.bethere.co.uk ([87.194.154.6] helo=[192.168.0.100])
+	by udon.noodlefactory.co.uk with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <nickwoolley@yahoo.co.uk>)
+	id 1NDGWp-0001w9-Th
+	for git@vger.kernel.org; Wed, 25 Nov 2009 11:59:24 +0000
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133633>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Hi,
 
-> On Wed, Nov 25, 2009 at 2:55 PM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->>
->>> Never used Mercurial but the idea of "git in" and "git out" to see how
->>> many commits ahead/behind would be nice.
->>
->> In Git, you'd run "git fetch" to get everything locally, and then
->>
->> git log ..origin/master => what origin/master has that you don't
->> git log origin/master.. => what you have that origin/master doesn't
->>
->> (and you can define aliases for that)
->
-> But I have many origins (any repository could be origin). "git status"
-> also have this kind of information, but only for "origin".
+I have a git repository with a merge point on the master branch.  This merge
+commit is empty, and just contains a commit message:
 
-Then, fetch from all of them and:
+  Merge commit 'otherbranch'
 
-  git log ^HEAD repo1/master repo2/master repo3/master
+I'm trying to export this branch into CVS using git-cvsexportcommit (the latest
+version from the master branch). It's actually done in a wrapper script [1] but
+the command that gets invoked is essentially:
 
---
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+ git cvsexportcommit -p -v -u -w  'cvscheckout/HEAD/my-cvs-module' -c \
+    <parent commit> <commit>
+
+Where <commit> is the empty merge commit.  However this invocation dies and
+aborts the process of exporting the branch half way.
+
+The fatal error I get is:
+
+ Applying to CVS commit <commit> from parent <parent commit>
+ Checking if patch will apply
+ Applying
+ error: No changes
+ cannot patch at /usr/lib/git-core/git-cvsexportcommit line 324.
+
+The vicinity of line 324 is (with some lines wrapped):
+
+ print "Applying\n";
+ if ($opt_W) {
+     system("git checkout -q $commit^0") && die "cannot patch";
+ } else {
+     `GIT_DIR= git-apply $context --summary --numstat --apply
+<.cvsexportcommit.diff` || die "cannot patch";
+ }
+
+It seems that the file .cvsexportcommit.diff is empty, so git-apply is refusing
+to apply it.
+
+Presumably the application would be a no-op, so this git-apply step could be
+skipped.  So I tried modifying the script to do that and it seems to work:
+
+ print "Applying\n";
+ if ($opt_W) {
+     system("git checkout -q $commit^0") && die "cannot patch";
+ } elsif (-s ".cvsexportcommit.diff") {
+     `GIT_DIR= git-apply $context --summary --numstat --apply
+<.cvsexportcommit.diff` || die "cannot patch";
+ } else {
+    print "No changes\n";
+ }
+
+The modified git-cvsexportcommit script completes without errors, but
+unsurprisingly, seems to export nothing, so that when imported back into git,
+there is no empty commit.  There appears to be no log message added in CVS, either.
+
+This does seem more acceptable than dying, although it doesn't faithfully
+reproduce the git history.  However I'm not sure if that would be possible in
+this case.
+
+Is the existing behaviour deliberately fatal, or is this worth supplying a patch
+for?
+
+
+Cheers,
+
+N
+
+1. http://github.com/wu-lee/git-cvs
