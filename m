@@ -1,93 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Wed, 25 Nov 2009 16:00:34 -0500
-Message-ID: <20091125210034.GC18487@coredump.intra.peff.net>
-References: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
- <20091125203922.GA18487@coredump.intra.peff.net>
- <7viqcytjic.fsf@alter.siamese.dyndns.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: jgit problems for file paths with non-ASCII characters
+Date: Wed, 25 Nov 2009 22:11:54 +0100
+Message-ID: <200911252211.55137.robin.rosenberg@dewire.com>
+References: <4B0D356D.1080709@syntevo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 22:00:42 2009
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, egit-dev@eclipse.org
+To: Marc Strapetz <marc.strapetz@syntevo.com>
+X-From: git-owner@vger.kernel.org Wed Nov 25 22:12:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDOyf-0001oe-6G
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 22:00:41 +0100
+	id 1NDP9f-0007Ia-OO
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 22:12:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759771AbZKYVA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 16:00:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759762AbZKYVA0
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 16:00:26 -0500
-Received: from peff.net ([208.65.91.99]:40704 "EHLO peff.net"
+	id S933108AbZKYVLw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 16:11:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933040AbZKYVLw
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 16:11:52 -0500
+Received: from mail.dewire.com ([83.140.172.130]:18172 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755515AbZKYVA0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 16:00:26 -0500
-Received: (qmail 16264 invoked by uid 107); 25 Nov 2009 21:04:57 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 25 Nov 2009 16:04:57 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Nov 2009 16:00:34 -0500
+	id S932749AbZKYVLv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 16:11:51 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id BD70D80038F;
+	Wed, 25 Nov 2009 22:11:56 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Z6JELtXzevCc; Wed, 25 Nov 2009 22:11:56 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id E0ECF800387;
+	Wed, 25 Nov 2009 22:11:55 +0100 (CET)
+User-Agent: KMail/1.11.4 (Linux/2.6.28-11-generic; KDE/4.2.4; i686; ; )
+In-Reply-To: <4B0D356D.1080709@syntevo.com>
 Content-Disposition: inline
-In-Reply-To: <7viqcytjic.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133675>
 
-On Wed, Nov 25, 2009 at 12:52:11PM -0800, Junio C Hamano wrote:
+onsdag 25 november 2009 14:47:25 skrev  Marc Strapetz:
+> I have noticed that jgit converts file paths to UTF-8 when querying the
+> repository. Especially,
+> org.eclipse.jgit.treewalk.filter.PathFilter#PathFilter performs this
+> conversion:
+>
+>   private PathFilter(final String s) {
+>     pathStr = s;
+>     pathRaw = Constants.encode(pathStr);
+>   }
+>
+> Because of this conversion, a TreeWalk fails to identify a file with
+> German umlauts. When using platform encoding to convert the file path to
+> bytes:
+>
+>   private PathFilter(final String s) {
+>     pathStr = s;
+>     pathRaw = s.getBytes();e pr
+>   }
+>
+> the TreeWalk works as expected. Actually, the file path seems to be
+> stored with platform encoding in the repository.
+>
+> Is this a bug or a misconfiguration of my repository? I'm using jgit
+> (commit e16af839e8a0cc01c52d3648d2d28e4cb915f80f) on Windows.
 
-> So I think the posted patch alone without changing anything else would be
-> the approach to give the most benefit with the least impact to existing
-> users, at least for now.
+A bug. 
 
-Yes, I meant to say in my original message but forgot to: I think
---full-tree is an important first step, no matter what happens next. It
-gives people a way to do what they want without typing the right number
-of ".."s, and it opens up --no-full-tree if the default changes later.
+The problem here is that we need to allow multiple encodings since there
+is no reliable encoding specified anywhere. The approach I advocate is
+the one we use for handling encoding in general. I.e. if it looks like UTF-8,
+treat it like that else fallback. This is expensive however and then we have
+all the other issues with case insensitive name and the funny property that
+unicode has when it allows characters to be encoding using multiple sequences
+of code points as empoloyed by Apple.
 
-But I do worry about it being a command-line option. You are asking the
-user to remember to type --full-tree every time. I can't count the
-number of times I have been in a subdirectory and done "git grep foo",
-spent some time analyzing and doing something with the results, only for
-my palm to hit my forehead when I realize that I was missing half of the
-results I wanted. In other words, I not only have to remember to use the
-option, but when I forget, I may get punished very annoyingly by results
-which are subtly different from what I want.
+-- robin
 
-So I am in favor of taking it further, but even if we do, the
-command-line option is the right thing to be doing _now_.
 
-> "git grep -e frotz .." will work in your "from linux/subproject/t look for
-> everywhere in linux/subproject", but if "/t" part were much longer and
-> variable (iow you need to chdir around inside linux/subproject to scratch
-> your itch) compared to "linux/subproject" part that is much shorter and
-> static (to your work), it may make sense to give us a mode to specify
-> pathspec from the top of the tree.
-> 
->     $ cd linux/subproject
->     $ cd foo
->     $ cd bar
->     $ cd baz
->     $ git grep --absolute-pathspec -e frotz -- linux/subproject
-> 
-> As "git grep" never takes absolute paths, we _might_ be able to also do
-> 
->     $ git grep -e frotz -- /linux/subproject
-> 
-> to achieve the same.
-
-Certainly I think that would be an improvement. But again, it suffers
-from the "you must remember to do this" as above. I really want "git
-grep" to Do What I Mean.
-
-I have to wonder: is "git grep" really plumbing or porcelain? It is
-really just a wrapper for
-
-  git ls-files | xargs grep
-
-Do people actually use it in their scripts? Should they be?
-
--Peff
+-- robin
