@@ -1,110 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-apply fails on creating a new file, with both -p and
- --directory specified
-Date: Wed, 25 Nov 2009 02:56:54 -0800
-Message-ID: <7vws1e3ma1.fsf@alter.siamese.dyndns.org>
-References: <20091123194523.GZ15966@cl.cam.ac.uk>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Git repository mesh?
+Date: Wed, 25 Nov 2009 12:54:32 +0100
+Message-ID: <vpqy6lues5j.fsf@bauges.imag.fr>
+References: <fcaeb9bf0911242007t1294bddej87b48691ea283e21@mail.gmail.com>
+	<vpqaaybf37f.fsf@bauges.imag.fr>
+	<fcaeb9bf0911250000u395c0153q43c8c7a60ca9b876@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Steven J. Murdoch" <git+Steven.Murdoch@cl.cam.ac.uk>
-X-From: git-owner@vger.kernel.org Wed Nov 25 11:57:12 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 25 12:54:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDFYc-0007r0-Ta
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 11:57:11 +0100
+	id 1NDGSN-0002Tl-4q
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 12:54:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758584AbZKYK46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 05:56:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758576AbZKYK45
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 05:56:57 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59307 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758353AbZKYK44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 05:56:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 025628297B;
-	Wed, 25 Nov 2009 05:57:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=la+FIzpZpzXf/VICNYWjTe6Vx+w=; b=It7KNd
-	ZdmmTJk7fnVWahHPK8FpYAu52QVcUEkViBhlGeD8VOgMkXP7vSTkLdXLnvajeIYu
-	buJTRhMsJ4T9OGjk/Oxd43OC+ekyev2OrNDCBVrEdRE0rSQ8JEgQLJ9AuWmlKXFr
-	43RB6oDfcJXjku8Tw3hec4F2iFnvCVJRnhSaE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xOadXCxVZ1bZtIwIL8Osr0cKyrJk0Y46
-	ellApubjG/J3ZqJzvLTpUgBd9SaX21QIOGYo0mbEqKMUX5XdHllNfxZM9j/YucHB
-	tOOmaywF40evXMfpACS5UrtnjzU+F/6xSOzXz8TtaxQ6LR4c5q5jnvOcaaWQjBj4
-	IL+57pLXfPE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D00338297A;
-	Wed, 25 Nov 2009 05:56:59 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76A5382979; Wed, 25 Nov
- 2009 05:56:56 -0500 (EST)
-In-Reply-To: <20091123194523.GZ15966@cl.cam.ac.uk> (Steven J. Murdoch's
- message of "Mon\, 23 Nov 2009 19\:45\:24 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 41721F3A-D9B1-11DE-B403-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S934471AbZKYLyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 06:54:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934397AbZKYLyf
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 06:54:35 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:53307 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934241AbZKYLye (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 06:54:34 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id nAPBqnfw020329
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 25 Nov 2009 12:52:49 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NDGS9-0006ys-1B; Wed, 25 Nov 2009 12:54:33 +0100
+In-Reply-To: <fcaeb9bf0911250000u395c0153q43c8c7a60ca9b876@mail.gmail.com> (Nguyen Thai Ngoc Duy's message of "Wed\, 25 Nov 2009 15\:00\:28 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 25 Nov 2009 12:52:50 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: nAPBqnfw020329
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1259754772.2416@Uak0Wb+tk8NFSCwlgVxNlg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133632>
 
-"Steven J. Murdoch" <git+Steven.Murdoch@cl.cam.ac.uk> writes:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> This appears to be because I was both using -p to strip some path
-> components, and --directory to add different ones in. Only creating
-> new files was affected.
+> On Wed, Nov 25, 2009 at 2:55 PM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>>
+>>> Never used Mercurial but the idea of "git in" and "git out" to see how
+>>> many commits ahead/behind would be nice.
+>>
+>> In Git, you'd run "git fetch" to get everything locally, and then
+>>
+>> git log ..origin/master => what origin/master has that you don't
+>> git log origin/master.. => what you have that origin/master doesn't
+>>
+>> (and you can define aliases for that)
+>
+> But I have many origins (any repository could be origin). "git status"
+> also have this kind of information, but only for "origin".
 
-A very nicely done report.
+Then, fetch from all of them and:
 
-In addition to your test case, I suspect that a patch that only changes
-mode would have acted funny with -p<n> option.
+  git log ^HEAD repo1/master repo2/master repo3/master
 
--- >8 --
-[PATCH] builtin-apply.c: pay attention to -p<n> when determining the name
-
-The patch structure has def_name component that is used to validate the
-sanity of a "diff --git" patch by checking pathnames that appear on the
-patch header lines for consistency.  The git_header_name() function is
-used to compute this out of "diff --git a/... b/..." line, but the code
-always stripped one level of prefix (i.e. "a/" and "b/"), without paying
-attention to -p<n> option.  Code in find_name() function that parses other
-lines in the patch header (e.g. "--- a/..." and "+++ b/..." lines) however
-did strip the correct number of leading paths prefixes, and the sanity
-check between these computed values failed.
-
-Teach git_header_name() to honor -p<n> option like find_name() function
-does.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin-apply.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/builtin-apply.c b/builtin-apply.c
-index f667368..36e2f9d 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -823,12 +823,13 @@ static int gitdiff_unrecognized(const char *line, struct patch *patch)
- 
- static const char *stop_at_slash(const char *line, int llen)
- {
-+	int nslash = p_value;
- 	int i;
- 
- 	for (i = 0; i < llen; i++) {
- 		int ch = line[i];
--		if (ch == '/')
--			return line + i;
-+		if (ch == '/' && --nslash <= 0)
-+			return &line[i];
- 	}
- 	return NULL;
- }
+--
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
