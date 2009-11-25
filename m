@@ -1,68 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Please help with GIT install problem.
-Date: Wed, 25 Nov 2009 14:23:13 -0800
-Message-ID: <7vhbsiqm5q.fsf@alter.siamese.dyndns.org>
-References: <377205.65475.qm@web30806.mail.mud.yahoo.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] grep: --full-tree
+Date: Wed, 25 Nov 2009 17:26:25 -0500
+Message-ID: <20091125222625.GB2861@coredump.intra.peff.net>
+References: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
+ <20091125203922.GA18487@coredump.intra.peff.net>
+ <7viqcytjic.fsf@alter.siamese.dyndns.org>
+ <20091125210034.GC18487@coredump.intra.peff.net>
+ <7vmy2as319.fsf@alter.siamese.dyndns.org>
+ <20091125214949.GA31473@coredump.intra.peff.net>
+ <7vtywiqmbs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: "Stephan T." <stman937-lingit@yahoo.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 23:23:31 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 25 23:26:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDQGj-0005LH-Fb
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 23:23:25 +0100
+	id 1NDQJi-0006gc-BY
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 23:26:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759048AbZKYWXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 17:23:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759001AbZKYWXO
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 17:23:14 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62094 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758963AbZKYWXN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 17:23:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D17D82C10;
-	Wed, 25 Nov 2009 17:23:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=T0HyIlFAtLCjFK5N4EqI8FknSMQ=; b=xgslBF
-	pGYmrNcOKSU0DbT5/dNNMi0yOaNFy0TCGXzK0EuaLEWU+CfR+JQRRtcfVp3tIH98
-	62eMclxpAQvVe9HSnzy3noNpKuQtra2yCW4jqi+svH/C671W+ZjU/SeDzZP/KLZA
-	Xs1csRJpREC+qo5ohg+b2WOGP8qTk4la8SpfI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BSP2v+nD7r9N+ux0QdzwLIcRkDRA57YF
-	qdoz95HXuTF3gRd4iiT6X1VcWAxnpT9ndhnZWdN8iM9XqLAEfqEKIn907ATRQpcv
-	TkQqlU6Q5pBcqee2us5PH1Q6f1jr2UwsTf4Ae+rfI2RPn2NPWgUXAeVcU+l/gAPG
-	XVSze88CsZs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B240F82C0F;
-	Wed, 25 Nov 2009 17:23:17 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1A61582C0A; Wed, 25 Nov
- 2009 17:23:14 -0500 (EST)
-In-Reply-To: <377205.65475.qm@web30806.mail.mud.yahoo.com> (Stephan T.'s
- message of "Wed\, 25 Nov 2009 14\:07\:54 -0800 \(PST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 21612582-DA11-11DE-A0DD-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1759320AbZKYW0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 17:26:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759245AbZKYW0S
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 17:26:18 -0500
+Received: from peff.net ([208.65.91.99]:38443 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759187AbZKYW0S (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 17:26:18 -0500
+Received: (qmail 16797 invoked by uid 107); 25 Nov 2009 22:30:48 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 25 Nov 2009 17:30:48 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Nov 2009 17:26:25 -0500
+Content-Disposition: inline
+In-Reply-To: <7vtywiqmbs.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133687>
 
-"Stephan T." <stman937-lingit@yahoo.com> writes:
+On Wed, Nov 25, 2009 at 02:19:35PM -0800, Junio C Hamano wrote:
 
-> My system is a:
-> % uname -a
-> Linux naboo 2.4.21-50.ELsmp #1 SMP Tue May 8 17:18:29 EDT 2007 i686 i686 i386 GNU/Linux
-> ...
-> What is missing on my system?
+> Jeff King <peff@peff.net> writes:
+> 
+> > ... That is, I don't want to have to remember "git grep
+> > --full-tree" or "git grep /" every time
+> 
+> But that cuts both ways.  If you change the default to full-tree,
+> people will forget to put "." every time when asking to limit to the
+> current directory.
 
-Perhaps reading INSTALL will tell you a bit better?
+I know. Which is why I am arguing for a configuration option.
 
-On a typical Linux desktop, configure is unnecessary.
+Though as a side note, I think if you are going to err, it is probably
+better to err in showing _too much_ data. It is easier for the user to
+notice the situation and re-issue the command with more limits than it
+is for them to notice that some results are missing and re-issue the
+command with fewer limits.
+
+> > If I am the one who sets the configuration variable to something more
+> > sensible for my workflow, who am I hurting?
+> 
+> Somebody more clueful in git than you who is called to help you in your
+> repository when you have trouble.  Obviously "you" in this sentence is not
+> Jeff King, but I think you get the point.
+
+Clearly, because there _isn't_ anybody more clueful than me in git. ;)
+
+But that is what my meta-rant elsewhere in the thread was about. Sure,
+it hurts when more clueful people are called in (and that includes
+asking for help on the list). But that evil to me is much less than a
+user who is frustrated because they have to specify the same thing to
+git over and over again.
+
+> And re-read what I wrote in its entirety and notice I am not disagreeing
+> with you that the long term goal should be to have the default changed
+> consistently for all command to do the full tree.  The important first
+> step is to make sure we are capable of doing both full tree and limit to
+> current directory and "grep" is one example that cannot do both, and be it
+> the --full-tree option or new /rooted-pathspec, we need some change _now_
+> that is backward compatible to pave the way for later changes.  We give
+> people convenient way to choose between the two, and _train_ them to
+> express which way they want _without_ having to think.  After that is
+> achieved, the default does not matter much and we can safely change the
+> default.
+> 
+> Think of it as a way to force existing users _unlearn_ the command
+> specific default we currently have.  Because any change of default will
+> hurt them until that is done, we should start training them as early as
+> possible.
+
+I agree with all of this as far as changing the default goes. But the
+point of my earlier messages was that I don't think there _is_ one sane
+default. I really do want it different per-project. And that means a
+configuration option.
+
+-Peff
