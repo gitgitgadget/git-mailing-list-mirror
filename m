@@ -1,119 +1,104 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Commiting changes onto more than one branch
-Date: Wed, 25 Nov 2009 10:58:05 -0800
-Message-ID: <7vaayazb2a.fsf@alter.siamese.dyndns.org>
-References: <6b4a562b0911250831q332ac3b5m6ee38f59e7a6f391@mail.gmail.com>
- <76c5b8580911250838x361ae081n271fcee2d1234703@mail.gmail.com>
- <6b4a562b0911250847x59116687iba1d1640ca6c3887@mail.gmail.com>
+Subject: Re: git-subtree: directory mismatch
+Date: Wed, 25 Nov 2009 11:31:59 -0800
+Message-ID: <7v7htexuxc.fsf@alter.siamese.dyndns.org>
+References: <20091124195353.GA16627@lonquimay.wrk.lsn.camptocamp.com>
+ <32541b130911241348s21e21fb8n12edf374e6a3c309@mail.gmail.com>
+ <20091125080812.6117@nanako3.lavabit.com>
+ <32541b130911251028h6db240d5yd171fa4941ef14ba@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
-To: Mike Jarmy <mjarmy@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 19:58:25 2009
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Marc Fournier <marc.fournier@camptocamp.com>,
+	git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 25 20:32:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDN4J-0002ps-RO
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 19:58:24 +0100
+	id 1NDNbB-00037V-ON
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 20:32:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932181AbZKYS6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 13:58:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759098AbZKYS6K
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 13:58:10 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43432 "EHLO
+	id S1759540AbZKYTcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 14:32:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759528AbZKYTcI
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 14:32:08 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55110 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753574AbZKYS6J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 13:58:09 -0500
+	with ESMTP id S1759493AbZKYTcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 14:32:07 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 059DEA1E76;
-	Wed, 25 Nov 2009 13:58:15 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7473EA1139;
+	Wed, 25 Nov 2009 14:32:11 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aTHsV1Cyhu6X2OpNedvMU8i4vl8=; b=asOZNO
-	t7TpaPd3KKs8wPAiBubTeHA07LCZyZ/jKAOiVWuIGSqqjSk3xprhuc/xNpL+BlzN
-	rOvyavY12EHaCKl8UdOWVSVx8ducJkrb3N2+IAXbW8g5nQIEsKgBULy+2sFMqnmi
-	dU+59HOdpG6hXFk3ZE76Yd6UeCWQYMB/NsdXQ=
+	:content-type; s=sasl; bh=yRrPDSLJWLHh/OT12zIVxhNFBZk=; b=yI2ZJc
+	zFgqZKn40I/89DSPfo3H1jse8SDFQmKsnjiXVMUc+Jvaz8R4xAO+nPNVD95o125F
+	aSPf940PzoaDAIsGPIHNVoEflEwjxW1eM/9TVV6XZ8ozj3FgSt7yYSMuw5Q/BTuQ
+	LpwnZWvhqdtPXykczdrx5GeRSgXq0MnQR1y8s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QhEDA4qq+9ttvuW6LLXFenclokKoiIml
-	Ax2axYyzHOqFcHF0CzJkgxlc0XSirVmuo1dEXFfr/b2i0xrs4Aaf3hYfqPWLCXDi
-	tmaPtY3KWDMZNhWrocUsr990+06dIvN28YGD720kxWv1g1suVxy0OH5J23cRbT6D
-	j8CJbbq5ht4=
+	:content-type; q=dns; s=sasl; b=orgZpVaUCDaQ/vT3tz55I9QsmyESqur+
+	Qm5Ps3sALRXI9GDRFEBDjtW8wMeh0EzgaS6/CpVr/0Es8M3HHpJM1dh8Nva3tOPv
+	HQ3mgcJfilbZ5Ry0WrbbquPt0Lhk3NYtF47Na2boyqm7zFUUk4QMy3pFu4VAQdyw
+	1NuZF97nbD8=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C7571A1E75;
-	Wed, 25 Nov 2009 13:58:11 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 35E29A1138;
+	Wed, 25 Nov 2009 14:32:07 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 60D5EA1E74; Wed, 25 Nov 2009
- 13:58:07 -0500 (EST)
-In-Reply-To: <6b4a562b0911250847x59116687iba1d1640ca6c3887@mail.gmail.com>
- (Mike Jarmy's message of "Wed\, 25 Nov 2009 11\:47\:54 -0500")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7DF57A1136; Wed, 25 Nov 2009
+ 14:32:01 -0500 (EST)
+In-Reply-To: <32541b130911251028h6db240d5yd171fa4941ef14ba@mail.gmail.com>
+ (Avery Pennarun's message of "Wed\, 25 Nov 2009 13\:28\:52 -0500")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7A7912B4-D9F4-11DE-89FC-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 37AB9696-D9F9-11DE-8253-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133660>
 
-Mike Jarmy <mjarmy@gmail.com> writes:
+Avery Pennarun <apenwarr@gmail.com> writes:
 
-> I guess I didn't explain it too well, I made it sound like v3, v4 and
-> v5 were still more-or-less the same.  What I'm thinking about here is
-> a case where we have switched to git a while back, and then done a lot
-> of work on the various different branches, so that v3, v4 and v5 have
-> diverged very far from each other.  In that case, we would never want
-> to merge them together.
+>> Probably you can save time by using what was already done
+>>
+>> http://thread.gmane.org/gmane.comp.version-control.git/76650/focus=89021
+>
+> Hi Nanako,
+>
+> I've read through the thread (I do remember skimming it awhile ago)
+> but can't find patches for the syntax actually under discussion.
 
-I take it to mean that even though v[345] have diverged, the area that the
-particular change you have in mind has to touch haven't changed since they
-forked.  Otherwise you wouldn't be able to apply the same change to all of
-them in the same form and instead would be making the logically same
-change in physically different ways per branch, and you won't be asking
-this question.
+I very much prefer gmane threading when following discussion over all the
+other mail archives, but this shows one thing I really dislike about it.
 
-        o--o--o--o--o--o--o--o v4
-       /
-    --o--x--x--x--x--x--x--x v3
+It is not easy to find a near-by thread when looking at an old article,
+and you have to be willing to bisect the page number at the right hand
+side of the web UI.  Often a patch series is posted as a separate thread
+after a discussion reaches conclusion or identifies an issue to solve, and
+the real patch series lives in a near-by thread.  Very inconvenient.
 
-If you implemented your change at the tip of v3 branch and merge the
-result to v4, you will pull _all_ of 'x' into v4 that may not be desirable
-if the branches diverged a lot, of course.  
+I don't know how Nana digs up older discussion; maybe she knows better
+ways.
 
-        o--o--o--o--o--o--o--o-------M v4
-       /                            /
-    --o--x--x--x--x--x--x--x       /
-                            \     /
-                             Y---Y your change(s) == v3
+In my primary repository, I have an archive of mothballed branches kept
+with this alias:
 
-But nobody tells you to do this.
+    [alias]
+    hold = "!sh -c 'git update-ref refs/hold/$1 refs/heads/$1 && git branch -D $1' -"
 
-Instead, you can fork such a topic from the latest common.
+and found this series in there.  It applies to v1.6.0-rc0~245 (no, I won't
+be rebasing this myself---I don't have time for that while preparing for
+the pre-release feature freeze).
 
-        o--o--o--o--o--o--o--o v4
-       /
-    --o--x--x--x--x--x--x--x v3
-       \
-        Y---Y
-            your change(s)
+    f7713ce Document that merge strategies can now take their own options
+    7eda236 Make "subtree" part more orthogonal to the rest of merge-recursive.
+    e416d61 Teach git-pull to pass -X<option> to git-merge
+    09f7d22 Teach git-merge to pass -X<option> to the backend strategy module
+    904288c git-merge-recursive-{ours,theirs}
+    e0aafb4 git-merge-file --ours, --theirs
+    -d3e977b Merge branch 'maint'
 
-and merging this to v3 and v4 will have the desired effect.
-
-        o--o--o--o--o--o--o--o---------M v4
-       /                              /
-    --o--x--x--x--x--x--x--x---M v3  /
-       \                      /     /
-        Y---Y----------------.-----.
-            your change(s)
-
-The merges will incorporate this particular change alone without dragging
-anything else.  When you merge it to v4, none of the unrelated 'x' will be
-merged into it.
-
-In general you shouldn't fork a topic from the _tip_ of the oldest branch,
-if the branches are not meant to be merged as a whole.
-
-Of course, if this becomes cumbersome, you would adopt a better branch
-management to keep the numbers of 'x' that shouldn't be in later branches
-to the minimum.
+Look at http://github.com/gitster/git/commits/jc/merge-theirs/
