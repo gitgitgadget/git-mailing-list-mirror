@@ -1,69 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Wed, 25 Nov 2009 15:41:00 -0800
-Message-ID: <7vvdgyp3zn.fsf@alter.siamese.dyndns.org>
-References: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
- <20091125203922.GA18487@coredump.intra.peff.net>
- <7viqcytjic.fsf@alter.siamese.dyndns.org>
- <20091125210034.GC18487@coredump.intra.peff.net>
- <7vmy2as319.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.0911260032410.4985@pacific.mpi-cbg.de>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: git-subtree: directory mismatch
+Date: Thu, 26 Nov 2009 00:41:22 +0100
+Message-ID: <20091125234122.GA31422@atjola.homenet>
+References: <20091124195353.GA16627@lonquimay.wrk.lsn.camptocamp.com>
+ <32541b130911241348s21e21fb8n12edf374e6a3c309@mail.gmail.com>
+ <20091125080812.6117@nanako3.lavabit.com>
+ <32541b130911251028h6db240d5yd171fa4941ef14ba@mail.gmail.com>
+ <7v7htexuxc.fsf@alter.siamese.dyndns.org>
+ <32541b130911251148v70a5dc77k9936881d0b382ec2@mail.gmail.com>
+ <7vpr76uzju.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.0911260013550.4985@pacific.mpi-cbg.de>
+ <32541b130911251520l7a84554bxab9cf59ff9d8fc1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Marc Fournier <marc.fournier@camptocamp.com>,
 	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 26 00:41:19 2009
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 26 00:41:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDRU7-0003uJ-9c
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 00:41:19 +0100
+	id 1NDRUM-00040z-7D
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 00:41:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964882AbZKYXlG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 18:41:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935209AbZKYXlG
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 18:41:06 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42320 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935207AbZKYXlF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 18:41:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EBE36822CE;
-	Wed, 25 Nov 2009 18:41:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CbgYx9VMVQzGVeavL+c2Vyj19Wg=; b=IcRigg
-	NAIpBfPux/fCqWiZBX+PUoy2NyLb2xWOGK8pbqGgFXEq+jBiYBxk3SRowrBzrCc1
-	SP0smWk5pCaG3gEk5LFo7cpoIqTzJ6vXtr0mWX/NHqMKnjBYLK/vDDRXGlZGE+u/
-	x1rCvbD5jyHWm9GifZhD8bCT8prldr/x+PF7I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=d9Ca2ulNHeNcLE3kwY3lCmqONZLHIqmp
-	bmT1+POb3BNwO7aOsRvNbfVZUgcVg7UbdhDvzJyE4A92Nck5aVliOm27occcFb2I
-	mfS5dIXry7BKOzChvwmGsbpVW0HS3o4/76ANNocTSjre/cX0w4ytP+fYVha9dGcw
-	/IZ/joVjOg0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BEE97822CB;
-	Wed, 25 Nov 2009 18:41:06 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EBEAC822C8; Wed, 25 Nov
- 2009 18:41:01 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0911260032410.4985@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Thu\, 26 Nov 2009 00\:34\:49 +0100
- \(CET\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0059D6A8-DA1C-11DE-8466-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S964988AbZKYXlW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Nov 2009 18:41:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964978AbZKYXlW
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 18:41:22 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60890 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S964965AbZKYXlV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 18:41:21 -0500
+Received: (qmail invoked by alias); 25 Nov 2009 23:41:26 -0000
+Received: from i59F564FE.versanet.de (EHLO atjola.homenet) [89.245.100.254]
+  by mail.gmx.net (mp060) with SMTP; 26 Nov 2009 00:41:26 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19Fvh0/PUVF4juyzsYHD8YerpPyS3gpKVY3J0Vky0
+	EpXqMlo0tHigWD
+Content-Disposition: inline
+In-Reply-To: <32541b130911251520l7a84554bxab9cf59ff9d8fc1@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133705>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 2009.11.25 18:20:45 -0500, Avery Pennarun wrote:
+> On Wed, Nov 25, 2009 at 6:17 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > On Wed, 25 Nov 2009, Junio C Hamano wrote:
+> >> I do remember some people didn't like -X<option> syntax but I don'=
+t
+> >> think there was any solid counterproposal to achieve a similar goa=
+l to
+> >> satisfy the need to pass arbitrary parameters to the merge strateg=
+y
+> >> backends.
+> >
+> > I took exception to the awkward way to specify the option. =A0A str=
+ong hint
+> > just how awkward -X<option> is: it is hard to implement using
+> > parse-options.
+>=20
+> I read the earlier thread and I still don't quite understand this
+> point.  What makes it difficult?
 
-> This would break spectacularly in MSys.
+I guess it's -Xfoo vs. -X foo (note the space). Same deal with log
+-S<string>. "git log -S foo" would look for an empty string (I guess)
+being added/removed in some commit in foo's history, while "git log
+-Sfoo" looks for "foo" being added/remove in HEAD's history.
 
-How?  If that is the case wouldn't --full-tree break Msys the same way?
+Bj=F6rn
