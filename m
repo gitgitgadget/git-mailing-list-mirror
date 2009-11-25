@@ -1,92 +1,70 @@
-From: Mike Jarmy <mjarmy@gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
 Subject: Re: Commiting changes onto more than one branch
-Date: Wed, 25 Nov 2009 12:40:15 -0500
-Message-ID: <6b4a562b0911250940k29d5e7eck2bb35d6831ed3af9@mail.gmail.com>
+Date: Wed, 25 Nov 2009 12:43:55 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0911251237000.2059@xanadu.home>
 References: <6b4a562b0911250831q332ac3b5m6ee38f59e7a6f391@mail.gmail.com>
-	 <m38wdublbq.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 18:40:27 2009
+To: Mike Jarmy <mjarmy@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 25 18:44:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDLqs-0008QU-T7
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 18:40:27 +0100
+	id 1NDLuf-0001lc-Ev
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 18:44:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759341AbZKYRkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 12:40:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759089AbZKYRkL
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 12:40:11 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:47324 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759001AbZKYRkJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 12:40:09 -0500
-Received: by fg-out-1718.google.com with SMTP id e12so5202fga.1
-        for <git@vger.kernel.org>; Wed, 25 Nov 2009 09:40:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=+M/slTa+sdLFPlOSM3jjND5j7BA3oigysM+/WG+Pn4E=;
-        b=ed0uM3NYO8jbzFFuXyBO+SKP2pNjk6lfYHooUIN67ZOj23qa6blJcR/lJLtJ3tXHLd
-         n0sfQICmAhXSEJpIsH3XK1sOR+Yiwcyx8LFoL3z8YnIMbm9+z2RTC4vu1T2zaSOoXh1H
-         9m7p0NzmWjt1mpWiwzfUU9L1DUau07oUbNjPk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=dUlDmCaW4sVTjSy9jS28S6aOZ6PwGPD8pEJ6M/9fVlLPb2bosr2QPcxpvbFhctoDgl
-         GIuoFtGPH9kP8Kh+wm/dIQAo9nxL1HjdAakXVC4G/tVLAjHm7SXqVQFU9nR2Yvv+Kjd7
-         agqeQYpSr+joQq835dtOhHQW/QnOT7Rn4q8d8=
-Received: by 10.103.50.22 with SMTP id c22mr3474745muk.54.1259170815308; Wed, 
-	25 Nov 2009 09:40:15 -0800 (PST)
-In-Reply-To: <m38wdublbq.fsf@localhost.localdomain>
+	id S932077AbZKYRoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 12:44:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759397AbZKYRoH
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 12:44:07 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:65336 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759390AbZKYRnt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 12:43:49 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0KTO00HMVEL7XN60@VL-MH-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 25 Nov 2009 12:43:55 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <6b4a562b0911250831q332ac3b5m6ee38f59e7a6f391@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133656>
 
-Jakub Narebski wrote:
-> Take a look at "Resolving conflicts/dependencies between topic
-> branches early" blog post by Junio C Hamano (git maintainer) at
-> http://gitster.livejournal.com/27297.html
->
-> In short the solution is to create separate topic branch for a bugfix,
-> branching off earliest place where it would be relevant, then merge
-> this bugfix branch into all development branches you need
-> (e.g. maint-v3, maint-v4, maint-v5, master).
+On Wed, 25 Nov 2009, Mike Jarmy wrote:
 
-Thanks guys.  I think some cross between this and the cherry-picking
-idea would work for us most of the time, if we go with the workflow
-that I originally specified.  I like the branch-per-bugfix idea -- its
-taking some time for me to free my mind to the point where I grok how
-lightweight and flexible branching really is.  Just branch off from
-the earliest affected release, naming the branch after the bug
-('fix-frobulator--issue-1235').  When finished, merge/cherry-pick back
-into the various branches.
+> My question is this:  How do I manage a checkin for a bugfix that
+> affects, say, only branches v3, v4, and v5?
+> 
+> Suppose that I checkout the v3 branch, and fix the bug by editing
+> several different files.  (Lets assume for now that the files in
+> question have not diverged between any of the 3 branches, even though
+> tons of other files have changed).  How do I commit the bugfix into
+> all of v3, v4 and v5?  Clearly, merging the branches together would be
+> bad.  So I think what I should do is perform 3 different commits, but
+> I'm not quite sure how to juggle the git index (or stash or whatever)
+> to accomplish this.  This may be a really obvious question, but I'm a
+> confused git newbie.
 
-Thomas's idea of using a more sophisticated workflow has definitely
-got me thinking.  Back in the day, once we started working on a new
-release, say v6, then the other branches to an extent become
-mothballed except for bugfixes.  In that case, using a merge-base
-approach would make sense.  More and more though, we have started to
-build separate sub-projects on top of specific releases -- in other
-words, we are simultaneously making a new product on top of v4, while
-preparing to release v5, and getting ready to start work on v6 in
-earnest, all the while fixing bugs across mulitple releases going all
-the way back to v2.  Its getting very complicated :-).  And our
-current VCS is starting to become an active hindrance in helping us
-manage all this in a sane way.
+Besides what other people have already suggested, you might simply elect 
+to use 'git cherry-pick' on the v4 and v5 branches to copy the fix from 
+the v3 branch.
 
-What I'm going to do is set up a toy environment that mirrors what I
-hope our final repository will look like.  Then I'll play with it for
-a while and concoct corner-case scenarios and see how it holds up.
-Once I have a workflow that I like, I can demonstrate it to my
-colleagues in gitk, and we can think about how to make it better.
+> Also, even though I may need to do 3 commits, it would be nice if the
+> commits were related together in some way, since in a sense they
+> represent only one action (namely, fixing the bug).  Is there a way to
+> do that, so that its clear in gitk that it was really one unified
+> thing? 
 
-Thanks,
-Mike Jarmy
+You can use the -x argument with 'git cherry-pick'.  This won't create a 
+formal history graph but at least the commit log will record a reference 
+to the original fix.
+
+
+Nicolas
