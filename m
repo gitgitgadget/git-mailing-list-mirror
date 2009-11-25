@@ -1,85 +1,56 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: OS X and umlauts in file names
-Date: Wed, 25 Nov 2009 23:43:54 +0100
-Message-ID: <m21vjmkyxh.fsf@igel.home>
-References: <4B0ABA42.1060103@syntevo.com>
-	<alpine.LNX.2.00.0911231403100.14365@iabervon.org>
-	<4B0CEFCA.5020605@syntevo.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] tests: rename duplicate t1009
+Date: Wed, 25 Nov 2009 17:46:16 -0500
+Message-ID: <20091125224616.GA8586@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Thomas Singer <thomas.singer@syntevo.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 23:44:12 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 25 23:46:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDQam-00062F-RZ
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 23:44:09 +0100
+	id 1NDQd5-00074q-Pa
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 23:46:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759881AbZKYWnz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Nov 2009 17:43:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759878AbZKYWny
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 17:43:54 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:38351 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759875AbZKYWnx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 17:43:53 -0500
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id 68B9C1C15A2B;
-	Wed, 25 Nov 2009 23:43:58 +0100 (CET)
-Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
-	by mail.m-online.net (Postfix) with ESMTP id DB19B904F9;
-	Wed, 25 Nov 2009 23:43:57 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
-	with ESMTP id WzE5Egmh-z+u; Wed, 25 Nov 2009 23:43:56 +0100 (CET)
-Received: from igel.home (DSL01.83.171.177.175.ip-pool.NEFkom.net [83.171.177.175])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Wed, 25 Nov 2009 23:43:56 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 6FEADCA28C; Wed, 25 Nov 2009 23:43:56 +0100 (CET)
-X-Yow: I'm having a MID-WEEK CRISIS!
-In-Reply-To: <4B0CEFCA.5020605@syntevo.com> (Thomas Singer's message of "Wed,
-	25 Nov 2009 09:50:18 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S934891AbZKYWqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 17:46:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759871AbZKYWqJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 17:46:09 -0500
+Received: from peff.net ([208.65.91.99]:45531 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759781AbZKYWqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 17:46:08 -0500
+Received: (qmail 17064 invoked by uid 107); 25 Nov 2009 22:50:39 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 25 Nov 2009 17:50:39 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Nov 2009 17:46:16 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133692>
 
-Thomas Singer <thomas.singer@syntevo.com> writes:
+We should avoid duplicate test numbers, since things like
+GIT_SKIP_TESTS consider something like t1009.5 to be
+unambiguous.
 
-> I've did following:
->
->  toms-mac-mini:git-umlauts tom$ ls
->  =C3=9Cberl=C3=A4nge.txt
->  toms-mac-mini:git-umlauts tom$ git status
->  # On branch master
->  #
->  # Initial commit
->  #
->  # Changes to be committed:
->  #   (use "git rm --cached <file>..." to unstage)
->  #
->   #	new file:   "U\314\210berla\314\210nge.txt"
->  #
->  toms-mac-mini:git-umlauts tom$ git stage "U\314\210berla\314\210nge.=
-txt"
->  fatal: pathspec 'U\314\210berla\314\210nge.txt' did not match any fi=
-les
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This is on top of the nd/sparse topic.
 
-Try $'U\314\210berla\314\210nge.txt' instead.
-"U\314\210berla\314\210nge.txt" is the same as
-"U\\314\\210berla\\314\\210nge.txt" to the shell.
+As an aside, that diffstat is really unreadable. I'm not sure how to do
+better without dropping the rename information, though.
 
-Andreas.
+ ...ckout.sh => t1011-read-tree-sparse-checkout.sh} |    0
+ 1 files changed, 0 insertions(+), 0 deletions(-)
+ rename t/{t1009-read-tree-sparse-checkout.sh => t1011-read-tree-sparse-checkout.sh} (100%)
 
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+diff --git a/t/t1009-read-tree-sparse-checkout.sh b/t/t1011-read-tree-sparse-checkout.sh
+similarity index 100%
+rename from t/t1009-read-tree-sparse-checkout.sh
+rename to t/t1011-read-tree-sparse-checkout.sh
+-- 
+1.6.6.rc0.249.g9b4cf.dirty
