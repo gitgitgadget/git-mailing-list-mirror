@@ -1,108 +1,99 @@
-From: Mike Jarmy <mjarmy@gmail.com>
-Subject: Re: Commiting changes onto more than one branch
-Date: Wed, 25 Nov 2009 14:43:02 -0500
-Message-ID: <6b4a562b0911251143s63f09f7bwe4b67d6871d8a1b2@mail.gmail.com>
-References: <6b4a562b0911250831q332ac3b5m6ee38f59e7a6f391@mail.gmail.com>
-	 <76c5b8580911250838x361ae081n271fcee2d1234703@mail.gmail.com>
-	 <6b4a562b0911250847x59116687iba1d1640ca6c3887@mail.gmail.com>
-	 <7vaayazb2a.fsf@alter.siamese.dyndns.org>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: git-subtree: directory mismatch
+Date: Wed, 25 Nov 2009 14:48:13 -0500
+Message-ID: <32541b130911251148v70a5dc77k9936881d0b382ec2@mail.gmail.com>
+References: <20091124195353.GA16627@lonquimay.wrk.lsn.camptocamp.com> 
+	<32541b130911241348s21e21fb8n12edf374e6a3c309@mail.gmail.com> 
+	<20091125080812.6117@nanako3.lavabit.com> <32541b130911251028h6db240d5yd171fa4941ef14ba@mail.gmail.com> 
+	<7v7htexuxc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Marc Fournier <marc.fournier@camptocamp.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 20:43:10 2009
+X-From: git-owner@vger.kernel.org Wed Nov 25 20:48:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDNle-0007zv-9N
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 20:43:10 +0100
+	id 1NDNqy-00027K-Gb
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 20:48:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754795AbZKYTm6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Nov 2009 14:42:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753841AbZKYTm6
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 14:42:58 -0500
-Received: from fg-out-1718.google.com ([72.14.220.154]:13989 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753045AbZKYTm5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Nov 2009 14:42:57 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so162844fgg.1
-        for <git@vger.kernel.org>; Wed, 25 Nov 2009 11:43:02 -0800 (PST)
+	id S1759560AbZKYTs2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Nov 2009 14:48:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759493AbZKYTs1
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 14:48:27 -0500
+Received: from mail-yx0-f188.google.com ([209.85.210.188]:38897 "EHLO
+	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759427AbZKYTs1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Nov 2009 14:48:27 -0500
+Received: by yxe26 with SMTP id 26so55276yxe.4
+        for <git@vger.kernel.org>; Wed, 25 Nov 2009 11:48:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+         :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=POFBmfK/bM+LYVJk1mLILm78PBRdM7Nvz/6SQbESoSQ=;
-        b=v/88vuF85pI20omXR5rCqyit6Y2qSUN2A+XrUf9X/Cww5rhxMpezPVgL8Q7RVuWNrT
-         Xkaa8Yw3NSpz0Oi63BD2gw2qShmmDA7taavXHkonHkiqUCc/n/p4THC4PTDkWVlgdNT1
-         74g+FAJpO+py6sKw9gzZg71F+lylSs2zC+HSE=
+        bh=g03E+DWbVL/DnySdjuFlSTGgUuelt/D2bRNJBKCbbaA=;
+        b=kn0es1rdxNJKFs9q4n9DN87M32E956qUiPTQjeJrgl+Fq8wzwU3DgKPAAnvQw3J2Ca
+         zhdyR2Hm0NYMc17FLVAH/yFaDyVSmLwyQIVLywvdPiT0nRaYczbzCGXYYNUoBdvqrVOp
+         +aCoBxi7oiTTXFUWUWFWCjGH7bo3RDq3fhbQQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=SSzYVP34MdQpitWBIdKFapVD9ks826tIu2IkpzYXvN1JPJD+C7l90JOiO/F7nKyNOr
-         eI3eTDe97/oJEyBLa2o0WXiJKq+SXR4njVt1VA+Xrb734JTgz8toKk5sJW3Yhc+rYksP
-         sZXuSd99ytZIE3EyIJWiI0zG2QlcfmCDBX+rg=
-Received: by 10.103.122.22 with SMTP id z22mr3471238mum.123.1259178182752; 
-	Wed, 25 Nov 2009 11:43:02 -0800 (PST)
-In-Reply-To: <7vaayazb2a.fsf@alter.siamese.dyndns.org>
+        b=mJ41DR9qpMXUcA2jdY8VuNf2K83IAbVwdy7TYoPRDs2Wz53CgSusXc16p43MoaYuwj
+         /h1lXOXb6xVp5oDQGGUpFfww9lrpPB5326Z0sVAc1cI1/SqZsIh51EiFD7ePwghziVp2
+         oauV+G86tegL5kWhE5H/ulx7w8h4y3BzEcb48=
+Received: by 10.151.16.24 with SMTP id t24mr14332528ybi.151.1259178513214; 
+	Wed, 25 Nov 2009 11:48:33 -0800 (PST)
+In-Reply-To: <7v7htexuxc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133664>
 
-Junio C Hamano wrote:
-> I take it to mean that even though v[345] have diverged, the area tha=
-t the
-> particular change you have in mind has to touch haven't changed since=
- they
-> forked.
-
-Correct.  Sometimes, there might be unrelated changes to a given file
-or files, in which case conflict resolution will be done manually.
-But generally speaking, bugfixes will tend to go on quite cleanly.
-
-> Instead, you can fork such a topic from the latest common.
+On Wed, Nov 25, 2009 at 2:31 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Avery Pennarun <apenwarr@gmail.com> writes:
+>> I've read through the thread (I do remember skimming it awhile ago)
+>> but can't find patches for the syntax actually under discussion.
 >
-> =A0 =A0 =A0 =A0o--o--o--o--o--o--o--o v4
-> =A0 =A0 =A0 /
-> =A0 =A0--o--x--x--x--x--x--x--x v3
-> =A0 =A0 =A0 \
-> =A0 =A0 =A0 =A0Y---Y
-> =A0 =A0 =A0 =A0 =A0 =A0your change(s)
->
-> and merging this to v3 and v4 will have the desired effect.
->
-> =A0 =A0 =A0 =A0o--o--o--o--o--o--o--o---------M v4
-> =A0 =A0 =A0 / =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0/
-> =A0 =A0--o--x--x--x--x--x--x--x---M v3 =A0/
-> =A0 =A0 =A0 \ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0/ =A0 =A0 /
-> =A0 =A0 =A0 =A0Y---Y----------------.-----.
-> =A0 =A0 =A0 =A0 =A0 =A0your change(s)
->
-> The merges will incorporate this particular change alone without drag=
-ging
-> anything else. =A0When you merge it to v4, none of the unrelated 'x' =
-will be
-> merged into it.
+> I very much prefer gmane threading when following discussion over all=
+ the
+> other mail archives, but this shows one thing I really dislike about =
+it.
+[...]
+> Look at http://github.com/gitster/git/commits/jc/merge-theirs/
 
-That sounds a whole lot like what I need.
+I also tried simply searching for things like 'git "-xsubtree"' in
+google, with no luck.  But thanks for the link.
 
-Right now I'm thinking that the right approach is that once we have
-released v3, and started working on v4 heavily, we will probably not
-want to check any commits directly into v3.  Bugfixes will have their
-own branch.   If there is a whole new project or whatever being done
-on top of v3, it will have its own branch as well.
+> and found this series in there. =A0It applies to v1.6.0-rc0~245 (no, =
+I won't
+> be rebasing this myself---I don't have time for that while preparing =
+for
+> the pre-release feature freeze).
 
-So once v3 is in beta or whatever and we declare a code freeze, we
-could have a rule that all commits must be merge-commits coming from
-dedicated branches with descriptive, intelligible names.  For each
-dedicated branch, some thought will have to be given as to just where
-off of v3 to branch it from (not just carelessly off the latest tip).
-Meanwhile, new development will continue on v4, with lots of commits
-going right into the branch (or into v4 sub-branches with occasional
-merge-commits into v4).
+I did a test merge and it looks like a ton of conflicts, but they seem
+to be pretty understandable ones, at least.  I don't mind doing the
+rebase and resubmitting the patches, since it's sure less work than
+figuring out how to do it from scratch myself.  Some questions though:
+
+- What was the reason this never got merged?  What changes are needed
+to rectify that?
+
+- Considering the earlier discussion, do we want to leave out the
+actual -Xtheirs feature and just have -Xours and -Xsubtree?
+
+- If I rebase them and the changes turn out to be minimal, do they
+still need a signed-off-by Junio?  (He obviously owns part of the
+copyright and has previously signed off, but he also won't have signed
+off the rebased patches verbatim, so I'm confused.)
+
+Thanks,
+
+Avery
