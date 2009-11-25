@@ -1,83 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb.js: Harden setting blamed commit info in
- incremental blame
-Date: Wed, 25 Nov 2009 13:39:23 -0800
-Message-ID: <7vd436s2r8.fsf@alter.siamese.dyndns.org>
-References: <1258659887-5244-1-git-send-email-bebarino@gmail.com>
- <4B0CAC2E.1060105@gmail.com> <200911251536.08993.jnareb@gmail.com>
- <200911252155.59318.jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] grep: --full-tree
+Date: Wed, 25 Nov 2009 16:49:49 -0500
+Message-ID: <20091125214949.GA31473@coredump.intra.peff.net>
+References: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
+ <20091125203922.GA18487@coredump.intra.peff.net>
+ <7viqcytjic.fsf@alter.siamese.dyndns.org>
+ <20091125210034.GC18487@coredump.intra.peff.net>
+ <7vmy2as319.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 22:40:42 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 25 22:49:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDPbF-0003R4-27
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 22:40:33 +0100
+	id 1NDPkI-0007hc-1k
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 22:49:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934922AbZKYVjc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 16:39:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934918AbZKYVja
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 16:39:30 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59300 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934901AbZKYVj3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 16:39:29 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 15908A1BB8;
-	Wed, 25 Nov 2009 16:39:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=57cXPdEw8LHy98sU39mvaPXw/xU=; b=iFufUG
-	40FMJ7kGPav1ABiLs/PtjsupeuNyseTw7trKxIBfztw0DNxM7bOPYU207ucDDBjo
-	2YJ49sv1yLgfAIu6FLbvyDvJeSkvW1vLeSbcuc8x9DZw/V7Iut/1FNjZ+osTNjSP
-	htNZ93A4ZoOjsovZSF6McutP5ZSwNCRIV58Ec=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OOS3rvk1fnwT+pbW2KrVzrPoTloNt3mU
-	kZiMg+3HOB1dYaEpOZasFtJ8cQBrpT0TwNa11JTmf6dEke3i/tNb4+Ol3gInONDv
-	tcCWRPh+aofxn0ObitLZOlQoWKXuwJV2EnY8vrnIDJQO5Y1i7d9bPfFeDKmxOfZu
-	zCDlCX6vMp0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DA2D0A1BB4;
-	Wed, 25 Nov 2009 16:39:29 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9D5E6A1BB3; Wed, 25 Nov 2009
- 16:39:25 -0500 (EST)
-In-Reply-To: <200911252155.59318.jnareb@gmail.com> (Jakub Narebski's message
- of "Wed\, 25 Nov 2009 21\:55\:58 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 030F0118-DA0B-11DE-B85A-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S934727AbZKYVtm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 16:49:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933357AbZKYVtm
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 16:49:42 -0500
+Received: from peff.net ([208.65.91.99]:60823 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932983AbZKYVtl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 16:49:41 -0500
+Received: (qmail 16450 invoked by uid 107); 25 Nov 2009 21:54:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 25 Nov 2009 16:54:12 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Nov 2009 16:49:49 -0500
+Content-Disposition: inline
+In-Reply-To: <7vmy2as319.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133679>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Wed, Nov 25, 2009 at 01:33:22PM -0800, Junio C Hamano wrote:
 
-> It was 'Unspecified error.' shown in xhr watch.  Accessing xhr.status
-> causes an error.
+> We could redefine get_pathspec() to treat a pathspec that begins with a
+> slash to be anchored at the top, i.e.
+> 
+> 	$ git grep -e frotz /
+> 
+> would be a nicer way to spell
+> 
+> 	$ git grep --full-tree -e frotz
 
-As to the topic, it does not seem to break _existing_ features; if that is
-not the case, please let me know.
+I do like that idea (and I cannot see any obvious flaw in it, though I
+have only been think for a few minutes). I am not sure how useful it
+will be for other commands. Conceptually I might use it for "diff" and
+"status" (the new version that uses pathspecs sanely :) ), but those
+commands generally aren't a big deal. I haven't touched anything in the
+uninteresting subtree, so there is nothing to report.
 
-Otherwise I'm inclined to merge the entire series to 'master' by 1.6.6-rc1.
+Hmm. Actually, after having considered that, don't we actually allow
+absolute paths in diff to do out-of-tree diffs? I haven't looked at how
+that code interacts with get_pathspec.
 
-    6821dee gitweb.js: fix padLeftStr() and its usage
-    6aa2de5 gitweb.js: Harden setting blamed commit info in incremental blame
-    e42a05f gitweb.js: fix null object exception in initials calculation
-    63267de gitweb: Minify gitweb.js if JSMIN is defined
-    c4ccf61 gitweb: Create links leading to 'blame_incremental' using JavaScript
-    e206d62 gitweb: Colorize 'blame_incremental' view during processing
-    4af819d gitweb: Incremental blame (using JavaScript)
-    aa7dd05 gitweb: Add optional "time to generate page" info in footer
-    -aef3768 gitweb: Use light/dark for class names also in 'blame' view
+> > Certainly I think that would be an improvement. But again, it suffers
+> > from the "you must remember to do this" as above. I really want "git
+> > grep" to Do What I Mean.
+> 
+> And /this-is-absolute is one way to tell "grep" What You Mean.  I do not
+> claim it would be the _best_ way (I just concocted it up a few minutes ago
+> without giving it deep thought).  Do you have a better alternative in
+> mind?
 
-and treat it as a new feature with known breakages, to give it wider
-audience.  That way you will hopefully get more people who are willing to
-help debug/fix things for you.
+Well, what I meant is that I shouldn't have to tell it each time what I
+mean. I should be able to set up configuration so that it does what I
+want (well, ideally, it would just read my mind, but I am willing to
+concede that point). That is, I don't want to have to remember "git grep
+--full-tree" or "git grep /" every time, because I am not likely to
+notice when I forget. I want to set up "when I am in this directory,
+this is probably what I want".
+
+> My earlier "push is excusable" was primarily because "push" tends to be
+> the _final_ action in the chain of events, as opposed to "ls-files" and
+> "grep" output that are meant to be used by the user to _decide_ what to
+> do next depending on what they find, and as such, the latter has more
+> problem if they changed behaviour based on the configuration.
+
+I'm not sure I really understand. "git grep" is routinely producing
+wrong results for me _now_. I'd like to configure it so that it produces
+results more sensible to me. If I am the one who sets the configuration
+variable to something more sensible for my workflow, who am I hurting?
+
+-Peff
