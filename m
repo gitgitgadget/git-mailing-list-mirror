@@ -1,135 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Wed, 25 Nov 2009 13:33:22 -0800
-Message-ID: <7vmy2as319.fsf@alter.siamese.dyndns.org>
-References: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
- <20091125203922.GA18487@coredump.intra.peff.net>
- <7viqcytjic.fsf@alter.siamese.dyndns.org>
- <20091125210034.GC18487@coredump.intra.peff.net>
+Subject: Re: [PATCH] gitweb.js: Harden setting blamed commit info in
+ incremental blame
+Date: Wed, 25 Nov 2009 13:39:23 -0800
+Message-ID: <7vd436s2r8.fsf@alter.siamese.dyndns.org>
+References: <1258659887-5244-1-git-send-email-bebarino@gmail.com>
+ <4B0CAC2E.1060105@gmail.com> <200911251536.08993.jnareb@gmail.com>
+ <200911252155.59318.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 25 22:33:39 2009
+Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 25 22:40:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDPUX-0000ba-3X
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 22:33:37 +0100
+	id 1NDPbF-0003R4-27
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 22:40:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759118AbZKYVd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 16:33:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759051AbZKYVdZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 16:33:25 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63971 "EHLO
+	id S934922AbZKYVjc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 16:39:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934918AbZKYVja
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 16:39:30 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59300 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759013AbZKYVdZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 16:33:25 -0500
+	with ESMTP id S934901AbZKYVj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 16:39:29 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A850E827B5;
-	Wed, 25 Nov 2009 16:33:29 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 15908A1BB8;
+	Wed, 25 Nov 2009 16:39:33 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tFq7UzAFHKr/NmBxykKdlzXzsH0=; b=FeDinf
-	Li2qXrTM2DJmgIHRm/y2J+QbIqmAKxGA7f0KO6rmHxjzVdAZzNeAmEKDFfSmqyv7
-	x6tOBoSLnYmScoSORq+Aew+CHrqqMt17WUREpYJofYOwVYaYPrKabIY58bPZqOar
-	hCHZ02MPBYejESiXAz9MUNxKVU8wbBpJSDuy8=
+	:content-type; s=sasl; bh=57cXPdEw8LHy98sU39mvaPXw/xU=; b=iFufUG
+	40FMJ7kGPav1ABiLs/PtjsupeuNyseTw7trKxIBfztw0DNxM7bOPYU207ucDDBjo
+	2YJ49sv1yLgfAIu6FLbvyDvJeSkvW1vLeSbcuc8x9DZw/V7Iut/1FNjZ+osTNjSP
+	htNZ93A4ZoOjsovZSF6McutP5ZSwNCRIV58Ec=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ckQKGosSGWjqqdhKVCrmEqNOZgOVtGaa
-	GSl/Xhsm+inVqHHPHbiw68vQDHinKwnLpWgFKlWac6SWAPSdqplHLEyje/tK3GM1
-	0FDnqqaKebj0Ck2vIM8dYryJRwDK9oClsppcHqmcPjBYEOnfFVZhVEqa2I9zzba2
-	aAqBk1mnwUI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 74A15827B0;
-	Wed, 25 Nov 2009 16:33:27 -0500 (EST)
+	:content-type; q=dns; s=sasl; b=OOS3rvk1fnwT+pbW2KrVzrPoTloNt3mU
+	kZiMg+3HOB1dYaEpOZasFtJ8cQBrpT0TwNa11JTmf6dEke3i/tNb4+Ol3gInONDv
+	tcCWRPh+aofxn0ObitLZOlQoWKXuwJV2EnY8vrnIDJQO5Y1i7d9bPfFeDKmxOfZu
+	zCDlCX6vMp0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DA2D0A1BB4;
+	Wed, 25 Nov 2009 16:39:29 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 59D51827AE; Wed, 25 Nov
- 2009 16:33:24 -0500 (EST)
-In-Reply-To: <20091125210034.GC18487@coredump.intra.peff.net> (Jeff King's
- message of "Wed\, 25 Nov 2009 16\:00\:34 -0500")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9D5E6A1BB3; Wed, 25 Nov 2009
+ 16:39:25 -0500 (EST)
+In-Reply-To: <200911252155.59318.jnareb@gmail.com> (Jakub Narebski's message
+ of "Wed\, 25 Nov 2009 21\:55\:58 +0100")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2B0CD97A-DA0A-11DE-9FC4-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 030F0118-DA0B-11DE-B85A-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133678>
 
-Jeff King <peff@peff.net> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> On Wed, Nov 25, 2009 at 12:52:11PM -0800, Junio C Hamano wrote:
->
->> So I think the posted patch alone without changing anything else would be
->> the approach to give the most benefit with the least impact to existing
->> users, at least for now.
->
-> Yes, I meant to say in my original message but forgot to: I think
-> --full-tree is an important first step, no matter what happens next. It
-> gives people a way to do what they want without typing the right number
-> of ".."s, and it opens up --no-full-tree if the default changes later.
->
-> But I do worry about it being a command-line option. You are asking the
-> user to remember to type --full-tree every time.
+> It was 'Unspecified error.' shown in xhr watch.  Accessing xhr.status
+> causes an error.
 
-We could redefine get_pathspec() to treat a pathspec that begins with a
-slash to be anchored at the top, i.e.
+As to the topic, it does not seem to break _existing_ features; if that is
+not the case, please let me know.
 
-	$ git grep -e frotz /
+Otherwise I'm inclined to merge the entire series to 'master' by 1.6.6-rc1.
 
-would be a nicer way to spell
+    6821dee gitweb.js: fix padLeftStr() and its usage
+    6aa2de5 gitweb.js: Harden setting blamed commit info in incremental blame
+    e42a05f gitweb.js: fix null object exception in initials calculation
+    63267de gitweb: Minify gitweb.js if JSMIN is defined
+    c4ccf61 gitweb: Create links leading to 'blame_incremental' using JavaScript
+    e206d62 gitweb: Colorize 'blame_incremental' view during processing
+    4af819d gitweb: Incremental blame (using JavaScript)
+    aa7dd05 gitweb: Add optional "time to generate page" info in footer
+    -aef3768 gitweb: Use light/dark for class names also in 'blame' view
 
-	$ git grep --full-tree -e frotz
-
-and allows you more than what you can do with --full-tree, e.g.
-
-	$ cd linux/subtree/some/very/deep/subdir/you/do/not/remember/exactly
-	$ git grep -e frotz /linux/subtree
-
-If we do that, it will not be limited to "grep" but would bring uniformity
-to the command set [*1*].  Of course, you can keep doing
-
-	$ cd t
-	$ git grep -e frotz .
-
-to look inside only the current directory, and once this new convention is
-accepted and widely used, it would become possible to flip the default
-without causing too much pain (yes, I am agreeing with you that this is an
-important first step).
-
-Once there is a convenient and uniform way to ask for either behaviour, no
-matter what the default is, the scripts that want specific behaviour can
-be updated to choose whichever they want, given enough time (say, 2.0.0).
-
-> Certainly I think that would be an improvement. But again, it suffers
-> from the "you must remember to do this" as above. I really want "git
-> grep" to Do What I Mean.
-
-And /this-is-absolute is one way to tell "grep" What You Mean.  I do not
-claim it would be the _best_ way (I just concocted it up a few minutes ago
-without giving it deep thought).  Do you have a better alternative in
-mind?
-
-> I have to wonder: is "git grep" really plumbing or porcelain? It is
-> really just a wrapper for
->
->   git ls-files | xargs grep
->
-> Do people actually use it in their scripts? Should they be?
-
-The issue is not necessarily "scripts", but "what people use the output
-for".
-
-My earlier "push is excusable" was primarily because "push" tends to be
-the _final_ action in the chain of events, as opposed to "ls-files" and
-"grep" output that are meant to be used by the user to _decide_ what to
-do next depending on what they find, and as such, the latter has more
-problem if they changed behaviour based on the configuration.
-
-
-[Footnote]
-
-*1* It won't be only get_pathspec(), but we would also need to teach
-verify_filename() and verify_non_filename() about the new convention.
+and treat it as a new feature with known breakages, to give it wider
+audience.  That way you will hopefully get more people who are willing to
+help debug/fix things for you.
