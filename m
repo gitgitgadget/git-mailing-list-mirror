@@ -1,73 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] grep: --full-tree
-Date: Thu, 26 Nov 2009 00:34:49 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0911260032410.4985@pacific.mpi-cbg.de>
-References: <7vk4xggv27.fsf@alter.siamese.dyndns.org> <20091125203922.GA18487@coredump.intra.peff.net> <7viqcytjic.fsf@alter.siamese.dyndns.org> <20091125210034.GC18487@coredump.intra.peff.net> <7vmy2as319.fsf@alter.siamese.dyndns.org>
+Date: Wed, 25 Nov 2009 15:41:00 -0800
+Message-ID: <7vvdgyp3zn.fsf@alter.siamese.dyndns.org>
+References: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
+ <20091125203922.GA18487@coredump.intra.peff.net>
+ <7viqcytjic.fsf@alter.siamese.dyndns.org>
+ <20091125210034.GC18487@coredump.intra.peff.net>
+ <7vmy2as319.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.0911260032410.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 26 00:30:54 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Nov 26 00:41:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDRK1-0008U7-FQ
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 00:30:53 +0100
+	id 1NDRU7-0003uJ-9c
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 00:41:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935123AbZKYXam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 18:30:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934909AbZKYXam
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 18:30:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54111 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934886AbZKYXal (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 18:30:41 -0500
-Received: (qmail invoked by alias); 25 Nov 2009 23:30:46 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp038) with SMTP; 26 Nov 2009 00:30:46 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/tt9NCvYDtp3FGngGNjCcMNV43oyJucL5GaSIhMU
-	rZ76RJaIAaE1/A
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vmy2as319.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S964882AbZKYXlG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 18:41:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935209AbZKYXlG
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 18:41:06 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42320 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935207AbZKYXlF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 18:41:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EBE36822CE;
+	Wed, 25 Nov 2009 18:41:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CbgYx9VMVQzGVeavL+c2Vyj19Wg=; b=IcRigg
+	NAIpBfPux/fCqWiZBX+PUoy2NyLb2xWOGK8pbqGgFXEq+jBiYBxk3SRowrBzrCc1
+	SP0smWk5pCaG3gEk5LFo7cpoIqTzJ6vXtr0mWX/NHqMKnjBYLK/vDDRXGlZGE+u/
+	x1rCvbD5jyHWm9GifZhD8bCT8prldr/x+PF7I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=d9Ca2ulNHeNcLE3kwY3lCmqONZLHIqmp
+	bmT1+POb3BNwO7aOsRvNbfVZUgcVg7UbdhDvzJyE4A92Nck5aVliOm27occcFb2I
+	mfS5dIXry7BKOzChvwmGsbpVW0HS3o4/76ANNocTSjre/cX0w4ytP+fYVha9dGcw
+	/IZ/joVjOg0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BEE97822CB;
+	Wed, 25 Nov 2009 18:41:06 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EBEAC822C8; Wed, 25 Nov
+ 2009 18:41:01 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.0911260032410.4985@pacific.mpi-cbg.de>
+ (Johannes Schindelin's message of "Thu\, 26 Nov 2009 00\:34\:49 +0100
+ \(CET\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0059D6A8-DA1C-11DE-8466-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133704>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Wed, 25 Nov 2009, Junio C Hamano wrote:
+> This would break spectacularly in MSys.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Wed, Nov 25, 2009 at 12:52:11PM -0800, Junio C Hamano wrote:
-> >
-> >> So I think the posted patch alone without changing anything else would be
-> >> the approach to give the most benefit with the least impact to existing
-> >> users, at least for now.
-> >
-> > Yes, I meant to say in my original message but forgot to: I think
-> > --full-tree is an important first step, no matter what happens next. It
-> > gives people a way to do what they want without typing the right number
-> > of ".."s, and it opens up --no-full-tree if the default changes later.
-> >
-> > But I do worry about it being a command-line option. You are asking the
-> > user to remember to type --full-tree every time.
-> 
-> We could redefine get_pathspec() to treat a pathspec that begins with a
-> slash to be anchored at the top,
-
-This would break spectacularly in MSys.  And this is just one reason not 
-to do this "magic".
-
-Clearly, a command line option is the only unambiguous way to do what you 
-want to do (and not changing the default all of a sudden).
-
-Ciao,
-Dscho
+How?  If that is the case wouldn't --full-tree break Msys the same way?
