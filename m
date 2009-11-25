@@ -1,86 +1,93 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Wed, 25 Nov 2009 15:56:49 +0100
-Message-ID: <fabb9a1e0911250656k31229c42jd79fb94c1a619e59@mail.gmail.com>
-References: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
+From: Mike Jarmy <mjarmy@gmail.com>
+Subject: Commiting changes onto more than one branch
+Date: Wed, 25 Nov 2009 11:31:59 -0500
+Message-ID: <6b4a562b0911250831q332ac3b5m6ee38f59e7a6f391@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 15:57:20 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 25 17:32:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDJIz-000614-Hq
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 15:57:17 +0100
+	id 1NDKmm-00087U-O9
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 17:32:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753101AbZKYO5F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Nov 2009 09:57:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752974AbZKYO5E
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 09:57:04 -0500
-Received: from mail-vw0-f192.google.com ([209.85.212.192]:47989 "EHLO
-	mail-vw0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751531AbZKYO5D convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Nov 2009 09:57:03 -0500
-Received: by vws30 with SMTP id 30so2143293vws.33
-        for <git@vger.kernel.org>; Wed, 25 Nov 2009 06:57:09 -0800 (PST)
+	id S1758824AbZKYQbz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 11:31:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758468AbZKYQbz
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 11:31:55 -0500
+Received: from gv-out-0910.google.com ([216.239.58.186]:55828 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758099AbZKYQby (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 11:31:54 -0500
+Received: by gv-out-0910.google.com with SMTP id r4so751103gve.37
+        for <git@vger.kernel.org>; Wed, 25 Nov 2009 08:32:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=89pKD1Se2F3YWfw0PeKYEMy2Sy/4TMeCYZZC32N5B5A=;
-        b=mRC/J317zuTgKtFXDUDjrShXb0bugkKBQ1BZcxkWvI+gsi6fQQdn6cAm+jpva4wU7G
-         Yw0OV9G+pbtg0t6G8D2gLnQqgw0YEfTNWStGIWtcdxuSt38pyRYbgDDcpwSIW1zvcXYx
-         cPpdDejU3hya5TgE5snzkxy/5V2bGn9c0c0wk=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=Gv0R6dGI5in+4im5YUBWI7prwlB4lUT/S1SFysLzy3Q=;
+        b=cw0D4Ax1UqUkmlGWTHHd7LSZLy3dPq0IqAXomFw3IP7BUci68cuUwRLatvUvFgVDpk
+         sJTgXhOIyRZUxHMAVMqy8ffOHN/Fq4aQ0nFGdWlLac8Ts5o4QjPv/RAaQwBC+d17bdQJ
+         aAUnufCfLwGE9cMnA7kH9Jx6VSLFoTZTwvZR8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=DcjHHhatQ/ZC/8PE46IBGF5Eh+wjWlCl89GLdzIDaS1cBDaj6DepshqH0w/vqBiEaW
-         mDpsvbv8WYmRfDqDVyFk9/UhxyR9LJdSkigdzALLUXvSSWVYIpTXypGHSQb0qQMerjpq
-         MAPUM3pb+MGArUfkWGzDjny0LWG0oojJRvjK8=
-Received: by 10.220.121.144 with SMTP id h16mr9273216vcr.53.1259161029124; 
-	Wed, 25 Nov 2009 06:57:09 -0800 (PST)
-In-Reply-To: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=mbNGCeeWnYUM9xV9asN5+r+DBmcfdS4kT/FmG6ma+pJdntvGPkLOZlfSK7GGwE+RMT
+         KqXa9LpIiC30OlgSFEg/hZUTTp8a93VQ+OawgiyADBJ+lV9nyqVickzNhpQX68H58Dus
+         qSUFEVez0sRaBa3DKKHgTarfFZWPVGc9Rr4DI=
+Received: by 10.103.125.19 with SMTP id c19mr3406052mun.59.1259166719983; Wed, 
+	25 Nov 2009 08:31:59 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133648>
 
-Heya,
+Hi,
 
-On Tue, Nov 24, 2009 at 09:56, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> =A0 I am not sure if there can be a sane way to flip the default with=
-out
-> =A0 hurting existing scripts and users. =A0Backward compatibility alw=
-ays is
-> =A0 a pain.
+At my day job, I'm doing the groundwork for recommending that we
+switch to a DVCS from a proprietary centralized VCS.  I find git's
+branching ability very compelling, and I think we would use it
+extensively.  I work on a very large project (many thousands of files)
+that has been around for many years, and has had several different
+releases.  Right now, each release has its own top level directory,
+but I'd like to change that so we use branches instead, out of one
+great big git repository.  My plan is to set up the repository such
+that the initial state at switchover will have a branch for the
+current state of each of our releases.  Lets say that the branches for
+each release are called v1, v2, etc.
 
-I regularly rely on this behavior in my usage of git grep. For
-example, the Melange project has this layout:
--- app
--- app/soc
--- app/django
--- app/... etc
--- scripts
--- tests
--- thirdparty
+My question is this:  How do I manage a checkin for a bugfix that
+affects, say, only branches v3, v4, and v5?
 
-I almost always want only results from "app/soc", so when I run git
-grep I do so from within "app/soc" to make sure I don't get false
-positives from the many external sources we have.
+Suppose that I checkout the v3 branch, and fix the bug by editing
+several different files.  (Lets assume for now that the files in
+question have not diverged between any of the 3 branches, even though
+tons of other files have changed).  How do I commit the bugfix into
+all of v3, v4 and v5?  Clearly, merging the branches together would be
+bad.  So I think what I should do is perform 3 different commits, but
+I'm not quite sure how to juggle the git index (or stash or whatever)
+to accomplish this.  This may be a really obvious question, but I'm a
+confused git newbie.
 
-Just chiming in for the "want to keep the current behavior" camp :).
+Also, even though I may need to do 3 commits, it would be nice if the
+commits were related together in some way, since in a sense they
+represent only one action (namely, fixing the bug).  Is there a way to
+do that, so that its clear in gitk that it was really one unified
+thing?  The very worst thing about our current VCS is that it has no
+concept of a 'commit', only individual file histories.  Git would fix
+that for us, but it would be nirvana if we could group commits for a
+given bugfix across branches somehow, while not merging the branches
+together.
 
-PS: I don't mind having to set a config variable to keep the current
-behavior though.
+One last question -- lets make the problem slightly more complicated
+by specify that some of the edited files changed between, say, v4 and
+v5.  I know how to handle a simple merge conflict in git, but is there
+anything different about my multi-branched, grouped-together case
+here?  The answer to this question may be obvious once I understand
+how to do the simpler, unconflicting checkin.
 
---=20
-Cheers,
-
-Sverre Rabbelier
+Thanks,
+Mike Jarmy
