@@ -1,83 +1,116 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Wed, 25 Nov 2009 15:52:32 -0500
-Message-ID: <20091125205232.GB18487@coredump.intra.peff.net>
-References: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
- <fabb9a1e0911250656k31229c42jd79fb94c1a619e59@mail.gmail.com>
- <7vr5rmwgbn.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb.js: Harden setting blamed commit info in incremental blame
+Date: Wed, 25 Nov 2009 21:55:58 +0100
+Message-ID: <200911252155.59318.jnareb@gmail.com>
+References: <1258659887-5244-1-git-send-email-bebarino@gmail.com> <4B0CAC2E.1060105@gmail.com> <200911251536.08993.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 21:52:45 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 25 21:56:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDOqr-0006OT-IC
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 21:52:37 +0100
+	id 1NDOuQ-0008H0-8k
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 21:56:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935042AbZKYUwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 15:52:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935040AbZKYUwY
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 15:52:24 -0500
-Received: from peff.net ([208.65.91.99]:45665 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935039AbZKYUwY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 15:52:24 -0500
-Received: (qmail 16217 invoked by uid 107); 25 Nov 2009 20:56:55 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 25 Nov 2009 15:56:55 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Nov 2009 15:52:32 -0500
+	id S935049AbZKYU4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 15:56:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935046AbZKYU4F
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 15:56:05 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:57119 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935039AbZKYU4D (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 15:56:03 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so189325fgg.1
+        for <git@vger.kernel.org>; Wed, 25 Nov 2009 12:56:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=iv4Qqv2vG6mAzCwENUCrqKYxHKE0sMat7ccYJJ2dqkg=;
+        b=svCmvHSdcXLsxKzDOAZEPnJFr7CI5jCgPOTdhDaWKensHMH95xmVDAZc4MKeBcd23M
+         bPZZTt5UW1o9ZBLRcLGqBgCT3jhMvRHeCamm3uCCSxeyCoaFFIDp7xi7j7q6XaVord+i
+         lFKlCVtwskffTvkkF/XfviZU/D/px3hKVv8qE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=qMK62eL/5Err1XZe2SJMJ7Loa0M3YKknKhMg36JTQm9y8YQlPlNOjS14zA4dBO6/Y/
+         Ki88c04wVV7J0vd+QVPyDe7cN2HN5H3pdlxCiqZUHBi+A9pTTDi1grtJNnDjVjpYzftR
+         UZW+ydA9aULTEXAs3NnfsroNAA/djzMRC/XYg=
+Received: by 10.86.248.36 with SMTP id v36mr1677632fgh.37.1259182568389;
+        Wed, 25 Nov 2009 12:56:08 -0800 (PST)
+Received: from ?192.168.1.13? (abvf67.neoplus.adsl.tpnet.pl [83.8.203.67])
+        by mx.google.com with ESMTPS id d8sm286077fga.13.2009.11.25.12.56.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 25 Nov 2009 12:56:05 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200911251536.08993.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vr5rmwgbn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133673>
 
-On Wed, Nov 25, 2009 at 11:32:44AM -0800, Junio C Hamano wrote:
+On Wed, 25 Nov 2009, Jakub Narebski wrote:
+> On Wed, 25 Nov 2009 05:01, Stephen Boyd wrote:
+> > Jakub Narebski wrote:
+> > >
+> > > Debugging this is serious PITA.  After fix below it appears that this bug
+> > > is some intermittent bug, depending on XMLHttpRequest timing.  It more
+> > > often than not (at least when I tried to debug it using build-in IE8
+> > > debugger) works correctly for the folowing files: README, GIT-VERSION-GEN,
+> > > revision.c (once even it did fail when first running for given file, and
+> > > then running correctly when reloading from debugger; fun it is not).
+> > >
+> > > It does consistently fail for gitweb/gitweb.perl... but when I tried
+> > > to debug it IE8 would hang up when trying to use debugger (with around
+> > > 600MB available RAM).  Perhaps somebody else would have more luck...
+> > 
+> > Interesting. I don't have time to look into this until early December, 
+> > but if it's still around then I'll take a look. I wonder if IE6 or IE7 
+> > works (I don't think everyone is on version 8 yet).
+> 
+> Well, the one time I was able to run debugger (F12, select 'Script', select
+> 'gitweb.js') with error occurring
 
-> But if a command like "grep" that "does one small thing and do it well"
-> changes its behaviour drastically depending on a config variable or an
-> environment variable, it won't be a command that you can rely upon any
-> more in your scripts and hooks.  It's the same insanity as GREP_OPTIONS
-> environment variable.
+The error was "Unspecified error", char:2 in the mentioned line
 
-I know this is the attitude we have taken in the past, and I am worried
-it is part of what hurts the usability of git. Just consider for a
-moment: git grows some feature with a default behavior X. Time passes.
-Some people like behavior Y instead. How can we help the people who like
-Y?
+> and without IE hanging (for README file) it did show an error for the
+> following line: 
+> 
+>   if (xhr.readyState === 3 && xhr.status !== 200) {
+> 
+> When I checked 'xhr' object, it has "Unknown error" as contents of 
+> xhr.statusText field and as contents of xhr.status (sic!), which should
+> be a number: HTTP status code.
 
-  1. Declare Y better than X, and default to it. This hurts people who
-     like X. It also hurts scripts built around X.
+It was 'Unspecified error.' shown in xhr watch.  Accessing xhr.status
+causes an error.
 
-  2. Add a config option to switch the behavior to Y. This hurts people
-     or scripts unexpectedly using somebody's configuration with Y.
+This might be cause by the fact that xhr (XMLHttpRequest object, or as IE8
+shows it in JScript debugger DispHTMLXMLHttpRequest object) is not fully
+initialized, or something; gitweb.js calls handleResponse() also from
+a timer, to work around the fact that some web browsers onreadystatechange
+handler is called only once for each state, and not as soon as new data
+is available from server.
 
-  3. Add a --Y command line option. Now the Y people have to remember to
-     use that option. Every single time they invoke the command.
+Longer term solution would be to use onprogress handler if it is available;
+if it is available we don't need trick with calling handleResponse from
+timer, as XMLHttpRequest 2.0 proposed specification ensures calling callback
+as soon as new data is available.
 
-  4. Tell them to alias "git foo-y" to "git foo --Y". IMHO, this is
-     completely unscalable. They can't just call it "foo", so they have
-     to remember to invoke "foo-y" each time. And when they forget,
-     instead of getting an error, they get the X behavior. Furthermore,
-     as time goes on, they basically develop a vocabulary of git
-     commands that is totally unlike anybody else's, making their
-     scripts and git knowledge unportable to other people's setups (sort
-     of like in (2) above).
+Short term solution would be to wrap access to xhr.status in try ... catch
+block for IE8... although I am a bit reluctant to implement this workaround
+bugs in IE8.
 
-So as a Y user, what is the impression of git that I am left with? It
-doesn't do what I want unless I remember an option every time, or create
-an arcane pseudo-porcelain interface through my set of aliases. Patches
-to fix the situation are blocked by compatibility issues. Y users remain
-frustrated indefinitely.
-
-I know that (1) and (2) have their problems. But I think by not giving a
-little on those compatibility issues, we end up with an equally bad or
-worse outcome. In other words, I think in this case that (2) may be the
-lesser of many evils.
-
--Peff
+-- 
+Jakub Narebski
+Poland
