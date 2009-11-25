@@ -1,85 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Wed, 25 Nov 2009 11:32:44 -0800
-Message-ID: <7vr5rmwgbn.fsf@alter.siamese.dyndns.org>
-References: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
- <fabb9a1e0911250656k31229c42jd79fb94c1a619e59@mail.gmail.com>
+From: Mike Jarmy <mjarmy@gmail.com>
+Subject: Re: Commiting changes onto more than one branch
+Date: Wed, 25 Nov 2009 14:43:02 -0500
+Message-ID: <6b4a562b0911251143s63f09f7bwe4b67d6871d8a1b2@mail.gmail.com>
+References: <6b4a562b0911250831q332ac3b5m6ee38f59e7a6f391@mail.gmail.com>
+	 <76c5b8580911250838x361ae081n271fcee2d1234703@mail.gmail.com>
+	 <6b4a562b0911250847x59116687iba1d1640ca6c3887@mail.gmail.com>
+	 <7vaayazb2a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 20:33:13 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 25 20:43:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDNbx-0003Tm-Vc
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 20:33:10 +0100
+	id 1NDNle-0007zv-9N
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 20:43:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759586AbZKYTcq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 14:32:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759583AbZKYTcp
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 14:32:45 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55178 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759577AbZKYTco (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 14:32:44 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 536EEA1142;
-	Wed, 25 Nov 2009 14:32:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=Ztuxs9zQ7QlJYSRrfDTogK0+Jxo=; b=BsVZq9JmDMBGI15yiXF2YrL
-	LnOoFrv9pAJrVPukVoHYozy+bS83fY6GCsfneMTf7S1Kq8jIW0D8jh4TzWPXphjZ
-	OW9LhYrT+bBPlAMh2H7Ky4idZEOg+VLbNTAUVYCiiyphVYtb9ywFbAtM3e/puPp5
-	l7aGBJtqNv4A1TIkkHJU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=e6d9SdgyQktJXEzEoMY0IDYhOWkku1fMw6917v6WSSxsihIo7
-	pcnUL5vsa//tE2A9GJkp9I5l4fXLNWe5vOauBRVeQRd9ahEKhBKSq/7wVCffgBrx
-	1SGgJprQXEPRZwSWlUZW9R0yEZKGyXhivtrtteST3xTgXT82CvfOTNf3VA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2FB53A1141;
-	Wed, 25 Nov 2009 14:32:49 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2C998A113D; Wed, 25 Nov 2009
- 14:32:45 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 50B0AD3E-D9F9-11DE-A77D-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1754795AbZKYTm6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Nov 2009 14:42:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753841AbZKYTm6
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 14:42:58 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:13989 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753045AbZKYTm5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Nov 2009 14:42:57 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so162844fgg.1
+        for <git@vger.kernel.org>; Wed, 25 Nov 2009 11:43:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=POFBmfK/bM+LYVJk1mLILm78PBRdM7Nvz/6SQbESoSQ=;
+        b=v/88vuF85pI20omXR5rCqyit6Y2qSUN2A+XrUf9X/Cww5rhxMpezPVgL8Q7RVuWNrT
+         Xkaa8Yw3NSpz0Oi63BD2gw2qShmmDA7taavXHkonHkiqUCc/n/p4THC4PTDkWVlgdNT1
+         74g+FAJpO+py6sKw9gzZg71F+lylSs2zC+HSE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SSzYVP34MdQpitWBIdKFapVD9ks826tIu2IkpzYXvN1JPJD+C7l90JOiO/F7nKyNOr
+         eI3eTDe97/oJEyBLa2o0WXiJKq+SXR4njVt1VA+Xrb734JTgz8toKk5sJW3Yhc+rYksP
+         sZXuSd99ytZIE3EyIJWiI0zG2QlcfmCDBX+rg=
+Received: by 10.103.122.22 with SMTP id z22mr3471238mum.123.1259178182752; 
+	Wed, 25 Nov 2009 11:43:02 -0800 (PST)
+In-Reply-To: <7vaayazb2a.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133663>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Junio C Hamano wrote:
+> I take it to mean that even though v[345] have diverged, the area tha=
+t the
+> particular change you have in mind has to touch haven't changed since=
+ they
+> forked.
 
-> I almost always want only results from "app/soc", so when I run git
-> grep I do so from within "app/soc" to make sure I don't get false
-> positives from the many external sources we have.
+Correct.  Sometimes, there might be unrelated changes to a given file
+or files, in which case conflict resolution will be done manually.
+But generally speaking, bugfixes will tend to go on quite cleanly.
 
-The standard answer given by others has been "you can always say '.' at
-the end; having to remember/count number of ../ necessary is much much
-more inconvenient".
+> Instead, you can fork such a topic from the latest common.
+>
+> =A0 =A0 =A0 =A0o--o--o--o--o--o--o--o v4
+> =A0 =A0 =A0 /
+> =A0 =A0--o--x--x--x--x--x--x--x v3
+> =A0 =A0 =A0 \
+> =A0 =A0 =A0 =A0Y---Y
+> =A0 =A0 =A0 =A0 =A0 =A0your change(s)
+>
+> and merging this to v3 and v4 will have the desired effect.
+>
+> =A0 =A0 =A0 =A0o--o--o--o--o--o--o--o---------M v4
+> =A0 =A0 =A0 / =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0/
+> =A0 =A0--o--x--x--x--x--x--x--x---M v3 =A0/
+> =A0 =A0 =A0 \ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0/ =A0 =A0 /
+> =A0 =A0 =A0 =A0Y---Y----------------.-----.
+> =A0 =A0 =A0 =A0 =A0 =A0your change(s)
+>
+> The merges will incorporate this particular change alone without drag=
+ging
+> anything else. =A0When you merge it to v4, none of the unrelated 'x' =
+will be
+> merged into it.
 
-> PS: I don't mind having to set a config variable to keep the current
-> behavior though.
+That sounds a whole lot like what I need.
 
-I've thought about it for five seconds before sending my patch, but
-discarded it, because I do not see it as a good transition plan.
+Right now I'm thinking that the right approach is that once we have
+released v3, and started working on v4 heavily, we will probably not
+want to check any commits directly into v3.  Bugfixes will have their
+own branch.   If there is a whole new project or whatever being done
+on top of v3, it will have its own branch as well.
 
-If it were something like "git-push", that is a purely Porcelain for
-causing _effect_ to outside world, the customizable behaviour of the
-command depending on which repository it is run is excusable and may even
-be beneficial.
-
-But if a command like "grep" that "does one small thing and do it well"
-changes its behaviour drastically depending on a config variable or an
-environment variable, it won't be a command that you can rely upon any
-more in your scripts and hooks.  It's the same insanity as GREP_OPTIONS
-environment variable.
-
-So this change, if we were to do it, unfortunately has to be "we do it
-once and for everybody" a flag day event, I think.  That is what I am not
-enthused about this patch.
+So once v3 is in beta or whatever and we declare a code freeze, we
+could have a rule that all commits must be merge-commits coming from
+dedicated branches with descriptive, intelligible names.  For each
+dedicated branch, some thought will have to be given as to just where
+off of v3 to branch it from (not just carelessly off the latest tip).
+Meanwhile, new development will continue on v4, with lots of commits
+going right into the branch (or into v4 sub-branches with occasional
+merge-commits into v4).
