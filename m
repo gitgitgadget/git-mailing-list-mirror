@@ -1,92 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Wed, 25 Nov 2009 16:49:49 -0500
-Message-ID: <20091125214949.GA31473@coredump.intra.peff.net>
-References: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
- <20091125203922.GA18487@coredump.intra.peff.net>
- <7viqcytjic.fsf@alter.siamese.dyndns.org>
- <20091125210034.GC18487@coredump.intra.peff.net>
- <7vmy2as319.fsf@alter.siamese.dyndns.org>
+From: "Stephan T." <stman937-lingit@yahoo.com>
+Subject: Please help with GIT install problem.
+Date: Wed, 25 Nov 2009 14:07:54 -0800 (PST)
+Message-ID: <377205.65475.qm@web30806.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 22:49:57 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 25 23:08:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDPkI-0007hc-1k
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 22:49:54 +0100
+	id 1NDQ1n-00072Z-Uh
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 23:08:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934727AbZKYVtm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 16:49:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933357AbZKYVtm
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 16:49:42 -0500
-Received: from peff.net ([208.65.91.99]:60823 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932983AbZKYVtl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 16:49:41 -0500
-Received: (qmail 16450 invoked by uid 107); 25 Nov 2009 21:54:12 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 25 Nov 2009 16:54:12 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Nov 2009 16:49:49 -0500
-Content-Disposition: inline
-In-Reply-To: <7vmy2as319.fsf@alter.siamese.dyndns.org>
+	id S1758957AbZKYWHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 17:07:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758920AbZKYWHs
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 17:07:48 -0500
+Received: from web30806.mail.mud.yahoo.com ([68.142.200.149]:22601 "HELO
+	web30806.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1758905AbZKYWHs (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Nov 2009 17:07:48 -0500
+Received: (qmail 65919 invoked by uid 60001); 25 Nov 2009 22:07:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1259186874; bh=d6qhH/q86qksifbUINka6Y7xaTVTIh78v+VzBBEhq9A=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type; b=Icl+HvRj27f3liII9tZhvzUbwAAoXuHRzZ+xLPkGufZLHoNq4rMxHXKZ/zZKRq0EGVqonEM7XuXAULMaZwohDqbOXIyLtDRcoZqB1chqiE7gp/2LHiqR0WhBtCFAaS97mpv+gmPkvWG+fCWdW3m6gBsr8XpBupH0Plj7QFlmiTI=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type;
+  b=B+j7oezsn7gfOBpuGMaVrqEu+EUXo5tuf8Dd9bW/e3w0epAahApFUscCxM0Rd75pMMwaQhCmG7MUAWj5cZ/5FJgqDCStDigZr1CaB8aJsB8+0n7vINjVNUj9pq8AIGn9trj7yhsR3jzolB7QTn53U+6DkltgrQLy7Goi2a+N8CQ=;
+X-YMail-OSG: 9QBHhngVM1mMtoSv9UQcMlr7PDkqDNeSnDsnXp3ShM256wND4r57ml4NS54lmCkcc6m8S3i8P8aK8KW1Hq2g4kAk1qs8k0Pq5szXL8fSr7kEpYZWeMFd.JGotM0dIx1c_.lnbEK09RU6zX9hcYtB3HmjGi2d9bqwADdsGaEq6PvjT0fZerJAMKpQfd2j_nWGMnCLG6hi5gqUfzilPmX9B3BScsp68InvvjHjXgVrvN73ZHAV5DjkQtxOcHC2rfW4LMpm7IpLOWjD8UAO0vxXPER4SDiOdvWpH8UXVL58wsMGOmJcxuPEzt_dWg--
+Received: from [209.172.102.66] by web30806.mail.mud.yahoo.com via HTTP; Wed, 25 Nov 2009 14:07:54 PST
+X-Mailer: YahooMailRC/211.6 YahooMailWebService/0.8.100.260964
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133680>
 
-On Wed, Nov 25, 2009 at 01:33:22PM -0800, Junio C Hamano wrote:
+Hello there,
 
-> We could redefine get_pathspec() to treat a pathspec that begins with a
-> slash to be anchored at the top, i.e.
-> 
-> 	$ git grep -e frotz /
-> 
-> would be a nicer way to spell
-> 
-> 	$ git grep --full-tree -e frotz
+My system is a:
+% uname -a
+Linux naboo 2.4.21-50.ELsmp #1 SMP Tue May 8 17:18:29 EDT 2007 i686 i686 i386 GNU/Linux
 
-I do like that idea (and I cannot see any obvious flaw in it, though I
-have only been think for a few minutes). I am not sure how useful it
-will be for other commands. Conceptually I might use it for "diff" and
-"status" (the new version that uses pathspecs sanely :) ), but those
-commands generally aren't a big deal. I haven't touched anything in the
-uninteresting subtree, so there is nothing to report.
+Trying to install "git-1.6.5.3".  Configure goes happily to the end but make gives me the following error:
 
-Hmm. Actually, after having considered that, don't we actually allow
-absolute paths in diff to do out-of-tree diffs? I haven't looked at how
-that code interacts with get_pathspec.
+> make
+    CC fast-import.o
+In file included from /usr/include/openssl/ssl.h:179,
+                 from git-compat-util.h:138,
+                 from builtin.h:4,
+                 from fast-import.c:143:
+/usr/include/openssl/kssl.h:72:18: krb5.h: No such file or directory
+In file included from /usr/include/openssl/ssl.h:179,
+                 from git-compat-util.h:138,
+                 from builtin.h:4,
+                 from fast-import.c:143:
+/usr/include/openssl/kssl.h:134: syntax error before "krb5_enctype"
 
-> > Certainly I think that would be an improvement. But again, it suffers
-> > from the "you must remember to do this" as above. I really want "git
-> > grep" to Do What I Mean.
-> 
-> And /this-is-absolute is one way to tell "grep" What You Mean.  I do not
-> claim it would be the _best_ way (I just concocted it up a few minutes ago
-> without giving it deep thought).  Do you have a better alternative in
-> mind?
 
-Well, what I meant is that I shouldn't have to tell it each time what I
-mean. I should be able to set up configuration so that it does what I
-want (well, ideally, it would just read my mind, but I am willing to
-concede that point). That is, I don't want to have to remember "git grep
---full-tree" or "git grep /" every time, because I am not likely to
-notice when I forget. I want to set up "when I am in this directory,
-this is probably what I want".
+What is missing on my system?
 
-> My earlier "push is excusable" was primarily because "push" tends to be
-> the _final_ action in the chain of events, as opposed to "ls-files" and
-> "grep" output that are meant to be used by the user to _decide_ what to
-> do next depending on what they find, and as such, the latter has more
-> problem if they changed behaviour based on the configuration.
-
-I'm not sure I really understand. "git grep" is routinely producing
-wrong results for me _now_. I'd like to configure it so that it produces
-results more sensible to me. If I am the one who sets the configuration
-variable to something more sensible for my workflow, who am I hurting?
-
--Peff
+Thanks for your help,
+Stephan.
