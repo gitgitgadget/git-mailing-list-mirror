@@ -1,73 +1,117 @@
-From: Jed Brown <jed@59A2.org>
-Subject: Re: git send-email --notmuch expr
-Date: Wed, 25 Nov 2009 14:06:47 +0100
-Message-ID: <87aaya69eg.fsf@59A2.org>
-References: <87d4375ne0.fsf@59A2.org> <m3hbsic3l5.fsf@localhost.localdomain>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: cvsexportcommit dies when applying an (empty) merge commit
+Date: Wed, 25 Nov 2009 14:06:13 +0100
+Message-ID: <4B0D2BC5.1000002@drmicha.warpmail.net>
+References: <4B0D1C1A.60707@yahoo.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 14:06:26 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Nick Woolley <nickwoolley@yahoo.co.uk>
+X-From: git-owner@vger.kernel.org Wed Nov 25 14:07:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDHZg-00068Z-QU
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 14:06:25 +0100
+	id 1NDHae-0006Yy-HG
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Nov 2009 14:07:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934660AbZKYNGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 08:06:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934657AbZKYNGL
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 08:06:11 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:45373 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934655AbZKYNGK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 08:06:10 -0500
-Received: by bwz27 with SMTP id 27so6874729bwz.21
-        for <git@vger.kernel.org>; Wed, 25 Nov 2009 05:06:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :in-reply-to:references:date:message-id:mime-version:content-type;
-        bh=c+Q+OgZ2puLVj1+2ewDgg9bJ0orbOfdZcVdcnkWIAqY=;
-        b=NOIBTB1FWGrUr++Vi1b1fXP5GXYKO4bzEX/W1dTSYmmp7FyXin+9/DBdKMzCoWnACk
-         7o6KZXhoOma/b8TkmxmiOyP6JgzgFcgKnEVrs6/7cXn3hzAX0RjZrlthweI3a+kSKm98
-         l6yl1fovNtWvA2dQxoPWAMAAKdvoD2qct4+OA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:in-reply-to:references:date:message-id
-         :mime-version:content-type;
-        b=vns2gzFIhO0HSwsFxW3xzh93IhgrpQyGiPng3gaHDjY06YXSe7B+SNQf6yqIquDy4f
-         /N9Nya+DAaZnLuPpxQlpYqJf9ZjuPSEOqODgAsIOux+VjDsc6dEStagOeMcXUwhmhF+4
-         e2Oog0J8LOsbv/DQvHLKyE9COJPBw2W2n9HFs=
-Received: by 10.204.7.195 with SMTP id e3mr7462405bke.118.1259154375322;
-        Wed, 25 Nov 2009 05:06:15 -0800 (PST)
-Received: from kunyang (vawpc43.ethz.ch [129.132.59.11])
-        by mx.google.com with ESMTPS id e17sm8583655fke.53.2009.11.25.05.06.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 25 Nov 2009 05:06:14 -0800 (PST)
-In-Reply-To: <m3hbsic3l5.fsf@localhost.localdomain>
+	id S934689AbZKYNHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 08:07:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934662AbZKYNHN
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 08:07:13 -0500
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:45006 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934675AbZKYNHM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Nov 2009 08:07:12 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id BD043C1BF8;
+	Wed, 25 Nov 2009 08:07:18 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 25 Nov 2009 08:07:18 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=/GWD0KSSbsGudHJWPkY++ubju4o=; b=rClo5SQ0vfDxP/GsIuC63iOx6gCfhIyb60yD1gNPGOvETLPuLV2O9YgBzI2FaAyQSKOtGnZcrCDbZQ2f/oPaO1lL2K1subQDM3Jjm9lqqIb+Uwn5OgaPzfivMoUNfqcLVPpV2X76rslZ0GNusmmRBmlAjSJoVsm6XOOeu/pTwrc=
+X-Sasl-enc: bjKLVP4K2sSJBxl0A0o29+kTVxWfd9fP2LGz15Iydd1Q 1259154438
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 17C705C471;
+	Wed, 25 Nov 2009 08:07:17 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091125 Lightning/1.0pre Shredder/3.0.1pre
+In-Reply-To: <4B0D1C1A.60707@yahoo.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133637>
 
-On Wed, 25 Nov 2009 02:16:52 -0800 (PST), Jakub Narebski <jnareb@gmail.com> wrote:
-> (?: ... ) is in Perl non-capturing grouping
+Nick Woolley venit, vidit, dixit 25.11.2009 12:59:
+> Hi,
+> 
+> I have a git repository with a merge point on the master branch.  This merge
+> commit is empty, and just contains a commit message:
+> 
+>   Merge commit 'otherbranch'
+> 
+> I'm trying to export this branch into CVS using git-cvsexportcommit (the latest
+> version from the master branch). It's actually done in a wrapper script [1] but
+> the command that gets invoked is essentially:
+> 
+>  git cvsexportcommit -p -v -u -w  'cvscheckout/HEAD/my-cvs-module' -c \
+>     <parent commit> <commit>
+> 
+> Where <commit> is the empty merge commit.  However this invocation dies and
+> aborts the process of exporting the branch half way.
+> 
+> The fatal error I get is:
+> 
+>  Applying to CVS commit <commit> from parent <parent commit>
+>  Checking if patch will apply
+>  Applying
+>  error: No changes
+>  cannot patch at /usr/lib/git-core/git-cvsexportcommit line 324.
+> 
+> The vicinity of line 324 is (with some lines wrapped):
+> 
+>  print "Applying\n";
+>  if ($opt_W) {
+>      system("git checkout -q $commit^0") && die "cannot patch";
+>  } else {
+>      `GIT_DIR= git-apply $context --summary --numstat --apply
+> <.cvsexportcommit.diff` || die "cannot patch";
+>  }
+> 
+> It seems that the file .cvsexportcommit.diff is empty, so git-apply is refusing
+> to apply it.
+> 
+> Presumably the application would be a no-op, so this git-apply step could be
+> skipped.  So I tried modifying the script to do that and it seems to work:
+> 
+>  print "Applying\n";
+>  if ($opt_W) {
+>      system("git checkout -q $commit^0") && die "cannot patch";
+>  } elsif (-s ".cvsexportcommit.diff") {
+>      `GIT_DIR= git-apply $context --summary --numstat --apply
+> <.cvsexportcommit.diff` || die "cannot patch";
+>  } else {
+>     print "No changes\n";
+>  }
+> 
+> The modified git-cvsexportcommit script completes without errors, but
+> unsurprisingly, seems to export nothing, so that when imported back into git,
+> there is no empty commit.  There appears to be no log message added in CVS, either.
+> 
+> This does seem more acceptable than dying, although it doesn't faithfully
+> reproduce the git history.  However I'm not sure if that would be possible in
+> this case.
+> 
+> Is the existing behaviour deliberately fatal, or is this worth supplying a patch
+> for?
 
-Thanks.  Actually that code only executes under --compose, the headers
-provided by format-patch all just come through untouched (but all the
-interesting ones are duplicated).  So it looks like we just need to
-actually parse the relevant headers from format-patch, before the part
-where the user gets prompted.  These are a little harder because they
-can span multiple lines.  The current validation with --compose is a bit
-broken: suppose the user sets the perfectly valid header
+I think the behavior is correct in the sense that you're telling git
+cvsexportcommit to make a commit to cvs, and it can't, because there is
+no change to commit. A merge can't be represented.
 
-To: foo@example.com,
-    bar@example.com
+It leaves you the choice between omitting the trivial merge from cvs
+history (that's what one would do for a merge based cvs<->git workflow)
+and generating a fake commit in cvs. I don't know if it has something
+like --allow-empty - it's file base, after all.
 
-The validation will strip the first line while issuing warning, but
-send the second through untouched.
-
-Jed
+Michael
