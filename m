@@ -1,78 +1,64 @@
-From: Yann Dirson <ydirson@linagora.com>
-Subject: Re: [egit] Git repository with multiple eclipse projects ?
-Date: Thu, 26 Nov 2009 15:30:16 +0100
-Message-ID: <20091126143016.GF15136@linagora.com>
-References: <20091125164734.GF21347@linagora.com>
- <20091126004817.GL11919@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [egit-dev] Re: jgit problems for file paths with non-ASCII
+ characters
+Date: Thu, 26 Nov 2009 15:47:29 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0911261546350.7500@intel-tinevez-2-302>
+References: <4B0D356D.1080709@syntevo.com> <200911252211.55137.robin.rosenberg@dewire.com> <20091126005423.GM11919@spearce.org> <4B0E7DF5.9040007@syntevo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Nov 26 15:30:26 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	EGit developer discussion <egit-dev@eclipse.org>,
+	Marc Strapetz <marc.strapetz@syntevo.com>, git@vger.kernel.org
+To: Thomas Singer <thomas.singer@syntevo.com>
+X-From: git-owner@vger.kernel.org Thu Nov 26 15:47:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDfMX-00083R-R7
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 15:30:26 +0100
+	id 1NDfdF-0007Sj-UA
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 15:47:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760532AbZKZOaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Nov 2009 09:30:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760347AbZKZOaN
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 09:30:13 -0500
-Received: from [194.206.158.221] ([194.206.158.221]:36066 "EHLO
-	cyann.linagora.lan" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1760286AbZKZOaM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Nov 2009 09:30:12 -0500
-Received: from yann by cyann.linagora.lan with local (Exim 4.69)
-	(envelope-from <yann@linagora.com>)
-	id 1NDfMO-0007Wk-Vt; Thu, 26 Nov 2009 15:30:16 +0100
-Content-Disposition: inline
-In-Reply-To: <20091126004817.GL11919@spearce.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754911AbZKZOr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Nov 2009 09:47:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754354AbZKZOr1
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 09:47:27 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42756 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754520AbZKZOr0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Nov 2009 09:47:26 -0500
+Received: (qmail invoked by alias); 26 Nov 2009 14:47:31 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp070) with SMTP; 26 Nov 2009 15:47:31 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX184hOEe/rY4sKatEXHYMDZ309x2aL5mVh8l0BIfZr
+	ttVysqY/ZipUQO
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <4B0E7DF5.9040007@syntevo.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133798>
 
-On Wed, Nov 25, 2009 at 04:48:17PM -0800, Shawn O. Pearce wrote:
-> > When importing a git repo into eclipse, we get a list of projects to
-> > import, but that list is empty.  What is expected by egit to get this
-> > list filled ?
+Hi,
+
+On Thu, 26 Nov 2009, Thomas Singer wrote:
+
+> [someone said, Thomas did not say who]
+>
+> > But as you said, this still doesn't make the Apple normal form any 
+> > easier.  Though if we know we are on such a strange filesystem we 
+> > might be able to assume the paths in the repository are equally 
+> > damaged.  Or not.
 > 
-> There should be .project files in the repository.  I think we scan
-> the entire checkout tree for .project files, but maybe we are doing
-> something stupid and only looking at the top level directory of
-> the checkout.
+> Well, if the git-core folks could standardize on, e.g., composed UTF-8 
+> (rather then just UTF-8), for storing file names in the repository, then 
+> everything should be clear, isn't it?
 
-Right, we could make it work - the devs just did not have the habbit
-of commiting .project files.
+You mean we should do the same thing as Apple with HFS?  Are you serious?
 
-> > It also does not look like it would be possible to use the "share"
-> > functionnality to setup such a repository from multiple projects (or
-> > from a project set), right ?
-> 
-> Nope, I don't think this is supported right now.  You need to
-> initialize the git repository by hand in the higher level directory
-> that holds the projects.
-
-Yes, we did that by git-add'ing the initial projects manually and
-pushing them, and we can now "import" that.
-
-That makes me wonder if it should work to add a new project afterwards
-from within Eclipse.  If we create a new project under the git tree,
-and try to use "share", then we get presented a folded list containing
-the project we want to add, which when unfolded reveals "..\.git"
-(yes, this test done on windows) as repository, which is promising.
-
-But then the field below near the "Create" button (the one with
-"\.git" text on the right) gets polulated with the full project path
-when we click on the project in the list, and we could not unlock the
-"next" or "finish" button.  Are we just trying things the way they
-should work but hit functionnality that is just not finished, or are
-we completely off-track ?
-
-Thanks much,
--- 
-Yann
+Ciao,
+Dscho
