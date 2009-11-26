@@ -1,113 +1,103 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: [PATCH 3/8] git-merge-recursive-{ours,theirs}
-Date: Thu, 26 Nov 2009 17:05:23 -0500
-Message-ID: <32541b130911261405q6564d8f2o30b7d7fd6f708d05@mail.gmail.com>
-References: <d243a513ffb8da4272f7a0e13a711f9b65195c25.1259201377.git.apenwarr@gmail.com> 
-	<905749faf5ccb2c7c54d3318dbc662d69daf8d0e.1259201377.git.apenwarr@gmail.com> 
-	<cover.1259201377.git.apenwarr@gmail.com> <7e1f1179fc5fe2f568e2c75f75366fa40d7bbbfb.1259201377.git.apenwarr@gmail.com> 
-	<7vr5rlerqf.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/2] format-patch: fix dashdash usage
+Date: Fri, 27 Nov 2009 00:14:29 +0200
+Message-ID: <94a0d4530911261414o533aa108l202d4c6926da361e@mail.gmail.com>
+References: <1259262720-24077-1-git-send-email-felipe.contreras@gmail.com>
+	 <1259262720-24077-2-git-send-email-felipe.contreras@gmail.com>
+	 <7vd4355aaw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 26 23:05:50 2009
+X-From: git-owner@vger.kernel.org Thu Nov 26 23:14:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDmTG-0007pb-2m
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 23:05:50 +0100
+	id 1NDmbs-0002wD-NH
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 23:14:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753112AbZKZWFj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Nov 2009 17:05:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752933AbZKZWFi
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 17:05:38 -0500
-Received: from mail-yw0-f182.google.com ([209.85.211.182]:60257 "EHLO
-	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751350AbZKZWFi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Nov 2009 17:05:38 -0500
-Received: by ywh12 with SMTP id 12so1143379ywh.21
-        for <git@vger.kernel.org>; Thu, 26 Nov 2009 14:05:44 -0800 (PST)
+	id S1752290AbZKZWOY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Nov 2009 17:14:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752069AbZKZWOY
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 17:14:24 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:62398 "EHLO
+	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751350AbZKZWOX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Nov 2009 17:14:23 -0500
+Received: by iwn1 with SMTP id 1so651365iwn.33
+        for <git@vger.kernel.org>; Thu, 26 Nov 2009 14:14:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=iGVfW9ZhQL0PlyIs0isx0COXoe2UfOZt13cZ50ICOZ0=;
-        b=I8TXer4kAxIi+hhRPl2C0HlfSie/VHhvEVHG1T120Q7QaU2tW1UB+t4nu+tN9hNNTn
-         8nrK6LlfybU8L5hFRWOOPLkJmc/F2X0ifFz9u6oDvNDw6vUj3YnIM2tck5YvMolqb86p
-         WjxYISw/nk/ffJggImN98419eJt484mPDnYnc=
+        bh=8qt+OeLUL6sTWWpz8CfDNNpAJ9Ia0Cw0QhIPFdQXSt4=;
+        b=DayPKpuVwmYDEsdlcnl8mS2lCGD/VXsdFyEfPQnH9Z14iuIOjvleJpm2AQSa32hvrI
+         OWelKSDxhQLGPxuTcjiT28VtJzQp8KGGGlHVCN8Bsg1S19heZKARy9pzIM5oJ8OI6Djd
+         qka0QZ2GBnpvs7lrJZlG3M23CbvSaNPEzXc/k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=aQL2xscew6d5PECs6GhZSrhl8BGbmpijb+OSiEf+4o3F9tFzJDlRm3Be+hBMLR2t4p
-         8J1D8+SPpb4KO8kx2NyGaMdYrGv59+z4ELu6eohPWq4k/YX8nOtnXssg3oVooH0BC4V1
-         2uRilsacpqp65skvrEOpVbrrwvYdRH8E2Oh6Y=
-Received: by 10.150.40.2 with SMTP id n2mr528733ybn.122.1259273143115; Thu, 26 
-	Nov 2009 14:05:43 -0800 (PST)
-In-Reply-To: <7vr5rlerqf.fsf@alter.siamese.dyndns.org>
+        b=Kc9e4xYEL4iv9ivMtJ15cegACJEyJqTWw2XsbO50L1/cGuOzsn80r5LXTauRDSg1XB
+         +Ol5LrBYZHFh+Ben4jrY+gEALeBsd28doSN+RmnEZ5qbNZUaRsbXAIc5tlWLrK2Fx0Jg
+         FBVto1Lvto5oczgO6cCL0ZxtJGXH2qET0YMPA=
+Received: by 10.231.122.103 with SMTP id k39mr607195ibr.10.1259273669583; Thu, 
+	26 Nov 2009 14:14:29 -0800 (PST)
+In-Reply-To: <7vd4355aaw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133844>
 
-On Thu, Nov 26, 2009 at 1:15 AM, Junio C Hamano <gitster@pobox.com> wro=
+On Thu, Nov 26, 2009 at 9:57 PM, Junio C Hamano <gitster@pobox.com> wro=
 te:
-> =A0- The original series was done over a few weeks in 'pu' and this
-> =A0 intermediate step was done before a better alternative of not usi=
-ng
-> =A0 these two extra merge strategies were discovered ("...may have be=
-en an
-> =A0 easy way to experiment, but we should bite the bullet", in the ne=
-xt
-> =A0 patch).
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> =A0 As the second round to seriously polish the series for inclusion,=
- it
-> =A0 would make much more sense to squash this with the next patch to =
-erase
-> =A0 this failed approach that has already been shown as clearly infer=
-iour.
-
-ok.
-
-> =A0- I think we should avoid adding the extra argument to ll_merge_fn=
-() by
-> =A0 combining virtual_ancestor and favor into one "flags" parameter. =
-=A0If
-> =A0 you do so, we do not have to change the callsites again next time=
- we
-> =A0 need to add new optional features that needs only a few bits.
+>> Otherwise 'git format-patch <committish> -- <non-existent-path>' doe=
+sn't
+>> work.
 >
-> =A0 I vaguely recall that I did the counterpart of this patch that wa=
-y
-> =A0 exactly for the above reason, but it is more than a year ago, so =
-maybe
-> =A0 I didn't do it that way.
+> Instead of "doesn't work", I really wished you wrote something like:
+>
+> =C2=A0 =C2=A0$ git format-patch <commit> -- <path>
+>
+> =C2=A0 =C2=A0complains that <path> does not exist in the current work=
+ tree and the
+> =C2=A0 =C2=A0user needs to explicitly specify "--", even though the u=
+ser _did_ give
+> =C2=A0 =C2=A0a "--". =C2=A0This is because it incorrectly removes "--=
+" from the command
+> =C2=A0 =C2=A0line arguments that is later passed to setup_revisions()=
+=2E
 
-You did do that, in fact, but I had to redo a bunch of the flag stuff
-anyway since a few other flags had been added in the meantime.
+Complaining is one thing... failing to do anything is another.
 
-I actually tried it both ways (with and without an extra parameter),
-but I observed that:
+> Remember that you are trying to help somebody who has to write Releas=
+e
+> Notes out of "git log" output.
+>
+> I actually have a bigger question, though. =C2=A0Does it even make se=
+nse to
+> allow pathspecs to format-patch? =C2=A0We sure are currently loose an=
+d take
+> them, but I doubt it is by design.
 
-- There are more lines of code (and more confusion) if you use an
-all-in-one flags vs. what I did.
+Not everyone has clean branches only with pertinent patches.
 
-- Several functions have the same signature with all-in-one flags vs.
-their current boolean parameter, so the code would compile (and then
-subtly not work) if I forgot to modify a particular function.
+I stumbled upon this trying to re-create (cleanly) a "branch" that was
+constantly merged into another "master" branch that had a lot more
+stuff. Maybe there was a smarter way to do that with 'git rebase', but
+that doesn't mean format-patch -- <path> shouldn't work.
 
-- When we go to add a third flag parameter, it wouldn't be any harder
-to join them together at that time, and because it would *again*
-modify the function signatures (from two flag params back down to
-one), the compiler would *again* be able to catch any functions we
-forgot to adjust.
+> The patch itself looks good and is a candidate 'maint' material, if t=
+he
+> answer to the above question is a convincing "yes, because ...".
 
-If you think this logic doesn't work, I can redo it with all-in-one
-flags as you request.
+Yeah, I also think this should go into 'maint'.
 
-Avery
+--=20
+=46elipe Contreras
