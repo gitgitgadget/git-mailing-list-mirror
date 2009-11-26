@@ -1,53 +1,91 @@
-From: Alan Stern <stern@rowland.harvard.edu>
-Subject: Strange behavior of gitweb
-Date: Thu, 26 Nov 2009 12:32:48 -0500 (EST)
-Message-ID: <Pine.LNX.4.44L0.0911261225130.17259-100000@netrider.rowland.org>
+From: James Pickens <jepicken@gmail.com>
+Subject: Re: [PATCH] grep: --full-tree
+Date: Thu, 26 Nov 2009 10:56:55 -0700
+Message-ID: <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com>
+References: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
+	 <20091125203922.GA18487@coredump.intra.peff.net>
+	 <7viqcytjic.fsf@alter.siamese.dyndns.org>
+	 <20091125210034.GC18487@coredump.intra.peff.net>
+	 <7vmy2as319.fsf@alter.siamese.dyndns.org>
+	 <20091125214949.GA31473@coredump.intra.peff.net>
+	 <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com>
+	 <20091125222037.GA2861@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 26 18:32:56 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 26 18:57:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDiD9-0007oI-LC
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 18:32:55 +0100
+	id 1NDiaU-0000uC-2P
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 18:57:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752447AbZKZRco (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Nov 2009 12:32:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752400AbZKZRcn
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 12:32:43 -0500
-Received: from netrider.rowland.org ([192.131.102.5]:42371 "HELO
-	netrider.rowland.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752274AbZKZRcm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Nov 2009 12:32:42 -0500
-Received: (qmail 17875 invoked by uid 500); 26 Nov 2009 12:32:48 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 26 Nov 2009 12:32:48 -0500
-X-X-Sender: stern@netrider.rowland.org
+	id S1750892AbZKZR4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Nov 2009 12:56:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750807AbZKZR4u
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 12:56:50 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:55645 "EHLO
+	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750706AbZKZR4t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Nov 2009 12:56:49 -0500
+Received: by iwn1 with SMTP id 1so565972iwn.33
+        for <git@vger.kernel.org>; Thu, 26 Nov 2009 09:56:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=7OcIS5E8MrYNocPw4LWK5aTmVF0ZQdgCcaYDpQyPqGE=;
+        b=bCVlhW+sJxqQojbzIGoP2POZmLaaN7GWhRD9g82dlJUzySYivHoQTngkCOcBHXUK0c
+         Ox2XudEV6588fndT0fx8Dl0NlpYe2IAaObToZ+mbMlkrz4AwTb76Cd5GcChRh+k3tYju
+         t9JHQG0JoLP/RAIt8IJaM/gOB/fD1UaSgX9Qk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=Zvmq4uTebGG9lOAWUNDvTxxKNpG/1DR404WZTY6fU4enHIl6NDfN2o3dUKj7fW5vNn
+         Mp9umthqHSpic9AtYUkZhyDKZetI0/EYBxvVvYIFN2P0qn12pf9VAG3gGblHhpDkwi6z
+         IaaNF6KUybRS+sE20YdQ+W3AHQtIyfc3qz4BI=
+Received: by 10.231.48.210 with SMTP id s18mr112316ibf.3.1259258215509; Thu, 
+	26 Nov 2009 09:56:55 -0800 (PST)
+In-Reply-To: <20091125222037.GA2861@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133816>
 
-If this isn't the right place to post this, could somebody please let 
-me know where would be better?
+On Wed, Nov 25, 2009 at 3:20 PM, Jeff King <peff@peff.net> wrote:
+> Sure, there are all those downsides. But what is the other option?
+> Making me use the command line option (or pathspec magic) every single
+> time I invoke git grep?
 
-I recently ran across this strange behavior in the gitweb server at 
-git.kernel.org.  The following URL:
+Yes, but only when you want non-default behavior, not every single time.
 
-http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.27.y.git;a=commit;h=2d93148ab6988cad872e65d694c95e8944e1b62
+> That is a huge downside to me.
 
-brings up a page containing commit 2d93148[...].  But that commit isn't
-part of the 2.6.27.y tree!  It belongs to Linus's main tree, and it was
-added long after 2.6.27.y was forked off.  The actual commit applied to
-2.6.27.y was 070bb0f3b6df167554f0ecdeb17a5bcdb1cd7b83.
+Is it *really*?  Does it also bother you that you have to tell standalone
+unix commands like diff and grep what you want them to diff or grep every
+single time you invoke them?
 
-So what's going on here?  Shouldn't the correct behavior be to report
-an error, since the requested commit isn't in the history of the
-specified tree?
+> I started to try to write an argument against this, but I really don't
+> know how to. You don't think this particular option gets over the bar.
+> Probably because it is not something that has been annoying you
+> personally. But is _is_ something that has been annoying me. Now we are
+> both making claims from our gut. How do we proceed with a rational
+> analysis?
 
-Thanks,
+I really think that this config option wouldn't even help you, because
+you'll have to remember what that option is set to in each working repo,
+and type the right command based on the setting.  That seems worse than
+having to use the same options over and over again, which you probably use
+the shell's history for anyways and don't actually type the same stuff over
+and over.  Oh and you also have to remember to set the option in each new
+repo you create.
 
-Alan Stern
+If you can get the behavior you want using an alias or a script, then I
+suggest you do that.  I don't think this config option should be considered
+unless *many* people want it, and so far I count only 1.
+
+James
