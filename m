@@ -1,167 +1,122 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH (resend)] Let core.excludesfile default to
-	~/.gitexcludes.
-Date: Thu, 26 Nov 2009 12:07:30 -0800
-Message-ID: <20091126200728.GA2665@gmail.com>
-References: <1258840832-22130-1-git-send-email-Matthieu.Moy@imag.fr> <1259231726-5218-1-git-send-email-Matthieu.Moy@imag.fr> <4B0E6DC9.3070105@drmicha.warpmail.net> <36ca99e90911260501q571929e5l114cb0af9f374a98@mail.gmail.com> <4B0E8529.3040609@drmicha.warpmail.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC/PATCH] gitweb: Make linking to actions requiring JavaScript a feature
+Date: Thu, 26 Nov 2009 21:12:15 +0100
+Message-ID: <200911262112.16280.jnareb@gmail.com>
+References: <1258659887-5244-1-git-send-email-bebarino@gmail.com> <7vpr76m8dx.fsf@alter.siamese.dyndns.org> <200911260159.48311.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Nov 26 21:06:52 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 26 21:12:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDkc5-0003gN-Di
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 21:06:49 +0100
+	id 1NDkhd-0005or-Ap
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 21:12:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752590AbZKZUGi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Nov 2009 15:06:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752576AbZKZUGi
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 15:06:38 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:49396 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751654AbZKZUGh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Nov 2009 15:06:37 -0500
-Received: by pwi3 with SMTP id 3so640089pwi.21
-        for <git@vger.kernel.org>; Thu, 26 Nov 2009 12:06:43 -0800 (PST)
+	id S1752441AbZKZUMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Nov 2009 15:12:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbZKZUMV
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 15:12:21 -0500
+Received: from mail-bw0-f223.google.com ([209.85.218.223]:51975 "EHLO
+	mail-bw0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751174AbZKZUMV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Nov 2009 15:12:21 -0500
+Received: by bwz23 with SMTP id 23so812534bwz.29
+        for <git@vger.kernel.org>; Thu, 26 Nov 2009 12:12:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=VwQS7nQPdv7pMkJdvCur7v1xD1jZiGeABW7AgNyUdu0=;
-        b=l9VhjNaZZjAZ6vYSioP7fgX4W/sF0bEZz+NXuYa8m260jsqSbzdZZEYrLh0nI/aL9N
-         LSxbE/nc4AkEG8HO7WgTuwVz2cEKlxR+UiuV4dsMznPZaRtcaNqF+gkdqYOWReCI6V1O
-         LfYFqmmnE8RwNxdk1+Qh0hZ761nUhpPPyLFvA=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=Effxr/5hgAQdG7K+aOYXUTe7zdM9QEfqqEXlgZEaPE4=;
+        b=e2ouTK9t28JhgnsOxhmvJ3g5CCcZCl2N9q4Iy4R1EdZkqCgKVe1lXHTMiXuF6rWm90
+         ac+CuZUgU63bKuSCniBsGsbtD6yL4c6uUMsThiIhRhg0McvmHfuz8Fg2CKxs82DEH6Qs
+         r/oqjns8nGUHWQ68FrsoNyowT7G8uB4rAEEps=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=YYNeGNChChIt1uy0wm0ELkWKJN0azelocHg5ALd7I/wctRRrpBWwcHwSlJOWv8oe0S
-         KzHVK4Pf2vX8z+vgCVc7X8rE6Tt56YR28aKy8/9DLwfq+CXQgIA2YwkQFPyz1CPD2u6c
-         wLoFqJHXcNFCsJYP23/6+brRsqYDkuVDBOW4E=
-Received: by 10.115.102.16 with SMTP id e16mr166932wam.202.1259266003544;
-        Thu, 26 Nov 2009 12:06:43 -0800 (PST)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 23sm696821pzk.12.2009.11.26.12.06.41
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=J3kKkQdDe4agrymsxunmH4LKCC+g+4BnJOpXb0NszmvnfwaTgh1ycUaYjapOsrp1Qh
+         CWlcG4nqNOMZ/b5A121zhXU724vKoibMlGygSVbXm508rP31aZMvn5WA9CYLkw/Z0kjI
+         M1/KAORWreDOV082o4gg0a9gvQ2e8dzcK/hEU=
+Received: by 10.204.34.73 with SMTP id k9mr202543bkd.45.1259266344337;
+        Thu, 26 Nov 2009 12:12:24 -0800 (PST)
+Received: from ?192.168.1.13? (abvg159.neoplus.adsl.tpnet.pl [83.8.204.159])
+        by mx.google.com with ESMTPS id 19sm1351412fkr.48.2009.11.26.12.12.22
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 26 Nov 2009 12:06:42 -0800 (PST)
+        Thu, 26 Nov 2009 12:12:23 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200911260159.48311.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <4B0E8529.3040609@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133832>
 
-On Thu, Nov 26, 2009 at 02:39:53PM +0100, Michael J Gruber wrote:
+On Thu, 26 Nov 2009, Jakub Narebski wrote:
+> On Thu, 26 Nov 2009, Junio C Hamano wrote:
+
+> > A follow-up patch to add a gitweb configuration switch that disables the
+> > non-working view by default but allows site owners to enable it in order
+> > to help improving the feature would be a sensible thing to do.  As long as
+> > that patch is solidly done we can merge the whole thing to 'master' in the
+> > upcoming release.
 > 
-> Now, that is bike shedding ;)
-> 
-> It seems to me that all ~/.*rc that I have are config files (.bashrc,
-> .xinitrc...), and all condif subdirs ~/.* are named by the
-> program/subsystem (.qt, .kde, .gnupg), which we cannot do any more, and
-> which is why I suggested .gitglobal. But I'd be fine with .gitrc.
-> 
-> > On the other
-> > hand the --global option to git config specifies the .gitconfig in
-> > your HOME.
-> 
-> That would have to change (ouch, ducking). Transition plan would be:
-> 
-> ~/.gitconfig, ~/.gitrc/config::
->         User-specific configuration file. Also called "global"
->         configuration file. Git looks in these locations in the
-> 	specified order and uses the first one it finds.
-> 
-> $(prefix)/etc/gitconfig, $(prefix)/etc/gitrc/config::
->         System-wide configuration file. Git looks in these locations
-> 	in the specified order and uses the first one it finds.
-> 
-> This would mean no surprises for users with existing config, one could
-> teach the new preferred locations exclusively, and at some future point
-> one could phase out the old paths.
-> 
-> Michael
+> But if it is already in 'next', then I'll try to come up with patch which
+> makes JavaScript-ing links (replacing links with JavaScript to equivalent
+> actions utilizing JavaScript, currently only 'blame' -> 'blame_incremental')
+> configurable.
 
+Here it is.  I am a bit ambiguous about *naming* of this feature (and
+whether it should be overridable), that's why it is marked as RFC.
 
-If we're going to bikeshed then let's throw a standard in there:
+Also the subject of this commit could have been better, I think...
 
-http://standards.freedesktop.org/basedir-spec/basedir-spec-0.6.html
+-- >8 --
+Let gitweb turn some links (like 'blame' links) into linking to
+actions which require JavaScript (like 'blame_incremental' action)
+only if 'javascript-actions' feature is enabled.
 
-~/.gitrc/ doesn't make sense (it's not a file) and ~/.gitglobal/
-hurts my eyes.
+This means that links to such actions would be present only if both
+JavaScript is enabled and 'javascript-actions' feature is enabled.
 
-"global"?  Huh?  Isn't it really user-specific?
-Why not call it ~/.gituser/ then?
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
 
-And what about the standard?
-The silly standard says to use ~/.config/git/.
-
-
-I'm quite happy with ~/.gitconfig and ~/.gitexclude if that's all
-there is to git's per-user configuration abilities, especially
-since ~/.gitexclude is less common.  _Much_ less common from
-what I've seen in practice.
-
-Being that we cannot predict the future then there is some
-appeal to a top-leve ~/.config/git/-like directory.  But...
-
-
-Like Junio said, I would stop only after adding support for
-the new paths.  We don't want to confuse old or new users
-and we should never deprecate existing ~/.gitconfig.
-
-
-So now the "user" config is not just tied to one file but
-is instead multiple files?  I dunno.. I kinda don't like
-that but the only reason is because I'm going to have to
-go and change code to take that into account.
-
-When I have to change code for little added benefit
-I ask questions.
-
-
-What about:
-
-	$ git config --global foo.bar baz
-
-What file does that touch?
-	~/.gitconfig or ~/.config/git/config?
-
-What if ~/.gitconfig exists and ~/.config/git/config doesn't?
-What about vice versa?
-
-Okay, I also don't like it for that reason.
-
-
-What if you jump between git versions?  Now the previous
-question is much more important -- it means that we *must*
-write to ~/.gitconfig to keep backwards compatibility otherwise
-someone will config something with git-vNew and be surprised
-when git-vOld does not find it.
-
-And if we must write to ~/.gitconfig then
-why does ~/.config/git/config even exist?
-
-
-I guess all I'm saying is that I'm quite happy with
-~/.gitconfig and do not see a compelling reason as
-to why we'd need to transition to a different path.
-
-Yes, I'm being lazy.  I don't feel like changing code
-when stuff works just fine right now ;-)
-
-And if we were to change it, then what about JGit,
-Dulwich, GitSharp, etc?  Who's going to change those?
-
-
-To quote an old famous horse, "No sir, I don't like it."
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a80cbd3..0ab47e1 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -432,6 +432,13 @@ our %feature = (
+ 	'timed' => {
+ 		'override' => 0,
+ 		'default' => [0]},
++
++	# Enable turning some links into links to actions which require
++	# JavaScript to run (like 'blame_incremental').  Enabled by default.
++	# Project specific override is currently not supported.
++	'javascript-actions' => {
++		'override' => 0,
++		'default' => [1]},
+ );
+ 
+ sub gitweb_get_feature {
+@@ -3326,7 +3333,7 @@ sub git_footer_html {
+ 		      qq!startBlame("!. href(action=>"blame_data", -replay=>1) .qq!",\n!.
+ 		      qq!           "!. href() .qq!");\n!.
+ 		      qq!</script>\n!;
+-	} else {
++	} elsif (gitweb_check_feature('javascript-actions')) {
+ 		print qq!<script type="text/javascript">\n!.
+ 		      qq!window.onload = fixLinks;\n!.
+ 		      qq!</script>\n!;
 -- 
-		David
+1.6.5.3
