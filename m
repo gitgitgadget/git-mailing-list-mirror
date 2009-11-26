@@ -1,84 +1,62 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: cvsexportcommit dies when applying an (empty) merge commit
-Date: Thu, 26 Nov 2009 07:51:05 +0100
-Message-ID: <200911260751.06377.robin.rosenberg.lists@dewire.com>
-References: <4B0D1C1A.60707@yahoo.co.uk>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH 1/8] git-merge-file --ours, --theirs
+Date: Thu, 26 Nov 2009 16:30:18 +0900
+Message-ID: <20091126163018.6117@nanako3.lavabit.com>
+References: <cover.1259201377.git.apenwarr@gmail.com> <cover.1259201377.git.apenwarr@gmail.com> <d243a513ffb8da4272f7a0e13a711f9b65195c25.1259201377.git.apenwarr@gmail.com> <7vy6ltdd2l.fsf@alter.siamese.dyndns.org> <20091126153726.6117@nanako3.lavabit.com> <7vvdgxbwav.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Nick Woolley <nickwoolley@yahoo.co.uk>
-X-From: git-owner@vger.kernel.org Thu Nov 26 08:09:38 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: "Avery Pennarun" <apenwarr@gmail.com>, <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 26 08:30:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDYTx-0004QK-3r
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 08:09:37 +0100
+	id 1NDYoC-0002B5-Nc
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 08:30:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758872AbZKZHJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Nov 2009 02:09:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758813AbZKZHJY
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 02:09:24 -0500
-Received: from mail.dewire.com ([83.140.172.130]:26413 "EHLO dewire.com"
+	id S1754021AbZKZHaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Nov 2009 02:30:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751947AbZKZHaU
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 02:30:20 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:36210 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753438AbZKZHJX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Nov 2009 02:09:23 -0500
-X-Greylist: delayed 1101 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Nov 2009 02:09:23 EST
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id E3F9F800395;
-	Thu, 26 Nov 2009 07:51:07 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id r2RBgi703L8g; Thu, 26 Nov 2009 07:51:07 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 2DF30800386;
-	Thu, 26 Nov 2009 07:51:07 +0100 (CET)
-User-Agent: KMail/1.11.4 (Linux/2.6.28-11-generic; KDE/4.2.4; i686; ; )
-In-Reply-To: <4B0D1C1A.60707@yahoo.co.uk>
-Content-Disposition: inline
+	id S1751532AbZKZHaU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Nov 2009 02:30:20 -0500
+Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
+	by karen.lavabit.com (Postfix) with ESMTP id A57AA157543;
+	Thu, 26 Nov 2009 01:30:26 -0600 (CST)
+Received: from 6142.lavabit.com (customer-148-233-239-23.uninet.net.mx [148.233.239.23])
+	by lavabit.com with ESMTP id BY73N482CVP1; Thu, 26 Nov 2009 01:30:26 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=TDugPUMeDvFLz7ZkydQ0pt4H7CkTvssKhtybQBzB6UVIbPaO22gy74aAfCVggHR65i8XQ3N/UM1860g++MuFRECJMFeuUPPueryfqo0L7MFhbwvQgh9bg4Ap4BwJRe86zuRHPKUbPlAYdiPCmFvwCico36oQUexo6eptwcFAIZQ=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7vvdgxbwav.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133773>
 
-onsdag 25 november 2009 12:59:22 skrev  Nick Woolley:
-> Hi,
->
-> I have a git repository with a merge point on the master branch.  This
-> merge commit is empty, and just contains a commit message:
->
->   Merge commit 'otherbranch'
->
-> I'm trying to export this branch into CVS using git-cvsexportcommit (the
-> latest version from the master branch). It's actually done in a wrapper
-> script [1] but the command that gets invoked is essentially:
->
->  git cvsexportcommit -p -v -u -w  'cvscheckout/HEAD/my-cvs-module' -c \
->     <parent commit> <commit>
->
-> Where <commit> is the empty merge commit.  However this invocation dies and
-> aborts the process of exporting the branch half way.
->
-> The fatal error I get is:
->
->  Applying to CVS commit <commit> from parent <parent commit>
->  Checking if patch will apply
->  Applying
->  error: No changes
->  cannot patch at /usr/lib/git-core/git-cvsexportcommit line 324.
->
-[....]
-> Is the existing behaviour deliberately fatal, or is this worth supplying a
-> patch for?
+Quoting Junio C Hamano <gitster@pobox.com> writes:
 
-I'm not the only contributor, but I'd say its a omission. cvsexportcommit 
-doesn't export commits. It export deltas, that is the change relative to one
-of the parents. It is reasonable that cvsexportcommit can "export" an
-empty commit by doing nothing and exiting with 0. Printing some kind of 
-warning seems reasonable too.
+> In any case, where does Avery's credit go?  Is there a point in helping to
+> polish others' patches?
+>
+> It is recoded on the Signed-off-by line.  When somebody passes a patch
+> from somebody else, an S-o-b is added for DCO purposes, but it also leaves
+> the "patch trail"---these people looked at the patch, spent effort to make
+> sure it is suitable for inclusion by reviewing, polishing, and enhancing.
+> A subsystem maintainer, or anybody who helps to polish others
+> contribution, may not necessarily have his name as the "author" of the
+> patch, and if the patch forwarding is done via e-mail, his name won't be
+> on the "committer" line either.  But the contribution is still noted and
+> appreciated, and the hint to pay attention to is by counting non-author
+> S-o-b and Tested-by lines in the commit messages.
 
-- robin
+I understand. Thank you for a detailed explanation. 
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
