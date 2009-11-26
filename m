@@ -1,83 +1,66 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2009, #06; Wed, 25)
-Date: Thu, 26 Nov 2009 02:15:58 +0100
-Message-ID: <fabb9a1e0911251715u661ce0aem79a4d700d552e105@mail.gmail.com>
-References: <7v8wduksgq.fsf@alter.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 2/4] fetch: try mirrors if selected
+Date: Wed, 25 Nov 2009 17:20:22 -0800
+Message-ID: <20091126012022.GP11919@spearce.org>
+References: <1259143617-26580-1-git-send-email-sam@vilain.net> <1259143617-26580-2-git-send-email-sam@vilain.net> <1259143617-26580-3-git-send-email-sam@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Nov 26 02:16:24 2009
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Thu Nov 26 02:20:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDSy8-0002dJ-2v
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 02:16:24 +0100
+	id 1NDT26-0003nl-GZ
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 02:20:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758889AbZKZBQN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Nov 2009 20:16:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758853AbZKZBQM
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 20:16:12 -0500
-Received: from mail-vw0-f192.google.com ([209.85.212.192]:55823 "EHLO
-	mail-vw0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755265AbZKZBQM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Nov 2009 20:16:12 -0500
-Received: by vws30 with SMTP id 30so76931vws.33
-        for <git@vger.kernel.org>; Wed, 25 Nov 2009 17:16:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+UOwcOFi7m2oDbMo5jTRu6yPtRk5ymksq5nh8xnIM8I=;
-        b=fuWSHJqrIsTE8Lno8qa6nbysCItuvtrnkNF4OZBbF9w8u86O+Cj4EyFDYSreP42h+B
-         b4HlYv56HeLyWX8o0BcG9HLkolYxIwfQ8xFjcFQVRTICg4ej+L1JK+9Pq13EasxybIZz
-         APK28KVpB+peXSGYYdkQ8WEqVrECMof/v64nE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=rLGioZBzY6aTy9LYR+wdGzWR5sgUmakJMOYeDLzn2yknJv5Yo3LXJpVAWAWGOGI3id
-         JlF0DWdlkWA/P2FeNVKcf8YDRUu6ZWKMpysAMua2Pm0Y8cpHNZMHvJqkA5IPR6z/9Is9
-         /zA6gAvLYNUBh7xEX/D8jAa8DLJsucCL0DkjM=
-Received: by 10.220.3.211 with SMTP id 19mr10248170vco.7.1259198178242; Wed, 
-	25 Nov 2009 17:16:18 -0800 (PST)
-In-Reply-To: <7v8wduksgq.fsf@alter.siamese.dyndns.org>
+	id S1758934AbZKZBUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 20:20:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758918AbZKZBUR
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 20:20:17 -0500
+Received: from george.spearce.org ([209.20.77.23]:33075 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758915AbZKZBUQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 20:20:16 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id C91223842F; Thu, 26 Nov 2009 01:20:22 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1259143617-26580-3-git-send-email-sam@vilain.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133751>
 
-Heya,
+Sam Vilain <sam@vilain.net> wrote:
+> diff --git a/builtin-fetch.c b/builtin-fetch.c
+> index 209f502..b3b8766 100644
+> @@ -109,6 +109,109 @@ static void find_non_local_tags(struct transport *transport,
+>  			struct ref **head,
+>  			struct ref ***tail);
+>  
+> +char* get_url_hostname(const char *url)
 
-On Thu, Nov 26, 2009 at 02:03, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> * sr/vcs-helper (2009-11-18) 12 commits
-> =A0- Add Python support library for remote helpers
-> =A0- Basic build infrastructure for Python scripts
-> =A0- Allow helpers to report in "list" command that the ref is unchan=
-ged
-> =A0- Fix various memory leaks in transport-helper.c
-> =A0- Allow helper to map private ref names into normal names
-> =A0- Add support for "import" helper command
-> =A0- Allow specifying the remote helper in the url
-> =A0- Add a config option for remotes to specify a foreign vcs
-> =A0- Allow fetch to modify refs
-> =A0- Use a function to determine whether a remote is valid
-> =A0- Allow programs to not depend on remotes having urls
-> =A0- Fix memory leak in helper method for disconnect
->
-> Replaced again, and looking good. =A0Perhaps Daniel has some comments=
-?
+Minor nit, but we mark any function not used outside of the module
+as static.  Especially in a builtin-*.c since they all link into
+the same namespace.  If this is meant to be reused, it belongs in
+connect.c most likely, that's where we already have code like this
+to get the SSH hostname out of a URL for SSH connections.
 
-Indeed, Johan, Daniel, is the current version good for next?
+I don't have time right now to read the rest of this series, but
+the general approach of fetching to a temporary mirror space before
+checking if you really are current is a good one.
 
---=20
-Cheers,
+I'm not sure that storing the list of mirrors inside of the remote
+makes much sense, I would think the user would want to store only
+a handful of "fast" URLs.
 
-Sverre Rabbelier
+And even then I wonder why this can't just be the url[1]..url[n-1]
+entries in the configuration file.  push pushes to all of the
+URLs at once, "seeding the mirrors".  Why can't fetch use the same
+configuration?
+
+-- 
+Shawn.
