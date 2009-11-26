@@ -1,123 +1,105 @@
 From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH/RFC 00/11] daemon-win32
-Date: Thu, 26 Nov 2009 01:43:04 +0100
-Message-ID: <40aa078e0911251643m7837cd82g8ea9d631c012d62@mail.gmail.com>
-References: <1259195958-2372-1-git-send-email-kusmabite@gmail.com>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Subject: [PATCH/RFC 00/11] daemon-win32
+Date: Thu, 26 Nov 2009 00:44:09 +0000
+Message-ID: <1259196260-3064-1-git-send-email-kusmabite@gmail.com>
 Cc: git@vger.kernel.org, dotzenlabs@gmail.com,
 	Erik Faye-Lund <kusmabite@gmail.com>
-To: msysgit@googlecode.com
-X-From: git-owner@vger.kernel.org Thu Nov 26 01:43:12 2009
+To: msysgit@googlegroups.com
+X-From: git-owner@vger.kernel.org Thu Nov 26 01:44:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDSS0-0000ei-36
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 01:43:12 +0100
+	id 1NDST5-0000z6-92
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 01:44:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759669AbZKZAnA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Nov 2009 19:43:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753592AbZKZAm7
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 19:42:59 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:41520 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753404AbZKZAm7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Nov 2009 19:42:59 -0500
-Received: by ewy19 with SMTP id 19so297816ewy.21
-        for <git@vger.kernel.org>; Wed, 25 Nov 2009 16:43:04 -0800 (PST)
+	id S965054AbZKZAoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 19:44:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759876AbZKZAoG
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 19:44:06 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:40313 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759731AbZKZAoG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 19:44:06 -0500
+Received: by ey-out-2122.google.com with SMTP id 4so88193eyf.19
+        for <git@vger.kernel.org>; Wed, 25 Nov 2009 16:44:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=V/pT8YADRRDbJUw3YgHFob2T1lHbjfkTlMJtzbspofw=;
-        b=USDfvnM2pzg2CSvlbk9f3sgDBVrY1+uVFDBqxIhK7lSQAlhN8JU3PzXuenishgD7zR
-         pvQl8KUhvZL8OfxjdT5tco/qaV4I72vVFQF3N+tYtwMdfpryA7rnLGN5mi0NRB3avWrh
-         6Lg/Gv+ZUeDXdJEi7fwXkforX27pjPofrVc48=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=B7jo5y3b8fCjsXD4rtg7G6YrfigwfnbvU6Y246MK5yI=;
+        b=h94oRYXQyaayXD5eFm3SmYuD3yyQEu0xWdLsntr0nLbjczzqGG5eGhUVTuOZY8npRD
+         LT3tMU3MNzRMMeJXWKVcgDcKDmdm/QcKmhY94yMfvucApr0VcfsNGi+YQusC4B7pMrBR
+         6vmUmSdTQhEJRuZq+X+t95WaR+N6V7cCQuYNU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=Wb2WJAUu7LTyXndGypcZRhLXbTLpm7TPzuGeZfmCPnoT5l/EGhJrO8lzKPEaVFQCQa
-         uZnQUKL1ObSrsxDGteGGsyuSCAQjnA4IqKk8zTIJBrELy3OLJaw+raHSYPBTo8mWTK1N
-         T3uAG1/sJUGURywBZBJPdY/g4TvT5zrLHxvTs=
-Received: by 10.216.93.12 with SMTP id k12mr2564406wef.195.1259196184378; Wed, 
-	25 Nov 2009 16:43:04 -0800 (PST)
-In-Reply-To: <1259195958-2372-1-git-send-email-kusmabite@gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=YSJxSdB5bb5m01t5AizRNkNzhW6K9FdK2khsMwE3bkq6PT+R2+Cqov7oa5GUKN2zsl
+         WAef1VrYejkz1bQt/YwCyDKCwCERQbl2D/PceaNTL3MO0sNU3QcQYer8Ma4sZ2SAqE6P
+         /QMtoDOdlED/6om7SpHmdEeA8QzNFp90drCbs=
+Received: by 10.213.23.205 with SMTP id s13mr1413751ebb.4.1259196251502;
+        Wed, 25 Nov 2009 16:44:11 -0800 (PST)
+Received: from localhost (cm-84.215.142.12.getinternet.no [84.215.142.12])
+        by mx.google.com with ESMTPS id 24sm390016eyx.30.2009.11.25.16.44.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 25 Nov 2009 16:44:10 -0800 (PST)
+X-Mailer: git-send-email 1.6.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133731>
 
-Awww, sorry people. I managed to send this one to the wrong
-msysgit-account. I'll repost, as I think it's important to get that
-list involved as well.
+This is my stab at cleaning up Mike Pape's patches for git-daemon
+on Windows for submission, plus some of my own.
 
-On Thu, Nov 26, 2009 at 1:39 AM, Erik Faye-Lund
-<kusmabite@googlemail.com> wrote:
-> This is my stab at cleaning up Mike Pape's patches for git-daemon
-> on Windows for submission, plus some of my own.
->
-> * Patch 1-4 originate from Mike Pape, but have been cleaned up quite
-> =A0a lot by me. I hope Mike won't hate me. Credit have been retained,
-> =A0as all important code here were written by Mike. The commit
-> =A0messages were written mostly by me.
->
-> * Patch 5 is a trivial old-style function declaration fix.
->
-> * Patch 6 introduces two new functions to the run-command API,
-> =A0kill_async() and is_async_alive().
->
-> * Patch 7-8 removes the stdin/stdout redirection for the service
-> =A0functions, as redirecting won't work for the threaded version.
->
-> * Patch 9 converts the daemon-code to use the run-command API. This
-> =A0is the patch I expect to be the most controversial.
->
-> * Patch 10 is about using line-buffered mode instead of full-buffered
-> =A0mode for stderr.
->
-> * Patch 11 finally enables compilation of git-daemon on MinGW.
->
-> Let the flames begin!
->
-> Erik Faye-Lund (7):
-> =A0inet_ntop: fix a couple of old-style decls
-> =A0run-command: add kill_async() and is_async_alive()
-> =A0run-command: support input-fd
-> =A0daemon: use explicit file descriptor
-> =A0daemon: use run-command api for async serving
-> =A0daemon: use full buffered mode for stderr
-> =A0mingw: compile git-daemon
->
-> Mike Pape (4):
-> =A0mingw: add network-wrappers for daemon
-> =A0strbuf: add non-variadic function strbuf_vaddf()
-> =A0mingw: implement syslog
-> =A0compat: add inet_pton and inet_ntop prototypes
->
-> =A0Makefile =A0 =A0 =A0 =A0 =A0 | =A0 =A08 ++-
-> =A0compat/inet_ntop.c | =A0 22 ++------
-> =A0compat/inet_pton.c | =A0 =A08 ++-
-> =A0compat/mingw.c =A0 =A0 | =A0111 ++++++++++++++++++++++++++++++++++=
-+++++++--
-> =A0compat/mingw.h =A0 =A0 | =A0 32 ++++++++++++
-> =A0daemon.c =A0 =A0 =A0 =A0 =A0 | =A0134 ++++++++++++++++++++++++++--=
-------------------------
-> =A0git-compat-util.h =A0| =A0 =A09 ++++
-> =A0run-command.c =A0 =A0 =A0| =A0 32 ++++++++++++-
-> =A0run-command.h =A0 =A0 =A0| =A0 =A02 +
-> =A0strbuf.c =A0 =A0 =A0 =A0 =A0 | =A0 15 ++++--
-> =A0strbuf.h =A0 =A0 =A0 =A0 =A0 | =A0 =A01 +
-> =A011 files changed, 274 insertions(+), 100 deletions(-)
->
->
+* Patch 1-4 originate from Mike Pape, but have been cleaned up quite
+  a lot by me. I hope Mike won't hate me. Credit have been retained,
+  as all important code here were written by Mike. The commit
+  messages were written mostly by me.
 
+* Patch 5 is a trivial old-style function declaration fix.
 
+* Patch 6 introduces two new functions to the run-command API,
+  kill_async() and is_async_alive().
 
---=20
-Erik "kusma" Faye-Lund
+* Patch 7-8 removes the stdin/stdout redirection for the service
+  functions, as redirecting won't work for the threaded version.
+
+* Patch 9 converts the daemon-code to use the run-command API. This
+  is the patch I expect to be the most controversial.
+
+* Patch 10 is about using line-buffered mode instead of full-buffered
+  mode for stderr.
+
+* Patch 11 finally enables compilation of git-daemon on MinGW.
+
+Let the flames begin!
+
+Erik Faye-Lund (7):
+  inet_ntop: fix a couple of old-style decls
+  run-command: add kill_async() and is_async_alive()
+  run-command: support input-fd
+  daemon: use explicit file descriptor
+  daemon: use run-command api for async serving
+  daemon: use full buffered mode for stderr
+  mingw: compile git-daemon
+
+Mike Pape (4):
+  mingw: add network-wrappers for daemon
+  strbuf: add non-variadic function strbuf_vaddf()
+  mingw: implement syslog
+  compat: add inet_pton and inet_ntop prototypes
+
+ Makefile           |    8 ++-
+ compat/inet_ntop.c |   22 ++------
+ compat/inet_pton.c |    8 ++-
+ compat/mingw.c     |  111 +++++++++++++++++++++++++++++++++++++++++--
+ compat/mingw.h     |   32 ++++++++++++
+ daemon.c           |  134 ++++++++++++++++++++++++++--------------------------
+ git-compat-util.h  |    9 ++++
+ run-command.c      |   32 ++++++++++++-
+ run-command.h      |    2 +
+ strbuf.c           |   15 ++++--
+ strbuf.h           |    1 +
+ 11 files changed, 274 insertions(+), 100 deletions(-)
