@@ -1,82 +1,65 @@
-From: Thomas Singer <thomas.singer@syntevo.com>
-Subject: Re: OS X and umlauts in file names
-Date: Thu, 26 Nov 2009 09:28:04 +0100
-Message-ID: <4B0E3C14.9070404@syntevo.com>
-References: <4B0ABA42.1060103@syntevo.com>	<alpine.LNX.2.00.0911231403100.14365@iabervon.org>	<4B0CEFCA.5020605@syntevo.com> <m21vjmkyxh.fsf@igel.home>
+From: Yann Simon <yann.simon.fr@gmail.com>
+Subject: Re: [egit] Git repository with multiple eclipse projects ?
+Date: Thu, 26 Nov 2009 09:39:11 +0100
+Message-ID: <551f769b0911260039u1f75decg66eded8069e67791@mail.gmail.com>
+References: <20091125164734.GF21347@linagora.com>
+	 <20091126004817.GL11919@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Thu Nov 26 09:27:30 2009
+Cc: Yann Dirson <ydirson@linagora.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Nov 26 09:39:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDZhI-0003bT-KR
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 09:27:28 +0100
+	id 1NDZsn-0007cu-2n
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 09:39:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759590AbZKZI1R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Nov 2009 03:27:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759572AbZKZI1R
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 03:27:17 -0500
-Received: from syntevo.com ([85.214.39.145]:52811 "EHLO syntevo.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759476AbZKZI1Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Nov 2009 03:27:16 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1]) with ESMTP id 0A42137C7B0
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <m21vjmkyxh.fsf@igel.home>
-X-Enigmail-Version: 0.96.0
+	id S1753475AbZKZIjI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Nov 2009 03:39:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753365AbZKZIjI
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 03:39:08 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:9610 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752753AbZKZIjH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Nov 2009 03:39:07 -0500
+Received: by fg-out-1718.google.com with SMTP id e12so218273fga.1
+        for <git@vger.kernel.org>; Thu, 26 Nov 2009 00:39:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3Tas+ppjRS/Cf+9HQzP0uXihYUHYGegO5/PydB0c5ik=;
+        b=tPDnc1FxB9S8As3fTBF3A3TB8kwPGURIusQmrcNpBd/S9rBnHRt96edIOb4VDxm8Bv
+         uX/HC2Jjjr4hLbhIRHNfg9mY//dnYI/8tCYx6qBqOGsF1RHfJDMQNyNIaimeWjnZ8Dvy
+         oi2Km5LMMsjWN/KG+Let21zRYjzP6+HeWGnKk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kebA+yEKY0MVrdQijqzgTKVeugFCSjKzBnwUB3wntGQC4gBxIxjUIo2VS1W53+YJzW
+         Q8gfWTe+EMsuQRv2utJ3sU0fweJLP38OtJJzxRt8SYd/QEWk3rvVEkfinSOSlv6XiQLq
+         XBFO8oTDlrKQHeLvwahMCKYia39OOSIPEiKyQ=
+Received: by 10.239.144.100 with SMTP id n36mr896502hba.19.1259224751553; Thu, 
+	26 Nov 2009 00:39:11 -0800 (PST)
+In-Reply-To: <20091126004817.GL11919@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133778>
 
-Hi Andreas,
+2009/11/26 Shawn O. Pearce <spearce@spearce.org>:
+> Yann Dirson <ydirson@linagora.com> wrote:
+>> It also does not look like it would be possible to use the "share"
+>> functionnality to setup such a repository from multiple projects (or
+>> from a project set), right ?
+>
+> Nope, I don't think this is supported right now. =C2=A0You need to
+> initialize the git repository by hand in the higher level directory
+> that holds the projects.
 
-Thank you for this hint. When trying
-
- toms-mac-mini:git-umlauts tom$ git stage $'U\314\210berla\314\210nge.t=
-xt'
-
-git shows me no error or other output, but invoking 'git status' again =
-shows
-no difference, the file is still showing up as new file.
-
-I've also tried to use double backslashes, but I could not enter a back=
-slash
-in the OS X Terminal (works fine in other applications). :(
-
---=20
-Tom
-
-Andreas Schwab wrote:
-> Thomas Singer <thomas.singer@syntevo.com> writes:
->=20
->> I've did following:
->>
->>  toms-mac-mini:git-umlauts tom$ ls
->>  =C3=9Cberl=C3=A4nge.txt
->>  toms-mac-mini:git-umlauts tom$ git status
->>  # On branch master
->>  #
->>  # Initial commit
->>  #
->>  # Changes to be committed:
->>  #   (use "git rm --cached <file>..." to unstage)
->>  #
->>   #	new file:   "U\314\210berla\314\210nge.txt"
->>  #
->>  toms-mac-mini:git-umlauts tom$ git stage "U\314\210berla\314\210nge=
-=2Etxt"
->>  fatal: pathspec 'U\314\210berla\314\210nge.txt' did not match any f=
-iles
->=20
-> Try $'U\314\210berla\314\210nge.txt' instead.
-> "U\314\210berla\314\210nge.txt" is the same as
-> "U\\314\\210berla\\314\\210nge.txt" to the shell.
->=20
-> Andreas.
->=20
+That was the question I initialy understood.
