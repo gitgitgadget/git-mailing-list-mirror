@@ -1,92 +1,67 @@
-From: Thomas Singer <thomas.singer@syntevo.com>
-Subject: Re: [egit-dev] Re: jgit problems for file paths with non-ASCII	characters
-Date: Thu, 26 Nov 2009 14:09:09 +0100
-Message-ID: <4B0E7DF5.9040007@syntevo.com>
-References: <4B0D356D.1080709@syntevo.com> <200911252211.55137.robin.rosenberg@dewire.com> <20091126005423.GM11919@spearce.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH (resend)] Let core.excludesfile default to ~/.gitexcludes.
+Date: Thu, 26 Nov 2009 14:27:45 +0100
+Message-ID: <4B0E8251.7050605@drmicha.warpmail.net>
+References: <1258840832-22130-1-git-send-email-Matthieu.Moy@imag.fr> <1259231726-5218-1-git-send-email-Matthieu.Moy@imag.fr> <4B0E6DC9.3070105@drmicha.warpmail.net> <helthi$8k5$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: EGit developer discussion <egit-dev@eclipse.org>,
-	Marc Strapetz <marc.strapetz@syntevo.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Nov 26 14:08:41 2009
+Cc: git@vger.kernel.org
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Nov 26 14:29:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDe5J-0007hW-5a
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 14:08:33 +0100
+	id 1NDeP7-0001HU-OA
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 14:29:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760170AbZKZNIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Nov 2009 08:08:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758084AbZKZNIS
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 08:08:18 -0500
-Received: from syntevo.com ([85.214.39.145]:46371 "EHLO syntevo.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752437AbZKZNIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Nov 2009 08:08:18 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1]) with ESMTP id 0C99A37C7B0
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <20091126005423.GM11919@spearce.org>
-X-Enigmail-Version: 0.96.0
+	id S1759172AbZKZN2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Nov 2009 08:28:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754066AbZKZN2t
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 08:28:49 -0500
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:43340 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753901AbZKZN2t (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Nov 2009 08:28:49 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 28E55C2CB6;
+	Thu, 26 Nov 2009 08:28:53 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Thu, 26 Nov 2009 08:28:54 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=FHnErHGXvzhEUBXENOeKRHzafek=; b=PZmkH2/0qV5ZiGy5mhn+TnUwkYK1KM44HRrloebKjdAfztbF+XQi4XjXeLBMeWlghk0L37MLPr/1eUHmMtmcL+1221MGquKhDsBSfdaO/EojOnKs56HLZQceGhaISmrdjZylokhztY4MuBVzDPM1nynhsZVwNgUepzRFsZTAChs=
+X-Sasl-enc: NoScAYXgJuo/y3/Hm/KVum79ZatABIAthYnpey0Ij88l 1259242133
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3B20E2E65F;
+	Thu, 26 Nov 2009 08:28:53 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091125 Lightning/1.0pre Shredder/3.0.1pre
+In-Reply-To: <helthi$8k5$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133794>
 
-> But as you said, this still doesn't make the Apple normal form
-> any easier.  Though if we know we are on such a strange filesystem
-> we might be able to assume the paths in the repository are equally
-> damaged.  Or not.
-
-Well, if the git-core folks could standardize on, e.g., composed UTF-8
-(rather then just UTF-8), for storing file names in the repository, then
-everything should be clear, isn't it?
-
---
-Best regards,
-Thomas Singer
-=============
-syntevo GmbH
-http://www.syntevo.com
-http://blog.syntevo.com
-
-
-Shawn O. Pearce wrote:
-> Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
->> onsdag 25 november 2009 14:47:25 skrev  Marc Strapetz:
->>> I have noticed that jgit converts file paths to UTF-8 when querying the
->>> repository.
-> ...
->>> Is this a bug or a misconfiguration of my repository? I'm using jgit
->>> (commit e16af839e8a0cc01c52d3648d2d28e4cb915f80f) on Windows.
->> A bug. 
+Paolo Bonzini venit, vidit, dixit 26.11.2009 13:49:
+> On 11/26/2009 01:00 PM, Michael J Gruber wrote:
+>> I'm sorry to jump in so late, and this may sound like bike-shedding, but
+>> right now we have
 >>
->> The problem here is that we need to allow multiple encodings since there
->> is no reliable encoding specified anywhere.
+>> .git/info/exclude
+>> .gitignore
+>>
+>> and this would add
+>>
+>> ~/.gitexcludes
+>>
+>> That is, three terms, or two, where one comes in two variations
+>> (exclude/exludes). I always wondered why we have two.
 > 
-> This is a design fault of both Linux and git.  git gets a byte
-> sequence from readdir and stores that as-is into the repository.
-> We have no way of knowing what that encoding is.  So now everyone
-> touching a Git repository is screwed.
-> 
->> The approach I advocate is
->> the one we use for handling encoding in general. I.e. if it looks like UTF-8,
->> treat it like that else fallback. This is expensive however
-> 
-> We should try to work harder with the git-core folks to get character
-> set encoding for file names worked out.  We might be able to use a
-> configuration setting in the repository to tell us what the proper
-> encoding should be, and if not set, assume UTF-8.
-> 
->> and then we have
->> all the other issues with case insensitive name and the funny property that
->> unicode has when it allows characters to be encoding using multiple sequences
->> of code points as empoloyed by Apple.
-> 
-> But as you said, this still doesn't make the Apple normal form
-> any easier.  Though if we know we are on such a strange filesystem
-> we might be able to assume the paths in the repository are equally
-> damaged.  Or not.
-> 
+> Would you be fine with ~/.gitexclude?
+
+Not really. You see, a user tracking his $HOME will have a ~/.gitignore
+and a ~/.gitexclude then. I think we should distinguish local and global
+"config" files more systematically. Which is why I suggested the subdir,
+or having global in the name.
+
+Michael
