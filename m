@@ -1,82 +1,67 @@
-From: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
-Subject: Re: Please help with GIT install problem.
-Date: Thu, 26 Nov 2009 08:44:45 +0100
-Message-ID: <4B0E31ED.4070002@statsbiblioteket.dk>
-References: <377205.65475.qm@web30806.mail.mud.yahoo.com>
+From: =?ISO-8859-15?Q?Martin_Storsj=F6?= <martin@martin.st>
+Subject: Re: [PATCH/RFC 01/11] mingw: add network-wrappers for daemon
+Date: Thu, 26 Nov 2009 10:24:08 +0200 (EET)
+Message-ID: <alpine.DEB.2.00.0911261015140.14228@cone.home.martin.st>
+References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com> <1259196260-3064-2-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Stephan T." <stman937-lingit@yahoo.com>
-X-From: git-owner@vger.kernel.org Thu Nov 26 08:54:57 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: msysgit@googlegroups.com, git@vger.kernel.org,
+	dotzenlabs@gmail.com, Erik Faye-Lund <kusmabite@gmail.com>
+To: Erik Faye-Lund <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 26 09:24:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDZBp-0001Ts-6R
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 08:54:57 +0100
+	id 1NDZeF-0002af-6E
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 09:24:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759131AbZKZHyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Nov 2009 02:54:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759124AbZKZHyo
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 02:54:44 -0500
-Received: from sbexch03.sb.statsbiblioteket.dk ([130.225.24.68]:41032 "EHLO
-	sbexch03.sb.statsbiblioteket.dk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759061AbZKZHyo (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Nov 2009 02:54:44 -0500
-X-Greylist: delayed 604 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Nov 2009 02:54:44 EST
-Received: from [130.225.25.159] (130.225.25.159) by
- sbexch03.sb.statsbiblioteket.dk (130.225.24.68) with Microsoft SMTP Server id
- 8.1.393.1; Thu, 26 Nov 2009 08:44:45 +0100
-User-Agent: Thunderbird 2.0.0.22 (X11/20090710)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <377205.65475.qm@web30806.mail.mud.yahoo.com>
+	id S1759454AbZKZIYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Nov 2009 03:24:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759377AbZKZIYF
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 03:24:05 -0500
+Received: from mta-out.inet.fi ([195.156.147.13]:46717 "EHLO jenni1.inet.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759450AbZKZIYE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Nov 2009 03:24:04 -0500
+Received: from dsl-tkubrasgw1-ffc4c100-75.dhcp.inet.fi (88.193.196.75) by jenni1.inet.fi (8.5.014)
+        id 4A776AE60435AF21; Thu, 26 Nov 2009 10:24:08 +0200
+X-X-Sender: martin@cone.home.martin.st
+In-Reply-To: <1259196260-3064-2-git-send-email-kusmabite@gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133776>
 
-Stephan T. wrote:
-> Hello there,
-> 
-> My system is a:
-> % uname -a
-> Linux naboo 2.4.21-50.ELsmp #1 SMP Tue May 8 17:18:29 EDT 2007 i686 i686 i386 GNU/Linux
-> 
+Hi,
 
-Looks like you're on RHEL 3 or a derivative.
+First of all, great that you're working on adding daemon support for 
+windows!
 
-> Trying to install "git-1.6.5.3".  Configure goes happily to the end but make gives me the following error:
-> 
->> make
->     CC fast-import.o
-> In file included from /usr/include/openssl/ssl.h:179,
->                  from git-compat-util.h:138,
->                  from builtin.h:4,
->                  from fast-import.c:143:
-> /usr/include/openssl/kssl.h:72:18: krb5.h: No such file or directory
-> In file included from /usr/include/openssl/ssl.h:179,
->                  from git-compat-util.h:138,
->                  from builtin.h:4,
->                  from fast-import.c:143:
-> /usr/include/openssl/kssl.h:134: syntax error before "krb5_enctype"
-> 
-> 
-> What is missing on my system?
-> 
+On Thu, 26 Nov 2009, Erik Faye-Lund wrote:
 
-You need to add "-I/usr/kerberos/include" to CFLAGS to build with 
-openssl on el3.
+> +static void wsa_init(void)
+>  {
+> +	static int initialized = 0;
+>  	WSADATA wsa;
+>  
+> +	if (initialized)
+> +		return;
+> +
+>  	if (WSAStartup(MAKEWORD(2,2), &wsa))
+>  		die("unable to initialize winsock subsystem, error %d",
+>  			WSAGetLastError());
+>  	atexit((void(*)(void)) WSACleanup);
+> +	initialized = 1;
+> +}
 
-Instead of doing your own build you could install the packages I 
-maintain for my own use:
-http://jupiterrise.com/tmp/git-el3
+Something similar to this was merged into master recently as part of my 
+mingw/ipv6 patches, so by rebasing your patch on top of that, this patch 
+will probably get a bit smaller.
 
-This is just a temporary location, in the future I hope so have this in 
-rpmforge.
+Also, the getaddrinfo-compatibility wrappers perhaps may need some minor 
+updates to handle the use cases needed for setting up listening sockets.
 
-Not that perl-Git will require perl-Error from rpmforge 
-(http://packages.sw.be/perl-Error)
-
--tgc
+// Martin
