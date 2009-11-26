@@ -1,9 +1,8 @@
 From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: [PATCH/RFC 02/11] strbuf: add non-variadic function strbuf_vaddf()
-Date: Thu, 26 Nov 2009 00:39:09 +0000
-Message-ID: <1259195958-2372-3-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH/RFC 01/11] mingw: add network-wrappers for daemon
+Date: Thu, 26 Nov 2009 00:39:08 +0000
+Message-ID: <1259195958-2372-2-git-send-email-kusmabite@gmail.com>
 References: <1259195958-2372-1-git-send-email-kusmabite@gmail.com>
- <1259195958-2372-2-git-send-email-kusmabite@gmail.com>
 Cc: git@vger.kernel.org, dotzenlabs@gmail.com,
 	Erik Faye-Lund <kusmabite@gmail.com>
 To: msysgit@googlecode.com
@@ -12,115 +11,195 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDSOS-0007kB-WB
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 01:39:33 +0100
+	id 1NDSOS-0007kB-FP
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 01:39:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964972AbZKZAjV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2009 19:39:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934965AbZKZAjU
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 19:39:20 -0500
+	id S934959AbZKZAjQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2009 19:39:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934864AbZKZAjQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Nov 2009 19:39:16 -0500
 Received: from mail-ew0-f219.google.com ([209.85.219.219]:41835 "EHLO
 	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934864AbZKZAjT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2009 19:39:19 -0500
+	with ESMTP id S934953AbZKZAjP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2009 19:39:15 -0500
 Received: by mail-ew0-f219.google.com with SMTP id 19so295613ewy.21
-        for <git@vger.kernel.org>; Wed, 25 Nov 2009 16:39:26 -0800 (PST)
+        for <git@vger.kernel.org>; Wed, 25 Nov 2009 16:39:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=xJKZ8RmFXz190VH89UfLMkRzw76M3RIRt11f2Gj1EFk=;
-        b=Ik1pOsL73cPhdiphJ2+b/Rwc7RJP/lpKD6B8bhyLJUbwf9CjnYZyRUcE8av72ZYjbc
-         ewI9JpOcv6Jn+IOl82v66bsExZWRas1HfJDRMRJ33BZy1jRSmtUPXW0oq/dywhwsjtNd
-         SzAvzdxcb3Ve9pL+pWz7kICB7HL7vDTcFz5Mc=
+        bh=7kyDgnnkR5ZwPOr/ssT6r1+rJUQKLqNjLScpjQq6flc=;
+        b=OTuvgEdYm+rFf81lU+LlqQdjT5ezHojn+Lg+UqC+xmrQM14CJN7LGIQYUHK35pmHYR
+         f+LT6sD6+KI1yiXgVbtECYKVxacR8oQwpdgmfS/lRDt45mimVZQopqmghe6HGHdTFuGV
+         Drpe4Luebx3ciGjYzN5yw+VOg1FQ10zYHT0BA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ckDdc0xNKiD9W0oGmOmtniUPIHXNPGFmMSxm8cEufAicN/82J4pHjIYlIsSKgf5rFb
-         sN8V8L/z5yO3iscB07lxXuAEwdyunO8m/t6NsVlwLJSZQ/GjAye6FxFCHUoTBthWzNAx
-         X5asXK/buTtwx2cC31AJ7pJAm71EZyGOdpTOE=
-Received: by 10.213.24.12 with SMTP id t12mr1842733ebb.70.1259195966139;
-        Wed, 25 Nov 2009 16:39:26 -0800 (PST)
+        b=vT2nI1WVvuf//fpLw61FVBCP75OCTOTyTezWU25DRCm8OpaF1njJNfoe7qSxoqlYgh
+         93seyDAoMD7irtOTA8RPiVfvvAuO/DD0bZuc9nNVxCtDeVrrgzGYVTDbqpOZrluOvgiB
+         6i/cCKav/HPga6VRSz4BmyzyDaVIi2I1nASdw=
+Received: by 10.213.24.12 with SMTP id t12mr1842673ebb.70.1259195961144;
+        Wed, 25 Nov 2009 16:39:21 -0800 (PST)
 Received: from localhost (cm-84.215.142.12.getinternet.no [84.215.142.12])
-        by mx.google.com with ESMTPS id 7sm387084eyg.25.2009.11.25.16.39.25
+        by mx.google.com with ESMTPS id 28sm384265eyg.36.2009.11.25.16.39.20
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 25 Nov 2009 16:39:25 -0800 (PST)
+        Wed, 25 Nov 2009 16:39:20 -0800 (PST)
 X-Mailer: git-send-email 1.6.4
-In-Reply-To: <1259195958-2372-2-git-send-email-kusmabite@gmail.com>
+In-Reply-To: <1259195958-2372-1-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133720>
 
 From: Mike Pape <dotzenlabs@gmail.com>
 
-This patch adds strbuf_vaddf, which takes a va_list as input
-instead of the variadic input that strbuf_addf takes. This
-is useful for fowarding varargs to strbuf_addf.
+git-daemon requires some socket-functionality that is not yet
+supported in the Windows-port. This patch adds said functionality,
+and makes sure WSAStartup gets called by socket(), since it is the
+first network-call in git-daemon. In addition, a check is added to
+prevent WSAStartup (and WSACleanup, though atexit) from being
+called more than once, since git-daemon calls both socket() and
+gethostbyname().
 
 Signed-off-by: Mike Pape <dotzenlabs@gmail.com>
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- strbuf.c |   15 +++++++++------
- strbuf.h |    1 +
- 2 files changed, 10 insertions(+), 6 deletions(-)
+ compat/mingw.c |   60 ++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ compat/mingw.h |   16 ++++++++++++++
+ 2 files changed, 72 insertions(+), 4 deletions(-)
 
-diff --git a/strbuf.c b/strbuf.c
-index a6153dc..e1833fb 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -190,23 +190,18 @@ void strbuf_adddup(struct strbuf *sb, size_t pos, size_t len)
- 	strbuf_setlen(sb, sb->len + len);
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 10d6796..458021b 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -983,23 +983,37 @@ char **make_augmented_environ(const char *const *vars)
+ 	return env;
  }
  
--void strbuf_addf(struct strbuf *sb, const char *fmt, ...)
-+void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap)
+-/* this is the first function to call into WS_32; initialize it */
+-#undef gethostbyname
+-struct hostent *mingw_gethostbyname(const char *host)
++static void wsa_init(void)
  {
- 	int len;
--	va_list ap;
++	static int initialized = 0;
+ 	WSADATA wsa;
  
- 	if (!strbuf_avail(sb))
- 		strbuf_grow(sb, 64);
--	va_start(ap, fmt);
- 	len = vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, ap);
--	va_end(ap);
- 	if (len < 0)
- 		die("your vsnprintf is broken");
- 	if (len > strbuf_avail(sb)) {
- 		strbuf_grow(sb, len);
--		va_start(ap, fmt);
- 		len = vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, ap);
--		va_end(ap);
- 		if (len > strbuf_avail(sb)) {
- 			die("this should not happen, your snprintf is broken");
- 		}
-@@ -214,6 +209,14 @@ void strbuf_addf(struct strbuf *sb, const char *fmt, ...)
- 	strbuf_setlen(sb, sb->len + len);
- }
- 
-+void strbuf_addf(struct strbuf *sb, const char *fmt, ...)
-+{
-+	va_list va;
-+	va_start(va, fmt);
-+	strbuf_vaddf(sb, fmt, va);
-+	va_end(va);
++	if (initialized)
++		return;
++
+ 	if (WSAStartup(MAKEWORD(2,2), &wsa))
+ 		die("unable to initialize winsock subsystem, error %d",
+ 			WSAGetLastError());
+ 	atexit((void(*)(void)) WSACleanup);
++	initialized = 1;
 +}
 +
- void strbuf_expand(struct strbuf *sb, const char *format, expand_fn_t fn,
- 		   void *context)
++/* this can be the first function to call into WS_32; initialize it */
++#undef gethostbyname
++struct hostent *mingw_gethostbyname(const char *host)
++{
++	wsa_init();
+ 	return gethostbyname(host);
+ }
+ 
++/* this can be the first function to call into WS_32; initialize it */
+ int mingw_socket(int domain, int type, int protocol)
  {
-diff --git a/strbuf.h b/strbuf.h
-index d05e056..8686bcb 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -119,6 +119,7 @@ extern size_t strbuf_expand_dict_cb(struct strbuf *sb, const char *placeholder,
++	SOCKET s;
+ 	int sockfd;
+-	SOCKET s = WSASocket(domain, type, protocol, NULL, 0, 0);
++
++	wsa_init();
++	s = WSASocket(domain, type, protocol, NULL, 0, 0);
+ 	if (s == INVALID_SOCKET) {
+ 		/*
+ 		 * WSAGetLastError() values are regular BSD error codes
+@@ -1029,6 +1043,44 @@ int mingw_connect(int sockfd, struct sockaddr *sa, size_t sz)
+ 	return connect(s, sa, sz);
+ }
  
- __attribute__((format(printf,2,3)))
- extern void strbuf_addf(struct strbuf *sb, const char *fmt, ...);
-+extern void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
++#undef bind
++int mingw_bind(int sockfd, struct sockaddr *sa, size_t sz)
++{
++	SOCKET s = (SOCKET)_get_osfhandle(sockfd);
++	return bind(s, sa, sz);
++}
++
++#undef setsockopt
++int mingw_setsockopt(int sockfd, int lvl, int optname, void *optval, int optlen)
++{
++	SOCKET s = (SOCKET)_get_osfhandle(sockfd);
++	return setsockopt(s, lvl, optname, (const char*)optval, optlen);
++}
++
++#undef listen
++int mingw_listen(int sockfd, int backlog)
++{
++	SOCKET s = (SOCKET)_get_osfhandle(sockfd);
++	return listen(s, backlog);
++}
++
++#undef accept
++int mingw_accept(int sockfd1, struct sockaddr *sa, socklen_t *sz)
++{
++	int sockfd2;
++
++	SOCKET s1 = (SOCKET)_get_osfhandle(sockfd1);
++	SOCKET s2 = accept(s1, sa, sz);
++
++	/* convert into a file descriptor */
++	if ((sockfd2 = _open_osfhandle(s2, O_RDWR|O_BINARY)) < 0) {
++		closesocket(s2);
++		return error("unable to make a socket file descriptor: %s",
++			strerror(errno));
++	}
++	return sockfd2;
++}
++
+ #undef rename
+ int mingw_rename(const char *pold, const char *pnew)
+ {
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 1978f8a..f362f61 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -5,6 +5,7 @@
+  */
  
- extern size_t strbuf_fread(struct strbuf *, size_t, FILE *);
- /* XXX: if read fails, any partial read is undone */
+ typedef int pid_t;
++typedef int socklen_t;
+ #define hstrerror strerror
+ 
+ #define S_IFLNK    0120000 /* Symbolic link */
+@@ -33,6 +34,9 @@ typedef int pid_t;
+ #define F_SETFD 2
+ #define FD_CLOEXEC 0x1
+ 
++#define EAFNOSUPPORT WSAEAFNOSUPPORT
++#define ECONNABORTED WSAECONNABORTED
++
+ struct passwd {
+ 	char *pw_name;
+ 	char *pw_gecos;
+@@ -182,6 +186,18 @@ int mingw_socket(int domain, int type, int protocol);
+ int mingw_connect(int sockfd, struct sockaddr *sa, size_t sz);
+ #define connect mingw_connect
+ 
++int mingw_bind(int sockfd, struct sockaddr *sa, size_t sz);
++#define bind mingw_bind
++
++int mingw_setsockopt(int sockfd, int lvl, int optname, void *optval, int optlen);
++#define setsockopt mingw_setsockopt
++
++int mingw_listen(int sockfd, int backlog);
++#define listen mingw_listen
++
++int mingw_accept(int sockfd, struct sockaddr *sa, socklen_t *sz);
++#define accept mingw_accept
++
+ int mingw_rename(const char*, const char*);
+ #define rename mingw_rename
+ 
 -- 
 1.6.5.rc2.7.g4f8d3
