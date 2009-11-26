@@ -1,108 +1,107 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH/RFC 02/11] strbuf: add non-variadic function 
-	strbuf_vaddf()
-Date: Thu, 26 Nov 2009 11:38:49 +0100
-Message-ID: <40aa078e0911260238rd0c90cag126709d1de5f50de@mail.gmail.com>
-References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com>
-	 <1259196260-3064-2-git-send-email-kusmabite@gmail.com>
-	 <1259196260-3064-3-git-send-email-kusmabite@gmail.com>
-	 <7vskc2ksnn.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
+From: =?ISO-8859-15?Q?Martin_Storsj=F6?= <martin@martin.st>
+Subject: [PATCH] Improve the mingw getaddrinfo stub to handle more use
+ cases
+Date: Thu, 26 Nov 2009 12:43:44 +0200 (EET)
+Message-ID: <alpine.DEB.2.00.0911261241590.14228@cone.home.martin.st>
+References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com> <1259196260-3064-2-git-send-email-kusmabite@gmail.com> <alpine.DEB.2.00.0911261015140.14228@cone.home.martin.st>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: msysgit@googlegroups.com, git@vger.kernel.org,
-	dotzenlabs@gmail.com, Alex Riesen <raa.lkml@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 26 11:38:56 2009
+	dotzenlabs@gmail.com, Erik Faye-Lund <kusmabite@gmail.com>
+To: Erik Faye-Lund <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 26 11:44:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDbkW-0003Zj-92
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 11:38:56 +0100
+	id 1NDbpf-0005aC-Kb
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 11:44:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760284AbZKZKip convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Nov 2009 05:38:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760267AbZKZKio
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 05:38:44 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:48694 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759392AbZKZKin convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Nov 2009 05:38:43 -0500
-Received: by ewy19 with SMTP id 19so290294ewy.21
-        for <git@vger.kernel.org>; Thu, 26 Nov 2009 02:38:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=j2UKjsJD76jMwwvJMXL3LU65Qi/sKvTvqiK4Rmqe0U0=;
-        b=Fhnxxc0devGAwv5EerZKmkDRnehXvxXRNHlEMmNcTgMgeGLJyz47n5lDk9dAvw9MCt
-         RCxEA1qMc4ZraDu3QXR6uFBJoO4b3HlhygCIl44A3RgVtNt//IKPMtnFO7vVvWq+IOaV
-         jFgX9SpakCMUf6E3GKhv5USdn/gd9+xFflZls=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=kR/saIo4hw2fU4T3Uy69Lsir5Xun/yAjDqW8VBLO21rM81ZtU+e6VKWEyuyVrpYzAj
-         sRAQpjpF1fLnYUpU5lZ3AkOX+daLmV+NamMP6Ms6/rIPOwiU6nn50/xaHVxBR1z+WwSk
-         CrQ26bi+fPjidJex/Dbp96hPDhpuSIxLXB3yQ=
-Received: by 10.216.88.68 with SMTP id z46mr542796wee.27.1259231929263; Thu, 
-	26 Nov 2009 02:38:49 -0800 (PST)
-In-Reply-To: <7vskc2ksnn.fsf@alter.siamese.dyndns.org>
+	id S1752030AbZKZKn4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Nov 2009 05:43:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750896AbZKZKnz
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 05:43:55 -0500
+Received: from mta-out.inet.fi ([195.156.147.13]:33481 "EHLO kirsi2.inet.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750767AbZKZKnz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Nov 2009 05:43:55 -0500
+Received: from dsl-tkubrasgw1-ffc4c100-75.dhcp.inet.fi (88.193.196.75) by kirsi2.inet.fi (8.5.014)
+        id 4A77692A0468D50D; Thu, 26 Nov 2009 12:43:59 +0200
+X-X-Sender: martin@cone.home.martin.st
+In-Reply-To: <alpine.DEB.2.00.0911261015140.14228@cone.home.martin.st>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133781>
 
-On Thu, Nov 26, 2009 at 1:59 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Erik Faye-Lund <kusmabite@googlemail.com> writes:
->
->> +void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap)
->> =A0{
->> =A0 =A0 =A0 int len;
->>
->> =A0 =A0 =A0 if (!strbuf_avail(sb))
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_grow(sb, 64);
->> =A0 =A0 =A0 len =3D vsnprintf(sb->buf + sb->len, sb->alloc - sb->len=
-, fmt, ap);
->> =A0 =A0 =A0 if (len < 0)
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("your vsnprintf is broken");
->> =A0 =A0 =A0 if (len > strbuf_avail(sb)) {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_grow(sb, len);
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 len =3D vsnprintf(sb->buf + sb->len, sb-=
->alloc - sb->len, fmt, ap);
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (len > strbuf_avail(sb)) {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("this should not hap=
-pen, your snprintf is broken");
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
->
-> Hmm, I would have expected to see va_copy() somewhere in the patch te=
-xt.
-> Is it safe to reuse ap like this in two separate invocations of
-> vsnprintf()?
->
+Allow the node parameter to be null, which is used for getting
+the default bind address.
 
-I think your expectation is well justified, this seems to be a
-portability-bug waiting to happen. Sorry for missing this prior to
-sending out - on Windows this is known to work, and this function is
-currently only used from the Windows implementation of syslog.
+Also allow the hints parameter to be null, to improve standard
+conformance of the stub implementation a little.
 
-How kosher is it to use va_copy in the git-core, considering that it's
-C99? A quick grep reveals only one occurrence of va_copy in the
-source, and that's in compat/winansi.c. Searching the history of next
-reveals that Alex Riesen (CC'd) already removed one occurrence
-(4bf5383), so I'm starting to get slightly scared it might not be OK.
+Signed-off-by: Martin Storsjo <martin@martin.st>
+---
 
-In practice it seems that something like the following works
-portably-enough for many applications, dunno if it's something we'll
-be happy with:
-#ifndef va_copy
-#define va_copy(a,b) ((a) =3D (b))
-#endif
+This patch adds support for the getaddrinfo parameters used by git-daemon, 
+as mentioned earlier.
 
---=20
-Erik "kusma" Faye-Lund
+ compat/mingw.c |   20 +++++++++++++-------
+ 1 files changed, 13 insertions(+), 7 deletions(-)
+
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 0653560..17d1314 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -913,19 +913,22 @@ static int WSAAPI getaddrinfo_stub(const char *node, const char *service,
+ 				   const struct addrinfo *hints,
+ 				   struct addrinfo **res)
+ {
+-	struct hostent *h = gethostbyname(node);
++	struct hostent *h = NULL;
+ 	struct addrinfo *ai;
+ 	struct sockaddr_in *sin;
+ 
+-	if (!h)
+-		return WSAGetLastError();
++	if (node) {
++		h = gethostbyname(node);
++		if (!h)
++			return WSAGetLastError();
++	}
+ 
+ 	ai = xmalloc(sizeof(struct addrinfo));
+ 	*res = ai;
+ 	ai->ai_flags = 0;
+ 	ai->ai_family = AF_INET;
+-	ai->ai_socktype = hints->ai_socktype;
+-	switch (hints->ai_socktype) {
++	ai->ai_socktype = hints ? hints->ai_socktype : 0;
++	switch (ai->ai_socktype) {
+ 	case SOCK_STREAM:
+ 		ai->ai_protocol = IPPROTO_TCP;
+ 		break;
+@@ -937,14 +940,17 @@ static int WSAAPI getaddrinfo_stub(const char *node, const char *service,
+ 		break;
+ 	}
+ 	ai->ai_addrlen = sizeof(struct sockaddr_in);
+-	ai->ai_canonname = strdup(h->h_name);
++	ai->ai_canonname = h ? strdup(h->h_name) : NULL;
+ 
+ 	sin = xmalloc(ai->ai_addrlen);
+ 	memset(sin, 0, ai->ai_addrlen);
+ 	sin->sin_family = AF_INET;
+ 	if (service)
+ 		sin->sin_port = htons(atoi(service));
+-	sin->sin_addr = *(struct in_addr *)h->h_addr;
++	if (h)
++		sin->sin_addr = *(struct in_addr *)h->h_addr;
++	else
++		sin->sin_addr.s_addr = INADDR_ANY;
+ 	ai->ai_addr = (struct sockaddr *)sin;
+ 	ai->ai_next = 0;
+ 	return 0;
+-- 
+1.6.4.4
