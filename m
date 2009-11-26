@@ -1,153 +1,91 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Octopus merge
-Date: Thu, 26 Nov 2009 17:52:39 +0100
-Message-ID: <4B0EB257.8080002@drmicha.warpmail.net>
-References: <4B0EA512.1050001@loria.fr>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What should a user expect from git log -M -- file
+Date: Thu, 26 Nov 2009 09:14:37 -0800 (PST)
+Message-ID: <m3ocmpmcoq.fsf@localhost.localdomain>
+References: <20091126163654.GA14509@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Claudia.Ignat@loria.fr
-X-From: git-owner@vger.kernel.org Thu Nov 26 17:54:05 2009
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Nov 26 18:14:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDhbS-0006hJ-FL
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 17:53:58 +0100
+	id 1NDhvZ-0007c3-Ku
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Nov 2009 18:14:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756516AbZKZQxq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Nov 2009 11:53:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755902AbZKZQxq
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 11:53:46 -0500
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:54230 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755859AbZKZQxp (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Nov 2009 11:53:45 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 07DC5C2ABF;
-	Thu, 26 Nov 2009 11:53:50 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Thu, 26 Nov 2009 11:53:50 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=TMYSfm8am2H9tBc+ud6JczNwktM=; b=tjx5Hf6IcACTIXPTdfbYKXxa+N5DmVTzUfV6iCu8JS5Z9rCtLMJ4yVN0HI7ncQ2dRJ9Yxuk/4XpzJ940aPY5ScqFjNCwJSKWj5xVy6ZcJswejVmBX7JCX7iPGGG8fPGW8LZfCWQg8i/xq19dD7CsLdwyKeZ8Vj0K/WuxQd7IzXM=
-X-Sasl-enc: c1GVa8rrlSniHcGH3UuCF5NXvUN3hOxgkfBZ2uNbSnLT 1259254429
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2CDE728437E;
-	Thu, 26 Nov 2009 11:53:49 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091125 Lightning/1.0pre Shredder/3.0.1pre
-In-Reply-To: <4B0EA512.1050001@loria.fr>
+	id S1755680AbZKZROe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Nov 2009 12:14:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755424AbZKZROe
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Nov 2009 12:14:34 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:22659 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755310AbZKZROd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Nov 2009 12:14:33 -0500
+Received: by fg-out-1718.google.com with SMTP id e12so374548fga.1
+        for <git@vger.kernel.org>; Thu, 26 Nov 2009 09:14:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=R8iKQEiMfMQLf/nUL40Ljjb4OGWTfRCrceXRrTuuzTo=;
+        b=ASTCj/4AuLR/htWh8gB4muq7pJWN/O3hpWyU50F1F/kP4XG4ZREv4ihuA0zYET5FCq
+         vrGPa7dTJb6CYPZ++nrquTrQCKAB4nvXCbg0/L3ZFx9/rDHS/xnKYqnIOE9h5HrdBr99
+         i4EyZIbtO2lKFMPILhs/rjnZ8EPSdZdwe8DO8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=khfRh4npax4BwKk4m5fnfnqlMYaYm1VLflYKAohp93kC9EzR4QnO1s4JtmUY4J2oMT
+         jTp4BIgQLz24hYdWQWYHBDXrQN1RGmScjJEEP0oUwXdOMP25F8dJ34yvKYtySTHeaJgc
+         051jtpMX5r42q43VpXYhh+m0jff/ZoaFEoP60=
+Received: by 10.87.73.4 with SMTP id a4mr20481fgl.76.1259255678672;
+        Thu, 26 Nov 2009 09:14:38 -0800 (PST)
+Received: from localhost.localdomain (abvg159.neoplus.adsl.tpnet.pl [83.8.204.159])
+        by mx.google.com with ESMTPS id e11sm3135586fga.24.2009.11.26.09.14.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 26 Nov 2009 09:14:37 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id nAQHDw77003927;
+	Thu, 26 Nov 2009 18:14:08 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id nAQHDg2i003918;
+	Thu, 26 Nov 2009 18:13:42 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20091126163654.GA14509@glandium.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133812>
 
-Claudia.Ignat@loria.fr venit, vidit, dixit 26.11.2009 16:56:
-> # !/bin/bash
-> TEST_NAME="TP1" # name of the working directory
-> rm -rf ${TEST_NAME} # cleaning working directory
-> mkdir -p ${TEST_NAME}
-> cd ${TEST_NAME}
+Mike Hommey <mh@glandium.org> writes:
+
+> I recently reorganized a project of mine, and the result is that a lot of
+> files moved from the top directory to a sub directory.
 > 
-> # initialising initial git workspace
-> mkdir ws1
-> cd ws1
-> git init
-> 
-> # adding a file to ws1
-> # commit changes
-> echo -e -n "1\n2\n3\n4\n5\n" > file.txt
-> git add file.txt
-> git commit -m "ws1 | add 12345"
-> cd ..
-> 
-> # cloning three times ws1 (as ws2, ws3 and ws4)
-> git clone ws1 ws2
-> git clone ws1 ws3
-> git clone ws1 ws4
-> git clone ws1 ws5
-> 
-> # updating file.txt in ws2 (insert X at line 3, then write and quit 'ed')
-> # commit changes
-> cd ws2
-> echo -e "3i\nX\n.\nw\nq\n" | ed file.txt
-> git add file.txt
-> git commit -m "ws2 | insert 12X345"
-> cd ..
-> 
-> 
-> # updating file.txt in ws3 (insert Y at line 3, then write and quit 'ed')
-> # commit changes
-> cd ws3
-> echo -e "3i\nY\n.\nw\nq\n" | ed file.txt
-> git add file.txt
-> git commit -m "ws3 | insert 12Y345"
-> cd ..
-> 
-> cd ws4
-> echo -e -n "U1\n2\n3\n4\n5\n" >  u.txt
-> git add u.txt
-> git commit -m "ws4 | add u.txt"
-> cd ..
-> 
-> cd ws5
-> echo -e -n "W1\n2\n3\n4\n5\n" > w.txt
-> git add w.txt
-> git commit -m "ws5 | add w.txt"
-> cd ..
-> 
-> # ws3 pull from ws2 ws4 ws5
-> cd ws3
-> git remote add bws2 ../ws2
-> git remote add bws4 ../ws4
-> git remote add bws5 ../ws5
-> git fetch bws2
-> git fetch bws4
-> git fetch bws5
-> git merge bws4/master bws2/master bws5/master
-> cd ..
-> 
-> # resolve conflict in ws3
-> cd ws3
+> Now, I innocently tried to 'git log -M' some of these files in the
+> subdirectories, and well, the history just stops when the file was
+> created. Obviously, if I put both the old and the new location it works,
+> but shouldn't users expect 'git log -M -- file' to try to find the
+> previous path and continue from there ?
 
-First of all, thanks for the clear description and test case!
+What you want is not
 
-The octopus strategy cannot do merges which need manual resolution. Or
-so the doc says. After trying the merge with 4 2 5, Git tells you:
+  git log -M -- file
 
-Trying simple merge with 7ff9b5bd514cb600bac935ebd40eae366bba7d19
-Trying simple merge with 6872cd350154743d59cb4d313cbdb122ac43e537
-Simple merge did not work, trying automatic merge.
-Auto-merging file.txt
-ERROR: content conflict in file.txt
-fatal: merge program failed
-Automated merge did not work.
-Should not be doing an Octopus.
-Merge with strategy octopus failed.
+but
 
-That is, it aborts the merge completely. If you "resolve" it and commit
-it's simply a commit that you make.
+  git log --follow file
 
-If, instead, you merge 4 5 2, Git tells you:
+"git log -M -- file" IIRC first applies path limiting, simplifying
+history, *then* does rename detection, and finally filters output
+(unless --full-diff is used).
 
-Trying simple merge with e4f78f6905bed39bcd96790a4f63e138a455a445
-Trying simple merge with 14c1f2a70767334df5d6d3120631752564094699
-Trying simple merge with 8540a039d3fc964d097d4f037357668441d1d4f5
-Simple merge did not work, trying automatic merge.
-Auto-merging file.txt
-ERROR: content conflict in file.txt
-fatal: merge program failed
-Automatic merge failed; fix conflicts and then commit the result.
-
-Admittedly this looks fatal also, but the last line tells you that the
-actual merge process is not aborted yet. If you resolve the conflict and
-commit without -m you even see the prepared commit message.
-
-So, octopus can deal with manual conflict resolution if the conflicts
-appear in the last step only. That is the difference between the two cases.
-
-Now, in the first case the aborted merge leaves some traces in the index
-as well as in the worktree. I'm not sure that is how it's supposed to be.
-
-Cheers,
-Michael
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
