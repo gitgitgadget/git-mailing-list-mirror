@@ -1,94 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Fri, 27 Nov 2009 11:53:42 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0911271144230.4521@intel-tinevez-2-302>
-References: <20091125203922.GA18487@coredump.intra.peff.net> <7viqcytjic.fsf@alter.siamese.dyndns.org> <20091125210034.GC18487@coredump.intra.peff.net> <7vmy2as319.fsf@alter.siamese.dyndns.org> <20091125214949.GA31473@coredump.intra.peff.net>
- <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com> <20091125222037.GA2861@coredump.intra.peff.net> <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com> <20091127062013.GA20844@coredump.intra.peff.net> <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302>
- <20091127095914.GA4865@sigill.intra.peff.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: OS X and umlauts in file names
+Date: Fri, 27 Nov 2009 11:56:25 +0100
+Message-ID: <46a038f90911270256w57487e6cq9bda8b98a5384799@mail.gmail.com>
+References: <4B0ABA42.1060103@syntevo.com>
+	 <alpine.LNX.2.00.0911231403100.14365@iabervon.org>
+	 <4B0CEFCA.5020605@syntevo.com>
+	 <76718490911260927h9ff796bgbebcccab7e52ffbe@mail.gmail.com>
+	 <4B0FA388.4030507@syntevo.com> <4B0FA7D7.1050302@syntevo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: James Pickens <jepicken@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 27 11:53:52 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Thomas Singer <thomas.singer@syntevo.com>
+X-From: git-owner@vger.kernel.org Fri Nov 27 11:56:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDySW-0003k4-47
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 11:53:52 +0100
+	id 1NDyV9-0004jN-9z
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 11:56:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753943AbZK0Kxj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2009 05:53:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753404AbZK0Kxj
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 05:53:39 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54275 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750778AbZK0Kxi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2009 05:53:38 -0500
-Received: (qmail invoked by alias); 27 Nov 2009 10:53:43 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp047) with SMTP; 27 Nov 2009 11:53:43 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+ANhM8QsiAikE34Oe1FPvYjOxBSnNf4b6jl0GxEs
-	TnBc/lgo9oVy+w
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20091127095914.GA4865@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1754381AbZK0K4W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Nov 2009 05:56:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754344AbZK0K4V
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 05:56:21 -0500
+Received: from ey-out-2122.google.com ([74.125.78.25]:24421 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753455AbZK0K4U convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Nov 2009 05:56:20 -0500
+Received: by ey-out-2122.google.com with SMTP id 25so106156eya.5
+        for <git@vger.kernel.org>; Fri, 27 Nov 2009 02:56:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=b1GaPuivJFUKhGsg7vT705jNCTbRhm0ye+gZ7xNpX00=;
+        b=uDZpuVRK3x9zNHbMR1j0YWvhSZlPidXAylU5tAy4dNvy2R51x0T8kExd9BGd3K3Xv9
+         0OOzfRNBSmjXiaTLtNsDj+BIFP40xVGwGLcu6KV2bl/hvT+wbNVTcnfhQlglS+KjGy7A
+         ZuQ3LwRzSsJ2XckiMcURBBPTidNXBSUCz1JQQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=RhP025S/V3/KlbpzxZXz+H/qKr9p1FaaQIt5P//PmsleI38oqJEMpigYkYud9kAXyw
+         /DudSR3ucAZiC8tL7EqhHi5T6pYveBrnvF5DQfgwkCB+vGyVJ72RbAB6yMsvGPaYdJDt
+         ymeF0tmts5b9pIFqDT9JZkU3B+7bNpcpZujGo=
+Received: by 10.213.63.136 with SMTP id b8mr227533ebi.71.1259319385949; Fri, 
+	27 Nov 2009 02:56:25 -0800 (PST)
+In-Reply-To: <4B0FA7D7.1050302@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133891>
 
-Hi,
+On Fri, Nov 27, 2009 at 11:20 AM, Thomas Singer
+<thomas.singer@syntevo.com> wrote:
+>> toms-mac-mini:git-umlauts tom$ git rm --cached "U\314\210berla\314\2=
+10nge.txt"
+>> fatal: pathspec 'U\314\210berla\314\210nge.txt' did not match any fi=
+les
+>
+> OK, I've found it. This works (I have to complete the file name after=
+ having
+> typed an U):
+>
+> toms-mac-mini:git-umlauts tom$ git rm --cached =DCberl=E4nge.txt
 
-On Fri, 27 Nov 2009, Jeff King wrote:
+Tom,
 
-> On Fri, Nov 27, 2009 at 10:31:30AM +0100, Johannes Schindelin wrote:
-> 
-> > Guess what.  I have a similar problem, only it is that my "git status" 
-> > output is _always_ too long, so I always have to page it.
-> > 
-> > Once upon a time, Junio applied a patch that implied -p with status.  
-> > I was overjoyed.  He reverted that patch later.  Yes, exactly.
-> > 
-> > So I end up doing "git config --global ps '-p status'" on every new 
-> 
-> If only somebody had written a "pager.status" configuration variable,
-> you could use that. Oh wait. I did. And it shipped in v1.6.0.
+have you tried calling git-update-index --add
+--stdin -z? Your original email stated
 
-And it makes things inconsistent.  That is why I do not use it.  Do you 
-work on 10 different computers?  I do.  And nothing is more unnerving than 
-the same command producing something different on the different computers.
+> we've got a problem report regarding our SmartGit GUI client
 
-Sure, after a few minutes of fiddling I find out that it was my fault to 
-begin with, but dammit! if the tool makes it that hard already for an 
-expert, it is outright unusable for new users.
+so it sounds like you are building a porcelain. In that case, the
+sanest approach is to invoke git-update-index and write to its stdin.
 
-I, for one, do not like Git's reputation, but I am tired of trying to 
-fight for the users.  BTW quick question: how many Git _users_ were at the 
-GitTogether at MV?  0?
+cheers,
 
-> > account (I usually even forget to curse!), and I really cannot see why 
-> > you do not do the equivalent "git config fullgrep grep --full-tree" in 
-> > your repositories (or even the global thing).
-> >
-> > The further benefit is that we stop talking about breaking backwards 
-> > compatibility, and we stop talking about making it hard for Git 
-> > experts to help newbies.
-> 
-> I guess you missed the part of the thread where I already discussed
-> this. It was here:
-> 
->   http://article.gmane.org/gmane.comp.version-control.git/133672
 
-I only skimmed it, yes.  And I did not plan to participate in this thread.  
-But it seems that my views are not represented enough, even if gitzilla 
-chimed in with the very valid, under-acknowledged and over-ignored 
-message: consistency is good.  Corollary: inconsistency is bad.
 
-Ciao,
-Dscho
+m
+--=20
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
