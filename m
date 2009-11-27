@@ -1,89 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 2/2] status -s: obey color.status
-Date: Thu, 26 Nov 2009 21:15:03 -0800
-Message-ID: <7vws1cwnu0.fsf@alter.siamese.dyndns.org>
-References: <cover.1259248243.git.git@drmicha.warpmail.net>
- <26d0a2022638ad7b75268ca291b8d02a22f1f66c.1259248243.git.git@drmicha.warpmail.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] grep: --full-tree
+Date: Fri, 27 Nov 2009 01:20:13 -0500
+Message-ID: <20091127062013.GA20844@coredump.intra.peff.net>
+References: <7vk4xggv27.fsf@alter.siamese.dyndns.org>
+ <20091125203922.GA18487@coredump.intra.peff.net>
+ <7viqcytjic.fsf@alter.siamese.dyndns.org>
+ <20091125210034.GC18487@coredump.intra.peff.net>
+ <7vmy2as319.fsf@alter.siamese.dyndns.org>
+ <20091125214949.GA31473@coredump.intra.peff.net>
+ <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com>
+ <20091125222037.GA2861@coredump.intra.peff.net>
+ <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Nov 27 06:15:38 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: James Pickens <jepicken@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 27 07:20:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDtBB-00054f-Fx
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 06:15:37 +0100
+	id 1NDuBo-0003gS-An
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 07:20:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750896AbZK0FPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2009 00:15:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750809AbZK0FPI
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 00:15:08 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56567 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750774AbZK0FPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2009 00:15:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B2F6CA18B0;
-	Fri, 27 Nov 2009 00:15:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SNsqK1I6MJVcCBQRrcNjZ7jHa6s=; b=vQUi/r
-	0wSudoDWv2tnnsJ8arGQQPBGzKf9z+asZRwRWbQWgc+cN6/IaIAJVVpfIKev/cnn
-	ePUBeHVqEkp+UU2xTA+S4ByWmxFBGOYwEo0j7FFDa634r1HnRb3DoE41QwCU2GDN
-	5M9lfiN3cF5K+u0fBWeMu6a/WxTDakxRS5dCk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mhbRqOosBDEn1M/p/GeitJo5cdFOjeuj
-	hURsdiipbl3Gspi/hC31z4JyTWf+PHSl836TLnP0KKlNHFvlMPi3Y8C1QbAx+rRH
-	DCvil7KTrOS3b5H53jfdzETaU8wS3hl+e82veKNsYaZU3NdsP7YW6LxT/D59xwxa
-	Os5HuB1sN9A=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 92295A18AF;
-	Fri, 27 Nov 2009 00:15:09 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5A60EA18A6; Fri, 27 Nov 2009
- 00:15:05 -0500 (EST)
-In-Reply-To: <26d0a2022638ad7b75268ca291b8d02a22f1f66c.1259248243.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Thu\, 26 Nov 2009 16\:24\:39 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D534A3F6-DB13-11DE-A90B-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1751855AbZK0GUH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2009 01:20:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751422AbZK0GUH
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 01:20:07 -0500
+Received: from peff.net ([208.65.91.99]:43764 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751407AbZK0GUG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2009 01:20:06 -0500
+Received: (qmail 24922 invoked by uid 107); 27 Nov 2009 06:24:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 27 Nov 2009 01:24:36 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Nov 2009 01:20:13 -0500
+Content-Disposition: inline
+In-Reply-To: <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133858>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Thu, Nov 26, 2009 at 10:56:55AM -0700, James Pickens wrote:
 
-> * Should I rename wt-status.c's color() into something more unique when
->   I export it?
+> On Wed, Nov 25, 2009 at 3:20 PM, Jeff King <peff@peff.net> wrote:
+> > Sure, there are all those downsides. But what is the other option?
+> > Making me use the command line option (or pathspec magic) every single
+> > time I invoke git grep?
+> 
+> Yes, but only when you want non-default behavior, not every single time.
 
-Is it an option to instead move short_unmerged(), short_status() and
-friends to wt-status.c from builtin-commit.c?  It's been quite a while
-since I worked on the code, so I don't recall why it needs such cross
-references at low level between two files.
+Did you miss the part of the thread where I explained that in certain
+repos, I want it one way every single time, and in others, I want it the
+other way?
 
-> * Is there any policy regarding use of putchar/puts vs. printf?
+So yes, in certain repos, it really is every single time.
 
-J6t addressed it.  You have mixture of putchar(' ') and printf(" ") which
-looks somewhat funny ;-)
+> > That is a huge downside to me.
+> 
+> Is it *really*?  Does it also bother you that you have to tell standalone
+> unix commands like diff and grep what you want them to diff or grep every
+> single time you invoke them?
 
-> * The way it is done now I "color" a space, otherwise one would need to
->   break down the print statements even more. Since we always color the
->   foreground only it is no problem, is it?
+This is a strawman. I am not saying every command-line option should be
+made into a configuration option. I am saying that some options,
+including this one, would be useful as configuration options. I have
+already explained several times in this thread exactly what
+characteristics of this option make that so.
 
-Some people do configure to use "reverse".  For example, I have:
+And please, questions like "Is it *really*?" don't add anything. Yes,
+really, or I wouldn't be having this discussion. This behavior has
+bitten me many times while using "git grep". I'm not making it up. Maybe
+I am the only one in the world, but I don't see how it makes any sense
+to argue that I am not actually annoyed by it.
 
-    [diff.color]
-            old = red reverse
-            whitespace = blue reverse
+> I really think that this config option wouldn't even help you, because
+> you'll have to remember what that option is set to in each working repo,
+> and type the right command based on the setting.  That seems worse than
 
-    [status.color]
-            updated = green
-            changed = red
-            untracked = blue reverse
+No, the _point_ is that I don't have to remember the right command in
+each repo. I can set it up for the workflow that matches that repository
+and then issue "git grep" without remembering which type I'm in.
 
-The output should be consistent between long and short format (I do not
-offhand recall what we do for the long format, though).
+> If you can get the behavior you want using an alias or a script, then I
+> suggest you do that.  I don't think this config option should be considered
+> unless *many* people want it, and so far I count only 1.
+
+Perhaps I am the only one who wants to use the config option per-repo.
+But we have already seen support for both behaviors, which means there
+are people who will be dissatisfied with either simply leaving the
+default or changing the default. And I don't want to speak for Junio,
+but he seemed to agree that what you most want would depend on the repo
+organization (though I think he may disagree that it is important enough
+to merit the hassle of a config option).
+
+-Peff
