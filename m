@@ -1,106 +1,127 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [msysGit] [PATCH/RFC 06/11] run-command: add kill_async() and 
-	is_async_alive()
-Date: Fri, 27 Nov 2009 17:04:31 +0100
-Message-ID: <40aa078e0911270804i1a828ea6we1611047d37869f7@mail.gmail.com>
-References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com>
-	 <1259196260-3064-6-git-send-email-kusmabite@gmail.com>
-	 <1259196260-3064-7-git-send-email-kusmabite@gmail.com>
-	 <200911262246.13342.j6t@kdbg.org>
-Reply-To: kusmabite@gmail.com
+From: Uri Okrent <uokrent@gmail.com>
+Subject: Re: [PATCH] grep: --full-tree
+Date: Fri, 27 Nov 2009 08:27:03 -0800
+Message-ID: <6839293b0911270827x54947c64q5f93e37664bc20f3@mail.gmail.com>
+References: <20091125203922.GA18487@coredump.intra.peff.net>
+	 <7vmy2as319.fsf@alter.siamese.dyndns.org>
+	 <20091125214949.GA31473@coredump.intra.peff.net>
+	 <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com>
+	 <20091125222037.GA2861@coredump.intra.peff.net>
+	 <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com>
+	 <20091127062013.GA20844@coredump.intra.peff.net>
+	 <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302>
+	 <20091127095914.GA4865@sigill.intra.peff.net>
+	 <alpine.DEB.1.00.0911271144230.4521@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: msysgit@googlegroups.com, git@vger.kernel.org, dotzenlabs@gmail.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Nov 27 17:04:43 2009
+Cc: Jeff King <peff@peff.net>, James Pickens <jepicken@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Nov 27 17:27:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NE3JH-00028z-DY
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 17:04:39 +0100
+	id 1NE3f4-0003QA-0H
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 17:27:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751768AbZK0QE1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Nov 2009 11:04:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbZK0QE1
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 11:04:27 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:57362 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751162AbZK0QE0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Nov 2009 11:04:26 -0500
-Received: by ewy19 with SMTP id 19so1561963ewy.21
-        for <git@vger.kernel.org>; Fri, 27 Nov 2009 08:04:31 -0800 (PST)
+	id S1752132AbZK0Q06 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Nov 2009 11:26:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752040AbZK0Q06
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 11:26:58 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:44701 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751937AbZK0Q05 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Nov 2009 11:26:57 -0500
+Received: by pwi3 with SMTP id 3so1063062pwi.21
+        for <git@vger.kernel.org>; Fri, 27 Nov 2009 08:27:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=jvJoT5ZpBAapHCGbRe2vWAW9QkLwFIOP/GQdtjqDndo=;
-        b=knxu6TqGU3ldTatsrATmYOXwAcKPZrq9MRomnG+lAKqDW8mwaiZS+yLXmZKnnzlh3z
-         ZAweTU68MMvz0P44hJgW/uLq10nWEI7OkD2PagarDw4L1lZl3Z1yJBg6FwOnVTSpXaal
-         HC5Sf1VFnlVnkRAwTwOxt2Jr7/Ayqk/UCSJmA=
+        bh=IWyUxScP1tsTOqYsI+XS9PJYemWz+tXT8Ud642xHe0s=;
+        b=sDtZFZsf9T2KFpju+uKihl+h2mRgbgE2oLPwr2drs9U7HT8eFfhqvx90nQB0jXKpBc
+         z4Ka/pZOxVis6cgLZkpnLkBQp2AbEBDvOdOq1Wea/rFIwClP9wnB18mZg9Gn5t/rzdiJ
+         v29C/8UMQLnfVaSOz0Nkt9LYpqpIRuttrp2D0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=Mw8TfjkrKDIPx4ew47blsxEwMWMX15HV64jpp1buc4spW0PtKSPGEkQzbx60xmQO/H
-         ksltlUMA2LHBj83ZjMux5vTE3hn5KuSJAbVLNLTHuVwkLD9aubzuVYMibXOZJRzQ83DD
-         3KW00Q1KYhf1J09DjZyP3gqqUA95RMa7Z1VL4=
-Received: by 10.216.85.197 with SMTP id u47mr376087wee.133.1259337871406; Fri, 
-	27 Nov 2009 08:04:31 -0800 (PST)
-In-Reply-To: <200911262246.13342.j6t@kdbg.org>
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VgGhvGh1FVOlPv+Bgyg34z+n+hCaWlet4EXplXFz41X/tzuSuNDMKwjIHns+pciVan
+         YpYTAdERwpP5cAlwOnetjdT9iklLMkMi6lDM/QR4GRp+MJV9rlf5XqzlYPCNSaSGh3VM
+         hlPbM9w82v7JJXJYhnR7miAqu86DYIlSPXglk=
+Received: by 10.141.106.13 with SMTP id i13mr76422rvm.0.1259339223848; Fri, 27 
+	Nov 2009 08:27:03 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0911271144230.4521@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133908>
 
-On Thu, Nov 26, 2009 at 10:46 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> On Donnerstag, 26. November 2009, Erik Faye-Lund wrote:
->> +int kill_async(struct async *async)
->> +{
->> +#ifndef WIN32
->> + =A0 =A0 return kill(async->pid, SIGTERM);
->> +#else
->> + =A0 =A0 DWORD ret =3D 0;
->> + =A0 =A0 if (!TerminateThread(async->tid, 0))
->> + =A0 =A0 =A0 =A0 =A0 =A0 ret =3D error("killing thread failed: %lu"=
-, GetLastError());
->
-> Ugh! Did you read the documentation of TerminateThread()?
->
-> We need to kill processes/threads when we detect that there are too m=
-any
-> connections. But TerminateThread() is such a dangerous function that =
-we
-> cannot pretend that everything is good, and we continue to accept
-> connections.
->
+I've been following this thread for a long time and now I feel the
+need to chime in...
 
-Ouch, this is nasty. Something else needs to be done.
+On Fri, Nov 27, 2009 at 2:53 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> And it makes things inconsistent. =C2=A0That is why I do not use it.
 
-> Unless we find a different solution, I would prefer to punt and die i=
-nstead.
->
+The number one problem my users have with git is inconsistent
+behavior, both internally to git, and externally with respect to the
+rest of the OS. But really, the issue is one of managing expectations,
+which is where we here tend to fall down.
 
-Do you really think it's better to unconditionally take down the
-entire process with an error, instead of having a relatively small
-chance of stuff blowing up without any sensible error? I'm not 100%
-convinced - but let's hope we'll find a proper fix.
+When you name the command grep, whether you like it of not,
+you've bought into a certain set of expectations from the user
+who has been using unix's grep since she was a baby. Saying,
+"well, in git it works this way", (or saying "well in git those path
+looking things you've been providing to commands are not really
+paths, so don't expect them to act as such"), would make my
+users want to vomit all over me, and then, not use git (a shame
+since it's the best scm system around IMHO).
 
->> + =A0 =A0 else if (!GetExitCodeThread(async->tid, &ret))
->> + =A0 =A0 =A0 =A0 =A0 =A0 ret =3D error("cannot get thread exit code=
-: %lu", GetLastError());
->
-> What should the exit code be good for? The return value of this funct=
-ion can
-> only be -1 (failure, could not kill) or 0 (success, process killed).
->
+If we intend the behavior of the command to be materially different
+from the good old unix standby, then we shouldn't use the same
+name, and create the expectation that they are getting essentially
+the same thing (git search, git pickaxe, or something carries no
+semantic baggage---and no, I'm not suggesting we change the
+name).
 
-I thought wait_or_whine() returned the exit-code, so I wanted to be
-somewhat consistent. But even if it does (haven't checked), it's
-probably not be worth it - I'll remove this for the next iteration.
+> I, for one, do not like Git's reputation...
 
+There's the rub. How do we achieve consistency without breaking the
+world? The short answer is, you really can't. As programmers we tend
+to be a very timid bunch, but sometimes (and David A. can attest to
+this, at least at dayjob) it's better to just make a change for the bet=
+ter,
+and just deal with the breakages. It is possible to change behavior (an=
+d
+even break some scripts! I firmly believe it is worthwhile sacrificing
+some scripts on the altar of consistency).
+
+The key once again, is managing expectations. We can't go around
+changing everything willy-nilly, and we can't be continually changing
+things. Here is where we could take a lesson from the python
+community.
+
+When they decided they needed to change things, they bundled a
+bunch of backwards incompatible changes together and went for it.
+Yes, Python 3 will break your scripts, but the most important thing is,
+everybody knows it.
+
+A similar thing was done here with the huge warning that push spits
+out, but in the general case I would argue, that the wisest course is t=
+o
+save backwards incompatible changes for a git 2 or something, where
+we know we're breaking the world, and then scratch all our (well though=
+t
+out) backwards incompatible itches at once.
+
+Whew. A bit of a rant, but there you go...
 --=20
-Erik "kusma" Faye-Lund
+   Uri
+
+Please consider the environment before printing this message.
+http://www.panda.org/how_you_can_help/
