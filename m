@@ -1,51 +1,58 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Mike Hommey <mh@glandium.org>
 Subject: Re: [PATCH] Makefile: determine the list of header files using a
  glob
-Date: Fri, 27 Nov 2009 09:50:47 +0100
-Message-ID: <4B0F92E7.8090403@viscovery.net>
-References: <4B0F8825.3040107@viscovery.net> <20091127082624.GA19875@glandium.org>
+Date: Fri, 27 Nov 2009 09:58:02 +0100
+Message-ID: <20091127085802.GA21217@glandium.org>
+References: <4B0F8825.3040107@viscovery.net>
+ <20091127082624.GA19875@glandium.org>
+ <4B0F92E7.8090403@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Fri Nov 27 09:51:00 2009
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Nov 27 09:58:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDwXY-0004OW-JT
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 09:50:56 +0100
+	id 1NDwfK-0007Px-Fz
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 09:58:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751176AbZK0Iup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2009 03:50:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751145AbZK0Iup
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 03:50:45 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:39038 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750971AbZK0Iuo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2009 03:50:44 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NDwXP-0008LN-RU; Fri, 27 Nov 2009 09:50:47 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 7E6EB1660F;
-	Fri, 27 Nov 2009 09:50:47 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <20091127082624.GA19875@glandium.org>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1752765AbZK0I6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2009 03:58:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752596AbZK0I6r
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 03:58:47 -0500
+Received: from vuizook.err.no ([85.19.221.46]:36376 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752590AbZK0I6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2009 03:58:46 -0500
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1NDwf7-0001ht-QB; Fri, 27 Nov 2009 09:58:48 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1NDweQ-0005Y1-Pc; Fri, 27 Nov 2009 09:58:02 +0100
+Content-Disposition: inline
+In-Reply-To: <4B0F92E7.8090403@viscovery.net>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133879>
 
-Mike Hommey schrieb:
-> I don't know if the current Makefile works with Solaris' make,...
+On Fri, Nov 27, 2009 at 09:50:47AM +0100, Johannes Sixt wrote:
+> Mike Hommey schrieb:
+> > I don't know if the current Makefile works with Solaris' make,...
+> 
+> No, it doesn't. You have to use GNU make anyway.
 
-No, it doesn't. You have to use GNU make anyway.
+Then it's fine. But shouldn't that be noted somewhere, like in the
+INSTALL file ?
 
--- Hannes
+Mike
