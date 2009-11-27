@@ -1,8 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH/RFC 1/2] Makefile: use target-specific variable to pass
- flags to cc
-Date: Fri, 27 Nov 2009 11:49:33 -0600
-Message-ID: <20091127174932.GB3461@progeny.tock>
+Subject: [PATCH/RFC 2/2] Makefile: automatically compute header dependencies
+Date: Fri, 27 Nov 2009 11:50:43 -0600
+Message-ID: <20091127175043.GC3461@progeny.tock>
 References: <4B0F8825.3040107@viscovery.net>
  <alpine.DEB.1.00.0911271033460.4521@intel-tinevez-2-302>
  <20091127174558.GA3461@progeny.tock>
@@ -12,46 +11,46 @@ Cc: Johannes Sixt <j.sixt@viscovery.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Nov 27 18:37:34 2009
+X-From: git-owner@vger.kernel.org Fri Nov 27 18:38:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NE4lB-0008Lz-Jh
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 18:37:33 +0100
+	id 1NE4mX-0000VJ-4O
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 18:38:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751867AbZK0RhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2009 12:37:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751092AbZK0RhW
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 12:37:22 -0500
-Received: from mail-yw0-f182.google.com ([209.85.211.182]:40705 "EHLO
-	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750883AbZK0RhV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2009 12:37:21 -0500
-Received: by ywh12 with SMTP id 12so1848763ywh.21
-        for <git@vger.kernel.org>; Fri, 27 Nov 2009 09:37:27 -0800 (PST)
+	id S1752374AbZK0Ric (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2009 12:38:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752280AbZK0Ric
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 12:38:32 -0500
+Received: from mail-gx0-f212.google.com ([209.85.217.212]:58317 "EHLO
+	mail-gx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752080AbZK0Rib (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2009 12:38:31 -0500
+Received: by gxk4 with SMTP id 4so92132gxk.8
+        for <git@vger.kernel.org>; Fri, 27 Nov 2009 09:38:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=fTBGp5pgSd3qpM0CMK961nyyj6+BQcADyEhxiU75F6k=;
-        b=nhW5eBfIWRQW1snnmfQP7hXaNfYkmJDC3QttQry9aBRqLMAA4mQhYnxyq1PZqVBbJg
-         ZwaKTGC0NUZFMvcivTEzZjFo4tPQd+hXrfP7dkSdk2lT2b58SHf13CLYAM3Z3jzV9tFg
-         WlVYuiO/+mkmSWMRmKabcIu0nKnNxisfF1LV4=
+        bh=szPp6xY9W+DYTObxu3YR0lhMfu1mMlQRsnRCJWoX9GE=;
+        b=rDwKl8xiBADf0pNC0SpF1bGihCGvdbLELuyuhNAjS4Qfu+qvMFcQLfQyBwERcifTqT
+         1HmSR5wT0NMiZVRxVxXgSI/PwJHfi/52LlYWBviaWcGkwcsHnyZsGR2phJ3gLSzew0Tb
+         JpdoUMmE4y9ysmKsg3OPnfC7glarmloUbyCSY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=Le/Ah1u2JtsBrWDE/wnnly1RDWVKUq+S2oE90JArjYOwEDhjbg26nNqkyMK7qzU2mc
-         vjjkBfJ3zLF1SJfYSyYkeTgLGcrz2qTr5+dKTCVbZghkodWAzfH8e2rWs143QdlQwAgP
-         axPlbp/4KZ7UaKf+cu1JVZR2wwK3YM2ACCSxA=
-Received: by 10.150.65.21 with SMTP id n21mr2191837yba.89.1259343446447;
-        Fri, 27 Nov 2009 09:37:26 -0800 (PST)
+        b=BFY5Z0rwbvwH9vqDwMR6csSNzlYfs4EZ1xx1EyxMVE5DyQoRqJNaIV+wPkHi3Y8tcj
+         TesJjdIVK0FpJwOMtOzfijHz+CxTvabOTBiQoo8OslVKOn7xcggC0Z4VhDTgyV6NZWaP
+         vFVeqrdxjX0VN0XBsFO6LwnuLnAPD2o0g/ivQ=
+Received: by 10.101.170.11 with SMTP id x11mr604002ano.109.1259343517833;
+        Fri, 27 Nov 2009 09:38:37 -0800 (PST)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 15sm743982gxk.0.2009.11.27.09.37.25
+        by mx.google.com with ESMTPS id 8sm898825yxg.24.2009.11.27.09.38.36
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 27 Nov 2009 09:37:26 -0800 (PST)
+        Fri, 27 Nov 2009 09:38:37 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20091127174558.GA3461@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -59,85 +58,91 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133913>
 
-Remove some duplicated Makefile code by reusing the %.o: %.c rule
-even for objects that need to be built with special flags.  This
-makes the relevant -D parameters more prominent on the command
-line and means any changes to the rules for compilation only have
-to happen in one place.
+Use the gcc -MMD -MP -MF options to generate dependency rules as a
+byproduct when building .o files.
 
-Target-specific variables have been supported in GNU make since
-version 3.77 from 1998.
+A bit remains to be done:
+
+ - add the same support to the .c.s rule
+ - make this optional (not all compilers support this, and not all
+   developers necessarily want to litter the directory with .*.o.d
+   files)
+ - document what gcc version introduced these options
+ - find equivalent options for other compilers (e.g., Intel C,
+   SunWSPro, MSVC)
+
+but this should give the idea.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Makefile |   31 +++++++++++++++----------------
- 1 files changed, 15 insertions(+), 16 deletions(-)
+Good idea?  Bad idea?
 
+Good night,
+Jonathan
+
+ .gitignore |    1 +
+ Makefile   |   15 ++++++++++++++-
+ 2 files changed, 15 insertions(+), 1 deletions(-)
+
+diff --git a/.gitignore b/.gitignore
+index ac02a58..c7b2736 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -170,6 +170,7 @@
+ *.exe
+ *.[aos]
+ *.py[co]
++.*.o.d
+ *+
+ /config.mak
+ /autom4te.cache
 diff --git a/Makefile b/Makefile
-index 5a0b3d4..ed0f461 100644
+index ed0f461..af3f874 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1440,19 +1440,18 @@ strip: $(PROGRAMS) git$X
- 	$(STRIP) $(STRIP_OPTS) $(PROGRAMS) git$X
+@@ -488,6 +488,7 @@ LIB_H += unpack-trees.h
+ LIB_H += userdiff.h
+ LIB_H += utf8.h
+ LIB_H += wt-status.h
++LIB_H :=
  
- git.o: git.c common-cmds.h GIT-CFLAGS
--	$(QUIET_CC)$(CC) -DGIT_VERSION='"$(GIT_VERSION)"' \
--		'-DGIT_HTML_PATH="$(htmldir_SQ)"' \
--		$(ALL_CFLAGS) -o $@ -c $(filter %.c,$^)
-+git.o: ALL_CFLAGS += -DGIT_VERSION='"$(GIT_VERSION)"' \
-+	'-DGIT_HTML_PATH="$(htmldir_SQ)"'
+ LIB_OBJS += abspath.o
+ LIB_OBJS += advice.o
+@@ -1559,13 +1560,23 @@ git.o git.spec \
+ 	$(patsubst %.perl,%,$(SCRIPT_PERL)) \
+ 	: GIT-VERSION-FILE
  
- git$X: git.o $(BUILTIN_OBJS) $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ git.o \
- 		$(BUILTIN_OBJS) $(ALL_LDFLAGS) $(LIBS)
- 
- builtin-help.o: builtin-help.c common-cmds.h GIT-CFLAGS
--	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) \
--		'-DGIT_HTML_PATH="$(htmldir_SQ)"' \
--		'-DGIT_MAN_PATH="$(mandir_SQ)"' \
--		'-DGIT_INFO_PATH="$(infodir_SQ)"' $<
-+builtin-help.o: ALL_CFLAGS += \
-+	'-DGIT_HTML_PATH="$(htmldir_SQ)"' \
-+	'-DGIT_MAN_PATH="$(mandir_SQ)"' \
-+	'-DGIT_INFO_PATH="$(infodir_SQ)"'
- 
- $(BUILT_INS): git$X
- 	$(QUIET_BUILT_IN)$(RM) $@ && \
-@@ -1568,24 +1567,24 @@ git.o git.spec \
++dep_file = $(dir $@).$(notdir $@).d
++dep_args = -MF $(dep_file) -MMD -MP
++
+ %.o: %.c GIT-CFLAGS
+-	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) $<
++	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(ALL_CFLAGS) $<
+ %.s: %.c GIT-CFLAGS
+ 	$(QUIET_CC)$(CC) -S $(ALL_CFLAGS) $<
+ %.o: %.S
  	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) $<
  
++objects := $(wildcard *.o block-sha1/*.o arm/*.o ppc/*.o \
++		compat/*.o compat/*/*.o xdiff/*.o)
++dep_files := $(wildcard $(foreach f,$(objects),$(dir $f).$(notdir $f).d))
++ifneq ($(dep_files),)
++include $(dep_files)
++endif
++
  exec_cmd.o: exec_cmd.c GIT-CFLAGS
--	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) \
--		'-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
--		'-DBINDIR="$(bindir_relative_SQ)"' \
--		'-DPREFIX="$(prefix_SQ)"' \
--		$<
-+exec_cmd.o: ALL_CFLAGS += \
-+	'-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
-+	'-DBINDIR="$(bindir_relative_SQ)"' \
-+	'-DPREFIX="$(prefix_SQ)"'
- 
- builtin-init-db.o: builtin-init-db.c GIT-CFLAGS
--	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) -DDEFAULT_GIT_TEMPLATE_DIR='"$(template_dir_SQ)"' $<
-+builtin-init-db.o: ALL_CFLAGS += \
-+	-DDEFAULT_GIT_TEMPLATE_DIR='"$(template_dir_SQ)"'
- 
- config.o: config.c GIT-CFLAGS
--	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) -DETC_GITCONFIG='"$(ETC_GITCONFIG_SQ)"' $<
-+config.o: ALL_CFLAGS += -DETC_GITCONFIG='"$(ETC_GITCONFIG_SQ)"'
- 
- http.o: http.c GIT-CFLAGS
--	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) -DGIT_USER_AGENT='"git/$(GIT_VERSION)"' $<
-+http.o: ALL_CFLAGS += -DGIT_USER_AGENT='"git/$(GIT_VERSION)"'
- 
- ifdef NO_EXPAT
- http-walker.o: http-walker.c http.h GIT-CFLAGS
--	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) -DNO_EXPAT $<
-+http-walker.o: ALL_CFLAGS += -DNO_EXPAT
- endif
- 
- git-%$X: %.o $(GITLIBS)
+ exec_cmd.o: ALL_CFLAGS += \
+ 	'-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
+@@ -1875,6 +1886,8 @@ distclean: clean
+ clean:
+ 	$(RM) *.o block-sha1/*.o arm/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o \
+ 		$(LIB_FILE) $(XDIFF_LIB)
++	$(RM) .*.o.d block-sha1/.*.o.d arm/.*.o.d ppc/.*.o.d compat/.*.o.d \
++		compat/*/.*.o.d xdiff/.*.o.d
+ 	$(RM) $(ALL_PROGRAMS) $(BUILT_INS) git$X
+ 	$(RM) $(TEST_PROGRAMS)
+ 	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags cscope*
 -- 
 1.6.5.3
