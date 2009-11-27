@@ -1,88 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: [PATCH] Add a notice that only certain functions can print color
  escape codes
-Date: Thu, 26 Nov 2009 23:30:48 -0800
-Message-ID: <7vzl68v2zb.fsf@alter.siamese.dyndns.org>
-References: <cover.1259248243.git.git@drmicha.warpmail.net>
- <26d0a2022638ad7b75268ca291b8d02a22f1f66c.1259248243.git.git@drmicha.warpmail.net> <4B0EA06A.1050101@viscovery.net> <7vy6lt6rh3.fsf@alter.siamese.dyndns.org> <4B0F78F1.4040101@viscovery.net>
+Date: Fri, 27 Nov 2009 08:42:25 +0100
+Message-ID: <4B0F82E1.80402@viscovery.net>
+References: <cover.1259248243.git.git@drmicha.warpmail.net> <26d0a2022638ad7b75268ca291b8d02a22f1f66c.1259248243.git.git@drmicha.warpmail.net> <4B0EA06A.1050101@viscovery.net> <7vy6lt6rh3.fsf@alter.siamese.dyndns.org> <4B0F78F1.4040101@viscovery.net> <7vzl68v2zb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Nov 27 08:31:08 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 27 08:42:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDvII-0004sx-Vl
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 08:31:07 +0100
+	id 1NDvTO-0007xa-Hw
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 08:42:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754089AbZK0Hay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2009 02:30:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752410AbZK0Hay
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 02:30:54 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41166 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752387AbZK0Hax (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2009 02:30:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CB4E83F02;
-	Fri, 27 Nov 2009 02:30:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RweTpVADiCy1hUD9DtzeWKhjUCY=; b=CbuuHg
-	e2KTN33ZLv7ReoadkEWtSzUSx1Yz47gAJZXqEusJTdzA56ehCGhr/0XTo0LCLmCN
-	ppKGQnjow1KpR3hHrN9Orz4f37UddbqMuJgSd+UVUb/umDLxSAKaZCI2qmbZ/zdY
-	iskoSjDS/Jm7nkExR+40MBfgz6sM0pRXrDyxA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WITGAJWwMV5lCbFwsiiHZv5cCvFdY1i/
-	C45DNdA7/WdNP6ApiQbuK73MhEKQsgUm5/k6mNe+iGeaGMf1yAQ+8dnZ0iuB8O3s
-	OGYydeNUQRLna64gkA06D3ni9q0vDTogJjcU/fD2La7KErrbMQl/3Y28ulAVF5y8
-	ASv36r72YFQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1947C83F01;
-	Fri, 27 Nov 2009 02:30:55 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 38DF783EFF; Fri, 27 Nov
- 2009 02:30:50 -0500 (EST)
-In-Reply-To: <4B0F78F1.4040101@viscovery.net> (Johannes Sixt's message of
- "Fri\, 27 Nov 2009 08\:00\:01 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CC4FEBD4-DB26-11DE-89A0-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752463AbZK0HmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2009 02:42:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751867AbZK0HmW
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 02:42:22 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:39644 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751234AbZK0HmW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2009 02:42:22 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NDvTF-0006Nm-Gg; Fri, 27 Nov 2009 08:42:25 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 4682B1660F;
+	Fri, 27 Nov 2009 08:42:25 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <7vzl68v2zb.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133871>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Junio C Hamano schrieb:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+> 
+>> Like this?
+> 
+> Yeah, and in addition to "puts", "write(2)" is also not supported, right?
 
-> Like this?
+Correct, good catch!
 
-Yeah, and in addition to "puts", "write(2)" is also not supported, right?
+--- 8< ---
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH] Add a notice that only certain functions can print color escape codes
 
->  color.h |    5 +++++
->  1 files changed, 5 insertions(+), 0 deletions(-)
->
-> diff --git a/color.h b/color.h
-> index 7d8da6f..edeaa3e 100644
-> --- a/color.h
-> +++ b/color.h
-> @@ -4,6 +4,11 @@
->  /* "\033[1;38;5;2xx;48;5;2xxm\0" is 23 bytes */
->  #define COLOR_MAXLEN 24
->
-> +/*
-> + * IMPORTANT: Due to the way these color codes are emulated on Windows,
-> + * write them only using printf, fprintf, and fputs. In particular,
-> + * do not use puts.
-> + */
->  #define GIT_COLOR_NORMAL	""
->  #define GIT_COLOR_RESET		"\033[m"
->  #define GIT_COLOR_BOLD		"\033[1m"
-> -- 
-> 1.6.6.rc0.43.g50037
+We emulate color escape codes on Windows by overriding printf, fprintf,
+and fputs. Warn users that these are the only functions that can be used
+to print them.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ color.h |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+diff --git a/color.h b/color.h
+index 7d8da6f..3cb4b7f 100644
+--- a/color.h
++++ b/color.h
+@@ -4,6 +4,11 @@
+ /* "\033[1;38;5;2xx;48;5;2xxm\0" is 23 bytes */
+ #define COLOR_MAXLEN 24
+
++/*
++ * IMPORTANT: Due to the way these color codes are emulated on Windows,
++ * write them only using printf(), fprintf(), and fputs(). In particular,
++ * do not use puts() or write().
++ */
+ #define GIT_COLOR_NORMAL	""
+ #define GIT_COLOR_RESET		"\033[m"
+ #define GIT_COLOR_BOLD		"\033[1m"
+-- 
+1.6.6.rc0.43.g50037
