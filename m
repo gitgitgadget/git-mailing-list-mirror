@@ -1,79 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Give the hunk comment its own color
-Date: Thu, 26 Nov 2009 23:27:40 -0800
-Message-ID: <7v4oogwhoz.fsf@alter.siamese.dyndns.org>
-References: <1258543836-799-1-git-send-email-bert.wesarg@googlemail.com>
- <20091118142320.GA1220@coredump.intra.peff.net>
- <7vaayjebu5.fsf@alter.siamese.dyndns.org>
- <36ca99e90911260405y42a9a07cx419d2973ec673039@mail.gmail.com>
- <7v4oogzo74.fsf@alter.siamese.dyndns.org>
- <20091127065202.GD20844@coredump.intra.peff.net>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: What should a user expect from git log -M -- file
+Date: Fri, 27 Nov 2009 08:28:20 +0100
+Message-ID: <20091127072820.GA17045@glandium.org>
+References: <20091126163654.GA14509@glandium.org>
+ <m3ocmpmcoq.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 27 08:28:02 2009
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 27 08:29:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDvFG-00044P-K7
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 08:27:58 +0100
+	id 1NDvGe-0004QD-Cp
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 08:29:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752111AbZK0H1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2009 02:27:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751971AbZK0H1r
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 02:27:47 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62237 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751066AbZK0H1q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2009 02:27:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 44477A1E5F;
-	Fri, 27 Nov 2009 02:27:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fsPEAie5xtjg7GccBXddta5Dwf4=; b=RXtUzs
-	nPk6bDLQG9l7sH9CrEFAR+QlifxFyO54yb0RBK8hOfvSA+tCiE+jzGQWTOn9Du83
-	DqQF131rhnDJhHQXgKGDQJeDTFOUUi6XvZfUnZMRM9OwZel2IlqCVF19wuLM5nBp
-	C0ByRRu0LbSWwMV5ULhd3SQN//KZQmvVwt/M4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Tn5HDnIC4++igg79SGEmQk+MeXiAMYvG
-	gPueWBHMya4RrzidIhvqR+KSeM5GdVgnuio9u0KBg+LGiWOXPjIK6vQB54RVRjUY
-	Pp3AfpCmb9TVeL+5KiiURa62JoHaPZJ/uzkLHOzgpp7tMIcKo9853mpGAeHf6Esy
-	Tv7KyOhkJ5U=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0F368A1E5E;
-	Fri, 27 Nov 2009 02:27:48 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8E49DA1E5D; Fri, 27 Nov 2009
- 02:27:42 -0500 (EST)
-In-Reply-To: <20091127065202.GD20844@coredump.intra.peff.net> (Jeff King's
- message of "Fri\, 27 Nov 2009 01\:52\:03 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5CCEB088-DB26-11DE-A617-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1752403AbZK0H3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2009 02:29:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752331AbZK0H3N
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 02:29:13 -0500
+Received: from vuizook.err.no ([85.19.221.46]:45602 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751066AbZK0H3M (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2009 02:29:12 -0500
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1NDvGU-0007F2-GT; Fri, 27 Nov 2009 08:29:17 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1NDvFc-0004V0-IW; Fri, 27 Nov 2009 08:28:20 +0100
+Content-Disposition: inline
+In-Reply-To: <m3ocmpmcoq.fsf@localhost.localdomain>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133869>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Nov 26, 2009 at 09:14:37AM -0800, Jakub Narebski wrote:
+> Mike Hommey <mh@glandium.org> writes:
+> 
+> > I recently reorganized a project of mine, and the result is that a lot of
+> > files moved from the top directory to a sub directory.
+> > 
+> > Now, I innocently tried to 'git log -M' some of these files in the
+> > subdirectories, and well, the history just stops when the file was
+> > created. Obviously, if I put both the old and the new location it works,
+> > but shouldn't users expect 'git log -M -- file' to try to find the
+> > previous path and continue from there ?
+> 
+> What you want is not
+> 
+>   git log -M -- file
+> 
+> but
+> 
+>   git log --follow file
+> 
+> "git log -M -- file" IIRC first applies path limiting, simplifying
+> history, *then* does rename detection, and finally filters output
+> (unless --full-diff is used).
 
-> On Thu, Nov 26, 2009 at 06:38:55PM -0800, Junio C Hamano wrote:
->
->> > ... If it is only the nen-existing
->> > consensus of the default color, than please use the die.
->> 
->> If you are having me go find the mail and apply I would probably use
->> "plain" as I suggested.
->
-> As the other person in the discussion, I'll just chime in that I also
-> think "plain" is the best of the suggested defaults.
+That's what I was looking for, thanks. I would suggest to put --follow
+closer to -M and -C in the documentation, but the way the git-log
+manual is generated (including diff options) makes that impossible :(
 
-Ok, I tweaked the patch locally and applied.
-
-Thanks.
+Mike
