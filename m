@@ -1,109 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-am: don't ignore --keep (-k) option
-Date: Fri, 27 Nov 2009 12:03:10 -0800
-Message-ID: <7vy6lrka69.fsf@alter.siamese.dyndns.org>
-References: <874ookp4u8.fsf@meyering.net>
- <7vmy2b76ji.fsf@alter.siamese.dyndns.org> <87638zm38r.fsf_-_@meyering.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] grep: --full-tree
+Date: Fri, 27 Nov 2009 21:07:51 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0911272102430.4521@intel-tinevez-2-302>
+References: <20091125210034.GC18487@coredump.intra.peff.net> <7vmy2as319.fsf@alter.siamese.dyndns.org> <20091125214949.GA31473@coredump.intra.peff.net> <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com> <20091125222037.GA2861@coredump.intra.peff.net>
+ <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com> <20091127062013.GA20844@coredump.intra.peff.net> <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302> <20091127095914.GA4865@sigill.intra.peff.net> <alpine.DEB.1.00.0911271144230.4521@intel-tinevez-2-302>
+ <20091127180235.GA26633@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Fri Nov 27 21:03:24 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: James Pickens <jepicken@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 27 21:08:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NE72K-0008O4-01
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 21:03:24 +0100
+	id 1NE76m-0001n9-B3
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 21:08:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752274AbZK0UDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2009 15:03:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752133AbZK0UDM
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 15:03:12 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56349 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751372AbZK0UDM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2009 15:03:12 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BD39383A25;
-	Fri, 27 Nov 2009 15:03:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nfnlIr2bsDRRNz+ROAWvOdBdLqs=; b=Gpsghp
-	KBVsfzf29smntHH8A0BBhcuXR2vQMh3WpBJclF0qQX5PpCci2rZyd65xJpxn+6ny
-	YM/6hGtGdjXRDd+y7ACs1E8xiolgkDSMhSrQ0BCs/TxXyENQ72W1t+QMqCeJfJPn
-	meK+qslud79plgqDmZB4eml6QHyEkCxDApQJY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=k7LZIg/hHeJnyBMnFCGOFAcyVjRuKNGl
-	idbfB2+6usLvPZZH6f/z/WrpCp3+eWHMojnlMndyAFJi/zI0SZhcJpSQ9rdLB78t
-	ejoPigdCT8jAb5gDwzgeKtw1LPS5B+7nb1l9tOjn4tnBRgx6AFaIVtQcCT0p/jQZ
-	j7mT9AvJKQA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 97F9483A23;
-	Fri, 27 Nov 2009 15:03:14 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C5EF583A20; Fri, 27 Nov
- 2009 15:03:11 -0500 (EST)
-In-Reply-To: <87638zm38r.fsf_-_@meyering.net> (Jim Meyering's message of
- "Wed\, 25 Nov 2009 09\:13\:08 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E58ECD86-DB8F-11DE-A17D-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751764AbZK0UHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2009 15:07:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751650AbZK0UHs
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 15:07:48 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35584 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751149AbZK0UHs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2009 15:07:48 -0500
+Received: (qmail invoked by alias); 27 Nov 2009 20:07:52 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp057) with SMTP; 27 Nov 2009 21:07:52 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18aFRYJV9ga1Wl+iWjPtPb20B7GgEES4bglHS70Cp
+	4J9STdkpwvpHoW
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20091127180235.GA26633@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133930>
 
-Jim Meyering <jim@meyering.net> writes:
+Hi,
 
-> I started looking at git-am.sh and spotted what appears to be a typo.
-> There is only that one use of $keep_subject, so its value currently
-> comes from the environment.
->
-> From 02f7e6433b5db8b18a4cccf58c302159c2f54fa5 Mon Sep 17 00:00:00 2001
-> From: Jim Meyering <meyering@redhat.com>
-> Date: Wed, 25 Nov 2009 09:10:46 +0100
-> Subject: [PATCH] git-am: don't ignore --keep (-k) option
->
-> Fix typo in variable name: s/keep_subject/keep/.
->
-> Signed-off-by: Jim Meyering <meyering@redhat.com>
+On Fri, 27 Nov 2009, Jeff King wrote:
 
-At the level of "what does each line of the code do", this is a fix, but
-as we do a lot more than just stripping "[PATCH] " from the beginning of
-the Subject: line these days, I think we are better off declaring defeat
-in this particular codepath and not doing anything here.
+> On Fri, Nov 27, 2009 at 11:53:42AM +0100, Johannes Schindelin wrote:
+> 
+> > > If only somebody had written a "pager.status" configuration variable,
+> > > you could use that. Oh wait. I did. And it shipped in v1.6.0.
+> > 
+> > And it makes things inconsistent.  That is why I do not use it. 
+> 
+> Then you can not use this configuration variable, too. Has the existence
+> of pager.status, since you do not use it, been a problem for you so far?
 
-Adding "[PATCH] " is no longer "keeping the original subject" anyway.  It
-is "without knowing what we already stripped, adding one random string
-that could have been what we removed".
+No, since none of the people I helped use it.
 
-I also have to wonder why $dotest/info does not have the [PATCH] or
-whatever prefix that we were told not to strip in this codepath.  After
-all, we are running "git mailinfo" with $keep option to produce that file,
-so if that part is working correctly, we shouldn't even have to have this
-"add [PATCH] back" trick to begin with.
+> > Do you work on 10 different computers?  I do.  And nothing is more 
+> > unnerving than the same command producing something different on the 
+> > different computers.
+> 
+> Yes, as a matter of fact, I do work on 10 different computers. I'm sorry 
+> that you find managing your configuration so challenging. But if you 
+> don't use the configuration variable, then your own personal setup is 
+> totally irrelevant.
 
-What am I missing???
+As I just demonstrated, this is a false statement.
 
-> ---
->  git-am.sh |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/git-am.sh b/git-am.sh
-> index 151512a..f353e73 100755
-> --- a/git-am.sh
-> +++ b/git-am.sh
-> @@ -578,7 +578,7 @@ do
->  			sed -e '1,/^$/d' >"$dotest/msg-clean"
->  		else
->  			SUBJECT="$(sed -n '/^Subject/ s/Subject: //p' "$dotest/info")"
-> -			case "$keep_subject" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
-> +			case "$keep" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
->
->  			(printf '%s\n\n' "$SUBJECT"; cat "$dotest/msg") |
->  				git stripspace > "$dotest/msg-clean"
-> --
-> 1.6.6.rc0.236.ge0b94
+> If your argument is that this lack of consistency will irritate users,
+> you need to show that:
+> 
+>   1. There are users who switch between a large number of setups, but
+>      will not apply config consistently.
+
+This is a strawman, and you should be ashamed to put it here.  Just 
+because nobody does what you actively encourage does not mean that the 
+encouraged procedure is good, or for that matter, helps anybody but you.
+
+Just think about it.  If you plan to change the side cars are supposed to 
+drive on, it is not enough to have a nice cozy committee deciding on it in 
+some little room somewhere in Wyoming.  Especially not if they decide that 
+you can drive on the other side if you put a sticker "I am a right-wing 
+driver" on your car.
+
+It is inconsistent, and it is violating the law of the least surprise.
+
+> And the GitTogether had a "users complain about git, and we try to
+> listen" session.
+
+Oh, that makes me so happy.  <sarcasm>Soooo happy</sarcasm>.  So it was an 
+ivory tower meeting, once again?
+
+Ciao,
+Dscho
