@@ -1,88 +1,80 @@
-From: Uri Okrent <uokrent@gmail.com>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Fri, 27 Nov 2009 10:47:45 -0800
-Message-ID: <4B101ED1.9000607@gmail.com>
-References: <20091125203922.GA18487@coredump.intra.peff.net> <7vmy2as319.fsf@alter.siamese.dyndns.org> <20091125214949.GA31473@coredump.intra.peff.net> <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com> <20091125222037.GA2861@coredump.intra.peff.net> <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com> <20091127062013.GA20844@coredump.intra.peff.net> <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302> <20091127095914.GA4865@sigill.intra.peff.net> <alpine.DEB.1.00.0911271144230.4521@intel-tinevez-2-302> <6839293b0911270827x54947c64q5f93e37664bc20f3@mail.gmail.com> <7vk4xbn7nl.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [msysGit] [PATCH/RFC 03/11] mingw: implement syslog
+Date: Fri, 27 Nov 2009 20:23:58 +0100
+Message-ID: <200911272023.58262.j6t@kdbg.org>
+References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com> <200911262223.22777.j6t@kdbg.org> <40aa078e0911270009u7569cfe5gb250092c8d2c0eac@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, James Pickens <jepicken@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 27 19:56:10 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: msysgit@googlegroups.com, git@vger.kernel.org, dotzenlabs@gmail.com
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Fri Nov 27 20:24:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NE5zE-0008PR-Ri
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 19:56:09 +0100
+	id 1NE6QW-0002JD-F0
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 20:24:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751893AbZK0Sz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2009 13:55:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751712AbZK0Sz5
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 13:55:57 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:58856 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751858AbZK0Sz4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2009 13:55:56 -0500
-Received: by pwi3 with SMTP id 3so1118570pwi.21
-        for <git@vger.kernel.org>; Fri, 27 Nov 2009 10:56:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=vXFmBdLJnt2lvOPxXI6XiYaHl1rrEHBUUCZ+P+8L9ck=;
-        b=d5r0NsRLsBrz77uyw1LuvfNk9Jz+aL0TjU7fRc4P5jCQZqXZk1gGh8oPLWTIOt1YRs
-         5nXM9Tw52pAdPNcG6+8mbs1j8RuEggY5MWLUKrcr5BIK/dJBcHp9EjuKA+TEZV1FATh5
-         kMPsOpxeZgXSEMmFRJYub5pLSX5m27nIG6vEg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=Wjqa1agzrifnyzLwFhWAjpUQ/NgZoVHqK77kiJxSBIPT5aYRDFooM5tUyTeSK5TudQ
-         s+56Ih/H+GbrVDI6chO4XUHDJbkGdhHkP48ePQVDaDhZTinP3XAUOsL0SVMaEkCrzIL/
-         8IuKiH7Q/GelXmpwBh6+5VxcvoawQSmr1CMbo=
-Received: by 10.114.187.7 with SMTP id k7mr2248135waf.106.1259347671828;
-        Fri, 27 Nov 2009 10:47:51 -0800 (PST)
-Received: from ?192.168.0.8? (cpe-76-90-12-237.socal.res.rr.com [76.90.12.237])
-        by mx.google.com with ESMTPS id 21sm1337972pzk.15.2009.11.27.10.47.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 27 Nov 2009 10:47:51 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <7vk4xbn7nl.fsf@alter.siamese.dyndns.org>
+	id S1751539AbZK0TYI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Nov 2009 14:24:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283AbZK0TYH
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 14:24:07 -0500
+Received: from [93.83.142.38] ([93.83.142.38]:63212 "EHLO dx.sixt.local"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751234AbZK0TYH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2009 14:24:07 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 7B95A19F610;
+	Fri, 27 Nov 2009 20:23:58 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <40aa078e0911270009u7569cfe5gb250092c8d2c0eac@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133925>
 
-Junio C Hamano wrote:
-> You preach to the choir.
-> 
-> That is exactly how we work and what people have been working hard for
-> 1.7.0.  Check the planned changes listed in the recent (and not so recent)
-> "What's cooking" summary reports.
+On Freitag, 27. November 2009, Erik Faye-Lund wrote:
+> On Thu, Nov 26, 2009 at 10:23 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> > I would
+> >
+> > =A0 =A0 =A0 =A0const char* arg;
+> > =A0 =A0 =A0 =A0if (strcmp(fmt, "%s"))
+> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0die("format string of syslog() not i=
+mplemented")
+> > =A0 =A0 =A0 =A0va_start(va, fmt);
+> > =A0 =A0 =A0 =A0arg =3D va_arg(va, char*);
+> > =A0 =A0 =A0 =A0va_end(va);
+> >
+> > because we have exactly one invocation of syslog(), which passes "%=
+s" as
+> > format string. Then strbuf_vaddf is not needed. Or even simpler: de=
+clare
+> > the function as
+> >
+> > void syslog(int priority, const char *fmt, const char*arg);
+>
+> After reading this again, I agree that this is the best solution. I'l=
+l
+> update for the next iteration.
 
-Yes, I guess my only point here was that maybe even 1.7 is not enough of
-a "Big Deal" (in the eyes of the public) to warrant breaking scripts. A
-2.0 version would be a more visible way to say "Hey test your scripts
-before upgrading". Adopting a strategy like that would mean making
-backwards incompatible changes a lot let frequently, but when we do we
-go for broke.
+Except that you shouldn't die like I proposed because here we are alrea=
+dy in=20
+the die_routine, no?
 
-> Changing "grep" is too late for 1.7.0, but we are trying to find an easy
-> migration path like you mentioned in your message and that is exactly what
-> this thread is about.
+> > "Note that the string that you log cannot contain %n, where n is an
+> > integer value (for example, %1) because the event viewer treats it =
+as an
+> > insertion string. ..."
+> >
+> > How are the chances that this condition applies to our use of the
+> > function?
+>
+> Ugh, increasingly high since we're adding IPv6 support, I guess.
+> Perhaps some form of escaping needs to be done?
 
-I wasn't actually suggesting we change grep for 1.7. As a matter of
-fact, my personal opinion (which I probably neglected to mention) is
-that grep default behavior should stay the same since it is semantically
-closer to unix (or gnu) grep.
+I think so, but actually I have no clue.
 
--- 
-    Uri
-
-Please consider the environment before printing this message.
-http://www.panda.org/how_you_can_help/
+-- Hannes
