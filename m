@@ -1,90 +1,110 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [msysGit] [PATCH/RFC 09/11] daemon: use run-command api for async  serving
-Date: Fri, 27 Nov 2009 21:59:38 +0100
-Message-ID: <200911272159.38757.j6t@kdbg.org>
-References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com> <1259196260-3064-9-git-send-email-kusmabite@gmail.com> <1259196260-3064-10-git-send-email-kusmabite@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] grep: --full-tree
+Date: Fri, 27 Nov 2009 16:05:30 -0500
+Message-ID: <20091127210530.GC26921@coredump.intra.peff.net>
+References: <20091125214949.GA31473@coredump.intra.peff.net>
+ <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com>
+ <20091125222037.GA2861@coredump.intra.peff.net>
+ <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com>
+ <20091127062013.GA20844@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302>
+ <20091127095914.GA4865@sigill.intra.peff.net>
+ <alpine.DEB.1.00.0911271144230.4521@intel-tinevez-2-302>
+ <20091127180235.GA26633@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0911272102430.4521@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: "Erik Faye-Lund" <kusmabite@googlemail.com>, git@vger.kernel.org,
-	dotzenlabs@gmail.com, "Erik Faye-Lund" <kusmabite@gmail.com>
-To: msysgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Fri Nov 27 21:59:57 2009
+Content-Type: text/plain; charset=utf-8
+Cc: James Pickens <jepicken@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Nov 27 22:05:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NE7v3-0003Lv-6O
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 21:59:57 +0100
+	id 1NE80V-0005Sz-At
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 22:05:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750933AbZK0U7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2009 15:59:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751301AbZK0U7q
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 15:59:46 -0500
-Received: from [93.83.142.38] ([93.83.142.38]:63839 "EHLO dx.sixt.local"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750956AbZK0U7p (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2009 15:59:45 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id D1FC519F60D;
-	Fri, 27 Nov 2009 21:59:38 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <1259196260-3064-10-git-send-email-kusmabite@gmail.com>
+	id S1752111AbZK0VFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2009 16:05:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752048AbZK0VFX
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 16:05:23 -0500
+Received: from peff.net ([208.65.91.99]:53500 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750696AbZK0VFX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2009 16:05:23 -0500
+Received: (qmail 29575 invoked by uid 107); 27 Nov 2009 21:09:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 27 Nov 2009 16:09:54 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Nov 2009 16:05:30 -0500
 Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0911272102430.4521@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133938>
 
-On Donnerstag, 26. November 2009, Erik Faye-Lund wrote:
->  static void check_dead_children(void)
->  {
-> -	int status;
-> -	pid_t pid;
-> -
-> -	while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
-> -		const char *dead = "";
-> -		remove_child(pid);
-> -		if (!WIFEXITED(status) || (WEXITSTATUS(status) > 0))
-> -			dead = " (with error)";
-> -		loginfo("[%"PRIuMAX"] Disconnected%s", (uintmax_t)pid, dead);
-> -	}
-> +	struct child **cradle, *blanket;
-> +	for (cradle = &firstborn; (blanket = *cradle);)
-> +		if (!is_async_alive(&blanket->async)) {
+On Fri, Nov 27, 2009 at 09:07:51PM +0100, Johannes Schindelin wrote:
 
-This would be the right place to call finish_async(). But since we cannot 
-wait, you invented is_async_alive(). But actually we are not only interested 
-in whether the process is alive, but also whether it completed successfully 
-so that we can add "(with error)". Would it make sense to have a function 
-finish_async_nowait() instead of is_async_alive() that (1) stresses the 
-start/finish symmetry and (2) can return more than just Boolean?
+> > Yes, as a matter of fact, I do work on 10 different computers. I'm sorry 
+> > that you find managing your configuration so challenging. But if you 
+> > don't use the configuration variable, then your own personal setup is 
+> > totally irrelevant.
+> 
+> As I just demonstrated, this is a false statement.
 
-> +			*cradle = blanket->next;
-> +			loginfo("Disconnected\n");
+I must have missed where you demonstrated it.
 
-Here you are losing information about the pid, which is important to have in 
-the syslog. The \n should be dropped.
+> > If your argument is that this lack of consistency will irritate users,
+> > you need to show that:
+> > 
+> >   1. There are users who switch between a large number of setups, but
+> >      will not apply config consistently.
+> 
+> This is a strawman, and you should be ashamed to put it here.  Just 
 
-> +	async.proc = async_execute;
-> +	async.data = ss;
-> +	async.out = incoming;
->
-> -	dup2(incoming, 0);
-> -	dup2(incoming, 1);
-> +	if (start_async(&async))
-> +		logerror("unable to fork");
-> +	else
-> +		add_child(&async, addr, addrlen);
->  	close(incoming);
-> -
-> -	exit(execute(0, addr));
+How is this a strawman? A strawman would be me overstating an
+exaggerated position by you and then arguing against it. All I have
+claimed is that it is not sufficient for _you_ to be personally annoyed
+by this existence of this option. You need to argue that there is a
+significant group of people in the same situation who will be ignored.
 
-In start_command(), the convention is that fds that are provided by the caller 
-are closed by start_command() (even if there are errors). The close(incoming) 
-that you leave here indicates that you are not using the same convention with 
-start_async(). It would be nice to switch to the same convention.
+Or have I mis-spoken in summarizing your claim that a "lack of
+consistency will irritate users". Is that not your point?
 
--- Hannes
+> Just think about it.  If you plan to change the side cars are supposed to 
+> drive on, it is not enough to have a nice cozy committee deciding on it in 
+> some little room somewhere in Wyoming.  Especially not if they decide that 
+> you can drive on the other side if you put a sticker "I am a right-wing 
+> driver" on your car.
+
+When the number of "git grep" crash fatalities rises above zero, maybe
+this line of reasoning will be relevant.
+
+I am talking about making software configurable so that people, in their
+own private setups, can make the software work as they see fit. Yes, it
+is possible for that setup to be visible to other people in some
+situations. But I am arguing that we need to weigh the (in my opinion
+substantial) inconvenience to users in their everyday work compared to
+the inconvenience of one user sitting at another user's terminal (or
+cutting and pasting commands, or running a script).
+
+> > And the GitTogether had a "users complain about git, and we try to
+> > listen" session.
+> 
+> Oh, that makes me so happy.  <sarcasm>Soooo happy</sarcasm>.  So it was an 
+> ivory tower meeting, once again?
+
+I don't know what to say. You complain and complain about how git is not
+being responsive to users. Shawn organizes a session where people at
+Google who are using git every day can try to make their complaints in
+an organized forum where a bunch of developers will listen and talk
+about ways we can address those complaints. And now you are mad about
+that?
+
+If you think we need a git conference where lots of users show up, I
+think that's a great idea. But until you provide some suggestions about
+how to organize such a thing, I don't see how you are helping anything.
+
+-Peff
