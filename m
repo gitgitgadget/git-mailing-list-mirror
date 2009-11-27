@@ -1,100 +1,99 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] gitweb: Make linking to actions requiring JavaScript a feature
-Date: Fri, 27 Nov 2009 16:41:39 +0100
-Message-ID: <200911271641.40947.jnareb@gmail.com>
-References: <1258659887-5244-1-git-send-email-bebarino@gmail.com> <200911262224.36371.jnareb@gmail.com> <7vy6lsy9mi.fsf@alter.siamese.dyndns.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH 0/2] http: allow multi-pass authentication
+Date: Fri, 27 Nov 2009 23:41:10 +0800
+Message-ID: <20091127234110.7b7e9993.rctay89@gmail.com>
+References: <Pine.LNX.4.64.0904150054470.7479@localhost.localdomain>,
+ <Pine.LNX.4.64.0904142350140.7479@localhost.localdomain>,
+ <1254510286-23155-1-git-send-email-nmiell@gmail.com>,
+ <25718488.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org,
-	Martin Koegler <mkoegler@auto.tuwien.ac.at>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 27 16:41:05 2009
+Cc: Martin =?ISO-8859-1?Q?Storsj=F6?= <martin@martin.st>,
+	Nicholas Miell <nmiell@gmail.com>, gsky51@gmail.com,
+	Clemens Buchacher <drizzd@aon.at>,
+	Mark Lodato <lodatom@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 27 16:41:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NE2wP-0000CJ-Hj
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 16:41:01 +0100
+	id 1NE2wu-0000Nn-9j
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 16:41:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750949AbZK0Pkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2009 10:40:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750890AbZK0Pkm
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 10:40:42 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:4933 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750840AbZK0Pkm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2009 10:40:42 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so227474fgg.1
-        for <git@vger.kernel.org>; Fri, 27 Nov 2009 07:40:47 -0800 (PST)
+	id S1751373AbZK0PlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2009 10:41:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751252AbZK0PlV
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 10:41:21 -0500
+Received: from mail-gx0-f212.google.com ([209.85.217.212]:34333 "EHLO
+	mail-gx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751193AbZK0PlU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2009 10:41:20 -0500
+Received: by gxk4 with SMTP id 4so3754gxk.8
+        for <git@vger.kernel.org>; Fri, 27 Nov 2009 07:41:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=8xmBksUqo8a99pmAHXNcBJkUftMVXkXXoDC0UPF91Ho=;
-        b=dyUpBrr85V9EYZ6xbGapIUiL+3tgO597dEAwKNYVj7qweRGCee8IVQuy/dI0Jg314M
-         9F9+cxx1EN9i8eRqSF3nEj65ZWc6JcrQM3b0m0YeLYd5WaCN3qpg8ihQmzi0XT8oyvVH
-         dVEVjC34YfqKarMV42K0bI0fFWe+TeLEqBnTs=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:in-reply-to:references:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=NNXJTw3zQhtPcSWY9MjKmCVAAiVEhGyQgW1n6hIQiDw=;
+        b=n2HqvXMbP3Ai3YgUBQz4cxp3yyj/pDNmgGB6UZkzGmPuuLwovIwQTOGMU1/fxYoJ9h
+         1N7URpK6OC9fyozLIrEmWMoI2HvIEWypZCxuv3oh54x4RqVATx6Rd1SA42qRdglcU7qr
+         EHwMM1WkP6K9WCDOAjm6TkGJVr9ghnnzI/jkE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=WjWMCVPW/D+gni751HlXJ/GjUm9ToCW3zEL9ymtCvevacE++b7h4NDaJfb0oBRyc0O
-         uSX7kZTY+3Lby7hCC85qPS8a+itmp1TlNHLvc1vrY1cUb5sT3KJ+rs5FBdYUxwuGWTbm
-         0ikC/4JNyRovgv9xmfdJTaJfBC0jOOvt0lZrE=
-Received: by 10.103.126.32 with SMTP id d32mr414622mun.0.1259336446872;
-        Fri, 27 Nov 2009 07:40:46 -0800 (PST)
-Received: from ?192.168.1.13? (abwo34.neoplus.adsl.tpnet.pl [83.8.238.34])
-        by mx.google.com with ESMTPS id y6sm4707356mug.1.2009.11.27.07.40.41
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        b=IBsr8N3mIAPWym2bZWdWvB/nWNLVOzSr7QPo0JGEw1+efzBaUjbZUxMmmxtieJbwX2
+         3aJ0euUiaUw8aRfCslj4BLSqEOaCMMghnNg98l+AXlZ+kYAKZ/0iqQyt646ohoUkwjii
+         AhhZD33JJZ5cwO4ldKBNe/p4xixfQrCE8T5y0=
+Received: by 10.150.56.1 with SMTP id e1mr1903991yba.225.1259336482345;
+        Fri, 27 Nov 2009 07:41:22 -0800 (PST)
+Received: from your-cukc5e3z5n (cm164.zeta152.maxonline.com.sg [116.87.152.164])
+        by mx.google.com with ESMTPS id 4sm641391ywg.28.2009.11.27.07.41.19
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 27 Nov 2009 07:40:41 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vy6lsy9mi.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+        Fri, 27 Nov 2009 07:41:21 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0904150054470.7479@localhost.localdomain>
+X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133903>
 
-On Fri, 27 Nov 2009, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > It might be however good *interim* solution, so people would be able
-> > to test 'blame_incremental' view without having to edit gitweb links.
-> 
-> Exactly.  I thought you were responding to my earlier "ship it as a new
-> feature with known breakage so that people can choose to enable to help
-> debugging and fixing".  If flipping on the new implementation makes an
-> alternative working implementation unavailable, that would be one reason
-> the site owners might consider _not_ enabling it.  By making them both
-> available, the result will have one less reason not to try for site
-> owners.
+This patch series applies on top of master. It enables fetching and
+pushing over http with the most suitable authentication scheme chosen
+by curl when the http.authAny or GIT_HTTP_AUTH_ANY is set.
 
-Actually "addLinks" would be a bit harder, I guess, than current "fixLinks"
-because "fixLinks" just adds ';js=1' to URL to denote that gitweb can use
-JavaScript-requiring actions equivalents.  For "addLinks" selecting where
-to add links would have to be in gitweb.js
+Authorization headers can also be preserved across requests, with at
+least 1 curl session being preserved by default. This is especially
+useful for the smart http protocol, where it is hard to rewind and re-
+send a request.
 
-I can "borrow" some code from Martin Koegler patch from April 2007
-"[PATCH 5/7] gitweb: Prototyp for selecting diffs in JavaScript"
-Message-Id: <1176669971921-git-send-email-mkoegler@auto.tuwien.ac.at>
-$gmane/44517/focus=44523.  
+Nicholas, Martin's patch should lead to similar functionality as your
+patch (dated Oct 3rd) would. However, unlike your patch,
+CURLOPT_HTTPAUTH is set even if the user name is not specified
+explicitly in the remote url, since it's conditional on
+http.c::user_name being set.
 
-Would turning
+I've tested this with Digest, and I believe this should work with NTLM
+too.
 
-  "blame"
+gsky, could you try this out with NTLM?
 
-link ito pair of links
+=?ISO-8859-15?Q?Martin_Storsj=F6?= (1):
+  Add an option for using any HTTP authentication scheme, not only
+    basic
 
-  "blame (incremental)"
+Tay Ray Chuan (1):
+  http: maintain curl sessions
 
-be a good solution?  I'm trying to come up with good naming for extra link
-to 'blame_incremental' action...
+ Documentation/config.txt |   13 +++++++++++++
+ http.c                   |   41 +++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 52 insertions(+), 2 deletions(-)
 
--- 
-Jakub Narebski
-Poland
+--
+Cheers,
+Ray Chuan
