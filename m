@@ -1,69 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Makefile: determine the list of header files using a
- glob
-Date: Fri, 27 Nov 2009 10:36:17 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0911271033460.4521@intel-tinevez-2-302>
-References: <4B0F8825.3040107@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] grep: --full-tree
+Date: Fri, 27 Nov 2009 04:59:14 -0500
+Message-ID: <20091127095914.GA4865@sigill.intra.peff.net>
+References: <20091125203922.GA18487@coredump.intra.peff.net>
+ <7viqcytjic.fsf@alter.siamese.dyndns.org>
+ <20091125210034.GC18487@coredump.intra.peff.net>
+ <7vmy2as319.fsf@alter.siamese.dyndns.org>
+ <20091125214949.GA31473@coredump.intra.peff.net>
+ <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com>
+ <20091125222037.GA2861@coredump.intra.peff.net>
+ <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com>
+ <20091127062013.GA20844@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Nov 27 10:36:25 2009
+Content-Type: text/plain; charset=utf-8
+Cc: James Pickens <jepicken@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Nov 27 10:59:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDxFY-0004Er-RN
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 10:36:25 +0100
+	id 1NDxbu-0004Kc-BI
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 10:59:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754196AbZK0JgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2009 04:36:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754176AbZK0JgN
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 04:36:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44561 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752338AbZK0JgM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2009 04:36:12 -0500
-Received: (qmail invoked by alias); 27 Nov 2009 09:36:17 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp070) with SMTP; 27 Nov 2009 10:36:17 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+SOOdsZAuSoJdaqxZEsI5QhDvPv7pYB66NB+7YqR
-	keBu25g1Rr7LcT
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <4B0F8825.3040107@viscovery.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1753200AbZK0J7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2009 04:59:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753105AbZK0J7M
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 04:59:12 -0500
+Received: from peff.net ([208.65.91.99]:39931 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751433AbZK0J7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2009 04:59:11 -0500
+Received: (qmail 26728 invoked by uid 107); 27 Nov 2009 10:03:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 27 Nov 2009 05:03:41 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Nov 2009 04:59:14 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133885>
 
-Hi,
+On Fri, Nov 27, 2009 at 10:31:30AM +0100, Johannes Schindelin wrote:
 
-On Fri, 27 Nov 2009, Johannes Sixt wrote:
-
-> From: Johannes Sixt <j6t@kdbg.org>
+> Guess what.  I have a similar problem, only it is that my "git status" 
+> output is _always_ too long, so I always have to page it.
 > 
-> The list of header files was incomplete because a number of header files
-> were added to the code base, but were not added to the list LIB_H that we
-> have in the Makefile. This meant that no rebuild was triggered if one of
-> the missing headers was changed because we do not have automatic
-> dependency tracking, either.
+> Once upon a time, Junio applied a patch that implied -p with status.  I 
+> was overjoyed.  He reverted that patch later.  Yes, exactly.
 > 
-> Sidestep the issue by computing the list using $(wildcard).
+> So I end up doing "git config --global ps '-p status'" on every new 
 
-Funny; I thought that not all header files are library header files, i.e. 
-not all header changes should trigger a full new build of libgit.a.
+If only somebody had written a "pager.status" configuration variable,
+you could use that. Oh wait. I did. And it shipped in v1.6.0.
 
-Am I wrong?
+> account (I usually even forget to curse!), and I really cannot see why you 
+> do not do the equivalent "git config fullgrep grep --full-tree" in your 
+> repositories (or even the global thing).
+>
+> The further benefit is that we stop talking about breaking backwards 
+> compatibility, and we stop talking about making it hard for Git experts to 
+> help newbies.
 
-Ciao,
-Dscho
+I guess you missed the part of the thread where I already discussed
+this. It was here:
 
-P.S.: Something that comes to mind is the http.h header, which should 
-really be independent of libgit.a.  Which reminds me: do we _still_ tell 
-libgit.a at _compile time_ whether git-remote-http is compiled with cURL?
+  http://article.gmane.org/gmane.comp.version-control.git/133672
+
+-Peff
