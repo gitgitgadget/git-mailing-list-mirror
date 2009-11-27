@@ -1,70 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Fri, 27 Nov 2009 15:53:05 -0500
-Message-ID: <20091127205305.GB26921@coredump.intra.peff.net>
-References: <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com>
- <20091125222037.GA2861@coredump.intra.peff.net>
- <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com>
- <20091127062013.GA20844@coredump.intra.peff.net>
- <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302>
- <20091127095914.GA4865@sigill.intra.peff.net>
- <alpine.DEB.1.00.0911271144230.4521@intel-tinevez-2-302>
- <6839293b0911270827x54947c64q5f93e37664bc20f3@mail.gmail.com>
- <7vk4xbn7nl.fsf@alter.siamese.dyndns.org>
- <4B101ED1.9000607@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [msysGit] [PATCH/RFC 09/11] daemon: use run-command api for async  serving
+Date: Fri, 27 Nov 2009 21:59:38 +0100
+Message-ID: <200911272159.38757.j6t@kdbg.org>
+References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com> <1259196260-3064-9-git-send-email-kusmabite@gmail.com> <1259196260-3064-10-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	James Pickens <jepicken@gmail.com>, git@vger.kernel.org
-To: Uri Okrent <uokrent@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 27 21:53:10 2009
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: "Erik Faye-Lund" <kusmabite@googlemail.com>, git@vger.kernel.org,
+	dotzenlabs@gmail.com, "Erik Faye-Lund" <kusmabite@gmail.com>
+To: msysgit@googlegroups.com
+X-From: git-owner@vger.kernel.org Fri Nov 27 21:59:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NE7oS-00013E-Mo
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 21:53:09 +0100
+	id 1NE7v3-0003Lv-6O
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 21:59:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751724AbZK0Uw5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2009 15:52:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751674AbZK0Uw5
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 15:52:57 -0500
-Received: from peff.net ([208.65.91.99]:56478 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751650AbZK0Uw4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2009 15:52:56 -0500
-Received: (qmail 29515 invoked by uid 107); 27 Nov 2009 20:57:28 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 27 Nov 2009 15:57:28 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Nov 2009 15:53:05 -0500
+	id S1750933AbZK0U7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2009 15:59:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751301AbZK0U7q
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 15:59:46 -0500
+Received: from [93.83.142.38] ([93.83.142.38]:63839 "EHLO dx.sixt.local"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750956AbZK0U7p (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2009 15:59:45 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id D1FC519F60D;
+	Fri, 27 Nov 2009 21:59:38 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <1259196260-3064-10-git-send-email-kusmabite@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <4B101ED1.9000607@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133937>
 
-On Fri, Nov 27, 2009 at 10:47:45AM -0800, Uri Okrent wrote:
+On Donnerstag, 26. November 2009, Erik Faye-Lund wrote:
+>  static void check_dead_children(void)
+>  {
+> -	int status;
+> -	pid_t pid;
+> -
+> -	while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+> -		const char *dead = "";
+> -		remove_child(pid);
+> -		if (!WIFEXITED(status) || (WEXITSTATUS(status) > 0))
+> -			dead = " (with error)";
+> -		loginfo("[%"PRIuMAX"] Disconnected%s", (uintmax_t)pid, dead);
+> -	}
+> +	struct child **cradle, *blanket;
+> +	for (cradle = &firstborn; (blanket = *cradle);)
+> +		if (!is_async_alive(&blanket->async)) {
 
-> >Changing "grep" is too late for 1.7.0, but we are trying to find an easy
-> >migration path like you mentioned in your message and that is exactly what
-> >this thread is about.
-> 
-> I wasn't actually suggesting we change grep for 1.7. As a matter of
-> fact, my personal opinion (which I probably neglected to mention) is
-> that grep default behavior should stay the same since it is semantically
-> closer to unix (or gnu) grep.
+This would be the right place to call finish_async(). But since we cannot 
+wait, you invented is_async_alive(). But actually we are not only interested 
+in whether the process is alive, but also whether it completed successfully 
+so that we can add "(with error)". Would it make sense to have a function 
+finish_async_nowait() instead of is_async_alive() that (1) stresses the 
+start/finish symmetry and (2) can return more than just Boolean?
 
-Keeping consistency with non-git grep has been mentioned a few times in
-this thread.  I really don't understand how default file selection is
-supposed to maintain consistency with non-git grep. Regular grep
-defaults to stdin if no paths are given. That mode doesn't make any
-sense for git grep.
+> +			*cradle = blanket->next;
+> +			loginfo("Disconnected\n");
 
-So of the two options (grepping the list of files from the full tree, or
-the list of files rooted at the current directory), how is one closer to
-non-git grep than the other?
+Here you are losing information about the pid, which is important to have in 
+the syslog. The \n should be dropped.
 
--Peff
+> +	async.proc = async_execute;
+> +	async.data = ss;
+> +	async.out = incoming;
+>
+> -	dup2(incoming, 0);
+> -	dup2(incoming, 1);
+> +	if (start_async(&async))
+> +		logerror("unable to fork");
+> +	else
+> +		add_child(&async, addr, addrlen);
+>  	close(incoming);
+> -
+> -	exit(execute(0, addr));
+
+In start_command(), the convention is that fds that are provided by the caller 
+are closed by start_command() (even if there are errors). The close(incoming) 
+that you leave here indicates that you are not using the same convention with 
+start_async(). It would be nice to switch to the same convention.
+
+-- Hannes
