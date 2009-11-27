@@ -1,74 +1,88 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: What should a user expect from git log -M -- file
-Date: Fri, 27 Nov 2009 08:28:20 +0100
-Message-ID: <20091127072820.GA17045@glandium.org>
-References: <20091126163654.GA14509@glandium.org>
- <m3ocmpmcoq.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add a notice that only certain functions can print color
+ escape codes
+Date: Thu, 26 Nov 2009 23:30:48 -0800
+Message-ID: <7vzl68v2zb.fsf@alter.siamese.dyndns.org>
+References: <cover.1259248243.git.git@drmicha.warpmail.net>
+ <26d0a2022638ad7b75268ca291b8d02a22f1f66c.1259248243.git.git@drmicha.warpmail.net> <4B0EA06A.1050101@viscovery.net> <7vy6lt6rh3.fsf@alter.siamese.dyndns.org> <4B0F78F1.4040101@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 27 08:29:25 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Nov 27 08:31:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NDvGe-0004QD-Cp
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 08:29:24 +0100
+	id 1NDvII-0004sx-Vl
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 08:31:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752403AbZK0H3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2009 02:29:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752331AbZK0H3N
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 02:29:13 -0500
-Received: from vuizook.err.no ([85.19.221.46]:45602 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751066AbZK0H3M (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2009 02:29:12 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1NDvGU-0007F2-GT; Fri, 27 Nov 2009 08:29:17 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1NDvFc-0004V0-IW; Fri, 27 Nov 2009 08:28:20 +0100
-Content-Disposition: inline
-In-Reply-To: <m3ocmpmcoq.fsf@localhost.localdomain>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1754089AbZK0Hay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2009 02:30:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752410AbZK0Hay
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 02:30:54 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41166 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752387AbZK0Hax (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2009 02:30:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CB4E83F02;
+	Fri, 27 Nov 2009 02:30:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RweTpVADiCy1hUD9DtzeWKhjUCY=; b=CbuuHg
+	e2KTN33ZLv7ReoadkEWtSzUSx1Yz47gAJZXqEusJTdzA56ehCGhr/0XTo0LCLmCN
+	ppKGQnjow1KpR3hHrN9Orz4f37UddbqMuJgSd+UVUb/umDLxSAKaZCI2qmbZ/zdY
+	iskoSjDS/Jm7nkExR+40MBfgz6sM0pRXrDyxA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WITGAJWwMV5lCbFwsiiHZv5cCvFdY1i/
+	C45DNdA7/WdNP6ApiQbuK73MhEKQsgUm5/k6mNe+iGeaGMf1yAQ+8dnZ0iuB8O3s
+	OGYydeNUQRLna64gkA06D3ni9q0vDTogJjcU/fD2La7KErrbMQl/3Y28ulAVF5y8
+	ASv36r72YFQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1947C83F01;
+	Fri, 27 Nov 2009 02:30:55 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 38DF783EFF; Fri, 27 Nov
+ 2009 02:30:50 -0500 (EST)
+In-Reply-To: <4B0F78F1.4040101@viscovery.net> (Johannes Sixt's message of
+ "Fri\, 27 Nov 2009 08\:00\:01 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CC4FEBD4-DB26-11DE-89A0-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133870>
 
-On Thu, Nov 26, 2009 at 09:14:37AM -0800, Jakub Narebski wrote:
-> Mike Hommey <mh@glandium.org> writes:
-> 
-> > I recently reorganized a project of mine, and the result is that a lot of
-> > files moved from the top directory to a sub directory.
-> > 
-> > Now, I innocently tried to 'git log -M' some of these files in the
-> > subdirectories, and well, the history just stops when the file was
-> > created. Obviously, if I put both the old and the new location it works,
-> > but shouldn't users expect 'git log -M -- file' to try to find the
-> > previous path and continue from there ?
-> 
-> What you want is not
-> 
->   git log -M -- file
-> 
-> but
-> 
->   git log --follow file
-> 
-> "git log -M -- file" IIRC first applies path limiting, simplifying
-> history, *then* does rename detection, and finally filters output
-> (unless --full-diff is used).
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-That's what I was looking for, thanks. I would suggest to put --follow
-closer to -M and -C in the documentation, but the way the git-log
-manual is generated (including diff options) makes that impossible :(
+> Like this?
 
-Mike
+Yeah, and in addition to "puts", "write(2)" is also not supported, right?
+
+>  color.h |    5 +++++
+>  1 files changed, 5 insertions(+), 0 deletions(-)
+>
+> diff --git a/color.h b/color.h
+> index 7d8da6f..edeaa3e 100644
+> --- a/color.h
+> +++ b/color.h
+> @@ -4,6 +4,11 @@
+>  /* "\033[1;38;5;2xx;48;5;2xxm\0" is 23 bytes */
+>  #define COLOR_MAXLEN 24
+>
+> +/*
+> + * IMPORTANT: Due to the way these color codes are emulated on Windows,
+> + * write them only using printf, fprintf, and fputs. In particular,
+> + * do not use puts.
+> + */
+>  #define GIT_COLOR_NORMAL	""
+>  #define GIT_COLOR_RESET		"\033[m"
+>  #define GIT_COLOR_BOLD		"\033[1m"
+> -- 
+> 1.6.6.rc0.43.g50037
