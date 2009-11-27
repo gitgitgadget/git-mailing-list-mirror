@@ -1,110 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Fri, 27 Nov 2009 16:05:30 -0500
-Message-ID: <20091127210530.GC26921@coredump.intra.peff.net>
-References: <20091125214949.GA31473@coredump.intra.peff.net>
- <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com>
- <20091125222037.GA2861@coredump.intra.peff.net>
- <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com>
- <20091127062013.GA20844@coredump.intra.peff.net>
- <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302>
- <20091127095914.GA4865@sigill.intra.peff.net>
- <alpine.DEB.1.00.0911271144230.4521@intel-tinevez-2-302>
- <20091127180235.GA26633@coredump.intra.peff.net>
- <alpine.DEB.1.00.0911272102430.4521@intel-tinevez-2-302>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-am: don't ignore --keep (-k) option
+Date: Fri, 27 Nov 2009 13:11:31 -0800
+Message-ID: <7vfx7zk70c.fsf@alter.siamese.dyndns.org>
+References: <874ookp4u8.fsf@meyering.net>
+ <7vmy2b76ji.fsf@alter.siamese.dyndns.org> <87638zm38r.fsf_-_@meyering.net>
+ <7vy6lrka69.fsf@alter.siamese.dyndns.org> <87y6lr203s.fsf@meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: James Pickens <jepicken@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Nov 27 22:05:35 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Fri Nov 27 22:11:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NE80V-0005Sz-At
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 22:05:35 +0100
+	id 1NE86T-0007ja-W3
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Nov 2009 22:11:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752111AbZK0VFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2009 16:05:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752048AbZK0VFX
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 16:05:23 -0500
-Received: from peff.net ([208.65.91.99]:53500 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750696AbZK0VFX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2009 16:05:23 -0500
-Received: (qmail 29575 invoked by uid 107); 27 Nov 2009 21:09:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 27 Nov 2009 16:09:54 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Nov 2009 16:05:30 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0911272102430.4521@intel-tinevez-2-302>
+	id S1752687AbZK0VLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2009 16:11:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752458AbZK0VLe
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 16:11:34 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62702 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752249AbZK0VLe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2009 16:11:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D02F883E5D;
+	Fri, 27 Nov 2009 16:11:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=B8WQiptOBRVLqPBCAeWn5M2Gu7M=; b=hXwQVi
+	LDptUvuZnhnNRXKPp/UXDXmEXSUJTVleY2BbNlIzu6Vl5d07uGfhJuFxd/bvda/p
+	LnUoKBwfK1QYYbJ0vEK4KCe2+LxnjYIM85DrURFIQxTXKGYzAw7BawM1agCCE3AU
+	+ilJTdofbN6RGkL/0SToT0PzOIZCqLfNIu9dA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=k8yqE571pZyqsEo3rCtkG8I0xgzyA80x
+	76CX1qheI7mg+1K4nS/qcLlEN8tSpWbhHbt/v6dN5o/CTtdpCF1d1F4PyCyK3diG
+	7g85s8n7078YaQ+LzH0jnDDc5TRwf3cSdj7tsJqwgbNDvHqKigT9vgqAHxDWMofC
+	ShY2EatAkkI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AD94383E5C;
+	Fri, 27 Nov 2009 16:11:36 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 007B583E5B; Fri, 27 Nov
+ 2009 16:11:32 -0500 (EST)
+In-Reply-To: <87y6lr203s.fsf@meyering.net> (Jim Meyering's message of "Fri\,
+ 27 Nov 2009 21\:17\:59 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 729874E4-DB99-11DE-A253-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133939>
 
-On Fri, Nov 27, 2009 at 09:07:51PM +0100, Johannes Schindelin wrote:
+Jim Meyering <jim@meyering.net> writes:
 
-> > Yes, as a matter of fact, I do work on 10 different computers. I'm sorry 
-> > that you find managing your configuration so challenging. But if you 
-> > don't use the configuration variable, then your own personal setup is 
-> > totally irrelevant.
-> 
-> As I just demonstrated, this is a false statement.
+>> At the level of "what does each line of the code do", this is a fix, but
+>> as we do a lot more than just stripping "[PATCH] " from the beginning of
+>> the Subject: line these days, I think we are better off declaring defeat
+>> in this particular codepath and not doing anything here.
+>
+> Sounds fine to me.
+> Glad you're keeping everything in perspective.
 
-I must have missed where you demonstrated it.
+What the case statement tries to do is _wrong_; "mailinfo -k" keeps the
+original prefix and all the case statement does is to add an extra [PATCH]
+that did not exist anywhere in the original on top of that.
 
-> > If your argument is that this lack of consistency will irritate users,
-> > you need to show that:
-> > 
-> >   1. There are users who switch between a large number of setups, but
-> >      will not apply config consistently.
-> 
-> This is a strawman, and you should be ashamed to put it here.  Just 
+What is funny is that the case statement has been trying to do a wrong
+thing from day-one, ever since the script was introduced in d1c5f2a (Add
+git-am, applymbox replacement., 2005-10-07).  That version uses $keep to
+hold -k or empty, gives that to mailinfo for producing $dotest/info, and
+it has the same case statement that switches on $keep_subject nobody sets
+to add an extra "[PATCH]" in front.  Luckily, due to the typo you found,
+nobody was bitten by the bug, and your patch will break things for people
+by enabling it ;-).
 
-How is this a strawman? A strawman would be me overstating an
-exaggerated position by you and then arguing against it. All I have
-claimed is that it is not sufficient for _you_ to be personally annoyed
-by this existence of this option. You need to argue that there is a
-significant group of people in the same situation who will be ignored.
-
-Or have I mis-spoken in summarizing your claim that a "lack of
-consistency will irritate users". Is that not your point?
-
-> Just think about it.  If you plan to change the side cars are supposed to 
-> drive on, it is not enough to have a nice cozy committee deciding on it in 
-> some little room somewhere in Wyoming.  Especially not if they decide that 
-> you can drive on the other side if you put a sticker "I am a right-wing 
-> driver" on your car.
-
-When the number of "git grep" crash fatalities rises above zero, maybe
-this line of reasoning will be relevant.
-
-I am talking about making software configurable so that people, in their
-own private setups, can make the software work as they see fit. Yes, it
-is possible for that setup to be visible to other people in some
-situations. But I am arguing that we need to weigh the (in my opinion
-substantial) inconvenience to users in their everyday work compared to
-the inconvenience of one user sitting at another user's terminal (or
-cutting and pasting commands, or running a script).
-
-> > And the GitTogether had a "users complain about git, and we try to
-> > listen" session.
-> 
-> Oh, that makes me so happy.  <sarcasm>Soooo happy</sarcasm>.  So it was an 
-> ivory tower meeting, once again?
-
-I don't know what to say. You complain and complain about how git is not
-being responsive to users. Shawn organizes a session where people at
-Google who are using git every day can try to make their complaints in
-an organized forum where a bunch of developers will listen and talk
-about ways we can address those complaints. And now you are mad about
-that?
-
-If you think we need a git conference where lots of users show up, I
-think that's a great idea. But until you provide some suggestions about
-how to organize such a thing, I don't see how you are helping anything.
-
--Peff
+Thanks for noticing this one.  It began an innocent bug nobody noticed,
+but it is embarrassing that we carefully _maintained_ that code nobody
+triggers for four years.
