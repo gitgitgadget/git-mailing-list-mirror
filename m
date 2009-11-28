@@ -1,63 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/3] format-patch: improve pathspec usage
-Date: Sat, 28 Nov 2009 11:47:14 -0800
-Message-ID: <7vpr72fn3x.fsf@alter.siamese.dyndns.org>
-References: <1259408429-5685-1-git-send-email-felipe.contreras@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/4] build dashless "test-bin" directory similar to
+ installed bindir
+Date: Sat, 28 Nov 2009 14:49:11 -0500
+Message-ID: <20091128194910.GA17605@coredump.intra.peff.net>
+References: <1259433537-3963-1-git-send-email-mmogilvi_git@miniinfo.net>
+ <1259433537-3963-2-git-send-email-mmogilvi_git@miniinfo.net>
+ <1259433537-3963-3-git-send-email-mmogilvi_git@miniinfo.net>
+ <1259433537-3963-4-git-send-email-mmogilvi_git@miniinfo.net>
+ <7vtywefn88.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 28 20:47:29 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Matthew Ogilvie <mmogilvi_git@miniinfo.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 28 20:49:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NETGS-0007vo-K9
-	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 20:47:28 +0100
+	id 1NETIF-0008Oi-RG
+	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 20:49:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753264AbZK1TrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Nov 2009 14:47:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753239AbZK1TrQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 14:47:16 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45216 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753015AbZK1TrQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Nov 2009 14:47:16 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 828CDA2685;
-	Sat, 28 Nov 2009 14:47:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qRiOAb70638r+A7Z+gNCFjCtyho=; b=OmPpAE
-	XfaosIDc3k5f/AdutenCzziiqp2ruojITHjAtLHhN61940nYjcxOThE17LuLI/tI
-	D5aMkyOsfyEjkFTV0hGOXIc+CnlML1G9YvmEOREQ1tWJfIZKgrTElsRzjNXfpksr
-	Mp2nDlJb5wLtcQJM80nRPc1nD0dINb/8UH73M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=q7pfYxqret8WqYjYQf9q9k/QsjG6jsBS
-	nPVXRZZe/vfbhiitIKXZyLEAAeoa/26axCb7Nhi4M/hB0E98u30L6Xrf4mGOUgkO
-	9TLuwoB3WgdwOt6GSJ5e2nhKAperFiPnEEd2fKQ9QYGEKUHxKhjHO8VEXdWMDgfF
-	2WLqYBIpKlg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 62696A2684;
-	Sat, 28 Nov 2009 14:47:19 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 74181A2683; Sat, 28 Nov 2009
- 14:47:16 -0500 (EST)
-In-Reply-To: <1259408429-5685-1-git-send-email-felipe.contreras@gmail.com>
- (Felipe Contreras's message of "Sat\, 28 Nov 2009 13\:40\:26 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D69CE3A4-DC56-11DE-82F8-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753722AbZK1TtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Nov 2009 14:49:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753709AbZK1TtG
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 14:49:06 -0500
+Received: from peff.net ([208.65.91.99]:59831 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753621AbZK1TtF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Nov 2009 14:49:05 -0500
+Received: (qmail 1580 invoked by uid 107); 28 Nov 2009 19:53:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 28 Nov 2009 14:53:35 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 28 Nov 2009 14:49:11 -0500
+Content-Disposition: inline
+In-Reply-To: <7vtywefn88.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133972>
 
-Thanks; I think I have queued the equivalent already and pushed out last
-night.
+On Sat, Nov 28, 2009 at 11:44:39AM -0800, Junio C Hamano wrote:
 
-I think making the full-diff default is a regression without an ability to
-turn it off and is a bit premature without a solid discussion in the
-documentation.
+>    . Advertising this forces the Makefile build test-bin/ contents from
+>      "all" target.  I think test-bin/ should only depend on "test" (iow,
+>      after "make all && make install" there shouldn't have to be "test-bin"
+>      directory.
+
+Would implementing it that way mean that:
+
+  make && cd t && make
+
+does not work (or worse, might silently use stale information in
+test-bin)? Dealing with this is part of the reason the valgrind code
+(which similarly sets up a pseudo-installed directory) does everything
+in test-lib.sh, and not as part of the make process.
+
+-Peff
