@@ -1,76 +1,196 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 3/3] format-patch: add test for dashdash
-Date: Sat, 28 Nov 2009 13:40:29 +0200
-Message-ID: <1259408429-5685-4-git-send-email-felipe.contreras@gmail.com>
-References: <1259408429-5685-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 28 12:40:58 2009
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH v3] Give the hunk comment its own color
+Date: Sat, 28 Nov 2009 13:08:20 +0100
+Message-ID: <36ca99e90911280408v186777f1h22254744fb61bf1f@mail.gmail.com>
+References: <7v4oogzo74.fsf@alter.siamese.dyndns.org>
+	 <1259304918-12600-1-git-send-email-bert.wesarg@googlemail.com>
+	 <7vhbsfi4bz.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 28 13:08:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NELfc-0006w7-IV
-	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 12:40:56 +0100
+	id 1NEM6G-0006cv-I4
+	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 13:08:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753932AbZK1Lkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Nov 2009 06:40:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753926AbZK1Lkq
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 06:40:46 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:38892 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753918AbZK1Lkp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Nov 2009 06:40:45 -0500
-Received: by mail-bw0-f227.google.com with SMTP id 27so1602122bwz.21
-        for <git@vger.kernel.org>; Sat, 28 Nov 2009 03:40:51 -0800 (PST)
+	id S1753842AbZK1MIQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Nov 2009 07:08:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753599AbZK1MIQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 07:08:16 -0500
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:41402 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753308AbZK1MIP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Nov 2009 07:08:15 -0500
+Received: by fxm5 with SMTP id 5so2271636fxm.28
+        for <git@vger.kernel.org>; Sat, 28 Nov 2009 04:08:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=15xR+3h4RGZRE1qd6+h8nuQ+nAzv0ZRpiFZInQJfLYA=;
-        b=kJMDurUDpedEgSj+uNOMu4hMekf//DSADtcSiFxC5Zrsii+QZk/KgKWgbeBecSQRnF
-         i0KDcnzUxZMFb07P4G4MOs7QVp2PqYnfYazjngv4hPSfp+moJvIK4B60RteBi38zPe+O
-         J7KOOPjd4hdzCRkcGCQ5jHSKKTVEQudKftXlk=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CBJNRRzmsVFZjn9AN5wJt5tW7EowYl3VJMn4Ap/0N0U=;
+        b=OzMBAd490X1NMI2xWz+sdbEZG+qQZ6PuMblhJxL+p+Odv4DTRnofrx/nt4OVnFGmA6
+         9b5QtvF3JI4TOjELBWw+9GOoZ9ghz07xJRqrR0unR6EwarLh6mrVTqVEnUbKJgoS07zN
+         ikSlLsMTX67yoLM3C2O3jQdsO9j4CGgVs5AOU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=bYr8Ya9muEf28HbX0v2OryuW5Wx7QeSFSRgijy8RAItj/PXcqH14urIGTvBJIny5J6
-         eihjOcdpm9uxvaZsmTZ3ZOA4lfebkIZ2ZLvhCliCb1Qtv+aPZkYR3Mpc6wWVBJVTDw/S
-         nDlCay45E1O4S0xmxN4n285T3r0J2xpIjJZGM=
-Received: by 10.204.34.20 with SMTP id j20mr2195667bkd.57.1259408451874;
-        Sat, 28 Nov 2009 03:40:51 -0800 (PST)
-Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
-        by mx.google.com with ESMTPS id 14sm615469bwz.1.2009.11.28.03.40.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 28 Nov 2009 03:40:51 -0800 (PST)
-X-Mailer: git-send-email 1.6.6.rc0.61.geeb75
-In-Reply-To: <1259408429-5685-1-git-send-email-felipe.contreras@gmail.com>
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ACsUhNL5CLPYcWzJ8Dlqd0C3A0sbHOnUS/AitSSVrNifWNRaSF5pFQX8ISSd60L9dj
+         PzSIBnZpgzWbDOXU+1FTAInPK7BIZNZ3jczxIi3ZFEcTU9DVtca2NAn/pmBD8FRPEh8w
+         xObfe+YXTOy99RGM3Br866mhxXGHTa2mdg1M8=
+Received: by 10.223.25.27 with SMTP id x27mr339737fab.7.1259410100858; Sat, 28 
+	Nov 2009 04:08:20 -0800 (PST)
+In-Reply-To: <7vhbsfi4bz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133960>
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- t/t4014-format-patch.sh |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+On Sat, Nov 28, 2009 at 06:52, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> Bert Wesarg <bert.wesarg@googlemail.com> writes:
+>
+>> =C2=A0diff.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 | =C2=A0 64 +++++++++++++++++++++++++++++++++++++++++++--
+>> ...
+>> @@ -344,6 +347,63 @@ static void emit_add_line(const char *reset,
+>> =C2=A0 =C2=A0 =C2=A0 }
+>> =C2=A0}
+>>
+>> +static void emit_hunk_line(struct emit_callback *ecbdata,
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0const char *line, int len)
+>> +{
+>> + =C2=A0 =C2=A0 const char *plain =3D diff_get_color(ecbdata->color_=
+diff, DIFF_PLAIN);
+>> + =C2=A0 =C2=A0 const char *frag =3D diff_get_color(ecbdata->color_d=
+iff, DIFF_FRAGINFO);
+>> + =C2=A0 =C2=A0 const char *func =3D diff_get_color(ecbdata->color_d=
+iff, DIFF_FUNCINFO);
+>> + =C2=A0 =C2=A0 const char *reset =3D diff_get_color(ecbdata->color_=
+diff, DIFF_RESET);
+>> + =C2=A0 =C2=A0 const char *orig_line =3D line;
+>> + =C2=A0 =C2=A0 int orig_len =3D len;
+>> + =C2=A0 =C2=A0 const char *frag_start;
+>> + =C2=A0 =C2=A0 int frag_len;
+>> + =C2=A0 =C2=A0 const char *part_end =3D NULL;
+>> + =C2=A0 =C2=A0 int part_len =3D 0;
+>> +
+>> + =C2=A0 =C2=A0 /* determine length of @ */
+>> + =C2=A0 =C2=A0 while (part_len < len && line[part_len] =3D=3D '@')
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 part_len++;
+>> +
+>> + =C2=A0 =C2=A0 /* find end of frag, (Ie. find second @@) */
+>> + =C2=A0 =C2=A0 part_end =3D memmem(line + part_len, len - part_len,
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 line, part_len);
+>
+> This is not incorrect per-se, but probably is overkill; this codepath=
+ only
+> deals with two-way diff and we know we are looking at "@@ -..., +... =
+@@"
+> at this point.
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0part_end =3D memmem(line + 2, len - 2, "@@=
+", 2);
+>
+> would be sufficient.
+Thats right, I made it generic by purpose.
 
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 7f267f9..d5b002d 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -536,6 +536,10 @@ test_expect_success 'format-patch --signoff' '
- 	grep "^Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
- '
- 
-+test_expect_success 'format-patch -- <path>' '
-+	git format-patch master..side -- file
-+'
-+
- echo "fatal: --name-only does not make sense" > expect.name-only
- echo "fatal: --name-status does not make sense" > expect.name-status
- echo "fatal: --check does not make sense" > expect.check
--- 
-1.6.6.rc0.59.g5117f7.dirty
+>
+>> + =C2=A0 =C2=A0 if (!part_end)
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return emit_line(ecbdata=
+->file, frag, reset, line, len);
+>> + =C2=A0 =C2=A0 /* calculate total length of frag */
+>> + =C2=A0 =C2=A0 part_len =3D (part_end + part_len) - line;
+>> +
+>> + =C2=A0 =C2=A0 /* remember frag part, we emit only if we find a spa=
+ce separator */
+>> + =C2=A0 =C2=A0 frag_start =3D line;
+>> + =C2=A0 =C2=A0 frag_len =3D part_len;
+>> +
+>> + =C2=A0 =C2=A0 /* consume hunk header */
+>> + =C2=A0 =C2=A0 len -=3D part_len;
+>> + =C2=A0 =C2=A0 line +=3D part_len;
+>> +
+>> + =C2=A0 =C2=A0 /*
+>> + =C2=A0 =C2=A0 =C2=A0* for empty reminder or empty space sequence (=
+exclusive any newlines
+>> + =C2=A0 =C2=A0 =C2=A0* or carriage returns) emit complete original =
+line as FRAGINFO
+>> + =C2=A0 =C2=A0 =C2=A0*/
+>> + =C2=A0 =C2=A0 if (!len || !(part_len =3D strspn(line, " \t")))
+>
+> Slightly worrisome is what guarantees this strspn() won't step outsid=
+e
+> len.
+Thats a valid concern and should be addressed.
+
+>
+> I would probably write the function like this instead.
+>
+> -- >8 --
+>
+> static void emit_hunk_header(struct emit_callback *ecbdata,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 const char *line, int len)
+> {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0const char *plain =3D diff_get_color(ecbda=
+ta->color_diff, DIFF_PLAIN);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0const char *frag =3D diff_get_color(ecbdat=
+a->color_diff, DIFF_FRAGINFO);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0const char *func =3D diff_get_color(ecbdat=
+a->color_diff, DIFF_FUNCINFO);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0const char *reset =3D diff_get_color(ecbda=
+ta->color_diff, DIFF_RESET);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0static const char atat[2] =3D { '@', '@' }=
+;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0const char *cp, *ep;
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0/*
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 * As a hunk header must begin with "@@ -<=
+old>, +<new> @@",
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 * it always is at least 10 bytes long.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 */
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (len < 10 ||
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0memcmp(line, atat, 2) ||
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0!(ep =3D memmem(line + 2, le=
+n - 2, atat, 2))) {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0emit_line(ecbd=
+ata->file, plain, reset, line, len);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0ep +=3D 2; /* skip over the second @@ */
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0/* The hunk header in fraginfo color */
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0emit_line(ecbdata->file, frag, reset, line=
+, ep - line);
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0/* blank before the func header */
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0for (cp =3D ep; ep - line < len; ep++)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (*ep !=3D '=
+ ' && *ep !=3D 't')
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0break;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ep !=3D cp)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0emit_line(ecbd=
+ata->file, plain, reset, cp, ep - cp);
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ep < line + len)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0emit_line(ecbd=
+ata->file, func, reset, ep, line + len - ep);
+> }
+Please check that its really an *ep !=3D '\t'. Its wrong in this mail, =
+I
+see only an *ep !=3D 't'. Otherwise:
+
+Acked-by: Bert.Wesarg@googlemail.com
+>
+>
