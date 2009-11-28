@@ -1,59 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/4] build dashless "test-bin" directory similar to
- installed bindir
-Date: Sat, 28 Nov 2009 14:49:11 -0500
-Message-ID: <20091128194910.GA17605@coredump.intra.peff.net>
-References: <1259433537-3963-1-git-send-email-mmogilvi_git@miniinfo.net>
- <1259433537-3963-2-git-send-email-mmogilvi_git@miniinfo.net>
- <1259433537-3963-3-git-send-email-mmogilvi_git@miniinfo.net>
- <1259433537-3963-4-git-send-email-mmogilvi_git@miniinfo.net>
- <7vtywefn88.fsf@alter.siamese.dyndns.org>
+From: Alex Chiang <achiang@hp.com>
+Subject: [StGit RFC PATCH 0/6] add support for git send-email
+Date: Sat, 28 Nov 2009 12:50:11 -0700
+Message-ID: <20091128194056.949.88791.stgit@bob.kio>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Matthew Ogilvie <mmogilvi_git@miniinfo.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 28 20:49:20 2009
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Karl Wiberg <kha@treskal.com>
+To: catalin.marinas@gmail.com
+X-From: git-owner@vger.kernel.org Sat Nov 28 20:50:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NETIF-0008Oi-RG
-	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 20:49:20 +0100
+	id 1NETJD-0000CL-Dy
+	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 20:50:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753722AbZK1TtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Nov 2009 14:49:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753709AbZK1TtG
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 14:49:06 -0500
-Received: from peff.net ([208.65.91.99]:59831 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753621AbZK1TtF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Nov 2009 14:49:05 -0500
-Received: (qmail 1580 invoked by uid 107); 28 Nov 2009 19:53:35 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 28 Nov 2009 14:53:35 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 28 Nov 2009 14:49:11 -0500
-Content-Disposition: inline
-In-Reply-To: <7vtywefn88.fsf@alter.siamese.dyndns.org>
+	id S1753523AbZK1TuG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Nov 2009 14:50:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753275AbZK1TuG
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 14:50:06 -0500
+Received: from g1t0029.austin.hp.com ([15.216.28.36]:18453 "EHLO
+	g1t0029.austin.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752340AbZK1TuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Nov 2009 14:50:05 -0500
+Received: from g4t0018.houston.hp.com (g4t0018.houston.hp.com [16.234.32.27])
+	by g1t0029.austin.hp.com (Postfix) with ESMTP id BEEFB3800F;
+	Sat, 28 Nov 2009 19:50:11 +0000 (UTC)
+Received: from ldl (linux.corp.hp.com [15.11.146.101])
+	by g4t0018.houston.hp.com (Postfix) with ESMTP id 7353710057;
+	Sat, 28 Nov 2009 19:50:11 +0000 (UTC)
+Received: from localhost (ldl.fc.hp.com [127.0.0.1])
+	by ldl (Postfix) with ESMTP id 4A7F0CF0009;
+	Sat, 28 Nov 2009 12:50:11 -0700 (MST)
+Received: from ldl ([127.0.0.1])
+	by localhost (ldl.fc.hp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ru+zpOYrXv3a; Sat, 28 Nov 2009 12:50:11 -0700 (MST)
+Received: from eh.fc.hp.com (eh.fc.hp.com [15.11.146.105])
+	by ldl (Postfix) with ESMTP id 34D58CF0007;
+	Sat, 28 Nov 2009 12:50:11 -0700 (MST)
+Received: by eh.fc.hp.com (Postfix, from userid 17609)
+	id 1379626172; Sat, 28 Nov 2009 12:50:11 -0700 (MST)
+X-Mailer: git-send-email 1.6.5.2.74.g610f9
+User-Agent: StGit/0.15-6-g435b-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133973>
 
-On Sat, Nov 28, 2009 at 11:44:39AM -0800, Junio C Hamano wrote:
+Hi Catalin,
 
->    . Advertising this forces the Makefile build test-bin/ contents from
->      "all" target.  I think test-bin/ should only depend on "test" (iow,
->      after "make all && make install" there shouldn't have to be "test-bin"
->      directory.
+This series starts down the path of eventually converting stg mail to
+simply become a wrapper around git send-email.
 
-Would implementing it that way mean that:
+The first 4 patches do some refactoring of internal APIs to set us up
+for the money patch 5/6 which actually adds the call to git send-email.
 
-  make && cd t && make
+Patch 6/6 shows a hint of the future, where we can start leveraging
+some of the features in git send-email for our own purposes. With it,
+you can now use mail aliases as supported by git send-email.
 
-does not work (or worse, might silently use stale information in
-test-bin)? Dealing with this is part of the reason the valgrind code
-(which similarly sets up a pseudo-installed directory) does everything
-in test-lib.sh, and not as part of the make process.
+stg mail still has some nice features over git send-email, such
+as the -v command line parameter and --prefix. Maybe at some point
+in the future, we can migrate those features into git send-email and
+continue thinning out stg mail.
 
--Peff
+But I wanted to get some feedback first to make sure I'm going in the
+right direction before going too much further.
+
+Disclaimer: I'm not really a python coder. Particularly, patch 5/6
+is ugly in how we look at the various stg mail options. I'm sure there's
+lots of room for improvement.
+
+This mail was sent with:
+	./stg mail -a --git --auto -e 
+
+[Karl, sorry about the earlier accidental mail. That was a testing mishap.]
+
+Thanks,
+/ac
+
+---
+
+Alex Chiang (6):
+      stg mail: Refactor __send_message and friends
+      stg mail: reorder __build_[message|cover] parameters
+      stg mail: make __send_message do more
+      stg mail: factor out __update_header
+      stg mail: add basic support for git send-email
+      stg mail: don't parse To/Cc/Bcc in --git mode
+
+
+ stgit/commands/mail.py |  205 ++++++++++++++++++++++++++++--------------------
+ 1 files changed, 121 insertions(+), 84 deletions(-)
