@@ -1,76 +1,60 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2009, #06; Wed, 25)
-Date: Sat, 28 Nov 2009 01:45:25 +0100
-Message-ID: <fabb9a1e0911271645i51fa3c7an6b416892a7c1592e@mail.gmail.com>
-References: <7v8wduksgq.fsf@alter.siamese.dyndns.org> <fabb9a1e0911251715u661ce0aem79a4d700d552e105@mail.gmail.com> 
-	<alpine.LNX.2.00.0911271417010.14365@iabervon.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sat Nov 28 01:46:02 2009
+From: Marc Liyanage <marc@entropy.ch>
+Subject: Unable to checkout a particular SVN revision
+Date: Fri, 27 Nov 2009 18:05:11 -0800
+Message-ID: <718EEBA2-FA4B-402D-B2FC-A8F14D79F6FF@entropy.ch>
+Mime-Version: 1.0 (Apple Message framework v1077)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 28 03:05:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEBRp-00022S-1m
-	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 01:46:01 +0100
+	id 1NECgs-0003ZP-Ie
+	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 03:05:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752866AbZK1Apk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Nov 2009 19:45:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752365AbZK1Apk
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 19:45:40 -0500
-Received: from mail-vw0-f197.google.com ([209.85.212.197]:42500 "EHLO
-	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751976AbZK1Apk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Nov 2009 19:45:40 -0500
-Received: by vws35 with SMTP id 35so546950vws.4
-        for <git@vger.kernel.org>; Fri, 27 Nov 2009 16:45:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lfua8gsPNEL2CdI83xdQYGLa5yr63fxtAiP30lWwpF4=;
-        b=BiBHbBeoyv5CSgCs5S3gjXZiJST8R3dM/vA9pCNPIakhIVv8MTAlUzXZ2rF7LTOSjS
-         vA9qgi1RJFx4CqztGvlMFI/eutWyFLbgDX9xr4FJIdLkfPFq4dnyKQAmFbB3JMil4GmP
-         q7ShYZxjFA4T8hEC13KebQfKpGDbPZcfPE3ec=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=dipc85lr9NmS+ORcoCppYoHFGk00s7AQCV6xe5g6nT0sJaf84Fkbl6u1xKhWuCCWL5
-         aEnIqPSVrcY5VxoG7geMsMo7POAcbvAltIFjVQAxsbzlYk5DMY1FUpsPXdIQAKMSw2zT
-         H2kK8mmbnen4UrAp4QulJrJhoC5ui0DfN+XH4=
-Received: by 10.220.125.7 with SMTP id w7mr1966477vcr.74.1259369145049; Fri, 
-	27 Nov 2009 16:45:45 -0800 (PST)
-In-Reply-To: <alpine.LNX.2.00.0911271417010.14365@iabervon.org>
+	id S1752660AbZK1CFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2009 21:05:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752627AbZK1CFO
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Nov 2009 21:05:14 -0500
+Received: from mail-gx0-f212.google.com ([209.85.217.212]:59055 "EHLO
+	mail-gx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752341AbZK1CFO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Nov 2009 21:05:14 -0500
+Received: by gxk4 with SMTP id 4so367447gxk.8
+        for <git@vger.kernel.org>; Fri, 27 Nov 2009 18:05:20 -0800 (PST)
+Received: by 10.151.95.3 with SMTP id x3mr2843159ybl.6.1259373920180;
+        Fri, 27 Nov 2009 18:05:20 -0800 (PST)
+Received: from ?192.168.19.81? (adsl-69-107-85-176.dsl.pltn13.pacbell.net [69.107.85.176])
+        by mx.google.com with ESMTPS id 21sm806752ywh.31.2009.11.27.18.05.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 27 Nov 2009 18:05:19 -0800 (PST)
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133944>
 
-Heya,
 
-On Fri, Nov 27, 2009 at 20:17, Daniel Barkalow <barkalow@iabervon.org> =
-wrote:
-> On Thu, 26 Nov 2009, Sverre Rabbelier wrote:
->> On Thu, Nov 26, 2009 at 02:03, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->> > * sr/vcs-helper (2009-11-18) 12 commits
->> > Replaced again, and looking good. =A0Perhaps Daniel has some comme=
-nts?
->>
->> Indeed, Johan, Daniel, is the current version good for next?
->
-> Looks good to me.
+I'm trying to clone a specific SVN revision with git-svn:
 
-Awesome, I'd say this is good for next then.
+    git svn clone -r 12345 https://host/svn/foo/branches/bar xyz
 
---=20
-Cheers,
+but it doesn't check out any files, I see just this:
 
-Sverre Rabbelier
+    Initialized empty Git repository in /Users/liyanage/Desktop/xyz/.git
+
+If I try the same thing with SVN like this:
+
+    svn co -r 12345 https://host/svn/foo/branches/bar xyz
+    
+then I get what I expect, it checks out all the files and "svn info" gives me this revision.
+
+
+I think it's because this particular revision wasn't committed on this branch, i.e. it doesn't show up in "svn log". If I try a revision that is listed in the log, it works as expected.
+
+
+Is there a way to make this work?
+    
