@@ -1,86 +1,66 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH/RFC 2/2 v3] Makefile: lazily compute header dependencies
-Date: Sat, 28 Nov 2009 10:26:27 +0100
-Message-ID: <m2bpint2yk.fsf@igel.home>
-References: <4B0F8825.3040107@viscovery.net>
-	<alpine.DEB.1.00.0911271033460.4521@intel-tinevez-2-302>
-	<20091127174558.GA3461@progeny.tock>
-	<20091127175043.GC3461@progeny.tock>
-	<20091128092948.GA8515@progeny.tock>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 0/4] Makefile fixes
+Date: Sat, 28 Nov 2009 05:25:46 -0600
+Message-ID: <20091128112546.GA10059@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 28 10:26:45 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 28 12:13:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEJZl-0005Ha-1q
-	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 10:26:45 +0100
+	id 1NELFH-0006qz-CB
+	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 12:13:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753728AbZK1J01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Nov 2009 04:26:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753720AbZK1J01
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 04:26:27 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:52058 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753668AbZK1J00 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Nov 2009 04:26:26 -0500
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id 07DA81C0006F;
-	Sat, 28 Nov 2009 10:26:29 +0100 (CET)
-Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
-	by mail.m-online.net (Postfix) with ESMTP id EFE0E90525;
-	Sat, 28 Nov 2009 10:26:28 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
-	with ESMTP id NhfYvv0uKza4; Sat, 28 Nov 2009 10:26:27 +0100 (CET)
-Received: from igel.home (DSL01.83.171.160.178.ip-pool.NEFkom.net [83.171.160.178])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Sat, 28 Nov 2009 10:26:27 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 735A3CA28F; Sat, 28 Nov 2009 10:26:27 +0100 (CET)
-X-Yow: We place two copies of PEOPLE magazine in a DARK, HUMID mobile home.
- 45 minutes later CYNDI LAUPER emerges wearing a BIRD CAGE on her head!
-In-Reply-To: <20091128092948.GA8515@progeny.tock> (Jonathan Nieder's message
-	of "Sat, 28 Nov 2009 03:29:48 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S1752101AbZK1LNb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Nov 2009 06:13:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752027AbZK1LNb
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 06:13:31 -0500
+Received: from mail-yw0-f182.google.com ([209.85.211.182]:49380 "EHLO
+	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751977AbZK1LNb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Nov 2009 06:13:31 -0500
+Received: by ywh12 with SMTP id 12so2370982ywh.21
+        for <git@vger.kernel.org>; Sat, 28 Nov 2009 03:13:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=Ng7rnpb7utJV2vkuQ67lo3SgWCvSY17YWczezTYPKTs=;
+        b=Jk+AYTcrxuchkMbMa37uaO9oMLJtlsihOFLM8nsh7jk+PvRjyd6NmTUtCWkQex0tYV
+         lNjtlCCSbl4HiGvRHzOqlDQcoiuyZROHUhBeZ+fE+9nx4tIt6DKvRJRblvXjqYqqvzoy
+         mqtEnsUr+X28ceFNnyOdnpbgLUtXQmhSo551o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=UlPjCdh0+jZJih1/NErLauzKIjgz+8iO4xM0UIRzCIC346gsc9SqkCxEpevp5uEfvW
+         07FFptY33Qe14PWSgEVB9ZKTEIHBQJMYb4To3V6nKvfF1iXg7Byej8/WKFHK5Kb5nztB
+         akoNk64AmE5d9FhDqrODE/6N9BXPflWbXw/IY=
+Received: by 10.150.167.26 with SMTP id p26mr3403621ybe.14.1259406817410;
+        Sat, 28 Nov 2009 03:13:37 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 13sm559293gxk.1.2009.11.28.03.13.36
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 28 Nov 2009 03:13:36 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133949>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Here are the aforementioned small fixes for the Makefile, intended for
+maint.  I hope they are of some use.
 
->  GIT-CFLAGS: .FORCE-GIT-CFLAGS
-> +	mkdir -p deps block-sha1/deps ppc/deps compat/deps \
-> +		compat/regex/deps compat/nedmalloc/deps compat/fnmatch/deps \
-> +		xdiff/deps
+Jonathan Nieder (4):
+  Makefile: http-push.c uses the git headers
+  Makefile: make ppc/sha1ppc.o depend on GIT-CFLAGS
+  Makefile: fix .s pattern rule dependencies
+  Makefile: stop cleaning arm directory
 
-IMHO the list of directories should be factored out in a variable for
-easier maintenance.
-
-> @@ -1873,8 +1898,10 @@ distclean: clean
->  	$(RM) configure
->  
->  clean:
-> -	$(RM) *.o block-sha1/*.o arm/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o \
-> +	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o \
->  		$(LIB_FILE) $(XDIFF_LIB)
-> +	$(RM) -r deps block-sha1/deps ppc/deps compat/deps \
-> +		compat/*/deps xdiff/deps
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+ Makefile |   12 +++++-------
+ 1 files changed, 5 insertions(+), 7 deletions(-)
