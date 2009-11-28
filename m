@@ -1,91 +1,88 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/2] format-patch: fix dashdash usage
-Date: Sat, 28 Nov 2009 13:18:25 +0200
-Message-ID: <94a0d4530911280318nd6ea6d4s7ee159fe173a3f2f@mail.gmail.com>
-References: <1259262720-24077-1-git-send-email-felipe.contreras@gmail.com>
-	 <1259262720-24077-2-git-send-email-felipe.contreras@gmail.com>
-	 <7vd4355aaw.fsf@alter.siamese.dyndns.org>
-	 <94a0d4530911261414o533aa108l202d4c6926da361e@mail.gmail.com>
-	 <7v7htc3mqo.fsf@alter.siamese.dyndns.org>
-	 <94a0d4530911261523q25147f12h2e6c9e4fe4f6b12b@mail.gmail.com>
-	 <7vhbsg25sb.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 1/4] Makefile: fix http-push.o dependencies
+Date: Sat, 28 Nov 2009 05:31:15 -0600
+Message-ID: <20091128113115.GB10059@progeny.tock>
+References: <20091128112546.GA10059@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 28 12:18:31 2009
+X-From: git-owner@vger.kernel.org Sat Nov 28 12:19:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NELJv-0000Ao-1m
-	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 12:18:31 +0100
+	id 1NELKa-0000PX-62
+	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 12:19:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753151AbZK1LSU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Nov 2009 06:18:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752770AbZK1LSU
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 06:18:20 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:50861 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752079AbZK1LST convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Nov 2009 06:18:19 -0500
-Received: by iwn1 with SMTP id 1so1336883iwn.33
-        for <git@vger.kernel.org>; Sat, 28 Nov 2009 03:18:25 -0800 (PST)
+	id S1752770AbZK1LTA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Nov 2009 06:19:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752079AbZK1LTA
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 06:19:00 -0500
+Received: from mail-yx0-f188.google.com ([209.85.210.188]:42431 "EHLO
+	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751977AbZK1LS7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Nov 2009 06:18:59 -0500
+Received: by yxe26 with SMTP id 26so1864252yxe.4
+        for <git@vger.kernel.org>; Sat, 28 Nov 2009 03:19:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=LTnis/akX5dBIi9VLc8qr+vDd6nJVxZ5wJqJoyFQnd4=;
-        b=gxOwI6JiUU8Rj151ltpAZZICiYe0vpQf48/qKb44nTVNs/7Y/g+PScJH/0am4xhH5p
-         jSC5kthgUD0lHBtKFyydGYlD9LgM4YDwY6SyqCQV/RJoyhLLyReBe3yO2eqO42D9pYK/
-         ZUHaep/2IyK6rsOMmCPPMnvia5Q51oRhQznXM=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=ln+cVHhfa9q5AzXX1i3rf6TUH41xsUHNCYCyERRPvq8=;
+        b=fdJFX7jtWCrbdIH/tmmIhaNsrqBZQ8mL5CQLwwxoZKhXgvAOzDUUGfiNTyBVBSKmdI
+         LrYliKWUygF+9s5RE+RIrA8a7fbWh3FYPrjLr0vLeIXLm5Dq4zfE5HWQ0j2NiJ8XxkkV
+         K8MDF8Wv3W0dgiij1V0v9ml/kVcYhSybRRVFY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FzLQ7pXZo3mDsK6182SqobYFhq8gu6E9rruqLyVhpJG490EkrTrJXaVvosrkAnzniz
-         VOIS2aXwVvPpYYa0jN1AH2lfFsabJlkhZii7nD5n28LHEHqyhJw5rG8IEbzTbo5YJRUe
-         XqMXOtZ8qNERxHrwVWP+E52IIr7mRFVXVXFts=
-Received: by 10.231.167.204 with SMTP id r12mr5038074iby.31.1259407105561; 
-	Sat, 28 Nov 2009 03:18:25 -0800 (PST)
-In-Reply-To: <7vhbsg25sb.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=IBGzK8O9tQdmBW+yjh+uD3Gl3pl5tumS/RbXVzAVab6Yo0mPJojDKzOoUN6m/0ES7X
+         O9UkJXWORA6tPWd8hVIK4swQiYk3aCE/5fHdfk0V6NIqKQ3hGgy5lopaUe3xnIn9RSs7
+         FOT6vU3q4hDgUKuWeX7UfuNFBwnA3KHh9y/rI=
+Received: by 10.150.127.17 with SMTP id z17mr3385898ybc.61.1259407145804;
+        Sat, 28 Nov 2009 03:19:05 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 15sm1111974gxk.4.2009.11.28.03.19.04
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 28 Nov 2009 03:19:05 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20091128112546.GA10059@progeny.tock>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133951>
 
-On Fri, Nov 27, 2009 at 2:03 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> =C2=A0(0) take your patch with an updated message (eh, that is not "n=
-ext step"
-> =C2=A0 =C2=A0 but the "first step");
+Since it is not in LIB_OBJS, http-push.o needs an explicit
+$(GIT_H) dependency.
 
-I guess it depends of what is the "fist step". To me the "first step"
-is realizing there's a problem. First patch submission is already many
-steps afterwards.
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+http-push.c begins:
 
-But sure, I'll do this next step :)
+#include "cache.h"
+#include "commit.h"
 
-> =C2=A0(1) make --full-diff implicit and default of format-patch (--no=
--full-diff
-> =C2=A0 =C2=A0 could be supported _if_ somebody can argue successfully=
- why limiting
-> =C2=A0 =C2=A0 the diff is also a useful thing to do); and
+ Makefile |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
 
-I started writing this patch but it turns out there's no --no-full-diff=
-=2E
-
-> =C2=A0(2) document clearly that format-patch takes optional pathspecs=
-, and in
-> =C2=A0 =C2=A0 what situation they are useful.
-
-I guess this would have to be done in multiple places so it might take
-me some time.
-
-Cheers.
-
---=20
-=46elipe Contreras
+diff --git a/Makefile b/Makefile
+index 856ba09..dc7c929 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1557,9 +1557,7 @@ git-imap-send$X: imap-send.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
+ 
+-http.o http-walker.o http-push.o: http.h
+-
+-http.o http-walker.o: $(LIB_H)
++http.o http-walker.o http-push.o: http.h $(LIB_H)
+ 
+ git-http-fetch$X: revision.o http.o http-walker.o http-fetch.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+-- 
+1.6.5.3
