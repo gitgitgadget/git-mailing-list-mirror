@@ -1,70 +1,87 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [RFC/PATCH] t7011: Mark fixed test as such
-Date: Sat, 28 Nov 2009 19:24:59 +0100
-Message-ID: <0327ed3d7c4621f205d2d111254d716bd1b06c28.1259432535.git.git@drmicha.warpmail.net>
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 28 19:25:15 2009
+From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+Subject: [PATCH 0/4] Run test suite without dashed commands in PATH
+Date: Sat, 28 Nov 2009 11:38:53 -0700
+Message-ID: <1259433537-3963-1-git-send-email-mmogilvi_git@miniinfo.net>
+Cc: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Nov 28 19:43:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NERys-0000J4-LV
-	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 19:25:14 +0100
+	id 1NESGq-0005md-63
+	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 19:43:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752863AbZK1SZB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Nov 2009 13:25:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752415AbZK1SZB
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 13:25:01 -0500
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:43689 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752347AbZK1SZA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Nov 2009 13:25:00 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 608EDC35A1;
-	Sat, 28 Nov 2009 13:25:07 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Sat, 28 Nov 2009 13:25:07 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=DFpv1a9ExFR/nqZfOYcwCVGLOzw=; b=uvqAcENMjzfYx10C/wYCgyFah9lxbJr7lNniLgXe+KNeDGdvj/qCB17dJ6ZhvzssCjU35IqVFuIsAi0fwMRBh+hka/kQj2KrWY5S/jULKB3Rp7xtZaRuFP0tKg1dMV9e7vnfQ8+4JTKuUQtpjAQIdAdwC8FF0hPrn4f5m2RGXK4=
-X-Sasl-enc: W3XSsLtz0zfoPd5+v0v1Hl8tH6Ax488WJ+Sxbum4mM13 1259432706
-Received: from localhost (p5DCC12B9.dip0.t-ipconnect.de [93.204.18.185])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id A84CFC5A;
-	Sat, 28 Nov 2009 13:25:06 -0500 (EST)
-X-Mailer: git-send-email 1.6.6.rc0.274.g71380
+	id S1753056AbZK1Snd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Nov 2009 13:43:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752756AbZK1Snd
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 13:43:33 -0500
+Received: from qmta09.emeryville.ca.mail.comcast.net ([76.96.30.96]:54425 "EHLO
+	QMTA09.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752120AbZK1Snc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Nov 2009 13:43:32 -0500
+Received: from OMTA23.emeryville.ca.mail.comcast.net ([76.96.30.90])
+	by QMTA09.emeryville.ca.mail.comcast.net with comcast
+	id AiWx1d0041wfjNsA9ijgim; Sat, 28 Nov 2009 18:43:40 +0000
+Received: from mmogilvi.homeip.net ([24.8.125.243])
+	by OMTA23.emeryville.ca.mail.comcast.net with comcast
+	id AitN1d0095FCJCg8jitPsL; Sat, 28 Nov 2009 18:53:23 +0000
+Received: from localhost.localdomain (bean [192.168.30.96])
+	by mmogilvi.homeip.net (Postfix) with ESMTP id E83FA89114;
+	Sat, 28 Nov 2009 11:43:36 -0700 (MST)
+X-Mailer: git-send-email 1.6.4.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133965>
 
-Test 16/17 had been fixed since its introduction in b4d1690 (Teach Git
-to respect skip-worktree bit (reading part), 2009-08-20). So, mark it as
-expect_success rather than expect_failure.
+This patch series runs the test suite without the dashed commands
+in the PATH.  This improves the usefulness of the test suite
+as examples of how to do things, and more importantly,
+minimizes any possibility of regressions in bindir-installed
+scripts that might prevent them from working in a standard
+install where most dashed commands are not in the PATH (git-cvsserver
+was broken in this way until Sep 2009: d2feb01aa5).
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-I'm actually wondering about 17/17 as well.
-If commit is called with a file name then shouldn't it simply commit the
-current state of the file in the worktree, no matter what the index or
-skip-worktree say? I therefore think 17/17 should be expect_success
-and have no test_must_fail.
+The scripts in the "test-bin" directory that patch 3 creates
+can also be useful for manually testing a build of git without
+installing it; you typically don't need to set any environment
+variables (except maybe PATH) for the test-bin scripts to use
+the build properly.
 
- t/t7011-skip-worktree-reading.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Trivial note: This is a cleaned up resend of part of a hodgepodge
+cvsserver patch series that I sent last January.
 
-diff --git a/t/t7011-skip-worktree-reading.sh b/t/t7011-skip-worktree-reading.sh
-index e996928..8960dd9 100755
---- a/t/t7011-skip-worktree-reading.sh
-+++ b/t/t7011-skip-worktree-reading.sh
-@@ -148,7 +148,7 @@ test_expect_success 'git-rm succeeds on skip-worktree absent entries' '
- 	git rm 1
- '
- 
--test_expect_failure 'commit on skip-worktree absent entries' '
-+test_expect_success 'commit on skip-worktree absent entries' '
- 	git reset &&
- 	setup_absent &&
- 	test_must_fail git commit -m null 1
--- 
-1.6.6.rc0.274.g71380
+---------
+
+By the way, has anyone considered the possibility of splitting
+up the large directory at the top of the git source tree?  I
+suspect that no one is interested, or it would have been done
+already, but I thought I would mention it anyway.  Perhaps split
+off separate directories for libgit.a, builtins, other C-based
+excutables, test support executables, scripts, output execdir, and
+output intermediate (object) files for each of the other
+directories.  Or some subset of these.
+
+--
+Matthew Ogilvie   [mmogilvi_git@miniinfo.net]
+
+Matthew Ogilvie (4):
+  t2300: use documented technique to invoke git-sh-setup
+  t3409 t4107 t7406: use dashless commands
+  build dashless "test-bin" directory similar to installed bindir
+  run test suite without dashed git-commands in PATH
+
+ .gitignore                         |    1 +
+ INSTALL                            |    8 +++++-
+ Makefile                           |   46 +++++++++++++++++++++++++----------
+ t/README                           |    8 ++++++
+ t/t2300-cd-to-toplevel.sh          |    2 +-
+ t/t3409-rebase-preserve-merges.sh  |    6 ++--
+ t/t4107-apply-ignore-whitespace.sh |   20 ++++++++--------
+ t/t7406-submodule-update.sh        |    4 +-
+ t/test-lib.sh                      |   33 ++++++++++++++++---------
+ test-bin-wrapper.sh                |   13 ++++++++++
+ 10 files changed, 99 insertions(+), 42 deletions(-)
+ create mode 100644 test-bin-wrapper.sh
