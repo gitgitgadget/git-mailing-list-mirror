@@ -1,109 +1,87 @@
-From: Maximilien Noal <noal.maximilien@gmail.com>
+From: Reece Dunn <msclrhd@googlemail.com>
 Subject: Re: non-US-ASCII file names (e.g. Hiragana) on Windows
-Date: Sun, 29 Nov 2009 00:07:47 +0100
-Message-ID: <4B11AD43.3070307@gmail.com>
+Date: Sat, 28 Nov 2009 23:37:40 +0000
+Message-ID: <3f4fd2640911281537m3a3d7f5dl7836a613b48128f2@mail.gmail.com>
 References: <4B1168D4.5010902@syntevo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
 To: Thomas Singer <thomas.singer@syntevo.com>
-X-From: git-owner@vger.kernel.org Sun Nov 29 00:08:05 2009
+X-From: git-owner@vger.kernel.org Sun Nov 29 00:37:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEWOa-0002V8-Nt
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 00:08:05 +0100
+	id 1NEWrT-0002b1-Nh
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 00:37:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752430AbZK1XHp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Nov 2009 18:07:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751852AbZK1XHp
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 18:07:45 -0500
-Received: from mail-ew0-f215.google.com ([209.85.219.215]:34675 "EHLO
-	mail-ew0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751814AbZK1XHo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Nov 2009 18:07:44 -0500
-Received: by ewy7 with SMTP id 7so3058153ewy.28
-        for <git@vger.kernel.org>; Sat, 28 Nov 2009 15:07:50 -0800 (PST)
+	id S1752713AbZK1Xhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Nov 2009 18:37:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674AbZK1Xhf
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 18:37:35 -0500
+Received: from mail-vw0-f197.google.com ([209.85.212.197]:37830 "EHLO
+	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750876AbZK1Xhe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Nov 2009 18:37:34 -0500
+Received: by vws35 with SMTP id 35so722939vws.4
+        for <git@vger.kernel.org>; Sat, 28 Nov 2009 15:37:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=8w8L/YXMAGEbfOa9L0lG+znZ7ar30Nj4rI0Pn6nVCoM=;
-        b=ppiE3PM6blNhnAA6D6nZKUmiiBrsewg4OPQzdp4SuAmyvv+a98vY+xiNTqREq9JCWr
-         27M5W2h+sktZ6J7gFXPBeau/sMFBIzl44g93djTskMyJaKDa0qe5u1rV2U7/LjXQJs2N
-         y/Ymp8tQbyGEbBUBl/HCGfpeO9yng7MDWcqMo=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=RYGVs/qcPE8x8uHyOuqouo4bMTbi9HrnzJQT9pGtYeo=;
+        b=fA0dQqkBvXJMNxUJ69B+7cz1edfxMVlsHpVUg0jL6aWYlMWWAViuEfpaRZJ8N+wy5o
+         DQ6ClygfVqKQ+kd9WZ9geh9/b/hq9kqmb/xx0eW5elpzFxtd1OSSBC8AyxDc2lPS/7FT
+         Zmnv33vGACwpYfDmDR5ndy1jETcz/zHl0Rs/k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=QlB+CxefAK/TbUPxVkPNIOutzNhd9kLv59M1R9HKX0gW+QuenJ52u8iSBR+GCAPQbd
-         pEttQoFyr+5PukUSRBIqv379FQcasONioiLcPEnvqWrreEB7TspsZI334TJ1Og8RtTwK
-         AuNr+i7yH7UJIzVAN+uIV2ks4rPWUZ8plT/Qk=
-Received: by 10.213.24.22 with SMTP id t22mr2628743ebb.59.1259449669313;
-        Sat, 28 Nov 2009 15:07:49 -0800 (PST)
-Received: from ?192.168.1.20? (ABordeaux-257-1-137-155.w90-55.abo.wanadoo.fr [90.55.144.155])
-        by mx.google.com with ESMTPS id 13sm1796422ewy.9.2009.11.28.15.07.48
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 28 Nov 2009 15:07:48 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=LlhIUSLTGCGqOGjRyEbQJx3Pn7phJQx0Xqa0dp69YAJ1v778tdxcpGuTTYb7CkAETQ
+         SqfjLJIH3KCTWYBbm4NoBrUih5cPi3M4V6T2Ock/rNu549cREa6CJz2Idgd0suqu1I5J
+         50YXU90kpOTbcFTLSKPD+b8qfjPNmXEd6TV/8=
+Received: by 10.220.122.100 with SMTP id k36mr3074573vcr.98.1259451460585; 
+	Sat, 28 Nov 2009 15:37:40 -0800 (PST)
 In-Reply-To: <4B1168D4.5010902@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133983>
 
-Thomas Singer a =E9crit :
-> I've created a file with unicode characters in its name (using Java):
->=20
->  new File(dir, "\u3041\u3042\u3043\u3044").createNewFile();
->=20
-> The file name is stored correctly on disk, because if invoking a
->=20
->  dir.list()
->=20
-> the name is listed correctly.
->=20
-> When opening this directory in the Windows Explorer (German Windows X=
-P SP3),
-> it shows 4 boxes - which most likely is a problem of the font not sup=
-porting
-> these characters.
->=20
-> When launching 'git status' from the git shell (msys 1.6.5.1.1367.gcd=
-48 from
-> 7zip-bundle) it only shows me 4 question marks. I would have expected=
- to see
-> the non-displayable characters escaped like it did with the umlauts o=
-n OS X.
->=20
+2009/11/28 Thomas Singer <thomas.singer@syntevo.com>:
+>
+> When launching 'git status' from the git shell (msys 1.6.5.1.1367.gcd48 from
+> 7zip-bundle) it only shows me 4 question marks. I would have expected to see
+> the non-displayable characters escaped like it did with the umlauts on OS X.
+>
 > Even adding fails:
->=20
+>
 > $ git add .
 > fatal: unable to stat '????': No such file or directory
->=20
+>
 > What should I do to make Git recognize these characters?
->=20
-Hi
 
-About the 'boxes' :
+This is a bug in git's character encoding/conversion logic. It looks
+like git is taking the source string and converting it to ascii to be
+displayed on the console output (e.g. by using the WideCharToMultiByte
+conversion API) -- these APIs will use a '?' character for characters
+that it cannot map to the target character encoding (like the Hiragana
+characters that you are using).
 
-The thing is, Windows' files for Asian languages are _not_ installed by=
-=20
-default.
+SetConsoleOutputCP can be used to change the console output codepage
+[http://msdn.microsoft.com/en-us/library/ms686036%28VS.85%29.aspx] and
+SetConsoleCP is the equivalent for input
+[http://msdn.microsoft.com/en-us/library/ms686013%28VS.85%29.aspx].
+e.g.
 
-They can be installed (even while installing Windows), by checking the=20
-two checkboxes under the "Supplemtal languages support" groupbox in the=
-=20
-"Languages" tab of the "Regional and language options" control panel.=20
-*re-take some breath ;-) *
+    SetConsoleCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8);
 
-It will remove the "boxes" in Explorer and display nice Asian character=
-s.
+should make the console process UTF-8 characters, so git shouldn't
+need to do any character conversions on Windows when reading/writing
+it's data.
 
-But that will only fix Windows' files' names display, surely not git=20
-(unless I'm mistaken).
+NOTE: I have not tested this, just noting what I have found via Google.
+
+- Reece
