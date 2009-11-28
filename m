@@ -1,157 +1,267 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Give the hunk comment its own color
-Date: Fri, 27 Nov 2009 21:52:16 -0800
-Message-ID: <7vhbsfi4bz.fsf@alter.siamese.dyndns.org>
-References: <7v4oogzo74.fsf@alter.siamese.dyndns.org>
- <1259304918-12600-1-git-send-email-bert.wesarg@googlemail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC 2/2 v3] Makefile: lazily compute header dependencies
+Date: Sat, 28 Nov 2009 03:29:48 -0600
+Message-ID: <20091128092948.GA8515@progeny.tock>
+References: <4B0F8825.3040107@viscovery.net>
+ <alpine.DEB.1.00.0911271033460.4521@intel-tinevez-2-302>
+ <20091127174558.GA3461@progeny.tock>
+ <20091127175043.GC3461@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 28 06:52:42 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Nov 28 10:18:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEGEc-0000e8-7U
-	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 06:52:42 +0100
+	id 1NEJRL-0000kb-VL
+	for gcvg-git-2@lo.gmane.org; Sat, 28 Nov 2009 10:18:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751107AbZK1FwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Nov 2009 00:52:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750977AbZK1FwV
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 00:52:21 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49727 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750941AbZK1FwU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Nov 2009 00:52:20 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4B710A256D;
-	Sat, 28 Nov 2009 00:52:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LrwEnc47NkbOLDYCEP72VIIMrio=; b=nRoQIh
-	3LEh3hG4oIS0mIBkxeYFmp6DBeE4zdz3XByD2w3yaolFB/RY/801IyrYBcsXs7oi
-	ANHcqiq74sppYJAHN/WcydfMBUVj2pYil+S14f9ypUaUZwGu3Jq+LLVjiDcS9zJA
-	pPqW1N3QEEuhq0/xLvaUyvijxBvTtXOwzo7s4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PfdBiQPjPTTihmnCxUNjnSlYt16g6Nuh
-	BtpZoMtZYSQXgAhyf19TcBBLwyOO+dSwS8GoBpqg/S0WTUaTmWIUreo9pzpzVu4x
-	Sl/nYv2HcMqgta3rvIMRxWr1pbYAy9L3Ja5TumWcM3DyEcLMSbUg9/yADk6tx0zS
-	uHUQPdSIc44=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1B7F6A256C;
-	Sat, 28 Nov 2009 00:52:23 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AC81BA256B; Sat, 28 Nov 2009
- 00:52:18 -0500 (EST)
-In-Reply-To: <1259304918-12600-1-git-send-email-bert.wesarg@googlemail.com>
- (Bert Wesarg's message of "Fri\, 27 Nov 2009 07\:55\:18 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 32E5BEDA-DBE2-11DE-B5A1-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753571AbZK1JRj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Nov 2009 04:17:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753529AbZK1JRj
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 04:17:39 -0500
+Received: from mail-yx0-f188.google.com ([209.85.210.188]:33583 "EHLO
+	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753190AbZK1JRg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Nov 2009 04:17:36 -0500
+Received: by yxe26 with SMTP id 26so1833731yxe.4
+        for <git@vger.kernel.org>; Sat, 28 Nov 2009 01:17:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=HoCCn8JvFpYCv8Y3rPdxd+Poy4HclavahGTyj5BSk28=;
+        b=kcQ0+GEPG8jBOVoEH8TIN/MfxOMEwKV0ikEJLM1dpBqNHw0XgjJF8rKhbNPxgzjnA7
+         7qfbXqM4tAYK5is01slKd7hGF+iKAOr4Rx6NIhRc1HE3CBstMCIkiYuk0Yj8KfqTrdRi
+         x015ACXuEiy2py5HVcbyEirX/o2YIf54fbz78=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=SLpzVId/wQ/V5Y7gXY7oPheUL3CnfQdWcvBq6s+XkLzasG0kcu8ax4eYIOVrd9V8uY
+         vwKqOE1iXHyBOpGOPSSqXCMYQINKEeeDpFoPHsPDxrqniPZtWF3OXY4BSZBM44637mff
+         MpXbUwZeWyzgXmeS4Usdgv10eRCu5pYKcWQ8Q=
+Received: by 10.150.89.3 with SMTP id m3mr3221239ybb.186.1259399861546;
+        Sat, 28 Nov 2009 01:17:41 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 14sm21876gxk.10.2009.11.28.01.17.39
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 28 Nov 2009 01:17:40 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20091127175043.GC3461@progeny.tock>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133947>
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
+Use the gcc -MMD -MP -MF options to generate dependencies as a
+byproduct of building .o files.
 
->  diff.c                   |   64 +++++++++++++++++++++++++++++++++++++++++++--
-> ...
-> @@ -344,6 +347,63 @@ static void emit_add_line(const char *reset,
->  	}
->  }
->  
-> +static void emit_hunk_line(struct emit_callback *ecbdata,
-> +			   const char *line, int len)
-> +{
-> +	const char *plain = diff_get_color(ecbdata->color_diff, DIFF_PLAIN);
-> +	const char *frag = diff_get_color(ecbdata->color_diff, DIFF_FRAGINFO);
-> +	const char *func = diff_get_color(ecbdata->color_diff, DIFF_FUNCINFO);
-> +	const char *reset = diff_get_color(ecbdata->color_diff, DIFF_RESET);
-> +	const char *orig_line = line;
-> +	int orig_len = len;
-> +	const char *frag_start;
-> +	int frag_len;
-> +	const char *part_end = NULL;
-> +	int part_len = 0;
-> +
-> +	/* determine length of @ */
-> +	while (part_len < len && line[part_len] == '@')
-> +		part_len++;
-> +
-> +	/* find end of frag, (Ie. find second @@) */
-> +	part_end = memmem(line + part_len, len - part_len,
-> +			  line, part_len);
+This feature has to be optional (I don=E2=80=99t think MSVC, for exampl=
+e,
+supports anything like this), so unless someone hooks in a rule
+to check the static header dependencies for correctness, this
+won=E2=80=99t help much with header dependency maintainance.  It is
+enabled by setting the COMPUTE_HEADER_DEPENDENCIES variable,
+unset by default.
 
-This is not incorrect per-se, but probably is overkill; this codepath only
-deals with two-way diff and we know we are looking at "@@ -..., +... @@"
-at this point.
+The scope of the %.o: %.c pattern rule has been restricted to
+make it easier to tell if a new object file has not been hooked
+into the dependency generation machinery.
 
-	part_end = memmem(line + 2, len - 2, "@@", 2);
+An unrelated fix also snuck in: the %.s: %.c pattern rule to
+generate an assembler listing did not have correct dependencies.
+It is meant to be invoked by hand and should always run.
 
-would be sufficient.
+To avoid litering the build directory with even more build
+products, the generated Makefile fragments are squirreled away
+into deps/ subdirectories of each directory containing object
+files.  These directories are currently generated as a
+side-effect of the GIT-CFLAGS rule, to guarantee they will be
+available whenever the %.o: %.c and %.o: %.S pattern rules are
+being used.  This is really not ideal, especially because it
+requires hard-coding the list of directories with objects.
 
-> +	if (!part_end)
-> +		return emit_line(ecbdata->file, frag, reset, line, len);
-> +	/* calculate total length of frag */
-> +	part_len = (part_end + part_len) - line;
-> +
-> +	/* remember frag part, we emit only if we find a space separator */
-> +	frag_start = line;
-> +	frag_len = part_len;
-> +
-> +	/* consume hunk header */
-> +	len -= part_len;
-> +	line += part_len;
-> +
-> +	/*
-> +	 * for empty reminder or empty space sequence (exclusive any newlines
-> +	 * or carriage returns) emit complete original line as FRAGINFO
-> +	 */
-> +	if (!len || !(part_len = strspn(line, " \t")))
+gcc learned the -MMD -MP -MF options in version 3.0, so most gcc
+users should have them by now.
 
-Slightly worrisome is what guarantees this strspn() won't step outside
-len.
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+I=E2=80=99ll send the .c.s and dependency fixes separately.
 
-I would probably write the function like this instead.
+Thoughts? Advice?
 
--- >8 --
+Thanks,
+Jonathan
 
-static void emit_hunk_header(struct emit_callback *ecbdata,
-			     const char *line, int len)
-{
-	const char *plain = diff_get_color(ecbdata->color_diff, DIFF_PLAIN);
-	const char *frag = diff_get_color(ecbdata->color_diff, DIFF_FRAGINFO);
-	const char *func = diff_get_color(ecbdata->color_diff, DIFF_FUNCINFO);
-	const char *reset = diff_get_color(ecbdata->color_diff, DIFF_RESET);
-	static const char atat[2] = { '@', '@' };
-	const char *cp, *ep;
+ .gitignore |    1 +
+ Makefile   |   63 ++++++++++++++++++++++++++++++++++++++++++----------=
+-------
+ 2 files changed, 46 insertions(+), 18 deletions(-)
 
-	/*
-	 * As a hunk header must begin with "@@ -<old>, +<new> @@",
-	 * it always is at least 10 bytes long.
-	 */
-	if (len < 10 ||
-	    memcmp(line, atat, 2) ||
-	    !(ep = memmem(line + 2, len - 2, atat, 2))) {
-		emit_line(ecbdata->file, plain, reset, line, len);
-		return;
-	}
-	ep += 2; /* skip over the second @@ */
-
-	/* The hunk header in fraginfo color */
-	emit_line(ecbdata->file, frag, reset, line, ep - line);
-
-	/* blank before the func header */
-	for (cp = ep; ep - line < len; ep++)
-		if (*ep != ' ' && *ep != 't')
-			break;
-	if (ep != cp)
-		emit_line(ecbdata->file, plain, reset, cp, ep - cp);
-
-	if (ep < line + len)
-		emit_line(ecbdata->file, func, reset, ep, line + len - ep);
-}
+diff --git a/.gitignore b/.gitignore
+index ac02a58..803247f 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -170,6 +170,7 @@
+ *.exe
+ *.[aos]
+ *.py[co]
++*.o.d
+ *+
+ /config.mak
+ /autom4te.cache
+diff --git a/Makefile b/Makefile
+index ed0f461..fb20302 100644
+--- a/Makefile
++++ b/Makefile
+@@ -216,6 +216,9 @@ all::
+ #   DEFAULT_EDITOR=3D'~/bin/vi',
+ #   DEFAULT_EDITOR=3D'$GIT_FALLBACK_EDITOR',
+ #   DEFAULT_EDITOR=3D'"C:\Program Files\Vim\gvim.exe" --nofork'
++#
++# Define COMPUTE_HEADER_DEPENDENCIES if you want to avoid rebuilding o=
+bjects
++# when an unrelated header file changes and your compiler supports it.
+=20
+ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -1559,12 +1562,42 @@ git.o git.spec \
+ 	$(patsubst %.perl,%,$(SCRIPT_PERL)) \
+ 	: GIT-VERSION-FILE
+=20
+-%.o: %.c GIT-CFLAGS
+-	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) $<
+-%.s: %.c GIT-CFLAGS
++GIT_OBJS :=3D http.o http-walker.o http-push.o \
++	$(LIB_OBJS) $(BUILTIN_OBJS) \
++	$(patsubst git-%$X,%.o,$(PROGRAMS)) git.o
++
++OBJECTS :=3D $(GIT_OBJS) $(XDIFF_OBJS)
++
++ifndef COMPUTE_HEADER_DEPENDENCIES
++$(GIT_OBJS): $(LIB_H)
++
++$(XDIFF_OBJS): xdiff/xinclude.h xdiff/xmacros.h xdiff/xdiff.h xdiff/xt=
+ypes.h \
++	xdiff/xutils.h xdiff/xprepare.h xdiff/xdiffi.h xdiff/xemit.h
++
++http.o http-walker.o http-push.o: http.h
++
++builtin-revert.o wt-status.o: wt-status.h
++
++$(patsubst git-%$X,%.o,$(PROGRAMS)) git.o: $(wildcard */*.h)
++else
++dep_files :=3D $(wildcard $(foreach f,$(OBJECTS),$(dir $f)deps/$(notdi=
+r $f).d))
++
++ifneq ($(dep_files),)
++include $(dep_files)
++endif
++
++# Take advantage of gcc's dependency generation.
++# See <http://gcc.gnu.org/gcc-3.0/features.html>.
++dep_args =3D -MF $(dep_file) -MMD -MP
++dep_file =3D $(dir $@)deps/$(notdir $@).d
++endif
++
++$(OBJECTS): %.o: %.c GIT-CFLAGS
++	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(ALL_CFLAGS) $<
++%.s: %.c GIT-CFLAGS .FORCE-LISTING
+ 	$(QUIET_CC)$(CC) -S $(ALL_CFLAGS) $<
+-%.o: %.S
+-	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) $<
++$(OBJECTS): %.o: %.S GIT-CFLAGS
++	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(ALL_CFLAGS) $<
+=20
+ exec_cmd.o: exec_cmd.c GIT-CFLAGS
+ exec_cmd.o: ALL_CFLAGS +=3D \
+@@ -1594,10 +1627,6 @@ git-imap-send$X: imap-send.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^=
+) \
+ 		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
+=20
+-http.o http-walker.o http-push.o: http.h
+-
+-http.o http-walker.o: $(LIB_H)
+-
+ git-http-fetch$X: revision.o http.o http-walker.o http-fetch.o $(GITLI=
+BS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^=
+) \
+ 		$(LIBS) $(CURL_LIBCURL)
+@@ -1609,22 +1638,15 @@ git-remote-curl$X: remote-curl.o http.o http-wa=
+lker.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^=
+) \
+ 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+=20
+-$(LIB_OBJS) $(BUILTIN_OBJS): $(LIB_H)
+-$(patsubst git-%$X,%.o,$(PROGRAMS)) git.o: $(LIB_H) $(wildcard */*.h)
+-builtin-revert.o wt-status.o: wt-status.h
+-
+ $(LIB_FILE): $(LIB_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(LIB_OBJS)
+=20
+ XDIFF_OBJS=3Dxdiff/xdiffi.o xdiff/xprepare.o xdiff/xutils.o xdiff/xemi=
+t.o \
+ 	xdiff/xmerge.o xdiff/xpatience.o
+-$(XDIFF_OBJS): xdiff/xinclude.h xdiff/xmacros.h xdiff/xdiff.h xdiff/xt=
+ypes.h \
+-	xdiff/xutils.h xdiff/xprepare.h xdiff/xdiffi.h xdiff/xemit.h
+=20
+ $(XDIFF_LIB): $(XDIFF_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(XDIFF_OBJS)
+=20
+-
+ doc:
+ 	$(MAKE) -C Documentation all
+=20
+@@ -1657,6 +1679,9 @@ TRACK_CFLAGS =3D $(subst ','\'',$(ALL_CFLAGS)):\
+              $(bindir_SQ):$(gitexecdir_SQ):$(template_dir_SQ):$(prefix=
+_SQ)
+=20
+ GIT-CFLAGS: .FORCE-GIT-CFLAGS
++	mkdir -p deps block-sha1/deps ppc/deps compat/deps \
++		compat/regex/deps compat/nedmalloc/deps compat/fnmatch/deps \
++		xdiff/deps
+ 	@FLAGS=3D'$(TRACK_CFLAGS)'; \
+ 	    if test x"$$FLAGS" !=3D x"`cat GIT-CFLAGS 2>/dev/null`" ; then \
+ 		echo 1>&2 "    * new build flags or prefix"; \
+@@ -1873,8 +1898,10 @@ distclean: clean
+ 	$(RM) configure
+=20
+ clean:
+-	$(RM) *.o block-sha1/*.o arm/*.o ppc/*.o compat/*.o compat/*/*.o xdif=
+f/*.o \
++	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o \
+ 		$(LIB_FILE) $(XDIFF_LIB)
++	$(RM) -r deps block-sha1/deps ppc/deps compat/deps \
++		compat/*/deps xdiff/deps
+ 	$(RM) $(ALL_PROGRAMS) $(BUILT_INS) git$X
+ 	$(RM) $(TEST_PROGRAMS)
+ 	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags csco=
+pe*
+@@ -1899,7 +1926,7 @@ endif
+ .PHONY: all install clean strip
+ .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_moder=
+n_shell
+ .PHONY: .FORCE-GIT-VERSION-FILE TAGS tags cscope .FORCE-GIT-CFLAGS
+-.PHONY: .FORCE-GIT-BUILD-OPTIONS
++.PHONY: .FORCE-GIT-BUILD-OPTIONS .FORCE-LISTING
+=20
+ ### Check documentation
+ #
+--=20
+1.6.5.3
