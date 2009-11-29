@@ -1,86 +1,71 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] reset: add --quiet option
-Date: Sun, 29 Nov 2009 12:58:10 +0200
-Message-ID: <1259492290-21771-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 29 11:58:40 2009
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [spf:guess] Re: git-svn: SVK merge commits can have >2 parents
+Date: Mon, 30 Nov 2009 00:26:07 +1300
+Message-ID: <1259493967.31767.4.camel@denix>
+References: <1259479636-sup-573@utwig> <1259480367-sup-6891@utwig>
+	 <20091129080815.GC24222@dcvr.yhbt.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Alex Vandiver <alex@chmrr.net>, git <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Nov 29 12:26:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEhUF-0002wq-Im
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 11:58:39 +0100
+	id 1NEhv9-0002bK-Am
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 12:26:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752500AbZK2K6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Nov 2009 05:58:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752173AbZK2K6S
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 05:58:18 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:34929 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751886AbZK2K6S (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Nov 2009 05:58:18 -0500
-Received: by bwz27 with SMTP id 27so1911739bwz.21
-        for <git@vger.kernel.org>; Sun, 29 Nov 2009 02:58:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=UNSV0mt6YcpJQtFgKYaM6q1vbifrRLsdH9vVXNVtG8I=;
-        b=jMKDDeeBwtNpOgu6wTZNo62jFbKnSmIwXObtLStIYVk2dwAr2X04Wi6NmXawote6Ip
-         RArtitCP4Ocfjecqu7y9ejUJUiMFGJGUn3u833jx4+AKTKWEtagtpsoz8JPqhCB7UKao
-         6bfl756PPUZPpwK2iPEt7aDOBterKgKG1zc5I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=WpBY38a4jB8ypRlNARbUaNvilDMo7gobGOHThhZAxM1HU6ZPdsGmFMqsHPXlS0DzkC
-         IIU696VW7h9cv7qTvU2UWTG6W82Sme1CH/ZwXVQaUgXIQn3dpRdx5ETvG2yTORyZ6h7h
-         dbboa4EzKiFGUjTSm+3pUilSE7xabhOyqcioI=
-Received: by 10.204.25.152 with SMTP id z24mr3164050bkb.44.1259492302157;
-        Sun, 29 Nov 2009 02:58:22 -0800 (PST)
-Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
-        by mx.google.com with ESMTPS id 14sm845286bwz.5.2009.11.29.02.58.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 29 Nov 2009 02:58:20 -0800 (PST)
-X-Mailer: git-send-email 1.6.6.rc0.63.g0471c
+	id S1753920AbZK2L0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Nov 2009 06:26:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753915AbZK2L0F
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 06:26:05 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:58458 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750958AbZK2L0F (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Nov 2009 06:26:05 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id A9E5521C442; Mon, 30 Nov 2009 00:26:08 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.3 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.69.234] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 9577F21C368;
+	Mon, 30 Nov 2009 00:25:51 +1300 (NZDT)
+In-Reply-To: <20091129080815.GC24222@dcvr.yhbt.net>
+X-Mailer: Evolution 2.28.0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134011>
 
-There's already -q, but --quiet is missing.
+On Sun, 2009-11-29 at 08:08 +0000, Eric Wong wrote:
+> Alex Vandiver <alex@chmrr.net> wrote:
+> > At Sun Nov 29 02:28:39 -0500 2009, Alex Vandiver wrote:
+> > > While converting a mildly complicated svn repository that was managed
+> > > with SVK, I ran across the following oddness.  `svk smerge` can only
+> > > merge between _two_ branches at once -- however, the way that svk
+> > > merge detection works, you can end up with erroneous extra parents
+> > > from long-dead branches.
+> > 
+> > Upon a little more inspection, I now understand that the rev-parse
+> > lines in find_extra_svk_parents are attempting to deal with this exact
+> > circumstance -- but they fail to properly sort the merge tickets
+> > first, which leads to this incorrect behavior.  Armed with this
+> > understanding, I'm more confident in the attached updated patch.  I
+> 
+> Hi Alex, Sam,
+> 
+> I'll defer to Sam for the Ack, my svk knowledge is limited. Thanks.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/git-reset.txt |    1 +
- builtin-reset.c             |    2 +-
- 2 files changed, 2 insertions(+), 1 deletions(-)
+Yes, the change does make sense to me - nicely done, Alex.
 
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index 2d27e40..9df6de2 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -62,6 +62,7 @@ This means that `git reset -p` is the opposite of `git add -p` (see
- linkgit:git-add[1]).
- 
- -q::
-+--quiet::
- 	Be quiet, only report errors.
- 
- <commit>::
-diff --git a/builtin-reset.c b/builtin-reset.c
-index 73e6022..c0127c4 100644
---- a/builtin-reset.c
-+++ b/builtin-reset.c
-@@ -209,7 +209,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 				"reset HEAD, index and working tree", HARD),
- 		OPT_SET_INT(0, "merge", &reset_type,
- 				"reset HEAD, index and working tree", MERGE),
--		OPT_BOOLEAN('q', NULL, &quiet,
-+		OPT_BOOLEAN('q', "quiet", &quiet,
- 				"disable showing new HEAD in hard reset and progress message"),
- 		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
- 		OPT_END()
--- 
-1.6.6.rc0.63.g0471c
+Acked-By: Sam Vilain <sam@vilain.net>
+
+Sam
