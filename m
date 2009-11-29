@@ -1,89 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Sun, 29 Nov 2009 11:28:27 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0911291121300.4985@pacific.mpi-cbg.de>
-References: <20091125214949.GA31473@coredump.intra.peff.net> <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com> <20091125222037.GA2861@coredump.intra.peff.net> <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com>
- <20091127062013.GA20844@coredump.intra.peff.net> <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302> <20091127095914.GA4865@sigill.intra.peff.net> <alpine.DEB.1.00.0911271144230.4521@intel-tinevez-2-302> <20091127180235.GA26633@coredump.intra.peff.net>
- <alpine.DEB.1.00.0911272102430.4521@intel-tinevez-2-302> <20091127210530.GC26921@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: James Pickens <jepicken@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 29 11:24:35 2009
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] reset: add --quiet option
+Date: Sun, 29 Nov 2009 12:58:10 +0200
+Message-ID: <1259492290-21771-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 29 11:58:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEgxF-0007vt-B3
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 11:24:33 +0100
+	id 1NEhUF-0002wq-Im
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 11:58:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753230AbZK2KYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Nov 2009 05:24:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752227AbZK2KYN
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 05:24:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47234 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751956AbZK2KYM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Nov 2009 05:24:12 -0500
-Received: (qmail invoked by alias); 29 Nov 2009 10:24:17 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp071) with SMTP; 29 Nov 2009 11:24:17 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+u66BopD6urxzKjKFIHBNXwN9edgzbAN7w7O5yNp
-	FZ0bHTI/FcJsLn
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20091127210530.GC26921@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1752500AbZK2K6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Nov 2009 05:58:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752173AbZK2K6S
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 05:58:18 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:34929 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751886AbZK2K6S (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Nov 2009 05:58:18 -0500
+Received: by bwz27 with SMTP id 27so1911739bwz.21
+        for <git@vger.kernel.org>; Sun, 29 Nov 2009 02:58:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=UNSV0mt6YcpJQtFgKYaM6q1vbifrRLsdH9vVXNVtG8I=;
+        b=jMKDDeeBwtNpOgu6wTZNo62jFbKnSmIwXObtLStIYVk2dwAr2X04Wi6NmXawote6Ip
+         RArtitCP4Ocfjecqu7y9ejUJUiMFGJGUn3u833jx4+AKTKWEtagtpsoz8JPqhCB7UKao
+         6bfl756PPUZPpwK2iPEt7aDOBterKgKG1zc5I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=WpBY38a4jB8ypRlNARbUaNvilDMo7gobGOHThhZAxM1HU6ZPdsGmFMqsHPXlS0DzkC
+         IIU696VW7h9cv7qTvU2UWTG6W82Sme1CH/ZwXVQaUgXIQn3dpRdx5ETvG2yTORyZ6h7h
+         dbboa4EzKiFGUjTSm+3pUilSE7xabhOyqcioI=
+Received: by 10.204.25.152 with SMTP id z24mr3164050bkb.44.1259492302157;
+        Sun, 29 Nov 2009 02:58:22 -0800 (PST)
+Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
+        by mx.google.com with ESMTPS id 14sm845286bwz.5.2009.11.29.02.58.19
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 29 Nov 2009 02:58:20 -0800 (PST)
+X-Mailer: git-send-email 1.6.6.rc0.63.g0471c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134010>
 
-Hi,
+There's already -q, but --quiet is missing.
 
-On Fri, 27 Nov 2009, Jeff King wrote:
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ Documentation/git-reset.txt |    1 +
+ builtin-reset.c             |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletions(-)
 
-> On Fri, Nov 27, 2009 at 09:07:51PM +0100, Johannes Schindelin wrote:
-> 
-> > > Yes, as a matter of fact, I do work on 10 different computers. I'm sorry 
-> > > that you find managing your configuration so challenging. But if you 
-> > > don't use the configuration variable, then your own personal setup is 
-> > > totally irrelevant.
-> > 
-> > As I just demonstrated, this is a false statement.
-> 
-> I must have missed where you demonstrated it.
-
-Usually, my mails are minimal, and I do not write as many mails as I 
-used to anymore, so it is hard to miss what I am saying.
-
-For your benefit: both Junio and me talked about experts helping users.  
-Even if I do not use the config options, I am affected.  And it does hurt.
-
-> > > If your argument is that this lack of consistency will irritate users,
-> > > you need to show that:
-> > > 
-> > >   1. There are users who switch between a large number of setups, but
-> > >      will not apply config consistently.
-> > 
-> > This is a strawman, and you should be ashamed to put it here.  Just 
-> 
-> How is this a strawman?
-
-You are comparing config settings which must be different, because they 
-affect _what_ project you are working with, with config settings that 
-affect _how_ you can work with them.
-
-> When the number of "git grep" crash fatalities rises above zero, maybe 
-> this line of reasoning will be relevant.
-
-Sure.  Let's wait for the first crash fatality, and only react then.  No 
-need to think ahead.
-
-That's it.  I don't think that I want to participate in this kind of 
-discussion anymore,
-Dscho
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 2d27e40..9df6de2 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -62,6 +62,7 @@ This means that `git reset -p` is the opposite of `git add -p` (see
+ linkgit:git-add[1]).
+ 
+ -q::
++--quiet::
+ 	Be quiet, only report errors.
+ 
+ <commit>::
+diff --git a/builtin-reset.c b/builtin-reset.c
+index 73e6022..c0127c4 100644
+--- a/builtin-reset.c
++++ b/builtin-reset.c
+@@ -209,7 +209,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 				"reset HEAD, index and working tree", HARD),
+ 		OPT_SET_INT(0, "merge", &reset_type,
+ 				"reset HEAD, index and working tree", MERGE),
+-		OPT_BOOLEAN('q', NULL, &quiet,
++		OPT_BOOLEAN('q', "quiet", &quiet,
+ 				"disable showing new HEAD in hard reset and progress message"),
+ 		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
+ 		OPT_END()
+-- 
+1.6.6.rc0.63.g0471c
