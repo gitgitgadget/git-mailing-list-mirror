@@ -1,120 +1,68 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Sun, 29 Nov 2009 14:13:17 +0200
-Message-ID: <94a0d4530911290413vbd71849u62ef01ed76bad4c0@mail.gmail.com>
-References: <20091125210034.GC18487@coredump.intra.peff.net>
-	 <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com>
-	 <20091125222037.GA2861@coredump.intra.peff.net>
-	 <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com>
-	 <20091127062013.GA20844@coredump.intra.peff.net>
-	 <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302>
-	 <20091127095914.GA4865@sigill.intra.peff.net>
-	 <alpine.DEB.1.00.0911271144230.4521@intel-tinevez-2-302>
-	 <20091127180235.GA26633@coredump.intra.peff.net>
-	 <alpine.DEB.1.00.0911272102430.4521@intel-tinevez-2-302>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, James Pickens <jepicken@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Nov 29 13:13:27 2009
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 0/2] User-friendly error messages for merge failure on fast-forward.
+Date: Sun, 29 Nov 2009 13:18:31 +0100
+Message-ID: <1259497113-1393-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 29 13:18:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEiea-0002IM-MO
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 13:13:25 +0100
+	id 1NEijs-0003vA-Qc
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 13:18:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753485AbZK2MNN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Nov 2009 07:13:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752500AbZK2MNN
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 07:13:13 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:64563 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751937AbZK2MNL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Nov 2009 07:13:11 -0500
-Received: by iwn1 with SMTP id 1so1654905iwn.33
-        for <git@vger.kernel.org>; Sun, 29 Nov 2009 04:13:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3JriV/ehD7dH5BNetSPafkYziQig3N0sLLIouUmE5HE=;
-        b=gFQK/C6fYe+E0A2ArT3wUmk87ok8QAXpdkBoUN0Pl4hC9O+wbDgqH4NAYy/pBGZfAb
-         cq0T1o6YCX8GJ9BoMZvyzUCS/Z1at3dCGcOonxjheVM4p+qhrgb2i8iBRuF0PkACI3JG
-         PSmLvvaYYIpioe7GrLxUtt8sdxpeZKdOa4X2E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xMIwfgQZk06lr5VLZrUIESdV2EGMYrdBRixSYJAICdQmfGFxhgMDADcNkt7e/eC3Vl
-         BY+ETygBjA43X3+tkp2trT7lN2p/uKMjOG+MaNmzDkR+cpQYLsevxKVduPyaqtT10yTl
-         QzC0O6xD3DhJhQ8AaYxjjaOB+D3bttt1oxedQ=
-Received: by 10.231.42.150 with SMTP id s22mr1356103ibe.22.1259496797774; Sun, 
-	29 Nov 2009 04:13:17 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0911272102430.4521@intel-tinevez-2-302>
+	id S1754155AbZK2MSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Nov 2009 07:18:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754113AbZK2MSj
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 07:18:39 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:49678 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753632AbZK2MSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Nov 2009 07:18:39 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id nATCGjUj024865
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 29 Nov 2009 13:16:45 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1NEijg-00089M-D1; Sun, 29 Nov 2009 13:18:40 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1NEijg-0005J0-Af; Sun, 29 Nov 2009 13:18:40 +0100
+X-Mailer: git-send-email 1.6.5.3.435.g5f2e3.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 29 Nov 2009 13:16:45 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: nATCGjUj024865
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1260101805.75911@AA8KXqcQPiC8UE/y1OKejA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134015>
 
-On Fri, Nov 27, 2009 at 10:07 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Fri, 27 Nov 2009, Jeff King wrote:
->> Yes, as a matter of fact, I do work on 10 different computers. I'm s=
-orry
->> that you find managing your configuration so challenging. But if you
->> don't use the configuration variable, then your own personal setup i=
-s
->> totally irrelevant.
->
-> As I just demonstrated, this is a false statement.
+I noticed that failures of fast-forward merges were still using the
+plumbing error message:
 
-Yes, defaults are important in UI.
+$ git merge master
+Updating 1fdeef9..e248dad
+error: Entry 'foo.txt' not uptodate. Cannot merge.
 
->> If your argument is that this lack of consistency will irritate user=
-s,
->> you need to show that:
->>
->> =C2=A0 1. There are users who switch between a large number of setup=
-s, but
->> =C2=A0 =C2=A0 =C2=A0will not apply config consistently.
->
-> This is a strawman, and you should be ashamed to put it here. =C2=A0J=
-ust
-> because nobody does what you actively encourage does not mean that th=
-e
-> encouraged procedure is good, or for that matter, helps anybody but y=
-ou.
+I'm not 100% sure that my patch doesn't trigger the porcelain behavior
+for plumbing. Someone more familiar than me with the codebase should
+confirm/infirm this.
 
-Not to mention that it's completely irrelevant. The fact that all
-users apply their configurations consistently through their setups, or
-not, doesn't make a default preference better or worst.
+Matthieu Moy (2):
+  merge-recursive: make the error-message generation an extern function
+  builtin-merge: show user-friendly error messages for fast-forward
+    too.
 
-If the argument is that default preferences are not relevant enough,
-then step aside and let the people that care about default preferences
-to discuss.
-
->> And the GitTogether had a "users complain about git, and we try to
->> listen" session.
->
-> Oh, that makes me so happy. =C2=A0<sarcasm>Soooo happy</sarcasm>. =C2=
-=A0So it was an
-> ivory tower meeting, once again?
-
-This is very typical on many open source projects. I think the
-benevolent dictator model works pretty good on low-level stuff, but on
-UI I think a democratic model works better.
-
-I've been thinking on setting up a pseudo-project on SourceForge and
-setup an IdeaTorrent, that way users can generate and organize ideas
-so that developers can have meaningful conversations with users:
-http://brainstorm.ubuntu.com/
-
-What do you think?
-
---=20
-=46elipe Contreras
+ builtin-merge.c   |    1 +
+ merge-recursive.c |   41 +++++++++++++++++++++++------------------
+ merge-recursive.h |    3 +++
+ 3 files changed, 27 insertions(+), 18 deletions(-)
