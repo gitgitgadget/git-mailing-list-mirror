@@ -1,101 +1,126 @@
 From: Alex Vandiver <alex@chmrr.net>
-Subject: Re: git-svn: SVK merge commits can have >2 parents
-Date: Sun, 29 Nov 2009 02:46:49 -0500
-Message-ID: <1259480367-sup-6891@utwig>
-References: <1259479636-sup-573@utwig>
+Subject: git-svn: SVK merge commits can have >2 parents
+Date: Sun, 29 Nov 2009 02:28:39 -0500
+Message-ID: <1259479636-sup-573@utwig>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-1259480809-959285-30157-9020-2-="
+Content-Type: multipart/mixed; boundary="=-1259479719-289075-30157-6363-1-="
 Content-Transfer-Encoding: 8bit
 Cc: git <git@vger.kernel.org>
 To: Sam Vilain <sam@vilain.net>, Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun Nov 29 08:46:57 2009
+X-From: git-owner@vger.kernel.org Sun Nov 29 08:52:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEeUi-0004bF-9y
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 08:46:56 +0100
+	id 1NEeaO-000621-W1
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 08:52:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753511AbZK2Hqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Nov 2009 02:46:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753226AbZK2Hqo
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 02:46:44 -0500
-Received: from chmrr.net ([209.67.253.66]:40825 "EHLO utwig.chmrr.net"
+	id S1753226AbZK2Hwd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Nov 2009 02:52:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751525AbZK2Hwd
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 02:52:33 -0500
+Received: from chmrr.net ([209.67.253.66]:41305 "EHLO utwig.chmrr.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751525AbZK2Hqn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Nov 2009 02:46:43 -0500
-X-Greylist: delayed 1090 seconds by postgrey-1.27 at vger.kernel.org; Sun, 29 Nov 2009 02:46:43 EST
+	id S1751017AbZK2Hwc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Nov 2009 02:52:32 -0500
 Received: from chmrr by utwig.chmrr.net with local (Exim 4.69)
 	(envelope-from <chmrr@chmrr.net>)
-	id 1NEeUb-0007tq-VU; Sun, 29 Nov 2009 02:46:49 -0500
-In-reply-to: <1259479636-sup-573@utwig>
+	id 1NEeD1-0007s7-9r; Sun, 29 Nov 2009 02:28:39 -0500
 User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134001>
 
 
---=-1259480809-959285-30157-9020-2-=
+--=-1259479719-289075-30157-6363-1-=
 Content-Type: text/plain; charset=UTF-8
 Content-Disposition: inline
 
-At Sun Nov 29 02:28:39 -0500 2009, Alex Vandiver wrote:
-> While converting a mildly complicated svn repository that was managed
-> with SVK, I ran across the following oddness.  `svk smerge` can only
-> merge between _two_ branches at once -- however, the way that svk
-> merge detection works, you can end up with erroneous extra parents
-> from long-dead branches.
+  Heya,
 
-Upon a little more inspection, I now understand that the rev-parse
-lines in find_extra_svk_parents are attempting to deal with this exact
-circumstance -- but they fail to properly sort the merge tickets
-first, which leads to this incorrect behavior.  Armed with this
-understanding, I'm more confident in the attached updated patch.  I
-assume, however, that the logic allows for more than one extra parent
-only because such an occurrance could be constructed by hand-editing
-svk:merge, because AFAIK svk's command-line tools should be able to
-construct such a circumstance.
+While converting a mildly complicated svn repository that was managed
+with SVK, I ran across the following oddness.  `svk smerge` can only
+merge between _two_ branches at once -- however, the way that svk
+merge detection works, you can end up with erroneous extra parents
+from long-dead branches.  Case in point:
+
+    export SVKROOT=/tmp/svk-testing-$$
+    svk mkdir //trunk -m 'trunk'
+    svk mkdir //branches -m 'branches'
+    svk co //trunk
+    svk cp //trunk/ //branches/feature1 -m 'branch for feature1'
+    svk cp //trunk/ //branches/feature2 -m 'branch for feature2'
+    svk co //branches/feature1
+    cd feature1
+    echo "foo" >foo
+    svk add foo
+    svk ci -m 'feature1 development'
+    svk sm //branches/feature1 //trunk -m 'merge feature1 to trunk'
+    cd ..
+    svk co //branches/feature2
+    cd feature2
+    echo "bar" >bar
+    svk add bar
+    svk ci -m 'feature2 development'
+    svk sm //trunk //branches/feature2 -m 'merge from trunk'
+    cd ..
+
+    git svn clone -s file://$SVKROOT/local
+
+The 'feature2' branch will appear to have three parents: r7, r6, _and_
+r5.  The r5 parent is extraneous, and only appears because r5 was
+previously merged into trunk, as part of r6.
+
+Given this, I'm a little confused why find_extra_svk_parents is
+written the way that it is, in seemingly allowing multiple extra
+parents to be found.  Since the most recent (i.e., highest-numbered)
+change is by definition the only one that can account for all of the
+other svk:merge changes, I _believe_ the attached diff to be correct,
+but I'm unsure because of the implicit current assumption that smerges
+can produce multiple parents.
+
  - Alex
 -- 
 Networking -- only one letter away from not working
 
---=-1259480809-959285-30157-9020-2-=
-Content-Disposition: attachment; filename="0001-git-svn-sort-svk-merge-tickets-to-account-for-minima.patch"
-Content-Type: application/octet-stream; name="0001-git-svn-sort-svk-merge-tickets-to-account-for-minima.patch"
+--=-1259479719-289075-30157-6363-1-=
+Content-Disposition: attachment; filename="0001-git-svn-svk-merge-commits-should-only-add-one-exta-p.patch"
+Content-Type: application/octet-stream; name="0001-git-svn-svk-merge-commits-should-only-add-one-exta-p.patch"
 Content-Transfer-Encoding: base64
 
-RnJvbSA0ZDMwZTU3ZTVkYTdjMmU4ODA5MDhiYzc0MmNmODA5OTBkNmY5ZjVk
+RnJvbSBiODZiNGJiMGNlY2I3MGQ4Mjg1NThiMDQ2YWEwYjNlN2I4OTliZjQx
 IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFZhbmRpdmVy
 IDxhbGV4QGNobXJyLm5ldD4KRGF0ZTogU3VuLCAyOSBOb3YgMjAwOSAwMjoy
-MDoyMSAtMDUwMApTdWJqZWN0OiBbUEFUQ0hdIGdpdC1zdm46IHNvcnQgc3Zr
-IG1lcmdlIHRpY2tldHMgdG8gYWNjb3VudCBmb3IgbWluaW1hbCBwYXJlbnRz
-CgpXaGVuIG1lcmdpbmcgYnJhbmNoZXMgYmFzZWQgb24gc3ZrOm1lcmdlIHBy
-b3BlcnRpZXMsIGEgc2luZ2xlIG1lcmdlCmNhbiBoYXZlIHVwZGF0ZWQgb3Ig
-YWRkZWQgbXVsdGlwbGUgc3ZrOm1lcmdlIGxpbmVzLiAgQXR0ZW1wdCB0bwpp
-bmNsdWRlIHRoZSBtaW5pbWFsIHNldCBvZiBwYXJlbnRzIGJ5IHNvcnRpbmcg
-dGhlIG1lcmdlIHByb3BlcnRpZXMgaW4Kb3JkZXIgb2YgcmV2aXNpb24sIGhp
-Z2hlc3QgdG8gbG93ZXN0LgoKU2lnbmVkLW9mZi1ieTogQWxleCBWYW5kaXZl
-ciA8YWxleEBjaG1yci5uZXQ+Ci0tLQogZ2l0LXN2bi5wZXJsIHwgICAgNiAr
-KysrKy0KIDEgZmlsZXMgY2hhbmdlZCwgNSBpbnNlcnRpb25zKCspLCAxIGRl
-bGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2dpdC1zdm4ucGVybCBiL2dpdC1z
-dm4ucGVybAppbmRleCA5NTdkNDRlLi41MWYwM2FkIDEwMDc1NQotLS0gYS9n
-aXQtc3ZuLnBlcmwKKysrIGIvZ2l0LXN2bi5wZXJsCkBAIC0yOTQwLDEwICsy
-OTQwLDE0IEBAIHN1YiBmaW5kX2V4dHJhX3N2a19wYXJlbnRzIHsKIAkJCWlm
-ICggbXkgJGNvbW1pdCA9ICRncy0+cmV2X21hcF9nZXQoJHJldiwgJHV1aWQp
-ICkgewogCQkJCSMgd2FoZXkhICB3ZSBmb3VuZCBpdCwgYnV0IGl0IG1pZ2h0
-IGJlCiAJCQkJIyBhbiBvbGQgb25lICghKQotCQkJCXB1c2ggQGtub3duX3Bh
-cmVudHMsICRjb21taXQ7CisJCQkJcHVzaCBAa25vd25fcGFyZW50cywgWyAk
-cmV2LCAkY29tbWl0IF07CiAJCQl9CiAJCX0KIAl9CisJIyBPcmRlcmluZyBt
-YXR0ZXJzOyBoaWdoZXN0LW51bWJlcmVkIGNvbW1pdCBtZXJnZSB0aWNrZXRz
-CisJIyBmaXJzdCwgYXMgdGhleSBtYXkgYWNjb3VudCBmb3IgbGF0ZXIgbWVy
-Z2UgdGlja2V0IGFkZGl0aW9ucworCSMgb3IgY2hhbmdlcy4KKwlAa25vd25f
-cGFyZW50cyA9IG1hcCB7JF8tPlsxXX0gc29ydCB7JGItPlswXSA8PT4gJGEt
-PlswXX0gQGtub3duX3BhcmVudHM7CiAJZm9yIG15ICRwYXJlbnQgKCBAa25v
-d25fcGFyZW50cyApIHsKIAkJbXkgQGNtZCA9ICgncmV2LWxpc3QnLCAkcGFy
-ZW50LCBtYXAgeyAiXiRfIiB9IEAkcGFyZW50cyApOwogCQlteSAoJG1zZ19m
-aCwgJGN0eCkgPSBjb21tYW5kX291dHB1dF9waXBlKEBjbWQpOwotLSAKMS42
-LjYucmMwLjI1NC5nNzM1MmQKCg==
+MDoyMSAtMDUwMApTdWJqZWN0OiBbUEFUQ0hdIGdpdC1zdm46IHN2ayBtZXJn
+ZSBjb21taXRzIHNob3VsZCBvbmx5IGFkZCBvbmUgZXh0YSBwYXJlbnQKCldo
+ZW4gbWVyZ2luZyBicmFuY2hlcyBiYXNlZCBvbiBzdms6bWVyZ2UgcHJvcGVy
+dGllcywgYSBzaW5nbGUgbWVyZ2UKY2FuIGhhdmUgdXBkYXRlZCBvciBhZGRl
+ZCBtdWx0aXBsZSBzdms6bWVyZ2UgbGluZXMuICBJZiBzby4gb25seQppbmNs
+dWRlIHRoZSBtaW5pbWFsIHNldCBvZiBuZXcgcGFyZW50cy4KClNpZ25lZC1v
+ZmYtYnk6IEFsZXggVmFuZGl2ZXIgPGFsZXhAY2htcnIubmV0PgotLS0KIGdp
+dC1zdm4ucGVybCB8ICAgIDUgKysrKy0KIDEgZmlsZXMgY2hhbmdlZCwgNCBp
+bnNlcnRpb25zKCspLCAxIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2dp
+dC1zdm4ucGVybCBiL2dpdC1zdm4ucGVybAppbmRleCA5NTdkNDRlLi42Njhl
+NTBjIDEwMDc1NQotLS0gYS9naXQtc3ZuLnBlcmwKKysrIGIvZ2l0LXN2bi5w
+ZXJsCkBAIC0yOTQwLDEwICsyOTQwLDEyIEBAIHN1YiBmaW5kX2V4dHJhX3N2
+a19wYXJlbnRzIHsKIAkJCWlmICggbXkgJGNvbW1pdCA9ICRncy0+cmV2X21h
+cF9nZXQoJHJldiwgJHV1aWQpICkgewogCQkJCSMgd2FoZXkhICB3ZSBmb3Vu
+ZCBpdCwgYnV0IGl0IG1pZ2h0IGJlCiAJCQkJIyBhbiBvbGQgb25lICghKQot
+CQkJCXB1c2ggQGtub3duX3BhcmVudHMsICRjb21taXQ7CisJCQkJcHVzaCBA
+a25vd25fcGFyZW50cywgWyAkcmV2LCAkY29tbWl0IF07CiAJCQl9CiAJCX0K
+IAl9CisJIyBXZSBvbmx5IGNhcmUgYWJvdXQgdGhlIGhpZ2hlc3QtbnVtYmVy
+ZWQgYXBwbGljYWJsZSBjb21taXQKKwlAa25vd25fcGFyZW50cyA9IG1hcCB7
+JF8tPlsxXX0gc29ydCB7JGItPlswXSA8PT4gJGEtPlswXX0gQGtub3duX3Bh
+cmVudHM7CiAJZm9yIG15ICRwYXJlbnQgKCBAa25vd25fcGFyZW50cyApIHsK
+IAkJbXkgQGNtZCA9ICgncmV2LWxpc3QnLCAkcGFyZW50LCBtYXAgeyAiXiRf
+IiB9IEAkcGFyZW50cyApOwogCQlteSAoJG1zZ19maCwgJGN0eCkgPSBjb21t
+YW5kX291dHB1dF9waXBlKEBjbWQpOwpAQCAtMjk1Niw2ICsyOTU4LDcgQEAg
+c3ViIGZpbmRfZXh0cmFfc3ZrX3BhcmVudHMgewogCQkJcHJpbnQgU1RERVJS
+CiAJCQkgICAgIkZvdW5kIG1lcmdlIHBhcmVudCAoc3ZrOm1lcmdlIHRpY2tl
+dCk6ICRwYXJlbnRcbiI7CiAJCQlwdXNoIEAkcGFyZW50cywgJHBhcmVudDsK
+KwkJCXJldHVybjsKIAkJfQogCX0KIH0KLS0gCjEuNi42LnJjMC4yNTQuZzcz
+NTJkCgo=
 
---=-1259480809-959285-30157-9020-2-=--
+--=-1259479719-289075-30157-6363-1-=--
