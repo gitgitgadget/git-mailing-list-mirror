@@ -1,74 +1,89 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] grep: --full-tree
-Date: Sun, 29 Nov 2009 11:21:06 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0911291118280.4985@pacific.mpi-cbg.de>
-References: <20091125210034.GC18487@coredump.intra.peff.net> <7vmy2as319.fsf@alter.siamese.dyndns.org> <20091125214949.GA31473@coredump.intra.peff.net> <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com> <20091125222037.GA2861@coredump.intra.peff.net>
- <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com> <20091127062013.GA20844@coredump.intra.peff.net> <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302> <20091127095914.GA4865@sigill.intra.peff.net> <7vpr73n7ns.fsf@alter.siamese.dyndns.org>
- <20091127205004.GA26921@coredump.intra.peff.net>
+Date: Sun, 29 Nov 2009 11:28:27 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0911291121300.4985@pacific.mpi-cbg.de>
+References: <20091125214949.GA31473@coredump.intra.peff.net> <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com> <20091125222037.GA2861@coredump.intra.peff.net> <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com>
+ <20091127062013.GA20844@coredump.intra.peff.net> <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302> <20091127095914.GA4865@sigill.intra.peff.net> <alpine.DEB.1.00.0911271144230.4521@intel-tinevez-2-302> <20091127180235.GA26633@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0911272102430.4521@intel-tinevez-2-302> <20091127210530.GC26921@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	James Pickens <jepicken@gmail.com>, git@vger.kernel.org
+Cc: James Pickens <jepicken@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 29 11:17:33 2009
+X-From: git-owner@vger.kernel.org Sun Nov 29 11:24:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEgq1-0003gy-7S
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 11:17:05 +0100
+	id 1NEgxF-0007vt-B3
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 11:24:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751894AbZK2KQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Nov 2009 05:16:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751956AbZK2KQx
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 05:16:53 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45569 "HELO mail.gmx.net"
+	id S1753230AbZK2KYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Nov 2009 05:24:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752227AbZK2KYN
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 05:24:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47234 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751737AbZK2KQw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Nov 2009 05:16:52 -0500
-Received: (qmail invoked by alias); 29 Nov 2009 10:16:57 -0000
+	id S1751956AbZK2KYM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Nov 2009 05:24:12 -0500
+Received: (qmail invoked by alias); 29 Nov 2009 10:24:17 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp002) with SMTP; 29 Nov 2009 11:16:57 +0100
+  by mail.gmx.net (mp071) with SMTP; 29 Nov 2009 11:24:17 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+RBzMbjOeR16EEcixSQG/vtQcnWuou6GV25snHXW
-	Ov8Qy//1XaOePb
+X-Provags-ID: V01U2FsdGVkX1+u66BopD6urxzKjKFIHBNXwN9edgzbAN7w7O5yNp
+	FZ0bHTI/FcJsLn
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20091127205004.GA26921@coredump.intra.peff.net>
+In-Reply-To: <20091127210530.GC26921@coredump.intra.peff.net>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134009>
 
 Hi,
 
 On Fri, 27 Nov 2009, Jeff King wrote:
 
-> On Fri, Nov 27, 2009 at 10:29:11AM -0800, Junio C Hamano wrote:
+> On Fri, Nov 27, 2009 at 09:07:51PM +0100, Johannes Schindelin wrote:
 > 
-> > > If only somebody had written a "pager.status" configuration variable,
-> > > you could use that. Oh wait. I did. And it shipped in v1.6.0.
+> > > Yes, as a matter of fact, I do work on 10 different computers. I'm sorry 
+> > > that you find managing your configuration so challenging. But if you 
+> > > don't use the configuration variable, then your own personal setup is 
+> > > totally irrelevant.
 > > 
-> > Nice try but, "grep" and "status" are apples and oranges comparision.
+> > As I just demonstrated, this is a false statement.
 > 
-> Yes, I think you are right that the existence of pager.* does not
-> necessarily imply that there should be a config option for grep. But
-> that makes his example even more irrelevant: he is advocating that I use
-> a solution in this instance because he uses it in another instance, when
-> that solution is not even necessary in the other instance (and as I have
-> hopefully already made clear, is in my opinion inferior).
+> I must have missed where you demonstrated it.
 
-Sorry, no, you got it all wrong.
+Usually, my mails are minimal, and I do not write as many mails as I 
+used to anymore, so it is hard to miss what I am saying.
 
-My point was that your config option introduced something _BAD_.  And my 
-point was that now, as a consequence of having managed to put it into Git, 
-you want more of such bad stuff.
+For your benefit: both Junio and me talked about experts helping users.  
+Even if I do not use the config options, I am affected.  And it does hurt.
 
-You continue to ignore that inconsistency -- even if it is introduced with 
-the best of all intentions -- is bad, bad, bad.
+> > > If your argument is that this lack of consistency will irritate users,
+> > > you need to show that:
+> > > 
+> > >   1. There are users who switch between a large number of setups, but
+> > >      will not apply config consistently.
+> > 
+> > This is a strawman, and you should be ashamed to put it here.  Just 
+> 
+> How is this a strawman?
 
-But I guess that I continue to get ignored,
+You are comparing config settings which must be different, because they 
+affect _what_ project you are working with, with config settings that 
+affect _how_ you can work with them.
+
+> When the number of "git grep" crash fatalities rises above zero, maybe 
+> this line of reasoning will be relevant.
+
+Sure.  Let's wait for the first crash fatality, and only react then.  No 
+need to think ahead.
+
+That's it.  I don't think that I want to participate in this kind of 
+discussion anymore,
 Dscho
