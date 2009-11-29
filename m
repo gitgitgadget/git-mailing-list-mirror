@@ -1,142 +1,92 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 1/2] merge-recursive: make the error-message generation an extern function
-Date: Sun, 29 Nov 2009 13:18:32 +0100
-Message-ID: <1259497113-1393-2-git-send-email-Matthieu.Moy@imag.fr>
-References: <1259497113-1393-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 29 13:19:06 2009
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC/PATCH] t7011: Mark fixed test as such
+Date: Sun, 29 Nov 2009 14:57:20 +0100
+Message-ID: <4B127DC0.4020108@drmicha.warpmail.net>
+References: <0327ed3d7c4621f205d2d111254d716bd1b06c28.1259432535.git.git@drmicha.warpmail.net> <fcaeb9bf0911290047t43ea3040x730e04baa81d8a98@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 29 14:57:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEik4-0003yO-Af
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 13:19:04 +0100
+	id 1NEkHN-000200-Lq
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 14:57:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754309AbZK2MSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Nov 2009 07:18:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754160AbZK2MSp
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 07:18:45 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:49680 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753920AbZK2MSk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Nov 2009 07:18:40 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id nATCGkek024873
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 29 Nov 2009 13:16:46 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NEiji-00089Q-0K; Sun, 29 Nov 2009 13:18:42 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NEijh-0005J3-V9; Sun, 29 Nov 2009 13:18:41 +0100
-X-Mailer: git-send-email 1.6.5.3.435.g5f2e3.dirty
-In-Reply-To: <1259497113-1393-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 29 Nov 2009 13:16:46 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: nATCGkek024873
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1260101807.01927@n4p5JBQhgBHxHMfIvMlmVw
+	id S1753024AbZK2N5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Nov 2009 08:57:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752563AbZK2N5V
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 08:57:21 -0500
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:55241 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751497AbZK2N5U (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Nov 2009 08:57:20 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id D6F68C4EB6;
+	Sun, 29 Nov 2009 08:57:26 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Sun, 29 Nov 2009 08:57:26 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=p7GUVRWc/DYRiBl2ERRtDHkf85k=; b=faIZ89YRLLa0q/hGA+FORKH0q3/k8V9Vi3mxVwFSFoFMSzfMgbGoDOHbuaqdm/jtEdppKBtLJaT7652poGMsM7JfdoaNgr+QFHhLmUbdYhk+ESDyOa1dqWxh5RlcjG5TJ/3YJbZ471+c0fR6n8hQF12mte19Gsxk66ydOVFZaLE=
+X-Sasl-enc: DuGpV4P37dR0fmXBTYaJzs9kh1tdVf+iPB7ygQQbe21f 1259503046
+Received: from localhost.localdomain (p5DCC0DA4.dip0.t-ipconnect.de [93.204.13.164])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 07C22198D3;
+	Sun, 29 Nov 2009 08:57:25 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091127 Lightning/1.0b1pre Shredder/3.0.1pre
+In-Reply-To: <fcaeb9bf0911290047t43ea3040x730e04baa81d8a98@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134018>
 
-The construction of the struct unpack_trees_error_msgs was done within
-git_merge_trees(), which prevented using the same messages easily from
-another function.
+Nguyen Thai Ngoc Duy venit, vidit, dixit 29.11.2009 09:47:
+> On 11/29/09, Michael J Gruber <git@drmicha.warpmail.net> wrote:
+>> Test 16/17 had been fixed since its introduction in b4d1690 (Teach Git
+>>  to respect skip-worktree bit (reading part), 2009-08-20). So, mark it as
+>>  expect_success rather than expect_failure.
+>>
+>>  Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> 
+> No ACK. See below.
+> 
+>>  ---
+>>  I'm actually wondering about 17/17 as well.
+>>  If commit is called with a file name then shouldn't it simply commit the
+>>  current state of the file in the worktree, no matter what the index or
+>>  skip-worktree say? I therefore think 17/17 should be expect_success
+>>  and have no test_must_fail.
+> 
+> Both 16/17 and 17/17 ensure that Git won't look at files on worktree
+> if they are marked as skip-worktree (by definition of skip-worktree,
+> you can safely ignore worktree, otherwise you would not mark them as
+> such). 16/17 happens to pass, not because it does not touch worktree,
+> but because the base index does not have "1", which happens to is the
+> same situation in 16/17 (test commit when "1" is gone). The result is
+> OK but it is actually not (17/17 shows this clearer as it commits the
+> worktree version).
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- merge-recursive.c |   41 +++++++++++++++++++++++------------------
- merge-recursive.h |    3 +++
- 2 files changed, 26 insertions(+), 18 deletions(-)
+On 16/17, I really cannot agree. You explain that you expect the test to
+succeed (we agree here), but that it succeeds for the wrong reasons. So
+it should be either "expect_success", or the test itself should be
+changed so that it really tests what it intends to, otherwise it raises
+a wrong "FIXED". I suggested and submitted the former.
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index a91208f..70cd6cc 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -172,23 +172,6 @@ static int git_merge_trees(int index_only,
- 	int rc;
- 	struct tree_desc t[3];
- 	struct unpack_trees_options opts;
--	struct unpack_trees_error_msgs msgs = {
--		/* would_overwrite */
--		"Your local changes to '%s' would be overwritten by merge.  Aborting.",
--		/* not_uptodate_file */
--		"Your local changes to '%s' would be overwritten by merge.  Aborting.",
--		/* not_uptodate_dir */
--		"Updating '%s' would lose untracked files in it.  Aborting.",
--		/* would_lose_untracked */
--		"Untracked working tree file '%s' would be %s by merge.  Aborting",
--		/* bind_overlap -- will not happen here */
--		NULL,
--	};
--	if (advice_commit_before_merge) {
--		msgs.would_overwrite = msgs.not_uptodate_file =
--			"Your local changes to '%s' would be overwritten by merge.  Aborting.\n"
--			"Please, commit your changes or stash them before you can merge.";
--	}
- 
- 	memset(&opts, 0, sizeof(opts));
- 	if (index_only)
-@@ -200,7 +183,7 @@ static int git_merge_trees(int index_only,
- 	opts.fn = threeway_merge;
- 	opts.src_index = &the_index;
- 	opts.dst_index = &the_index;
--	opts.msgs = msgs;
-+	opts.msgs = get_porcelain_error_msgs();
- 
- 	init_tree_desc_from_tree(t+0, common);
- 	init_tree_desc_from_tree(t+1, head);
-@@ -1188,6 +1171,28 @@ static int process_entry(struct merge_options *o,
- 	return clean_merge;
- }
- 
-+struct unpack_trees_error_msgs get_porcelain_error_msgs()
-+{
-+	struct unpack_trees_error_msgs msgs = {
-+		/* would_overwrite */
-+		"Your local changes to '%s' would be overwritten by merge.  Aborting.",
-+		/* not_uptodate_file */
-+		"Your local changes to '%s' would be overwritten by merge.  Aborting.",
-+		/* not_uptodate_dir */
-+		"Updating '%s' would lose untracked files in it.  Aborting.",
-+		/* would_lose_untracked */
-+		"Untracked working tree file '%s' would be %s by merge.  Aborting",
-+		/* bind_overlap -- will not happen here */
-+		NULL,
-+	};
-+	if (advice_commit_before_merge) {
-+		msgs.would_overwrite = msgs.not_uptodate_file =
-+			"Your local changes to '%s' would be overwritten by merge.  Aborting.\n"
-+			"Please, commit your changes or stash them before you can merge.";
-+	}
-+	return msgs;
-+}
-+
- int merge_trees(struct merge_options *o,
- 		struct tree *head,
- 		struct tree *merge,
-diff --git a/merge-recursive.h b/merge-recursive.h
-index fd138ca..f4b7f57 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -17,6 +17,9 @@ struct merge_options {
- 	struct string_list current_directory_set;
- };
- 
-+/* Return a list of user-friendly error messages to be used by merge */
-+struct unpack_trees_error_msgs get_porcelain_error_msgs();
-+
- /* merge_trees() but with recursive ancestor consolidation */
- int merge_recursive(struct merge_options *o,
- 		    struct commit *h1,
--- 
-1.6.5.3.435.g5f2e3.dirty
+On 17/17, it's not clear what should happen. "skip-worktree" says ignore
+the worktree and look in the index instead of accessing worktree files.
+But "git commit file" says ignore the index and stage and commit the
+file from the worktree directly. And that is exactly what happens:
+
+You say "git commit file".
+That means "ignore the index".
+That also means that git ignores the skip-worktree bit which is set in
+the index.
+Therefore, file is committed with the content is has in the worktree.
+
+I'm going by the documentation for git-update-index and git-commit. It
+could be that they are wrong, too, but they agree with the code, so
+what's the reference for saying both code and documentation are wrong?
+
+Michael
