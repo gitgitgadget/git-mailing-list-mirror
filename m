@@ -1,8 +1,8 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH] grep: --full-tree
-Date: Sun, 29 Nov 2009 13:48:55 +0200
-Message-ID: <94a0d4530911290348mf3b713aq15fe45ce92743b9d@mail.gmail.com>
-References: <20091125203922.GA18487@coredump.intra.peff.net>
+Date: Sun, 29 Nov 2009 14:13:17 +0200
+Message-ID: <94a0d4530911290413vbd71849u62ef01ed76bad4c0@mail.gmail.com>
+References: <20091125210034.GC18487@coredump.intra.peff.net>
 	 <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com>
 	 <20091125222037.GA2861@coredump.intra.peff.net>
 	 <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com>
@@ -10,83 +10,111 @@ References: <20091125203922.GA18487@coredump.intra.peff.net>
 	 <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302>
 	 <20091127095914.GA4865@sigill.intra.peff.net>
 	 <alpine.DEB.1.00.0911271144230.4521@intel-tinevez-2-302>
-	 <6839293b0911270827x54947c64q5f93e37664bc20f3@mail.gmail.com>
-	 <7vk4xbn7nl.fsf@alter.siamese.dyndns.org>
+	 <20091127180235.GA26633@coredump.intra.peff.net>
+	 <alpine.DEB.1.00.0911272102430.4521@intel-tinevez-2-302>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Uri Okrent <uokrent@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, James Pickens <jepicken@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 29 12:49:05 2009
+Cc: Jeff King <peff@peff.net>, James Pickens <jepicken@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Nov 29 13:13:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEiGz-0003jr-8S
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 12:49:01 +0100
+	id 1NEiea-0002IM-MO
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 13:13:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754265AbZK2Lst convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Nov 2009 06:48:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754224AbZK2Lst
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 06:48:49 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:49625 "EHLO
+	id S1753485AbZK2MNN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Nov 2009 07:13:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752500AbZK2MNN
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 07:13:13 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:64563 "EHLO
 	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754143AbZK2Lss convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Nov 2009 06:48:48 -0500
-Received: by iwn1 with SMTP id 1so1650106iwn.33
-        for <git@vger.kernel.org>; Sun, 29 Nov 2009 03:48:55 -0800 (PST)
+	with ESMTP id S1751937AbZK2MNL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Nov 2009 07:13:11 -0500
+Received: by iwn1 with SMTP id 1so1654905iwn.33
+        for <git@vger.kernel.org>; Sun, 29 Nov 2009 04:13:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=qaCzECSacehkovS70HlrEOTqVs9FvEzSEVYS8WFtLjM=;
-        b=iq06HizWCX9tsuia+Q5uMvtaB4j1fERFBi3cx3VJeKVnuuxx8WmYjQBoVbLfNZmXKw
-         z0l8clQRil38NFVhXjofUJpqdCgqEK17bR/5m6dIDFkls9qLxYIg9cAPDc9uqCfgnoL1
-         S/ZlMNaXo6iGFdFKRIpfueNjRhrtS0DrrEdl0=
+        bh=3JriV/ehD7dH5BNetSPafkYziQig3N0sLLIouUmE5HE=;
+        b=gFQK/C6fYe+E0A2ArT3wUmk87ok8QAXpdkBoUN0Pl4hC9O+wbDgqH4NAYy/pBGZfAb
+         cq0T1o6YCX8GJ9BoMZvyzUCS/Z1at3dCGcOonxjheVM4p+qhrgb2i8iBRuF0PkACI3JG
+         PSmLvvaYYIpioe7GrLxUtt8sdxpeZKdOa4X2E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=kpS0q7qLN+JmGNKlQajFcFHr3pU6FMu6+bkx7QMyMp/C/y7u+okZoM4Hhjgkou4WIw
-         xBUvIlj8Uk8LN8DArT3bmjDwMmOqR/Fqzkecgesee1qUAMseG15uerIpWeqjQNdPBWKM
-         KQeublmZfo6tsez+j06dQbNqq9rbKAf7k5LBI=
-Received: by 10.231.73.131 with SMTP id q3mr3891916ibj.6.1259495335161; Sun, 
-	29 Nov 2009 03:48:55 -0800 (PST)
-In-Reply-To: <7vk4xbn7nl.fsf@alter.siamese.dyndns.org>
+        b=xMIwfgQZk06lr5VLZrUIESdV2EGMYrdBRixSYJAICdQmfGFxhgMDADcNkt7e/eC3Vl
+         BY+ETygBjA43X3+tkp2trT7lN2p/uKMjOG+MaNmzDkR+cpQYLsevxKVduPyaqtT10yTl
+         QzC0O6xD3DhJhQ8AaYxjjaOB+D3bttt1oxedQ=
+Received: by 10.231.42.150 with SMTP id s22mr1356103ibe.22.1259496797774; Sun, 
+	29 Nov 2009 04:13:17 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0911272102430.4521@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134014>
 
-On Fri, Nov 27, 2009 at 8:29 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> That is exactly how we work and what people have been working hard fo=
-r
-> 1.7.0. =C2=A0Check the planned changes listed in the recent (and not =
-so recent)
-> "What's cooking" summary reports.
+On Fri, Nov 27, 2009 at 10:07 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Fri, 27 Nov 2009, Jeff King wrote:
+>> Yes, as a matter of fact, I do work on 10 different computers. I'm s=
+orry
+>> that you find managing your configuration so challenging. But if you
+>> don't use the configuration variable, then your own personal setup i=
+s
+>> totally irrelevant.
 >
-> Changing "grep" is too late for 1.7.0, but we are trying to find an e=
-asy
-> migration path like you mentioned in your message and that is exactly=
- what
-> this thread is about.
+> As I just demonstrated, this is a false statement.
 
-How about this. For now, make --full-tree available, and that's it.
-Then, on 1.8.0, add the configuration option, and if there's consensus
-make it default (-1 from me).
+Yes, defaults are important in UI.
 
-However, in order to ease the transition I think Jeff's GIT_PLUMBING
-(I would call it GIT_SCRIPTING) should be introduced on 1.7.0 so
-people can start exporting it in their scripts. That way people don't
-have to worry about adding --(no-)full-tree on their scripts (nor any
-other argument that depends on configurations) and when 1.8.0 comes,
-there's no script breakage.
+>> If your argument is that this lack of consistency will irritate user=
+s,
+>> you need to show that:
+>>
+>> =C2=A0 1. There are users who switch between a large number of setup=
+s, but
+>> =C2=A0 =C2=A0 =C2=A0will not apply config consistently.
+>
+> This is a strawman, and you should be ashamed to put it here. =C2=A0J=
+ust
+> because nobody does what you actively encourage does not mean that th=
+e
+> encouraged procedure is good, or for that matter, helps anybody but y=
+ou.
+
+Not to mention that it's completely irrelevant. The fact that all
+users apply their configurations consistently through their setups, or
+not, doesn't make a default preference better or worst.
+
+If the argument is that default preferences are not relevant enough,
+then step aside and let the people that care about default preferences
+to discuss.
+
+>> And the GitTogether had a "users complain about git, and we try to
+>> listen" session.
+>
+> Oh, that makes me so happy. =C2=A0<sarcasm>Soooo happy</sarcasm>. =C2=
+=A0So it was an
+> ivory tower meeting, once again?
+
+This is very typical on many open source projects. I think the
+benevolent dictator model works pretty good on low-level stuff, but on
+UI I think a democratic model works better.
+
+I've been thinking on setting up a pseudo-project on SourceForge and
+setup an IdeaTorrent, that way users can generate and organize ideas
+so that developers can have meaningful conversations with users:
+http://brainstorm.ubuntu.com/
+
+What do you think?
 
 --=20
 =46elipe Contreras
