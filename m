@@ -1,66 +1,88 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [spf:guess] Re: git-svn: SVK merge commits can have >2 parents
-Date: Sun, 29 Nov 2009 12:47:13 -0800
-Message-ID: <20091129204713.GA3944@dcvr.yhbt.net>
-References: <1259479636-sup-573@utwig> <1259480367-sup-6891@utwig> <20091129080815.GC24222@dcvr.yhbt.net> <1259493967.31767.4.camel@denix>
+From: Karl Wiberg <kha@treskal.com>
+Subject: Re: [PATCH 3/6] stg mail: make __send_message do more
+Date: Sun, 29 Nov 2009 22:23:00 +0100
+Message-ID: <b8197bcb0911291323l35cb3624td3cbc393bf4513b3@mail.gmail.com>
+References: <20091128194056.949.88791.stgit@bob.kio>
+	 <20091128195026.949.1772.stgit@bob.kio>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Vandiver <alex@chmrr.net>, git <git@vger.kernel.org>,
-	Sam Vilain <sam@vilain.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 29 21:47:22 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: catalin.marinas@gmail.com, git@vger.kernel.org
+To: Alex Chiang <achiang@hp.com>
+X-From: git-owner@vger.kernel.org Sun Nov 29 22:23:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEqfy-0001cD-0B
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 21:47:22 +0100
+	id 1NErEk-00054H-1r
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 22:23:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753034AbZK2UrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Nov 2009 15:47:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752993AbZK2UrI
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 15:47:08 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:41694 "EHLO dcvr.yhbt.net"
+	id S1752505AbZK2VW5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Nov 2009 16:22:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752381AbZK2VW4
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 16:22:56 -0500
+Received: from mail1.space2u.com ([62.20.1.135]:56985 "EHLO mail1.space2u.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752193AbZK2UrH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Nov 2009 15:47:07 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D10A1F5F3;
-	Sun, 29 Nov 2009 20:47:14 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1259493967.31767.4.camel@denix>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752306AbZK2VW4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Nov 2009 16:22:56 -0500
+Received: from mail-bw0-f227.google.com (mail-bw0-f227.google.com [209.85.218.227])
+	(authenticated bits=0)
+	by mail1.space2u.com (8.14.3/8.14.3) with ESMTP id nATLMgGI017941
+	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NOT)
+	for <git@vger.kernel.org>; Sun, 29 Nov 2009 22:22:42 +0100
+Received: by bwz27 with SMTP id 27so2108999bwz.21
+        for <git@vger.kernel.org>; Sun, 29 Nov 2009 13:23:00 -0800 (PST)
+Received: by 10.204.26.147 with SMTP id e19mr3556877bkc.149.1259529780959; 
+	Sun, 29 Nov 2009 13:23:00 -0800 (PST)
+In-Reply-To: <20091128195026.949.1772.stgit@bob.kio>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134038>
 
-Sam Vilain <sam@vilain.net> wrote:
-> On Sun, 2009-11-29 at 08:08 +0000, Eric Wong wrote:
-> > Alex Vandiver <alex@chmrr.net> wrote:
-> > > At Sun Nov 29 02:28:39 -0500 2009, Alex Vandiver wrote:
-> > > > While converting a mildly complicated svn repository that was managed
-> > > > with SVK, I ran across the following oddness.  `svk smerge` can only
-> > > > merge between _two_ branches at once -- however, the way that svk
-> > > > merge detection works, you can end up with erroneous extra parents
-> > > > from long-dead branches.
-> > > 
-> > > Upon a little more inspection, I now understand that the rev-parse
-> > > lines in find_extra_svk_parents are attempting to deal with this exact
-> > > circumstance -- but they fail to properly sort the merge tickets
-> > > first, which leads to this incorrect behavior.  Armed with this
-> > > understanding, I'm more confident in the attached updated patch.  I
-> > 
-> > Hi Alex, Sam,
-> > 
-> > I'll defer to Sam for the Ack, my svk knowledge is limited. Thanks.
-> 
-> Yes, the change does make sense to me - nicely done, Alex.
-> 
-> Acked-By: Sam Vilain <sam@vilain.net>
+On Sat, Nov 28, 2009 at 8:50 PM, Alex Chiang <achiang@hp.com> wrote:
 
-Thanks Sam, acked and pushed to git://git.bogomips.org/git-svn
+> Factor out the common code required to send either a cover mail
+> or patch, and implement it in __send_message.
 
--- 
-Eric Wong
+Nice code size reduction.
+
+> + =C2=A0 =C2=A0msg_id =3D email.Utils.make_msgid('stgit')
+> + =C2=A0 =C2=A0build =3D { 1: __build_cover, 4: __build_message }
+> + =C2=A0 =C2=A0msg =3D build[len(args)](tmpl, msg_id, options, *args)
+> +
+> + =C2=A0 =C2=A0from_addr, to_addrs =3D __parse_addresses(msg)
+> + =C2=A0 =C2=A0msg_str =3D msg.as_string(options.mbox)
+> + =C2=A0 =C2=A0if options.mbox:
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0out.stdout_raw(msg_str + '\n')
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0return msg_id
+> +
+> + =C2=A0 =C2=A0outstr =3D { 1: 'the cover message', 4: 'patch "%s"' %=
+ args[0] }
+> + =C2=A0 =C2=A0out.start('Sending ' + outstr[len(args)])
+
+You could consolidate the two dictionaries like this, to avoid making
+the same choice twice and make the code more pleasant to read:
+
+  (build, outstr) =3D { 1: (__build_cover, 'the cover message'), 4:
+(__build_message, 'patch "%s"' % args[0]) }
+
+> + =C2=A0 =C2=A0# give recipients a chance of receiving related patche=
+s in correct order
+> + =C2=A0 =C2=A0# =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 patch_nr < total_nr
+> + =C2=A0 =C2=A0if len(args) =3D=3D 1 or (len(args) =3D=3D 4 and args[=
+1] < args[2]):
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0sleep =3D options.sleep or config.getint=
+('stgit.smtpdelay')
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0time.sleep(sleep)
+
+Hmm. I must say I find all the args[x] a bit hard to read. I'd prefer
+symbolic names.
+
+--=20
+Karl Wiberg, kha@treskal.com
+   subrabbit.wordpress.com
+   www.treskal.com/kalle
