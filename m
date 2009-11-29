@@ -1,92 +1,63 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH] t7011: Mark fixed test as such
-Date: Sun, 29 Nov 2009 14:57:20 +0100
-Message-ID: <4B127DC0.4020108@drmicha.warpmail.net>
-References: <0327ed3d7c4621f205d2d111254d716bd1b06c28.1259432535.git.git@drmicha.warpmail.net> <fcaeb9bf0911290047t43ea3040x730e04baa81d8a98@mail.gmail.com>
+From: Dan Carpenter <error27@gmail.com>
+Subject: does clone --depth work?
+Date: Sun, 29 Nov 2009 18:03:52 +0200
+Message-ID: <20091129160352.GO10640@bicker>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 29 14:57:35 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 29 17:04:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEkHN-000200-Lq
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 14:57:34 +0100
+	id 1NEmFy-0006oa-3L
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 17:04:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753024AbZK2N5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Nov 2009 08:57:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752563AbZK2N5V
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 08:57:21 -0500
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:55241 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751497AbZK2N5U (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Nov 2009 08:57:20 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id D6F68C4EB6;
-	Sun, 29 Nov 2009 08:57:26 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Sun, 29 Nov 2009 08:57:26 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=p7GUVRWc/DYRiBl2ERRtDHkf85k=; b=faIZ89YRLLa0q/hGA+FORKH0q3/k8V9Vi3mxVwFSFoFMSzfMgbGoDOHbuaqdm/jtEdppKBtLJaT7652poGMsM7JfdoaNgr+QFHhLmUbdYhk+ESDyOa1dqWxh5RlcjG5TJ/3YJbZ471+c0fR6n8hQF12mte19Gsxk66ydOVFZaLE=
-X-Sasl-enc: DuGpV4P37dR0fmXBTYaJzs9kh1tdVf+iPB7ygQQbe21f 1259503046
-Received: from localhost.localdomain (p5DCC0DA4.dip0.t-ipconnect.de [93.204.13.164])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 07C22198D3;
-	Sun, 29 Nov 2009 08:57:25 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091127 Lightning/1.0b1pre Shredder/3.0.1pre
-In-Reply-To: <fcaeb9bf0911290047t43ea3040x730e04baa81d8a98@mail.gmail.com>
+	id S1752306AbZK2QDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Nov 2009 11:03:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752066AbZK2QDx
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 11:03:53 -0500
+Received: from mail-ew0-f215.google.com ([209.85.219.215]:52141 "EHLO
+	mail-ew0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751402AbZK2QDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Nov 2009 11:03:52 -0500
+Received: by ewy7 with SMTP id 7so3535229ewy.28
+        for <git@vger.kernel.org>; Sun, 29 Nov 2009 08:03:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=tW2ssR3DIhwtvE57+pGJyBmk5XG0oagu2snWKr2mfoA=;
+        b=IR9BzRFlYkcrOn0UZfcxSybguX1gu1DxSpbLDADrjvWRMXnUACIkEOeOU/T2Ty53of
+         ZgZi5P+Dpq2AvptllV+ey0pie2vdbuQQGikdcRmXf2t75XWPI5H+oJbxIK1Z2YhstnaU
+         XIYManrCoExyDgl63IiwYO3v70jX4ZX8aNNZc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=E5MBzuSWup30jeDyIjzC7TeO0N9imuWHQulG4RaL6HJ59onTwgAycTJxatByJ5m29u
+         ODK3MNYf5Xgg9Rg4Wrd39G+4mEoR/Y6cywnZkRC3UgB/7hEVAybagD0nyZjv7lFpCJ/+
+         3/DLhcG+PB7wNeESMrQlf5J+OZkJm8eAMI3No=
+Received: by 10.213.2.84 with SMTP id 20mr3764825ebi.46.1259510637815;
+        Sun, 29 Nov 2009 08:03:57 -0800 (PST)
+Received: from bicker ([41.222.20.196])
+        by mx.google.com with ESMTPS id 16sm2109426ewy.6.2009.11.29.08.03.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 29 Nov 2009 08:03:56 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134019>
 
-Nguyen Thai Ngoc Duy venit, vidit, dixit 29.11.2009 09:47:
-> On 11/29/09, Michael J Gruber <git@drmicha.warpmail.net> wrote:
->> Test 16/17 had been fixed since its introduction in b4d1690 (Teach Git
->>  to respect skip-worktree bit (reading part), 2009-08-20). So, mark it as
->>  expect_success rather than expect_failure.
->>
->>  Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> 
-> No ACK. See below.
-> 
->>  ---
->>  I'm actually wondering about 17/17 as well.
->>  If commit is called with a file name then shouldn't it simply commit the
->>  current state of the file in the worktree, no matter what the index or
->>  skip-worktree say? I therefore think 17/17 should be expect_success
->>  and have no test_must_fail.
-> 
-> Both 16/17 and 17/17 ensure that Git won't look at files on worktree
-> if they are marked as skip-worktree (by definition of skip-worktree,
-> you can safely ignore worktree, otherwise you would not mark them as
-> such). 16/17 happens to pass, not because it does not touch worktree,
-> but because the base index does not have "1", which happens to is the
-> same situation in 16/17 (test commit when "1" is gone). The result is
-> OK but it is actually not (17/17 shows this clearer as it commits the
-> worktree version).
+I do: `git clone --depth 0 ./repo1/ repo2`  I expected that 
+"git log" in repo2 wouldn't show any revisions, but it does.
 
-On 16/17, I really cannot agree. You explain that you expect the test to
-succeed (we agree here), but that it succeeds for the wrong reasons. So
-it should be either "expect_success", or the test itself should be
-changed so that it really tests what it intends to, otherwise it raises
-a wrong "FIXED". I suggested and submitted the former.
+I'm using 1.6.5.3.171.ge36e.dirty (small unrelated modification).
 
-On 17/17, it's not clear what should happen. "skip-worktree" says ignore
-the worktree and look in the index instead of accessing worktree files.
-But "git commit file" says ignore the index and stage and commit the
-file from the worktree directly. And that is exactly what happens:
+Am I doing something incorrectly?
 
-You say "git commit file".
-That means "ignore the index".
-That also means that git ignores the skip-worktree bit which is set in
-the index.
-Therefore, file is committed with the content is has in the worktree.
-
-I'm going by the documentation for git-update-index and git-commit. It
-could be that they are wrong, too, but they agree with the code, so
-what's the reference for saying both code and documentation are wrong?
-
-Michael
+regards,
+dan carpenter
