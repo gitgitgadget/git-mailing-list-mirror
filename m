@@ -1,91 +1,66 @@
-From: Uri Okrent <uokrent@gmail.com>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Sun, 29 Nov 2009 11:50:50 -0800
-Message-ID: <4B12D09A.3080408@gmail.com>
-References: <885649360911251412n3e566c8fu536b361b993f2ac6@mail.gmail.com> <20091125222037.GA2861@coredump.intra.peff.net> <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com> <20091127062013.GA20844@coredump.intra.peff.net> <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302> <20091127095914.GA4865@sigill.intra.peff.net> <alpine.DEB.1.00.0911271144230.4521@intel-tinevez-2-302> <6839293b0911270827x54947c64q5f93e37664bc20f3@mail.gmail.com> <7vk4xbn7nl.fsf@alter.siamese.dyndns.org> <4B101ED1.9000607@gmail.com> <20091127205305.GB26921@coredump.intra.peff.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [spf:guess] Re: git-svn: SVK merge commits can have >2 parents
+Date: Sun, 29 Nov 2009 12:47:13 -0800
+Message-ID: <20091129204713.GA3944@dcvr.yhbt.net>
+References: <1259479636-sup-573@utwig> <1259480367-sup-6891@utwig> <20091129080815.GC24222@dcvr.yhbt.net> <1259493967.31767.4.camel@denix>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	James Pickens <jepicken@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 29 20:51:06 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Vandiver <alex@chmrr.net>, git <git@vger.kernel.org>,
+	Sam Vilain <sam@vilain.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 29 21:47:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEpnU-000813-PT
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 20:51:05 +0100
+	id 1NEqfy-0001cD-0B
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 21:47:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752473AbZK2Tux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Nov 2009 14:50:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752407AbZK2Tuw
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 14:50:52 -0500
-Received: from mail-pz0-f171.google.com ([209.85.222.171]:51098 "EHLO
-	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752015AbZK2Tuw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Nov 2009 14:50:52 -0500
-Received: by pzk1 with SMTP id 1so2045002pzk.33
-        for <git@vger.kernel.org>; Sun, 29 Nov 2009 11:50:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=im1b2NCSr0NJ7Tg75RjCRXx3Uofz8cyY2HxT7IvRMRc=;
-        b=fzQts2/w9WqX2ui6iMGbVLqsyfEPdSOtj/yzEWn3tzV0k19x830KWTtD2hoptsm+A+
-         pW8caDKcw7lxBgpxQbQjQGC2QAtKZR+5SJ49KVXjmIfE29wnyQx7sB/+4iS7+NlS5RQZ
-         Hcviyk4J3HmhiHzTdbGoJdSj01OFiNCZObxvE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=edeJ+HE1PynXwi/61Mm5srFfDVAr14Ai7u+f6V+R/6zK82bsWte5iOymUgpaqOFPF2
-         bHRkeAA2b+cPdL7+neDd+NGJSNApmjOXQk2Mbta2daqFRLhT1M9XrzWrITgwzejn+7DD
-         dOMD72McaAKagrKPnHBoGzH/R6VvncWX4yNUI=
-Received: by 10.114.214.17 with SMTP id m17mr5370801wag.197.1259524258274;
-        Sun, 29 Nov 2009 11:50:58 -0800 (PST)
-Received: from ?192.168.0.8? (cpe-76-90-12-237.socal.res.rr.com [76.90.12.237])
-        by mx.google.com with ESMTPS id 22sm2462419pzk.6.2009.11.29.11.50.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 29 Nov 2009 11:50:57 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <20091127205305.GB26921@coredump.intra.peff.net>
+	id S1753034AbZK2UrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Nov 2009 15:47:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752993AbZK2UrI
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 15:47:08 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:41694 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752193AbZK2UrH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Nov 2009 15:47:07 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D10A1F5F3;
+	Sun, 29 Nov 2009 20:47:14 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1259493967.31767.4.camel@denix>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134037>
 
-Jeff King wrote:
-> On Fri, Nov 27, 2009 at 10:47:45AM -0800, Uri Okrent wrote:
->> As a matter of
->> fact, my personal opinion (which I probably neglected to mention) is
->> that grep default behavior should stay the same since it is semantically
->> closer to unix (or gnu) grep.
+Sam Vilain <sam@vilain.net> wrote:
+> On Sun, 2009-11-29 at 08:08 +0000, Eric Wong wrote:
+> > Alex Vandiver <alex@chmrr.net> wrote:
+> > > At Sun Nov 29 02:28:39 -0500 2009, Alex Vandiver wrote:
+> > > > While converting a mildly complicated svn repository that was managed
+> > > > with SVK, I ran across the following oddness.  `svk smerge` can only
+> > > > merge between _two_ branches at once -- however, the way that svk
+> > > > merge detection works, you can end up with erroneous extra parents
+> > > > from long-dead branches.
+> > > 
+> > > Upon a little more inspection, I now understand that the rev-parse
+> > > lines in find_extra_svk_parents are attempting to deal with this exact
+> > > circumstance -- but they fail to properly sort the merge tickets
+> > > first, which leads to this incorrect behavior.  Armed with this
+> > > understanding, I'm more confident in the attached updated patch.  I
+> > 
+> > Hi Alex, Sam,
+> > 
+> > I'll defer to Sam for the Ack, my svk knowledge is limited. Thanks.
 > 
-> Keeping consistency with non-git grep has been mentioned a few times in
-> this thread.  I really don't understand how default file selection is
-> supposed to maintain consistency with non-git grep. Regular grep
-> defaults to stdin if no paths are given. That mode doesn't make any
-> sense for git grep.
+> Yes, the change does make sense to me - nicely done, Alex.
 > 
-> So of the two options (grepping the list of files from the full tree, or
-> the list of files rooted at the current directory), how is one closer to
-> non-git grep than the other?
-> 
-> -Peff
+> Acked-By: Sam Vilain <sam@vilain.net>
 
-I guess you're right, in that neither is exactly the same as non-git,
-and so it's impossible to objectively quantify how one is "closer". My
-general feeling though is that grep rooted at the current directory is
-more similar because grep -r does exist and is common enough that the
-layman isn't too surprised at git's default behavior. Git grep with
---full-tree though, has no analogue in non-git grep.
+Thanks Sam, acked and pushed to git://git.bogomips.org/git-svn
 
 -- 
-    Uri
-
-Please consider the environment before printing this message.
-http://www.panda.org/how_you_can_help/
+Eric Wong
