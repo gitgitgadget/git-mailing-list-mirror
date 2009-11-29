@@ -1,168 +1,169 @@
-From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Subject: Re: [PATCH 3/4] build dashless "test-bin" directory similar to installed bindir
-Date: Sat, 28 Nov 2009 19:52:51 -0700
-Message-ID: <20091129025251.GA1771@comcast.net>
-References: <1259433537-3963-1-git-send-email-mmogilvi_git@miniinfo.net> <1259433537-3963-2-git-send-email-mmogilvi_git@miniinfo.net> <1259433537-3963-3-git-send-email-mmogilvi_git@miniinfo.net> <1259433537-3963-4-git-send-email-mmogilvi_git@miniinfo.net> <7vtywefn88.fsf@alter.siamese.dyndns.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [RFH] Mention of 1.7.0 transition plans in Release Notes to 1.6.6
+Date: Sun, 29 Nov 2009 12:24:48 +0900
+Message-ID: <20091129122448.6117@nanako3.lavabit.com>
+References: <7vfx7yfetb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, peff@peff.net
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 29 03:53:01 2009
+X-From: git-owner@vger.kernel.org Sun Nov 29 04:27:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEZuG-0000Em-DU
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 03:53:00 +0100
+	id 1NEaRa-0006am-Gu
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 04:27:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753811AbZK2Cws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Nov 2009 21:52:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753768AbZK2Cws
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 21:52:48 -0500
-Received: from qmta11.emeryville.ca.mail.comcast.net ([76.96.27.211]:48555
-	"EHLO QMTA11.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753673AbZK2Cwr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Nov 2009 21:52:47 -0500
-Received: from OMTA01.emeryville.ca.mail.comcast.net ([76.96.30.11])
-	by QMTA11.emeryville.ca.mail.comcast.net with comcast
-	id AqNk1d0030EPchoABqqA5V; Sun, 29 Nov 2009 02:50:10 +0000
-Received: from mmogilvi.homeip.net ([24.8.125.243])
-	by OMTA01.emeryville.ca.mail.comcast.net with comcast
-	id Aqst1d0085FCJCg8MqsuHJ; Sun, 29 Nov 2009 02:52:54 +0000
-Received: by mmogilvi.homeip.net (Postfix, from userid 501)
-	id BC00D89115; Sat, 28 Nov 2009 19:52:51 -0700 (MST)
-Content-Disposition: inline
-In-Reply-To: <7vtywefn88.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.4i
+	id S1753787AbZK2D1B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Nov 2009 22:27:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753706AbZK2D1B
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 22:27:01 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:36028 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752734AbZK2D1A (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Nov 2009 22:27:00 -0500
+Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
+	by karen.lavabit.com (Postfix) with ESMTP id A736511B726;
+	Sat, 28 Nov 2009 21:27:06 -0600 (CST)
+Received: from 5456.lavabit.com (212.62.97.23)
+	by lavabit.com with ESMTP id PY6TQY67X3WJ; Sat, 28 Nov 2009 21:27:06 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=n1hLEsSnsnGCXDOhBV1jHjZYa9ZOR99AOoJfREO3VOLKoAo7kdWvdIgf/mx2sozAJLYq1G8laDTyoSrX+9ERyOi2BU77e9qIjI+pqC+0AoGG51XMToCUaTyrol/NvDPOId/86J0HR/smde6sucDjB7fFhW35BXLtrUwTo0lW90o=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7vfx7yfetb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133987>
 
-On Sat, Nov 28, 2009 at 11:44:39AM -0800, Junio C Hamano wrote:
->  - Patch #1 and #2 are good and are independent from the later patches, as
->    without them running tests with GIT_TEST_INSTALLED would not work.
-> 
->    By the way, 6720721 (test-lib.sh: Allow running the test suite against
->    installed git, 2009-03-16) failed to document the feature in t/README.
->    Could you please fix this while you are at it?
+Subject: prepare send-email for smoother change of --chain-reply-to default
 
-Sure, I'll include another patch for this when I re-roll the
-series.  It will probably mention something about still needing
-a build so that it can access the test-* support executables.
+Give a warning message when send-email uses chain-reply-to to thread the
+messages because of the current default, not because the user explicitly
+asked to, either from the command line or from the configuration.
 
->  - It certainly is _possible_ to add $(pwd)/test-bin to $PATH instead of
->    the established practice of using GIT_EXEC_PATH for every day/permanent
->    use without installation, but I doubt we should _encourage_ it for a
->    few reasons:
-> 
->    . The set-up will force one extra exec due to the wrapper; this is good
->      for the purpose of running tests, but unnecessary for a set-up for
->      every day/permanent use by people, compared with the already working
->      approach.  The user needs to change an environment variable _anyway_
->      (either GIT_EXEC_PATH with the traditional approach, or PATH with
->      your patch).
-> 
->    . The new component to be added to $PATH shouldn't be named "test-bin/"
->      if it is meant for every day/permanent use.
-> 
->    . Advertising this forces the Makefile build test-bin/ contents from
->      "all" target.  I think test-bin/ should only depend on "test" (iow,
->      after "make all && make install" there shouldn't have to be "test-bin"
->      directory.
-> 
->    I would rather treat it an unintended side-effect that you can add that
->    directory to the $PATH.  It is designed to work in such an environment
->    (otherwise the tests won't exercise the version of git they are meant
->    to test), but I do not think it is _meant_ to be _used_  by end users
->    that way.  And an unintended side-effect does not have to be mentioned
->    in INSTALL (especially with the directory name with "test" in it).
+This way, by the time 1.7.0 switches the default, everybody will be ready.
 
-I personally like the idea of being able to use an uninstalled
-build without touching environment variables at all.  Just specify
-the full path to the the version you want to run on the
-command line, as in: ~/SANDBOX/test-bin/git WHATEVER
-Especially handy for trying "ssh MACHINE /PATH/SANDBOX/...".
+Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
+---
+ Quoting Junio C Hamano <gitster@pobox.com>
 
-FYI: There are already a number of test suite support executables
-built by "make all" (test-*).  It might be hard to eliminate them
-from "all" without risking stale executables.  As Jeff
-King <peff@peff.net> pointed out in a separate email, some people
-(including me) often don't use the top-level "make test" target
-to run tests.
+ >  - I do not think we have such an anti-procrastination measure for
+ >    send-email's --[no-]chain-reply-to change.  We might want to have one
+ >    before 1.6.6 ships; namely, if the code decided to use chain-reply-to
+ >    behaviour by default because there was no sendemail.chainreplyto (or
+ >    sendemail.$identity.chainreplyto) configured, nor --no-chain-reply-to
+ >    or --chain-reply-to given from the command line, we issue a big fat
+ >    warning just like we warn against unconfigured push.denyCurrentBranch
+ >    when allowing pushing to a checked-out branch without being told.
 
-I'm still thinking about this.  I've noted some possible changes
-to the patch series below, some of which are mutually exclusive.
-Any opinions?
+ Like this?
 
-Options geared towards isolating/hiding test-bin:
+ git-send-email.perl   |   19 +++++++++++++++++--
+ t/t9001-send-email.sh |   40 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 57 insertions(+), 2 deletions(-)
 
-  1. Scrap the part of the patch that modifies INSTALL.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 4f5da4e..2afed76 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -187,9 +187,11 @@ my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts);
+ my ($validate, $confirm);
+ my (@suppress_cc);
+ 
++my $not_set_by_user = "true but not set by the user";
++
+ my %config_bool_settings = (
+     "thread" => [\$thread, 1],
+-    "chainreplyto" => [\$chain_reply_to, 1],
++    "chainreplyto" => [\$chain_reply_to, $not_set_by_user],
+     "suppressfrom" => [\$suppress_from, undef],
+     "signedoffbycc" => [\$signed_off_by_cc, undef],
+     "signedoffcc" => [\$signed_off_by_cc, undef],      # Deprecated
+@@ -214,6 +216,19 @@ my %config_settings = (
+     "from" => \$sender,
+ );
+ 
++# Help users prepare for 1.7.0
++sub chain_reply_to {
++	if (defined $chain_reply_to &&
++	    $chain_reply_to eq $not_set_by_user) {
++		print STDERR
++		    "In git 1.7.0, the default will be changed to --no-chain-reply-to\n" .
++		    "Set sendemail.chainreplyto configuration variable to true if\n" .
++		    "you want to keep --chain-reply-to as your default.\n";
++		$chain_reply_to = 1;
++	}
++	return $chain_reply_to;
++}
++
+ # Handle Uncouth Termination
+ sub signal_handler {
+ 
+@@ -1157,7 +1172,7 @@ foreach my $t (@files) {
+ 
+ 	# set up for the next message
+ 	if ($thread && $message_was_sent &&
+-		($chain_reply_to || !defined $reply_to || length($reply_to) == 0)) {
++		(chain_reply_to() || !defined $reply_to || length($reply_to) == 0)) {
+ 		$reply_to = $message_id;
+ 		if (length $references > 0) {
+ 			$references .= "\n $message_id";
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 84a7f03..4372774 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -769,4 +769,44 @@ test_expect_success 'threading but no chain-reply-to' '
+ 	grep "In-Reply-To: " stdout
+ '
+ 
++test_expect_success 'no warning with an explicit --chain-reply-to' '
++	git send-email \
++	--dry-run \
++	--from="Example <nobody@example.com>" \
++	--to=nobody@example.com \
++	--chain-reply-to \
++	outdir/000?-*.patch 2>errors >out &&
++	! grep "no-chain-reply-to" errors
++'
++
++test_expect_success 'no warning with an explicit --no-chain-reply-to' '
++	git send-email \
++	--dry-run \
++	--from="Example <nobody@example.com>" \
++	--to=nobody@example.com \
++	--no-chain-reply-to \
++	outdir/000?-*.patch 2>errors >out &&
++	! grep "no-chain-reply-to" errors
++'
++
++test_expect_success 'no warning with sendemail.chainreplyto = false' '
++	git config sendemail.chainreplyto false &&
++	git send-email \
++	--dry-run \
++	--from="Example <nobody@example.com>" \
++	--to=nobody@example.com \
++	outdir/000?-*.patch 2>errors >out &&
++	! grep "no-chain-reply-to" errors
++'
++
++test_expect_success 'no warning with sendemail.chainreplyto = true' '
++	git config sendemail.chainreplyto true &&
++	git send-email \
++	--dry-run \
++	--from="Example <nobody@example.com>" \
++	--to=nobody@example.com \
++	outdir/000?-*.patch 2>errors >out &&
++	! grep "no-chain-reply-to" errors
++'
++
+ test_done
 
-  2. Perhaps use hardlinks, symlinks, and/or copies within test-bin,
-     instead of wrapper scripts, to eliminate the extra exec.  Since
-     test-lib.sh already sets up necessary environment variables,
-     they don't strictly need to be set in the wrappers as
-     well.  On the other hand, hardlinks and copies are potentially
-     vulnerable to stale executable issues, and symlinks typically
-     don't work on Windows.  
 
-  3. Scrap pre-built test-bin completely, and switch to a solution
-     that more closely resembles the valgrind option (have test-lib.sh
-     build the directory).  This can't use the same makefile variables
-     to define the contents of the directory, though.
-
-Options geared towards making something like test-bin an official way
-to run an uninstalled build:
-
-  4. Rename test-bin.  Perhaps "bin-wrappers", "bin-dashless",
-     "bin-install", "bin", or "bindir".  Any preferences?
-
-  5. The current patch doesn't quite handle the simple
-     "~/SANDBOX/test-bin/gitSOMETHING WHATEVER" idiom perfectly
-     if the executable (gitSOMETHING) tries to run additional
-     git commands without adjusting the PATH first.  I could enhance
-     the wrapper to prefix test-bin onto the PATH just in case it
-     isn't there already.
-
-Other cleanup options:
-
-  6. There is a stale script issue if someone does something like:
-       make
-       cp -a . /some/other/path
-       cd /some/other/path
-       [optional modifications, without a "make clean"]
-       make
-       [run tests; uses wrong executables...]
-     Including GIT-CFLAGS as a makefile dependency for the
-     wrappers was intended to address this, but looking
-     closer, I don't think it works.  Perhaps I should
-     include $(shell pwd) in GIT-CFLAGS, or make a new GIT-PWD target
-     that works similarly to GIT-CFLAGS.  Without this, a workaround
-     (and probably best option overall) is to do a "make clean" after
-     copying a sandbox.
-
-  7. Enable similar dashless environment when
-     GIT_TEST_INSTALLED and/or valgrind are enabled?
-
-  8. Include wrappers for other dashed-commands in test-bin, which
-     would always fail, in case someone runs tests with an installed
-     GIT_EXEC_PATH already in their PATH.  This might catch a new test
-     using dashes in such an environment.  I don't really think this
-     is worth it, though.  Most people don't have GIT_EXEC_PATH in their
-     PATH, and some such person would notice any problems soon.
-
-  9. This may be outside the scope of this patch series, but perhaps
-     git executables could try to find argv[0] in the PATH
-     (if argv[0] is not absolute), and see if they can find various other
-     executables (GIT_EXEC_PATH) and data files (perl, templates,
-     etc) using paths relative to itself.  This may include
-     manually dereferencing argv[0] if it is a symlink.  GIT_EXEC_PATH
-     and friends still takes precedence, but only fallback on
-     compile-time defaults if "find relative to argv[0]" fails.
-     It looks like Makefile RUNTIME_PREFIX enables something like
-     this, but it is currently disabled by default on most platforms.
-
---
-Matthew Ogilvie   [mmogilvi_git@miniinfo.net]
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
