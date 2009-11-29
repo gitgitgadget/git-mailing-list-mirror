@@ -1,93 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] grep: --full-tree
-Date: Sun, 29 Nov 2009 13:32:17 -0500
-Message-ID: <20091129183217.GB21520@sigill.intra.peff.net>
-References: <20091125222037.GA2861@coredump.intra.peff.net>
- <885649360911260956p58c54a54rd887102c9adedcc9@mail.gmail.com>
- <20091127062013.GA20844@coredump.intra.peff.net>
- <alpine.DEB.1.00.0911271027510.4521@intel-tinevez-2-302>
- <20091127095914.GA4865@sigill.intra.peff.net>
- <alpine.DEB.1.00.0911271144230.4521@intel-tinevez-2-302>
- <20091127180235.GA26633@coredump.intra.peff.net>
- <alpine.DEB.1.00.0911272102430.4521@intel-tinevez-2-302>
- <20091127210530.GC26921@coredump.intra.peff.net>
- <alpine.DEB.1.00.0911291121300.4985@pacific.mpi-cbg.de>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: Fwd: What is the best way to backport a feature?
+Date: Sun, 29 Nov 2009 19:33:53 +0100
+Message-ID: <200911291933.54301.j6t@kdbg.org>
+References: <loom.20091129T164518-669@post.gmane.org> <4db3b0200911290941j42c5a0aaq2c6a9836b38066b2@mail.gmail.com> <4db3b0200911290945r34a73346w148ee42e59868876@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: James Pickens <jepicken@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Nov 29 19:32:34 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Peter Weseloh <peter.weseloh@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 29 19:34:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEoZV-0004QP-Oh
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 19:32:34 +0100
+	id 1NEobB-0004vZ-Rk
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 19:34:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752499AbZK2ScO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Nov 2009 13:32:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752446AbZK2ScN
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 13:32:13 -0500
-Received: from peff.net ([208.65.91.99]:41704 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752442AbZK2ScN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Nov 2009 13:32:13 -0500
-Received: (qmail 7715 invoked by uid 107); 29 Nov 2009 18:36:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 29 Nov 2009 13:36:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 29 Nov 2009 13:32:17 -0500
+	id S1752557AbZK2SeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Nov 2009 13:34:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751455AbZK2SeF
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 13:34:05 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:46955 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752442AbZK2SeF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Nov 2009 13:34:05 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id C8A4DCDF96;
+	Sun, 29 Nov 2009 19:34:08 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 922B019F5F0;
+	Sun, 29 Nov 2009 19:33:54 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <4db3b0200911290945r34a73346w148ee42e59868876@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0911291121300.4985@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134032>
 
-On Sun, Nov 29, 2009 at 11:28:27AM +0100, Johannes Schindelin wrote:
+[please keep the Cc list]
 
-> > > > Yes, as a matter of fact, I do work on 10 different computers. I'm sorry 
-> > > > that you find managing your configuration so challenging. But if you 
-> > > > don't use the configuration variable, then your own personal setup is 
-> > > > totally irrelevant.
-> > > 
-> > > As I just demonstrated, this is a false statement.
-> > 
-> > I must have missed where you demonstrated it.
-> 
-> Usually, my mails are minimal, and I do not write as many mails as I 
-> used to anymore, so it is hard to miss what I am saying.
-> 
-> For your benefit: both Junio and me talked about experts helping users.  
-> Even if I do not use the config options, I am affected.  And it does hurt.
+On Sonntag, 29. November 2009, Peter Weseloh wrote:
+> But on the other hand the intermediate merges from the Mainline make
+> for much simpler merges, right?.
+> If merging is done only when Feature_A is ready it might become a real
+> pain. It might take several month to complete it and the mainline
+> might have changed a lot.
 
-A point which I adressed in my numbered point (2) in the mail you are
-quoting above. But you didn't bother to quote that part.
+Incidentally, Junio has blogged about this just the other day:
 
-> > When the number of "git grep" crash fatalities rises above zero, maybe 
-> > this line of reasoning will be relevant.
-> 
-> Sure.  Let's wait for the first crash fatality, and only react then.  No 
-> need to think ahead.
+http://gitster.livejournal.com/42247.html
 
-You missed my point. My point is that your analogy had many
-characteristics that do not apply to this situation. You are comparing a
-situation where somebody's preference (to drive on the left side or the
-right side) is weighed against a system where everyone needs to follow
-the same rule, or people will die in large numbers. The actual situation
-at hand is a git grep configuration variable. I am weighing the
-preference of people who use git every day and want it to work in a
-certain way against the possibility that somebody helping them will be
-slightly inconvenienced or surprised. Something that will happen much
-less frequently than the person actually _using_ git, and something
-which has much smaller negative consequences than people dying.
+Basically, as soon as you merge Mainline into Feature_A, you change the topic 
+of Feature_A from "Feature for Release_1.0" to "Feature for this Mainline". 
+Clearly, this topic is not suitable for Release_1.0 anymore.
 
-> That's it.  I don't think that I want to participate in this kind of 
-> discussion anymore,
+There is a way around this that doesn't sacrifice the topic-oriented nature of 
+the branch: You keep developing Feature_A as planned for Release_1.0 and when 
+you notice that merging this feature to Mainline will become increasingly 
+complex, you fork off a new branch Feature_A_for_Release_2.0 from Mainline 
+and merge Feature_A into this new branch:
 
-Fine. I have made my point over and over, and not once have you
-responded to it directly, so I also feel this is going nowhere.
+   o--o--o                    Release_1.0
+  /    \  \
+ o-o-o--o--o-o-o-o-X-o---o--o Mainline
+      \             \
+       F1            o--o     Feature_A_for_Release_2.0   
+        \           /  /
+         F2--------F3-F4      Feature_A
 
--Peff
+The fork point X must be in Release_2.0.
+
+-- Hannes
