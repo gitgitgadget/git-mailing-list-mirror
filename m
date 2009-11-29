@@ -1,87 +1,83 @@
-From: Reece Dunn <msclrhd@googlemail.com>
-Subject: Re: non-US-ASCII file names (e.g. Hiragana) on Windows
-Date: Sat, 28 Nov 2009 23:37:40 +0000
-Message-ID: <3f4fd2640911281537m3a3d7f5dl7836a613b48128f2@mail.gmail.com>
-References: <4B1168D4.5010902@syntevo.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] build dashless "test-bin" directory similar to
+ installed bindir
+Date: Sat, 28 Nov 2009 18:32:33 -0800
+Message-ID: <7vaay6f4ce.fsf@alter.siamese.dyndns.org>
+References: <1259433537-3963-1-git-send-email-mmogilvi_git@miniinfo.net>
+ <1259433537-3963-2-git-send-email-mmogilvi_git@miniinfo.net>
+ <1259433537-3963-3-git-send-email-mmogilvi_git@miniinfo.net>
+ <1259433537-3963-4-git-send-email-mmogilvi_git@miniinfo.net>
+ <7vtywefn88.fsf@alter.siamese.dyndns.org>
+ <20091128194910.GA17605@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Thomas Singer <thomas.singer@syntevo.com>
-X-From: git-owner@vger.kernel.org Sun Nov 29 00:37:57 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthew Ogilvie <mmogilvi_git@miniinfo.net>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Nov 29 03:32:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEWrT-0002b1-Nh
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 00:37:56 +0100
+	id 1NEZam-0004Zs-N1
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 03:32:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752713AbZK1Xhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Nov 2009 18:37:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674AbZK1Xhf
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 18:37:35 -0500
-Received: from mail-vw0-f197.google.com ([209.85.212.197]:37830 "EHLO
-	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750876AbZK1Xhe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Nov 2009 18:37:34 -0500
-Received: by vws35 with SMTP id 35so722939vws.4
-        for <git@vger.kernel.org>; Sat, 28 Nov 2009 15:37:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=RYGVs/qcPE8x8uHyOuqouo4bMTbi9HrnzJQT9pGtYeo=;
-        b=fA0dQqkBvXJMNxUJ69B+7cz1edfxMVlsHpVUg0jL6aWYlMWWAViuEfpaRZJ8N+wy5o
-         DQ6ClygfVqKQ+kd9WZ9geh9/b/hq9kqmb/xx0eW5elpzFxtd1OSSBC8AyxDc2lPS/7FT
-         Zmnv33vGACwpYfDmDR5ndy1jETcz/zHl0Rs/k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=LlhIUSLTGCGqOGjRyEbQJx3Pn7phJQx0Xqa0dp69YAJ1v778tdxcpGuTTYb7CkAETQ
-         SqfjLJIH3KCTWYBbm4NoBrUih5cPi3M4V6T2Ock/rNu549cREa6CJz2Idgd0suqu1I5J
-         50YXU90kpOTbcFTLSKPD+b8qfjPNmXEd6TV/8=
-Received: by 10.220.122.100 with SMTP id k36mr3074573vcr.98.1259451460585; 
-	Sat, 28 Nov 2009 15:37:40 -0800 (PST)
-In-Reply-To: <4B1168D4.5010902@syntevo.com>
+	id S1753447AbZK2Cci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Nov 2009 21:32:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753323AbZK2Cci
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Nov 2009 21:32:38 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57619 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752847AbZK2Cci (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Nov 2009 21:32:38 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A729F838C2;
+	Sat, 28 Nov 2009 21:32:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RAQYim5Q4iNnWqFai6Qr+LrLTmg=; b=kXZw4R
+	zKbWLQtKGWEVkI3op/YxJv7HBrcGDqDU95zULZG/zhVmQL5pORb3Sg65bs/O0OAB
+	62bRCLQxR/bRg5LNo1T3WRbmVTATn2xOIT/5t/oK+N7AQH+cYskqz38E8khFB2ks
+	MN2B35c9bFT2SUFyfTAFRAbo1kO4oq5QqQS3U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LkY/jYvuVm3xhB85udGYsMmkuq69TJNZ
+	feL1TSWX3ydkNwj+s+qrGYlNMP83cPAh6ZBKB6W9nF3S2us7uyHPthVVfY0rGVj+
+	WNSxgbLUfU3AAIGGUnTcQW+9ZpgfccwBTmiuuLQsJtPI05bmm2kiyVGi44PPBxCZ
+	/nu3HSiVV9Y=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 774C7838C1;
+	Sat, 28 Nov 2009 21:32:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A13AC838C0; Sat, 28 Nov
+ 2009 21:32:35 -0500 (EST)
+In-Reply-To: <20091128194910.GA17605@coredump.intra.peff.net> (Jeff King's
+ message of "Sat\, 28 Nov 2009 14\:49\:11 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 771E24CC-DC8F-11DE-BD35-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/133984>
 
-2009/11/28 Thomas Singer <thomas.singer@syntevo.com>:
+Jeff King <peff@peff.net> writes:
+
+> On Sat, Nov 28, 2009 at 11:44:39AM -0800, Junio C Hamano wrote:
 >
-> When launching 'git status' from the git shell (msys 1.6.5.1.1367.gcd48 from
-> 7zip-bundle) it only shows me 4 question marks. I would have expected to see
-> the non-displayable characters escaped like it did with the umlauts on OS X.
+>>    . Advertising this forces the Makefile build test-bin/ contents from
+>>      "all" target.  I think test-bin/ should only depend on "test" (iow,
+>>      after "make all && make install" there shouldn't have to be "test-bin"
+>>      directory.
 >
-> Even adding fails:
+> Would implementing it that way mean that:
 >
-> $ git add .
-> fatal: unable to stat '????': No such file or directory
+>   make && cd t && make
 >
-> What should I do to make Git recognize these characters?
+> does not work (or worse, might silently use stale information in
+> test-bin)?
 
-This is a bug in git's character encoding/conversion logic. It looks
-like git is taking the source string and converting it to ascii to be
-displayed on the console output (e.g. by using the WideCharToMultiByte
-conversion API) -- these APIs will use a '?' character for characters
-that it cannot map to the target character encoding (like the Hiragana
-characters that you are using).
-
-SetConsoleOutputCP can be used to change the console output codepage
-[http://msdn.microsoft.com/en-us/library/ms686036%28VS.85%29.aspx] and
-SetConsoleCP is the equivalent for input
-[http://msdn.microsoft.com/en-us/library/ms686013%28VS.85%29.aspx].
-e.g.
-
-    SetConsoleCP(CP_UTF8);
-    SetConsoleOutputCP(CP_UTF8);
-
-should make the console process UTF-8 characters, so git shouldn't
-need to do any character conversions on Windows when reading/writing
-it's data.
-
-NOTE: I have not tested this, just noting what I have found via Google.
-
-- Reece
+Why can't t/Makefile have a dependency on its 'default' target that goes
+up and prepares test-bin/, i.e. "cd .. && make test-bin-stuff"?
