@@ -1,66 +1,71 @@
-From: Karl Wiberg <kha@treskal.com>
-Subject: Re: [StGit RFC PATCH 0/6] add support for git send-email
-Date: Sun, 29 Nov 2009 23:05:07 +0100
-Message-ID: <b8197bcb0911291405i6f052216q8717c34063320592@mail.gmail.com>
-References: <20091128194056.949.88791.stgit@bob.kio>
+From: Justin Mattock <justinmattock@gmail.com>
+Subject: help reverting a merge
+Date: Sun, 29 Nov 2009 15:24:09 -0800
+Message-ID: <dd18b0c30911291524q7ea7e9c7v980340ddf7269519@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: catalin.marinas@gmail.com, git@vger.kernel.org
-To: Alex Chiang <achiang@hp.com>
-X-From: git-owner@vger.kernel.org Sun Nov 29 23:05:17 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 30 00:24:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NErtM-0002Pa-Tc
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Nov 2009 23:05:17 +0100
+	id 1NEt7o-0004Dp-Jg
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 00:24:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753380AbZK2WFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Nov 2009 17:05:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753362AbZK2WFD
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 17:05:03 -0500
-Received: from mail1.space2u.com ([62.20.1.135]:58335 "EHLO mail1.space2u.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753357AbZK2WFC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Nov 2009 17:05:02 -0500
-Received: from mail-bw0-f227.google.com (mail-bw0-f227.google.com [209.85.218.227])
-	(authenticated bits=0)
-	by mail1.space2u.com (8.14.3/8.14.3) with ESMTP id nATM4muq029172
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NOT)
-	for <git@vger.kernel.org>; Sun, 29 Nov 2009 23:04:48 +0100
-Received: by bwz27 with SMTP id 27so2123920bwz.21
-        for <git@vger.kernel.org>; Sun, 29 Nov 2009 14:05:07 -0800 (PST)
-Received: by 10.204.49.79 with SMTP id u15mr3708510bkf.117.1259532307244; Sun, 
-	29 Nov 2009 14:05:07 -0800 (PST)
-In-Reply-To: <20091128194056.949.88791.stgit@bob.kio>
+	id S1751943AbZK2XYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Nov 2009 18:24:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751865AbZK2XYE
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 18:24:04 -0500
+Received: from mail-px0-f173.google.com ([209.85.216.173]:48050 "EHLO
+	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751855AbZK2XYD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Nov 2009 18:24:03 -0500
+Received: by pxi3 with SMTP id 3so2298801pxi.22
+        for <git@vger.kernel.org>; Sun, 29 Nov 2009 15:24:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=k3fcPKrHSJw5ZUy6eboYt5Bg1Vtjcpi1Sn0hnUPm+nY=;
+        b=EPO6pQH+f14I4SjPTtJra6nvth+NLFY+eJIBKg4oPWsY7YnARUze+vXzRBOgWV3klx
+         TTkKU70WZfhYji1t+iX81KJ+PmB1M99C2UKswCi5Refek2RncSILbDi/8y0fW1mhUq9Q
+         GW6bBn5+4aY53MZY3MnzWOhfshX/MtgAhDIXY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=iKciWdl3dewjy62HAXlWm0ujwqGCny4ine/5/Net/7g1DY2EZL5igdVfbQOB64er3W
+         fMYflcGKFXj8tCfP6oo8LKpjcDOIARkfIBIUN8hsYCPkDvowOtbMsf3FNvTkKpFWe+F1
+         qqwectveB1OnQm6xjtVPpkW7TTcb3unhK31yA=
+Received: by 10.142.7.10 with SMTP id 10mr370441wfg.137.1259537049108; Sun, 29 
+	Nov 2009 15:24:09 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134041>
 
-On Sat, Nov 28, 2009 at 8:50 PM, Alex Chiang <achiang@hp.com> wrote:
+(I'm not on the list, so hopefully this goes through).
+I've done a bisect on a problem with the kernel,
+and am a bit confused on what to do. i.g. the
+results are showing this:
+a03fdb7612874834d6847107198712d18b5242c7 is the first bad commit
 
-> stg mail still has some nice features over git send-email, such
-> as the -v command line parameter and --prefix. Maybe at some point
-> in the future, we can migrate those features into git send-email and
-> continue thinning out stg mail.
+when trying to revert this commit I get this:
+git revert a03fdb7612874834d6847107198712d18b5242c7
+fatal: Commit a03fdb7612874834d6847107198712d18b5242c7 is a merge but
+no -m option was given.
 
-Yes. But note that we tend to be conservative and not require a
-too-new git, so a patch adding such a dependency would have to wait a
-while. (I'm currently carrying two such patches in my experimental
-branch.)
+then doing this I get this:
 
-> But I wanted to get some feedback first to make sure I'm going in the
-> right direction before going too much further.
+git revert -m 1 a03fdb7612874834d6847107198712d18b5242c7
+Automatic revert failed.  After resolving the conflicts,
+mark the corrected paths with 'git add <paths>' or 'git rm <paths>'
+and commit the result.
 
-I've read the patches, and it looks about right from where I stand.
+how do I find out the commits in this merge to automatically
+revert to find the problem that's causing this bug?
 
-Did you remember to run the regression tests? It's very helpful when
-reviewing to know that the regression suite passes at every point in
-the series.
 
 -- 
-Karl Wiberg, kha@treskal.com
-   subrabbit.wordpress.com
-   www.treskal.com/kalle
+Justin P. Mattock
