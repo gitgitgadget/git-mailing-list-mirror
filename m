@@ -1,87 +1,64 @@
-From: Armen Baghumian <armen@OpenSourceClub.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: git include
-Date: Mon, 30 Nov 2009 10:40:55 +0330
-Message-ID: <20091130104055.3c3274f5@Office>
-References: <4B136932.9000908@gulfsat.mg>
-	<fcaeb9bf0911292245t6b18c238s2859d2cbd5dd26be@mail.gmail.com>
+Date: Mon, 30 Nov 2009 14:29:46 +0700
+Message-ID: <fcaeb9bf0911292329p672572dcmbe0c01912d50fd0a@mail.gmail.com>
+References: <4B136932.9000908@gulfsat.mg> <fcaeb9bf0911292245t6b18c238s2859d2cbd5dd26be@mail.gmail.com> 
+	<20091130104055.3c3274f5@Office>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=PGP-SHA1;
- boundary="Sig_/6dg/SrfQy.1BCowJ9ViikU.";
- protocol="application/pgp-signature"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 30 08:20:31 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Armen Baghumian <armen@opensourceclub.org>
+X-From: git-owner@vger.kernel.org Mon Nov 30 08:30:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NF0Yd-0007iI-VX
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 08:20:28 +0100
+	id 1NF0i5-0001bf-54
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 08:30:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753775AbZK3HUO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2009 02:20:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753753AbZK3HUO
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 02:20:14 -0500
-Received: from julius.technotux.org ([88.198.8.89]:51648 "EHLO
-	julius.technotux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753714AbZK3HUN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2009 02:20:13 -0500
-X-Greylist: delayed 537 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 Nov 2009 02:20:13 EST
-Received: from localhost (localhost [127.0.0.1])
-	by julius.technotux.org (Postfix) with ESMTP id B3DE5F6C15D
-	for <git@vger.kernel.org>; Mon, 30 Nov 2009 08:08:59 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at julius.technotux.org
-Received: from julius.technotux.org ([127.0.0.1])
-	by localhost (julius.technotux.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zgEXdduOOEi9 for <git@vger.kernel.org>;
-	Mon, 30 Nov 2009 08:08:59 +0100 (CET)
-Received: from Office (unknown [213.207.255.133])
-	by julius.technotux.org (Postfix) with ESMTPA id 7F456F6C030
-	for <git@vger.kernel.org>; Mon, 30 Nov 2009 08:08:58 +0100 (CET)
-In-Reply-To: <fcaeb9bf0911292245t6b18c238s2859d2cbd5dd26be@mail.gmail.com>
-X-Mailer: Claws Mail 3.5.0 (GTK+ 2.16.1; i486-pc-linux-gnu)
+	id S1753836AbZK3HaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2009 02:30:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753815AbZK3HaA
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 02:30:00 -0500
+Received: from mail-pz0-f171.google.com ([209.85.222.171]:37267 "EHLO
+	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753482AbZK3H37 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2009 02:29:59 -0500
+Received: by pzk1 with SMTP id 1so2321893pzk.33
+        for <git@vger.kernel.org>; Sun, 29 Nov 2009 23:30:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=AHyOaQxbI5OdakfNZT/et76R4K9GidArgSdnHYI4nFQ=;
+        b=I2hH9uMSd4lhHLEdF4q4l4xgnkFNhbI8aA719ovaC90p3LxNbhxaB5cVDYVuEURHCl
+         vb+D2ZL5mULhUtt6AgqQAIjchtwfK/7M/mJPQ19N5qUADWTqgAjPrWlCmcAdEnxvXKLg
+         uhxSTAEFSBA+0YvUt9kOStDocjrV/3DboSSWg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=unoeKFYiTlM0/uQIeHfRzC9KtWu4MWp7FCqPKJMwlEZ2uLj9iYewnkdoal10a7azN8
+         g7BiO2kV2X8POfkohh7Zf01075OjtGHetHaCuVm+YjmsLUV4v96corTEPX7GaOUrcyHL
+         egmQu4gc34qv6YWn1DKEVuIPnXDblYwQ66W9M=
+Received: by 10.115.98.29 with SMTP id a29mr6654797wam.142.1259566206056; Sun, 
+	29 Nov 2009 23:30:06 -0800 (PST)
+In-Reply-To: <20091130104055.3c3274f5@Office>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134066>
 
---Sig_/6dg/SrfQy.1BCowJ9ViikU.
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
-
-
-Probably you want to add .gitignore too
-
-*
-!*.ml
-!.gitignore
-
-On Mon, 30 Nov 2009 13:45:57 +0700
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-
-> On Mon, Nov 30, 2009 at 1:41 PM, Rakotomandimby Mihamina
-> <mihamina@gulfsat.mg> wrote:
-> > Hi all,
-> >
-> > I would like to track only *.ml files and ignore all others.
-> > Is there a way to do that in .gitignore?
->=20
-> This .gitignore should work (of course for new files only):
-> -->8--
+On Mon, Nov 30, 2009 at 2:10 PM, Armen Baghumian
+<armen@opensourceclub.org> wrote:
+>
+> Probably you want to add .gitignore too
+>
 > *
 > !*.ml
-> -->8--
+> !.gitignore
 
---Sig_/6dg/SrfQy.1BCowJ9ViikU.
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Disposition: attachment; filename=signature.asc
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAksTb/8ACgkQ6Z1ZqiMrQgCqZgCfVgjTATmPfACAp+g4ED5vvn+g
-4pkAoNnvw+v7s7tK3SOtVzTu8oUiZxQE
-=gvL9
------END PGP SIGNATURE-----
-
---Sig_/6dg/SrfQy.1BCowJ9ViikU.--
+In that case it should be "!.git*" as you may miss .gitattributes or .gitmodules
+-- 
+Duy
