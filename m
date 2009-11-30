@@ -1,56 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Update $GIT_DIR/remotes to $GIT_DIR/refs/remotes in
- docs
-Date: Mon, 30 Nov 2009 00:03:33 -0500
-Message-ID: <20091130050333.GA26585@coredump.intra.peff.net>
-References: <1259552316-20088-1-git-send-email-ayiehere@gmail.com>
- <1259552316-20088-2-git-send-email-ayiehere@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: ayiehere@gmail.com
-X-From: git-owner@vger.kernel.org Mon Nov 30 06:03:40 2009
+From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+Subject: [PATCH v2 1/6] t2300: use documented technique to invoke git-sh-setup
+Date: Sun, 29 Nov 2009 23:19:26 -0700
+Message-ID: <1259561971-25730-2-git-send-email-mmogilvi_git@miniinfo.net>
+References: <1259561971-25730-1-git-send-email-mmogilvi_git@miniinfo.net>
+Cc: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Nov 30 07:20:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEyQF-0008V8-MT
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 06:03:40 +0100
+	id 1NEzcI-0000qX-Fx
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 07:20:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751071AbZK3FD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2009 00:03:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750799AbZK3FD1
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 00:03:27 -0500
-Received: from peff.net ([208.65.91.99]:33066 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750781AbZK3FD1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2009 00:03:27 -0500
-Received: (qmail 9354 invoked by uid 107); 30 Nov 2009 05:07:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 30 Nov 2009 00:07:58 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Nov 2009 00:03:33 -0500
-Content-Disposition: inline
-In-Reply-To: <1259552316-20088-2-git-send-email-ayiehere@gmail.com>
+	id S1752854AbZK3GTz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2009 01:19:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752688AbZK3GTz
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 01:19:55 -0500
+Received: from qmta05.emeryville.ca.mail.comcast.net ([76.96.30.48]:50929 "EHLO
+	QMTA05.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752157AbZK3GTy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Nov 2009 01:19:54 -0500
+Received: from OMTA12.emeryville.ca.mail.comcast.net ([76.96.30.44])
+	by QMTA05.emeryville.ca.mail.comcast.net with comcast
+	id BJJf1d0010x6nqcA5JL21u; Mon, 30 Nov 2009 06:20:02 +0000
+Received: from mmogilvi.homeip.net ([24.8.125.243])
+	by OMTA12.emeryville.ca.mail.comcast.net with comcast
+	id BJL01d0035FCJCg8YJL1Jq; Mon, 30 Nov 2009 06:20:01 +0000
+Received: from localhost.localdomain (bean [192.168.30.96])
+	by mmogilvi.homeip.net (Postfix) with ESMTP id D4EEB89115;
+	Sun, 29 Nov 2009 23:19:59 -0700 (MST)
+X-Mailer: git-send-email 1.6.4.GIT
+In-Reply-To: <1259561971-25730-1-git-send-email-mmogilvi_git@miniinfo.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134048>
 
-On Mon, Nov 30, 2009 at 11:38:36AM +0800, ayiehere@gmail.com wrote:
+This is needed to allow the test suite to run against a standard
+install bin directory instead of GIT_EXEC_PATH.
 
->  DESCRIPTION
->  -----------
->  This script is included in various scripts to supply
-> -routines to parse files under $GIT_DIR/remotes/ and
-> +routines to parse files under $GIT_DIR/refs/remotes/ and
->  $GIT_DIR/branches/ and configuration variables that are related
->  to fetching, pulling and pushing.
+Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+---
+ t/t2300-cd-to-toplevel.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Er, what? $GIT_DIR/remotes/ and $GIT_DIR/refs/remotes/ are not even
-remotely the same thing. The former holds information about how to
-contact remotes (but that information is usually held in the config file
-these days).  The latter holds any tracking refs we have fetched from
-the remotes.
-
--Peff
+diff --git a/t/t2300-cd-to-toplevel.sh b/t/t2300-cd-to-toplevel.sh
+index 3b01ad2..9965bc5 100755
+--- a/t/t2300-cd-to-toplevel.sh
++++ b/t/t2300-cd-to-toplevel.sh
+@@ -8,7 +8,7 @@ test_cd_to_toplevel () {
+ 	test_expect_success $3 "$2" '
+ 		(
+ 			cd '"'$1'"' &&
+-			. git-sh-setup &&
++			. "$(git --exec-path)"/git-sh-setup &&
+ 			cd_to_toplevel &&
+ 			[ "$(pwd -P)" = "$TOPLEVEL" ]
+ 		)
+-- 
+1.6.4.GIT
