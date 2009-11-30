@@ -1,90 +1,91 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: [PATCH 3/8] git-merge-recursive-{ours,theirs}
-Date: Mon, 30 Nov 2009 15:02:51 -0500
-Message-ID: <32541b130911301202j2b551d80v650d252b7934eb98@mail.gmail.com>
-References: <d243a513ffb8da4272f7a0e13a711f9b65195c25.1259201377.git.apenwarr@gmail.com> 
-	<905749faf5ccb2c7c54d3318dbc662d69daf8d0e.1259201377.git.apenwarr@gmail.com> 
-	<cover.1259201377.git.apenwarr@gmail.com> <7e1f1179fc5fe2f568e2c75f75366fa40d7bbbfb.1259201377.git.apenwarr@gmail.com> 
-	<7vr5rlerqf.fsf@alter.siamese.dyndns.org> <32541b130911261405q6564d8f2o30b7d7fd6f708d05@mail.gmail.com> 
-	<7vvdgs1qip.fsf@alter.siamese.dyndns.org> <32541b130911301008v4156f0c6ge9f30952565392f9@mail.gmail.com> 
-	<7viqcrlrb8.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] Detailed diagnostic when parsing an object name
+ fails.
+Date: Mon, 30 Nov 2009 12:12:42 -0800
+Message-ID: <7vtywbkc05.fsf@alter.siamese.dyndns.org>
+References: <1259603421-10055-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 30 21:03:25 2009
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 30 21:13:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFCSw-0004Nm-63
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 21:03:22 +0100
+	id 1NFCcM-0000OG-VY
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 21:13:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751741AbZK3UDH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Nov 2009 15:03:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751421AbZK3UDH
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 15:03:07 -0500
-Received: from mail-pz0-f171.google.com ([209.85.222.171]:41785 "EHLO
-	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751333AbZK3UDG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Nov 2009 15:03:06 -0500
-Received: by pzk1 with SMTP id 1so2960811pzk.33
-        for <git@vger.kernel.org>; Mon, 30 Nov 2009 12:03:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/oTJHlHMBcwyXjqj/H7eXJpicCHdlBPF821JS6seK2A=;
-        b=p5MMPBOcWAFHNp7Vd+Af+sKkQ7xRc/5yiSrQOblKzwoHDtBhL/0Wsi8DTAaBJ+ZUgm
-         rJZafzTYqDvxiZzcNVosZGnNaQEv5BLnEjwcb+iZVI36tQ8QbWT3QTd0UFhvscr7Igg7
-         RzgK0mgOaD2Jd3aW2iCmdlcxR5Ci7rz+BgK+s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=aLCgZEV1TMjNt87CyF2km5z9C4hm0hzkukbEm9qB42dw0swrIajN09jtscnEFBsFYi
-         teA50GVRrcT0Shsh+eLoIfvjbNnJpwh1sliKQiXL7mnDKlMtoTlGg/T1LfCeyhQpxuwp
-         hnhqivdOJNdhlx1QJ8jrMMfgvurN/fHj0V240=
-Received: by 10.140.185.18 with SMTP id i18mr327885rvf.87.1259611391073; Mon, 
-	30 Nov 2009 12:03:11 -0800 (PST)
-In-Reply-To: <7viqcrlrb8.fsf@alter.siamese.dyndns.org>
+	id S1751347AbZK3UMy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2009 15:12:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751098AbZK3UMy
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 15:12:54 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46210 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750876AbZK3UMy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2009 15:12:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4220F84DA7;
+	Mon, 30 Nov 2009 15:12:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Y2MVMUsILHjc4Rli0ETLXh7AQ64=; b=SkSpCT
+	cCUINoiMml5egpIMx7nWnS6dlPL4sH7/BdMwnyh0T+eH6p9NfSZM+qhH9d5EUj5h
+	LkFSArkuNzhGyOTy1O6If4CFfNQHIqHXjP+KWvkCe0RIEA+EO8qOyXj9MXovkStY
+	lLXf03TO7tuITNTdOD61eS8bJAYD+wkG7qWWg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CZ2viOGqZQILX8kJHHp0VWPmVKf8K6DR
+	zEViDa3TyGUMJ4BmD3TIK0ilTa3FKsJF4iI+b4wm0mzy1h0GoxiEznM5Vf/k625O
+	A9KG3miwswJ3S5WCnE13xzlgDp2hz/IlXHlY9oZ0OqLDPdLlrh4mfs7bHuB2Jl3E
+	QmxPwNNd+cw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5309484DA6;
+	Mon, 30 Nov 2009 15:12:51 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1462884DA4; Mon, 30 Nov
+ 2009 15:12:43 -0500 (EST)
+In-Reply-To: <1259603421-10055-1-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Mon\, 30 Nov 2009 18\:50\:21 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: BC8C426A-DDEC-11DE-B739-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134136>
 
-On Mon, Nov 30, 2009 at 2:56 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Avery Pennarun <apenwarr@gmail.com> writes:
->>> I've queued the series with minor fixes to 'pu' and pushed it out.
->>
->> Since I see you didn't change a couple of things you mentioned in
->> earlier comments (the NEEDSWORK comment and the sq-then-eval trick) =
-do
->> you still want me to respin this series?
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+
+> The original motivation is actually to anwser the FAQ of "git show
+> HEAD:foo.txt" being relative to the root, while some users would
+> expect it relative to $PWD but the patch ended up being far more
+> general. At least, 
 >
-> The commit still is NEEDSWORK and shouldn't be in 'next' in its curre=
-nt
-> shape. =A0I don't think the topic is 1.6.6 material yet, and we will =
-be in
-> pre-release feature freeze any minute now, so there is no urgency.
->
-> As I did the sq-then-eval in many places in our Porcelain scripts (an=
-d
-> many of them are converted to C and lost the need for the trick), I m=
-ay
-> get tempted to fix it up when I am bored ;-). =A0But no promises.
+> $ cd git
+> $ cd t
+> $ ../git show HEAD:test-lib.sh 
+> fatal: Path 't/test-lib.sh' exists, but not 'test-lib.sh'.
+> Did you mean 'HEAD:t/test-lib.sh'?
 
-I'll interpret that as "no, I should not respin the series because
-Junio plans to deal with it" :)
+The first thought that comes to mind is that if it makes more sense to
+just fall back to the interpretation of the input when the tool has
+already figured out to second guess the intention of the user like the
+above message does.
 
-Do let me know if there's anything I should do to help this advance
-from pu->next sooner (if they delay is not simply because of the code
-freeze).
+That would obviously break scripts that try to make sure the _absense_ of
+a path in a tree-ish (or in the index if you lack "HEAD" in your example),
+expecting:
 
-Have fun,
+   git rev-parse HEAD:test-lib.sh ||
+   echo "test-lib.sh shouldn't be at the top level"
 
-Avery
+to work regardless of where you are in the work tree, so it won't fly
+well.
+
+Perhaps the second step would be to teach the machinery to understand a
+syntax like "<tree-ish>:./<path>" and have it prefix the path to the
+current subdirectory from the root of the work tree, and with such an
+enhancement, the suggestion given by this patch would probably change to
+"Did you mean 'HEAD:./test-lib.sh'?", but that would be a separate topic.
