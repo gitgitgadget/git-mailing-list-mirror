@@ -1,72 +1,81 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH v3] Give the hunk comment its own color
-Date: Mon, 30 Nov 2009 09:09:22 +0100
-Message-ID: <fabb9a1e0911300009j1574c06cy500dde75fc68662f@mail.gmail.com>
-References: <7v4oogzo74.fsf@alter.siamese.dyndns.org> <1259304918-12600-1-git-send-email-bert.wesarg@googlemail.com> 
-	<7vhbsfi4bz.fsf@alter.siamese.dyndns.org> <36ca99e90911280408v186777f1h22254744fb61bf1f@mail.gmail.com> 
-	<36ca99e90911292307w769913fdn1f610eeb065b41e@mail.gmail.com> 
-	<7v4ooczdoe.fsf@alter.siamese.dyndns.org> <36ca99e90911292341o524840ebo47d79f06b1588d5c@mail.gmail.com> 
-	<7vtywcwj1o.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: help reverting a merge
+Date: Mon, 30 Nov 2009 03:13:15 -0500
+Message-ID: <20091130081315.GA587@coredump.intra.peff.net>
+References: <dd18b0c30911291524q7ea7e9c7v980340ddf7269519@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 30 09:09:49 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+To: Justin Mattock <justinmattock@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 30 09:13:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NF1KO-0004Rw-7R
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 09:09:48 +0100
+	id 1NF1Nq-0005T6-1n
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 09:13:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752624AbZK3IJg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2009 03:09:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752596AbZK3IJg
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 03:09:36 -0500
-Received: from mail-vw0-f197.google.com ([209.85.212.197]:61280 "EHLO
-	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752230AbZK3IJg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2009 03:09:36 -0500
-Received: by vws35 with SMTP id 35so986334vws.4
-        for <git@vger.kernel.org>; Mon, 30 Nov 2009 00:09:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=TxJtVlSEFJrIvJp8Z/m28brhUQleDRISV9OzEEu12KQ=;
-        b=tKzVD27oNQ8+4FJ2zLvpAxRWBKR9Q2KQOwPo+YzoXPE6a6lFsP7294N1DuMa+y74dY
-         P710YzU4OeoAhRCm1z1jytOkwJzYwUxnrf6f8/72mgSpIowE+f7+n9VuUStXpP1Qh6O4
-         E2LgCnq9zy3H4sGfQqShfvBdBOv2ulIJYEVNw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=U0goWM2QqBQQQ64+bJXcPUmZpRAsMndTo5wMCHiu5r90u2VZB27QJv7m6xn72T7ZZ/
-         MlRmPf+YO6hm6u+mp3Af5VKOtGiT1MzFXDkkWcc71PEH66YCAXR8x7/2sackmqf31k8M
-         XVVAHwZ9i0gHB8rHVgAqIf474Udspjr3kBjtI=
-Received: by 10.220.126.150 with SMTP id c22mr4836555vcs.6.1259568582077; Mon, 
-	30 Nov 2009 00:09:42 -0800 (PST)
-In-Reply-To: <7vtywcwj1o.fsf@alter.siamese.dyndns.org>
+	id S1752912AbZK3INI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2009 03:13:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752872AbZK3INI
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 03:13:08 -0500
+Received: from peff.net ([208.65.91.99]:34390 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752429AbZK3INH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2009 03:13:07 -0500
+Received: (qmail 10687 invoked by uid 107); 30 Nov 2009 08:17:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 30 Nov 2009 03:17:40 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Nov 2009 03:13:15 -0500
+Content-Disposition: inline
+In-Reply-To: <dd18b0c30911291524q7ea7e9c7v980340ddf7269519@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134079>
 
-Heya,
+On Sun, Nov 29, 2009 at 03:24:09PM -0800, Justin Mattock wrote:
 
-On Mon, Nov 30, 2009 at 08:47, Junio C Hamano <gitster@pobox.com> wrote:
-> I'll merge the updated (i.e. rewound and then rebuilt) tip
-> of the topic branch when the topic graduates to the master (hopefully
-> before 1.6.6-rc1), so we won't see the botched one in the end result.
+> I've done a bisect on a problem with the kernel,
+> and am a bit confused on what to do. i.g. the
+> results are showing this:
+> a03fdb7612874834d6847107198712d18b5242c7 is the first bad commit
+>
+> [...]
+> 
+> how do I find out the commits in this merge to automatically
+> revert to find the problem that's causing this bug?
 
-I'm curious how you do this. Do you keep a list of replacements, that
-is "when merging branch foo from next to master, instead merge bar",
-or is it something the original author should remind you of when it's
-time to merge to master?
+There is some discussion here:
 
--- 
-Cheers,
+http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#bisect-merges
 
-Sverre Rabbelier
+Basically neither merged branch was buggy on its own, but together they
+have a bug.  You can try rebasing the two sides of the merge into a
+linear history, and then bisecting on that:
+
+  # order doesn't matter here, but rebasing 12e0933 on top makes more
+  # sense since it has many fewer commits between it and the merge-base
+  # (and you'll need to fix up conflicts manually, so the smaller the
+  # rebase the better)
+  git checkout 12e0933
+  git rebase 202c467
+
+  # to be safe, confirm that the rebase result shows your bug;
+  # we know that 202c467 doesn't have the bug, or we would not have
+  # bisected to the merge commit before
+  test test test
+  git bisect start
+  git bisect bad HEAD
+  git bisect good 202c467
+
+which should give you the specific commit on the side branch where the
+breakage occurred.
+
+This has been discussed as a technique before, and I have a feeling in
+the back of my mind that maybe there was talk of having git-bisect help
+with this case, but I don't think anything ever came of it. Christian
+(cc'd) would probably know more.
+
+-Peff
