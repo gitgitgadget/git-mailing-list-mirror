@@ -1,67 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git merge" merges too much!
-Date: Mon, 30 Nov 2009 12:50:21 -0800
-Message-ID: <7vy6lnivoy.fsf@alter.siamese.dyndns.org>
-References: <m1NEaLp-000kn1C@most.weird.com>
- <7vskbxewti.fsf@alter.siamese.dyndns.org> <m1NFBAx-000kmgC@most.weird.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] tests: handle NO_PYTHON setting
+Date: Mon, 30 Nov 2009 15:54:53 -0500
+Message-ID: <20091130205453.GA20348@coredump.intra.peff.net>
+References: <20091130075221.GA5421@coredump.intra.peff.net>
+ <0OMCWm31DRbUGCfPIS6SSJn59HQIM9AKtSDgVSNdiSR99clfmJ3D-Q@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: The Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 30 21:50:38 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Mon Nov 30 21:55:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFDCc-0007sT-SY
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 21:50:35 +0100
+	id 1NFDGv-0001Lm-6C
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 21:55:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752399AbZK3UuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2009 15:50:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752340AbZK3UuW
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 15:50:22 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53863 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752055AbZK3UuW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2009 15:50:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 339AE84157;
-	Mon, 30 Nov 2009 15:50:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bzhw/F1CaQuw/SFkqQmHwh73sio=; b=tTeVVu
-	TfAK26xCgmFCVuWKEE9DUiKcwWDtN+LsnZzFwukORzDBRZ3D9qncgxY4pU1E2L+o
-	CqBZcEGntdsX5i77Eb8fQ4xb/ZevSHT/JDb5xy0GGi3m8C8azKhMy5Hu4S7+Z3gT
-	BWmikkoMoBQzsMuz4oBt6RAypj2h+HgSDLCc8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H7AkuDu0lEK32JqvIFHe0cZ/iPRG6RlG
-	D63/HwBY4bO9mX2rpmQt/0B3zpTAt/xn3EI7juQm8WMVJjsQ3PASqNAqcttR1y14
-	bdWch7AI0KGvKwKOlY7fAjz0sesrzMO4KpiGKRzzdOsOOXeCoWlyiK0FycnwuBRH
-	TPhLcscNezQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2122184155;
-	Mon, 30 Nov 2009 15:50:26 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D115084150; Mon, 30 Nov
- 2009 15:50:22 -0500 (EST)
-In-Reply-To: <m1NFBAx-000kmgC@most.weird.com> (Greg A. Woods's message of
- "Mon\, 30 Nov 2009 13\:40\:38 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FC834300-DDF1-11DE-92A0-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752720AbZK3Uyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2009 15:54:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752704AbZK3Uyq
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 15:54:46 -0500
+Received: from peff.net ([208.65.91.99]:40514 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752533AbZK3Uyq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2009 15:54:46 -0500
+Received: (qmail 14244 invoked by uid 107); 30 Nov 2009 20:59:19 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 30 Nov 2009 15:59:19 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Nov 2009 15:54:53 -0500
+Content-Disposition: inline
+In-Reply-To: <0OMCWm31DRbUGCfPIS6SSJn59HQIM9AKtSDgVSNdiSR99clfmJ3D-Q@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134139>
 
-"Greg A. Woods" <woods@planix.com> writes:
+On Mon, Nov 30, 2009 at 12:07:40PM -0600, Brandon Casey wrote:
 
-> ....  This isn't really a Git problem I suppose, except
-> for the fact that it means the lack of easy support for multiple working
-> directories that track different branches makes this kind of development
-> somewhat more difficult to do with Git than with, say, CVS.
+> Shouldn't this section be moved down below the sourcing of ../GIT-BUILD-OPTIONS
+> on line 656 so that the value of NO_PYTHON will be available when running the
+> test scripts directly?
 
-You want to google for git-new-workdir then; it is found in
-contrib/workdir and fairly widely used.
+Oops, good catch. I stupidly tested with "make NO_PYTHON=1 test" instead
+of actually checking that GIT-BUILD-OPTIONS was propagating it
+correctly.
+
+> ps. There's something eerily familiar about this patch.
+
+Hmmm. Yes, I didn't search before writing it, but you probably mean:
+
+  http://article.gmane.org/gmane.comp.version-control.git/127172
+
+But that is missing the NO-PYTHON bit in GIT-BUILD-OPTIONS (did you
+forget it there, or was it part of some other patch that also didn't get
+applied?).
+
+Also, I am tempted to move the GIT-BUILD-OPTIONS invocation _up_. It
+is about reading config and should probably come before we start doing
+_anything_.
+
+So maybe this instead:
+
+-- >8 --
+Subject: [PATCH] tests: handle NO_PYTHON setting
+
+Without this, test-lib checks that the git_remote_helpers
+directory has been built. However, if we are building
+without python, we will not have done anything at all in
+that directory, and test-lib's sanity check will fail.
+
+We bump the inclusion of GIT-BUILD-OPTIONS further up in
+test-lib; it contains configuration, and as such should be
+read before we do any checks (and in this particular case,
+we need its value to do our check properly).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I moved the BUILD-OPTIONS thing to just above the beginning of the
+"have you built anything" checks, but after all of the function
+definitions. But perhaps it should simply go at the very top of the
+script. After all, in the case of "make NO_PYTHON=1 test", those
+variables will already be defined at the very beginning of the script.
+
+ Makefile      |    1 +
+ t/test-lib.sh |    6 +++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 42744a4..443565e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1743,6 +1743,7 @@ GIT-BUILD-OPTIONS: .FORCE-GIT-BUILD-OPTIONS
+ 	@echo TAR=\''$(subst ','\'',$(subst ','\'',$(TAR)))'\' >>$@
+ 	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@
+ 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@
++	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@
+ 
+ ### Detect Tck/Tk interpreter path changes
+ ifndef NO_TCLTK
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 4a40520..2d523fe 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -632,13 +632,15 @@ GIT_CONFIG_NOSYSTEM=1
+ GIT_CONFIG_NOGLOBAL=1
+ export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG_NOSYSTEM GIT_CONFIG_NOGLOBAL
+ 
++. ../GIT-BUILD-OPTIONS
++
+ GITPERLLIB=$(pwd)/../perl/blib/lib:$(pwd)/../perl/blib/arch/auto/Git
+ export GITPERLLIB
+ test -d ../templates/blt || {
+ 	error "You haven't built things yet, have you?"
+ }
+ 
+-if test -z "$GIT_TEST_INSTALLED"
++if test -z "$GIT_TEST_INSTALLED" && test -z "$NO_PYTHON"
+ then
+ 	GITPYTHONLIB="$(pwd)/../git_remote_helpers/build/lib"
+ 	export GITPYTHONLIB
+@@ -653,8 +655,6 @@ if ! test -x ../test-chmtime; then
+ 	exit 1
+ fi
+ 
+-. ../GIT-BUILD-OPTIONS
+-
+ # Test repository
+ test="trash directory.$(basename "$0" .sh)"
+ test -n "$root" && test="$root/$test"
+-- 
+1.6.6.rc0.327.gd49b
