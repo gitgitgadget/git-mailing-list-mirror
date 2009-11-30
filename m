@@ -1,71 +1,78 @@
-From: Justin Mattock <justinmattock@gmail.com>
-Subject: help reverting a merge
-Date: Sun, 29 Nov 2009 15:24:09 -0800
-Message-ID: <dd18b0c30911291524q7ea7e9c7v980340ddf7269519@mail.gmail.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] reset: add --quiet option
+Date: Sun, 29 Nov 2009 17:18:59 -0800
+Message-ID: <1259543939.5679.5.camel@swboyd-laptop>
+References: <1259492290-21771-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 30 00:24:17 2009
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 30 02:19:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEt7o-0004Dp-Jg
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 00:24:16 +0100
+	id 1NEuuy-0002FT-OY
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 02:19:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751943AbZK2XYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Nov 2009 18:24:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751865AbZK2XYE
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 18:24:04 -0500
-Received: from mail-px0-f173.google.com ([209.85.216.173]:48050 "EHLO
-	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751855AbZK2XYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Nov 2009 18:24:03 -0500
-Received: by pxi3 with SMTP id 3so2298801pxi.22
-        for <git@vger.kernel.org>; Sun, 29 Nov 2009 15:24:09 -0800 (PST)
+	id S1753187AbZK3BS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Nov 2009 20:18:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752829AbZK3BS4
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Nov 2009 20:18:56 -0500
+Received: from mail-yx0-f188.google.com ([209.85.210.188]:55712 "EHLO
+	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751709AbZK3BS4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Nov 2009 20:18:56 -0500
+Received: by yxe26 with SMTP id 26so2639851yxe.4
+        for <git@vger.kernel.org>; Sun, 29 Nov 2009 17:19:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=k3fcPKrHSJw5ZUy6eboYt5Bg1Vtjcpi1Sn0hnUPm+nY=;
-        b=EPO6pQH+f14I4SjPTtJra6nvth+NLFY+eJIBKg4oPWsY7YnARUze+vXzRBOgWV3klx
-         TTkKU70WZfhYji1t+iX81KJ+PmB1M99C2UKswCi5Refek2RncSILbDi/8y0fW1mhUq9Q
-         GW6bBn5+4aY53MZY3MnzWOhfshX/MtgAhDIXY=
+        h=domainkey-signature:received:received:subject:from:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=RDDPbf1g6rLNYlXnMrAc1Q8wK4o6YfUE2SzGh1Yq7OI=;
+        b=DnvIHWozHE6LJt4oZPS1yBlCrGZHmEnoyMi5lwKfiJ1auRN1I1e8oxFEznYFHCjNbq
+         QZjHsaV3uWLM3LjgLkvFvfK9jPBK87F3XbEk/R1O7kBqCzaAQZ6BLRqWoiYtlpR3JkkY
+         81dMmsW3ZqS1k5RTlTPWVSZzFqSXojmrxjTp0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=iKciWdl3dewjy62HAXlWm0ujwqGCny4ine/5/Net/7g1DY2EZL5igdVfbQOB64er3W
-         fMYflcGKFXj8tCfP6oo8LKpjcDOIARkfIBIUN8hsYCPkDvowOtbMsf3FNvTkKpFWe+F1
-         qqwectveB1OnQm6xjtVPpkW7TTcb3unhK31yA=
-Received: by 10.142.7.10 with SMTP id 10mr370441wfg.137.1259537049108; Sun, 29 
-	Nov 2009 15:24:09 -0800 (PST)
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=OSOjxrFVgIF3AQsp71UDqV0zwH2OjSCiket5RIlmx2TbQgxzIRb6nht0q1klvMqW2D
+         8Bke/wIJS4kCWl0CNP1Ic3imclvAvsCC2XTeAwhn8zbEIm5kepXRII5oQ16szPhX1qps
+         QFgzBRfHUFOjGM8RTrueRun05MHHx7XDX6fNI=
+Received: by 10.91.178.19 with SMTP id f19mr5843219agp.33.1259543942598;
+        Sun, 29 Nov 2009 17:19:02 -0800 (PST)
+Received: from ?192.168.0.6? (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
+        by mx.google.com with ESMTPS id 4sm1800456yxd.52.2009.11.29.17.19.00
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 29 Nov 2009 17:19:01 -0800 (PST)
+In-Reply-To: <1259492290-21771-1-git-send-email-felipe.contreras@gmail.com>
+X-Mailer: Evolution 2.28.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134042>
 
-(I'm not on the list, so hopefully this goes through).
-I've done a bisect on a problem with the kernel,
-and am a bit confused on what to do. i.g. the
-results are showing this:
-a03fdb7612874834d6847107198712d18b5242c7 is the first bad commit
+On Sun, 2009-11-29 at 12:58 +0200, Felipe Contreras wrote:
+> diff --git a/builtin-reset.c b/builtin-reset.c
+> index 73e6022..c0127c4 100644
+> --- a/builtin-reset.c
+> +++ b/builtin-reset.c
+> @@ -209,7 +209,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+>  				"reset HEAD, index and working tree", HARD),
+>  		OPT_SET_INT(0, "merge", &reset_type,
+>  				"reset HEAD, index and working tree", MERGE),
+> -		OPT_BOOLEAN('q', NULL, &quiet,
+> +		OPT_BOOLEAN('q', "quiet", &quiet,
+>  				"disable showing new HEAD in hard reset and progress message"),
+>  		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
+>  		OPT_END()
 
-when trying to revert this commit I get this:
-git revert a03fdb7612874834d6847107198712d18b5242c7
-fatal: Commit a03fdb7612874834d6847107198712d18b5242c7 is a merge but
-no -m option was given.
+Why not just OPT__QUIET? We lose the specific help string but it's
+possible that what quiet is silencing will change in the future.
 
-then doing this I get this:
-
-git revert -m 1 a03fdb7612874834d6847107198712d18b5242c7
-Automatic revert failed.  After resolving the conflicts,
-mark the corrected paths with 'git add <paths>' or 'git rm <paths>'
-and commit the result.
-
-how do I find out the commits in this merge to automatically
-revert to find the problem that's causing this bug?
-
-
--- 
-Justin P. Mattock
+Maybe you could move the help string to the documentation if you want to
+save it.
