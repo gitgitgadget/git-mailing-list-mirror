@@ -1,78 +1,155 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] Add --track option to git clone
-Date: Mon, 30 Nov 2009 14:36:40 +0100
-Message-ID: <4B13CA68.70708@drmicha.warpmail.net>
-References: <1259587004-14633-1-git-send-email-sn_@gmx.net>
+From: "Bernhard R. Link" <brlink@debian.org>
+Subject: equal-tree-merges as way to make rebases fast-forward-able
+Date: Mon, 30 Nov 2009 15:43:33 +0100
+Message-ID: <cover.1259524136.git.brlink@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Soria Parra <sn_@gmx.net>
-X-From: git-owner@vger.kernel.org Mon Nov 30 14:38:00 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 30 15:43:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NF6S0-00064w-ES
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 14:38:00 +0100
+	id 1NF7TY-0006ge-Bi
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 15:43:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753034AbZK3Nhr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2009 08:37:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752743AbZK3Nhr
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 08:37:47 -0500
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:54669 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752340AbZK3Nhq (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Nov 2009 08:37:46 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 34504C4A01;
-	Mon, 30 Nov 2009 08:37:53 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 30 Nov 2009 08:37:53 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=RQ88yROQSBfXmHAVns6u3L0ylbw=; b=cw0qWMcHNtO3jkU6nJ31vwuOy+FYcHcbUbzSw0CP0m6RyD968Fj90q4eOtb+fScvqcy+1yJfLU+e6pkOM2ZFQNacO9OK22Bf9clxA9BfW7SKfm4J+QYpJtA6oSJo+nYiQ0ErwN8iMmzMjFU5dBDLM5y6gPDkqyvi+NZewy2gYWk=
-X-Sasl-enc: qZJ0nWrlZBXNTccBMBnw68blTJwFyClPs8U8s5G9QJnb 1259588272
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 81E5349CC23;
-	Mon, 30 Nov 2009 08:37:52 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091127 Lightning/1.0b1pre Shredder/3.0.1pre
-In-Reply-To: <1259587004-14633-1-git-send-email-sn_@gmx.net>
+	id S1752794AbZK3On3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2009 09:43:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752713AbZK3On2
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 09:43:28 -0500
+Received: from pcpool00.mathematik.uni-freiburg.de ([132.230.30.150]:33528
+	"EHLO pcpool00.mathematik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752557AbZK3On2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Nov 2009 09:43:28 -0500
+Received: from pcpool09.mathematik.uni-freiburg.de ([132.230.30.159])
+	by pcpool00.mathematik.uni-freiburg.de with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <brl@pcpool00.mathematik.uni-freiburg.de>)
+	id 1NF7TR-0000vu-Rl
+	for git@vger.kernel.org; Mon, 30 Nov 2009 15:43:33 +0100
+Received: from brl by pcpool09.mathematik.uni-freiburg.de with local (Exim 4.69)
+	(envelope-from <brl@pcpool00.mathematik.uni-freiburg.de>)
+	id 1NF7TR-0000qH-Pr
+	for git@vger.kernel.org; Mon, 30 Nov 2009 15:43:33 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134103>
 
-David Soria Parra venit, vidit, dixit 30.11.2009 14:16:
-> The following series adds a --track option to git clone. If the --track option
-> is specified only the given remote branch will be received and checked out.
-> 
-> It tries to make the following usecase possible:
-> Imagine you are working on a project that has 1.x and a 2.x branch. The project
-> itself requires a complex setup (webserver, configuration files, etc). Setting up
-> 1.x and 2.x branch requires a lot of work, but a developer needs to maintain both.
-> He'll use the --track option to clone the 2.x branch into a directory and does the same
-> with the 1.x branch, where he setup the project. He can use locally separate repositories
-> while still being able to push to just one remote repository.
+The itch this idea is supposed to scratch is the problem that a rebase
+or a amended commit is no longer a fast-forward, so cannot be easily
+pulled.
+While this is not a problem in most workflows, as one can either merge
+or keep everything private and rebase until published, it would be nice
+to have a way for cases in between, where both a clean presentable
+commit order is to be maintained and people (or yourself from different
+repositories) should be able to easily upgrade to newer versions without
+an error-prone not-fast-forward.
 
-While I think the feature itself is useful, I don't think it's that
-useful for the case you mention. If you clone all branches anyways
-you're much better of using alternates or --reference, or the workdir
-script in contrib/
+My idea to solve this is combining both histories, the rebased/revised
+history and the actualy history, marking with some "equal-tree-merge"
+the point where they have the same result.
+The following mails show some patches to implement this by means of
+a merge where all parents have the same tree and some special casing
+when encountering such a thing. This has the advantage that older git
+version will just see strange merges and may present both histories,
+but otherwise just work.
 
-> I'm aware that it's not possible to give more than one --track option. Implementing
-> the possibility to specify multiple --track option would certainly a good improvment
-> later, but would also require a lot more work as far as I understand the clone code.
-> 
-> Being able to specify just one --track option is a compromise of doing a small change
-> and implementing this feature.
+Example 1:
 
-That restriction makes a lot of sense. Two suggestions:
+Let's assume you maintain such a regularily-rebased branch that you
+want to be able to publish (or pull from other repositories for example
+on your laptop):
 
-- How does one turn such a "partial" clone into a full one? That should
-be documented somewhere (git config remote.origin.fetch
-'+refs/heads/*:refs/remotes/origin/*').
+o=m=o=o=master
+   \
+    a=b=c=d=e=feature
 
-- A test would be nice, which makes sure you clone what you think you clone.
+with this patch you can do "git rebase -eqt master" and get:
 
-Cheers,
-Michael
+              a'=b'=c'=d'=e'=feature'=eqt
+             /                       /
+o=m=o=o=master--------              /
+   \                  \            /
+    a=b=c=d=e=feature--merge-------
+
+i.e: the new feature branch has both histories:
+  - "feature'" where everything is cleanly rebased and in a form where
+               format-patch is suitable to send it upstream
+  - "merge" which is both a descendant from feature (so one can see what
+    changed since that time and can just pull when one had had cloned feature)
+
+Example 2:
+
+Let's assume you have a feature branch like
+
+o=master
+   \
+    a=b=c=d=e=f
+
+Assume you just commited "f" which fixes a bug introduced by "b".
+Now you of course do not want to send it that way upstream (as it will
+make reviewing harder, may force people bisecting to skip some versions
+every time they hit this region and so on), so you want to
+bisect -i and squash "f" into "b".
+
+o=master
+   \
+    a=b+f=c'=d'=e'
+
+But if you had already cloned at state "d" to your laptop (or made a backup
+of that branch at some server, or published it for use of some collegues)
+it will not be a fast-forward, so you have to be very carefull to not
+accidentially lose a commit that is already there.
+
+So with this patches you can do "git rebase -i --eqt" and squash f into b
+and get:
+
+o=master
+   \
+    a=b=c=d=e=f---
+     \            \
+      b+f=c'=d'=e'=eqt
+
+which means that you can just pull from your laptop and get the new head
+as fast-forward, but still have a proper history ready for submitting.
+
+The only downsize of this approach is that an unpatched/old git of course
+does not know about that it can just choose one of both histories but think
+it has to look at both, so git-format-patch will return patches multiple times
+and git-rebase will also try to apply both branches, which the patched version
+no longer does, only showing the 'presentable' in this case.
+
+Those patches are a bit rough and mostly intended to show how it could work
+and to allow experimenting with it. I think the biggest thing still missing
+(apart from documentation, error handling, better commit messages) is making
+git bisect take advantage of this and only looking at the nice branch.
+
+Bernhard R. Link (7):
+  add new command git equal-tree-marker
+  add option to only visit the first parent of a equal tree merge
+  format-patch defaults to --first-equal-tree-only
+  support equal tree merges in interactive rebase
+  make rebase -m equal tree marker aware
+  add support for creating equal tree markers after rebase
+  add support for creating equal tree markers to rebase -i
+
+ .gitignore                 |    1 +
+ Makefile                   |    1 +
+ builtin-log.c              |    1 +
+ git-equal-tree-marker.sh   |   50 ++++++++++++++++++++++++++++++++++++++
+ git-rebase--interactive.sh |   33 +++++++++++++++++++++++++
+ git-rebase.sh              |   35 ++++++++++++++++++++++++--
+ revision.c                 |   57 +++++++++++++++++++++++++++++++++++++-------
+ revision.h                 |    1 +
+ 8 files changed, 167 insertions(+), 12 deletions(-)
+ create mode 100644 git-equal-tree-marker.sh
+
+Hochachtungsvoll,
+	Bernhard R. Link
+-- 
+"Never contain programs so few bugs, as when no debugging tools are available!"
+	Niklaus Wirth
