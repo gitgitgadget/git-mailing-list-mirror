@@ -1,113 +1,85 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/7] add new command git equal-tree-marker
-Date: Mon, 30 Nov 2009 16:36:28 +0100
-Message-ID: <4B13E67C.4050005@drmicha.warpmail.net>
-References: <cover.1259524136.git.brlink@debian.org> <9e6833ef7188f41d6ea46ddcf92929af284b4adb.1259524136.git.brlink@debian.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: git archive without path
+Date: Mon, 30 Nov 2009 18:45:35 +0300
+Message-ID: <37fcd2780911300745r79c0cb54ifc3af5e79bb963e4@mail.gmail.com>
+References: <20091130123203.GA11235@dpotapov.dyndns.org>
+	 <4B13C2FE.3040707@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Bernhard R. Link" <brlink@debian.org>
-X-From: git-owner@vger.kernel.org Mon Nov 30 16:37:56 2009
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Nov 30 16:45:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NF8K3-0004iY-9W
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 16:37:55 +0100
+	id 1NF8Rb-0008In-S4
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 16:45:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753111AbZK3Phf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2009 10:37:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753093AbZK3Phe
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 10:37:34 -0500
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:44122 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753061AbZK3Phd (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Nov 2009 10:37:33 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id C92F5C51A7;
-	Mon, 30 Nov 2009 10:37:39 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 30 Nov 2009 10:37:39 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=zriURAWA6NLh3NGze3FibG22w2c=; b=ZIHqocHq5c9zIh4sVmXVMQGEsznvdUDgLQJM/WtCw57405uFB6p4ugusMIn3yaluTRdgl2KZVV4FYiNBsixArjg76CzTI2gI0NSIZsz4HCGwRZ7l4IXBQhcfptjDajWU3Wtnvd/KIdGlXCXXGIzKJRy8QvjItVfy2QWACRoEdms=
-X-Sasl-enc: cHKLWZQilSwMI4qJBZJoslC9f9w9gratay+8QFiyM2s7 1259595459
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 4031B1A6A8;
-	Mon, 30 Nov 2009 10:37:39 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091127 Lightning/1.0b1pre Shredder/3.0.1pre
-In-Reply-To: <9e6833ef7188f41d6ea46ddcf92929af284b4adb.1259524136.git.brlink@debian.org>
+	id S1752610AbZK3Ppb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2009 10:45:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752553AbZK3Ppb
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 10:45:31 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:36549 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752410AbZK3Ppb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2009 10:45:31 -0500
+Received: by bwz27 with SMTP id 27so2613556bwz.21
+        for <git@vger.kernel.org>; Mon, 30 Nov 2009 07:45:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=zy+qeGugAgVZGhC/reySU9TZ5mdoeXxUN6BtxhB3e9A=;
+        b=jk2Efl1OZPyXYjbE9JPHU14EUMcixgJ0zQUobYy2rYJHux89/CiZ41PvPtcUGRqhQj
+         QIGcqEhw5TMoPuia8I02Bqxwv465BfbkTyVbi6HeDArBTuYf8jGxCe11BxsWqYhXzKMT
+         8Bj9trhY4RhEsOZqss5msgrGR/zPIXipoL0Do=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=WuVF7A1Z/Gb4jA8PilIY9wUdE1rRDw8/yGJXOSgJhmMeXWeo0Q2uCkbuScj2//QHhy
+         g8XoXf+BCWG9wXUI/Cch0bfuvUOw6qP4JdNmm1F2r7Lck0nnR3jVSOxVDsEDUCCsnTDv
+         XL6nxH+wzyZRp2rf8kIp8hk5fthNxIvbZkabQ=
+Received: by 10.239.163.222 with SMTP id q30mr493723hbd.128.1259595935814; 
+	Mon, 30 Nov 2009 07:45:35 -0800 (PST)
+In-Reply-To: <4B13C2FE.3040707@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134115>
 
-Bernhard R. Link venit, vidit, dixit 30.11.2009 15:43:
-> This adds a new commit denoting tha current branch has the same
-> tree as another branch, thus allowing fast-forward from the named
-> commits to this one.
-> 
-> TODO: manpage, rewrite as builtin once the semantics are accepted?
-> ---
->  .gitignore               |    1 +
->  Makefile                 |    1 +
->  git-equal-tree-marker.sh |   50 ++++++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 52 insertions(+), 0 deletions(-)
->  create mode 100644 git-equal-tree-marker.sh
-> 
-> diff --git a/.gitignore b/.gitignore
-> index ac02a58..248d146 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -39,6 +39,7 @@
->  /git-difftool
->  /git-difftool--helper
->  /git-describe
-> +/git-equal-tree-marker
->  /git-fast-export
->  /git-fast-import
->  /git-fetch
-> diff --git a/Makefile b/Makefile
-> index 4dba10e..913d4c4 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -336,6 +336,7 @@ TEST_PROGRAMS =
->  SCRIPT_SH += git-am.sh
->  SCRIPT_SH += git-bisect.sh
->  SCRIPT_SH += git-difftool--helper.sh
-> +SCRIPT_SH += git-equal-tree-marker.sh
->  SCRIPT_SH += git-filter-branch.sh
->  SCRIPT_SH += git-lost-found.sh
->  SCRIPT_SH += git-merge-octopus.sh
-> diff --git a/git-equal-tree-marker.sh b/git-equal-tree-marker.sh
-> new file mode 100644
-> index 0000000..403cc56
-> --- /dev/null
-> +++ b/git-equal-tree-marker.sh
-> @@ -0,0 +1,50 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2009 Bernhard R. Link
-> +#
-> +# Create a new commit making HEAD parent of the arguments,
-> +# which must be commits with the same tree.
-> +
-> +set -e
-> +
-> +USAGE='<head>...'
-> +LONG_USAGE='Make current HEAD parent of the given heads (which need to have the same tree).'
-> +SUBDIRECTORY_OK=Yes
-> +OPTIONS_SPEC=
-> +. git-sh-setup
-> +cd_to_toplevel
-> +
-> +# is there really no function for this?
-> +tree_of_commit() {
-> +	git cat-file commit "$1" | grep '^tree ' | head -n 1 | sed -e 's/^tree //'
-> +}
+On Mon, Nov 30, 2009 at 4:05 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+>
+> Depends on the definition of "all" :)
 
-You mean there should be something really simple, such as:
+I don't think it caries any restriction clause in this case....
 
-git rev-parse "$1"^{tree}
+>
+> In fact: Two mighty powers are fighting right now for the primacy in the
+> Land of the Git, and both carry the name "consistency" on their flags.
+> One is the "order of the consistency of generations", also named
+> "backwards compatibility", and one is the "order of the consistency of
+> commands", also named "user experience".
+>
+> Many commands have different defaults with respect to how they behave in
+> a subdirectory (compare status to ls-files, e.g.), and the discussion
+> about how to best change that are underway, most prominently in the case
+> of git grep.
 
-Michael
+Well, "order of the consistency" is a noble cause, but I don't think the
+situations are comparable. The man page for git-grep has never claimed
+that git grep works on all files. Also, git grep works on the working tree
+by default, so defaulting to the current working directory at least makes
+some sense. I cannot say the same about git-archive, which only works
+on the repository and if I specified some revision without any path then
+I expect to have the whole archive not some part of it just because I
+happened to be in some subdirectory.
+
+So, in the case of git-grep, we speak about changing the behavior that
+was well-known, often used, and documented as such. On contrast,
+git-archive documented as including all files if path is not specified.
+
+Dmitry
