@@ -1,86 +1,95 @@
-From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Subject: [PATCH v2 6/6] INSTALL: document a simpler way to run uninstalled builds
-Date: Sun, 29 Nov 2009 23:19:31 -0700
-Message-ID: <1259561971-25730-7-git-send-email-mmogilvi_git@miniinfo.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 4/6] build dashless "bin-wrappers" directory similar
+ to installed bindir
+Date: Sun, 29 Nov 2009 22:28:46 -0800
+Message-ID: <7vmy241q75.fsf@alter.siamese.dyndns.org>
 References: <1259561971-25730-1-git-send-email-mmogilvi_git@miniinfo.net>
  <1259561971-25730-2-git-send-email-mmogilvi_git@miniinfo.net>
  <1259561971-25730-3-git-send-email-mmogilvi_git@miniinfo.net>
  <1259561971-25730-4-git-send-email-mmogilvi_git@miniinfo.net>
  <1259561971-25730-5-git-send-email-mmogilvi_git@miniinfo.net>
- <1259561971-25730-6-git-send-email-mmogilvi_git@miniinfo.net>
-Cc: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Nov 30 07:28:05 2009
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+X-From: git-owner@vger.kernel.org Mon Nov 30 07:29:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEzjx-0002dE-3o
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 07:28:05 +0100
+	id 1NEzkt-0002ur-SX
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 07:29:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753251AbZK3G1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2009 01:27:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753210AbZK3G1j
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 01:27:39 -0500
-Received: from qmta14.emeryville.ca.mail.comcast.net ([76.96.27.212]:55524
-	"EHLO QMTA14.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753191AbZK3G1j (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Nov 2009 01:27:39 -0500
-Received: from OMTA17.emeryville.ca.mail.comcast.net ([76.96.30.73])
-	by QMTA14.emeryville.ca.mail.comcast.net with comcast
-	id BJLD1d0011afHeLAEJTmzf; Mon, 30 Nov 2009 06:27:46 +0000
-Received: from mmogilvi.homeip.net ([24.8.125.243])
-	by OMTA17.emeryville.ca.mail.comcast.net with comcast
-	id BJTk1d0075FCJCg8dJTlR2; Mon, 30 Nov 2009 06:27:46 +0000
-Received: from localhost.localdomain (bean [192.168.30.96])
-	by mmogilvi.homeip.net (Postfix) with ESMTP id E095389114;
-	Sun, 29 Nov 2009 23:20:04 -0700 (MST)
-X-Mailer: git-send-email 1.6.4.GIT
-In-Reply-To: <1259561971-25730-6-git-send-email-mmogilvi_git@miniinfo.net>
+	id S1753210AbZK3G2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2009 01:28:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752082AbZK3G2w
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 01:28:52 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44468 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751945AbZK3G2w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2009 01:28:52 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C86781080;
+	Mon, 30 Nov 2009 01:28:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2cfIFPDNG4IGO9oT4wJYHYOjtno=; b=Mw6Nnv
+	2xmiwnTkOhv562CbYrNsMet9g53mvFqoHbpUpwsnNvZAE2eFfYT2vHoUIajSJ4gg
+	e6+U2qF+Q/DsRxyGtJwAV728XkqE7JduH0sbt9s6eNsaozcy9j3NloquNBxts9hI
+	U7G4ugLBrMyuX3x+U3o9ONqUGfhF+R6MELUzg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=J9Y87P0nT5biXwMT1XNjOrwG443GHMuO
+	XyxmWrJoa78mV/yu6WzrDwQBkWLFKtCRWEPXt8VBUqNHhhKhyr8yu+cM8PpPiO+E
+	n4iW8aIsYQ45inBlWYgBtgoKrME3QALz39Gb006A9iU/yoLv8bQr+NGpp26ZLoXD
+	TlP+mam1+T8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A415C107F;
+	Mon, 30 Nov 2009 01:28:53 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5A9AF107C; Mon, 30 Nov
+ 2009 01:28:48 -0500 (EST)
+In-Reply-To: <1259561971-25730-5-git-send-email-mmogilvi_git@miniinfo.net>
+ (Matthew Ogilvie's message of "Sun\, 29 Nov 2009 23\:19\:29 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A166A174-DD79-11DE-B42B-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134056>
 
-The new scripts automatically saved in the bin-wrappers
-directory allow you test run a build when you have neither installed
-git nor tweaked environment variables.  Mention this in INSTALL,
-along with the slight performance issue of doing so.
+Matthew Ogilvie <mmogilvi_git@miniinfo.net> writes:
 
-This can be especially handy for manually testing
-network-invoked git (from ssh, web servers, or similar), but
-it is also handy with a plain command prompt.
+> diff --git a/wrap-for-bin.sh b/wrap-for-bin.sh
+> new file mode 100644
+> index 0000000..ee2bc98
+> --- /dev/null
+> +++ b/wrap-for-bin.sh
+> @@ -0,0 +1,15 @@
+> +#!/bin/sh
+> +
+> +# wrap-for-bin.sh: Template for git executable wrapper scripts
+> +# to run test suite against sandbox, but with only bindir-installed
+> +# executables in PATH.  The Makefile copies this into various
+> +# files in bin-wrappers, substituting
+> +# __GIT_EXEC_PATH__ and __PROG__.
+> +
+> +GIT_EXEC_PATH="__GIT_EXEC_PATH__"
+> +GIT_TEMPLATE_DIR="__GIT_EXEC_PATH__/templates/blt"
+> +GITPERLLIB="__GIT_EXEC_PATH__/perl/blib/lib"
+> +PATH="__GIT_EXEC_PATH__/bin-wrappers:$PATH"
+> +export GIT_EXEC_PATH GIT_TEMPLATE_DIR GITPERLLIB PATH
+> +
+> +exec "${GIT_EXEC_PATH}/__PROG__" "$@"
 
-Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
----
- INSTALL |   14 +++++++++++++-
- 1 files changed, 13 insertions(+), 1 deletions(-)
+Two issues, one minor and one not so minor but not grave:
 
-diff --git a/INSTALL b/INSTALL
-index be504c9..ee718c6 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -39,7 +39,19 @@ Issues of note:
-    with --disable-transition option to avoid this.
- 
-  - You can use git after building but without installing if you
--   wanted to.  Various git commands need to find other git
-+   want to.
-+
-+   The simplest option for running some manual tests of a build
-+   before installing it is to use the wrapper scripts that are built
-+   and saved into `pwd`/bin-wrappers.  Either invoke the scripts in
-+   bin-wrappers using their full paths, put bin-wrappers in your
-+   PATH, or copy/symlink just the bin-wrappers scripts into somewhere
-+   already in your PATH.  But this option is slightly inefficient,
-+   so for a more permanent solution we recommend either installing
-+   git (you can set a prefix to install right next to your
-+   build directory), or use the alternative below.
-+
-+   Alternatively, various git commands need to find other git
-    commands and scripts to do their work, so you would need to
-    arrange a few environment variables to tell them that their
-    friends will be found in your built source area instead of at
--- 
-1.6.4.GIT
+ - Everywhere else we seem to use "@@UPPERCASE_NAME@@" not
+   double-underscore as placeholders like the above.
+
+ - @@PROG@@ is under our control and it is easy for us to guarantee that
+   it won't have any funny letters, but GIT_EXEC_PATH is not.  Is it safe
+   to do a simple-minded "sed" replacement, or does it need the usual sq
+   trick employed in the other replacement in our Makefile?
