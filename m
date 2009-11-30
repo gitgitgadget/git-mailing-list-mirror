@@ -1,58 +1,81 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: equal-tree-merges as way to make rebases fast-forward-able
-Date: Mon, 30 Nov 2009 20:26:53 +0100
-Message-ID: <200911302026.53933.j6t@kdbg.org>
-References: <cover.1259524136.git.brlink@debian.org> <7v8wdnooza.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/8] git-merge-recursive-{ours,theirs}
+Date: Mon, 30 Nov 2009 11:56:43 -0800
+Message-ID: <7viqcrlrb8.fsf@alter.siamese.dyndns.org>
+References: <d243a513ffb8da4272f7a0e13a711f9b65195c25.1259201377.git.apenwarr@gmail.com>
+ <905749faf5ccb2c7c54d3318dbc662d69daf8d0e.1259201377.git.apenwarr@gmail.com>
+ <cover.1259201377.git.apenwarr@gmail.com>
+ <7e1f1179fc5fe2f568e2c75f75366fa40d7bbbfb.1259201377.git.apenwarr@gmail.com>
+ <7vr5rlerqf.fsf@alter.siamese.dyndns.org>
+ <32541b130911261405q6564d8f2o30b7d7fd6f708d05@mail.gmail.com>
+ <7vvdgs1qip.fsf@alter.siamese.dyndns.org>
+ <32541b130911301008v4156f0c6ge9f30952565392f9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Bernhard R. Link" <brlink@debian.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 30 20:27:30 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 30 20:56:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFBu2-00058S-Mx
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 20:27:19 +0100
+	id 1NFCMj-0001jD-WD
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 20:56:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753128AbZK3T1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2009 14:27:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753100AbZK3T1G
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 14:27:06 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:19913 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753027AbZK3T1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2009 14:27:06 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 928DFCDF82;
-	Mon, 30 Nov 2009 20:27:09 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 4C2D019F6B5;
-	Mon, 30 Nov 2009 20:26:54 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <7v8wdnooza.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752891AbZK3T4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2009 14:56:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752861AbZK3T4p
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 14:56:45 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61465 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752469AbZK3T4p (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2009 14:56:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A728E84BDD;
+	Mon, 30 Nov 2009 14:56:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BlE2RyaPP+XjTEiNyzogF8yu8gI=; b=tW95Ct
+	bNzpX9WKPgH/l75wL8q7h8I6dRS9eBTy8wFLNu3yzaOZJSzGRKyNUSu4ckdUs04z
+	7UBiRnxaAVeJBknK0At8+nQhvGa6eqk9LWWvSlstMHEBqftW0KEmsoB8AX3Wf//M
+	niOMLdWpIgv559L8hMVpgY7PiaqTdo9agCGNg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=syua3AhcMALUryOlvc3XgS1XTMuFarxN
+	gMsU69M/l4ep9cxFc5zi9k07gypMqtJ1HZNmXkTKF6RTNYlyrYemuFiHllwEvNko
+	WBq8f7PGuwAmr02Vt9tCshD9B/wGLpuNEH1gJAvAUbh1H3SM9JstwWOMqor/9gz3
+	OK0AdAdgX9I=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 70D8084BDC;
+	Mon, 30 Nov 2009 14:56:48 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8148484BDB; Mon, 30 Nov
+ 2009 14:56:45 -0500 (EST)
+In-Reply-To: <32541b130911301008v4156f0c6ge9f30952565392f9@mail.gmail.com>
+ (Avery Pennarun's message of "Mon\, 30 Nov 2009 13\:08\:58 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 7EA0FB1E-DDEA-11DE-B2AC-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134133>
 
-On Montag, 30. November 2009, Junio C Hamano wrote:
-> To avoid that, I think (1) the marker has to be more reliable than just
-> "happens to have the same tree", and (2) the traversal done by Porcelains
-> (your patches 3 thru 5) by default should be unaware of eqt.
+Avery Pennarun <apenwarr@gmail.com> writes:
+
+>> I've queued the series with minor fixes to 'pu' and pushed it out.
 >
-> I don't know what a suitable marker should look like, though.  The marker
-> must be easily identifiable by the lowest level rev-list machinery, so it
-> needs to be a sign left somewhere in the commit object.
+> Since I see you didn't change a couple of things you mentioned in
+> earlier comments (the NEEDSWORK comment and the sq-then-eval trick) do
+> you still want me to respin this series?
 
-Wouldn't the pathspec . be the marker:
+The commit still is NEEDSWORK and shouldn't be in 'next' in its current
+shape.  I don't think the topic is 1.6.6 material yet, and we will be in
+pre-release feature freeze any minute now, so there is no urgency.
 
-    git rev-list HEAD -- .
+As I did the sq-then-eval in many places in our Porcelain scripts (and
+many of them are converted to C and lost the need for the trick), I may
+get tempted to fix it up when I am bored ;-).  But no promises.
 
-follows only one of the branches that have identical trees.
-
--- Hannes
+Thanks.
