@@ -1,69 +1,62 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] tests: handle NO_PYTHON setting
-Date: Mon, 30 Nov 2009 08:55:51 +0100
-Message-ID: <fabb9a1e0911292355v260b9f0ck79d993e25f0c5c61@mail.gmail.com>
+Date: Mon, 30 Nov 2009 02:59:27 -0500
+Message-ID: <20091130075927.GA5767@coredump.intra.peff.net>
 References: <20091130075221.GA5421@coredump.intra.peff.net>
+ <fabb9a1e0911292355v260b9f0ck79d993e25f0c5c61@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
-	Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Nov 30 08:56:31 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Johan Herland <johan@herland.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 30 08:59:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NF17V-0000Wv-NU
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 08:56:30 +0100
+	id 1NF1AR-0001Wz-JS
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 08:59:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752318AbZK3H4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2009 02:56:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752284AbZK3H4G
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 02:56:06 -0500
-Received: from mail-vw0-f197.google.com ([209.85.212.197]:40790 "EHLO
-	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750920AbZK3H4F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2009 02:56:05 -0500
-Received: by vws35 with SMTP id 35so983830vws.4
-        for <git@vger.kernel.org>; Sun, 29 Nov 2009 23:56:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=cKT7wjOglAmuwZX9AbO/ff5q/K4FHSCOEtV5Tx7SsfI=;
-        b=OnlTKUsUllQHqX3EI/JF5pOuzCamF6lW6pCkp4IgbDO9UT515XxRGOsbGDtyFXK5i3
-         Kdobp7C+7maOPZkNtuZl1b0k/5TlRsU8Nm0rOZ6+OsV10cuzsI38OykrFhiqvAqMN7w/
-         mYG6ZyFY1NpTDrUfrcvjYajGj2hWuHcHBmTnw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=b3xNR17ITtbAjgZhsxJzYkNs68jNLjZ5NZX1CocqUwblTqsP2kwi19Ubzy81RliG8/
-         2kT/XjX+02AJzdXlwS9HYFXuQxzlbJe7IYwVDbTHaRENCKUZiXW0OzuQNo/h3lWiVPG6
-         ebiyJ5NLX++1GBbHzPTT9FDWaKeDT8uBo70d4=
-Received: by 10.220.125.7 with SMTP id w7mr4745407vcr.74.1259567771099; Sun, 
-	29 Nov 2009 23:56:11 -0800 (PST)
-In-Reply-To: <20091130075221.GA5421@coredump.intra.peff.net>
+	id S1751860AbZK3H7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2009 02:59:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751633AbZK3H7U
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 02:59:20 -0500
+Received: from peff.net ([208.65.91.99]:33340 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751515AbZK3H7U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2009 02:59:20 -0500
+Received: (qmail 10491 invoked by uid 107); 30 Nov 2009 08:03:53 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 30 Nov 2009 03:03:53 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Nov 2009 02:59:27 -0500
+Content-Disposition: inline
+In-Reply-To: <fabb9a1e0911292355v260b9f0ck79d993e25f0c5c61@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134075>
 
-Heya,
+On Mon, Nov 30, 2009 at 08:55:51AM +0100, Sverre Rabbelier wrote:
 
-On Mon, Nov 30, 2009 at 08:52, Jeff King <peff@peff.net> wrote:
-> This feels a little funny for NO_PYTHON to mean "no remote helpers at
-> all". But that is the way the Makefile is set up, since we seem to have
-> only python helpers.
+> > This feels a little funny for NO_PYTHON to mean "no remote helpers at
+> > all". But that is the way the Makefile is set up, since we seem to have
+> > only python helpers.
+> 
+> I don't understand what you mean? Do you mean NO_PYTHON implies "no
+> remote helpers at all", or "not having any remote helpers" implies
+> NO_PYTHON? Either way, I'm not sure how to set it up differently, not
+> having that much Makefile foo myself, so maybe Johan and Daniel could
+> comment?
 
-I don't understand what you mean? Do you mean NO_PYTHON implies "no
-remote helpers at all", or "not having any remote helpers" implies
-NO_PYTHON? Either way, I'm not sure how to set it up differently, not
-having that much Makefile foo myself, so maybe Johan and Daniel could
-comment?
+I mean, I would think that the "git_remote_helpers" directory contained
+remote helpers of all sorts, not just the python ones. Right now we
+_only_ have python ones. So checking for NO_PYTHON in test-lib.sh before
+looking at git_remote_helpers makes sense.  But I am concerned that
+assumption will be broken silently in the future if non-python helpers
+are added to git_remote_helpers.
 
--- 
-Cheers,
+It is probably not worth caring about too much, though.
 
-Sverre Rabbelier
+-Peff
