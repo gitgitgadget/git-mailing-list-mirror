@@ -1,95 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/6] build dashless "bin-wrappers" directory similar
- to installed bindir
-Date: Sun, 29 Nov 2009 22:28:46 -0800
-Message-ID: <7vmy241q75.fsf@alter.siamese.dyndns.org>
-References: <1259561971-25730-1-git-send-email-mmogilvi_git@miniinfo.net>
- <1259561971-25730-2-git-send-email-mmogilvi_git@miniinfo.net>
- <1259561971-25730-3-git-send-email-mmogilvi_git@miniinfo.net>
- <1259561971-25730-4-git-send-email-mmogilvi_git@miniinfo.net>
- <1259561971-25730-5-git-send-email-mmogilvi_git@miniinfo.net>
+From: Rakotomandimby Mihamina <mihamina@gulfsat.mg>
+Subject: git include
+Date: Mon, 30 Nov 2009 09:41:54 +0300
+Message-ID: <4B136932.9000908@gulfsat.mg>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-X-From: git-owner@vger.kernel.org Mon Nov 30 07:29:04 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 30 07:42:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NEzkt-0002ur-SX
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 07:29:04 +0100
+	id 1NEzxe-00060M-II
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Nov 2009 07:42:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753210AbZK3G2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2009 01:28:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752082AbZK3G2w
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 01:28:52 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44468 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751945AbZK3G2w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2009 01:28:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C86781080;
-	Mon, 30 Nov 2009 01:28:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2cfIFPDNG4IGO9oT4wJYHYOjtno=; b=Mw6Nnv
-	2xmiwnTkOhv562CbYrNsMet9g53mvFqoHbpUpwsnNvZAE2eFfYT2vHoUIajSJ4gg
-	e6+U2qF+Q/DsRxyGtJwAV728XkqE7JduH0sbt9s6eNsaozcy9j3NloquNBxts9hI
-	U7G4ugLBrMyuX3x+U3o9ONqUGfhF+R6MELUzg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J9Y87P0nT5biXwMT1XNjOrwG443GHMuO
-	XyxmWrJoa78mV/yu6WzrDwQBkWLFKtCRWEPXt8VBUqNHhhKhyr8yu+cM8PpPiO+E
-	n4iW8aIsYQ45inBlWYgBtgoKrME3QALz39Gb006A9iU/yoLv8bQr+NGpp26ZLoXD
-	TlP+mam1+T8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A415C107F;
-	Mon, 30 Nov 2009 01:28:53 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5A9AF107C; Mon, 30 Nov
- 2009 01:28:48 -0500 (EST)
-In-Reply-To: <1259561971-25730-5-git-send-email-mmogilvi_git@miniinfo.net>
- (Matthew Ogilvie's message of "Sun\, 29 Nov 2009 23\:19\:29 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A166A174-DD79-11DE-B42B-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752869AbZK3GmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2009 01:42:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752106AbZK3GmB
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 01:42:01 -0500
+Received: from smtp-out.malagasy.com ([41.204.120.134]:58577 "EHLO
+	smtp-out.malagasy.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751504AbZK3GmA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2009 01:42:00 -0500
+Received: from camel.malagasy.com (camel.malagasy.com [41.204.104.34])
+	by smtp-out.malagasy.com (Postfix) with ESMTP id AB7E58C122
+	for <git@vger.kernel.org>; Mon, 30 Nov 2009 09:45:25 +0300 (EAT)
+Received: from localhost (static-104-53.blueline.mg [41.204.104.53])
+	by camel.malagasy.com (Postfix) with ESMTP id C932FFEAF
+	for <git@vger.kernel.org>; Mon, 30 Nov 2009 09:42:01 +0300 (EAT)
+X-Virus-Scanned: par antivirus2.malagasy.com
+X-Spam-Flag: NO
+X-Spam-Score: -2.684
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.684 required=7 tests=[AWL=-0.085, BAYES_00=-2.599]
+Received: from camel.malagasy.com ([41.204.104.34])
+	by localhost (antivirus2.malagasy.com [41.204.104.53]) (amavisd-new, port 10024)
+	with ESMTP id 3RjFV0UQh9eV for <git@vger.kernel.org>;
+	Mon, 30 Nov 2009 09:41:56 +0300 (EAT)
+Received: from rktmb (sysadmin-cnc.malagasy.com [41.204.104.9])
+	by camel.malagasy.com (Postfix) with ESMTP id 9E35FFEAA
+	for <git@vger.kernel.org>; Mon, 30 Nov 2009 09:41:54 +0300 (EAT)
+Received: from localhost ([127.0.0.1])
+	by rktmb with esmtp (Exim 4.69)
+	(envelope-from <mihamina@gulfsat.mg>)
+	id 1NEzxK-0001uo-F8
+	for git@vger.kernel.org; Mon, 30 Nov 2009 09:41:54 +0300
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091125 Shredder/3.0.1pre
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134057>
 
-Matthew Ogilvie <mmogilvi_git@miniinfo.net> writes:
+Hi all,
 
-> diff --git a/wrap-for-bin.sh b/wrap-for-bin.sh
-> new file mode 100644
-> index 0000000..ee2bc98
-> --- /dev/null
-> +++ b/wrap-for-bin.sh
-> @@ -0,0 +1,15 @@
-> +#!/bin/sh
-> +
-> +# wrap-for-bin.sh: Template for git executable wrapper scripts
-> +# to run test suite against sandbox, but with only bindir-installed
-> +# executables in PATH.  The Makefile copies this into various
-> +# files in bin-wrappers, substituting
-> +# __GIT_EXEC_PATH__ and __PROG__.
-> +
-> +GIT_EXEC_PATH="__GIT_EXEC_PATH__"
-> +GIT_TEMPLATE_DIR="__GIT_EXEC_PATH__/templates/blt"
-> +GITPERLLIB="__GIT_EXEC_PATH__/perl/blib/lib"
-> +PATH="__GIT_EXEC_PATH__/bin-wrappers:$PATH"
-> +export GIT_EXEC_PATH GIT_TEMPLATE_DIR GITPERLLIB PATH
-> +
-> +exec "${GIT_EXEC_PATH}/__PROG__" "$@"
+I would like to track only *.ml files and ignore all others.
+Is there a way to do that in .gitignore?
 
-Two issues, one minor and one not so minor but not grave:
+Thanks.
 
- - Everywhere else we seem to use "@@UPPERCASE_NAME@@" not
-   double-underscore as placeholders like the above.
-
- - @@PROG@@ is under our control and it is easy for us to guarantee that
-   it won't have any funny letters, but GIT_EXEC_PATH is not.  Is it safe
-   to do a simple-minded "sed" replacement, or does it need the usual sq
-   trick employed in the other replacement in our Makefile?
+-- 
+       Architecte Informatique chez Blueline/Gulfsat:
+    Administration Systeme, Recherche & Developpement
+                                    +261 33 11 207 36
