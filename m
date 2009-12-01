@@ -1,170 +1,66 @@
-From: =?ISO-8859-15?Q?Martin_Storsj=F6?= <martin@martin.st>
-Subject: [PATCH/RFC] Allow curl to rewind the RPC read buffer at any time
-Date: Tue, 1 Dec 2009 12:37:26 +0200 (EET)
-Message-ID: <alpine.DEB.2.00.0912011236360.5582@cone.home.martin.st>
-References: <Pine.LNX.4.64.0904150054470.7479@localhost.localdomain>, <Pine.LNX.4.64.0904142350140.7479@localhost.localdomain>, <1254510286-23155-1-git-send-email-nmiell@gmail.com>, <25718488.post@talk.nabble.com> <20091127234110.7b7e9993.rctay89@gmail.com>
- <alpine.DEB.2.00.0912011208160.5582@cone.home.martin.st>
+From: Jeenu V <jeenuv@gmail.com>
+Subject: Transplant branch from another repository
+Date: Tue, 1 Dec 2009 16:31:02 +0530
+Message-ID: <5195c8760912010301r63d5e27axf53c17db799a798f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Nicholas Miell <nmiell@gmail.com>,
-	gsky51@gmail.com, Clemens Buchacher <drizzd@aon.at>,
-	Mark Lodato <lodatom@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 01 11:37:37 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 01 12:01:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFQ6w-0002Ge-3O
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 11:37:35 +0100
+	id 1NFQU4-0003b3-GB
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 12:01:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752704AbZLAKhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 05:37:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752667AbZLAKhW
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 05:37:22 -0500
-Received: from mta-out.inet.fi ([195.156.147.13]:34253 "EHLO jenni2.inet.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752265AbZLAKhW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 05:37:22 -0500
-Received: from dsl-tkubrasgw1-ffc4c100-75.dhcp.inet.fi (88.193.196.75) by jenni2.inet.fi (8.5.014)
-        id 4A777091046C7CC4; Tue, 1 Dec 2009 12:37:26 +0200
-X-X-Sender: martin@cone.home.martin.st
-In-Reply-To: <alpine.DEB.2.00.0912011208160.5582@cone.home.martin.st>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1753040AbZLALBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 06:01:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752938AbZLALBQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 06:01:16 -0500
+Received: from mail-vw0-f197.google.com ([209.85.212.197]:46549 "EHLO
+	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752367AbZLALBQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 06:01:16 -0500
+Received: by vws35 with SMTP id 35so1456207vws.4
+        for <git@vger.kernel.org>; Tue, 01 Dec 2009 03:01:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=9GW+uP7byEV3dqABXIVzJLG6rGDP0pP9CXx1ibZonHk=;
+        b=vLl9E60qlTQqJH0pgUTJDsh5wfZhgiduz3nGdadkKsqu2TCl3c+WpND5ehZb/Rn/gw
+         3pa9EbHata7CusueoGfl8qq/H9mUqIhFXqd8oVvGvkEMVSBUYFtuVFpKZF/RrxVHdzpa
+         zQM0U2Y2zRP8ESdhR6wMrXpPOduYx7cf1uAfM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=kDlZWKChHBOU6u9Fv4612bPkBLyqxQaufqXNe4heNSvSXT1y41zgUbNJAKI+n++EdU
+         eCPVmgZM9mtYc1tSNwe86Hp3KGDhTCJGifzeMLr+vXl9eUeO2H9Dw4aYkiyI32v2C2Tb
+         bsAhkljZPgYd/+k1wSIZ+h/wC7vpKOI3bBqow=
+Received: by 10.220.126.224 with SMTP id d32mr6743087vcs.57.1259665282117; 
+	Tue, 01 Dec 2009 03:01:22 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134197>
 
-When using multi-pass authentication methods, the curl library may
-need to rewind the read buffers used for providing data to HTTP POST,
-if data has been output before a 401 error is received.
+Hi,
 
-This solution buffers all data read by the curl library, in order to allow
-it to rewind the reading buffer at any time later.
+Say, I have two repositories A and B (local, independent, but similar
+- they are for content tracking and not collaboration purposes). A has
+a branch 'a', which I want to have in B. What I mean is that I'd like
+to have the sequence of changes in the branch 'a' to be present in B,
+thus creating an independent branch 'b' in B.
 
-If communicating with a HTTP server that doesn't support the
-Expect: 100-continue headers, all HTTP POST data will be sent before
-the server replies with the 401 error containing the authentication
-challenge.
+Is there any way to achieve this? One thing that I could think of is
+to use 'format-patch' to generate the list of patch files from A. But
+I don't see how to convert those patches to a sequence of commits in
+repo B. I could do a 'git apply patches/*' but then all patches
+collapse to one single commit. If format-patch is a/the way, could
+somebody tell me how to get this done? Or are there any alternatives?
 
-The buffering is enabled only if the rpc_service function allocates a
-buffer - this should perhaps be limited to the cases where http.authAny
-is enabled.
+FWIW: I'm running Git under Cygwin, and sendmail isn't configured.
 
-Signed-off-by: Martin Storsjo <martin@martin.st>
----
- remote-curl.c |   53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 53 insertions(+), 0 deletions(-)
-
-diff --git a/remote-curl.c b/remote-curl.c
-index a331bae..c1c5ccd 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -286,6 +286,10 @@ struct rpc_state {
- 	size_t alloc;
- 	size_t len;
- 	size_t pos;
-+	char *rewind_buf;
-+	size_t rewind_buf_size;
-+	size_t rewind_buf_write_pos;
-+	size_t rewind_buf_read_pos;
- 	int in;
- 	int out;
- 	struct strbuf result;
-@@ -299,12 +303,28 @@ static size_t rpc_out(void *ptr, size_t eltsize,
- 	struct rpc_state *rpc = buffer_;
- 	size_t avail = rpc->len - rpc->pos;
- 
-+	if (rpc->rewind_buf && rpc->rewind_buf_read_pos < rpc->rewind_buf_write_pos) {
-+		avail = rpc->rewind_buf_write_pos - rpc->rewind_buf_read_pos;
-+		if (max < avail)
-+			avail = max;
-+		memcpy(ptr, rpc->rewind_buf + rpc->rewind_buf_read_pos, avail);
-+		rpc->rewind_buf_read_pos += avail;
-+		return avail;
-+	}
-+
- 	if (!avail) {
- 		avail = packet_read_line(rpc->out, rpc->buf, rpc->alloc);
- 		if (!avail)
- 			return 0;
- 		rpc->pos = 0;
- 		rpc->len = avail;
-+
-+		if (rpc->rewind_buf) {
-+			ALLOC_GROW(rpc->rewind_buf, rpc->rewind_buf_write_pos + avail, rpc->rewind_buf_size);
-+			memcpy(rpc->rewind_buf + rpc->rewind_buf_write_pos, rpc->buf, avail);
-+			rpc->rewind_buf_write_pos += avail;
-+			rpc->rewind_buf_read_pos += avail;
-+		}
- 	}
- 
- 	if (max < avail)
-@@ -314,6 +334,26 @@ static size_t rpc_out(void *ptr, size_t eltsize,
- 	return avail;
- }
- 
-+#ifndef NO_CURL_IOCTL
-+curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
-+{
-+	struct rpc_state *rpc = clientp;
-+
-+	switch (cmd) {
-+	case CURLIOCMD_NOP:
-+		return CURLIOE_OK;
-+
-+	case CURLIOCMD_RESTARTREAD:
-+		rpc->rewind_buf_read_pos = 0;
-+		rpc->pos = rpc->len;
-+		return CURLIOE_OK;
-+
-+	default:
-+		return CURLIOE_UNKNOWNCMD;
-+	}
-+}
-+#endif
-+
- static size_t rpc_in(const void *ptr, size_t eltsize,
- 		size_t nmemb, void *buffer_)
- {
-@@ -370,8 +410,18 @@ static int post_rpc(struct rpc_state *rpc)
- 		 */
- 		headers = curl_slist_append(headers, "Expect: 100-continue");
- 		headers = curl_slist_append(headers, "Transfer-Encoding: chunked");
-+		if (rpc->rewind_buf) {
-+			ALLOC_GROW(rpc->rewind_buf, rpc->rewind_buf_write_pos + rpc->len, rpc->rewind_buf_size);
-+			memcpy(rpc->rewind_buf, rpc->buf, rpc->len);
-+			rpc->rewind_buf_read_pos = rpc->len;
-+			rpc->rewind_buf_write_pos = rpc->len;
-+		}
- 		curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, rpc_out);
- 		curl_easy_setopt(slot->curl, CURLOPT_INFILE, rpc);
-+#ifndef NO_CURL_IOCTL
-+		curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, rpc_ioctl);
-+		curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, rpc);
-+#endif
- 		if (options.verbosity > 1) {
- 			fprintf(stderr, "POST %s (chunked)\n", rpc->service_name);
- 			fflush(stderr);
-@@ -472,6 +522,8 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
- 	rpc->buf = xmalloc(rpc->alloc);
- 	rpc->in = client.in;
- 	rpc->out = client.out;
-+	rpc->rewind_buf_size = 100;
-+	rpc->rewind_buf = xmalloc(rpc->rewind_buf_size);
- 	strbuf_init(&rpc->result, 0);
- 
- 	strbuf_addf(&buf, "%s/%s", url, svc);
-@@ -503,6 +555,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
- 	free(rpc->hdr_content_type);
- 	free(rpc->hdr_accept);
- 	free(rpc->buf);
-+	free(rpc->rewind_buf);
- 	strbuf_release(&buf);
- 	return err;
- }
--- 
-1.6.4.4
+Thanks
+Jeenu
