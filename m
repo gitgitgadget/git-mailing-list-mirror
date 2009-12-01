@@ -1,142 +1,71 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: equal-tree-merges as way to make rebases fast-forward-able
-Date: Tue, 01 Dec 2009 12:50:13 +0100
-Message-ID: <4B1502F5.1060100@alum.mit.edu>
-References: <cover.1259524136.git.brlink@debian.org>
+From: Mikko Oksalahti <mikko@azila.fi>
+Subject: Re: Newbie
+Date: Tue, 1 Dec 2009 12:00:22 +0000 (UTC)
+Message-ID: <loom.20091201T125555-549@post.gmane.org>
+References: <loom.20091201T101313-496@post.gmane.org> <26ae428a0912010145k61dbfc41l8243363493918445@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Bernhard R. Link" <brlink@debian.org>
-X-From: git-owner@vger.kernel.org Tue Dec 01 12:50:31 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 01 13:00:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFRFW-0004kN-Er
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 12:50:30 +0100
+	id 1NFRPa-0008OF-UT
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 13:00:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753977AbZLALuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 06:50:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753957AbZLALuN
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 06:50:13 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:46342 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753885AbZLALuM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 06:50:12 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id nB1BoDtS020059
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 1 Dec 2009 12:50:13 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.23) Gecko/20090817 Thunderbird/2.0.0.23 Mnenhy/0.7.6.666
-In-Reply-To: <cover.1259524136.git.brlink@debian.org>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752871AbZLAMAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 07:00:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752201AbZLAMAn
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 07:00:43 -0500
+Received: from lo.gmane.org ([80.91.229.12]:55826 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752150AbZLAMAm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 07:00:42 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NFRPU-0008LB-FC
+	for git@vger.kernel.org; Tue, 01 Dec 2009 13:00:48 +0100
+Received: from xdsl-238-224.nebulazone.fi ([83.145.238.224])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 01 Dec 2009 13:00:48 +0100
+Received: from mikko by xdsl-238-224.nebulazone.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 01 Dec 2009 13:00:48 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 83.145.238.224 (Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/3.0.195.33 Safari/532.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134199>
 
-Bernhard R. Link wrote:
-> Example 1:
+Howard Miller <howardsmiller <at> googlemail.com> writes:
+
 > 
-> Let's assume you maintain such a regularily-rebased branch that you
-> want to be able to publish (or pull from other repositories for example
-> on your laptop):
+> 2009/12/1 Mikko Oksalahti <mikko <at> azila.fi>:
+> > How do I now get the accidentally deleted files back from the repository 
+without
+> > losing local changes made to 10 files?
 > 
-> o=m=o=o=master
->    \
->     a=b=c=d=e=feature
+> 'git status' should show you what files you have deleted.  'git
+> checkout filename' should get them back. I can't think of a way of
+> recovering every file you have just deleted although - I suspect it
+> might be tricky. Thinks like 'git pull' only apply to remote
+> repositories and you don't have one of those. 
 > 
-> with this patch you can do "git rebase -eqt master" and get:
+> Howard
 > 
->               a'=b'=c'=d'=e'=feature'=eqt
->              /                       /
-> o=m=o=o=master--------              /
->    \                  \            /
->     a=b=c=d=e=feature--merge-------
 
-Actually, there is more information that can be retained about this
-rebase operation.  Your scheme records the fact that (a+b+c+d+e+merge)
-== (o+o+a'+b'+c'+d'+e'), which is certainly true.  But in the process of
-rebasing, the user has (implicitly or explicitly) resolved conflicts in
-transforming each of the patches a -> a', b -> b', etc.  In fact, the
-patch a' is itself a merge between a and master; b' is a merge between b
-and a'; etc.  If you record each of these merges individually, the
-result looks like this:
+Ok. That helps. I just assumed the 'git pull' would work same way on local and 
+remote repositories but I guess not then...
 
-o=m=o=o=master
-   \      \
-    \      a'=b'=c'=d'=e'=feature'
-     \    /  /  /  /  /
-      ---a==b==c==d==e==feature
+> ....You're not thinking of it the right way (yet) 
 
-There are advantages to retaining all of this history:
+I hate when you say that :P
 
-* It faithfully represents intermediate steps of the rebase.
-
-* There is no need for special "merge" and "eqt" merge commits affecting
-an arbitrary group of feature patches; each of the rebased patches is
-treated identically.
-
-* There is a direct ancestry connection from the "new version" to the
-"old version" of each patch; for example, it is easy to see that c' is a
-new version of c and to compute the corresponding interdiffs.
-
-* There are situations where the additional info can help git choose
-better merge bases in the case of merge/rebases across three or more
-repositories.  For example, somebody who is developing a subfeature
-based on the feature branch can merge/rebase changes from both feature
-and master without causing utter chaos.
-
-The "historical" version of the feature branch should be omitted from
-most git output as you have suggested, but this would be best
-implemented by marking the "historical" ancestor with some extra flag in
-each merge commit.
-
-> Example 2:
-> 
-> Let's assume you have a feature branch like
-> 
-> o=master
->    \
->     a=b=c=d=e=f
-> 
-> Assume you just commited "f" which fixes a bug introduced by "b". [...]
-> 
-> So with this patches you can do "git rebase -i --eqt" and squash f into b
-> and get:
-> 
-> o=master
->    \
->     a=b=c=d=e=f---
->      \            \
->       b+f=c'=d'=e'=eqt
-
-This case can also record additional information:
-
-o=master
-   \
-    a=b===c==d=e=f
-       \   \  \   \
-        b+f=c'=d'==e'
-
-Here the new DAG cannot represent *all* ancestry information (namely,
-that b+f, c', and d' also include the original patch f), but it does
-accurately reflect useful information such as that c' includes c and
-that e' includes e and f.
-
-I wrote some blog entries about rebasing-with-history that might be
-interesting [1-3].
-
-Michael
-
-[1]
-http://softwareswirl.blogspot.com/2009/04/truce-in-merge-vs-rebase-war.html
-[2]
-http://softwareswirl.blogspot.com/2009/08/upstream-rebase-just-works-if-history.html
-[3]
-http://softwareswirl.blogspot.com/2009/08/rebase-with-history-implementation.html
+  /Mikko
