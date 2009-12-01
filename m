@@ -1,7 +1,7 @@
 From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [RFC PATCH 8/8] Support mandatory capabilities
-Date: Tue,  1 Dec 2009 15:57:18 +0200
-Message-ID: <1259675838-14692-9-git-send-email-ilari.liusvaara@elisanet.fi>
+Subject: [RFC PATCH 3/8] Support taking over transports
+Date: Tue,  1 Dec 2009 15:57:13 +0200
+Message-ID: <1259675838-14692-4-git-send-email-ilari.liusvaara@elisanet.fi>
 References: <1259675838-14692-1-git-send-email-ilari.liusvaara@elisanet.fi>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Tue Dec 01 15:08:55 2009
@@ -9,26 +9,26 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFTPP-0000SF-S6
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 15:08:52 +0100
+	id 1NFTPP-0000SF-BV
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 15:08:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501AbZLAOI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752601AbZLAOI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Tue, 1 Dec 2009 09:08:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750841AbZLAOIZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 09:08:25 -0500
-Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:37500 "EHLO
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752311AbZLAOI0
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 09:08:26 -0500
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:37507 "EHLO
 	emh04.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751824AbZLAOIX (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1752187AbZLAOIX (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 1 Dec 2009 09:08:23 -0500
 Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh04-2.mail.saunalahti.fi (Postfix) with SMTP id 6C50413BED5
-	for <git@vger.kernel.org>; Tue,  1 Dec 2009 15:58:02 +0200 (EET)
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
+	by emh04-2.mail.saunalahti.fi (Postfix) with SMTP id 61FDC13B590
+	for <git@vger.kernel.org>; Tue,  1 Dec 2009 15:57:39 +0200 (EET)
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
 	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A041FF6968A; Tue, 01 Dec 2009 15:58:02 +0200
+	with SMTP (gateway) id A040FC5F52A; Tue, 01 Dec 2009 15:57:39 +0200
 Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id D7BF6E51A8
-	for <git@vger.kernel.org>; Tue,  1 Dec 2009 15:57:59 +0200 (EET)
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 139442BD4E
+	for <git@vger.kernel.org>; Tue,  1 Dec 2009 15:57:36 +0200 (EET)
 X-Mailer: git-send-email 1.6.6.rc0.64.g5593e
 In-Reply-To: <1259675838-14692-1-git-send-email-ilari.liusvaara@elisanet.fi>
 X-Antivirus: VAMS
@@ -36,91 +36,291 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134210>
 
-Add support for marking capability as mandatory for hosting git version
-to understand. This is useful for helpers which require various types
-of assistance from main git binary.
+Add support for taking over transports that turn out to be smart.
 
 Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 ---
- Documentation/git-remote-helpers.txt |    5 ++++-
- transport-helper.c                   |   31 +++++++++++++++++++++++--------
- 2 files changed, 27 insertions(+), 9 deletions(-)
+ transport-helper.c |   12 +++++++
+ transport.c        |   89 +++++++++++++++++++++++++++++++++++++++++++++++----
+ transport.h        |   15 +++++++++
+ 3 files changed, 109 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-index adf815c..eab9c03 100644
---- a/Documentation/git-remote-helpers.txt
-+++ b/Documentation/git-remote-helpers.txt
-@@ -25,7 +25,10 @@ Commands are given by the caller on the helper's standard input, one per line.
- 
- 'capabilities'::
- 	Lists the capabilities of the helper, one per line, ending
--	with a blank line.
-+	with a blank line. Each capability may be preceeded with '*'.
-+	This marks them mandatory for git version using the remote
-+	helper to understand (unknown mandatory capability is fatal
-+	error).
- 
- 'list'::
- 	Lists the refs, one per line, in the format "<value> <name>
 diff --git a/transport-helper.c b/transport-helper.c
-index 697f026..a128560 100644
+index a499751..777ecbb 100644
 --- a/transport-helper.c
 +++ b/transport-helper.c
-@@ -145,30 +145,45 @@ static struct child_process *get_helper(struct transport *transport)
- 	write_constant(helper->in, "capabilities\n");
+@@ -20,8 +20,18 @@ struct helper_data
+ 	/* These go from remote name (as in "list") to private name */
+ 	struct refspec *refspecs;
+ 	int refspec_nr;
++	struct git_transport_options gitoptions;
+ };
  
- 	while (1) {
-+		const char* capname;
-+		int mandatory = 0;
- 		recvline(data, &buf, seen_line);
- 		seen_line = 1;
++static struct child_process* helper_disown(struct transport *transport)
++{
++	struct helper_data *data = transport->data;
++	struct child_process *child = data->helper;
++	fclose(data->out);
++	free(data);
++	return child;
++}
++
+ const char* remove_ext_force(const char* url)
+ {
+ 	const char* url2 = url;
+@@ -562,5 +572,7 @@ int transport_helper_init(struct transport *transport, const char *name)
+ 	transport->fetch = fetch;
+ 	transport->push_refs = push_refs;
+ 	transport->disconnect = release_helper;
++	transport->disown = helper_disown;
++	transport->smart_options = &(data->gitoptions);
+ 	return 0;
+ }
+diff --git a/transport.c b/transport.c
+index 7956892..09e4c97 100644
+--- a/transport.c
++++ b/transport.c
+@@ -9,6 +9,8 @@
+ #include "dir.h"
+ #include "refs.h"
  
- 		if (!*buf.buf)
- 			break;
--		if(debug) fprintf(stderr, "Debug: Got cap %s\n", buf.buf);
--		if (!strcmp(buf.buf, "fetch"))
++struct ref special_transport_layer6_ready;
 +
-+		if(*buf.buf == '*') {
-+			capname = buf.buf + 1;
-+			mandatory = 1;
-+		} else
-+			capname = buf.buf;
+ /* rsync support */
+ 
+ /*
+@@ -398,6 +400,8 @@ struct git_transport_data {
+ 	struct git_transport_options options;
+ 	struct child_process *conn;
+ 	int fd[2];
++	/* Connection is fully up. */
++	unsigned virtual_connected : 1;
+ 	struct extra_have_objects extra_have;
+ };
+ 
+@@ -432,10 +436,21 @@ static int set_git_option(struct git_transport_options *opts,
+ static int connect_setup(struct transport *transport, int for_push, int verbose)
+ {
+ 	struct git_transport_data *data = transport->data;
 +
-+		if(debug) fprintf(stderr, "Debug: Got cap %s\n", capname);
-+		if (!strcmp(capname, "fetch"))
- 			data->fetch = 1;
--		if (!strcmp(buf.buf, "option"))
-+		else if (!strcmp(capname, "option"))
- 			data->option = 1;
--		if (!strcmp(buf.buf, "push"))
-+		else if (!strcmp(capname, "push"))
- 			data->push = 1;
--		if (!strcmp(buf.buf, "import"))
-+		else if (!strcmp(capname, "import"))
- 			data->import = 1;
--		if (!data->refspecs && !prefixcmp(buf.buf, "refspec ")) {
-+		else if (!data->refspecs && !prefixcmp(capname, "refspec ")) {
- 			ALLOC_GROW(refspecs,
- 				   refspec_nr + 1,
- 				   refspec_alloc);
- 			refspecs[refspec_nr++] = strdup(buf.buf + strlen("refspec "));
- 		}
--		if (!strcmp(buf.buf, "connect-r"))
-+		else if (!strcmp(capname, "connect-r"))
- 			data->connect_r = 1;
--		if (!strcmp(buf.buf, "invoke-r"))
-+		else if (!strcmp(capname, "invoke-r"))
- 			data->invoke_r = 1;
-+		else if (mandatory) {
-+			fflush(stderr);
-+			die("Unknown madatory capability %s. This remote "
-+			    "helper probably needs newer version of Git.\n",
-+			    capname);
-+		}
++	if(!data->virtual_connected && data->conn) {
++		/* Just mark it connected. */
++		data->virtual_connected = 1;
++		return 0;
++	}
++
+ 	data->conn = git_connect(data->fd, transport->url,
+ 				 for_push ? data->options.receivepack :
+ 				 data->options.uploadpack,
+ 				 verbose ? CONNECT_VERBOSE : 0);
++
++	if(data->conn)
++		data->virtual_connected = 1;
++
+ 	return 0;
+ }
+ 
+@@ -477,7 +492,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	for (i = 0; i < nr_heads; i++)
+ 		origh[i] = heads[i] = xstrdup(to_fetch[i]->name);
+ 
+-	if (!data->conn) {
++	if (!data->virtual_connected) {
+ 		connect_setup(transport, 0, 0);
+ 		get_remote_heads(data->fd[0], &refs_tmp, 0, NULL, 0, NULL);
  	}
- 	if (refspecs) {
- 		int i;
+@@ -490,6 +505,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	if (finish_connect(data->conn))
+ 		refs = NULL;
+ 	data->conn = NULL;
++	data->virtual_connected = 0;
+ 
+ 	free_refs(refs_tmp);
+ 
+@@ -718,7 +734,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 	struct send_pack_args args;
+ 	int ret;
+ 
+-	if (!data->conn) {
++	if (!data->virtual_connected) {
+ 		struct ref *tmp_refs;
+ 		connect_setup(transport, 1, 0);
+ 
+@@ -741,6 +757,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 	close(data->fd[0]);
+ 	ret |= finish_connect(data->conn);
+ 	data->conn = NULL;
++	data->virtual_connected = 0;
+ 
+ 	return ret;
+ }
+@@ -749,7 +766,8 @@ static int disconnect_git(struct transport *transport)
+ {
+ 	struct git_transport_data *data = transport->data;
+ 	if (data->conn) {
+-		packet_flush(data->fd[1]);
++		if(data->virtual_connected)
++			packet_flush(data->fd[1]);
+ 		close(data->fd[0]);
+ 		close(data->fd[1]);
+ 		finish_connect(data->conn);
+@@ -759,6 +777,35 @@ static int disconnect_git(struct transport *transport)
+ 	return 0;
+ }
+ 
++static void git_take_over_transport(struct transport *transport)
++{
++	struct git_transport_data *data;
++
++	if(!transport->disown)
++		die("Bug detected: Taking over transport requires non-NULL "
++		    "disown method.");
++	if(!transport->smart_options)
++		die("Bug detected: Taking over transport requires non-NULL "
++		    "smart_options field.");
++
++	data = xcalloc(1, sizeof(*data));
++	data->options = *transport->smart_options;
++	data->conn = transport->disown(transport);
++	data->fd[0] = data->conn->out;
++	data->fd[1] = data->conn->in;
++	data->virtual_connected = 0;
++	transport->data = data;
++
++	transport->set_option = NULL;
++	transport->get_refs_list = get_refs_via_connect;
++	transport->fetch = fetch_refs_via_pack;
++	transport->push = NULL;
++	transport->push_refs = git_transport_push;
++	transport->disconnect = disconnect_git;
++	transport->smart_options = &(data->options);
++	transport->disown = NULL;
++}
++
+ static int is_local(const char *url)
+ {
+ 	const char *colon = strchr(url, ':');
+@@ -857,6 +904,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		ret->fetch = fetch_objs_via_rsync;
+ 		ret->push = rsync_transport_push;
+ 		ret->smart_options = NULL;
++		ret->disown = NULL;
+ 	} else if (is_local(url) && is_file(url)) {
+ 		struct bundle_transport_data *data = xcalloc(1, sizeof(*data));
+ 		ret->data = data;
+@@ -864,6 +912,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		ret->fetch = fetch_refs_from_bundle;
+ 		ret->disconnect = close_bundle;
+ 		ret->smart_options = NULL;
++		ret->disown = NULL;
+ 	} else if(!is_url(url)
+ 		|| !prefixcmp(url, "file://")
+ 		|| !prefixcmp(url, "git://")
+@@ -879,8 +928,10 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		ret->push_refs = git_transport_push;
+ 		ret->disconnect = disconnect_git;
+ 		ret->smart_options = &(data->options);
++		ret->disown = NULL;
+ 
+ 		data->conn = NULL;
++		data->virtual_connected = 0;
+ 	} else if (!prefixcmp(url, "http://")
+ 		|| !prefixcmp(url, "https://")
+ 		|| !prefixcmp(url, "ftp://")) {
+@@ -938,14 +989,25 @@ int transport_push(struct transport *transport,
+ 		   int refspec_nr, const char **refspec, int flags,
+ 		   int *nonfastforward)
+ {
++	int rc = 0;
+ 	*nonfastforward = 0;
+ 	verify_remote_names(refspec_nr, refspec);
+ 
+-	if (transport->push)
+-		return transport->push(transport, refspec_nr, refspec, flags);
+-	if (transport->push_refs) {
++retry:
++	if (transport->push) {
++		rc = transport->push(transport, refspec_nr, refspec, flags);
++		if(rc == TRANSPORT_LAYER6_READY) {
++			git_take_over_transport(transport);
++			goto retry;
++		}
++		return rc;
++	} else if (transport->push_refs) {
+ 		struct ref *remote_refs =
+ 			transport->get_refs_list(transport, 1);
++		if(remote_refs == &special_transport_layer6_ready) {
++			git_take_over_transport(transport);
++			goto retry;
++		}
+ 		struct ref *local_refs = get_local_heads();
+ 		int match_flags = MATCH_REFS_NONE;
+ 		int verbose = flags & TRANSPORT_PUSH_VERBOSE;
+@@ -985,8 +1047,15 @@ int transport_push(struct transport *transport,
+ 
+ const struct ref *transport_get_remote_refs(struct transport *transport)
+ {
+-	if (!transport->remote_refs)
++	if (!transport->remote_refs) {
++retry:
+ 		transport->remote_refs = transport->get_refs_list(transport, 0);
++		if(transport->remote_refs == &special_transport_layer6_ready) {
++			git_take_over_transport(transport);
++			goto retry;
++		}
++	}
++
+ 	return transport->remote_refs;
+ }
+ 
+@@ -1020,7 +1089,13 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
+ 			heads[nr_heads++] = rm;
+ 	}
+ 
++retry:
+ 	rc = transport->fetch(transport, nr_heads, heads);
++	if(rc == TRANSPORT_LAYER6_READY) {
++		git_take_over_transport(transport);
++		goto retry;
++	}
++
+ 	free(heads);
+ 	return rc;
+ }
+diff --git a/transport.h b/transport.h
+index 5949132..f3ee890 100644
+--- a/transport.h
++++ b/transport.h
+@@ -65,6 +65,15 @@ struct transport {
+ 	int (*push_refs)(struct transport *transport, struct ref *refs, int flags);
+ 	int (*push)(struct transport *connection, int refspec_nr, const char **refspec, int flags);
+ 
++	/**
++	 * Disown the transport helper. Releases all resources used
++	 * by field pointed by member data, except that the child
++	 * process is not released but returned and whatever is pointed
++	 * by smart transport options structure is not freed (but the
++	 * smart transport options structure itself is).
++	 **/
++	struct child_process* (*disown)(struct transport* connection);
++
+ 	/** get_refs_list(), fetch(), and push_refs() can keep
+ 	 * resources (such as a connection) reserved for futher
+ 	 * use. disconnect() releases these resources.
+@@ -79,6 +88,12 @@ struct transport {
+ 	struct git_transport_options* smart_options;
+ };
+ 
++/* Returned by get_refs_list, fetch or push methods of struct transport: Layer 6 is ready,
++   take over the transport and retry operation. */
++#define TRANSPORT_LAYER6_READY -42
++extern struct ref special_transport_layer6_ready;
++
++
+ #define TRANSPORT_PUSH_ALL 1
+ #define TRANSPORT_PUSH_FORCE 2
+ #define TRANSPORT_PUSH_DRY_RUN 4
 -- 
 1.6.6.rc0.64.g5593e
