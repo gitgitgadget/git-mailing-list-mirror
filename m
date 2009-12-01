@@ -1,67 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] get_ref_states: strdup entries and free util in stale 
- list
-Date: Tue, 01 Dec 2009 11:20:12 -0800
-Message-ID: <7vaay2zekz.fsf@alter.siamese.dyndns.org>
-References: <0458f16c6ce906997aaf357c0c7368841ae83c36.1259625072.git.bert.wesarg@googlemail.com> <7viqcrbl22.fsf@alter.siamese.dyndns.org> <36ca99e90911302249r5f77f031o73cc7bb13dc375cf@mail.gmail.com> <7vy6ln2llw.fsf@alter.siamese.dyndns.org> <36ca99e90912010132iee0d42fo933aeb12833ad1ad@mail.gmail.com> <7v8wdm1ui1.fsf@alter.siamese.dyndns.org> <36ca99e90912011014sd7372d0yc234873a26c2ae43@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC PATCH 4/8] Support remote helpers implementing smart
+	transports
+Date: Tue, 1 Dec 2009 11:22:33 -0800
+Message-ID: <20091201192233.GL21299@spearce.org>
+References: <1259675838-14692-1-git-send-email-ilari.liusvaara@elisanet.fi> <1259675838-14692-5-git-send-email-ilari.liusvaara@elisanet.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 01 20:20:45 2009
+Cc: git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Tue Dec 01 20:22:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFYH1-0005ov-5H
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 20:20:31 +0100
+	id 1NFYJ9-0006x4-AD
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 20:22:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753631AbZLATUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 14:20:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753068AbZLATUT
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 14:20:19 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40451 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751352AbZLATUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 14:20:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F04C84937;
-	Tue,  1 Dec 2009 14:20:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rZbnxmm4Q/G3nxoBV6qmxCMlP7g=; b=RX5b1G
-	7Qo5QVFNFmGnaEDD2To+7jsE3mZA9bZqsxX8ce7zwDrADph2r2W2xEfc1twI8KI2
-	sTwAXs0oTSChqMOXozECQLRfh7PPPnKFjzawcC/Wnr4yajdPYI6MHTAMtemP/4zz
-	2l0M3wkYxmUsvxhZW24obo1JzomF4xG4U88tE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VRMWKzjLXIPYYyZ9HpgMxTZIK/ZHwFZy
-	T1y7q6Gv6YQlEDfQYjOe5Cpuhq0SpzMike7wBjd+hEFc4DgjewUOOEHsnIIuW3Vg
-	UI6efHfrjmeBCXlnnDP89mvC+rnNBx6QgCUduhiaFB1j5p9Oyi0fn6S6tRKCM3R1
-	zmiqj08QuEQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 21A1E84935;
-	Tue,  1 Dec 2009 14:20:20 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F0F228492E; Tue,  1 Dec
- 2009 14:20:13 -0500 (EST)
-In-Reply-To: <36ca99e90912011014sd7372d0yc234873a26c2ae43@mail.gmail.com>
- (Bert Wesarg's message of "Tue\, 1 Dec 2009 19\:14\:30 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 90B306F2-DEAE-11DE-B9C2-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753720AbZLATWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 14:22:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753574AbZLATWc
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 14:22:32 -0500
+Received: from mail-yw0-f182.google.com ([209.85.211.182]:60535 "EHLO
+	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752231AbZLATWb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 14:22:31 -0500
+Received: by ywh12 with SMTP id 12so5509475ywh.21
+        for <git@vger.kernel.org>; Tue, 01 Dec 2009 11:22:37 -0800 (PST)
+Received: by 10.101.175.39 with SMTP id c39mr617883anp.87.1259695357578;
+        Tue, 01 Dec 2009 11:22:37 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 4sm178821yxd.70.2009.12.01.11.22.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 01 Dec 2009 11:22:35 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1259675838-14692-5-git-send-email-ilari.liusvaara@elisanet.fi>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134251>
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
+Ilari Liusvaara <ilari.liusvaara@elisanet.fi> wrote:
+> diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
+> index 5cfdc0c..adf815c 100644
+> --- a/Documentation/git-remote-helpers.txt
+> +++ b/Documentation/git-remote-helpers.txt
+> @@ -90,6 +90,28 @@ Supported if the helper has the "push" capability.
+>  +
+>  Supported if the helper has the "import" capability.
+>  
+> +'connect-r' <service>::
+> +	Connects to given service. Stdin and stdout of helper are
+> +	connected to specified service (no git or git- prefixes are used,
+> +	so e.g. fetching uses 'upload-pack' as service) on remote side.
 
-> A quick test with my use case does not show errors in the maint
-> branch. So it should not be needed (except the memory leak fix of the
-> .util member). And valgrind confirms this.
+This flies against every other convention we have.  git:// uses the
+string 'git-upload-pack' and 'git-receive-pack', and so does the
+smart-http code.  We should continue to use the git- prefix here,
+to be consistent, even though by context its clearly implied.
 
-Thanks.
+> +	Valid replies to this command are 'OK' (connection established),
+
+Why 'OK'?  Currently remote-helpers return an empty blank line
+to any successful command, not 'OK'.
+
+> +	'FALLBACK' (no smart transport support, fall back to dumb
+> +	transports) and 'ERROR' (can't connect, don't bother trying to
+> +	fall back).
+
+FALLBACK almost makes sense, but ERROR we don't do in the
+the existing helper protocol.  Instead the helper simply
+prints its error message(s) to stderr and does exit(128).
+aka what die() does.
+
+> +Supported if the helper has the "connect-r" capability. Not used if
+> +helper has the "invoke-r" capability, as invoke is preferred to connect.
+> +
+> +'invoke-r' <cmdlength> <cmd>::
+> +	Like connect-r command, but instead of service name, command
+> +	line is given. The length of command field is given in command
+> +	length field.
+> ++
+> +Supported if the helper has the "invoke-r" capability.
+
+Why both connect-r and invoke-r?  Why isn't connect-r sufficient
+here?  Isn't it sufficient for any service that runs over git:// ?
+
+-- 
+Shawn.
