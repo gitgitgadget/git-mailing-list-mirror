@@ -1,79 +1,107 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] get_ref_states: strdup entries and free util in stale 
-	list
-Date: Tue, 1 Dec 2009 19:20:55 +0100
-Message-ID: <36ca99e90912011020u4bcc8802qd12049969d162c97@mail.gmail.com>
-References: <0458f16c6ce906997aaf357c0c7368841ae83c36.1259625072.git.bert.wesarg@googlemail.com>
-	 <alpine.DEB.1.00.0912010934120.4985@pacific.mpi-cbg.de>
-	 <36ca99e90912010105r428a7bfdw63928e8a5515bd1d@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] Add a --bouquet option to git rev-list
+Date: Tue, 01 Dec 2009 10:21:32 -0800
+Message-ID: <7viqcqzhar.fsf@alter.siamese.dyndns.org>
+References: <4b143a9c.c401be0a.364f.ffffba5b@mx.google.com>
+ <4B14CF47.5020808@drmicha.warpmail.net>
+ <d77df1110912010931l40472723v80ad675a92d23fa3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Dec 01 19:21:03 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: "Nathan W. Panike" <nathan.panike@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 01 19:21:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFXLR-0002tr-L2
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 19:21:01 +0100
+	id 1NFXMK-0003NV-Tr
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 19:21:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753087AbZLASUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 13:20:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752302AbZLASUu
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 13:20:50 -0500
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:36359 "EHLO
-	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751412AbZLASUt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 13:20:49 -0500
-Received: by fxm5 with SMTP id 5so5222917fxm.28
-        for <git@vger.kernel.org>; Tue, 01 Dec 2009 10:20:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=mazoVnJA7HyjXmeMff9wbDrqM79yX8NkpKOd5dloGq8=;
-        b=sOkgngcy5gj/AAYerkx+wekrVff/uOny9jZNdzezKEPYHRV2tihRwIfeVlD9dULc96
-         lphHa3Py3f9iYaDKqKnKHXKYnID6rcRyZUYNSXqhmfNqwegBSP04/n8jnyIVSb2IZLhc
-         RRMYcB0vC9mLVYcYLCpVZEXLLuy73jNHEgVH0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=efyGj3QNnyYZY5xyFeQ7MgCcY+l+iWHl8wjD1r9FN64FasTgEPQi2T2rjRymqvFolL
-         eLMsR7nZnwZFhBJKDC+un+t8kHHEbXcZOpXG0XIwPGCGoxLtBB/oAswxyYeKcqV37UXU
-         LBCKCcsQPVdrXtw0Ic/q4R9ayd8zxps0OBGcM=
-Received: by 10.223.68.155 with SMTP id v27mr925919fai.10.1259691655108; Tue, 
-	01 Dec 2009 10:20:55 -0800 (PST)
-In-Reply-To: <36ca99e90912010105r428a7bfdw63928e8a5515bd1d@mail.gmail.com>
+	id S1753255AbZLASVq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Dec 2009 13:21:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753234AbZLASVp
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 13:21:45 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64540 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753211AbZLASVp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 13:21:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A4EC843DF;
+	Tue,  1 Dec 2009 13:21:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=gfGxl6FfhVbV
+	YnOxj84T1nTKQTM=; b=Bkvo5hkguzh0JUwAR+vXK7ze0FwRX73x6IgBpWb4UCQN
+	rp6orMfCaZeprG9pW5xh034oHZjvKV46+pip7BQWAO1NZDou5ezzgBlIA6kn9mdN
+	uevX9GZr6HwUJs/+VNu20F5/CdOQZ6IC76KiLyKlGdLqJwgTjYpLT1WqcB+gZ1Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QrbtH4
+	yzDLOfKROiVZeIEjyiIUFbVoZCqHv76BM6jsP8Y2ef+akA1W8L9/APKupsdavRYU
+	58tx1ESu61dl5M/Jdy5ngNRYqZohvlS6tv/6bfvZ6IjXhua8cAhGDU55M0hHXMhg
+	zlU4FfK7Vq1uo9xbUt63QblJ97roucwXx7dz0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AE8B1843DC;
+	Tue,  1 Dec 2009 13:21:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1A2F5843D8; Tue,  1 Dec
+ 2009 13:21:33 -0500 (EST)
+In-Reply-To: <d77df1110912010931l40472723v80ad675a92d23fa3@mail.gmail.com>
+ (Nathan W. Panike's message of "Tue\, 1 Dec 2009 11\:31\:56 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5EF454DE-DEA6-11DE-9D79-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134241>
 
-On Tue, Dec 1, 2009 at 10:05, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
-> There are still invalid reads of size 4. I think the problem is the
-> flex array member of 'struct ref' and strlen(). If its worth I can
-> look into this.
-A short heads-up, here is the valgrind error I get for this invalid read:
+"Nathan W. Panike" <nathan.panike@gmail.com> writes:
 
-==27305== Invalid read of size 4
-==27305==    at 0x4936AF: copy_ref (remote.c:870)
-==27305==    by 0x4942E4: get_fetch_map (remote.c:1271)
-==27305==    by 0x44473E: get_remote_ref_states (builtin-remote.c:271)
-==27305==    by 0x446DCE: cmd_remote (builtin-remote.c:1022)
-==27305==    by 0x4045F0: handle_internal_command (git.c:257)
-==27305==    by 0x404B8F: main (git.c:482)
-==27305==  Address 0x5b5ba38 is 104 bytes inside a block of size 107 alloc'd
-==27305==    at 0x4C24477: calloc (vg_replace_malloc.c:418)
-==27305==    by 0x4B09AD: xcalloc (wrapper.c:75)
-==27305==    by 0x493924: alloc_ref_with_prefix (remote.c:853)
-==27305==    by 0x46653B: get_remote_heads (connect.c:96)
-==27305==    by 0x4A9347: get_refs_via_connect (transport.c:453)
-==27305==    by 0x4A7F14: transport_get_remote_refs (transport.c:895)
-==27305==    by 0x4445B6: get_remote_ref_states (builtin-remote.c:810)
-==27305==    by 0x446DCE: cmd_remote (builtin-remote.c:1022)
-==27305==    by 0x4045F0: handle_internal_command (git.c:257)
-==27305==    by 0x404B8F: main (git.c:482)
+>>> include_forks ()
+>>> {
+>>> =C2=A0 =C2=A0 local head=3D"$(git show -s --pretty=3Dformat:'%H' HE=
+AD)";
+>>> =C2=A0 =C2=A0 echo "HEAD $(git for-each-ref --format=3D'%(refname)'=
+ \
+>>> =C2=A0 =C2=A0 =C2=A0 refs/heads refs/remotes | while read ref; do \
+>>> =C2=A0 =C2=A0 =C2=A0 if test "$(git merge-base HEAD ${ref}^{commit}=
+)" !=3D ""; \
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 then echo ${ref}; =
+fi; done)"
+>>> }
+
+Because you have to traverse the entire history from tips of refs to kn=
+ow
+if the histories to reach them are disjoint, this is fundamentally a ve=
+ry
+expensive operation and will not scale to projects with deep histories.
+
+If a low-level support for this kind of thing is necessary, then I do n=
+ot
+think it should just be "give me set of refs that is related to HEAD". =
+ I
+suspect that is too inflexible to be useful in other situations.
+
+A command to list refs (i.e. not as rev-list argument that shows list o=
+f
+commits, but as a new feature of for-each-ref) with new criteria might
+have wider use (I am just thinking aloud).  Something like
+
+ - among these refs (you would specify this with --all, --heads, or pre=
+fix
+   'refs/heads refs/remotes'), list only the ones related to this and t=
+hat
+   ref (here you would give HEAD or whatever you want to check with as
+   argument)"; and=20
+
+ - its counterpart "list the ones that are _not_ related" with the same
+   input.
+
+As to the implementation, instead of running get_merge_bases() number o=
+f
+times (a naive implementation would be O(n*m), I guess), I think it may
+make sense to run the traversal in parallel, similar to the way done in
+show-branches (but the termination condition would be different).
