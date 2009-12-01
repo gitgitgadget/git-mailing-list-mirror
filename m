@@ -1,146 +1,113 @@
-From: "Nathan W. Panike" <nathan.panike@gmail.com>
-Subject: Re: [PATCH/RFC] Add a --bouquet option to git rev-list
-Date: Tue, 1 Dec 2009 11:31:56 -0600
-Message-ID: <d77df1110912010931l40472723v80ad675a92d23fa3@mail.gmail.com>
-References: <4b143a9c.c401be0a.364f.ffffba5b@mx.google.com>
-	 <4B14CF47.5020808@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] Allow curl to rewind the RPC read buffer
+Date: Tue, 01 Dec 2009 09:49:01 -0800
+Message-ID: <7vzl62zisy.fsf@alter.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0904150054470.7479@localhost.localdomain>
+ <Pine.LNX.4.64.0904142350140.7479@localhost.localdomain>
+ <1254510286-23155-1-git-send-email-nmiell@gmail.com>
+ <25718488.post@talk.nabble.com> <20091127234110.7b7e9993.rctay89@gmail.com>
+ <alpine.DEB.2.00.0912011208160.5582@cone.home.martin.st>
+ <alpine.DEB.2.00.0912011232450.5582@cone.home.martin.st>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Dec 01 18:32:07 2009
+Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org,
+	Nicholas Miell <nmiell@gmail.com>, gsky51@gmail.com,
+	Clemens Buchacher <drizzd@aon.at>,
+	Mark Lodato <lodatom@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Martin =?utf-8?Q?Storsj=C3=B6?= <martin@martin.st>
+X-From: git-owner@vger.kernel.org Tue Dec 01 18:49:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFWa4-0004GV-Gj
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 18:32:04 +0100
+	id 1NFWqw-0004Ih-Hw
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 18:49:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753675AbZLARbv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Dec 2009 12:31:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753644AbZLARbu
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 12:31:50 -0500
-Received: from mail-yw0-f182.google.com ([209.85.211.182]:40065 "EHLO
-	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752932AbZLARbu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 12:31:50 -0500
-Received: by ywh12 with SMTP id 12so5381736ywh.21
-        for <git@vger.kernel.org>; Tue, 01 Dec 2009 09:31:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=G3kWzAXzW/ZQK7kFBeGTYnriAjIMuA3y2t1lZM2G5Qk=;
-        b=mQqbSgqHriBL7QxOSBsg/3YuHH6vKjn0MiFHUqEXjcR30v503DRBO13RKd/tEUOm2U
-         tAem0C5DpTFTOnai+fBvXUkMd3IQ5K8IhIoQdbW4viEkOQctf6rrVmDJBJRSKdCgmh3c
-         fvGL61ovdmwWeVWjyqT7kSGKunNiWIzVd+Fag=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=XwOxOFV20FxWCh+7x6tF0hl/QM4IRR1tp34vhUg5YEy3guajErsYsChgxCCm2TyBIj
-         BkLBA4+/TrKUZbsAKD8VDvUfYN6qbjVDX7zUzlfrPLpkxP1QC9z6FhgimsZVKpKASzJb
-         Iovt3PdiYtrwFreJi3OSjCDnWBjm4ZDFE9G7Q=
-Received: by 10.151.21.1 with SMTP id y1mr10292358ybi.3.1259688716444; Tue, 01 
-	Dec 2009 09:31:56 -0800 (PST)
-In-Reply-To: <4B14CF47.5020808@drmicha.warpmail.net>
+	id S1754018AbZLARtS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Dec 2009 12:49:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752294AbZLARtS
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 12:49:18 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55045 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752513AbZLARtR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 12:49:17 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 17057A3752;
+	Tue,  1 Dec 2009 12:49:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Xrvdl2GxKyZI
+	TQ9/ED3+v+Fj+zQ=; b=jadckC+iMnY0H5crjtFNa+JE5mfVColW8KT01K4WUKEX
+	OpUIl/bCyCSK6+2llyy0H+fXytFycE4manfKlAfHBZhymaL7CYR/FFRtQrDfkN4Q
+	rmVvWD7ODpUzoQD8eBJRGMGeYG+jQjjEL1ihaPxWY4lBjsRT1YZXRWojjl/lu5E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Vndj3G
+	8Ea6lcTCSro637TANj5ZhCz1FBiyHreKu+XlQnYw2+hWvJXpkiCRivYYa7GtRwU5
+	tM4muW1Ukc6gNXBKfL8grENgYBdNuu70Go6rJSx1OHv/X4HPlPhG9e09OuxzjDXY
+	XxHgNOELD8kIhjyNUiLKImWNFdgOy14MXWct0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 899C5A3740;
+	Tue,  1 Dec 2009 12:49:14 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 33280A3733; Tue,  1 Dec 2009
+ 12:49:02 -0500 (EST)
+In-Reply-To: <alpine.DEB.2.00.0912011232450.5582@cone.home.martin.st>
+ ("Martin =?utf-8?Q?Storsj=C3=B6=22's?= message of "Tue\, 1 Dec 2009
+ 12\:33\:39 +0200 \(EET\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D6F36498-DEA1-11DE-9397-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134237>
 
-Hello,
+Martin Storsj=C3=B6 <martin@martin.st> writes:
 
-On Tue, Dec 1, 2009 at 2:09 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Nathan W. Panike venit, vidit, dixit 30.11.2009 21:55:
->> Add a command line option to rev-list so the command 'git rev-list -=
--bouquet'
->> shows all revisions that are ancestors of refs which share history w=
-ith HEAD.
->>
->> Signed-off-by: Nathan W. Panike <nathan.panike@gmail.com>
->> ---
->> I have a repository with the following structure:
->>
->> =A0 =A0 =A0 B
->> =A0 =A0 =A0/
->> A'--A--C
->> =A0 =A0 =A0\
->> =A0 =A0 =A0 D
->>
->> E'--E
->>
->> Thus the command 'git merge base E A' returns nothing, as there is n=
-o common
->> history. =A0The E history contains stuff that is derived from the ot=
-her history
->> (A, B, C, or D). =A0Often I find myself doing the following:
->
-> Either I don't understand the diagram or your term "derived". If
-> "derived" means "on some branch of a merge" and E is derived from A, =
-B,
-> C, or D, then (since B, C, D is derived from A, and from A') E is
-> derived from A', and they will have a merge base.
->
+> As long as the current rpc read buffer is the first one, we're able t=
+o
+> rewind without need for additional buffering.
 
-"Derived" in my case means that E is processed from a snapshot of the
-tree at, say, A.
+=2E.. and if the current buffer isn't the first one, what do we do?
 
-> Are these diagrams really disconnected from each other?
+> +#ifndef NO_CURL_IOCTL
+> +curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
+> +{
+> +	struct rpc_state *rpc =3D clientp;
+> +
+> +	switch (cmd) {
+> +	case CURLIOCMD_NOP:
+> +		return CURLIOE_OK;
+> +
+> +	case CURLIOCMD_RESTARTREAD:
+> +		if (rpc->initial_buffer) {
+> +			rpc->pos =3D 0;
+> +			return CURLIOE_OK;
+> +		}
+> +		fprintf(stderr, "Unable to rewind rpc post data - try increasing h=
+ttp.postBuffer\n");
+> +		return CURLIOE_FAILRESTART;
+> +
+> +	default:
+> +		return CURLIOE_UNKNOWNCMD;
+> +	}
+> +}
+> +#endif
 
-Yes.  I started the history of E with plumbing using git commit-tree,
-without a -p flag specifying a parent
+What will this result in?  A failed request, then the user increases
+http.postBuffer, and re-runs the entire command?  I am not suggesting t=
+he
+code should do it differently (e.g.  retry with a larger buffer without
+having the user to help it).  At least not yet.  That is why my first
+question above was "what do we do?" and not "what should we do?".
 
->
->> git checkout C
->> gitk $(include_forks) &
->> <View history, make changes, merges, et cetera>
->> git checkout E
->> <go back to gitk, only see history for B, C, etc>
->>
->> Now the 'include_forks' command is a bash function in my .bashrc:
->>
->> include_forks ()
->> {
->> =A0 =A0 local head=3D"$(git show -s --pretty=3Dformat:'%H' HEAD)";
->> =A0 =A0 echo "HEAD $(git for-each-ref --format=3D'%(refname)' \
->> =A0 =A0 =A0 refs/heads refs/remotes | while read ref; do \
->> =A0 =A0 =A0 if test "$(git merge-base HEAD ${ref}^{commit})" !=3D ""=
-; \
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 then echo ${ref}; fi; done)"
->> }
->>
->> The shell thus intercepts my command and I must restart gitk to see =
-the history
->> of E.
->>
->> With this patch, I can issue the command 'gitk --bouquet' and when I=
- checkout
->> E, I can 'reload' in gitk and see the history of E automatically.
->
-> What would your patch do in the example you gave above? Which refs wo=
-uld
-> it cause gitk (rev-list) to show?
->
-
-I wish to be concrete, so let us suppose you use a default clone of
-git.git.  Further, suppose you are on origin/master.
-Then, with my patch,
-
-git rev-list --bouquet
-
-should be an---admittedly less efficient---equivalent to
-
-git rev-list --all --not refs/remotes/origin/html
-refs/remotes/origin/man refs/remotes/origin/todo
-
-> Michael
->
-
-Thanks,
-
-Nathan Panike
+I am primarily interested in _documenting_ the expected user experience=
+ in
+the failure case, so that people can notice the message, run "git grep"=
+ to
+find the above line and then run "git blame" to find the commit to read
+its log message to understand what is going on.
