@@ -1,123 +1,146 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: non-US-ASCII file names (e.g. Hiragana) on Windows
-Date: Tue, 01 Dec 2009 09:24:58 -0800 (PST)
-Message-ID: <m3k4x6na81.fsf@localhost.localdomain>
-References: <4B1168D4.5010902@syntevo.com> <4B11AD43.3070307@gmail.com>
-	<4B123C80.30607@syntevo.com> <4B14CA79.6040408@syntevo.com>
-	<4B14D381.3010706@viscovery.net> <4B14DA1A.4060505@syntevo.com>
-	<4B14E934.9090304@viscovery.net> <4B150747.2030900@syntevo.com>
+From: "Nathan W. Panike" <nathan.panike@gmail.com>
+Subject: Re: [PATCH/RFC] Add a --bouquet option to git rev-list
+Date: Tue, 1 Dec 2009 11:31:56 -0600
+Message-ID: <d77df1110912010931l40472723v80ad675a92d23fa3@mail.gmail.com>
+References: <4b143a9c.c401be0a.364f.ffffba5b@mx.google.com>
+	 <4B14CF47.5020808@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Thomas Singer <thomas.singer@syntevo.com>
-X-From: git-owner@vger.kernel.org Tue Dec 01 18:25:06 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Dec 01 18:32:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFWTJ-0000xB-Rl
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 18:25:06 +0100
+	id 1NFWa4-0004GV-Gj
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 18:32:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752314AbZLARYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 12:24:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbZLARYy
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 12:24:54 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:52924 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753089AbZLARYx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 12:24:53 -0500
-Received: by mail-bw0-f227.google.com with SMTP id 27so3659203bwz.21
-        for <git@vger.kernel.org>; Tue, 01 Dec 2009 09:24:59 -0800 (PST)
+	id S1753675AbZLARbv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Dec 2009 12:31:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753644AbZLARbu
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 12:31:50 -0500
+Received: from mail-yw0-f182.google.com ([209.85.211.182]:40065 "EHLO
+	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752932AbZLARbu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 12:31:50 -0500
+Received: by ywh12 with SMTP id 12so5381736ywh.21
+        for <git@vger.kernel.org>; Tue, 01 Dec 2009 09:31:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=gqIjKonyq5SgOVT10cQQu5Y5ikUpTFYYh5/d4vb3OEI=;
-        b=SBBqm69jT+28dlDn66QnK0AUdT1VjIrdhYu5Rf2FPdYsgpac8RuPcp3X34kaZKDgfc
-         +p35Xuz6Wqma7DERZZsmdQuDnIhS1kaYpIYfod5HgwVQhKmwjo1rSjf8Vb4KYpKNqAe4
-         UbGFsWcqyMVpFi4qi5l9Rcxp0/yPrl+n/FQxQ=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=G3kWzAXzW/ZQK7kFBeGTYnriAjIMuA3y2t1lZM2G5Qk=;
+        b=mQqbSgqHriBL7QxOSBsg/3YuHH6vKjn0MiFHUqEXjcR30v503DRBO13RKd/tEUOm2U
+         tAem0C5DpTFTOnai+fBvXUkMd3IQ5K8IhIoQdbW4viEkOQctf6rrVmDJBJRSKdCgmh3c
+         fvGL61ovdmwWeVWjyqT7kSGKunNiWIzVd+Fag=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=Gg98r70cfcjbynb/186m0T9ZmYCIHeC+4Hsiou4shCwISsZXv0m+9wfs+O7iF/cR7G
-         maCZeOWyUVmMJYKaYe4Wfs0UbuE+vJPgOHhd1djQKdt/FqiFyoXy+nIMSpDySYF8lh1j
-         r3e7vP6Zmw3mBLuxc+eO/Y9lnWmIGj6XeGIds=
-Received: by 10.204.156.195 with SMTP id y3mr6425470bkw.46.1259688299203;
-        Tue, 01 Dec 2009 09:24:59 -0800 (PST)
-Received: from localhost.localdomain (abwm69.neoplus.adsl.tpnet.pl [83.8.236.69])
-        by mx.google.com with ESMTPS id 13sm129271fxm.9.2009.12.01.09.24.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Dec 2009 09:24:58 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id nB1CZWWJ022325;
-	Tue, 1 Dec 2009 13:35:42 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id nB1CZBua022321;
-	Tue, 1 Dec 2009 13:35:11 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4B150747.2030900@syntevo.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=XwOxOFV20FxWCh+7x6tF0hl/QM4IRR1tp34vhUg5YEy3guajErsYsChgxCCm2TyBIj
+         BkLBA4+/TrKUZbsAKD8VDvUfYN6qbjVDX7zUzlfrPLpkxP1QC9z6FhgimsZVKpKASzJb
+         Iovt3PdiYtrwFreJi3OSjCDnWBjm4ZDFE9G7Q=
+Received: by 10.151.21.1 with SMTP id y1mr10292358ybi.3.1259688716444; Tue, 01 
+	Dec 2009 09:31:56 -0800 (PST)
+In-Reply-To: <4B14CF47.5020808@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134236>
 
-Thomas Singer <thomas.singer@syntevo.com> writes:
+Hello,
 
-> Johannes Sixt wrote:
->> Thomas Singer schrieb:
->>>
->>> Is it a German Windows limitation, that far-east characters are not
->>> supported on it (but work fine on a Japanese Windows), are there different
->>> (mysys)Git versions available or is this a configuration issue?
->> 
->> It is a matter of configuration.
->> 
->> Since 8 bits are not sufficient to support Japanese alphabet in addition
->> to the German alphabet, programs that are not Unicode aware -- such as git
->> -- have to make a decision which alphabet they support. The decision is
->> made by picking a "codepage".
->> 
->> On German Windows, you are in codepage 850 (in the console). The filenames
->>  (that actually are in Unicode) are converted to bytes according to
->> codepage 850 *before* git sees them. If your filenames contain Hiragana,
->> they are substituted by the "unknown character" marker because there is no
->> place for them in codepage 850.
-[...]
+On Tue, Dec 1, 2009 at 2:09 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Nathan W. Panike venit, vidit, dixit 30.11.2009 21:55:
+>> Add a command line option to rev-list so the command 'git rev-list -=
+-bouquet'
+>> shows all revisions that are ancestors of refs which share history w=
+ith HEAD.
+>>
+>> Signed-off-by: Nathan W. Panike <nathan.panike@gmail.com>
+>> ---
+>> I have a repository with the following structure:
+>>
+>> =A0 =A0 =A0 B
+>> =A0 =A0 =A0/
+>> A'--A--C
+>> =A0 =A0 =A0\
+>> =A0 =A0 =A0 D
+>>
+>> E'--E
+>>
+>> Thus the command 'git merge base E A' returns nothing, as there is n=
+o common
+>> history. =A0The E history contains stuff that is derived from the ot=
+her history
+>> (A, B, C, or D). =A0Often I find myself doing the following:
+>
+> Either I don't understand the diagram or your term "derived". If
+> "derived" means "on some branch of a merge" and E is derived from A, =
+B,
+> C, or D, then (since B, C, D is derived from A, and from A') E is
+> derived from A', and they will have a merge base.
+>
 
->> Corollary: Stick to ASCII file names.
->> 
->> There have been suggestions to switch the console to codepage 65001
->> (UTF-8), but I have never heard of success reports. I'm not saying it does
->> not work, though.
-> 
-> Thanks for the detailed explanation. I know the differences between bytes
-> and characters and the needed *encoding* to convert from one to another, but
-> I did not know how Git handles it. I'm quite surprised, that -- as I
-> understand you -- msys-Git (or Git at all?) is not able to handle all
-> characters (aka unicode) at the same time. I expected it would be better
-> than older tools, e.g. SVN.
+"Derived" in my case means that E is processed from a snapshot of the
+tree at, say, A.
 
-The problem is not with Git, as Git is (currently) agnostic with
-respect to filename encoding; for Git filenames are opaque NUL ('\0)
-terminated binary data.  There is some infrastructure to convert
-between filename encodings and other filename quirks (like
-case-insensivity), though...
+> Are these diagrams really disconnected from each other?
 
-The problem is with MS Windows *console*, from which you invoke git
-commands, and which does translation from filename encoding used by
-the filesystem to encoding / codepage used by console.
+Yes.  I started the history of E with plumbing using git commit-tree,
+without a -p flag specifying a parent
 
-> BTW, we are invoking the Git executable from Java. Is there automatically a
-> console "around" Git? Should we invoke a shell-script (which sets the
-> console's code page) instead of the Git executable directly?
+>
+>> git checkout C
+>> gitk $(include_forks) &
+>> <View history, make changes, merges, et cetera>
+>> git checkout E
+>> <go back to gitk, only see history for B, C, etc>
+>>
+>> Now the 'include_forks' command is a bash function in my .bashrc:
+>>
+>> include_forks ()
+>> {
+>> =A0 =A0 local head=3D"$(git show -s --pretty=3Dformat:'%H' HEAD)";
+>> =A0 =A0 echo "HEAD $(git for-each-ref --format=3D'%(refname)' \
+>> =A0 =A0 =A0 refs/heads refs/remotes | while read ref; do \
+>> =A0 =A0 =A0 if test "$(git merge-base HEAD ${ref}^{commit})" !=3D ""=
+; \
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 then echo ${ref}; fi; done)"
+>> }
+>>
+>> The shell thus intercepts my command and I must restart gitk to see =
+the history
+>> of E.
+>>
+>> With this patch, I can issue the command 'gitk --bouquet' and when I=
+ checkout
+>> E, I can 'reload' in gitk and see the history of E automatically.
+>
+> What would your patch do in the example you gave above? Which refs wo=
+uld
+> it cause gitk (rev-list) to show?
+>
 
-If you use Git from Java, why don't you just use JGit (www.jgit.org),
-which is Git implementation in Java?
+I wish to be concrete, so let us suppose you use a default clone of
+git.git.  Further, suppose you are on origin/master.
+Then, with my patch,
 
--- 
-Jakub Narebski
-Poland
+git rev-list --bouquet
+
+should be an---admittedly less efficient---equivalent to
+
+git rev-list --all --not refs/remotes/origin/html
+refs/remotes/origin/man refs/remotes/origin/todo
+
+> Michael
+>
+
+Thanks,
+
+Nathan Panike
