@@ -1,63 +1,62 @@
-From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
-Subject: [PATCH] Documentation: commit: explain the non-meaning of S-o-b
-Date: Tue, 1 Dec 2009 23:25:20 +0100
-Message-ID: <20091201232520.45579cbb@perceptron>
+From: Jeff Epler <jepler@unpythonic.net>
+Subject: Re: multiple working directories for long-running builds (was:
+	"git merge" merges too much!)
+Date: Tue, 1 Dec 2009 16:25:26 -0600
+Message-ID: <20091201222526.GB1926@unpythonic.net>
+References: <m1NEaLp-000kn1C@most.weird.com> <7vskbxewti.fsf@alter.siamese.dyndns.org> <m1NFBAx-000kmgC@most.weird.com> <20091130211744.GA27278@dpotapov.dyndns.org> <m1NFGXS-000kn2C@most.weird.com> <20091201054734.GB11235@dpotapov.dyndns.org> <m1NFX19-000kn4C@most.weird.com> <20091201185114.GC11235@dpotapov.dyndns.org> <m1NFXvL-000kn2C@most.weird.com> <20091201211830.GE11235@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 01 23:25:31 2009
+Content-Type: text/plain; charset=us-ascii
+To: The Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 01 23:25:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFbA2-0003Vw-T8
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 23:25:31 +0100
+	id 1NFbAG-0003co-WB
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 23:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753585AbZLAWZT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Dec 2009 17:25:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752917AbZLAWZS
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 17:25:18 -0500
-Received: from zoidberg.org ([88.198.6.61]:50605 "EHLO cthulhu.zoidberg.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752430AbZLAWZS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 17:25:18 -0500
-Received: from perceptron (xdsl-78-35-144-134.netcologne.de [::ffff:78.35.144.134])
-  (IDENT: unknown, AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-  by cthulhu.zoidberg.org with esmtp; Tue, 01 Dec 2009 23:25:22 +0100
-  id 004D0364.4B1597D2.000022A1
-X-Mailer: Claws Mail 3.7.3 (GTK+ 2.18.3; i486-pc-linux-gnu)
-X-Obscure-Spam: http://music-jk.net/
+	id S1753931AbZLAWZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 17:25:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753667AbZLAWZd
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 17:25:33 -0500
+Received: from dsl.unpythonic.net ([206.222.212.217]:57680 "EHLO
+	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753141AbZLAWZd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 17:25:33 -0500
+Received: by unpythonic.net (Postfix, from userid 1000)
+	id DE3831148EA; Tue,  1 Dec 2009 16:25:26 -0600 (CST)
+Content-Disposition: inline
+In-Reply-To: <20091201211830.GE11235@dpotapov.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134262>
 
-In the manpage for git commit, the option --signoff is mentioned but
-there is no explanation of what it actually means. Add a brief hint tha=
-t
-S-o-b doesn't have a pre-defined meaning.
+On Wed, Dec 02, 2009 at 12:18:30AM +0300, Dmitry Potapov wrote:
+> AFAIK, "git archive" is cheaper than git clone. I do not say it is fast
+> for huge project, but if you want to run a process such as clean build
+> and test that takes a long time anyway, it does not add much to the
+> total time.
 
-Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
----
- Documentation/git-commit.txt |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+If you want to keep a separate copy of your source tree in order to get
+consistent builds, "git archive" is not much cheaper in disk space or in
+time, at least on this unix system:
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.tx=
-t
-index d227cec..cae510b 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -100,7 +100,8 @@ OPTIONS
- -s::
- --signoff::
- 	Add Signed-off-by line by the committer at the end of the commit
--	log message.
-+	log message. This line has no inherent meaning; what it stands for
-+	is up to whoever includes this commit in a repository.
-=20
- -n::
- --no-verify::
---=20
-1.6.5.3.171.ge36e
+$ find orig -exec md5sum {} + > /dev/null 2>&1 # ensure hot cache
+$ time git clone orig temp-clone
+Initialized empty Git repository in
+/usr/local/jepler/src/temp-clone/.git/
+0.6 real 0.3 user 0.6 system
+$ time (GIT_DIR=orig/.git git archive --format tar --prefix temp-archive/ HEAD | tar xf -)
+0.5 real 0.2 user 0.5 system
+$ du -s orig temp-clone temp-archive
+41880   orig
+14640   temp-clone  # du excludes files already accounted for by 'orig'
+14304   temp-archive
+
+.. and the next run to bring temp-clone up to date can be even faster,
+since it's just 'git pull' and will only touch changed files.
+
+Jeff
