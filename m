@@ -1,34 +1,34 @@
 From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [RFC PATCH 1/8] Pass unknown protocols to external protocol handlers
-Date: Tue,  1 Dec 2009 15:57:11 +0200
-Message-ID: <1259675838-14692-2-git-send-email-ilari.liusvaara@elisanet.fi>
+Subject: [RFC PATCH 2/8] Refactor git transport options parsing
+Date: Tue,  1 Dec 2009 15:57:12 +0200
+Message-ID: <1259675838-14692-3-git-send-email-ilari.liusvaara@elisanet.fi>
 References: <1259675838-14692-1-git-send-email-ilari.liusvaara@elisanet.fi>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 01 15:07:13 2009
+X-From: git-owner@vger.kernel.org Tue Dec 01 15:07:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFTNl-0008Eh-IE
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 15:07:10 +0100
+	id 1NFTNx-0008IO-HB
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 15:07:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753136AbZLAOG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 09:06:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753112AbZLAOG6
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 09:06:58 -0500
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:53195 "EHLO
-	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752885AbZLAOG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 09:06:57 -0500
-Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
-	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 1D3FA18CF5F
-	for <git@vger.kernel.org>; Tue,  1 Dec 2009 15:57:28 +0200 (EET)
+	id S1753164AbZLAOHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 09:07:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752827AbZLAOHG
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 09:07:06 -0500
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:36949 "EHLO
+	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753164AbZLAOHE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 09:07:04 -0500
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id CF46F8C55E
+	for <git@vger.kernel.org>; Tue,  1 Dec 2009 15:57:33 +0200 (EET)
 Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
-	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
-	with SMTP (gateway) id A0454B1994A; Tue, 01 Dec 2009 15:57:28 +0200
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A040D5CC5D1; Tue, 01 Dec 2009 15:57:33 +0200
 Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id F35402BD49
-	for <git@vger.kernel.org>; Tue,  1 Dec 2009 15:57:25 +0200 (EET)
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 528D52BD46
+	for <git@vger.kernel.org>; Tue,  1 Dec 2009 15:57:30 +0200 (EET)
 X-Mailer: git-send-email 1.6.6.rc0.64.g5593e
 In-Reply-To: <1259675838-14692-1-git-send-email-ilari.liusvaara@elisanet.fi>
 X-Antivirus: VAMS
@@ -36,230 +36,222 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134205>
 
-Change URL handling to allow external protocol handlers to provde
-new protocols without the '::' syntax if helper name does not conflict
-with any builtin protocol.
-
-foo:// now invokes git-remote-foo with foo:// URL.
+Refactor the transport options parsing so that protocols that aren't
+directly smart transports (file://, git://, ssh:// & co) can record
+the smart transport options for the case if it turns that transport
+can actually be smart.
 
 Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 ---
- transport-helper.c |   57 ++++++++++++++++++++++++++++++++----
- transport.c        |   82 +++++++++++++++++++++++++++++++++++++++++++++-------
- 2 files changed, 122 insertions(+), 17 deletions(-)
+ transport.c |   78 +++++++++++++++++++++++++++++++++++-----------------------
+ transport.h |   12 +++++++++
+ 2 files changed, 59 insertions(+), 31 deletions(-)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 6182413..a499751 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -22,6 +22,26 @@ struct helper_data
- 	int refspec_nr;
- };
- 
-+const char* remove_ext_force(const char* url)
-+{
-+	const char* url2 = url;
-+	const char* first_colon = NULL;
-+
-+	if(!url)
-+		return NULL;
-+
-+	while(*url2 && !first_colon)
-+		if(*url2 == ':')
-+			first_colon = url2;
-+		else
-+			url2++;
-+
-+	if(first_colon && first_colon[1] == ':')
-+		return first_colon + 2;
-+	else
-+		return url;
-+}
-+
- static struct child_process *get_helper(struct transport *transport)
- {
- 	struct helper_data *data = transport->data;
-@@ -30,6 +50,8 @@ static struct child_process *get_helper(struct transport *transport)
- 	const char **refspecs = NULL;
- 	int refspec_nr = 0;
- 	int refspec_alloc = 0;
-+	int duped;
-+	int seen_line = 0;
- 
- 	if (data->helper)
- 		return data->helper;
-@@ -39,21 +61,43 @@ static struct child_process *get_helper(struct transport *transport)
- 	helper->out = -1;
- 	helper->err = 0;
- 	helper->argv = xcalloc(4, sizeof(*helper->argv));
--	strbuf_addf(&buf, "remote-%s", data->name);
-+	/* We use the dashed form because git <unknown helper>
-+	   would run and print totally inapporiate error message. */
-+	strbuf_addf(&buf, "git-remote-%s", data->name);
- 	helper->argv[0] = strbuf_detach(&buf, NULL);
- 	helper->argv[1] = transport->remote->name;
--	helper->argv[2] = transport->url;
--	helper->git_cmd = 1;
-+	helper->argv[2] = remove_ext_force(transport->url);
-+	helper->git_cmd = 0;
- 	if (start_command(helper))
--		die("Unable to run helper: git %s", helper->argv[0]);
-+		die("Unable to run helper: %s", helper->argv[0]);
- 	data->helper = helper;
- 
-+	/* Open the output as FILE* so strbuf_getline() can be used.
-+	   Do this with duped fd because fclose() will close the fd,
-+	   and stuff like disowning will require the fd to remain.
-+
-+	   Set the stream to unbuffered because some reads are critical
-+	   in sense that any overreading will cause deadlocks.
-+	*/
-+	if((duped = dup(helper->out)) < 0)
-+		die_errno("Can't dup helper output fd");
-+	data->out = xfdopen(duped, "r");
-+	setvbuf(data->out, NULL, _IONBF, 0);
-+
- 	write_str_in_full(helper->in, "capabilities\n");
- 
--	data->out = xfdopen(helper->out, "r");
- 	while (1) {
--		if (strbuf_getline(&buf, data->out, '\n') == EOF)
-+		if (strbuf_getline(&buf, data->out, '\n') == EOF) {
-+			/* If we haven't seen line yet, try to finish the
-+			   command so we get error message about failed
-+			   execution. */
-+			if(!seen_line)
-+				finish_command(helper);
-+
- 			exit(128); /* child died, message supplied already */
-+		}
-+
-+		seen_line = 1;
- 
- 		if (!*buf.buf)
- 			break;
-@@ -91,6 +135,7 @@ static int disconnect_helper(struct transport *transport)
- 	if (data->helper) {
- 		write_str_in_full(data->helper->in, "\n");
- 		close(data->helper->in);
-+		close(data->helper->out);
- 		fclose(data->out);
- 		finish_command(data->helper);
- 		free((char *)data->helper->argv[0]);
 diff --git a/transport.c b/transport.c
-index 3eea836..148b9e1 100644
+index 148b9e1..7956892 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -780,6 +780,55 @@ static int is_file(const char *url)
- 	return S_ISREG(buf.st_mode);
+@@ -395,41 +395,35 @@ static int close_bundle(struct transport *transport)
  }
  
-+static const char* strchrc(const char* str, int c)
-+{
-+	while(*str)
-+		if(*str == c)
-+			return str;
-+		else
-+			str++;
-+	return NULL;
-+}
-+
-+static int is_url(const char* url)
-+{
-+	if(!url)
-+		return 0;
-+
-+	const char* url2 = url;
-+	const char* first_slash = strchrc(url, '/');
-+
-+	/* Input with no slash at all or slash first can't be URL. */
-+	if(!first_slash || first_slash == url)
-+		return 0;
-+	/* Character before must be : and next must be /. */
-+	if(first_slash[-1] != ':' || first_slash[1] != '/')
-+		return 0;
-+	/* There must be something before the :// */
-+	if(first_slash == url + 1)
-+		return 0;
-+	/* Check all characters up to first slash. Only alpha, num and
-+	   : are allowed. : must be followed by : or / */
-+	url2 = url;
-+	while(url2 < first_slash) {
-+		if(*url2 != ':' && !isalnum((unsigned char)*url2))
-+			return 0;
-+		if(*url2 == ':' && url2[1] != ':' && url2[1] != '/')
-+			return 0;
-+		if(*url2 == ':')
-+			url2++;		/* Skip second : */
-+		url2++;
-+	}
-+
-+	/* Valid enough. */
-+	return 1;
-+}
-+
-+static int external_specification_len(const char* url)
-+{
-+	return strchrc(url, ':') - url;
-+}
-+
- struct transport *transport_get(struct remote *remote, const char *url)
+ struct git_transport_data {
+-	unsigned thin : 1;
+-	unsigned keep : 1;
+-	unsigned followtags : 1;
+-	int depth;
++	struct git_transport_options options;
+ 	struct child_process *conn;
+ 	int fd[2];
+-	const char *uploadpack;
+-	const char *receivepack;
+ 	struct extra_have_objects extra_have;
+ };
+ 
+-static int set_git_option(struct transport *connection,
++static int set_git_option(struct git_transport_options *opts,
+ 			  const char *name, const char *value)
  {
- 	struct transport *ret = xcalloc(1, sizeof(*ret));
-@@ -812,23 +861,19 @@ struct transport *transport_get(struct remote *remote, const char *url)
+-	struct git_transport_data *data = connection->data;
+ 	if (!strcmp(name, TRANS_OPT_UPLOADPACK)) {
+-		data->uploadpack = value;
++		opts->uploadpack = value;
+ 		return 0;
+ 	} else if (!strcmp(name, TRANS_OPT_RECEIVEPACK)) {
+-		data->receivepack = value;
++		opts->receivepack = value;
+ 		return 0;
+ 	} else if (!strcmp(name, TRANS_OPT_THIN)) {
+-		data->thin = !!value;
++		opts->thin = !!value;
+ 		return 0;
+ 	} else if (!strcmp(name, TRANS_OPT_FOLLOWTAGS)) {
+-		data->followtags = !!value;
++		opts->followtags = !!value;
+ 		return 0;
+ 	} else if (!strcmp(name, TRANS_OPT_KEEP)) {
+-		data->keep = !!value;
++		opts->keep = !!value;
+ 		return 0;
+ 	} else if (!strcmp(name, TRANS_OPT_DEPTH)) {
+ 		if (!value)
+-			data->depth = 0;
++			opts->depth = 0;
+ 		else
+-			data->depth = atoi(value);
++			opts->depth = atoi(value);
+ 		return 0;
+ 	}
+ 	return 1;
+@@ -439,7 +433,8 @@ static int connect_setup(struct transport *transport, int for_push, int verbose)
+ {
+ 	struct git_transport_data *data = transport->data;
+ 	data->conn = git_connect(data->fd, transport->url,
+-				 for_push ? data->receivepack : data->uploadpack,
++				 for_push ? data->options.receivepack :
++				 data->options.uploadpack,
+ 				 verbose ? CONNECT_VERBOSE : 0);
+ 	return 0;
+ }
+@@ -469,15 +464,15 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	struct ref *refs_tmp = NULL;
+ 
+ 	memset(&args, 0, sizeof(args));
+-	args.uploadpack = data->uploadpack;
+-	args.keep_pack = data->keep;
++	args.uploadpack = data->options.uploadpack;
++	args.keep_pack = data->options.keep;
+ 	args.lock_pack = 1;
+-	args.use_thin_pack = data->thin;
+-	args.include_tag = data->followtags;
++	args.use_thin_pack = data->options.thin;
++	args.include_tag = data->options.followtags;
+ 	args.verbose = (transport->verbose > 0);
+ 	args.quiet = (transport->verbose < 0);
+ 	args.no_progress = args.quiet || (!transport->progress && !isatty(1));
+-	args.depth = data->depth;
++	args.depth = data->options.depth;
+ 
+ 	for (i = 0; i < nr_heads; i++)
+ 		origh[i] = heads[i] = xstrdup(to_fetch[i]->name);
+@@ -734,7 +729,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 	memset(&args, 0, sizeof(args));
+ 	args.send_mirror = !!(flags & TRANSPORT_PUSH_MIRROR);
+ 	args.force_update = !!(flags & TRANSPORT_PUSH_FORCE);
+-	args.use_thin_pack = data->thin;
++	args.use_thin_pack = data->options.thin;
+ 	args.verbose = !!(flags & TRANSPORT_PUSH_VERBOSE);
+ 	args.quiet = !!(flags & TRANSPORT_PUSH_QUIET);
+ 	args.dry_run = !!(flags & TRANSPORT_PUSH_DRY_RUN);
+@@ -861,12 +856,14 @@ struct transport *transport_get(struct remote *remote, const char *url)
  		ret->get_refs_list = get_refs_via_rsync;
  		ret->fetch = fetch_objs_via_rsync;
  		ret->push = rsync_transport_push;
--
--	} else if (!prefixcmp(url, "http://")
--	        || !prefixcmp(url, "https://")
--	        || !prefixcmp(url, "ftp://")) {
--		transport_helper_init(ret, "curl");
--#ifdef NO_CURL
--		error("git was compiled without libcurl support.");
--#endif
--
++		ret->smart_options = NULL;
  	} else if (is_local(url) && is_file(url)) {
  		struct bundle_transport_data *data = xcalloc(1, sizeof(*data));
  		ret->data = data;
  		ret->get_refs_list = get_refs_from_bundle;
  		ret->fetch = fetch_refs_from_bundle;
  		ret->disconnect = close_bundle;
--
--	} else {
-+	} else if(!is_url(url)
-+		|| !prefixcmp(url, "file://")
-+		|| !prefixcmp(url, "git://")
-+		|| !prefixcmp(url, "ssh://")
-+		|| !prefixcmp(url, "git+ssh://")
-+		|| !prefixcmp(url, "ssh+git://")) {
-+		/* These are builtin smart transports. */
++		ret->smart_options = NULL;
+ 	} else if(!is_url(url)
+ 		|| !prefixcmp(url, "file://")
+ 		|| !prefixcmp(url, "git://")
+@@ -876,20 +873,14 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		/* These are builtin smart transports. */
  		struct git_transport_data *data = xcalloc(1, sizeof(*data));
  		ret->data = data;
- 		ret->set_option = set_git_option;
-@@ -845,6 +890,21 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 		data->receivepack = "git-receive-pack";
- 		if (remote->receivepack)
- 			data->receivepack = remote->receivepack;
-+	} else if (!prefixcmp(url, "http://")
-+		|| !prefixcmp(url, "https://")
-+		|| !prefixcmp(url, "ftp://")) {
-+		/* These three are just plain special. */
-+		transport_helper_init(ret, "curl");
-+#ifdef NO_CURL
-+		error("git was compiled without libcurl support.");
-+#else
-+	} else {
-+		/* Unknown protocol in URL. Pass to external handler. */
-+		int len = external_specification_len(url);
-+		char* handler = xmalloc(len + 1);
-+		handler[len] = 0;
-+		strncpy(handler, url, len);
-+		transport_helper_init(ret, handler);
+-		ret->set_option = set_git_option;
++		ret->set_option = NULL;
+ 		ret->get_refs_list = get_refs_via_connect;
+ 		ret->fetch = fetch_refs_via_pack;
+ 		ret->push_refs = git_transport_push;
+ 		ret->disconnect = disconnect_git;
++		ret->smart_options = &(data->options);
+ 
+-		data->thin = 1;
+ 		data->conn = NULL;
+-		data->uploadpack = "git-upload-pack";
+-		if (remote->uploadpack)
+-			data->uploadpack = remote->uploadpack;
+-		data->receivepack = "git-receive-pack";
+-		if (remote->receivepack)
+-			data->receivepack = remote->receivepack;
+ 	} else if (!prefixcmp(url, "http://")
+ 		|| !prefixcmp(url, "https://")
+ 		|| !prefixcmp(url, "ftp://")) {
+@@ -907,14 +898,39 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		transport_helper_init(ret, handler);
  	}
  
++	if(ret->smart_options) {
++		ret->smart_options->thin = 1;
++		ret->smart_options->uploadpack = "git-upload-pack";
++		if (remote->uploadpack)
++			ret->smart_options->uploadpack = remote->uploadpack;
++		ret->smart_options->receivepack = "git-receive-pack";
++		if (remote->receivepack)
++			ret->smart_options->receivepack = remote->receivepack;
++	}
++
  	return ret;
+ }
+ 
+ int transport_set_option(struct transport *transport,
+ 			 const char *name, const char *value)
+ {
++	int git_reports = 1, protocol_reports = 1;
++
++	if (transport->smart_options)
++		git_reports = set_git_option(transport->smart_options,
++					     name, value);
++
+ 	if (transport->set_option)
+-		return transport->set_option(transport, name, value);
++		protocol_reports = transport->set_option(transport, name,
++							value);
++
++	/* If either report is 0, report 0 (success). */
++	if(!git_reports || !protocol_reports)
++		return 0;
++	/* If either reports -1 (invalid value), report -1. */
++	if((git_reports == -1) || (protocol_reports == -1))
++		return -1;
++	/* Otherwise if both report unknown, report unknown. */
+ 	return 1;
+ }
+ 
+diff --git a/transport.h b/transport.h
+index 9e74406..5949132 100644
+--- a/transport.h
++++ b/transport.h
+@@ -4,6 +4,15 @@
+ #include "cache.h"
+ #include "remote.h"
+ 
++struct git_transport_options {
++	unsigned thin : 1;
++	unsigned keep : 1;
++	unsigned followtags : 1;
++	int depth;
++	const char *uploadpack;
++	const char *receivepack;
++};
++
+ struct transport {
+ 	struct remote *remote;
+ 	const char *url;
+@@ -65,6 +74,9 @@ struct transport {
+ 	signed verbose : 3;
+ 	/* Force progress even if the output is not a tty */
+ 	unsigned progress : 1;
++	/* If transport is at least potentially smart, this points to git_transport_options
++	   structure to use in case transport actually turns out to be smart. */
++	struct git_transport_options* smart_options;
+ };
+ 
+ #define TRANSPORT_PUSH_ALL 1
 -- 
 1.6.6.rc0.64.g5593e
