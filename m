@@ -1,101 +1,164 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] get_ref_states: strdup entries and free util in stale 
- list
-Date: Mon, 30 Nov 2009 23:34:51 -0800
-Message-ID: <7vy6ln2llw.fsf@alter.siamese.dyndns.org>
-References: <0458f16c6ce906997aaf357c0c7368841ae83c36.1259625072.git.bert.wesarg@googlemail.com> <7viqcrbl22.fsf@alter.siamese.dyndns.org> <36ca99e90911302249r5f77f031o73cc7bb13dc375cf@mail.gmail.com>
+From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+Subject: Re: [PATCH v2 4/6] build dashless "bin-wrappers" directory similar to installed bindir
+Date: Tue, 1 Dec 2009 00:33:50 -0700
+Message-ID: <20091201073350.GA528@comcast.net>
+References: <1259561971-25730-1-git-send-email-mmogilvi_git@miniinfo.net> <1259561971-25730-2-git-send-email-mmogilvi_git@miniinfo.net> <1259561971-25730-3-git-send-email-mmogilvi_git@miniinfo.net> <1259561971-25730-4-git-send-email-mmogilvi_git@miniinfo.net> <1259561971-25730-5-git-send-email-mmogilvi_git@miniinfo.net> <7vmy241q75.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 01 08:35:47 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 01 08:36:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFNH0-0007up-73
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 08:35:46 +0100
+	id 1NFNHp-0008Do-Ox
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 08:36:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753773AbZLAHfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 02:35:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753838AbZLAHfD
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 02:35:03 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51604 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753785AbZLAHe7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 02:34:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 085F0A2BEA;
-	Tue,  1 Dec 2009 02:35:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PMjfIOafAMFFZaC9rzUzqIASYog=; b=Gcx7hA
-	TtM82ryvBj24H9+OllVjJt/Qxvfg+xSkpAbEnompYVKfWc7sOxF5tKD7L8D6M15h
-	+FikowogbY/G7JRvFfUsaRAYnUYdt4RFg4hD9qCefW24/4d5zTddeHhJvomE2di0
-	RK7Xp/lulVu/ozUjZUKOevNd/dRaM76ez9teI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bKmThdfoOleRjikgASv0DiT1lBh3zRUT
-	jb1SVAPCRJtTGGZMjj7krRol4i0dGO8AP8h4RC/yJVlbf7fM2lrjBQ0gXOU28af/
-	msDe6mbeCMKgRQngUdlPgNWPPA9kFn27aF9G5SUr0kgf0dF4QbJNCbHI018Uh9JW
-	PrDPuoT0Uh4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BC806A2BE9;
-	Tue,  1 Dec 2009 02:35:00 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9B052A2BE6; Tue,  1 Dec 2009
- 02:34:53 -0500 (EST)
-In-Reply-To: <36ca99e90911302249r5f77f031o73cc7bb13dc375cf@mail.gmail.com>
- (Bert Wesarg's message of "Tue\, 1 Dec 2009 07\:49\:05 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 08633982-DE4C-11DE-B351-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753892AbZLAHfB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 02:35:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753875AbZLAHfB
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 02:35:01 -0500
+Received: from qmta05.emeryville.ca.mail.comcast.net ([76.96.30.48]:33737 "EHLO
+	QMTA05.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753688AbZLAHdq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 02:33:46 -0500
+Received: from OMTA12.emeryville.ca.mail.comcast.net ([76.96.30.44])
+	by QMTA05.emeryville.ca.mail.comcast.net with comcast
+	id BjYW1d0050x6nqcA5jZtFu; Tue, 01 Dec 2009 07:33:53 +0000
+Received: from mmogilvi.homeip.net ([24.8.125.243])
+	by OMTA12.emeryville.ca.mail.comcast.net with comcast
+	id BjZs1d0045FCJCg8YjZsue; Tue, 01 Dec 2009 07:33:53 +0000
+Received: by mmogilvi.homeip.net (Postfix, from userid 501)
+	id 9656989115; Tue,  1 Dec 2009 00:33:50 -0700 (MST)
+Content-Disposition: inline
+In-Reply-To: <7vmy241q75.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.4i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134171>
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
+On Sun, Nov 29, 2009 at 10:28:46PM -0800, Junio C Hamano wrote:
+> Matthew Ogilvie <mmogilvi_git@miniinfo.net> writes:
+> > +GIT_EXEC_PATH="__GIT_EXEC_PATH__"
+> > +exec "${GIT_EXEC_PATH}/__PROG__" "$@"
+> 
+> Two issues, one minor and one not so minor but not grave:
+> 
+>  - Everywhere else we seem to use "@@UPPERCASE_NAME@@" not
+>    double-underscore as placeholders like the above.
+> 
+>  - @@PROG@@ is under our control and it is easy for us to guarantee that
+>    it won't have any funny letters, but GIT_EXEC_PATH is not.  Is it safe
+>    to do a simple-minded "sed" replacement, or does it need the usual sq
+>    trick employed in the other replacement in our Makefile?
 
-> On Tue, Dec 1, 2009 at 01:21, Junio C Hamano <gitster@pobox.com> wrote:
-> ...
->> Hmm, the Subject: matches what the code does, but nobody mentions why it
->> is necessary (iow, what breaks in the current code and what becomes better
->> if the patch is applied). The blank space before your "S-o-b:" line is
->> for you to describe these things.
-> Sure. unfortunately the code where the string list is filled is not in
-> the patch. But if you look at the code it should be self-explanatory.
+You've already applied the v2 patch to pu, but if it is still
+a concern, you might either add or squash in the patch at
+the bottom of this message for the @@ vs __ issue.  But first,
+some thoughts about escaping $(shell pwd):
 
-That is _exactly_ why I want the description in the commit log message.  I
-don't want commit messages (or lack thereof) to force people to look at
-the code outside the patch.
+-------------
 
-Otherwise I'll have to ask _you_ to personally give the 7-line explanation
-you just gave us to anybody who runs "git log -p" with the default context
-size after this patch is applied.  I do not think you have the bandwidth
-to handle that ;-).
+The patch below also switches to using single quotes in the wrapper
+script, but that by itself doesn't fix everything.  Basically it
+fixes '"', '$', (and maybe/partially '\\') at the expense of
+breaking '\''.  Several characters are still
+broken: '\'', '|', '&', '\\', and maybe others.  Either option
+should handle ' ' (space) OK.
 
-> There is actually also an other solution: we could first strdup the
-> ref name to the .util member and take this as the input for the
-> abbrev_ref()/string list entry and safe there the strdup.
+The "standard" *_SQ replacement used elsewhere in the makefile
+is inadequate in this context, since we really needs to escape
+makefile, shell, sed, and then shell again.  It might be possible
+to define something like the following, and then use it instead
+of $(shell pwd).  You could also try several nested
+$(subst ...)'s instead of sed.  I have not tried either of these.
 
-I too thought something like that may make sense, but it doesn't look like
-so, for two reasons:
+build_dir_MQ=$(shell pwd | sed -e "s/'/'\"'\"'/g" \
+                               -e 's/[|&\\]/\\&/g' \
+                               -e "s/'/'\"'\"'/g" )
 
- - string-list API is a bit cumbersome to use if you allocate the string
-   yourself.  You will be made responsible for freeing them, and often you
-   do so by setting strdup_strings to true immediately before calling
-   string_list_clear(), which is kind of ugly;
+Rationale:
 
- - The ref abbrev_branch() is called and the address of whose substring is
-   taken to be used as "name" in handle_one_branch() is refspec.src, but
-   what goes to .util is refname that is refspec.dst---they are different
-   strings and one is not a substring of the other.
+Working backwards, the last -e makes sure the sed argument doesn't
+get split or combined by the shell before it gets to sed.  The
+middle -e is intended to escape characters that sed would
+misinterpret.  The first -e is so that single quotes get
+properly interpreted by the shell that interprets
+bin-wrappers/* generated scripts.
 
-IOW, your patch text is good; it just would have been better with a bit
-more explanation.
+But I don't really think this is worth it:
 
-Thanks, will queue in 'maint'.
+1. I think there are parts of test-lib.sh (and maybe other places)
+that don't even handle spaces in top-level $(pwd), let alone more
+complicated characters.  (git itself should be robust, though)
+
+2. Technically, stuff like SHELL_PATH_SQ (anything that is used
+by the makefile as the replacement text for a sed 's' command) may
+benefit from something similar.  (But other uses like -DVAR='$(xx_SQ)'
+are probably perfect already.)
+
+3. It doesn't seem like a severe restriction to require that users
+build git in a directory with a reasonably normal full path name.
+
+-------------
+
+From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+Date: Mon, 30 Nov 2009 22:57:40 -0700
+Subject: [PATCH] wrap-for-bin.sh: Use @@var@@ for Makefile variable expansion
+
+We use @@var@@-style variable expansion in most other places, so be
+consistent with them.
+
+Also, rename it to @@BUILD_DIR@@ to clarify what it is expanded with,
+and use single quotes in wrap-for-bin.sh to reduce the number of shell
+meta characters that might mess it up.
+
+Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+---
+ Makefile        |    4 ++--
+ wrap-for-bin.sh |   12 ++++++------
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index c8f0c5f..811db45 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1791,8 +1791,8 @@ all:: $(TEST_PROGRAMS) $(test_bindir_programs)
+ bin-wrappers/%: wrap-for-bin.sh
+ 	@mkdir -p bin-wrappers
+ 	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+-	     -e 's|__GIT_EXEC_PATH__|$(shell pwd)|' \
+-	     -e 's|__PROG__|$(@F)|' < $< > $@ && \
++	     -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
++	     -e 's|@@PROG@@|$(@F)|' < $< > $@ && \
+ 	chmod +x $@
+ 
+ # GNU make supports exporting all variables by "export" without parameters.
+diff --git a/wrap-for-bin.sh b/wrap-for-bin.sh
+index ee2bc98..c5075c9 100644
+--- a/wrap-for-bin.sh
++++ b/wrap-for-bin.sh
+@@ -4,12 +4,12 @@
+ # to run test suite against sandbox, but with only bindir-installed
+ # executables in PATH.  The Makefile copies this into various
+ # files in bin-wrappers, substituting
+-# __GIT_EXEC_PATH__ and __PROG__.
++# @@BUILD_DIR@@ and @@PROG@@.
+ 
+-GIT_EXEC_PATH="__GIT_EXEC_PATH__"
+-GIT_TEMPLATE_DIR="__GIT_EXEC_PATH__/templates/blt"
+-GITPERLLIB="__GIT_EXEC_PATH__/perl/blib/lib"
+-PATH="__GIT_EXEC_PATH__/bin-wrappers:$PATH"
++GIT_EXEC_PATH='@@BUILD_DIR@@'
++GIT_TEMPLATE_DIR='@@BUILD_DIR@@/templates/blt'
++GITPERLLIB='@@BUILD_DIR@@/perl/blib/lib'
++PATH='@@BUILD_DIR@@/bin-wrappers:'"$PATH"
+ export GIT_EXEC_PATH GIT_TEMPLATE_DIR GITPERLLIB PATH
+ 
+-exec "${GIT_EXEC_PATH}/__PROG__" "$@"
++exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+-- 
+1.6.4.GIT
