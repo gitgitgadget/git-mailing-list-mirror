@@ -1,85 +1,94 @@
-From: Michael Norman <mwnorman@gmail.com>
-Subject: git-svn: after fetch , move 'remotes/git-svn' commits to be under 
-	'master' ?
-Date: Tue, 1 Dec 2009 11:18:05 -0500
-Message-ID: <d43c95440912010818j3c0b98e0o504f82c666c7a290@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: non-US-ASCII file names (e.g. Hiragana) on Windows
+Date: Tue, 1 Dec 2009 08:26:27 -0800
+Message-ID: <20091201162627.GE21299@spearce.org>
+References: <4B1168D4.5010902@syntevo.com> <200911282100.23000.j6t@kdbg.org> <4B14DA78.70906@syntevo.com> <4B14DC20.6040808@syntevo.com> <4B14EB2E.9020906@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 01 17:21:49 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Singer <thomas.singer@syntevo.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Dec 01 17:27:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFVQc-0005oO-He
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 17:18:14 +0100
+	id 1NFVYo-0004bw-IB
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 17:26:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754186AbZLAQSB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Dec 2009 11:18:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754160AbZLAQSB
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 11:18:01 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:47590 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754020AbZLAQSA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 11:18:00 -0500
-Received: by bwz27 with SMTP id 27so3584741bwz.21
-        for <git@vger.kernel.org>; Tue, 01 Dec 2009 08:18:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=aYmMzS+2FRvQQFGNK0qDhE8VophqxjhB2SaOHXxBLdk=;
-        b=vRmJVHSicMEFmVOQ7d3qHLLixJhWfDlZy+VD22QNf8Y6a9fYPOkbhtqWbVkBEaRTEs
-         F9IYPNUBKWOpNrNBL58efCBjh9ZNwspAkuXaT/rLmW9qRucaG6yG7FdYe0rKWwetkqoi
-         LOdDHxYn2kaAePyOTdTDptha9hYJQDDoqyWrA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=q1EZ23ApU2+oZ6KR+nJT7r6Xule5zQPwPykF70smvSPp+zVzD3V77++orwa+8WQLn8
-         RM11JAjkd8gxHHR99dbBGLdLVKH8SLyCeQBI6N+rFF/YDY58Jhj5abcEi/nUBHW7ZV+8
-         u8stuowU2f7+e44M3sWf54hwBqTpRJF55PUMQ=
-Received: by 10.204.150.68 with SMTP id x4mr5900857bkv.151.1259684286054; Tue, 
-	01 Dec 2009 08:18:06 -0800 (PST)
+	id S1751940AbZLAQ0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 11:26:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750929AbZLAQ0a
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 11:26:30 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:33606 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750815AbZLAQ03 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 11:26:29 -0500
+Received: by yxe17 with SMTP id 17so4704835yxe.33
+        for <git@vger.kernel.org>; Tue, 01 Dec 2009 08:26:36 -0800 (PST)
+Received: by 10.101.34.13 with SMTP id m13mr2342649anj.179.1259684791229;
+        Tue, 01 Dec 2009 08:26:31 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 39sm108006yxd.45.2009.12.01.08.26.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 01 Dec 2009 08:26:29 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4B14EB2E.9020906@viscovery.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134223>
 
-I don't know if following work-flow makes sense, but here it is:
+Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Thomas Singer schrieb:
+> > To be more precise: Who is interpreting the bytes in the file names as
+> > characters? Windows, Git or Java?
+> 
+> In the case of git: Windows does it, using the console's codepage to
+> convert between bytes and Unicode.
+> 
+> I don't know about Java, but I guess that no conversion is necessary
+> because Java is Unicode-aware.
 
-step 0) clone a (very!) large SVN repository: since --depth=3D1 doesn't
-work for git-svn clone,
-pick the revision manually. In this case, I picked the revision one
-behind HEAD, so I have
-only 2 commits in my working copy:
+Actually, conversion is necessary, and its something that is proving
+to be really painful within JGit.
 
-yellow-dot - master
-    |
-blue-dot=A0   - misc. tweak settings
-=A0=A0=A0 |
-blue-dot=A0   - bug 295xx - fix
+The Java IO APIs use UTF-16 for file names.  However we are reading
+a stream of unknown bytes from the index file and tree objects.
+Thus JGit must convert a stream of bytes into UTF-16 just to get
+to the OS.
 
-step 1) I then created a few local branches off of master - br1, br2, e=
-tc.
-           Some local commits are created under each branch
+The JVM then turns around and converts from UTF-16 to some other
+encoding for the filesystem.
 
-Pick up latest_&_greatest revisions from SVN
-step 2) git svn fetch (about ~50 commits)
-           These all identify their branch as 'remotes/git-svn'
+On Win32 I suspect the JVM uses the native UTF-16 file APIs, so
+this translation is lossless.
 
-It is possible to move the fetched commits to be under 'master'? My
-local branch commits
-do not overlap (adding new functionality only), so if the new commits
-are moved to be under
-master, then branches br1 and br2 will inherit those changes - correct?
+On POSIX, I suspect the JVM uses $LANG or some other related
+environment variable to guess the user's preferred encoding, and
+then converts from UTF-16 to bytes in that encoding.  And I have
+no idea how they handle normalization of composed code points.
 
-Any advice would be greatly appreciated -  say if for example my work
-flow is all wrong and
-there is a better way to keep in sync with the remote SVN repository
-while still commiting local
-work in my working-copy tree
+All of these layers make for a *very* confusing situation for us
+within JGit:
 
-Mike Norman
+  git tree
+  +---------+
+  | bytes   | -+
+  +---------+   \
+                 \             +--------+            +---------+
+                  +-- JGit --> | UTF-16 | -- JVM --> | OS call |
+  .git/index     /             +--------+            +---------+
+  +---------+   /
+  | bytes   | -+
+  +---------+
+
+Its impossible for us to do what C git does, which is just use the
+bytes used by the OS call within the git datastructure.  Which of
+course also isn't always portable, e.g. the Mac OS X HFS+ mess.
+
+:-)
+
+-- 
+Shawn.
