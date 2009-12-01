@@ -1,91 +1,91 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC PATCH 4/8] Support remote helpers implementing smart
-	transports
-Date: Tue, 1 Dec 2009 11:22:33 -0800
-Message-ID: <20091201192233.GL21299@spearce.org>
-References: <1259675838-14692-1-git-send-email-ilari.liusvaara@elisanet.fi> <1259675838-14692-5-git-send-email-ilari.liusvaara@elisanet.fi>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Tue Dec 01 20:22:47 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH] help: Do not unnecessarily look for a repository
+Date: Tue,  1 Dec 2009 11:27:34 -0800
+Message-ID: <1259695654-3182-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Dec 01 20:26:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFYJ9-0006x4-AD
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 20:22:43 +0100
+	id 1NFYNC-0000VQ-3x
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 20:26:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753720AbZLATWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 14:22:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753574AbZLATWc
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 14:22:32 -0500
-Received: from mail-yw0-f182.google.com ([209.85.211.182]:60535 "EHLO
-	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752231AbZLATWb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 14:22:31 -0500
-Received: by ywh12 with SMTP id 12so5509475ywh.21
-        for <git@vger.kernel.org>; Tue, 01 Dec 2009 11:22:37 -0800 (PST)
-Received: by 10.101.175.39 with SMTP id c39mr617883anp.87.1259695357578;
-        Tue, 01 Dec 2009 11:22:37 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 4sm178821yxd.70.2009.12.01.11.22.34
+	id S1754034AbZLAT0m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 14:26:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754025AbZLAT0m
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 14:26:42 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:56087 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753040AbZLAT0k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 14:26:40 -0500
+Received: by bwz27 with SMTP id 27so3784521bwz.21
+        for <git@vger.kernel.org>; Tue, 01 Dec 2009 11:26:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=RNVjnqtsWlKZ58yekHsxKIezeCqk701ffz8IVq3WWL0=;
+        b=OWhVbe5L1Hl1f7HEgwZLJ//qw/bkX+CsSi1A6TpPaKo0rpkO23hW+NM5W/0+dAnIm7
+         pR7nv04hHhlXS1cZrpE6h2B8ZQRz+bn+gdsbKtn12DBLgBC7JnDzpu014ziIHidGrtB6
+         Qe7Ae6fApAPyUYQfKJ3Dd4OQ38e4+Ix18+iFA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=GLS3tDRwu/thjGTetnSVx8lyXUotfNJYpfg9BugQtVYaR+bPvJPqYf5YreN+iWDPpl
+         qTDP6rIaRa6eyF9iZyevLpViXz++rvRhEP6jmv9KgFOm8o/MCdmh449apzkurY4Wvj1O
+         FRcgmYtq/vkAmcHRR56774tb6F1bTkwRi4MWk=
+Received: by 10.204.24.71 with SMTP id u7mr6577972bkb.35.1259695605270;
+        Tue, 01 Dec 2009 11:26:45 -0800 (PST)
+Received: from localhost (wdas-1.disneyanimation.com [12.188.26.1])
+        by mx.google.com with ESMTPS id 2sm537762fks.43.2009.12.01.11.26.43
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Dec 2009 11:22:35 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1259675838-14692-5-git-send-email-ilari.liusvaara@elisanet.fi>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+        Tue, 01 Dec 2009 11:26:44 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134252>
 
-Ilari Liusvaara <ilari.liusvaara@elisanet.fi> wrote:
-> diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-> index 5cfdc0c..adf815c 100644
-> --- a/Documentation/git-remote-helpers.txt
-> +++ b/Documentation/git-remote-helpers.txt
-> @@ -90,6 +90,28 @@ Supported if the helper has the "push" capability.
->  +
->  Supported if the helper has the "import" capability.
->  
-> +'connect-r' <service>::
-> +	Connects to given service. Stdin and stdout of helper are
-> +	connected to specified service (no git or git- prefixes are used,
-> +	so e.g. fetching uses 'upload-pack' as service) on remote side.
+Although 'git help' actually doesn't need to be run inside a git
+repository and uses no repository-specific information, it looks for a git
+directory.  Searching for a git directory can be annoying in auto-mount
+environments.  With this commit, 'git help' no longer searches for a
+repository when run without any options.
 
-This flies against every other convention we have.  git:// uses the
-string 'git-upload-pack' and 'git-receive-pack', and so does the
-smart-http code.  We should continue to use the git- prefix here,
-to be consistent, even though by context its clearly implied.
+7c3baa9 originally modified 'git help -a' to not require a repository.
+This applies the same fix for 'git help'.
 
-> +	Valid replies to this command are 'OK' (connection established),
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ builtin-help.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-Why 'OK'?  Currently remote-helpers return an empty blank line
-to any successful command, not 'OK'.
-
-> +	'FALLBACK' (no smart transport support, fall back to dumb
-> +	transports) and 'ERROR' (can't connect, don't bother trying to
-> +	fall back).
-
-FALLBACK almost makes sense, but ERROR we don't do in the
-the existing helper protocol.  Instead the helper simply
-prints its error message(s) to stderr and does exit(128).
-aka what die() does.
-
-> +Supported if the helper has the "connect-r" capability. Not used if
-> +helper has the "invoke-r" capability, as invoke is preferred to connect.
-> +
-> +'invoke-r' <cmdlength> <cmd>::
-> +	Like connect-r command, but instead of service name, command
-> +	line is given. The length of command field is given in command
-> +	length field.
-> ++
-> +Supported if the helper has the "invoke-r" capability.
-
-Why both connect-r and invoke-r?  Why isn't connect-r sufficient
-here?  Isn't it sufficient for any service that runs over git:// ?
-
+diff --git a/builtin-help.c b/builtin-help.c
+index ca08519..09ad4b0 100644
+--- a/builtin-help.c
++++ b/builtin-help.c
+@@ -427,9 +427,6 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 		return 0;
+ 	}
+ 
+-	setup_git_directory_gently(&nongit);
+-	git_config(git_help_config, NULL);
+-
+ 	if (!argv[0]) {
+ 		printf("usage: %s\n\n", git_usage_string);
+ 		list_common_cmds_help();
+@@ -437,6 +434,9 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 		return 0;
+ 	}
+ 
++	setup_git_directory_gently(&nongit);
++	git_config(git_help_config, NULL);
++
+ 	alias = alias_lookup(argv[0]);
+ 	if (alias && !is_git_command(argv[0])) {
+ 		printf("`git %s' is aliased to `%s'\n", argv[0], alias);
 -- 
-Shawn.
+1.6.5.3
