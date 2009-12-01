@@ -1,98 +1,70 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH/RFC] Add a --bouquet option to git rev-list
-Date: Tue, 01 Dec 2009 09:09:43 +0100
-Message-ID: <4B14CF47.5020808@drmicha.warpmail.net>
-References: <4b143a9c.c401be0a.364f.ffffba5b@mx.google.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: non-US-ASCII file names (e.g. Hiragana) on Windows
+Date: Tue, 01 Dec 2009 09:27:45 +0100
+Message-ID: <4B14D381.3010706@viscovery.net>
+References: <4B1168D4.5010902@syntevo.com> <4B11AD43.3070307@gmail.com> <4B123C80.30607@syntevo.com> <4B14CA79.6040408@syntevo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Nathan W. Panike" <nathan.panike@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 01 09:11:02 2009
+To: Thomas Singer <thomas.singer@syntevo.com>
+X-From: git-owner@vger.kernel.org Tue Dec 01 09:28:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFNp8-0002cX-AS
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 09:11:02 +0100
+	id 1NFO5a-0000eE-AZ
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 09:28:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753522AbZLAIKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 03:10:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753141AbZLAIKu
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 03:10:50 -0500
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:36251 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752557AbZLAIKt (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 03:10:49 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 714AFC448D;
-	Tue,  1 Dec 2009 03:10:56 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 01 Dec 2009 03:10:56 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=VCgt+wa1VxfKwNecn26yQfNM2vU=; b=eoLYnU8gohIwzNke51vSx4yLsAHug3TU7AkmofQXHDm7LOJo8NCVL7X3Cun1MLpDeItHgvnxA3+MHSEFGqMHy+sMfy70rFHWG3JiwdWQrM+aa75blzcDLmEPFnlCGu5hC5L7/5WHZATfpPaqdvw/PqbyBG/4EkouzF4IOICVXH4=
-X-Sasl-enc: hcm5qmztEH24Ih5IyGD9t9cCfncZoPpvGeD61h5EobwJ 1259655056
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id D9D6149ED7E;
-	Tue,  1 Dec 2009 03:10:55 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091127 Lightning/1.0b1pre Shredder/3.0.1pre
-In-Reply-To: <4b143a9c.c401be0a.364f.ffffba5b@mx.google.com>
+	id S1753016AbZLAI1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 03:27:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752997AbZLAI1u
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 03:27:50 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:24436 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752932AbZLAI1u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 03:27:50 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NFO5K-00051t-Ga; Tue, 01 Dec 2009 09:27:53 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 448361660F;
+	Tue,  1 Dec 2009 09:27:46 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <4B14CA79.6040408@syntevo.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134177>
 
-Nathan W. Panike venit, vidit, dixit 30.11.2009 21:55:
-> Add a command line option to rev-list so the command 'git rev-list --bouquet'
-> shows all revisions that are ancestors of refs which share history with HEAD.
+Thomas Singer schrieb:
+> Thomas Singer wrote:
+>> Reece Dunn wrote:
+>>> This is a bug in git's character encoding/conversion logic. It looks
+>>> like git is taking the source string and converting it to ascii to be
+>>> displayed on the console output (e.g. by using the WideCharToMultiByte
+>>> conversion API) -- these APIs will use a '?' character for characters
+>>> that it cannot map to the target character encoding (like the Hiragana
+>>> characters that you are using).
+>> I have a screenshot from a SmartGit user where 1) the console can show the
+>> far-east-characters and 2) Git *can* show the characters escaped. Are there
+>> two versions of Git available or does Gits behaviour depends somehow on the
+>> system locale?
 > 
-> Signed-off-by: Nathan W. Panike <nathan.panike@gmail.com>
-> ---
-> I have a repository with the following structure:
-> 
->       B
->      /
-> A'--A--C
->      \
->       D
-> 
-> E'--E
-> 
-> Thus the command 'git merge base E A' returns nothing, as there is no common
-> history.  The E history contains stuff that is derived from the other history
-> (A, B, C, or D).  Often I find myself doing the following:
+> Does no Git expert know what to do to get it working?
 
-Either I don't understand the diagram or your term "derived". If
-"derived" means "on some branch of a merge" and E is derived from A, B,
-C, or D, then (since B, C, D is derived from A, and from A') E is
-derived from A', and they will have a merge base.
+http://article.gmane.org/gmane.comp.version-control.git/133980 [*]
 
-Are these diagrams really disconnected from each other?
+The possible reason why some one else is seeing correct glyphs with
+SmartGit is because it is a Unicode application and the Windows box has
+suitable fonts installed and the console is configured with a suitable
+font as well.
 
-> git checkout C
-> gitk $(include_forks) &
-> <View history, make changes, merges, et cetera>
-> git checkout E
-> <go back to gitk, only see history for B, C, etc>
-> 
-> Now the 'include_forks' command is a bash function in my .bashrc:
-> 
-> include_forks () 
-> { 
->     local head="$(git show -s --pretty=format:'%H' HEAD)";
->     echo "HEAD $(git for-each-ref --format='%(refname)' \
-> 	refs/heads refs/remotes | while read ref; do \
-> 	if test "$(git merge-base HEAD ${ref}^{commit})" != ""; \
-> 		then echo ${ref}; fi; done)"
-> }
-> 
-> The shell thus intercepts my command and I must restart gitk to see the history
-> of E. 
-> 
-> With this patch, I can issue the command 'gitk --bouquet' and when I checkout
-> E, I can 'reload' in gitk and see the history of E automatically.
+-- Hannes
 
-What would your patch do in the example you gave above? Which refs would
-it cause gitk (rev-list) to show?
-
-Michael
+[*] I had a botch email infrastructure when I sent this message, and the
+copy intended for you went to the waste bin, but I thought I had re-sent
+to you in a private mail.
