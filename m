@@ -1,88 +1,156 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 0/8] Git remote helpers to implement smart
- transports.
-Date: Tue, 01 Dec 2009 12:42:29 -0800
-Message-ID: <7vskbuwhmy.fsf@alter.siamese.dyndns.org>
-References: <1259675838-14692-1-git-send-email-ilari.liusvaara@elisanet.fi>
- <fabb9a1e0912010812t4de8027dj1faf828051d1adc2@mail.gmail.com>
- <20091201165245.GF21299@spearce.org> <20091201171908.GA15436@Knoppix>
- <20091201193009.GM21299@spearce.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: "git merge" merges too much!
+Date: Tue, 1 Dec 2009 23:50:57 +0300
+Message-ID: <20091201205057.GD11235@dpotapov.dyndns.org>
+References: <m1NEaLp-000kn1C@most.weird.com> <20091129051427.GA6104@coredump.intra.peff.net> <m1NFAji-000kn2C@most.weird.com> <20091130192212.GA23181@dpotapov.dyndns.org> <m1NFXpl-000knKC@most.weird.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Dec 01 21:42:50 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: The Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 01 21:51:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFZYe-0000Ma-1d
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 21:42:48 +0100
+	id 1NFZh8-00044t-CB
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 21:51:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754288AbZLAUmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 15:42:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753280AbZLAUmg
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 15:42:36 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51752 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751352AbZLAUmf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 15:42:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2BD6FA3644;
-	Tue,  1 Dec 2009 15:42:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ieaTwTJ/qAwSp/jL1pfWeqYoFXM=; b=Nj66UR
-	agj73ht367AoqSYb8BRV7SRcuSo26K4jCjSg2DSJuqXGAilgJTUidsT5S6TI06Rw
-	xdrkm3Xo9gufZrE2H1DcawCpXBYs63ichKaIcu9OEY1qeOnyogKKLSlQ5QEGvuqm
-	SykULMKWClnT9I2Ra4MrprW7yPRYD2HFJ8ZFY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VmtaCbp3b26fxdVXhldwFSlVsoY7iMLl
-	1JSPSjqH6J2j/5Kb2laAYaoyYa9s5lefOASBQ3bdZjKZI3xTTawrXmHTwsOOKXH7
-	icZRZzYJKJ74URBLZM4FBrWaeckkA158s/xhwNIj20tYPS3KgI1uBPYCvzxjF+PP
-	0NCjCSM7zb8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E3186A3643;
-	Tue,  1 Dec 2009 15:42:36 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 16E2FA3639; Tue,  1 Dec 2009
- 15:42:30 -0500 (EST)
-In-Reply-To: <20091201193009.GM21299@spearce.org> (Shawn O. Pearce's message
- of "Tue\, 1 Dec 2009 11\:30\:09 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0F3F5682-DEBA-11DE-84C0-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1754041AbZLAUvP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Dec 2009 15:51:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753824AbZLAUvP
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 15:51:15 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:61146 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752070AbZLAUvO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 15:51:14 -0500
+Received: by bwz27 with SMTP id 27so3859233bwz.21
+        for <git@vger.kernel.org>; Tue, 01 Dec 2009 12:51:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=oJdTfS/lZL/u04SApMJpb+qNxkp+HoLeFJPR0ghJSEU=;
+        b=X/Oassne7Gs9/u5t1jIkqd7O1SjnKsmnIlmUB8U8ck2t8Y153GgcCByfC0QC6NycUl
+         +DcMJMghhwBJJeuOdo9fD2hGD9lypSczbPrTjuDgrHleZdytJCNVG1i5dpYERAq4jY0Z
+         O7dD+yZlcNO8FTU9bn2gBV7Yl/bY5lxUi69Rk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=u04zoA3wXToqZNsi7gih2gn2X41N6sMG8oYFqsW86yIzngQWPCHf0cu6vEnKGlUVET
+         btoqJXMQ9YOlQq4TBZpBEOoXRUxifRLv1sAj1N/EMVYB0lVO5uxpsE6nvLGVaq6pKf1L
+         IUXMQFZjuE9aF1lvtC37UW/cfnUFiFezA/Qvs=
+Received: by 10.204.154.213 with SMTP id p21mr28137bkw.163.1259700679462;
+        Tue, 01 Dec 2009 12:51:19 -0800 (PST)
+Received: from localhost ([91.78.50.138])
+        by mx.google.com with ESMTPS id 14sm148916bwz.1.2009.12.01.12.51.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 01 Dec 2009 12:51:18 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <m1NFXpl-000knKC@most.weird.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134256>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On Tue, Dec 01, 2009 at 01:52:18PM -0500, Greg A. Woods wrote:
+> At Mon, 30 Nov 2009 22:22:12 +0300, Dmitry Potapov <dpotapov@gmail.co=
+m> wrote:
+> Subject: Re: "git merge" merges too much!
+> >=20
+> > The key difference comparing to what you may got used is that branc=
+hes
+> > are normally based on the oldest branch in what this feature may be
+> > included. Thus normally changes are not backported to old branches,
+> > because you can merge them directly.
+>=20
+> Hmmm... the idea of creating topic branches based on the oldest branc=
+h
+> where the feature might be used is indeed neither intuitive, nor is i=
+t
+> mentioned anywhere I've so far read about using topic branches in Git=
+=2E
 
-> Ilari Liusvaara <ilari.liusvaara@elisanet.fi> wrote:
->> 
->> For instance, to support new types of authentication for smart transports
->> without patching client git binaries (SSH has lots of failure modes that
->> are quite nasty to debug) or abusing GIT_PROXY (yuck). 
->
-> So the bulk of this series is about making a proxy for git://
-> easier to tie into git?
->
-> Forgive me if I sound stupid, but for gits:// shouldn't that just
-> be a matter of git_connect() forking a git-remote-gits process
-> linked against openssl?  Or, maybe it just runs `openssl s_client`?
->
-> Why go through all of this effort of making a really generic proxy
-> protocol system when the long-term plan is to just ship native
-> gits:// support as part of git-core?
+Most things that we consider "intuitive" are those that we got used to.
+Git is different in many aspect than other VCSes (such as CVS/SVN), and
+the workflow that good for those VCSes may not be optimal for Git. Ther=
+e
+is a good description that provide basic knowledge how to use Git:
 
-I didn't know what the long-term plan was to be honest, but after skimming
-the series, I think your response is a good summary.
+man gitworkflows
 
-It is somewhat unfortunate that a few changes I liked (e.g. the "debug"
-bit), even though it was somewhat painful to read them due to coding style
-differences, were not at the beginning of the series but instead buried
-after changes that are much bigger and controversial (e.g. [6/8]).
+or online:
+
+http://www.kernel.org/pub/software/scm/git/docs/gitworkflows.html
+
+If you do not base your changes on the oldest branch then you will not
+be able to merge changes, which implies you will have to cherry-pick
+manually without ability automatic to track what changes were merged
+and what were not, this is a recipe for a disaster...
+
+
+> At the moment I'm leaning towards a process where the configuration
+> branch is re-created for every build -- i.e. the merges are redone fr=
+om
+> every topic branch to a freshly configured branch forked from the
+> locally supported release branch, hopefully making use of git-rerere =
+to
+> solve most conflicts in as automated a fashion as is possible.
+
+I am not quite sure that I fully understood your idea of configuration
+branches, but I want to warn you about one serious limitations of
+git-rerere -- it stores conflict resolution per-file basis. This means
+that if resolution of some conflict implies some change to another file
+then git-rerere will not help you here. So, it handles maybe 80-90%
+cases, but not all of them.
+
+>=20
+> Perhaps Stacked-Git really is the best answer.  I will have to
+> investigate more.
+
+There is also TopGit. I have never used any of them, but if you are
+interested in patch management system, you probably should look at both
+of them. StGit is modelled after quilt, while TopGit is aimed to be
+better integrated with Git and better fit to work in distributed
+environment. But as I said, I do not have any first hand experience
+with any of them. (Personally, I would look at TopGit first, but maybe
+I am biased here).
+
+> >=20
+> > $ git branch new-foo foo
+> >=20
+> > $ git rebase --onto newbase oldbase new-foo
+>=20
+> Hmmm.... I'll have to think about that.  It makes some sense, but I
+> don't intuitively read the command-line parameters well enough to
+> predict the outcome in all of the scenarios I'm interested in.
+>=20
+> what is "oldbase" there?  I'm guessing it means "base of foo" (and fo=
+r
+> the moment, "new-foo" too)?
+
+You have:
+
+ o---o---o---o---o  newbase
+       \
+        o---o---o---o---o  oldbase
+                         \
+                          o---o---o  foo
+
+
+and you want this:
+
+ o---o---o---o---o  newbase
+     |            \
+     |             o=B4--o=B4--o=B4  new-foo
+      \
+       o---o---o---o---o  oldbase
+                         \
+                          o---o---o  foo
+
+
+Dmitry
