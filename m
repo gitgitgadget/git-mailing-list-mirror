@@ -1,82 +1,73 @@
-From: Alex Chiang <achiang@hp.com>
-Subject: Re: [StGit RFC PATCH 0/6] add support for git send-email
-Date: Mon, 30 Nov 2009 17:02:58 -0700
-Message-ID: <20091201000258.GM12733@ldl.fc.hp.com>
-References: <20091128194056.949.88791.stgit@bob.kio> <b8197bcb0911291405i6f052216q8717c34063320592@mail.gmail.com>
+From: "Justin P. Mattock" <justinmattock@gmail.com>
+Subject: Re: help reverting a merge
+Date: Mon, 30 Nov 2009 16:06:50 -0800
+Message-ID: <4B145E1A.9040304@gmail.com>
+References: <dd18b0c30911291524q7ea7e9c7v980340ddf7269519@mail.gmail.com> <20091130081315.GA587@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: catalin.marinas@gmail.com, git@vger.kernel.org
-To: Karl Wiberg <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Dec 01 01:03:13 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Dec 01 01:07:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFGD1-0006iT-QT
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 01:03:12 +0100
+	id 1NFGGg-00088d-NB
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 01:06:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754112AbZLAACw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2009 19:02:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754082AbZLAACw
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 19:02:52 -0500
-Received: from g4t0017.houston.hp.com ([15.201.24.20]:48598 "EHLO
-	g4t0017.houston.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754035AbZLAACv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2009 19:02:51 -0500
-Received: from g1t0038.austin.hp.com (g1t0038.austin.hp.com [16.236.32.44])
-	by g4t0017.houston.hp.com (Postfix) with ESMTP id 8ECA6380B0;
-	Tue,  1 Dec 2009 00:02:58 +0000 (UTC)
-Received: from ldl (linux.corp.hp.com [15.11.146.101])
-	by g1t0038.austin.hp.com (Postfix) with ESMTP id 6E39130035;
-	Tue,  1 Dec 2009 00:02:58 +0000 (UTC)
-Received: from localhost (ldl.fc.hp.com [127.0.0.1])
-	by ldl (Postfix) with ESMTP id 48058CF000F;
-	Mon, 30 Nov 2009 17:02:58 -0700 (MST)
-Received: from ldl ([127.0.0.1])
-	by localhost (ldl.fc.hp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id u72EwZGMzSkm; Mon, 30 Nov 2009 17:02:58 -0700 (MST)
-Received: by ldl (Postfix, from userid 17609)
-	id 340F8CF000D; Mon, 30 Nov 2009 17:02:58 -0700 (MST)
-Content-Disposition: inline
-In-Reply-To: <b8197bcb0911291405i6f052216q8717c34063320592@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754099AbZLAAGr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2009 19:06:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754082AbZLAAGr
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 19:06:47 -0500
+Received: from mail-gx0-f212.google.com ([209.85.217.212]:61061 "EHLO
+	mail-gx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751347AbZLAAGr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2009 19:06:47 -0500
+Received: by gxk4 with SMTP id 4so3177503gxk.8
+        for <git@vger.kernel.org>; Mon, 30 Nov 2009 16:06:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=fWNBJMALczj6Y7HNa9Ftx7n4ztL61v9mXUCOiSlLaGE=;
+        b=xJxFEkK/wV9BmSuAK7QOOMKBRu4PswjMWtzAeMN+zwQkIEhi6fDglz5/bCUz2qMBVp
+         lYThmk4nPPis+Ps5d8q+aKSalSIUz5yBHAg6HQPmlWTLOu7FJ/AtVbakIGfkjPo/lf8u
+         kivC98WJtne+qenoKuTgsbm85uB1RCFEgeqW4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=h1daT2RTtfmR3cf+ULwggpA0Xxgb5yLWHCbEzoOYtr5cJKBuz13+IUvPFYf2kyuxLw
+         L3FuNq4VDreOqD7qWvaIH+TKEFxFeb6X2jojBuzka2QU/OsUDivruAC3iyAmAnCeAh6d
+         9gnq7uh/ZFGhN52qAWMpM24gvEIr5Ct1ffMQA=
+Received: by 10.91.148.11 with SMTP id a11mr7336177ago.14.1259626013069;
+        Mon, 30 Nov 2009 16:06:53 -0800 (PST)
+Received: from ?10.0.0.95? (cpe-76-173-26-187.socal.res.rr.com [76.173.26.187])
+        by mx.google.com with ESMTPS id 15sm2283445yxh.22.2009.11.30.16.06.51
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 30 Nov 2009 16:06:51 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.4pre) Gecko/20091114 Lightning/1.0pre Thunderbird/3.0b4
+In-Reply-To: <20091130081315.GA587@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134153>
 
-* Karl Wiberg <kha@treskal.com>:
-> On Sat, Nov 28, 2009 at 8:50 PM, Alex Chiang <achiang@hp.com> wrote:
-> 
-> > stg mail still has some nice features over git send-email, such
-> > as the -v command line parameter and --prefix. Maybe at some point
-> > in the future, we can migrate those features into git send-email and
-> > continue thinning out stg mail.
-> 
-> Yes. But note that we tend to be conservative and not require a
-> too-new git, so a patch adding such a dependency would have to wait a
-> while. (I'm currently carrying two such patches in my experimental
-> branch.)
+First things first is I owe you a great thanks
+for teaching me how to do a rebase.. :-)
 
-Understood. For now, of course, all the changes that I'm
-proposing should work with bog-standard, oldish git, since I
-don't think the git send-email interface has changed in a while.
+took a while, and still a bit confusing
+but I managed to do exactly what you
+had written down.
 
-> > But I wanted to get some feedback first to make sure I'm going in the
-> > right direction before going too much further.
-> 
-> I've read the patches, and it looks about right from where I stand.
+bad thing is somehow the bisect came up
+with no results. probably will do another bisect,
+just to make sure things are in the right
+direction, and the try the rebase again.
 
-Thank you very much for the review.
+Again Thanks for the help/info on this.
 
-> Did you remember to run the regression tests? It's very helpful when
-> reviewing to know that the regression suite passes at every point in
-> the series.
-
-Good idea. I've been running t/t1900-mail.sh at each stage since
-my changes seem rather localized to sending mail.
-
-Should I be running the entire suite?
-
-/ac
+Justin P. Mattock
