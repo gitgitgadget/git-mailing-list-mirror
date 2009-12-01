@@ -1,66 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH/RFC] Allow curl to rewind the RPC read buffer
-Date: Tue, 1 Dec 2009 08:01:50 -0800
-Message-ID: <20091201160150.GB21299@spearce.org>
-References: <25718488.post@talk.nabble.com> <20091127234110.7b7e9993.rctay89@gmail.com> <alpine.DEB.2.00.0912011208160.5582@cone.home.martin.st> <alpine.DEB.2.00.0912011232450.5582@cone.home.martin.st>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Transplant branch from another repository
+Date: Tue, 01 Dec 2009 17:07:35 +0100
+Message-ID: <4B153F47.5040504@drmicha.warpmail.net>
+References: <5195c8760912010301r63d5e27axf53c17db799a798f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org,
-	Nicholas Miell <nmiell@gmail.com>, gsky51@gmail.com,
-	Clemens Buchacher <drizzd@aon.at>,
-	Mark Lodato <lodatom@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Martin Storsj? <martin@martin.st>
-X-From: git-owner@vger.kernel.org Tue Dec 01 17:02:21 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeenu V <jeenuv@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 01 17:09:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFVB0-0004VC-5B
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 17:02:06 +0100
+	id 1NFVHy-0008Bi-VI
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 17:09:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753885AbZLAQBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 11:01:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbZLAQBu
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 11:01:50 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:39555 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753877AbZLAQBs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 11:01:48 -0500
-Received: by yxe17 with SMTP id 17so4679488yxe.33
-        for <git@vger.kernel.org>; Tue, 01 Dec 2009 08:01:54 -0800 (PST)
-Received: by 10.101.134.6 with SMTP id l6mr2483461ann.67.1259683314499;
-        Tue, 01 Dec 2009 08:01:54 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 7sm98880yxd.44.2009.12.01.08.01.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Dec 2009 08:01:52 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.00.0912011232450.5582@cone.home.martin.st>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754139AbZLAQJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 11:09:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754035AbZLAQJH
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 11:09:07 -0500
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:45124 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754135AbZLAQJF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 11:09:05 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 6AD85C538E;
+	Tue,  1 Dec 2009 11:08:54 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 01 Dec 2009 11:08:54 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=OYWJmGp80LqAAnXU3extjf/QUVY=; b=pOYRjw/348cNtCj662wWJFcfBRwB/NO3rTtYGuDQ94S3kddyj3j041xEal9VY922m0joRbBeF85+kDN4Gry0Wd1OVgt+qP5DtZ2Sr++N9hUZLNciw5V88v9DlM0VSUIJs8Z93FkjBFJLeWmY7FQJKWho7XnbmBTBaVcFFSFwMk0=
+X-Sasl-enc: KAsgJ2kkllZlGrSGsmWV5jpLKR9YQmbJlDEQaNzmSqUq 1259683728
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5C6C81ACD9;
+	Tue,  1 Dec 2009 11:08:48 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091127 Lightning/1.0b1pre Shredder/3.0.1pre
+In-Reply-To: <5195c8760912010301r63d5e27axf53c17db799a798f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134217>
 
-Martin Storsj? <martin@martin.st> wrote:
-> When using multi-pass authentication methods, the curl library may need
-> to rewind the read buffers used for providing data to HTTP POST, if data
-> has been output before a 401 error is received.
+Jeenu V venit, vidit, dixit 01.12.2009 12:01:
+> Hi,
+> 
+> Say, I have two repositories A and B (local, independent, but similar
+> - they are for content tracking and not collaboration purposes). A has
+> a branch 'a', which I want to have in B. What I mean is that I'd like
+> to have the sequence of changes in the branch 'a' to be present in B,
+> thus creating an independent branch 'b' in B.
+> 
+> Is there any way to achieve this? One thing that I could think of is
+> to use 'format-patch' to generate the list of patch files from A. But
+> I don't see how to convert those patches to a sequence of commits in
+> repo B. I could do a 'git apply patches/*' but then all patches
+> collapse to one single commit. If format-patch is a/the way, could
+> somebody tell me how to get this done? Or are there any alternatives?
+> 
+> FWIW: I'm running Git under Cygwin, and sendmail isn't configured.
 
-In theory, since the cURL session stays active, we would have
-received the 401 authentication error during the initial
-"GET $GIT_DIR/info/refs?service=git-$service" request, and the subsequent
-"POST $GIT_DIR/git-$service" requests would automatically include the
-authentication data.
+>From within your B repo:
 
-That's theory.  Reality doesn't always agree with my theories.  :-)
- 
->  remote-curl.c |   30 ++++++++++++++++++++++++++++++
->  1 files changed, 30 insertions(+), 0 deletions(-)
+git fetch pathtoA a:b
 
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
-
--- 
-Shawn.
+Cheers,
+Michael
