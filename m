@@ -1,94 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-merge: a deprecation notice of the ancient command
- line syntax
-Date: Mon, 30 Nov 2009 20:07:24 -0800
-Message-ID: <7viqcr72wz.fsf@alter.siamese.dyndns.org>
-References: <cover.1259524136.git.brlink@debian.org>
- <7v8wdnooza.fsf@alter.siamese.dyndns.org>
- <20091201071234.6117@nanako3.lavabit.com>
- <7vmy23bl4o.fsf@alter.siamese.dyndns.org>
- <7vaay3bkyx.fsf_-_@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.0911302251270.5820@xanadu.home>
-Mime-Version: 1.0
+From: Marc Liyanage <marc@entropy.ch>
+Subject: Re: Unable to checkout a particular SVN revision
+Date: Mon, 30 Nov 2009 20:59:25 -0800
+Message-ID: <F558F791-E9C4-4340-BE3D-A46464F6033B@entropy.ch>
+References: <718EEBA2-FA4B-402D-B2FC-A8F14D79F6FF@entropy.ch> <1259513411.32532.22.camel@localhost>
+Mime-Version: 1.0 (Apple Message framework v1077)
 Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	"Bernhard R. Link" <brlink@debian.org>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue Dec 01 05:07:44 2009
+Content-Transfer-Encoding: 8BIT
+Cc: Daniele Segato <daniele.bilug@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 01 05:59:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFK1f-0004VB-JY
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 05:07:43 +0100
+	id 1NFKps-0000zH-CG
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 05:59:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752917AbZLAEHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2009 23:07:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752658AbZLAEHb
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 23:07:31 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44098 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752442AbZLAEHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2009 23:07:30 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BADB7A3C59;
-	Mon, 30 Nov 2009 23:07:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qLPCrm0H4n+VzU+bdjY/PwputwM=; b=U90yGq
-	8iCNFzhMiwKGme12+cRpnDxOnf0p49Enru78AoYxhTrmULAFgd6rmuIB9hFteVn2
-	hn7tTLXoi7HUPe97d4k/7JGnSIvF0504Ep+P6rBrtH0vptO6MnXAGMElj3PuHM+R
-	QZPCQVuTTKhhuv442qM32AWlZqV+3KyOB6zQE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=U12I+yg7PONUakxN8/llkaV40q7QwX/k
-	tqKnbZOGOtup06AIK/iGzbdiMc/Qu6+BxGlvRwAMdi19/hVxYS3rh4oOJ5ESL8dZ
-	pdn4EmwbSOOrTAnibgIVyc7dQURZU6up8tvQ9vHq6WsbGMSE4TamsYm14HFAW99M
-	dNzd59zqWqc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7A74AA3C56;
-	Mon, 30 Nov 2009 23:07:31 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EC9C9A3C55; Mon, 30 Nov 2009
- 23:07:25 -0500 (EST)
-In-Reply-To: <alpine.LFD.2.00.0911302251270.5820@xanadu.home> (Nicolas
- Pitre's message of "Mon\, 30 Nov 2009 22\:55\:58 -0500 \(EST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0C0B24EA-DE2F-11DE-AE33-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753164AbZLAE7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2009 23:59:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753148AbZLAE7Y
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Nov 2009 23:59:24 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:63685 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752986AbZLAE7X convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Nov 2009 23:59:23 -0500
+Received: by yxe17 with SMTP id 17so4305069yxe.33
+        for <git@vger.kernel.org>; Mon, 30 Nov 2009 20:59:30 -0800 (PST)
+Received: by 10.151.25.6 with SMTP id c6mr8855904ybj.243.1259643569589;
+        Mon, 30 Nov 2009 20:59:29 -0800 (PST)
+Received: from ?10.0.1.3? (c-76-21-40-129.hsd1.ca.comcast.net [76.21.40.129])
+        by mx.google.com with ESMTPS id 6sm1910396ywc.9.2009.11.30.20.59.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 30 Nov 2009 20:59:29 -0800 (PST)
+In-Reply-To: <1259513411.32532.22.camel@localhost>
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134164>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
 
-> On Mon, 30 Nov 2009, Junio C Hamano wrote:
->
->> The ancient form of git merge command used in the original sample script
->> has been copied from Linus and are still found everywhere, I think, and
->> people may still have it in their scripts, but on the other hand, it is so
->> unintuitive that even people reasonably familiar with git is surprised by
->> accidentally triggering the support to parse this ancient form.
->> 
->> Gently nudge people to upgrade their script to more recent and readable
->> style for eventual removal of the original syntax.
->> 
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->> 
->>     And this is the first step of such a deprecation.  Perhaps we start
->>     warning in 1.7.0 and remove it in 1.8.0, or something like that.
->
-> If this is going to be removed in the future, then it is already 
-> deprecated.  Therefore it is much better to start warning now and not 
-> wait for 1.7.0.  There is just no point delaying the advice.
+On 29.11.2009, at 08:50, Daniele Segato wrote:
 
-Very true.
+> You had to understand the difference between a distributed version
+> control system (git) and a centralized version control system (svn).
 
-What I am not absolutely sure about is if the presense of the support for
-ancient usage hurts people in real life so much that it is better to
-remove it than keep it.  At least we saw one example of a user (who is not
-a novice) getting puzzled by it, but that may not be enough datapoint to
-decide with.
+I understand that, I use (pure) git for all my personal projects, and it works great.
+
+And even as a front end for SVN, I am *very* happy with what I got from git-svn so far, I think it is an excellent tool, even better than the actual SVN client. I track an SVN repository in my local git master branch, then branch off locally for development, send patches for review, reorder/consolidate/squash commits back onto my master branch and then dcommit that back to SVN. All that is great.
+
+
+I would like to understand why 
+
+   git svn clone -r n <url>
+
+does not work as expected while
+
+   git svn clone -r m <url>
+
+does work perfectly fine, if that m revision number happens to have been committed on the particular SVN branch I cloned (you left off that -r in your git svn clone examples). As it is, I have to hunt for the next lower or higher revision number that happens to be on that branch.
+
+I might be doing a poor job explaining what my question is... Basically, what prevents that operation from doing the same thing that SVN does? Lack of information, i.e. should I just clone higher up in the tree?
+
+
+
+______________________________
+Marc Liyanage
+www.entropy.ch
+
+skype mliyanage
+iChat liyanage@mac.com
