@@ -1,54 +1,97 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] get_ref_states: strdup entries and free util in stale
- list
-Date: Tue, 1 Dec 2009 09:35:01 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0912010934120.4985@pacific.mpi-cbg.de>
-References: <0458f16c6ce906997aaf357c0c7368841ae83c36.1259625072.git.bert.wesarg@googlemail.com>
+From: Jochen <rick23@gmx.net>
+Subject: Re: Umlaut in filename makes troubles
+Date: Tue, 01 Dec 2009 09:26:14 +0100
+Message-ID: <hf2jvd$jff$2@ger.gmane.org>
+References: <200912010815.14515.rick23@gmx.net> <20091201074420.GC3618@triton>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 01 09:30:55 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 01 09:40:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFO8L-0001hr-OM
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 09:30:54 +0100
+	id 1NFOHP-00058Q-LX
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 09:40:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753353AbZLAIam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 03:30:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752513AbZLAIam
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 03:30:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51001 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752063AbZLAIam (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 03:30:42 -0500
-Received: (qmail invoked by alias); 01 Dec 2009 08:30:47 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp017) with SMTP; 01 Dec 2009 09:30:47 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19xex8hwpZxJziJCmdtqspcyrWOr5FehqFPi/dG26
-	IvV7mE49XhOrzO
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <0458f16c6ce906997aaf357c0c7368841ae83c36.1259625072.git.bert.wesarg@googlemail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.72
+	id S1753551AbZLAIkB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Dec 2009 03:40:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753497AbZLAIkB
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 03:40:01 -0500
+Received: from lo.gmane.org ([80.91.229.12]:58331 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753463AbZLAIkA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 03:40:00 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NFOHF-00052v-JC
+	for git@vger.kernel.org; Tue, 01 Dec 2009 09:40:05 +0100
+Received: from 85-127-8-251.dynamic.xdsl-line.inode.at ([85.127.8.251])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 01 Dec 2009 09:40:05 +0100
+Received: from rick23 by 85-127-8-251.dynamic.xdsl-line.inode.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 01 Dec 2009 09:40:05 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 85-127-8-251.dynamic.xdsl-line.inode.at
+User-Agent: KNode/0.99.01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134179>
 
-Hi,
+=C3=98yvind A. Holm wrote:
 
-On Tue, 1 Dec 2009, Bert Wesarg wrote:
+> On 2009-12-01 08:15:08, rick23@gmx.net wrote:
+> > I have problems with my repository under slackware vs. windows. I
+> > created a repo in linux and every time I use it under msysgit,
+> > the files containing umlauts in the filename are marked as
+> > deleted (and vice versa).
+> >
+> > For instance: the repo perfectly synced under msysgit leads to:
+> >
+> > user@sauron:/media/disk-2$ git status |grep Auszug
+> > #       deleted:    "trunk/007_Literatur/Auszug aus Ergonomische
+> > Untersuchung des Lenkgef\374hles.docx"
+> > #       "trunk/007_Literatur/Auszug aus Ergonomische Untersuchung
+> > des Lenkgef\303\274hles.docx"
+> >
+> > in linux. But the file exists and is displayed correctly in the
+> > shell or in dolphin (my filemanager under X):
+> >
+> > user@sauron:/media/disk-2$ ls trunk/007_Literatur/Auszug*
+> > trunk/007_Literatur/Auszug aus Ergonomische Untersuchung des
+> > Lenkgef=C3=BChles.docx
+> >
+> > Can you please give me a hint what to do?
+>
+> Try to specify "utf8" as mount option under Linux.=20
 
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+The automount of KDE 4.2.4 already used utf-8 (I guess the filenames=20
+would be garbled in dolphin otherwise)
 
-Thanks.  I trust you ran the test suite with valgrind just to make sure?
+> You can also try
+> experimenting with the "nls" mount option, check out the mount(8)
+> man page to see how it's used.
 
-Ciao,
-Dscho
+Ufff, I'm sorry - I'm not sure how to pass this to the automouter. I'd=20
+tried to mount the stick manually (with and without utf) and without=20
+utf8 the filenames are display strange from "ls".
+
+> Additionally, I found that I need "shortname=3Dmixed" when mounting
+> USB memory cards. As filenames are case insensitive in Windowsworld
+> and gadgets using vfat, Linux tend to treat them differently.
+
+My automouter done it as
+
+/dev/sde on /media/disk-2 type vfat=20
+(rw,nosuid,nodev,uhelper=3Dhal,uid=3D1000,utf8,shortname=3Dmixed)
+
+So the options look right to me.
+
+Kindest regards
+Jochen
