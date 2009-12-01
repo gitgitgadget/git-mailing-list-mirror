@@ -1,56 +1,74 @@
 From: David Soria Parra <sn_@gmx.net>
-Subject: [PATCH v2] Add --track option to git clone
-Date: Tue,  1 Dec 2009 23:51:03 +0100
-Message-ID: <1259707865-6561-1-git-send-email-sn_@gmx.net>
+Subject: [PATCH v2 2/2] Documentation: Add --track option to the git clone manpage
+Date: Tue,  1 Dec 2009 23:51:05 +0100
+Message-ID: <1259707865-6561-3-git-send-email-sn_@gmx.net>
+References: <1259707865-6561-1-git-send-email-sn_@gmx.net>
+Cc: David Soria Parra <dsp@php.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 01 23:51:22 2009
+X-From: git-owner@vger.kernel.org Tue Dec 01 23:51:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFbZ3-0005ib-OP
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 23:51:22 +0100
+	id 1NFbZ4-0005ib-QR
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 23:51:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754583AbZLAWvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 17:51:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754527AbZLAWvH
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 17:51:07 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42643 "HELO mail.gmx.net"
+	id S1754642AbZLAWvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 17:51:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754527AbZLAWvK
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 17:51:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42945 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750929AbZLAWvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 17:51:06 -0500
-Received: (qmail invoked by alias); 01 Dec 2009 22:51:11 -0000
+	id S1754568AbZLAWvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 17:51:08 -0500
+Received: (qmail invoked by alias); 01 Dec 2009 22:51:14 -0000
 Received: from e180068007.adsl.alicedsl.de (EHLO localhost.localdomain) [85.180.68.7]
-  by mail.gmx.net (mp049) with SMTP; 01 Dec 2009 23:51:11 +0100
+  by mail.gmx.net (mp049) with SMTP; 01 Dec 2009 23:51:14 +0100
 X-Authenticated: #4427663
-X-Provags-ID: V01U2FsdGVkX18fP4d8ioofM2lr5c7O1mQWv9NAtKHZPuPl8CDsph
-	iM3LyRj/Bf87pD
+X-Provags-ID: V01U2FsdGVkX1+Y3LZRqcCYtPKSYTi/Qk10bQTjZ40kt84gcfx4K4
+	JVgB/y0Jxxxw+l
 X-Mailer: git-send-email 1.6.6.rc0.268.g1c272
+In-Reply-To: <1259707865-6561-1-git-send-email-sn_@gmx.net>
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.72
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134265>
 
-Update: 
- + added a test
+From: David Soria Parra <dsp@php.net>
 
-The following series adds a --track option to git clone. If the --track option
-is specified only the given remote branch will be received and checked out.
+Signed-off-by: David Soria Parra <dsp@php.net>
+---
+ Documentation/git-clone.txt |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
 
-It tries to make the following usecase possible:
-Imagine you are working on a project that has 1.x and a 2.x branch. The project
-itself requires a complex setup (webserver, configuration files, etc). Setting up
-1.x and 2.x branch requires a lot of work, but a developer needs to maintain both.
-He'll use the --track option to clone the 2.x branch into a directory and does the same
-with the 1.x branch, where he setup the project. He can use locally separate repositories
-while still being able to push to just one remote repository.
-
-I'm aware that it's not possible to give more than one --track option. Implementing
-the possibility to specify multiple --track option would certainly a good improvment
-later, but would also require a lot more work as far as I understand the clone code.
-
-Being able to specify just one --track option is a compromise of doing a small change
-and implementing this feature.
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 7ccd742..c2ab645 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git clone' [--template=<template_directory>]
+ 	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+-	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
++	  [-o <name>] [-b <name>] [-t <name>] [-u <upload-pack>] [--reference <repository>]
+ 	  [--depth <depth>] [--recursive] [--] <repository> [<directory>]
+ 
+ DESCRIPTION
+@@ -135,6 +135,12 @@ objects from the source repository into a pack in the cloned repository.
+ 	instead. In a non-bare repository, this is the branch that will
+ 	be checked out.
+ 
++--track <name>::
++-t <name>::
++	Instead of cloning the complete remote repository, only the given
++	remote branch `<name>` will be tracked and checked out.
++	This implies --branch `<name>`.
++
+ --upload-pack <upload-pack>::
+ -u <upload-pack>::
+ 	When given, and the repository to clone from is accessed
+-- 
+1.6.6.rc0.268.g1c272
