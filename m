@@ -1,68 +1,87 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Transplant branch from another repository
-Date: Tue, 01 Dec 2009 17:07:35 +0100
-Message-ID: <4B153F47.5040504@drmicha.warpmail.net>
-References: <5195c8760912010301r63d5e27axf53c17db799a798f@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH/RFC] Allow curl to rewind the RPC read buffer
+Date: Wed, 2 Dec 2009 00:12:17 +0800
+Message-ID: <be6fef0d0912010812i54531ce0n18e4615c3f408569@mail.gmail.com>
+References: <25718488.post@talk.nabble.com>
+	 <20091127234110.7b7e9993.rctay89@gmail.com>
+	 <alpine.DEB.2.00.0912011208160.5582@cone.home.martin.st>
+	 <alpine.DEB.2.00.0912011232450.5582@cone.home.martin.st>
+	 <20091201160150.GB21299@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeenu V <jeenuv@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 01 17:09:20 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Martin Storsj?" <martin@martin.st>, git@vger.kernel.org,
+	Nicholas Miell <nmiell@gmail.com>, gsky51@gmail.com,
+	Clemens Buchacher <drizzd@aon.at>,
+	Mark Lodato <lodatom@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Dec 01 17:12:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFVHy-0008Bi-VI
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 17:09:19 +0100
+	id 1NFVL4-0001aw-5x
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 17:12:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754139AbZLAQJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 11:09:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754035AbZLAQJH
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 11:09:07 -0500
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:45124 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754135AbZLAQJF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 11:09:05 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 6AD85C538E;
-	Tue,  1 Dec 2009 11:08:54 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Tue, 01 Dec 2009 11:08:54 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=OYWJmGp80LqAAnXU3extjf/QUVY=; b=pOYRjw/348cNtCj662wWJFcfBRwB/NO3rTtYGuDQ94S3kddyj3j041xEal9VY922m0joRbBeF85+kDN4Gry0Wd1OVgt+qP5DtZ2Sr++N9hUZLNciw5V88v9DlM0VSUIJs8Z93FkjBFJLeWmY7FQJKWho7XnbmBTBaVcFFSFwMk0=
-X-Sasl-enc: KAsgJ2kkllZlGrSGsmWV5jpLKR9YQmbJlDEQaNzmSqUq 1259683728
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 5C6C81ACD9;
-	Tue,  1 Dec 2009 11:08:48 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091127 Lightning/1.0b1pre Shredder/3.0.1pre
-In-Reply-To: <5195c8760912010301r63d5e27axf53c17db799a798f@mail.gmail.com>
+	id S1754104AbZLAQMN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Dec 2009 11:12:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754067AbZLAQMM
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 11:12:12 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:43810 "EHLO
+	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753881AbZLAQML convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 11:12:11 -0500
+Received: by iwn1 with SMTP id 1so3166114iwn.33
+        for <git@vger.kernel.org>; Tue, 01 Dec 2009 08:12:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=hqMhmKpo4+WWfXEmsA+ANZv/SEyf4ZDn9Ii9CIt529U=;
+        b=EaKJ2ZuU7YSdkgrCdRq2lmBEgUPhcKCe+vxYvEz2B/TL6bTjKzsdgOg1d3STSKcwIo
+         mM+pVNJhrrGmVLFkcu62l2fpcSAJTyeyI/7ZGic0wdWuBvQSTrX13fuQXK6KIMSlBLQB
+         EbWIz31gRHI5vX4EGSbx1h80cJzC9p+P6uuK8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=hx+P2wji7tuu68QPtalMcb9/fL/NGmo/FK/RQqop1qZtX22WgRRg5O5NhbG8mUA9Fg
+         gs28KiskkacPI7tSn0vYvtCkbQWh2Lemci+yK7twB72gPgrwTPTlK2oqSnLh/1o+43+R
+         9/Z00mXM5e8rktjD3jusPugGX5kLsoPIn5B6w=
+Received: by 10.231.123.216 with SMTP id q24mr147351ibr.43.1259683937731; Tue, 
+	01 Dec 2009 08:12:17 -0800 (PST)
+In-Reply-To: <20091201160150.GB21299@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134218>
 
-Jeenu V venit, vidit, dixit 01.12.2009 12:01:
-> Hi,
-> 
-> Say, I have two repositories A and B (local, independent, but similar
-> - they are for content tracking and not collaboration purposes). A has
-> a branch 'a', which I want to have in B. What I mean is that I'd like
-> to have the sequence of changes in the branch 'a' to be present in B,
-> thus creating an independent branch 'b' in B.
-> 
-> Is there any way to achieve this? One thing that I could think of is
-> to use 'format-patch' to generate the list of patch files from A. But
-> I don't see how to convert those patches to a sequence of commits in
-> repo B. I could do a 'git apply patches/*' but then all patches
-> collapse to one single commit. If format-patch is a/the way, could
-> somebody tell me how to get this done? Or are there any alternatives?
-> 
-> FWIW: I'm running Git under Cygwin, and sendmail isn't configured.
+Hi,
 
->From within your B repo:
+On Wed, Dec 2, 2009 at 12:01 AM, Shawn O. Pearce <spearce@spearce.org> =
+wrote:
+> In theory, since the cURL session stays active, we would have
+> received the 401 authentication error during the initial
+> "GET $GIT_DIR/info/refs?service=3Dgit-$service" request, and the subs=
+equent
+> "POST $GIT_DIR/git-$service" requests would automatically include the
+> authentication data.
+>
+> That's theory. =A0Reality doesn't always agree with my theories. =A0:=
+-)
 
-git fetch pathtoA a:b
+that's because the curl session where the 401 was received (and thus
+successful authentication takes place) is closed.
 
+I sent out a patch series recently which contains a patch to maintain
+at least one curl session throughout a http session (from http_init()
+to http_cleanup()), you can see this here:
+
+  http://www.spinics.net/lists/git/msg118190.html
+
+--=20
 Cheers,
-Michael
+Ray Chuan
