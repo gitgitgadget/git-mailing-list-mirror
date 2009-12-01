@@ -1,60 +1,55 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Umlaut in filename makes troubles
-Date: Tue, 01 Dec 2009 15:10:56 +0100
-Message-ID: <4B1523F0.9030304@drmicha.warpmail.net>
-References: <200912010815.14515.rick23@gmx.net> <hf2pbp$rss$1@ger.gmane.org>
+From: Thomas Singer <thomas.singer@syntevo.com>
+Subject: Re: non-US-ASCII file names (e.g. Hiragana) on Windows
+Date: Tue, 01 Dec 2009 16:41:16 +0100
+Message-ID: <4B15391C.5090302@syntevo.com>
+References: <4B1168D4.5010902@syntevo.com> <4B11AD43.3070307@gmail.com> <4B123C80.30607@syntevo.com> <4B14CA79.6040408@syntevo.com> <4B14D381.3010706@viscovery.net> <4B14DA1A.4060505@syntevo.com> <4B14E934.9090304@viscovery.net> <4B150747.2030900@syntevo.com> <4B151782.8050309@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jochen <rick23@gmx.net>
-X-From: git-owner@vger.kernel.org Tue Dec 01 15:12:19 2009
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Dec 01 16:41:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFTSl-0001zR-3S
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 15:12:19 +0100
+	id 1NFUqO-0004pc-Ly
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 16:40:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753178AbZLAOMF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Dec 2009 09:12:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752658AbZLAOMF
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 09:12:05 -0500
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:43403 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751898AbZLAOME (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 09:12:04 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 285B8C4CCD;
-	Tue,  1 Dec 2009 09:12:10 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 01 Dec 2009 09:12:10 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=o9qw34huYjtUz10izsiZyXpteiE=; b=h6vOl+QIvN2kQwDj5iL8dgJ21OnyMWCNaKOKxL9N3FJVVu7CE4612K21mDghdxZkWTBK9e9P/Pugt12H/8GanI2xQq3s8BZwMK0Ljn5p9JdfLHoDpYjgLF1SCMjyWz/wSz16kmCqlpCWf9xvoHZYluouwncpubrFh/6F1SIksGg=
-X-Sasl-enc: S9W+mI+AkU1INWUS4UrbVKsdi8c39kpO6ps+Mf1ZvPu+ 1259676729
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 7053549F264;
-	Tue,  1 Dec 2009 09:12:09 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091127 Lightning/1.0b1pre Shredder/3.0.1pre
-In-Reply-To: <hf2pbp$rss$1@ger.gmane.org>
+	id S1753662AbZLAPkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 10:40:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753573AbZLAPkg
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 10:40:36 -0500
+Received: from syntevo.com ([85.214.39.145]:53974 "EHLO syntevo.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752827AbZLAPkf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 10:40:35 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1]) with ESMTP id CB44E37C7B0
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <4B151782.8050309@viscovery.net>
+X-Enigmail-Version: 0.96.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134213>
 
-Jochen venit, vidit, dixit 01.12.2009 10:58:
-> I found another strange effect...
->=20
-> I made a file with "touch a=C3=B6=C3=A4=C3=BC.txt" and from "git stat=
-us" I get=20
-> #       "a\303\266\303\244\303\274.txt"
-> reported as untracked. But when I start "git gui" I get file displaye=
-d with=20
-> it's correct name...
->=20
+Johannes Sixt wrote:
+> Thomas Singer schrieb:
+>> I'm quite surprised, that -- as I
+>> understand you -- msys-Git (or Git at all?) is not able to handle all
+>> characters (aka unicode) at the same time. I expected it would be better
+>> than older tools, e.g. SVN.
+> 
+> This has been discussed at length here and in the msysgit mailing list.
+> Git expects that the file system returns file names with the same byte
+> sequence that git used to create a file. On Windows, this works only as
+> long as you do not switch the codepage.
 
-Does this change after
+Now you confuse me: is this a problem of Windows, Git using a less capable
+Windows-API call or is there no unicode-capable API call to list file names
+on Windows? I ask myself how Java does it in its internals, finally it
+(also) consists of a C-base, I guess.
 
-git config core.quotepath false
-
-Michael
+-- 
+Tom
