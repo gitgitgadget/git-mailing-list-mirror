@@ -1,66 +1,142 @@
-From: Jeenu V <jeenuv@gmail.com>
-Subject: Transplant branch from another repository
-Date: Tue, 1 Dec 2009 16:31:02 +0530
-Message-ID: <5195c8760912010301r63d5e27axf53c17db799a798f@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: equal-tree-merges as way to make rebases fast-forward-able
+Date: Tue, 01 Dec 2009 12:50:13 +0100
+Message-ID: <4B1502F5.1060100@alum.mit.edu>
+References: <cover.1259524136.git.brlink@debian.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 01 12:01:33 2009
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Bernhard R. Link" <brlink@debian.org>
+X-From: git-owner@vger.kernel.org Tue Dec 01 12:50:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFQU4-0003b3-GB
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 12:01:28 +0100
+	id 1NFRFW-0004kN-Er
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Dec 2009 12:50:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753040AbZLALBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 06:01:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752938AbZLALBQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 06:01:16 -0500
-Received: from mail-vw0-f197.google.com ([209.85.212.197]:46549 "EHLO
-	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752367AbZLALBQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 06:01:16 -0500
-Received: by vws35 with SMTP id 35so1456207vws.4
-        for <git@vger.kernel.org>; Tue, 01 Dec 2009 03:01:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:content-type;
-        bh=9GW+uP7byEV3dqABXIVzJLG6rGDP0pP9CXx1ibZonHk=;
-        b=vLl9E60qlTQqJH0pgUTJDsh5wfZhgiduz3nGdadkKsqu2TCl3c+WpND5ehZb/Rn/gw
-         3pa9EbHata7CusueoGfl8qq/H9mUqIhFXqd8oVvGvkEMVSBUYFtuVFpKZF/RrxVHdzpa
-         zQM0U2Y2zRP8ESdhR6wMrXpPOduYx7cf1uAfM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=kDlZWKChHBOU6u9Fv4612bPkBLyqxQaufqXNe4heNSvSXT1y41zgUbNJAKI+n++EdU
-         eCPVmgZM9mtYc1tSNwe86Hp3KGDhTCJGifzeMLr+vXl9eUeO2H9Dw4aYkiyI32v2C2Tb
-         bsAhkljZPgYd/+k1wSIZ+h/wC7vpKOI3bBqow=
-Received: by 10.220.126.224 with SMTP id d32mr6743087vcs.57.1259665282117; 
-	Tue, 01 Dec 2009 03:01:22 -0800 (PST)
+	id S1753977AbZLALuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 06:50:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753957AbZLALuN
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 06:50:13 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:46342 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753885AbZLALuM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 06:50:12 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id nB1BoDtS020059
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 1 Dec 2009 12:50:13 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.23) Gecko/20090817 Thunderbird/2.0.0.23 Mnenhy/0.7.6.666
+In-Reply-To: <cover.1259524136.git.brlink@debian.org>
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134198>
 
-Hi,
+Bernhard R. Link wrote:
+> Example 1:
+> 
+> Let's assume you maintain such a regularily-rebased branch that you
+> want to be able to publish (or pull from other repositories for example
+> on your laptop):
+> 
+> o=m=o=o=master
+>    \
+>     a=b=c=d=e=feature
+> 
+> with this patch you can do "git rebase -eqt master" and get:
+> 
+>               a'=b'=c'=d'=e'=feature'=eqt
+>              /                       /
+> o=m=o=o=master--------              /
+>    \                  \            /
+>     a=b=c=d=e=feature--merge-------
 
-Say, I have two repositories A and B (local, independent, but similar
-- they are for content tracking and not collaboration purposes). A has
-a branch 'a', which I want to have in B. What I mean is that I'd like
-to have the sequence of changes in the branch 'a' to be present in B,
-thus creating an independent branch 'b' in B.
+Actually, there is more information that can be retained about this
+rebase operation.  Your scheme records the fact that (a+b+c+d+e+merge)
+== (o+o+a'+b'+c'+d'+e'), which is certainly true.  But in the process of
+rebasing, the user has (implicitly or explicitly) resolved conflicts in
+transforming each of the patches a -> a', b -> b', etc.  In fact, the
+patch a' is itself a merge between a and master; b' is a merge between b
+and a'; etc.  If you record each of these merges individually, the
+result looks like this:
 
-Is there any way to achieve this? One thing that I could think of is
-to use 'format-patch' to generate the list of patch files from A. But
-I don't see how to convert those patches to a sequence of commits in
-repo B. I could do a 'git apply patches/*' but then all patches
-collapse to one single commit. If format-patch is a/the way, could
-somebody tell me how to get this done? Or are there any alternatives?
+o=m=o=o=master
+   \      \
+    \      a'=b'=c'=d'=e'=feature'
+     \    /  /  /  /  /
+      ---a==b==c==d==e==feature
 
-FWIW: I'm running Git under Cygwin, and sendmail isn't configured.
+There are advantages to retaining all of this history:
 
-Thanks
-Jeenu
+* It faithfully represents intermediate steps of the rebase.
+
+* There is no need for special "merge" and "eqt" merge commits affecting
+an arbitrary group of feature patches; each of the rebased patches is
+treated identically.
+
+* There is a direct ancestry connection from the "new version" to the
+"old version" of each patch; for example, it is easy to see that c' is a
+new version of c and to compute the corresponding interdiffs.
+
+* There are situations where the additional info can help git choose
+better merge bases in the case of merge/rebases across three or more
+repositories.  For example, somebody who is developing a subfeature
+based on the feature branch can merge/rebase changes from both feature
+and master without causing utter chaos.
+
+The "historical" version of the feature branch should be omitted from
+most git output as you have suggested, but this would be best
+implemented by marking the "historical" ancestor with some extra flag in
+each merge commit.
+
+> Example 2:
+> 
+> Let's assume you have a feature branch like
+> 
+> o=master
+>    \
+>     a=b=c=d=e=f
+> 
+> Assume you just commited "f" which fixes a bug introduced by "b". [...]
+> 
+> So with this patches you can do "git rebase -i --eqt" and squash f into b
+> and get:
+> 
+> o=master
+>    \
+>     a=b=c=d=e=f---
+>      \            \
+>       b+f=c'=d'=e'=eqt
+
+This case can also record additional information:
+
+o=master
+   \
+    a=b===c==d=e=f
+       \   \  \   \
+        b+f=c'=d'==e'
+
+Here the new DAG cannot represent *all* ancestry information (namely,
+that b+f, c', and d' also include the original patch f), but it does
+accurately reflect useful information such as that c' includes c and
+that e' includes e and f.
+
+I wrote some blog entries about rebasing-with-history that might be
+interesting [1-3].
+
+Michael
+
+[1]
+http://softwareswirl.blogspot.com/2009/04/truce-in-merge-vs-rebase-war.html
+[2]
+http://softwareswirl.blogspot.com/2009/08/upstream-rebase-just-works-if-history.html
+[3]
+http://softwareswirl.blogspot.com/2009/08/rebase-with-history-implementation.html
