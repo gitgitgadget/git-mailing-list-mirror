@@ -1,54 +1,67 @@
-From: Karl Wiberg <kha@treskal.com>
-Subject: Re: [StGit PATCH v2 0/6] add support for git send-email
-Date: Wed, 2 Dec 2009 08:08:55 +0100
-Message-ID: <b8197bcb0912012308n249f70e4j54e76d70f9601279@mail.gmail.com>
-References: <20091202003503.7737.51579.stgit@bob.kio>
+From: David Soria Parra <sn_@gmx.net>
+Subject: Re: [PATCH v2] Add --track option to git clone
+Date: Wed, 2 Dec 2009 07:20:44 +0000 (UTC)
+Message-ID: <slrnhhc58g.cpv.sn_@experimentalworks.net>
+References: <1259707865-6561-1-git-send-email-sn_@gmx.net>
+ <BLU0-SMTP487572F057CC9D30C837D7AE950@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: catalin.marinas@gmail.com, git <git@vger.kernel.org>
-To: Alex Chiang <achiang@hp.com>
-X-From: git-owner@vger.kernel.org Wed Dec 02 08:09:03 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 02 08:21:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFjKg-0001bZ-D6
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 08:09:02 +0100
+	id 1NFjWX-0005Q0-HO
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 08:21:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752709AbZLBHIu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 02:08:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751055AbZLBHIu
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 02:08:50 -0500
-Received: from mail1.space2u.com ([62.20.1.135]:37723 "EHLO mail1.space2u.com"
+	id S1751906AbZLBHVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 02:21:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751688AbZLBHVE
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 02:21:04 -0500
+Received: from lo.gmane.org ([80.91.229.12]:43840 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751366AbZLBHIu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 02:08:50 -0500
-Received: from mail-bw0-f227.google.com (mail-bw0-f227.google.com [209.85.218.227])
-	(authenticated bits=0)
-	by mail1.space2u.com (8.14.3/8.14.3) with ESMTP id nB278npi022215
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 2 Dec 2009 08:08:49 +0100
-Received: by bwz27 with SMTP id 27so4113934bwz.21
-        for <git@vger.kernel.org>; Tue, 01 Dec 2009 23:08:55 -0800 (PST)
-Received: by 10.204.48.131 with SMTP id r3mr6884562bkf.195.1259737735514; Tue, 
-	01 Dec 2009 23:08:55 -0800 (PST)
-In-Reply-To: <20091202003503.7737.51579.stgit@bob.kio>
+	id S1750929AbZLBHVD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 02:21:03 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NFjWO-0005Mk-0J
+	for git@vger.kernel.org; Wed, 02 Dec 2009 08:21:08 +0100
+Received: from 217.114.211.68 ([217.114.211.68])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 02 Dec 2009 08:21:07 +0100
+Received: from sn_ by 217.114.211.68 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 02 Dec 2009 08:21:07 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 217.114.211.68
+User-Agent: slrn/0.9.9p1 (SunOS)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134310>
 
-On Wed, Dec 2, 2009 at 1:46 AM, Alex Chiang <achiang@hp.com> wrote:
+On 2009-12-02, Sean Estabrooks <seanlkml@sympatico.ca> wrote:
+>> It tries to make the following usecase possible:
+>> Imagine you are working on a project that has 1.x and a 2.x branch. The project
+>> itself requires a complex setup (webserver, configuration files, etc). Setting up
+>> 1.x and 2.x branch requires a lot of work, but a developer needs to maintain both.
+>> He'll use the --track option to clone the 2.x branch into a directory and does the same
+>> with the 1.x branch, where he setup the project. He can use locally separate repositories
+>> while still being able to push to just one remote repository.
+>
+> This is already straightforward in Git without the limitation of tracking only
+> a single remote branch.   What is the necessity of doing this via the clone command?
+>
+>   $ git init myrepo
+>   $ cd myrepo
+>   $ git remote add -t branch1.x -f origin <URL>
+>   $ git checkout -t origin/branch1.x
+I'm aware that this is possible, but I want to have a shortcut for this as the users that I
+helped with getting into git usually where confused about the point that you have to do it manually
+via git init, so take the patch as a proposal to get more consistent interface for git clone.
 
-> This is v2 of the series that starts teaching stg mail how to
-> call git send-email.
-
-Acked-by: Karl Wiberg <kha@treskal.com>
-
-when the CmdException/Exception thing is fixed in the first patch.
-
--- 
-Karl Wiberg, kha@treskal.com
-   subrabbit.wordpress.com
-   www.treskal.com/kalle
+david
