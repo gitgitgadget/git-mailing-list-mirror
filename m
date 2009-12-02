@@ -1,95 +1,104 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH 2/2] Document date formats accepted by parse_date()
-Date: Thu, 03 Dec 2009 07:33:13 +0900
-Message-ID: <20091203073313.6117@nanako3.lavabit.com>
-References: <3d547f4e32c026efc76a7dfe1572da617714f8c9.1259791789.git.vmiklos@frugalware.org> <831fc8f48429d5a21e29d04760b46b2ddfcb7d80.1259791789.git.vmiklos@frugalware.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] Add --track option to git clone
+Date: Wed, 2 Dec 2009 17:37:29 -0500
+Message-ID: <20091202223728.GB9691@coredump.intra.peff.net>
+References: <1259707865-6561-1-git-send-email-sn_@gmx.net>
+ <20091202192028.6117@nanako3.lavabit.com>
+ <20091202190807.GB30778@coredump.intra.peff.net>
+ <20091203060708.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Wed Dec 02 23:36:15 2009
+Content-Type: text/plain; charset=utf-8
+Cc: David Soria Parra <sn_@gmx.net>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Wed Dec 02 23:37:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFxny-0002qU-Lf
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 23:36:15 +0100
+	id 1NFxpF-0003Rh-VW
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 23:37:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755892AbZLBWgC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 17:36:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755885AbZLBWgC
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 17:36:02 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:33351 "EHLO karen.lavabit.com"
+	id S1755747AbZLBWhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 17:37:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755722AbZLBWhX
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 17:37:23 -0500
+Received: from peff.net ([208.65.91.99]:39328 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755861AbZLBWgA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 17:36:00 -0500
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id 90A0B11B85C;
-	Wed,  2 Dec 2009 16:36:05 -0600 (CST)
-Received: from 4307.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id 5LYPOF26ZKH1; Wed, 02 Dec 2009 16:36:05 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=aCdaRAzOPonM8UdBW9mUX2W65PVGdYZvoRhVSpWEnVlFNTZPYcpNAOiK1QZ3KDHyNShCYotzeiF53AAQR727fYsnFJbLPlAd2S1L6c5ZELGPepBsY3w1+5Lr8JLzml1AR2YE4LBVJLia1nkMBc3+DzcpmXavBx8pQ87RtFiuQuY=;
-  h=From:To:Cc:Subject:X-Draft-From:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-X-Draft-From: ("nnml:git-review" 6653)
-In-Reply-To: <831fc8f48429d5a21e29d04760b46b2ddfcb7d80.1259791789.git.vmiklos@frugalware.org>
+	id S1755494AbZLBWhW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 17:37:22 -0500
+Received: (qmail 28395 invoked by uid 107); 2 Dec 2009 22:41:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 02 Dec 2009 17:41:56 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Dec 2009 17:37:29 -0500
+Content-Disposition: inline
+In-Reply-To: <20091203060708.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134412>
 
-Quoting Miklos Vajna <vmiklos@frugalware.org>
+On Thu, Dec 03, 2009 at 06:07:08AM +0900, Nanako Shiraishi wrote:
 
-> ---
+> >   # most general case
+> >   git clone -f 'refs/heads/subset/*:refs/remotes/origin/*' remote.git
+> 
+> Because this is only about branches and no other kinds of 
+> references, I think this is an overkill.
 
-I don't think any message needs to be there, but a Signed-Off-By: 
-line should be.
+Perhaps. I'm not sure this has to be only about branches. You could do:
 
-> +The GIT_AUTHOR_DATE, GIT_COMMITTER_DATE environment variables
-> +ifdef::git-commit[]
-> +and the `--date` option
-> +endif::git-commit[]
-> +support the following date formats:
-> +
-> +Git native format::
-> +	It is `<unix timestamp> <timezone offset>`, where `<unix
-> +	timestamp>` is the number of seconds since the UNIX epoch.
-> +	`<timezone offset>` is a positive or negative offset from UTC.
-> +	For example CET (which is 2 hours ahead UTC) is `+0200`.
+  git clone -f tags/v1.6.1 git.git
 
-It is better to call it 'internal' format, instead of 'native'. 
-I think 'native' means the most natural way to Git, and users 
-view what 'git show' outputs as 'native'.
+though I admit I don't really have a burning desire to do so. I just
+think it will be simple to make it flexible (since you have to build
+such a refspec _anyway_), and there is no reason to restrict people who
+might use it creatively.
 
-  nana.git% git show -s v1.6.5^0 | grep Date
-  Date:   Sat Oct 10 00:05:19 2009 -0700
-  nana.git% ./test-date parse 'Sat Oct 10 00:05:19 2009 -0700'
-  Sat Oct 10 00:05:19 2009 -0700 -> 2009-10-10 07:05:19 +0000
+The biggest argument against it would be that we are confusing the user
+by giving too much rope, but I don't think that is the case here. If
+you just use branches, you need never know that the full refspec exists
+(just as some people use "git fetch origin master" without ever
+understanding how "master" can be replaced by a full refspec).
 
-And 'Git native' format is also supported, I think.
+> >   git clone -f 'subset/*' remote.git
+> 
+> But I think this is a good idea.
 
-> +RFC 2822::
-> +	The standard email format as described by RFC 2822, for example
-> +	`Thu, 07 Apr 2005 22:13:13 +0200`.
-> +
-> +ISO 8601::
-> +	Time and date specified by the ISO 8601 standard, for example
-> +	`2005-04-07T22:13:13`. The parser accepts a space instead of the
-> +	`T` character as well.
+One question on this: does it fetch to "refs/remotes/origin/subset/*"
+or to "refs/remotes/origin/*"?
 
-I didn't know about "T", but it works (^_^).
+I think the latter makes more sense (presumably you don't care that your
+branches are in "subset/", since you by definition have asked for
+nothing outside of that namespace).
 
-  nana.git% ./test-date parse '2005-04-07T22:13:13'
-  2005-04-07T22:13:13 -> 2005-04-07 13:13:13 +0000
+> >   # choose your favorite branch
+> >   git clone -f maint -f master -f next -f pu -b next git.git
+> > ...
+> > What do you think?
+> 
+> I think your rule to make first branch given by -f the default 
+> for -b is a good idea. But I'm not very happy with the example 
+> with four -f. Can we probably write it like this?
+> 
+>   git clone -f maint,master,next,pu git.git
 
-Is there something wrong with 'show'?
+Yeah, that is much nicer. I think "," is allowed in ref names, but I
+am tempted not to care here. It is not as if this is a low-level
+feature, and most people will not be crazy enough to use commas in their
+branch-names. IOW, you will get into trouble only if you have crazy
+names _and_ you want to use this particular feature. If we wanted to be
+complete, we could provide a quoting mechanism, but that is perhaps
+excessive.
 
-  nana.git% ./test-date show '2005-04-07T22:13:13'
-  2005-04-07T22:13:13 -> 40 years ago
+> If it isn't a good idea to use comma, we can use colon to split 
+> the list of branch names instead.
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Colon would work (though of course it would imply not allowing full
+refspecs with "-f"). However, I actually find
+
+  git clone -f maint:master:next:pu git.git
+
+to be a bit ugly and confusing.
+
+-Peff
