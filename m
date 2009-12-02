@@ -1,112 +1,124 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH/RFC] Allow curl to rewind the RPC read buffer at any time
-Date: Wed, 2 Dec 2009 10:03:33 +0800
-Message-ID: <be6fef0d0912011803u2ec9ab1bsa167cf59de4dd47c@mail.gmail.com>
-References: <25718488.post@talk.nabble.com>
-	 <20091127234110.7b7e9993.rctay89@gmail.com>
-	 <alpine.DEB.2.00.0912011208160.5582@cone.home.martin.st>
-	 <alpine.DEB.2.00.0912011236360.5582@cone.home.martin.st>
-	 <20091201161428.GC21299@spearce.org>
-	 <alpine.DEB.2.00.0912011914270.30348@tvnag.unkk.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: multiple working directories for long-running builds
+Date: Tue, 01 Dec 2009 18:09:38 -0800
+Message-ID: <7viqcqp1nh.fsf@alter.siamese.dyndns.org>
+References: <m1NEaLp-000kn1C@most.weird.com>
+ <7vskbxewti.fsf@alter.siamese.dyndns.org> <m1NFBAx-000kmgC@most.weird.com>
+ <20091130211744.GA27278@dpotapov.dyndns.org> <m1NFGXS-000kn2C@most.weird.com>
+ <20091201054734.GB11235@dpotapov.dyndns.org> <m1NFX19-000kn4C@most.weird.com>
+ <20091201185114.GC11235@dpotapov.dyndns.org> <m1NFXvL-000kn2C@most.weird.com>
+ <20091201211830.GE11235@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Martin Storsj?" <martin@martin.st>, git@vger.kernel.org,
-	Nicholas Miell <nmiell@gmail.com>, gsky51@gmail.com,
-	Clemens Buchacher <drizzd@aon.at>,
-	Mark Lodato <lodatom@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Daniel Stenberg <daniel@haxx.se>
-X-From: git-owner@vger.kernel.org Wed Dec 02 03:03:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: The Git Mailing List <git@vger.kernel.org>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 02 03:09:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFeZ9-0003h0-Sm
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 03:03:40 +0100
+	id 1NFef9-0005P5-BH
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 03:09:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753714AbZLBCD2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Dec 2009 21:03:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753357AbZLBCD1
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 21:03:27 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:57263 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753168AbZLBCD1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 21:03:27 -0500
-Received: by iwn1 with SMTP id 1so3552755iwn.33
-        for <git@vger.kernel.org>; Tue, 01 Dec 2009 18:03:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=W6SPmlbOUworhoCVOxWdY9MDGhUBiv3neokKgENNAu0=;
-        b=brUSUw2cZMT2uychisr6aOXoukoT8DdhnMZE4lqeZ1uSuNcWc2OyVEl/wxttnKcjO9
-         LBtA5R3bH04oZU7SxY9BuULz3twL4UXnmpn9nNfzkglkBztGxmE0o8Q2NaSkJ1HMCvG/
-         zHrblU3Xg7E3xgdzzpmvb9UKH/QnD+dnvZsjA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QsyQFpyZRz8ClOis6EBiAHC4/Sd57ZNEmA0exz0QBrTU6vhmvSqtUDPNA6gMFt/PHn
-         wmgjKDyF9/yz3u5busWIm7kaMZwR2erf5T/ndOa95HDRTexyy41XnFrH+/RmBh+HtpQH
-         Eq/wHKeF5nuqAtwmS+FsKPpijNY52YXM2d3X8=
-Received: by 10.231.1.22 with SMTP id 22mr878469ibd.56.1259719413409; Tue, 01 
-	Dec 2009 18:03:33 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.00.0912011914270.30348@tvnag.unkk.fr>
+	id S1754368AbZLBCJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 21:09:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754283AbZLBCJk
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 21:09:40 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40520 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753731AbZLBCJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 21:09:39 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 660D3A3F85;
+	Tue,  1 Dec 2009 21:09:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=CP25uNrB4Y2dJ1ZNKmvbtV8Nikw=; b=v/9ax/vf8K0HATTnKqvNSbX
+	EKArQkXeB59gMoJViX1UYzDE2yVZPEJrzaehvGtFcDsy4cEdilTj/LwRPkPgpVcf
+	6OrT21dhxJETXcI7rVDEAeKfT2g+3mc6Gt+NuaPEC0E1/K3fJPxYlcPUthATrDBq
+	3n/F3fLzS/Zlk1MxD8eg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=UPlrsTmVzJ7gbHmFqedUsQRJVA6+nQMG23vzRi1caDZqs/dG3
+	bY4vO9QlMu6AhKz+/qJnKxfethtH9d9HQd5+pmET5epsGIG1GZiO1g5RocGXnj72
+	1NH4Ww1pBZcJW5+FAKTwkIoQ6ofjDGrC5FScJgH/ms6IQa3cqPSzqXK6tM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3F9F8A3F84;
+	Tue,  1 Dec 2009 21:09:43 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CDF4FA3F83; Tue,  1 Dec 2009
+ 21:09:39 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C15D5ADA-DEE7-11DE-A448-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134281>
 
-Hi,
+Dmitry Potapov <dpotapov@gmail.com> writes:
 
-On Wed, Dec 2, 2009 at 2:18 AM, Daniel Stenberg <daniel@haxx.se> wrote:
-> If '#@!*@!*' is your pattern for matching libcurl or curl, then sure =
-libcurl
-> certainly has no problem at all to send as many requests you like
-> back-to-back.
+> On Tue, Dec 01, 2009 at 01:58:05PM -0500, Greg A. Woods wrote:
+>> 
+>> > > I just disagreed that "git archive" was a reasonable alternative to
+>> > > leaving the working directory alone during the entire time of the build.
+>> > 
+>> > Using "git archive" allows you avoid running long time procedure such as
+>> > full clean build and testing in the working tree. Also, it is guaranteed
+>> > that you test exactly what you put in Git and some other garbage in your
+>> > working tree does not affect the result.
+>> 
+>> Sure, but let's be very clear here:  "git archive" is likely even more
+>> impossible for some large projects to use than "git clone" would be to
+>> use to create build directories.
+>
+> AFAIK, "git archive" is cheaper than git clone. I do not say it is fast
+> for huge project, but if you want to run a process such as clean build
+> and test that takes a long time anyway, it does not add much to the
+> total time.
 
-I have a feeling Shawn's referring to the git http library on top of th=
-at. ;)
+I do not understand people who advocate for "git archive" to be used in
+this manner at all.
 
-> The rewinding business is only really necessary for multipass authent=
-ication
-> when Expect: 100-continue doesn't work (and thus libcurl has started =
-to send
-> data that the server will discard and thus is needed to get sent agai=
-n). And
-> that's not something you can blame "the #@!*@!* library" for, but rat=
-her
-> your server end and/or how HTTP is defined to work.
+I do use a set of separate build directories, and I typically run 5 to 10
+full builds (in each) per day, but I rarely if ever make fix in them.
+Perhaps the usage pattern expected by people who want others to use "git
+archive" to prepare separate build directories may be different from how I
+use them for.
 
-According to Martin, Expect: 100-continue is not working due to libcurl=
-=2E
+I see two downsides in using "git archive":
 
-I quote him:
+ - "archive" piped to "tar xf -" will overwrite _all_ files every time you
+   refresh the build area, causing extra work on "make" and any build
+   procedure based on file timestamps.  Sure, you can work it around by
+   using ccache but why make your life complicated?
 
-Date: Tue, 1 Dec 2009 12:28:26 +0200 (EET)
-Subject: Re: [PATCH 0/2] http: allow multi-pass authentication
+ - When a build in these separate build areas fails, you would want to go
+   there and try to diagnose or even fix the problem in there, not in your
+   primary working area (after all, the whole point of keeping a separate
+   build area is so that you do not have to switch branches too much in
+   the primary working area).  A directory structure prepared by "archive"
+   piped to "tar xf -" however is not a work tree, and any experimental
+   changes (e.g. "debugf()") or fixes you make there need to be reverted
+   or taken back manually to be placed in the primary working area.
 
-On Tue, Dec 1, 2009 at 6:28 PM, Martin Storsj=F6 <martin@martin.st> wro=
-te:
-> Normally, libcurl should add the Expect: 100-continue header
-> automatically, but for some reason
-> (http://article.gmane.org/gmane.comp.web.curl.library/25992) it doesn=
-'t,
-> so that's probably why we're manually adding that header in
-> remote-curl.c:371 at the moment. libcurl doesn't detect this at the m=
-oment
-> (http://article.gmane.org/gmane.comp.web.curl.library/25991) so it wo=
-n't
-> wait for the 100 continue response before starting to send the body d=
-ata.
+If your build area is prepared with new-workdir, then you share the
+history and you even share the ref namespace, so that "reset --hard" will
+remove all the debugf() added while diagnosing, and "diff" will give you
+the patch you need to take home.
 
-But, again, don't read my blaming of libcurl for this 100 business as
-a criticism of curl.
+You could even make a commit from your build area, but this cuts both
+ways.  You need to be aware that after committing on a branch in one
+repository other repositories that have the same branch checked out will
+become out of sync.  It is however less of an issue in practice, because
+the build areas are typically used to check out integration branches
+(e.g. 'master' and 'next' in git.git) that you do not directly commit
+anyway, and you will get very aware of the tentative nature of the tree,
+as the update procedure for such a build area prepared with new-workdir is
+always:
 
---=20
-Cheers,
-Ray Chuan
+    cd /buildfarm/<branch>/ && git reset --hard
+
+This will not touch any file that do not have to get updated, so your
+"make" won't get confused.
