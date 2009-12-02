@@ -1,108 +1,96 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH/RFC 01/11] mingw: add network-wrappers for daemon
-Date: Wed, 2 Dec 2009 16:11:23 +0100
-Message-ID: <40aa078e0912020711v6dcebba1g511e6cacbbed16be@mail.gmail.com>
-References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com>
-	 <1259196260-3064-2-git-send-email-kusmabite@gmail.com>
-	 <alpine.DEB.2.00.0911261015140.14228@cone.home.martin.st>
-	 <40aa078e0911260246j47fa36d5t421de7c1d07d5cca@mail.gmail.com>
-	 <alpine.DEB.2.00.0911261250180.14228@cone.home.martin.st>
-	 <40aa078e0912020501v9378c37l106e1e23b5e7b43d@mail.gmail.com>
-	 <alpine.DEB.2.00.0912021511310.5582@cone.home.martin.st>
-	 <40aa078e0912020549s792eb3ffi93b2cfdc6b7219dd@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Marking commits as transitory for git bisect?
+Date: Wed, 02 Dec 2009 12:01:28 +0100
+Message-ID: <87tyw9wsfr.fsf@lola.goethe.zz>
+References: <871vjdyb59.fsf@lola.goethe.zz>
+	<4B164501.7010902@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: msysgit@googlegroups.com, git@vger.kernel.org,
-	dotzenlabs@gmail.com, Johannes Sixt <j6t@kdbg.org>
-To: =?ISO-8859-1?Q?Martin_Storsj=F6?= <martin@martin.st>
-X-From: git-owner@vger.kernel.org Wed Dec 02 16:11:35 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Dec 02 16:17:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFqrb-00077k-RS
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 16:11:32 +0100
+	id 1NFqxW-0001wr-HX
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 16:17:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754852AbZLBPLT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Dec 2009 10:11:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754788AbZLBPLT
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 10:11:19 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:37449 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754568AbZLBPLS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Dec 2009 10:11:18 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so303930fga.1
-        for <git@vger.kernel.org>; Wed, 02 Dec 2009 07:11:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sDb4wvLq12w2D8M3zee6B8pbUNfniJ45qeL8gFQ7hA0=;
-        b=oNvfDRtvgKCBQPi0qtdfs7a4buk+5FnfBCI1iIFST2f1W5OdrYOFQ3Hwicc7MW6IBV
-         QUe88qJfe8O//lr7P1GMKjAR/YZtLKo6oLHji+Pzy/Jw3WrV37Dw6/V7crRY9RZU8+pi
-         gXE/ru6J+bfIrPVL0/Ok83g0yiIeVsHMrzzZ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=GgYUKe3rGtAVFGy7d2ItrQV4ogz8HE419G2kwpxskmGtOrEUsFIg+GI8hOBpDHXUJ4
-         F+GbvfhfAsK7um+M8jaaUBplrN7BvYZoPVDI5w+htWcHQxkLQk1v/5dFHQ8ZnVqDhmHs
-         oUWTuXAgtfdti/y4s79+fz1ca2Apx51OHbjKs=
-Received: by 10.216.85.136 with SMTP id u8mr76958wee.79.1259766683987; Wed, 02 
-	Dec 2009 07:11:23 -0800 (PST)
-In-Reply-To: <40aa078e0912020549s792eb3ffi93b2cfdc6b7219dd@mail.gmail.com>
+	id S1753357AbZLBPR1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 10:17:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753002AbZLBPR1
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 10:17:27 -0500
+Received: from fencepost.gnu.org ([140.186.70.10]:36437 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752199AbZLBPR0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 10:17:26 -0500
+Received: from localhost ([127.0.0.1]:57737 helo=lola.goethe.zz)
+	by fencepost.gnu.org with esmtp (Exim 4.67)
+	(envelope-from <dak@gnu.org>)
+	id 1NFqxQ-0004AH-BR; Wed, 02 Dec 2009 10:17:32 -0500
+Received: by lola.goethe.zz (Postfix, from userid 1000)
+	id A7FFF248DE; Wed,  2 Dec 2009 12:01:28 +0100 (CET)
+In-Reply-To: <4B164501.7010902@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Wed, 02 Dec 2009 11:44:17 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134338>
 
-On Wed, Dec 2, 2009 at 2:49 PM, Erik Faye-Lund <kusmabite@googlemail.co=
-m> wrote:
-> On Wed, Dec 2, 2009 at 2:21 PM, Martin Storsj=F6 <martin@martin.st> w=
-rote:
->> On Wed, 2 Dec 2009, Erik Faye-Lund wrote:
->>> @@ -854,6 +850,7 @@ static int service_loop(int socknum, int *sockl=
-ist)
->>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 =A0 }
->>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
->>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 han=
-dle(incoming, (struct sockaddr *)&ss, sslen);
->>>
->>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 break=
-;
->>
->> What's this good for?
->>
+Michael J Gruber <git@drmicha.warpmail.net> writes:
+
+> David Kastrup venit, vidit, dixit 02.12.2009 10:32:
+>> 
+>> sometimes there are changes which would seem better to restructure into
+>> more than one commit, with a non-operative intermediate state.
+>> 
+>> What I am thinking of is something like
+>> 
+>> a) change an API (small but highly intricate patch warranting thorough
+>>    line-by-line review to make sure it's fine)
+>> b) adapt all existing callers (really large but utterly trivial patch)
 >
-> When I clone git://localhost/some-repo, select() returns a fd-set wit=
-h
-> both the IPv4 and IPv6 fds. After accept()'ing the first one, the
-> second call to accept() hangs. I solved this by accepting only the
-> first connection I got; the second one should be accepted in the next
-> round of the service loop (if still available).
+> A quick solution with current git would be "replace": Say, in
+> A-B-C-D
+> you want B and C to be considered an "atom" for bisection. So, "git
+> replace" C by a commit C' which is B+C squashed and has A as its parent:
+> A-C'-D.
+
+That would lose B and C.  The idea was to have this available
+publically.
+
+> Alternatively, if you want this to be distributed more easily and think
+> of it at the time of committing, producing a DAG like
 >
+> A--C'--D
+>  \    /
+>   B--C
+>
+> with C' as the first parent of D may help during bisection. I.e., you
+> keep the detailed history on the side branch and squash it together on
+> the --first-parent-line, with C,C' being tree-same.
 
-Actually, it's no good - my code is broken. FD_SET() and FD_ISSET()
-needs wrapping to call _get_osfhandle() on the socket. Since this is
-not needed on Linux, the code ran just fine there. But on Windows,
-select() failed, but due to the following bug, it wasn't picked up:
-+               if (select(0, &fds, NULL, NULL, &timeout) > 0) {
+That would seem to be more or less accomplished by putting B-C on a
+side-branch, then merge that branch into A (C' basically being the merge
+commit).  So the DAG would be something like
 
-changing the comparison around, revealed that select hadn't done
-anything so fds wasn't modified at all! Thus, I wrongly interpreted it
-as if both sockets had an awaiting connection, making IPv6 connections
-work (since they are on the first socket), but IPv4 not.
+A------D
+ \    /
+  B--C
 
-I've corrected this locally, and I'll include the fixed patch in the ne=
-xt round.
+If B-C is a local branch, will their history make it through to a remote
+repository when you push D?
 
-Thanks for pointing out the issue, causing me to second guess my "cure"=
- :)
+It seems like this workflow could possibly meet my criteria when one has
+push access to the repo in question.  If one passes D upstream via
+git-format-patch, however, it would appear that just the equivalent of
+C' makes it upstream, with the B-C history staying local.
 
---=20
-Erik "kusma" Faye-Lund
+Not sure what will happen when upstream pulls D.
+
+Further comments/insights?
+
+-- 
+David Kastrup
