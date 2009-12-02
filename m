@@ -1,82 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] transport-helper: remove duplicate free()
-Date: Wed, 02 Dec 2009 11:06:43 -0800
-Message-ID: <7vws15ci0s.fsf@alter.siamese.dyndns.org>
-References: <20091202153950.c18095b7.rctay89@gmail.com>
- <alpine.LNX.2.00.0912021120440.14365@iabervon.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] Add --track option to git clone
+Date: Wed, 2 Dec 2009 14:08:07 -0500
+Message-ID: <20091202190807.GB30778@coredump.intra.peff.net>
+References: <1259707865-6561-1-git-send-email-sn_@gmx.net>
+ <20091202192028.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Dec 02 20:07:14 2009
+Content-Type: text/plain; charset=utf-8
+Cc: David Soria Parra <sn_@gmx.net>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Wed Dec 02 20:08:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFuXZ-0001y8-De
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 20:07:05 +0100
+	id 1NFuYg-0002Zy-70
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 20:08:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755193AbZLBTGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 14:06:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755095AbZLBTGx
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 14:06:53 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37345 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753690AbZLBTGx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 14:06:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4736AA35A4;
-	Wed,  2 Dec 2009 14:06:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jFIYSqdTGNrWEgkeVFC3PZkwvlM=; b=JsqfQ6
-	IGwXNqqlcntu+CV65UqeNLoACSMyVwwzUJjuPxu4ekB4BO2jD5Csf9htqkb0Hckq
-	2Mu9TRWIVi73mhkXZM09VFdOkEW79kcoCmus8wWzU/1uiLTTEmOH+HNWu63xoXab
-	xJ94wn1rPHGX2dC1vjGIr6d5WRtdxbGolZm6Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OBVifG44nfO4MbnWtIk+4UY5JK9oRJv/
-	vTNaRvX4BoItJ9Kl+M1+4ZL6jcaxDshbFFB0MScDfeHAMhkUHTtnWonwWnXHD/5h
-	7w+ILZCjjWOv6wTLmxbXSWpmcPF6I5ZBQrR7QVUj4idpS6mU4EGrYoqAJZcsG+J2
-	6k/Azal7CRM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 09419A35A3;
-	Wed,  2 Dec 2009 14:06:53 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id F07CAA359D; Wed,  2 Dec 2009
- 14:06:45 -0500 (EST)
-In-Reply-To: <alpine.LNX.2.00.0912021120440.14365@iabervon.org> (Daniel
- Barkalow's message of "Wed\, 2 Dec 2009 11\:23\:56 -0500 \(EST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: DA094042-DF75-11DE-B442-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1755269AbZLBTIB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 14:08:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755232AbZLBTIB
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 14:08:01 -0500
+Received: from peff.net ([208.65.91.99]:44207 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753690AbZLBTIA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 14:08:00 -0500
+Received: (qmail 26952 invoked by uid 107); 2 Dec 2009 19:12:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 02 Dec 2009 14:12:35 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Dec 2009 14:08:07 -0500
+Content-Disposition: inline
+In-Reply-To: <20091202192028.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134374>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On Wed, Dec 02, 2009 at 07:20:28PM +0900, Nanako Shiraishi wrote:
 
-> On Wed, 2 Dec 2009, Tay Ray Chuan wrote:
->
->> Remove the free() invocation on transport->data in release_helper(), as
->> disconnect_helper() has already done so.
->
-> You need to remove the one in disconnect_helper, because the entire point 
-> of disconnect_helper as opposed to release_helper is to *not* free that 
-> memory. If you remove this one, you'll access freed memory in any case 
-> where the helper has to be quit and restarted.
+> Quoting David Soria Parra <sn_@gmx.net> writes:
+> 
+> > I'm aware that it's not possible to give more than one --track
+> > option. Implementing the possibility to specify multiple --track option
+> > would certainly a good improvment later, but would also require a lot
+> > more work as far as I understand the clone code.
+> 
+> I'm sorry if I'm asking the obvious, but how can multiple --track 
+> options be a useful future enhancement? If I understand your use 
+> case correctly, it's useful when you want to work on only one 
+> branch that isn't the default, and that is why you don't want to 
+> get data necessary for other branches. What does it mean to give 
+> two --track options? You will get one master branch that tracks
+> both versions, and "git pull" will merge both branches you track?
 
-Thanks.  I did two things:
+I would find something like this useful for cloning git.git, where I
+explicitly fetch maint, master, next, and pu, but none of html, man, or
+todo. This makes "gitk --all" much nicer to view.
 
- - Since the bottom commit cannot be rewritten (as it is based on the
-   version that is before the change in the caller to free it), I queued a
-   one liner to remove the free from the callee in 'next'.
+However, I don't think --track is the right term. There are really two
+things happening here:
 
- - The problem will surface when the series is later merged to 'master'.
-   I told my rerere database about the necessity of this "evil merge", so
-   that we will automatically have the equivalent of the one-liner when it
-   happens.
+  1. Setting the fetch refspec(s).
+
+  2. Choosing an initial branch to checkout.
+
+We can already do (2) with "-b". But there is no way to do (1)
+currently. If we are going to implement (1), I don't see a reason to be
+restrictive about it. We should really accept arbitrary refspecs, and
+then provide a syntax on top of that for doing both (1) and (2)
+together. I am thinking something like:
+
+  # most general case
+  git clone -f 'refs/heads/subset/*:refs/remotes/origin/*' remote.git
+
+  # expands to refs/heads/subset/*:refs/remotes/origin/*
+  git clone -f 'refs/heads/subset/*' remote.git
+
+  # expands to refs/heads/subset/*, which then expands as above
+  git clone -f 'subset/*' remote.git
+
+  # multiple -f should add multiple refspec lines
+  git clone -f maint -f master -f next -f pu git.git
+
+  # choose your favorite branch
+  git clone -f maint -f master -f next -f pu -b next git.git
+
+And for convenience of the user, you would want a way to avoid repeating
+the name of the "I want to check this out" branch. So either:
+
+  1. Add "--track foo" as a convenience wrapper for "-f foo -b foo".
+
+  2. If no "-b" is given, the first "-f" is assumed as "-b". So "git
+     clone -f foo" becomes equivalent to David's --track.
+
+And of course the name "-f" (for --fetch, if you were wondering) is open
+to suggestion.
+
+What do you think?
+
+-Peff
