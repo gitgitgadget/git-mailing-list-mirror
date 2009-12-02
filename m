@@ -1,116 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-pull.sh: Fix call to git-merge for new command  
- format
-Date: Wed, 02 Dec 2009 09:49:08 -0800
-Message-ID: <7viqcpgtbf.fsf@alter.siamese.dyndns.org>
-References: <1259707451-20661-1-git-send-email-vonbrand@inf.utfsm.cl>
- <7vmy22qmgp.fsf@alter.siamese.dyndns.org>
- <4B163B49.4070606@drmicha.warpmail.net>
- <7vws15jpe7.fsf@alter.siamese.dyndns.org>
- <4B16A410.5090802@drmicha.warpmail.net>
+Subject: Re: warning in git version 1.6.6.rc0.114.gc8648
+Date: Wed, 02 Dec 2009 09:50:40 -0800
+Message-ID: <7veindgt8v.fsf@alter.siamese.dyndns.org>
+References: <hf67m0$r10$1@ger.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Dec 02 18:49:42 2009
+Cc: git@vger.kernel.org
+To: Alejandro Riveira <ariveira@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 02 18:51:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFtKf-0005vC-GI
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 18:49:41 +0100
+	id 1NFtLo-0006jI-Uz
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 18:50:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755279AbZLBRtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 12:49:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755264AbZLBRtO
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 12:49:14 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61092 "EHLO
+	id S1755081AbZLBRul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 12:50:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755018AbZLBRul
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 12:50:41 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48825 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755222AbZLBRtM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 12:49:12 -0500
+	with ESMTP id S1754897AbZLBRul (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 12:50:41 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 94F8FA3E71;
-	Wed,  2 Dec 2009 12:49:17 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2540E84224;
+	Wed,  2 Dec 2009 12:50:47 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=n9TQFXlgJ8SSsV0ecRsga13YPJc=; b=vwVYlN
-	J6eQwEESd4LEaCm8ADeR/gw8p2JCn+55G4VSpq0lpR9yRn+iHR+y5Fn3InDqUMDW
-	WeqcaVPqjSQDx2qny01TyGgH+BCvTWpkH2rXh4gnTr5crGoqB5FfzZUV/Pk3tHlY
-	lWHQtKbdBUZUYYJMpzorFOWfisDH4EZrcr82o=
+	:content-type; s=sasl; bh=Ww+j6u2vWFithy4j/a6rQR/gIHY=; b=fdwFcI
+	SY2oKNx3xoJu0w9DsNMvjft1DVsdlNgDqng4FoF/g8k/tyjfnUxI6WfNapirgQDR
+	LVQk5U76bi0vZ4/2fSVVqGFcrzkFMeGz3n3iEmRxNHmm+AcmKwNr5vUFuTaedNd4
+	wdRSIg34MEyoZMQ4/HjDqKCFjtiysSmpxylug=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xgwYWSREyfKfwdRBbAZz62Fhcw/Zij6u
-	23+U4d4HWPbq92Z9obPObZYSglmamaLeanoS5BfMw7OXH0MtY/1ZHDEhbn2Rcttk
-	p6rGTWRGiLlxsWw994huHoWsb4Qdn/4QzrSLXbF13dcN+SFzDSxQsIBfu84pHx0C
-	FsaJY85gWSk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 63CAEA3E65;
-	Wed,  2 Dec 2009 12:49:14 -0500 (EST)
+	:content-type; q=dns; s=sasl; b=JHlzUcmp36EDk9mJS65hjEDsOYjPEFnC
+	N11BsfgQnTIEYHG053sH4jbHPwJJp6bT7ma6JsbF99M845AYgIB6E2RPARK7pRsy
+	iYEHcV6WE4X14ADPaPS67qpmEQUhwrULG9JmcTacWqkZdsrq7Oo7hA4Ff35AFvP5
+	wKLMz/05XbY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 05B0484223;
+	Wed,  2 Dec 2009 12:50:45 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D124EA3E5B; Wed,  2 Dec 2009
- 12:49:09 -0500 (EST)
-In-Reply-To: <4B16A410.5090802@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Wed\, 02 Dec 2009 18\:29\:52 +0100")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 696EA84222; Wed,  2 Dec
+ 2009 12:50:42 -0500 (EST)
+In-Reply-To: <hf67m0$r10$1@ger.gmane.org> (Alejandro Riveira's message of
+ "Wed\, 2 Dec 2009 17\:21\:04 +0000 \(UTC\)")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0146D0DA-DF6B-11DE-8A61-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 374C2248-DF6B-11DE-BE82-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134362>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Alejandro Riveira <ariveira@gmail.com> writes:
 
->> Yes.  Anything that sets GIT_EXEC_PATH correctly can use git-foo form.
+> Whenever i do a "git pull" to check updates to the kernel
+> or git repo i recieve
 >
-> I know they can. That was in the part you snipped ;)
+> warning: 'git merge <msg> HEAD <commit>' is deprecated. Please update
+> your script to use 'git merge -m <msg> <commit>' instead.
+> In future versions of git, this syntax will be removed.
+> Already up-to-date.
+>
+> git pull should be updated to not use a deprecated form of git merge.
 
-You asked about the presense of "a policy", and you got an answer.
+Yes we are aware of the issue and have a patch to do so which requires
+another change which we also already have patch for.  It will be fixed
+before 1.6.6-rc1
 
-> The questions is: Should they? Should we avoid mixing both forms in one
-> script?
-
-Should we avoid it?  Yes but not very enthusiastically.  We should make
-sure that new invocations anybody adds use dashless form, but I would
-recommend against a "let's remove use of dashed form" patch _unless_ you
-find a time when the project is really quiet and there is nothing else
-going on.
-
-The whole point of GIT_EXEC_PATH trick is to allow continued use of the
-dashed form, so that we do not have to suffer from code churn and patches
-to implement real changes do not have to crash with such clean-ups.
-
-As we'll be changing "git pull", we should use dashless form in the
-vicinity of the real change (which is only one line) while at it, like
-this.
-
--- >8 --
-From: Horst H. von Brand <vonbrand@inf.utfsm.cl>
-Date: Tue, 1 Dec 2009 19:44:11 -0300
-Subject: [PATCH] git-pull.sh: Fix call to git-merge for new command format
-
-Now "git merge <msg> HEAD" is officially deprecated, we should
-clean our own use as well.
-
-Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- git-pull.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-pull.sh b/git-pull.sh
-index bfeb4a0..fcf6c81 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -216,7 +216,7 @@ fi
- 
- merge_name=$(git fmt-merge-msg $log_arg <"$GIT_DIR/FETCH_HEAD") || exit
- test true = "$rebase" &&
--	exec git-rebase $diffstat $strategy_args --onto $merge_head \
-+	exec git rebase $diffstat $strategy_args --onto $merge_head \
- 	${oldremoteref:-$merge_head}
--exec git-merge $diffstat $no_commit $squash $no_ff $ff_only $log_arg $strategy_args \
--	"$merge_name" HEAD $merge_head $verbosity
-+exec git merge $verbosity $diffstat $no_commit $squash $no_ff $ff_only $log_arg $strategy_args \
-+	-m "$merge_name" $merge_head
+Thanks for reporting.
