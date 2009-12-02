@@ -1,92 +1,105 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] builtin-commit: add --date option
-Date: Wed, 2 Dec 2009 22:07:51 +0100
-Message-ID: <20091202210751.GC31763@genesis.frugalware.org>
-References: <1259627252-21615-1-git-send-email-vmiklos@frugalware.org>
- <20091202192614.GD30778@coredump.intra.peff.net>
- <7vpr6xcgki.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="CLLB+19uC8aeq76E"
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 02 22:08:07 2009
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Describe (possible) gitweb.js minification in gitweb/README
+Date: Wed,  2 Dec 2009 22:14:36 +0100
+Message-ID: <1259788476-9697-1-git-send-email-jnareb@gmail.com>
+References: <7vaay2tkfh.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 02 22:15:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFwQe-0005g2-U3
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 22:08:06 +0100
+	id 1NFwXv-0000rG-Ji
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 22:15:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754301AbZLBVHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 16:07:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754223AbZLBVHq
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 16:07:46 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:46551 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753016AbZLBVHq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 16:07:46 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 490115809B;
-	Wed,  2 Dec 2009 22:07:52 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 07C6242F0A;
-	Wed,  2 Dec 2009 22:07:52 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id C63D81240011; Wed,  2 Dec 2009 22:07:51 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vpr6xcgki.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755316AbZLBVPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 16:15:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755266AbZLBVPX
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 16:15:23 -0500
+Received: from mail-fx0-f221.google.com ([209.85.220.221]:45021 "EHLO
+	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754120AbZLBVPX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 16:15:23 -0500
+Received: by fxm21 with SMTP id 21so786376fxm.1
+        for <git@vger.kernel.org>; Wed, 02 Dec 2009 13:15:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:from:to:cc
+         :subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=DGRQmpMeF9FC0JDFbkPkb2Xj2UtfOrnwtgfyzvG1g18=;
+        b=fFUBP2OxGOYjalIxGi5Vy9k6z5jSbw9oFhzC3fSNi37xCOPCjP2Lune9KihCEGRj+s
+         cx1DQ7pSdAVm+ytkGpdrWZ37Rs26VA2OhfeaYXGx2wegH+w4JNBFVG/qwLqUbRyoMPzm
+         +ABMZ5A/ExqJa3dtm7kNSbDZ917Ytn6lt8+sU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=EU4XNBRCJWjV6KeIwpvxeiXiKQBdppjjoX6Bi9OyTTiiMuFsDZTCm6nvvbgH3eHkg9
+         iocml5Q5Z4Wx3IwTzrJ4YxsGfd8BrLm5SgV6gzeS/b5hIPuZPZ1XqyWs76mQwMPDeGwI
+         1zH4xckbu+L3dJnLzQFZzAF8eG1E1vU1hcJo4=
+Received: by 10.103.48.19 with SMTP id a19mr215467muk.136.1259788528076;
+        Wed, 02 Dec 2009 13:15:28 -0800 (PST)
+Received: from localhost.localdomain (abvj160.neoplus.adsl.tpnet.pl [83.8.207.160])
+        by mx.google.com with ESMTPS id i7sm4122183mue.46.2009.12.02.13.15.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 02 Dec 2009 13:15:25 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id nB2LEw37009729;
+	Wed, 2 Dec 2009 22:15:03 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id nB2LEg0n009727;
+	Wed, 2 Dec 2009 22:14:42 +0100
+X-Mailer: git-send-email 1.6.5.3
+In-Reply-To: <7vaay2tkfh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134401>
 
+On Tue, 1 Dec 2009, Junio C Hamano wrote:
 
---CLLB+19uC8aeq76E
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> * jn/gitweb-blame (2009-11-24) 8 commits.
+>   (merged to 'next' on 2009-11-25 at 0a5b649)
+>  + gitweb.js: fix padLeftStr() and its usage
+>  + gitweb.js: Harden setting blamed commit info in incremental blame
+>  + gitweb.js: fix null object exception in initials calculation
+>  + gitweb: Minify gitweb.js if JSMIN is defined
 
-On Wed, Dec 02, 2009 at 11:38:05AM -0800, Junio C Hamano <gitster@pobox.com> wrote:
->  - We should honor GIT_AUTHOR_DATE if --reset-author is given.
+This commit is somehow missing description of JSMIn in gitweb/README
+from the original patch.  Here is its completion.
 
-This is already a situation, as far as I see.
+>  + gitweb: Create links leading to 'blame_incremental' using JavaScript
+>   (merged to 'next' on 2009-10-11 at 73c4a83)
+>  + gitweb: Colorize 'blame_incremental' view during processing
+>  + gitweb: Incremental blame (using JavaScript)
+>  + gitweb: Add optional "time to generate page" info in footer
+> 
+> With two more changes to disable this by default to make it
+> suitable as "new feature with known breakages" for 1.6.6
 
->  - I _think_ we should ignore GIT_AUTHOR_DATE if --reset-author is not
->    given, as --amend/-c/-C is stronger for being command line options than
->    an environment variable.
+-- >8 --
+Subject: [PATCH] gitweb: Describe (possible) gitweb.js minification in gitweb/README
 
-We already ignore GIT_AUTHOR_DATE if --reset-author is not given, also
-when I change it like this:
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/README |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index e93a647..7234c7d 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -397,7 +397,8 @@ static void determine_author_info(void)
-
-                name = xstrndup(a + 8, lb - (a + 8));
-                email = xstrndup(lb + 2, rb - (lb + 2));
--               date = xstrndup(rb + 2, eol - (rb + 2));
-+               if (!date)
-+                       date = xstrndup(rb + 2, eol - (rb + 2));
-        }
-
-        if (force_author) {
-
-tests 27, 33, 38 and 39 fail in t7501-commit.sh.
-
---CLLB+19uC8aeq76E
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAksW1ycACgkQe81tAgORUJYxngCglzQla+wr5lzC0Jz6etlCCMUz
-lTIAoKM3+zfGcu9ujVCRcgKdcoI0PwJy
-=oRL6
------END PGP SIGNATURE-----
-
---CLLB+19uC8aeq76E--
+diff --git a/gitweb/README b/gitweb/README
+index b69b0e5..e34ee79 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -95,7 +95,8 @@ You can specify the following configuration variables when building GIT:
+  * GITWEB_JS
+    Points to the localtion where you put gitweb.js on your web server
+    (or to be more generic URI of JavaScript code used by gitweb).
+-   Relative to base URI of gitweb.  [Default: gitweb.js]
++   Relative to base URI of gitweb.  [Default: gitweb.js (or gitweb.min.js
++   if JSMIN build variable is defined / JavaScript minifier is used)]
+  * GITWEB_CONFIG
+    This Perl file will be loaded using 'do' and can be used to override any
+    of the options above as well as some other options -- see the "Runtime
+-- 
+1.6.5.3
