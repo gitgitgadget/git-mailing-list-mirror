@@ -1,55 +1,65 @@
-From: GittyUser <xtelligence@gmail.com>
-Subject: How to update from remote origin with local modified branch?
-Date: Wed, 2 Dec 2009 03:22:34 -0800 (PST)
-Message-ID: <1259752954810-4099323.post@n2.nabble.com>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: choosing an issue tracker
+Date: Wed, 2 Dec 2009 05:54:24 -0600
+Message-ID: <19222.21872.425947.273352@lisa.zopyra.com>
+References: <4B16331A.3060606@gulfsat.mg>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 02 12:22:41 2009
+Cc: git@vger.kernel.org
+To: Rakotomandimby Mihamina <mihamina@gulfsat.mg>
+X-From: git-owner@vger.kernel.org Wed Dec 02 12:54:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFnI9-00016i-5V
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 12:22:41 +0100
+	id 1NFnnC-00066Y-RX
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 12:54:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752280AbZLBLW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 06:22:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751811AbZLBLW3
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 06:22:29 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:54861 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751210AbZLBLW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 06:22:28 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1NFnI2-0002vD-QI
-	for git@vger.kernel.org; Wed, 02 Dec 2009 03:22:34 -0800
-X-Nabble-From: GittyUser <xtelligence@gmail.com>
+	id S1752658AbZLBLye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 06:54:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752446AbZLBLye
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 06:54:34 -0500
+Received: from 75-27-130-60.lightspeed.austtx.sbcglobal.net ([75.27.130.60]:36823
+	"EHLO zopyra.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752001AbZLBLye (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 06:54:34 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id nB2BsWG00755;
+	Wed, 2 Dec 2009 05:54:32 -0600
+In-Reply-To: <4B16331A.3060606@gulfsat.mg>
+X-Mailer: VM 8.0.11 under Emacs 21.1.1 (i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134331>
+
+On Wednesday, December 2, 2009 at 12:27:54 (+0300) Rakotomandimby Mihamina writes:
+>Hi all,
+>
+>For a while, I used SVN and Trac.
+>They have a satisfying mutual integration.
+>
+>I am looking for our new issue tracker, and would like to be advised.
+>
+>Our context:
+>- developpers using git, developping
+>   - web based applications (PHP, Python, OCaml,...)
+>   - Unix-like system maintainance scripts (SHELL, Perl,...)
+>- a QA guy that makes functional tests only on the web applications
+>   and reports bugs and potential improvements. He does not use git.
+>- multiple projects
+>
+>What we look for:
+>something like the (Trac, SVN) but with git as SCM.
+>
+>What issue tracker would you recommend?
+
+You might be interested in Jira, which I have tied to git with my
+open-source niftyism:
+
+http://github.com/rael/git-jira
 
 
-I have once cloned a a project from a remote repository:
-git cloned http://repo.or.cz/r/openbsc.git
-
-After that I modified some files and commited.
-In the mean time the remote repository had several commits. Now I want to
-update my local repo from the remote repo but I also want to keep my own
-commits. So, when doing "git pull" I get the message that certain files
-needs to be updated.
-
-Now, how can I get my local repo, with my own modification, updated by the
-remote repo?
-I know I need to be aware that those updates (or commits) from remote must
-not conflict with my local.
-
-Thank you.
--- 
-View this message in context: http://n2.nabble.com/How-to-update-from-remote-origin-with-local-modified-branch-tp4099323p4099323.html
-Sent from the git mailing list archive at Nabble.com.
+Bill
