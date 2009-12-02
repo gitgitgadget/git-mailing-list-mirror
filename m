@@ -1,105 +1,149 @@
 From: Alex Chiang <achiang@hp.com>
-Subject: [StGit PATCH v2 0/6] add support for git send-email
-Date: Tue,  1 Dec 2009 17:46:00 -0700
-Message-ID: <20091202003503.7737.51579.stgit@bob.kio>
+Subject: [StGit PATCH v2 4/6] stg mail: factor out __update_header
+Date: Tue,  1 Dec 2009 17:46:22 -0700
+Message-ID: <20091202004622.7737.78332.stgit@bob.kio>
+References: <20091202003503.7737.51579.stgit@bob.kio>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 Cc: git <git@vger.kernel.org>, Karl Wiberg <kha@treskal.com>
 To: catalin.marinas@gmail.com
-X-From: git-owner@vger.kernel.org Wed Dec 02 01:46:27 2009
+X-From: git-owner@vger.kernel.org Wed Dec 02 01:46:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFdMO-0005kv-Ts
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 01:46:25 +0100
+	id 1NFdMT-0005mQ-T6
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 01:46:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754648AbZLBAqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 19:46:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754963AbZLBAqG
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 19:46:06 -0500
-Received: from g1t0029.austin.hp.com ([15.216.28.36]:21665 "EHLO
-	g1t0029.austin.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754961AbZLBAqF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 19:46:05 -0500
-Received: from g5t0030.atlanta.hp.com (g5t0030.atlanta.hp.com [16.228.8.142])
-	by g1t0029.austin.hp.com (Postfix) with ESMTP id B63673800D;
-	Wed,  2 Dec 2009 00:46:11 +0000 (UTC)
+	id S1754968AbZLBAqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 19:46:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754965AbZLBAqR
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 19:46:17 -0500
+Received: from g5t0009.atlanta.hp.com ([15.192.0.46]:5169 "EHLO
+	g5t0009.atlanta.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754938AbZLBAqQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 19:46:16 -0500
+Received: from g5t0029.atlanta.hp.com (g5t0029.atlanta.hp.com [16.228.8.141])
+	by g5t0009.atlanta.hp.com (Postfix) with ESMTP id E606130111;
+	Wed,  2 Dec 2009 00:46:22 +0000 (UTC)
 Received: from ldl (linux.corp.hp.com [15.11.146.101])
-	by g5t0030.atlanta.hp.com (Postfix) with ESMTP id 51A231410B;
-	Wed,  2 Dec 2009 00:46:01 +0000 (UTC)
+	by g5t0029.atlanta.hp.com (Postfix) with ESMTP id BCFFF200A5;
+	Wed,  2 Dec 2009 00:46:22 +0000 (UTC)
 Received: from localhost (ldl.fc.hp.com [127.0.0.1])
-	by ldl (Postfix) with ESMTP id 27983CF000A;
-	Tue,  1 Dec 2009 17:46:01 -0700 (MST)
+	by ldl (Postfix) with ESMTP id 877E9CF000A;
+	Tue,  1 Dec 2009 17:46:22 -0700 (MST)
 Received: from ldl ([127.0.0.1])
 	by localhost (ldl.fc.hp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UlUc5pWv4PHu; Tue,  1 Dec 2009 17:46:01 -0700 (MST)
+	with ESMTP id B0JQHnjzpEmN; Tue,  1 Dec 2009 17:46:22 -0700 (MST)
 Received: from eh.fc.hp.com (eh.fc.hp.com [15.11.146.105])
-	by ldl (Postfix) with ESMTP id 13722CF0007;
-	Tue,  1 Dec 2009 17:46:01 -0700 (MST)
+	by ldl (Postfix) with ESMTP id 68AF4CF0007;
+	Tue,  1 Dec 2009 17:46:22 -0700 (MST)
 Received: by eh.fc.hp.com (Postfix, from userid 17609)
-	id E7A1226160; Tue,  1 Dec 2009 17:46:00 -0700 (MST)
+	id 57DF526160; Tue,  1 Dec 2009 17:46:22 -0700 (MST)
 X-Mailer: git-send-email 1.6.5.2.74.g610f9
+In-Reply-To: <20091202003503.7737.51579.stgit@bob.kio>
 User-Agent: StGit/0.15-6-gc6f39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134274>
 
-This is v2 of the series that starts teaching stg mail how to
-call git send-email.
+Factor __update_header out of __build_address_headers.
 
-I made all the changes that Karl recommended, and made sure to
-run the t1900-mail.sh test at every point in the series (passes
-successfully).
+Headers like Reply-To, Mail-Reply-To, and Mail-Followup-To are now
+handled in __build_extra_headers.
 
-I also experimented with adding another test case for --git
-mode, basically duplicating t1900-mail.sh, and then adding the
---git argument wherever it made sense.
+We make this change because in the future, we do not want to call
+__build_address_headers if using git send-email but we will always
+want to call __build_extra_headers.
 
-However, that resulted in failure of the last 3 test cases,
-which is due to the fact that we no longer parse To/Cc/Bcc
-command line args in --git mode, and the resulting mbox file was
-missing the expected recipient addresses.
-
-I played around with that for a while, thinking that I could use
-git send-email --dry-run to do something equivalent, but then
-realized that git send-email's run-run mode is definitely not
-analogous to stg mail's --mbox mode.
-
-The upshot is that in stg mail, --git and --mbox don't interact
-well, and the resulting mbox file will lack the recipients. This
-might be fixed in the future if we teach git send-email how to
-generate mbox files, but then we introduce a versioning problem.
-
-So let's just accept this wart for now, and say, if you want an
-mbox file generated, don't use --git. That seems reasonable to
-me.
-
-This mail was sent with the following command line:
-
-	./stg mail --git -a -e --auto -v v2 --prefix=StGit
-	--to=catalin.marinas@gmail.com --cc=git
-
-Note that the --cc= contains an alias for the git mailing list
-that I defined in my ~/.mutt.aliases file (and specified in
-.gitconfig -> sendemail.aliasesfile and sendemail.aliasfiletype.
-
-Thanks,
-/ac
-
+Cc: Karl Wiberg <kha@treskal.com>
+Signed-off-by: Alex Chiang <achiang@hp.com>
 ---
 
-Alex Chiang (6):
-      stg mail: Refactor __send_message and friends
-      stg mail: reorder __build_[message|cover] parameters
-      stg mail: make __send_message do more
-      stg mail: factor out __update_header
-      stg mail: add basic support for git send-email
-      stg mail: don't parse To/Cc/Bcc in --git mode
+ stgit/commands/mail.py |   48 +++++++++++++++++++++++++-----------------------
+ 1 files changed, 25 insertions(+), 23 deletions(-)
 
-
- stgit/commands/mail.py |  196 +++++++++++++++++++++++++++---------------------
- 1 files changed, 112 insertions(+), 84 deletions(-)
+diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
+index edff878..f430a13 100644
+--- a/stgit/commands/mail.py
++++ b/stgit/commands/mail.py
+@@ -262,25 +262,25 @@ def __send_message(type, tmpl, options, *args):
+     out.done()
+     return msg_id
+ 
+-def __build_address_headers(msg, options, extra_cc = []):
+-    """Build the address headers and check existing headers in the
+-    template.
+-    """
++def __update_header(msg, header, addr = '', ignore = ()):
+     def __addr_pairs(msg, header, extra):
+         pairs = email.Utils.getaddresses(msg.get_all(header, []) + extra)
+         # remove pairs without an address and resolve the aliases
+         return [address_or_alias(p) for p in pairs if p[1]]
+ 
+-    def __update_header(header, addr = '', ignore = ()):
+-        addr_pairs = __addr_pairs(msg, header, [addr])
+-        del msg[header]
+-        # remove the duplicates and filter the addresses
+-        addr_dict = dict((addr, email.Utils.formataddr((name, addr)))
+-                         for name, addr in addr_pairs if addr not in ignore)
+-        if addr_dict:
+-            msg[header] = ', '.join(addr_dict.itervalues())
+-        return set(addr_dict.iterkeys())
++    addr_pairs = __addr_pairs(msg, header, [addr])
++    del msg[header]
++    # remove the duplicates and filter the addresses
++    addr_dict = dict((addr, email.Utils.formataddr((name, addr)))
++                     for name, addr in addr_pairs if addr not in ignore)
++    if addr_dict:
++        msg[header] = ', '.join(addr_dict.itervalues())
++    return set(addr_dict.iterkeys())
+ 
++def __build_address_headers(msg, options, extra_cc = []):
++    """Build the address headers and check existing headers in the
++    template.
++    """
+     to_addr = ''
+     cc_addr = ''
+     extra_cc_addr = ''
+@@ -300,18 +300,14 @@ def __build_address_headers(msg, options, extra_cc = []):
+         bcc_addr = autobcc
+ 
+     # if an address is on a header, ignore it from the rest
+-    to_set = __update_header('To', to_addr)
+-    cc_set = __update_header('Cc', cc_addr, to_set)
+-    bcc_set = __update_header('Bcc', bcc_addr, to_set.union(cc_set))
++    to_set = __update_header(msg, 'To', to_addr)
++    cc_set = __update_header(msg, 'Cc', cc_addr, to_set)
++    bcc_set = __update_header(msg, 'Bcc', bcc_addr, to_set.union(cc_set))
+ 
+     # --auto generated addresses, don't include the sender
+-    from_set = __update_header('From')
+-    __update_header('Cc', extra_cc_addr, to_set.union(bcc_set).union(from_set))
+-
+-    # update other address headers
+-    __update_header('Reply-To')
+-    __update_header('Mail-Reply-To')
+-    __update_header('Mail-Followup-To')
++    from_set = __update_header(msg, 'From')
++    __update_header(msg, 'Cc', extra_cc_addr,
++                    to_set.union(bcc_set).union(from_set))
+ 
+ def __get_signers_list(msg):
+     """Return the address list generated from signed-off-by and
+@@ -349,6 +345,12 @@ def __build_extra_headers(msg, msg_id, ref_id = None):
+         msg['References'] = ref_id
+     msg['User-Agent'] = 'StGit/%s' % version.version
+ 
++    # update other address headers
++    __update_header(msg, 'Reply-To')
++    __update_header(msg, 'Mail-Reply-To')
++    __update_header(msg, 'Mail-Followup-To')
++
++
+ def __encode_message(msg):
+     # 7 or 8 bit encoding
+     charset = email.Charset.Charset('utf-8')
