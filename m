@@ -1,96 +1,112 @@
-From: Richard Hartmann <richih.mailinglist@gmail.com>
-Subject: [PATCH] Fixed typo
-Date: Wed, 2 Dec 2009 02:35:18 +0100
-Message-ID: <2d460de70912011735ha181f7s141f208bcab34fa8@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH/RFC] Allow curl to rewind the RPC read buffer at any time
+Date: Wed, 2 Dec 2009 10:03:33 +0800
+Message-ID: <be6fef0d0912011803u2ec9ab1bsa167cf59de4dd47c@mail.gmail.com>
+References: <25718488.post@talk.nabble.com>
+	 <20091127234110.7b7e9993.rctay89@gmail.com>
+	 <alpine.DEB.2.00.0912011208160.5582@cone.home.martin.st>
+	 <alpine.DEB.2.00.0912011236360.5582@cone.home.martin.st>
+	 <20091201161428.GC21299@spearce.org>
+	 <alpine.DEB.2.00.0912011914270.30348@tvnag.unkk.fr>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=0016e6d975cb1ae77a0479b4e316
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 02 02:36:03 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Martin Storsj?" <martin@martin.st>, git@vger.kernel.org,
+	Nicholas Miell <nmiell@gmail.com>, gsky51@gmail.com,
+	Clemens Buchacher <drizzd@aon.at>,
+	Mark Lodato <lodatom@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Daniel Stenberg <daniel@haxx.se>
+X-From: git-owner@vger.kernel.org Wed Dec 02 03:03:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFe8P-00031H-C2
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 02:36:01 +0100
+	id 1NFeZ9-0003h0-Sm
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 03:03:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751409AbZLBBfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 20:35:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751400AbZLBBfr
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 20:35:47 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:61065 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750876AbZLBBfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 20:35:46 -0500
-Received: by ewy19 with SMTP id 19so5629678ewy.21
-        for <git@vger.kernel.org>; Tue, 01 Dec 2009 17:35:42 -0800 (PST)
+	id S1753714AbZLBCD2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Dec 2009 21:03:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753357AbZLBCD1
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 21:03:27 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:57263 "EHLO
+	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753168AbZLBCD1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 21:03:27 -0500
+Received: by iwn1 with SMTP id 1so3552755iwn.33
+        for <git@vger.kernel.org>; Tue, 01 Dec 2009 18:03:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=V+hdgHbfwUSGb4OTJ4y6ko44YC5UzVAqBv582knxWok=;
-        b=E777uXLAIbrYSUpT2dC6ekPgs9c9dvXbg6cb1zDgaqH+T8QHrAoaBdmwQU7H8DwgKD
-         dLCiMNnNoS+erHRoknxXaXEtPZL6iXI/xUwV7L9vRYDZ908RxmkvtMqX46WInUzJ4c6V
-         I6PH0iUinbmgoRCi7cHDM6syTMd1/NEYNzFTc=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=W6SPmlbOUworhoCVOxWdY9MDGhUBiv3neokKgENNAu0=;
+        b=brUSUw2cZMT2uychisr6aOXoukoT8DdhnMZE4lqeZ1uSuNcWc2OyVEl/wxttnKcjO9
+         LBtA5R3bH04oZU7SxY9BuULz3twL4UXnmpn9nNfzkglkBztGxmE0o8Q2NaSkJ1HMCvG/
+         zHrblU3Xg7E3xgdzzpmvb9UKH/QnD+dnvZsjA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=o7Y+WhEWdjr0xegj3aveClqPxoqKT3ybr7KoUmq2unVKZr74jUu1cHM9Nq4c4n1g23
-         UrJtVGjQDHd82xb26EhcIB3y0S6mcV5qpZbSQn/ndIhZXyMp+KXEkQDXRNysCydW14/0
-         5awU8gSDcdxxjxHDyCYlmq1gq0FAowGQzQxQU=
-Received: by 10.213.104.78 with SMTP id n14mr6704936ebo.98.1259717718107; Tue, 
-	01 Dec 2009 17:35:18 -0800 (PST)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=QsyQFpyZRz8ClOis6EBiAHC4/Sd57ZNEmA0exz0QBrTU6vhmvSqtUDPNA6gMFt/PHn
+         wmgjKDyF9/yz3u5busWIm7kaMZwR2erf5T/ndOa95HDRTexyy41XnFrH+/RmBh+HtpQH
+         Eq/wHKeF5nuqAtwmS+FsKPpijNY52YXM2d3X8=
+Received: by 10.231.1.22 with SMTP id 22mr878469ibd.56.1259719413409; Tue, 01 
+	Dec 2009 18:03:33 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.00.0912011914270.30348@tvnag.unkk.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134280>
 
---0016e6d975cb1ae77a0479b4e316
-Content-Type: text/plain; charset=UTF-8
+Hi,
 
-Hi all,
+On Wed, Dec 2, 2009 at 2:18 AM, Daniel Stenberg <daniel@haxx.se> wrote:
+> If '#@!*@!*' is your pattern for matching libcurl or curl, then sure =
+libcurl
+> certainly has no problem at all to send as many requests you like
+> back-to-back.
 
-please see attached.
+I have a feeling Shawn's referring to the git http library on top of th=
+at. ;)
 
+> The rewinding business is only really necessary for multipass authent=
+ication
+> when Expect: 100-continue doesn't work (and thus libcurl has started =
+to send
+> data that the server will discard and thus is needed to get sent agai=
+n). And
+> that's not something you can blame "the #@!*@!* library" for, but rat=
+her
+> your server end and/or how HTTP is defined to work.
 
-Richard
+According to Martin, Expect: 100-continue is not working due to libcurl=
+=2E
 
---0016e6d975cb1ae77a0479b4e316
-Content-Type: text/x-diff; charset=US-ASCII; name="0001-Typos-commiting-committing.patch"
-Content-Disposition: attachment; 
-	filename="0001-Typos-commiting-committing.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_g2pfdza71
+I quote him:
 
-RnJvbSAxMzhiOTU2Mzg2OTNiNDcyNTFkNjFlZDVmMzE2YjZlNjgwMDJiNzY2IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBSaWNoYXJkIEhhcnRtYW5uIDxyaWNoaWgubWFpbGluZ2xpc3RA
-Z21haWwuY29tPgpEYXRlOiBXZWQsIDIgRGVjIDIwMDkgMDI6MzM6MTcgKzAxMDAKU3ViamVjdDog
-W1BBVENIXSBUeXBvczogY29tbWl0aW5nIC0+IGNvbW1pdHRpbmcKCi0tLQogYnVpbHRpbi1yZXZl
-cnQuYyB8ICAgIDIgKy0KIHQvdDcwMDEtbXYuc2ggICAgfCAgICA4ICsrKystLS0tCiAyIGZpbGVz
-IGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKSwgNSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9i
-dWlsdGluLXJldmVydC5jIGIvYnVpbHRpbi1yZXZlcnQuYwppbmRleCAxNTFhYTZhLi41NzA4OTA4
-IDEwMDY0NAotLS0gYS9idWlsdGluLXJldmVydC5jCisrKyBiL2J1aWx0aW4tcmV2ZXJ0LmMKQEAg
-LTIxNiw3ICsyMTYsNyBAQCBzdGF0aWMgY2hhciAqaGVscF9tc2coY29uc3QgdW5zaWduZWQgY2hh
-ciAqc2hhMSkKIAogCWlmIChhY3Rpb24gPT0gQ0hFUlJZX1BJQ0spIHsKIAkJc3ByaW50ZihoZWxw
-YnVmICsgc3RybGVuKGhlbHBidWYpLAotCQkJIlxuV2hlbiBjb21taXRpbmcsIHVzZSB0aGUgb3B0
-aW9uICIKKwkJCSJcbldoZW4gY29tbWl0dGluZywgdXNlIHRoZSBvcHRpb24gIgogCQkJIictYyAl
-cycgdG8gcmV0YWluIGF1dGhvcnNoaXAgYW5kIG1lc3NhZ2UuIiwKIAkJCWZpbmRfdW5pcXVlX2Fi
-YnJldihzaGExLCBERUZBVUxUX0FCQlJFVikpOwogCX0KZGlmZiAtLWdpdCBhL3QvdDcwMDEtbXYu
-c2ggYi90L3Q3MDAxLW12LnNoCmluZGV4IDEwYjhmOGMuLmFkOTNhOTcgMTAwNzU1Ci0tLSBhL3Qv
-dDcwMDEtbXYuc2gKKysrIGIvdC90NzAwMS1tdi5zaApAQCAtMTYsNyArMTYsNyBAQCB0ZXN0X2V4
-cGVjdF9zdWNjZXNzIFwKIAogIyBpbiBwYXRoMCBjdXJyZW50bHkKIHRlc3RfZXhwZWN0X3N1Y2Nl
-c3MgXAotICAgICdjb21taXRpbmcgdGhlIGNoYW5nZScgXAorICAgICdjb21taXR0aW5nIHRoZSBj
-aGFuZ2UnIFwKICAgICAnY2QgLi4gJiYgZ2l0IGNvbW1pdCAtbSBtb3ZlLW91dCAtYScKIAogdGVz
-dF9leHBlY3Rfc3VjY2VzcyBcCkBAIC0zMCw3ICszMCw3IEBAIHRlc3RfZXhwZWN0X3N1Y2Nlc3Mg
-XAogCiAjIGluIHBhdGgwIGN1cnJlbnRseQogdGVzdF9leHBlY3Rfc3VjY2VzcyBcCi0gICAgJ2Nv
-bW1pdGluZyB0aGUgY2hhbmdlJyBcCisgICAgJ2NvbW1pdHRpbmcgdGhlIGNoYW5nZScgXAogICAg
-ICdjZCAuLiAmJiBnaXQgY29tbWl0IC1tIG1vdmUtaW4gLWEnCiAKIHRlc3RfZXhwZWN0X3N1Y2Nl
-c3MgXApAQCAtODIsNyArODIsNyBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzIFwKICAgICAnZ2l0IG12
-IHBhdGgwIHBhdGgyJwogCiB0ZXN0X2V4cGVjdF9zdWNjZXNzIFwKLSAgICAnY29tbWl0aW5nIHRo
-ZSBjaGFuZ2UnIFwKKyAgICAnY29tbWl0dGluZyB0aGUgY2hhbmdlJyBcCiAgICAgJ2dpdCBjb21t
-aXQgLW0gZGlyLW1vdmUgLWEnCiAKIHRlc3RfZXhwZWN0X3N1Y2Nlc3MgXApAQCAtMTAxLDcgKzEw
-MSw3IEBAIHRlc3RfZXhwZWN0X3N1Y2Nlc3MgXAogICAgICdnaXQgbXYgcGF0aDIgcGF0aDEnCiAK
-IHRlc3RfZXhwZWN0X3N1Y2Nlc3MgXAotICAgICdjb21taXRpbmcgdGhlIGNoYW5nZScgXAorICAg
-ICdjb21taXR0aW5nIHRoZSBjaGFuZ2UnIFwKICAgICAnZ2l0IGNvbW1pdCAtbSBkaXItbW92ZSAt
-YScKIAogdGVzdF9leHBlY3Rfc3VjY2VzcyBcCi0tIAoxLjYuNS4yCgo=
---0016e6d975cb1ae77a0479b4e316--
+Date: Tue, 1 Dec 2009 12:28:26 +0200 (EET)
+Subject: Re: [PATCH 0/2] http: allow multi-pass authentication
+
+On Tue, Dec 1, 2009 at 6:28 PM, Martin Storsj=F6 <martin@martin.st> wro=
+te:
+> Normally, libcurl should add the Expect: 100-continue header
+> automatically, but for some reason
+> (http://article.gmane.org/gmane.comp.web.curl.library/25992) it doesn=
+'t,
+> so that's probably why we're manually adding that header in
+> remote-curl.c:371 at the moment. libcurl doesn't detect this at the m=
+oment
+> (http://article.gmane.org/gmane.comp.web.curl.library/25991) so it wo=
+n't
+> wait for the 100 continue response before starting to send the body d=
+ata.
+
+But, again, don't read my blaming of libcurl for this 100 business as
+a criticism of curl.
+
+--=20
+Cheers,
+Ray Chuan
