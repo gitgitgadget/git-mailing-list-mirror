@@ -1,83 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 0/8] Git remote helpers to implement smart
- transports.
-Date: Tue, 01 Dec 2009 22:35:58 -0800
-Message-ID: <7vy6llnar5.fsf@alter.siamese.dyndns.org>
-References: <1259675838-14692-1-git-send-email-ilari.liusvaara@elisanet.fi>
- <fabb9a1e0912010812t4de8027dj1faf828051d1adc2@mail.gmail.com>
- <20091201165245.GF21299@spearce.org> <20091201171908.GA15436@Knoppix>
- <20091201193009.GM21299@spearce.org>
- <7vskbuwhmy.fsf@alter.siamese.dyndns.org> <20091202055632.GD31244@Knoppix>
+From: Karl Wiberg <kha@treskal.com>
+Subject: Re: [StGit PATCH v2 0/6] add support for git send-email
+Date: Wed, 2 Dec 2009 07:46:02 +0100
+Message-ID: <b8197bcb0912012246n3b83866cjb93654effc000242@mail.gmail.com>
+References: <20091202003503.7737.51579.stgit@bob.kio>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Wed Dec 02 07:36:14 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: catalin.marinas@gmail.com, git <git@vger.kernel.org>
+To: Alex Chiang <achiang@hp.com>
+X-From: git-owner@vger.kernel.org Wed Dec 02 07:46:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFiov-0000T0-Oe
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 07:36:14 +0100
+	id 1NFiyk-0003G9-Fs
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 07:46:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752046AbZLBGgB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 01:36:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751689AbZLBGgA
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 01:36:00 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47157 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751048AbZLBGgA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 01:36:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7D27BA3FD9;
-	Wed,  2 Dec 2009 01:36:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; s=sasl; bh=Bv2ueh3OzkoxQsmyzvBKzQDmvVg=; b=C8c8ZZ
-	4iVAuEEdmla4IAPDhdwdIxP0ql4kdxOLl+aunpucxGIA4rM4hd71kMVhxfXriAVs
-	pvtuSLpLOgr3imHOwHT/Ap5Rv06QdrzvvowLXu0vgNGObfwKlS/ivf4IxmXJYOse
-	jtbV8b+nKJs0eOWTIZB/YWEcotQnRQFnm2Q1k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Kjotbx9Djz7ntUKfR7CthQqTlycauri3
-	YldZNl5uuqhTiVUI0jDwrkgZLVTsPhi9S0YV6AOevMz/xFqqLOQofJAU9mTM+sFt
-	/5pYkpDL7rrdNgT+O96TLWeG3LUQWvRlvEtW7P40eGNsev+QRyMhpcQOQLI29aPH
-	2VTekQ3LP9c=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5B5FEA3FD7;
-	Wed,  2 Dec 2009 01:36:04 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1719DA3FD4; Wed,  2 Dec 2009
- 01:35:59 -0500 (EST)
-In-Reply-To: <20091202055632.GD31244@Knoppix> (Ilari Liusvaara's message of
- "Wed\, 2 Dec 2009 07\:56\:32 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F6F13DFE-DF0C-11DE-96BB-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753893AbZLBGp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 01:45:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752321AbZLBGp7
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 01:45:59 -0500
+Received: from mail1.space2u.com ([62.20.1.135]:57340 "EHLO mail1.space2u.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752034AbZLBGp6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 01:45:58 -0500
+Received: from mail-bw0-f227.google.com (mail-bw0-f227.google.com [209.85.218.227])
+	(authenticated bits=0)
+	by mail1.space2u.com (8.14.3/8.14.3) with ESMTP id nB26jv0D023243
+	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 2 Dec 2009 07:45:58 +0100
+Received: by bwz27 with SMTP id 27so4106528bwz.21
+        for <git@vger.kernel.org>; Tue, 01 Dec 2009 22:46:03 -0800 (PST)
+Received: by 10.204.25.76 with SMTP id y12mr7075533bkb.13.1259736363011; Tue, 
+	01 Dec 2009 22:46:03 -0800 (PST)
+In-Reply-To: <20091202003503.7737.51579.stgit@bob.kio>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134306>
 
-Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
+On Wed, Dec 2, 2009 at 1:46 AM, Alex Chiang <achiang@hp.com> wrote:
 
-> On Tue, Dec 01, 2009 at 12:42:29PM -0800, Junio C Hamano wrote:
->> 
->> It is somewhat unfortunate that a few changes I liked (e.g. the "debug"
->> bit), even though it was somewhat painful to read them due to coding style
->> differences, were not at the beginning of the series but instead buried
->> after changes that are much bigger and controversial (e.g. [6/8]).
+> I also experimented with adding another test case for --git mode,
+> basically duplicating t1900-mail.sh, and then adding the --git
+> argument wherever it made sense.
+
+Ah, good.
+
+> However, that resulted in failure of the last 3 test cases, which is
+> due to the fact that we no longer parse To/Cc/Bcc command line args
+> in --git mode, and the resulting mbox file was missing the expected
+> recipient addresses.
 >
-> Funny, I considered some other stuff in series much more controversial than
-> the 6/8 one.
+> I played around with that for a while, thinking that I could use git
+> send-email --dry-run to do something equivalent, but then realized
+> that git send-email's run-run mode is definitely not analogous to
+> stg mail's --mbox mode.
+>
+> The upshot is that in stg mail, --git and --mbox don't interact
+> well, and the resulting mbox file will lack the recipients. This
+> might be fixed in the future if we teach git send-email how to
+> generate mbox files, but then we introduce a versioning problem.
 
-I didn't mean the line count by "large".  I was referring to the size of
-change at the conceptual level.  As Daniel already explained, it has been
-one of the design assumption so far that there are built-in mappings from
-some common <scheme>:// to backend "helpers".
+One wild idea: git send-email's --smtp-server flag will accept the
+(full) path of a sendmail program; writing such a program, just
+capable enough to receive the outgoing emails and dumping them to a
+file, should be easy. Another option would be a program that speaks
+just enough SMTP to accept the mails. (Incidentally, these two would
+be useful in testing stg mail even without the --git option.)
 
-I am _not_ saying that that particular design assumption must be cast in
-stone (nothing is)---that is a totally different matter to be debated.
-But the fact that it needs to be debated means it is not "a trivial 8-line
-reduction", but rather a large conceptual change (perhaps improvement).
+I fully understand if you'd rather get on with scratching your actual
+itch, though ...
+
+> So let's just accept this wart for now, and say, if you want an mbox
+> file generated, don't use --git. That seems reasonable to me.
+
+Sure.
+
+-- 
+Karl Wiberg, kha@treskal.com
+   subrabbit.wordpress.com
+   www.treskal.com/kalle
