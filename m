@@ -1,79 +1,104 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [BUG?] git-merge appends extra string to user's message?
-Date: Wed, 2 Dec 2009 16:54:46 +0100
-Message-ID: <20091202155446.GU31763@genesis.frugalware.org>
-References: <20091202192030.6117@nanako3.lavabit.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [msysGit] [PATCH/RFC 06/11] run-command: add kill_async() and 
+	is_async_alive()
+Date: Wed, 2 Dec 2009 16:57:01 +0100
+Message-ID: <40aa078e0912020757i3b63ef6eh71c3d4d99047f1f2@mail.gmail.com>
+References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com>
+	 <200911262246.13342.j6t@kdbg.org>
+	 <40aa078e0911270804i1a828ea6we1611047d37869f7@mail.gmail.com>
+	 <200911272059.25934.j6t@kdbg.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="js+/jT5SQQin5+Fm"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Wed Dec 02 16:54:57 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com, git@vger.kernel.org, dotzenlabs@gmail.com
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Dec 02 16:57:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFrXb-0003YE-Pu
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 16:54:56 +0100
+	id 1NFrZk-0004ea-Ei
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 16:57:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754555AbZLBPyo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 10:54:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754455AbZLBPyn
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 10:54:43 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:35754 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754363AbZLBPyn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 10:54:43 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 07E2B5809B;
-	Wed,  2 Dec 2009 16:54:47 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id C9DF642F0A;
-	Wed,  2 Dec 2009 16:54:46 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 7B88F1240011; Wed,  2 Dec 2009 16:54:46 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20091202192030.6117@nanako3.lavabit.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754614AbZLBP45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 10:56:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751688AbZLBP44
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 10:56:56 -0500
+Received: from mail-fx0-f221.google.com ([209.85.220.221]:65489 "EHLO
+	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751429AbZLBP44 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 10:56:56 -0500
+Received: by fxm21 with SMTP id 21so393467fxm.1
+        for <git@vger.kernel.org>; Wed, 02 Dec 2009 07:57:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=ctxRBYJ/86QZC+yqC9n9Z3HnF6urLhoAb3lYoJ/4yl0=;
+        b=LkV8vu0zM65dkLIQQl+Jlv6JlslPI6gm6l1qak7fYWqExwC65Pvg3h0vKlym/iXp6t
+         BIByVJaRoXe4tSaW91A27NeXg4b9hq/lH1VGzL45/aMovS004zAavR+gNHV703+r00cE
+         e6hESBrW3I12cefMwtqBfKNEFatI3m5EEhdiA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        b=JR3PUR1ZJjh7D9O4RMDX/YNPrQTOcO0I0IZVwcoMVS+bAMELb5yNpHsTsARlUl1zIN
+         3jStYTUpPP2zOTjGw6r+fW0zu5KkDFN+mPZ/av4aeoT714XJ8nJAuFnl+CXhiCu16lvc
+         bE6pdjNbLm0X/IMNffALZM2Hu/fVVmiMfb1YU=
+Received: by 10.216.89.137 with SMTP id c9mr80708wef.228.1259769421453; Wed, 
+	02 Dec 2009 07:57:01 -0800 (PST)
+In-Reply-To: <200911272059.25934.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134342>
 
+On Fri, Nov 27, 2009 at 8:59 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> On Freitag, 27. November 2009, Erik Faye-Lund wrote:
+>> Do you really think it's better to unconditionally take down the
+>> entire process with an error, instead of having a relatively small
+>> chance of stuff blowing up without any sensible error? I'm not 100%
+>> convinced - but let's hope we'll find a proper fix.
+>
+> "relatively small chance of stuff blowing up"? The docs of
+> TerminateThread: "... the kernel32 state for the thread's process could be
+> inconsistent." That's scary if we are talking about a process that should run
+> for days or weeks without interruption.
+>
 
---js+/jT5SQQin5+Fm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think there's a misunderstanding here. I thought your suggestion was
+to simply call die(), which would take down the main process. After
+reading this explanation, I think you're talking about giving an error
+and rejecting the connection instead. Which makes more sense than to
+risk crashing the main-process, indeed.
 
-On Wed, Dec 02, 2009 at 07:20:30PM +0900, Nanako Shiraishi <nanako3@lavabit=
-=2Ecom> wrote:
-> % git merge -m "Merge early part of side branch" `git rev-parse side~2`
-> % git show -s=20
-> commit 37217141e7519629353738d5e4e677a15096206f
-> Merge: e68e646 a1d2374
-> Author: ???????????? ????????? <nanako3@lavabit.com>
-> Date:   Wed Dec 2 14:33:20 2009 +0900
->=20
->     Merge early part of side branch
->=20
->     Merge commit 'a1d2374f8f52f4e8a53171601a920b538a6cec23'
+> The reason why we are killing a thread is to prevent keeping lots of
+> connections open (to the same IP address). There are two situations to take
+> care of:
+>
+> 1. We are in a lengthy computation without paying attention to the socket.
+>
+> 2. The client does not send or accept data for a long time.
+>
+> Case 1 could happen if upload-pack is "counting objects" on a large
+> repository. We would need some way to kill upload-pack. Since it is a
+> separate process anyway, we could use TerminateProcess().
+>
 
-At least it's intentional. When I wrote builtin-merge I remember I
-checked that the script version had this behaviour and that's why I
-implemented the same way in C.
+Makes sense. I'll play around a bit with this and see what I come up with.
 
---js+/jT5SQQin5+Fm
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> Case 2 could be achieved by using setsockopt() with SO_RCVTIMEO and
+> SO_SNDTIMEO and a tiny timeout. But notice that we would set a timeout in one
+> thread while another thread is waiting in ReadFile() or WriteFile(). Would
+> that work?
+>
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+I think it should work fine, but I won't give you a guarantee ;)
+Perhaps we should have a configurable global max timeout, and just set
+that on all sockets? Or does this open for DDOS attacks?
 
-iEYEARECAAYFAksWjcYACgkQe81tAgORUJZBEQCghKCg5BPtFaC0bKAgRq0orGnI
-gDoAniNmQd2LPeEJnQH+UAbIS2ah3obH
-=jRfJ
------END PGP SIGNATURE-----
+Anyway, thanks for the sanity :)
 
---js+/jT5SQQin5+Fm--
+-- 
+Erik "kusma" Faye-Lund
