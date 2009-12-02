@@ -1,72 +1,58 @@
 From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: "git merge" merges too much!
-Date: Wed, 02 Dec 2009 19:20:21 +0900
-Message-ID: <20091202192021.6117@nanako3.lavabit.com>
-References: <m1NEaLp-000kn1C@most.weird.com> <20091129051427.GA6104@coredump.intra.peff.net> <m1NFAji-000kn2C@most.weird.com> <20091130192212.GA23181@dpotapov.dyndns.org> <m1NFXpl-000knKC@most.weird.com>
+Subject: Re: [PATCH v2] Add --track option to git clone
+Date: Wed, 02 Dec 2009 19:20:28 +0900
+Message-ID: <20091202192028.6117@nanako3.lavabit.com>
+References: <1259707865-6561-1-git-send-email-sn_@gmx.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Cc: Dmitry Potapov <dpotapov@gmail.com>
-To: The Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 02 11:20:44 2009
+Cc: git@vger.kernel.org
+To: David Soria Parra <sn_@gmx.net>
+X-From: git-owner@vger.kernel.org Wed Dec 02 11:21:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFmK9-0001ja-Gz
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 11:20:41 +0100
+	id 1NFmKR-0001tG-Dm
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 11:21:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753206AbZLBKU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 05:20:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753005AbZLBKU3
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 05:20:29 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:60297 "EHLO karen.lavabit.com"
+	id S1753346AbZLBKUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 05:20:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753275AbZLBKUh
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 05:20:37 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:60308 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752727AbZLBKU2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 05:20:28 -0500
+	id S1753244AbZLBKUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 05:20:35 -0500
 Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
-	by karen.lavabit.com (Postfix) with ESMTP id 56F9015754D;
-	Wed,  2 Dec 2009 04:20:35 -0600 (CST)
+	by karen.lavabit.com (Postfix) with ESMTP id 6629D11B7F0;
+	Wed,  2 Dec 2009 04:20:42 -0600 (CST)
 Received: from 2268.lavabit.com (212.62.97.23)
-	by lavabit.com with ESMTP id MP1WKW6TA4D1; Wed, 02 Dec 2009 04:20:35 -0600
+	by lavabit.com with ESMTP id WNQ788F8MS12; Wed, 02 Dec 2009 04:20:42 -0600
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=pFE5BCUiM5j1Gc0PaMY0c1WqXRzf4TGVMVzDqY9qJIhd4C4a4evXhXPAP797cVklI0KZ96TwoSwwtuCL+fKGGRfg1z6wVGyd6D36DfJ2jXNNETEkt3RFoimpfqPyc0rcXj1uPZuvFdl8KkR9A1KnrLnOPfkE680vinRPGB1VWTc=;
+  b=5aqj3pTkgD9P0mBjFMBDN4K0S+eiAeQ5nzFzAzwbnUEeQC+1SqZaJ86sAv8eg0Jd1Hj5ut4yfVpSrPWFBhD2DR2Whl1zEanJF2kMtXDcvqQ50h4HnAbeIok1arG3/HgM1hnHtzcP/AeMka+gBWIk+u7gkkdt4w3bZPGLDfAwy88=;
   h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <m1NFXpl-000knKC@most.weird.com>
+In-Reply-To: <1259707865-6561-1-git-send-email-sn_@gmx.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134323>
 
-Quoting "Greg A. Woods" <woods@planix.com> writes:
+Quoting David Soria Parra <sn_@gmx.net> writes:
 
-> At Mon, 30 Nov 2009 22:22:12 +0300, Dmitry Potapov <dpotapov@gmail.com> wrote:
-> Subject: Re: "git merge" merges too much!
->> 
->> The key difference comparing to what you may got used is that branches
->> are normally based on the oldest branch in what this feature may be
->> included. Thus normally changes are not backported to old branches,
->> because you can merge them directly.
->
-> Hmmm... the idea of creating topic branches based on the oldest branch
-> where the feature might be used is indeed neither intuitive, nor is it
-> mentioned anywhere I've so far read about using topic branches in Git.
+> I'm aware that it's not possible to give more than one --track
+> option. Implementing the possibility to specify multiple --track option
+> would certainly a good improvment later, but would also require a lot
+> more work as far as I understand the clone code.
 
-You may want to add the result of googling 
-
-  "Fun with" site:gitster.livejournal.com
-
-to the list of Git documents you read. "Fork from the oldest 
-branch" is one of the techniques Junio teaches often and many 
-of his other techiniques are built upon.
-
-He not just teaches useful techniques but explains a lot about 
-the reasoning behind them in his Git book. His blog articles 
-have the same explanations on many topics I saw in his book 
-but not in other places. It is a useful substitute until his 
-book gets translated to English for people who don't read 
-Japanese.
+I'm sorry if I'm asking the obvious, but how can multiple --track 
+options be a useful future enhancement? If I understand your use 
+case correctly, it's useful when you want to work on only one 
+branch that isn't the default, and that is why you don't want to 
+get data necessary for other branches. What does it mean to give 
+two --track options? You will get one master branch that tracks
+both versions, and "git pull" will merge both branches you track?
 
 -- 
 Nanako Shiraishi
