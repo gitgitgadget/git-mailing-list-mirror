@@ -1,98 +1,69 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH/RFC] Allow curl to rewind the RPC read buffer at any time
-Date: Wed, 2 Dec 2009 11:15:15 +0800
-Message-ID: <be6fef0d0912011915u78945c77x29880da3f709a912@mail.gmail.com>
-References: <25718488.post@talk.nabble.com>
-	 <20091127234110.7b7e9993.rctay89@gmail.com>
-	 <alpine.DEB.2.00.0912011208160.5582@cone.home.martin.st>
-	 <alpine.DEB.2.00.0912011236360.5582@cone.home.martin.st>
-	 <20091201161428.GC21299@spearce.org>
-	 <alpine.DEB.2.00.0912011852030.5582@cone.home.martin.st>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: What's cooking in git.git (Dec 2009, #01; Tue, 01)
+Date: Tue, 1 Dec 2009 23:50:43 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.0912012340060.14365@iabervon.org>
+References: <7vaay2tkfh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Nicholas Miell <nmiell@gmail.com>, gsky51@gmail.com,
-	Clemens Buchacher <drizzd@aon.at>,
-	Mark Lodato <lodatom@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: =?ISO-8859-1?Q?Martin_Storsj=F6?= <martin@martin.st>
-X-From: git-owner@vger.kernel.org Wed Dec 02 04:15:33 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 02 05:50:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFfgf-00066v-Dq
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 04:15:29 +0100
+	id 1NFhB3-0007TZ-Ol
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 05:50:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753736AbZLBDPL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Dec 2009 22:15:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753480AbZLBDPK
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 22:15:10 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:47250 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753178AbZLBDPJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 22:15:09 -0500
-Received: by iwn1 with SMTP id 1so3587937iwn.33
-        for <git@vger.kernel.org>; Tue, 01 Dec 2009 19:15:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RRTYA9u5YeS7rrkKXOvp/Jyft4qByoWWcQmIN+RPAF8=;
-        b=ewypEW8AayJ4goQetxoHZxypmGAf8eHA3305I7+THxgueIL+OVneV21H10bBzC3zhq
-         IlG62XqPK8m+yhaXTVkytFvnIN7K1lQCL3QxFK8X5H9jvqTpGdb57bHYsw8G/S9JS+3w
-         HfCLTVcyHBJ9WpHL7oOkIK8CJKU91dcuIznz0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=RKSsaCFFkB8JJkgth78p+a7CKoWhmp58Rn+nY5nUK8G/uggyWVBG2k7e/SQ4o+GzfU
-         dM6VtFUMDN7zy0wg9zyQltONkZTD2dsQLl0dBoSki1GYqWwU9EGSwenTx1UUt0ih3KRP
-         NorUPmUjOVECpNUmKiYxXVFd+GDdoJptfb+L4=
-Received: by 10.231.9.33 with SMTP id j33mr1027997ibj.37.1259723715969; Tue, 
-	01 Dec 2009 19:15:15 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.00.0912011852030.5582@cone.home.martin.st>
+	id S1754222AbZLBEui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 23:50:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753434AbZLBEuh
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 23:50:37 -0500
+Received: from iabervon.org ([66.92.72.58]:33212 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752265AbZLBEuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 23:50:37 -0500
+Received: (qmail 27328 invoked by uid 1000); 2 Dec 2009 04:50:43 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 2 Dec 2009 04:50:43 -0000
+In-Reply-To: <7vaay2tkfh.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134297>
 
-Hi,
+On Tue, 1 Dec 2009, Junio C Hamano wrote:
 
-On Wed, Dec 2, 2009 at 12:59 AM, Martin Storsj=F6 <martin@martin.st> wr=
-ote:
-> On Tue, 1 Dec 2009, Shawn O. Pearce wrote:
->> The *correct* way to support an arbitrary rewind is to modify the
->> outgoing channel from remote-curl to its protocol engine (client.in
->> within the rpc_service method) to somehow request the protocol engin=
-e
->> (aka git-send-pack or git-fetch-pack) to stop and regenerate the
->> current request.
->
-> That's a good idea!
->
->> Another approach would be to modify http-backend (and the protocol)
->> to support an "auth ping" request prior to spooling out the entire
->> payload if its more than an http.postBuffer size. =A0Basically we
->> do what the "Expect: 100-continue" protocol is supposed to do,
->> but in the application layer rather than the HTTP/1.1 layer, so
->> our CGI actually gets invoked.
->
-> That's also quite a good idea, especially if it would be done in a wa=
-y so
-> that it's certain that the same curl session will be reused, instead =
-of
-> getting a potentially new curl session when using get_active_slot().
+> * sr/vcs-helper (2009-11-18) 12 commits
+>   (merged to 'next' on 2009-11-27 at 83268ab)
+>  + Add Python support library for remote helpers
+>  + Basic build infrastructure for Python scripts
+>  + Allow helpers to report in "list" command that the ref is unchanged
+>  + Fix various memory leaks in transport-helper.c
+>  + Allow helper to map private ref names into normal names
+>  + Add support for "import" helper command
+>  + Allow specifying the remote helper in the url
+>  + Add a config option for remotes to specify a foreign vcs
+>  + Allow fetch to modify refs
+>  + Use a function to determine whether a remote is valid
+>  + Allow programs to not depend on remotes having urls
+>  + Fix memory leak in helper method for disconnect
 
-I think restarting the read by killing the protocol engine/client and
-starting again would be the easier of the two.
+The bottom one here now needs another hunk that reverts a free of the same 
+memory (including in cases that this series will need to keep it) that 
+snuck in unannounced with ef08ef9ea0a271e5be5844408d2496a946d6e8d9.
 
-Not just that, it would be neater than storing everything that the
-protocol engine has spewed out, like Martin's patch does.
-
---=20
-Cheers,
-Ray Chuan
+diff --git a/transport-helper.c b/transport-helper.c
+index 5078c71..d729146 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -72,7 +72,6 @@ static int disconnect_helper(struct transport 
+*transport)
+                free(data->helper);
+                data->helper = NULL;
+        }
+-       free(data);
+        return 0;
+ }
