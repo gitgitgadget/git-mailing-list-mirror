@@ -1,67 +1,77 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH] transport-helper: remove duplicate free()
-Date: Thu, 3 Dec 2009 07:00:08 +0800
-Message-ID: <be6fef0d0912021500w313ac170m65251f7b8a4fa1de@mail.gmail.com>
-References: <20091202153950.c18095b7.rctay89@gmail.com>
-	 <alpine.LNX.2.00.0912021120440.14365@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Add --track option to git clone
+Date: Wed, 02 Dec 2009 15:02:23 -0800
+Message-ID: <7v1vjd9dz4.fsf@alter.siamese.dyndns.org>
+References: <1259707865-6561-1-git-send-email-sn_@gmx.net>
+ <20091202192028.6117@nanako3.lavabit.com>
+ <20091202190807.GB30778@coredump.intra.peff.net>
+ <20091203060708.6117@nanako3.lavabit.com>
+ <20091202223728.GB9691@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu Dec 03 00:00:20 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	David Soria Parra <sn_@gmx.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 03 00:02:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFyBH-0004UH-UV
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 00:00:20 +0100
+	id 1NFyDY-0005Wg-CS
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 00:02:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754857AbZLBXAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 18:00:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754856AbZLBXAE
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 18:00:04 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:46130 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753850AbZLBXAC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 18:00:02 -0500
-Received: by iwn1 with SMTP id 1so491289iwn.33
-        for <git@vger.kernel.org>; Wed, 02 Dec 2009 15:00:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=u1YB5Nal5YC9qQ1FI1wd0Xk7MviMMib9n4tCvkXByGo=;
-        b=yE87ycJEl4wAl40dIuX5nZx4FkbQRRv8Y41PZM/Fbui3WlAwgETuPomWHIw2a66zdr
-         8WRbBZ0mEIeEfC+ieMLYl55iIOXy9ss33Sxm0h7VSuatc7q94Ldx9iYQil9lvTM9V6IH
-         S9OMh1amc4omRoHZRBrz8qhXwgqGprLb4rRLk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=QvIID1Nqnj0W12kyrjRzv0ZsERp/gl4atq+emWK2nkGFKaUl3WxRONADqf3VX4/AfV
-         c5/hUCFkBidwqhrB+FekFbRt8MKaOknrfdq1ym1f/ibGNOB+V2hEuOdWU9uPyQdfvwtu
-         OmcKugFlD+6tUEsIBzp0dzFfpkj2MI8sjp7+k=
-Received: by 10.231.167.65 with SMTP id p1mr1356079iby.20.1259794808651; Wed, 
-	02 Dec 2009 15:00:08 -0800 (PST)
-In-Reply-To: <alpine.LNX.2.00.0912021120440.14365@iabervon.org>
+	id S1755027AbZLBXC3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 18:02:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754856AbZLBXC3
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 18:02:29 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40253 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754952AbZLBXC2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 18:02:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EDE23844BA;
+	Wed,  2 Dec 2009 18:02:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4JOLYPKQn9jRcS4rYPrRb8MSW84=; b=Jlp3kT
+	9nJRQ6TOZWFAyW4qMNJ5I9QWkrKP4RygcQU7qdYBenorPmvj3L2wVD7T+yRbr4ab
+	9hZdvOdd6jJWZBhgzdceHWhC1Om/jOcdFsCRt0ROd5aAZilBBx58G8VlaSejzePf
+	/v/PWyOlMAhHeCenwSjiQIiTGxMH7byZwP6ww=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=INoAoKzrPPpLYViH0uo5UAW9SUdLPgu0
+	Dufqy5HCaV8p8EPyAqA19y9KLW12kjGo1wXC2LSao1AYHvmDi/CDtv4hRQ8aRvv5
+	xgze5T7TcFklJo2O0/psYAiJfALHYkw23rflEmuz0KYV3TGFKtm5gtdIJDSv0ufB
+	o+RLWjD+/b4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CA25844B7;
+	Wed,  2 Dec 2009 18:02:29 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CDAD7844B3; Wed,  2 Dec
+ 2009 18:02:24 -0500 (EST)
+In-Reply-To: <20091202223728.GB9691@coredump.intra.peff.net> (Jeff King's
+ message of "Wed\, 2 Dec 2009 17\:37\:29 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C41DA41E-DF96-11DE-B688-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134417>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-On Thu, Dec 3, 2009 at 12:23 AM, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> You need to remove the one in disconnect_helper, because the entire point
-> of disconnect_helper as opposed to release_helper is to *not* free that
-> memory. If you remove this one, you'll access freed memory in any case
-> where the helper has to be quit and restarted.
+>>   git clone -f maint,master,next,pu git.git
+>
+> Yeah, that is much nicer. I think "," is allowed in ref names, but I
+> am tempted not to care here. It is not as if this is a low-level
+> feature, and most people will not be crazy enough to use commas in their
+> branch-names. IOW, you will get into trouble only if you have crazy
+> names _and_ you want to use this particular feature. If we wanted to be
+> complete, we could provide a quoting mechanism, but that is perhaps
+> excessive.
 
-I see. I guess I should have looked more closely at f2a3715 (Fix
-memory leak in helper method for disconnect).
-
--- 
-Cheers,
-Ray Chuan
+Yeah, I agree it is Ok not to support crazy people in this case.  Not
+supporting from the very beginning is quite different from _breaking_ them
+;-)
