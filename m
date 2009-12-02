@@ -1,136 +1,79 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [msysGit] [PATCH/RFC 09/11] daemon: use run-command api for async 
-	serving
-Date: Wed, 2 Dec 2009 16:45:03 +0100
-Message-ID: <40aa078e0912020745o4b72342fm722a944621cfda5@mail.gmail.com>
-References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com>
-	 <1259196260-3064-9-git-send-email-kusmabite@gmail.com>
-	 <1259196260-3064-10-git-send-email-kusmabite@gmail.com>
-	 <200911272159.38757.j6t@kdbg.org>
-Reply-To: kusmabite@gmail.com
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [BUG?] git-merge appends extra string to user's message?
+Date: Wed, 2 Dec 2009 16:54:46 +0100
+Message-ID: <20091202155446.GU31763@genesis.frugalware.org>
+References: <20091202192030.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: msysgit@googlegroups.com, git@vger.kernel.org, dotzenlabs@gmail.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Dec 02 16:45:19 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="js+/jT5SQQin5+Fm"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Wed Dec 02 16:54:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFrOH-0007I8-GG
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 16:45:17 +0100
+	id 1NFrXb-0003YE-Pu
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 16:54:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754563AbZLBPo7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Dec 2009 10:44:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754559AbZLBPo7
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 10:44:59 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:31796 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754455AbZLBPo6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Dec 2009 10:44:58 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so318601fga.1
-        for <git@vger.kernel.org>; Wed, 02 Dec 2009 07:45:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=T6SL/W/CyZIoa3fKFmgTdIZMZrj3Tm3fB91SQK8E9rk=;
-        b=MwXlPlnZE6B8EOXrjOU3IAySbZgUTB32/Br6Rmv/TVjS1Cue2z8ZAzGeSW68UwIKIw
-         2d0ye9uc/9vhLkR9iK0lqPMvr7Q43gSfYLU4/e0CcmziHBroHCqDrRtEsov3o9VRsurm
-         KK9DHABZ773TQG/t2hU3FtDlmm2EtLFCbnZLw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=VoJFPNg6ha1fppUHDRkzl0J5xz9qRG64egsvw72VSstvsnJff7Awv9WML9C/5THxEI
-         ScBCHs+rPwJgMYjDx4gQ3REatrP9uKPGMtKv6APY2JzXQYXtT0JstFWUgyl55bxbMtyA
-         Fr0ZSbHeihDzRVctMtG8iq++UAoJ30IDnH9GM=
-Received: by 10.216.85.197 with SMTP id u47mr85944wee.133.1259768703477; Wed, 
-	02 Dec 2009 07:45:03 -0800 (PST)
-In-Reply-To: <200911272159.38757.j6t@kdbg.org>
+	id S1754555AbZLBPyo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 10:54:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754455AbZLBPyn
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 10:54:43 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:35754 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754363AbZLBPyn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 10:54:43 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 07E2B5809B;
+	Wed,  2 Dec 2009 16:54:47 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id C9DF642F0A;
+	Wed,  2 Dec 2009 16:54:46 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 7B88F1240011; Wed,  2 Dec 2009 16:54:46 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20091202192030.6117@nanako3.lavabit.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134341>
 
-On Fri, Nov 27, 2009 at 9:59 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> On Donnerstag, 26. November 2009, Erik Faye-Lund wrote:
->> =A0static void check_dead_children(void)
->> =A0{
->> - =A0 =A0 int status;
->> - =A0 =A0 pid_t pid;
->> -
->> - =A0 =A0 while ((pid =3D waitpid(-1, &status, WNOHANG)) > 0) {
->> - =A0 =A0 =A0 =A0 =A0 =A0 const char *dead =3D "";
->> - =A0 =A0 =A0 =A0 =A0 =A0 remove_child(pid);
->> - =A0 =A0 =A0 =A0 =A0 =A0 if (!WIFEXITED(status) || (WEXITSTATUS(sta=
-tus) > 0))
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 dead =3D " (with error)";
->> - =A0 =A0 =A0 =A0 =A0 =A0 loginfo("[%"PRIuMAX"] Disconnected%s", (ui=
-ntmax_t)pid, dead);
->> - =A0 =A0 }
->> + =A0 =A0 struct child **cradle, *blanket;
->> + =A0 =A0 for (cradle =3D &firstborn; (blanket =3D *cradle);)
->> + =A0 =A0 =A0 =A0 =A0 =A0 if (!is_async_alive(&blanket->async)) {
->
-> This would be the right place to call finish_async(). But since we ca=
-nnot
-> wait, you invented is_async_alive(). But actually we are not only int=
-erested
-> in whether the process is alive, but also whether it completed succes=
-sfully
-> so that we can add "(with error)". Would it make sense to have a func=
-tion
-> finish_async_nowait() instead of is_async_alive() that (1) stresses t=
-he
-> start/finish symmetry and (2) can return more than just Boolean?
->
 
-Yes, it does.
+--js+/jT5SQQin5+Fm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 *cradle =3D blanket->next;
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 loginfo("Disconnected\n");
->
-> Here you are losing information about the pid, which is important to =
-have in
-> the syslog. The \n should be dropped.
->
+On Wed, Dec 02, 2009 at 07:20:30PM +0900, Nanako Shiraishi <nanako3@lavabit=
+=2Ecom> wrote:
+> % git merge -m "Merge early part of side branch" `git rev-parse side~2`
+> % git show -s=20
+> commit 37217141e7519629353738d5e4e677a15096206f
+> Merge: e68e646 a1d2374
+> Author: ???????????? ????????? <nanako3@lavabit.com>
+> Date:   Wed Dec 2 14:33:20 2009 +0900
+>=20
+>     Merge early part of side branch
+>=20
+>     Merge commit 'a1d2374f8f52f4e8a53171601a920b538a6cec23'
 
-Yeah... I removed the pid mostly because after moving to async, there
-wasn't "just a pid" any more. But if we make finish_async_nowait()
-return whatever we need to report, I guess we can add the information
-back somehow.
+At least it's intentional. When I wrote builtin-merge I remember I
+checked that the script version had this behaviour and that's why I
+implemented the same way in C.
 
-I'm not entirely sure how to make the interface, though. Any good sugge=
-stions?
+--js+/jT5SQQin5+Fm
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
->> + =A0 =A0 async.proc =3D async_execute;
->> + =A0 =A0 async.data =3D ss;
->> + =A0 =A0 async.out =3D incoming;
->>
->> - =A0 =A0 dup2(incoming, 0);
->> - =A0 =A0 dup2(incoming, 1);
->> + =A0 =A0 if (start_async(&async))
->> + =A0 =A0 =A0 =A0 =A0 =A0 logerror("unable to fork");
->> + =A0 =A0 else
->> + =A0 =A0 =A0 =A0 =A0 =A0 add_child(&async, addr, addrlen);
->> =A0 =A0 =A0 close(incoming);
->> -
->> - =A0 =A0 exit(execute(0, addr));
->
-> In start_command(), the convention is that fds that are provided by t=
-he caller
-> are closed by start_command() (even if there are errors). The close(i=
-ncoming)
-> that you leave here indicates that you are not using the same convent=
-ion with
-> start_async(). It would be nice to switch to the same convention.
->
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Yeah, I've fixed this for the next round.
+iEYEARECAAYFAksWjcYACgkQe81tAgORUJZBEQCghKCg5BPtFaC0bKAgRq0orGnI
+gDoAniNmQd2LPeEJnQH+UAbIS2ah3obH
+=jRfJ
+-----END PGP SIGNATURE-----
 
---=20
-Erik "kusma" Faye-Lund
+--js+/jT5SQQin5+Fm--
