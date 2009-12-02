@@ -1,68 +1,78 @@
-From: Daniel Stenberg <daniel@haxx.se>
-Subject: Re: [PATCH/RFC] Allow curl to rewind the RPC read buffer at any
- time
-Date: Wed, 2 Dec 2009 10:19:00 +0100 (CET)
-Message-ID: <alpine.DEB.2.00.0912021011430.19179@tvnag.unkk.fr>
-References: <25718488.post@talk.nabble.com>  <20091127234110.7b7e9993.rctay89@gmail.com>  <alpine.DEB.2.00.0912011208160.5582@cone.home.martin.st>  <alpine.DEB.2.00.0912011236360.5582@cone.home.martin.st>  <20091201161428.GC21299@spearce.org> 
- <alpine.DEB.2.00.0912011914270.30348@tvnag.unkk.fr> <be6fef0d0912011803u2ec9ab1bsa167cf59de4dd47c@mail.gmail.com>
+From: Rakotomandimby Mihamina <mihamina@gulfsat.mg>
+Subject: choosing an issue tracker
+Date: Wed, 02 Dec 2009 12:27:54 +0300
+Message-ID: <4B16331A.3060606@gulfsat.mg>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Martin Storsj? <martin@martin.st>, git@vger.kernel.org,
-	Nicholas Miell <nmiell@gmail.com>, gsky51@gmail.com,
-	Clemens Buchacher <drizzd@aon.at>,
-	Mark Lodato <lodatom@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 02 10:19:17 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 02 10:28:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFlMi-00031U-L9
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 10:19:16 +0100
+	id 1NFlVR-0006Vw-9P
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 10:28:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751323AbZLBJTD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 04:19:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751278AbZLBJTD
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 04:19:03 -0500
-Received: from giant.haxx.se ([83.168.254.42]:41873 "EHLO giant.haxx.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751259AbZLBJTB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 04:19:01 -0500
-Received: from giant.haxx.se (giant.haxx.se [83.168.254.42])
-	by giant.haxx.se (8.14.3/8.14.3/Debian-9) with ESMTP id nB29J0MN024139;
-	Wed, 2 Dec 2009 10:19:00 +0100
-X-X-Sender: dast@giant.haxx.se
-In-Reply-To: <be6fef0d0912011803u2ec9ab1bsa167cf59de4dd47c@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-fromdanielhimself: yes
+	id S1752553AbZLBJ2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 04:28:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752523AbZLBJ2F
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 04:28:05 -0500
+Received: from smtp-out.malagasy.com ([41.204.120.134]:41051 "EHLO
+	smtp-out.malagasy.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751579AbZLBJ2D (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 04:28:03 -0500
+Received: from camel.malagasy.com (camel.malagasy.com [41.204.104.34])
+	by smtp-out.malagasy.com (Postfix) with ESMTP id D293E8C132
+	for <git@vger.kernel.org>; Wed,  2 Dec 2009 12:31:31 +0300 (EAT)
+Received: from localhost (spamassassin.malagasy.com [41.204.104.47])
+	by camel.malagasy.com (Postfix) with ESMTP id 74CD4FE9E
+	for <git@vger.kernel.org>; Wed,  2 Dec 2009 12:28:05 +0300 (EAT)
+X-Virus-Scanned: par antivirus.malagasy.com
+X-Spam-Flag: NO
+X-Spam-Score: -2.773
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.773 required=7 tests=[AWL=-0.174, BAYES_00=-2.599]
+Received: from camel.malagasy.com ([41.204.104.34])
+	by localhost (spamassassin.malagasy.com [41.204.104.47]) (amavisd-new, port 10024)
+	with ESMTP id wPuTOp5tAHpU for <git@vger.kernel.org>;
+	Wed,  2 Dec 2009 12:31:21 +0300 (EAT)
+Received: from rktmb (sysadmin-cnc.malagasy.com [41.204.104.9])
+	by camel.malagasy.com (Postfix) with ESMTP id 75ABFFEBC
+	for <git@vger.kernel.org>; Wed,  2 Dec 2009 12:27:53 +0300 (EAT)
+Received: from localhost ([127.0.0.1])
+	by rktmb with esmtp (Exim 4.69)
+	(envelope-from <mihamina@gulfsat.mg>)
+	id 1NFlV4-0003jY-55
+	for git@vger.kernel.org; Wed, 02 Dec 2009 12:27:54 +0300
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091125 Shredder/3.0.1pre
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134316>
 
-On Wed, 2 Dec 2009, Tay Ray Chuan wrote:
+Hi all,
 
-> According to Martin, Expect: 100-continue is not working due to libcurl.
+For a while, I used SVN and Trac.
+They have a satisfying mutual integration.
 
-Right, that is/was a bug in how libcurl behaves when the application itself 
-has set the "Expect: 100-continue" header. Martin has provided a fix for that 
-for the next libcurl version though, but that won't make a lot of existing 
-users happy.
+I am looking for our new issue tracker, and would like to be advised.
 
-Thinking about this particular problem, what is the motivation for git to 
-forcily add that header in the first place? I mean, libcurl does add the 
-header by itself when it thinks it is necessary and then it handles it 
-correctly.
+Our context:
+- developpers using git, developping
+   - web based applications (PHP, Python, OCaml,...)
+   - Unix-like system maintainance scripts (SHELL, Perl,...)
+- a QA guy that makes functional tests only on the web applications
+   and reports bugs and potential improvements. He does not use git.
+- multiple projects
 
-I'm just suggesting (and speculating widely since I don't know git internals) 
-that a possible way to work around this particular bug may be to reconsider 
-how git adds the Expect header.
+What we look for:
+something like the (Trac, SVN) but with git as SCM.
 
-It's just an idea. Please ignore it if it is totally crazy.
+What issue tracker would you recommend?
 
 -- 
-
-  / daniel.haxx.se
+       Architecte Informatique chez Blueline/Gulfsat:
+    Administration Systeme, Recherche & Developpement
+                                    +261 33 11 207 36
