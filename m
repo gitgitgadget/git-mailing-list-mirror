@@ -1,65 +1,135 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH/RFC 01/11] mingw: add network-wrappers for daemon
-Date: Wed, 2 Dec 2009 20:34:09 +0100
-Message-ID: <200912022034.09266.j6t@kdbg.org>
-References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com> <alpine.DEB.2.00.0911261250180.14228@cone.home.martin.st> <40aa078e0912020501v9378c37l106e1e23b5e7b43d@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Martin =?iso-8859-1?q?Storsj=F6?= <martin@martin.st>,
-	msysgit@googlegroups.com, git@vger.kernel.org, dotzenlabs@gmail.com
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Wed Dec 02 20:34:36 2009
+From: Alex Vandiver <alex@chmrr.net>
+Subject: [PATCH 2/5] git-svn: Make merge metadata accessible to make_log_entry
+Date: Wed,  2 Dec 2009 14:07:51 -0500
+Message-ID: <1259780874-14706-3-git-send-email-alex@chmrr.net>
+References: <1259780874-14706-1-git-send-email-alex@chmrr.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 02 20:37:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFuyB-0006Cc-P4
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 20:34:36 +0100
+	id 1NFv1G-0007cC-Tj
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 20:37:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755493AbZLBTeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 14:34:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753696AbZLBTeV
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 14:34:21 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:50124 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755329AbZLBTeU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 14:34:20 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 9C3E1CDF96;
-	Wed,  2 Dec 2009 20:34:25 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 5892B19F60D;
-	Wed,  2 Dec 2009 20:34:09 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <40aa078e0912020501v9378c37l106e1e23b5e7b43d@mail.gmail.com>
-Content-Disposition: inline
+	id S1755558AbZLBThg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 14:37:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754895AbZLBThg
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 14:37:36 -0500
+Received: from chmrr.net ([209.67.253.66]:56887 "EHLO utwig.chmrr.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755558AbZLBThe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 14:37:34 -0500
+Received: from 75-147-59-54-newengland.hfc.comcastbusiness.net ([75.147.59.54] helo=localhost.localdomain)
+	by utwig.chmrr.net with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <alex@chmrr.net>)
+	id 1NFuYj-0004Rd-5B
+	for git@vger.kernel.org; Wed, 02 Dec 2009 14:08:20 -0500
+X-Mailer: git-send-email 1.6.6.rc0.327.g032bc
+In-Reply-To: <1259780874-14706-1-git-send-email-alex@chmrr.net>
+X-Authenticated-User: chmrr
+X-Authenticator: plain
+X-Sender-Verify: SUCCEEDED (sender exists & accepts mail)
+X-Exim-Version: 4.69 (build at 07-Feb-2009 20:08:51)
+X-Date: 2009-12-02 14:08:20
+X-Connected-IP: 75.147.59.54:47077
+X-Message-Linecount: 94
+X-Body-Linecount: 85
+X-Message-Size: 3024
+X-Body-Size: 2609
+X-Received-Count: 1
+X-Recipient-Count: 1
+X-Local-Recipient-Count: 1
+X-Local-Recipient-Defer-Count: 0
+X-Local-Recipient-Fail-Count: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134382>
 
-On Mittwoch, 2. Dezember 2009, Erik Faye-Lund wrote:
-> I'm not very familiar with poll(), but if I understand the man-pages
-> correctly it's waiting for events on file descriptors, and is in our
-> case used to check for incoming connections, right? If so, I see three
-> possible ways forward: (1) extending our poll()-emulation to handle
-> multiple sockets, (2) change daemon.c to check one socket at the time,
-> and (3) using select() instead of poll().
->
-> (1) seems like the "correct" but tricky thing to do, (2) like the
-> "easy" but nasty thing to do. However, (3) strikes me as the least
-> dangerous thing to do ;)
->
-> For (1), there's also a WSAPoll() function in Windows, but I'm not
-> sure how to figure out if an fd is a socket or a pipe. There's also
-> WaitForMultipleObjects.
 
-GetFileType() returns FILE_TYPE_PIPE for both pipes and sockets. But once you 
-know this, you can use getsockopt(): If it succeeds, it is a socket, and in 
-this case, assume that poll() was called from git-daemon, i.e. all polled-for 
-fds are sockets and you can select().
+Signed-off-by: Alex Vandiver <alex@chmrr.net>
+---
+ git-svn.perl |   22 ++++++++++++++--------
+ 1 files changed, 14 insertions(+), 8 deletions(-)
 
--- Hannes
+diff --git a/git-svn.perl b/git-svn.perl
+index 53bf20c..5337326 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2924,7 +2924,7 @@ sub check_author {
+ }
+ 
+ sub find_extra_svk_parents {
+-	my ($self, $ed, $tickets, $parents) = @_;
++	my ($self, $ed, $tickets, $parents, $merges) = @_;
+ 	# aha!  svk:merge property changed...
+ 	my @tickets = split "\n", $tickets;
+ 	my @known_parents;
+@@ -2944,14 +2944,15 @@ sub find_extra_svk_parents {
+ 				# wahey!  we found it, but it might be
+ 				# an old one (!)
+ 				push @known_parents, [ $rev, $commit ];
++				push @known_parents, [ $rev, $path, $commit ];
+ 			}
+ 		}
+ 	}
+ 	# Ordering matters; highest-numbered commit merge tickets
+ 	# first, as they may account for later merge ticket additions
+ 	# or changes.
+-	@known_parents = map {$_->[1]} sort {$b->[0] <=> $a->[0]} @known_parents;
+-	for my $parent ( @known_parents ) {
++	for my $merge ( sort {$b->[0] <=> $a->[0]} @known_parents ) {
++		my ($rev, $path, $parent) = @{$merge};
+ 		my @cmd = ('rev-list', $parent, map { "^$_" } @$parents );
+ 		my ($msg_fh, $ctx) = command_output_pipe(@cmd);
+ 		my $new;
+@@ -2963,6 +2964,7 @@ sub find_extra_svk_parents {
+ 			print STDERR
+ 			    "Found merge parent (svk:merge ticket): $parent\n";
+ 			push @$parents, $parent;
++			push @$merges, "$path:$rev";
+ 		}
+ 	}
+ }
+@@ -3061,27 +3063,31 @@ sub make_log_entry {
+ 	my ($self, $rev, $parents, $ed) = @_;
+ 	my $untracked = $self->get_untracked($ed);
+ 
+-	my @parents = @$parents;
++	my %log_entry = ( parents => $parents,
++	                  merged_branches => [],
++	                  revision => $rev,
++	                  log => '');
+ 	my $ps = $ed->{path_strip} || "";
+ 	for my $path ( grep { m/$ps/ } %{$ed->{dir_prop}} ) {
+ 		my $props = $ed->{dir_prop}{$path};
+ 		if ( $props->{"svk:merge"} ) {
+ 			$self->find_extra_svk_parents
+-				($ed, $props->{"svk:merge"}, \@parents);
++				($ed,
++				 $props->{"svk:merge"},
++				 $log_entry{parents},
++				 $log_entry{merged_branches});
+ 		}
+ 		if ( $props->{"svn:mergeinfo"} ) {
+ 			$self->find_extra_svn_parents
+ 				($ed,
+ 				 $props->{"svn:mergeinfo"},
+-				 \@parents);
++				 $log_entry{parents});
+ 		}
+ 	}
+ 
+ 	open my $un, '>>', "$self->{dir}/unhandled.log" or croak $!;
+ 	print $un "r$rev\n" or croak $!;
+ 	print $un $_, "\n" foreach @$untracked;
+-	my %log_entry = ( parents => \@parents, revision => $rev,
+-	                  log => '');
+ 
+ 	my $headrev;
+ 	my $logged = delete $self->{logged_rev_props};
+-- 
+1.6.6.rc0.327.g032bc
