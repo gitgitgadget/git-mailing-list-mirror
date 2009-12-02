@@ -1,93 +1,70 @@
-From: Yann Dirson <ydirson@linagora.com>
-Subject: Re: [egit] Git repository with multiple eclipse projects ?
-Date: Wed, 2 Dec 2009 15:24:13 +0100
-Message-ID: <20091202142413.GB18165@linagora.com>
-References: <20091125164734.GF21347@linagora.com>
- <200911252227.40235.robin.rosenberg@dewire.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: How to update from remote origin with local modified branch?
+Date: Wed, 02 Dec 2009 15:26:45 +0100
+Message-ID: <4B167925.8080307@drmicha.warpmail.net>
+References: <1259752954810-4099323.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, egit-dev@eclipse.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Dec 02 15:26:46 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: GittyUser <xtelligence@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 02 15:28:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFq7y-0000T0-Cu
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 15:24:22 +0100
+	id 1NFqBa-0003VQ-9C
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 15:28:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753937AbZLBOYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 09:24:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753823AbZLBOYJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 09:24:09 -0500
-Received: from [194.206.158.221] ([194.206.158.221]:35511 "EHLO
-	cyann.linagora.lan" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753764AbZLBOYI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 09:24:08 -0500
-Received: from yann by cyann.linagora.lan with local (Exim 4.69)
-	(envelope-from <yann@linagora.com>)
-	id 1NFq7p-0000bn-64; Wed, 02 Dec 2009 15:24:13 +0100
-Content-Disposition: inline
-In-Reply-To: <200911252227.40235.robin.rosenberg@dewire.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752503AbZLBO1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 09:27:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751824AbZLBO1v
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 09:27:51 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:51284 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750815AbZLBO1v (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Dec 2009 09:27:51 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id A7803C58DF;
+	Wed,  2 Dec 2009 09:27:57 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 02 Dec 2009 09:27:57 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=siqlObJFEVAftPHDfaH+gJoKuRA=; b=KaZTXfHm40X5tn3AD8AH+0KHIeulLs1bOxVDORCGlQjcL2hlQlrUeHpQGyYXy/2Y/1I7/2Z5+Vo8RD7X7HIu+tAJAc6me9yLjV0SbLyCFopCnlTjX8IaqRUoL066QIA7RVh99QcgMo8Q73/Hv+WCZsu2GmV6+pRzTi5RFeDQMJ4=
+X-Sasl-enc: lJm+Wl3yKZEDpBSuW+V99SJRnYTIZIYbBhw+XJYa9xWv 1259764077
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 0D6461B60F;
+	Wed,  2 Dec 2009 09:27:56 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091127 Lightning/1.0b1pre Shredder/3.0.1pre
+In-Reply-To: <1259752954810-4099323.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134336>
 
-On Wed, Nov 25, 2009 at 10:27:39PM +0100, Robin Rosenberg wrote:
-> onsdag 25 november 2009 17:47:34 skrev  Yann Dirson:
-> > I am investigating whether it is possible at all to have several
-> > eclipse projects in a single git repo, and have those projects
-> > correctly seen as managed by git.
-> >
-> > When importing a git repo into eclipse, we get a list of projects to
-> > import, but that list is empty.  What is expected by egit to get this
-> > list filled ?
+GittyUser venit, vidit, dixit 02.12.2009 12:22:
 > 
-> Both Egit and Jgit themselves have multiple projects in the same repo. 
-> All projects must be located in the same directory structure.
+> I have once cloned a a project from a remote repository:
+> git cloned http://repo.or.cz/r/openbsc.git
 > 
-> repo/.git
->     |`--project1/.git
->     |`--project2
+> After that I modified some files and commited.
+> In the mean time the remote repository had several commits. Now I want to
+> update my local repo from the remote repo but I also want to keep my own
+> commits. So, when doing "git pull" I get the message that certain files
+> needs to be updated.
 > 
-> etc
-> Other variations are possible.
-
-You seem to talk about nested git repo here.  Do you mean using
-submodules (I thought jgit did not support them yet) ?  git-subtree ?
-
-> >
-> > It also does not look like it would be possible to use the "share"
-> > functionnality to setup such a repository from multiple projects (or
-> > from a project set), right ?
+> Now, how can I get my local repo, with my own modification, updated by the
+> remote repo?
+> I know I need to be aware that those updates (or commits) from remote must
+> not conflict with my local.
 > 
-> Share only tells Eclipse to attach EGit as the team provider, provided
-> it is located in a git repo, or lets you create a repo if none exists.
+> Thank you.
 
-Looks like there is a possibly-windows-specific issue here.
+I think you want to read up on workflows with git and decide whether you
+want to rebase or merge. In short, git fetch --all (which is called by
+git pull) will update your remote tracking branches (origin/*), and then
+you can decide what to do with your local branch (probably master): Do
+you merge origin/master into master, or do you rebase master onto
+origin/master?
 
-The test repo is a git repo with a couple of eclipse projects just
-beneath the top-level.  It can be checked-out from both Ubuntu
-(Karmic) and Windows (Vista), and in both cases the projects can be
-attached to the team provider from the "import" wizard.
-
-On an Ubuntu box, I could use "team/disconnect", and then "share" to
-attach to "../.git", it worked like a charm.  On the windows box
-however, reconnecting was not possible: the "../.git" line is not
-selectable.  Note that it does read "../.git" and not "..\.git".
-
-
-Note that on my "mostly squeeze" Debian box, the import would succeed,
-but in that case none of the projects were attached to the team
-provider.  If afterwards I try to connect it, it silently does nothing.
-
-In that case it may be a known bug: I have a ~/.git dir that is also
-seen by jgit, and which I am also proposed in the "share" dialog.  If
-I move it away, the request to attach is successful.
-
-Best regards,
--- 
-Yann
+Michael
