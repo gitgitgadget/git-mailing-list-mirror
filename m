@@ -1,117 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: "git merge" merges too much!
-Date: Wed, 2 Dec 2009 15:09:04 -0500
-Message-ID: <20091202200904.GA7631@coredump.intra.peff.net>
-References: <m1NEaLp-000kn1C@most.weird.com>
- <20091129051427.GA6104@coredump.intra.peff.net>
- <m1NFAji-000kn2C@most.weird.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [RFC PATCH 4/8] Support remote helpers implementing smart
+ transports
+Date: Wed, 2 Dec 2009 22:10:08 +0200
+Message-ID: <20091202201008.GB11301@Knoppix>
+References: <1259675838-14692-1-git-send-email-ilari.liusvaara@elisanet.fi>
+ <1259675838-14692-5-git-send-email-ilari.liusvaara@elisanet.fi>
+ <20091201192233.GL21299@spearce.org>
+ <20091202055543.GC31244@Knoppix>
+ <20091202170457.GC31648@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-To: The Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 02 21:09:13 2009
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Dec 02 21:10:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFvVf-0004Uf-65
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 21:09:11 +0100
+	id 1NFvWo-00050E-1A
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 21:10:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754515AbZLBUI7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 15:08:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752929AbZLBUI7
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 15:08:59 -0500
-Received: from peff.net ([208.65.91.99]:35919 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751824AbZLBUI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 15:08:58 -0500
-Received: (qmail 27557 invoked by uid 107); 2 Dec 2009 20:13:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 02 Dec 2009 15:13:32 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Dec 2009 15:09:04 -0500
+	id S1755389AbZLBUKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 15:10:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755368AbZLBUKI
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 15:10:08 -0500
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:41005 "EHLO
+	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755285AbZLBUKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 15:10:06 -0500
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id E1B23C83A1;
+	Wed,  2 Dec 2009 22:10:10 +0200 (EET)
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A02C1DDE80F; Wed, 02 Dec 2009 22:10:10 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id 72742E51A3;
+	Wed,  2 Dec 2009 22:10:08 +0200 (EET)
 Content-Disposition: inline
-In-Reply-To: <m1NFAji-000kn2C@most.weird.com>
+In-Reply-To: <20091202170457.GC31648@spearce.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134394>
 
-On Mon, Nov 30, 2009 at 01:12:31PM -0500, Greg A. Woods wrote:
+On Wed, Dec 02, 2009 at 09:04:57AM -0800, Shawn O. Pearce wrote:
+> Ilari Liusvaara <ilari.liusvaara@elisanet.fi> wrote:
+> 
+> Drop invoke-r.
 
-> (From a first pass through the documentation I would never have guessed
-> that "tags" were also a form of "refs".  All these different names for
+Dropped.
 
-I find git is much simpler to use and understand if you start "at the
-bottom" with the basic concepts (because for the most part, git is
-really a set of tools for manipulating the few basic data structures).
-For a short intro, try:
+> Modify transport-helper.c to allow pushing TRANS_OPT_UPLOADPACK and
+> TRANS_OPT_RECEIVEPACK down into the helper via the option capability.
 
-  http://eagain.net/articles/git-for-computer-scientists/
+NAK. Modified _process_connect_or_invoke (now _process_connect) to pass
+new option that appiles to connecting all subprotocols (if needed).
 
-I think Scott Chacon's "Pro Git" book also takes a similar approach, but
-I confess that I have not actually read it carefully. At this point, I
-know enough about git to make reading it not very interesting. :) You
-can find it online at:
+It looks like following:
 
-  http://progit.org/book/
+ > capabilities
+ < option
+ < connect
+ <
+ > option servpath <blahblah>
+ < ok
+ > connect git-upload-pack
+ < 
 
-> features.  Even the gitglossary(7) is somewhat inconsistent on how it
-> uses "ref" and "refs".  Perhaps all that's needed is some firm editing
-> and clean-up of the manuals and documentation by a good strong technical
-> editor.)
+And from helper POV, all subprotocols should appear identical from
+layer 6 POV so it doesn't make sense to diffrentiate between path
+for upload-pack and receive-pack (or upload-archive!).
 
-I skimmed it and didn't see any inconsistency. If you have something
-specific in mind, please point it out so we can fix it.
+> I'd rename connect-r to just connect.
 
-> "git rebase" will not work for me unless it grows a "copy" option ,
-> i.e. one which does not delete the original branch (i.e. avoids the
-> "reset" phase of its operation).  This option would likely only make
-> sense when used with the "--onto" option, I would guess.
+Yeah, putting repository in RPC explicit signature is bit ugly (there
+isn't probaby ever going to be signature that doesn't contain repo as
+argument). That would make it 'connect'.
 
-I think Dmitry already mentioned this, but you probably want to create a
-new branch to hold your rebased history if you don't want to modify the
-existing branch.
+Renamed.
 
-> (git-log(1) is worse than ls(1) for having too many options, but worst
-> of all in the release I'm still using it doesn't respond sensibly nor
-> consistently with other commands when given the "-?" option.)
-
-$ ls -?
-ls: invalid option -- '?'
-Try `ls --help' for more information.
-
-$ ls --help ;# or ls -h
-[copious usage information]
-
-$ git log -?
-fatal: unrecognized argument: -?
-
-$ git log --help
-[the man page]
-
-$ git log -h
-usage: git log [<options>] [<since>..<until>] [[--] <path>...]
-   or: git show [options] <object>...
-
-$ cd /outside/of/git/repo
-$ git log -?
-fatal: Not a git repository (or any of the parent directories): .git
-
-So "-?" is bogus for both ls and git. But there are two failings I see:
-
-  1. Outside of a repository, "git log" does not even get to the
-     argument-parsing phase to see that "-?" is bogus. We short-circuit
-     "-h" and "--help" to avoid actually looking for a git repository,
-     but obviously cannot do so for every "--bogus" argument we see.
-     We could potentially also short-circuit "-?" (and probably map it
-     to "-h" if we were going to do that). However, I didn't think "-?"
-     was in common use.
-
-  2. "git log -h" doesn't mention any of the options specifically,
-     though other git commands do (e.g., try "git archive -h"). This is
-     because the option list is generated by our parseopt library, but
-     the revision and diff options (which are the only ones that "git
-     log" takes) do not use parseopt. Maybe we should point to "--help"
-     for the full list in that case.
-
--Peff
+-Ilari
