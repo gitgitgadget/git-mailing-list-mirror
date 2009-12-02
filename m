@@ -1,67 +1,60 @@
-From: David Soria Parra <sn_@gmx.net>
-Subject: Re: [PATCH v2] Add --track option to git clone
-Date: Wed, 2 Dec 2009 07:20:44 +0000 (UTC)
-Message-ID: <slrnhhc58g.cpv.sn_@experimentalworks.net>
-References: <1259707865-6561-1-git-send-email-sn_@gmx.net>
- <BLU0-SMTP487572F057CC9D30C837D7AE950@phx.gbl>
+From: Wenguang Wang <wenguang@apple.com>
+Subject: How to include full commit logs in git merge message?
+Date: Wed, 2 Dec 2009 07:30:17 +0000 (UTC)
+Message-ID: <loom.20091202T082853-425@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 02 08:21:18 2009
+X-From: git-owner@vger.kernel.org Wed Dec 02 08:35:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFjWX-0005Q0-HO
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 08:21:17 +0100
+	id 1NFjjz-00013l-KR
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 08:35:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751906AbZLBHVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 02:21:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751688AbZLBHVE
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 02:21:04 -0500
-Received: from lo.gmane.org ([80.91.229.12]:43840 "EHLO lo.gmane.org"
+	id S1753378AbZLBHe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 02:34:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753353AbZLBHe7
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 02:34:59 -0500
+Received: from lo.gmane.org ([80.91.229.12]:39068 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750929AbZLBHVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 02:21:03 -0500
+	id S1753359AbZLBHe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 02:34:58 -0500
 Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1NFjWO-0005Mk-0J
-	for git@vger.kernel.org; Wed, 02 Dec 2009 08:21:08 +0100
-Received: from 217.114.211.68 ([217.114.211.68])
+	id 1NFjjs-00010x-3k
+	for git@vger.kernel.org; Wed, 02 Dec 2009 08:35:04 +0100
+Received: from adsl-67-117-147-85.dsl.snfc21.pacbell.net ([67.117.147.85])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 02 Dec 2009 08:21:07 +0100
-Received: from sn_ by 217.114.211.68 with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Wed, 02 Dec 2009 08:35:04 +0100
+Received: from wenguang by adsl-67-117-147-85.dsl.snfc21.pacbell.net with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 02 Dec 2009 08:21:07 +0100
+        for <git@vger.kernel.org>; Wed, 02 Dec 2009 08:35:04 +0100
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 217.114.211.68
-User-Agent: slrn/0.9.9p1 (SunOS)
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 67.117.147.85 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_2; en-us) AppleWebKit/531.21.8 (KHTML, like Gecko) Version/4.0.4 Safari/531.21.10)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134311>
 
-On 2009-12-02, Sean Estabrooks <seanlkml@sympatico.ca> wrote:
->> It tries to make the following usecase possible:
->> Imagine you are working on a project that has 1.x and a 2.x branch. The project
->> itself requires a complex setup (webserver, configuration files, etc). Setting up
->> 1.x and 2.x branch requires a lot of work, but a developer needs to maintain both.
->> He'll use the --track option to clone the 2.x branch into a directory and does the same
->> with the 1.x branch, where he setup the project. He can use locally separate repositories
->> while still being able to push to just one remote repository.
->
-> This is already straightforward in Git without the limitation of tracking only
-> a single remote branch.   What is the necessity of doing this via the clone command?
->
->   $ git init myrepo
->   $ cd myrepo
->   $ git remote add -t branch1.x -f origin <URL>
->   $ git checkout -t origin/branch1.x
-I'm aware that this is possible, but I want to have a shortcut for this as the users that I
-helped with getting into git usually where confused about the point that you have to do it manually
-via git init, so take the patch as a proposal to get more consistent interface for git clone.
+Hi,
 
-david
+When I merge a branch, say myfix, to master,
+I would like to let the merge log message contain
+all commit messages I had for the branch I am 
+merging.  However, the "git merge --log" only
+populates one-line descriptions of the commits.
+
+Is there any simple way to populate the full 
+merge messages into the log message of the 
+merge commit?
+
+Thanks!
+
+-Wenguang
