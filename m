@@ -1,114 +1,178 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: "git merge" merges too much!
-Date: Wed, 2 Dec 2009 03:22:01 +0300
-Message-ID: <20091202002201.GG11235@dpotapov.dyndns.org>
-References: <m1NEaLp-000kn1C@most.weird.com> <20091129051427.GA6104@coredump.intra.peff.net> <m1NFAji-000kn2C@most.weird.com> <20091130192212.GA23181@dpotapov.dyndns.org> <m1NFXpl-000knKC@most.weird.com> <20091201205057.GD11235@dpotapov.dyndns.org> <m1NFak0-000kn2C@most.weird.com>
+From: Alex Chiang <achiang@hp.com>
+Subject: [StGit PATCH v2 1/6] stg mail: Refactor __send_message and friends
+Date: Tue,  1 Dec 2009 17:46:06 -0700
+Message-ID: <20091202004605.7737.2077.stgit@bob.kio>
+References: <20091202003503.7737.51579.stgit@bob.kio>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: The Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 02 01:22:36 2009
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>, Karl Wiberg <kha@treskal.com>
+To: catalin.marinas@gmail.com
+X-From: git-owner@vger.kernel.org Wed Dec 02 01:46:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFczM-0006Kp-8t
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 01:22:36 +0100
+	id 1NFdME-0005gK-Jn
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 01:46:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754863AbZLBAWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 19:22:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754718AbZLBAWT
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 19:22:19 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:64957 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754734AbZLBAWS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 19:22:18 -0500
-Received: by bwz27 with SMTP id 27so3984388bwz.21
-        for <git@vger.kernel.org>; Tue, 01 Dec 2009 16:22:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=OEkhotfdXa2kb2scDgMZouArMd4ZRumo7aS5SFYbueI=;
-        b=IkVwmQyexZP12kTi4MM3k4YEMvQUHr817CyaLlsENniI8rQXLfIq0uqeovwnTv3gha
-         /2HN6JcxI3W0G7SFrrFeek6epKpVfJPFtxjRro9pLas2Owar/y8NFAdYXqhYty05Gn+L
-         4NRO1Ayz/Jkf+0NMBgDiVHErWZdTXNuVLe1XE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=oky6s1gCAKz7xG+3B4Omdy3QaCIQacxpamAeDwrYdF5+b3uBogFnnAcoSKyw3itZ4y
-         jQOPRFMPvzAMazirfca3OLKAZvinRvAUyBm3dJgExdS/8E+YLqmjOPRq/buhzot/+A7T
-         3be/aOQY9Ow1LJgAkvOFvaRtlvW9yJOd0mfOU=
-Received: by 10.204.32.209 with SMTP id e17mr229399bkd.84.1259713343135;
-        Tue, 01 Dec 2009 16:22:23 -0800 (PST)
-Received: from localhost ([91.78.50.138])
-        by mx.google.com with ESMTPS id 15sm180509bwz.8.2009.12.01.16.22.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Dec 2009 16:22:22 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <m1NFak0-000kn2C@most.weird.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754950AbZLBAqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 19:46:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754944AbZLBAqB
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 19:46:01 -0500
+Received: from g5t0007.atlanta.hp.com ([15.192.0.44]:23200 "EHLO
+	g5t0007.atlanta.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754929AbZLBAqA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2009 19:46:00 -0500
+Received: from g5t0029.atlanta.hp.com (g5t0029.atlanta.hp.com [16.228.8.141])
+	by g5t0007.atlanta.hp.com (Postfix) with ESMTP id 1912214955;
+	Wed,  2 Dec 2009 00:46:07 +0000 (UTC)
+Received: from ldl (linux.corp.hp.com [15.11.146.101])
+	by g5t0029.atlanta.hp.com (Postfix) with ESMTP id B0A65200A5;
+	Wed,  2 Dec 2009 00:46:06 +0000 (UTC)
+Received: from localhost (ldl.fc.hp.com [127.0.0.1])
+	by ldl (Postfix) with ESMTP id 7B14BCF0010;
+	Tue,  1 Dec 2009 17:46:06 -0700 (MST)
+Received: from ldl ([127.0.0.1])
+	by localhost (ldl.fc.hp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Bn4TJ+ZcY6mv; Tue,  1 Dec 2009 17:46:06 -0700 (MST)
+Received: from eh.fc.hp.com (eh.fc.hp.com [15.11.146.105])
+	by ldl (Postfix) with ESMTP id 658ECCF0007;
+	Tue,  1 Dec 2009 17:46:06 -0700 (MST)
+Received: by eh.fc.hp.com (Postfix, from userid 17609)
+	id 453B426160; Tue,  1 Dec 2009 17:46:06 -0700 (MST)
+X-Mailer: git-send-email 1.6.5.2.74.g610f9
+In-Reply-To: <20091202003503.7737.51579.stgit@bob.kio>
+User-Agent: StGit/0.15-6-gc6f39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134272>
 
-On Tue, Dec 01, 2009 at 04:58:34PM -0500, Greg A. Woods wrote:
-> At Tue, 1 Dec 2009 23:50:57 +0300, Dmitry Potapov <dpotapov@gmail.com> wrote:
-> Subject: Re: "git merge" merges too much!
-> > 
-> > > > 
-> > > > $ git branch new-foo foo
-> > > > 
-> > > > $ git rebase --onto newbase oldbase new-foo
-> > > 
-> > > Hmmm.... I'll have to think about that.  It makes some sense, but I
-> > > don't intuitively read the command-line parameters well enough to
-> > > predict the outcome in all of the scenarios I'm interested in.
-> > > 
-> > > what is "oldbase" there?  I'm guessing it means "base of foo" (and for
-> > > the moment, "new-foo" too)?
-> > 
-> > You have:
-> > 
-> >  o---o---o---o---o  newbase
-> >        \
-> >         o---o---o---o---o  oldbase
-> >                          \
-> >                           o---o---o  foo
-> 
-> Yes, sort of -- in the ideal situation, but not in my particular example
-> where "oldbase" is just a tag, not a real branch.
+Instead of passing all the various smtp* args to __send_message
+individually, let's just pass the options list instead.
 
-It does not matter whether it is tag or branch or just SHA-1. You can
-use any two reference as newbase and oldbase. They specify two points
-in DAG. The only thing that has to be a branch in my example is new-foo.
+The main motivation is for future patches. The end goal is to
+thin out stg mail's implementation and make it a minimal wrapper
+around git send-email. By passing the options list to __send_message
+we prepare to pass options directly to git send-email.
 
-> 
-> So yes, "oldbase" is in fact "base of foo".  Trickier still is when the
-> "oldbase" branch has one or more commits newer then "base of foo".  Does
-> Git not have a symbolic name for the true base of a branch?  I.e. is
-> there not some form of symbolic name for "N" in the following?
-> 
->    o---o---o---o---o---o---o---o  master
->             \
->              o---o---N---o---o  release-1
->                       \
->                        o---o---o  local-release-1
+As a bonus, this change results in a cleaner internal API.
 
-You can always find SHA-1 for N using the following command:
+Finally, it also pushes the smtp logic where it belongs, viz. into
+__send_message_smtp, instead of cluttering up the main body of
+mail.func().
 
-  git merge-base release-1 local-release-1
+Cc: Karl Wiberg <kha@treskal.com>
+Signed-off-by: Alex Chiang <achiang@hp.com>
+---
 
-but you do not have to do that to rebase your changes. You just can run:
+ stgit/commands/mail.py |   43 +++++++++++++++++++------------------------
+ 1 files changed, 19 insertions(+), 24 deletions(-)
 
-   # create a copy of local-release-1, so it will not disappear
-   git branch copy-release-1 local-release-1
-
-   # rebase the branch to master
-   git rebase --onto master release-1 copy-release-1
-
-
-Dmitry
+diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
+index abd42e4..a38e3e6 100644
+--- a/stgit/commands/mail.py
++++ b/stgit/commands/mail.py
+@@ -190,10 +190,20 @@ def __send_message_sendmail(sendmail, msg):
+     cmd = sendmail.split()
+     Run(*cmd).raw_input(msg).discard_output()
+ 
+-def __send_message_smtp(smtpserver, from_addr, to_addr_list, msg,
+-                        smtpuser, smtppassword, use_tls):
++def __send_message_smtp(smtpserver, from_addr, to_addr_list, msg, options):
+     """Send the message using the given SMTP server
+     """
++    smtppassword = options.smtp_password or config.get('stgit.smtppassword')
++    smtpuser = options.smtp_user or config.get('stgit.smtpuser')
++    smtpusetls = options.smtp_tls or config.get('stgit.smtptls') == 'yes'
++
++    if (smtppassword and not smtpuser):
++        raise Exception('SMTP password supplied, username needed')
++    if (smtpusetls and not smtpuser):
++        raise Exception('SMTP over TLS requested, username needed')
++    if (smtpuser and not smtppassword):
++        smtppassword = getpass.getpass("Please enter SMTP password: ")
++
+     try:
+         s = smtplib.SMTP(smtpserver)
+     except Exception, err:
+@@ -203,7 +213,7 @@ def __send_message_smtp(smtpserver, from_addr, to_addr_list, msg,
+     try:
+         if smtpuser and smtppassword:
+             s.ehlo()
+-            if use_tls:
++            if smtpusetls:
+                 if not hasattr(socket, 'ssl'):
+                     raise CmdException,  "cannot use TLS - no SSL support in Python"
+                 s.starttls()
+@@ -218,17 +228,17 @@ def __send_message_smtp(smtpserver, from_addr, to_addr_list, msg,
+ 
+     s.quit()
+ 
+-def __send_message(smtpserver, from_addr, to_addr_list, msg,
+-                   smtpuser, smtppassword, use_tls):
++def __send_message(from_addr, to_addr_list, msg, options):
+     """Message sending dispatcher.
+     """
++    smtpserver = options.smtp_server or config.get('stgit.smtpserver')
++
+     if smtpserver.startswith('/'):
+         # Use the sendmail tool
+         __send_message_sendmail(smtpserver, msg)
+     else:
+         # Use the SMTP server (we have host and port information)
+-        __send_message_smtp(smtpserver, from_addr, to_addr_list, msg,
+-                            smtpuser, smtppassword, use_tls)
++        __send_message_smtp(smtpserver, from_addr, to_addr_list, msg, options)
+ 
+ def __build_address_headers(msg, options, extra_cc = []):
+     """Build the address headers and check existing headers in the
+@@ -543,8 +553,6 @@ def func(parser, options, args):
+     """Send the patches by e-mail using the patchmail.tmpl file as
+     a template
+     """
+-    smtpserver = options.smtp_server or config.get('stgit.smtpserver')
+-
+     applied = crt_series.get_applied()
+ 
+     if options.all:
+@@ -564,17 +572,6 @@ def func(parser, options, args):
+             raise CmdException, 'Cannot send empty patch "%s"' % p
+     out.done()
+ 
+-    smtppassword = options.smtp_password or config.get('stgit.smtppassword')
+-    smtpuser = options.smtp_user or config.get('stgit.smtpuser')
+-    smtpusetls = options.smtp_tls or config.get('stgit.smtptls') == 'yes'
+-
+-    if (smtppassword and not smtpuser):
+-        raise CmdException, 'SMTP password supplied, username needed'
+-    if (smtpusetls and not smtpuser):
+-        raise CmdException, 'SMTP over TLS requested, username needed'
+-    if (smtpuser and not smtppassword):
+-        smtppassword = getpass.getpass("Please enter SMTP password: ")
+-
+     total_nr = len(patches)
+     if total_nr == 0:
+         raise CmdException, 'No patches to send'
+@@ -616,8 +613,7 @@ def func(parser, options, args):
+             out.stdout_raw(msg_string + '\n')
+         else:
+             out.start('Sending the cover message')
+-            __send_message(smtpserver, from_addr, to_addr_list, msg_string,
+-                           smtpuser, smtppassword, smtpusetls)
++            __send_message(from_addr, to_addr_list, msg_string, options)
+             time.sleep(sleep)
+             out.done()
+ 
+@@ -648,8 +644,7 @@ def func(parser, options, args):
+             out.stdout_raw(msg_string + '\n')
+         else:
+             out.start('Sending patch "%s"' % p)
+-            __send_message(smtpserver, from_addr, to_addr_list, msg_string,
+-                           smtpuser, smtppassword, smtpusetls)
++            __send_message(from_addr, to_addr_list, msg_string, options)
+             # give recipients a chance of receiving related patches in the
+             # correct order.
+             if patch_nr < total_nr:
