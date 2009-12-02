@@ -1,104 +1,83 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [msysGit] [PATCH/RFC 06/11] run-command: add kill_async() and 
-	is_async_alive()
-Date: Wed, 2 Dec 2009 16:57:01 +0100
-Message-ID: <40aa078e0912020757i3b63ef6eh71c3d4d99047f1f2@mail.gmail.com>
-References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com>
-	 <200911262246.13342.j6t@kdbg.org>
-	 <40aa078e0911270804i1a828ea6we1611047d37869f7@mail.gmail.com>
-	 <200911272059.25934.j6t@kdbg.org>
-Reply-To: kusmabite@gmail.com
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [RFC PATCH 0/8] Git remote helpers to implement smart
+ transports.
+Date: Wed, 2 Dec 2009 18:04:47 +0200
+Message-ID: <20091202160446.GA32667@Knoppix>
+References: <1259675838-14692-1-git-send-email-ilari.liusvaara@elisanet.fi>
+ <fabb9a1e0912010812t4de8027dj1faf828051d1adc2@mail.gmail.com>
+ <20091201165245.GF21299@spearce.org>
+ <20091201171908.GA15436@Knoppix>
+ <20091201193009.GM21299@spearce.org>
+ <7vskbuwhmy.fsf@alter.siamese.dyndns.org>
+ <20091202055632.GD31244@Knoppix>
+ <7vy6llnar5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysgit@googlegroups.com, git@vger.kernel.org, dotzenlabs@gmail.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Dec 02 16:57:09 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 02 17:05:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFrZk-0004ea-Ei
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 16:57:08 +0100
+	id 1NFrhM-0008Oy-KX
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 17:05:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754614AbZLBP45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 10:56:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751688AbZLBP44
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 10:56:56 -0500
-Received: from mail-fx0-f221.google.com ([209.85.220.221]:65489 "EHLO
-	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751429AbZLBP44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 10:56:56 -0500
-Received: by fxm21 with SMTP id 21so393467fxm.1
-        for <git@vger.kernel.org>; Wed, 02 Dec 2009 07:57:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=ctxRBYJ/86QZC+yqC9n9Z3HnF6urLhoAb3lYoJ/4yl0=;
-        b=LkV8vu0zM65dkLIQQl+Jlv6JlslPI6gm6l1qak7fYWqExwC65Pvg3h0vKlym/iXp6t
-         BIByVJaRoXe4tSaW91A27NeXg4b9hq/lH1VGzL45/aMovS004zAavR+gNHV703+r00cE
-         e6hESBrW3I12cefMwtqBfKNEFatI3m5EEhdiA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        b=JR3PUR1ZJjh7D9O4RMDX/YNPrQTOcO0I0IZVwcoMVS+bAMELb5yNpHsTsARlUl1zIN
-         3jStYTUpPP2zOTjGw6r+fW0zu5KkDFN+mPZ/av4aeoT714XJ8nJAuFnl+CXhiCu16lvc
-         bE6pdjNbLm0X/IMNffALZM2Hu/fVVmiMfb1YU=
-Received: by 10.216.89.137 with SMTP id c9mr80708wef.228.1259769421453; Wed, 
-	02 Dec 2009 07:57:01 -0800 (PST)
-In-Reply-To: <200911272059.25934.j6t@kdbg.org>
+	id S1753518AbZLBQEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 11:04:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751429AbZLBQEq
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 11:04:46 -0500
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:54657 "EHLO
+	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750815AbZLBQEq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 11:04:46 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 7C2EBC7DB4;
+	Wed,  2 Dec 2009 18:04:51 +0200 (EET)
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A018E278D46; Wed, 02 Dec 2009 18:04:51 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id 30F5C158A64;
+	Wed,  2 Dec 2009 18:04:48 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <7vy6llnar5.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134343>
 
-On Fri, Nov 27, 2009 at 8:59 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> On Freitag, 27. November 2009, Erik Faye-Lund wrote:
->> Do you really think it's better to unconditionally take down the
->> entire process with an error, instead of having a relatively small
->> chance of stuff blowing up without any sensible error? I'm not 100%
->> convinced - but let's hope we'll find a proper fix.
->
-> "relatively small chance of stuff blowing up"? The docs of
-> TerminateThread: "... the kernel32 state for the thread's process could be
-> inconsistent." That's scary if we are talking about a process that should run
-> for days or weeks without interruption.
->
+On Tue, Dec 01, 2009 at 10:35:58PM -0800, Junio C Hamano wrote:
+> Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
+> 
+> I didn't mean the line count by "large".  I was referring to the size of
+> change at the conceptual level.  As Daniel already explained, it has been
+> one of the design assumption so far that there are built-in mappings from
+> some common <scheme>:// to backend "helpers".
 
-I think there's a misunderstanding here. I thought your suggestion was
-to simply call die(), which would take down the main process. After
-reading this explanation, I think you're talking about giving an error
-and rejecting the connection instead. Which makes more sense than to
-risk crashing the main-process, indeed.
+No implicit mappings from <scheme>:// to helpers existed before this series
+(except for forcing in URL, which are different). Thus, any mapping had to
+be explicit and built-in.
 
-> The reason why we are killing a thread is to prevent keeping lots of
-> connections open (to the same IP address). There are two situations to take
-> care of:
->
-> 1. We are in a lengthy computation without paying attention to the socket.
->
-> 2. The client does not send or accept data for a long time.
->
-> Case 1 could happen if upload-pack is "counting objects" on a large
-> repository. We would need some way to kill upload-pack. Since it is a
-> separate process anyway, we could use TerminateProcess().
->
+And if mappings http -> curl, https -> curl, ftp -> curl are to remain explicit
+in main git binary, I would put them into table and build stub remote-curl if
+NO_CURL is defined instead of special casing the error in main git binary
+(but I consider that worse than just removing the association from main
+git binary).
 
-Makes sense. I'll play around a bit with this and see what I come up with.
+>From file system listing on this computer (note the I-node numbers, this is
+on newer version of change than the one sent):
 
-> Case 2 could be achieved by using setsockopt() with SO_RCVTIMEO and
-> SO_SNDTIMEO and a tiny timeout. But notice that we would set a timeout in one
-> thread while another thread is waiting in ReadFile() or WriteFile(). Would
-> that work?
->
+2068945 -rwxr-xr-x 4 Ilari users 1547231 2009-12-02 15:12 /home/Ilari/.local/git-testing/libexec/git-core/git-remote-ftp
+2068945 -rwxr-xr-x 4 Ilari users 1547231 2009-12-02 15:12 /home/Ilari/.local/git-testing/libexec/git-core/git-remote-ftps
+2068945 -rwxr-xr-x 4 Ilari users 1547231 2009-12-02 15:12 /home/Ilari/.local/git-testing/libexec/git-core/git-remote-http
+2068945 -rwxr-xr-x 4 Ilari users 1547231 2009-12-02 15:12 /home/Ilari/.local/git-testing/libexec/git-core/git-remote-https
 
-I think it should work fine, but I won't give you a guarantee ;)
-Perhaps we should have a configurable global max timeout, and just set
-that on all sockets? Or does this open for DDOS attacks?
+So instead of mapping explicitly, those are effectively mapped by filesystem
+(that's after the fixes for next round that make helpers hardlinked instead
+of copied).
 
-Anyway, thanks for the sanity :)
-
--- 
-Erik "kusma" Faye-Lund
+-Ilari
