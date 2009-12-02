@@ -1,124 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: multiple working directories for long-running builds
-Date: Tue, 01 Dec 2009 18:09:38 -0800
-Message-ID: <7viqcqp1nh.fsf@alter.siamese.dyndns.org>
-References: <m1NEaLp-000kn1C@most.weird.com>
- <7vskbxewti.fsf@alter.siamese.dyndns.org> <m1NFBAx-000kmgC@most.weird.com>
- <20091130211744.GA27278@dpotapov.dyndns.org> <m1NFGXS-000kn2C@most.weird.com>
- <20091201054734.GB11235@dpotapov.dyndns.org> <m1NFX19-000kn4C@most.weird.com>
- <20091201185114.GC11235@dpotapov.dyndns.org> <m1NFXvL-000kn2C@most.weird.com>
- <20091201211830.GE11235@dpotapov.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: [RFC/PATCHv9 00/11] git notes
+Date: Wed, 02 Dec 2009 03:09:32 +0100
+Message-ID: <1259719783-4674-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: The Git Mailing List <git@vger.kernel.org>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 02 03:09:52 2009
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+Cc: gitster@pobox.com, johan@herland.net, spearce@spearce.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 02 03:10:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFef9-0005P5-BH
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 03:09:51 +0100
+	id 1NFefS-0005TP-1l
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 03:10:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754368AbZLBCJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2009 21:09:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754283AbZLBCJk
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 21:09:40 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40520 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753731AbZLBCJj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2009 21:09:39 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 660D3A3F85;
-	Tue,  1 Dec 2009 21:09:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=CP25uNrB4Y2dJ1ZNKmvbtV8Nikw=; b=v/9ax/vf8K0HATTnKqvNSbX
-	EKArQkXeB59gMoJViX1UYzDE2yVZPEJrzaehvGtFcDsy4cEdilTj/LwRPkPgpVcf
-	6OrT21dhxJETXcI7rVDEAeKfT2g+3mc6Gt+NuaPEC0E1/K3fJPxYlcPUthATrDBq
-	3n/F3fLzS/Zlk1MxD8eg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=UPlrsTmVzJ7gbHmFqedUsQRJVA6+nQMG23vzRi1caDZqs/dG3
-	bY4vO9QlMu6AhKz+/qJnKxfethtH9d9HQd5+pmET5epsGIG1GZiO1g5RocGXnj72
-	1NH4Ww1pBZcJW5+FAKTwkIoQ6ofjDGrC5FScJgH/ms6IQa3cqPSzqXK6tM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3F9F8A3F84;
-	Tue,  1 Dec 2009 21:09:43 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CDF4FA3F83; Tue,  1 Dec 2009
- 21:09:39 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C15D5ADA-DEE7-11DE-A448-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1754450AbZLBCJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2009 21:09:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754443AbZLBCJ6
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Dec 2009 21:09:58 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:61613 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754383AbZLBCJ5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Dec 2009 21:09:57 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KU0004FW60RPL70@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 02 Dec 2009 03:10:03 +0100 (MET)
+Received: from localhost.localdomain ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KU000JVB60NVI30@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 02 Dec 2009 03:10:03 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.12.2.15716
+X-Mailer: git-send-email 1.6.5.3.433.g11067
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134282>
 
-Dmitry Potapov <dpotapov@gmail.com> writes:
+Hi,
 
-> On Tue, Dec 01, 2009 at 01:58:05PM -0500, Greg A. Woods wrote:
->> 
->> > > I just disagreed that "git archive" was a reasonable alternative to
->> > > leaving the working directory alone during the entire time of the build.
->> > 
->> > Using "git archive" allows you avoid running long time procedure such as
->> > full clean build and testing in the working tree. Also, it is guaranteed
->> > that you test exactly what you put in Git and some other garbage in your
->> > working tree does not affect the result.
->> 
->> Sure, but let's be very clear here:  "git archive" is likely even more
->> impossible for some large projects to use than "git clone" would be to
->> use to create build directories.
->
-> AFAIK, "git archive" is cheaper than git clone. I do not say it is fast
-> for huge project, but if you want to run a process such as clean build
-> and test that takes a long time anyway, it does not add much to the
-> total time.
+Here is the 9th iteration of the git-notes series. Changes in this
+iteration are as follows:
 
-I do not understand people who advocate for "git archive" to be used in
-this manner at all.
+Changes to existing patches:
 
-I do use a set of separate build directories, and I typically run 5 to 10
-full builds (in each) per day, but I rarely if ever make fix in them.
-Perhaps the usage pattern expected by people who want others to use "git
-archive" to prepare separate build directories may be different from how I
-use them for.
+- Rebased back onto the early part of the jh/notes series, as
+  suggested by Junio.
 
-I see two downsides in using "git archive":
+- Minor style fixes to some of the patches.
 
- - "archive" piped to "tar xf -" will overwrite _all_ files every time you
-   refresh the build area, causing extra work on "make" and any build
-   procedure based on file timestamps.  Sure, you can work it around by
-   using ccache but why make your life complicated?
+- The git-fast-import patch has been heavily rewritten after
+  suggestions from Shawn. The new patch is much less intrusive,
+  by way of NOT interfacing with the notes API, but doing the
+  fanout strategy directly in fast-import.c instead.
 
- - When a build in these separate build areas fails, you would want to go
-   there and try to diagnose or even fix the problem in there, not in your
-   primary working area (after all, the whole point of keeping a separate
-   build area is so that you do not have to switch branches too much in
-   the primary working area).  A directory structure prepared by "archive"
-   piped to "tar xf -" however is not a work tree, and any experimental
-   changes (e.g. "debugf()") or fixes you make there need to be reverted
-   or taken back manually to be placed in the primary working area.
+- The new fast-import patch no longer depends on changes in the
+  notes API. The fast-import-related patches are therefore moved
+  to the head of the patch series, and the notes API changes that
+  are no longer necessary (but still worthwhile, IMHO) are moved
+  to the tail.
 
-If your build area is prepared with new-workdir, then you share the
-history and you even share the ref namespace, so that "reset --hard" will
-remove all the debugf() added while diagnosing, and "diff" will give you
-the patch you need to take home.
+If Shawn is OK with the fast-import patch, I believe that at least
+patches #1 - #3 (and possibly #4 - #5) are ready for 'next'.
 
-You could even make a commit from your build area, but this cuts both
-ways.  You need to be aware that after committing on a branch in one
-repository other repositories that have the same branch checked out will
-become out of sync.  It is however less of an issue in practice, because
-the build areas are typically used to check out integration branches
-(e.g. 'master' and 'next' in git.git) that you do not directly commit
-anyway, and you will get very aware of the tentative nature of the tree,
-as the update procedure for such a build area prepared with new-workdir is
-always:
+Patches #6 - #11 drastically extend the notes API. Since there are
+currently no users of that API, and it has not been discussed much
+on the list (although these patches have already been present in a
+couple of iterations), I would still consider them RFC quality.
 
-    cd /buildfarm/<branch>/ && git reset --hard
 
-This will not touch any file that do not have to get updated, so your
-"make" won't get confused.
+TODO:
+- Builtin-ify git-notes shell script to take advantage of notes API
+- Garbage collect notes whose referenced object is unreachable (gc_notes())
+- Handle note objects that are not blobs, but trees
+
+
+Have fun! :)
+
+...Johan
+
+
+Johan Herland (11):
+  fast-import: Proper notes tree manipulation
+  Rename t9301 to t9350, to make room for more fast-import tests
+  Add more testcases to test fast-import of notes
+  Minor style fixes to notes.c
+  Notes API: get_commit_notes() -> format_note() + remove the commit restriction
+  Notes API: init_notes(): Initialize the notes tree from the given notes ref
+  Notes API: add_note(): Add note objects to the internal notes tree structure
+  Notes API: get_note(): Return the note annotating the given object
+  Notes API: for_each_note(): Traverse the entire notes tree with a callback
+  Notes API: Allow multiple concurrent notes trees with new struct notes_tree
+  Refactor notes concatenation into a flexible interface for combining notes
+
+ fast-import.c                                    |  141 +++++-
+ notes.c                                          |  345 ++++++++++----
+ notes.h                                          |  114 ++++-
+ pretty.c                                         |    9 +-
+ t/t9300-fast-import.sh                           |  156 ++++++-
+ t/t9301-fast-import-notes.sh                     |  578 ++++++++++++++++++++++
+ t/{t9301-fast-export.sh => t9350-fast-export.sh} |    0
+ 7 files changed, 1218 insertions(+), 125 deletions(-)
+ create mode 100755 t/t9301-fast-import-notes.sh
+ rename t/{t9301-fast-export.sh => t9350-fast-export.sh} (100%)
