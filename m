@@ -1,96 +1,136 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Marking commits as transitory for git bisect?
-Date: Wed, 02 Dec 2009 12:01:28 +0100
-Message-ID: <87tyw9wsfr.fsf@lola.goethe.zz>
-References: <871vjdyb59.fsf@lola.goethe.zz>
-	<4B164501.7010902@drmicha.warpmail.net>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [msysGit] [PATCH/RFC 09/11] daemon: use run-command api for async 
+	serving
+Date: Wed, 2 Dec 2009 16:45:03 +0100
+Message-ID: <40aa078e0912020745o4b72342fm722a944621cfda5@mail.gmail.com>
+References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com>
+	 <1259196260-3064-9-git-send-email-kusmabite@gmail.com>
+	 <1259196260-3064-10-git-send-email-kusmabite@gmail.com>
+	 <200911272159.38757.j6t@kdbg.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Dec 02 16:17:41 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: msysgit@googlegroups.com, git@vger.kernel.org, dotzenlabs@gmail.com
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Dec 02 16:45:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFqxW-0001wr-HX
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 16:17:39 +0100
+	id 1NFrOH-0007I8-GG
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 16:45:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753357AbZLBPR1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 10:17:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753002AbZLBPR1
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 10:17:27 -0500
-Received: from fencepost.gnu.org ([140.186.70.10]:36437 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752199AbZLBPR0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 10:17:26 -0500
-Received: from localhost ([127.0.0.1]:57737 helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.67)
-	(envelope-from <dak@gnu.org>)
-	id 1NFqxQ-0004AH-BR; Wed, 02 Dec 2009 10:17:32 -0500
-Received: by lola.goethe.zz (Postfix, from userid 1000)
-	id A7FFF248DE; Wed,  2 Dec 2009 12:01:28 +0100 (CET)
-In-Reply-To: <4B164501.7010902@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Wed, 02 Dec 2009 11:44:17 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.50 (gnu/linux)
+	id S1754563AbZLBPo7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Dec 2009 10:44:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754559AbZLBPo7
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 10:44:59 -0500
+Received: from fg-out-1718.google.com ([72.14.220.155]:31796 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754455AbZLBPo6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Dec 2009 10:44:58 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so318601fga.1
+        for <git@vger.kernel.org>; Wed, 02 Dec 2009 07:45:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=T6SL/W/CyZIoa3fKFmgTdIZMZrj3Tm3fB91SQK8E9rk=;
+        b=MwXlPlnZE6B8EOXrjOU3IAySbZgUTB32/Br6Rmv/TVjS1Cue2z8ZAzGeSW68UwIKIw
+         2d0ye9uc/9vhLkR9iK0lqPMvr7Q43gSfYLU4/e0CcmziHBroHCqDrRtEsov3o9VRsurm
+         KK9DHABZ773TQG/t2hU3FtDlmm2EtLFCbnZLw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=VoJFPNg6ha1fppUHDRkzl0J5xz9qRG64egsvw72VSstvsnJff7Awv9WML9C/5THxEI
+         ScBCHs+rPwJgMYjDx4gQ3REatrP9uKPGMtKv6APY2JzXQYXtT0JstFWUgyl55bxbMtyA
+         Fr0ZSbHeihDzRVctMtG8iq++UAoJ30IDnH9GM=
+Received: by 10.216.85.197 with SMTP id u47mr85944wee.133.1259768703477; Wed, 
+	02 Dec 2009 07:45:03 -0800 (PST)
+In-Reply-To: <200911272159.38757.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134339>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
-
-> David Kastrup venit, vidit, dixit 02.12.2009 10:32:
->> 
->> sometimes there are changes which would seem better to restructure into
->> more than one commit, with a non-operative intermediate state.
->> 
->> What I am thinking of is something like
->> 
->> a) change an API (small but highly intricate patch warranting thorough
->>    line-by-line review to make sure it's fine)
->> b) adapt all existing callers (really large but utterly trivial patch)
+On Fri, Nov 27, 2009 at 9:59 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> On Donnerstag, 26. November 2009, Erik Faye-Lund wrote:
+>> =A0static void check_dead_children(void)
+>> =A0{
+>> - =A0 =A0 int status;
+>> - =A0 =A0 pid_t pid;
+>> -
+>> - =A0 =A0 while ((pid =3D waitpid(-1, &status, WNOHANG)) > 0) {
+>> - =A0 =A0 =A0 =A0 =A0 =A0 const char *dead =3D "";
+>> - =A0 =A0 =A0 =A0 =A0 =A0 remove_child(pid);
+>> - =A0 =A0 =A0 =A0 =A0 =A0 if (!WIFEXITED(status) || (WEXITSTATUS(sta=
+tus) > 0))
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 dead =3D " (with error)";
+>> - =A0 =A0 =A0 =A0 =A0 =A0 loginfo("[%"PRIuMAX"] Disconnected%s", (ui=
+ntmax_t)pid, dead);
+>> - =A0 =A0 }
+>> + =A0 =A0 struct child **cradle, *blanket;
+>> + =A0 =A0 for (cradle =3D &firstborn; (blanket =3D *cradle);)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 if (!is_async_alive(&blanket->async)) {
 >
-> A quick solution with current git would be "replace": Say, in
-> A-B-C-D
-> you want B and C to be considered an "atom" for bisection. So, "git
-> replace" C by a commit C' which is B+C squashed and has A as its parent:
-> A-C'-D.
-
-That would lose B and C.  The idea was to have this available
-publically.
-
-> Alternatively, if you want this to be distributed more easily and think
-> of it at the time of committing, producing a DAG like
+> This would be the right place to call finish_async(). But since we ca=
+nnot
+> wait, you invented is_async_alive(). But actually we are not only int=
+erested
+> in whether the process is alive, but also whether it completed succes=
+sfully
+> so that we can add "(with error)". Would it make sense to have a func=
+tion
+> finish_async_nowait() instead of is_async_alive() that (1) stresses t=
+he
+> start/finish symmetry and (2) can return more than just Boolean?
 >
-> A--C'--D
->  \    /
->   B--C
+
+Yes, it does.
+
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 *cradle =3D blanket->next;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 loginfo("Disconnected\n");
 >
-> with C' as the first parent of D may help during bisection. I.e., you
-> keep the detailed history on the side branch and squash it together on
-> the --first-parent-line, with C,C' being tree-same.
+> Here you are losing information about the pid, which is important to =
+have in
+> the syslog. The \n should be dropped.
+>
 
-That would seem to be more or less accomplished by putting B-C on a
-side-branch, then merge that branch into A (C' basically being the merge
-commit).  So the DAG would be something like
+Yeah... I removed the pid mostly because after moving to async, there
+wasn't "just a pid" any more. But if we make finish_async_nowait()
+return whatever we need to report, I guess we can add the information
+back somehow.
 
-A------D
- \    /
-  B--C
+I'm not entirely sure how to make the interface, though. Any good sugge=
+stions?
 
-If B-C is a local branch, will their history make it through to a remote
-repository when you push D?
+>> + =A0 =A0 async.proc =3D async_execute;
+>> + =A0 =A0 async.data =3D ss;
+>> + =A0 =A0 async.out =3D incoming;
+>>
+>> - =A0 =A0 dup2(incoming, 0);
+>> - =A0 =A0 dup2(incoming, 1);
+>> + =A0 =A0 if (start_async(&async))
+>> + =A0 =A0 =A0 =A0 =A0 =A0 logerror("unable to fork");
+>> + =A0 =A0 else
+>> + =A0 =A0 =A0 =A0 =A0 =A0 add_child(&async, addr, addrlen);
+>> =A0 =A0 =A0 close(incoming);
+>> -
+>> - =A0 =A0 exit(execute(0, addr));
+>
+> In start_command(), the convention is that fds that are provided by t=
+he caller
+> are closed by start_command() (even if there are errors). The close(i=
+ncoming)
+> that you leave here indicates that you are not using the same convent=
+ion with
+> start_async(). It would be nice to switch to the same convention.
+>
 
-It seems like this workflow could possibly meet my criteria when one has
-push access to the repo in question.  If one passes D upstream via
-git-format-patch, however, it would appear that just the equivalent of
-C' makes it upstream, with the B-C history staying local.
+Yeah, I've fixed this for the next round.
 
-Not sure what will happen when upstream pulls D.
-
-Further comments/insights?
-
--- 
-David Kastrup
+--=20
+Erik "kusma" Faye-Lund
