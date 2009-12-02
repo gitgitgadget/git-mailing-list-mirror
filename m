@@ -1,138 +1,325 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
-X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,MSGID_NOFQDN1,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-Received: (qmail 14220 invoked by uid 102); 10 Jun 2013 15:17:05 -0000
-Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.84) with ESMTP; Mon, 10 Jun 2013 10:17:03 -0500
+X-Spam-Level: **
+X-Spam-ASN: AS31976 209.132.176.0/21
+X-Spam-Status: No, score=2.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,MSGID_NOFQDN1,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+Received: (qmail 27516 invoked by uid 107); 2 Dec 2009 20:06:07 -0000
+Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
+    by peff.net (qpsmtpd/0.40) with ESMTP; Wed, 02 Dec 2009 15:06:05 -0500
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753507Ab3FJPQJ (ORCPT <rfc822;peff@peff.net>);
-	Mon, 10 Jun 2013 11:16:09 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:47835 "EHLO rominette.imag.fr"
+	id S1755014AbZLBUBP (ORCPT <rfc822;peff@peff.net>);
+	Wed, 2 Dec 2009 15:01:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754948AbZLBUBP
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 15:01:15 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:47191 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752247Ab3FJPQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jun 2013 11:16:08 -0400
-Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r5AFD7eS025935
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 10 Jun 2013 17:13:07 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id r5AFD9CH016064;
-	Mon, 10 Jun 2013 17:13:09 +0200
-Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id r5AFD82F007153;
-	Mon, 10 Jun 2013 17:13:08 +0200
-Received: (from garciagj@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id r5AFD8cr007150;
-	Mon, 10 Jun 2013 17:13:08 +0200
-From:	y@ensimag.imag.fr
-To:	git@vger.kernel.org
-Cc:	gitster@pobox.com,
-	Jorge Juan Garcia Garcia 
-	<Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>,
-	Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: v3 [PATCH 2/2] status:introduce status.branch to enable --branch by default
-Date:	Mon, 10 Jun 2013 17:13:04 +0200
-Message-Id: <1370877184-19409-2-git-send-email-y>
-X-Mailer: git-send-email 1.7.8
-In-Reply-To: <1370877184-19409-1-git-send-email-y>
-References: <y>
- <1370877184-19409-1-git-send-email-y>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 10 Jun 2013 17:13:07 +0200 (CEST)
+	id S1754895AbZLBUBI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 15:01:08 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id nB2Jx09s028017
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 2 Dec 2009 20:59:00 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1NFvNp-00036h-F2; Wed, 02 Dec 2009 21:01:05 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1NFvNp-0006YM-A9; Wed, 02 Dec 2009 21:01:05 +0100
+From:	y@imag.fr
+To:	git@vger.kernel.org, gitster@pobox.com
+Cc:	Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2] Detailed diagnosis when parsing an object name fails.
+Date:	Wed,  2 Dec 2009 21:01:01 +0100
+Message-Id: <1259784061-25143-1-git-send-email-y>
+X-Mailer: git-send-email 1.6.6.rc0.256.g6060
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 02 Dec 2009 20:59:00 +0100 (CET)
+X-IMAG-MailScanner-Information:	Please contact MI2S MIM  for more information
+X-MailScanner-ID: nB2Jx09s028017
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check:	1260388742.14744@PryVIcEi2E/Qai02vIhVeA
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 
-Some people often run 'git status -b'.
-The config variable status.branch allows to set it by default.
+The previous error message was the same in many situations (unknown
+revision or path not in the working tree). We try to help the user as
+much as possible to understand the error, especially with the
+sha1:filename notation. In this case, we say whether the sha1 or the
+filename is problematic, and diagnose the confusion between
+relative-to-root and relative-to-$PWD confusion precisely.
 
-Signed-off-by: Jorge Juan Garcia Garcia <Jorge-Juan.Garcia-Garcia@ensimag.imag.fr>
-Signed-off-by: Mathieu Lienard--Mayor <Mathieu.Lienard--Mayor@ensimag.imag.fr>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
---- 
-Changes to be commented:
-- Cleaning test
+The 6 new error messages are tested.
 
- Documentation/config.txt |    4 ++++
- builtin/commit.c         |    4 ++++
- t/t7508-status.sh        |   27 +++++++++++++++++++++++++++
- 3 files changed, 35 insertions(+), 0 deletions(-)
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Changes since v1:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1983bf7..ecdcd6d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2070,6 +2070,10 @@ status.short::
- 	Set to true to enable --short by default in linkgit:git-status[1].
- 	The option --no-short takes precedence over this variable.
+* Fixed a segfault with
+
++	if (!prefix)
++		prefix = "";
+
+* Added testcases.
+
+ cache.h                        |    6 ++-
+ setup.c                        |   15 +++++-
+ sha1_name.c                    |   95 ++++++++++++++++++++++++++++++++++++++--
+ t/t1506-rev-parse-diagnosis.sh |   67 ++++++++++++++++++++++++++++
+ 4 files changed, 176 insertions(+), 7 deletions(-)
+ create mode 100755 t/t1506-rev-parse-diagnosis.sh
+
+diff --git a/cache.h b/cache.h
+index 0e69384..5c8cb5f 100644
+--- a/cache.h
++++ b/cache.h
+@@ -708,7 +708,11 @@ static inline unsigned int hexval(unsigned char c)
+ #define DEFAULT_ABBREV 7
  
-+status.branch::
-+	Set to true to enable --branch by default in linkgit:git-status[1].
-+	The option --no-branch takes precedence over this variable.
+ extern int get_sha1(const char *str, unsigned char *sha1);
+-extern int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode);
++static inline get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode)
++{
++	return get_sha1_with_mode_1(str, sha1, mode, 0, NULL);
++}
++extern int get_sha1_with_mode_1(const char *str, unsigned char *sha1, unsigned *mode, int fatal, const char *prefix);
+ extern int get_sha1_hex(const char *hex, unsigned char *sha1);
+ extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
+ extern int read_ref(const char *filename, unsigned char *sha1);
+diff --git a/setup.c b/setup.c
+index f67250b..3094e8b 100644
+--- a/setup.c
++++ b/setup.c
+@@ -74,6 +74,18 @@ int check_filename(const char *prefix, const char *arg)
+ 	die_errno("failed to stat '%s'", arg);
+ }
+ 
++static void NORETURN die_verify_filename(const char *prefix, const char *arg)
++{
++	unsigned char sha1[20];
++	unsigned mode;
++	/* try a detailed diagnostic ... */
++	get_sha1_with_mode_1(arg, sha1, &mode, 1, prefix);
++	/* ... or fall back the most general message. */
++	die("ambiguous argument '%s': unknown revision or path not in the working tree.\n"
++	    "Use '--' to separate paths from revisions", arg);
 +
- status.showUntrackedFiles::
- 	By default, linkgit:git-status[1] and linkgit:git-commit[1] show
- 	files which are not currently tracked by Git. Directories which
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 287f1cb..f2b5d44 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1117,6 +1117,10 @@ static int git_status_config(const char *k, const char *v, void *cb)
- 			status_format = STATUS_FORMAT_SHORT;
- 		return 0;
- 	}
-+	if (!strcmp(k, "status.branch")) {
-+		s->show_branch = git_config_bool(k, v);
-+		return 0;
++}
++
+ /*
+  * Verify a filename that we got as an argument for a pathspec
+  * entry. Note that a filename that begins with "-" never verifies
+@@ -87,8 +99,7 @@ void verify_filename(const char *prefix, const char *arg)
+ 		die("bad flag '%s' used after filename", arg);
+ 	if (check_filename(prefix, arg))
+ 		return;
+-	die("ambiguous argument '%s': unknown revision or path not in the working tree.\n"
+-	    "Use '--' to separate paths from revisions", arg);
++	die_verify_filename(prefix, arg);
+ }
+ 
+ /*
+diff --git a/sha1_name.c b/sha1_name.c
+index 44bb62d..030e2ac 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -804,7 +804,77 @@ int get_sha1(const char *name, unsigned char *sha1)
+ 	return get_sha1_with_mode(name, sha1, &unused);
+ }
+ 
+-int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
++static void diagnose_invalid_sha1_path(const char *prefix,
++				       const char *filename,
++				       const char *tree_sha1,
++				       const char *object_name)
++{
++	struct stat st;
++	unsigned char sha1[20];
++	unsigned mode;
++
++	if (!prefix)
++		prefix = "";
++
++	if (!lstat(filename, &st))
++		die("Path '%s' exists on disk, but not in '%s'.",
++		    filename, object_name);
++	if (errno == ENOENT || errno == ENOTDIR) {
++		char *fullname = malloc(strlen(filename)
++					     + strlen(prefix) + 1);
++		strcpy(fullname, prefix);
++		strcat(fullname, filename);
++
++		if (!get_tree_entry(tree_sha1, fullname,
++				    sha1, &mode)) {
++			die("Path '%s' exists, but not '%s'.\n"
++			    "Did you mean '%s:%s'?",
++			    fullname,
++			    filename,
++			    object_name,
++			    fullname);
++		}
++		die("Path '%s' does not exist in '%s'",
++		    filename, object_name);
 +	}
- 	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
- 		s->use_color = git_config_colorbool(k, v);
- 		return 0;
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index 9a07f15..958617a 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -1366,6 +1366,33 @@ test_expect_success '"status.short=false" weaker than "-s"' '
- 	test_cmp actual expected_short
- '
- 
-+test_expect_success '"status.branch=true" same as "-b"' '
-+	git -c status.branch=true status -s >actual &&
-+	git status -sb >expected_branch &&
-+	test_cmp actual expected_branch
++}
++
++static void diagnose_invalid_index_path(int stage,
++					const char *prefix,
++					const char *filename)
++{
++	struct stat st;
++
++	if (!prefix)
++		prefix = "";
++
++	if (!lstat(filename, &st))
++		die("Path '%s' exists on disk, but not in the index.", filename);
++	if (errno == ENOENT || errno == ENOTDIR) {
++		struct cache_entry *ce;
++		int pos;
++		int namelen = strlen(filename) + strlen(prefix);
++		char *fullname = malloc(namelen + 1);
++		strcpy(fullname, prefix);
++		strcat(fullname, filename);
++		pos = cache_name_pos(fullname, namelen);
++		if (pos < 0)
++			pos = -pos - 1;
++		ce = active_cache[pos];
++		if (ce_namelen(ce) == namelen &&
++		    !memcmp(ce->name, fullname, namelen))
++			die("Path '%s' is in the index, but not '%s'.\n"
++			    "Did you mean ':%d:%s'?",
++			    fullname, filename,
++			    stage, fullname);
++
++		die("Path '%s' does not exist (neither on disk nor in the index).",
++		    filename);
++	}
++}
++
++
++int get_sha1_with_mode_1(const char *name, unsigned char *sha1, unsigned *mode, int fatal, const char *prefix)
+ {
+ 	int ret, bracket_depth;
+ 	int namelen = strlen(name);
+@@ -850,6 +920,8 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
+ 			}
+ 			pos++;
+ 		}
++		if (fatal)
++			diagnose_invalid_index_path(stage, prefix, cp);
+ 		return -1;
+ 	}
+ 	for (cp = name, bracket_depth = 0; *cp; cp++) {
+@@ -862,9 +934,24 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
+ 	}
+ 	if (*cp == ':') {
+ 		unsigned char tree_sha1[20];
+-		if (!get_sha1_1(name, cp-name, tree_sha1))
+-			return get_tree_entry(tree_sha1, cp+1, sha1,
+-					      mode);
++		char *object_name;
++		if (fatal) {
++			object_name = malloc(cp-name+1);
++			strncpy(object_name, name, cp-name);
++			object_name[cp-name] = '\0';
++		}
++		if (!get_sha1_1(name, cp-name, tree_sha1)) {
++			const char *filename = cp+1;
++			ret = get_tree_entry(tree_sha1, filename, sha1, mode);
++			if (fatal)
++				diagnose_invalid_sha1_path(prefix, filename,
++							   tree_sha1, object_name);
++
++			return ret;
++		} else {
++			if (fatal)
++				die("Invalid object name '%s'.", object_name);
++		}
+ 	}
+ 	return ret;
+ }
+diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
+new file mode 100755
+index 0000000..8112d56
+--- /dev/null
++++ b/t/t1506-rev-parse-diagnosis.sh
+@@ -0,0 +1,67 @@
++#!/bin/sh
++
++test_description='test git rev-parse diagnosis for invalid argument'
++
++exec </dev/null
++
++. ./test-lib.sh
++
++HASH_file=
++
++test_expect_success 'set up basic repo' '
++	echo one > file.txt &&
++	mkdir subdir &&
++	echo two > subdir/file.txt &&
++	echo three > subdir/file2.txt &&
++	git add . &&
++	git commit -m init &&
++	echo four > index-only.txt &&
++	git add index-only.txt &&
++	echo five > disk-only.txt
 +'
 +
-+test_expect_success '"status.branch=true" different from "--no-branch"' '
-+	git -c status.branch=true status -s >actual &&
-+	git status -s --no-branch  >expected_nobranch &&
-+	test_must_fail test_cmp actual expected_nobranch
++test_expect_success 'correct file objects' '
++	HASH_file=$(git rev-parse HEAD:file.txt) &&
++	git rev-parse HEAD:subdir/file.txt &&
++	git rev-parse :index-only.txt &&
++	cd subdir &&
++	git rev-parse HEAD:file.txt &&
++	git rev-parse HEAD:subdir/file2.txt &&
++	test $HASH_file = $(git rev-parse HEAD:file.txt) &&
++	test $HASH_file = $(git rev-parse :file.txt) &&
++	test $HASH_file = $(git rev-parse :0:file.txt) &&
++	cd ..
 +'
 +
-+test_expect_success '"status.branch=true" weaker than "--no-branch"' '
-+	git -c status.branch=true status -s --no-branch >actual &&
-+	test_cmp actual expected_nobranch
++test_expect_success 'incorrect revision id' '
++	test_must_fail git rev-parse foobar:file.txt 2>&1 |
++		grep "Invalid object name '"'"'foobar'"'"'." &&
++	test_must_fail git rev-parse foobar 2>&1 |
++		grep "unknown revision or path not in the working tree."
 +'
 +
-+test_expect_success '"status.branch=false" same as "--no-branch"' '
-+	git -c status.branch=false status -s >actual &&
-+	test_cmp actual expected_nobranch
++test_expect_success 'incorrect file in sha1:path' '
++	test_must_fail git rev-parse HEAD:nothing.txt 2>&1 |
++		grep "fatal: Path '"'"'nothing.txt'"'"' does not exist in '"'"'HEAD'"'"'" &&
++	test_must_fail git rev-parse HEAD:index-only.txt 2>&1 |
++		grep "fatal: Path '"'"'index-only.txt'"'"' exists on disk, but not in '"'"'HEAD'"'"'." &&
++	cd subdir &&
++	test_must_fail git rev-parse HEAD:file2.txt 2>&1 |
++		grep "Did you mean '"'"'HEAD:subdir/file2.txt'"'"'?" &&
++	cd ..
 +'
 +
-+test_expect_success '"status.branch=false" weaker than "-b"' '
-+	git -c status.branch=false status -sb >actual &&
-+	test_cmp actual expected_branch
++test_expect_success 'incorrect file in :path and :0:path' '
++	test_must_fail git rev-parse :nothing.txt 2>&1 |
++		grep "fatal: Path '"'"'nothing.txt'"'"' does not exist (neither on disk nor in the index)." &&
++	test_must_fail git rev-parse :1:nothing.txt 2>&1 |
++		grep "Path '"'"'nothing.txt'"'"' does not exist (neither on disk nor in the index)." &&
++	cd subdir &&
++	test_must_fail git rev-parse :file2.txt 2>&1 |
++		grep "Did you mean '"'"':0:subdir/file2.txt'"'"'?" &&
++	cd .. &&
++	test_must_fail git rev-parse :disk-only.txt 2>&1 |
++		grep "fatal: Path '"'"'disk-only.txt'"'"' exists on disk, but not in the index."
 +'
 +
- test_expect_success '"Back to environment of test by default"' '
- 	git config status.showUntrackedFiles yes
- '
++test_done
 -- 
-1.7.8
+1.6.6.rc0.256.g6060
 
