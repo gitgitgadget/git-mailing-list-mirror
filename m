@@ -1,65 +1,95 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH v2 0/6] add support for git send-email
-Date: Wed, 2 Dec 2009 22:35:31 +0000
-Message-ID: <b0943d9e0912021435k6d19dc1crfa9c6865217a4973@mail.gmail.com>
-References: <20091202003503.7737.51579.stgit@bob.kio>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH 2/2] Document date formats accepted by parse_date()
+Date: Thu, 03 Dec 2009 07:33:13 +0900
+Message-ID: <20091203073313.6117@nanako3.lavabit.com>
+References: <3d547f4e32c026efc76a7dfe1572da617714f8c9.1259791789.git.vmiklos@frugalware.org> <831fc8f48429d5a21e29d04760b46b2ddfcb7d80.1259791789.git.vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>, Karl Wiberg <kha@treskal.com>
-To: Alex Chiang <achiang@hp.com>
-X-From: git-owner@vger.kernel.org Wed Dec 02 23:35:39 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Dec 02 23:36:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFxnO-0002X4-84
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 23:35:38 +0100
+	id 1NFxny-0002qU-Lf
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Dec 2009 23:36:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755835AbZLBWf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 17:35:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755834AbZLBWf0
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 17:35:26 -0500
-Received: from mail-fx0-f221.google.com ([209.85.220.221]:47887 "EHLO
-	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755774AbZLBWfZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 17:35:25 -0500
-Received: by fxm21 with SMTP id 21so865501fxm.1
-        for <git@vger.kernel.org>; Wed, 02 Dec 2009 14:35:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=fICAB+uGBILrbB+jEo2tMkPBqna3gAWwbksASVg9BRI=;
-        b=T0JaDWSjlHTr7l9hwoA+UzEgEubfFHJDpBSgnJWzrMGcKNc5AnuWUud2algwLuwrWP
-         BKz+KJCAj17lKGyUovYwdgabxDbwUbwPjEGDbcHuYn3IU0aYZJuRsnZzOoVkJ9lXNcxP
-         s3xyuEvnYN/6GFxCctUP+c90u7rRTL/orPuqE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=p7EylKE/6fPmi0RDwGtuMnpAF7ZNF+jIlQvQE9SAgVYyIRCHVGB8BkJCJQG57gy8x6
-         uc5lKCnGli1X1GIrD3qFKPC3+sO+jqsrNzs9GoNJ8QDr6V36z7hKNF4Wr8CjYFstW7ZX
-         s0RJvyNjwBWiHEAj/ASF+ncwntggrBNanLly8=
-Received: by 10.223.4.27 with SMTP id 27mr124193fap.48.1259793331267; Wed, 02 
-	Dec 2009 14:35:31 -0800 (PST)
-In-Reply-To: <20091202003503.7737.51579.stgit@bob.kio>
+	id S1755892AbZLBWgC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 17:36:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755885AbZLBWgC
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 17:36:02 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:33351 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755861AbZLBWgA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 17:36:00 -0500
+Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
+	by karen.lavabit.com (Postfix) with ESMTP id 90A0B11B85C;
+	Wed,  2 Dec 2009 16:36:05 -0600 (CST)
+Received: from 4307.lavabit.com (212.62.97.20)
+	by lavabit.com with ESMTP id 5LYPOF26ZKH1; Wed, 02 Dec 2009 16:36:05 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=aCdaRAzOPonM8UdBW9mUX2W65PVGdYZvoRhVSpWEnVlFNTZPYcpNAOiK1QZ3KDHyNShCYotzeiF53AAQR727fYsnFJbLPlAd2S1L6c5ZELGPepBsY3w1+5Lr8JLzml1AR2YE4LBVJLia1nkMBc3+DzcpmXavBx8pQ87RtFiuQuY=;
+  h=From:To:Cc:Subject:X-Draft-From:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+X-Draft-From: ("nnml:git-review" 6653)
+In-Reply-To: <831fc8f48429d5a21e29d04760b46b2ddfcb7d80.1259791789.git.vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134411>
 
-Hi Alex,
+Quoting Miklos Vajna <vmiklos@frugalware.org>
 
-2009/12/2 Alex Chiang <achiang@hp.com>:
-> This is v2 of the series that starts teaching stg mail how to
-> call git send-email.
+> ---
 
-Thanks for posting these patches (and thanks to Karl for reviewing
-them). I don't have much to comment (Karl did the hard work here) but
-I'll give them a try tomorrow and let you know.
+I don't think any message needs to be there, but a Signed-Off-By: 
+line should be.
 
-Thanks.
+> +The GIT_AUTHOR_DATE, GIT_COMMITTER_DATE environment variables
+> +ifdef::git-commit[]
+> +and the `--date` option
+> +endif::git-commit[]
+> +support the following date formats:
+> +
+> +Git native format::
+> +	It is `<unix timestamp> <timezone offset>`, where `<unix
+> +	timestamp>` is the number of seconds since the UNIX epoch.
+> +	`<timezone offset>` is a positive or negative offset from UTC.
+> +	For example CET (which is 2 hours ahead UTC) is `+0200`.
+
+It is better to call it 'internal' format, instead of 'native'. 
+I think 'native' means the most natural way to Git, and users 
+view what 'git show' outputs as 'native'.
+
+  nana.git% git show -s v1.6.5^0 | grep Date
+  Date:   Sat Oct 10 00:05:19 2009 -0700
+  nana.git% ./test-date parse 'Sat Oct 10 00:05:19 2009 -0700'
+  Sat Oct 10 00:05:19 2009 -0700 -> 2009-10-10 07:05:19 +0000
+
+And 'Git native' format is also supported, I think.
+
+> +RFC 2822::
+> +	The standard email format as described by RFC 2822, for example
+> +	`Thu, 07 Apr 2005 22:13:13 +0200`.
+> +
+> +ISO 8601::
+> +	Time and date specified by the ISO 8601 standard, for example
+> +	`2005-04-07T22:13:13`. The parser accepts a space instead of the
+> +	`T` character as well.
+
+I didn't know about "T", but it works (^_^).
+
+  nana.git% ./test-date parse '2005-04-07T22:13:13'
+  2005-04-07T22:13:13 -> 2005-04-07 13:13:13 +0000
+
+Is there something wrong with 'show'?
+
+  nana.git% ./test-date show '2005-04-07T22:13:13'
+  2005-04-07T22:13:13 -> 40 years ago
 
 -- 
-Catalin
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
