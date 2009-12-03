@@ -1,162 +1,268 @@
 From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC/PATCHv9 01/11] fast-import: Proper notes tree manipulation
-Date: Thu, 03 Dec 2009 04:45:55 +0100
-Message-ID: <200912030445.55732.johan@herland.net>
-References: <1259719783-4674-1-git-send-email-johan@herland.net>
- <1259719783-4674-2-git-send-email-johan@herland.net>
- <20091202203953.GE31648@spearce.org>
+Subject: [PATCH for v1.6.6] Fix crasher on encountering SHA1-like non-note in
+ notes tree
+Date: Thu, 03 Dec 2009 04:53:54 +0100
+Message-ID: <1259812434-24471-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
+Content-Type: TEXT/PLAIN
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Dec 03 04:46:19 2009
+Cc: git@vger.kernel.org, johan@herland.net, spearce@spearce.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Dec 03 04:54:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NG2dz-0004xC-K4
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 04:46:15 +0100
+	id 1NG2ld-0007XF-LR
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 04:54:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753455AbZLCDpx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 22:45:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753299AbZLCDpx
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 22:45:53 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:54232 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753089AbZLCDpw (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Dec 2009 22:45:52 -0500
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+	id S1755454AbZLCDx5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 22:53:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754291AbZLCDx5
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 22:53:57 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:50358 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753408AbZLCDx4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Dec 2009 22:53:56 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KU2003ME54LZ300@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 03 Dec 2009 04:45:57 +0100 (MET)
-Received: from alpha.localnet ([84.215.102.95])
+ with ESMTP id <0KU2000XB5I1OD50@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 03 Dec 2009 04:54:01 +0100 (MET)
+Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KU2003PJ54JBW20@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 03 Dec 2009 04:45:57 +0100 (MET)
+ with ESMTP id <0KU2003195HZBW30@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 03 Dec 2009 04:54:01 +0100 (MET)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.12.3.33320
-User-Agent: KMail/1.12.3 (Linux/2.6.31-ARCH; KDE/4.3.3; x86_64; ; )
-In-reply-to: <20091202203953.GE31648@spearce.org>
+ Antispam-Data: 2009.12.3.33917
+X-Mailer: git-send-email 1.6.5.3.433.g11067
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134429>
 
-(Oops. I forgot to answer a couple of your questions...)
+When loading a notes tree, the code primarily looks for SHA1-like paths
+whose total length (discounting directory separators) are 40 chars
+(interpreted as valid note entries) or less (interpreted as subtree
+entries that may in turn contain note entries when unpacked).
 
-On Wednesday 02 December 2009, Shawn O. Pearce wrote:
-> Johan Herland <johan@herland.net> wrote:
-> > +static unsigned int do_change_note_fanout(
-> > +		struct tree_entry *orig_root, struct tree_entry *root,
-> > +		char *hex_sha1, unsigned int hex_sha1_len,
-> > +		char *fullpath, unsigned int fullpath_len,
-> > +		unsigned char fanout)
-> > +{
-> > +	struct tree_content *t = root->tree;
-> > +	struct tree_entry *e, leaf;
-> > +	unsigned int i, tmp_hex_sha1_len, tmp_fullpath_len, num_notes = 0;
-> > +	unsigned char sha1[20];
-> > +	char realpath[60];
-> > +	int is_note;
-> > +
-> > +	for (i = 0; i < t->entry_count; i++) {
-> > +		e = t->entries[i];
-> > +		is_note = (e->versions[1].mode & NOTE_MODE) == NOTE_MODE;
-> > +		tmp_hex_sha1_len = hex_sha1_len + e->name->str_len;
-> > +		tmp_fullpath_len = fullpath_len;
-> > +
-> > +		if (tmp_hex_sha1_len <= 40 && e->name->str_len >= 2) {
-> > +			memcpy(hex_sha1 + hex_sha1_len, e->name->str_dat,
-> > +				e->name->str_len);
-> > +			if (tmp_fullpath_len)
-> > +				fullpath[tmp_fullpath_len++] = '/';
-> > +			memcpy(fullpath + tmp_fullpath_len, e->name->str_dat,
-> > +				e->name->str_len);
-> > +			tmp_fullpath_len += e->name->str_len;
-> > +			assert(tmp_fullpath_len < 60);
-> > +			fullpath[tmp_fullpath_len] = '\0';
-> > +		} else {
-> > +			assert(!is_note);
-> > +			continue;
-> > +		}
-> 
-> Are we rejecting a mixed content-tree here?  I thought a notes
-> tree was allowed to hold anything, e.g. isn't it ok to put a
-> ".gitattributes" file into a notes tree.
-> 
-> I think we'd do better to have at the top of our loop:
-> 
-> 	if (!is_note && !S_ISDIR(e->versions[1].mode))
-> 		continue;
-> 
-> so that we ignore non-notes and non-subdirectories which might
-> contain notes.
+However, there is an additional condition that must hold for valid
+subtree entries: They must be _tree_ objects (duh).
 
-AFAICS, the current code does not reject ".gitattributes", but instead 
-simply ignores it presence (i.e. does not change its fanout). However, it 
-certainly does some unnecessary work (setting up hex_sha1 and fullpath) 
-which is ignored in the bottom part of the loop (where it fails both the "if 
-(is_note)" and the following "else if").
+This patch adds an appropriate test for this condition, thereby fixing
+the crash that occured when passing a non-tree object to the tree-walk
+API.
 
-However, while adding a test to verify the handling of non-notes, I came 
-across an unrelated crasher in the notes.c code. Will send a fix for this 
-ASAP.
+The patch also adds another selftest verifying correct behaviour of
+non-notes in note trees.
 
-In any case, I think your proposed if-condition is better, and I will 
-rewrite the code accordingly.
+Signed-off-by: Johan Herland <johan@herland.net>
+---
 
-> > @@ -2080,8 +2195,10 @@ static void note_change_n(struct branch *b)
-> >  			    typename(type), command_buf.buf);
-> >  	}
-> >
-> > -	tree_content_set(&b->branch_tree, sha1_to_hex(commit_sha1), sha1,
-> > -		S_IFREG | 0644, NULL);
-> > +	construct_path_with_fanout(sha1_to_hex(commit_sha1), fanout, path);
-> > +	b->num_notes += adjust_num_notes(&b->branch_tree, path, sha1);
-> > +	mode = (is_null_sha1(sha1) ? S_IFREG : NOTE_MODE) | 0644;
-> > +	tree_content_set(&b->branch_tree, path, sha1, mode, NULL);
-> 
-> I wonder if it wouldn't be better to compute the fan out here on
-> each put.  That way if an importer drives 2,000,000 notes at once
-> to us in a single commit, we don't wind up with a flat 0 fan-out
-> tree and trying to perform a linear insert on each one, but instead
-> will start to increase the fan out as the number of entries goes up.
-> 
-> Basically, tree_content_set/remove are O(N) operations on N paths
-> in the tree, because their structures aren't necessarily sorted.
-> IIRC at one point in time I tried to do this with a binary search but
-> gave up and just did it unsorted.  At least using the fan out here
-> would help partition the search space dramatically on large inserts.
+Junio,
 
-This is a really good idea, but it's a bit more complicated than that:
-An 'N' command may not only add new notes, but also rewrite existing notes, 
-and when rewriting an existing note we must take care to _replace_ the old 
-note, and not merely adding a new note at a different fanout level. The 
-above code implicitly guarantees this, by calling note_change_n() with the 
-'old' fanout level (which will cause the new note to overwrite the old note 
-in-place).
+I believe this should be included in v1.6.6. It fixes an existing crasher in
+the early part of the notes series.
 
-However, as long as we remember to check for (and remove, if found) the note 
-at the old fanout level, we might still be able to place the new note at the 
-_current_ fanout level [1], and thus avoid the worst case you describe 
-above. Hmm. I need to think some more about this...
-
-
-Have fun! :)
 
 ...Johan
 
+ notes.c                |    2 +
+ t/t3304-notes-mixed.sh |  172 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 174 insertions(+), 0 deletions(-)
+ create mode 100755 t/t3304-notes-mixed.sh
 
-[1] This is actually not _completely_ right: If you have several 'N' 
-commands in the same commit that act on the same note, but happen to do so 
-in at least two different fanout levels, you will end up with two notes for 
-the same object (at least until do_change_note_fanout() arbitrarily 
-overwrites one of them with the other). However, this might be such a far-
-fetched scenario, that we don't have to worry about it in practice.
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+diff --git a/notes.c b/notes.c
+index 50a4672..023adce 100644
+--- a/notes.c
++++ b/notes.c
+@@ -331,6 +331,8 @@ static void load_subtree(struct leaf_node *subtree, struct int_node *node,
+ 			hashcpy(l->key_sha1, commit_sha1);
+ 			hashcpy(l->val_sha1, entry.sha1);
+ 			if (len < 20) {
++				if (!S_ISDIR(entry.mode))
++					continue; /* entry cannot be subtree */
+ 				l->key_sha1[19] = (unsigned char) len;
+ 				type = PTR_TYPE_SUBTREE;
+ 			}
+diff --git a/t/t3304-notes-mixed.sh b/t/t3304-notes-mixed.sh
+new file mode 100755
+index 0000000..256687f
+--- /dev/null
++++ b/t/t3304-notes-mixed.sh
+@@ -0,0 +1,172 @@
++#!/bin/sh
++
++test_description='Test notes trees that also contain non-notes'
++
++. ./test-lib.sh
++
++number_of_commits=100
++
++start_note_commit () {
++	test_tick &&
++	cat <<INPUT_END
++commit refs/notes/commits
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++notes
++COMMIT
++
++from refs/notes/commits^0
++deleteall
++INPUT_END
++
++}
++
++verify_notes () {
++	git log | grep "^    " > output &&
++	i=$number_of_commits &&
++	while [ $i -gt 0 ]; do
++		echo "    commit #$i" &&
++		echo "    note for commit #$i" &&
++		i=$(($i-1));
++	done > expect &&
++	test_cmp expect output
++}
++
++test_expect_success "setup: create a couple of commits" '
++
++	test_tick &&
++	cat <<INPUT_END >input &&
++commit refs/heads/master
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++commit #1
++COMMIT
++
++M 644 inline file
++data <<EOF
++file in commit #1
++EOF
++
++INPUT_END
++
++	test_tick &&
++	cat <<INPUT_END >>input &&
++commit refs/heads/master
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++commit #2
++COMMIT
++
++M 644 inline file
++data <<EOF
++file in commit #2
++EOF
++
++INPUT_END
++	git fast-import --quiet <input
++'
++
++test_expect_success "create a notes tree with both notes and non-notes" '
++
++	commit1=$(git rev-parse refs/heads/master^) &&
++	commit2=$(git rev-parse refs/heads/master) &&
++	test_tick &&
++	cat <<INPUT_END >input &&
++commit refs/notes/commits
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++notes commit #1
++COMMIT
++
++N inline $commit1
++data <<EOF
++note for commit #1
++EOF
++
++N inline $commit2
++data <<EOF
++note for commit #2
++EOF
++
++INPUT_END
++	test_tick &&
++	cat <<INPUT_END >>input &&
++commit refs/notes/commits
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++notes commit #2
++COMMIT
++
++M 644 inline foobar/non-note.txt
++data <<EOF
++A non-note in a notes tree
++EOF
++
++N inline $commit2
++data <<EOF
++edited note for commit #2
++EOF
++
++INPUT_END
++	test_tick &&
++	cat <<INPUT_END >>input &&
++commit refs/notes/commits
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++notes commit #3
++COMMIT
++
++N inline $commit1
++data <<EOF
++edited note for commit #1
++EOF
++
++M 644 inline deadbeef
++data <<EOF
++non-note with SHA1-like name
++EOF
++
++M 644 inline de/adbeef
++data <<EOF
++another non-note with SHA1-like name
++EOF
++
++INPUT_END
++	git fast-import --quiet <input &&
++	git config core.notesRef refs/notes/commits
++'
++
++cat >expect <<EXPECT_END
++    commit #2
++    edited note for commit #2
++    commit #1
++    edited note for commit #1
++EXPECT_END
++
++test_expect_success "verify contents of notes" '
++
++	git log | grep "^    " > actual &&
++	test_cmp expect actual
++'
++
++cat >expect_nn1 <<EXPECT_END
++A non-note in a notes tree
++EXPECT_END
++cat >expect_nn2 <<EXPECT_END
++non-note with SHA1-like name
++EXPECT_END
++cat >expect_nn3 <<EXPECT_END
++another non-note with SHA1-like name
++EXPECT_END
++
++test_expect_success "verify contents of non-notes" '
++
++	git cat-file -p refs/notes/commits:foobar/non-note.txt > actual_nn1 &&
++	test_cmp expect_nn1 actual_nn1 &&
++	git cat-file -p refs/notes/commits:deadbeef > actual_nn2 &&
++	test_cmp expect_nn2 actual_nn2 &&
++	git cat-file -p refs/notes/commits:de/adbeef > actual_nn3 &&
++	test_cmp expect_nn3 actual_nn3
++'
++
++test_done
+--
+1.6.5.3.433.g11067
