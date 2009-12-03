@@ -1,265 +1,179 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Detailed diagnosis when parsing an object name fails.
-Date: Thu, 03 Dec 2009 12:37:55 -0800
-Message-ID: <7vljhj4wv0.fsf@alter.siamese.dyndns.org>
-References: <1259784061-25143-1-git-send-email-y>
+From: Alex Chiang <achiang@hp.com>
+Subject: [StGit PATCH v3 1/6] stg mail: Refactor __send_message and friends
+Date: Thu, 3 Dec 2009 13:46:35 -0700
+Message-ID: <20091203204635.GH23258@ldl.fc.hp.com>
+References: <20091202003503.7737.51579.stgit@bob.kio> <20091202004605.7737.2077.stgit@bob.kio> <b8197bcb0912012253l399bb542sab141021e7ff6353@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: y@imag.fr
-X-From: git-owner@vger.kernel.org Thu Dec 03 21:38:14 2009
+Cc: catalin.marinas@gmail.com, git <git@vger.kernel.org>
+To: Karl Wiberg <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Dec 03 21:47:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGIRI-0002Yg-KS
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 21:38:13 +0100
+	id 1NGIZl-0006MT-K5
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 21:46:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754414AbZLCUiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 15:38:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754321AbZLCUiA
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 15:38:00 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55785 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753864AbZLCUh7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Dec 2009 15:37:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8C68DA30C0;
-	Thu,  3 Dec 2009 15:38:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yK07G5ZYPo80rXDyjMhdE42VCK4=; b=QrhiO5
-	9R+82tPoyvxl1b6ldhJ0S2xFpxiMZXZrJuPNZY+lowtukVmpRhWSowRKJ1hZylQr
-	qHcXBYvGt3oRuiAK7EUmt9GBoRBrg9pee5HoSo4Y5LlaXhEhCyA/9LzqCw4CoQv/
-	VJNR6o2Ynm3fOCFIj7yM2xiuqErfCh1CKl4g8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YpscYDRhVkdmxEFesXypl9GKJ/cmjGr+
-	FM3csLPwb0ZkA/FEsT3lT5grzsdsCX1JQ6X7avnYai3FioZ74iPr1znrwXGTg6ki
-	oZ5BF9jGvt7Utnmi4ZVuo+uB4N1k6Wsu8YgkPOAGLzNKB95+5GWJRmljiss819Bc
-	Y1DMgxDOwuM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5C598A30BE;
-	Thu,  3 Dec 2009 15:38:02 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9CEBCA30B6; Thu,  3 Dec 2009
- 15:37:57 -0500 (EST)
-In-Reply-To: <1259784061-25143-1-git-send-email-y> (y.'s message of "Wed\,  2
- Dec 2009 21\:01\:01 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C06EFE3E-E04B-11DE-B34F-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1755183AbZLCUqp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2009 15:46:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755023AbZLCUqp
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 15:46:45 -0500
+Received: from g5t0008.atlanta.hp.com ([15.192.0.45]:43790 "EHLO
+	g5t0008.atlanta.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754307AbZLCUqo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2009 15:46:44 -0500
+Received: from g5t0029.atlanta.hp.com (g5t0029.atlanta.hp.com [16.228.8.141])
+	by g5t0008.atlanta.hp.com (Postfix) with ESMTP id 3BC15240DD;
+	Thu,  3 Dec 2009 20:46:51 +0000 (UTC)
+Received: from ldl (linux.corp.hp.com [15.11.146.101])
+	by g5t0029.atlanta.hp.com (Postfix) with ESMTP id B6C7B2003B;
+	Thu,  3 Dec 2009 20:46:40 +0000 (UTC)
+Received: from localhost (ldl.fc.hp.com [127.0.0.1])
+	by ldl (Postfix) with ESMTP id 9899DCF001B;
+	Thu,  3 Dec 2009 13:46:35 -0700 (MST)
+Received: from ldl ([127.0.0.1])
+	by localhost (ldl.fc.hp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id PVkG7qpNujfX; Thu,  3 Dec 2009 13:46:35 -0700 (MST)
+Received: by ldl (Postfix, from userid 17609)
+	id 82CD8CF0007; Thu,  3 Dec 2009 13:46:35 -0700 (MST)
+Content-Disposition: inline
+In-Reply-To: <b8197bcb0912012253l399bb542sab141021e7ff6353@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134476>
 
-y@imag.fr writes:
+Instead of passing all the various smtp* args to __send_message
+individually, let's just pass the options list instead.
 
-> diff --git a/cache.h b/cache.h
-> index 0e69384..5c8cb5f 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -708,7 +708,11 @@ static inline unsigned int hexval(unsigned char c)
->  #define DEFAULT_ABBREV 7
->  
->  extern int get_sha1(const char *str, unsigned char *sha1);
-> -extern int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode);
-> +static inline get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode)
-> +{
-> +	return get_sha1_with_mode_1(str, sha1, mode, 0, NULL);
-> +}
-> +extern int get_sha1_with_mode_1(const char *str, unsigned char *sha1, unsigned *mode, int fatal, const char *prefix);
+The main motivation is for future patches. The end goal is to
+thin out stg mail's implementation and make it a minimal wrapper
+around git send-email. By passing the options list to __send_message
+we prepare to pass options directly to git send-email.
 
-Do I understand correctly that "fatal" here is the same as "!gently"
-elsewhere in the API?
+As a bonus, this change results in a cleaner internal API.
 
-> diff --git a/sha1_name.c b/sha1_name.c
-> index 44bb62d..030e2ac 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -804,7 +804,77 @@ int get_sha1(const char *name, unsigned char *sha1)
->  	return get_sha1_with_mode(name, sha1, &unused);
->  }
->  
-> -int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
-> +static void diagnose_invalid_sha1_path(const char *prefix,
-> +				       const char *filename,
-> +				       const char *tree_sha1,
-> +				       const char *object_name)
-> +{
-> +	struct stat st;
-> +	unsigned char sha1[20];
-> +	unsigned mode;
-> +
-> +	if (!prefix)
-> +		prefix = "";
-> +
-> +	if (!lstat(filename, &st))
-> +		die("Path '%s' exists on disk, but not in '%s'.",
-> +		    filename, object_name);
-> +	if (errno == ENOENT || errno == ENOTDIR) {
-> +		char *fullname = malloc(strlen(filename)
-> +					     + strlen(prefix) + 1);
-> +		strcpy(fullname, prefix);
-> +		strcat(fullname, filename);
+Finally, it also pushes the smtp logic where it belongs, viz. into
+__send_message_smtp, instead of cluttering up the main body of
+mail.func().
 
-What if malloc fails here (and elsewhere in your patch)?
+Cc: Karl Wiberg <kha@treskal.com>
+Signed-off-by: Alex Chiang <achiang@hp.com>
+---
 
-> +		if (!get_tree_entry(tree_sha1, fullname,
-> +				    sha1, &mode)) {
-> +			die("Path '%s' exists, but not '%s'.\n"
-> +			    "Did you mean '%s:%s'?",
-> +			    fullname,
-> +			    filename,
-> +			    object_name,
-> +			    fullname);
-> +		}
-> +		die("Path '%s' does not exist in '%s'",
-> +		    filename, object_name);
-> +	}
-> +}
-> +
-> +static void diagnose_invalid_index_path(int stage,
-> +					const char *prefix,
-> +					const char *filename)
-> +{
-> +	struct stat st;
-> +
-> +	if (!prefix)
-> +		prefix = "";
-> +
-> +	if (!lstat(filename, &st))
-> +		die("Path '%s' exists on disk, but not in the index.", filename);
-> +	if (errno == ENOENT || errno == ENOTDIR) {
-> +		struct cache_entry *ce;
-> +		int pos;
-> +		int namelen = strlen(filename) + strlen(prefix);
-> +		char *fullname = malloc(namelen + 1);
-> +		strcpy(fullname, prefix);
-> +		strcat(fullname, filename);
-> +		pos = cache_name_pos(fullname, namelen);
-> +		if (pos < 0)
-> +			pos = -pos - 1;
-> +		ce = active_cache[pos];
-> +		if (ce_namelen(ce) == namelen &&
-> +		    !memcmp(ce->name, fullname, namelen))
-> +			die("Path '%s' is in the index, but not '%s'.\n"
-> +			    "Did you mean ':%d:%s'?",
-> +			    fullname, filename,
-> +			    stage, fullname);
+Catalin,
 
-What happens if the user asked for ":2:Makefile" while in directory "t/",
-and there is ":1:t/Makefile" but not ":2:t/Makefile" in the index?
+This is the only patch in the series that changed, so no sense in
+sending out all the others.
 
-What should happen if the user asked for ":2:t/Makefile" in such a case?
+ stgit/commands/mail.py |   43 +++++++++++++++++++------------------------
+ 1 files changed, 19 insertions(+), 24 deletions(-)
 
-> @@ -850,6 +920,8 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
->  			}
->  			pos++;
->  		}
-> +		if (fatal)
-> +			diagnose_invalid_index_path(stage, prefix, cp);
->  		return -1;
->  	}
->  	for (cp = name, bracket_depth = 0; *cp; cp++) {
-> @@ -862,9 +934,24 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
->  	}
->  	if (*cp == ':') {
->  		unsigned char tree_sha1[20];
-> -		if (!get_sha1_1(name, cp-name, tree_sha1))
-> -			return get_tree_entry(tree_sha1, cp+1, sha1,
-> -					      mode);
-> +		char *object_name;
-> +		if (fatal) {
-> +			object_name = malloc(cp-name+1);
-
-Where is this freed?
-
-Instead of doing a leaky allocation, it may make sense to pass the tree
-object name as <const char *, size_t> pair, and print it with "%.*s" in
-the error reporting codepath.  After all, object_name is used only for
-that purpose in diagnose_invalid_sha1_path(), no?
-
-> +			strncpy(object_name, name, cp-name);
-> +			object_name[cp-name] = '\0';
-> +		}
-> +		if (!get_sha1_1(name, cp-name, tree_sha1)) {
-> +			const char *filename = cp+1;
-> +			ret = get_tree_entry(tree_sha1, filename, sha1, mode);
-> +			if (fatal)
-> +				diagnose_invalid_sha1_path(prefix, filename,
-> +							   tree_sha1, object_name);
-> +
-> +			return ret;
-> +		} else {
-> +			if (fatal)
-> +				die("Invalid object name '%s'.", object_name);
-> +		}
->  	}
->  	return ret;
->  }
-> diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
-> new file mode 100755
-> index 0000000..8112d56
-> --- /dev/null
-> +++ b/t/t1506-rev-parse-diagnosis.sh
-> @@ -0,0 +1,67 @@
-> +#!/bin/sh
-> +
-> +test_description='test git rev-parse diagnosis for invalid argument'
-> +
-> +exec </dev/null
-> +
-> +. ./test-lib.sh
-> +
-> +HASH_file=
-> +
-> +test_expect_success 'set up basic repo' '
-> +	echo one > file.txt &&
-> +	mkdir subdir &&
-> +	echo two > subdir/file.txt &&
-> +	echo three > subdir/file2.txt &&
-> +	git add . &&
-> +	git commit -m init &&
-> +	echo four > index-only.txt &&
-> +	git add index-only.txt &&
-> +	echo five > disk-only.txt
-> +'
-> +
-> +test_expect_success 'correct file objects' '
-> +	HASH_file=$(git rev-parse HEAD:file.txt) &&
-> +	git rev-parse HEAD:subdir/file.txt &&
-> +	git rev-parse :index-only.txt &&
-> +	cd subdir &&
-> +	git rev-parse HEAD:file.txt &&
-> +	git rev-parse HEAD:subdir/file2.txt &&
-> +	test $HASH_file = $(git rev-parse HEAD:file.txt) &&
-> +	test $HASH_file = $(git rev-parse :file.txt) &&
-> +	test $HASH_file = $(git rev-parse :0:file.txt) &&
-> +	cd ..
-> +'
-
-Please make it a habit of not doing "cd" without forcing a subprocess
-using ().  If 'rev-parse HEAD:file.txt' fails after "cd subdir", the next
-test will start running from that directory.
-
-> +test_expect_success 'incorrect revision id' '
-> +	test_must_fail git rev-parse foobar:file.txt 2>&1 |
-> +		grep "Invalid object name '"'"'foobar'"'"'." &&
-
-It always is better to write this in separate steps, because exit status
-of the upstream of pipe is discarded by the shell.
-
-If you expect an error exit and want to make sure a particular error
-message is given, do this:
-
-	test_must_fail git rev-parse foobar:file.txt 2>error &&
-        grep "Invalid ..." error 
-
-If you expect an error exit and want to make sure an incorrect error
-message is not produced, do this:
-
-	test_must_fail git rev-parse foobar:file.txt 2>error &&
-        ! grep "Invalid ..." error 
+diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
+index abd42e4..777ee36 100644
+--- a/stgit/commands/mail.py
++++ b/stgit/commands/mail.py
+@@ -190,10 +190,20 @@ def __send_message_sendmail(sendmail, msg):
+     cmd = sendmail.split()
+     Run(*cmd).raw_input(msg).discard_output()
+ 
+-def __send_message_smtp(smtpserver, from_addr, to_addr_list, msg,
+-                        smtpuser, smtppassword, use_tls):
++def __send_message_smtp(smtpserver, from_addr, to_addr_list, msg, options):
+     """Send the message using the given SMTP server
+     """
++    smtppassword = options.smtp_password or config.get('stgit.smtppassword')
++    smtpuser = options.smtp_user or config.get('stgit.smtpuser')
++    smtpusetls = options.smtp_tls or config.get('stgit.smtptls') == 'yes'
++
++    if (smtppassword and not smtpuser):
++        raise CmdException('SMTP password supplied, username needed')
++    if (smtpusetls and not smtpuser):
++        raise CmdException('SMTP over TLS requested, username needed')
++    if (smtpuser and not smtppassword):
++        smtppassword = getpass.getpass("Please enter SMTP password: ")
++
+     try:
+         s = smtplib.SMTP(smtpserver)
+     except Exception, err:
+@@ -203,7 +213,7 @@ def __send_message_smtp(smtpserver, from_addr, to_addr_list, msg,
+     try:
+         if smtpuser and smtppassword:
+             s.ehlo()
+-            if use_tls:
++            if smtpusetls:
+                 if not hasattr(socket, 'ssl'):
+                     raise CmdException,  "cannot use TLS - no SSL support in Python"
+                 s.starttls()
+@@ -218,17 +228,17 @@ def __send_message_smtp(smtpserver, from_addr, to_addr_list, msg,
+ 
+     s.quit()
+ 
+-def __send_message(smtpserver, from_addr, to_addr_list, msg,
+-                   smtpuser, smtppassword, use_tls):
++def __send_message(from_addr, to_addr_list, msg, options):
+     """Message sending dispatcher.
+     """
++    smtpserver = options.smtp_server or config.get('stgit.smtpserver')
++
+     if smtpserver.startswith('/'):
+         # Use the sendmail tool
+         __send_message_sendmail(smtpserver, msg)
+     else:
+         # Use the SMTP server (we have host and port information)
+-        __send_message_smtp(smtpserver, from_addr, to_addr_list, msg,
+-                            smtpuser, smtppassword, use_tls)
++        __send_message_smtp(smtpserver, from_addr, to_addr_list, msg, options)
+ 
+ def __build_address_headers(msg, options, extra_cc = []):
+     """Build the address headers and check existing headers in the
+@@ -543,8 +553,6 @@ def func(parser, options, args):
+     """Send the patches by e-mail using the patchmail.tmpl file as
+     a template
+     """
+-    smtpserver = options.smtp_server or config.get('stgit.smtpserver')
+-
+     applied = crt_series.get_applied()
+ 
+     if options.all:
+@@ -564,17 +572,6 @@ def func(parser, options, args):
+             raise CmdException, 'Cannot send empty patch "%s"' % p
+     out.done()
+ 
+-    smtppassword = options.smtp_password or config.get('stgit.smtppassword')
+-    smtpuser = options.smtp_user or config.get('stgit.smtpuser')
+-    smtpusetls = options.smtp_tls or config.get('stgit.smtptls') == 'yes'
+-
+-    if (smtppassword and not smtpuser):
+-        raise CmdException, 'SMTP password supplied, username needed'
+-    if (smtpusetls and not smtpuser):
+-        raise CmdException, 'SMTP over TLS requested, username needed'
+-    if (smtpuser and not smtppassword):
+-        smtppassword = getpass.getpass("Please enter SMTP password: ")
+-
+     total_nr = len(patches)
+     if total_nr == 0:
+         raise CmdException, 'No patches to send'
+@@ -616,8 +613,7 @@ def func(parser, options, args):
+             out.stdout_raw(msg_string + '\n')
+         else:
+             out.start('Sending the cover message')
+-            __send_message(smtpserver, from_addr, to_addr_list, msg_string,
+-                           smtpuser, smtppassword, smtpusetls)
++            __send_message(from_addr, to_addr_list, msg_string, options)
+             time.sleep(sleep)
+             out.done()
+ 
+@@ -648,8 +644,7 @@ def func(parser, options, args):
+             out.stdout_raw(msg_string + '\n')
+         else:
+             out.start('Sending patch "%s"' % p)
+-            __send_message(smtpserver, from_addr, to_addr_list, msg_string,
+-                           smtpuser, smtppassword, smtpusetls)
++            __send_message(from_addr, to_addr_list, msg_string, options)
+             # give recipients a chance of receiving related patches in the
+             # correct order.
+             if patch_nr < total_nr:
