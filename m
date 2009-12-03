@@ -1,87 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git 1.6.5.4
-Date: Thu, 03 Dec 2009 09:43:38 -0800
-Message-ID: <7viqco54xh.fsf@alter.siamese.dyndns.org>
-References: <7v638o76ra.fsf@alter.siamese.dyndns.org>
- <m2hbs85koj.fsf@igel.home> <4B17ABE3.6060003@drmicha.warpmail.net>
- <m2d42w5fqq.fsf@igel.home> <4B17D078.6080000@drmicha.warpmail.net>
- <20091203150323.GI23717@inocybe.localdomain>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH 1/2] t4201: use ISO8859-1 rather than ISO-8859-1
+Date: Thu,  3 Dec 2009 11:52:45 -0600
+Message-ID: <cQVSAldE71QbE653CpBd7qjd43g8URlxW7WO99KN4T0njgcXAbpAJQhTbfLeU5wxWrW84lsFVZE@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Todd Zullinger <tmz@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 03 18:45:13 2009
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Dec 03 18:53:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGFif-0005Dx-Jv
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 18:43:57 +0100
+	id 1NGFs5-0002hF-0M
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 18:53:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754937AbZLCRnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 12:43:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753419AbZLCRnp
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 12:43:45 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54203 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753406AbZLCRnp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Dec 2009 12:43:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 20DB184853;
-	Thu,  3 Dec 2009 12:43:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=674D3udHujPodBUKuwCiqT6cag8=; b=hcDKhQ9/VQAo5fmtGa89qk3
-	yeUkRKxb7d3TbdJ+MWZk43WlTsAtccRMeHB2q5wRO9Uy4WVT8zcQL6pZz8EFBrDO
-	D9ukFZdUk5SfgDdYJKXT/GVADdNeWq0qyIeBqcyYkX+H99IlZRBSy6accnUT3Afs
-	PnEeuZyEfu5ZOXoY/x4c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=ezFBCquxAIDuo5TQDkzRmdDDku09xFtTsUJjyvff6Bsr2PE8u
-	C47K6pnBPAKmyd70HKWRwpMOVAsF6F+XuZ1r/FLH2kMJH35ygk8FlWOV01yMcrTX
-	H71uriK2qyJ1FX9PXgWio2XQb1zk4/ItBmls609k5CcU53jt742qbJfymU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C40B784852;
-	Thu,  3 Dec 2009 12:43:45 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ABD038484A; Thu,  3 Dec
- 2009 12:43:39 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 67D5E106-E033-11DE-95D5-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754296AbZLCRxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2009 12:53:07 -0500
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754182AbZLCRxG
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 12:53:06 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50544 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752704AbZLCRxF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2009 12:53:05 -0500
+Received: by mail.nrlssc.navy.mil id nB3Hr9OY002960; Thu, 3 Dec 2009 11:53:09 -0600
+X-OriginalArrivalTime: 03 Dec 2009 17:53:09.0818 (UTC) FILETIME=[79C5C1A0:01CA7441]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134461>
 
-Todd Zullinger <tmz@pobox.com> writes:
+=46rom: Brandon Casey <drafnel@gmail.com>
 
-> Michael J Gruber wrote:
->>>> Andreas Schwab venit, vidit, dixit 03.12.2009 13:03:
->>> xmlto version 0.0.18
-> [...]
->> Now that predates Git quite a bit (2004-01-21)...
->> I think we can require at least 0.0.20, which is in Debian Lenny and
->> Fedora 9, for example. I think that should have it. (I'm not sure, they
->> don't use a proper vcs ;) ).
->
-> xmlto-0.0.18 is what's in RHEL/CentOS 5.  It would be nice to be able
-> to build git docs there, which works pretty well in general (I
-> believe).
->
-> I built 1.6.6.rc1 on CentOS 5.4 last night with Junio's first patch
-> for this, which only called --stringparam if MAN_BASE_URL was set.
+Some ancient platforms do not have an extensive list of alternate names=
+ for
+character encodings.  For example, Solaris 7 and IRIX 6.5 do not know t=
+hat
+ISO-8859-1 is the same as ISO8859-1.  Modern platforms do know this, so=
+ use
+the older name.
 
-I did the second one after seeing that both my Debian box and the k.org
-machine that manpages tarballs are made (FC11 IIRC) had that option, and
-my impression has been that it usually is safe to say "even Debian has it,
-and there wouldn't be many things older than that distro", but that is
-apparently not true.
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
+ t/t4201-shortlog.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Either we require 0.0.20 or we revert the tip one on this topic.  I think
-the latter is a safe thing to do.
-
-Thanks for a quick report and analysis.
+diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+index dd818f6..a01e55b 100755
+--- a/t/t4201-shortlog.sh
++++ b/t/t4201-shortlog.sh
+@@ -53,7 +53,7 @@ GIT_DIR=3Dnon-existing git shortlog -w < log > out
+ test_expect_success 'shortlog from non-git directory' 'test_cmp expect=
+ out'
+=20
+ iconvfromutf8toiso88591() {
+-	printf "%s" "$*" | iconv -f UTF-8 -t ISO-8859-1
++	printf "%s" "$*" | iconv -f UTF-8 -t ISO8859-1
+ }
+=20
+ DSCHO=3D"J=C3=B6h=C3=A4nn=C3=ABs \"Dsch=C3=B6\" Schind=C3=ABlin"
+@@ -72,7 +72,7 @@ test_expect_success 'shortlog encoding' '
+ 	git config --unset i18n.commitencoding &&
+ 	echo 2 > a1 &&
+ 	git commit --quiet -m "$MSG1" --author=3D"$DSCHOE" a1 &&
+-	git config i18n.commitencoding "ISO-8859-1" &&
++	git config i18n.commitencoding "ISO8859-1" &&
+ 	echo 3 > a1 &&
+ 	git commit --quiet -m "$(iconvfromutf8toiso88591 "$MSG2")" \
+ 		--author=3D"$(iconvfromutf8toiso88591 "$DSCHOE")" a1 &&
+--=20
+1.6.5.3
