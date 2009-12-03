@@ -1,118 +1,103 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 2/2 v2] Document date formats accepted by parse_date()
-Date: Thu,  3 Dec 2009 00:49:19 +0100
-Message-ID: <465359e7bb6f00b622a1a5df5bc178eee019f4a2.1259797598.git.vmiklos@frugalware.org>
-References: <7v638p9ebz.fsf@alter.siamese.dyndns.org>
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] pull: clarify advice for the unconfigured error case
+Date: Wed, 2 Dec 2009 19:26:14 -0600
+Message-ID: <20091203012535.GA16259@progeny.tock>
+References: <D6B0AE61-6CA3-4F79-BB50-B8795415BAB7@dbservice.com>
+ <1257968052.26362.155.camel@heerbeest>
+ <AC99BA30-A36D-4798-8E7D-9D69EFE99D55@dbservice.com>
+ <1258035449.26362.273.camel@heerbeest>
+ <20091112155310.7836c388@perceptron>
+ <20091112150626.GA24848@coredump.intra.peff.net>
+ <20091112170814.1858aba4@perceptron>
+ <20091113040754.GA3255@progeny.tock>
+ <20091127141704.GA24080@progeny.tock>
+ <7vk4x57z4e.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jan =?iso-8859-1?Q?Kr=FCger?= <jk@jk.gs>,
+	Jeff King <peff@peff.net>,
+	Jan Nieuwenhuizen <janneke-list@xs4all.nl>,
+	Tomas Carnecky <tom@dbservice.com>,
+	git list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 03 00:47:36 2009
+X-From: git-owner@vger.kernel.org Thu Dec 03 02:19:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NFyv1-0006oQ-Hk
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 00:47:35 +0100
+	id 1NG0Lh-0005PX-56
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 02:19:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755121AbZLBXrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2009 18:47:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754621AbZLBXrW
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 18:47:22 -0500
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:55985 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753991AbZLBXrW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 18:47:22 -0500
-Received: from vmobile.example.net (dsl5401C01C.pool.t-online.hu [84.1.192.28])
-	by yugo.frugalware.org (Postfix) with ESMTPA id AF21F1A49F;
-	Thu,  3 Dec 2009 00:47:27 +0100 (CET)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id BA0BC181FDB; Thu,  3 Dec 2009 00:49:19 +0100 (CET)
-X-Mailer: git-send-email 1.6.5.2
-In-Reply-To: <7v638p9ebz.fsf@alter.siamese.dyndns.org>
+	id S1753429AbZLCBTA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Dec 2009 20:19:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753108AbZLCBTA
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 20:19:00 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:61474 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752915AbZLCBS7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 20:18:59 -0500
+Received: by yxe17 with SMTP id 17so722967yxe.33
+        for <git@vger.kernel.org>; Wed, 02 Dec 2009 17:19:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=vxR/j4tvKHgE73vEbFaoJ07JNk5GdwyEZyJzJnUVJiY=;
+        b=yDrlgsKmkNu87szJ+pPD7zDbMy7AWOALn87T0ViSvYTXUWuoz1Wnf1xIVNa1d+PgcV
+         rJO3pTtK2XbXsMhXM6GBF/SR18mkoPVmO6xh8ldsIEAP80oUZrJizUVwo1Y1MxQ7cU5/
+         3QVmsAzI4CF6FEeVgAzhm+iuwM5nKp0k4Pr1s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=uBhJB1yBlLNypVi9Vnrdt+kBAycYsEcUxBtgDcw4lZGngSY7tovjsAbOrEbMu40shH
+         YDnEsXEza/QW+6pPMWSkFNi7BK4hQ+vJjZR8oSIo0rKyPlCW1SFN8x6Yt2vUievOe+oM
+         6tB9QhD52avJF2JJg31qNQdCQcWmLUsgeKUOw=
+Received: by 10.90.10.9 with SMTP id 9mr1296985agj.69.1259802813847;
+        Wed, 02 Dec 2009 17:13:33 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 23sm242596iwn.11.2009.12.02.17.13.32
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 02 Dec 2009 17:13:33 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vk4x57z4e.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134421>
 
----
-
-On Wed, Dec 02, 2009 at 02:54:40PM -0800, Junio C Hamano <gitster@pobox.com> wrote:
-> I agree with the "native->internal" part of the suggestion.
-
-Changed.
-
-> Also "test-date parse" seems to accept things like these:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
->     '2009.04.07 20:21:22 -0000'
->     '04/07/2009 20:21:22 -0000'
->     '07.04.2009 20:21:22 -0000'
+>> From: Jan Kr=C3=BCger <jk@jk.gs>
+>>
+>> When pull --rebase fails because it cannot find what branch to
+>> merge against, the error message implies we are trying to merge.
+>> Say "rebase against" instead of "merge with" to avoid confusion.
+[...]
+> Is this a good replacement for 31971b3 (git-pull.sh --rebase: overhau=
+l
+> error handling when no candidates are found, 2009-11-12) that is on '=
+pu'
 
-Ah OK, I just tried 2009.04.07 (without the time part) and thought it
-was about approxidate() as well. I added them.
+Yes, that is the intent.
 
- Documentation/date-formats.txt    |   26 ++++++++++++++++++++++++++
- Documentation/git-commit-tree.txt |    1 +
- Documentation/git-commit.txt      |    2 ++
- 3 files changed, 29 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/date-formats.txt
+> and does the lack of follow-up mean everybody involved in the discuss=
+ion
+> is happy with this version?
 
-diff --git a/Documentation/date-formats.txt b/Documentation/date-formats.txt
-new file mode 100644
-index 0000000..c000f08
---- /dev/null
-+++ b/Documentation/date-formats.txt
-@@ -0,0 +1,26 @@
-+DATE FORMATS
-+------------
-+
-+The GIT_AUTHOR_DATE, GIT_COMMITTER_DATE environment variables
-+ifdef::git-commit[]
-+and the `--date` option
-+endif::git-commit[]
-+support the following date formats:
-+
-+Git internal format::
-+	It is `<unix timestamp> <timezone offset>`, where `<unix
-+	timestamp>` is the number of seconds since the UNIX epoch.
-+	`<timezone offset>` is a positive or negative offset from UTC.
-+	For example CET (which is 2 hours ahead UTC) is `+0200`.
-+
-+RFC 2822::
-+	The standard email format as described by RFC 2822, for example
-+	`Thu, 07 Apr 2005 22:13:13 +0200`.
-+
-+ISO 8601::
-+	Time and date specified by the ISO 8601 standard, for example
-+	`2005-04-07T22:13:13`. The parser accepts a space instead of the
-+	`T` character as well.
-++
-+NOTE: In addition, the date part is accepted in the following formats:
-+`YYYY.MM.DD`, `MM/DD/YYYY` and `DD.MM.YYYY`.
-diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
-index b8834ba..4fec5d5 100644
---- a/Documentation/git-commit-tree.txt
-+++ b/Documentation/git-commit-tree.txt
-@@ -73,6 +73,7 @@ A commit comment is read from stdin. If a changelog
- entry is not provided via "<" redirection, 'git-commit-tree' will just wait
- for one to be entered and terminated with ^D.
- 
-+include::date-formats.txt[]
- 
- Diagnostics
- -----------
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index cbbbeeb..17783b4 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -220,6 +220,8 @@ specified.
- 	these files are also staged for the next commit on top
- 	of what have been staged before.
- 
-+:git-commit: 1
-+include::date-formats.txt[]
- 
- EXAMPLES
- --------
--- 
-1.6.5.2
+I=E2=80=99m not sure.  I know I like it. :-)
+
+I was the only one with nitpicks about the wording (sorry).  Re
+whether to use configuration file syntax or a 'git config' command
+line snippet, it seemed like there was some consensus once it was
+clear that the user would have to modify the lines anyway to fill in
+the right values.  But others can speak up if this seems wrong.
+
+Hope that helps,
+Jonathan
