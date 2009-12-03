@@ -1,86 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: git gsoc money
-Date: Thu, 3 Dec 2009 00:22:20 -0500
-Message-ID: <20091203052220.GA22582@coredump.intra.peff.net>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH v2] Add --track option to git clone
+Date: Thu, 3 Dec 2009 06:31:46 +0100
+Message-ID: <20091203053146.GA23215@atjola.homenet>
+References: <1259707865-6561-1-git-send-email-sn_@gmx.net>
+ <20091202192028.6117@nanako3.lavabit.com>
+ <20091202190807.GB30778@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 03 06:22:27 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	David Soria Parra <sn_@gmx.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 03 06:31:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NG495-0004u5-3d
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 06:22:27 +0100
+	id 1NG4IG-0007An-Bx
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 06:31:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300AbZLCFWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 00:22:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751238AbZLCFWP
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 00:22:15 -0500
-Received: from peff.net ([208.65.91.99]:48648 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751156AbZLCFWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Dec 2009 00:22:15 -0500
-Received: (qmail 12000 invoked by uid 107); 3 Dec 2009 05:26:48 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 03 Dec 2009 00:26:48 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Dec 2009 00:22:20 -0500
+	id S1751308AbZLCFbp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Dec 2009 00:31:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751281AbZLCFbo
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 00:31:44 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42363 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750955AbZLCFbo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2009 00:31:44 -0500
+Received: (qmail invoked by alias); 03 Dec 2009 05:31:49 -0000
+Received: from i59F55C39.versanet.de (EHLO atjola.homenet) [89.245.92.57]
+  by mail.gmx.net (mp059) with SMTP; 03 Dec 2009 06:31:49 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/tQVItqHXtFTNpsexnTUU9Ntt7c5Ml7LjBWiC3HR
+	y02NJDJ23O1SyF
 Content-Disposition: inline
+In-Reply-To: <20091202190807.GB30778@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134436>
 
-As a result of our participation in the Summer of Code project last
-summer and this summer, Google gave the git community some money. Most
-of that money went to defraying travel costs to the SoC mentor summit
-and the GitTogether, both last year and this year.
+On 2009.12.02 14:08:07 -0500, Jeff King wrote:
+> And for convenience of the user, you would want a way to avoid repeat=
+ing
+> the name of the "I want to check this out" branch. So either:
+>=20
+>   1. Add "--track foo" as a convenience wrapper for "-f foo -b foo".
 
-However, we still have about $500 USD remaining. Because of the way
-Google hands out the money (they want to deal with one entity per
-project, and git has no legal entity), all of the remaining money is
-being held personally by me.
+Hm, we already have --track for "remote add", and that supports being
+supplied multiple times, so I guess for clone, that should work too. Bu=
+t
+if track implies -b, having multiple --track seems rather weird. Which
+branch head would be created? One for the first --track? Or the last
+one? Or one for each? So I'd rather not make --track imply -b.
 
-For accounting and tax reasons, I don't want to hold it later than Dec
-31st. So I am soliciting suggestions from the community on what to do
-with the money.
+>   2. If no "-b" is given, the first "-f" is assumed as "-b". So "git
+>      clone -f foo" becomes equivalent to David's --track.
 
-Some possibilities are:
+Won't work if the first one is -f refs/heads/subst/*:refs/remotes/origi=
+n/*
 
-  1. Become an affiliated project of an organization like The Software
-     Freedom Conservancy or Software in the Public Interest. These are
-     non-profit groups to whom we (or anyone else who wants to, for that
-     matter) can donate money earmarked for a particular project. They
-     handle the accounting and hold the money, and then we get it out
-     when we need it for something.
+> And of course the name "-f" (for --fetch, if you were wondering) is o=
+pen
+> to suggestion.
+>=20
+> What do you think?
 
-     Of course, then we still have the question of what that "something"
-     is. So far, all money has been used for travel aid. Suggestions
-     welcome.
+I'd prefer to see just --track for consistency with "remote add". That
+could even learn to use globs, but allowing to specify the right side o=
+f
+the refspec seems wrong given the option name, so it would be more
+limited than your -f option.
 
-     The upsides of this path are that it would handle the issue for
-     future years, and it would make it easy for people to donate money
-     to git if they wanted to. The downside is that the process may take
-     a while, so it may not actually happen in the next month.
-
-     Some relevant links for further reading:
-
-       http://conservancy.softwarefreedom.org/overview/
-       http://www.spi-inc.org/treasurer/associated-project-howto.html
-
-  2. Donate the money to some non-profit (by the way, all discussion of
-     taxes and non-profit here is with respect to the United States, as
-     the money is being held in the US). Possible recipients include a
-     software freedom organization like those listed above, or something
-     not software-specific like the EFF. It might be nice to contribute
-     to projects that help us build git, like curl, libxdiff, or
-     asciidoc, but AFAIK we can't do so in a tax-exempt way. gcc/mingw
-     is another candidate; we can probably donate to the Free Software
-     Foundation for that.
-
-Basically I don't want to hold on to this money, I want it to go
-somewhere useful, and I don't want to make a unilateral decision.
-Please let me know what people think would be useful.
-
--Peff
+Bj=F6rn
