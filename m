@@ -1,68 +1,71 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC PATCH 4/8] Support remote helpers implementing smart
-	transports
-Date: Thu, 3 Dec 2009 11:42:42 -0800
-Message-ID: <20091203194242.GD23281@spearce.org>
-References: <1259675838-14692-1-git-send-email-ilari.liusvaara@elisanet.fi> <1259675838-14692-5-git-send-email-ilari.liusvaara@elisanet.fi> <20091201192233.GL21299@spearce.org> <20091202055543.GC31244@Knoppix> <20091202170457.GC31648@spearce.org> <20091202201008.GB11301@Knoppix>
+From: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
+Subject: installation problems with version 1.6.5.4
+Date: Thu, 3 Dec 2009 20:09:21 +0000
+Message-ID: <20091203200921.GA29478@cs-wsok.swansea.ac.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Thu Dec 03 20:42:55 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 03 21:09:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGHZn-0003YM-8I
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 20:42:55 +0100
+	id 1NGHzW-000745-05
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 21:09:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756179AbZLCTmm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 14:42:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756148AbZLCTmm
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 14:42:42 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:62662 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756160AbZLCTml (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Dec 2009 14:42:41 -0500
-Received: by yxe17 with SMTP id 17so1440699yxe.33
-        for <git@vger.kernel.org>; Thu, 03 Dec 2009 11:42:48 -0800 (PST)
-Received: by 10.101.88.12 with SMTP id q12mr2732025anl.76.1259869365935;
-        Thu, 03 Dec 2009 11:42:45 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 34sm1194518yxf.11.2009.12.03.11.42.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 03 Dec 2009 11:42:43 -0800 (PST)
+	id S1752340AbZLCUJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2009 15:09:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751773AbZLCUJS
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 15:09:18 -0500
+Received: from mhs.swan.ac.uk ([137.44.1.33]:42504 "EHLO mhs.swan.ac.uk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751691AbZLCUJR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2009 15:09:17 -0500
+Received: from [137.44.2.59] (helo=cs-svr1.swan.ac.uk)
+	by mhs.swan.ac.uk with esmtp (Exim 4.69)
+	(envelope-from <O.Kullmann@swansea.ac.uk>)
+	id 1NGHzO-0002AF-KH; Thu, 03 Dec 2009 20:09:22 +0000
+Received: from cs-wsok.swansea.ac.uk (cs-wsok [137.44.2.227])
+	by cs-svr1.swan.ac.uk (Postfix) with ESMTP id B175036DF;
+	Thu,  3 Dec 2009 20:09:21 +0000 (GMT)
+Received: by cs-wsok.swansea.ac.uk (Postfix, from userid 3579)
+	id A5BA274211; Thu,  3 Dec 2009 20:09:21 +0000 (GMT)
 Content-Disposition: inline
-In-Reply-To: <20091202201008.GB11301@Knoppix>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134471>
 
-Ilari Liusvaara <ilari.liusvaara@elisanet.fi> wrote:
-> On Wed, Dec 02, 2009 at 09:04:57AM -0800, Shawn O. Pearce wrote:
-> > Modify transport-helper.c to allow pushing TRANS_OPT_UPLOADPACK and
-> > TRANS_OPT_RECEIVEPACK down into the helper via the option capability.
-> 
-> NAK. Modified _process_connect_or_invoke (now _process_connect) to pass
-> new option that appiles to connecting all subprotocols (if needed).
-...
-> And from helper POV, all subprotocols should appear identical from
-> layer 6 POV so it doesn't make sense to diffrentiate between path
-> for upload-pack and receive-pack (or upload-archive!).
+Hi,
 
-That may be true, but the remote.origin.uploadpack and
-remote.origin.receivepack configuration options exist
-and are passed through as these option uploadpack and
-option receivepack callbacks.
+I get when installing 1.6.5.4
 
-If you want to pass through a single option with the remote program
-name, you need to do that immediately before the connect invoke
-occurs, and instead buffer the two different configuration options
-in the struct transport.  I think that would make the series messier
-than it is.
- 
--- 
-Shawn.
+    GEN technical/api-index.txt
+    ASCIIDOC technical/api-index.html
+    ASCIIDOC git-add.xml
+    XMLTO git-add.1
+xmlto: unrecognised option `--stringparam'
+usage: xmlto [OPTION]... FORMAT XML
+OPTIONs are:
+  -v              verbose output (-vv for very verbose)
+  -x stylesheet   use the specified stylesheet instead of choosing one
+  -m fragment     use the XSL fragment to customize the stylesheet
+  -o directory    put output in the specified directory instead of
+                  the current working directory
+  -p postprocopts pass option to postprocessor
+  --extensions    turn on stylesheet extensions for this tool chain
+  --searchpath    colon-separated list of fallback directories
+  --skip-validation
+                  do not attempt to validate the input before processing
+
+
+where
+
+> xmlto --version
+xmlto version 0.0.18
+
+Couldn't find something on versions of xmlto required?
+
+Oliver
