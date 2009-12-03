@@ -1,70 +1,80 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] git-pull.sh: Fix call to git-merge for new command  
- format
-Date: Thu, 03 Dec 2009 09:10:53 +0100
-Message-ID: <4B17728D.4070606@drmicha.warpmail.net>
-References: <1259707451-20661-1-git-send-email-vonbrand@inf.utfsm.cl> <7vmy22qmgp.fsf@alter.siamese.dyndns.org> <4B163B49.4070606@drmicha.warpmail.net> <7vws15jpe7.fsf@alter.siamese.dyndns.org> <4B16A410.5090802@drmicha.warpmail.net> <7viqcpgtbf.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 03 09:12:16 2009
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH RESEND] git config: clarify bool types
+Date: Thu,  3 Dec 2009 10:21:13 +0200
+Message-ID: <1259828473-14830-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 03 09:21:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NG6nO-0000Kp-2d
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 09:12:15 +0100
+	id 1NG6wT-0003nS-L7
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 09:21:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751816AbZLCIMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 03:12:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751696AbZLCIMA
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 03:12:00 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35255 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751590AbZLCIL7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Dec 2009 03:11:59 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id C0A68C5329;
-	Thu,  3 Dec 2009 03:12:05 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 03 Dec 2009 03:12:05 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=aNRuNA78NfX3cPfL8bea8x7mIHk=; b=lbSJx71MXsWHuhEBsnjU88Z4vem1oklnB2aiC3VlV1HTZwXWMaH/tRubk6fx3FET5FzB6flWOy20KbLy9H2yzdM68MX8er8Fy8PbkhPeesizcPhjb5aMxZ3v7Rg1p6fdCYYYkeJ7dfxc/NyW6qPYZKAw8wf9yQy6uBWKXj3M1bo=
-X-Sasl-enc: 4zHoboguGy1xOPAMibNik9h9f2NvwJMipHLrgtTBSM9g 1259827925
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1BF982B215;
-	Thu,  3 Dec 2009 03:12:04 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091127 Lightning/1.0b1pre Shredder/3.0.1pre
-In-Reply-To: <7viqcpgtbf.fsf@alter.siamese.dyndns.org>
+	id S1751879AbZLCIVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2009 03:21:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751590AbZLCIVT
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 03:21:19 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:34686 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751425AbZLCIVS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2009 03:21:18 -0500
+Received: by bwz27 with SMTP id 27so873202bwz.21
+        for <git@vger.kernel.org>; Thu, 03 Dec 2009 00:21:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=ITpweJ4ColwzKoA3/FyT9olcBUDDS8K0fvfzfoffNeo=;
+        b=TG6IONCIM929SPKC/wKRppZe2fHGKtNd/Ctop0M5PGLg6KSVk1fl4koNZ7pzOsrTVp
+         QrAZrqDVnVIUYYjCkeyJpiXVGbbC4d6aRh8QuULslV/BkLe7BgNAaonMHJ7o6+xP+KhP
+         0/xAIj50eQktHp3DhxsTpxIFJ+07pIlWDDPWQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=bdpXBp1G+wM8arCDuraztjJeMZLTDqp3tI3XxQQGOIbAQPLqUK14quoJ+pH2UcPyBv
+         JB2Agw9WtrAgevPh7zvUQw1j4v97S5QVTbJ7p9ufF3mUJQhReRrUETvQf7oRzbbJNCNH
+         PCQ637ODwx+YvEKrImj2S/0gxs2GhuGC89+3E=
+Received: by 10.204.160.90 with SMTP id m26mr1270010bkx.63.1259828484103;
+        Thu, 03 Dec 2009 00:21:24 -0800 (PST)
+Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
+        by mx.google.com with ESMTPS id 13sm521259bwz.10.2009.12.03.00.21.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 03 Dec 2009 00:21:22 -0800 (PST)
+X-Mailer: git-send-email 1.6.6.rc1.1.ge4e9b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134441>
 
-Junio C Hamano venit, vidit, dixit 02.12.2009 18:49:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->>> Yes.  Anything that sets GIT_EXEC_PATH correctly can use git-foo form.
->>
->> I know they can. That was in the part you snipped ;)
-> 
-> You asked about the presense of "a policy", and you got an answer.
+The value is what it is, the --bool and --bool-or-int options don't
+specify the value type, just how it is interpreted. For example: a value
+of '1' can be interpreted as 'true'.
 
-I guess that was a language issue (on both sides) then, since "can"
-could be "is able to" as well as "is allowed to", and I read your answer
-in the former sense; the latter makes it a policy.
+Comments by Michael J Gruber.
 
->> The questions is: Should they? Should we avoid mixing both forms in one
->> script?
-> 
-> Should we avoid it?  Yes but not very enthusiastically.  We should make
-> sure that new invocations anybody adds use dashless form, but I would
-> recommend against a "let's remove use of dashed form" patch _unless_ you
-> find a time when the project is really quiet and there is nothing else
-> going on.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ builtin-config.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-OK, that's all I wanted to know. Thanks.
-
-Michael
+diff --git a/builtin-config.c b/builtin-config.c
+index a2d656e..d81928c 100644
+--- a/builtin-config.c
++++ b/builtin-config.c
+@@ -66,9 +66,9 @@ static struct option builtin_config_options[] = {
+ 	OPT_STRING(0, "get-color", &get_color_slot, "slot", "find the color configured: [default]"),
+ 	OPT_STRING(0, "get-colorbool", &get_colorbool_slot, "slot", "find the color setting: [stdout-is-tty]"),
+ 	OPT_GROUP("Type"),
+-	OPT_BIT(0, "bool", &types, "value is \"true\" or \"false\"", TYPE_BOOL),
++	OPT_BIT(0, "bool", &types, "value is interpreted as a boolean (\"true\" or \"false\")", TYPE_BOOL),
+ 	OPT_BIT(0, "int", &types, "value is decimal number", TYPE_INT),
+-	OPT_BIT(0, "bool-or-int", &types, "value is --bool or --int", TYPE_BOOL_OR_INT),
++	OPT_BIT(0, "bool-or-int", &types, "value is interpreted either as --bool or --int", TYPE_BOOL_OR_INT),
+ 	OPT_GROUP("Other"),
+ 	OPT_BOOLEAN('z', "null", &end_null, "terminate values with NUL byte"),
+ 	OPT_END(),
+-- 
+1.6.6.rc1.1.ge4e9b
