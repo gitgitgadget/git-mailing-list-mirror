@@ -1,96 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git documentation consistency
-Date: Thu, 3 Dec 2009 02:45:00 -0500
-Message-ID: <20091203074500.GA31566@coredump.intra.peff.net>
-References: <m1NEaLp-000kn1C@most.weird.com>
- <20091129051427.GA6104@coredump.intra.peff.net>
- <m1NFAji-000kn2C@most.weird.com>
- <20091202200904.GA7631@coredump.intra.peff.net>
- <m1NG0O6-000kmgC@most.weird.com>
- <7vaay096ye.fsf@alter.siamese.dyndns.org>
- <m1NG61U-000kn4C@most.weird.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] git-pull.sh: Fix call to git-merge for new command  
+ format
+Date: Thu, 03 Dec 2009 09:10:53 +0100
+Message-ID: <4B17728D.4070606@drmicha.warpmail.net>
+References: <1259707451-20661-1-git-send-email-vonbrand@inf.utfsm.cl> <7vmy22qmgp.fsf@alter.siamese.dyndns.org> <4B163B49.4070606@drmicha.warpmail.net> <7vws15jpe7.fsf@alter.siamese.dyndns.org> <4B16A410.5090802@drmicha.warpmail.net> <7viqcpgtbf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: The Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 03 08:45:11 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 03 09:12:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NG6NB-0000U4-8q
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 08:45:10 +0100
+	id 1NG6nO-0000Kp-2d
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 09:12:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754712AbZLCHo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 02:44:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754222AbZLCHoz
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 02:44:55 -0500
-Received: from peff.net ([208.65.91.99]:46188 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754327AbZLCHox (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Dec 2009 02:44:53 -0500
-Received: (qmail 12507 invoked by uid 107); 3 Dec 2009 07:49:28 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 03 Dec 2009 02:49:28 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Dec 2009 02:45:00 -0500
-Content-Disposition: inline
-In-Reply-To: <m1NG61U-000kn4C@most.weird.com>
+	id S1751816AbZLCIMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2009 03:12:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751696AbZLCIMA
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 03:12:00 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35255 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751590AbZLCIL7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Dec 2009 03:11:59 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id C0A68C5329;
+	Thu,  3 Dec 2009 03:12:05 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Thu, 03 Dec 2009 03:12:05 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=aNRuNA78NfX3cPfL8bea8x7mIHk=; b=lbSJx71MXsWHuhEBsnjU88Z4vem1oklnB2aiC3VlV1HTZwXWMaH/tRubk6fx3FET5FzB6flWOy20KbLy9H2yzdM68MX8er8Fy8PbkhPeesizcPhjb5aMxZ3v7Rg1p6fdCYYYkeJ7dfxc/NyW6qPYZKAw8wf9yQy6uBWKXj3M1bo=
+X-Sasl-enc: 4zHoboguGy1xOPAMibNik9h9f2NvwJMipHLrgtTBSM9g 1259827925
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 1BF982B215;
+	Thu,  3 Dec 2009 03:12:04 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.6pre) Gecko/20091127 Lightning/1.0b1pre Shredder/3.0.1pre
+In-Reply-To: <7viqcpgtbf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134440>
 
-On Thu, Dec 03, 2009 at 02:22:41AM -0500, Greg A. Woods wrote:
-
-> > I think you are showing ignorance here, as -? is *not* even close to
-> > standard, nor even widely used practice at all.
+Junio C Hamano venit, vidit, dixit 02.12.2009 18:49:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 > 
-> I think I should know something about Unix command line and option
-> parsers, having used them for some 25 years or so now.  In fact I've
-> used most every kind of unix that ever was, and I've worked on the
-> source to more than a few.
+>>> Yes.  Anything that sets GIT_EXEC_PATH correctly can use git-foo form.
+>>
+>> I know they can. That was in the part you snipped ;)
+> 
+> You asked about the presense of "a policy", and you got an answer.
 
-I don't want to nitpick, because the main thrust of your point (that
-"git foo --bogus" should show a more useful message) is not affected by
-this subpoint at all.  But if we are considering special-casing "-?", I
-would like to see some evidence that it is actually in use.
+I guess that was a language issue (on both sides) then, since "can"
+could be "is able to" as well as "is allowed to", and I read your answer
+in the former sense; the latter makes it a policy.
 
-I can't seem to find it respected anywhere, as shown below (and note
-that yes, some of this output does show a useful help message, but that
-is because --bogus would show the same message, and I am not disputing
-that we should handle that case):
+>> The questions is: Should they? Should we avoid mixing both forms in one
+>> script?
+> 
+> Should we avoid it?  Yes but not very enthusiastically.  We should make
+> sure that new invocations anybody adds use dashless form, but I would
+> recommend against a "let's remove use of dashed form" patch _unless_ you
+> find a time when the project is really quiet and there is nothing else
+> going on.
 
-# My linux box
-$ uname -sr
-Linux 2.6.31-1-686
-$ ls -?
-ls: invalid option -- '?'
-Try `ls --help' for more information.
+OK, that's all I wanted to know. Thanks.
 
-# Solaris
-$ uname -sr
-SunOS 5.8
-$ /bin/ls -?
-/bin/ls: illegal option -- ?
-usage: ls -1RaAdCxmnlogrtucpFbqisfL [files]
-$ /usr/ucb/ls -? ;# appears to ignore bogus options entirely?
-foo
-$ /usr/ucb/fold -?
-/usr/ucb/fold: illegal option -- ?
-Usage: fold [-bs] [-w width | -width ] [file...]
-$ /usr/xpg4/bin/ls -?
-/usr/xpg4/bin/ls: illegal option -- ?
-usage: ls -1RaAdCxmnlogrtucpFbqisfL [files]
-$ /usr/xpg6/bin/ls -?
-bash: /usr/xpg6/bin/ls: No such file or directory
-
-# AIX
-$ uname -svr
-AIX 1 6
-$ /bin/ls -?
-/bin/ls: illegal option -- ?
-usage: ls [-1ACFHLNRabcdefgilmnopqrstuxEUX] [File...]
-
-So what systems _do_ treat "-?" specially?
-
--Peff
+Michael
