@@ -1,94 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git 1.6.5.4
-Date: Thu, 03 Dec 2009 14:30:41 -0800
-Message-ID: <7vbpif4rn2.fsf@alter.siamese.dyndns.org>
-References: <7v638o76ra.fsf@alter.siamese.dyndns.org>
- <m2hbs85koj.fsf@igel.home> <4B17ABE3.6060003@drmicha.warpmail.net>
- <m2d42w5fqq.fsf@igel.home> <4B17D078.6080000@drmicha.warpmail.net>
- <20091203150323.GI23717@inocybe.localdomain>
- <7viqco54xh.fsf@alter.siamese.dyndns.org>
- <20091203202738.GP23717@inocybe.localdomain>
- <7vfx7r4we7.fsf@alter.siamese.dyndns.org>
- <20091203220020.GS23717@inocybe.localdomain>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH] builtin-push: don't access freed transport->url
+Date: Fri, 4 Dec 2009 07:31:44 +0800
+Message-ID: <20091204073144.f98115f9.rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-To: Todd Zullinger <tmz@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 03 23:31:11 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: "Daniel Barkalow" <barkalow@iabervon.org>,
+	"Sverre Rabbelier" <srabbelier@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 04 00:33:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGKCc-00069A-6a
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 23:31:10 +0100
+	id 1NGLBC-000579-3F
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 00:33:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754307AbZLCWav (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 17:30:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754188AbZLCWav
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 17:30:51 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42759 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751595AbZLCWat (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Dec 2009 17:30:49 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4C6A0A3D29;
-	Thu,  3 Dec 2009 17:30:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=I+UlWvew28rCu/zIgRGfqPnl8+Q=; b=jhzMAY
-	MK7y/Soj8ky4J5nfOStbNiD97SGDEPO+HK6oxf+PxeWbzDgg4WAx1LBJvTqK37rS
-	w8aKTM4whWEoCB5Ygf54dxwnzRvzfd5tb9AV2YCOHimayeWMrjUKMu6DKFyp48NM
-	6ThSGQpgyWAOhK7K/c/01EZF2eWjcjy3maSQo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EcrvjDno/Ig0uj7dQkqXk+S3tbu81fg7
-	EzONs52+pS4vTA3pQH6WUM6oVxHtI9NdZQRRbtNPwSOo1376K3YuqFFOg+qoPNzS
-	K8iSwP8rSdUWIPc1+FhrchlUpL8cWQZYu5E7vW5MndaDr6oQDH7QO0GFpMc2wedq
-	SZ7WF9iR7FY=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0C55EA3D28;
-	Thu,  3 Dec 2009 17:30:49 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7104AA3D27; Thu,  3 Dec 2009
- 17:30:43 -0500 (EST)
-In-Reply-To: <20091203220020.GS23717@inocybe.localdomain> (Todd Zullinger's
- message of "Thu\, 3 Dec 2009 17\:00\:20 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 81AEEE38-E05B-11DE-AD0E-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753824AbZLCXde (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2009 18:33:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753619AbZLCXdd
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 18:33:33 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:59806 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751304AbZLCXdd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2009 18:33:33 -0500
+Received: by yxe17 with SMTP id 17so1627135yxe.33
+        for <git@vger.kernel.org>; Thu, 03 Dec 2009 15:33:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=Bmu+TScHnAbYWURY8/RhlxTKGW+ILXoEqzaG9sCYio0=;
+        b=ixDQmHxl6/edMrECPkiF6jQ3nWx1S3yxbmtrh5OAQtw8uw9kRTUV7vqjmu1SOZlkjR
+         Q3ZMstIAYJ/DwecEAZDFPcOG5QpDqN/tVpAgJu30UQyxTHj2qIkKpx/SSg+hfDXOKea0
+         zRd6Y+h2gBsya54SGk9yPcTmPhI6SHMetmOVo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=vjLi/WVsz6x/SOILLSgSf7G/e/wTqLp+h38fNxTSoNfUWUcQ/6OyJBwZoPjQTEyiE+
+         +aIerM2XteJQFPkUKiXmwbmGcVz0HbuTJJRicDXKIx6smv16bx+QPVGRhY6CyhJYpORc
+         O68JzbYy9LxUVLtogVGo7lHjA6xEZ2aDzpenY=
+Received: by 10.101.4.22 with SMTP id g22mr3113178ani.40.1259883219532;
+        Thu, 03 Dec 2009 15:33:39 -0800 (PST)
+Received: from your-cukc5e3z5n (cm81.zeta152.maxonline.com.sg [116.87.152.81])
+        by mx.google.com with ESMTPS id 6sm1283362yxg.48.2009.12.03.15.33.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 03 Dec 2009 15:33:38 -0800 (PST)
+X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134482>
 
-Todd Zullinger <tmz@pobox.com> writes:
+Move the failed push message to before transport_disconnect() so that
+it doesn't access transport->url after transport has been free()'d (in
+transport_disconnect()).
 
-> I tested with this in Documentation/manpage-base.xsl on a CentOS 5 box
-> and it builds fine, leaving no cruft in the man pages regarding the
-> man.base.url...
->
-> <!-- set a base URL for relative links -->
-> <xsl:param name="man.base.url.for.relative.links"
->        >/path/to/git/docs</xsl:param>
->
-> Of course, the relative links looked just like they did in older
-> docbook releases:
->
->        1. Everyday Git
->           everyday.html
->
-> Is it worth the effort to have @@MAN_BASE_URL@@ in
-> Documentation/manpage-base.xsl or similar and replace it at build
-> time?
+Additionally, make the failed push message more accurate by moving it
+before transport_disconnect(), so that it doesn't report errors due
+to a failed disconnect.
 
-I think it depends on the likelihood that a distro has xmlto so old that
-it does not understand --stringparam yet it uses stylesheet so new that
-setting the parameter makes a positive difference (either it gives the
-full URL or at least squelches the "You should define the parameter"
-noise) in the output.
+Cc: "Daniel Barkalow" <barkalow@iabervon.org>
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
+ builtin-push.c |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-I am guessing that the answer would be that is a very unlikely combination
-and not worth worrying about it, but I've been wrong before in this exact
-area ;-)
+diff --git a/builtin-push.c b/builtin-push.c
+index a21e46c..dcfb53f 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -101,13 +101,14 @@ static int push_with_options(struct transport *transport, int flags)
+ 		fprintf(stderr, "Pushing to %s\n", transport->url);
+ 	err = transport_push(transport, refspec_nr, refspec, flags,
+ 			     &nonfastforward);
++	if (err != 0)
++		error("failed to push some refs to '%s'", transport->url);
++
+ 	err |= transport_disconnect(transport);
+
+ 	if (!err)
+ 		return 0;
+
+-	error("failed to push some refs to '%s'", transport->url);
+-
+ 	if (nonfastforward && advice_push_nonfastforward) {
+ 		printf("To prevent you from losing history, non-fast-forward updates were rejected\n"
+ 		       "Merge the remote changes before pushing again.  See the 'non-fast-forward'\n"
+--
+1.6.6.rc1.249.g048b3
