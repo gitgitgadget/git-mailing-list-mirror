@@ -1,114 +1,265 @@
-From: Todd Zullinger <tmz@pobox.com>
-Subject: Re: [ANNOUNCE] Git 1.6.5.4
-Date: Thu, 3 Dec 2009 15:27:38 -0500
-Message-ID: <20091203202738.GP23717@inocybe.localdomain>
-References: <7v638o76ra.fsf@alter.siamese.dyndns.org>
- <m2hbs85koj.fsf@igel.home> <4B17ABE3.6060003@drmicha.warpmail.net>
- <m2d42w5fqq.fsf@igel.home> <4B17D078.6080000@drmicha.warpmail.net>
- <20091203150323.GI23717@inocybe.localdomain>
- <7viqco54xh.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Detailed diagnosis when parsing an object name fails.
+Date: Thu, 03 Dec 2009 12:37:55 -0800
+Message-ID: <7vljhj4wv0.fsf@alter.siamese.dyndns.org>
+References: <1259784061-25143-1-git-send-email-y>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="VnOTrGv5LmZxna7m"
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 03 21:27:56 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: y@imag.fr
+X-From: git-owner@vger.kernel.org Thu Dec 03 21:38:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGIHL-0006an-UX
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 21:27:56 +0100
+	id 1NGIRI-0002Yg-KS
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 21:38:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754498AbZLCU1m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 15:27:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753265AbZLCU1m
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 15:27:42 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52191 "EHLO
+	id S1754414AbZLCUiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2009 15:38:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754321AbZLCUiA
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 15:38:00 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55785 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753864AbZLCU1l (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Dec 2009 15:27:41 -0500
+	with ESMTP id S1753864AbZLCUh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2009 15:37:59 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 97D8F858B8;
-	Thu,  3 Dec 2009 15:27:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-	:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=sasl; bh=npCG6r/SYl+aProWKV9IwGScz3Q=; b=Mxk4gje
-	P1Mb+wNoavwbAY7Nhfs5GJP+FYydkt2AVrf+CWs2AJsYZsapuSAjbqhROZhXI+Xt
-	HbTyHb/RJONaa7x/hKx47bJq60+FVAMksNa7/jhrYkK1PibIjOOYEr8R4wzifI3c
-	+zvUamNGGFQ3KTzXcQjXoNHveZYHgYo9fzR4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-	:subject:message-id:references:mime-version:content-type
-	:in-reply-to; q=dns; s=sasl; b=LYj92Umg7mbmMAY1K5vLgfs6uBFxFt98q
-	eyYlZEfpsczVBcMqxVC6f38lIGp+qXFQixCSRyjmJOk3/PI7nUJW2tSIT8ALrBls
-	8/sz7iVcBI0BHblCwPmT5dSpULicNJH5Dts1G5BjGeXDYfBnUlnTeGw6rebcbSJF
-	Jc7JJgwCtU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DEE86858B7;
-	Thu,  3 Dec 2009 15:27:43 -0500 (EST)
-Received: from inocybe.localdomain (unknown [98.117.251.177]) (using TLSv1
- with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F16E7858B6; Thu,  3 Dec
- 2009 15:27:39 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7viqco54xh.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Pobox-Relay-ID: 4FCEAACC-E04A-11DE-BDFE-9F3FEE7EF46B-09356542!a-pb-sasl-quonix.pobox.com
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8C68DA30C0;
+	Thu,  3 Dec 2009 15:38:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yK07G5ZYPo80rXDyjMhdE42VCK4=; b=QrhiO5
+	9R+82tPoyvxl1b6ldhJ0S2xFpxiMZXZrJuPNZY+lowtukVmpRhWSowRKJ1hZylQr
+	qHcXBYvGt3oRuiAK7EUmt9GBoRBrg9pee5HoSo4Y5LlaXhEhCyA/9LzqCw4CoQv/
+	VJNR6o2Ynm3fOCFIj7yM2xiuqErfCh1CKl4g8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YpscYDRhVkdmxEFesXypl9GKJ/cmjGr+
+	FM3csLPwb0ZkA/FEsT3lT5grzsdsCX1JQ6X7avnYai3FioZ74iPr1znrwXGTg6ki
+	oZ5BF9jGvt7Utnmi4ZVuo+uB4N1k6Wsu8YgkPOAGLzNKB95+5GWJRmljiss819Bc
+	Y1DMgxDOwuM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5C598A30BE;
+	Thu,  3 Dec 2009 15:38:02 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9CEBCA30B6; Thu,  3 Dec 2009
+ 15:37:57 -0500 (EST)
+In-Reply-To: <1259784061-25143-1-git-send-email-y> (y.'s message of "Wed\,  2
+ Dec 2009 21\:01\:01 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C06EFE3E-E04B-11DE-B34F-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134475>
 
+y@imag.fr writes:
 
---VnOTrGv5LmZxna7m
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> diff --git a/cache.h b/cache.h
+> index 0e69384..5c8cb5f 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -708,7 +708,11 @@ static inline unsigned int hexval(unsigned char c)
+>  #define DEFAULT_ABBREV 7
+>  
+>  extern int get_sha1(const char *str, unsigned char *sha1);
+> -extern int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode);
+> +static inline get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode)
+> +{
+> +	return get_sha1_with_mode_1(str, sha1, mode, 0, NULL);
+> +}
+> +extern int get_sha1_with_mode_1(const char *str, unsigned char *sha1, unsigned *mode, int fatal, const char *prefix);
 
-Junio C Hamano wrote:
-> I did the second one after seeing that both my Debian box and the
-> k.org machine that manpages tarballs are made (FC11 IIRC) had that
-> option, and my impression has been that it usually is safe to say
-> "even Debian has it, and there wouldn't be many things older than
-> that distro", but that is apparently not true.
+Do I understand correctly that "fatal" here is the same as "!gently"
+elsewhere in the API?
 
-Heh, that surely used to be a very good rule of thumb.  Perhaps these
-days a rule of whichever is older Debian stable or current RHEL/CentOS
-would suffice?
+> diff --git a/sha1_name.c b/sha1_name.c
+> index 44bb62d..030e2ac 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -804,7 +804,77 @@ int get_sha1(const char *name, unsigned char *sha1)
+>  	return get_sha1_with_mode(name, sha1, &unused);
+>  }
+>  
+> -int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
+> +static void diagnose_invalid_sha1_path(const char *prefix,
+> +				       const char *filename,
+> +				       const char *tree_sha1,
+> +				       const char *object_name)
+> +{
+> +	struct stat st;
+> +	unsigned char sha1[20];
+> +	unsigned mode;
+> +
+> +	if (!prefix)
+> +		prefix = "";
+> +
+> +	if (!lstat(filename, &st))
+> +		die("Path '%s' exists on disk, but not in '%s'.",
+> +		    filename, object_name);
+> +	if (errno == ENOENT || errno == ENOTDIR) {
+> +		char *fullname = malloc(strlen(filename)
+> +					     + strlen(prefix) + 1);
+> +		strcpy(fullname, prefix);
+> +		strcat(fullname, filename);
 
-> Either we require 0.0.20 or we revert the tip one on this topic.  I
-> think the latter is a safe thing to do.
+What if malloc fails here (and elsewhere in your patch)?
 
-That sounds good to me.  I'd like to get the EPEL builds for
-RHEL/CentOS updated sometime soon, as they're currently still on
-1.5.5.6 and that lacks too many of the great improvements in newer git
-releases.  Not having to patch for building the docs is one less thing
-to worry about.
+> +		if (!get_tree_entry(tree_sha1, fullname,
+> +				    sha1, &mode)) {
+> +			die("Path '%s' exists, but not '%s'.\n"
+> +			    "Did you mean '%s:%s'?",
+> +			    fullname,
+> +			    filename,
+> +			    object_name,
+> +			    fullname);
+> +		}
+> +		die("Path '%s' does not exist in '%s'",
+> +		    filename, object_name);
+> +	}
+> +}
+> +
+> +static void diagnose_invalid_index_path(int stage,
+> +					const char *prefix,
+> +					const char *filename)
+> +{
+> +	struct stat st;
+> +
+> +	if (!prefix)
+> +		prefix = "";
+> +
+> +	if (!lstat(filename, &st))
+> +		die("Path '%s' exists on disk, but not in the index.", filename);
+> +	if (errno == ENOENT || errno == ENOTDIR) {
+> +		struct cache_entry *ce;
+> +		int pos;
+> +		int namelen = strlen(filename) + strlen(prefix);
+> +		char *fullname = malloc(namelen + 1);
+> +		strcpy(fullname, prefix);
+> +		strcat(fullname, filename);
+> +		pos = cache_name_pos(fullname, namelen);
+> +		if (pos < 0)
+> +			pos = -pos - 1;
+> +		ce = active_cache[pos];
+> +		if (ce_namelen(ce) == namelen &&
+> +		    !memcmp(ce->name, fullname, namelen))
+> +			die("Path '%s' is in the index, but not '%s'.\n"
+> +			    "Did you mean ':%d:%s'?",
+> +			    fullname, filename,
+> +			    stage, fullname);
 
---=20
-Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Rowe's Rule: The odds are five to six that the light at the end of the
-tunnel is the headlight of an oncoming train.
-    -- Paul Dickson
+What happens if the user asked for ":2:Makefile" while in directory "t/",
+and there is ":1:t/Makefile" but not ":2:t/Makefile" in the index?
 
+What should happen if the user asked for ":2:t/Makefile" in such a case?
 
---VnOTrGv5LmZxna7m
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> @@ -850,6 +920,8 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
+>  			}
+>  			pos++;
+>  		}
+> +		if (fatal)
+> +			diagnose_invalid_index_path(stage, prefix, cp);
+>  		return -1;
+>  	}
+>  	for (cp = name, bracket_depth = 0; *cp; cp++) {
+> @@ -862,9 +934,24 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
+>  	}
+>  	if (*cp == ':') {
+>  		unsigned char tree_sha1[20];
+> -		if (!get_sha1_1(name, cp-name, tree_sha1))
+> -			return get_tree_entry(tree_sha1, cp+1, sha1,
+> -					      mode);
+> +		char *object_name;
+> +		if (fatal) {
+> +			object_name = malloc(cp-name+1);
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Where is this freed?
 
-iQFDBAEBCAAtBQJLGB86JhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
-bXouYXNjAAoJEEMlk4u+rwzjtuoH/2WWb6FgN4ySvUrJ5t2EUqkL0G9yQf3AkEsH
-e7kn7XGebbjYUHwM6Cx6Zs4y+sir7EhjTHg3WqQnBQZeZhHB8lgivb4C9/OlkuNP
-mepq/y1PeXutvIoTMDF6RAjpmDmyxQVmRPhHQX9a22TqFCy6O2wuOwQ9pPxtViwn
-0yh/SL5z6OApXQZtjTh00gJA+fWQzaliSNI4MIDEcMHyfsCu5hBZZwG7mRAIxq8l
-MQzze7epqukzA8ek1zS9Xyejgsy4NHanfzvUpiQ1Vxo+H/cN8JCKJ1/O+Fy3FWKh
-hmpxICW3LyZ3GlqvMX9T/TPaSzhRS0pSnQIsjhCEmvewFUlvNDA=
-=EdgF
------END PGP SIGNATURE-----
+Instead of doing a leaky allocation, it may make sense to pass the tree
+object name as <const char *, size_t> pair, and print it with "%.*s" in
+the error reporting codepath.  After all, object_name is used only for
+that purpose in diagnose_invalid_sha1_path(), no?
 
---VnOTrGv5LmZxna7m--
+> +			strncpy(object_name, name, cp-name);
+> +			object_name[cp-name] = '\0';
+> +		}
+> +		if (!get_sha1_1(name, cp-name, tree_sha1)) {
+> +			const char *filename = cp+1;
+> +			ret = get_tree_entry(tree_sha1, filename, sha1, mode);
+> +			if (fatal)
+> +				diagnose_invalid_sha1_path(prefix, filename,
+> +							   tree_sha1, object_name);
+> +
+> +			return ret;
+> +		} else {
+> +			if (fatal)
+> +				die("Invalid object name '%s'.", object_name);
+> +		}
+>  	}
+>  	return ret;
+>  }
+> diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
+> new file mode 100755
+> index 0000000..8112d56
+> --- /dev/null
+> +++ b/t/t1506-rev-parse-diagnosis.sh
+> @@ -0,0 +1,67 @@
+> +#!/bin/sh
+> +
+> +test_description='test git rev-parse diagnosis for invalid argument'
+> +
+> +exec </dev/null
+> +
+> +. ./test-lib.sh
+> +
+> +HASH_file=
+> +
+> +test_expect_success 'set up basic repo' '
+> +	echo one > file.txt &&
+> +	mkdir subdir &&
+> +	echo two > subdir/file.txt &&
+> +	echo three > subdir/file2.txt &&
+> +	git add . &&
+> +	git commit -m init &&
+> +	echo four > index-only.txt &&
+> +	git add index-only.txt &&
+> +	echo five > disk-only.txt
+> +'
+> +
+> +test_expect_success 'correct file objects' '
+> +	HASH_file=$(git rev-parse HEAD:file.txt) &&
+> +	git rev-parse HEAD:subdir/file.txt &&
+> +	git rev-parse :index-only.txt &&
+> +	cd subdir &&
+> +	git rev-parse HEAD:file.txt &&
+> +	git rev-parse HEAD:subdir/file2.txt &&
+> +	test $HASH_file = $(git rev-parse HEAD:file.txt) &&
+> +	test $HASH_file = $(git rev-parse :file.txt) &&
+> +	test $HASH_file = $(git rev-parse :0:file.txt) &&
+> +	cd ..
+> +'
+
+Please make it a habit of not doing "cd" without forcing a subprocess
+using ().  If 'rev-parse HEAD:file.txt' fails after "cd subdir", the next
+test will start running from that directory.
+
+> +test_expect_success 'incorrect revision id' '
+> +	test_must_fail git rev-parse foobar:file.txt 2>&1 |
+> +		grep "Invalid object name '"'"'foobar'"'"'." &&
+
+It always is better to write this in separate steps, because exit status
+of the upstream of pipe is discarded by the shell.
+
+If you expect an error exit and want to make sure a particular error
+message is given, do this:
+
+	test_must_fail git rev-parse foobar:file.txt 2>error &&
+        grep "Invalid ..." error 
+
+If you expect an error exit and want to make sure an incorrect error
+message is not produced, do this:
+
+	test_must_fail git rev-parse foobar:file.txt 2>error &&
+        ! grep "Invalid ..." error 
