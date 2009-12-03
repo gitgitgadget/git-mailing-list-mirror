@@ -1,109 +1,130 @@
-From: Todd Zullinger <tmz@pobox.com>
-Subject: Re: [ANNOUNCE] Git 1.6.5.4
-Date: Thu, 3 Dec 2009 10:03:23 -0500
-Message-ID: <20091203150323.GI23717@inocybe.localdomain>
-References: <7v638o76ra.fsf@alter.siamese.dyndns.org>
- <m2hbs85koj.fsf@igel.home> <4B17ABE3.6060003@drmicha.warpmail.net>
- <m2d42w5fqq.fsf@igel.home> <4B17D078.6080000@drmicha.warpmail.net>
+From: Uri Okrent <uokrent@gmail.com>
+Subject: Re: Git documentation consistency
+Date: Thu, 3 Dec 2009 07:24:30 -0800
+Message-ID: <6839293b0912030724y1c794606w3f2b191b3123a542@mail.gmail.com>
+References: <m1NEaLp-000kn1C@most.weird.com>
+	 <20091129051427.GA6104@coredump.intra.peff.net>
+	 <m1NFAji-000kn2C@most.weird.com>
+	 <20091202200904.GA7631@coredump.intra.peff.net>
+	 <m1NG0O6-000kmgC@most.weird.com>
+	 <7vaay096ye.fsf@alter.siamese.dyndns.org>
+	 <m1NG61U-000kn4C@most.weird.com>
+	 <20091203074500.GA31566@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="rV8arf8D5Dod9UkK"
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Dec 03 16:04:01 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: The Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 03 16:24:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGDDm-0007DZ-PT
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 16:03:55 +0100
+	id 1NGDXo-00087n-JP
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 16:24:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756301AbZLCPD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 10:03:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756297AbZLCPD1
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 10:03:27 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57028 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756296AbZLCPD1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Dec 2009 10:03:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E8FA985983;
-	Thu,  3 Dec 2009 10:03:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-	:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=sasl; bh=K0pXiuBdlTwGe+ysfmM/jhueh7g=; b=paMh000
-	1UWDcNvB5mLJQzgpCRlfMbJf63SPxvXQPhVuNke2F5lrf7mGxnuG69CZuZ3RqfOw
-	65H1I4iIjuEUgyp/EmoTnkAqJr6+7BORjoeNyPigl9Z9PpS5UczR9hr8hHGQC4F6
-	TCHqnCMHMFWHoS2wHIdXWY3cx/7zEx0KVZOo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-	:subject:message-id:references:mime-version:content-type
-	:in-reply-to; q=dns; s=sasl; b=BpWJUkSK7XQyAG2CPhMinu1MocdHTXzDh
-	HTQO+XsPg/yotwNksLLMaFVSBVtiLANY01b07tTFhamv3+NcqYxNVBQuLE+KgRxp
-	5juSam5orsxPeThyqdhI2IzoI5di9frUJfIAoWt82/n8plawm8P3N3evKmiDdZP/
-	3JzE2UCSws=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B426E8597E;
-	Thu,  3 Dec 2009 10:03:29 -0500 (EST)
-Received: from inocybe.localdomain (unknown [98.117.251.177]) (using TLSv1
- with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F19238597B; Thu,  3 Dec
- 2009 10:03:25 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <4B17D078.6080000@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Pobox-Relay-ID: 042E7BC4-E01D-11DE-B619-9F3FEE7EF46B-09356542!a-pb-sasl-quonix.pobox.com
+	id S1756104AbZLCPYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2009 10:24:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756078AbZLCPYZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 10:24:25 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:63546 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751053AbZLCPYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2009 10:24:24 -0500
+Received: by pwi3 with SMTP id 3so1170872pwi.21
+        for <git@vger.kernel.org>; Thu, 03 Dec 2009 07:24:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=HvsEf6wpt0dgfL5KZLgfjJl4K/7/FC4upp/lYLO8NCA=;
+        b=KXNkC7hCZMVc/2t2CJT8K9/+aJAznFln9lTxn+o9g9bwLoCMsoC1Jy+cmwESGFR/K4
+         HdO67B9B2szo2HyBt7coatzbD3XT3XD++Ud/DbY9HJU1FcTSBZKwFLSOcF5Gm5YKfsEa
+         M8Eh1vnYd81aqDrZcHcB3GAqd/FMXxV8s5LII=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=KPLw8WZ5haiRIgD7MIY/9bhH4vZLnf7KNswocsTiolEakiV43848+k9ibIZkgxDtl9
+         C9mdHfB3VF7DNkmo7HgBYZnUy5XRQ0qQwMx2UlC5xqt1X05cgQmg4ojGWj1ZFAnaqI7o
+         Byr/artdxFTQsykPvs+HU5EfO1XKX4ToY50Sk=
+Received: by 10.140.132.9 with SMTP id f9mr119424rvd.234.1259853870451; Thu, 
+	03 Dec 2009 07:24:30 -0800 (PST)
+In-Reply-To: <20091203074500.GA31566@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134455>
 
+On Wed, Dec 2, 2009 at 11:45 PM, Jeff King <peff@peff.net> wrote:
+> So what systems _do_ treat "-?" specially?
+>
+> -Peff
 
---rV8arf8D5Dod9UkK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Windows seems to (of course you need to use '/' instead of '-'):
 
-Michael J Gruber wrote:
->>> Andreas Schwab venit, vidit, dixit 03.12.2009 13:03:
->> xmlto version 0.0.18
-[...]
-> Now that predates Git quite a bit (2004-01-21)...
-> I think we can require at least 0.0.20, which is in Debian Lenny and
-> Fedora 9, for example. I think that should have it. (I'm not sure, they
-> don't use a proper vcs ;) ).
+Microsoft Windows [Version 6.0.6001]
 
-xmlto-0.0.18 is what's in RHEL/CentOS 5.  It would be nice to be able
-to build git docs there, which works pretty well in general (I
-believe).
+c:\>dir -h
+ Volume in drive C has no label.
+ Volume Serial Number is B09A-B49F
 
-I built 1.6.6.rc1 on CentOS 5.4 last night with Junio's first patch
-for this, which only called --stringparam if MAN_BASE_URL was set.
+ Directory of c:\
 
---=20
-Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-A common mistake people make when trying to design something
-completely foolproof is to underestimate the ingenuity of complete
-fools.
-    -- Douglas Adams
+File Not Found
 
+c:\>dir /h
+Invalid switch - "h".
 
---rV8arf8D5Dod9UkK
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+c:\>dir /help
+Invalid switch - "help".
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+c:\>dir /?
+Displays a list of files and subdirectories in a directory.
 
-iQFDBAEBCAAtBQJLF9M2JhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
-bXouYXNjAAoJEEMlk4u+rwzjaQAH/30URq5BEHRMn6BXKKrv5NIvQ2T1ueGp0zTY
-+d2Xmjpuuxd5n4w2LaVe2EMGWzJw30rs/20XcArAbxbuU/eXoaDMilOU/lmCswOg
-PETsVOUffajjOxNxGf+z0M6G7G08T540md1hJp3Q32KDFm2+Xm7OlIlV+Os2ymwv
-ujVFjg4DBUIUgA4Be9ijVRjt4WkVesnoc42KeO0jHssA5j5YXIReXYfCHvIGHcZJ
-URvg9lpevx4gcx53C7QehFXyay1Huw22ABbKVBrmJMhVMakSsa8a/TXjSwljuTgu
-DjaMbVsaaHHKc5pL+MDca/gKP/PwKXLvwLvzPLjD3Vi5+BCEYms=
-=OKQv
------END PGP SIGNATURE-----
+DIR [drive:][path][filename] [/A[[:]attributes]] [/B] [/C] [/D] [/L] [/N]
+  [/O[[:]sortorder]] [/P] [/Q] [/R] [/S] [/T[[:]timefield]] [/W] [/X] [/4]
 
---rV8arf8D5Dod9UkK--
+  [drive:][path][filename]
+              Specifies drive, directory, and/or files to list.
+
+  /A          Displays files with specified attributes.
+  attributes   D  Directories                R  Read-only files
+               H  Hidden files               A  Files ready for archiving
+               S  System files               I  Not content indexed files
+               L  Reparse Points             -  Prefix meaning not
+  /B          Uses bare format (no heading information or summary).
+  /C          Display the thousand separator in file sizes.  This is the
+              default.  Use /-C to disable display of separator.
+  /D          Same as wide but files are list sorted by column.
+  /L          Uses lowercase.
+  /N          New long list format where filenames are on the far right.
+  /O          List by files in sorted order.
+  sortorder    N  By name (alphabetic)       S  By size (smallest first)
+               E  By extension (alphabetic)  D  By date/time (oldest first)
+               G  Group directories first    -  Prefix to reverse order
+  /P          Pauses after each screenful of information.
+  /Q          Display the owner of the file.
+  /R          Display alternate data streams of the file.
+  /S          Displays files in specified directory and all subdirectories.
+  /T          Controls which time field displayed or used for sorting
+  timefield   C  Creation
+              A  Last Access
+              W  Last Written
+  /W          Uses wide list format.
+  /X          This displays the short names generated for non-8dot3 file
+              names.  The format is that of /N with the short name inserted
+              before the long name. If no short name is present, blanks are
+              displayed in its place.
+  /4          Displays four-digit years
+
+Switches may be preset in the DIRCMD environment variable.  Override
+preset switches by prefixing any switch with - (hyphen)--for example, /-W.
+
+c:\>
+
+-- 
+   Uri
+
+Please consider the environment before printing this message.
+http://www.panda.org/how_you_can_help/
