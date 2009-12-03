@@ -1,77 +1,65 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH] reset: add --quiet option
-Date: Thu, 03 Dec 2009 01:46:35 -0800
-Message-ID: <1259833595.1491.1.camel@swboyd-laptop>
-References: <1259492290-21771-1-git-send-email-felipe.contreras@gmail.com>
-	 <1259543939.5679.5.camel@swboyd-laptop>
-	 <94a0d4530911300219j51e21e2cwae17d4248400a345@mail.gmail.com>
-	 <780e0a6b0911301345v42c2b22bs34092fb69b21a2a0@mail.gmail.com>
-	 <94a0d4530912030133n7e2fbf2asfea6e3896980dc7c@mail.gmail.com>
+From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
+Subject: Re: [PATCH] pull: clarify advice for the unconfigured error case
+Date: Thu, 3 Dec 2009 11:51:10 +0100
+Message-ID: <20091203115110.08dde406@perceptron>
+References: <48B54636-1825-48B3-BECD-4150A55B013F@dbservice.com>
+	<1257965806.26362.132.camel@heerbeest>
+	<D6B0AE61-6CA3-4F79-BB50-B8795415BAB7@dbservice.com>
+	<1257968052.26362.155.camel@heerbeest>
+	<AC99BA30-A36D-4798-8E7D-9D69EFE99D55@dbservice.com>
+	<1258035449.26362.273.camel@heerbeest>
+	<20091112155310.7836c388@perceptron>
+	<20091112150626.GA24848@coredump.intra.peff.net>
+	<20091112170814.1858aba4@perceptron>
+	<20091113040754.GA3255@progeny.tock>
+	<20091127141704.GA24080@progeny.tock>
+	<7vk4x57z4e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 03 10:46:47 2009
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	Jan Nieuwenhuizen <janneke-list@xs4all.nl>,
+	Tomas Carnecky <tom@dbservice.com>,
+	git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 03 11:51:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NG8Gq-0001uH-AF
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 10:46:44 +0100
+	id 1NG9Hq-00023E-HM
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 11:51:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755798AbZLCJqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 04:46:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755657AbZLCJqc
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 04:46:32 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:41554 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755516AbZLCJqb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Dec 2009 04:46:31 -0500
-Received: by pwi3 with SMTP id 3so951153pwi.21
-        for <git@vger.kernel.org>; Thu, 03 Dec 2009 01:46:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=3mOvQvNWHb/4Y9pv0TMhAgtOMxNG2SxMl17KlANtWU8=;
-        b=kZYKLCgBRcsICjezWCRvmYuyb2cp3T1AcGW7Syp/W6OfmESK5Abc4Z5TVw7lN7I6Xz
-         DFGW9rBgVHgbdapePOzRuK2shrWVP1tk0JUTx5/8NGnt1i1nUPFTW+YCKiIaotGVIfCV
-         ADEYznDGu39yrwX+N0UE4x7/Lm12KamGzvjfw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=Sb7nz4BHGk8hKOu/HkC2hI1AUwq+d4+UhQstA4nScs6KDuKBPwzw8eICDM3jupCY2D
-         ORGKlwofnod/n+lZEacEvUyhLLnuzTB8wAIO01s8ZxHqglvCuiWBJhibVibuLrx+gnO1
-         1zho20gLtJqhSU2vEx/KLfPcS8V0d72h7I+is=
-Received: by 10.115.102.38 with SMTP id e38mr2097934wam.207.1259833597442;
-        Thu, 03 Dec 2009 01:46:37 -0800 (PST)
-Received: from ?192.168.1.5? (user-0c9haca.cable.mindspring.com [24.152.169.138])
-        by mx.google.com with ESMTPS id 23sm1560163pzk.0.2009.12.03.01.46.36
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 03 Dec 2009 01:46:36 -0800 (PST)
-In-Reply-To: <94a0d4530912030133n7e2fbf2asfea6e3896980dc7c@mail.gmail.com>
-X-Mailer: Evolution 2.28.1 
+	id S1754452AbZLCKvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2009 05:51:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754000AbZLCKvi
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 05:51:38 -0500
+Received: from zoidberg.org ([88.198.6.61]:33202 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751053AbZLCKvh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2009 05:51:37 -0500
+Received: from perceptron (pC19EAB10.dip.t-dialin.net [::ffff:193.158.171.16])
+  (AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by cthulhu.zoidberg.org with esmtp; Thu, 03 Dec 2009 11:51:41 +0100
+  id 004D0355.4B17983E.00007E5B
+In-Reply-To: <7vk4x57z4e.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.7.3 (GTK+ 2.18.3; i486-pc-linux-gnu)
+X-Obscure-Spam: http://music-jk.net/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134447>
 
-On Thu, 2009-12-03 at 11:33 +0200, Felipe Contreras wrote:
-> On Mon, Nov 30, 2009 at 11:45 PM, Stephen Boyd <bebarino@gmail.com> wrote:
-> > If you're already touching the line why not just do it once? I agree a
-> > follow-up patch to cover the other commands would be good.
-> 
-> Because the less trivial the patches, the less luck I have of getting
-> them applied :)
+Junio C Hamano <gitster@pobox.com> wrote:
 
-Heh, still seems pretty trivial to me ;-)
+> Is this a good replacement for 31971b3 (git-pull.sh --rebase: overhaul
+> error handling when no candidates are found, 2009-11-12) that is on
+> 'pu' and does the lack of follow-up mean everybody involved in the
+> discussion is happy with this version?
 
-> 
-> Anyway, I sent a patch to use OPT__QUIET directly in two places.
-> 
+I'm not deliriously happy but I can't think of a better version, and I
+suppose it's better than what I suggested. In other words, I'm fine
+with the patch.
 
-Great. Thanks for making it more consistent.
+Jan
