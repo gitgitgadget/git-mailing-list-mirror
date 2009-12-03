@@ -1,134 +1,86 @@
-From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Subject: [PATCH v3 2/3] run test suite without dashed git-commands in PATH
-Date: Wed,  2 Dec 2009 22:14:06 -0700
-Message-ID: <1259817247-3724-3-git-send-email-mmogilvi_git@miniinfo.net>
-References: <1259817247-3724-1-git-send-email-mmogilvi_git@miniinfo.net>
- <1259817247-3724-2-git-send-email-mmogilvi_git@miniinfo.net>
-Cc: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Dec 03 06:14:52 2009
+From: Jeff King <peff@peff.net>
+Subject: git gsoc money
+Date: Thu, 3 Dec 2009 00:22:20 -0500
+Message-ID: <20091203052220.GA22582@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 03 06:22:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NG41j-000341-Lw
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 06:14:52 +0100
+	id 1NG495-0004u5-3d
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 06:22:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211AbZLCFOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 00:14:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751167AbZLCFOd
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 00:14:33 -0500
-Received: from qmta05.emeryville.ca.mail.comcast.net ([76.96.30.48]:37077 "EHLO
-	QMTA05.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751156AbZLCFOc (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Dec 2009 00:14:32 -0500
-Received: from OMTA21.emeryville.ca.mail.comcast.net ([76.96.30.88])
-	by QMTA05.emeryville.ca.mail.comcast.net with comcast
-	id CUdD1d0041u4NiLA5VEgpP; Thu, 03 Dec 2009 05:14:40 +0000
-Received: from mmogilvi.homeip.net ([24.8.125.243])
-	by OMTA21.emeryville.ca.mail.comcast.net with comcast
-	id CVEZ1d0045FCJCg8hVEctc; Thu, 03 Dec 2009 05:14:39 +0000
-Received: from localhost.localdomain (bean [192.168.30.96])
-	by mmogilvi.homeip.net (Postfix) with ESMTP id 4F0E589115;
-	Wed,  2 Dec 2009 22:14:32 -0700 (MST)
-X-Mailer: git-send-email 1.6.6.rc1
-In-Reply-To: <1259817247-3724-2-git-send-email-mmogilvi_git@miniinfo.net>
+	id S1751300AbZLCFWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2009 00:22:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751238AbZLCFWP
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 00:22:15 -0500
+Received: from peff.net ([208.65.91.99]:48648 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751156AbZLCFWP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2009 00:22:15 -0500
+Received: (qmail 12000 invoked by uid 107); 3 Dec 2009 05:26:48 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 03 Dec 2009 00:26:48 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Dec 2009 00:22:20 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134435>
 
-Only put bin-wrappers in the PATH (not GIT_EXEC_PATH), to emulate the
-default installed user environment, and ensure all the programs run
-correctly in such an environment.  This is now the default, although
-it can be overridden with a --with-dashes test option when running
-tests.
+As a result of our participation in the Summer of Code project last
+summer and this summer, Google gave the git community some money. Most
+of that money went to defraying travel costs to the SoC mentor summit
+and the GitTogether, both last year and this year.
 
-Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
----
- t/README      |    9 +++++++++
- t/test-lib.sh |   33 +++++++++++++++++++++------------
- 2 files changed, 30 insertions(+), 12 deletions(-)
+However, we still have about $500 USD remaining. Because of the way
+Google hands out the money (they want to deal with one entity per
+project, and git has no legal entity), all of the remaining money is
+being held personally by me.
 
-diff --git a/t/README b/t/README
-index 4e1d7dd..dcd3ebb 100644
---- a/t/README
-+++ b/t/README
-@@ -75,6 +75,15 @@ appropriately before running "make".
- 	As the names depend on the tests' file names, it is safe to
- 	run the tests with this option in parallel.
- 
-+--with-dashes::
-+	By default tests are run without dashed forms of
-+	commands (like git-commit) in the PATH (it only uses
-+	wrappers from ../bin-wrappers).  Use this option to include
-+	the build directory (..) in the PATH, which contains all
-+	the dashed forms of commands.  This option is currently
-+	implied by other options like --valgrind and
-+	GIT_TEST_INSTALLED.
-+
- You can also set the GIT_TEST_INSTALLED environment variable to
- the bindir of an existing git installation to test that installation.
- You still need to have built this git sandbox, from which various
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index ec3336a..85377c8 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -105,6 +105,8 @@ do
- 		verbose=t; shift ;;
- 	-q|--q|--qu|--qui|--quie|--quiet)
- 		quiet=t; shift ;;
-+	--with-dashes)
-+		with_dashes=t; shift ;;
- 	--no-color)
- 		color=; shift ;;
- 	--no-python)
-@@ -551,19 +553,8 @@ test_done () {
- # Test the binaries we have just built.  The tests are kept in
- # t/ subdirectory and are run in 'trash directory' subdirectory.
- TEST_DIRECTORY=$(pwd)
--if test -z "$valgrind"
-+if test -n "$valgrind"
- then
--	if test -z "$GIT_TEST_INSTALLED"
--	then
--		PATH=$TEST_DIRECTORY/..:$PATH
--		GIT_EXEC_PATH=$TEST_DIRECTORY/..
--	else
--		GIT_EXEC_PATH=$($GIT_TEST_INSTALLED/git --exec-path)  ||
--		error "Cannot run git from $GIT_TEST_INSTALLED."
--		PATH=$GIT_TEST_INSTALLED:$TEST_DIRECTORY/..:$PATH
--		GIT_EXEC_PATH=${GIT_TEST_EXEC_PATH:-$GIT_EXEC_PATH}
--	fi
--else
- 	make_symlink () {
- 		test -h "$2" &&
- 		test "$1" = "$(readlink "$2")" || {
-@@ -625,6 +616,24 @@ else
- 	PATH=$GIT_VALGRIND/bin:$PATH
- 	GIT_EXEC_PATH=$GIT_VALGRIND/bin
- 	export GIT_VALGRIND
-+elif test -n "$GIT_TEST_INSTALLED" ; then
-+	GIT_EXEC_PATH=$($GIT_TEST_INSTALLED/git --exec-path)  ||
-+	error "Cannot run git from $GIT_TEST_INSTALLED."
-+	PATH=$GIT_TEST_INSTALLED:$TEST_DIRECTORY/..:$PATH
-+	GIT_EXEC_PATH=${GIT_TEST_EXEC_PATH:-$GIT_EXEC_PATH}
-+else # normal case, use ../bin-wrappers only unless $with_dashes:
-+	git_bin_dir="$TEST_DIRECTORY/../bin-wrappers"
-+	if ! test -x "$git_bin_dir/git" ; then
-+		if test -z "$with_dashes" ; then
-+			say "$git_bin_dir/git is not executable; using GIT_EXEC_PATH"
-+		fi
-+		with_dashes=t
-+	fi
-+	PATH="$git_bin_dir:$PATH"
-+	GIT_EXEC_PATH=$TEST_DIRECTORY/..
-+	if test -n "$with_dashes" ; then
-+		PATH="$TEST_DIRECTORY/..:$PATH"
-+	fi
- fi
- GIT_TEMPLATE_DIR=$(pwd)/../templates/blt
- unset GIT_CONFIG
--- 
-1.6.6.rc1
+For accounting and tax reasons, I don't want to hold it later than Dec
+31st. So I am soliciting suggestions from the community on what to do
+with the money.
+
+Some possibilities are:
+
+  1. Become an affiliated project of an organization like The Software
+     Freedom Conservancy or Software in the Public Interest. These are
+     non-profit groups to whom we (or anyone else who wants to, for that
+     matter) can donate money earmarked for a particular project. They
+     handle the accounting and hold the money, and then we get it out
+     when we need it for something.
+
+     Of course, then we still have the question of what that "something"
+     is. So far, all money has been used for travel aid. Suggestions
+     welcome.
+
+     The upsides of this path are that it would handle the issue for
+     future years, and it would make it easy for people to donate money
+     to git if they wanted to. The downside is that the process may take
+     a while, so it may not actually happen in the next month.
+
+     Some relevant links for further reading:
+
+       http://conservancy.softwarefreedom.org/overview/
+       http://www.spi-inc.org/treasurer/associated-project-howto.html
+
+  2. Donate the money to some non-profit (by the way, all discussion of
+     taxes and non-profit here is with respect to the United States, as
+     the money is being held in the US). Possible recipients include a
+     software freedom organization like those listed above, or something
+     not software-specific like the EFF. It might be nice to contribute
+     to projects that help us build git, like curl, libxdiff, or
+     asciidoc, but AFAIK we can't do so in a tax-exempt way. gcc/mingw
+     is another candidate; we can probably donate to the Free Software
+     Foundation for that.
+
+Basically I don't want to hold on to this money, I want it to go
+somewhere useful, and I don't want to make a unilateral decision.
+Please let me know what people think would be useful.
+
+-Peff
