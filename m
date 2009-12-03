@@ -1,69 +1,106 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pull: clarify advice for the unconfigured error case
-Date: Wed, 2 Dec 2009 20:43:15 -0500
-Message-ID: <20091203014315.GA12061@coredump.intra.peff.net>
-References: <1257968052.26362.155.camel@heerbeest>
- <AC99BA30-A36D-4798-8E7D-9D69EFE99D55@dbservice.com>
- <1258035449.26362.273.camel@heerbeest>
- <20091112155310.7836c388@perceptron>
- <20091112150626.GA24848@coredump.intra.peff.net>
- <20091112170814.1858aba4@perceptron>
- <20091113040754.GA3255@progeny.tock>
- <20091127141704.GA24080@progeny.tock>
- <7vk4x57z4e.fsf@alter.siamese.dyndns.org>
- <20091203012535.GA16259@progeny.tock>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: [RFC PATCH] Documentation: set a base URL for relative links
+Date: Wed, 2 Dec 2009 20:50:05 -0500
+Message-ID: <20091203015005.GH23717@inocybe.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
-	Jan Nieuwenhuizen <janneke-list@xs4all.nl>,
-	Tomas Carnecky <tom@dbservice.com>,
-	git list <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 03 02:43:31 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 03 02:50:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NG0jC-0003vJ-SC
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 02:43:31 +0100
+	id 1NG0pk-00060D-KO
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 02:50:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752834AbZLCBnJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Dec 2009 20:43:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752562AbZLCBnJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 20:43:09 -0500
-Received: from peff.net ([208.65.91.99]:40543 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752036AbZLCBnI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 20:43:08 -0500
-Received: (qmail 29011 invoked by uid 107); 3 Dec 2009 01:47:43 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 02 Dec 2009 20:47:43 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Dec 2009 20:43:15 -0500
+	id S1753485AbZLCBuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2009 20:50:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753307AbZLCBuD
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 20:50:03 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62522 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752562AbZLCBuC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2009 20:50:02 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 99FE5843D2
+	for <git@vger.kernel.org>; Wed,  2 Dec 2009 20:50:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+	:subject:message-id:mime-version:content-type; s=sasl; bh=QvibgI
+	NS0IEYiY3mnY/cg4JKzJ8=; b=YmrRtOaQ0xwhUIV/LxLkH3w9vkH6dlICJONAOQ
+	nc/d/Wl5+fhYIXFF6kA/fnSCYhIo1X6PMxhpc7lY9iKwoBbAkz9j5XF3hmi/JbM5
+	y2ORZyter8m+4K82E4g5CMsGVtx3qC6O8rLfv5fIud/bj0G/SPzStejua3uEyhVX
+	D+mHk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to
+	:subject:message-id:mime-version:content-type; q=dns; s=sasl; b=
+	VKC4eGDS2TrJR3Tm+ylzGf3wOZjbNhOQworYdfZ8LlbtFb5unnanp2UlYQxclfU2
+	mYBNBLQZy7pEz8e05w/BkqSVnB2EPpR1oIBAhWhloFMBVC/VHG4w1AquoJn8p4y6
+	LFfp8KXJwixBQXiQ1ckmf6E0L+iV7NkecvJ3QVQradE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 41545843D1
+	for <git@vger.kernel.org>; Wed,  2 Dec 2009 20:50:07 -0500 (EST)
+Received: from inocybe.localdomain (unknown [98.117.251.177]) (using TLSv1
+ with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6CD2D843D0 for
+ <git@vger.kernel.org>; Wed,  2 Dec 2009 20:50:06 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <20091203012535.GA16259@progeny.tock>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Pobox-Relay-ID: 2EEDCA8C-DFAE-11DE-8DE9-9F3FEE7EF46B-09356542!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134425>
 
-On Wed, Dec 02, 2009 at 07:26:14PM -0600, Jonathan Nieder wrote:
+The man.base.url.for.relative.links setting is used when generating the
+NOTES sections of various man pages.  If unset, the output looks like
+this:
 
-> > and does the lack of follow-up mean everybody involved in the discu=
-ssion
-> > is happy with this version?
->=20
-> I=E2=80=99m not sure.  I know I like it. :-)
->=20
-> I was the only one with nitpicks about the wording (sorry).  Re
-> whether to use configuration file syntax or a 'git config' command
-> line snippet, it seemed like there was some consensus once it was
-> clear that the user would have to modify the lines anyway to fill in
-> the right values.  But others can speak up if this seems wrong.
+        1. Everyday Git
+           [set $man.base.url.for.relative.links]/everyday.html
 
-Yeah, that was my main complaint, and I withdrew it after getting a
-clue. :) I gave the patch another quick look, and I think it is fine.
+Reported-by: Michal Schmidt (Fedora bug #543481)
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
 
--Peff
+This was reported to the Fedora bugzilla.  I checked and it's been
+broken in the Fedora builds for quite a while.  In origin/man, the
+first time it appeared was 3ae5cb60 (Autogenerated manpages for
+v1.6.5.1-75-g02d56), which looks to be around the time that kernel.org
+switched from F9 to F11.
+
+I don't know the doc toolchain well enough to know how best to fix
+this without breaking anything.  It would be ideal if the base URL
+used was substituted and controllable via make variables.  That would
+allow packagers to make it point to the on-disk documentation and make
+git's documentation even easier to use when disconnected.
+
+Any help or suggestions to refine this and test it on various docbook
+versions would be most welcome.
+
+ Documentation/manpage-base.xsl |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/manpage-base.xsl b/Documentation/manpage-base.xsl
+index a264fa6..50ce029 100644
+--- a/Documentation/manpage-base.xsl
++++ b/Documentation/manpage-base.xsl
+@@ -7,6 +7,10 @@
+ <xsl:param name="man.output.quietly" select="1"/>
+ <xsl:param name="refentry.meta.get.quietly" select="1"/>
+ 
++<!-- set a base URL for relative links -->
++<xsl:param name="man.base.url.for.relative.links"
++	>http://www.kernel.org/pub/software/scm/git/docs/</xsl:param>
++
+ <!-- convert asciidoc callouts to man page format;
+      git.docbook.backslash and git.docbook.dot params
+      must be supplied by another XSL file or other means -->
+-- 
+1.6.6.rc0
+
+-- 
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Just because everything is different doesn't mean anything has
+changed.
+    -- Irene Peter
