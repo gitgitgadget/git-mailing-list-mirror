@@ -1,72 +1,65 @@
-From: Maarten Lankhorst <m.b.lankhorst@gmail.com>
-Subject: git reset --hard in .git causes a checkout in that directory
-Date: Thu, 03 Dec 2009 12:30:46 +0100
-Message-ID: <4B17A166.60306@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [ANNOUNCE] Git 1.6.5.4
+Date: Thu, 03 Dec 2009 13:03:24 +0100
+Message-ID: <m2hbs85koj.fsf@igel.home>
+References: <7v638o76ra.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 03 12:36:28 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 03 13:03:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NG9z1-00031g-CW
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 12:36:27 +0100
+	id 1NGAPH-0004Og-1q
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 13:03:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753986AbZLCLgP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 06:36:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753892AbZLCLgP
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 06:36:15 -0500
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:37230 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753839AbZLCLgO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Dec 2009 06:36:14 -0500
-X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Dec 2009 06:36:13 EST
-Received: by ewy6 with SMTP id 6so1380155ewy.29
-        for <git@vger.kernel.org>; Thu, 03 Dec 2009 03:36:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=OuYFU69LUHxrQVo3zoh5vk7dVad541VuqB3HGCdkOaY=;
-        b=BvOq9Oq+UGjHnLsEtCpt3tJtJd0444rz7tIIrQ5/O8J8y33V0BoDB31YjI5Md4moGH
-         pXYz3K9cmJ2heYyehL4Jrhwz19KgHfUIh/rezu0Ip5Ucm2wyMDYCE6JodbXMrsONYFY7
-         Y0uU8vWrhFeGseUKJuHDbi1i6NjmFT5mJjIkE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=dLZ2S9CrAP1NCHNWfqU56P/D1gtcSxwskdkAfFCvfxpQAVMPt8mwkP3r7KB3pouzFE
-         +64LEOEfeXKj+Ek8k1I/FCdK7cddCOjbVdpV3Yl//3xZBPOxKvRKphnVhX3kiVs53srg
-         NfG0eUc2a0T5iODe0H/29S2nabUkVzhgeV7ic=
-Received: by 10.213.24.2 with SMTP id t2mr6012310ebb.6.1259839847630;
-        Thu, 03 Dec 2009 03:30:47 -0800 (PST)
-Received: from ?192.168.1.34? (82-169-33-1.ip.telfort.nl [82.169.33.1])
-        by mx.google.com with ESMTPS id 14sm1267856ewy.3.2009.12.03.03.30.46
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 03 Dec 2009 03:30:47 -0800 (PST)
-User-Agent: Mozilla-Thunderbird 2.0.0.22 (X11/20091109)
+	id S1752604AbZLCMDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2009 07:03:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750974AbZLCMDV
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 07:03:21 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:51050 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752469AbZLCMDU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2009 07:03:20 -0500
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id 4A2BC1C15E3E;
+	Thu,  3 Dec 2009 13:03:26 +0100 (CET)
+Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
+	by mail.m-online.net (Postfix) with ESMTP id 027DF902DD;
+	Thu,  3 Dec 2009 13:03:26 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
+	with ESMTP id M3Ar2IYoAxiZ; Thu,  3 Dec 2009 13:03:24 +0100 (CET)
+Received: from igel.home (DSL01.83.171.171.98.ip-pool.NEFkom.net [83.171.171.98])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Thu,  3 Dec 2009 13:03:24 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 6FE6ECA28C; Thu,  3 Dec 2009 13:03:24 +0100 (CET)
+X-Yow: Where do your SOCKS go when you lose them in th' WASHER?
+In-Reply-To: <7v638o76ra.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 03 Dec 2009 01:21:13 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134449>
 
-Hi all,
+Junio C Hamano <gitster@pobox.com> writes:
 
-When I was working on my code and made a mess that I wanted to undo, I 
-accidentally did it in the .git directory, and had a whole clone of my 
-last committed tree there.
+>       Unconditionally set man.base.url.for.relative.links
 
-It can be triggered easily:
+rm -f git-add.1 && \
+        xmlto -m manpage-normal.xsl  --stringparam man.base.url.for.relative.links= man git-add.xml
+xmlto: unrecognized option '--stringparam'
+make[1]: *** [git-add.1] Error 1
 
-mkdir test; cd test; git init; touch foo; git add foo; git commit -m 
-'add foo'; cd .git; git reset --hard; [ -f foo ] && echo hello beauty
+Andreas.
 
-Other parts of git could be affected, I haven't checked where exactly 
-the bug hides, so I was afraid to send in a patch
-
-Cheers,
-Maarten
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
