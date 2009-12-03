@@ -1,46 +1,78 @@
-From: Marinescu Paul dan <pauldan.marinescu@epfl.ch>
-Subject: Running commands in wrong environment
-Date: Thu, 3 Dec 2009 20:19:05 +0100
-Message-ID: <D6F784B72498304C93A8A4691967698E8EE2C44FE5@REX2.intranet.epfl.ch>
+From: Alex Chiang <achiang@hp.com>
+Subject: Re: [StGit PATCH v2 0/6] add support for git send-email
+Date: Thu, 3 Dec 2009 12:27:31 -0700
+Message-ID: <20091203192731.GD23258@ldl.fc.hp.com>
+References: <20091202003503.7737.51579.stgit@bob.kio> <b8197bcb0912012246n3b83866cjb93654effc000242@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 03 20:19:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: catalin.marinas@gmail.com, git <git@vger.kernel.org>
+To: Karl Wiberg <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Dec 03 20:27:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGHCt-0000tf-Qt
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 20:19:16 +0100
+	id 1NGHL0-0004oE-2p
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 20:27:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756722AbZLCTTD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 14:19:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756559AbZLCTTD
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 14:19:03 -0500
-Received: from smtp0.epfl.ch ([128.178.224.219]:44312 "HELO smtp0.epfl.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755680AbZLCTTB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Dec 2009 14:19:01 -0500
-Received: (qmail 5364 invoked by uid 107); 3 Dec 2009 19:19:06 -0000
-X-Virus-Scanned: ClamAV
-Received: from slb-nat-128-178-224-64.epfl.ch (192.26.45.64)
-  by smtp0.epfl.ch (AngelmatoPhylax SMTP proxy); Thu, 03 Dec 2009 20:19:06 +0100
-Received: from REX2.intranet.epfl.ch ([128.178.50.202]) by
- ewa4.intranet.epfl.ch ([128.178.224.64]) with mapi; Thu, 3 Dec 2009 20:19:05
- +0100
-Thread-Topic: Running commands in wrong environment
-Thread-Index: AQHKdE16zgFoJXlAykaznNOPSahXbA==
-Accept-Language: en-US, fr-CH
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, fr-CH
+	id S1756743AbZLCT10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2009 14:27:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756734AbZLCT10
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 14:27:26 -0500
+Received: from g4t0017.houston.hp.com ([15.201.24.20]:17162 "EHLO
+	g4t0017.houston.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756732AbZLCT1Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2009 14:27:25 -0500
+Received: from g4t0009.houston.hp.com (g4t0009.houston.hp.com [16.234.32.26])
+	by g4t0017.houston.hp.com (Postfix) with ESMTP id 3582238310;
+	Thu,  3 Dec 2009 19:27:32 +0000 (UTC)
+Received: from ldl (linux.corp.hp.com [15.11.146.101])
+	by g4t0009.houston.hp.com (Postfix) with ESMTP id DCE58C119;
+	Thu,  3 Dec 2009 19:27:31 +0000 (UTC)
+Received: from localhost (ldl.fc.hp.com [127.0.0.1])
+	by ldl (Postfix) with ESMTP id B9B28CF0017;
+	Thu,  3 Dec 2009 12:27:31 -0700 (MST)
+Received: from ldl ([127.0.0.1])
+	by localhost (ldl.fc.hp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id fWvooDezyWsr; Thu,  3 Dec 2009 12:27:31 -0700 (MST)
+Received: by ldl (Postfix, from userid 17609)
+	id A3547CF0007; Thu,  3 Dec 2009 12:27:31 -0700 (MST)
+Content-Disposition: inline
+In-Reply-To: <b8197bcb0912012246n3b83866cjb93654effc000242@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134467>
 
+* Karl Wiberg <kha@treskal.com>:
+> On Wed, Dec 2, 2009 at 1:46 AM, Alex Chiang <achiang@hp.com> wrote:
+> > The upshot is that in stg mail, --git and --mbox don't interact
+> > well, and the resulting mbox file will lack the recipients. This
+> > might be fixed in the future if we teach git send-email how to
+> > generate mbox files, but then we introduce a versioning problem.
+> 
+> One wild idea: git send-email's --smtp-server flag will accept the
+> (full) path of a sendmail program; writing such a program, just
+> capable enough to receive the outgoing emails and dumping them to a
+> file, should be easy. Another option would be a program that speaks
+> just enough SMTP to accept the mails. (Incidentally, these two would
+> be useful in testing stg mail even without the --git option.)
+ 
+Hm, I think this is getting to be a bit of overkill. I could see
+adding --mbox support to git send-email as being a better use of
+time (IMO).
 
-git's start_command (run_command.c) executes a command (e.g. hook) but does not verify that it has properly set up the environment. It seems that in the unlikely case where putenv (run_command.c:117) fails, the command may have undesirable effects e.g. GIT_INDEX_FILE should have been set (interactive pre-commit hooks) but the default index will be used instead. It would be safer not to run the command but just exit in that case.
+> I fully understand if you'd rather get on with scratching your actual
+> itch, though ...
+ 
+:)
+
+> > So let's just accept this wart for now, and say, if you want an mbox
+> > file generated, don't use --git. That seems reasonable to me.
+> 
+> Sure.
+
+Thanks,
+/ac
