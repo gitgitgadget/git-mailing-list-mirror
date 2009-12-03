@@ -1,71 +1,70 @@
-From: Marko Kreen <markokr@gmail.com>
-Subject: Re: Git documentation consistency
-Date: Thu, 3 Dec 2009 18:22:27 +0200
-Message-ID: <e51f66da0912030822ye1541b4gb1b8a3e07eb72484@mail.gmail.com>
-References: <m1NEaLp-000kn1C@most.weird.com>
-	 <20091129051427.GA6104@coredump.intra.peff.net>
-	 <m1NFAji-000kn2C@most.weird.com>
-	 <20091202200904.GA7631@coredump.intra.peff.net>
-	 <m1NG0O6-000kmgC@most.weird.com>
-	 <7vaay096ye.fsf@alter.siamese.dyndns.org>
-	 <m1NG61U-000kn4C@most.weird.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git gsoc money
+Date: Thu, 03 Dec 2009 09:32:32 -0800
+Message-ID: <7v1vjc6k0f.fsf@alter.siamese.dyndns.org>
+References: <20091203052220.GA22582@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: The Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 03 17:22:35 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 03 18:35:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGERu-0002Hm-PY
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 17:22:35 +0100
+	id 1NGFXq-0004Ld-Ik
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 18:32:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754417AbZLCQWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 11:22:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754390AbZLCQWX
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 11:22:23 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:28950 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750842AbZLCQWW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Dec 2009 11:22:22 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so765916fga.1
-        for <git@vger.kernel.org>; Thu, 03 Dec 2009 08:22:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type;
-        bh=T3VzGMwHYYJjRK1ezgv+2hfE1dofTwfMIT3AGuJ1IMs=;
-        b=mrj8j7vNTQ2QGF67FhbB7IEl9WgGMJosf4WqTrEXhIT0spEv1dteqBbR9BBajHv/no
-         9uYvhFKkggTzrSyNnplkMf53oesmHSK/q6U1+dS2EYOE9Dl7k6IU4wbLwcxiHy4j6VMG
-         5iGKQrNTfDPVKInResR3HF8kNE18qc7fdIIxk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=ilnQJyqOB50WH+2vVDpSIOjV+Fes78Umcw1K0flyl2vflVwbrt0lUkm4gxQE4bDtaH
-         fYgbbk+DcDvjioJrzIHdf5Y+RB4NmDYYlAUXOjYi6D+ynO01SQBtYTL4RvGN050jnDna
-         z+DoUJoM9BlUXpPBdhrmsxPYMnNzLa/q/srq8=
-Received: by 10.239.237.193 with SMTP id k1mr162768hbp.173.1259857347916; Thu, 
-	03 Dec 2009 08:22:27 -0800 (PST)
-In-Reply-To: <m1NG61U-000kn4C@most.weird.com>
+	id S1754070AbZLCRce (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2009 12:32:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753284AbZLCRce
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 12:32:34 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38443 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751429AbZLCRcd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2009 12:32:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 96FA5A3D7D;
+	Thu,  3 Dec 2009 12:32:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AZtj8OZ4OVsUQr2YJSIxQwA/XB0=; b=aRUNDs
+	g1TwQpQGmxONAD2M5bUxfU/87CHc3NdDUePLqpldCTduXjMwePtE1MPBNMnQWVu4
+	NviN+LJ6n5hcK0eZLmZZO8gCpMWeYVBjVgmTICVqV0gknUf9Yqfa1Oulhy3nCYIH
+	sX2TEJ3dlXft8sajUDGiQ4ZcwPnRhEf/3EDQ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xeIRzTYbUgkJ/w4rDY2ZhepYB8K/Sduz
+	5FViWXPlRLDU2MFYLv2LpG+7pjdi8Bp8gOU+7+vIE5DmTJVrQ9eNwK+rUtdytBSD
+	vWJMxdAx2+pyGR7c2IlLmJA6zXc9dJTQgvwmGbKpOrcibmFdvHa73Q5YNKtTawpp
+	7C5jeY5UBF4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 76279A3D7C;
+	Thu,  3 Dec 2009 12:32:37 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7AE52A3D73; Thu,  3 Dec 2009
+ 12:32:34 -0500 (EST)
+In-Reply-To: <20091203052220.GA22582@coredump.intra.peff.net> (Jeff King's
+ message of "Thu\, 3 Dec 2009 00\:22\:20 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D97A99A2-E031-11DE-A355-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134459>
 
-On 12/3/09, Greg A. Woods <woods@planix.com> wrote:
-> At Wed, 02 Dec 2009 17:34:01 -0800, Junio C Hamano <gitster@pobox.com> wrote:
->  Subject: Re: Git documentation consistency
->  > I think you are showing ignorance here, as -? is *not* even close to
->  > standard, nor even widely used practice at all.
->
->  I think I should know something about Unix command line and option
->  parsers, having used them for some 25 years or so now.  In fact I've
->  used most every kind of unix that ever was, and I've worked on the
->  source to more than a few.
+Jeff King <peff@peff.net> writes:
 
-'?' is what getopt(3) is supposed to return for unknown options.
+> As a result of our participation in the Summer of Code project last
+> summer and this summer, Google gave the git community some money. Most
+> of that money went to defraying travel costs to the SoC mentor summit
+> and the GitTogether, both last year and this year.
 
--- 
-marko
+I have never been actively involved in SoC mentoring so my suggestion
+shouldn't count too much, but the SFC route sounds like a very reasonable
+option to me.  Travel fund helped me a lot to attend last year's
+GitTogether, and it would be very handy to have such a community fund to
+cover part of costs when git people need to appear in events and
+conferences for the benefit of git community as a whole.
