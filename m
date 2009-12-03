@@ -1,203 +1,85 @@
-From: Marinescu Paul dan <pauldan.marinescu@epfl.ch>
-Subject: [BUG] crash on make test
-Date: Thu, 3 Dec 2009 16:38:58 +0100
-Message-ID: <D6F784B72498304C93A8A4691967698E8EE2C44FE2@REX2.intranet.epfl.ch>
-References: <D6F784B72498304C93A8A4691967698E8EE2C44FE1@REX2.intranet.epfl.ch>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git gsoc money
+Date: Thu, 3 Dec 2009 07:39:35 -0800
+Message-ID: <20091203153935.GB23281@spearce.org>
+References: <20091203052220.GA22582@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 03 16:39:57 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 03 16:47:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGDme-000756-80
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 16:39:56 +0100
+	id 1NGDtn-00027J-No
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Dec 2009 16:47:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753174AbZLCPjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2009 10:39:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752408AbZLCPjn
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 10:39:43 -0500
-Received: from smtp0.epfl.ch ([128.178.224.219]:41183 "HELO smtp0.epfl.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752001AbZLCPjm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Dec 2009 10:39:42 -0500
-Received: (qmail 13105 invoked by uid 107); 3 Dec 2009 15:39:47 -0000
-X-Virus-Scanned: ClamAV
-Received: from slb-nat-128-178-224-63.epfl.ch (192.26.45.63)
-  by smtp0.epfl.ch (AngelmatoPhylax SMTP proxy); Thu, 03 Dec 2009 16:39:47 +0100
-Received: from REX2.intranet.epfl.ch ([128.178.50.202]) by
- ewa3.intranet.epfl.ch ([128.178.224.63]) with mapi; Thu, 3 Dec 2009 16:39:47
- +0100
-Thread-Topic: [BUG] crash on make test
-Thread-Index: AQHKdC1xKCZl8xfG8EOQRldu8WAYPZFTdRrE
-In-Reply-To: <D6F784B72498304C93A8A4691967698E8EE2C44FE1@REX2.intranet.epfl.ch>
-Accept-Language: en-US, fr-CH
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, fr-CH
+	id S1753789AbZLCPrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2009 10:47:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753610AbZLCPrI
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Dec 2009 10:47:08 -0500
+Received: from mail-gx0-f226.google.com ([209.85.217.226]:59997 "EHLO
+	mail-gx0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753431AbZLCPrH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2009 10:47:07 -0500
+Received: by gxk26 with SMTP id 26so1327370gxk.1
+        for <git@vger.kernel.org>; Thu, 03 Dec 2009 07:47:13 -0800 (PST)
+Received: by 10.101.61.12 with SMTP id o12mr1859340ank.1.1259854779108;
+        Thu, 03 Dec 2009 07:39:39 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 15sm1088662yxh.40.2009.12.03.07.39.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 03 Dec 2009 07:39:37 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20091203052220.GA22582@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134457>
+
+Jeff King <peff@peff.net> wrote:
+> However, we still have about $500 USD remaining.
+> 
+> Some possibilities are:
+> 
+>   1. Become an affiliated project of an organization like The Software
+>      Freedom Conservancy or Software in the Public Interest.
+
+Try to join the Software Freedom Conservancy and retain the funds
+for Git's use?  Maybe you can slide in before the Dec 31st deadline.
+
+I know a few users of Git have said they can't contribute code, but
+they would like to throw $25-50 towards a developer to say thank you.
+This would give them an easier vehicle to do that.
+
+I'm not saying we should actively seek donations, we have virtually
+no expenses and don't need them.
+
+But we do sometimes have these GitTogether things, or one of us is
+going to a Linux Plumbers conference or something to give a talk
+promoting Git.  Having $500 from a handful of donations available
+to defray Git related travel costs for some of our more active
+developers is more useful than having a user send something from
+an Amazon wish list [1][2].
+
+At worst, if we collect a bunch of money and realize "Oh, wait,
+we have like $8000 USD and we haven't spent any of it in the past
+5 years!" we can have the SFC do a big donation to FSF or something
+and say "thanks for GCC!".
+
+If joining the SFC proves too difficult, just donate the $500 to
+the FSF.  That's what we did the first year we were in GSoC.
 
 
-I got a crash on git's make test with and a core file in ./t/trash directory.t4200-rerere/
-The problem seems to be in garbage_collect (builtin-rerere.c) where readdir can be called with a null pointer
+[1] At least, to me.  My apartment isn't big enough for the crap
+    I already own, I don't need more crap shipped to it.
 
-Below is the gdb stack trace:
+[2] This remark is due to a user on #git the other week wondering
+    why I don't have an Amazon wish list, as he wanted to send me
+    something to thank me for some feature I wrote eons ago.
 
-GNU gdb 6.8-debian
-Copyright (C) 2008 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
-and "show warranty" for details.
-This GDB was configured as "i486-linux-gnu"...
-Reading symbols from /lib/libz.so.1...done.
-Loaded symbols for /lib/libz.so.1
-Reading symbols from /lib/i686/cmov/libcrypto.so.0.9.8...done.
-Loaded symbols for /lib/i686/cmov/libcrypto.so.0.9.8
-Reading symbols from /lib/tls/i686/cmov/libpthread.so.0...Reading symbols from /usr/lib/debug/lib/tls/i686/cmov/libpthread-2.9.so...done.
-done.
-Loaded symbols for /lib/tls/i686/cmov/libpthread.so.0
-Reading symbols from /lib/tls/i686/cmov/libc.so.6...Reading symbols from /usr/lib/debug/lib/tls/i686/cmov/libc-2.9.so...done.
-done.
-Loaded symbols for /lib/tls/i686/cmov/libc.so.6
-Reading symbols from /usr/lib/libxml2.so.2...done.
-Loaded symbols for /usr/lib/libxml2.so.2
-Reading symbols from /lib/tls/i686/cmov/librt.so.1...Reading symbols from /usr/lib/debug/lib/tls/i686/cmov/librt-2.9.so...done.
-done.
-Loaded symbols for /lib/tls/i686/cmov/librt.so.1
-Reading symbols from /lib/tls/i686/cmov/libdl.so.2...Reading symbols from /usr/lib/debug/lib/tls/i686/cmov/libdl-2.9.so...done.
-done.
-Loaded symbols for /lib/tls/i686/cmov/libdl.so.2
-Reading symbols from /usr/lib/libelf.so.1...done.
-Loaded symbols for /usr/lib/libelf.so.1
-Reading symbols from /usr/lib/libstdc++.so.6...done.
-Loaded symbols for /usr/lib/libstdc++.so.6
-Reading symbols from /lib/tls/i686/cmov/libm.so.6...Reading symbols from /usr/lib/debug/lib/tls/i686/cmov/libm-2.9.so...done.
-done.
-Loaded symbols for /lib/tls/i686/cmov/libm.so.6
-Reading symbols from /lib/libgcc_s.so.1...done.
-Loaded symbols for /lib/libgcc_s.so.1
-Reading symbols from /lib/ld-linux.so.2...Reading symbols from /usr/lib/debug/lib/ld-2.9.so...done.
-done.
-Loaded symbols for /lib/ld-linux.so.2
-Core was generated by `git rerere gc'.
-Program terminated with signal 11, Segmentation fault.
-[New process 5637]
-#0  0x4027fca5 in __readdir64 (dirp=0x0) at ../sysdeps/unix/readdir.c:45
- in ../sysdeps/unix/readdir.c
-(gdb) bt full
-#0  0x4027fca5 in __readdir64 (dirp=0x0) at ../sysdeps/unix/readdir.c:45
- ignore1 = 0
- ignore2 = 1
- dp = <value optimized out>
- saved_errno = 12
-#1  0x0813cfd4 in garbage_collect (rr=0xbfabe89c) at builtin-rerere.c:51
- to_remove = {items = 0x0, nr = 0, alloc = 0, strdup_strings = 1}
- dir = (DIR *) 0x0
- e = (struct dirent *) 0x1
- i = 0
- cutoff = -1079252800
- now = 1259852637
- then = 1
-#2  0x0813d970 in cmd_rerere (argc=2, argv=0xbfabeaa8, prefix=0x0) at builtin-rerere.c:121
- merge_rr = {items = 0xa0d2728, nr = 1, alloc = 32, strdup_strings = 1}
- i = -1
- fd = 6
-#3  0x0804ca57 in run_builtin (p=0x831465c, argc=2, argv=0xbfabeaa8) at git.c:249
- status = 1076211824
- st = {st_dev = 3418922014550254984, __pad1 = 65535, __st_ino = 1073860596, st_mode = 134517300, 
-  st_nlink = 1073862256, st_uid = 3215714640, st_gid = 1073798779, st_rdev = 4632177755147065384, __pad2 = 1, 
-  st_size = 1, st_blksize = 134519071, st_blocks = 180, st_atim = {tv_sec = 137446088, tv_nsec = 1}, st_mtim = {
-    tv_sec = 1075774256, tv_nsec = 1077161972}, st_ctim = {tv_sec = 137183648, tv_nsec = 134524528}, 
-  st_ino = 4612030924696840600}
- prefix = 0x0
-#4  0x0804cee8 in handle_internal_command (argc=2, argv=0xbfabeaa8) at git.c:394
- p = (struct cmd_struct *) 0x831465c
- cmd = 0xbfac098a "rerere"
- i = 69
- commands = {{cmd = 0x82d4765 "add", fn = 0x804f757 <cmd_add>, option = 5}, {cmd = 0x82d4769 "stage", 
-    fn = 0x804f757 <cmd_add>, option = 5}, {cmd = 0x82d476f "annotate", fn = 0x8050754 <cmd_annotate>, option = 1}, {
-    cmd = 0x82d4778 "apply", fn = 0x80679e1 <cmd_apply>, option = 0}, {cmd = 0x82d477e "archive", 
-    fn = 0x8069ba0 <cmd_archive>, option = 0}, {cmd = 0x82d4786 "bisect--helper", 
-    fn = 0x806a138 <cmd_bisect__helper>, option = 5}, {cmd = 0x82d4795 "blame", fn = 0x807770d <cmd_blame>, 
-    option = 1}, {cmd = 0x82d479b "branch", fn = 0x807d584 <cmd_branch>, option = 1}, {cmd = 0x82d47a2 "bundle", 
-    fn = 0x807e3ec <cmd_bundle>, option = 0}, {cmd = 0x82d47a9 "cat-file", fn = 0x80803cb <cmd_cat_file>, 
-    option = 1}, {cmd = 0x82d47b2 "checkout", fn = 0x8088f1c <cmd_checkout>, option = 5}, {
-    cmd = 0x82d47bb "checkout-index", fn = 0x8082fc9 <cmd_checkout_index>, option = 5}, {
-    cmd = 0x82d47ca "check-ref-format", fn = 0x8081920 <cmd_check_ref_format>, option = 0}, {
-    cmd = 0x82d47db "check-attr", fn = 0x808125a <cmd_check_attr>, option = 1}, {cmd = 0x82d47e6 "cherry", 
-    fn = 0x80eb740 <cmd_cherry>, option = 1}, {cmd = 0x82d47ed "cherry-pick", fn = 0x814c341 <cmd_cherry_pick>, 
-    option = 5}, {cmd = 0x82d47f9 "clone", fn = 0x808e8a1 <cmd_clone>, option = 0}, {cmd = 0x82d47ff "clean", 
-    fn = 0x808aa34 <cmd_clean>, option = 5}, {cmd = 0x82d4805 "commit", fn = 0x809b274 <cmd_commit>, option = 5}, {
-    cmd = 0x82d480c "commit-tree", fn = 0x8092531 <cmd_commit_tree>, option = 1}, {cmd = 0x82d4818 "config", 
-    fn = 0x809f881 <cmd_config>, option = 0}, {cmd = 0x82d481f "count-objects", fn = 0x80a1c75 <cmd_count_objects>, 
-    option = 1}, {cmd = 0x82d482d "describe", fn = 0x80a4d6d <cmd_describe>, option = 1}, {cmd = 0x82d4836 "diff", 
-    fn = 0x80a99e8 <cmd_diff>, option = 0}, {cmd = 0x82d483b "diff-files", fn = 0x80a56d0 <cmd_diff_files>, 
-    option = 5}, {cmd = 0x82d4846 "diff-index", fn = 0x80a601c <cmd_diff_index>, option = 1}, {
-    cmd = 0x82d4851 "diff-tree", fn = 0x80a7307 <cmd_diff_tree>, option = 1}, {cmd = 0x82d485b "fast-export", 
-    fn = 0x80af36f <cmd_fast_export>, option = 1}, {cmd = 0x82d4867 "fetch", fn = 0x80c1668 <cmd_fetch>, 
-    option = 1}, {cmd = 0x82d486d "fetch-pack", fn = 0x80ba759 <cmd_fetch_pack>, option = 1}, {
-    cmd = 0x82d4878 "fetch--tool", fn = 0x80b4202 <cmd_fetch__tool>, option = 1}, {cmd = 0x82d4884 "fmt-merge-msg", 
-    fn = 0x80c5038 <cmd_fmt_merge_msg>, option = 1}, {cmd = 0x82d4892 "for-each-ref", 
-    fn = 0x80cb172 <cmd_for_each_ref>, option = 1}, {cmd = 0x82d489f "format-patch", 
-    fn = 0x80e86a4 <cmd_format_patch>, option = 1}, {cmd = 0x82d48ac "fsck", fn = 0x80cf9d5 <cmd_fsck>, option = 1}, 
-  {cmd = 0x82d48b1 "fsck-objects", fn = 0x80cf9d5 <cmd_fsck>, option = 1}, {cmd = 0x82d48be "gc", 
-    fn = 0x80d17fd <cmd_gc>, option = 1}, {cmd = 0x82d48c1 "get-tar-commit-id", 
-    fn = 0x8163545 <cmd_get_tar_commit_id>, option = 0}, {cmd = 0x82d48d3 "grep", fn = 0x80d80ba <cmd_grep>, 
-    option = 3}, {cmd = 0x82d48d8 "help", fn = 0x80dcd12 <cmd_help>, option = 0}, {cmd = 0x82d48dd "init", 
-    fn = 0x80e0d5b <cmd_init_db>, option = 0}, {cmd = 0x82d48e2 "init-db", fn = 0x80e0d5b <cmd_init_db>, 
-    option = 0}, {cmd = 0x82d48ea "log", fn = 0x80e4c6f <cmd_log>, option = 3}, {cmd = 0x82d48ee "ls-files", 
-    fn = 0x80ef3e5 <cmd_ls_files>, option = 1}, {cmd = 0x82d48f7 "ls-tree", fn = 0x80f1e84 <cmd_ls_tree>, 
-    option = 1}, {cmd = 0x82d48ff "ls-remote", fn = 0x80f0a35 <cmd_ls_remote>, option = 0}, {
-    cmd = 0x82d4909 "mailinfo", fn = 0x80f99ac <cmd_mailinfo>, option = 0}, {cmd = 0x82d4912 "mailsplit", 
-    fn = 0x80fbd21 <cmd_mailsplit>, option = 0}, {cmd = 0x82d491c "merge", fn = 0x81045ff <cmd_merge>, option = 5}, {
-    cmd = 0x82d4922 "merge-base", fn = 0x81084c3 <cmd_merge_base>, option = 1}, {cmd = 0x82d492d "merge-file", 
-    fn = 0x8108839 <cmd_merge_file>, option = 0}, {cmd = 0x82d4938 "merge-ours", fn = 0x8109594 <cmd_merge_ours>, 
-    option = 1}, {cmd = 0x82d4943 "merge-recursive", fn = 0x81097ca <cmd_merge_recursive>, option = 5}, {
-    cmd = 0x82d4953 "merge-subtree", fn = 0x81097ca <cmd_merge_recursive>, option = 5}, {cmd = 0x82d4961 "mktree", 
-    fn = 0x810afea <cmd_mktree>, option = 1}, {cmd = 0x82d4968 "mv", fn = 0x810ba65 <cmd_mv>, option = 5}, {
-    cmd = 0x82d496b "name-rev", fn = 0x810ef35 <cmd_name_rev>, option = 1}, {cmd = 0x82d4974 "pack-objects", 
-    fn = 0x811daed <cmd_pack_objects>, option = 1}, {cmd = 0x82d4981 "peek-remote", fn = 0x80f0a35 <cmd_ls_remote>, 
-    option = 0}, {cmd = 0x82d498d "pickaxe", fn = 0x807770d <cmd_blame>, option = 1}, {cmd = 0x82d4995 "prune", 
-    fn = 0x812160f <cmd_prune>, option = 1}, {cmd = 0x82d499b "prune-packed", fn = 0x812029c <cmd_prune_packed>, 
-    option = 1}, {cmd = 0x82d49a8 "push", fn = 0x8122de2 <cmd_push>, option = 1}, {cmd = 0x82d49ad "read-tree", 
-    fn = 0x8123640 <cmd_read_tree>, option = 1}, {cmd = 0x82d49b7 "receive-pack", fn = 0x8128ec4 <cmd_receive_pack>, 
-    option = 0}, {cmd = 0x82d49c4 "reflog", fn = 0x812ebcf <cmd_reflog>, option = 1}, {cmd = 0x82d49cb "remote", 
-    fn = 0x813ad5e <cmd_remote>, option = 1}, {cmd = 0x82d49d2 "replace", fn = 0x813c0fc <cmd_replace>, option = 1}, 
-  {cmd = 0x82d49da "repo-config", fn = 0x809f881 <cmd_config>, option = 0}, {cmd = 0x82d49e6 "rerere", 
-    fn = 0x813d60d <cmd_rerere>, option = 1}, {cmd = 0x82d49ed "reset", fn = 0x813f0c9 <cmd_reset>, option = 1}, {
-    cmd = 0x82d49f3 "rev-list", fn = 0x8142605 <cmd_rev_list>, option = 1}, {cmd = 0x82d49fc "rev-parse", 
-    fn = 0x81461ab <cmd_rev_parse>, option = 0}, {cmd = 0x82d4a06 "revert", fn = 0x814c24b <cmd_revert>, 
-    option = 5}, {cmd = 0x82d4a0d "rm", fn = 0x814d170 <cmd_rm>, option = 1}, {cmd = 0x82d4a10 "send-pack", 
-    fn = 0x815167e <cmd_send_pack>, option = 1}, {cmd = 0x82d4a1a "shortlog", fn = 0x81547ad <cmd_shortlog>, 
-    option = 2}, {cmd = 0x82d4a23 "show-branch", fn = 0x81590c0 <cmd_show_branch>, option = 1}, {
-    cmd = 0x82d4a2f "show", fn = 0x80e3cc2 <cmd_show>, option = 3}, {cmd = 0x82d4a34 "status", 
-    fn = 0x809a6e5 <cmd_status>, option = 5}, {cmd = 0x82d4a3b "stripspace", fn = 0x815e3e7 <cmd_stripspace>, 
-    option = 0}, {cmd = 0x82d4a46 "symbolic-ref", fn = 0x815e849 <cmd_symbolic_ref>, option = 1}, {
-    cmd = 0x82d4a53 "tag", fn = 0x816180b <cmd_tag>, option = 1}, {cmd = 0x82d4a57 "tar-tree", 
-    fn = 0x81630ac <cmd_tar_tree>, option = 0}, {cmd = 0x82d4a60 "unpack-objects", 
-    fn = 0x8166bdf <cmd_unpack_objects>, option = 1}, {cmd = 0x82d4a6f "update-index", 
-    fn = 0x816b514 <cmd_update_index>, option = 1}, {cmd = 0x82d4a7c "update-ref", fn = 0x816ddd0 <cmd_update_ref>, 
-    option = 1}, {cmd = 0x82d4a87 "update-server-info", fn = 0x816e734 <cmd_update_server_info>, option = 1}, {
-    cmd = 0x82d4a9a "upload-archive", fn = 0x816f579 <cmd_upload_archive>, option = 0}, {
-    cmd = 0x82d4aa9 "verify-tag", fn = 0x817257a <cmd_verify_tag>, option = 1}, {cmd = 0x82d4ab4 "version", 
-    fn = 0x81f5c18 <cmd_version>, option = 0}, {cmd = 0x82d4abc "whatchanged", fn = 0x80e339b <cmd_whatchanged>, 
-    option = 3}, {cmd = 0x82d4ac8 "write-tree", fn = 0x8172814 <cmd_write_tree>, option = 1}, {
-    cmd = 0x82d4ad3 "verify-pack", fn = 0x81714a2 <cmd_verify_pack>, option = 0}, {cmd = 0x82d4adf "show-ref", 
-    fn = 0x815d8b1 <cmd_show_ref>, option = 1}, {cmd = 0x82d4ae8 "pack-refs", fn = 0x811f8a4 <cmd_pack_refs>, 
-    option = 1}}
- ext = ""
-#5  0x0804d1ce in run_argv (argcp=0xbfabea20, argv=0xbfabea24) at git.c:436
- done_alias = 0
-#6  0x0804d6d1 in main (argc=2, argv=0xbfabeaa8) at git.c:507
- cmd = 0xbfac098a "rerere"
- done_help = 0
- was_alias = 0
-(gdb) quit
+-- 
+Shawn.
