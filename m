@@ -1,136 +1,96 @@
-From: Guido Stevens <guido.stevens@cosent.net>
-Subject: git-svn breakage on repository rename
-Date: Fri, 04 Dec 2009 21:26:32 +0100
-Organization: Cosent   -:-   s h a r i n g   m a k e s   s e n s e
-Message-ID: <4B197078.6050203@cosent.net>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: git-blame.el: what is format-spec?
+Date: Fri, 04 Dec 2009 23:54:10 +0300
+Message-ID: <87einafojx.fsf@osv.gnss.ru>
+References: <87vdgm3e1k.fsf@osv.gnss.ru> <m2fx7qae49.fsf@igel.home>
+	<87ljhi3cao.fsf@osv.gnss.ru> <87fx7q4p6h.fsf@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: George Kuk <George.Kuk@nottingham.ac.uk>
-To: normalperson@yhbt.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 04 21:52:24 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Andreas Schwab <schwab@linux-m68k.org>
+To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Fri Dec 04 21:54:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGf8U-0002D9-TT
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 21:52:19 +0100
+	id 1NGfAS-00033x-5r
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 21:54:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932384AbZLDUvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2009 15:51:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932311AbZLDUvF
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 15:51:05 -0500
-Received: from slow3-v.mail.gandi.net ([217.70.178.89]:48441 "EHLO
-	slow3-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932264AbZLDUvA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2009 15:51:00 -0500
-Received: from relay2-v.mail.gandi.net (relay2-v.mail.gandi.net [217.70.178.76])
-	by slow3-v.mail.gandi.net (Postfix) with ESMTP id 27D83405F5
-	for <git@vger.kernel.org>; Fri,  4 Dec 2009 21:27:02 +0100 (CET)
-Received: from [192.168.178.24] (isis-torproxy.xs4all.nl [80.101.174.248])
-	by relay2-v.mail.gandi.net (Postfix) with ESMTP id 7BC62135D8;
-	Fri,  4 Dec 2009 21:26:33 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+	id S932412AbZLDUyH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Dec 2009 15:54:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757218AbZLDUyH
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 15:54:07 -0500
+Received: from javad.com ([205.178.136.214]:46533 "EHLO 02aef2d.netsolvps.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757170AbZLDUyG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2009 15:54:06 -0500
+Received: (qmail 9968 invoked from network); 4 Dec 2009 20:54:12 +0000
+Received: from unknown (HELO osv.gnss.ru) (89.175.180.246)
+  by javad.com with (AES256-SHA encrypted) SMTP; 4 Dec 2009 20:54:12 +0000
+Received: from osv by osv.gnss.ru with local (Exim 4.69)
+	(envelope-from <osv@osv.gnss.ru>)
+	id 1NGfAI-0005bq-Mr; Fri, 04 Dec 2009 23:54:10 +0300
+In-Reply-To: <87fx7q4p6h.fsf@lysator.liu.se> ("David =?utf-8?Q?K=C3=A5geda?=
+ =?utf-8?Q?l=22's?= message of "Fri\, 04 Dec 2009 18\:36\:06 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134576>
 
-Hi Eric e.a.,
+David K=C3=A5gedal <davidk@lysator.liu.se> writes:
 
-I have a weird git-svn corner case that might interest you (or not at 
-all). I'd appreciate any help or hints for moving beyond this problem.
+> Sergei Organov <osv@javad.com> writes:
+>
+>> Andreas Schwab <schwab@linux-m68k.org> writes:
+>>> Sergei Organov <osv@javad.com> writes:
+>>>
+>>>> What is format-spec function in current git-blame.el? Neither my G=
+NU
+>>>> Emacs 22.2.1 nor Google knows anything about it.
+>>>
+>>> It's part of Emacs since more than 9 years, imported from Gnus.
+>>>
+>>
+>> Thanks, I now see it in Gnus on my own computer, in
+>> lisp/gnus/format-spec.el.gz.
+>>
+>> GNU Emacs 22.2.1 (i486-pc-linux-gnu, GTK+ Version 2.12.11) of 2008-1=
+1-10
+>> on raven, modified by Debian=20
+>>
+>> However, isn't it a bad idea to require Gnus(!) for git-blame to run=
+? Gnus
+>> is not installed on our server where I've encountered the problem. W=
+as
+>> format-spec actually moved to core emacs recently?
+>
+> That was not my intention when I posted the patch. I seem to recall t=
+hat
+> I asked for testing, in particular from users with older Emacsen than
+> 23. But I got no response, and only recently discovered that the patc=
+h
+> hade been accepted.
+>
+> format-spec is included in Emacs 23, and is a useful function.
 
-I'm using git-svn to do a full commit history analysis of the Zope + 
-Plone CMS code bases as part of a research project with the University 
-of Nottingham into open source knowledge dynamics.
+Then there should be (require 'format-spec) in git-blame.el, right? Due
+to:
 
-One of the repositories I'm importing breaks with a "Checksum mismatch", 
-indicating a corruption. However, this error message occurs exactly at 
-the point where the repository was renamed: from "Products.CMFPlone" to 
-"Plone" (22715->22716). (Yes, it's the Plone core itself that resists 
-analysis :-()
+$ emacs --version
+GNU Emacs 23.1.1
+[...]
+$ emacs --batch -Q -f format-spec
+Symbol's function definition is void: format-spec
+$
 
-The git-svn url for the later commits would be:
-   http://svn-mirror.plone.org/svn/plone/Plone/trunk
+Now, I've evaluated (require 'format-spec) in my Emacs 22 (yes, 22, not
+23), and now git-blame almost works there. The problem I see is that it
+doesn't output anything in the echo area. It color-codes the buffer, it
+does show correct pop-up when mouse is over a region, but it doesn't
+print anything in the echo area when I move cursor through the regions.
+Any idea how to debug/fix this?
 
-Whereas an older part of the code base lives at:
-   http://svn-mirror.plone.org/svn/plone/Products.CMFPlone/trunk
-
-Funny thing is, git-svn detects this rename upfront but then breaks
-anyway. Which raises the questions:
-
-- is this breakage caused by the rename?
-
-- or does git-svn handle the rename, and there is an actual corruption?
-
-- is there any way I can work around this and get a valid or semi-valid
-git history for this project?
-
-I don't mind missing a few commits, since I'm not doing code development
-on this repository, only statistical analysis.
-
-Solving this would also be helpful for anyone who wants to work on Plone 
-development through git rather than through raw svn.
-
-:*CU#
-
-----------------------------------------------------
-To reconstruct this error:
-----------------------------------------------------
-
-$ git svn init https://svn-mirror.plone.org/svn/plone/Plone/trunk Plone
-$ cd Plone
-$ git svn fetch
-
-... Error message: (reformatted to wrap 78 cols):
-
-Found possible branch point:
-https://svn.plone.org/svn/plone/Plone/branches/4.0 =>
-https://svn.plone.org/svn/plone/Plone/trunk, 30966
-
-Initializing parent: git-svn@30966
-
-Found possible branch point:
-https://svn.plone.org/svn/plone/Plone/branches/3.3 =>
-https://svn.plone.org/svn/plone/Plone/branches/4.0, 27288
-
-Initializing parent: git-svn@27288
-
-Found possible branch point:
-https://svn.plone.org/svn/plone/Plone/branches/3.2 =>
-https://svn.plone.org/svn/plone/Plone/branches/3.3, 25119
-
-Initializing parent: git-svn@25119
-
-Found possible branch point:
-https://svn.plone.org/svn/plone/Plone/branches/3.1 =>
-https://svn.plone.org/svn/plone/Plone/branches/3.2, 22725
-
-Initializing parent: git-svn@22725
-
-branch_from: /Products.CMFPlone => /Products.CMFPlone/branches/3.1
-
-Found possible branch point:
-https://svn.plone.org/svn/plone/Products.CMFPlone/branches/3.1 =>
-https://svn.plone.org/svn/plone/Plone/branches/3.1, 22715
-
-Initializing parent: git-svn@22715
-
-Found branch parent: (git-svn@22725)
-e477345f83a0f2cc7e27348e01493a841c9cd587
-
-Following parent with do_switch
-
-Checksum mismatch: Products/CMFPlone/HISTORY.txt
-expected: 69106809d879e7370dd133c7ba338670
-     got: 7b1a0641d429f0c567acf7a3a4be5a45
-
-
--- 
-***   Guido A.J. Stevens        ***   tel: +31.43.3618933    ***
-***   guido.stevens@cosent.net  ***   Postbus 619            ***
-***   http://www.cosent.nl      ***   6200 AP  Maastricht    ***
-
-             s h a r i n g    m a k e s    s e n s e
+-- Sergei.
