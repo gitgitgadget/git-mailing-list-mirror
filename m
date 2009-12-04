@@ -1,61 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH 2/2] MSVC: Fix an "incompatible pointer types" compiler
- warning
-Date: Fri, 4 Dec 2009 11:47:17 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0912041144470.4985@pacific.mpi-cbg.de>
-References: <4B1806FB.2050401@ramsay1.demon.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: Re: Running commands in wrong environment
+Date: Fri, 4 Dec 2009 05:44:41 -0500
+Message-ID: <20091204104441.GD27495@coredump.intra.peff.net>
+References: <D6F784B72498304C93A8A4691967698E8EE2C44FE5@REX2.intranet.epfl.ch>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Marius Storm-Olsen <mstormo@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Fri Dec 04 11:43:11 2009
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Marinescu Paul dan <pauldan.marinescu@epfl.ch>
+X-From: git-owner@vger.kernel.org Fri Dec 04 11:44:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGVd0-0005dr-LF
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 11:43:10 +0100
+	id 1NGVeg-0006P5-Cf
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 11:44:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751844AbZLDKmy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2009 05:42:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751405AbZLDKmy
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 05:42:54 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34450 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751681AbZLDKmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2009 05:42:53 -0500
-Received: (qmail invoked by alias); 04 Dec 2009 10:42:58 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp064) with SMTP; 04 Dec 2009 11:42:58 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+wY/xdubCwKxp77vKaDRFC/UGnKe0skVGe8DUjNK
-	SMAltGwEVV37hh
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <4B1806FB.2050401@ramsay1.demon.co.uk>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1754173AbZLDKoi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2009 05:44:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754174AbZLDKoh
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 05:44:37 -0500
+Received: from peff.net ([208.65.91.99]:46473 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753590AbZLDKog (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2009 05:44:36 -0500
+Received: (qmail 18788 invoked by uid 107); 4 Dec 2009 10:49:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 04 Dec 2009 05:49:11 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Dec 2009 05:44:41 -0500
+Content-Disposition: inline
+In-Reply-To: <D6F784B72498304C93A8A4691967698E8EE2C44FE5@REX2.intranet.epfl.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134507>
 
-Hi,
+On Thu, Dec 03, 2009 at 08:19:05PM +0100, Marinescu Paul dan wrote:
 
-On Thu, 3 Dec 2009, Ramsay Jones wrote:
+> git's start_command (run_command.c) executes a command (e.g. hook) but
+> does not verify that it has properly set up the environment. It seems
+> that in the unlikely case where putenv (run_command.c:117) fails, the
+> command may have undesirable effects e.g. GIT_INDEX_FILE should have
+> been set (interactive pre-commit hooks) but the default index will be
+> used instead. It would be safer not to run the command but just exit
+> in that case.--
 
->  compat/mingw.h |   27 ++++++++++++++++++++++++++-
->  compat/msvc.h  |   25 +------------------------
->  2 files changed, 27 insertions(+), 25 deletions(-)
+Hmm. It is simple enough to patch the one use of putenv, but there are
+34 other calls to setenv, which has the same problem. I am tempted to
+ignore it, as it is extremely unlikely for this ever to happen, and
+adding error checking everywhere reduces the code readability.
 
-I'd prefer to have the MSVC-specific definitions in msvc.h, along with a 
-definition of, say, ALREADY_DEFINED_STATI64 or some such (which tells 
-mingw.h not to do anything about those types).  There is no need to 
-clutter mingw.h with stuff for MSVC.
+But the consequences, as you mention, could include data loss, which
+argues for being on the safe side. In that case, we would probably want
+an "xsetenv" to die() if we fail to avoid cluttering the code
+everywhere.
 
-Ciao,
-Dscho
+I dunno. If we're going to do it, it is probably maint-worthy. Junio?
+
+-Peff
