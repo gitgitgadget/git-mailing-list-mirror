@@ -1,85 +1,91 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [ANNOUNCE] Git 1.6.5.4
-Date: Fri, 04 Dec 2009 07:39:59 +0100
-Message-ID: <vpq638ntf7k.fsf@bauges.imag.fr>
-References: <7v638o76ra.fsf@alter.siamese.dyndns.org>
-	<4B17ABE3.6060003@drmicha.warpmail.net> <m2d42w5fqq.fsf@igel.home>
-	<4B17D078.6080000@drmicha.warpmail.net>
-	<20091203150323.GI23717@inocybe.localdomain>
-	<7viqco54xh.fsf@alter.siamese.dyndns.org>
-	<20091203202738.GP23717@inocybe.localdomain>
-	<7vfx7r4we7.fsf@alter.siamese.dyndns.org>
-	<20091203220020.GS23717@inocybe.localdomain>
-	<7vbpif4rn2.fsf@alter.siamese.dyndns.org>
-	<76c5b8580912031949k7f4193f9q94f9a2040b877571@mail.gmail.com>
-	<7vocmfxnxh.fsf@alter.siamese.dyndns.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH resend 0/3] transport: catch non-fast-forwards
+Date: Fri, 4 Dec 2009 14:54:37 +0800
+Message-ID: <20091204145437.1a9910db.rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eugene Sajine <euguess@gmail.com>, Todd Zullinger <tmz@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 04 07:40:26 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Daniel Barkalow" <barkalow@iabervon.org>,
+	"Sverre Rabbelier" <srabbelier@gmail.com>,
+	"Clemens Buchacher" <drizzd@aon.at>, "Jeff King" <peff@peff.net>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 04 07:54:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGRq4-0005S7-NY
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 07:40:25 +0100
+	id 1NGS43-0000tr-Lw
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 07:54:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752172AbZLDGkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2009 01:40:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752162AbZLDGkM
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 01:40:12 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:35449 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752160AbZLDGkL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2009 01:40:11 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id nB46bpgE010333
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 4 Dec 2009 07:37:51 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NGRpg-0000nX-Vd; Fri, 04 Dec 2009 07:40:01 +0100
-In-Reply-To: <7vocmfxnxh.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 03 Dec 2009 22\:18\:02 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 04 Dec 2009 07:37:51 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: nB46bpgE010333
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1260513472.12641@PseeA1T3W/Dvxbeh4c+vHQ
+	id S1752155AbZLDGyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2009 01:54:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752126AbZLDGyj
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 01:54:39 -0500
+Received: from mail-gx0-f226.google.com ([209.85.217.226]:43054 "EHLO
+	mail-gx0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751975AbZLDGyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2009 01:54:39 -0500
+Received: by gxk26 with SMTP id 26so1973881gxk.1
+        for <git@vger.kernel.org>; Thu, 03 Dec 2009 22:54:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=1qHTN6nGXlkatnNq0n6jAte09eJ9/aBOQQndArcVDSU=;
+        b=hNtepd/IH7iJuuH1ad0nRXiSIXLiDgP6tX4vmQpi45MOONRwisqGyda0nDSzzEdwRn
+         WQmFUB2yld0tjJE7N6zKdhlQIyFA2eTbPfGcAQqMlILyUAJ2IqByIx5A1ICw0SrDI03F
+         AoGf30fS5qov2hBtQ5DXZLCNvX3MOj/SNIfSQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=ZHztPkjpDnhI+0Rt7ijxoPAbLj4HXGbZ11x5IxUCySh9UBreWuHCyraNMZZEkqtfk5
+         fgsNugO02Z/QEkx9QBtl25jziL7CfzCwHPIu0z9kGrGbZ1jkqOlj4Zz/gky31U9f2gJR
+         SqoZWQpuehZZZ8Cjz/qh6+4p5cbYROfrFatjg=
+Received: by 10.90.242.9 with SMTP id p9mr1305282agh.30.1259909685510;
+        Thu, 03 Dec 2009 22:54:45 -0800 (PST)
+Received: from your-cukc5e3z5n (cm81.zeta152.maxonline.com.sg [116.87.152.81])
+        by mx.google.com with ESMTPS id 36sm1425284yxh.67.2009.12.03.22.54.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 03 Dec 2009 22:54:44 -0800 (PST)
+X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134494>
 
-Junio C Hamano <gitster@pobox.com> writes:
+This patch series applies on top of 'next', and deals with alerting
+the user to non-fast-forward pushes when using helpers (smart).
 
-> Eugene Sajine <euguess@gmail.com> writes:
->
->> We have RH with xmlto 0.0.18. I was getting ready to update our
->> installation to 1.6.5.4, but as i understand the documentation will
->> not be fully available untill this issue is resolved. Could you,
->> please, advise if this is going to be in next 1.6.5.5?
->
-> I've applied the patch in the thread you are responding to already on
-> 'maint' so it will appear in both 1.6.5.5 and 1.6.6.  In the meantime, if
-> you want to run 1.6.5.4 or preferably 1.6.6-rc1, you can locally revert
-> 8dd35c7 (Unconditionally set man.base.url.for.relative.links,
-> 2009-12-03).
+Previously, git silently exited. This situation involves the curl
+helper and the smart protocol. The fast-forward push is only detected
+when curl executes the rpc client (git-send-pack). Now, we detect it
+before telling the helper to push.
 
-Also, one can download the man pages from git.git :
+The first patch refactors ref status logic out of builtin-send-pack.c.
 
-# in a clone of git://git.kernel.org/pub/scm/git/git.git
-git archive --format=tar origin/man | tar -x -C /usr/share/man/ -vf -
+The second patch lets git know of non-fast-forwards before actually
+telling the helper to push anything.
 
-(or leave with 1.6.5.5 and the docs of 1.6.5.4 for some time)
+The third patch changes the return code when ref status indicate an
+error (determined by push_had_errors()), so that the caller of
+transport_push() is alerted.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+PS. There are at least 2 bug fixes related to this series. If you
+usually do so from repo.or.cz, please fetch from git.kernel.org; the
+former is 2 days old.
+
+ builtin-send-pack.c |   39 +++------------------------------------
+ remote.c            |   42 ++++++++++++++++++++++++++++++++++++++++++
+ remote.h            |    1 +
+ transport-helper.c  |   10 +++-------
+ transport.c         |   11 +++++++----
+ 5 files changed, 56 insertions(+), 47 deletions(-)
+
+--
+Cheers,
+Ray Chuan
