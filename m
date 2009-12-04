@@ -1,116 +1,80 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Wrong damage counting in diffcore_count_changes?
-Date: Fri, 4 Dec 2009 12:07:47 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0912041200120.24579@localhost.localdomain>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Endianness bug in git-svn or called component?
+Date: Fri, 04 Dec 2009 21:16:40 +0100
+Message-ID: <m23a3qa40n.fsf@igel.home>
+References: <20091204174458.GV17192@gradx.cs.jhu.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 04 21:08:29 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nathaniel W Filardo <nwf@cs.jhu.edu>
+X-From: git-owner@vger.kernel.org Fri Dec 04 21:16:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGeS3-0004pc-NI
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 21:08:28 +0100
+	id 1NGea9-0008EG-PG
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 21:16:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757230AbZLDUIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2009 15:08:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757221AbZLDUIQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 15:08:16 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:49117 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754455AbZLDUIP (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Dec 2009 15:08:15 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id nB4K7mfw010895
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 4 Dec 2009 12:07:49 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id nB4K7l6l012546;
-	Fri, 4 Dec 2009 12:07:47 -0800
-X-X-Sender: torvalds@localhost.localdomain
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.458 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1757237AbZLDUQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2009 15:16:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757229AbZLDUQh
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 15:16:37 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:33579 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757140AbZLDUQh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2009 15:16:37 -0500
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id C87571C159B5;
+	Fri,  4 Dec 2009 21:16:42 +0100 (CET)
+Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
+	by mail.m-online.net (Postfix) with ESMTP id 2408D90573;
+	Fri,  4 Dec 2009 21:16:42 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
+	with ESMTP id 42MLmf-DjfCO; Fri,  4 Dec 2009 21:16:40 +0100 (CET)
+Received: from igel.home (DSL01.83.171.145.25.ip-pool.NEFkom.net [83.171.145.25])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Fri,  4 Dec 2009 21:16:40 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 5554ACA28C; Fri,  4 Dec 2009 21:16:40 +0100 (CET)
+X-Yow: I can see you GUYS an' GALS need a LOT of HELP...You're all very
+ STUPID!!  I used to be STUPID, too..before I started watching UHF-TV!!
+In-Reply-To: <20091204174458.GV17192@gradx.cs.jhu.edu> (Nathaniel W. Filardo's
+	message of "Fri, 4 Dec 2009 12:44:58 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134569>
 
+Nathaniel W Filardo <nwf@cs.jhu.edu> writes:
 
-Ok, so I had somebody actually ask me about '--dirstat', and as a result I 
-ended up looking at how well the numbers it calculates really reflect the 
-damage done to a file.
+> On this machine,
+>
+> mirrors hydra:/tank0/mirrors/misc% uname -a
+> FreeBSD hydra.priv.oc.ietfng.org 9.0-CURRENT FreeBSD 9.0-CURRENT #13: Sat Nov 14 19:40:25 EST 2009 root@hydra.priv.oc.ietfng.org:/systank/obj/systank/src/sys/NWFKERN  sparc64
+>
+> attempting to fetch from an svn source yields the following error:
+>
+> rs hydra:/tank0/mirrors/misc% git svn init -s https://joshua.svn.sourceforge.net/svnroot/joshua test-joshua
+> Initialized empty Git repository in /tank0/mirrors/misc/test-joshua/.git/                                       
+> mirrors hydra:/tank0/mirrors/misc% cd test-joshua                                                               
+> mirrors hydra:/tank0/mirrors/misc/test-joshua% git svn fetch
+>         A       scripts/distributedLM/config.template       
+> [...]
+>         A       build.xml
+> r1 = fe84a7d821ec6d92da75133ac7ad1deb476b6484 (refs/remotes/trunk)
+> error: index uses  extension, which we do not understand
+> fatal: index file corrupt
+> write-tree: command returned error: 128
 
-And to my horror, it doesn't necessarily reflect the damage well at all!
+I could not reproduce that on powerpc (both 32bit and 64bit).
 
-Now, dirstat just takes the same damage numbers that git uses to estimate 
-similarity for renames, so if dirstat gets odd numbers, then that implies 
-that file similarity will also be somewhat odd.
+Andreas.
 
-So looking at _why_ the dirstat numbers were odd, I came up with this 
-patch that seems to make much sense. What used to happen is that 
-diffcore_count_changes() simply ignored any hashes in the destination that 
-didn't match hashes in the source. EXCEPT if the source hash didn't exist 
-at all, in which case it would count _one_ destination hash that happened 
-to have the "next" hash value. 
-
-This changes it so that
-
- - whenever it bypasses a destination hash (because it doesn't match a 
-   source), it counts the bytes associated with that as "literal added"
-
- - at the end (once we have used up all the source hashes), we do the same 
-   thing with the remaining destination hashes.
-
- - when hashes do match, and we use the difference in counts as a value, 
-   we also use up that destination hash entry (the 'd++'
-
-This _seems_ to make --dirstat output more sensible, and I'd hope that 
-that in turn should mean that file rename detection should also be more 
-sensible. But I haven't actually verified it in any way. Maybe I just 
-screwed up file rename detection entirely.
-
-Did I miss something?
-
-		Linus
----
- diffcore-delta.c |   11 ++++++++++-
- 1 files changed, 10 insertions(+), 1 deletions(-)
-
-diff --git a/diffcore-delta.c b/diffcore-delta.c
-index e670f85..7cf431d 100644
---- a/diffcore-delta.c
-+++ b/diffcore-delta.c
-@@ -201,10 +201,15 @@ int diffcore_count_changes(struct diff_filespec *src,
- 		while (d->cnt) {
- 			if (d->hashval >= s->hashval)
- 				break;
-+			la += d->cnt;
- 			d++;
- 		}
- 		src_cnt = s->cnt;
--		dst_cnt = d->hashval == s->hashval ? d->cnt : 0;
-+		dst_cnt = 0;
-+		if (d->cnt && d->hashval == s->hashval) {
-+			dst_cnt = d->cnt;
-+			d++;
-+		}
- 		if (src_cnt < dst_cnt) {
- 			la += dst_cnt - src_cnt;
- 			sc += src_cnt;
-@@ -213,6 +218,10 @@ int diffcore_count_changes(struct diff_filespec *src,
- 			sc += dst_cnt;
- 		s++;
- 	}
-+	while (d->cnt) {
-+		la += d->cnt;
-+		d++;
-+	}
- 
- 	if (!src_count_p)
- 		free(src_count);
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
