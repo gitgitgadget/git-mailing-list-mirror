@@ -1,122 +1,98 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [RFC PATCH v2 8/8] Support mandatory capabilities
-Date: Fri,  4 Dec 2009 17:56:08 +0200
-Message-ID: <1259942168-24869-11-git-send-email-ilari.liusvaara@elisanet.fi>
-References: <1259942168-24869-1-git-send-email-ilari.liusvaara@elisanet.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 04 17:00:41 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-gui: suppress the X error on exit
+Date: Fri, 4 Dec 2009 07:57:51 -0800
+Message-ID: <20091204155751.GB1483@spearce.org>
+References: <20091204102844.3c720b21@starbug.prg01.itonis.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jindrich Makovicka <makovick@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 04 17:00:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGaX9-0002gj-Hs
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 16:57:27 +0100
+	id 1NGaXg-00036Z-DK
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 16:58:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756895AbZLDP5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2009 10:57:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755796AbZLDP5L
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 10:57:11 -0500
-Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:58826 "EHLO
-	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755344AbZLDP5J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2009 10:57:09 -0500
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 59FF38C11F
-	for <git@vger.kernel.org>; Fri,  4 Dec 2009 17:57:15 +0200 (EET)
-Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A04DA055236; Fri, 04 Dec 2009 17:57:15 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id 286604045
-	for <git@vger.kernel.org>; Fri,  4 Dec 2009 17:57:13 +0200 (EET)
-X-Mailer: git-send-email 1.6.6.rc1.288.g40e67
-In-Reply-To: <1259942168-24869-1-git-send-email-ilari.liusvaara@elisanet.fi>
-X-Antivirus: VAMS
+	id S1756443AbZLDP5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2009 10:57:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755894AbZLDP5s
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 10:57:48 -0500
+Received: from mail-vw0-f192.google.com ([209.85.212.192]:43893 "EHLO
+	mail-vw0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755631AbZLDP5s (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2009 10:57:48 -0500
+Received: by vws30 with SMTP id 30so1216646vws.33
+        for <git@vger.kernel.org>; Fri, 04 Dec 2009 07:57:54 -0800 (PST)
+Received: by 10.220.126.155 with SMTP id c27mr4141505vcs.81.1259942274287;
+        Fri, 04 Dec 2009 07:57:54 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 4sm1577379yxd.70.2009.12.04.07.57.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 04 Dec 2009 07:57:53 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20091204102844.3c720b21@starbug.prg01.itonis.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134527>
 
-Add support for marking capability as mandatory for hosting git version
-to understand. This is useful for helpers which require various types
-of assistance from main git binary.
+Jindrich Makovicka <makovick@gmail.com> wrote:
+> Due to a bug in Tk, git-gui almost always (unless git-gui is closed
+> right after starting) produces an X window error message on exit,
+> something like
 
-Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Thanks.  I've wrapped it up into the following commit.  Can I get
+a Signed-off-by line from you?
+
+--8<--
+[PATCH] git-gui: suppress RenderBadPicture X error caused by Tk bug
+
+Due to a bug in Tk, git-gui almost always (unless git-gui is closed
+right after starting) produces an X window error message on exit,
+something like:
+
+X Error of failed request:  RenderBadPicture (invalid Picture parameter)
+  Major opcode of failed request:  150 (RENDER)
+  Minor opcode of failed request:  7 (RenderFreePicture)
+  Picture id in failed request: 0x3a000dc
+  Serial number of failed request:  1965
+  Current serial number in output stream:  1980
+
+Respective Tk bug report is here:
+
+http://sourceforge.net/tracker/?func=detail&atid=112997&aid=1821174&group_id=12997
+
+This bug is triggered only when the send command is blocked via
+rename send {} . The following patch re-enables send just before
+quiting git-gui to suppress the error.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- Documentation/git-remote-helpers.txt |    5 ++++-
- transport-helper.c                   |   29 ++++++++++++++++++++++-------
- 2 files changed, 26 insertions(+), 8 deletions(-)
+ git-gui.sh |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-index 91cd9eb..6af6824 100644
---- a/Documentation/git-remote-helpers.txt
-+++ b/Documentation/git-remote-helpers.txt
-@@ -25,7 +25,10 @@ Commands are given by the caller on the helper's standard input, one per line.
- 
- 'capabilities'::
- 	Lists the capabilities of the helper, one per line, ending
--	with a blank line.
-+	with a blank line. Each capability may be preceeded with '*'.
-+	This marks them mandatory for git version using the remote
-+	helper to understand (unknown mandatory capability is fatal
-+	error).
- 
- 'list'::
- 	Lists the refs, one per line, in the format "<value> <name>
-diff --git a/transport-helper.c b/transport-helper.c
-index 03920bb..9ddcdc3 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -140,27 +140,42 @@ static struct child_process *get_helper(struct transport *transport)
- 	write_constant(helper->in, "capabilities\n");
- 
- 	while (1) {
-+		const char* capname;
-+		int mandatory = 0;
- 		recvline(data, &buf);
- 
- 		if (!*buf.buf)
- 			break;
--		if(debug) fprintf(stderr, "Debug: Got cap %s\n", buf.buf);
--		if (!strcmp(buf.buf, "fetch"))
-+
-+		if(*buf.buf == '*') {
-+			capname = buf.buf + 1;
-+			mandatory = 1;
-+		} else
-+			capname = buf.buf;
-+
-+		if(debug) fprintf(stderr, "Debug: Got cap %s\n", capname);
-+		if (!strcmp(capname, "fetch"))
- 			data->fetch = 1;
--		if (!strcmp(buf.buf, "option"))
-+		else if (!strcmp(capname, "option"))
- 			data->option = 1;
--		if (!strcmp(buf.buf, "push"))
-+		else if (!strcmp(capname, "push"))
- 			data->push = 1;
--		if (!strcmp(buf.buf, "import"))
-+		else if (!strcmp(capname, "import"))
- 			data->import = 1;
--		if (!data->refspecs && !prefixcmp(buf.buf, "refspec ")) {
-+		else if (!data->refspecs && !prefixcmp(capname, "refspec ")) {
- 			ALLOC_GROW(refspecs,
- 				   refspec_nr + 1,
- 				   refspec_alloc);
- 			refspecs[refspec_nr++] = strdup(buf.buf + strlen("refspec "));
- 		}
--		if (!strcmp(buf.buf, "connect"))
-+		else if (!strcmp(capname, "connect"))
- 			data->connect = 1;
-+		else if (mandatory) {
-+			fflush(stderr);
-+			die("Unknown madatory capability %s. This remote "
-+			    "helper probably needs newer version of Git.\n",
-+			    capname);
-+		}
+diff --git a/git-gui.sh b/git-gui.sh
+index 037a1f2..718277a 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -2052,6 +2052,11 @@ proc do_quit {{rc {1}}} {
  	}
- 	if (refspecs) {
- 		int i;
+ 
+ 	set ret_code $rc
++
++	# Briefly enable send again, working around Tk bug
++	# http://sourceforge.net/tracker/?func=detail&atid=112997&aid=1821174&group_id=12997
++	tk appname [appname]
++
+ 	destroy .
+ }
+ 
 -- 
-1.6.6.rc1.288.g40e67
+1.6.6.rc0.324.gb5bf2
+
+-- 
+Shawn.
