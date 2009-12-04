@@ -1,168 +1,197 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Wrong damage counting in diffcore_count_changes?
-Date: Fri, 4 Dec 2009 15:20:47 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0912041504380.24579@localhost.localdomain>
-References: <alpine.LFD.2.00.0912041200120.24579@localhost.localdomain> <7vljhio4a3.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.0912041419540.24579@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 05 00:20:58 2009
+From: "James P. Howard, II" <jh@jameshoward.us>
+Subject: [PATCH] Add commit.infodisplay option to give message editor empty file
+Date: Fri,  4 Dec 2009 18:04:39 -0500
+Message-ID: <1259967879-65517-1-git-send-email-jh@jameshoward.us>
+Cc: "James P. Howard, II" <jh@jameshoward.us>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 05 00:36:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGhSL-0006Gu-SP
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Dec 2009 00:20:58 +0100
+	id 1NGhh8-0003gL-Tz
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Dec 2009 00:36:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757419AbZLDXUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2009 18:20:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755236AbZLDXUq
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 18:20:46 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:46033 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755156AbZLDXUp (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Dec 2009 18:20:45 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id nB4NKm3K025973
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 4 Dec 2009 15:20:49 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id nB4NKmoB001694;
-	Fri, 4 Dec 2009 15:20:48 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.00.0912041419540.24579@localhost.localdomain>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.458 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S932496AbZLDXgD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2009 18:36:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932483AbZLDXgC
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 18:36:02 -0500
+Received: from byzantine.jameshoward.us ([204.109.63.101]:30409 "EHLO
+	byzantine.jameshoward.us" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932472AbZLDXgB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2009 18:36:01 -0500
+Received: from byzantine.jameshoward.us (localhost [127.0.0.1])
+	by byzantine.jameshoward.us (8.14.3/8.14.3) with ESMTP id nB4N4tAk065548;
+	Fri, 4 Dec 2009 23:04:55 GMT
+	(envelope-from howardjp@byzantine.jameshoward.us)
+Received: (from howardjp@localhost)
+	by byzantine.jameshoward.us (8.14.3/8.14.3/Submit) id nB4N4tBk065547;
+	Fri, 4 Dec 2009 18:04:55 -0500 (EST)
+	(envelope-from howardjp)
+X-Mailer: git-send-email 1.6.5.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134589>
 
+This patch creates commit.infodisplay which causes git commit to
+display the status information on the standard output rather
+than in the temporary file for the commit message.  By doing
+this, it becomes feasible to set core.editor for commit messages
+to be a line editor, e.g. ex or ed.
 
+Signed-off-by: James P. Howard, II <jh@jameshoward.us>
+---
+ Documentation/config.txt |    5 +++++
+ builtin-commit.c         |   31 ++++++++++++++++++-------------
+ cache.h                  |    1 +
+ environment.c            |    3 +++
+ 4 files changed, 27 insertions(+), 13 deletions(-)
 
-On Fri, 4 Dec 2009, Linus Torvalds wrote:
-> 
-> It also looks a bit like diffcore-break actually worked around this whole 
-> thing, and does
-> 
->         /* sanity */
->         if (src->size < src_copied)
->                 src_copied = src->size;
->         if (dst->size < literal_added + src_copied) {
->                 if (src_copied < dst->size)
->                         literal_added = dst->size - src_copied;   
->                 else
->                         literal_added = 0;
->         } 
->         src_removed = src->size - src_copied;
-> 
-> so this _may_ change what -B does, but I get the feeling that it should 
-> improve that too. I'm running a before-and-after "git log -M -B --summary" 
-> on the kernel now, but it's a pretty expensive operation, so it hasn't 
-> finished yet.
-
-Ok, somewhat confirmed. Before-and-after changes:
-
- - commit 2def7b8bcd4c49ca71a950611c9d456fd35282d2
-
-	- 2 files changed, 187 insertions(+), 218 deletions(-)
-	- delete mode 100644 drivers/staging/hv/include/ChannelMessages.h
-	+ 1 files changed, 109 insertions(+), 4 deletions(-)
-	+ rename drivers/staging/hv/{include/ChannelMessages.h => ChannelMgmt.h} (70%)
-
-   ie it _used_ to get broken up, now it shows up as a rename, presumably 
-   due to better scoring.
-
- - commit 64a1403d797d38c0bd18ba43bda5653c012c0d58. Similar.
-
- - commit 3ce0a23d2d253185df24e22e3d5f89800bb3dd1c
-
-	- 34 files changed, 8316 insertions(+), 633 deletions(-)
-	- create mode 100644 drivers/gpu/drm/radeon/avivod.h
-	+ 34 files changed, 8287 insertions(+), 643 deletions(-)
-	+ copy drivers/gpu/drm/radeon/{radeon_share.h => avivod.h} (50%)
-
-   that looks like a smaller diff, judging by the line counts
-
- - commit 9f77da9f40045253e91f55c12d4481254b513d2d
-
-	- 4 files changed, 358 insertions(+), 328 deletions(-)
-	+ 4 files changed, 132 insertions(+), 420 deletions(-)
-	  rewrite include/linux/rcutree.h (73%)
-	+ rename {include/linux => kernel}/rcutree.h (80%)
-
- - commit d15dd3e5d74186a3b0a4db271b440bbdc0f6da36
-
-	- 6 files changed, 75 insertions(+), 41 deletions(-)
-	- create mode 100644 drivers/net/wireless/ath/ath.h
-	+ 6 files changed, 59 insertions(+), 47 deletions(-)
-	+ copy drivers/net/wireless/ath/{main.c => ath.h} (73%)
-
- - commit cf4f1e76c49dacfde0680b170b9a9b6a42f296bb
-
-	- 2 files changed, 716 insertions(+), 714 deletions(-)
-	+ 2 files changed, 371 insertions(+), 1034 deletions(-)
-	  rewrite drivers/usb/host/r8a66597.h (62%)
-	+ rename {drivers/usb/host => include/linux/usb}/r8a66597.h (65%)
-
- - commit d69864158e24f323e818403c6b89ad4871aea6f6
-
-	- 4 files changed, 172 insertions(+), 238 deletions(-)
-	+ 3 files changed, 90 insertions(+), 106 deletions(-)
-	+ rename arch/sparc/include/asm/{dma-mapping_64.h => dma-mapping.h} (71%)
-	  delete mode 100644 arch/sparc/include/asm/dma-mapping_32.h
-	- delete mode 100644 arch/sparc/include/asm/dma-mapping_64.h
-
-etc. From what I can see, it looks like in general it picked better things 
-with the new diffcore_count_changes() implementation, Looking at just the 
-"files changed" summaries, it tends to look like this:
-
-	- 21 files changed, 5659 insertions(+), 3227 deletions(-)
-	+ 19 files changed, 5723 insertions(+), 2285 deletions(-)
-
-	- 3 files changed, 645 insertions(+), 654 deletions(-)
-	+ 3 files changed, 387 insertions(+), 820 deletions(-)
-
-	- 11 files changed, 187 insertions(+), 177 deletions(-)
-	+ 10 files changed, 166 insertions(+), 109 deletions(-)
-
-	- 100 files changed, 1114 insertions(+), 3388 deletions(-)
-	+ 99 files changed, 1102 insertions(+), 3337 deletions(-)
-
-	- 2 files changed, 127 insertions(+), 106 deletions(-)
-	+ 2 files changed, 113 insertions(+), 92 deletions(-)
-
-	- 7 files changed, 128 insertions(+), 59 deletions(-)
-	+ 7 fileas changed, 87 insertions(+), 69 deletions(-)
-
-	- 154 files changed, 3641 insertions(+), 4232 deletions(-)
-	+ 154 files changed, 3635 insertions(+), 4233 deletions(-)
-
-	- 24 files changed, 162 insertions(+), 226 deletions(-)
-	+ 23 files changed, 61 insertions(+), 77 deletions(-)
-
-	- 4 files changed, 1995 insertions(+), 2114 deletions(-)
-	+ 3 files changed, 796 insertions(+), 814 deletions(-)
-
-	- 3 files changed, 1104 insertions(+), 1114 deletions(-)
-	+ 3 files changed, 886 insertions(+), 1038 deletions(-)
-
-	- 46 files changed, 17743 insertions(+), 5986 deletions(-)
-	+ 46 files changed, 16239 insertions(+), 6636 deletions(-)
-
-	- 9 files changed, 295 insertions(+), 284 deletions(-)
-	+ 9 files changed, 203 insertions(+), 291 deletions(-)
-
-ie I can see several cases where the new break choice resulted in fewer 
-files changed and/or fewer over-all lines changed (due to better rename 
-choices), and I haven't seen any going the other way. There's probably 
-some, but it does seem that in general the patch results in better picks 
-(when it makes any difference in the first place - there seems to be only 
-71 commits in the kernel git tree that are affected at all)
-
-			Linus
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index a1e36d7..56b3238 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -705,6 +705,11 @@ color.ui::
+ 	terminal. When more specific variables of color.* are set, they always
+ 	take precedence over this setting. Defaults to false.
+ 
++commit.infodisplay::
++	When true and a commit message is not specified on the command line,
++	the status information is not placed in the message template but is
++	printed to the standard output.
++
+ commit.template::
+ 	Specify a file to use as the template for new commit messages.
+ 	"{tilde}/" is expanded to the value of `$HOME` and "{tilde}user/" to the
+diff --git a/builtin-commit.c b/builtin-commit.c
+index e93a647..e4db374 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -463,7 +463,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	int commitable, saved_color_setting;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	char *buffer;
+-	FILE *fp;
++	FILE *fp, *infofp;
+ 	const char *hook_arg1 = NULL;
+ 	const char *hook_arg2 = NULL;
+ 	int ident_shown = 0;
+@@ -540,7 +540,12 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 
+ 	if (fwrite(sb.buf, 1, sb.len, fp) < sb.len)
+ 		die_errno("could not write commit template");
+-
++	if (info_display)
++		infofp = stdout;
++	else {
++		infofp = fp;
++		fprintf(infofp, "\n");
++	}
+ 	strbuf_release(&sb);
+ 
+ 	determine_author_info();
+@@ -552,7 +557,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		const char *committer_ident;
+ 
+ 		if (in_merge)
+-			fprintf(fp,
++			fprintf(infofp,
+ 				"#\n"
+ 				"# It looks like you may be committing a MERGE.\n"
+ 				"# If this is not correct, please remove the file\n"
+@@ -561,28 +566,27 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 				"#\n",
+ 				git_path("MERGE_HEAD"));
+ 
+-		fprintf(fp,
+-			"\n"
++		fprintf(infofp,
+ 			"# Please enter the commit message for your changes.");
+ 		if (cleanup_mode == CLEANUP_ALL)
+-			fprintf(fp,
++			fprintf(infofp,
+ 				" Lines starting\n"
+ 				"# with '#' will be ignored, and an empty"
+ 				" message aborts the commit.\n");
+ 		else /* CLEANUP_SPACE, that is. */
+-			fprintf(fp,
++			fprintf(infofp,
+ 				" Lines starting\n"
+ 				"# with '#' will be kept; you may remove them"
+ 				" yourself if you want to.\n"
+ 				"# An empty message aborts the commit.\n");
+ 		if (only_include_assumed)
+-			fprintf(fp, "# %s\n", only_include_assumed);
++			fprintf(infofp, "# %s\n", only_include_assumed);
+ 
+ 		author_ident = xstrdup(fmt_name(author_name, author_email));
+ 		committer_ident = fmt_name(getenv("GIT_COMMITTER_NAME"),
+ 					   getenv("GIT_COMMITTER_EMAIL"));
+ 		if (strcmp(author_ident, committer_ident))
+-			fprintf(fp,
++			fprintf(infofp,
+ 				"%s"
+ 				"# Author:    %s\n",
+ 				ident_shown++ ? "" : "#\n",
+@@ -590,18 +594,18 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		free(author_ident);
+ 
+ 		if (!user_ident_explicitly_given)
+-			fprintf(fp,
++			fprintf(infofp,
+ 				"%s"
+ 				"# Committer: %s\n",
+ 				ident_shown++ ? "" : "#\n",
+ 				committer_ident);
+ 
+ 		if (ident_shown)
+-			fprintf(fp, "#\n");
++			fprintf(infofp, "#\n");
+ 
+ 		saved_color_setting = s->use_color;
+ 		s->use_color = 0;
+-		commitable = run_status(fp, index_file, prefix, 1, s);
++		commitable = run_status(infofp, index_file, prefix, 1, s);
+ 		s->use_color = saved_color_setting;
+ 	} else {
+ 		unsigned char sha1[20];
+@@ -1006,7 +1010,8 @@ static int git_commit_config(const char *k, const char *v, void *cb)
+ 
+ 	if (!strcmp(k, "commit.template"))
+ 		return git_config_pathname(&template_file, k, v);
+-
++	if (!strcmp(k, "commit.infodisplay"))
++		info_display = git_config_bool(k, v);
+ 	return git_status_config(k, v, s);
+ }
+ 
+diff --git a/cache.h b/cache.h
+index bf468e5..2b36fb3 100644
+--- a/cache.h
++++ b/cache.h
+@@ -529,6 +529,7 @@ extern int auto_crlf;
+ extern int read_replace_refs;
+ extern int fsync_object_files;
+ extern int core_preload_index;
++extern int info_display;
+ 
+ enum safe_crlf {
+ 	SAFE_CRLF_FALSE = 0,
+diff --git a/environment.c b/environment.c
+index 5171d9f..ac7cfed 100644
+--- a/environment.c
++++ b/environment.c
+@@ -55,6 +55,9 @@ int grafts_replace_parents = 1;
+ /* Parallel index stat data preload? */
+ int core_preload_index = 0;
+ 
++/* Controls whether commit information is appended to message text or displayed */
++int info_display = 0;
++
+ /* This is set by setup_git_dir_gently() and/or git_default_config() */
+ char *git_work_tree_cfg;
+ static char *work_tree;
+-- 
+1.6.5.3
