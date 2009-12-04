@@ -1,86 +1,136 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: git-svn: Fails to drop leading path from empty dir name
-Date: Sun, 22 Nov 2009 14:46:38 +0100
-Message-ID: <20091122134638.GA12233@atjola.homenet>
+From: Guido Stevens <guido.stevens@cosent.net>
+Subject: git-svn breakage on repository rename
+Date: Fri, 04 Dec 2009 21:26:32 +0100
+Organization: Cosent   -:-   s h a r i n g   m a k e s   s e n s e
+Message-ID: <4B197078.6050203@cosent.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun Nov 22 14:46:55 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: George Kuk <George.Kuk@nottingham.ac.uk>
+To: normalperson@yhbt.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 04 21:52:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NCCmF-0003OZ-DC
-	for gcvg-git-2@lo.gmane.org; Sun, 22 Nov 2009 14:46:55 +0100
+	id 1NGf8U-0002D9-TT
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 21:52:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754257AbZKVNqj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Nov 2009 08:46:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753980AbZKVNqi
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Nov 2009 08:46:38 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56630 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752382AbZKVNqi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Nov 2009 08:46:38 -0500
-Received: (qmail invoked by alias); 22 Nov 2009 13:46:42 -0000
-Received: from i59F5B6DD.versanet.de (EHLO atjola.homenet) [89.245.182.221]
-  by mail.gmx.net (mp009) with SMTP; 22 Nov 2009 14:46:42 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/XgnlLCWnXHmTL5kpGKilaRf98tS2Dj5LMIOhfQf
-	pcbZ/bKxN0vwBP
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S932384AbZLDUvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2009 15:51:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932311AbZLDUvF
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 15:51:05 -0500
+Received: from slow3-v.mail.gandi.net ([217.70.178.89]:48441 "EHLO
+	slow3-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932264AbZLDUvA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2009 15:51:00 -0500
+Received: from relay2-v.mail.gandi.net (relay2-v.mail.gandi.net [217.70.178.76])
+	by slow3-v.mail.gandi.net (Postfix) with ESMTP id 27D83405F5
+	for <git@vger.kernel.org>; Fri,  4 Dec 2009 21:27:02 +0100 (CET)
+Received: from [192.168.178.24] (isis-torproxy.xs4all.nl [80.101.174.248])
+	by relay2-v.mail.gandi.net (Postfix) with ESMTP id 7BC62135D8;
+	Fri,  4 Dec 2009 21:26:33 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134575>
 
-Hi Eric,
+Hi Eric e.a.,
 
-the stuff to create empty directories fails to strip leading path
-components, e.g. when using
-"git svn clone -s svn://whatever/project/trunk".
+I have a weird git-svn corner case that might interest you (or not at 
+all). I'd appreciate any help or hints for moving beyond this problem.
 
-Instead of creating the empty directory "foo" in the repo root, it
-creates "project/trunk/foo".
+I'm using git-svn to do a full commit history analysis of the Zope + 
+Plone CMS code bases as part of a research project with the University 
+of Nottingham into open source knowledge dynamics.
 
-Ad hoc patch for the test case below.
+One of the repositories I'm importing breaks with a "Checksum mismatch", 
+indicating a corruption. However, this error message occurs exactly at 
+the point where the repository was renamed: from "Products.CMFPlone" to 
+"Plone" (22715->22716). (Yes, it's the Plone core itself that resists 
+analysis :-()
 
-Bj=F6rn
+The git-svn url for the later commits would be:
+   http://svn-mirror.plone.org/svn/plone/Plone/trunk
 
-diff --git a/t/t9146-git-svn-empty-dirs.sh b/t/t9146-git-svn-empty-dirs=
-=2Esh
-index 5948544..9e22089 100755
---- a/t/t9146-git-svn-empty-dirs.sh
-+++ b/t/t9146-git-svn-empty-dirs.sh
-@@ -82,4 +82,27 @@ test_expect_success 'git svn mkdirs -r works' '
- 	)
- '
-=20
-+test_expect_success 'initialize trunk' '
-+	for i in trunk trunk/a trunk/"weird file name"
-+	do
-+		svn_cmd mkdir -m "mkdir $i" "$svnrepo"/"$i"
-+	done
-+'
-+
-+test_expect_success 'clone trunk' 'git svn clone -s "$svnrepo" trunk'
-+
-+test_expect_success 'empty directories in trunk exist' '
-+	(
-+		cd cloned &&
-+		for i in trunk/a trunk/"weird file name"
-+		do
-+			if ! test -d "$i"
-+			then
-+				echo >&2 "$i does not exist"
-+				exit 1
-+			fi
-+		done
-+	)
-+'
-+
- test_done
+Whereas an older part of the code base lives at:
+   http://svn-mirror.plone.org/svn/plone/Products.CMFPlone/trunk
+
+Funny thing is, git-svn detects this rename upfront but then breaks
+anyway. Which raises the questions:
+
+- is this breakage caused by the rename?
+
+- or does git-svn handle the rename, and there is an actual corruption?
+
+- is there any way I can work around this and get a valid or semi-valid
+git history for this project?
+
+I don't mind missing a few commits, since I'm not doing code development
+on this repository, only statistical analysis.
+
+Solving this would also be helpful for anyone who wants to work on Plone 
+development through git rather than through raw svn.
+
+:*CU#
+
+----------------------------------------------------
+To reconstruct this error:
+----------------------------------------------------
+
+$ git svn init https://svn-mirror.plone.org/svn/plone/Plone/trunk Plone
+$ cd Plone
+$ git svn fetch
+
+... Error message: (reformatted to wrap 78 cols):
+
+Found possible branch point:
+https://svn.plone.org/svn/plone/Plone/branches/4.0 =>
+https://svn.plone.org/svn/plone/Plone/trunk, 30966
+
+Initializing parent: git-svn@30966
+
+Found possible branch point:
+https://svn.plone.org/svn/plone/Plone/branches/3.3 =>
+https://svn.plone.org/svn/plone/Plone/branches/4.0, 27288
+
+Initializing parent: git-svn@27288
+
+Found possible branch point:
+https://svn.plone.org/svn/plone/Plone/branches/3.2 =>
+https://svn.plone.org/svn/plone/Plone/branches/3.3, 25119
+
+Initializing parent: git-svn@25119
+
+Found possible branch point:
+https://svn.plone.org/svn/plone/Plone/branches/3.1 =>
+https://svn.plone.org/svn/plone/Plone/branches/3.2, 22725
+
+Initializing parent: git-svn@22725
+
+branch_from: /Products.CMFPlone => /Products.CMFPlone/branches/3.1
+
+Found possible branch point:
+https://svn.plone.org/svn/plone/Products.CMFPlone/branches/3.1 =>
+https://svn.plone.org/svn/plone/Plone/branches/3.1, 22715
+
+Initializing parent: git-svn@22715
+
+Found branch parent: (git-svn@22725)
+e477345f83a0f2cc7e27348e01493a841c9cd587
+
+Following parent with do_switch
+
+Checksum mismatch: Products/CMFPlone/HISTORY.txt
+expected: 69106809d879e7370dd133c7ba338670
+     got: 7b1a0641d429f0c567acf7a3a4be5a45
+
+
+-- 
+***   Guido A.J. Stevens        ***   tel: +31.43.3618933    ***
+***   guido.stevens@cosent.net  ***   Postbus 619            ***
+***   http://www.cosent.nl      ***   6200 AP  Maastricht    ***
+
+             s h a r i n g    m a k e s    s e n s e
