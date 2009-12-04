@@ -1,186 +1,168 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [RFC PATCH v2 2/2] MSVC: Fix an "incompatible pointer types" compiler
- warning
-Date: Fri, 04 Dec 2009 23:13:36 +0000
-Message-ID: <4B1997A0.9000004@ramsay1.demon.co.uk>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Wrong damage counting in diffcore_count_changes?
+Date: Fri, 4 Dec 2009 15:20:47 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0912041504380.24579@localhost.localdomain>
+References: <alpine.LFD.2.00.0912041200120.24579@localhost.localdomain> <7vljhio4a3.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.0912041419540.24579@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Marius Storm-Olsen <mstormo@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	GIT Mailing-list <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 05 00:16:15 2009
+X-From: git-owner@vger.kernel.org Sat Dec 05 00:20:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGhNk-0004S8-Ub
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Dec 2009 00:16:13 +0100
+	id 1NGhSL-0006Gu-SP
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Dec 2009 00:20:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932563AbZLDXPy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2009 18:15:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932543AbZLDXPy
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 18:15:54 -0500
-Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:53238 "EHLO
-	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932561AbZLDXPx (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Dec 2009 18:15:53 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
-	id 1NGhNW-0000oS-bL; Fri, 04 Dec 2009 23:15:59 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1757419AbZLDXUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2009 18:20:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755236AbZLDXUq
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 18:20:46 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:46033 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755156AbZLDXUp (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Dec 2009 18:20:45 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id nB4NKm3K025973
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 4 Dec 2009 15:20:49 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id nB4NKmoB001694;
+	Fri, 4 Dec 2009 15:20:48 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <alpine.LFD.2.00.0912041419540.24579@localhost.localdomain>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.458 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134588>
 
 
-In particular, the following warning is issued while compiling
-compat/msvc.c:
 
-    ...mingw.c(223) : warning C4133: 'function' : incompatible \
-types - from '_stati64 *' to '_stat64 *'
+On Fri, 4 Dec 2009, Linus Torvalds wrote:
+> 
+> It also looks a bit like diffcore-break actually worked around this whole 
+> thing, and does
+> 
+>         /* sanity */
+>         if (src->size < src_copied)
+>                 src_copied = src->size;
+>         if (dst->size < literal_added + src_copied) {
+>                 if (src_copied < dst->size)
+>                         literal_added = dst->size - src_copied;   
+>                 else
+>                         literal_added = 0;
+>         } 
+>         src_removed = src->size - src_copied;
+> 
+> so this _may_ change what -B does, but I get the feeling that it should 
+> improve that too. I'm running a before-and-after "git log -M -B --summary" 
+> on the kernel now, but it's a pretty expensive operation, so it hasn't 
+> finished yet.
 
-which relates to a call of _fstati64() in the mingw_fstat()
-function definition.
+Ok, somewhat confirmed. Before-and-after changes:
 
-This is caused by various layers of macro magic and attempts to
-avoid macro redefinition compiler warnings. For example, the call
-to _fstati64() mentioned above is actually a call to _fstat64(),
-since macro _USE_32BIT_TIME_T is not defined, and expects a pointer
-to a struct _stat64 rather than the struct _stati64 which is passed
-to mingw_fstat().
+ - commit 2def7b8bcd4c49ca71a950611c9d456fd35282d2
 
-The definition of struct _stati64 given in compat/msvc.h had the
-same "shape" as the definition of struct _stat64, so the call to
-_fstat64() does not actually cause any runtime errors, but the
-structure types are indeed incompatible. Also, the "shape" of
-struct _stati64 changes, depending on the _USE_32BIT_TIME_T
-macro, since the time_t type is defined as either __time64_t or
-__time32_t.
+	- 2 files changed, 187 insertions(+), 218 deletions(-)
+	- delete mode 100644 drivers/staging/hv/include/ChannelMessages.h
+	+ 1 files changed, 109 insertions(+), 4 deletions(-)
+	+ rename drivers/staging/hv/{include/ChannelMessages.h => ChannelMgmt.h} (70%)
 
-When _USE_32BIT_TIME_T is defined, the call to _fstati64() is
-actually a call to _fstat32i64() and expects a struct _stat32i64
-pointer parameter. (struct _stati64 would again have the same
-"shape" as struct _stat32i64).
+   ie it _used_ to get broken up, now it shows up as a rename, presumably 
+   due to better scoring.
 
-The _USE_32BIT_TIME_T macro, along with all of the additional
-structure type definitions, function definitions, and overloading
-macro magic was introduced in msvc 2005.
+ - commit 64a1403d797d38c0bd18ba43bda5653c012c0d58. Similar.
 
-In order to avoid the compiler warning, we add declarations for the
-mingw_lstat() and mingw_fstat() functions and supporting macros to
-msvc.h, suppressing the corresponding declarations in mingw.h, so
-that we can use the appropriate structure type (and function) names
-from the msvc headers.
+ - commit 3ce0a23d2d253185df24e22e3d5f89800bb3dd1c
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
+	- 34 files changed, 8316 insertions(+), 633 deletions(-)
+	- create mode 100644 drivers/gpu/drm/radeon/avivod.h
+	+ 34 files changed, 8287 insertions(+), 643 deletions(-)
+	+ copy drivers/gpu/drm/radeon/{radeon_share.h => avivod.h} (50%)
 
-Changes from v1:
-    - moved the new declarations to msvc.h rather than clutter mingw.h
-      with msvc related code.
-    - don't even attempt to support older msvc compilers
+   that looks like a smaller diff, judging by the line counts
 
-The patch is still marked RFC because:
-    - I'm still not sure if the flexibility to support both 32- and 64-bit
-      time_t is required.
-    - should -D_USE_32BIT_TIME_T be added to the Makefile?
+ - commit 9f77da9f40045253e91f55c12d4481254b513d2d
 
-ATB,
-Ramsay Jones
+	- 4 files changed, 358 insertions(+), 328 deletions(-)
+	+ 4 files changed, 132 insertions(+), 420 deletions(-)
+	  rewrite include/linux/rcutree.h (73%)
+	+ rename {include/linux => kernel}/rcutree.h (80%)
 
- compat/mingw.h |    4 +++-
- compat/msvc.h  |   54 +++++++++++++++++++++++++++++-------------------------
- 2 files changed, 32 insertions(+), 26 deletions(-)
+ - commit d15dd3e5d74186a3b0a4db271b440bbdc0f6da36
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 5b5258b..b5cec7f 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -175,13 +175,15 @@ int mingw_getpagesize(void);
-  * mingw_fstat() instead of fstat() on Windows.
-  */
- #define off_t off64_t
--#define stat _stati64
- #define lseek _lseeki64
-+#ifndef ALREADY_DECLARED_STAT_FUNCS
-+#define stat _stati64
- int mingw_lstat(const char *file_name, struct stat *buf);
- int mingw_fstat(int fd, struct stat *buf);
- #define fstat mingw_fstat
- #define lstat mingw_lstat
- #define _stati64(x,y) mingw_lstat(x,y)
-+#endif
- 
- int mingw_utime(const char *file_name, const struct utimbuf *times);
- #define utime mingw_utime
-diff --git a/compat/msvc.h b/compat/msvc.h
-index 9c753a5..f431007 100644
---- a/compat/msvc.h
-+++ b/compat/msvc.h
-@@ -21,30 +21,34 @@ static __inline int strcasecmp (const char *s1, const char *s2)
- }
- 
- #undef ERROR
--#undef stat
--#undef _stati64
-+
-+/* Use mingw_lstat() instead of lstat()/stat() and mingw_fstat() instead
-+ * of fstat(). We add the declaration of these functions here, suppressing
-+ * the corresponding declarations in mingw.h, so that we can use the
-+ * appropriate structure type (and function) names from the msvc headers.
-+ */
-+#if defined(_USE_32BIT_TIME_T)
-+# define stat _stat32i64
-+#else
-+# define stat _stat64
-+#endif
-+
-+int mingw_lstat(const char *file_name, struct stat *buf);
-+int mingw_fstat(int fd, struct stat *buf);
-+
-+#define fstat mingw_fstat
-+#define lstat mingw_lstat
-+
-+#if defined(_USE_32BIT_TIME_T)
-+# define _stat32i64(x,y) mingw_lstat(x,y)
-+#else
-+# define _stat64(x,y) mingw_lstat(x,y)
-+#endif
-+
-+#define ALREADY_DECLARED_STAT_FUNCS
-+
- #include "compat/mingw.h"
--#undef stat
--#define stat _stati64
--#define _stat64(x,y) mingw_lstat(x,y)
--
--/*
--   Even though _stati64 is normally just defined at _stat64
--   on Windows, we specify it here as a proper struct to avoid
--   compiler warnings about macro redefinition due to magic in
--   mingw.h. Struct taken from ReactOS (GNU GPL license).
--*/
--struct _stati64 {
--	_dev_t  st_dev;
--	_ino_t  st_ino;
--	unsigned short st_mode;
--	short   st_nlink;
--	short   st_uid;
--	short   st_gid;
--	_dev_t  st_rdev;
--	__int64 st_size;
--	time_t  st_atime;
--	time_t  st_mtime;
--	time_t  st_ctime;
--};
-+
-+#undef ALREADY_DECLARED_STAT_FUNCS
-+
- #endif
--- 
-1.6.5
+	- 6 files changed, 75 insertions(+), 41 deletions(-)
+	- create mode 100644 drivers/net/wireless/ath/ath.h
+	+ 6 files changed, 59 insertions(+), 47 deletions(-)
+	+ copy drivers/net/wireless/ath/{main.c => ath.h} (73%)
+
+ - commit cf4f1e76c49dacfde0680b170b9a9b6a42f296bb
+
+	- 2 files changed, 716 insertions(+), 714 deletions(-)
+	+ 2 files changed, 371 insertions(+), 1034 deletions(-)
+	  rewrite drivers/usb/host/r8a66597.h (62%)
+	+ rename {drivers/usb/host => include/linux/usb}/r8a66597.h (65%)
+
+ - commit d69864158e24f323e818403c6b89ad4871aea6f6
+
+	- 4 files changed, 172 insertions(+), 238 deletions(-)
+	+ 3 files changed, 90 insertions(+), 106 deletions(-)
+	+ rename arch/sparc/include/asm/{dma-mapping_64.h => dma-mapping.h} (71%)
+	  delete mode 100644 arch/sparc/include/asm/dma-mapping_32.h
+	- delete mode 100644 arch/sparc/include/asm/dma-mapping_64.h
+
+etc. From what I can see, it looks like in general it picked better things 
+with the new diffcore_count_changes() implementation, Looking at just the 
+"files changed" summaries, it tends to look like this:
+
+	- 21 files changed, 5659 insertions(+), 3227 deletions(-)
+	+ 19 files changed, 5723 insertions(+), 2285 deletions(-)
+
+	- 3 files changed, 645 insertions(+), 654 deletions(-)
+	+ 3 files changed, 387 insertions(+), 820 deletions(-)
+
+	- 11 files changed, 187 insertions(+), 177 deletions(-)
+	+ 10 files changed, 166 insertions(+), 109 deletions(-)
+
+	- 100 files changed, 1114 insertions(+), 3388 deletions(-)
+	+ 99 files changed, 1102 insertions(+), 3337 deletions(-)
+
+	- 2 files changed, 127 insertions(+), 106 deletions(-)
+	+ 2 files changed, 113 insertions(+), 92 deletions(-)
+
+	- 7 files changed, 128 insertions(+), 59 deletions(-)
+	+ 7 fileas changed, 87 insertions(+), 69 deletions(-)
+
+	- 154 files changed, 3641 insertions(+), 4232 deletions(-)
+	+ 154 files changed, 3635 insertions(+), 4233 deletions(-)
+
+	- 24 files changed, 162 insertions(+), 226 deletions(-)
+	+ 23 files changed, 61 insertions(+), 77 deletions(-)
+
+	- 4 files changed, 1995 insertions(+), 2114 deletions(-)
+	+ 3 files changed, 796 insertions(+), 814 deletions(-)
+
+	- 3 files changed, 1104 insertions(+), 1114 deletions(-)
+	+ 3 files changed, 886 insertions(+), 1038 deletions(-)
+
+	- 46 files changed, 17743 insertions(+), 5986 deletions(-)
+	+ 46 files changed, 16239 insertions(+), 6636 deletions(-)
+
+	- 9 files changed, 295 insertions(+), 284 deletions(-)
+	+ 9 files changed, 203 insertions(+), 291 deletions(-)
+
+ie I can see several cases where the new break choice resulted in fewer 
+files changed and/or fewer over-all lines changed (due to better rename 
+choices), and I haven't seen any going the other way. There's probably 
+some, but it does seem that in general the patch results in better picks 
+(when it makes any difference in the first place - there seems to be only 
+71 commits in the kernel git tree that are affected at all)
+
+			Linus
