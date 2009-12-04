@@ -1,58 +1,59 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: git gsoc money
-Date: Fri, 04 Dec 2009 10:57:53 -0600
-Message-ID: <24r8x4QA-YeeHozJZid4zZzSATqzAQ6hK6SsZm3DEIugiRsQm2ATbQ@cipher.nrlssc.navy.mil>
-References: <20091203052220.GA22582@coredump.intra.peff.net> <20091203153935.GB23281@spearce.org> <20091204121417.GA20682@coredump.intra.peff.net>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: git-blame.el: what is format-spec?
+Date: Fri, 04 Dec 2009 19:59:43 +0300
+Message-ID: <87ljhi3cao.fsf@osv.gnss.ru>
+References: <87vdgm3e1k.fsf@osv.gnss.ru> <m2fx7qae49.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Dec 04 17:59:51 2009
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Fri Dec 04 18:00:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGbUT-0008Ry-UC
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 17:58:46 +0100
+	id 1NGbVY-0000kA-SN
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 17:59:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932244AbZLDQ6D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2009 11:58:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932217AbZLDQ5w
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 11:57:52 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:44809 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932190AbZLDQ5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2009 11:57:51 -0500
-Received: by mail.nrlssc.navy.mil id nB4Gvsmf007493; Fri, 4 Dec 2009 10:57:54 -0600
-In-Reply-To: <20091204121417.GA20682@coredump.intra.peff.net>
-X-OriginalArrivalTime: 04 Dec 2009 16:57:54.0162 (UTC) FILETIME=[EBE68D20:01CA7502]
+	id S932231AbZLDQ7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2009 11:59:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932212AbZLDQ7j
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 11:59:39 -0500
+Received: from javad.com ([205.178.136.214]:39046 "EHLO 02aef2d.netsolvps.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932189AbZLDQ7i (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2009 11:59:38 -0500
+Received: (qmail 30011 invoked from network); 4 Dec 2009 16:59:45 +0000
+Received: from unknown (HELO osv.gnss.ru) (89.175.180.246)
+  by javad.com with (AES256-SHA encrypted) SMTP; 4 Dec 2009 16:59:45 +0000
+Received: from osv by osv.gnss.ru with local (Exim 4.69)
+	(envelope-from <osv@osv.gnss.ru>)
+	id 1NGbVP-0005JU-Br; Fri, 04 Dec 2009 19:59:43 +0300
+In-Reply-To: <m2fx7qae49.fsf@igel.home> (Andreas Schwab's message of "Fri\, 04 Dec 2009 17\:38\:30 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134539>
 
-Jeff King wrote:
-> On Thu, Dec 03, 2009 at 07:39:35AM -0800, Shawn O. Pearce wrote:
-> 
->>>   1. Become an affiliated project of an organization like The Software
->>>      Freedom Conservancy or Software in the Public Interest.
->> Try to join the Software Freedom Conservancy and retain the funds
->> for Git's use?  Maybe you can slide in before the Dec 31st deadline.
-> 
-> Everybody who responded seems to think that is a good idea, so I've
-> contacted the SFC about joining. I'll keep the list up to date as things
-> develop there.
-> 
-> I expect they'll need a liaison from the project. I can do that, but if
-> somebody else is interested, let me know.
+Andreas Schwab <schwab@linux-m68k.org> writes:
+> Sergei Organov <osv@javad.com> writes:
+>
+>> What is format-spec function in current git-blame.el? Neither my GNU
+>> Emacs 22.2.1 nor Google knows anything about it.
+>
+> It's part of Emacs since more than 9 years, imported from Gnus.
+>
 
-Now that I've read the links that you mentioned, I too think this is a
-good idea.  I haven't been involved in SoC (though I benefited and much
-appreciated having my travel expenses reimbursed), so my opinion should
-be weighted accordingly.
+Thanks, I now see it in Gnus on my own computer, in
+lisp/gnus/format-spec.el.gz.
 
-If there's anything I can do to help, Jeff, please let me know.
+GNU Emacs 22.2.1 (i486-pc-linux-gnu, GTK+ Version 2.12.11) of 2008-11-10
+on raven, modified by Debian 
 
--brandon
+However, isn't it a bad idea to require Gnus(!) for git-blame to run? Gnus
+is not installed on our server where I've encountered the problem. Was
+format-spec actually moved to core emacs recently?
+
+-- Sergei.
