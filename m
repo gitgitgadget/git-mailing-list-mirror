@@ -1,85 +1,90 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH v8 7/7] fast-import: add (non-)relative-marks feature
-Date: Fri, 4 Dec 2009 13:09:17 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.0912041258280.14365@iabervon.org>
-References: <1259946420-8845-1-git-send-email-srabbelier@gmail.com> <1259946420-8845-2-git-send-email-srabbelier@gmail.com> <1259946420-8845-3-git-send-email-srabbelier@gmail.com> <1259946420-8845-4-git-send-email-srabbelier@gmail.com>
- <1259946420-8845-5-git-send-email-srabbelier@gmail.com> <1259946420-8845-6-git-send-email-srabbelier@gmail.com> <1259946420-8845-7-git-send-email-srabbelier@gmail.com> <1259946420-8845-8-git-send-email-srabbelier@gmail.com>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: git-blame.el: what is format-spec?
+Date: Fri, 04 Dec 2009 18:36:06 +0100
+Message-ID: <87fx7q4p6h.fsf@lysator.liu.se>
+References: <87vdgm3e1k.fsf@osv.gnss.ru> <m2fx7qae49.fsf@igel.home>
+	<87ljhi3cao.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>,
-	vcs-fast-import-devs@lists.launchpad.net
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 04 19:09:25 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Andreas Schwab <schwab@linux-m68k.org>
+To: Sergei Organov <osv@javad.com>
+X-From: git-owner@vger.kernel.org Fri Dec 04 19:17:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGcap-0003eU-UE
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 19:09:24 +0100
+	id 1NGciM-0006yg-Fu
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 19:17:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932358AbZLDSJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2009 13:09:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932329AbZLDSJM
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 13:09:12 -0500
-Received: from iabervon.org ([66.92.72.58]:47780 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932320AbZLDSJL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2009 13:09:11 -0500
-Received: (qmail 14694 invoked by uid 1000); 4 Dec 2009 18:09:17 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Dec 2009 18:09:17 -0000
-In-Reply-To: <1259946420-8845-8-git-send-email-srabbelier@gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S932324AbZLDSQ7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Dec 2009 13:16:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932236AbZLDSQ6
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 13:16:58 -0500
+Received: from mail.lysator.liu.se ([130.236.254.3]:35606 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932212AbZLDSQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2009 13:16:57 -0500
+Received: from mail.lysator.liu.se (localhost [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id C452440030;
+	Fri,  4 Dec 2009 19:15:59 +0100 (CET)
+Received: by mail.lysator.liu.se (Postfix, from userid 1674)
+	id B9E7A4003A; Fri,  4 Dec 2009 19:15:59 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
+	bernadotte.lysator.liu.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 required=5.0 tests=AWL autolearn=disabled 
+	version=3.1.7-deb3
+Received: from krank (unknown [62.20.90.206])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id 7597340030;
+	Fri,  4 Dec 2009 19:15:59 +0100 (CET)
+Received: by krank (Postfix, from userid 1000)
+	id 0BF7560737; Fri,  4 Dec 2009 18:36:06 +0100 (CET)
+In-Reply-To: <87ljhi3cao.fsf@osv.gnss.ru> (Sergei Organov's message of "Fri,
+	04 Dec 2009 19:59:43 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134561>
 
-On Fri, 4 Dec 2009, Sverre Rabbelier wrote:
+Sergei Organov <osv@javad.com> writes:
 
-> After specifying 'feature relative-marks' the paths specified with
-> 'feature import-marks' and 'feature export-marks' are relative to an
-> internal directory in the current repository.
-> 
-> In git-fast-import this means that the paths are relative to the
-> '.git/info/fast-import' directory. However, other importers may use a
-> different location.
-> 
-> Add 'feature non-relative-marks' to disable this behavior, this way
-> it is possible to, for example, specify the import-marks location as
-> relative, and the export-marks location as non-relative.
-> 
-> Also add tests to verify this behavior.
-> 
-> Cc: Daniel Barkalow <barkalow@iabervon.org>
-> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
-> ---
-> 
-> 	As requested by Daniel, it is now possible to have the marks be
-> 	relative to a constant directory. We might want to consider making
-> 	this the default at some point.
-> 
-> 	This patch opens the way for remote-helpers to use the marks feature
-> 	without poluting the work tree, which I think is very important.
+> Andreas Schwab <schwab@linux-m68k.org> writes:
+>> Sergei Organov <osv@javad.com> writes:
+>>
+>>> What is format-spec function in current git-blame.el? Neither my GN=
+U
+>>> Emacs 22.2.1 nor Google knows anything about it.
+>>
+>> It's part of Emacs since more than 9 years, imported from Gnus.
+>>
+>
+> Thanks, I now see it in Gnus on my own computer, in
+> lisp/gnus/format-spec.el.gz.
+>
+> GNU Emacs 22.2.1 (i486-pc-linux-gnu, GTK+ Version 2.12.11) of 2008-11=
+-10
+> on raven, modified by Debian=20
+>
+> However, isn't it a bad idea to require Gnus(!) for git-blame to run?=
+ Gnus
+> is not installed on our server where I've encountered the problem. Wa=
+s
+> format-spec actually moved to core emacs recently?
 
-I think it would be better to make relative paths be the only available 
-method, in part because we don't want to polute the work tree, but more 
-because otherwise scripts aren't transferrable. That is, if you have an 
-absolute path, you can't send the same script to two different importers 
-(because they'd have to write their marks to the same location). And 
-there's no way for the program constructing a script to determine a good 
-absolute location if the script may be run on a different host than it's 
-generated on (think of getting a Linux user getting a script attached to a 
-bug report from a native Windows user; there are no absolute paths that 
-are valid on both of these).
+That was not my intention when I posted the patch. I seem to recall tha=
+t
+I asked for testing, in particular from users with older Emacsen than
+23. But I got no response, and only recently discovered that the patch
+hade been accepted.
 
-(However, it probably does make sense to permit absolute paths in the 
-command line, since whoever's writing the command line is presumably aware 
-of any local conventions)
+format-spec is included in Emacs 23, and is a useful function. But we
+can rewrite git-blame.el to do the formatting manuall instead.
 
-	-Daniel
-*This .sig left intentionally blank*
+--=20
+David K=C3=A5gedal
