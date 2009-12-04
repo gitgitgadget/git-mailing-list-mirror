@@ -1,78 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/3] Add a command "fix" to rebase --interactive.
-Date: Fri, 4 Dec 2009 17:57:46 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0912041755220.21557@intel-tinevez-2-302>
-References: <cover.1259934977.git.mhagger@alum.mit.edu> <6d779d2c244bf5d5b7924cdc5daf66a8186e4bc7.1259934977.git.mhagger@alum.mit.edu>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: git gsoc money
+Date: Fri, 04 Dec 2009 10:57:53 -0600
+Message-ID: <24r8x4QA-YeeHozJZid4zZzSATqzAQ6hK6SsZm3DEIugiRsQm2ATbQ@cipher.nrlssc.navy.mil>
+References: <20091203052220.GA22582@coredump.intra.peff.net> <20091203153935.GB23281@spearce.org> <20091204121417.GA20682@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Dec 04 17:58:43 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 04 17:59:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGbTh-0007zy-6h
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 17:57:57 +0100
+	id 1NGbUT-0008Ry-UC
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Dec 2009 17:58:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756960AbZLDQ5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2009 11:57:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756935AbZLDQ5p
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 11:57:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58463 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756926AbZLDQ5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2009 11:57:44 -0500
-Received: (qmail invoked by alias); 04 Dec 2009 16:57:50 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp067) with SMTP; 04 Dec 2009 17:57:50 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/gOhUPRV/gUqgMtTh2vZsg29KI2hivZFqZiNMbaB
-	woVgYZI69dyzvd
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <6d779d2c244bf5d5b7924cdc5daf66a8186e4bc7.1259934977.git.mhagger@alum.mit.edu>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
+	id S932244AbZLDQ6D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2009 11:58:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932217AbZLDQ5w
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Dec 2009 11:57:52 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:44809 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932190AbZLDQ5v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2009 11:57:51 -0500
+Received: by mail.nrlssc.navy.mil id nB4Gvsmf007493; Fri, 4 Dec 2009 10:57:54 -0600
+In-Reply-To: <20091204121417.GA20682@coredump.intra.peff.net>
+X-OriginalArrivalTime: 04 Dec 2009 16:57:54.0162 (UTC) FILETIME=[EBE68D20:01CA7502]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134538>
 
-Hi,
-
-On Fri, 4 Dec 2009, Michael Haggerty wrote:
-
-> The command is like "squash", except that it discards the commit message
-> of the corresponding commit.
+Jeff King wrote:
+> On Thu, Dec 03, 2009 at 07:39:35AM -0800, Shawn O. Pearce wrote:
 > 
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>>>   1. Become an affiliated project of an organization like The Software
+>>>      Freedom Conservancy or Software in the Public Interest.
+>> Try to join the Software Freedom Conservancy and retain the funds
+>> for Git's use?  Maybe you can slide in before the Dec 31st deadline.
+> 
+> Everybody who responded seems to think that is a good idea, so I've
+> contacted the SFC about joining. I'll keep the list up to date as things
+> develop there.
+> 
+> I expect they'll need a liaison from the project. I can do that, but if
+> somebody else is interested, let me know.
 
-The only part which made me a bit uneasy was this one:
+Now that I've read the links that you mentioned, I too think this is a
+good idea.  I haven't been involved in SoC (though I benefited and much
+appreciated having my travel expenses reimbursed), so my opinion should
+be weighted accordingly.
 
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index 0bd3bf7..539413d 100755
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -302,7 +302,7 @@ nth_string () {
->  
->  make_squash_message () {
->  	if test -f "$SQUASH_MSG"; then
-> -		COUNT=$(($(sed -n "s/^# This is [^0-9]*\([1-9][0-9]*\).*/\1/p" \
-> +		COUNT=$(($(sed -n "s/^# Th[^0-9]*\([1-9][0-9]*\)\(th\|st\|nd\|rd\) commit message.*:/\1/p" \
->  			< "$SQUASH_MSG" | sed -ne '$p')+1))
->  		echo "# This is a combination of $COUNT commits."
->  		sed -e 1d -e '2,/^./{
+If there's anything I can do to help, Jeff, please let me know.
 
-But it is fine.  (Took this idiot a couple of seconds to figure out why; 
-I'd have put "th" last, being a mathematician instead of a computer 
-scientist, so my natural numbers start with 1, not 0 ;-)
-
-To be honest, I never thought of "fix" as something I want, but patiently 
-deleted the respective commit messages of my fixup commits (usually called 
-"amend" or "amend.<something helpful>").
-
-This is brilliant.
-
-ACK
+-brandon
