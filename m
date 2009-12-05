@@ -1,63 +1,47 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: svn svn returning 'fatal: Not a valid object name' on
-	sourceforge svn repo
-Date: Sat, 5 Dec 2009 14:49:50 -0800
-Message-ID: <20091205224950.GC2120@dcvr.yhbt.net>
-References: <p0624081ac73dd6a1aaff@[63.138.152.192]>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stephen Bannasch <stephen.bannasch@deanbrook.org>
-X-From: git-owner@vger.kernel.org Sat Dec 05 23:50:07 2009
+From: Alex Vandiver <alex@chmrr.net>
+Subject: Re: [PATCH 2/5] git-svn: Make merge metadata accessible to make_log_entry
+Date: Sat, 05 Dec 2009 17:51:23 -0500
+Message-ID: <1260052934-sup-9563@utwig>
+References: <1259780874-14706-1-git-send-email-alex@chmrr.net> <1259780874-14706-3-git-send-email-alex@chmrr.net> <1259786690-sup-8337@utwig> <20091205223241.GB2120@dcvr.yhbt.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Sam Vilain <sam@vilain.net>, git <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Dec 05 23:51:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NH3S1-00069m-QL
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Dec 2009 23:50:06 +0100
+	id 1NH3TM-0006iU-OB
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Dec 2009 23:51:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756932AbZLEWtp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Dec 2009 17:49:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756427AbZLEWto
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 17:49:44 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:36018 "EHLO dcvr.yhbt.net"
+	id S1757057AbZLEWvS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Dec 2009 17:51:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756989AbZLEWvR
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 17:51:17 -0500
+Received: from chmrr.net ([209.67.253.66]:44789 "EHLO utwig.chmrr.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754728AbZLEWto (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Dec 2009 17:49:44 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C57B4296845;
-	Sat,  5 Dec 2009 22:49:50 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <p0624081ac73dd6a1aaff@[63.138.152.192]>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1756698AbZLEWvR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Dec 2009 17:51:17 -0500
+Received: from chmrr by utwig.chmrr.net with local (Exim 4.69)
+	(envelope-from <chmrr@chmrr.net>)
+	id 1NH3TH-0006x3-1A; Sat, 05 Dec 2009 17:51:23 -0500
+In-reply-to: <20091205223241.GB2120@dcvr.yhbt.net>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134632>
 
-Stephen Bannasch <stephen.bannasch@deanbrook.org> wrote:
-> I use git svn often and normally it works fine.
->
-> I getting a fatal error trying to clone the asciimathm svn repo at sourceforge:
->
-> $ git svn clone --trunk=trunk --branches=branches http://asciimathml.svn.sourceforge.net/svnroot/asciimathml asciimathml-svn-git
-> fatal: Not a valid object name
-> ls-tree -z  ./: command returned error: 128
->
-> Anybody seen this kind of problem before.
->
-> A svn co works fine.
->
-> I'm using git version 1.6.5.1 on mac os 10.5.8.
+At Sat Dec 05 17:32:41 -0500 2009, Eric Wong wrote:
+> I'll continue to defer to Sam for ack-ing SVK-related things.
+> 
+> One thing I am very picky about is wrapping lines at 80-columns or
+> less (hard tabs being 8 characters wide).
 
-Hi Stephen,
-
-Passing the "-r4:HEAD" parameter to "git svn clone" should work.  It
-looks like the repository was initially miscreated and "trunk" was a
-symlink (and not a directory) in r1.
-
-I have not yet thought of a good solution to this, yet...
-
+*nod* I've fixed up my local copy for v2 to rewrap things at < 80
+columns, and will keep that in mind for the future.
+ - Alex
 -- 
-Eric Wong
+Networking -- only one letter away from not working
