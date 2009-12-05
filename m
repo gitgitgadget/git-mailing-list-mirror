@@ -1,56 +1,56 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH RESEND] git gui: make current branch default in "remote
- delete branch" merge check
-Date: Sat, 05 Dec 2009 14:19:53 +0100
-Message-ID: <4B1A5DF9.70203@web.de>
-References: <20091204212648.GA3979@book.hvoigt.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH v2 2/2] MSVC: Fix an "incompatible pointer types"
+ compiler warning
+Date: Sat, 5 Dec 2009 15:57:03 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0912051556290.4985@pacific.mpi-cbg.de>
+References: <4B1997A0.9000004@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sat Dec 05 14:20:03 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sat Dec 05 15:52:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGuYM-0004Ji-12
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Dec 2009 14:20:02 +0100
+	id 1NGw08-0008T3-PY
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Dec 2009 15:52:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755126AbZLENTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Dec 2009 08:19:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755106AbZLENTu
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 08:19:50 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:36794 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755096AbZLENTu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Dec 2009 08:19:50 -0500
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 389AF13FC2FB6;
-	Sat,  5 Dec 2009 14:19:56 +0100 (CET)
-Received: from [80.128.81.202] (helo=[192.168.178.26])
-	by smtp05.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1NGuYG-0002Xr-00; Sat, 05 Dec 2009 14:19:56 +0100
-User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
-In-Reply-To: <20091204212648.GA3979@book.hvoigt.net>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/qO9khMLulEJ2fPNoDEabyriKmadMOIT8GILM8
-	UZNpLjjEhbwR9x9IDDoPAqCIMOoazVo1CZgL8s0fWNSNABYmgf
-	jFmOngQ/jLihFX4K216Q==
+	id S1755571AbZLEOwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Dec 2009 09:52:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755531AbZLEOwh
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 09:52:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43183 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754654AbZLEOwg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Dec 2009 09:52:36 -0500
+Received: (qmail invoked by alias); 05 Dec 2009 14:52:41 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp018) with SMTP; 05 Dec 2009 15:52:41 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Ik7E5rNUIL0Acl5vK1NZHYHurpo6LFu1htgo8DQ
+	wybbPa6sol6u3A
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <4B1997A0.9000004@ramsay1.demon.co.uk>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.78
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134602>
 
-Heiko Voigt schrieb:
-> We already do the same when locally deleting a branch.
+Hi,
 
-+1
+On Fri, 4 Dec 2009, Ramsay Jones wrote:
 
-This is very useful in a workflow where the reviewer deletes the remote
-feature branch right after merging and pushing it.
+> Changes from v1:
+>     - moved the new declarations to msvc.h rather than clutter mingw.h
+>       with msvc related code.
 
-
-Jens
+Thanks,
+Dscho
