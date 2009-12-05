@@ -1,72 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git GUI client SmartGit released
-Date: Sat, 5 Dec 2009 16:01:28 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0912051601040.4985@pacific.mpi-cbg.de>
-References: <4B161B15.2020106@syntevo.com> <c94f8e120912042337n43d5bcd0qc61a2820a8009dc4@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-131833641-1260025288=:4985"
-Cc: Marc Strapetz <marc.strapetz@syntevo.com>,
-	git <git@vger.kernel.org>
-To: Dilip M <dilipm79@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 05 15:57:41 2009
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH 0/2] Refactor status producers and make status -s use color
+Date: Sat,  5 Dec 2009 16:04:36 +0100
+Message-ID: <cover.1260025135.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 05 16:04:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGw4P-0002ij-Hh
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Dec 2009 15:57:13 +0100
+	id 1NGwBo-0005yu-KL
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Dec 2009 16:04:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755737AbZLEO5C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Dec 2009 09:57:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755638AbZLEO5B
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 09:57:01 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43611 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755531AbZLEO5A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Dec 2009 09:57:00 -0500
-Received: (qmail invoked by alias); 05 Dec 2009 14:57:06 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp011) with SMTP; 05 Dec 2009 15:57:06 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18x2ToeCS0xMX8ucsPcd1d4d5LilJhPx4fae/5QYT
-	B2s+Lg5s8XzeM3
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <c94f8e120912042337n43d5bcd0qc61a2820a8009dc4@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1755721AbZLEPEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Dec 2009 10:04:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755617AbZLEPEi
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 10:04:38 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:46728 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755531AbZLEPEh (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Dec 2009 10:04:37 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id ED70CC58B1;
+	Sat,  5 Dec 2009 10:04:43 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Sat, 05 Dec 2009 10:04:43 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=IjiJ/cbDJKF+9KI2NLqmCCYt+kI=; b=OllJdVWhjJOQcf+r5sWZMdd0aJ46JifkZhzxyduE31rIyexVCk+qLi6C7OGFAhvZ1k1jwfxuglMcwp/Z00hMr1+zdskiR90BCmwXn9D74mvl111nMWjZYwRRpidi7rXSIxAjvIRRWiSsKTw0Pp/oDgWqLQ0kv1ATbWrY/TGo1iU=
+X-Sasl-enc: G3NO9rHP0+L6BiT4y/QhbWGqthZsgmSz42gMSjcto0cg 1260025483
+Received: from localhost (p5DCC0D75.dip0.t-ipconnect.de [93.204.13.117])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3DC4A42C2;
+	Sat,  5 Dec 2009 10:04:43 -0500 (EST)
+X-Mailer: git-send-email 1.6.6.rc1.282.ge6667
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134604>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+This is is the refactoring as suggested by Junio, and rebased on top is
+the patch which makes status -s obey color.status. I also adjusted the
+latter to not color the space separating the (colored) status letters
+from the (uncolored) file name.
 
---8323328-131833641-1260025288=:4985
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+This mini series is directly on top of 91691ec (Merge branch
+'jk/1.7.0-status' into next, 2009-11-27).
 
-Hi,
+Michael J Gruber (2):
+  builtin-commit: refactor short-status code into wt-status.c
+  status -s: obey color.status
 
-On Sat, 5 Dec 2009, Dilip M wrote:
-
-> 2009/12/2 Marc Strapetz <marc.strapetz@syntevo.com>:
-> 
-> > We are proud to announce the general availability of our Git client
-> > SmartGit[1]:
-> >
-> >  http://www.syntevo.com/smartgit/index.html
-> >
-> > Thank you, Git community, for the great DVCS you are building and the
-> > feed-back to SmartGit!
-> 
-> Man! this is what missing for GIT! Way to go!
-
-As for "missing", do you refer to "paid service", or "yet another GUI"?
-
-Just curious,
-Dscho
-
---8323328-131833641-1260025288=:4985--
+ builtin-commit.c |  105 ++++-------------------------------------------------
+ wt-status.c      |   96 +++++++++++++++++++++++++++++++++++++++++++++++++
+ wt-status.h      |    2 +
+ 3 files changed, 106 insertions(+), 97 deletions(-)
