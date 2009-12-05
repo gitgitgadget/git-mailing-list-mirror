@@ -1,72 +1,56 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: rev-parse --show-cdup in .git
-Date: Sat, 05 Dec 2009 14:19:07 +0100
-Message-ID: <4B1A5DCB.7020903@drmicha.warpmail.net>
-References: <4B192EAE.8000806@drmicha.warpmail.net> <7vhbs6skzi.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH RESEND] git gui: make current branch default in "remote
+ delete branch" merge check
+Date: Sat, 05 Dec 2009 14:19:53 +0100
+Message-ID: <4B1A5DF9.70203@web.de>
+References: <20091204212648.GA3979@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 05 14:19:21 2009
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Sat Dec 05 14:20:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGuXf-00047c-IE
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Dec 2009 14:19:20 +0100
+	id 1NGuYM-0004Ji-12
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Dec 2009 14:20:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755089AbZLENTI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Dec 2009 08:19:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754994AbZLENTH
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 08:19:07 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33596 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754718AbZLENTH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Dec 2009 08:19:07 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 86115C5FCD;
-	Sat,  5 Dec 2009 08:19:12 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Sat, 05 Dec 2009 08:19:12 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=8sv8PQiG/FXJZec7/4Ix3cpmWYU=; b=POWi7GHr1cRxprBtAhRAwKQlTK7zr8WRiJdgRLXM69afRxErZMjUJrw8TrzXyOZAID4C+rdBoEPlu5iCPRnnHE4Bqaf2VtKgfkK7vzTy6pM8BpxGPajRdFHzZwzZa/BynXDL2UGPOk5NvmxwJmcJiOF4N4IvD2d98zly3ZOL0tY=
-X-Sasl-enc: Xy7uoXhpWzFTOUQ5BAW0N1Bu3OBhJmsAAld/jeKjh8tD 1260019152
-Received: from localhost.localdomain (p5DCC0D75.dip0.t-ipconnect.de [93.204.13.117])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id D64193FE2;
-	Sat,  5 Dec 2009 08:19:11 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7pre) Gecko/20091204 Lightning/1.0b1pre Shredder/3.0.1pre
-In-Reply-To: <7vhbs6skzi.fsf@alter.siamese.dyndns.org>
+	id S1755126AbZLENTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Dec 2009 08:19:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755106AbZLENTu
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 08:19:50 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:36794 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755096AbZLENTu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Dec 2009 08:19:50 -0500
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 389AF13FC2FB6;
+	Sat,  5 Dec 2009 14:19:56 +0100 (CET)
+Received: from [80.128.81.202] (helo=[192.168.178.26])
+	by smtp05.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NGuYG-0002Xr-00; Sat, 05 Dec 2009 14:19:56 +0100
+User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
+In-Reply-To: <20091204212648.GA3979@book.hvoigt.net>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/qO9khMLulEJ2fPNoDEabyriKmadMOIT8GILM8
+	UZNpLjjEhbwR9x9IDDoPAqCIMOoazVo1CZgL8s0fWNSNABYmgf
+	jFmOngQ/jLihFX4K216Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134601>
 
-Junio C Hamano venit, vidit, dixit 04.12.2009 18:32:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> I'm sure this was discussed somewhere, but I can't find it:
->>
->> When called from within .git, git rev-parse --show-cdup returns nothing
->> rather than "..", not even an error code. Is this intended?
-> 
-> I do not think --show-cdup should be linked to --is-inside-work-tree in
-> any way, if that is what you are getting at by mentioning "error code".
+Heiko Voigt schrieb:
+> We already do the same when locally deleting a branch.
 
-It's just difficult to tell from the output whether you are at the
-toplevel (empty relative path) or you're within .git or somewhere else.
++1
 
->> This is all the more disturbing since the cwd of hooks seems to be
->> GIT_DIR. Is that something one can rely upon? In that case one can
->> simply use ".." for cdup.
-> 
-> I think you will see something that is different from and is more sensible
-> than ".." when you use GIT_WORK_TREE environment variable (or its
-> corresponding configuration variable).
+This is very useful in a workflow where the reviewer deletes the remote
+feature branch right after merging and pushing it.
 
-All that I want is a reliable method for a hook to cd to the toplevel of
-the worktree of a non-bare repositity. cd_to_toplevel (from
-git-sh-setup) does not work. I don't think I should have to set any
-worktree config in a non-bare repository with standard layout, should I?
 
-Michael
+Jens
