@@ -1,80 +1,59 @@
-From: "James P. Howard, II" <jh@jameshoward.us>
-Subject: Re: [PATCH] Add commit.infodisplay option to give message editor
- empty file
-Date: Sat, 5 Dec 2009 18:09:03 -0500
-Message-ID: <20091205230903.GA3816@thermopylae.local>
-References: <1259967879-65517-1-git-send-email-jh@jameshoward.us>
- <7vpr6t6fnz.fsf@alter.siamese.dyndns.org>
- <20091205154753.GA3717@thermopylae.local>
- <20091205162827.GA9584@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Dec 06 00:09:15 2009
+From: Alex Vandiver <alex@chmrr.net>
+Subject: Re: [spf:guess] Re: [PATCH 2/5] git-svn: Make merge metadata accessible to make_log_entry
+Date: Sat, 05 Dec 2009 18:10:10 -0500
+Message-ID: <1260054349-sup-9732@utwig>
+References: <1259780874-14706-1-git-send-email-alex@chmrr.net> <1259780874-14706-3-git-send-email-alex@chmrr.net> <1259786690-sup-8337@utwig> <20091205223241.GB2120@dcvr.yhbt.net> <1260052934-sup-9563@utwig> <1260053972.22680.5.camel@denix>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Eric Wong <normalperson@yhbt.net>, git <git@vger.kernel.org>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Sun Dec 06 00:10:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NH3kY-00046E-VY
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 00:09:15 +0100
+	id 1NH3lt-0004aW-UA
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 00:10:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757510AbZLEXJD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Dec 2009 18:09:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757490AbZLEXJD
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 18:09:03 -0500
-Received: from qw-out-2122.google.com ([74.125.92.27]:8507 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757475AbZLEXJC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Dec 2009 18:09:02 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so689520qwe.37
-        for <git@vger.kernel.org>; Sat, 05 Dec 2009 15:09:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=FVA3rZDlPkn+2W1XrKWaQBL/YmNEerz0iGFPmZ9B4XE=;
-        b=J7Rnr44swc94gFJOQEtYcDXxGI9DSZFXzTQPrJvuDRex1+EnC6DB+o5WPQ9cm50+OT
-         gTXXARbwJKKzW8Vc0WaADRYpsDA03N/xwbh/txFfMDV2LzobZUpwFpMSbonPF0Ctt4T2
-         5P2MQNIt6Feg8dMWgapojFD+G/Xeijo40VWU4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=VhgKk2hbKFAalQPBFLOzhvg1Egjklp1leTChAIEELe8dWC68TKrME4GzzdNG66IBj+
-         f6sjbpsxsI6mTaHXKinGpeldC9c6zTZZ6I6GmxFI+mQOBk14iANwFDGDD57fcxhU5YRj
-         LKbJzN/QcDjkBg36xSaUTQC7ESKeZddsB+p0c=
-Received: by 10.224.82.85 with SMTP id a21mr2620862qal.108.1260054547072;
-        Sat, 05 Dec 2009 15:09:07 -0800 (PST)
-Received: from thermopylae.local (c-68-57-75-220.hsd1.va.comcast.net [68.57.75.220])
-        by mx.google.com with ESMTPS id 20sm2634117qyk.9.2009.12.05.15.09.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 05 Dec 2009 15:09:05 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20091205162827.GA9584@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1758004AbZLEXKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Dec 2009 18:10:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757927AbZLEXKF
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 18:10:05 -0500
+Received: from chmrr.net ([209.67.253.66]:42438 "EHLO utwig.chmrr.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757903AbZLEXKE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Dec 2009 18:10:04 -0500
+Received: from chmrr by utwig.chmrr.net with local (Exim 4.69)
+	(envelope-from <chmrr@chmrr.net>)
+	id 1NH3lS-0006yw-1l; Sat, 05 Dec 2009 18:10:10 -0500
+In-reply-to: <1260053972.22680.5.camel@denix>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134636>
 
-On Sat, Dec 05, 2009 at 11:28:27AM -0500, Jeff King wrote:
+At Sat Dec 05 17:59:32 -0500 2009, Sam Vilain wrote:
+> Hi, I've just seen the series, looks like a good idea.  Just a couple of
+> questions then I'll review the code;
+> 
+>  - when a change is merged upstream with svk, you will get multiple log
+> entries in a single commit message.  What do you do with commits like
+> that?
 
-> If the latter, I think we would be better served by an option to simply
-> turn off the template. Then that is also helpful for the case of people
-> using decent editors, but who don't want to waste the CPU time on
-> generating the template information (which can be substantial for things
-> like media repositories).
+If the user edited the merge message and supplied their own message,
+nothing.  If the first line is an SVK merge line, it inserts a message
+"Merged from /svn/path/to/trunk:12345\n\n" at the top.
 
-Actually, I find this a reasonable solution for both cases and would be
-willing to reimplment my change this way, as it meets my needs and would
-be useful to others.  The only question I have is, what should variable/
-command line option be called?
+>  - there are quite a few repos which will have empty commits (ie, no
+> changes), but with one or more of the above log entries, owing to a bug
+> which I can't seem to find the details of right now..  how might those
+> appear?
 
-James
-
+Without seeing an example, I'm not sure offhand -- but what you're
+describing does ring a bell, so I'm sure I've seen the mismerges
+you're talking about as well.
+ - Alex
 -- 
-James P. Howard, II, MPA MBCS
-jh@jameshoward.us
+Networking -- only one letter away from not working
