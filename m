@@ -1,120 +1,91 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 2/2] status -s: obey color.status
-Date: Sat,  5 Dec 2009 16:04:38 +0100
-Message-ID: <2b987524f57a0ac04e219f82e20e806741ce4eca.1260025135.git.git@drmicha.warpmail.net>
-References: <cover.1260025135.git.git@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 05 16:05:10 2009
+From: "James P. Howard\, II" <jh@jameshoward.us>
+Subject: Re: [PATCH] Add commit.infodisplay option to give message editor
+ empty file
+Date: Sat, 5 Dec 2009 10:47:53 -0500
+Message-ID: <20091205154753.GA3717@thermopylae.local>
+References: <1259967879-65517-1-git-send-email-jh@jameshoward.us>
+ <7vpr6t6fnz.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 05 16:48:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NGwC1-00064w-Qc
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Dec 2009 16:05:06 +0100
+	id 1NGwre-0004lS-1h
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Dec 2009 16:48:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755994AbZLEPEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Dec 2009 10:04:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755942AbZLEPEq
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 10:04:46 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52161 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755902AbZLEPEn (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Dec 2009 10:04:43 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id E6F21C5DBB;
-	Sat,  5 Dec 2009 10:04:49 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Sat, 05 Dec 2009 10:04:49 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=y8CDWfytckWLheRnohxtloZUwYM=; b=cZNFcA+FNsOWP280Y9Tm3JtILmz1ObYMp8QPlQgVapnY5PSV3S6zSApbBIaNsWFUl9JsYTh9nVU2HlZdzW1nOAQaJbYuEMSKDYSZy3yriViSSqNwOH8FUUCOQOPfrRm5OU74u/v+JCeMMm17Yy0TtId/dFABri2nOHtnE1fvEnk=
-X-Sasl-enc: ipUgwu71W33uVTo0owJHl+NrVbqaBXyyYAlhulG/1z6s 1260025489
-Received: from localhost (p5DCC0D75.dip0.t-ipconnect.de [93.204.13.117])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 0340842AE;
-	Sat,  5 Dec 2009 10:04:48 -0500 (EST)
-X-Mailer: git-send-email 1.6.6.rc1.282.ge6667
-In-Reply-To: <cover.1260025135.git.git@drmicha.warpmail.net>
+	id S1756756AbZLEPrw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Dec 2009 10:47:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756538AbZLEPrv
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 10:47:51 -0500
+Received: from mail-qy0-f192.google.com ([209.85.221.192]:45161 "EHLO
+	mail-qy0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756059AbZLEPrv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Dec 2009 10:47:51 -0500
+Received: by qyk30 with SMTP id 30so1452480qyk.33
+        for <git@vger.kernel.org>; Sat, 05 Dec 2009 07:47:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=Rjx37GpQstiy+1TsdRK6rH8pQ1EWa9ps0ASyynp6qik=;
+        b=cAoLh90ENvDX7S1NH1Kh6PqK6LjZJHzeaTrkw0tT9jLn/SaL+EeZCHFMTvbRQu7yW6
+         rX2iEcQ/FH5HbfooLRYrU/vzGqogksZkAcvXkS2ckEpJEjOOSxu2gJy3AukMYDE2odlR
+         6YB22Y/ZMBcCNFuC4MojFlkuzNq+5E/xuJZI0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=lbtpihQeagN9UIYoE4UkL7YQjdu4DHnqhrKkb4VJTGsmjwAsMPiOq/YBmubLfEGik4
+         pRWqxsFYOVoZXg7vj+20vFfo2xn6GrC3ZyGVYqYjLVY7eBVBmfrvtxHv1XcTgjV8T1ua
+         ps4rWGcMKzL5uwrIQjKnC8Lh102Ios2zU2zdc=
+Received: by 10.224.66.136 with SMTP id n8mr2435336qai.328.1260028076618;
+        Sat, 05 Dec 2009 07:47:56 -0800 (PST)
+Received: from thermopylae.local (c-68-57-75-220.hsd1.va.comcast.net [68.57.75.220])
+        by mx.google.com with ESMTPS id 20sm2441147qyk.13.2009.12.05.07.47.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 05 Dec 2009 07:47:55 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vpr6t6fnz.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134607>
 
-Make the short version of status obey the color.status boolean. We color
-the status letters only, because they carry the state information and are
-potentially colored differently, such as for a file with staged changes
-as well as changes in the worktree against the index.
+On Fri, Dec 04, 2009 at 11:30:56PM -0800, Junio C Hamano wrote:
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- builtin-commit.c |    4 ++++
- wt-status.c      |   21 ++++++++++++++-------
- 2 files changed, 18 insertions(+), 7 deletions(-)
+> Two points and a half:
+> 
+>  - Why does info_display need to be visible to everybody else by being in
+>    cache.h and environment.c?  Shouldn't its scope be similar to that of
+>    template_file, that is static to builtin-commit.c?
+> 
+>  - A configuration variable that does not allow the users to override from
+>    the command line is a no-no.  We usually do command line option first
+>    and then (or at the same time) configuration variable as a typesaver.
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 548bbf5..ddcfffb 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -1022,6 +1022,10 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	case STATUS_FORMAT_SHORT:
- 		if (s.relative_paths)
- 			s.prefix = prefix;
-+		if (s.use_color == -1)
-+			s.use_color = git_use_color_default;
-+		if (diff_use_color_default == -1)
-+			diff_use_color_default = git_use_color_default;
- 		wt_shortstatus_print(&s, null_termination);
- 		break;
- 	case STATUS_FORMAT_PORCELAIN:
-diff --git a/wt-status.c b/wt-status.c
-index 93af994..a8b6d05 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -616,14 +616,14 @@ static void wt_shortstatus_unmerged(int null_termination, struct string_list_ite
- 	case 6: how = "AA"; break; /* both added */
- 	case 7: how = "UU"; break; /* both modified */
- 	}
--	printf("%s ", how);
-+	color_fprintf(s->fp, color(WT_STATUS_UNMERGED, s), "%s", how);
- 	if (null_termination) {
--		fprintf(stdout, "%s%c", it->string, 0);
-+		fprintf(stdout, " %s%c", it->string, 0);
- 	} else {
- 		struct strbuf onebuf = STRBUF_INIT;
- 		const char *one;
- 		one = quote_path(it->string, -1, &onebuf, s->prefix);
--		printf("%s\n", one);
-+		printf(" %s\n", one);
- 		strbuf_release(&onebuf);
- 	}
- }
-@@ -633,9 +633,15 @@ static void wt_shortstatus_status(int null_termination, struct string_list_item
- {
- 	struct wt_status_change_data *d = it->util;
+I can make these changes in the next few days.
  
--	printf("%c%c ",
--		!d->index_status ? ' ' : d->index_status,
--		!d->worktree_status ? ' ' : d->worktree_status);
-+	if (d->index_status)
-+		color_fprintf(s->fp, color(WT_STATUS_UPDATED, s), "%c", d->index_status);
-+	else
-+		putchar(' ');
-+	if (d->worktree_status)
-+		color_fprintf(s->fp, color(WT_STATUS_CHANGED, s), "%c", d->worktree_status);
-+	else
-+		putchar(' ');
-+	putchar(' ');
- 	if (null_termination) {
- 		fprintf(stdout, "%s%c", it->string, 0);
- 		if (d->head_path)
-@@ -663,7 +669,8 @@ static void wt_shortstatus_untracked(int null_termination, struct string_list_it
- 		struct strbuf onebuf = STRBUF_INIT;
- 		const char *one;
- 		one = quote_path(it->string, -1, &onebuf, s->prefix);
--		printf("?? %s\n", one);
-+		color_fprintf(s->fp, color(WT_STATUS_UNTRACKED, s), "??");
-+		printf(" %s\n", one);
- 		strbuf_release(&onebuf);
- 	}
- }
+>  - While the amount of change necessary for this change doesn't look too
+>    bad, is it really worth it?  What is wrong with "1,$p" while using ed
+>    as your editor?
+
+I tried a few variants of this, and shell script wrappers for ex (and
+gate, which is a specizalized text editor that actually works kind of
+well for commit message editing), and it worked fairly well.
+
+The real motivation is that this feature ditches all assumptions about
+the capabilities of the text editor.  I am not sure where that leads
+yet, but I'd rather make it possible.
+
+James
+
 -- 
-1.6.6.rc1.282.ge6667
+James P. Howard, II, MPA MBCS
+jh@jameshoward.us
