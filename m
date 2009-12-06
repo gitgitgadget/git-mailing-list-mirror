@@ -1,131 +1,65 @@
-From: Alex Vandiver <alex@chmrr.net>
-Subject: [PATCH] Allow --quiet option to git remote, particularly for `git remote update`
-Date: Sat,  5 Dec 2009 19:00:23 -0500
-Message-ID: <1260057623-28960-1-git-send-email-alex@chmrr.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 06 01:00:38 2009
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Continued work on sr/vcs-helper and sr/gfi-options
+Date: Sun, 6 Dec 2009 01:53:03 +0100
+Message-ID: <fabb9a1e0912051653s77ba25e1g9ff1e21219cd06c9@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Dec 06 01:53:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NH4YG-0004DR-22
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 01:00:36 +0100
+	id 1NH5NV-0006gW-3A
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 01:53:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933249AbZLFAA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Dec 2009 19:00:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933242AbZLFAAZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 19:00:25 -0500
-Received: from chmrr.net ([209.67.253.66]:39756 "EHLO utwig.chmrr.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933233AbZLFAAY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Dec 2009 19:00:24 -0500
-Received: from c-67-186-135-139.hsd1.ma.comcast.net ([67.186.135.139] helo=localhost.localdomain)
-	by utwig.chmrr.net with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <alex@chmrr.net>)
-	id 1NH4Y7-00071U-Bo
-	for git@vger.kernel.org; Sat, 05 Dec 2009 19:00:30 -0500
-X-Mailer: git-send-email 1.6.6.rc0.360.gc408
-X-Authenticated-User: chmrr
-X-Authenticator: plain
-X-Sender-Verify: SUCCEEDED (sender exists & accepts mail)
-X-Exim-Version: 4.69 (build at 07-Feb-2009 20:08:51)
-X-Date: 2009-12-05 19:00:30
-X-Connected-IP: 67.186.135.139:37540
-X-Message-Linecount: 90
-X-Body-Linecount: 83
-X-Message-Size: 2854
-X-Body-Size: 2556
-X-Received-Count: 1
-X-Recipient-Count: 1
-X-Local-Recipient-Count: 1
-X-Local-Recipient-Defer-Count: 0
-X-Local-Recipient-Fail-Count: 0
+	id S1754228AbZLFAxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Dec 2009 19:53:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753574AbZLFAxR
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 19:53:17 -0500
+Received: from mail-vw0-f197.google.com ([209.85.212.197]:51500 "EHLO
+	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753549AbZLFAxR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Dec 2009 19:53:17 -0500
+Received: by vws35 with SMTP id 35so1585344vws.4
+        for <git@vger.kernel.org>; Sat, 05 Dec 2009 16:53:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=kCpXdeFuShQrzscg4ClbDiLFH5K7o0g5hPwh+YEwoIo=;
+        b=HO5V2LlB76L5ekqX5ma7LHj1PwfXX8mkYNKYSZHQsCdfdhoz0V0pgbEQZ+wzudC3Qm
+         oPlNlxf7HFWZq7k3dsmrB5Ro85ymUAKBJvSC/rvO8D6p9VwpuL98jbkjHT6DOdVh0AfF
+         mZhFBRX4CTvBDFSbhpsP5aKuUwtvpQMf3tklQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=jXGnxNepMpSQ6MUHyB04xFWRfuBfnhnGzaeoNMELbpX3xXRD5j5swtBbLm4Jw8fS+1
+         tCsb/MwAGpmyaTIKN3RJ2yC+zNKs9+8qa4ogO2s/1PfLpj32sbJrS6Gj1/Oa9oqEBoiU
+         u/+LRZiNuWbon3yyLNC4MjydqaJdgjs0PRewY=
+Received: by 10.220.123.2 with SMTP id n2mr6328593vcr.71.1260060803049; Sat, 
+	05 Dec 2009 16:53:23 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134639>
 
+Heya,
 
-Signed-off-by: Alex Vandiver <alex@chmrr.net>
----
- builtin-remote.c |   19 ++++++++++++-------
- 1 files changed, 12 insertions(+), 7 deletions(-)
+I'm planning to start finishing up git-remote-hg this week, and for
+that I need both sr/vcs-helper (in next) and sr/gfi-options (in pu).
+How can I best go about working on these? I _think_ what I want is to
+merge sr/vcs-helper and sr/gfi-options, into either master or next
+(with a three-way merge), but I'm not sure? Also, when I try to rebase
+sr/vcs-helper onto master I get conflicts yet again, since these were
+already resolved in next, what is the best way for me to proceed in
+such a way that it is convenient for you (Junio) and the list, if
+possible, without having to untangle those merge conflicts.
 
-diff --git a/builtin-remote.c b/builtin-remote.c
-index a501939..a34006f 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -8,14 +8,14 @@
- #include "refs.h"
- 
- static const char * const builtin_remote_usage[] = {
--	"git remote [-v | --verbose]",
-+	"git remote [-v | --verbose] [-q | --quiet]",
- 	"git remote add [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>",
- 	"git remote rename <old> <new>",
- 	"git remote rm <name>",
- 	"git remote set-head <name> (-a | -d | <branch>)",
- 	"git remote [-v | --verbose] show [-n] <name>",
- 	"git remote prune [-n | --dry-run] <name>",
--	"git remote [-v | --verbose] update [-p | --prune] [group | remote]",
-+	"git remote [-v | --verbose] [-q | --quiet] update [-p | --prune] [group]",
- 	NULL
- };
- 
-@@ -58,7 +58,7 @@ static const char * const builtin_remote_update_usage[] = {
- #define GET_HEAD_NAMES (1<<1)
- #define GET_PUSH_REF_STATES (1<<2)
- 
--static int verbose;
-+static int verbosity;
- 
- static int show_all(void);
- static int prune_remote(const char *remote, int dry_run);
-@@ -84,9 +84,12 @@ static int opt_parse_track(const struct option *opt, const char *arg, int not)
- static int fetch_remote(const char *name)
- {
- 	const char *argv[] = { "fetch", name, NULL, NULL };
--	if (verbose) {
-+	if (verbosity > 0) {
- 		argv[1] = "-v";
- 		argv[2] = name;
-+	} else if (verbosity < 0) {
-+		argv[1] = "-q";
-+		argv[2] = name;
- 	}
- 	printf("Updating %s\n", name);
- 	if (run_command_v_opt(argv, RUN_GIT_CMD))
-@@ -1236,8 +1239,10 @@ static int update(int argc, const char **argv)
- 
- 	if (prune)
- 		fetch_argv[fetch_argc++] = "--prune";
--	if (verbose)
-+	if (verbosity > 0)
- 		fetch_argv[fetch_argc++] = "-v";
-+	if (verbosity < 0)
-+		fetch_argv[fetch_argc++] = "-q";
- 	if (argc < 2) {
- 		fetch_argv[fetch_argc++] = "default";
- 	} else {
-@@ -1301,7 +1306,7 @@ static int show_all(void)
- 		sort_string_list(&list);
- 		for (i = 0; i < list.nr; i++) {
- 			struct string_list_item *item = list.items + i;
--			if (verbose)
-+			if (verbosity > 0)
- 				printf("%s\t%s\n", item->string,
- 					item->util ? (const char *)item->util : "");
- 			else {
-@@ -1318,7 +1323,7 @@ static int show_all(void)
- int cmd_remote(int argc, const char **argv, const char *prefix)
- {
- 	struct option options[] = {
--		OPT_BOOLEAN('v', "verbose", &verbose, "be verbose; must be placed before a subcommand"),
-+		OPT__VERBOSITY(&verbosity),
- 		OPT_END()
- 	};
- 	int result;
+Thanks!
+
 -- 
-1.6.6.rc0.360.gc408
+Cheers,
+
+Sverre Rabbelier
