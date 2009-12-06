@@ -1,63 +1,67 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git reset --hard in .git causes a checkout in that directory
-Date: Sat, 5 Dec 2009 23:18:40 -0500
-Message-ID: <20091206041839.GB23983@coredump.intra.peff.net>
-References: <4B17A166.60306@gmail.com>
- <20091204111158.GE27495@coredump.intra.peff.net>
- <7vocmdutph.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] Add commit.infodisplay option to give message editor
+ empty file
+Date: Sat, 5 Dec 2009 23:22:06 -0500
+Message-ID: <20091206042206.GC23983@coredump.intra.peff.net>
+References: <1259967879-65517-1-git-send-email-jh@jameshoward.us>
+ <7vpr6t6fnz.fsf@alter.siamese.dyndns.org>
+ <20091205154753.GA3717@thermopylae.local>
+ <20091205162827.GA9584@sigill.intra.peff.net>
+ <20091205230903.GA3816@thermopylae.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Maarten Lankhorst <m.b.lankhorst@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 06 05:18:50 2009
+Cc: git@vger.kernel.org
+To: "James P. Howard, II" <jh@jameshoward.us>
+X-From: git-owner@vger.kernel.org Sun Dec 06 05:22:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NH8a7-0006uH-2U
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 05:18:47 +0100
+	id 1NH8dS-0007k2-Vg
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 05:22:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933545AbZLFESh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Dec 2009 23:18:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758096AbZLFESg
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 23:18:36 -0500
-Received: from peff.net ([208.65.91.99]:57222 "EHLO peff.net"
+	id S1758109AbZLFEWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Dec 2009 23:22:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758106AbZLFEWD
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 23:22:03 -0500
+Received: from peff.net ([208.65.91.99]:48220 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758071AbZLFESf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Dec 2009 23:18:35 -0500
-Received: (qmail 28414 invoked by uid 107); 6 Dec 2009 04:23:11 -0000
+	id S1758105AbZLFEWC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Dec 2009 23:22:02 -0500
+Received: (qmail 28458 invoked by uid 107); 6 Dec 2009 04:26:38 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 05 Dec 2009 23:23:11 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Dec 2009 23:18:40 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 05 Dec 2009 23:26:38 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Dec 2009 23:22:06 -0500
 Content-Disposition: inline
-In-Reply-To: <7vocmdutph.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20091205230903.GA3816@thermopylae.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134645>
 
-On Sat, Dec 05, 2009 at 11:06:02AM -0800, Junio C Hamano wrote:
+On Sat, Dec 05, 2009 at 06:09:03PM -0500, James P. Howard, II wrote:
 
-> > Junio, I think the following should go to maint (I didn't bother
-> > splitting the --merge and --hard code; --merge is in v1.6.2. I assumed
-> > we don't care about maint releases that far back).
+> On Sat, Dec 05, 2009 at 11:28:27AM -0500, Jeff King wrote:
 > 
-> Although I'll apply your patch to 'maint' and will merge it for 1.6.6, I
-> am not quite sure if this is the best fix in the longer run.  Shouldn't we
-> go back to the top of the work tree and running what was asked there?
+> > If the latter, I think we would be better served by an option to simply
+> > turn off the template. Then that is also helpful for the case of people
+> > using decent editors, but who don't want to waste the CPU time on
+> > generating the template information (which can be substantial for things
+> > like media repositories).
+> 
+> Actually, I find this a reasonable solution for both cases and would be
+> willing to reimplment my change this way, as it meets my needs and would
+> be useful to others.  The only question I have is, what should variable/
+> command line option be called?
 
-I actually considered that, too, when writing the patch. But that would
-be inconsistent with all of the other commands that use SETUP_WORK_TREE.
-For example:
+I would be tempted to call it "--no-template", but I think that is too
+confusing. The "--template" option is not really about the git-generated
+template, but about a user-defined template that goes on top of the
+git-generated one (I would have expected --template=/dev/null to do what
+you want, too, but it retains the git template).
 
-  $ git init && cd .git && git clean
-  fatal: This operation must be run in a work tree
-
-So I think we are better to be consistent with the other commands. If
-somebody wants to make a separate patch to discover the work tree while
-in the $GIT_DIR and chdir to it, that should then be applied to all
-commands.  I'm not opposed to it, but I also don't see it as a
-particularly pressing need.
+Probably "--no-status" would be a good name, as the generated template
+is the format generated by "git status".
 
 -Peff
