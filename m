@@ -1,184 +1,101 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2] Detailed diagnosis when parsing an object name fails.
-Date: Sun, 06 Dec 2009 19:28:08 +0100
-Message-ID: <vpqhbs4dkjr.fsf@bauges.imag.fr>
-References: <1259784061-25143-1-git-send-email-y>
-	<7vljhj4wv0.fsf@alter.siamese.dyndns.org>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: git-blame.el: what is format-spec?
+Date: Sun, 06 Dec 2009 19:43:29 +0100
+Message-ID: <87d42s3pv2.fsf@lysator.liu.se>
+References: <87vdgm3e1k.fsf@osv.gnss.ru> <m2fx7qae49.fsf@igel.home>
+	<87ljhi3cao.fsf@osv.gnss.ru> <87fx7q4p6h.fsf@lysator.liu.se>
+	<87einafojx.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 06 19:31:30 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: Sergei Organov <osv@javad.com>
+X-From: git-owner@vger.kernel.org Sun Dec 06 19:43:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHLtK-0007Yu-7R
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 19:31:30 +0100
+	id 1NHM5F-000339-N2
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 19:43:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933926AbZLFSbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2009 13:31:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757113AbZLFSbR
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 13:31:17 -0500
-Received: from imag.imag.fr ([129.88.30.1]:62078 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755755AbZLFSbQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2009 13:31:16 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id nB6IS8UY004938
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 6 Dec 2009 19:28:08 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NHLq4-0006fe-Jt; Sun, 06 Dec 2009 19:28:08 +0100
-In-Reply-To: <7vljhj4wv0.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 03 Dec 2009 12\:37\:55 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 06 Dec 2009 19:28:10 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S932887AbZLFSne convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Dec 2009 13:43:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756954AbZLFSnd
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 13:43:33 -0500
+Received: from mail.lysator.liu.se ([130.236.254.3]:50340 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757010AbZLFSnc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2009 13:43:32 -0500
+Received: from mail.lysator.liu.se (localhost [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id E629F4006B;
+	Sun,  6 Dec 2009 19:42:32 +0100 (CET)
+Received: by mail.lysator.liu.se (Postfix, from userid 1674)
+	id D9CF34006F; Sun,  6 Dec 2009 19:42:32 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
+	bernadotte.lysator.liu.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 required=5.0 tests=AWL autolearn=disabled 
+	version=3.1.7-deb3
+Received: from krank (unknown [87.96.142.66])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id 8FE6F4006B;
+	Sun,  6 Dec 2009 19:42:32 +0100 (CET)
+Received: by krank (Postfix, from userid 1000)
+	id C38DB608C9; Sun,  6 Dec 2009 19:43:29 +0100 (CET)
+In-Reply-To: <87einafojx.fsf@osv.gnss.ru> (Sergei Organov's message of "Fri,
+	04 Dec 2009 23:54:10 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134686>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Sergei Organov <osv@javad.com> writes:
 
-> y@imag.fr writes:
+> Then there should be (require 'format-spec) in git-blame.el, right? D=
+ue
+> to:
 
-(sorry for the bad email, my fingers tried to anwser "yes" when
-git-send-email asked me to confirm my address)
+Of course. I must have missed that since I already had it loaded.
 
->> diff --git a/cache.h b/cache.h
->> index 0e69384..5c8cb5f 100644
->> --- a/cache.h
->> +++ b/cache.h
->> @@ -708,7 +708,11 @@ static inline unsigned int hexval(unsigned char c)
->>  #define DEFAULT_ABBREV 7
->>  
->>  extern int get_sha1(const char *str, unsigned char *sha1);
->> -extern int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode);
->> +static inline get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode)
->> +{
->> +	return get_sha1_with_mode_1(str, sha1, mode, 0, NULL);
->> +}
->> +extern int get_sha1_with_mode_1(const char *str, unsigned char *sha1, unsigned *mode, int fatal, const char *prefix);
->
-> Do I understand correctly that "fatal" here is the same as "!gently"
-> elsewhere in the API?
+> Now, I've evaluated (require 'format-spec) in my Emacs 22 (yes, 22, n=
+ot
+> 23), and now git-blame almost works there. The problem I see is that =
+it
+> doesn't output anything in the echo area. It color-codes the buffer, =
+it
+> does show correct pop-up when mouse is over a region, but it doesn't
+> print anything in the echo area when I move cursor through the region=
+s.
+> Any idea how to debug/fix this?
 
-It seems it is. I renamed it.
+Well, it appears I removed the output to the echo area. I didn't think
+it worked very well, and the new output format mostly replaces it by
+showing the hash.
 
->> +	if (errno == ENOENT || errno == ENOTDIR) {
->> +		char *fullname = malloc(strlen(filename)
->> +					     + strlen(prefix) + 1);
->> +		strcpy(fullname, prefix);
->> +		strcat(fullname, filename);
->
-> What if malloc fails here (and elsewhere in your patch)?
+There are also technical reasons for removing it (it couldn't be
+implemented very cleanly).
 
-Should have been an xmalloc. Fixed.
+It would of course be possible to restore the old way, but I think it
+would be good to ask ourselves what we really would like to see? Some
+ideas:
 
->> +static void diagnose_invalid_index_path(int stage,
->> +					const char *prefix,
->> +					const char *filename)
->> +{
->> +	struct stat st;
->> +
->> +	if (!prefix)
->> +		prefix = "";
->> +
->> +	if (!lstat(filename, &st))
->> +		die("Path '%s' exists on disk, but not in the index.", filename);
->> +	if (errno == ENOENT || errno == ENOTDIR) {
->> +		struct cache_entry *ce;
->> +		int pos;
->> +		int namelen = strlen(filename) + strlen(prefix);
->> +		char *fullname = malloc(namelen + 1);
->> +		strcpy(fullname, prefix);
->> +		strcat(fullname, filename);
->> +		pos = cache_name_pos(fullname, namelen);
->> +		if (pos < 0)
->> +			pos = -pos - 1;
->> +		ce = active_cache[pos];
->> +		if (ce_namelen(ce) == namelen &&
->> +		    !memcmp(ce->name, fullname, namelen))
->> +			die("Path '%s' is in the index, but not '%s'.\n"
->> +			    "Did you mean ':%d:%s'?",
->> +			    fullname, filename,
->> +			    stage, fullname);
-                            ^^^^^
-This one should have been ce_stage(ce), otherwise, we
-suggest :0:t/Makefile as you probably guessed:
+* A keybinding to show the commit introducing the current line,
+  including diff and all.
 
-> What happens if the user asked for ":2:Makefile" while in directory "t/",
-> and there is ":1:t/Makefile" but not ":2:t/Makefile" in the index?
->
-> What should happen if the user asked for ":2:t/Makefile" in such a
-> case?
+* A keybinding to show the commit message in the echo areia.
 
-I originally didn't handle the case "it's in the index, but not at the
-stage you requested" (since most users asking :N:blah will be fluent
-enough in Git not to need a special case of error messages). But I
-finally implemented this test.
+* The old "log --oneline in echo area when point moves in to a new
+  region" behavior.
 
->> @@ -862,9 +934,24 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
->>  	}
->>  	if (*cp == ':') {
->>  		unsigned char tree_sha1[20];
->> -		if (!get_sha1_1(name, cp-name, tree_sha1))
->> -			return get_tree_entry(tree_sha1, cp+1, sha1,
->> -					      mode);
->> +		char *object_name;
->> +		if (fatal) {
->> +			object_name = malloc(cp-name+1);
->
-> Where is this freed?
+* The old behvaior with a delay.
 
-Nowhere. In the present state, it's not serious since all codepath
-going through this malloc reach a die() right after. But a free()
-doesn't harm, I've added it.
+* Inline display of even more information. For just the current region?
 
-> Instead of doing a leaky allocation, it may make sense to pass the tree
-> object name as <const char *, size_t> pair, and print it with "%.*s" in
-> the error reporting codepath.  After all, object_name is used only for
-> that purpose in diagnose_invalid_sha1_path(), no?
+* A constantly updating separate window
 
-matter of taste, but I prefer doing one "complicated" thing (copying
-the string) once, and avoid having to deal with two variables instead
-of one later.
-
->> +test_expect_success 'correct file objects' '
->> +	HASH_file=$(git rev-parse HEAD:file.txt) &&
->> +	git rev-parse HEAD:subdir/file.txt &&
->> +	git rev-parse :index-only.txt &&
->> +	cd subdir &&
->> +	git rev-parse HEAD:file.txt &&
->> +	git rev-parse HEAD:subdir/file2.txt &&
->> +	test $HASH_file = $(git rev-parse HEAD:file.txt) &&
->> +	test $HASH_file = $(git rev-parse :file.txt) &&
->> +	test $HASH_file = $(git rev-parse :0:file.txt) &&
->> +	cd ..
->> +'
->
-> Please make it a habit of not doing "cd" without forcing a subprocess
-> using ().
-
-Fixed.
-
->> +	test_must_fail git rev-parse foobar:file.txt 2>&1 |
->> +		grep "Invalid object name '"'"'foobar'"'"'." &&
->
-> It always is better to write this in separate steps, because exit status
-> of the upstream of pipe is discarded by the shell.
-
-Fixed.
-
-I'll resubmit soon.
-
---
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--=20
+David K=C3=A5gedal
