@@ -1,34 +1,34 @@
 From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [RFC PATCH v3 1/8] Add remote helper debug mode
-Date: Sun,  6 Dec 2009 18:28:44 +0200
-Message-ID: <1260116931-16549-2-git-send-email-ilari.liusvaara@elisanet.fi>
+Subject: [RFC PATCH v3 2/8] Support mandatory capabilities
+Date: Sun,  6 Dec 2009 18:28:45 +0200
+Message-ID: <1260116931-16549-3-git-send-email-ilari.liusvaara@elisanet.fi>
 References: <1260116931-16549-1-git-send-email-ilari.liusvaara@elisanet.fi>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 06 17:29:35 2009
+X-From: git-owner@vger.kernel.org Sun Dec 06 17:29:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHJzK-0006Vu-Vt
+	id 1NHJzL-0006Vu-Lg
 	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 17:29:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932921AbZLFQ2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2009 11:28:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932885AbZLFQ2u
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 11:28:50 -0500
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:41046 "EHLO
-	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932857AbZLFQ2s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2009 11:28:48 -0500
+	id S932981AbZLFQ2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2009 11:28:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932935AbZLFQ2w
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 11:28:52 -0500
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:58598 "EHLO
+	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932758AbZLFQ2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2009 11:28:49 -0500
 Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 3126F18CFF2
-	for <git@vger.kernel.org>; Sun,  6 Dec 2009 18:28:54 +0200 (EET)
+	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id 71E3BEF263
+	for <git@vger.kernel.org>; Sun,  6 Dec 2009 18:28:55 +0200 (EET)
 Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
 	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A0027013B8E; Sun, 06 Dec 2009 18:28:54 +0200
+	with SMTP (gateway) id A0027654BFD; Sun, 06 Dec 2009 18:28:55 +0200
 Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id 0384D4045
-	for <git@vger.kernel.org>; Sun,  6 Dec 2009 18:28:52 +0200 (EET)
+	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id 4B1224035
+	for <git@vger.kernel.org>; Sun,  6 Dec 2009 18:28:54 +0200 (EET)
 X-Mailer: git-send-email 1.6.6.rc1.300.gfbc27
 In-Reply-To: <1260116931-16549-1-git-send-email-ilari.liusvaara@elisanet.fi>
 X-Antivirus: VAMS
@@ -36,229 +36,82 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134671>
 
-Remote helpers deadlock easily, so support debug mode which shows the
-interaction steps.
+Add support for marking capability as mandatory for hosting git version
+to understand. This is useful for helpers which require various types
+of assistance from main git binary.
 
 Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 ---
- transport-helper.c |   90 +++++++++++++++++++++++++++++++++++++--------------
- 1 files changed, 65 insertions(+), 25 deletions(-)
+ Documentation/git-remote-helpers.txt |    5 ++++-
+ transport-helper.c                   |   26 ++++++++++++++++++++------
+ 2 files changed, 24 insertions(+), 7 deletions(-)
 
+diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
+index 5cfdc0c..20a05fe 100644
+--- a/Documentation/git-remote-helpers.txt
++++ b/Documentation/git-remote-helpers.txt
+@@ -25,7 +25,10 @@ Commands are given by the caller on the helper's standard input, one per line.
+ 
+ 'capabilities'::
+ 	Lists the capabilities of the helper, one per line, ending
+-	with a blank line.
++	with a blank line. Each capability may be preceeded with '*'.
++	This marks them mandatory for git version using the remote
++	helper to understand (unknown mandatory capability is fatal
++	error).
+ 
+ 'list'::
+ 	Lists the refs, one per line, in the format "<value> <name>
 diff --git a/transport-helper.c b/transport-helper.c
-index 11f3d7e..914bed0 100644
+index 914bed0..f5c585d 100644
 --- a/transport-helper.c
 +++ b/transport-helper.c
-@@ -8,6 +8,8 @@
- #include "quote.h"
- #include "remote.h"
- 
-+static int debug = 0;
-+
- struct helper_data
- {
- 	const char *name;
-@@ -22,6 +24,45 @@ struct helper_data
- 	int refspec_nr;
- };
- 
-+static void sendline(struct helper_data *helper, struct strbuf *buffer)
-+{
-+	if (debug)
-+		fprintf(stderr, "Debug: Remote helper: -> %s", buffer->buf);
-+	if (write_in_full(helper->helper->in, buffer->buf, buffer->len)
-+		!= buffer->len)
-+		die_errno("Full write to remote helper failed");
-+}
-+
-+static int recvline(struct helper_data *helper, struct strbuf *buffer)
-+{
-+	strbuf_reset(buffer);
-+	if (debug)
-+		fprintf(stderr, "Debug: Remote helper: Waiting...\n");
-+	if (strbuf_getline(buffer, helper->out, '\n') == EOF) {
-+		if (debug)
-+			fprintf(stderr, "Debug: Remote helper quit.\n");
-+		exit(128);
-+	}
-+
-+	if (debug)
-+		fprintf(stderr, "Debug: Remote helper: <- %s\n", buffer->buf);
-+	return 0;
-+}
-+
-+static void xchgline(struct helper_data *helper, struct strbuf *buffer)
-+{
-+	sendline(helper, buffer);
-+	recvline(helper, buffer);
-+}
-+
-+static void write_constant(int fd, const char *str)
-+{
-+	if (debug)
-+		fprintf(stderr, "Debug: Remote helper: -> %s", str);
-+	if (write_in_full(fd, str, strlen(str)) != strlen(str))
-+		die_errno("Full write to remote helper failed");
-+}
-+
- static struct child_process *get_helper(struct transport *transport)
- {
- 	struct helper_data *data = transport->data;
-@@ -48,15 +89,15 @@ static struct child_process *get_helper(struct transport *transport)
- 		die("Unable to run helper: git %s", helper->argv[0]);
- 	data->helper = helper;
- 
--	write_str_in_full(helper->in, "capabilities\n");
-+	write_constant(helper->in, "capabilities\n");
+@@ -93,24 +93,38 @@ static struct child_process *get_helper(struct transport *transport)
  
  	data->out = xfdopen(helper->out, "r");
  	while (1) {
--		if (strbuf_getline(&buf, data->out, '\n') == EOF)
--			exit(128); /* child died, message supplied already */
-+		recvline(data, &buf);
++		const char* capname;
++		int mandatory = 0;
+ 		recvline(data, &buf);
  
  		if (!*buf.buf)
  			break;
-+		if (debug) fprintf(stderr, "Debug: Got cap %s\n", buf.buf);
- 		if (!strcmp(buf.buf, "fetch"))
+-		if (debug) fprintf(stderr, "Debug: Got cap %s\n", buf.buf);
+-		if (!strcmp(buf.buf, "fetch"))
++
++		if (*buf.buf == '*') {
++			capname = buf.buf + 1;
++			mandatory = 1;
++		} else
++			capname = buf.buf;
++
++		if (debug) fprintf(stderr, "Debug: Got cap %s\n", capname);
++		if (!strcmp(capname, "fetch"))
  			data->fetch = 1;
- 		if (!strcmp(buf.buf, "option"))
-@@ -82,14 +123,19 @@ static struct child_process *get_helper(struct transport *transport)
- 		free(refspecs);
- 	}
- 	strbuf_release(&buf);
-+	if (debug) fprintf(stderr, "Debug: Capabilities complete.\n");
- 	return data->helper;
- }
- 
- static int disconnect_helper(struct transport *transport)
- {
- 	struct helper_data *data = transport->data;
-+	struct strbuf buf = STRBUF_INIT;
-+
- 	if (data->helper) {
--		write_str_in_full(data->helper->in, "\n");
-+		if (debug) fprintf(stderr, "Debug: Disconnecting.\n");
-+		strbuf_addf(&buf, "\n");
-+		sendline(data, &buf);
- 		close(data->helper->in);
- 		fclose(data->out);
- 		finish_command(data->helper);
-@@ -117,10 +163,11 @@ static int set_helper_option(struct transport *transport,
- 			  const char *name, const char *value)
- {
- 	struct helper_data *data = transport->data;
--	struct child_process *helper = get_helper(transport);
- 	struct strbuf buf = STRBUF_INIT;
- 	int i, ret, is_bool = 0;
- 
-+	get_helper(transport);
-+
- 	if (!data->option)
- 		return 1;
- 
-@@ -143,12 +190,7 @@ static int set_helper_option(struct transport *transport,
- 		quote_c_style(value, &buf, NULL, 0);
- 	strbuf_addch(&buf, '\n');
- 
--	if (write_in_full(helper->in, buf.buf, buf.len) != buf.len)
--		die_errno("cannot send option to %s", data->name);
--
--	strbuf_reset(&buf);
--	if (strbuf_getline(&buf, data->out, '\n') == EOF)
--		exit(128); /* child died, message supplied already */
-+	xchgline(data, &buf);
- 
- 	if (!strcmp(buf.buf, "ok"))
- 		ret = 0;
-@@ -208,13 +250,10 @@ static int fetch_with_fetch(struct transport *transport,
- 	}
- 
- 	strbuf_addch(&buf, '\n');
--	if (write_in_full(data->helper->in, buf.buf, buf.len) != buf.len)
--		die_errno("cannot send fetch to %s", data->name);
-+	sendline(data, &buf);
- 
- 	while (1) {
--		strbuf_reset(&buf);
--		if (strbuf_getline(&buf, data->out, '\n') == EOF)
--			exit(128); /* child died, message supplied already */
-+		recvline(data, &buf);
- 
- 		if (!prefixcmp(buf.buf, "lock ")) {
- 			const char *name = buf.buf + 5;
-@@ -249,12 +288,13 @@ static int fetch_with_import(struct transport *transport,
- 			     int nr_heads, struct ref **to_fetch)
- {
- 	struct child_process fastimport;
--	struct child_process *helper = get_helper(transport);
- 	struct helper_data *data = transport->data;
- 	int i;
- 	struct ref *posn;
- 	struct strbuf buf = STRBUF_INIT;
- 
-+	get_helper(transport);
-+
- 	if (get_importer(transport, &fastimport))
- 		die("Couldn't run fast-import");
- 
-@@ -264,7 +304,7 @@ static int fetch_with_import(struct transport *transport,
- 			continue;
- 
- 		strbuf_addf(&buf, "import %s\n", posn->name);
--		write_in_full(helper->in, buf.buf, buf.len);
-+		sendline(data, &buf);
- 		strbuf_reset(&buf);
- 	}
- 	disconnect_helper(transport);
-@@ -369,17 +409,14 @@ static int push_refs(struct transport *transport,
- 	}
- 
- 	strbuf_addch(&buf, '\n');
--	if (write_in_full(helper->in, buf.buf, buf.len) != buf.len)
--		exit(128);
-+	sendline(data, &buf);
- 
- 	ref = remote_refs;
- 	while (1) {
- 		char *refname, *msg;
- 		int status;
- 
--		strbuf_reset(&buf);
--		if (strbuf_getline(&buf, data->out, '\n') == EOF)
--			exit(128); /* child died, message supplied already */
-+		recvline(data, &buf);
- 		if (!buf.len)
- 			break;
- 
-@@ -471,8 +508,7 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
- 
- 	while (1) {
- 		char *eov, *eon;
--		if (strbuf_getline(&buf, data->out, '\n') == EOF)
--			exit(128); /* child died, message supplied already */
-+		recvline(data, &buf);
- 
- 		if (!*buf.buf)
- 			break;
-@@ -497,6 +533,7 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
+-		if (!strcmp(buf.buf, "option"))
++		else if (!strcmp(capname, "option"))
+ 			data->option = 1;
+-		if (!strcmp(buf.buf, "push"))
++		else if (!strcmp(capname, "push"))
+ 			data->push = 1;
+-		if (!strcmp(buf.buf, "import"))
++		else if (!strcmp(capname, "import"))
+ 			data->import = 1;
+-		if (!data->refspecs && !prefixcmp(buf.buf, "refspec ")) {
++		else if (!data->refspecs && !prefixcmp(capname, "refspec ")) {
+ 			ALLOC_GROW(refspecs,
+ 				   refspec_nr + 1,
+ 				   refspec_alloc);
+ 			refspecs[refspec_nr++] = strdup(buf.buf + strlen("refspec "));
++		} else if (mandatory) {
++			fflush(stderr);
++			die("Unknown madatory capability %s. This remote "
++			    "helper probably needs newer version of Git.\n",
++			    capname);
  		}
- 		tail = &((*tail)->next);
  	}
-+	if (debug) fprintf(stderr, "Debug: Read ref listing.\n");
- 	strbuf_release(&buf);
- 
- 	for (posn = ret; posn; posn = posn->next)
-@@ -510,6 +547,9 @@ int transport_helper_init(struct transport *transport, const char *name)
- 	struct helper_data *data = xcalloc(sizeof(*data), 1);
- 	data->name = name;
- 
-+	if (getenv("GIT_TRANSPORT_HELPER_DEBUG"))
-+		debug = 1;
-+
- 	transport->data = data;
- 	transport->set_option = set_helper_option;
- 	transport->get_refs_list = get_refs_list;
+ 	if (refspecs) {
 -- 
 1.6.6.rc1.300.gfbc27
