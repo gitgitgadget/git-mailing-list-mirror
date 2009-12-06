@@ -1,82 +1,50 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Approach for collaborative branches
-Date: Sun, 06 Dec 2009 18:15:40 +0100
-Message-ID: <vpqhbs4f2gz.fsf@bauges.imag.fr>
-References: <4B1BE266.2000208@pickrell.com>
+From: Stephen Bannasch <stephen.bannasch@deanbrook.org>
+Subject: Re: svn svn returning 'fatal: Not a valid object name' on sourceforge svn repo
+Date: Sun, 6 Dec 2009 12:49:18 -0500
+Message-ID: <p06240802c7419ec49cd5@[192.168.1.106]>
+References: <p0624081ac73dd6a1aaff@[63.138.152.192]> <20091205224950.GC2120@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Cc: git@vger.kernel.org
-To: Gary Pickrell <gary@pickrell.com>
-X-From: git-owner@vger.kernel.org Sun Dec 06 18:16:18 2009
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Dec 06 18:49:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHKiD-0005Pe-1O
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 18:15:57 +0100
+	id 1NHLEx-0001Bc-Lg
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 18:49:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933923AbZLFRPp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2009 12:15:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933910AbZLFRPo
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 12:15:44 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:41771 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933894AbZLFRPo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2009 12:15:44 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id nB6HDNDG017585
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 6 Dec 2009 18:13:23 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NHKhw-0006Eh-LR; Sun, 06 Dec 2009 18:15:40 +0100
-In-Reply-To: <4B1BE266.2000208@pickrell.com> (Gary Pickrell's message of "Sun\, 06 Dec 2009 08\:57\:10 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 06 Dec 2009 18:13:23 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: nB6HDNDG017585
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1260724405.58119@6+jfbz3m7WxqWkTnkm1SHQ
+	id S1756972AbZLFRtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2009 12:49:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756964AbZLFRtf
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 12:49:35 -0500
+Received: from deanbrook.org ([72.52.70.192]:53677 "HELO deanbrook.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756929AbZLFRtf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2009 12:49:35 -0500
+Received: from ::ffff:71.123.118.50 ([71.123.118.50]) by deanbrook.org for <git@vger.kernel.org>; Sun, 6 Dec 2009 09:49:40 -0800
+In-Reply-To: <20091205224950.GC2120@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134681>
 
-Gary Pickrell <gary@pickrell.com> writes:
-
-> 1) Clone the repository on Ubuntu
-> 2) Made an Ubuntu branch
-> 3) Made my changes to the code.  Added files...ect
-> 4) Used git push origin Ubuntu to push the changes to the repository
+At 2:49 PM -0800 12/5/09, Eric Wong wrote:
+>Stephen Bannasch <stephen.bannasch@deanbrook.org> wrote:
+>> I use git svn often and normally it works fine.
+>>
+>> I getting a fatal error trying to clone the asciimathm svn repo at sourceforge:
+>>
+>> $ git svn clone --trunk=trunk --branches=branches http://asciimathml.svn.sourceforge.net/svnroot/asciimathml asciimathml-svn-git
+>> fatal: Not a valid object name
+> > ls-tree -z  ./: command returned error: 128
 >
-> I'm unable to see my Ubuntu changes on my windows machine.  How should
-> I proceed?
+>Passing the "-r4:HEAD" parameter to "git svn clone" should work.  It
+>looks like the repository was initially miscreated and "trunk" was a
+>symlink (and not a directory) in r1.
 
-On the windows machine, you should do first
+Thanks Eric, your suggestion worked.
 
-  git fetch
-
-this will tell you about the new branch if you didn't fetch it
-already. If it's called Ubuntu remotely, it's probably called
-origin/Ubuntu on your local repository after doing a fetch. Therefore,
-you can now do
-
-  git merge origin/Ubuntu
-
-
-Now, you probably also want your local branch to be named the same way
-on both machines. One way to do that is to create a branch "foo" on
-the repository, then on both sides, fetch it and do
-
-  git checkout --track origin/foo
-
-this will create a local branch foo, and tell git that further "pull"
-should take their changes from origin/foo.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+How could you tell the first svn commit was a symlink?
