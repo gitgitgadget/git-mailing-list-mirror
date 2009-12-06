@@ -1,67 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add commit.infodisplay option to give message editor
- empty file
-Date: Sat, 5 Dec 2009 23:22:06 -0500
-Message-ID: <20091206042206.GC23983@coredump.intra.peff.net>
-References: <1259967879-65517-1-git-send-email-jh@jameshoward.us>
- <7vpr6t6fnz.fsf@alter.siamese.dyndns.org>
- <20091205154753.GA3717@thermopylae.local>
- <20091205162827.GA9584@sigill.intra.peff.net>
- <20091205230903.GA3816@thermopylae.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "James P. Howard, II" <jh@jameshoward.us>
-X-From: git-owner@vger.kernel.org Sun Dec 06 05:22:16 2009
+From: Tomas Carnecky <tom@dbservice.com>
+Subject: clang static analyzer
+Date: Sun, 6 Dec 2009 07:11:24 +0100
+Message-ID: <33ABC714-2BCC-4910-BCAE-D331AAF2A724@dbservice.com>
+Mime-Version: 1.0 (Apple Message framework v1077)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Dec 06 07:12:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NH8dS-0007k2-Vg
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 05:22:15 +0100
+	id 1NHALn-0005Op-AQ
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 07:12:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758109AbZLFEWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Dec 2009 23:22:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758106AbZLFEWD
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 23:22:03 -0500
-Received: from peff.net ([208.65.91.99]:48220 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758105AbZLFEWC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Dec 2009 23:22:02 -0500
-Received: (qmail 28458 invoked by uid 107); 6 Dec 2009 04:26:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 05 Dec 2009 23:26:38 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Dec 2009 23:22:06 -0500
-Content-Disposition: inline
-In-Reply-To: <20091205230903.GA3816@thermopylae.local>
+	id S1751656AbZLFGLp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2009 01:11:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751625AbZLFGLp
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 01:11:45 -0500
+Received: from office.neopsis.com ([78.46.209.98]:47162 "EHLO
+	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751542AbZLFGLo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Dec 2009 01:11:44 -0500
+Received: from calvin.emmen.dbservice.com ([62.65.141.13])
+	(authenticated user tom@dbservice.com)
+	by office.neopsis.com
+	for git@vger.kernel.org;
+	Sun, 6 Dec 2009 07:11:49 +0100
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134646>
 
-On Sat, Dec 05, 2009 at 06:09:03PM -0500, James P. Howard, II wrote:
+There have been several attempts at running the clang static analyzer on the git source code, some even resulted in patches. I tried it, too, and among the many false positives I think clang found a few real issues. The results can be seen at [1].
 
-> On Sat, Dec 05, 2009 at 11:28:27AM -0500, Jeff King wrote:
-> 
-> > If the latter, I think we would be better served by an option to simply
-> > turn off the template. Then that is also helpful for the case of people
-> > using decent editors, but who don't want to waste the CPU time on
-> > generating the template information (which can be substantial for things
-> > like media repositories).
-> 
-> Actually, I find this a reasonable solution for both cases and would be
-> willing to reimplment my change this way, as it meets my needs and would
-> be useful to others.  The only question I have is, what should variable/
-> command line option be called?
+Clang again found many dead assignments/increments, but in the earlier discussions you concluded that you want to keep those around. So I focussed on another class of potential bugs: Argument with 'nonnull' attribute passed null. There were a total of seven such issues. I then tried to look through the code and see if they are valid or false positives:
 
-I would be tempted to call it "--no-template", but I think that is too
-confusing. The "--template" option is not really about the git-generated
-template, but about a user-defined template that goes on top of the
-git-generated one (I would have expected --template=/dev/null to do what
-you want, too, but it retains the git template).
+xdiff-interface.c:xdiff_set_find_func() - When 'value' is a string with no newline character in it, the loop at line 291 sets 'value' to NULL on its first iteration and then passes 'value' to strchr() in the second iteration.
 
-Probably "--no-status" would be a good name, as the generated template
-is the format generated by "git status".
+utf8.c:utf8_strwidth() - 'string' may be set to NULL in utf8_width() which makes this one a false positive.
 
--Peff
+pretty.c:get_header() - if 'line' doesn't contain a newline character, line is set to NULL on first iteration and then passed to strchr() in the second itration.
+
+attr.c:prepare_attr_stack() - bootstrap_attr_stack() sets attr_stack so this one is a false positive as well.
+
+test-parse-options.c:length_callback() - if arg == NULL and unset == 0 then the function passes NULL to strlen().
+
+builtin-pack-objects.c:check_pbase_path() - false positive, if done_pbase_paths == NULL then also done_pbase_paths_alloc == 0 and so step 4 can't take the false branch.
+
+builtin-ls-files.c:verify_pathspec() - false positive, pathspec is not NULL when the function is called.
+
+
+- Some of the issues might be purely hypothetical, for example I don't know if it's possible that get_header() can be passed a string with no newlines, maybe this is prevented earlier in the code path.
+- Some of the false positives (such as the last one) could be avoided by giving clang a hint that a certain variable can't be NULL (by using assert() or if (!foo) return).
+
+
+tom
+
+
+[1] http://78.46.209.101/stuff/clang-static-analyzer/git/v1.6.6-rc1-32-g97f3d79/
