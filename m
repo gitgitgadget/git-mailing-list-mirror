@@ -1,78 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git reset --hard in .git causes a checkout in that directory
-Date: Sat, 05 Dec 2009 23:54:42 -0800
-Message-ID: <7vk4x0k059.fsf@alter.siamese.dyndns.org>
-References: <4B17A166.60306@gmail.com>
- <20091204111158.GE27495@coredump.intra.peff.net>
- <7vocmdutph.fsf@alter.siamese.dyndns.org>
- <20091206041839.GB23983@coredump.intra.peff.net>
+Subject: Re: [PATCH] Add commit.infodisplay option to give message editor
+ empty file
+Date: Sun, 06 Dec 2009 00:01:53 -0800
+Message-ID: <7v7ht0jzta.fsf@alter.siamese.dyndns.org>
+References: <1259967879-65517-1-git-send-email-jh@jameshoward.us>
+ <7vpr6t6fnz.fsf@alter.siamese.dyndns.org>
+ <20091205154753.GA3717@thermopylae.local>
+ <20091205162827.GA9584@sigill.intra.peff.net>
+ <20091205230903.GA3816@thermopylae.local>
+ <20091206042206.GC23983@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Maarten Lankhorst <m.b.lankhorst@gmail.com>, git@vger.kernel.org
+Cc: "James P. Howard\, II" <jh@jameshoward.us>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Dec 06 08:54:59 2009
+X-From: git-owner@vger.kernel.org Sun Dec 06 09:02:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHBxK-0000Ek-4a
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 08:54:58 +0100
+	id 1NHC4I-0001na-U0
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 09:02:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753888AbZLFHyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2009 02:54:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932103AbZLFHyq
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 02:54:46 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61876 "EHLO
+	id S932221AbZLFIB6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2009 03:01:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932172AbZLFIB5
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 03:01:57 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50441 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753634AbZLFHyp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2009 02:54:45 -0500
+	with ESMTP id S932103AbZLFIB5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2009 03:01:57 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C94ACA4030;
-	Sun,  6 Dec 2009 02:54:51 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 16D5785B92;
+	Sun,  6 Dec 2009 03:02:02 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jEm7Lji+fZ4QrWdT3a/dwsIRQ8A=; b=YSeIk7
-	e1Jum+deZCM4W97w/cyQwa+tT/IkAUD3Re9RwvwZFytgM7DLzHjZi4BQqKsWwevr
-	PYkWi18roHWhsOj0cv2EnZthBwoo9R9YOx13/3imjjgr6A31x86PDfA50iDY0WXC
-	cog/pVM9ddKf6OAsmmUzPFXXC0CgpyLapggwA=
+	:content-type; s=sasl; bh=KwHzh5CiiNRizRX2n71pkj76LF8=; b=yH5ooX
+	O46o6xGY8nc+dWwsFlNqBF1Uefb4XilAaeY3ldKe89ZxHXZ6SDOWTPp6E+vEPqJ4
+	TOBTrJqTkobu9U6I2Q8KDxwi9xpWoJNr4T0eTJaPziNoQjYXP2+kae0w1EDhKPrX
+	1SgqyyqLwDOvF9BlSMarUtppcXMykYBX276Us=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vzdPbI0aAHf8hB04LWwAY3Pt/eo7FtXK
-	s08/zV0rjnwocs3lOF5W46kAa5bmED2YyHoL0JYWJJfFs1+H2fDg/vkKyEqYSgoW
-	MJ6Ab84RotCV0OHC7lIaN4w4KK+rUKYyCNBzyDXJ/n2AFivkMiRimkF+cQT6E8mt
-	bAR6fHrNehk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9B704A402F;
-	Sun,  6 Dec 2009 02:54:48 -0500 (EST)
+	:content-type; q=dns; s=sasl; b=jcCUmlFYlvZ0GK5VoDPvTjqM5qMWW6iz
+	NcHDRu7RY1Z9EIRP6xu6mhHzWUfpBniW5eXCwSBCyPkH2Xs+/gJgoJdWmBDa2LiJ
+	rXgGrH4VkP8V4BcYwjyaCCPMwwq0agT9INs7sijdoNI8f89tLEp+hsxrmBAJRsYe
+	43L2Lp0XcIY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CC82385B91;
+	Sun,  6 Dec 2009 03:01:58 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6EFF9A402C; Sun,  6 Dec 2009
- 02:54:43 -0500 (EST)
-In-Reply-To: <20091206041839.GB23983@coredump.intra.peff.net> (Jeff King's
- message of "Sat\, 5 Dec 2009 23\:18\:40 -0500")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E5F985B8F; Sun,  6 Dec
+ 2009 03:01:54 -0500 (EST)
+In-Reply-To: <20091206042206.GC23983@coredump.intra.peff.net> (Jeff King's
+ message of "Sat\, 5 Dec 2009 23\:22\:06 -0500")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A079A32A-E23C-11DE-8064-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: A0E6BC2A-E23D-11DE-9D6A-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134649>
 
 Jeff King <peff@peff.net> writes:
 
-> I actually considered that, too, when writing the patch. But that would
-> be inconsistent with all of the other commands that use SETUP_WORK_TREE.
-> For example:
+> I would be tempted to call it "--no-template", but I think that is too
+> confusing. The "--template" option is not really about the git-generated
+> template, but about a user-defined template that goes on top of the
+> git-generated one (I would have expected --template=/dev/null to do what
+> you want, too, but it retains the git template).
 >
->   $ git init && cd .git && git clean
->   fatal: This operation must be run in a work tree
->
-> So I think we are better to be consistent with the other commands. If
-> somebody wants to make a separate patch to discover the work tree while
-> in the $GIT_DIR and chdir to it, that should then be applied to all
-> commands.  I'm not opposed to it, but I also don't see it as a
-> particularly pressing need.
+> Probably "--no-status" would be a good name, as the generated template
+> is the format generated by "git status".
 
-Yes, we would of course want to do this consistently.  I haven't followed
-the codepath yet, but I suspect this will end up being connected with
-running "rev-parse --show-cdup" inside .git/ of a non-bare repository.
+I wonder which part is the most expensive in generating the status
+output.  Perhaps -suno is sufficient?
