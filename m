@@ -1,149 +1,96 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [RFC PATCH v3 8/8] Remove special casing of http, https and ftp
-Date: Sun,  6 Dec 2009 18:28:51 +0200
-Message-ID: <1260116931-16549-9-git-send-email-ilari.liusvaara@elisanet.fi>
-References: <1260116931-16549-1-git-send-email-ilari.liusvaara@elisanet.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 06 17:29:41 2009
+From: Guido Stevens <guido.stevens@cosent.net>
+Subject: Re: git-svn breakage on repository rename
+Date: Sun, 06 Dec 2009 17:24:36 +0100
+Organization: Cosent   -:-   s h a r i n g   m a k e s   s e n s e
+Message-ID: <4B1BDAC4.9070305@cosent.net>
+References: <4B197078.6050203@cosent.net> <20091205222251.GA2120@dcvr.yhbt.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, George Kuk <George.Kuk@nottingham.ac.uk>,
+	clark.alex@gmail.com, wichert@wiggy.net, admins@lists.plone.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Dec 06 17:46:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHJzO-0006Vu-OC
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 17:29:39 +0100
+	id 1NHKFT-0003lg-QH
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 17:46:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933873AbZLFQ3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2009 11:29:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932938AbZLFQ3I
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 11:29:08 -0500
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:49891 "EHLO
-	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932857AbZLFQ26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2009 11:28:58 -0500
-Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
-	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 0E292C7538
-	for <git@vger.kernel.org>; Sun,  6 Dec 2009 18:29:03 +0200 (EET)
-Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
-	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
-	with SMTP (gateway) id A011FC0B3E2; Sun, 06 Dec 2009 18:29:03 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id E32074035
-	for <git@vger.kernel.org>; Sun,  6 Dec 2009 18:29:01 +0200 (EET)
-X-Mailer: git-send-email 1.6.6.rc1.300.gfbc27
-In-Reply-To: <1260116931-16549-1-git-send-email-ilari.liusvaara@elisanet.fi>
-X-Antivirus: VAMS
+	id S1756722AbZLFQqD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2009 11:46:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756601AbZLFQqC
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 11:46:02 -0500
+Received: from slow3-v.mail.gandi.net ([217.70.178.89]:60069 "EHLO
+	slow3-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755824AbZLFQqB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2009 11:46:01 -0500
+Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
+	by slow3-v.mail.gandi.net (Postfix) with ESMTP id 8FE823A086
+	for <git@vger.kernel.org>; Sun,  6 Dec 2009 17:25:05 +0100 (CET)
+Received: from [192.168.178.23] (isis-torproxy.xs4all.nl [80.101.174.248])
+	by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 38E09225173;
+	Sun,  6 Dec 2009 17:17:23 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+In-Reply-To: <20091205222251.GA2120@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134678>
 
-HTTP, HTTPS and FTP are no longer special to transport code. Also
-add support for FTPS (curl supports it so it is easy).
+Eric, thanks!
 
-Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
----
- .gitignore  |    4 ++++
- Makefile    |   24 ++++++++++++++++++++++--
- transport.c |    8 --------
- 3 files changed, 26 insertions(+), 10 deletions(-)
+Plone admins: I can now confirm it was not a svn corruption. Adding the 
+"--no-follow-parent" switch to git svn clone makes it possible to check 
+out the Plone svn into git -- at least the commits since the rename.
 
-diff --git a/.gitignore b/.gitignore
-index 7cc54b4..7c79f97 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -107,6 +107,10 @@
- /git-relink
- /git-remote
- /git-remote-curl
-+/git-remote-http
-+/git-remote-https
-+/git-remote-ftp
-+/git-remote-ftps
- /git-repack
- /git-replace
- /git-repo-config
-diff --git a/Makefile b/Makefile
-index 42744a4..1332225 100644
---- a/Makefile
-+++ b/Makefile
-@@ -424,6 +424,13 @@ BUILT_INS += git-stage$X
- BUILT_INS += git-status$X
- BUILT_INS += git-whatchanged$X
- 
-+#ifdef NO_CURL
-+REMOTE_CURL_NAMES =
-+#else
-+# Yes, this is missing git-remote-http intentionally!
-+REMOTE_CURL_NAMES = git-remote-https git-remote-ftp git-remote-ftps
-+#endif
-+
- # what 'all' will build and 'install' will install in gitexecdir,
- # excluding programs for built-in commands
- ALL_PROGRAMS = $(PROGRAMS) $(SCRIPTS)
-@@ -1097,7 +1104,7 @@ else
- 	else
- 		CURL_LIBCURL = -lcurl
- 	endif
--	PROGRAMS += git-remote-curl$X git-http-fetch$X
-+	PROGRAMS += git-remote-http$X git-remote-https$X git-remote-ftp$X git-remote-ftps$X git-http-fetch$X
- 	curl_check := $(shell (echo 070908; curl-config --vernum) | sort -r | sed -ne 2p)
- 	ifeq "$(curl_check)" "070908"
- 		ifndef NO_EXPAT
-@@ -1676,7 +1683,13 @@ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
- 
--git-remote-curl$X: remote-curl.o http.o http-walker.o $(GITLIBS)
-+$(REMOTE_CURL_NAMES): git-remote-http$X
-+	$(QUIET_LNCP)$(RM) $@ && \
-+	ln $< $@ 2>/dev/null || \
-+	ln -s $< $@ 2>/dev/null || \
-+	cp $< $@
-+
-+git-remote-http$X: remote-curl.o http.o http-walker.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
- 
-@@ -1853,6 +1866,7 @@ endif
- ifneq (,$X)
- 	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), test '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p' -ef '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p$X' || $(RM) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p';)
- endif
-+
- 	bindir=$$(cd '$(DESTDIR_SQ)$(bindir_SQ)' && pwd) && \
- 	execdir=$$(cd '$(DESTDIR_SQ)$(gitexec_instdir_SQ)' && pwd) && \
- 	{ test "$$bindir/" = "$$execdir/" || \
-@@ -1866,6 +1880,12 @@ endif
- 		ln -s "git$X" "$$execdir/$$p" 2>/dev/null || \
- 		cp "$$execdir/git$X" "$$execdir/$$p" || exit; \
- 	  done; } && \
-+	{ for p in $(REMOTE_CURL_NAMES); do \
-+		$(RM) "$$execdir/$$p" && \
-+		ln "$$execdir/git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
-+		ln -s "git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
-+		cp "$$execdir/git-remote-http$X" "$$execdir/$$p" || exit; \
-+	  done; } && \
- 	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
- 
- install-doc:
-diff --git a/transport.c b/transport.c
-index b418889..c6684ac 100644
---- a/transport.c
-+++ b/transport.c
-@@ -935,14 +935,6 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 
- 		data->conn = NULL;
- 		data->got_remote_heads = 0;
--	} else if (!prefixcmp(url, "http://")
--		|| !prefixcmp(url, "https://")
--		|| !prefixcmp(url, "ftp://")) {
--		/* These three are just plain special. */
--		transport_helper_init(ret, "curl");
--#ifdef NO_CURL
--		error("git was compiled without libcurl support.");
--#endif
- 	} else {
- 		/* Unknown protocol in URL. Pass to external handler. */
- 		int len = external_specification_len(url);
+That one might be relevant for anybody who wants to contribute to the 
+Plone code base from a git-centered workflow.
+
+Thanks everybody for helping to solve this problem! I can now integrate 
+the analysis of Products.CMFPlone into the overall Plone ecosystem 
+analysis, and it would have been very awkward not to be able to do that 
+because of this renaming issue. Again: thanks.
+
+:*CU#
+
+Eric Wong wrote:
+> Guido Stevens <guido.stevens@cosent.net> wrote:
+>> ----------------------------------------------------
+>> To reconstruct this error:
+>> ----------------------------------------------------
+>>
+>> $ git svn init https://svn-mirror.plone.org/svn/plone/Plone/trunk Plone
+>> $ cd Plone
+>> $ git svn fetch
+> 
+> Since Plone appears to use a standard trunk/branches/tags layout
+> recommended by SVN developers, can you try this instead?:
+> 
+>   git svn clone -s http://svn-mirror.plone.org/svn/plone/Plone
+
+That one breaks completely, silently.
+
+> 
+> If you don't care about branches/tags at all, you can also try
+> 
+>   git svn clone --no-follow-parent \
+>     https://svn-mirror.plone.org/svn/plone/Plone/trunk Plone
+
+Yep, that one does the trick.
+
+It does what it says though: it stops at the rename boundary 
+22715->22716. Luckily I can do other checkouts on the other names that 
+this package has had and complete my analysis anyway.
+
+:*CU#
 -- 
-1.6.6.rc1.300.gfbc27
+***   Guido A.J. Stevens        ***   tel: +31.43.3618933    ***
+***   guido.stevens@cosent.nl   ***   Postbus 619            ***
+***   http://www.cosent.nl      ***   6200 AP  Maastricht    ***
+
+             s h a r i n g    m a k e s    s e n s e
+
+	
