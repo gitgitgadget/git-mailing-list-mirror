@@ -1,127 +1,83 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Continued work on sr/vcs-helper and sr/gfi-options
-Date: Sun, 6 Dec 2009 11:23:17 +0100
-Message-ID: <fabb9a1e0912060223h148a67b0q589b8461dae6330e@mail.gmail.com>
-References: <fabb9a1e0912051653s77ba25e1g9ff1e21219cd06c9@mail.gmail.com> 
-	<7vr5r8oov1.fsf@alter.siamese.dyndns.org>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCHv3 0/3] git-gui: more robust handling of fancy repos
+Date: Sun, 6 Dec 2009 13:59:22 +0100
+Message-ID: <36ca99e90912060459u1073288bj2114f8ab56c7224b@mail.gmail.com>
+References: <1250467128-29839-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <36ca99e90910270435h69c1e983j78ff9ec49e7e8eae@mail.gmail.com>
+	 <cb7bb73a0912060014p548884e0g8c4510a5b562901b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 06 11:23:48 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 06 13:59:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHEHM-0006Rn-9O
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 11:23:48 +0100
+	id 1NHGi6-0001wg-Ba
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 13:59:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933230AbZLFKXd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Dec 2009 05:23:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933219AbZLFKXc
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 05:23:32 -0500
-Received: from mail-vw0-f197.google.com ([209.85.212.197]:64121 "EHLO
-	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933217AbZLFKXb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Dec 2009 05:23:31 -0500
-Received: by vws35 with SMTP id 35so1669294vws.4
-        for <git@vger.kernel.org>; Sun, 06 Dec 2009 02:23:37 -0800 (PST)
+	id S1756464AbZLFM7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2009 07:59:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756337AbZLFM7S
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 07:59:18 -0500
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:59881 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756345AbZLFM7R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2009 07:59:17 -0500
+Received: by fxm5 with SMTP id 5so4005923fxm.28
+        for <git@vger.kernel.org>; Sun, 06 Dec 2009 04:59:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
+        d=googlemail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=z9hkfr2XWrm1/az0hV39nI8J8KLFc+JdL37bEwtNAv8=;
-        b=x+vAz2SVvbyIQ5BPmTtKRutIZQAjYd4vNuYwv+23UHd6mu66Uh7NxJbnVj/gqG3o3e
-         ImaHcLHprONeplJ+UDdBzvf6EEpRYfKuzjZB62VG+80Clq47mFXVsXy1gM6l0kEWwqre
-         AnVjCFWVu0zWFXGwJigdfTH7dsoCZeAboR/Yk=
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=SSXM974AcfOzTpHzqpD4un01PbVVzy7IdM1uF2JeP38=;
+        b=FMKR5SAdBtxyy9dG/ANpxirB8GVbWWISCrVT/EBYs4exSYIIDaQM752omKFOgjQTIC
+         3GfRYhKyd+qAqMSAHXkf7kicabgigKxdVk9e27nZyU5vbTlPoTYCir34xe/eS3HdAfrW
+         2xGESGDLy6VyzfMzYTS3SUCZJqY1fZoQAPHfw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=s9lzlyGyXDsiFVwc8EvZ6zcPKal4FqZoykc1g2RPe3bTBnrjbsRsGx8WjgAA3PSZ3u
-         6rKXP3oNyKUj1uJSWamCHxLyq3GFrZj9z21ADOLCP2BemmvHnYjlgn+ThXtNUhzEi+qD
-         Si1MVAeGCnqv4YCuE+zxGzH1f+Nk52Sk9al+c=
-Received: by 10.220.125.7 with SMTP id w7mr6791516vcr.14.1260095017251; Sun, 
-	06 Dec 2009 02:23:37 -0800 (PST)
-In-Reply-To: <7vr5r8oov1.fsf@alter.siamese.dyndns.org>
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=HmPBj2QwtkRRHAYshMUzjrqv+66PFYeMSX5kTVaxAWBCXYXb29rRLEd77NF4y225DP
+         CHy/G3+1sv3BLSRx00WXU26QDhwrcydUODmRxC9OS1Cz7DezoOfY2xV4U6/DKuTh/Blw
+         7FPm0BKj3kKIaauPtQU93MIDLwKarD7MJS8OE=
+Received: by 10.223.6.9 with SMTP id 9mr804316fax.84.1260104362940; Sun, 06 
+	Dec 2009 04:59:22 -0800 (PST)
+In-Reply-To: <cb7bb73a0912060014p548884e0g8c4510a5b562901b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134658>
 
-Heya,
-
-On Sun, Dec 6, 2009 at 02:47, Junio C Hamano <gitster@pobox.com> wrote:
-> =A0- sr/vcs-helper seems to be near completion; I'd expect it to be a=
-mong
-> =A0 the first batch of topics to go to 'master' after 1.6.6 final (so=
-me
-> =A0 fixes may happen between now and 1.6.6 final to make the series a=
- bit
-> =A0 longer, though).
-
-*nod*.
-
-> =A0- sr/gfi-options started moving again and there could be a couple =
-more
-> =A0 iterations before it would hit 'next'.
-
-Yup, I'm hoping for a review by Shawn and the vcs list.
-
-> Until sr/gfi-options becomes more solid, one way we can manage
-> sr/remote-hg is (thinking aloud):
+On Sun, Dec 6, 2009 at 09:14, Giuseppe Bilotta
+<giuseppe.bilotta@gmail.com> wrote:
+> On Tue, Oct 27, 2009 at 12:35 PM, Bert Wesarg
+> <bert.wesarg@googlemail.com> wrote:
+>>
+>> I would also suggest to always export GIT_DIR into the environment, so
+>> that guitools can relay on this.
 >
-> =A0- Fork sr/remote-hg from today's sr/vcs-helper;
+> I'm sorry I couldn't reply to this email earlier. I have never used
+> this feature, but if you can provide some example guitools
+> configuration I'll gladly move the environment export earlier and test
+> it.
+Here it is:
 
-That makes sense, this way I don't have to re-resolve those merge
-conflicts either.
+[guitool "exclude/Ignore file"]
+	cmd = echo \"$FILENAME\" >> \"${GIT_DIR:=.git}/info/exclude\"
+	noconsole = yes
+	needsfile = yes
 
-> =A0- Merge today's 'master' to sr/remote-hg (optional);
+The purpose is simple: add the current file to the info/exclude file
+in the git dir As you can see, I have a workaround for not having
+GIT_DIR in the env, which should solve the issue. But it would be nice
+to rely on this.
 
-I'm not sure why this is though? (no objections against it, I just
-don't understand the motivation)
-
-> =A0- Whenever any updates to vcs-helper topic appears, apply them to
-> =A0 sr/vcs-helper, and merge the result to sr/remote-hg;
-
-*nod*
-
-> =A0- Create an unstable sr/pu-remote-hg branch that:
+Bert
 >
-> =A0 - is reset to the tip of sr/remote-hg at the beginning of the day=
-;
-> =A0 - merges the day's sr/gfi-options on top;
-> =A0 - re-applies patches to implement Hg interoperation on top of the
-> =A0 =A0 result.
-
-Ok, that does make sense, how would I send out patches for review from
-this unstable branch though? (since others would not have the required
-merges etc) I reckon it would be necessary to publish sr/pu-remote-hg
-somewhere?
-
-> When sr/gfi-options becomes solid, we can merge it to sr/remote-hg it=
-self,
-> get rid of sr/pu-remote-hg "patch queue", and move the Hg interoperat=
-ion
-> patches we helpd in sr/pu-remote-hg to sr/remote-hg branch. =A0We wil=
-l merge
-> early parts of sr/remote-hg (at least up to the merge with sr/gfi-opt=
-ions,
-> and perhaps early parts of individual Hg interoperation patches as we=
-ll)
-> to 'next', and remaining parts on the branch to 'pu' (and they can be
-> replaced).
-
-Luckily the remote-hg patch is just that, a single patch. I've already
-put all the other work that's needed into sr/vcs-helper and
-sr/gfi-options.
-
-Thank you for the detailed explanation :).
-
---=20
-Cheers,
-
-Sverre Rabbelier
+> --
+> Giuseppe "Oblomov" Bilotta
+>
