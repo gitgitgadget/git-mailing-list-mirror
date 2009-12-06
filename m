@@ -1,94 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Continued work on sr/vcs-helper and sr/gfi-options
-Date: Sun, 06 Dec 2009 15:36:24 -0800
-Message-ID: <7vfx7nekuf.fsf@alter.siamese.dyndns.org>
-References: <fabb9a1e0912051653s77ba25e1g9ff1e21219cd06c9@mail.gmail.com>
- <7vr5r8oov1.fsf@alter.siamese.dyndns.org>
- <fabb9a1e0912060223h148a67b0q589b8461dae6330e@mail.gmail.com>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: Re: clang static analyzer
+Date: Mon, 7 Dec 2009 00:49:02 +0100
+Message-ID: <20091206234902.GA12932@vidovic>
+References: <33ABC714-2BCC-4910-BCAE-D331AAF2A724@dbservice.com> <20091206145744.GA6725@coredump.intra.peff.net> <alpine.LFD.2.00.0912061032380.31174@xanadu.home> <20091206160436.GA7140@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 00:36:38 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	Tomas Carnecky <tom@dbservice.com>,
+	git list <git@vger.kernel.org>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 07 00:49:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHQec-0001ps-2e
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 00:36:38 +0100
+	id 1NHQqu-00067h-Fk
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 00:49:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757815AbZLFXg2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Dec 2009 18:36:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757809AbZLFXg1
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 18:36:27 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61940 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757790AbZLFXg0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Dec 2009 18:36:26 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4D61AA42D4;
-	Sun,  6 Dec 2009 18:36:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=OxRhWwvrLDqK
-	Tescv8WzWMRo7VY=; b=sWI5DP7YilnqUXqHoQMqCLxFS4mjTrkLQZeuCiVEzjE8
-	O9aS60ZJ8o5Xfdey6W5BRqyD2dqyInKmgDxGOVJPS6BOETkBjqgO+edLfXcoiHca
-	h0ve/93IN9eIEFuoSHmmuFpSB+nOheDc0AVw2bvESfkjnhO4MxjUXG58GDfDze0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=rAhhC1
-	7YpHOtITHNtkkk/BNc3GvxBq7nc3eEbuCgWUaacfp7PdTiGd4YQhxS3rVMqh1RfB
-	OxdmOBPATzNDRhB49iBQQKkY+sQwpni33kY6yuHKnZAPkJA1l2vChLigfSK88kyg
-	9HlBo385YezcxAK79raTws8/1pA7Te/v1l16w=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 298DDA42D3;
-	Sun,  6 Dec 2009 18:36:29 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2A54EA42CE; Sun,  6 Dec 2009
- 18:36:25 -0500 (EST)
-In-Reply-To: <fabb9a1e0912060223h148a67b0q589b8461dae6330e@mail.gmail.com>
- (Sverre Rabbelier's message of "Sun\, 6 Dec 2009 11\:23\:17 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2D6B02BE-E2C0-11DE-A382-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1758028AbZLFXtC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2009 18:49:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757896AbZLFXtB
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 18:49:01 -0500
+Received: from ey-out-2122.google.com ([74.125.78.25]:42437 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757895AbZLFXtA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2009 18:49:00 -0500
+Received: by ey-out-2122.google.com with SMTP id d26so1021582eyd.19
+        for <git@vger.kernel.org>; Sun, 06 Dec 2009 15:49:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=92xB/L7uwSPHLTnh9AmkFdbhWEvlYkHUEMGD83NElcQ=;
+        b=rtV0SHIZYAmYNvZoRph4tc3oF2b6FEX7MuVs0KQi/cRZVtL8tXM9TeY5gU/HWZH0cr
+         Lylr9FARMmyOHh52k5wH/wkpW2ZwfNQj8Ji7o4PYHPCqTIrXSWwwBcs8IdM3EYRMvMrz
+         NAmWUoKOyhTEZ/1kzCjIpR2NgEP9vaAWewO5s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=fMROuRMux+XnwBPjTYo28BjYKpiuZPZgXaRSEJsNjSQpFQHUK+VVmAvohCK3plrnV5
+         Zzh52pw4JsvJESh+VC6FdJWPyXxJSdIsnt7ZOuJdJzWDGdj9M+G14rpxXGZJbRnV9v6N
+         tedF5SBdOflbesGnl0aZ7lVcQxpnt9cB5MR0I=
+Received: by 10.213.37.76 with SMTP id w12mr653331ebd.84.1260143346227;
+        Sun, 06 Dec 2009 15:49:06 -0800 (PST)
+Received: from @ (88-121-121-28.rev.libertysurf.net [88.121.121.28])
+        by mx.google.com with ESMTPS id 13sm3138968ewy.9.2009.12.06.15.49.04
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 06 Dec 2009 15:49:05 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20091206160436.GA7140@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134695>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+The 06/12/09, Jeff King wrote:
+> On Sun, Dec 06, 2009 at 10:39:56AM -0500, Nicolas Pitre wrote:
+> 
+> > >   2. If it is a false positive, see what it would take to silence clang
+> > >      and submit a patch.  I don't think we are opposed to annotations
+> > >      that help analysis tools as long as those annotations aren't too
+> > >      intrusive or make the code less readable.
+> > 
+> > I'm a bit skeptical here.  Going down that route might mean that we'll 
+> > eventually have to add all sort of crap to accommodate everyone's 
+> > preferred static analysis tool of the day.  Would be far nicer to try to 
+> > make those tools more intelligent instead, or at least make them 
+> > understand an out-of-line annotation format that does not clutter the 
+> > code itself.
+> 
+> To be clear, I am a bit skeptical, too. 
 
->> =C2=A0- Merge today's 'master' to sr/remote-hg (optional);
->
-> I'm not sure why this is though? (no objections against it, I just
-> don't understand the motivation)
+Me too. I have no idea about how clang works but if there are enough
+work done to support such a tool in the code itself, it would be sad to
+not share and promote this work. If Junio cares enough himself, he could
+set up a public dedicated branch. Now if he doesn't, it's not necessary
+at all. Tomas or anyone else with enough time and motivation can fork
+the repository for this purpose.
 
-It would make sense if you use 1.6.6 features in your new series (as th=
-e
-forkpoint of sr/vcs-helper is beginning to look a tad stale), but
-otherwise unnecessary; that is the reason why I said it is "(optional)"
-and it is up to what is in the remote-hg patch.
+The latter option would be good and appreciated by everybody here, I
+think.
 
->> =C2=A0- Create an unstable sr/pu-remote-hg branch that:
->>
->> =C2=A0 - is reset to the tip of sr/remote-hg at the beginning of the=
- day;
->> =C2=A0 - merges the day's sr/gfi-options on top;
->> =C2=A0 - re-applies patches to implement Hg interoperation on top of=
- the
->> =C2=A0 =C2=A0 result.
->
-> Ok, that does make sense, how would I send out patches for review fro=
-m
-> this unstable branch though? (since others would not have the require=
-d
-> merges etc) I reckon it would be necessary to publish sr/pu-remote-hg
-> somewhere?
-
-I was thinking about carrying it myself (perhaps with help from you in
-conflict resolution as necessary) when I wrote it, but if you want me t=
-o
-pull from your repository somewhere e.g. repo.or.cz, that would also be
-fine.
+-- 
+Nicolas Sebrecht
