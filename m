@@ -1,125 +1,78 @@
-From: Dilip M <dilipm79@gmail.com>
-Subject: Re: Git GUI client SmartGit released
-Date: Sun, 6 Dec 2009 12:07:33 +0530
-Message-ID: <c94f8e120912052237g4be9afacmdd35031608c8700@mail.gmail.com>
-References: <4B161B15.2020106@syntevo.com>
-	 <c94f8e120912042337n43d5bcd0qc61a2820a8009dc4@mail.gmail.com>
-	 <alpine.DEB.1.00.0912051601040.4985@pacific.mpi-cbg.de>
-	 <c94f8e120912050832o6d43672bla3beb1e3cedd7db3@mail.gmail.com>
-	 <20091205204455.GA49665@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git reset --hard in .git causes a checkout in that directory
+Date: Sat, 05 Dec 2009 23:54:42 -0800
+Message-ID: <7vk4x0k059.fsf@alter.siamese.dyndns.org>
+References: <4B17A166.60306@gmail.com>
+ <20091204111158.GE27495@coredump.intra.peff.net>
+ <7vocmdutph.fsf@alter.siamese.dyndns.org>
+ <20091206041839.GB23983@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: David Aguilar <davvid@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marc Strapetz <marc.strapetz@syntevo.com>,
-	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Dec 06 07:37:49 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Maarten Lankhorst <m.b.lankhorst@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Dec 06 08:54:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHAkf-00025a-7H
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 07:37:49 +0100
+	id 1NHBxK-0000Ek-4a
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 08:54:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068AbZLFGh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2009 01:37:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbZLFGh2
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 01:37:28 -0500
-Received: from mail-pz0-f171.google.com ([209.85.222.171]:55974 "EHLO
-	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752014AbZLFGh1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2009 01:37:27 -0500
-Received: by pzk1 with SMTP id 1so701266pzk.33
-        for <git@vger.kernel.org>; Sat, 05 Dec 2009 22:37:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type;
-        bh=qJ0rkVhVn1miVSUVr4XpxvVgz6f5XpAbfeiKyzs3KNc=;
-        b=v84gSNlrrJe4WKbz3A+wZvx7WKnUkakFOTWAoomAc1NSW26Kd7s3kqwP7fVhBSO6KO
-         rT9cxVYUs4P0D20o1FjTmGSE5LhkhxwFXXJzoQ2kq0kXJUl+saAV155oK03twvtfZNLS
-         OxxA2G0LZlIpl6Zw1jIOtva+4YPHNZ+CJoEJU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=D3hBgejhOpiaAIT/8HblL/RI6JWxBNlbzMT9AgaIofqE2VWCDQ+Kgo+JB27epjeJnI
-         hEfpxKx5VHvaZzOs4bi4zqkCOKR8NrDpMFTcqfYXG40ye4IqWFWNo2thccrg4EIjwmKU
-         xtFOZF9jNjfrHL/AJvfRHjclhrsKMa2qmFaC8=
-Received: by 10.140.199.16 with SMTP id w16mr326757rvf.252.1260081453978; Sat, 
-	05 Dec 2009 22:37:33 -0800 (PST)
-In-Reply-To: <20091205204455.GA49665@gmail.com>
+	id S1753888AbZLFHyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2009 02:54:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932103AbZLFHyq
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 02:54:46 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61876 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753634AbZLFHyp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2009 02:54:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C94ACA4030;
+	Sun,  6 Dec 2009 02:54:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jEm7Lji+fZ4QrWdT3a/dwsIRQ8A=; b=YSeIk7
+	e1Jum+deZCM4W97w/cyQwa+tT/IkAUD3Re9RwvwZFytgM7DLzHjZi4BQqKsWwevr
+	PYkWi18roHWhsOj0cv2EnZthBwoo9R9YOx13/3imjjgr6A31x86PDfA50iDY0WXC
+	cog/pVM9ddKf6OAsmmUzPFXXC0CgpyLapggwA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vzdPbI0aAHf8hB04LWwAY3Pt/eo7FtXK
+	s08/zV0rjnwocs3lOF5W46kAa5bmED2YyHoL0JYWJJfFs1+H2fDg/vkKyEqYSgoW
+	MJ6Ab84RotCV0OHC7lIaN4w4KK+rUKYyCNBzyDXJ/n2AFivkMiRimkF+cQT6E8mt
+	bAR6fHrNehk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9B704A402F;
+	Sun,  6 Dec 2009 02:54:48 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6EFF9A402C; Sun,  6 Dec 2009
+ 02:54:43 -0500 (EST)
+In-Reply-To: <20091206041839.GB23983@coredump.intra.peff.net> (Jeff King's
+ message of "Sat\, 5 Dec 2009 23\:18\:40 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A079A32A-E23C-11DE-8064-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134648>
 
-Hi, yes..Cheetah has more feature set. Have to give a try once.
+Jeff King <peff@peff.net> writes:
 
-I really don't know the diff of Cheetah and Tortise. Want to know more
-on Cheetah...any links would help. Some time back when googled all
-resulted in Tortise.
+> I actually considered that, too, when writing the patch. But that would
+> be inconsistent with all of the other commands that use SETUP_WORK_TREE.
+> For example:
+>
+>   $ git init && cd .git && git clean
+>   fatal: This operation must be run in a work tree
+>
+> So I think we are better to be consistent with the other commands. If
+> somebody wants to make a separate patch to discover the work tree while
+> in the $GIT_DIR and chdir to it, that should then be applied to all
+> commands.  I'm not opposed to it, but I also don't see it as a
+> particularly pressing need.
 
-On 12/6/09, David Aguilar <davvid@gmail.com> wrote:
-> On Sat, Dec 05, 2009 at 10:02:08PM +0530, Dilip M wrote:
->> On Sat, Dec 5, 2009 at 8:31 PM, <Johannes.Schindelin@gmx.de> wrote:
->>
->> > As for "missing", do you refer to "paid service", or "yet another GUI"?
->>
->> Ahaha! I can say "a good gui" :)
->>
->> I was not knowing that this was "paid service". I saw the screenshot
->> and tried it. No doubt, it has a _great_ ui interface.  While installation
->> I
->> realized that it is licensed.
->>
->> - SOFTWARE Non-Commercial License,
->> - SOFTWARE Commercial License,
->> - SOFTWARE Enterprise License.
->
->
-> Aside from the other good GUIs out there, have you tried
-> git-cola?
->
-> http://cola.tuxfamily.org/
->
-> It's GPL and not too shabby.
-> The screenshots on the webpage are a bit out of date, though.
-> I should probably get to writing the release announcment and
-> updating the screenshots ;)
->
-> It probably also depends on your platform of choice.
-> I know some Windows users like explorer-integration, so stuff
-> like git-cheetah make a lot of sense for them.  I was a little
-> sad to see that the tortoise-git guys didn't get the joke
-> (who wants a tortoise when you have a cheetah?) and didn't
-> just work on cheetah instead, but hey, it's all good.
->
-> Another example: eclipse users like eclipse integration so for
-> them egit makes perfect sense.
->
-> Maybe that makes git-cola the poor man's smartgit?
-> If that's the case then it looks like the poor man is still
-> winning according to the feature matrix on the git wiki ;)
-> I don't know.. I haven't used smartgit, but if there are
-> any features that people are itching to have that git-cola
-> doesn't then feel free to throw it on the backlog:
->
-> http://github.com/davvid/git-cola/issues
->
-> At first glance, the gitk-like history widget in smartgit
-> is very nice.  I've been thinking about how to implement that in
-> PyQt for a while but haven't yet hammered it out.
->
->
-> Have fun,
->
-> --
-> 		David
->
-
--- 
-Sent from my mobile device
-
-Dilip
+Yes, we would of course want to do this consistently.  I haven't followed
+the codepath yet, but I suspect this will end up being connected with
+running "rev-parse --show-cdup" inside .git/ of a non-bare repository.
