@@ -1,91 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Allow --quiet option to git remote, particularly for
- `git remote update`
-Date: Sat, 05 Dec 2009 18:04:14 -0800
-Message-ID: <7vd42soo2p.fsf@alter.siamese.dyndns.org>
-References: <1260057623-28960-1-git-send-email-alex@chmrr.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: git reset --hard in .git causes a checkout in that directory
+Date: Sat, 5 Dec 2009 23:15:17 -0500
+Message-ID: <20091206041517.GA23983@coredump.intra.peff.net>
+References: <4B17A166.60306@gmail.com>
+ <20091204111158.GE27495@coredump.intra.peff.net>
+ <7vljhislbj.fsf@alter.siamese.dyndns.org>
+ <7vfx7pwa6p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex Vandiver <alex@chmrr.net>
-X-From: git-owner@vger.kernel.org Sun Dec 06 03:04:42 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Maarten Lankhorst <m.b.lankhorst@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 06 05:15:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NH6UM-0007tc-0C
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 03:04:42 +0100
+	id 1NH8X5-0006KT-GW
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 05:15:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756756AbZLFCE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Dec 2009 21:04:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756895AbZLFCE0
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 21:04:26 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34990 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756756AbZLFCET (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Dec 2009 21:04:19 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0DFE285B7E;
-	Sat,  5 Dec 2009 21:04:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3TdaawT0+TF6ttf0TaDHbV+pJhY=; b=UrbbLJ
-	4fW2yNcimqSP7MKQmHwgE5vgNA05K+3uisfL2ulmsaCAthUdYatRzcFvnrWOHI/p
-	kw9ax35k/Mhe7skd2LlPVzGAEASmmruQyE0xx5rLVjWjKqVyvehMDneNZ6OVKXEC
-	4SuxObYm8soowVVDlUCk9lgTiSSoK/1n8RsEI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=b+P76nV9m1wJr7PTkV8VwuQSEE8OC8tr
-	DdxDtVpVM0nSxBuMlGajm39LHVNJ4mVjfb8o2vtGeu80vj5GG/S0jQK2CfjTrm6M
-	/qNDiy50G6N2u+OkYQ39brO0k9b1P1i2mfrAdktGy4ocmdPV7asIrLZjFLBjIw1I
-	kuXdfsU9pbQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F9B385B7C;
-	Sat,  5 Dec 2009 21:04:20 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8071E85B73; Sat,  5 Dec
- 2009 21:04:16 -0500 (EST)
-In-Reply-To: <1260057623-28960-1-git-send-email-alex@chmrr.net> (Alex
- Vandiver's message of "Sat\,  5 Dec 2009 19\:00\:23 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AA8D5F4A-E20B-11DE-835D-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758103AbZLFEPP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Dec 2009 23:15:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758096AbZLFEPP
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Dec 2009 23:15:15 -0500
+Received: from peff.net ([208.65.91.99]:57214 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758093AbZLFEPO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Dec 2009 23:15:14 -0500
+Received: (qmail 28383 invoked by uid 107); 6 Dec 2009 04:19:50 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 05 Dec 2009 23:19:50 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Dec 2009 23:15:18 -0500
+Content-Disposition: inline
+In-Reply-To: <7vfx7pwa6p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134643>
 
-Alex Vandiver <alex@chmrr.net> writes:
+On Sat, Dec 05, 2009 at 10:24:46AM -0800, Junio C Hamano wrote:
 
-> Signed-off-by: Alex Vandiver <alex@chmrr.net>
+> > ...  The test already checks that the change won't break soft reset,
+> > which is good, but it does not seem to check/specify what should happen in
+> > the mixed reset in this case (I think it should be allowed).
+> 
+> Heh, I was not thinking straight. A bare repository does not have the
+> index, so allowing (cd .git && git reset) is Ok but mixed in a bare
+> repository (cd bare.git && git reset) is not.
 
-Sounds good as it makes the behaviour consistent with the underlying "git
-fetch".
+Hmm. I would have thought it would be allowed in a bare repository, to
+explicitly let people treat the bare repo as a pseudo-database, just
+pulling out the files when they want to. And I was all set to argue
+against restricting it, but looking at your tests, it seems we already
+disallow it. So I don't see a harm in verifying the current behavior.
 
-> ...
->  	"git remote prune [-n | --dry-run] <name>",
-> -	"git remote [-v | --verbose] update [-p | --prune] [group | remote]",
-> +	"git remote [-v | --verbose] [-q | --quiet] update [-p | --prune] [group]",
-
-We say "<name>" everywhere else except for "update" we call the parameter
-"group" or "remote" using different typography.  It is not the fault of
-your patch, but has been this way since 1918278 (Allow git-remote to
-update named groups of remotes, 2007-02-20).
-
-Three issues to consider:
-
- - shouldn't we use the same typography, i.e. <group>?
-
- - should we say <name> _if_ we are not going to say <group>|<remote>?
-
- - should we keep it as <group>|<remote> to make it clear that only this
-   subcommand allows the group nickname?
-
-The first two are easy and I expect the answers to be both yes.  The third
-one needs some studying and further thought.
-
- - is "remote update" the only one that takes group nickname?
-
- - should "remote update" the only one? e.g. does "remote prune" also
-   take group? if not, shouldn't it?
+-Peff
