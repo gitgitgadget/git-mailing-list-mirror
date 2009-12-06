@@ -1,83 +1,76 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCHv3 0/3] git-gui: more robust handling of fancy repos
-Date: Sun, 6 Dec 2009 13:59:22 +0100
-Message-ID: <36ca99e90912060459u1073288bj2114f8ab56c7224b@mail.gmail.com>
-References: <1250467128-29839-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <36ca99e90910270435h69c1e983j78ff9ec49e7e8eae@mail.gmail.com>
-	 <cb7bb73a0912060014p548884e0g8c4510a5b562901b@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add commit.infodisplay option to give message editor
+ empty file
+Date: Sun, 6 Dec 2009 08:12:18 -0500
+Message-ID: <20091206131217.GA12851@sigill.intra.peff.net>
+References: <1259967879-65517-1-git-send-email-jh@jameshoward.us>
+ <7vpr6t6fnz.fsf@alter.siamese.dyndns.org>
+ <20091205154753.GA3717@thermopylae.local>
+ <20091205162827.GA9584@sigill.intra.peff.net>
+ <20091205230903.GA3816@thermopylae.local>
+ <20091206042206.GC23983@coredump.intra.peff.net>
+ <7v7ht0jzta.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 06 13:59:36 2009
+Content-Type: text/plain; charset=utf-8
+Cc: "James P. Howard, II" <jh@jameshoward.us>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 06 14:12:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHGi6-0001wg-Ba
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 13:59:34 +0100
+	id 1NHGuX-0005yU-SV
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Dec 2009 14:12:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756464AbZLFM7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2009 07:59:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756337AbZLFM7S
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 07:59:18 -0500
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:59881 "EHLO
-	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756345AbZLFM7R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2009 07:59:17 -0500
-Received: by fxm5 with SMTP id 5so4005923fxm.28
-        for <git@vger.kernel.org>; Sun, 06 Dec 2009 04:59:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=SSXM974AcfOzTpHzqpD4un01PbVVzy7IdM1uF2JeP38=;
-        b=FMKR5SAdBtxyy9dG/ANpxirB8GVbWWISCrVT/EBYs4exSYIIDaQM752omKFOgjQTIC
-         3GfRYhKyd+qAqMSAHXkf7kicabgigKxdVk9e27nZyU5vbTlPoTYCir34xe/eS3HdAfrW
-         2xGESGDLy6VyzfMzYTS3SUCZJqY1fZoQAPHfw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=HmPBj2QwtkRRHAYshMUzjrqv+66PFYeMSX5kTVaxAWBCXYXb29rRLEd77NF4y225DP
-         CHy/G3+1sv3BLSRx00WXU26QDhwrcydUODmRxC9OS1Cz7DezoOfY2xV4U6/DKuTh/Blw
-         7FPm0BKj3kKIaauPtQU93MIDLwKarD7MJS8OE=
-Received: by 10.223.6.9 with SMTP id 9mr804316fax.84.1260104362940; Sun, 06 
-	Dec 2009 04:59:22 -0800 (PST)
-In-Reply-To: <cb7bb73a0912060014p548884e0g8c4510a5b562901b@mail.gmail.com>
+	id S932462AbZLFNMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2009 08:12:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932392AbZLFNMO
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 08:12:14 -0500
+Received: from peff.net ([208.65.91.99]:52450 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932315AbZLFNMN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2009 08:12:13 -0500
+Received: (qmail 30098 invoked by uid 107); 6 Dec 2009 13:16:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 06 Dec 2009 08:16:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 06 Dec 2009 08:12:18 -0500
+Content-Disposition: inline
+In-Reply-To: <7v7ht0jzta.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134659>
 
-On Sun, Dec 6, 2009 at 09:14, Giuseppe Bilotta
-<giuseppe.bilotta@gmail.com> wrote:
-> On Tue, Oct 27, 2009 at 12:35 PM, Bert Wesarg
-> <bert.wesarg@googlemail.com> wrote:
->>
->> I would also suggest to always export GIT_DIR into the environment, so
->> that guitools can relay on this.
->
-> I'm sorry I couldn't reply to this email earlier. I have never used
-> this feature, but if you can provide some example guitools
-> configuration I'll gladly move the environment export earlier and test
-> it.
-Here it is:
+On Sun, Dec 06, 2009 at 12:01:53AM -0800, Junio C Hamano wrote:
 
-[guitool "exclude/Ignore file"]
-	cmd = echo \"$FILENAME\" >> \"${GIT_DIR:=.git}/info/exclude\"
-	noconsole = yes
-	needsfile = yes
+> Jeff King <peff@peff.net> writes:
+> 
+> > I would be tempted to call it "--no-template", but I think that is too
+> > confusing. The "--template" option is not really about the git-generated
+> > template, but about a user-defined template that goes on top of the
+> > git-generated one (I would have expected --template=/dev/null to do what
+> > you want, too, but it retains the git template).
+> >
+> > Probably "--no-status" would be a good name, as the generated template
+> > is the format generated by "git status".
+> 
+> I wonder which part is the most expensive in generating the status
+> output.  Perhaps -suno is sufficient?
 
-The purpose is simple: add the current file to the info/exclude file
-in the git dir As you can see, I have a workaround for not having
-GIT_DIR in the env, which should solve the issue. But it would be nice
-to rely on this.
+Speaking from my experience, it is doing break and rename detection on
+large files, which there is currently no way to turn off (I hacked
+around it with "$EDITOR msg && git commit --quiet -F msg").
 
-Bert
->
-> --
-> Giuseppe "Oblomov" Bilotta
->
+Keep in mind this is one of my gigantic photo repositories, and the
+commit in question made a minor change to almost 3G worth of files. So
+it is not the end of the world for me to use the hack above on those
+rare occasions. But since James wants it for other reasons, and it
+should be a trivial patch, I think it would be nice for commit to
+support it natively.
+
+It would also make sense to me for "--quiet" to suppress the template,
+but that is a behavior change that I suppose some people might not like.
+
+-Peff
