@@ -1,70 +1,75 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH] gitweb.js: Harden setting blamed commit info in
- incremental blame
-Date: Sun, 06 Dec 2009 17:19:01 -0800
-Message-ID: <1260148741.1579.50.camel@swboyd-laptop>
-References: <1258659887-5244-1-git-send-email-bebarino@gmail.com>
-	 <200911250145.16472.jnareb@gmail.com> <4B0CAC2E.1060105@gmail.com>
-	 <200911251536.08993.jnareb@gmail.com>
-	 <1260147860.1579.47.camel@swboyd-laptop>
+From: Greg Price <price@ksplice.com>
+Subject: Re: Unapplied patches reminder
+Date: Sun, 6 Dec 2009 22:03:59 -0500
+Message-ID: <20091207030359.GK30538@dr-wily.mit.edu>
+References: <7voco4gtxd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 02:19:11 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Geoffrey Thomas <geofft@mit.edu>, git@vger.kernel.org,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 07 04:04:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHSFp-0005Wm-Jy
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 02:19:09 +0100
+	id 1NHTti-0001nD-O4
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 04:04:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932780AbZLGBS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2009 20:18:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758282AbZLGBS5
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 20:18:57 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:60674 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758046AbZLGBS4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2009 20:18:56 -0500
-Received: by pwj9 with SMTP id 9so610246pwj.21
-        for <git@vger.kernel.org>; Sun, 06 Dec 2009 17:19:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=mxtLn3zUXyHOQWHdXo4IY06NtA2WPjs/7QzzNDMuAUM=;
-        b=XQDxYZhc9VvFBdofwBN+hEsKokU9InKuJb9YIQ55uUyVYAxHMd2X9PLoyWcuA//pGW
-         JjLAYud9wDe/jS3JSXYRWmM7EZyfW7BTM+fAlEtDXOfYpvAXPIhWcJBcksO2pkqsfgDt
-         WlCbrFhiA+NWdUjB+L1ebovU2vcgDDlLCDWDg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=srXG8M4ZopPkA9D5gnOoYnGYQvZORkfFqkeVorGarS4gKe5lVBTtdtLzMPxdoRuEoi
-         p/XnQWpUwurOzu0YuQ/XunA+8RoF0VfRzSDRpnQt8uWORDNaZwftjJbZcyeT3yayg74m
-         A6QU3KpoyiCb8qtPSzhUA3GMGk8umjTep1eSs=
-Received: by 10.115.27.14 with SMTP id e14mr6058453waj.116.1260148743418;
-        Sun, 06 Dec 2009 17:19:03 -0800 (PST)
-Received: from ?192.168.1.5? (user-0c9haca.cable.mindspring.com [24.152.169.138])
-        by mx.google.com with ESMTPS id 21sm4755139pzk.7.2009.12.06.17.19.02
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 06 Dec 2009 17:19:02 -0800 (PST)
-In-Reply-To: <1260147860.1579.47.camel@swboyd-laptop>
-X-Mailer: Evolution 2.28.1 
+	id S934461AbZLGDEC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2009 22:04:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934457AbZLGDEB
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 22:04:01 -0500
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:52457 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934455AbZLGDEA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Dec 2009 22:04:00 -0500
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id nB733Wp1018020;
+	Sun, 6 Dec 2009 22:03:32 -0500 (EST)
+Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
+	(authenticated bits=0)
+        (User authenticated as price@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id nB7348nB008160;
+	Sun, 6 Dec 2009 22:04:08 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7voco4gtxd.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134707>
 
-On Sun, 2009-12-06 at 17:04 -0800, Stephen Boyd wrote:
-> 
-> Ok. It's December and I've had some more time to look into this.
-> Initializing 'xhr' to null seems to get rid of the "Unknown error"
-> problem (see patch below).
-> 
+Junio wrote:
+> > From: Geoffrey Thomas <geofft@mit.edu>
+> > Subject: [PATCH] diffcore-order: Default the order file to .git/info/order.
+> > Date: Sat, 12 Sep 2009 19:49:48 -0400
+> > Message-ID: <1252799388-16295-1-git-send-email-geofft@mit.edu>
+> >
+> >     Since order files tend to be useful for all operations in the
+> >     project/repository, add a default location for the order file, so that
+> >     you don't have to specify -O<orderfile> on every diff or similar
+> >     operation.
+>
+> Except that "$GIT_DIR/info/order" is a bit too generic a name ("eh,
+> 'order'?  Order of what?"), I do not think this will hurt, as no existing
+> repositories would have such a file that would cause any behaviour change
+> to existing users.  The reason I did not queue it was because there wasn't
+> any discussion on it (not even the filename being too generic) which was
+> an indication that not many people are interested in such a feature.
+>
+> That of course can be remedied by interested people speaking out.
 
-Ah sorry. Seems this doesn't work and I was just getting lucky.
+I never use the -O option, but if this feature were available I think
+I would use it.  It would make it possible to configure a helpful
+order once -- for example, putting a changelog file first in order to
+compare it with the commit message -- and then always use it without
+effort.
+
+A less generic name might be 'difforder'.
+
+Greg
