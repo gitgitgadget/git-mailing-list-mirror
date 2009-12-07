@@ -1,54 +1,117 @@
-From: Karl Wiberg <kha@treskal.com>
-Subject: Re: [StGit PATCH v2 0/6] add support for git send-email
-Date: Mon, 7 Dec 2009 08:09:02 +0100
-Message-ID: <b8197bcb0912062309q4130d207yca069c6ce3256b29@mail.gmail.com>
-References: <20091202003503.7737.51579.stgit@bob.kio>
-	 <b0943d9e0912061416y4089643l2a5ebdf1c1c0960b@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 2/2] Add a command "fixup" to rebase --interactive
+Date: Sun, 06 Dec 2009 23:12:07 -0800
+Message-ID: <7vskbn9s1k.fsf@alter.siamese.dyndns.org>
+References: <cover.1260099005.git.mhagger@alum.mit.edu>
+ <ced6765cff6225a05f196a6896ab577850979ab1.1260099005.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Alex Chiang <achiang@hp.com>, git <git@vger.kernel.org>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 08:09:24 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, git@drmicha.warpmail.net,
+	Johannes.Schindelin@gmx.de, bgustavsson@gmail.com
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Dec 07 08:12:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHXil-0005zd-M3
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 08:09:24 +0100
+	id 1NHXlm-0006tr-CC
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 08:12:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757525AbZLGHJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2009 02:09:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755441AbZLGHI7
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 02:08:59 -0500
-Received: from mail1.space2u.com ([62.20.1.135]:48351 "EHLO mail1.space2u.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757525AbZLGHI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2009 02:08:59 -0500
-Received: from mail-bw0-f227.google.com (mail-bw0-f227.google.com [209.85.218.227])
-	(authenticated bits=0)
-	by mail1.space2u.com (8.14.3/8.14.3) with ESMTP id nB778uU0018648
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 7 Dec 2009 08:08:57 +0100
-Received: by bwz27 with SMTP id 27so3253853bwz.21
-        for <git@vger.kernel.org>; Sun, 06 Dec 2009 23:09:02 -0800 (PST)
-Received: by 10.204.34.20 with SMTP id j20mr6688763bkd.57.1260169742780; Sun, 
-	06 Dec 2009 23:09:02 -0800 (PST)
-In-Reply-To: <b0943d9e0912061416y4089643l2a5ebdf1c1c0960b@mail.gmail.com>
+	id S1757496AbZLGHMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2009 02:12:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757213AbZLGHMS
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 02:12:18 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40448 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756168AbZLGHMR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2009 02:12:17 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 607EAA4E5B;
+	Mon,  7 Dec 2009 02:12:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=b1fQeWwouEN5o7VU5TmYA5/b7e0=; b=eNxIkg
+	dwW0ONlOZBFgZ3GYUgGxLMV8PNcz/02VB2jkyJURhFyj1WLZEKdA4m8es2FUv+Qt
+	KRRevB4yqrcpHQmvnjWfJ3ZpPct0L9foNXBZNMUQXSVJtdgoRmSxIhAYBs/6X57t
+	+vuGwYHzmVo5MG5Ab/S2ciwCdp41CqqAWpc/Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hMFYeGzVjwMfbsS19O1ov/T/GmyPwNFE
+	GiEv/japysBy9gGAFdt7HiaN2Y978JA8wTOpc+tUoxKfjJR1CRafyosSwwO+ccBs
+	is3kK2127HhZQosDDHWOf/BdZxW9k4GT+M9Q8Qxj2Jqahh4hnUMaQ6z5GB1G41Ra
+	uxP5Lb7muxY=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1397DA4E5A;
+	Mon,  7 Dec 2009 02:12:16 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2D2D4A4E58; Mon,  7 Dec 2009
+ 02:12:08 -0500 (EST)
+In-Reply-To: <ced6765cff6225a05f196a6896ab577850979ab1.1260099005.git.mhagger@alum.mit.edu> (Michael Haggerty's message of "Mon\,  7 Dec 2009 05\:22\:59 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D97235B6-E2FF-11DE-964E-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134717>
 
-On Sun, Dec 6, 2009 at 11:16 PM, Catalin Marinas
-<catalin.marinas@gmail.com> wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> --refid -> --in-reply-to
-> --noreply -> --no-thread
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index 0bd3bf7..a7de5ea 100755
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -302,7 +302,13 @@ nth_string () {
+>  
+>  make_squash_message () {
+>  	if test -f "$SQUASH_MSG"; then
+> -		COUNT=$(($(sed -n "s/^# This is [^0-9]*\([1-9][0-9]*\).*/\1/p" \
+> +		# We want to be careful about matching only the commit
+> +		# message comment lines generated by this function.
 
-And I must say, the git options are better named than ours anyway ...
+> +		# But supposedly some sed versions don't handle "\|"
+> +		# correctly, so instead of "\(st\|nd\|rd\|th\)", use
+> +		# the less accurate "[snrt][tdh]" to match the
+> +		# nth_string endings.
 
--- 
-Karl Wiberg, kha@treskal.com
-   subrabbit.wordpress.com
-   www.treskal.com/kalle
+I'd drop this comment; blaming POSIX-compliant sed without GNU extension
+is simply wrong.
+
+> +		COUNT=$(($(sed -n "s/^# Th[^0-9]*\([1-9][0-9]*\)[snrt][tdh] commit message.*:/\1/p" \
+>  			< "$SQUASH_MSG" | sed -ne '$p')+1))
+>  		echo "# This is a combination of $COUNT commits."
+>  		sed -e 1d -e '2,/^./{
+> @@ -315,10 +321,26 @@ make_squash_message () {
+>  		echo
+>  		git cat-file commit HEAD | sed -e '1,/^$/d'
+>  	fi
+> -	echo
+> -	echo "# This is the $(nth_string $COUNT) commit message:"
+> -	echo
+> -	git cat-file commit $1 | sed -e '1,/^$/d'
+> +	case $1 in
+> +	squash)
+> +		echo
+> +		echo "# This is the $(nth_string $COUNT) commit message:"
+> +		echo
+> +		git cat-file commit $2 | sed -e '1,/^$/d'
+> +		;;
+> +	fixup)
+> +		echo
+> +		echo "# The $(nth_string $COUNT) commit message will be skipped:"
+> +		echo
+> +		# Comment the lines of the commit message out using
+> +		# "#" rather than "# " (a) to make them more distinct
+> +		# from the explanatory comments added by this function
+> +		# and (b) to make it less likely that the sed regexp
+> +		# above will be confused by a commented-out commit
+> +		# message.
+
+Use "#  " as prefix and you won't have to worry about a line in the log
+message that begins with " Th", no?
+
+In any case, I agree that a comment like this is necessary to warn anybody
+who will be touching the code that the COUNT=$((...))  needs to avoid
+matching what is produced here, but I find the above 6-line comment a bit
+too excessive.
