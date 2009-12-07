@@ -1,65 +1,119 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCHv2 2/2] Add a command "fixup" to rebase --interactive
-Date: Mon, 7 Dec 2009 12:26:37 +0100
-Message-ID: <fabb9a1e0912070326s6cda5c8r442c4816538d0e2a@mail.gmail.com>
-References: <cover.1260099005.git.mhagger@alum.mit.edu> <ced6765cff6225a05f196a6896ab577850979ab1.1260099005.git.mhagger@alum.mit.edu>
+From: Johan Herland <johan@herland.net>
+Subject: [RFC/PATCHv10 00/11] git notes
+Date: Mon, 07 Dec 2009 12:27:23 +0100
+Message-ID: <1260185254-1523-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, gitster@pobox.com, git@drmicha.warpmail.net,
-	Johannes.Schindelin@gmx.de, bgustavsson@gmail.com
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Dec 07 12:27:06 2009
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+Cc: gitster@pobox.com, johan@herland.net, spearce@spearce.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 07 12:29:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHbk8-00074m-SU
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 12:27:05 +0100
+	id 1NHbmC-0007m5-7F
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 12:29:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933682AbZLGL0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2009 06:26:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753572AbZLGL0w
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 06:26:52 -0500
-Received: from mail-vw0-f197.google.com ([209.85.212.197]:35839 "EHLO
-	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752706AbZLGL0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2009 06:26:51 -0500
-Received: by vws35 with SMTP id 35so1979338vws.4
-        for <git@vger.kernel.org>; Mon, 07 Dec 2009 03:26:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=uGr1zYZmDaUGdaPWBTeuzImxnYzixY6qusxr4Lp6sb4=;
-        b=rw/7POWDQ4VbXLqMbCxV/RIPH+tDiW/PGpL/g3OinfEysKmjVY38pZ7e984dLKUoD+
-         gr1IHO0CPXvndQtuQUBwi+Q0HOzvlHIEfCO6nvgwKJTQfyIosE8a9+O8H1FZFplnpygD
-         7f3n2QVyY27iYZHx/RSjDDBylFyZyFmypVa+A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=UdOt3cwK+RIA53LI73qldsdUO3JO3D0VpYgFGD93F7VpCATOmoA0Nqb0hUM+BW3y/r
-         WsK6QoeT57Az4JSncvA57puQOIuuzbnAkf99cCI413ivt1pZZb0y6RWB7Sz2ACuvw9lV
-         VOdJm+kE4YqNguEjrEphixIXYugLsX2DsxeiI=
-Received: by 10.220.127.2 with SMTP id e2mr8086146vcs.70.1260185217533; Mon, 
-	07 Dec 2009 03:26:57 -0800 (PST)
-In-Reply-To: <ced6765cff6225a05f196a6896ab577850979ab1.1260099005.git.mhagger@alum.mit.edu>
+	id S933807AbZLGL1k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2009 06:27:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933770AbZLGL1j
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 06:27:39 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:46132 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S933744AbZLGL1i (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Dec 2009 06:27:38 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KUA00A0Z565MPE0@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 07 Dec 2009 12:27:41 +0100 (MET)
+Received: from localhost.localdomain ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KUA002OO5616830@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 07 Dec 2009 12:27:41 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.12.7.111518
+X-Mailer: git-send-email 1.6.5.3.433.g11067
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134738>
 
-Heya,
+Hi,
 
-On Mon, Dec 7, 2009 at 05:22, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> The command is like "squash", except that it discards the commit message
-> of the corresponding commit.
+Here is the 10th iteration of the git-notes series. Changes in this
+iteration are as follows:
 
-No no, wait, wasn't "fixup" supposed to let you just edit the commit
-message of the commit you're fixing up? :(
+Changes to existing patches:
 
--- 
-Cheers,
+- Rebased onto 488bdf2... (Fix crasher on encountering SHA1-like non-note
+  in notes tree) (There are no conflicts resolved by this, but a test in
+  this series crashes without the crash fix in 488bdf2...).
 
-Sverre Rabbelier
+- Yet another rewrite of the fast-import patch. After trying to implement
+  Shawn's suggestions, I found that hacking the mode bits of note entries
+  could not work, since they are stripped by a mktree()/load_tree()
+  round-trip. The new versions treats _all_ entries with note-compatible
+  paths (40 hex chars, not including directory separators) as note entries
+  (to be subjected to fanout adjustments) in branches where there are note
+  activity (one or more 'N' commands).
+  Branches without note activity are not touched, of course.
+
+- Otherwise, Shawn's suggestions to the previous iteration have been
+  incorporated.
+
+- Extended t9301 tests to verify that non-notes residing in a notes tree
+  are not clobbered by the fast-import patch.
+
+- Fix t9301 test #12 to not "cheat" (by 'deleteall' followed by a few
+  additions). Instead, remove notes one-by-one to verify correct
+  fanout consolidation.
+
+- Minor cleanups here and there
+
+
+If Shawn is OK with the fast-import patch, I believe that at least
+patches #1 - #3 (and possibly #4 - #5) are ready for 'next'.
+
+Patches #6 - #11 drastically extend the notes API. Since there are
+currently no users of that API, and it has not been discussed much
+on the list (although these patches have already been present in a
+few iterations), I would still consider them RFC quality.
+
+
+TODO:
+- Builtin-ify git-notes shell script to take advantage of notes API
+- Garbage collect notes whose referenced object is unreachable (gc_notes())
+- Handle note objects that are not blobs, but trees
+
+
+Have fun! :)
+
+...Johan
+
+
+Johan Herland (11):
+  fast-import: Proper notes tree manipulation
+  Rename t9301 to t9350, to make room for more fast-import tests
+  Add more testcases to test fast-import of notes
+  Minor style fixes to notes.c
+  Notes API: get_commit_notes() -> format_note() + remove the commit restriction
+  Notes API: init_notes(): Initialize the notes tree from the given notes ref
+  Notes API: add_note(): Add note objects to the internal notes tree structure
+  Notes API: get_note(): Return the note annotating the given object
+  Notes API: for_each_note(): Traverse the entire notes tree with a callback
+  Notes API: Allow multiple concurrent notes trees with new struct notes_tree
+  Refactor notes concatenation into a flexible interface for combining notes
+
+ fast-import.c                                    |  134 +++++-
+ notes.c                                          |  345 +++++++++----
+ notes.h                                          |  114 ++++-
+ pretty.c                                         |    9 +-
+ t/t9300-fast-import.sh                           |  156 +++++-
+ t/t9301-fast-import-notes.sh                     |  623 ++++++++++++++++++++++
+ t/{t9301-fast-export.sh => t9350-fast-export.sh} |    0
+ 7 files changed, 1259 insertions(+), 122 deletions(-)
+ create mode 100755 t/t9301-fast-import-notes.sh
+ rename t/{t9301-fast-export.sh => t9350-fast-export.sh} (100%)
