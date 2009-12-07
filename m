@@ -1,79 +1,75 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [RFC PATCH v3 0/8] Remote helpers smart transport extensions
-Date: Mon, 7 Dec 2009 13:57:37 +0100
-Message-ID: <40aa078e0912070457i16394913v5ff041061ec9eeaf@mail.gmail.com>
-References: <1260116931-16549-1-git-send-email-ilari.liusvaara@elisanet.fi>
-	 <7v7hsz9qxj.fsf@alter.siamese.dyndns.org>
-	 <20091207210608.6117@nanako3.lavabit.com>
-Reply-To: kusmabite@gmail.com
+From: walter harms <wharms@bfs.de>
+Subject: help: bisect single file from repos
+Date: Mon, 07 Dec 2009 13:59:56 +0100
+Message-ID: <4B1CFC4C.6090406@bfs.de>
+Reply-To: wharms@bfs.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 13:57:45 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 07 14:00:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHd9s-0007HB-Dy
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 13:57:44 +0100
+	id 1NHdCK-0008Jd-SF
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 14:00:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934104AbZLGM5d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Dec 2009 07:57:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755722AbZLGM5c
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 07:57:32 -0500
-Received: from ey-out-2122.google.com ([74.125.78.26]:54617 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755126AbZLGM5c convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Dec 2009 07:57:32 -0500
-Received: by ey-out-2122.google.com with SMTP id d26so1124329eyd.19
-        for <git@vger.kernel.org>; Mon, 07 Dec 2009 04:57:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8wSTfcA2ghvx1ahWW82sYURgte2gVylK067YVd+aEUE=;
-        b=UE8Z+gwvxbH1SW4eweaPDMmx0hU6ElpeSAaRxgtMzYOAw/91wajmfGfNuMj8V/gH7f
-         o6PzupNbDZwa6Le0O1JsyyTIYOmbv5f4Q/UoTDj9hfPaELbaMm7yE+Ohb7xsYhK1N+Fz
-         yrZdPXXVdR2NNc47LufVpAhRab0By6pcszlnc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=HyhuRHeHk8DzEFhLx508IkRtmHhmVDnq7B3KifIiOPkQwd1crHlRh6NT5BF/RyygJq
-         Mi5LWwjk+YC3DRXUSV/89De+hkD7o902OErkvMXTjv6AH7h1OizDN80P/B/NTs7VAC98
-         1V4GAtvcRsz+pHmNGMxcNbcGTqvIDWd/CRInQ=
-Received: by 10.216.86.139 with SMTP id w11mr2333553wee.10.1260190657607; Mon, 
-	07 Dec 2009 04:57:37 -0800 (PST)
-In-Reply-To: <20091207210608.6117@nanako3.lavabit.com>
+	id S1755881AbZLGNAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2009 08:00:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932872AbZLGNAF
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 08:00:05 -0500
+Received: from mx.sz.bfs.de ([194.94.69.70]:34731 "EHLO mx.sz.bfs.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755737AbZLGNAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2009 08:00:04 -0500
+Received: from mail.sz.bfs.de (mail.sz.bfs.de [192.168.0.1])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(No client certificate requested)
+	by mx.sz.bfs.de (BfS Mail Relay SZ) with ESMTP id C54E4288E1E
+	for <git@vger.kernel.org>; Mon,  7 Dec 2009 14:00:09 +0100 (CET)
+Received: from localhost (unknown [192.168.2.47])
+	by mail.sz.bfs.de (BfS Mail Hub) with ESMTP id A0C94E3908
+	for <git@vger.kernel.org>; Mon,  7 Dec 2009 14:00:09 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at bfs.de
+Received: from mail.sz.bfs.de ([192.168.2.193])
+	by localhost (amavis-sz.sz.bfs.de [192.168.2.47]) (amavisd-new, port 10024)
+	with ESMTP id 8JPMufTpVeoa for <git@vger.kernel.org>;
+	Mon,  7 Dec 2009 13:59:58 +0100 (CET)
+Received: from dc-slave2-fr.fr.bfs.de (unknown [10.177.18.200])
+	by mail.sz.bfs.de (BfS Mail Hub) with ESMTP id 7A71BE390E
+	for <git@vger.kernel.org>; Mon,  7 Dec 2009 13:59:57 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dc-slave2-fr.fr.bfs.de (Postfix) with ESMTP id 28C90DB260
+	for <git@vger.kernel.org>; Mon,  7 Dec 2009 13:59:57 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dc-slave2-fr.fr.bfs.de (Postfix) with ESMTP id E8D84DB261
+	for <git@vger.kernel.org>; Mon,  7 Dec 2009 13:59:56 +0100 (CET)
+X-Virus-Scanned: by amavisd-new-2.4.2 (20060627) (Debian) at fr.bfs.de
+Received: from dc-slave2-fr.fr.bfs.de ([127.0.0.1])
+	by localhost (dc-slave2-fr.fr.bfs.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 1QgdKZXkLLtb for <git@vger.kernel.org>;
+	Mon,  7 Dec 2009 13:59:56 +0100 (CET)
+Received: from [134.92.181.33] (unknown [134.92.181.33])
+	by dc-slave2-fr.fr.bfs.de (Postfix) with ESMTP id A9BD0DB260
+	for <git@vger.kernel.org>; Mon,  7 Dec 2009 13:59:56 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134756>
 
-On Mon, Dec 7, 2009 at 1:06 PM, Nanako Shiraishi <nanako3@lavabit.com> =
-wrote:
-> Quoting Junio C Hamano <gitster@pobox.com>
->
->> I queued to ease the discussion in 'pu'. =A0I had to fix-up some con=
-flicts
->> while doing so. =A0Please sanity check the result.
->
-> I see that you changed many "char* variable" to "char *variable", but
-> what is the reason for these changes?
->
+Hi list,
+i am new to git (using: git version 1.6.0.2).
 
-Documentation/CodingGuidelines:
+I would like to bisect a single file but i have only commit id, no tags.
 
- - When declaring pointers, the star sides with the variable
-   name, i.e. "char *string", not "char* string" or
-   "char * string".  This makes it easier to understand code
-   like "char *string, c;".
+Background:
+I have a copy of the busybox git repos, and i know there is (perhaps) a bug
+in ash.c.
 
---=20
-Erik "kusma" Faye-Lund
+how can i do that ?
+
+re,
+ wh
