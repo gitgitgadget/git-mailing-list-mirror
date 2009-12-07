@@ -1,236 +1,86 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCHv3 2/2] Add a command "fixup" to rebase --interactive
-Date: Mon,  7 Dec 2009 10:20:59 +0100
-Message-ID: <d81f8fc2655f77cfb09830dcda68c1b5713c5b4d.1260177312.git.mhagger@alum.mit.edu>
-References: <7vskbn9s1k.fsf@alter.siamese.dyndns.org>
-Cc: gitster@pobox.com, git@drmicha.warpmail.net,
-	Johannes.Schindelin@gmx.de, bgustavsson@gmail.com,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 07 10:21:55 2009
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] Detailed diagnosis when parsing an object name fails.
+Date: Mon, 07 Dec 2009 11:07:59 +0100
+Message-ID: <vpqws0zcd1c.fsf@bauges.imag.fr>
+References: <1259784061-25143-1-git-send-email-y>
+	<7vljhj4wv0.fsf@alter.siamese.dyndns.org>
+	<vpqhbs4dkjr.fsf@bauges.imag.fr>
+	<7vk4wz9rbt.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 07 11:12:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHZn0-0006Qw-84
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 10:21:54 +0100
+	id 1NHaYv-0001KW-Dh
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 11:11:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759295AbZLGJVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2009 04:21:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759291AbZLGJVT
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 04:21:19 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:60697 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759283AbZLGJVS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2009 04:21:18 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from localhost.localdomain (ssh.berlin.jpk.com [212.222.128.135])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id nB79L9Ij003623;
-	Mon, 7 Dec 2009 10:21:17 +0100
-X-Mailer: git-send-email 1.6.5.5
-In-Reply-To: <7vskbn9s1k.fsf@alter.siamese.dyndns.org>
-In-Reply-To: <cover.1260177312.git.mhagger@alum.mit.edu>
-References: <cover.1260177312.git.mhagger@alum.mit.edu>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S934976AbZLGKLG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2009 05:11:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934967AbZLGKLF
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 05:11:05 -0500
+Received: from imag.imag.fr ([129.88.30.1]:42845 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934964AbZLGKLE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2009 05:11:04 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id nB7A7xEN022755
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 7 Dec 2009 11:07:59 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NHaVb-0005sK-Jl; Mon, 07 Dec 2009 11:07:59 +0100
+In-Reply-To: <7vk4wz9rbt.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Sun\, 06 Dec 2009 23\:27\:34 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 07 Dec 2009 11:08:02 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134731>
 
-The command is like "squash", except that it discards the commit message
-of the corresponding commit.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- Documentation/git-rebase.txt  |   13 +++++++----
- git-rebase--interactive.sh    |   45 +++++++++++++++++++++++++++++++---------
- t/lib-rebase.sh               |    7 +++--
- t/t3404-rebase-interactive.sh |   30 +++++++++++++++++++++++++++
- 4 files changed, 77 insertions(+), 18 deletions(-)
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+> The second round still had a few compilation warnings (turned to errors in
+> my environment) so I fixed them up somewhat.
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index ca5e1e8..9b648ec 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -382,9 +382,12 @@ If you just want to edit the commit message for a commit, replace the
- command "pick" with the command "reword".
- 
- If you want to fold two or more commits into one, replace the command
--"pick" with "squash" for the second and subsequent commit.  If the
--commits had different authors, it will attribute the squashed commit to
--the author of the first commit.
-+"pick" for the second and subsequent commits with "squash" or "fixup".
-+If the commits had different authors, the folded commit will be
-+attributed to the author of the first commit.  The suggested commit
-+message for the folded commit is the concatenation of the commit
-+messages of the first commit and of those with the "squash" command,
-+but omits the commit messages of commits with the "fixup" command.
- 
- 'git-rebase' will stop when "pick" has been replaced with "edit" or
- when a command fails due to merge errors. When you are done editing
-@@ -512,8 +515,8 @@ Easy case: The changes are literally the same.::
- Hard case: The changes are not the same.::
- 
- 	This happens if the 'subsystem' rebase had conflicts, or used
--	`\--interactive` to omit, edit, or squash commits; or if the
--	upstream used one of `commit \--amend`, `reset`, or
-+	`\--interactive` to omit, edit, squash, or fixup commits; or
-+	if the upstream used one of `commit \--amend`, `reset`, or
- 	`filter-branch`.
- 
- 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 0bd3bf7..cd2dce1 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -302,7 +302,10 @@ nth_string () {
- 
- make_squash_message () {
- 	if test -f "$SQUASH_MSG"; then
--		COUNT=$(($(sed -n "s/^# This is [^0-9]*\([1-9][0-9]*\).*/\1/p" \
-+		# We want to be careful about matching only the commit
-+		# message comment lines generated by this function.
-+		# "[snrt][tdh]" matches the nth_string endings.
-+		COUNT=$(($(sed -n "s/^# Th[^0-9]*\([1-9][0-9]*\)[snrt][tdh] commit message.*:/\1/p" \
- 			< "$SQUASH_MSG" | sed -ne '$p')+1))
- 		echo "# This is a combination of $COUNT commits."
- 		sed -e 1d -e '2,/^./{
-@@ -315,10 +318,23 @@ make_squash_message () {
- 		echo
- 		git cat-file commit HEAD | sed -e '1,/^$/d'
- 	fi
--	echo
--	echo "# This is the $(nth_string $COUNT) commit message:"
--	echo
--	git cat-file commit $1 | sed -e '1,/^$/d'
-+	case $1 in
-+	squash)
-+		echo
-+		echo "# This is the $(nth_string $COUNT) commit message:"
-+		echo
-+		git cat-file commit $2 | sed -e '1,/^$/d'
-+		;;
-+	fixup)
-+		echo
-+		echo "# The $(nth_string $COUNT) commit message will be skipped:"
-+		echo
-+		# Comment the lines of the commit message out using
-+		# "#" rather than "# " to make them less likely to
-+		# confuse the sed regexp above.
-+		git cat-file commit $2 | sed -e '1,/^$/d' -e 's/^/#/'
-+		;;
-+	esac
- }
- 
- peek_next_command () {
-@@ -367,20 +383,28 @@ do_next () {
- 		warn
- 		exit 0
- 		;;
--	squash|s)
--		comment_for_reflog squash
-+	squash|s|fixup|f)
-+		case "$command" in
-+		squash|s)
-+			squash_style=squash
-+			;;
-+		fixup|f)
-+			squash_style=fixup
-+			;;
-+		esac
-+		comment_for_reflog $squash_style
- 
- 		test -f "$DONE" && has_action "$DONE" ||
--			die "Cannot 'squash' without a previous commit"
-+			die "Cannot '$squash_style' without a previous commit"
- 
- 		mark_action_done
--		make_squash_message $sha1 > "$MSG"
-+		make_squash_message $squash_style $sha1 > "$MSG"
- 		failed=f
- 		author_script=$(get_author_ident_from_commit HEAD)
- 		output git reset --soft HEAD^
- 		pick_one -n $sha1 || failed=t
- 		case "$(peek_next_command)" in
--		squash|s)
-+		squash|s|fixup|f)
- 			USE_OUTPUT=output
- 			MSG_OPT=-F
- 			EDIT_OR_FILE="$MSG"
-@@ -768,6 +792,7 @@ first and then run 'git rebase --continue' again."
- #  r, reword = use commit, but edit the commit message
- #  e, edit = use commit, but stop for amending
- #  s, squash = use commit, but meld into previous commit
-+#  f, fixup = like "squash", but discard this commit's log message
- #
- # If you remove a line here THAT COMMIT WILL BE LOST.
- # However, if you remove everything, the rebase will be aborted.
-diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-index 62f452c..f4dda02 100644
---- a/t/lib-rebase.sh
-+++ b/t/lib-rebase.sh
-@@ -9,8 +9,9 @@
- #
- #	"[<lineno1>] [<lineno2>]..."
- #
--#   If a line number is prefixed with "squash", "edit", or "reword", the
--#   respective line's command will be replaced with the specified one.
-+#   If a line number is prefixed with "squash", "fixup", "edit", or
-+#   "reword", the respective line's command will be replaced with the
-+#   specified one.
- 
- set_fake_editor () {
- 	echo "#!$SHELL_PATH" >fake-editor.sh
-@@ -32,7 +33,7 @@ cat "$1".tmp
- action=pick
- for line in $FAKE_LINES; do
- 	case $line in
--	squash|edit|reword)
-+	squash|fixup|edit|reword)
- 		action="$line";;
- 	*)
- 		echo sed -n "${line}s/^pick/$action/p"
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 778daf4..ea26115 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -235,6 +235,36 @@ test_expect_success 'multi-squash only fires up editor once' '
- 	test 1 = $(git show | grep ONCE | wc -l)
- '
- 
-+test_expect_success 'multi-fixup only fires up editor once' '
-+	git checkout -b multi-fixup E &&
-+	base=$(git rev-parse HEAD~4) &&
-+	FAKE_COMMIT_AMEND="ONCE" FAKE_LINES="1 fixup 2 fixup 3 fixup 4" \
-+		git rebase -i $base &&
-+	test $base = $(git rev-parse HEAD^) &&
-+	test 1 = $(git show | grep ONCE | wc -l) &&
-+	git checkout to-be-rebased &&
-+	git branch -D multi-fixup
-+'
-+
-+cat > expect-squash-fixup << EOF
-+B
-+
-+D
-+
-+ONCE
-+EOF
-+
-+test_expect_success 'squash and fixup generate correct log messages' '
-+	git checkout -b squash-fixup E &&
-+	base=$(git rev-parse HEAD~4) &&
-+	FAKE_COMMIT_AMEND="ONCE" FAKE_LINES="1 fixup 2 squash 3 fixup 4" \
-+		git rebase -i $base &&
-+	git cat-file commit HEAD | sed -e 1,/^\$/d > actual-squash-fixup &&
-+	test_cmp expect-squash-fixup actual-squash-fixup &&
-+	git checkout to-be-rebased &&
-+	git branch -D squash-fixup
-+'
-+
- test_expect_success 'squash works as expected' '
- 	for n in one two three four
- 	do
+Thanks. For some reasons, I had CFLAGS=-g and I didn't see the
+warnings :-(
+
+> I stopped before getting a
+> clean compile, though---you will still get:
+>
+>   sha1_name.c: In function 'get_sha1_with_mode_1':
+>   sha1_name.c:956: error: 'object_name' may be used uninitialized in this function
+
+This one is strange. I don't git it with gcc 4.4, even with -Wall
+-Werror. And indeed, object_name is initialized when !gently, which is
+precisely when we use it.
+
+I did
+
+-               char *object_name;
++               char *object_name = NULL;
+
+to make sure the warning goes away on your machine, but I don't
+understand what's going on.
+
+>  cache.h     |    4 ++--
+>  sha1_name.c |    2 +-
+
+Squashed into v3, together with initialisation of object_name, and two
+s/int/unsigned/ to please gcc -Wextra.
+
 -- 
-1.6.5.5
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
