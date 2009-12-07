@@ -1,79 +1,113 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH 1/2] Documentation: 'git add -A' can remove files
-Date: Mon, 7 Dec 2009 01:57:32 +0100
-Message-ID: <20091207005732.GA20909@atjola.homenet>
-References: <4B1C384A.8000106@gmail.com>
- <7vr5r7el2q.fsf@alter.siamese.dyndns.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] gitweb.js: Harden setting blamed commit info in
+ incremental blame
+Date: Sun, 06 Dec 2009 17:04:20 -0800
+Message-ID: <1260147860.1579.47.camel@swboyd-laptop>
+References: <1258659887-5244-1-git-send-email-bebarino@gmail.com>
+	 <200911250145.16472.jnareb@gmail.com> <4B0CAC2E.1060105@gmail.com>
+	 <200911251536.08993.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?Q?Bj=F6rn?= Gustavsson <bgustavsson@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 01:57:47 2009
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 07 02:04:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHRv5-0006cB-If
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 01:57:43 +0100
+	id 1NHS1d-0000r8-Bp
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 02:04:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758229AbZLGA5b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Dec 2009 19:57:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758227AbZLGA5b
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 19:57:31 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36751 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758184AbZLGA5a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2009 19:57:30 -0500
-Received: (qmail invoked by alias); 07 Dec 2009 00:57:36 -0000
-Received: from i59F572C7.versanet.de (EHLO atjola.homenet) [89.245.114.199]
-  by mail.gmx.net (mp035) with SMTP; 07 Dec 2009 01:57:36 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/+oZll39b+FST+LEpKC+yx5Z+NqL+EW6yom4zSqH
-	vnxTePfA0YVAxu
-Content-Disposition: inline
-In-Reply-To: <7vr5r7el2q.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1758364AbZLGBER (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2009 20:04:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758358AbZLGBER
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 20:04:17 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:64145 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758347AbZLGBEQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2009 20:04:16 -0500
+Received: by pwj9 with SMTP id 9so605038pwj.21
+        for <git@vger.kernel.org>; Sun, 06 Dec 2009 17:04:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=o87PbZTOabo2y2BGMhxv3uIIavsdTDE5EGrwKSexeNc=;
+        b=M5OFvJkUOYqyZ6BEegGIQPFcZEXAMt/xqbD6ir/MQdxx13phvl3rglfrJoOBUkDy3r
+         RHg4avZg5XByUIPHN0S2PhgFNjPjBzwcN2P3MVA2zTH12SWJS8OLw899dAMrtc9bGmjN
+         +3vaWnGWty355ZVkYKH75qMRbETnPZhwKtb2s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=HZudLJ8gPIHT973VWDUtO7zA82pgvp5Bpucw9n8MMpn6sUtKq0HkoG+mVWsXGFfHPx
+         RtRAZSKGZypM7wnXuRoXyTNACRnTBYtzu7fww/OPhLP3uYarOQ04O/lu8aVcYJkWwASD
+         W+SV7L2YB8xdjZXYgbxIBCB6tXpPyz1J6Tz0c=
+Received: by 10.115.102.5 with SMTP id e5mr6107158wam.210.1260147863001;
+        Sun, 06 Dec 2009 17:04:23 -0800 (PST)
+Received: from ?192.168.1.5? (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 20sm4744802pzk.5.2009.12.06.17.04.21
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 06 Dec 2009 17:04:21 -0800 (PST)
+In-Reply-To: <200911251536.08993.jnareb@gmail.com>
+X-Mailer: Evolution 2.28.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134705>
 
-On 2009.12.06 15:31:25 -0800, Junio C Hamano wrote:
-> I wonder if we can restructure the description of "-u" to make it eas=
-ier
-> to read, to simplify the description of "-A".
+On Wed, 2009-11-25 at 15:36 +0100, Jakub Narebski wrote:
+> Well, the one time I was able to run debugger (F12, select 'Script', select
+> 'gitweb.js') with error occurring and without IE hanging (for README file)
+> it did show an error for the following line:
+> 
+>   if (xhr.readyState === 3 && xhr.status !== 200) {
+> 
+> When I checked 'xhr' object, it has "Unknown error" as contents of 
+> xhr.statusText field and as contents of xhr.status (sic!), which should
+> be a number: HTTP status code.
+> 
+> Unfortunately I had to take a break... and I was not able to reproduce this
+> (without hanging web browser: "program not responding") since then...
+> 
 
-What I usually say on #git is something like:
+Ok. It's December and I've had some more time to look into this.
+Initializing 'xhr' to null seems to get rid of the "Unknown error"
+problem (see patch below).
 
-	"git add <path>" looks at the working tree to find files
-	matching <path>.  "git add -u <path>" looks at the index, and
-	"git add -A <path>" looks at both. Therefore "add" and "add -A"
-	can add new files to the index, and "add -u" and "add -A" can
-	remove files from it.
+The responsiveness on IE8 is pretty poor. I load the page and then after
+some waiting (usually 20-30 seconds including IE becoming a "Not
+Responding" program) the whole page will load. There is nothing
+incremental about it. I'm trying to figure out why it's slow now.
 
-	And for convenience, -u and -A default to "." as the path argument.
+--->8----
 
-So maybe something like this?
+Subject: [PATCH] gitweb.js: workaround IE8 "Unknown error"
 
--u, --update
-    Instead of matching <filepattern> against files in the working tree=
-,
-    it is matched against the already tracked files in the index. This
-    means that it won't find any new files, but can find files already
-    deleted from the working tree and remove them from the index. Also,
-    if no <filepattern> is given, this option will make it default to
-    ".", updating all tracked files in the current directory and its
-    subdirectories.
+Internet Explorer 8 complains about an "Unknown error on line 782, char 2".
+That line is a reference to xhr and the status code. By initializing xhr
+to null this error goes away.
 
--A, --all
-    Like -u, but matches <filepattern> against files in the index in
-    addition to the files in working tree. This means that it can find
-    new files as well.
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+---
+ gitweb/gitweb.js |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
+diff --git a/gitweb/gitweb.js b/gitweb/gitweb.js
+index 2a25b7c..b936635 100644
+--- a/gitweb/gitweb.js
++++ b/gitweb/gitweb.js
+@@ -126,7 +126,7 @@ function createRequestObject() {
+ /* ============================================================ */
+ /* utility/helper functions (and variables) */
 
-Bj=F6rn
+-var xhr;        // XMLHttpRequest object
++var xhr = null;        // XMLHttpRequest object
+ var projectUrl; // partial query + separator ('?' or ';')
+
+ // 'commits' is an associative map. It maps SHA1s to Commit objects.
+-- 
+1.6.6.rc1.39.g9a42
