@@ -1,76 +1,84 @@
-From: Yakup Akbay <yakbay@ubicom.com>
-Subject: [BUG] git config does not reuse section name
-Date: Mon, 07 Dec 2009 19:06:19 +0200
-Message-ID: <4B1D360B.4070203@ubicom.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] git config does not reuse section name
+Date: Mon, 07 Dec 2009 12:04:52 -0800
+Message-ID: <7vy6le35zv.fsf@alter.siamese.dyndns.org>
+References: <4B1D360B.4070203@ubicom.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 07 20:10:45 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Yakup Akbay <yakbay@ubicom.com>
+X-From: git-owner@vger.kernel.org Mon Dec 07 21:05:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHiyq-0005er-Kl
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 20:10:44 +0100
+	id 1NHjpf-00067Y-QB
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 21:05:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932269AbZLGTKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2009 14:10:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932146AbZLGTKG
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 14:10:06 -0500
-Received: from server70.appriver.com ([69.20.119.203]:2018 "EHLO
-	server70.appriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932244AbZLGTKF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2009 14:10:05 -0500
-X-Greylist: delayed 7201 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Dec 2009 14:10:05 EST
-X-Policy: GLOBAL - ubicom.com
-X-Primary: yakbay@ubicom.com
-X-Note: This Email was scanned by AppRiver SecureTide
-X-Virus-Scan: V-
-X-Note: TCH-CT/SI:0-126/SG:2 12/7/2009 12:10:15 PM
-X-GBUdb-Analysis: 0, 216.112.109.98, Ugly c=0.662751 p=-0.838969 Source Normal
-X-Signature-Violations: 0-0-0-1582-c
-X-Note: Spam Tests Failed: 
-X-Country-Path: PRIVATE->UNITED STATES->UNITED STATES
-X-Note-Sending-IP: 216.112.109.98
-X-Note-Reverse-DNS: 216.112.109.98.ptr.us.xo.net
-X-Note-WHTLIST: yakbay@ubicom.com
-X-Note: User Rule Hits: 
-X-Note: Global Rule Hits: 115 116 117 118 122 123 221 
-X-Note: Mail Class: VALID
-X-Note: Headers Injected
-Received: from [216.112.109.98] (HELO stork.scenix.com)
-  by server70.appriver.com (CommuniGate Pro SMTP 5.3c2)
-  with ESMTP id 108701875 for git@vger.kernel.org; Mon, 07 Dec 2009 12:10:16 -0500
-Received: from [172.18.200.148] ([172.18.200.148]) by stork.scenix.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 7 Dec 2009 09:02:47 -0800
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-X-OriginalArrivalTime: 07 Dec 2009 17:02:47.0906 (UTC) FILETIME=[1A399420:01CA775F]
+	id S1758839AbZLGUE6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2009 15:04:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758817AbZLGUE5
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 15:04:57 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44144 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758783AbZLGUE4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2009 15:04:56 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 83FB686626;
+	Mon,  7 Dec 2009 15:05:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MNtrRklW/VDPCg6r80MV9z60UWA=; b=pssk11
+	qhViA0Nfvnlk74y2oONO22b1PBr2LeUYeKheKZENMCQzhI9xvINsTfXCs1e0CgB+
+	Gmi2z5lAQhbVJj44elED9m7EcY2udycbbtbQ5ceRPlIGwuElyWDmc1I4ZbpkqxYJ
+	GjrcDaXy6MclQPiTrsMo2irvWx+ChscZu+qmk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oSl2ij18lHq20rv3Sl/Cr7liyH4uZMuW
+	0WtlqbEKDOFvVCjilE1LrjzUbizJVtzOBRnVU5ij2NnX+OyaOJsYyAuxvU9ns717
+	0GUOu4+Mppigekty/Esenbt3t/mT761PE3tiKd9/Xm8AUIhvxPK4Dt08ssGElmbw
+	IzgnWigZdXQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CA88D86624;
+	Mon,  7 Dec 2009 15:04:58 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9804C86623; Mon,  7 Dec
+ 2009 15:04:54 -0500 (EST)
+In-Reply-To: <4B1D360B.4070203@ubicom.com> (Yakup Akbay's message of "Mon\,
+ 07 Dec 2009 19\:06\:19 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CBCD8D04-E36B-11DE-9918-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134774>
 
-When I repeat the following n times
+Yakup Akbay <yakbay@ubicom.com> writes:
 
-    $ git config color.ui always
-    $ git config --unset color.ui
+> When I repeat the following n times
+>
+>    $ git config color.ui always
+>    $ git config --unset color.ui
+>
+>
+> it ends up the section name [color] n times in the .git/config file.
+>
+>
+>
+> like this for n=4:
+>
+>    [color]
+>    [color]
+>    [color]
+>    [color]
+>
+>
+> Using git version 1.6.5.3 (I don't know whether this is already fixed
+> in in later versions)
 
-
-it ends up the section name [color] n times in the .git/config file.
-
-
-
-like this for n=4:
-
-    [color]
-    [color]
-    [color]
-    [color]
-
-
-Using git version 1.6.5.3 (I don't know whether this is already fixed in 
-in later versions)
-
-Yakup
+If I recall correctly, this hasn't been even noticed/reported/recognized
+as an issue, ever since the "git repo-config" was introduced (which later
+was renamed to "git config").  Dscho, do you remember details?
