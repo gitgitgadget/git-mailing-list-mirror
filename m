@@ -1,181 +1,156 @@
 From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
-Subject: [PATCH 1/2] git-add/rm doc: Consistently back-quote
-Date: Mon, 07 Dec 2009 19:26:57 +0100
-Message-ID: <4B1D48F1.1060303@gmail.com>
+Subject: [PATCH 2/2] git-rm doc: Describe how to sync index & work tree
+Date: Mon, 07 Dec 2009 19:35:42 +0100
+Message-ID: <4B1D4AFE.6090708@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 07 19:27:10 2009
+X-From: git-owner@vger.kernel.org Mon Dec 07 19:36:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHiId-0003G4-4G
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 19:27:07 +0100
+	id 1NHiRC-0006vf-VF
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 19:35:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758208AbZLGS0y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Dec 2009 13:26:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757866AbZLGS0x
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 13:26:53 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:53610 "EHLO
+	id S1758597AbZLGSfp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Dec 2009 13:35:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758561AbZLGSfn
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 13:35:43 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:51950 "EHLO
 	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758041AbZLGS0w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2009 13:26:52 -0500
-Received: by mail-ew0-f219.google.com with SMTP id 19so791269ewy.1
-        for <git@vger.kernel.org>; Mon, 07 Dec 2009 10:26:59 -0800 (PST)
+	with ESMTP id S1758589AbZLGSfj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2009 13:35:39 -0500
+Received: by ewy19 with SMTP id 19so802152ewy.1
+        for <git@vger.kernel.org>; Mon, 07 Dec 2009 10:35:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from
          :user-agent:mime-version:to:cc:subject:content-type
          :content-transfer-encoding;
-        bh=He2G48doV5BhZeXFI33/qVpY0lrJcm6u1VaEEUGFZEE=;
-        b=VbARPpEZjlys2s3eeLkQJr6FlGJfVcxQXNJ62ucHrj/jeBSHAWj2rjKHmuquwUisAD
-         97EOBpqY34hKbDTHg+C9mKgj3Y7Hf605QlECWQl56DR2F1g5qeuGT6LaiA1cTh9W/MZc
-         N2WVEt7rKrF/Q+ZLizhw+Vn0a4CqPEDxKpm9k=
+        bh=Wv18mCPBnzHHkzuBOVMYZP+kcCoY+WUsknlju2g2FfY=;
+        b=MSftq0JgekFqr6YgdLTfismzhVPNKXysnxByNOegMHelvDcmPH3heFD460FNWhn3YF
+         /BqF8baYVmpvaUrd86f1+nERi2RjgbgHhMK44ZgGiLY4JWMLfjkgWkvcWS7dU+SrcZEj
+         VWID9m9o8R8evNHLvqWnzYdmFFUO0gVmD2aqI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :content-type:content-transfer-encoding;
-        b=bgjCwR1onFWOgA67ZHGC782mgcGf6IaRK2Cjt9+GlHG0VOmnmoDursyOnaAQ58KNht
-         s9XvJUqrcjIx203/XASEk9Q9+D35V/K8AeIqh6f6J+GyfxPP8/G3JUgQagPQKKR32phw
-         sCT51rbPQTx/0QsKl0nkMONcYjlVpZEJ5e5zA=
-Received: by 10.213.100.138 with SMTP id y10mr7308177ebn.96.1260210419097;
-        Mon, 07 Dec 2009 10:26:59 -0800 (PST)
+        b=O4o1+eMWjcqQ+hZtXMgHGokyj7bfN1yDEY4CeGQhHNZexJqUSruWPJ23ydQR8bvUBP
+         DCEmknz8i56yS9GBAPl4EQ521rwudz18jCgv/ne4ldMGMAnTBQD5YlkvQ4IzrM/vAxuF
+         5J0Gz0Sb5h+0nQIc+vvrZVyKh9WI4OoIzfMtM=
+Received: by 10.213.110.7 with SMTP id l7mr632533ebp.23.1260210943875;
+        Mon, 07 Dec 2009 10:35:43 -0800 (PST)
 Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
-        by mx.google.com with ESMTPS id 14sm3544977ewy.15.2009.12.07.10.26.58
+        by mx.google.com with ESMTPS id 13sm3546340ewy.5.2009.12.07.10.35.42
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 07 Dec 2009 10:26:58 -0800 (PST)
+        Mon, 07 Dec 2009 10:35:43 -0800 (PST)
 User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134772>
 
-Consistently back-quote commands, options and file names.
+Newcomers to git that want to remove from the index only the
+files that have disappeared from the working tree will probably
+look for a way to do that in the documentation for 'git rm'.
+
+Therefore, describe how that can be done (even though it involves
+other commands than 'git rm'). Based on a suggestion by Junio,
+but re-arranged and rewritten to better fit into the style of
+command reference.
+
+While at it, change a single occurrence of "work tree" to "working
+tree" for consistency.
 
 Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
 ---
- Documentation/git-add.txt |   24 ++++++++++++------------
- Documentation/git-rm.txt  |    6 +++---
- 2 files changed, 15 insertions(+), 15 deletions(-)
+To better fit a reference page (IMO), I have changed the
+order of the commands, and have put the straightforward
+command last as it is the least useful, and I have removed
+the "bad examples" (using two commands instead of simply
+'git add -A'). I realize that those examples have their value,
+too, but since most people scan a reference page quickly
+to find what they'll need, it will just confuse them.
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index ed68ea3..1f1b199 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -24,22 +24,22 @@ remove paths that do not exist in the working tree =
-anymore.
- The "index" holds a snapshot of the content of the working tree, and i=
-t
- is this snapshot that is taken as the contents of the next commit.  Th=
-us
- after making any changes to the working directory, and before running
--the commit command, you must use the 'add' command to add any new or
-+the commit command, you must use the `add` command to add any new or
- modified files to the index.
-=20
- This command can be performed multiple times before a commit.  It only
- adds the content of the specified file(s) at the time the add command =
-is
- run; if you want subsequent changes included in the next commit, then
--you must run 'git add' again to add the new content to the index.
-+you must run `git add` again to add the new content to the index.
-=20
--The 'git status' command can be used to obtain a summary of which
-+The `git status` command can be used to obtain a summary of which
- files have changes that are staged for the next commit.
-=20
--The 'git add' command will not add ignored files by default.  If any
--ignored files were explicitly specified on the command line, 'git add'
-+The `git add` command will not add ignored files by default.  If any
-+ignored files were explicitly specified on the command line, `git add`
- will fail with a list of ignored files.  Ignored files reached by
- directory recursion or filename globbing performed by Git (quote your
--globs before the shell) will be silently ignored.  The 'add' command c=
-an
-+globs before the shell) will be silently ignored.  The `add` command c=
-an
- be used to add ignored files with the `-f` (force) option.
-=20
- Please see linkgit:git-commit[1] for alternative ways to add content t=
-o a
-@@ -119,8 +119,8 @@ subdirectories.
- 	Record only the fact that the path will be added later. An entry
- 	for the path is placed in the index with no content. This is
- 	useful for, among other things, showing the unstaged content of
--	such files with 'git diff' and committing them with 'git commit
--	-a'.
-+	such files with `git diff` and committing them with `git commit
-+	-a`.
-=20
- --refresh::
- 	Don't add the file(s), but only refresh their stat()
-@@ -140,7 +140,7 @@ subdirectories.
- Configuration
- -------------
-=20
--The optional configuration variable 'core.excludesfile' indicates a pa=
-th to a
-+The optional configuration variable `core.excludesfile` indicates a pa=
-th to a
- file containing patterns of file names to exclude from git-add, simila=
-r to
- $GIT_DIR/info/exclude.  Patterns in the exclude file are used in addit=
-ion to
- those in info/exclude.  See linkgit:gitrepository-layout[5].
-@@ -188,7 +188,7 @@ and type return, like this:
-     What now> 1
- ------------
-=20
--You also could say "s" or "sta" or "status" above as long as the
-+You also could say `s` or `sta` or `status` above as long as the
- choice is unique.
-=20
- The main command loop has 6 subcommands (plus help and quit).
-@@ -196,9 +196,9 @@ The main command loop has 6 subcommands (plus help =
-and quit).
- status::
-=20
-    This shows the change between HEAD and index (i.e. what will be
--   committed if you say "git commit"), and between index and
-+   committed if you say `git commit`), and between index and
-    working tree files (i.e. what you could stage further before
--   "git commit" using "git-add") for each path.  A sample output
-+   `git commit` using `git add`) for each path.  A sample output
-    looks like this:
- +
- ------------
+ Documentation/git-rm.txt |   53 ++++++++++++++++++++++++++++++++++++++=
++++++++-
+ 1 files changed, 52 insertions(+), 1 deletions(-)
+
 diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index 5afb1e7..d4162f6 100644
+index d4162f6..c622972 100644
 --- a/Documentation/git-rm.txt
 +++ b/Documentation/git-rm.txt
-@@ -12,13 +12,13 @@ SYNOPSIS
- DESCRIPTION
+@@ -13,7 +13,7 @@ DESCRIPTION
  -----------
  Remove files from the index, or from the working tree and the index.
--'git-rm' will not remove a file from just your working directory.
-+`git rm` will not remove a file from just your working directory.
- (There is no option to remove a file only from the work tree
+ `git rm` will not remove a file from just your working directory.
+-(There is no option to remove a file only from the work tree
++(There is no option to remove a file only from the working tree
  and yet keep it in the index; use `/bin/rm` if you want to do that.)
  The files being removed have to be identical to the tip of the branch,
  and no updates to their contents can be staged in the index,
- though that default behavior can be overridden with the `-f` option.
--When '--cached' is given, the staged content has to
-+When `--cached` is given, the staged content has to
- match either the tip of the branch or the file on disk,
- allowing the file to be removed from just the index.
+@@ -81,6 +81,57 @@ two directories `d` and `d2`, there is a difference =
+between
+ using `git rm \'d\*\'` and `git rm \'d/\*\'`, as the former will
+ also remove all of directory `d2`.
 =20
-@@ -64,7 +64,7 @@ OPTIONS
-=20
- -q::
- --quiet::
--	'git-rm' normally outputs one line (in the form of an "rm" command)
-+	`git rm` normally outputs one line (in the form of an `rm` command)
- 	for each file removed. This option suppresses that output.
-=20
-=20
++REMOVING FILES THAT HAVE DISAPPEARED FROM THE FILESYSTEM
++--------------------------------------------------------
++There is no option for `git rm` to remove from the index only
++the paths that have disappeared from the filesystem. However,
++depending on the use case, there are several ways that can be
++done.
++
++Using "git commit -a"
++~~~~~~~~~~~~~~~~~~~~~
++If you intend that your next commit should record all modifications
++of tracked files in the working tree and record all removals of
++files that have been removed from the working tree with `rm`
++(as opposed to `git rm`), use `git commit -a`, as it will
++automatically notice and record all removals.
++
++Using "git add -A"
++~~~~~~~~~~~~~~~~~~
++When accepting a new code drop for a vendor branch, you probably
++want to record both the removal of paths and additions of new paths
++as well as modifications of existing paths.
++
++Typically you would first remove all tracked files from the working
++tree using this command:
++
++----------------
++git ls-files -z | xargs -0 rm -f
++----------------
++
++and then "untar" the new code in the working tree. Alternately
++you could "rsync" the changes into the working tree.
++
++After that, the easiest way to record all removals, additions, and
++modifications in the working tree is:
++
++----------------
++git add -A
++----------------
++
++See linkgit:git-add[1].
++
++Other ways
++~~~~~~~~~~
++If all you really want to do is to remove from the index the files
++that are no longer present in the working tree (perhaps because
++your working tree is dirty so that you cannot use `git commit -a`),
++use the following command:
++
++----------------
++git diff --name-only --diff-filter=3DD -z | xargs -0 git rm --cached
++----------------
++
+ EXAMPLES
+ --------
+ git rm Documentation/\\*.txt::
 --=20
 1.6.6.rc1.31.g1a56b
