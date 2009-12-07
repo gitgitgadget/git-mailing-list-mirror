@@ -1,50 +1,54 @@
-From: =?ISO-8859-15?Q?J=E9r=F4me_Petazzoni?= 
-	<jerome.petazzoni@sipartech.com>
-Subject: Re: [Admins] Re: git-svn breakage on repository rename
-Date: Mon, 07 Dec 2009 17:21:02 +0100
-Message-ID: <4B1D2B6E.7050600@sipartech.com>
-References: <4B197078.6050203@cosent.net> <20091205222251.GA2120@dcvr.yhbt.net> <4B1BDAC4.9070305@cosent.net>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [RFC PATCH v3 0/8] Remote helpers smart transport extensions
+Date: Mon, 7 Dec 2009 18:33:38 +0200
+Message-ID: <20091207163338.GA27516@Knoppix>
+References: <1260116931-16549-1-git-send-email-ilari.liusvaara@elisanet.fi>
+ <7v7hsz9qxj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>, wichert@wiggy.net,
-	George Kuk <George.Kuk@nottingham.ac.uk>,
-	admins@lists.plone.org, clark.alex@gmail.com, git@vger.kernel.org
-To: Guido Stevens <guido.stevens@cosent.net>
-X-From: git-owner@vger.kernel.org Mon Dec 07 17:28:52 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 07 17:33:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHgS7-0007hC-LG
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 17:28:47 +0100
+	id 1NHgX2-0001Sh-Fl
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 17:33:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935335AbZLGQ2f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2009 11:28:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934606AbZLGQ2e
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 11:28:34 -0500
-Received: from smtp.enix.org ([193.19.211.146]:48118 "EHLO smtp.enix.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933781AbZLGQ2e (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2009 11:28:34 -0500
-X-Greylist: delayed 448 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Dec 2009 11:28:34 EST
-Received: from [85.171.23.6] (helo=[192.168.0.16])
-	by smtp.enix.org with esmtpa (Exim 4.63)
-	(envelope-from <jerome.petazzoni@sipartech.com>)
-	id 1NHgKd-0007XZ-OY; Mon, 07 Dec 2009 17:21:03 +0100
-User-Agent: Mozilla-Thunderbird 2.0.0.9 (X11/20080110)
-In-Reply-To: <4B1BDAC4.9070305@cosent.net>
+	id S935393AbZLGQdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2009 11:33:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935379AbZLGQdi
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 11:33:38 -0500
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:44457 "EHLO
+	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935373AbZLGQdh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2009 11:33:37 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 1450DC7B16;
+	Mon,  7 Dec 2009 18:33:43 +0200 (EET)
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A07AA611131; Mon, 07 Dec 2009 18:33:43 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id 9F46141BE4;
+	Mon,  7 Dec 2009 18:33:39 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <7v7hsz9qxj.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134764>
 
-Guido Stevens wrote:
-> Thanks everybody for helping to solve this problem! I can now integrate 
-> the analysis of Products.CMFPlone into the overall Plone ecosystem 
-> analysis, and it would have been very awkward not to be able to do that 
-> because of this renaming issue. Again: thanks.
->   
+On Sun, Dec 06, 2009 at 11:36:08PM -0800, Junio C Hamano wrote:
+> I queued to ease the discussion in 'pu'.  I had to fix-up some conflicts
+> while doing so.  Please sanity check the result.
 
-You're very welcome :-)
+The conflict resolution seems sane. 
+
+Sorry about leaving lots of codingstyle stuff unfixed.
+
+-Ilari
