@@ -1,39 +1,39 @@
 From: Johan Herland <johan@herland.net>
-Subject: [RFC/PATCHv10 06/11] Notes API: init_notes(): Initialize the notes
- tree from the given notes ref
-Date: Mon, 07 Dec 2009 12:27:29 +0100
-Message-ID: <1260185254-1523-7-git-send-email-johan@herland.net>
+Subject: [RFC/PATCHv10 10/11] Notes API: Allow multiple concurrent notes trees
+ with new struct notes_tree
+Date: Mon, 07 Dec 2009 12:27:33 +0100
+Message-ID: <1260185254-1523-11-git-send-email-johan@herland.net>
 References: <1260185254-1523-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
 Content-Transfer-Encoding: 7BIT
 Cc: gitster@pobox.com, johan@herland.net, spearce@spearce.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 07 12:29:25 2009
+X-From: git-owner@vger.kernel.org Mon Dec 07 12:29:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHbmM-0007m5-ET
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 12:29:22 +0100
+	id 1NHbmP-0007m5-Jk
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 12:29:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934026AbZLGL2D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2009 06:28:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933966AbZLGL2C
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 06:28:02 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:34424 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S933949AbZLGL16 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Dec 2009 06:27:58 -0500
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+	id S934045AbZLGL2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2009 06:28:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934038AbZLGL2S
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 06:28:18 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:46455 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S933756AbZLGL2R (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Dec 2009 06:28:17 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KUA00L1G56Q4350@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Mon, 07 Dec 2009 12:28:02 +0100 (MET)
+ with ESMTP id <0KUA00A2T571MPE0@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 07 Dec 2009 12:28:13 +0100 (MET)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KUA002OO5616830@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Mon, 07 Dec 2009 12:28:02 +0100 (MET)
+ git@vger.kernel.org; Mon, 07 Dec 2009 12:28:13 +0100 (MET)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.12.7.111518
 X-Mailer: git-send-email 1.6.5.3.433.g11067
@@ -42,103 +42,281 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134747>
 
-Created by a simple refactoring of initialize_notes().
+The new struct notes_tree encapsulates access to a specific notes tree.
+It is provided to allow callers to interface with several different notes
+trees simultaneously.
 
-Also add a new 'flags' parameter, which is a bitwise combination of notes
-initialization flags. For now, there is only one flag - NOTES_INIT_EMPTY -
-which indicates that the notes tree should not auto-load the contents of
-the given (or default) notes ref, but rather should leave the notes tree
-initialized to an empty state. This will become useful in the future when
-manipulating the notes tree through the notes API.
+A struct notes_tree * parameter is added to every function in the notes API.
+In all cases, NULL can be passed, in which case, a fallback "default" notes
+tree (declared in notes.c) is used.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- notes.c |   27 ++++++++++++++++-----------
- notes.h |   20 ++++++++++++++++++++
- 2 files changed, 36 insertions(+), 11 deletions(-)
+ notes.c  |   67 ++++++++++++++++++++++++++++++++++++++-----------------------
+ notes.h  |   53 +++++++++++++++++++++++++++++++++++-------------
+ pretty.c |    7 +++--
+ 3 files changed, 84 insertions(+), 43 deletions(-)
 
 diff --git a/notes.c b/notes.c
-index 5590414..e0dfa24 100644
+index de5a847..efd0007 100644
 --- a/notes.c
 +++ b/notes.c
-@@ -341,13 +341,25 @@ static void load_subtree(struct leaf_node *subtree, struct int_node *node,
- 	free(buf);
+@@ -50,9 +50,7 @@ struct leaf_node {
+ #define SUBTREE_SHA1_PREFIXCMP(key_sha1, subtree_sha1) \
+ 	(memcmp(key_sha1, subtree_sha1, subtree_sha1[19]))
+ 
+-static struct int_node root_node;
+-
+-static int initialized;
++static struct notes_tree default_tree;
+ 
+ static void load_subtree(struct leaf_node *subtree, struct int_node *node,
+ 		unsigned int n);
+@@ -436,14 +434,15 @@ redo:
+ 	return 0;
  }
  
--static void initialize_notes(const char *notes_ref_name)
-+void init_notes(const char *notes_ref, int flags)
+-void init_notes(const char *notes_ref, int flags)
++void init_notes(struct notes_tree *t, const char *notes_ref, int flags)
  {
  	unsigned char sha1[20], object_sha1[20];
  	unsigned mode;
  	struct leaf_node root_tree;
  
--	if (!notes_ref_name || read_ref(notes_ref_name, object_sha1) ||
-+	assert(!initialized);
-+	initialized = 1;
-+
-+	if (!notes_ref) {
-+		const char *env = getenv(GIT_NOTES_REF_ENVIRONMENT);
-+		if (env)
-+			notes_ref = getenv(GIT_NOTES_REF_ENVIRONMENT);
-+		else
-+			notes_ref = GIT_NOTES_DEFAULT_REF;
-+	}
-+
-+	if (flags & NOTES_INIT_EMPTY || !notes_ref ||
-+	    read_ref(notes_ref, object_sha1) ||
- 	    get_tree_entry(object_sha1, "", sha1, &mode))
- 		return;
+-	assert(!initialized);
+-	initialized = 1;
++	if (!t)
++		t = &default_tree;
++	assert(!t->initialized);
  
-@@ -380,15 +392,8 @@ void format_note(const unsigned char *object_sha1, struct strbuf *sb,
+ 	if (!notes_ref) {
+ 		const char *env = getenv(GIT_NOTES_REF_ENVIRONMENT);
+@@ -453,6 +452,10 @@ void init_notes(const char *notes_ref, int flags)
+ 			notes_ref = GIT_NOTES_DEFAULT_REF;
+ 	}
+ 
++	t->root = (struct int_node *) xcalloc(sizeof(struct int_node), 1);
++	t->ref = notes_ref ? xstrdup(notes_ref) : NULL;
++	t->initialized = 1;
++
+ 	if (flags & NOTES_INIT_EMPTY || !notes_ref ||
+ 	    read_ref(notes_ref, object_sha1) ||
+ 	    get_tree_entry(object_sha1, "", sha1, &mode))
+@@ -460,44 +463,56 @@ void init_notes(const char *notes_ref, int flags)
+ 
+ 	hashclr(root_tree.key_sha1);
+ 	hashcpy(root_tree.val_sha1, sha1);
+-	load_subtree(&root_tree, &root_node, 0);
++	load_subtree(&root_tree, t->root, 0);
+ }
+ 
+-void add_note(const unsigned char *object_sha1, const unsigned char *note_sha1)
++void add_note(struct notes_tree *t, const unsigned char *object_sha1,
++		const unsigned char *note_sha1)
+ {
+ 	struct leaf_node *l;
+ 
+-	assert(initialized);
++	if (!t)
++		t = &default_tree;
++	assert(t->initialized);
+ 	l = (struct leaf_node *) xmalloc(sizeof(struct leaf_node));
+ 	hashcpy(l->key_sha1, object_sha1);
+ 	hashcpy(l->val_sha1, note_sha1);
+-	note_tree_insert(&root_node, 0, l, PTR_TYPE_NOTE);
++	note_tree_insert(t->root, 0, l, PTR_TYPE_NOTE);
+ }
+ 
+-const unsigned char *get_note(const unsigned char *object_sha1)
++const unsigned char *get_note(struct notes_tree *t,
++		const unsigned char *object_sha1)
+ {
+ 	struct leaf_node *found;
+ 
+-	assert(initialized);
+-	found = note_tree_find(&root_node, 0, object_sha1);
++	if (!t)
++		t = &default_tree;
++	assert(t->initialized);
++	found = note_tree_find(t->root, 0, object_sha1);
+ 	return found ? found->val_sha1 : NULL;
+ }
+ 
+-int for_each_note(each_note_fn fn, void *cb_data)
++int for_each_note(struct notes_tree *t, each_note_fn fn, void *cb_data)
+ {
+-	assert(initialized);
+-	return for_each_note_helper(&root_node, 0, 0, fn, cb_data);
++	if (!t)
++		t = &default_tree;
++	assert(t->initialized);
++	return for_each_note_helper(t->root, 0, 0, fn, cb_data);
+ }
+ 
+-void free_notes(void)
++void free_notes(struct notes_tree *t)
+ {
+-	note_tree_free(&root_node);
+-	memset(&root_node, 0, sizeof(struct int_node));
+-	initialized = 0;
++	if (!t)
++		t = &default_tree;
++	if (t->root)
++		note_tree_free(t->root);
++	free(t->root);
++	free(t->ref);
++	memset(t, 0, sizeof(struct notes_tree));
+ }
+ 
+-void format_note(const unsigned char *object_sha1, struct strbuf *sb,
+-		const char *output_encoding, int flags)
++void format_note(struct notes_tree *t, const unsigned char *object_sha1,
++		struct strbuf *sb, const char *output_encoding, int flags)
+ {
+ 	static const char utf8[] = "utf-8";
+ 	const unsigned char *sha1;
+@@ -505,10 +520,12 @@ void format_note(const unsigned char *object_sha1, struct strbuf *sb,
  	unsigned long linelen, msglen;
  	enum object_type type;
  
--	if (!initialized) {
--		const char *env = getenv(GIT_NOTES_REF_ENVIRONMENT);
--		if (env)
--			notes_ref_name = getenv(GIT_NOTES_REF_ENVIRONMENT);
--		else if (!notes_ref_name)
--			notes_ref_name = GIT_NOTES_DEFAULT_REF;
--		initialize_notes(notes_ref_name);
--		initialized = 1;
--	}
-+	if (!initialized)
-+		init_notes(NULL, 0);
+-	if (!initialized)
+-		init_notes(NULL, 0);
++	if (!t)
++		t = &default_tree;
++	if (!t->initialized)
++		init_notes(t, NULL, 0);
  
- 	sha1 = lookup_notes(object_sha1);
+-	sha1 = get_note(object_sha1);
++	sha1 = get_note(t, object_sha1);
  	if (!sha1)
+ 		return;
+ 
 diff --git a/notes.h b/notes.h
-index d745ed1..6b52799 100644
+index f67bae8..ea1235f 100644
 --- a/notes.h
 +++ b/notes.h
-@@ -1,6 +1,26 @@
- #ifndef NOTES_H
+@@ -2,6 +2,21 @@
  #define NOTES_H
  
-+/*
-+ * Flags controlling behaviour of notes tree initialization
+ /*
++ * Notes tree object
 + *
-+ * Default behaviour is to initialize the notes tree from the tree object
-+ * specified by the given (or default) notes ref.
++ * Encapsulates the internal notes tree structure associated with a notes ref.
++ * Whenever a struct notes_tree pointer is required below, you may pass NULL in
++ * order to use the default/internal notes tree. E.g. you only need to pass a
++ * non-NULL value if you need to refer to several different notes trees
++ * simultaneously.
 + */
-+#define NOTES_INIT_EMPTY 1
++struct notes_tree {
++	struct int_node *root;
++	char *ref;
++	int initialized;
++};
 +
 +/*
-+ * Initialize internal notes tree structure with the notes tree at the given
-+ * ref. If given ref is NULL, the value of the $GIT_NOTES_REF environment
-+ * variable is used, and if that is missing, the default notes ref is used
-+ * ("refs/notes/commits").
-+ *
-+ * If you need to re-intialize the internal notes tree structure (e.g. loading
-+ * from a different notes ref), please first de-initialize the current notes
-+ * tree by calling free_notes().
-+ */
-+void init_notes(const char *notes_ref, int flags);
-+
- /* Free (and de-initialize) the internal notes tree structure */
- void free_notes(void);
+  * Flags controlling behaviour of notes tree initialization
+  *
+  * Default behaviour is to initialize the notes tree from the tree object
+@@ -10,26 +25,32 @@
+ #define NOTES_INIT_EMPTY 1
  
+ /*
+- * Initialize internal notes tree structure with the notes tree at the given
++ * Initialize the given notes_tree with the notes tree structure at the given
+  * ref. If given ref is NULL, the value of the $GIT_NOTES_REF environment
+  * variable is used, and if that is missing, the default notes ref is used
+  * ("refs/notes/commits").
+  *
+- * If you need to re-intialize the internal notes tree structure (e.g. loading
+- * from a different notes ref), please first de-initialize the current notes
+- * tree by calling free_notes().
++ * If you need to re-intialize a notes_tree structure (e.g. when switching from
++ * one notes ref to another), you must first de-initialize the notes_tree
++ * structure by calling free_notes(struct notes_tree *).
++ *
++ * If you pass t == NULL, the default internal notes_tree will be initialized.
++ *
++ * Precondition: The notes_tree structure is zeroed (this can be achieved with
++ * memset(t, 0, sizeof(struct notes_tree)))
+  */
+-void init_notes(const char *notes_ref, int flags);
++void init_notes(struct notes_tree *t, const char *notes_ref, int flags);
+ 
+-/* Add the given note object to the internal notes tree structure */
+-void add_note(const unsigned char *object_sha1,
++/* Add the given note object to the given notes_tree structure */
++void add_note(struct notes_tree *t, const unsigned char *object_sha1,
+ 		const unsigned char *note_sha1);
+ 
+ /* Get the note object SHA1 containing the note data for the given object */
+-const unsigned char *get_note(const unsigned char *object_sha1);
++const unsigned char *get_note(struct notes_tree *t,
++		const unsigned char *object_sha1);
+ 
+ /*
+- * Invoke the specified callback function for each note
++ * Invoke the specified callback function for each note in the given notes_tree
+  *
+  * If the callback returns nonzero, the note walk is aborted, and the return
+  * value from the callback is returned from for_each_note().
+@@ -43,10 +64,10 @@ const unsigned char *get_note(const unsigned char *object_sha1);
+ typedef int each_note_fn(const unsigned char *object_sha1,
+ 		const unsigned char *note_sha1, const char *note_tree_path,
+ 		void *cb_data);
+-int for_each_note(each_note_fn fn, void *cb_data);
++int for_each_note(struct notes_tree *t, each_note_fn fn, void *cb_data);
+ 
+-/* Free (and de-initialize) the internal notes tree structure */
+-void free_notes(void);
++/* Free (and de-initialize) the give notes_tree structure */
++void free_notes(struct notes_tree *t);
+ 
+ /* Flags controlling how notes are formatted */
+ #define NOTES_SHOW_HEADER 1
+@@ -55,12 +76,14 @@ void free_notes(void);
+ /*
+  * Fill the given strbuf with the notes associated with the given object.
+  *
+- * If the internal notes structure is not initialized, it will be auto-
++ * If the given notes_tree structure is not initialized, it will be auto-
+  * initialized to the default value (see documentation for init_notes() above).
++ * If the given notes_tree is NULL, the internal/default notes_tree will be
++ * used instead.
+  *
+  * 'flags' is a bitwise combination of the above formatting flags.
+  */
+-void format_note(const unsigned char *object_sha1, struct strbuf *sb,
+-		const char *output_encoding, int flags);
++void format_note(struct notes_tree *t, const unsigned char *object_sha1,
++		struct strbuf *sb, const char *output_encoding, int flags);
+ 
+ #endif
+diff --git a/pretty.c b/pretty.c
+index fe77090..b4882cc 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -775,8 +775,9 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
+ 		}
+ 		return 0;	/* unknown %g placeholder */
+ 	case 'N':
+-		format_note(commit->object.sha1, sb, git_log_output_encoding ?
+-			    git_log_output_encoding : git_commit_encoding, 0);
++		format_note(NULL, commit->object.sha1, sb,
++			    git_log_output_encoding ? git_log_output_encoding
++						    : git_commit_encoding, 0);
+ 		return 1;
+ 	}
+ 
+@@ -1095,7 +1096,7 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
+ 		strbuf_addch(sb, '\n');
+ 
+ 	if (fmt != CMIT_FMT_ONELINE)
+-		format_note(commit->object.sha1, sb, encoding,
++		format_note(NULL, commit->object.sha1, sb, encoding,
+ 			    NOTES_SHOW_HEADER | NOTES_INDENT);
+ 
+ 	free(reencoded);
 -- 
 1.6.5.3.433.g11067
