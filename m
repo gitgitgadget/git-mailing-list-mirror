@@ -1,73 +1,79 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [RFC PATCH v2 0/2] git-gui: (un)stage a range of changes
-	at once
-Date: Mon, 7 Dec 2009 13:54:35 +0100
-Message-ID: <20091207125435.GA43609@book.hvoigt.net>
-References: <1256160023-29629-1-git-send-email-jepler@unpythonic.net> <20091026193903.GA27319@unpythonic.net> <20091205213613.GG5610@spearce.org>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [RFC PATCH v3 0/8] Remote helpers smart transport extensions
+Date: Mon, 7 Dec 2009 13:57:37 +0100
+Message-ID: <40aa078e0912070457i16394913v5ff041061ec9eeaf@mail.gmail.com>
+References: <1260116931-16549-1-git-send-email-ilari.liusvaara@elisanet.fi>
+	 <7v7hsz9qxj.fsf@alter.siamese.dyndns.org>
+	 <20091207210608.6117@nanako3.lavabit.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff Epler <jepler@unpythonic.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Dec 07 13:54:45 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Mon Dec 07 13:57:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHd6x-00064W-VS
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 13:54:44 +0100
+	id 1NHd9s-0007HB-Dy
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 13:57:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933632AbZLGMyb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Dec 2009 07:54:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933597AbZLGMyb
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 07:54:31 -0500
-Received: from darksea.de ([83.133.111.250]:33012 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755126AbZLGMya (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2009 07:54:30 -0500
-Received: (qmail 3658 invoked from network); 7 Dec 2009 13:54:35 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 7 Dec 2009 13:54:35 +0100
-Content-Disposition: inline
-In-Reply-To: <20091205213613.GG5610@spearce.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S934104AbZLGM5d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Dec 2009 07:57:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755722AbZLGM5c
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 07:57:32 -0500
+Received: from ey-out-2122.google.com ([74.125.78.26]:54617 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755126AbZLGM5c convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Dec 2009 07:57:32 -0500
+Received: by ey-out-2122.google.com with SMTP id d26so1124329eyd.19
+        for <git@vger.kernel.org>; Mon, 07 Dec 2009 04:57:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=8wSTfcA2ghvx1ahWW82sYURgte2gVylK067YVd+aEUE=;
+        b=UE8Z+gwvxbH1SW4eweaPDMmx0hU6ElpeSAaRxgtMzYOAw/91wajmfGfNuMj8V/gH7f
+         o6PzupNbDZwa6Le0O1JsyyTIYOmbv5f4Q/UoTDj9hfPaELbaMm7yE+Ohb7xsYhK1N+Fz
+         yrZdPXXVdR2NNc47LufVpAhRab0By6pcszlnc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=HyhuRHeHk8DzEFhLx508IkRtmHhmVDnq7B3KifIiOPkQwd1crHlRh6NT5BF/RyygJq
+         Mi5LWwjk+YC3DRXUSV/89De+hkD7o902OErkvMXTjv6AH7h1OizDN80P/B/NTs7VAC98
+         1V4GAtvcRsz+pHmNGMxcNbcGTqvIDWd/CRInQ=
+Received: by 10.216.86.139 with SMTP id w11mr2333553wee.10.1260190657607; Mon, 
+	07 Dec 2009 04:57:37 -0800 (PST)
+In-Reply-To: <20091207210608.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134755>
 
-On Sat, Dec 05, 2009 at 01:36:13PM -0800, Shawn O. Pearce wrote:
-> Jeff Epler <jepler@unpythonic.net> wrote:
-> > I've found another problem, which I'll work on as soon as I find a
-> > chance.
-> >=20
-> > When staging multiple "+" lines preceded by a "-" line that must be
-> > turned into context, the converted "-" line must come after *all* t=
-he
-> > "+" lines, not just the first one.
->=20
-> So the reason this series got stuck was this message, this bug is
-> enough to suggest we shouldn't apply it to my tree yet, so I've
-> been waiting for an update on the topic.
+On Mon, Dec 7, 2009 at 1:06 PM, Nanako Shiraishi <nanako3@lavabit.com> =
+wrote:
+> Quoting Junio C Hamano <gitster@pobox.com>
+>
+>> I queued to ease the discussion in 'pu'. =A0I had to fix-up some con=
+flicts
+>> while doing so. =A0Please sanity check the result.
+>
+> I see that you changed many "char* variable" to "char *variable", but
+> what is the reason for these changes?
+>
 
-In an attempt to help this series forward I tried to reproduce this bug
-but were unsuccessfull. It seems that a change like this:
+Documentation/CodingGuidelines:
 
-@@ -13,7 +13,9 @@ set appvers {@@GITGUI_VERSION@@}
- set copyright [encoding convertfrom utf-8 {
- Copyright =A9 2006, 2007 Shawn Pearce, et. al.
-=20
--This program is free software; you can redistribute it and/or modify
-+Blabla
-+blubblub
-+lalala
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+ - When declaring pointers, the star sides with the variable
+   name, i.e. "char *string", not "char* string" or
+   "char * string".  This makes it easier to understand code
+   like "char *string, c;".
 
-and then trying to stage part of the '+' lines is not enough. Jeff coul=
-d you
-clarify or provide an example?
-
-cheers Heiko
+--=20
+Erik "kusma" Faye-Lund
