@@ -1,77 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Detailed diagnosis when parsing an object name fails.
-Date: Sun, 06 Dec 2009 16:30:16 -0800
-Message-ID: <7vtyw3bp7r.fsf@alter.siamese.dyndns.org>
-References: <1259784061-25143-1-git-send-email-y>
- <7vljhj4wv0.fsf@alter.siamese.dyndns.org> <vpqhbs4dkjr.fsf@bauges.imag.fr>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Continued work on sr/vcs-helper and sr/gfi-options
+Date: Mon, 7 Dec 2009 01:52:24 +0100
+Message-ID: <fabb9a1e0912061652s3133a8c8s8b43bbc666c6016f@mail.gmail.com>
+References: <fabb9a1e0912051653s77ba25e1g9ff1e21219cd06c9@mail.gmail.com> 
+	<7vr5r8oov1.fsf@alter.siamese.dyndns.org> <fabb9a1e0912060223h148a67b0q589b8461dae6330e@mail.gmail.com> 
+	<7vfx7nekuf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Dec 07 01:31:59 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 07 01:53:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHRVz-0004Cy-7O
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 01:31:47 +0100
+	id 1NHRqQ-0003ha-5Y
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 01:52:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934509AbZLGAai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2009 19:30:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934518AbZLGAaW
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 19:30:22 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64620 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934424AbZLGAaQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2009 19:30:16 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8311A856C3;
-	Sun,  6 Dec 2009 19:30:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=4vvzIQWH7rIOkNJwKhSGGsrIwDs=; b=rWWH1SLeuYqVHMJR6FG6o7V
-	RkPSMbE/QpKRgvY8Y2pl1lGi+DxIwP99VBABOtnGT43y2A1O3BB/llF1jm6fxnbt
-	wdvMWeRmbe8iKkqAqDcGb89FNfQ6/d3yw4rGk8XBkLy55i9+hGpg8BmvrllmVibu
-	Qp/6xklecxIt1baIjUDk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=Mc5HcacQNEe1/SZn/m77z7Q636mzLtxp52wmZDbBuegGSVkau
-	g+U1AjnWnTyqMtlzd3JjyLxAMN6owuXLYlYaxD1mH9D2elPc7taOW5y0yO3Y13ys
-	gE7FRpaUTvJAJsrWfK3obA91bESwx+gGGfy0VVGXYPJtZuzc13DR69yYpM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6205F856C2;
-	Sun,  6 Dec 2009 19:30:20 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C0182856BA; Sun,  6 Dec
- 2009 19:30:17 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B363045A-E2C7-11DE-8488-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758126AbZLGAwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2009 19:52:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758122AbZLGAwj
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 19:52:39 -0500
+Received: from mail-vw0-f197.google.com ([209.85.212.197]:35834 "EHLO
+	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757674AbZLGAwi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2009 19:52:38 -0500
+Received: by vws35 with SMTP id 35so1836418vws.4
+        for <git@vger.kernel.org>; Sun, 06 Dec 2009 16:52:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=xqtoW9MWptZ7xUY7+1N13Dp8I24D+5U9gSOrJNFFPGQ=;
+        b=TfgCVnz0a3KPbmKz1tdHM7/2dPE/CcDxm2G9ptggdgqADwYGVymaan16qtFdEjhndU
+         NKCYyPZ8In8/9re2nGt1y982CHj37fl/l9QK10fcZsiHP7YEuf0XQHFY+jlfLb6NwFLv
+         HCT3LXJt9pJWpkDscwf4H6PK8eu39UyMyg/iU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Yg+otALqp0xddkJeVkFW52oHii3vkOlgSu8unaQPPZTLhVBVr+LwulmFzX+/UAq4F/
+         /KwdYPbiJYgrucYkxhyGacZ6Q52N+Z7lb6VuYJfhq/wPnRSchoDZO0OUruPdjRZWS8E7
+         3x4cHgCQvQkcTZ1q2sOprVdGQFVOYVCJu8aSI=
+Received: by 10.220.125.5 with SMTP id w5mr7567709vcr.30.1260147164078; Sun, 
+	06 Dec 2009 16:52:44 -0800 (PST)
+In-Reply-To: <7vfx7nekuf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134703>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Heya,
 
->>> +extern int get_sha1_with_mode_1(const char *str, unsigned char *sha1, unsigned *mode, int fatal, const char *prefix);
->>
->> Do I understand correctly that "fatal" here is the same as "!gently"
->> elsewhere in the API?
->
-> It seems it is. I renamed it.
+On Mon, Dec 7, 2009 at 00:36, Junio C Hamano <gitster@pobox.com> wrote:
+> It would make sense if you use 1.6.6 features in your new series (as the
+> forkpoint of sr/vcs-helper is beginning to look a tad stale), but
+> otherwise unnecessary; that is the reason why I said it is "(optional)"
+> and it is up to what is in the remote-hg patch.
 
-This was a pure question, not a suggestion to change it (we do name a
-function do_foo_gently() when there is do_foo() that does the same but
-reports errors more noisily, though).  I found the name "fatal" a bit
-confusing as I at first couldn't tell if the caller was telling the
-function that it already detected a "fatal" error (and telling the
-function to report the fatalness) and didn't realize that the caller is
-instead saying "if you find an error, treat it as a fatal one" until I
-read it again.
+Gotcha, I don't think I use any 1.6.6 features though, so I don't
+think that will be necessary.
 
-I am Ok with the new "gently" name with the negative semantics as well (I
-see no need to change it back to "error_is_fatal").
+> I was thinking about carrying it myself (perhaps with help from you in
+> conflict resolution as necessary) when I wrote it
 
-Thanks.
+That would be great! If you are you offering to create the
+sr/pu-remote-hg branch and merge it to pu so that I can send patches
+based on that, please do. If not, what do I do instead? :).
+
+-- 
+Cheers,
+
+Sverre Rabbelier
