@@ -1,70 +1,74 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [BUG] git config does not reuse section name
-Date: Mon, 7 Dec 2009 21:23:20 +0100
-Message-ID: <fabb9a1e0912071223l21c70e2ax9b0e3c9976ae9d7@mail.gmail.com>
-References: <4B1D360B.4070203@ubicom.com> <7vy6le35zv.fsf@alter.siamese.dyndns.org>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [RFC PATCH v3 6/8] Support remote helpers implementing smart
+ transports
+Date: Mon, 7 Dec 2009 22:35:24 +0200
+Message-ID: <20091207203524.GA29629@Knoppix>
+References: <1260116931-16549-1-git-send-email-ilari.liusvaara@elisanet.fi>
+ <1260116931-16549-7-git-send-email-ilari.liusvaara@elisanet.fi>
+ <20091207181148.GG17173@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Yakup Akbay <yakbay@ubicom.com>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 21:24:29 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Dec 07 21:35:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHk7b-0006sh-EP
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 21:23:51 +0100
+	id 1NHkIv-0003yk-Tk
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 21:35:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934907AbZLGUXf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2009 15:23:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934620AbZLGUXe
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 15:23:34 -0500
-Received: from mail-vw0-f197.google.com ([209.85.212.197]:45069 "EHLO
-	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934440AbZLGUXe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2009 15:23:34 -0500
-Received: by vws35 with SMTP id 35so2174476vws.4
-        for <git@vger.kernel.org>; Mon, 07 Dec 2009 12:23:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=Ht21T8eZBIB5BJFEx8OA8xeL1k5wm3Fm2FZazb7z72M=;
-        b=NBX0hlSTj+15p3qOiWqkigRGR8YYDHTM4VxurUvnBM4+b25b2Zd56xZc63R+8PtDeW
-         H2Dk5a9quYMxgGSGMD+1gOtY07glwoI+j+3Wu7m3we6v22VlqQUY1wXg2YmWZ86D18qj
-         8RuSslRj5vHYLa1Bi7yuDRmMrlmUNNle+x2k8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=ezixzBs5bf7a3x8QWkjvjSrVJyhHWs5qTn54Ow1s1YD5QDmaZ1z4QYE4Vb4fhbIRg9
-         rgphbECOtLqQ190sO/nruBAPojZuaDVzenzB6hyvuE4HaLDY+zYJdXztMWdL8ZM4cXSj
-         n4BN6R4l6zAYRqVtVGINQnIZYo2glzfqQU3lY=
-Received: by 10.220.122.144 with SMTP id l16mr821vcr.78.1260217420108; Mon, 07 
-	Dec 2009 12:23:40 -0800 (PST)
-In-Reply-To: <7vy6le35zv.fsf@alter.siamese.dyndns.org>
+	id S964827AbZLGUfX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2009 15:35:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934939AbZLGUfW
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 15:35:22 -0500
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:54416 "EHLO
+	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935185AbZLGUfV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2009 15:35:21 -0500
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 6218A8BFB2;
+	Mon,  7 Dec 2009 22:35:27 +0200 (EET)
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A047C754BA8; Mon, 07 Dec 2009 22:35:27 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id 4B8E01C6383;
+	Mon,  7 Dec 2009 22:35:25 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <20091207181148.GG17173@spearce.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134779>
 
-Heya,
+On Mon, Dec 07, 2009 at 10:11:48AM -0800, Shawn O. Pearce wrote:
+> 
+> We should already be connected because of the prior call into
+> get_refs_list().  If I read your code correctly we'd try to open
+> a new connection right here, which makes no sense. 
 
-On Mon, Dec 7, 2009 at 21:04, Junio C Hamano <gitster@pobox.com> wrote:
-> If I recall correctly, this hasn't been even noticed/reported/recognized
-> as an issue, ever since the "git repo-config" was introduced (which later
-> was renamed to "git config").
+The have prior connection case can't happen since take_over_transport()
+overwrites the method pointers.
 
-I poked Dscho about it at some point.
+> But its also
+> possible for us to be in a different transport, so we do code with
+> the assumption that we didn't get invoked through get_refs_list()
+> first and therefore need to open the connection ourselves.
 
-> Dscho, do you remember details?
+Right. The reason why the code is there is in case somebody invokes
+fetch() first.
 
-He told me that the 'git config' code is so horrible that it's
-nigh-impossible to change the behavior, hence why he didn't do it :P.
+The same things apply to push function too.
 
--- 
-Cheers,
+> Also, given the above invocation pattern, I see no reason why you
+> need the disown virtual function on struct transport*.  Just pass
+> the #@!**! struct child* into transport_take_over() from the 3
+> call sites here and get rid of that unnecessary indirection.
 
-Sverre Rabbelier
+Fixed.
+
+-Ilari
