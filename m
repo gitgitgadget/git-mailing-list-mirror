@@ -1,78 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git 1.6.5.4
-Date: Sun, 06 Dec 2009 16:30:09 -0800
-Message-ID: <7vzl5vbp7y.fsf@alter.siamese.dyndns.org>
-References: <m2d42w5fqq.fsf@igel.home>
- <4B17D078.6080000@drmicha.warpmail.net>
- <20091203150323.GI23717@inocybe.localdomain>
- <7viqco54xh.fsf@alter.siamese.dyndns.org>
- <20091203202738.GP23717@inocybe.localdomain>
- <7vfx7r4we7.fsf@alter.siamese.dyndns.org>
- <20091203220020.GS23717@inocybe.localdomain>
- <7vbpif4rn2.fsf@alter.siamese.dyndns.org> <m2r5rb9hes.fsf@igel.home>
- <7vzl5ysm11.fsf@alter.siamese.dyndns.org>
- <20091204193355.GC4629@inocybe.localdomain>
+Subject: Re: [PATCH v2] Detailed diagnosis when parsing an object name fails.
+Date: Sun, 06 Dec 2009 16:30:16 -0800
+Message-ID: <7vtyw3bp7r.fsf@alter.siamese.dyndns.org>
+References: <1259784061-25143-1-git-send-email-y>
+ <7vljhj4wv0.fsf@alter.siamese.dyndns.org> <vpqhbs4dkjr.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Todd Zullinger <tmz@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 01:31:55 2009
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Dec 07 01:31:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHRVz-0004Cy-Oz
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 01:31:48 +0100
+	id 1NHRVz-0004Cy-7O
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Dec 2009 01:31:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934434AbZLGAav (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2009 19:30:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934473AbZLGAaT
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 19:30:19 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39861 "EHLO
+	id S934509AbZLGAai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2009 19:30:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934518AbZLGAaW
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Dec 2009 19:30:22 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64620 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932831AbZLGAaO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2009 19:30:14 -0500
+	with ESMTP id S934424AbZLGAaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2009 19:30:16 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B40F3A45FA;
-	Sun,  6 Dec 2009 19:30:20 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8311A856C3;
+	Sun,  6 Dec 2009 19:30:22 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=YRfYn2kOHu8s1KQ1Je8RVOLg1pg=; b=xhaW8nMqrUeYIU3EfPowFcE
-	LouvOZm9wN07jlo69nkBsb5gi4Ge4TtK7z2MEG8IttTLH/RsPullvCBWEfoWVAD+
-	Kigi8Dpwm4qrN6RNzuO9XcDAcgnUiXpJIcR1H4+JS3oemfigqMbPeWdVuWOlSEat
-	HZRCtZdcpY0GqCD7jpIY=
+	sasl; bh=4vvzIQWH7rIOkNJwKhSGGsrIwDs=; b=rWWH1SLeuYqVHMJR6FG6o7V
+	RkPSMbE/QpKRgvY8Y2pl1lGi+DxIwP99VBABOtnGT43y2A1O3BB/llF1jm6fxnbt
+	wdvMWeRmbe8iKkqAqDcGb89FNfQ6/d3yw4rGk8XBkLy55i9+hGpg8BmvrllmVibu
+	Qp/6xklecxIt1baIjUDk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=nD4AVZRX+GRFVHZv66I5wtVgfRzSJtdkWDRdDVsjzQfBzjvp3
-	fgfjc4wbb80ewHBqki1aGFGeAomIhl8AXF7CSQmu3V0W1AN5U4PC6oPdMBzyQuXz
-	tyIc4sMjkoOJvZ6qgZYLuJS2N+A0CgKdtSOPQ1PmjEKh+Gowj9AaYlLT4E=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7663CA45F9;
-	Sun,  6 Dec 2009 19:30:16 -0500 (EST)
+	dns; s=sasl; b=Mc5HcacQNEe1/SZn/m77z7Q636mzLtxp52wmZDbBuegGSVkau
+	g+U1AjnWnTyqMtlzd3JjyLxAMN6owuXLYlYaxD1mH9D2elPc7taOW5y0yO3Y13ys
+	gE7FRpaUTvJAJsrWfK3obA91bESwx+gGGfy0VVGXYPJtZuzc13DR69yYpM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6205F856C2;
+	Sun,  6 Dec 2009 19:30:20 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 07E3FA45F6; Sun,  6 Dec 2009
- 19:30:10 -0500 (EST)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C0182856BA; Sun,  6 Dec
+ 2009 19:30:17 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B108F110-E2C7-11DE-A5F7-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: B363045A-E2C7-11DE-8488-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134702>
 
-Todd Zullinger <tmz@pobox.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Something like this perhaps?  I tested it with 1.6.5.4 on Fedora 10,
-> 12 and CentOS 5.4 but it could surely use more eyes and testing to
-> ensure it works as it should and doesn't have unintended negative
-> effects on make clean and such.
+>>> +extern int get_sha1_with_mode_1(const char *str, unsigned char *sha1, unsigned *mode, int fatal, const char *prefix);
+>>
+>> Do I understand correctly that "fatal" here is the same as "!gently"
+>> elsewhere in the API?
+>
+> It seems it is. I renamed it.
 
-Thanks (and thanks Andreas for pointing out a yet another distro that is
-different).  I think the patch makes sense.
+This was a pure question, not a suggestion to change it (we do name a
+function do_foo_gently() when there is do_foo() that does the same but
+reports errors more noisily, though).  I found the name "fatal" a bit
+confusing as I at first couldn't tell if the caller was telling the
+function that it already detected a "fatal" error (and telling the
+function to report the fatalness) and didn't realize that the caller is
+instead saying "if you find an error, treat it as a fatal one" until I
+read it again.
 
-> This does set MAN_BASE_URL unconditionally, pointing to kernel.org.
+I am Ok with the new "gently" name with the negative semantics as well (I
+see no need to change it back to "error_is_fatal").
 
-I'd change this to point at "file://$(htmldir)/", though.
+Thanks.
