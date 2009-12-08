@@ -1,124 +1,82 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH/RFC 07/11] run-command: support input-fd
-Date: Tue, 8 Dec 2009 14:46:19 +0100
-Message-ID: <40aa078e0912080546v544451c6yd3a3b15cb05a08ed@mail.gmail.com>
-References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com>
-	 <200911262253.59641.j6t@kdbg.org>
-	 <40aa078e0911270639n1de36517w5fdf6ef38e931b19@mail.gmail.com>
-	 <200911272114.13107.j6t@kdbg.org>
-Reply-To: kusmabite@gmail.com
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 0/3] Add a "fix" command to "rebase --interactive"
+Date: Tue, 8 Dec 2009 14:51:14 +0100
+Message-ID: <fabb9a1e0912080551s32295cfahf05bdc715360360@mail.gmail.com>
+References: <cover.1259934977.git.mhagger@alum.mit.edu> <4B192701.4000308@drmicha.warpmail.net> 
+	<vpqfx7qocwl.fsf@bauges.imag.fr> <7vws12r5v2.fsf@alter.siamese.dyndns.org> 
+	<alpine.DEB.1.00.0912041945161.21557@intel-tinevez-2-302> 
+	<20091205062708.6117@nanako3.lavabit.com> <7vd42t6f9i.fsf@alter.siamese.dyndns.org> 
+	<20091208121314.6117@nanako3.lavabit.com> <7viqchhl7h.fsf@alter.siamese.dyndns.org> 
+	<20091208093515.GA32655@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Cc: msysgit@googlegroups.com, git@vger.kernel.org, dotzenlabs@gmail.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: 3r1geSwkOB3EZjhbPQXiTVddVaTbPXa.RdbbhnhVXiVddVaTVgdjeh.Rdb@listserv.bounces.google.com Tue Dec 08 14:46:43 2009
-Return-path: <3r1geSwkOB3EZjhbPQXiTVddVaTbPXa.RdbbhnhVXiVddVaTVgdjeh.Rdb@listserv.bounces.google.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-gx0-f190.google.com ([209.85.217.190])
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Dec 08 14:51:40 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NI0Op-0001Ak-2l
-	for gcvm-msysgit@m.gmane.org; Tue, 08 Dec 2009 14:46:43 +0100
-Received: by gxk6 with SMTP id 6sf8649587gxk.13
-        for <gcvm-msysgit@m.gmane.org>; Tue, 08 Dec 2009 05:46:41 -0800 (PST)
-Received: by 10.91.181.17 with SMTP id i17mr196226agp.7.1260279983834;
-        Tue, 08 Dec 2009 05:46:23 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.213.37.194 with SMTP id y2ls209828ebd.3.p; Tue, 08 Dec 2009 
-	05:46:20 -0800 (PST)
-Received: by 10.213.41.5 with SMTP id m5mr966940ebe.26.1260279980617;
-        Tue, 08 Dec 2009 05:46:20 -0800 (PST)
-Received: by 10.213.41.5 with SMTP id m5mr966939ebe.26.1260279980589;
-        Tue, 08 Dec 2009 05:46:20 -0800 (PST)
-Received: from ey-out-1920.google.com (ey-out-1920.google.com [74.125.78.144])
-        by gmr-mx.google.com with ESMTP id 18si667902ewy.8.2009.12.08.05.46.19;
-        Tue, 08 Dec 2009 05:46:19 -0800 (PST)
-Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 74.125.78.144 as permitted sender) client-ip=74.125.78.144;
-Received: by ey-out-1920.google.com with SMTP id 5so545308eyb.20
-        for <msysgit@googlegroups.com>; Tue, 08 Dec 2009 05:46:19 -0800 (PST)
-Received: by 10.216.87.209 with SMTP id y59mr3139716wee.21.1260279979289; Tue, 
-	08 Dec 2009 05:46:19 -0800 (PST)
-In-Reply-To: <200911272114.13107.j6t@kdbg.org>
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: 
-	domain of kusmabite@googlemail.com designates 74.125.78.144 as permitted 
-	sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) 
-	header.i=@googlemail.com
-X-Original-Sender: <kusmabite@googlemail.com>
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-List-Post: <http://groups.google.com/group/msysgit/post?hl=>, 
-	<mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=>
-X-Thread-Url: http://groups.google.com/group/msysgit/t/15f3dd983aa85143
-X-Message-Url: http://groups.google.com/group/msysgit/msg/8ced271e6016d90d
-Sender: msysgit+owner@googlegroups.com
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=>, 
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=>, 
-	<mailto:msysgit+subscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134871>
+	id 1NI0Tb-00039T-TM
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 14:51:40 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755110AbZLHNv3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2009 08:51:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755029AbZLHNv2
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 08:51:28 -0500
+Received: from mail-vw0-f197.google.com ([209.85.212.197]:44232 "EHLO
+	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754881AbZLHNv1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Dec 2009 08:51:27 -0500
+Received: by vws35 with SMTP id 35so2450120vws.4
+        for <git@vger.kernel.org>; Tue, 08 Dec 2009 05:51:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zg+d0zd1uoivE0bqJQaHFFLDL3zmrmip9dTp3pyRTbA=;
+        b=qEjHEoRTmNXpzPNi9es8tk+aOR9aT9ZzBS2eL+C68Wde9Zpt2AfVsBLD7kEnvxZ177
+         pgiw+fsNMilDn0KBlrK9jU+1g3qO3dxC6cqN8zhvJGOOHMg33PWROBRHTbLZmwUAE31u
+         Tw1W94LcU5GzsjxAnqnEqZ5Jx2rkEIo7G37rA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=vrtmswayaTFJ7Tv32flsZnT4SKpezc4C0j7HJhgm5bpkEYLhc+2vuKF6oSdv0Pqxdm
+         SqyfYrM+QEqTDtIW+KveLtjJPk8RE28AomSEVXaTSjJwOowz1twUxNCi3ujdatTgctjN
+         Ts8MG5NDmcWhN5jTUGVrNz4FUdSXCtPyn4vC0=
+Received: by 10.220.123.167 with SMTP id p39mr1684084vcr.22.1260280294089; 
+	Tue, 08 Dec 2009 05:51:34 -0800 (PST)
+In-Reply-To: <20091208093515.GA32655@sigill.intra.peff.net>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134872>
 
-On Fri, Nov 27, 2009 at 9:14 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> On Freitag, 27. November 2009, Erik Faye-Lund wrote:
->> What do you find confusing about it? The idea is to use a provided
->> bi-directional fd instead of a pipe if async->out is non-zero. The
->> currently defined rules for async is that async->out must be zero
->> (since the structure should be zero-initialized).
->
-> It is just the code structure that is confusing. It should be
->
-> =A0 =A0 =A0 =A0if (async->out) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0/* fd was provided */
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0do all that is needed in this case
-> =A0 =A0 =A0 =A0} else {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0/* fd was requested */
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0do all for this other case
-> =A0 =A0 =A0 =A0}
-> =A0 =A0 =A0 =A0/* nothing to do anymore here */
->
-> (Of course, this should only replace the part that is cited above, not th=
-e
-> whole function.)
->
+Heya,
 
-OK. I've reimplemented the change for the next round, taking this into acco=
-unt.
+On Tue, Dec 8, 2009 at 10:35, Jeff King <peff@peff.net> wrote:
+> =A0$ bash
+> =A0$ echo "!fixup commit"
+> =A0bash: !fixup: event not found
+> =A0$ echo "fixup! commit"
+> =A0fixup! commit
 
->> Indeed it does. Do we want to extend it to support a set of
->> unidirectional channels instead?
->
-> Yes, I think so. We could pass a regular int fd[2] array around with the =
-clear
-> definition that both can be closed independently, i.e. one must be a dup(=
-) of
-> the other. struct async would also have such an array.
->
-
-OK. This has been included for the next round. Instead of an array,
-I've tried to be consistent with start_command, and used two
-variables, "in" and "out".
-
-> Speaking of dup(): The underlying function is DuplicateHandle(), and its
-> documentation says:
->
-> "You should not use DuplicateHandle to duplicate handles to the following
-> objects: ... o Sockets. ... use WSADuplicateSocket."
->
-> But then the docs of WSADuplicateSocket() talk only about duplicating a s=
-ocket
-> to a separate process. Perhaps DuplicateHandle() of a socket within the s=
-ame
-> process Just Works?
->
-
-It seems the rest of the Windows-world depends on DuplicateHandle()
-working for sockets, so I'm not too worried. I can't find anything
-documentation(1) for _dup, and I don't think we have our own
-dup()-implementation.
-
-(1) http://msdn.microsoft.com/en-us/library/8syseb29(VS.71).aspx
+Speaking of which, must we use that annoying bang? I hate how bash
+gets in my way when I try to write a commit message with a a bang in
+it, I'd much rather use a different character that is not in risk of
+being mistreated by my shell. (Although it seems that bash does do TRT
+in the 'fixup!' case.)
 
 --=20
-Erik "kusma" Faye-Lund
+Cheers,
+
+Sverre Rabbelier
