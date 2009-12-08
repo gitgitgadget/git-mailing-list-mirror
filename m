@@ -1,77 +1,121 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC/PATCHv10 01/11] fast-import: Proper notes tree
-	manipulation
-Date: Mon, 7 Dec 2009 18:01:34 -0800
-Message-ID: <20091208020134.GC17588@spearce.org>
-References: <1260185254-1523-1-git-send-email-johan@herland.net> <1260185254-1523-2-git-send-email-johan@herland.net> <20091207164130.GD17173@spearce.org> <200912080244.30390.johan@herland.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [RFC/PATCHv10 01/11] fast-import: Proper notes tree manipulation
+Date: Tue, 08 Dec 2009 03:34:39 +0100
+Message-ID: <200912080334.39337.johan@herland.net>
+References: <1260185254-1523-1-git-send-email-johan@herland.net>
+ <1260185254-1523-2-git-send-email-johan@herland.net>
+ <7vocma1ppc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Dec 08 03:01:53 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, spearce@spearce.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 08 03:34:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHpOi-0004vf-R0
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 03:01:53 +0100
+	id 1NHpuj-0005Oh-HG
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 03:34:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965055AbZLHCBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2009 21:01:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935397AbZLHCBf
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 21:01:35 -0500
-Received: from mail-yw0-f198.google.com ([209.85.211.198]:35673 "EHLO
-	mail-yw0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934933AbZLHCBa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2009 21:01:30 -0500
-Received: by ywh36 with SMTP id 36so4970256ywh.15
-        for <git@vger.kernel.org>; Mon, 07 Dec 2009 18:01:37 -0800 (PST)
-Received: by 10.150.24.34 with SMTP id 34mr9732281ybx.239.1260237697000;
-        Mon, 07 Dec 2009 18:01:37 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 9sm2241558ywe.56.2009.12.07.18.01.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 07 Dec 2009 18:01:36 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <200912080244.30390.johan@herland.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S965402AbZLHCei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2009 21:34:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965396AbZLHCeh
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 21:34:37 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:50476 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S965390AbZLHCeh (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Dec 2009 21:34:37 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KUB00KSAB5VAB20@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 08 Dec 2009 03:34:43 +0100 (MET)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KUB002EXB5SCZ00@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 08 Dec 2009 03:34:43 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.12.8.22416
+User-Agent: KMail/1.12.4 (Linux/2.6.31-ARCH; KDE/4.3.4; x86_64; ; )
+In-reply-to: <7vocma1ppc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134804>
 
-Johan Herland <johan@herland.net> wrote:
-> > If we're here, isn't it likely that *all* notes are in the wrong
-> > path in the tree, and we need to move them all to a new location?
-> > If that's true then should we instead just build an entirely new
-> > tree and swap the root when we are done?
+On Monday 07 December 2009, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > This patch teaches 'git fast-import' to automatically organize note
+> > objects in a fast-import stream into an appropriate fanout structure.
 > 
-> Hmm. Not always. In your earlier scenario where we add 2,000,000 notes in a 
-> single commit, the current code would need to rewrite 255 of them from 
-> fanout 0 to fanout 2, and 65,535 of them from fanout 1 to fanout 2. But the 
-> vast majority (1,934,465) would not require rewriting (having been added at 
-> the correct fanout initially). However, if we build a new tree (by which I 
-> assume you mean tree_content_remove() from the old tree and 
-> tree_content_set() to the new tree for every single note (and non-note)), we 
-> end up processing all 2,000,000 entries.
+> I really hate to sound like a clueless newbie, but that is what I am in
+> the area of 'notes', so I have two questions.
+> 
+>  - What is the semantics of having more than one note to the same commit
+>    in the input stream?  Does the 'notes' part also have history and the
+>    latest one overwrite the earlier one by creating a new commit that
+>    points at the new 'notes' tree?
 
-Well, by processing here you mean we wind up looking at them, only
-to determine they are in the correct place already and skipping past.
+Yes.
 
-I guess I see your point though.  We're fairly bounded on how many
-we might need to move, probably only 65,535, and the rest will be
-at the right position so we're mostly just iterating through to
-confirm they don't have to be moved.
- 
-> I'm not sure I get the details here. How can we avoid doing the 
-> _remove()/_set() from/to the old/new tree for every tree_entry? In other 
-> words, how do we avoid removing and re-setting the 2,000,000 notes in the 
-> above example?
+>    I've always thought of 'notes' as an
+>    unversioned metainfo, but I realize that versioning them would make
+>    sense (you can and obviously would want to inspect the story behind
+>    the current note attached to one particular commit).
 
-You can't.  But I realize now what you are saying... for the vast
-majority of the notes we only need to validate they are in the
-correct path.
+Correct.  Since the notes themselves are organized in a regular ref pointing 
+to a series of commits, the notes for a particular object are indeed 
+versioned.  Thus, the first annotation of a commit will happen as part of a 
+commit to the notes ref at some point in time, and a change to that 
+annotation will happen as part of a subsequent commit to the same notes ref 
+at some later point in time.  The latter annotation naturally replaces the 
+former, in the same way as a regular file change causes a new blob to 
+replace any blob representing the previous version of the same file.
+
+However, if some object is annotated _twice_ in the _same_ notes commit, 
+then only the last annotation will be reachable. (again, this is the same 
+behaviour as if a regular file is changed twice in the same commit).
+
+>  - If however 'notes' want to have a history, how would it interact with
+>    this rebalancing of the tree?  Rebalancing makes a lot of sense if the
+>    'notes' mechanism deals with the only one latest version because it
+>    can keep the optimal look-up performance.  There were some talks about
+>    specialized merge strategies that can be made aware of rebalancing, but
+>    is there a plan to deal with "git log -p notes" side, and how?
+
+For now (at least), most use cases concern themselves only with the last 
+version of the notes tree, hence no work has been put into prettifying the 
+history of the notes tree.
+
+The notes rebalancing will become part of the same notes commit as the note 
+addition/removal that triggers the rebalancing. This does indeed make the 
+notes commits themselves somewhat uglier, but since the rebalancing only 
+moves notes verbatim from one location to another, it's still fairly simple 
+(with judicious use of e.g. "-M") to find the "actual" changes in a notes 
+commit.
+
+For now, there is no plan to prettify the log of a notes ref, in order to 
+mask away the fanout restructuring. For that matter, there is also no plan 
+to hide the fanout structure itself of the notes tree. It is assumed that if 
+you need to look at a notes tree directly, you can either deal with the 
+implementation details yourself, (or by using future extensions to the notes 
+API; see later patches for the beginnings of those...).
+
+With regards to specialized merge strategies: When merging two notes trees 
+with no specialized strategy, you might end up with two (or more) notes 
+objects annotating the _same_ commit (located at different fanout levels). 
+However, this has already been taken care of by the concatenation code at 
+the tail of the already-merged early part of jh/notes, which automatically 
+concatenates (non-identical) note objects annotating the same commit. Thus, 
+no special merge strategy is needed in order to administer notes trees.
+
+
+Hope this helps,
+
+...Johan
 
 -- 
-Shawn.
+Johan Herland, <johan@herland.net>
+www.herland.net
