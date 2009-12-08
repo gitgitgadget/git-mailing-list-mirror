@@ -1,76 +1,70 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH RFC] rebase: add --revisions flag
-Date: Tue, 8 Dec 2009 21:29:55 +0100
-Message-ID: <fabb9a1e0912081229l7990a148j9cd2daa338662dd@mail.gmail.com>
-References: <20091208144740.GA30830@redhat.com> <7vfx7lcj18.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [RFC PATCH v2 2/2] MSVC: Fix an "incompatible pointer types" compiler warning
+Date: Tue, 8 Dec 2009 21:31:43 +0100
+Message-ID: <200912082131.44498.j6t@kdbg.org>
+References: <4B1997A0.9000004@ramsay1.demon.co.uk> <200912051257.21386.j6t@kdbg.org> <4B1EAD9A.3090205@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <christian@couder.net>,
-	Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Dec 08 21:30:40 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Marius Storm-Olsen" <mstormo@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"GIT Mailing-list" <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue Dec 08 21:32:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NI6he-0006Kz-Eg
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 21:30:34 +0100
+	id 1NI6jJ-00077Y-TV
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 21:32:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966055AbZLHUaL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2009 15:30:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966054AbZLHUaK
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 15:30:10 -0500
-Received: from mail-vw0-f197.google.com ([209.85.212.197]:65183 "EHLO
-	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966011AbZLHUaJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Dec 2009 15:30:09 -0500
-Received: by vws35 with SMTP id 35so2627725vws.4
-        for <git@vger.kernel.org>; Tue, 08 Dec 2009 12:30:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zesZ6/wV372ui1zhQOTxC+LbjjMiaiksaY3P5fEyGWY=;
-        b=uyCeLBViGy/+s7B5/TF51ajRJE0JjuJVuiwEnfZsUnmjq4uQggCZIyINxw4vhnpRoj
-         xlIFry/JwQokThYi5B2upHltOSTEbQrnAog+A8zAOBI4/L80fd7hBQtkKAHqyQVYokDI
-         4uHDMaENgEDOblaq6UaH8pqZ4bbLo9+1/SH+I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=R3WY7yR7YV/cDXpfeGhC7LYbKhUycDSRnW3k+b9wyP8CfDLiOTe5Tl9hhoFlQL8VWp
-         t1izSeKH/iVtl/v23d1Z/Lfbp2621X1O7iGJiDlOHSb/cvuL7Ps30C88PBlRrLUd+IQ0
-         FgzJTyJ1I7Neap88DyzZ0G4LSo0QO+QGZkB4s=
-Received: by 10.220.125.40 with SMTP id w40mr1095882vcr.17.1260304215186; Tue, 
-	08 Dec 2009 12:30:15 -0800 (PST)
-In-Reply-To: <7vfx7lcj18.fsf@alter.siamese.dyndns.org>
+	id S937321AbZLHUcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2009 15:32:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936711AbZLHUcC
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 15:32:02 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:62262 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S936476AbZLHUcB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2009 15:32:01 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id DD1D8CDF8C;
+	Tue,  8 Dec 2009 21:32:05 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 9774619F5C4;
+	Tue,  8 Dec 2009 21:31:44 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <4B1EAD9A.3090205@ramsay1.demon.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134910>
 
-Heya,
+On Dienstag, 8. Dezember 2009, Ramsay Jones wrote:
+>     30	#define stat _stat64
+>     31	int mingw_lstat(const char *file_name, struct stat *buf);
+>     32	int mingw_fstat(int fd, struct stat *buf);
+>     33	#define fstat mingw_fstat
+>     34	#define lstat mingw_lstat
+>     35	#define _stat64(x,y) mingw_lstat(x,y)
+>     36	#define ALREADY_DECLARED_STAT_FUNCS
+>     37
+>     38	#include "compat/mingw.h"
+>     39
+>     40	#undef ALREADY_DECLARED_STAT_FUNCS
+>
+> This works fine, *provided* you do not need to compile with
+> -D_USE_32BIT_TIME_T, which would produce this warning:
+>
+>     ...mingw.c(223) : warning C4133: 'function' : incompatible types - \
+>     from '_stat64 *' to '_stat32i64 *'
+>
+> This would actually be *worse* than the original code, since the struct
+> _stat64 would not have the same "shape" as the struct _stat32i64; ...
 
-On Tue, Dec 8, 2009 at 21:22, Junio C Hamano <gitster@pobox.com> wrote:
-> But I think it is a reasonable thing to _implement_ the feature to
-> range-pick commits reusing the sequencing logic already in "rebase" a=
-nd
-> "rebase -i". =A0That essentially is what we wanted to do with "git
-> sequencer" that would be a sequencing logic backend shared among reba=
-se,
-> cherry-pick, and perhaps am.
+To cut this short: According to your explanations, using -D_USE_32BIT_TIME_T 
+with MSVC is bad. Please reroll without references to _USE_32BIT_TIME_T.
 
-Speaking of which, what's the status of git sequencer? I seem to
-remember some activity recently to slowly rewrite git rebase in c, but
-I haven't seen anything since then. Is it still moving forward? Is
-anyone interested in doing so? Just curious...
-
---=20
-Cheers,
-
-Sverre Rabbelier
+-- Hannes
