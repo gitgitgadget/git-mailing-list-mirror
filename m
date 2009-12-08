@@ -1,11 +1,14 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 0/6] "git reset --merge" related improvements
-Date: Tue, 08 Dec 2009 00:29:43 -0800
-Message-ID: <7vk4wxkgw8.fsf@alter.siamese.dyndns.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH v4 2/6] reset: use "unpack_trees()" directly instead of
+ "git read-tree"
+Date: Tue, 08 Dec 2009 00:45:19 -0800
+Message-ID: <1260261919.1554.11.camel@swboyd-laptop>
 References: <20091208075005.4475.26582.chriscool@tuxfamily.org>
+	 <20091208075616.4475.46720.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Stephan Beyer <s-beyer@gmx.net>,
@@ -14,67 +17,66 @@ Cc: git@vger.kernel.org,
 	Paolo Bonzini <bonzini@gnu.org>,
 	Johannes Sixt <j.sixt@viscovery.net>
 To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Dec 08 09:34:36 2009
+X-From: git-owner@vger.kernel.org Tue Dec 08 09:45:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHvWl-0001fe-M2
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 09:34:36 +0100
+	id 1NHvhK-0005yy-CT
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 09:45:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754756AbZLHIeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2009 03:34:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753522AbZLHIeY
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 03:34:24 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45445 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753112AbZLHIeX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2009 03:34:23 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C87586CD8;
-	Tue,  8 Dec 2009 03:34:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=th1k8hnhrO6N6r1apuZfx8qDcHY=; b=f6DgCH
-	qIgtlA99eDvQoRzVfT96Bg1d4cvWvWmEEU1+TU/IUIahdy5avRKBibZvMX2+x5mW
-	+lznyLjLNVApXHNl2IQp80Ajq5IYmefwwaE2SDSx/f9COtT0IrTFVlJOZdO/aiaK
-	dEfZ/bO8oH5cY4CdQdturnb3lsprQE6l1fLvs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O0YJyfAx1ubkActP3HjaP0B3dfh1WwyH
-	lcgCjd3fJ6fdubU22cjp7G98+SSxP+X2HaU2r3As1mS0aYiAG2M3U5b0JYyICUrX
-	yC1KXemA15Y5FWg5DpdlBZpTmgdbC89kqeOhCXSCArOcAfeTJ8dz25m8IHn6b1Vd
-	Eufpe5B0A4s=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 815EC86CCE;
-	Tue,  8 Dec 2009 03:34:19 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB10186C79; Tue,  8 Dec
- 2009 03:29:45 -0500 (EST)
-In-Reply-To: <20091208075005.4475.26582.chriscool@tuxfamily.org> (Christian
- Couder's message of "Tue\, 08 Dec 2009 08\:56\:09 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7A77DA68-E3D4-11DE-A28F-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753135AbZLHIpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2009 03:45:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbZLHIpS
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 03:45:18 -0500
+Received: from mail-pz0-f171.google.com ([209.85.222.171]:50804 "EHLO
+	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750842AbZLHIpQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2009 03:45:16 -0500
+Received: by pzk1 with SMTP id 1so2005773pzk.33
+        for <git@vger.kernel.org>; Tue, 08 Dec 2009 00:45:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=87Oeyjp2C2qd5kpEjRZbarYerXk7R2uGmdEqB2YXzWM=;
+        b=Haf7gd/AiDity/gaULKQUKwSxgxyc/3EeuBuaAQgILjMkpk93UeGEp/Z9Enouq7X7i
+         JznYjqdR/aurqH8wVQB/t+JiNlFxzFP8/sy3cjuBG0w3heWWBOP3wHXTpT+Ehrtc6YET
+         VZf7ev8+uOtUW6HbToqlwUyYjIyLZqS0T8pdk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=BcYaImboXAz3ROV6Gy/kfOP/At07dIJ8OmjH5D9X9zPaD5piGp/aeFV5cJ/XIoVN1K
+         bFtkc7h3+2LZkHw3ILw338K/WyF+v0DI/szMk2eW4Ajh0IX2OdSbhHGMWYwkWpjGpDpn
+         X//2n8AJU5q+/bCeG1OjTL92U4jFIVN72IW/Q=
+Received: by 10.115.101.1 with SMTP id d1mr14551888wam.40.1260261922398;
+        Tue, 08 Dec 2009 00:45:22 -0800 (PST)
+Received: from ?192.168.1.5? (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 22sm5816988pzk.6.2009.12.08.00.45.20
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 08 Dec 2009 00:45:21 -0800 (PST)
+In-Reply-To: <20091208075616.4475.46720.chriscool@tuxfamily.org>
+X-Mailer: Evolution 2.28.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134844>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On Tue, 2009-12-08 at 08:56 +0100, Christian Couder wrote:
+> +static int parse_and_init_tree_desc(const unsigned char *sha1,
+> +					     struct tree_desc *desc)
+> +{
+> +	struct tree *tree = parse_tree_indirect(sha1);
+> +	if (!tree)
+> +		return 1;
+> +	init_tree_desc(desc, tree->buffer, tree->size);
+> +	return 0;
+> +}
+> +
+>  
 
-> The new option name is "--keep-local-changes" because that's what
-> Junio used in the last email of the previous discussion, but my
-> opinion is that it is a bit long and so I'd like to rename it "--keep"
-> or another such short name.
-
-I vaguely recall that I mentioned something like "I still don't know what
-you are going to use this for, even though I think I am starting to
-understand it a bit better than before. In any case, it sounds like 'keep
-local changes' rather than 'safe'".
-
-Please don't take that as a serious suggestion of a better name.
-
-IOW, don't mind me---come up with a name that describes what you
-are doing better.  But please don't blame me either ;-)
+Is there a reason why you use this function instead of
+fill_tree_descriptor()?
