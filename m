@@ -1,105 +1,80 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: help: bisect single file from repos
-Date: Tue, 8 Dec 2009 09:17:17 +0100
-Message-ID: <200912080917.17220.chriscool@tuxfamily.org>
-References: <4B1CFC4C.6090406@bfs.de> <4B1D1A5A.9060004@drmicha.warpmail.net> <4B1D27B6.7010900@bfs.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 0/6] "git reset --merge" related improvements
+Date: Tue, 08 Dec 2009 00:29:43 -0800
+Message-ID: <7vk4wxkgw8.fsf@alter.siamese.dyndns.org>
+References: <20091208075005.4475.26582.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: wharms@bfs.de
-X-From: git-owner@vger.kernel.org Tue Dec 08 09:15:01 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue Dec 08 09:34:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHvDo-0003yi-P0
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 09:15:01 +0100
+	id 1NHvWl-0001fe-M2
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 09:34:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753670AbZLHIOo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2009 03:14:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753605AbZLHIOn
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 03:14:43 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:50564 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752408AbZLHIOm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Dec 2009 03:14:42 -0500
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 76C0F818042;
-	Tue,  8 Dec 2009 09:14:42 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 69B4A8180EC;
-	Tue,  8 Dec 2009 09:14:40 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <4B1D27B6.7010900@bfs.de>
-Content-Disposition: inline
+	id S1754756AbZLHIeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2009 03:34:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753522AbZLHIeY
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 03:34:24 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45445 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753112AbZLHIeX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2009 03:34:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C87586CD8;
+	Tue,  8 Dec 2009 03:34:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=th1k8hnhrO6N6r1apuZfx8qDcHY=; b=f6DgCH
+	qIgtlA99eDvQoRzVfT96Bg1d4cvWvWmEEU1+TU/IUIahdy5avRKBibZvMX2+x5mW
+	+lznyLjLNVApXHNl2IQp80Ajq5IYmefwwaE2SDSx/f9COtT0IrTFVlJOZdO/aiaK
+	dEfZ/bO8oH5cY4CdQdturnb3lsprQE6l1fLvs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=O0YJyfAx1ubkActP3HjaP0B3dfh1WwyH
+	lcgCjd3fJ6fdubU22cjp7G98+SSxP+X2HaU2r3As1mS0aYiAG2M3U5b0JYyICUrX
+	yC1KXemA15Y5FWg5DpdlBZpTmgdbC89kqeOhCXSCArOcAfeTJ8dz25m8IHn6b1Vd
+	Eufpe5B0A4s=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 815EC86CCE;
+	Tue,  8 Dec 2009 03:34:19 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB10186C79; Tue,  8 Dec
+ 2009 03:29:45 -0500 (EST)
+In-Reply-To: <20091208075005.4475.26582.chriscool@tuxfamily.org> (Christian
+ Couder's message of "Tue\, 08 Dec 2009 08\:56\:09 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 7A77DA68-E3D4-11DE-A28F-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134843>
 
-Hi,
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-On lundi 07 d=C3=A9cembre 2009, walter harms wrote:
-> Michael J Gruber schrieb:
-> > walter harms venit, vidit, dixit 07.12.2009 13:59:
-> >> Hi list,
-> >> i am new to git (using: git version 1.6.0.2).
-> >
-> > though your git is not that new ;)
-> >
-> >> I would like to bisect a single file but i have only commit id, no
-> >> tags.
-> >>
-> >> Background:
-> >> I have a copy of the busybox git repos, and i know there is (perha=
-ps)
-> >> a bug in ash.c.
-> >>
-> >> how can i do that ?
-> >
-> > You don't need any tags for bisecting. The man page of git-bisect h=
-as
-> > several examples on how to use it. Do you have a test script which
-> > exposes the bug?
->
-> unfortunately no, the error shows up very nicely when booting my
-> embdedded system but not else (this is the reason i would to bisect t=
-hat
-> file only and not busybox completely). And from the man pages i got t=
-he
-> impression that it is only possible the start with a tag.
+> The new option name is "--keep-local-changes" because that's what
+> Junio used in the last email of the previous discussion, but my
+> opinion is that it is a bit long and so I'd like to rename it "--keep"
+> or another such short name.
 
-The man page says:
+I vaguely recall that I mentioned something like "I still don't know what
+you are going to use this for, even though I think I am starting to
+understand it a bit better than before. In any case, it sounds like 'keep
+local changes' rather than 'safe'".
 
-git bisect start [<bad> [<good>...]] [--] [<paths>...]
+Please don't take that as a serious suggestion of a better name.
 
-and then:
-
-"This command uses git rev-list --bisect to help drive the binary searc=
-h=20
-process to find which change introduced a bug, given an old "good" comm=
-it=20
-object name and a later "bad" commit object name."
-
-> i already had the hint that i need to do:
-> git bisect start bad_commit_id good_commit_id -- ash.c
-
-So did you try that?
-
-> Ntl, there is one more question, how can i make sure that
-> i use the right version ?
-
-If you mean the right git version, then I think any 1.6.X should be eno=
-ugh.
-
-> first i toughed  that cherry-pick is the right=20
-> idea but it seems that that will apply onyl certain patches ?
-
-If you want to find the commit that introduced a bug, then you should n=
-ot=20
-need cherry-pick.
-
-Regards,
-Christian.
+IOW, don't mind me---come up with a name that describes what you
+are doing better.  But please don't blame me either ;-)
