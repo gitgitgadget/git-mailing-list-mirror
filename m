@@ -1,73 +1,61 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: Re: [PATCH 2/2] git-rm doc: Describe how to sync index & work tree
-Date: Tue, 8 Dec 2009 07:19:03 +0100
-Message-ID: <6672d0160912072219g4326bb5pde7bd02c09a9556a@mail.gmail.com>
-References: <4B1D4AFE.6090708@gmail.com>
-	 <7vpr6qze4i.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH v3 0/8] Remote helpers smart transport extensions
+Date: Tue, 8 Dec 2009 01:29:37 -0500
+Message-ID: <20091208062937.GA11353@coredump.intra.peff.net>
+References: <1260116931-16549-1-git-send-email-ilari.liusvaara@elisanet.fi>
+ <7v7hsz9qxj.fsf@alter.siamese.dyndns.org>
+ <20091207210608.6117@nanako3.lavabit.com>
+ <7vein635vn.fsf@alter.siamese.dyndns.org>
+ <20091208055735.GA9951@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 08 07:19:12 2009
+X-From: git-owner@vger.kernel.org Tue Dec 08 07:29:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHtPj-0006bX-Mh
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 07:19:12 +0100
+	id 1NHtZz-0000Zj-KE
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 07:29:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934543AbZLHGS7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2009 01:18:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932965AbZLHGS7
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 01:18:59 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:48715 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932734AbZLHGS7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Dec 2009 01:18:59 -0500
-Received: by bwz27 with SMTP id 27so4137448bwz.21
-        for <git@vger.kernel.org>; Mon, 07 Dec 2009 22:19:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Sc0MLx4h6FKwmAaLrJX9IE2hJZzufuaAYBjnljYOEMo=;
-        b=w+csItwvjYftaRDknK2KOG9UW4YT/ohHtgJVMtthrx6THyaperzLIQMujfEcpDKdmJ
-         IlSE9mksBmLhLQYg6oYburlNKm+f6TwUSR9JYyXGPsn1lyYOlxhCjbbgfU9TFdlDFTvL
-         VsBVxiptYC9/7SKExx0GeEbEgdCEFjR4jMPio=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=C0nAiDGvlr4PFYXq178yarrCJ3cINCRjWSpS3lXitBkNsOJmvnGbKVqQadfrRpUp+4
-         b09yvT8ZAmZoRCU3HwyMmraa0JuMQdqUOhlw++sIOkwbwCmHCRGQa9j8Wk4VhlN92nXk
-         y8HxwrYt/hYOTk/4GE7AidHmfBrEdnKfTqO1U=
-Received: by 10.204.162.143 with SMTP id v15mr1723977bkx.50.1260253143321; 
-	Mon, 07 Dec 2009 22:19:03 -0800 (PST)
-In-Reply-To: <7vpr6qze4i.fsf@alter.siamese.dyndns.org>
+	id S935831AbZLHG3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2009 01:29:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935828AbZLHG3e
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 01:29:34 -0500
+Received: from peff.net ([208.65.91.99]:45550 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932682AbZLHG3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2009 01:29:34 -0500
+Received: (qmail 8470 invoked by uid 107); 8 Dec 2009 06:34:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 08 Dec 2009 01:34:11 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Dec 2009 01:29:37 -0500
+Content-Disposition: inline
+In-Reply-To: <20091208055735.GA9951@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134823>
 
-2009/12/7 Junio C Hamano <gitster@pobox.com>:
-> I think mentioning "add -u" in the same section as "commit -a" would =
-be
-> helpful, as these two are more for user's own development (as opposed=
- to
-> vendor-code-drop). =C2=A0I'd perhaps squash something like this in. =C2=
-=A0Please say
-> "yes", "don't, it is horrible", or something in between ;-)
+On Tue, Dec 08, 2009 at 12:57:35AM -0500, Jeff King wrote:
 
-Yes, but...
+> On Mon, Dec 07, 2009 at 12:07:24PM -0800, Junio C Hamano wrote:
+> 
+> > I haven't asked people why they choose to write like this:
+> > 
+> > 	char* string;
+> > 
+> > beyond "that is how we were taught and what we are used to".
+> 
+> I have seen it in C++ code and recommended many years ago on
+> comp.lang.c++. The argument was something along the lines of:
 
-> -automatically notice and record all removals.
-> +automatically notice and record all removals. =C2=A0`git add -u`
-> +can be used for a similar effect without commiting.
+Perhaps I should have simply used google:
 
-s/commiting/committing/
+  http://www2.research.att.com/~bs/bs_faq2.html#whitespace
 
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+-Peff
