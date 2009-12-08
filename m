@@ -1,7 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 3/6] reset: add option "--keep-local-changes" to "git reset"
-Date: Tue, 08 Dec 2009 08:56:12 +0100
-Message-ID: <20091208075616.4475.31260.chriscool@tuxfamily.org>
+Subject: [PATCH v4 2/6] reset: use "unpack_trees()" directly instead of "git
+	read-tree"
+Date: Tue, 08 Dec 2009 08:56:11 +0100
+Message-ID: <20091208075616.4475.46720.chriscool@tuxfamily.org>
 References: <20091208075005.4475.26582.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
@@ -17,178 +18,168 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHv4P-00014T-C4
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 09:05:17 +0100
+	id 1NHv4O-00014T-B9
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 09:05:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755986AbZLHIEx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2009 03:04:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755870AbZLHIEu
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 03:04:50 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:38854 "EHLO smtp3-g21.free.fr"
+	id S1755965AbZLHIEt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2009 03:04:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755870AbZLHIEs
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 03:04:48 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:38843 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755911AbZLHIEo (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755879AbZLHIEo (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 8 Dec 2009 03:04:44 -0500
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 38789818124;
-	Tue,  8 Dec 2009 09:04:41 +0100 (CET)
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 7AA8C818023;
+	Tue,  8 Dec 2009 09:04:40 +0100 (CET)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id D0579818064;
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 6316C8180D7;
 	Tue,  8 Dec 2009 09:04:38 +0100 (CET)
-X-git-sha1: eaa6b94c1d60ce94612b5df78f815a45b407df54 
+X-git-sha1: 4cd9052b8f9e019d7677ed41bbac802a6345b9c5 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20091208075005.4475.26582.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134839>
 
-The purpose of this new option is to discard some of the
-last commits but to keep current changes in the work tree
-and the index.
+From: Stephan Beyer <s-beyer@gmx.net>
 
-The table below shows what happens when running
-"git reset --option target" to reset the HEAD to another
-commit (as a special case "target" could be the same as
-HEAD) in the cases where "--merge" and
-"--keep-local-changes" (abreviated --k-l-c) behave
-differently.
+This patch makes "reset_index_file()" call "unpack_trees()" directly
+instead of forking and execing "git read-tree". So the code is more
+efficient.
 
-working index HEAD target         working index HEAD
-----------------------------------------------------
-  B      B     A     A   --k-l-c    B      A     A
-                         --merge    A      A     A
-  B      B     A     C   --k-l-c       (disallowed)
-                         --merge    C      C     C
+And it's also easier to see which unpack_tree() options will be used,
+as we don't need to follow "git read-tree"'s command line parsing
+which is quite complex.
 
-In this table, A, B and C are some different states of
-a file. For example the first line of the table means
-that if a file is in state B in the working tree and
-the index, and in a different state A in HEAD and in
-the target, then "git reset --keep-local-changes target"
-will put the file in state B in the working tree and in
-state A in the index and HEAD.
+As Daniel Barkalow found, there is a difference between this new
+version and the old one. The old version gives an error for
+"git reset --merge" with unmerged entries and the new version does
+not. But this can be seen as a bug fix, because "--merge" was the
+only "git reset" option with this behavior and this behavior was
+not documented.
 
-So as can be seen in the table, "--merge" discards changes
-in the index, while "--keep-local-changes" does not. So
-if one wants to avoid using "git stash" before and after
-using "git reset" to save current changes, it is better to
-use "--keep-local-changes" rather than "--merge".
+In fact there is still an error with unmerge entries if we reset
+the unmerge entries to the same state as HEAD. So the bug is not
+completely fixed.
 
-The following table shows what happens on unmerged entries:
-
-working index HEAD target         working index HEAD
-----------------------------------------------------
- X       U     A    B     --k-l-c  X       B     B
-                          --merge  X       B     B
- X       U     A    A     --k-l-c  X       A     A
-                          --merge (disallowed)
-
-In this table X can be any state and U means an unmerged
-entry.
-
-A following patch will add some test cases for
-"--keep-local-changes", where the differences between
-"--merge" and "--keep-local-changes" can also be seen.
-
-The "--keep-local-changes" option is implemented by doing
-a 2 way merge between HEAD and the reset target, and if
-this succeeds by doing a mixed reset to the target.
-
-The code comes from the sequencer GSoC project, where
-such an option was developed by Stephan Beyer:
+The code comes from the sequencer GSoC project:
 
 git://repo.or.cz/git/sbeyer.git
 
 (at commit 5a78908b70ceb5a4ea9fd4b82f07ceba1f019079)
-
-But in the sequencer project the "reset" flag was set
-in the "struct unpack_trees_options" passed to
-"unpack_trees()". With this flag the changes in the
-working tree were discarded if the file was different
-between HEAD and the reset target.
 
 Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin-reset.c |   30 +++++++++++++++++++++++++-----
- 1 files changed, 25 insertions(+), 5 deletions(-)
+ builtin-reset.c        |   51 +++++++++++++++++++++++++++++++++++++----------
+ t/t7110-reset-merge.sh |    8 ++++--
+ 2 files changed, 45 insertions(+), 14 deletions(-)
 
 diff --git a/builtin-reset.c b/builtin-reset.c
-index ddb81f3..3cbc4fd 100644
+index 73e6022..ddb81f3 100644
 --- a/builtin-reset.c
 +++ b/builtin-reset.c
-@@ -22,13 +22,15 @@
- #include "cache-tree.h"
+@@ -18,6 +18,8 @@
+ #include "tree.h"
+ #include "branch.h"
+ #include "parse-options.h"
++#include "unpack-trees.h"
++#include "cache-tree.h"
  
  static const char * const git_reset_usage[] = {
--	"git reset [--mixed | --soft | --hard | --merge] [-q] [<commit>]",
-+	"git reset [--mixed | --soft | --hard | --merge | --keep-local-changes] [-q] [<commit>]",
- 	"git reset [--mixed] <commit> [--] <paths>...",
- 	NULL
- };
+ 	"git reset [--mixed | --soft | --hard | --merge] [-q] [<commit>]",
+@@ -52,29 +54,56 @@ static inline int is_merge(void)
+ 	return !access(git_path("MERGE_HEAD"), F_OK);
+ }
  
--enum reset_type { MIXED, SOFT, HARD, MERGE, NONE };
--static const char *reset_type_names[] = { "mixed", "soft", "hard", "merge", NULL };
-+enum reset_type { MIXED, SOFT, HARD, MERGE, KEEP_LOCAL_CHANGES, NONE };
-+static const char *reset_type_names[] = {
-+	"mixed", "soft", "hard", "merge", "keep_local_changes", NULL
-+};
- 
- static char *args_to_str(const char **argv)
- {
-@@ -81,6 +83,7 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
- 	if (!quiet)
- 		opts.verbose_update = 1;
- 	switch (reset_type) {
-+	case KEEP_LOCAL_CHANGES:
- 	case MERGE:
- 		opts.update = 1;
- 		break;
-@@ -95,6 +98,16 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
- 
- 	read_cache_unmerged();
- 
-+	if (reset_type == KEEP_LOCAL_CHANGES) {
-+		unsigned char head_sha1[20];
-+		if (get_sha1("HEAD", head_sha1))
-+			return error("You do not have a valid HEAD.");
-+		if (parse_and_init_tree_desc(head_sha1, desc))
-+			return error("Failed to find tree of HEAD.");
-+		nr++;
-+		opts.fn = twoway_merge;
-+	}
++static int parse_and_init_tree_desc(const unsigned char *sha1,
++					     struct tree_desc *desc)
++{
++	struct tree *tree = parse_tree_indirect(sha1);
++	if (!tree)
++		return 1;
++	init_tree_desc(desc, tree->buffer, tree->size);
++	return 0;
++}
 +
- 	if (parse_and_init_tree_desc(sha1, desc + nr - 1))
- 		return error("Failed to find tree of %s.", sha1_to_hex(sha1));
- 	if (unpack_trees(nr, desc, &opts))
-@@ -238,6 +251,9 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 				"reset HEAD, index and working tree", HARD),
- 		OPT_SET_INT(0, "merge", &reset_type,
- 				"reset HEAD, index and working tree", MERGE),
-+		OPT_SET_INT(0, "keep-local-changes", &reset_type,
-+				"reset HEAD but keep local changes",
-+				KEEP_LOCAL_CHANGES),
- 		OPT_BOOLEAN('q', NULL, &quiet,
- 				"disable showing new HEAD in hard reset and progress message"),
- 		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
-@@ -324,9 +340,13 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	if (reset_type == SOFT) {
- 		if (is_merge() || read_cache() < 0 || unmerged_cache())
- 			die("Cannot do a soft reset in the middle of a merge.");
-+	} else {
-+		int err = reset_index_file(sha1, reset_type, quiet);
-+		if (reset_type == KEEP_LOCAL_CHANGES)
-+			err = err || reset_index_file(sha1, MIXED, quiet);
-+		if (err)
-+			die("Could not reset index file to revision '%s'.", rev);
- 	}
--	else if (reset_index_file(sha1, reset_type, quiet))
--		die("Could not reset index file to revision '%s'.", rev);
+ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet)
+ {
+-	int i = 0;
+-	const char *args[6];
++	int nr = 1;
++	int newfd;
++	struct tree_desc desc[2];
++	struct unpack_trees_options opts;
++	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
  
- 	/* Any resets update HEAD to the head being switched to,
- 	 * saving the previous head in ORIG_HEAD before. */
+-	args[i++] = "read-tree";
++	memset(&opts, 0, sizeof(opts));
++	opts.head_idx = 1;
++	opts.src_index = &the_index;
++	opts.dst_index = &the_index;
++	opts.fn = oneway_merge;
++	opts.merge = 1;
+ 	if (!quiet)
+-		args[i++] = "-v";
++		opts.verbose_update = 1;
+ 	switch (reset_type) {
+ 	case MERGE:
+-		args[i++] = "-u";
+-		args[i++] = "-m";
++		opts.update = 1;
+ 		break;
+ 	case HARD:
+-		args[i++] = "-u";
++		opts.update = 1;
+ 		/* fallthrough */
+ 	default:
+-		args[i++] = "--reset";
++		opts.reset = 1;
+ 	}
+-	args[i++] = sha1_to_hex(sha1);
+-	args[i] = NULL;
+ 
+-	return run_command_v_opt(args, RUN_GIT_CMD);
++	newfd = hold_locked_index(lock, 1);
++
++	read_cache_unmerged();
++
++	if (parse_and_init_tree_desc(sha1, desc + nr - 1))
++		return error("Failed to find tree of %s.", sha1_to_hex(sha1));
++	if (unpack_trees(nr, desc, &opts))
++		return -1;
++	if (write_cache(newfd, active_cache, active_nr) ||
++	    commit_locked_index(lock))
++		return error("Could not write new index file.");
++
++	return 0;
+ }
+ 
+ static void print_new_head_line(struct commit *commit)
+diff --git a/t/t7110-reset-merge.sh b/t/t7110-reset-merge.sh
+index 8190da1..6afaf73 100755
+--- a/t/t7110-reset-merge.sh
++++ b/t/t7110-reset-merge.sh
+@@ -79,10 +79,12 @@ test_expect_success 'setup 2 different branches' '
+      git commit -a -m "change in branch2"
+ '
+ 
+-test_expect_success '"reset --merge HEAD^" fails with pending merge' '
++test_expect_success '"reset --merge HEAD^" is ok with pending merge' '
+      test_must_fail git merge branch1 &&
+-     test_must_fail git reset --merge HEAD^ &&
+-     git reset --hard HEAD
++     git reset --merge HEAD^ &&
++     test -z "$(git diff --cached)" &&
++     test -n "$(git diff)" &&
++     git reset --hard HEAD@{1}
+ '
+ 
+ test_expect_success '"reset --merge HEAD" fails with pending merge' '
 -- 
 1.6.5.1.gaf97d
