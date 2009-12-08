@@ -1,50 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add commit.status, --status, and --no-status
-Date: Tue, 8 Dec 2009 01:04:15 -0500
-Message-ID: <20091208060415.GC9951@coredump.intra.peff.net>
-References: <20091206131217.GA12851@sigill.intra.peff.net>
- <1260225927-33612-1-git-send-email-jh@jameshoward.us>
+From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
+Subject: Re: [PATCH 2/2] git-rm doc: Describe how to sync index & work tree
+Date: Tue, 8 Dec 2009 07:12:57 +0100
+Message-ID: <6672d0160912072212j5b6f5c0bha57e818ccf975ba6@mail.gmail.com>
+References: <4B1D4AFE.6090708@gmail.com>
+	 <7vpr6qze4i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "James P. Howard, II" <jh@jameshoward.us>
-X-From: git-owner@vger.kernel.org Tue Dec 08 07:04:26 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 08 07:13:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHtBQ-00037k-4G
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 07:04:24 +0100
+	id 1NHtJo-0005EC-Q3
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 07:13:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935638AbZLHGEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2009 01:04:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935632AbZLHGEM
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 01:04:12 -0500
-Received: from peff.net ([208.65.91.99]:52541 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935626AbZLHGEL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2009 01:04:11 -0500
-Received: (qmail 7958 invoked by uid 107); 8 Dec 2009 06:08:49 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 08 Dec 2009 01:08:49 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Dec 2009 01:04:15 -0500
-Content-Disposition: inline
-In-Reply-To: <1260225927-33612-1-git-send-email-jh@jameshoward.us>
+	id S932406AbZLHGMw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2009 01:12:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932289AbZLHGMw
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 01:12:52 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:48297 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932242AbZLHGMv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Dec 2009 01:12:51 -0500
+Received: by bwz27 with SMTP id 27so4135880bwz.21
+        for <git@vger.kernel.org>; Mon, 07 Dec 2009 22:12:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ej/pyqYizl1otTXnGAmhXJNtTIwvYdhhuIe8gUUxVEc=;
+        b=IGrBs6IKntfrswN/xKuR+75CwfB0rLQkYyfr5f1KcSQeLaTziTzaJxX53iFILjIqW0
+         Vo+0wJ8fu8HgF74+1ekXmaG3LOkdZmjnd3ROw9hxmrsj9T2e+ic8WkGnJQ/cWIVOTMn+
+         sUfMOeFkdNah0XTWTpdVw7Nl/6HR2rPed5cs4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=GaH47e2arGLh+wDdZq/aEoIDihP7nKsgYGlMa9KvPtuubBQyeplzyz+X8PaX7pOk9x
+         sP4fsktbn1CRduzMAQ/1z8CQYbovArLad5tbXfgs0pb3onc3lTbJlqD2A/KoyeR4xobS
+         jAHI0vUHKPw52wNG0Pgob6r7UKPjBD/Q3eIvo=
+Received: by 10.204.48.194 with SMTP id s2mr7941325bkf.210.1260252777292; Mon, 
+	07 Dec 2009 22:12:57 -0800 (PST)
+In-Reply-To: <7vpr6qze4i.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134821>
 
-On Mon, Dec 07, 2009 at 05:45:27PM -0500, James P. Howard, II wrote:
+2009/12/7 Junio C Hamano <gitster@pobox.com>:
+> Looks sensible.
+>
+> I think mentioning "add -u" in the same section as "commit -a" would =
+be
+> helpful, as these two are more for user's own development (as opposed=
+ to
+> vendor-code-drop). =C2=A0I'd perhaps squash something like this in. =C2=
+=A0Please say
+> "yes", "don't, it is horrible", or something in between ;-)
 
-> This commit provides support for commit.status, --status, and
-> --no-status, which control whether or not the git status information
-> is included in the commit message template when using an editor to
-> prepare the commit message.  It does not affect the effects of a
-> user's commit.template settings.
+Yes. :-)
 
-Thanks, this looks very cleanly done. The only complaint I would make is
-that it should probably include a simple test case.
-
--Peff
+--=20
+Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
