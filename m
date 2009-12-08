@@ -1,64 +1,76 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 2/2] t7508-status: test all modes with color
-Date: Tue, 08 Dec 2009 17:06:36 +0100
-Message-ID: <4B1E798C.5050204@drmicha.warpmail.net>
-References: <cover.1260266027.git.git@drmicha.warpmail.net> <39211ecec866882503d1188d359e1183341faeb1.1260266027.git.git@drmicha.warpmail.net> <hflc82$sf8$1@ger.gmane.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH RFC] rebase: add --revisions flag
+Date: Tue, 8 Dec 2009 17:08:22 +0100
+Message-ID: <20091208160822.GA1299@atjola.homenet>
+References: <20091208144740.GA30830@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 08 17:08:06 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Dec 08 17:08:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NI2bd-0003X7-ES
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 17:08:05 +0100
+	id 1NI2c6-0003ko-ND
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 17:08:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932409AbZLHQHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2009 11:07:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932403AbZLHQHs
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 11:07:48 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:41292 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932332AbZLHQHs (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Dec 2009 11:07:48 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 2550EC54DD;
-	Tue,  8 Dec 2009 11:07:54 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 08 Dec 2009 11:07:54 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=vj97atAJJkCy4sSQH44dEe82Lrg=; b=WsanK9xehQFeHuXZB2vhiedWDOaOjqhGgghmu7c6sDoAk5btfvI/WsLUtSJcdUtOYV/v9zszVDSpgGiR+o/nZKf6j1DTraZnmNVy970wBzYI2GVHq34Z2uLjYm/TuWEDE6Raxm/XxVl53THF+/4z5ryzh5dWsi+MQnxwvoyvNQ4=
-X-Sasl-enc: HEq4qUo5fDdVo7Iw6w3kFnC3EhS83ljtGnMBt7G4WwBv 1260288473
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8FD0A4A8B81;
-	Tue,  8 Dec 2009 11:07:53 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7pre) Gecko/20091204 Lightning/1.0b1pre Shredder/3.0.1pre
-In-Reply-To: <hflc82$sf8$1@ger.gmane.org>
+	id S932466AbZLHQIW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2009 11:08:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932463AbZLHQIV
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 11:08:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60549 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932403AbZLHQIU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2009 11:08:20 -0500
+Received: (qmail invoked by alias); 08 Dec 2009 16:08:26 -0000
+Received: from i59F55883.versanet.de (EHLO atjola.homenet) [89.245.88.131]
+  by mail.gmx.net (mp060) with SMTP; 08 Dec 2009 17:08:26 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX181wANoof01tNxE650IERsvRhB2whlLWUyyr35IoP
+	mVr2zDd1YYsdTX
+Content-Disposition: inline
+In-Reply-To: <20091208144740.GA30830@redhat.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134890>
 
-Jakub Narebski venit, vidit, dixit 08.12.2009 12:10:
-> Michael J Gruber wrote:
-> 
->> +decrypt_color () {
->> +       sed \
->> +               -e 's/.\[1m/<WHITE>/g' \
->> +               -e 's/.\[31m/<RED>/g' \
->> +               -e 's/.\[32m/<GREEN>/g' \
->> +               -e 's/.\[34m/<BLUE>/g' \
->> +               -e 's/.\[m/<RESET>/g'
->> +}
-> 
-> Shouldn't this be better in test-lib.sh, or some common lib 
-> (lib-color.sh or color-lib.sh; we are unfortunately a bit inconsistent
-> in naming here)?
+On 2009.12.08 16:47:42 +0200, Michael S. Tsirkin wrote:
+> Add --revisions flag to rebase, so that it can be used
+> to apply an arbitrary range of commits on top
+> of a current branch.
+>=20
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>=20
+> I've been wishing for this functionality for a while now,
+> so here goes. This isn't yet properly documented and I didn't
+> write a test, but the patch seems to work fine for me.
+> Any early flames/feedback?
 
-Well, so far it's used in two places (and somewhat differently). I would
-say test-libification starts at 3 :)
+This pretty much reverses what rebase normally does. Instead of "rebase
+this onto that" it's "'rebase' that onto this". And instead of updating
+the branch head that got rebased, the, uhm, "upstream" gets updated.
 
-Michael
+Also, AFAICT this needs to be called like this:
+git rebase --revisions foo..bar HEAD
+
+Changing the meaning of the <upstream> argument and relying on the fact
+that <newbase> defaults to <upstream>. If such a thing gets added, it
+should rather work like --root, not using <upstream> at all, but --onto
+<newbase> only. Maybe defaulting to HEAD for <newbase> and making --ont=
+o
+optional, as it's reversed WRT what it does compared to the usual
+rebase.
+
+But generally, I'd say it would be better to add such a range feature t=
+o
+cherry-pick than abusing rebase for that.
+
+Bj=F6rn
