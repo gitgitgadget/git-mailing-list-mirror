@@ -1,88 +1,185 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: help: bisect single file from repos
-Date: Tue, 08 Dec 2009 10:35:11 -0800
-Message-ID: <7vein5e2lc.fsf@alter.siamese.dyndns.org>
-References: <4B1CFC4C.6090406@bfs.de> <4B1D1A5A.9060004@drmicha.warpmail.net>
- <4B1D27B6.7010900@bfs.de> <200912080917.17220.chriscool@tuxfamily.org>
- <4B1E5796.2090201@bfs.de>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH RFC] rebase: add --revisions flag
+Date: Tue, 8 Dec 2009 20:11:07 +0100
+Message-ID: <20091208191107.GA4103@atjola.homenet>
+References: <20091208144740.GA30830@redhat.com>
+ <20091208160822.GA1299@atjola.homenet>
+ <20091208161406.GB32045@redhat.com>
+ <20091208163737.GA2005@atjola.homenet>
+ <20091208164449.GA32204@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>, wharms@bfs.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 08 19:35:42 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Dec 08 20:11:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NI4uL-0005dv-Qf
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 19:35:34 +0100
+	id 1NI5T1-0006g8-PK
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 20:11:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754859AbZLHSfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2009 13:35:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754775AbZLHSfT
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 13:35:19 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53583 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754334AbZLHSfS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2009 13:35:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DC3438689D;
-	Tue,  8 Dec 2009 13:35:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p9QpKH9WZezd6nQ8gxue6+WP8lU=; b=TPc2Uq
-	DmdBfRfvYkHk2aXyEhcECa91zfdKe6v3XmzgZ18JZ9P82JZUB91vKg0kJYywPwgm
-	BkrRhea8Nk+1idbWkCro2ukoka+rla4bd2A9Tc9/zgFtxCEwnMEkhHf8LN66igWe
-	IW/pGkVAyKzl416vMUqeAXmCeMLcJDoiBHSzk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=imamcKLE30Ct60YlzsglbDy3/lwOmUuT
-	F3Lc5yxOlwebadtFtuwhBYOvlR1hBiRmVjfwX5rDwRQf54GHsVrFPEOV71PR5H+X
-	gytYyBvetU4xde1fds/Ai06H5cTjD8wTJe0y3k3UEkbb5Vwr1OUMSl7MtZHWsanz
-	VY1qsLStzrA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BA8E8689A;
-	Tue,  8 Dec 2009 13:35:18 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9572C8688B; Tue,  8 Dec
- 2009 13:35:13 -0500 (EST)
-In-Reply-To: <4B1E5796.2090201@bfs.de> (walter harms's message of "Tue\, 08
- Dec 2009 14\:41\:42 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6F4BA580-E428-11DE-BEA2-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S965794AbZLHTLL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2009 14:11:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965791AbZLHTLJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 14:11:09 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33123 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965790AbZLHTLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2009 14:11:08 -0500
+Received: (qmail invoked by alias); 08 Dec 2009 19:11:11 -0000
+Received: from i59F55883.versanet.de (EHLO atjola.homenet) [89.245.88.131]
+  by mail.gmx.net (mp056) with SMTP; 08 Dec 2009 20:11:11 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/JQd4VOrLJPW7EuFtp2b3fgAysemUsk1pXgyyIGW
+	SNwmkIT6qgsqWV
+Content-Disposition: inline
+In-Reply-To: <20091208164449.GA32204@redhat.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134903>
 
-walter harms <wharms@bfs.de> writes:
+On 2009.12.08 18:44:49 +0200, Michael S. Tsirkin wrote:
+> On Tue, Dec 08, 2009 at 05:37:37PM +0100, Bj=F6rn Steinbrink wrote:
+> > On 2009.12.08 18:14:07 +0200, Michael S. Tsirkin wrote:
+> > > On Tue, Dec 08, 2009 at 05:08:22PM +0100, Bj=F6rn Steinbrink wrot=
+e:
+> > > > On 2009.12.08 16:47:42 +0200, Michael S. Tsirkin wrote:
+> > > > > Add --revisions flag to rebase, so that it can be used
+> > > > > to apply an arbitrary range of commits on top
+> > > > > of a current branch.
+> > > > >=20
+> > > > > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> > > > > ---
+> > > > >=20
+> > > > > I've been wishing for this functionality for a while now,
+> > > > > so here goes. This isn't yet properly documented and I didn't
+> > > > > write a test, but the patch seems to work fine for me.
+> > > > > Any early flames/feedback?
+> > > >=20
+> > > > This pretty much reverses what rebase normally does. Instead of=
+ "rebase
+> > > > this onto that" it's "'rebase' that onto this". And instead of =
+updating
+> > > > the branch head that got rebased, the, uhm, "upstream" gets upd=
+ated.
+> > >=20
+> > > The last sentence is wrong I think - it is still the branch head =
+that
+> > > is updated.
+> >=20
+> > But you don't rebase the branch head. Before the rebase, the branch=
+ head
+> > doesn't reference the commits that get rebased. For example:
+> >=20
+> > git checkout bar
+> > git rebase --revisions foo bar
+> >=20
+> > You "rebase" the commits in foo's history, but you update bar.
+>=20
+> Yes, that's the who point of the patch.
 
-> Christian Couder schrieb:
-> ...
-> i am sorry, i am not familiar with git and when i am stating i am looking
-> for examples first. the examples in my man page are like
-> git bisect start v2.6.20-rc6 v2.6.20-rc4
-> there is nothing like:
-> git bisect start 6a87a68a6a8 65a76a8a68a7
->
-> I ASSUME that you can use tags like "v2.6.20-rc6" and commit-id like "6a87a68a6a8"
-> interchangeable but that was not clear from beginning.
+Yes, and it's "backwards" compared to the existing "rebase" modes, but
+more like "cherry-pick".
 
-The misconception here is "naming commit is done completely differently
-from naming branches and tags", which is false in the git land, but it may
-hold true in some other systems (e.g. Subversion, which made them into
-different dimensions by making branches and tags into a location in a
-larger whole tree namespace when their commits are named by serial version
-number of that whole tree namespace).
+> The above applies a single commit, foo, on top of current branch bar.
 
-We can call this a misconception, tell users to learn how things work
-before using git (sometimes unlearning CVS and Subversion helps for this
-exact reason), dismiss the issue and move on.  But I wonder if there is
-something we _could_ have done better in the documentation area to avoid
-this from the beginning, iow, make it easier to "learn how things work
-before using"?  I think there is a lesson to be learned by us in here, and
-I'd like to hear comments and improvement suggestions, especially from
-"usability" and "friendly to new people" advocates.
+Hm, no. I expected it to turn all commits reachable from foo into
+patches and applying them to bar. But actually, that should hit the
+special <since> mode of format-patch. So
+git rebase --revisions foo bar
+is (with your patch) actually the same as
+git rebase foo bar
+
+So actually the example should have been:
+git rebase --root --revisions foo bar
+
+Both invocations probably mess up the diff-stat as that becomes:
+git diff --stat --summary foo
+So it creates a diffstat of the diff from the working tree to "foo",
+which can't be right.
+
+>=20
+> > WRT the result, the above command should be equivalent to:
+> > git checkout bar
+> > git reset --hard foo
+> > git rebase --root --onto ORIG_HEAD;
+> >=20
+> > And here, the commits currently reachable through "bar" are rebased=
+, and
+> > "bar" also gets updated.
+>=20
+> So this=20
+> 1. won't be very useful, as you show it is easy
+>    to achieve with existing commands.
+
+One can "almost" achieve it.
+git rebase --revision A..B foo
+
+is about the same as:
+git checkout foo
+git reset --hard B
+git rebase --onto ORIG_HEAD A
+
+But:
+a) The "reset --hard" obviously lacks the safety checks for clean
+index/working tree.
+b) "git rebase --abort" won't take you back to your initial state, but
+to B.
+c) It's not really obvious that you can do it and how to do it.
+
+Another possibility would be:
+
+git checkout B^0 # detach HEAD at B
+git rebase foo # rebase onto foo
+git checkout foo=20
+git merge HEAD@{1} # Fast-forwards foo to the rebased stuff
+
+That fixes a), avoid b) [because you don't mess up any branch head
+early] but is still subject to c).
+
+And for both methods, the ORIG_HEAD and HEAD@{1} arguments are somewhat
+"unstable", e.g. checking out the wrong branch head first, and only the=
+n
+the correct one, you'd have to use HEAD@{2} instead of HEAD@{1} (becaus=
+e
+the reflog for HEAD got a new entry).
+
+So you can already do what you want to do, but wrapping it in a single
+porcelain might still be useful because it's obviously a  lot easier an=
+d
+safer that way. That said, I wonder what kind of workflow you're using
+though, and why you require that feature. I've never needed something
+like that.
+
+> 2. interprets "foo" as branch name as opposed to
+>    revision range.
+
+Well, a single committish is a "range" as far as the range-based
+commands are concerned, e.g. "git log master" treats "master" to mean
+all commits reachable it. If "rebase --revisions master" would do the
+same, that's at least consistent (and for single commit picks, there's
+already cherry-pick). The problem with your patch is that it passes the
+revision argument to format-patch as is, and:
+git format-patch foo
+is the same as
+git format-patch foo..HEAD
+
+
+> OTOH, rebase --revisions as I implemented is a "smarter cherry-pick"
+> which can't easily be achieved with existing commands, especially if
+> you add "-i".
+
+And that "is a 'smarter cherry-pick'" is why I think that rebase is
+actually the wrong command to get that feature. While rebase internally
+does just mass-cherry-picking, it does that with commits in the current
+branch onto a specified branch. The --revisions flag makes it do things
+the other way around.
+
+Bj=F6rn
