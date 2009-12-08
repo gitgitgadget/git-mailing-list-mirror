@@ -1,70 +1,65 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [RFC PATCH v2 2/2] MSVC: Fix an "incompatible pointer types" compiler warning
-Date: Tue, 8 Dec 2009 21:31:43 +0100
-Message-ID: <200912082131.44498.j6t@kdbg.org>
-References: <4B1997A0.9000004@ramsay1.demon.co.uk> <200912051257.21386.j6t@kdbg.org> <4B1EAD9A.3090205@ramsay1.demon.co.uk>
+From: Patrick Grimard <pgrimard@gmail.com>
+Subject: delete remote branches
+Date: Tue, 8 Dec 2009 15:35:27 -0500
+Message-ID: <9cdb17250912081235m2b061ca5x70fe42749b49670f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Marius Storm-Olsen" <mstormo@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"GIT Mailing-list" <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Dec 08 21:32:22 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 08 21:35:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NI6jJ-00077Y-TV
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 21:32:18 +0100
+	id 1NI6mU-0008M9-IJ
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 21:35:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937321AbZLHUcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2009 15:32:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936711AbZLHUcC
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 15:32:02 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:62262 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S936476AbZLHUcB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2009 15:32:01 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id DD1D8CDF8C;
-	Tue,  8 Dec 2009 21:32:05 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 9774619F5C4;
-	Tue,  8 Dec 2009 21:31:44 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <4B1EAD9A.3090205@ramsay1.demon.co.uk>
-Content-Disposition: inline
+	id S966034AbZLHUfX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2009 15:35:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936949AbZLHUfW
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 15:35:22 -0500
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:53534 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936711AbZLHUfV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2009 15:35:21 -0500
+Received: by fxm5 with SMTP id 5so6699194fxm.28
+        for <git@vger.kernel.org>; Tue, 08 Dec 2009 12:35:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=9iicqkYfeE4KEBESYWm2CZ6wWD1SFPBMHX2Epl3c/+w=;
+        b=ZRFJ4KIySGDy0Rv3CJcSAhWUOrJdA6bHGIxXBWC8VX2x0xCYQEH4eCWoZvVISl05Si
+         sNTwPdPg5/oe+BhUba4mJnEi71VkRdPBqX9WHhP59EchbdrWV4HMykVnTRc6YU033KzU
+         iwP9h8NBkBTdSr0fyLa/+HY/wbKV+iZ9IGcKk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=T8MZJTqKp2SYDb4FHmcRDxWpv1aJKe+CkZb4qGa6WIgk6pt9k1wBigxLr7yM4Ck4kx
+         R2RL7AJbCrb+fxESpOINBYGuXmbmM9tpq6/vGjZ9l8piK5SVElnadmWMoS4W+xItg/mw
+         BQYAs/vQRzQcmAMZpLSwa4nBH+RId01O8+tMY=
+Received: by 10.223.4.144 with SMTP id 16mr1323557far.36.1260304527509; Tue, 
+	08 Dec 2009 12:35:27 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134911>
 
-On Dienstag, 8. Dezember 2009, Ramsay Jones wrote:
->     30	#define stat _stat64
->     31	int mingw_lstat(const char *file_name, struct stat *buf);
->     32	int mingw_fstat(int fd, struct stat *buf);
->     33	#define fstat mingw_fstat
->     34	#define lstat mingw_lstat
->     35	#define _stat64(x,y) mingw_lstat(x,y)
->     36	#define ALREADY_DECLARED_STAT_FUNCS
->     37
->     38	#include "compat/mingw.h"
->     39
->     40	#undef ALREADY_DECLARED_STAT_FUNCS
->
-> This works fine, *provided* you do not need to compile with
-> -D_USE_32BIT_TIME_T, which would produce this warning:
->
->     ...mingw.c(223) : warning C4133: 'function' : incompatible types - \
->     from '_stat64 *' to '_stat32i64 *'
->
-> This would actually be *worse* than the original code, since the struct
-> _stat64 would not have the same "shape" as the struct _stat32i64; ...
+I'm experimenting with Git, just trying to get a feel for it.  I
+created a bare git repo on a server and pushed a local git repo (let's
+call it DIR1) from my PC to the server.  Then from another directory
+on my local PC (let's call it DIR2), I cloned the repo on the server
+and checked out a new branch named testBranch.  Did some playing with
+branches to see how they worked, like pushing the branch to the server
+from DIR2 and fetching it from DIR1, merging it into master and then
+pushing master back to the server.  Now from DIR2, I fetched master
+from the server, merged in the changes and deleted the remote branch
+called testBranch using the command "git push origin :testBranch"
+which seemed to work fine since the command "git branch -r" no longer
+lists the remote branch.  However from DIR1 if I do "git branch -r" I
+still see the remote branch and can't seem to delete it using the
+above method.  Any idea why this is happening?
 
-To cut this short: According to your explanations, using -D_USE_32BIT_TIME_T 
-with MSVC is bad. Please reroll without references to _USE_32BIT_TIME_T.
+Thanks in advance.
 
--- Hannes
+Patrick
