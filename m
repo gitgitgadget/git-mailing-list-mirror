@@ -1,77 +1,108 @@
-From: Russ Dill <russ.dill@gmail.com>
-Subject: Generic filters for git archive?
-Date: Mon, 7 Dec 2009 18:06:04 -0700
-Message-ID: <f9d2a5e10912071706m10ed7112ob7db47cdfac510d6@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [RFC/PATCHv10 01/11] fast-import: Proper notes tree manipulation
+Date: Tue, 08 Dec 2009 02:44:30 +0100
+Message-ID: <200912080244.30390.johan@herland.net>
+References: <1260185254-1523-1-git-send-email-johan@herland.net>
+ <1260185254-1523-2-git-send-email-johan@herland.net>
+ <20091207164130.GD17173@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 08 02:06:12 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Dec 08 02:44:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHoWp-00067p-TR
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 02:06:12 +0100
+	id 1NHp87-0008SC-2V
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 02:44:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965252AbZLHBF7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2009 20:05:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965208AbZLHBF7
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 20:05:59 -0500
-Received: from mail-pz0-f171.google.com ([209.85.222.171]:62801 "EHLO
-	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965207AbZLHBF6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2009 20:05:58 -0500
-Received: by pzk1 with SMTP id 1so1764345pzk.33
-        for <git@vger.kernel.org>; Mon, 07 Dec 2009 17:06:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=hrAk7LtL7r2EIVNJ9r09sqKtZSUU8rNO4UBu1+QJnWw=;
-        b=M2KQ0Id7wrkmubtFALP2OfEqxyJ66kF7sMhGnwfkMSdxvIsc/UMVSLnCcdWqhq8eH0
-         mr/fjIsd+9pwFgFxnHLqgTC868hpls7lCERt8XXB+oY0bETHkObfwru3ifdmILefHc/H
-         /49yHsUI1jTDGbxtPg9OG7af6xD6geUfdhxuk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=bcoVIFdcUVsUEZdd+P1c4Te73Z6V3XmeNoeDvYb4QSBcSpAkurI+0Il9JkvRzzoi4U
-         hVlskzFBblgwvZvAAyo1+XbAVjCUQXIvmJKHMmytZtzjvjnR2HVM6AS/474VKdD8pWze
-         4PAR1zQw00/bCxD+LGebPb3aAwGZC0AGtA25g=
-Received: by 10.143.21.34 with SMTP id y34mr857701wfi.16.1260234364560; Mon, 
-	07 Dec 2009 17:06:04 -0800 (PST)
+	id S935737AbZLHBob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2009 20:44:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935735AbZLHBoa
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 20:44:30 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:37871 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S935734AbZLHBo3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Dec 2009 20:44:29 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KUB00K738UAAB20@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 08 Dec 2009 02:44:34 +0100 (MET)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KUB004598U7CQ30@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 08 Dec 2009 02:44:34 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.12.8.13619
+User-Agent: KMail/1.12.4 (Linux/2.6.31-ARCH; KDE/4.3.4; x86_64; ; )
+In-reply-to: <20091207164130.GD17173@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134798>
 
-I'm trying to add copyright headers to my source files as they are
-exported via git archive. eg:
+On Monday 07 December 2009, Shawn O. Pearce wrote:
+> Johan Herland <johan@herland.net> wrote:
+> > +static uintmax_t do_change_note_fanout(
+> > +		struct tree_entry *orig_root, struct tree_entry *root,
+> > +		char *hex_sha1, unsigned int hex_sha1_len,
+> > +		char *fullpath, unsigned int fullpath_len,
+> > +		unsigned char fanout)
+> 
+> I think this function winds up processing all notes twice.  Yuck.
+> 
+> tree_content_set() adds a new tree entry to the end of the current
+> tree.  So when converting "1a9029b006484e8b9aca06ff261beb2324bb9916"
+> into "1a" (to go from fanout 0 to fanout 1) we'll place 1a at the
+> end of orig_root, and this function will walk 1a/ recursively,
+> examining 1a9029b006484e8b9aca06ff261beb2324bb9916 all over again.
 
-* $Copyright$
+Yep, you're right. Still, we only do the tree_content_remove()/set() once 
+per note, so although performance is probably not abysmal, we are still 
+clearly suboptimal.
 
-to
+Also, keep in mind that change_note_fanout() is only called when the number 
+of notes crosses a power of 256. Thus for typical notes trees (which are 
+assumed to mostly accumulate notes over their lifetime), 
+change_note_fanout() will be called zero, one or two times (depending on the 
+final number of notes).
 
- * Copyright (c) 2003-2009 by Foo Bar
- *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+> If we're here, isn't it likely that *all* notes are in the wrong
+> path in the tree, and we need to move them all to a new location?
+> If that's true then should we instead just build an entirely new
+> tree and swap the root when we are done?
 
-And properly handling things like '# $Copyright$', '// $Copyright$',
-etc. I have a sed script that does this, but no way to apply it to the
-output of git archive. I tried setting up a smudge filter that would
-only smudge output on archive exports, but it doesn't appear that the
-smudge filters get run on git archive.
+Hmm. Not always. In your earlier scenario where we add 2,000,000 notes in a 
+single commit, the current code would need to rewrite 255 of them from 
+fanout 0 to fanout 2, and 65,535 of them from fanout 1 to fanout 2. But the 
+vast majority (1,934,465) would not require rewriting (having been added at 
+the correct fanout initially). However, if we build a new tree (by which I 
+assume you mean tree_content_remove() from the old tree and 
+tree_content_set() to the new tree for every single note (and non-note)), we 
+end up processing all 2,000,000 entries.
 
-I am currently running 1.6.3.3
+> As we empty out a tree the object will be recycled into a pool of
+> trees which can be reused at a later point.  It might actually make
+> sense to build the new tree under a different root.  We won't scan
+> entries we've moved, and the memory difference should be fairly
+> small as tree_content_remove() will make a subtree available for
+> reuse as soon as its empty.  So we're only dealing with a handful
+> of additional tree objects as we do the conversion.
+
+I'm not sure I get the details here. How can we avoid doing the 
+_remove()/_set() from/to the old/new tree for every tree_entry? In other 
+words, how do we avoid removing and re-setting the 2,000,000 notes in the 
+above example?
+
+
+Thanks for the review!
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
