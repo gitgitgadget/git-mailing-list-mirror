@@ -1,118 +1,102 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC/PATCHv10 08/11] Notes API: get_note(): Return the note
- annotating the given object
-Date: Tue, 08 Dec 2009 04:18:06 +0100
-Message-ID: <200912080418.06233.johan@herland.net>
-References: <1260185254-1523-1-git-send-email-johan@herland.net>
- <1260185254-1523-9-git-send-email-johan@herland.net>
- <7vk4wy1p8d.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-apply fails on creating a new file, with both -p and
+ --directory specified
+Date: Mon, 07 Dec 2009 19:20:30 -0800
+Message-ID: <7v3a3mqhhd.fsf@alter.siamese.dyndns.org>
+References: <20091123194523.GZ15966@cl.cam.ac.uk>
+ <7vws1e3ma1.fsf@alter.siamese.dyndns.org>
+ <loom.20091207T222449-752@post.gmane.org>
+ <7vk4wyqigf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, spearce@spearce.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 08 04:18:32 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: James Vega <vega.james@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 08 04:20:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHqar-0008S7-1K
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 04:18:29 +0100
+	id 1NHqd4-0000c3-5J
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 04:20:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934810AbZLHDSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2009 22:18:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935785AbZLHDSF
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 22:18:05 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:60693 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S934488AbZLHDSD (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Dec 2009 22:18:03 -0500
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KUB00KA8D68AB30@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 08 Dec 2009 04:18:09 +0100 (MET)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KUB00ED9D66V430@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 08 Dec 2009 04:18:08 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.12.8.30625
-User-Agent: KMail/1.12.4 (Linux/2.6.31-ARCH; KDE/4.3.4; x86_64; ; )
-In-reply-to: <7vk4wy1p8d.fsf@alter.siamese.dyndns.org>
+	id S935793AbZLHDUf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2009 22:20:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935811AbZLHDUe
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 22:20:34 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47039 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935116AbZLHDUd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2009 22:20:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3052686C72;
+	Mon,  7 Dec 2009 22:20:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AazlAMaqNnh6ePnriLCKcqaSoWE=; b=JKqBWk
+	TdKY0m6Soqvu03FY4Y/tPMhdxBAE/IUAm5cDqbo/xy0FKY+7Tcmihl1L+HNy5x5l
+	NxDI/X5Q/utammEAApfS2tx/GmySfR3h9R7A2PiXtNSjscGjj7TKy6UMrlVTmhKv
+	zX+ksGNv0Wo7rcvVdlpiotfoW+hyAMEO7lcEo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OLA9WiPIeiKrdywHEqWlzNaSrrzE35s0
+	NUCrrS1ioyRzXDiR+9+t67E2EYZqKtFKjS9iG6v/bIvf2tfPT+SwDmZkFhyPAWwy
+	lsn2sco9TZn9NGX35q8k4B9h5pRxD6tzT3kzqIzhyqTuhQFBzLO3g6+Z6SRD76lT
+	Ox1O2+ZUuJs=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 03DBC86C71;
+	Mon,  7 Dec 2009 22:20:35 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3681686C70; Mon,  7 Dec
+ 2009 22:20:32 -0500 (EST)
+In-Reply-To: <7vk4wyqigf.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon\, 07 Dec 2009 18\:59\:28 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A6C78BA8-E3A8-11DE-900E-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134809>
 
-On Monday 07 December 2009, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> > Created by a simple cleanup and rename of lookup_notes().
-> >
-> > Signed-off-by: Johan Herland <johan@herland.net>
-> > ---
-> >  notes.c |   15 ++++++++-------
-> >  notes.h |    3 +++
-> >  2 files changed, 11 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/notes.c b/notes.c
-> > index 79bfa24..110404a 100644
-> > --- a/notes.c
-> > +++ b/notes.c
-> > @@ -379,12 +379,13 @@ void add_note(const unsigned char *object_sha1,
-> > const unsigned char *note_sha1) note_tree_insert(&root_node, 0, l,
-> > PTR_TYPE_NOTE);
-> >  }
-> >
-> > -static unsigned char *lookup_notes(const unsigned char *object_sha1)
-> > +const unsigned char *get_note(const unsigned char *object_sha1)
-> 
-> Is there a need to find "note for this commit in the set of notes 3 days
-> ago"?  IOW, reading note for the given commit not from the tip of the
-> history of the refs/notes/commits but from say refs/notes/commits~4?
-> Similarly, is there a need to ask for a history of notes for a given
-> commit, something like "git log refs/notes/commit/$this_commit" in a
->  world without any fanout?
+Junio C Hamano <gitster@pobox.com> writes:
+
+> James Vega <vega.james@gmail.com> writes:
 >
-> Obviously, "there is no need because..." is the best answer I'd be happy
-> with.  "There may be in the future but we haven't identified a good use
-> case and we don't implement what we do not need now." is also perfectly
-> acceptable.
+>> It looks like this may have introduced a bug when staging a file
+>> removal.  Here's an example git session showing the issue:
 
-There may be in the future but we haven't identified a good use case and we 
-don't implement what we do not need now.
+An update.  I tried your reproduction recipe with 1.6.5.2 and it doesn't
+reproduce, but with 1.6.5.3 it does.
 
-;)
+$ git init test
+Initialized empty Git repository in /local_disk/tmp/test/.git/
+$ cd test
+$ echo "foo" > foo
+$ git add foo
+$ git commit -m 'Add foo'
+[master (root-commit) 3643b5d] Add foo
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 foo
+$ mv foo bar
+$ git add -p
+diff --git a/foo b/foo
+index 257cc56..0000000
+--- a/foo
++++ /dev/null
+@@ -1 +0,0 @@
+-foo
+Stage this hunk [y,n,q,a,d,/,e,?]? y
 
-> IOW, I am not suggesting to change it---I just want to know how much
-> thought went in before deciding to implement the interface this way.
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD ..." to unstage)
+#
+#       new file:   dev/null
+#       deleted:    foo
+#
 
-Well, this later part of the series (from patch #6) was built mainly to 
-support the fast-import patch (which is no longer based on this API), but 
-also with an eye towards keeping things fairly flexible and generic. 
-Furthermore I expect to use most of these patches when I get around to 
-builtin-ifying the git-notes shell script (which currently is oblivious the 
-notes API and things like fanout and rebalancing).
+A quick bisection of the original issue points at
 
-In any case, if you look at patch #10/11, you'll see I introduce the concept 
-of multiple notes trees. This was originally done to allow fast-import to 
-edit notes in several branches simultaneously, but it now occurs to me that 
-this is exactly what we need to answer your questions above: If you want to 
-look at an older version of your notes tree, you simply instantiate another 
-notes tree with:
-
-	struct notes_tree my_notes;
-	init_notes(my_notes, "refs/notes/commits~4", ...);
-
-and you can now compare notes between my_notes and the current (or any 
-other) notes tree.
-
-
-Have fun! :)
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+24ab81a (add-interactive: handle deletion of empty files, 2009-10-27)
