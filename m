@@ -1,70 +1,115 @@
-From: James Vega <vega.james@gmail.com>
-Subject: Re: git-apply fails on creating a new file, with both -p and
- --directory specified
-Date: Mon, 7 Dec 2009 22:39:31 -0500
-Message-ID: <20091208033931.GK14401@jamessan.com>
-References: <20091123194523.GZ15966@cl.cam.ac.uk>
- <7vws1e3ma1.fsf@alter.siamese.dyndns.org>
- <loom.20091207T222449-752@post.gmane.org>
- <7vk4wyqigf.fsf@alter.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git svn: Don't create empty directories whose parents
+	were deleted
+Date: Mon, 7 Dec 2009 20:59:26 -0800
+Message-ID: <20091208045926.GA17683@dcvr.yhbt.net>
+References: <20091208032831.GL30538@dr-wily.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 08 04:39:39 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Alex Vandiver <alex@chmrr.net>
+To: Greg Price <price@ksplice.com>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 08 05:59:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHqvK-00051M-Pn
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 04:39:39 +0100
+	id 1NHsAt-0004cC-3p
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 05:59:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933750AbZLHDj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2009 22:39:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932739AbZLHDj1
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 22:39:27 -0500
-Received: from qmta10.emeryville.ca.mail.comcast.net ([76.96.30.17]:38562 "EHLO
-	QMTA10.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932282AbZLHDj1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Dec 2009 22:39:27 -0500
-Received: from OMTA05.emeryville.ca.mail.comcast.net ([76.96.30.43])
-	by QMTA10.emeryville.ca.mail.comcast.net with comcast
-	id ESqy1d0050vp7WLAATfaBF; Tue, 08 Dec 2009 03:39:34 +0000
-Received: from debil.jamessan.com ([98.216.49.10])
-	by OMTA05.emeryville.ca.mail.comcast.net with comcast
-	id ETfY1d00C0DBqmy8RTfZDi; Tue, 08 Dec 2009 03:39:34 +0000
-Received: by debil.jamessan.com (Postfix, from userid 1000)
-	id 5BB5CA1AFA; Mon,  7 Dec 2009 22:39:31 -0500 (EST)
+	id S935788AbZLHE7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2009 23:59:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935784AbZLHE7c
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 23:59:32 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:38555 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935626AbZLHE7V (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2009 23:59:21 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A6451FA98;
+	Tue,  8 Dec 2009 04:59:27 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <7vk4wyqigf.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20091208032831.GL30538@dr-wily.mit.edu>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134814>
 
-On Mon, Dec 07, 2009 at 06:59:28PM -0800, Junio C Hamano wrote:
-> James Vega <vega.james@gmail.com> writes:
-> 
-> > It looks like this may have introduced a bug when staging a file
-> > removal.  Here's an example git session showing the issue:
-> > <<snipped>>
-> 
-> Thanks for a report, but I cannot get the evidence that the said patch has
-> anything to do with the issue you illustrated.
+Greg Price <price@ksplice.com> wrote:
+> This is a regression in v1.6.6-rc0, so it would be good to fix before v1.6.6.
 
-Right, I incorrectly assumed the problem was with git-apply when I saw
-Steve's patch since the symptoms seemed similar.
+Thanks Greg,
 
-I just finished a bisect, though, and the problem is in removing a
-non-empty file with "git add -p".  This wasn't caught by existing tests
-because they only try to remove an empty file.
+I found another git svn bug (fixed in a patch below) while writing a
+test case for this.
 
-This was introduced in
+Junio:
 
-8f0bef6 (git-apply--interactive: Refactor patch mode code, 2009-08-13)
+  The following are pushed out to git://git.bogomips.org/git-svn and
+  should be ready for v1.6.6:
 
+    Alex Vandiver (1):
+          git-svn: sort svk merge tickets to account for minimal parents
+
+    Eric Wong (1):
+          git svn: log removals of empty directories
+
+    Greg Price (1):
+          git svn: Don't create empty directories whose parents were deleted
+
+Thanks all
+
+>From f9ad77a739c0d012ee58b64eda2d7ec0d4e1df9d Mon Sep 17 00:00:00 2001
+From: Eric Wong <normalperson@yhbt.net>
+Date: Mon, 7 Dec 2009 20:49:38 -0800
+Subject: [PATCH] git svn: log removals of empty directories
+
+This also adds a test case for:
+  "git svn: Don't create empty directories whose parents were deleted"
+which was the reason we found this bug in the first place.
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl                  |    2 +-
+ t/t9146-git-svn-empty-dirs.sh |   10 ++++++++++
+ 2 files changed, 11 insertions(+), 1 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index bdd1f96..5a52068 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -3891,11 +3891,11 @@ sub delete_entry {
+ 		}
+ 		print "\tD\t$gpath/\n" unless $::_q;
+ 		command_close_pipe($ls, $ctx);
+-		$self->{empty}->{$path} = 0
+ 	} else {
+ 		$self->{gii}->remove($gpath);
+ 		print "\tD\t$gpath\n" unless $::_q;
+ 	}
++	$self->{empty}->{$path} = 0;
+ 	undef;
+ }
+ 
+diff --git a/t/t9146-git-svn-empty-dirs.sh b/t/t9146-git-svn-empty-dirs.sh
+index 70c52c1..9b8d046 100755
+--- a/t/t9146-git-svn-empty-dirs.sh
++++ b/t/t9146-git-svn-empty-dirs.sh
+@@ -105,4 +105,14 @@ test_expect_success 'empty directories in trunk exist' '
+ 	)
+ '
+ 
++test_expect_success 'remove a top-level directory from svn' '
++	svn_cmd rm -m "remove d" "$svnrepo"/d
++'
++
++test_expect_success 'removed top-level directory does not exist' '
++	git svn clone "$svnrepo" removed &&
++	test ! -e removed/d
++
++'
++
+ test_done
 -- 
-James
-GPG Key: 1024D/61326D40 2003-09-02 James Vega <vega.james@gmail.com>
+Eric Wong
