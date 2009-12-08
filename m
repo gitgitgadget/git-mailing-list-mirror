@@ -1,82 +1,55 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 0/3] Add a "fix" command to "rebase --interactive"
-Date: Tue, 8 Dec 2009 14:51:14 +0100
-Message-ID: <fabb9a1e0912080551s32295cfahf05bdc715360360@mail.gmail.com>
-References: <cover.1259934977.git.mhagger@alum.mit.edu> <4B192701.4000308@drmicha.warpmail.net> 
-	<vpqfx7qocwl.fsf@bauges.imag.fr> <7vws12r5v2.fsf@alter.siamese.dyndns.org> 
-	<alpine.DEB.1.00.0912041945161.21557@intel-tinevez-2-302> 
-	<20091205062708.6117@nanako3.lavabit.com> <7vd42t6f9i.fsf@alter.siamese.dyndns.org> 
-	<20091208121314.6117@nanako3.lavabit.com> <7viqchhl7h.fsf@alter.siamese.dyndns.org> 
-	<20091208093515.GA32655@sigill.intra.peff.net>
+From: Ferry Huberts <ferry.huberts@pelagic.nl>
+Subject: Re: [BUG] Bad msysgit/egit interaction over dotfiles
+Date: Tue, 08 Dec 2009 14:42:23 +0100
+Message-ID: <4B1E57BF.1000500@pelagic.nl>
+References: <20091208132857.GB5425@linagora.com> <40aa078e0912080534x32fe9724xcda47ad46dbdb7c0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 08 14:51:40 2009
+Content-Transfer-Encoding: 7bit
+Cc: Yann Dirson <ydirson@linagora.com>, GIT ml <git@vger.kernel.org>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Tue Dec 08 15:01:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NI0Tb-00039T-TM
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 14:51:40 +0100
+	id 1NI0d8-00073N-8D
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 15:01:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755110AbZLHNv3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2009 08:51:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755029AbZLHNv2
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 08:51:28 -0500
-Received: from mail-vw0-f197.google.com ([209.85.212.197]:44232 "EHLO
-	mail-vw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754881AbZLHNv1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Dec 2009 08:51:27 -0500
-Received: by vws35 with SMTP id 35so2450120vws.4
-        for <git@vger.kernel.org>; Tue, 08 Dec 2009 05:51:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zg+d0zd1uoivE0bqJQaHFFLDL3zmrmip9dTp3pyRTbA=;
-        b=qEjHEoRTmNXpzPNi9es8tk+aOR9aT9ZzBS2eL+C68Wde9Zpt2AfVsBLD7kEnvxZ177
-         pgiw+fsNMilDn0KBlrK9jU+1g3qO3dxC6cqN8zhvJGOOHMg33PWROBRHTbLZmwUAE31u
-         Tw1W94LcU5GzsjxAnqnEqZ5Jx2rkEIo7G37rA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=vrtmswayaTFJ7Tv32flsZnT4SKpezc4C0j7HJhgm5bpkEYLhc+2vuKF6oSdv0Pqxdm
-         SqyfYrM+QEqTDtIW+KveLtjJPk8RE28AomSEVXaTSjJwOowz1twUxNCi3ujdatTgctjN
-         Ts8MG5NDmcWhN5jTUGVrNz4FUdSXCtPyn4vC0=
-Received: by 10.220.123.167 with SMTP id p39mr1684084vcr.22.1260280294089; 
-	Tue, 08 Dec 2009 05:51:34 -0800 (PST)
-In-Reply-To: <20091208093515.GA32655@sigill.intra.peff.net>
+	id S1755282AbZLHOBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2009 09:01:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755243AbZLHOBN
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 09:01:13 -0500
+Received: from hupie.xs4all.nl ([82.95.241.251]:45652 "EHLO
+	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755223AbZLHOBM (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Dec 2009 09:01:12 -0500
+X-Greylist: delayed 1133 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Dec 2009 09:01:11 EST
+Received: from stinkpad.internal.hupie.com (Stinkpad.internal.Hupie.com [192.168.0.101])
+	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id A474C58C9F1;
+	Tue,  8 Dec 2009 14:42:23 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.4pre) Gecko/20090922 Fedora/3.0-3.9.b4.fc12 Thunderbird/3.0b4
+In-Reply-To: <40aa078e0912080534x32fe9724xcda47ad46dbdb7c0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134873>
 
-Heya,
+On 12/08/2009 02:34 PM, Erik Faye-Lund wrote:
+> On Tue, Dec 8, 2009 at 2:28 PM, Yann Dirson <ydirson@linagora.com> wrote:
+>> I'm not sure who's at fault here - namely, I can't see any valid
+>> reason for eclipse to refuse such writes, but I am not sure it is a
+>> good reason for msysgit would set the hidden bit either.  In either
+>> case, even if only for the short term, I think msysgit should ensure
+>> that this bit does not get set (possibly circumventing any magic msys
+>> would do behind its back).
+> 
+> Setting the config option "core.hidedotfiles" to "false" should
+> prevent this from happening.
+> 
 
-On Tue, Dec 8, 2009 at 10:35, Jeff King <peff@peff.net> wrote:
-> =A0$ bash
-> =A0$ echo "!fixup commit"
-> =A0bash: !fixup: event not found
-> =A0$ echo "fixup! commit"
-> =A0fixup! commit
+why isn't this the default?
 
-Speaking of which, must we use that annoying bang? I hate how bash
-gets in my way when I try to write a commit message with a a bang in
-it, I'd much rather use a different character that is not in risk of
-being mistreated by my shell. (Although it seems that bash does do TRT
-in the 'fixup!' case.)
-
---=20
-Cheers,
-
-Sverre Rabbelier
+I also experienced this change in behaviour and I thought we would
+strive to keep the experience the same.
