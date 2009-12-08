@@ -1,68 +1,87 @@
 From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [BUG] Bad msysgit/egit interaction over dotfiles
-Date: Tue, 8 Dec 2009 14:34:59 +0100
-Message-ID: <40aa078e0912080534x32fe9724xcda47ad46dbdb7c0@mail.gmail.com>
-References: <20091208132857.GB5425@linagora.com>
+Subject: Re: [PATCH/RFC 09/11] daemon: use run-command api for async 
+	serving
+Date: Tue, 8 Dec 2009 14:36:49 +0100
+Message-ID: <40aa078e0912080536o21101f18p15c6c708b1cb6c14@mail.gmail.com>
+References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com>
+	 <200911272159.38757.j6t@kdbg.org>
+	 <40aa078e0912020745o4b72342fm722a944621cfda5@mail.gmail.com>
+	 <200912022012.08905.j6t@kdbg.org>
 Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: GIT ml <git@vger.kernel.org>
-To: Yann Dirson <ydirson@linagora.com>
-X-From: git-owner@vger.kernel.org Tue Dec 08 14:35:14 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Transfer-Encoding: quoted-printable
+Cc: msysgit@googlegroups.com, git@vger.kernel.org, dotzenlabs@gmail.com
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: 3dFYeSwkOBzQakicQRYjUWeeWbUcQYb.SeccioiWYjWeeWbUWhekfi.Sec@listserv.bounces.google.com Tue Dec 08 14:37:12 2009
+Return-path: <3dFYeSwkOBzQakicQRYjUWeeWbUcQYb.SeccioiWYjWeeWbUWhekfi.Sec@listserv.bounces.google.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-gx0-f190.google.com ([209.85.217.190])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NI0Dh-0005C1-Rf
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 14:35:14 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754989AbZLHNe4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2009 08:34:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754878AbZLHNez
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 08:34:55 -0500
-Received: from mail-ew0-f209.google.com ([209.85.219.209]:41658 "EHLO
-	mail-ew0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754809AbZLHNez convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Dec 2009 08:34:55 -0500
-Received: by ewy1 with SMTP id 1so2729655ewy.28
-        for <git@vger.kernel.org>; Tue, 08 Dec 2009 05:35:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+NON0LWDSyqD4bETuoNkBR98xof6p4GTBZ3ZDseX+PY=;
-        b=i6IBcPyM906h2RJ6ZNCJJAzKIihgKRw0t8MNHip2CnKrxwy07dP82DVxjRKpzEt2h5
-         emFi1bS45DvYfF/OTDnrCfBC8BT3dFIpbYKXUlqw2/tmAHIDpqQ/sRN0+sLdpUfgWFyT
-         UPX5R4xnnsb8auKAWeZCzZUKIaic4iIQ1s8Rk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=eEB67Bl4WSi7PEp2xYmsqBpPdLdlynulxgKUNznf0RM8lF3+1bFPCOKTLri9dJgNkb
-         pYbbFEe+qUJZpSS45DCvqmt5D0X3TAQQS4bIURl4Hy+RxSlRWc395WHZKTiORkKWjXae
-         +mGlH6zp0CVtKsJlzUJHCtQkIWtW8Ua2mvCK0=
-Received: by 10.216.93.78 with SMTP id k56mr2907249wef.102.1260279299891; Tue, 
-	08 Dec 2009 05:34:59 -0800 (PST)
-In-Reply-To: <20091208132857.GB5425@linagora.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134867>
+	id 1NI0Fb-00065f-LY
+	for gcvm-msysgit@m.gmane.org; Tue, 08 Dec 2009 14:37:11 +0100
+Received: by gxk6 with SMTP id 6sf8632931gxk.13
+        for <gcvm-msysgit@m.gmane.org>; Tue, 08 Dec 2009 05:37:10 -0800 (PST)
+Received: by 10.91.95.6 with SMTP id x6mr817932agl.18.1260279412917;
+        Tue, 08 Dec 2009 05:36:52 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.213.77.68 with SMTP id f4ls208351ebk.2.p; Tue, 08 Dec 2009 
+	05:36:51 -0800 (PST)
+Received: by 10.213.61.142 with SMTP id t14mr1052035ebh.14.1260279411090;
+        Tue, 08 Dec 2009 05:36:51 -0800 (PST)
+Received: by 10.213.61.142 with SMTP id t14mr1052034ebh.14.1260279411069;
+        Tue, 08 Dec 2009 05:36:51 -0800 (PST)
+Received: from ey-out-2122.google.com (ey-out-2122.google.com [74.125.78.25])
+        by gmr-mx.google.com with ESMTP id 12si666037ewy.14.2009.12.08.05.36.49;
+        Tue, 08 Dec 2009 05:36:50 -0800 (PST)
+Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 74.125.78.25 as permitted sender) client-ip=74.125.78.25;
+Received: by ey-out-2122.google.com with SMTP id 22so1237083eye.7
+        for <msysgit@googlegroups.com>; Tue, 08 Dec 2009 05:36:49 -0800 (PST)
+Received: by 10.216.90.208 with SMTP id e58mr2786724wef.57.1260279409740; Tue, 
+	08 Dec 2009 05:36:49 -0800 (PST)
+In-Reply-To: <200912022012.08905.j6t@kdbg.org>
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: 
+	domain of kusmabite@googlemail.com designates 74.125.78.25 as permitted 
+	sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) 
+	header.i=@googlemail.com
+X-Original-Sender: <kusmabite@googlemail.com>
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+List-Post: <http://groups.google.com/group/msysgit/post?hl=>, 
+	<mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=>
+X-Thread-Url: http://groups.google.com/group/msysgit/t/15f3dd983aa85143
+X-Message-Url: http://groups.google.com/group/msysgit/msg/46a1f544979dc75d
+Sender: msysgit+owner@googlegroups.com
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=>, 
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=>, 
+	<mailto:msysgit+subscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134868>
 
-On Tue, Dec 8, 2009 at 2:28 PM, Yann Dirson <ydirson@linagora.com> wrot=
-e:
-> I'm not sure who's at fault here - namely, I can't see any valid
-> reason for eclipse to refuse such writes, but I am not sure it is a
-> good reason for msysgit would set the hidden bit either. =A0In either
-> case, even if only for the short term, I think msysgit should ensure
-> that this bit does not get set (possibly circumventing any magic msys
-> would do behind its back).
+On Wed, Dec 2, 2009 at 8:12 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> On Mittwoch, 2. Dezember 2009, Erik Faye-Lund wrote:
+>> I'm not entirely sure how to make the interface, though. Any good
+>> suggestions?
+>
+> I suggest to model finish_async_nowait() after waitpid() so that
+>
+> =A0 =A0 =A0 =A0while ((pid =3D waitpid(-1, &status, WNOHANG)) > 0) ...
+> becomes
+> =A0 =A0 =A0 =A0while ((pid =3D finish_async_nowait(&some_async, &status))=
+ > 0) ...
+>
+> but where the resulting status is already "decoded", i.e. zero is success=
+ and
+> non-zero is failure (including death through signal); WIFEXITED and
+> WEXITSTATUS should not be applicable to status anymore.
+>
+> -- Hannes
+>
 
-Setting the config option "core.hidedotfiles" to "false" should
-prevent this from happening.
+Thanks. Implemented as suggested for the next round.
 
 --=20
 Erik "kusma" Faye-Lund
