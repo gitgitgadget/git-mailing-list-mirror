@@ -1,70 +1,163 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add commit.status, --status, and --no-status
-Date: Tue, 8 Dec 2009 02:55:17 -0500
-Message-ID: <20091208075517.GC12049@coredump.intra.peff.net>
-References: <20091206131217.GA12851@sigill.intra.peff.net>
- <1260225927-33612-1-git-send-email-jh@jameshoward.us>
- <20091208060415.GC9951@coredump.intra.peff.net>
- <7vr5r6ndkz.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "James P. Howard, II" <jh@jameshoward.us>, git@vger.kernel.org
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v4 1/6] reset: add a few tests for "git reset --merge"
+Date: Tue, 08 Dec 2009 08:56:10 +0100
+Message-ID: <20091208075616.4475.21452.chriscool@tuxfamily.org>
+References: <20091208075005.4475.26582.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Johannes Sixt <j.sixt@viscovery.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 08 08:56:24 2009
+X-From: git-owner@vger.kernel.org Tue Dec 08 09:05:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHuvn-0006jI-8O
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 08:56:23 +0100
+	id 1NHv4N-00014T-9B
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 09:05:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755750AbZLHHzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2009 02:55:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755534AbZLHHzT
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 02:55:19 -0500
-Received: from peff.net ([208.65.91.99]:49979 "EHLO peff.net"
+	id S1755948AbZLHIEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2009 03:04:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755927AbZLHIEp
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 03:04:45 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:38826 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755411AbZLHHzN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2009 02:55:13 -0500
-Received: (qmail 9313 invoked by uid 107); 8 Dec 2009 07:59:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 08 Dec 2009 02:59:50 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Dec 2009 02:55:17 -0500
-Content-Disposition: inline
-In-Reply-To: <7vr5r6ndkz.fsf@alter.siamese.dyndns.org>
+	id S1755908AbZLHIEo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2009 03:04:44 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 0EBF581802D;
+	Tue,  8 Dec 2009 09:04:40 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id EE3DF8180AB;
+	Tue,  8 Dec 2009 09:04:37 +0100 (CET)
+X-git-sha1: 9b115cefd2732598efe78bca2a02fa0885391959 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20091208075005.4475.26582.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134835>
 
-On Mon, Dec 07, 2009 at 11:13:00PM -0800, Junio C Hamano wrote:
+Commit 9e8eceab ("Add 'merge' mode to 'git reset'", 2008-12-01),
+added the --merge option to git reset, but there were no test cases
+for it.
 
-> >> This commit provides support for commit.status, --status, and
-> >> --no-status, which control whether or not the git status information
-> >> is included in the commit message template when using an editor to
-> >> prepare the commit message.  It does not affect the effects of a
-> >> user's commit.template settings.
-> >
-> > Thanks, this looks very cleanly done. The only complaint I would make is
-> > that it should probably include a simple test case.
-> 
-> Yes.  Also I am a _bit_ worried about the name "status", as the longer
-> term direction is to make "status" not "a preview of commit", may confuse
-> people who do read Release Notes.
+This was not a big problem because "git reset" was just forking and
+execing "git read-tree", but this will change in a following patch.
 
-I thought about that, but what other name does it have? That text has
-always been called "status", and we will continue to support that output
-format as "git status" _and_ as "commit --dry-run". So I think
-explaining it as "usually we stick the output of 'git status' into the
-commit message, but this suppresses it" is not that hard (and that was
-how I read the documentation in his patch).
+So let's add a few test cases to make sure that there will be no
+regression.
 
-The only trick is that it is not a vanilla "git status", but rather
-"status after we have staged things for commit". But I think that is
-fairly obvious since you are, after all, calling "commit".
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ t/t7110-reset-merge.sh |   94 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 94 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7110-reset-merge.sh
 
-But then again, I am probably way too deep in this topic to provide a
-regular git user's perspective of what is obvious.
-
--Peff
+diff --git a/t/t7110-reset-merge.sh b/t/t7110-reset-merge.sh
+new file mode 100755
+index 0000000..8190da1
+--- /dev/null
++++ b/t/t7110-reset-merge.sh
+@@ -0,0 +1,94 @@
++#!/bin/sh
++#
++# Copyright (c) 2009 Christian Couder
++#
++
++test_description='Tests for "git reset --merge"'
++
++. ./test-lib.sh
++
++test_expect_success 'creating initial files' '
++     echo "line 1" >> file1 &&
++     echo "line 2" >> file1 &&
++     echo "line 3" >> file1 &&
++     cp file1 file2 &&
++     git add file1 file2 &&
++     test_tick &&
++     git commit -m "Initial commit"
++'
++
++test_expect_success 'reset --merge is ok with changes in file it does not touch' '
++     echo "line 4" >> file1 &&
++     echo "line 4" >> file2 &&
++     test_tick &&
++     git commit -m "add line 4" file1 &&
++     git reset --merge HEAD^ &&
++     ! grep 4 file1 &&
++     grep 4 file2 &&
++     git reset --merge HEAD@{1} &&
++     grep 4 file1 &&
++     grep 4 file2
++'
++
++test_expect_success 'reset --merge discards changes added to index (1)' '
++     echo "line 5" >> file1 &&
++     git add file1 &&
++     git reset --merge HEAD^ &&
++     ! grep 4 file1 &&
++     ! grep 5 file1 &&
++     grep 4 file2 &&
++     echo "line 5" >> file2 &&
++     git add file2 &&
++     git reset --merge HEAD@{1} &&
++     ! grep 4 file2 &&
++     ! grep 5 file1 &&
++     grep 4 file1
++'
++
++test_expect_success 'reset --merge discards changes added to index (2)' '
++     echo "line 4" >> file2 &&
++     git add file2 &&
++     git reset --merge HEAD^ &&
++     ! grep 4 file2 &&
++     git reset --merge HEAD@{1} &&
++     ! grep 4 file2 &&
++     grep 4 file1
++'
++
++test_expect_success 'reset --merge fails with changes in file it touches' '
++     echo "line 5" >> file1 &&
++     test_tick &&
++     git commit -m "add line 5" file1 &&
++     sed -e "s/line 1/changed line 1/" <file1 >file3 &&
++     mv file3 file1 &&
++     test_must_fail git reset --merge HEAD^ 2>err.log &&
++     grep file1 err.log | grep "not uptodate" &&
++     git reset --hard HEAD^
++'
++
++test_expect_success 'setup 2 different branches' '
++     git branch branch1 &&
++     git branch branch2 &&
++     git checkout branch1 &&
++     echo "line 5 in branch1" >> file1 &&
++     test_tick &&
++     git commit -a -m "change in branch1" &&
++     git checkout branch2 &&
++     echo "line 5 in branch2" >> file1 &&
++     test_tick &&
++     git commit -a -m "change in branch2"
++'
++
++test_expect_success '"reset --merge HEAD^" fails with pending merge' '
++     test_must_fail git merge branch1 &&
++     test_must_fail git reset --merge HEAD^ &&
++     git reset --hard HEAD
++'
++
++test_expect_success '"reset --merge HEAD" fails with pending merge' '
++     test_must_fail git merge branch1 &&
++     test_must_fail git reset --merge HEAD &&
++     git reset --hard HEAD
++'
++
++test_done
+-- 
+1.6.5.1.gaf97d
