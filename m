@@ -1,150 +1,147 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH RFC] rebase: add --revisions flag
-Date: Tue, 8 Dec 2009 16:47:42 +0200
-Message-ID: <20091208144740.GA30830@redhat.com>
+From: Jan Nieuwenhuizen <janneke-list@xs4all.nl>
+Subject: [PATCH] Add/resurrect make uninstall target
+Date: Tue, 08 Dec 2009 15:50:31 +0100
+Organization: www.AvatarAcademy.nl
+Message-ID: <1260283831.1856.43.camel@vuurvlieg>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 08 15:50:40 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 08 15:50:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NI1Of-0002j6-RB
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 15:50:38 +0100
+	id 1NI1On-0002px-Hs
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 15:50:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755536AbZLHOuW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2009 09:50:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755449AbZLHOuV
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 09:50:21 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:36148 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755364AbZLHOuU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2009 09:50:20 -0500
-Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id nB8EoPnQ028550
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 8 Dec 2009 09:50:25 -0500
-Received: from redhat.com (dhcp-0-94.tlv.redhat.com [10.35.0.94])
-	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id nB8EoNhf027980;
-	Tue, 8 Dec 2009 09:50:24 -0500
-Content-Disposition: inline
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
+	id S1755730AbZLHOua convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2009 09:50:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755571AbZLHOu3
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 09:50:29 -0500
+Received: from edu-smtp-01.edutel.nl ([88.159.1.221]:40904 "EHLO
+	edu-smtp-01.edutel.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755449AbZLHOu3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2009 09:50:29 -0500
+Received: from vuurvlieg (unknown [88.159.206.46])
+	by edu-smtp-01.edutel.nl (Postfix) with ESMTP id D3E5C67ABE;
+	Tue,  8 Dec 2009 15:50:31 +0100 (CET)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by vuurvlieg (Postfix) with ESMTP id B887A11C4E2;
+	Tue,  8 Dec 2009 15:50:31 +0100 (CET)
+X-Mailer: Evolution 2.28.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134884>
 
-Add --revisions flag to rebase, so that it can be used
-to apply an arbitrary range of commits on top
-of a current branch.
+Uninstall is a common make target that users may expect to be present,
+e.g. it is provided automatically by automake.
 
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+The default Git install performs a multi-rooted installation in $HOME,
+which makes manual removing somewhat cumbersome.
+
+The uninstall target was not present in the toplevel makefile,
+only a few other makefiles had partial uninstall targets.
+
+Signed-off-by: Jan Nieuwenhuizen <janneke@gnu.org>
 ---
+ Makefile           |   18 +++++++++++++++++-
+ gitk-git/Makefile  |    2 ++
+ perl/Makefile      |    2 +-
+ templates/Makefile |    5 +++++
+ 4 files changed, 25 insertions(+), 2 deletions(-)
 
-I've been wishing for this functionality for a while now,
-so here goes. This isn't yet properly documented and I didn't
-write a test, but the patch seems to work fine for me.
-Any early flames/feedback?
-
-
- git-rebase.sh |   36 ++++++++++++++++++++++++------------
- 1 files changed, 24 insertions(+), 12 deletions(-)
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index b121f45..d99d04b 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -3,12 +3,13 @@
- # Copyright (c) 2005 Junio C Hamano.
- #
- 
--USAGE='[--interactive | -i] [-v] [--force-rebase | -f] [--onto <newbase>] [<upstream>|--root] [<branch>] [--quiet | -q]'
-+USAGE='[--interactive | -i] [-v] [--force-rebase | -f] [--onto <newbase>] [--revisions <revision range>] [<upstream>|--root] [<branch>] [--quiet | -q]'
- LONG_USAGE='git-rebase replaces <branch> with a new branch of the
- same name.  When the --onto option is provided the new branch starts
- out with a HEAD equal to <newbase>, otherwise it is equal to <upstream>
- It then attempts to create a new commit for each commit from the original
--<branch> that does not exist in the <upstream> branch.
-+<branch> that does not exist in the <upstream> branch, or for
-+each commit matching <revision range> when the --revisions options is provided.
- 
- It is possible that a merge failure will prevent this process from being
- completely automatic.  You will have to resolve any such merge failure
-@@ -41,6 +42,7 @@ If you would prefer to skip this patch, instead run \"git rebase --skip\".
- To restore the original branch and stop rebasing run \"git rebase --abort\".
- "
- unset newbase
-+unset revisions
- strategy=recursive
- do_merge=
- dotest="$GIT_DIR"/rebase-merge
-@@ -291,6 +293,11 @@ do
- 		newbase="$2"
- 		shift
- 		;;
-+	--revisions)
-+		test 2 -le "$#" || usage
-+		revisions="$2"
-+		shift
-+		;;
- 	-M|-m|--m|--me|--mer|--merg|--merge)
- 		do_merge=t
- 		;;
-@@ -459,12 +466,24 @@ case "$#" in
- esac
- orig_head=$branch
- 
-+if test -z "$revisions"
-+then
-+	if test -n "$rebase_root"
-+	then
-+		revisions="$onto..$orig_head"
-+	else
-+		revisions="$upstream..$orig_head"
-+	fi
-+	mb=$(git merge-base "$onto" "$branch")
-+else
-+	mb=""
-+fi
+diff --git a/Makefile b/Makefile
+index 4a1e5bc..b9ef172 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1842,7 +1842,23 @@ quick-install-man:
+ quick-install-html:
+ 	$(MAKE) -C Documentation quick-install-html
+=20
++bindir_PROGRAMS =3D git$X git-upload-pack$X git-receive-pack$X git-upl=
+oad-archive$X git-shell$X git-cvsserver
+=20
++uninstall:
++ifndef NO_TCLTK
++	$(MAKE) -C gitk-git uninstall
++	$(MAKE) -C git-gui gitexecdir=3D'$(gitexec_instdir_SQ)' uninstall
++endif
++ifndef NO_PERL
++	$(MAKE) -C perl prefix=3D'$(prefix_SQ)' DESTDIR=3D'$(DESTDIR_SQ)' uni=
+nstall
++endif
++	$(MAKE) -C templates DESTDIR=3D'$(DESTDIR_SQ)' uninstall
++	$(RM) $(ALL_PROGRAMS:%=3D'$(DESTDIR_SQ)$(gitexec_instdir_SQ)'/%)
++	$(RM) $(BUILT_INS:%=3D'$(DESTDIR_SQ)$(gitexec_instdir_SQ)'/%)
++	$(RM) $(OTHER_PROGRAMS:%=3D'$(DESTDIR_SQ)$(gitexec_instdir_SQ)'/%)
++	-rmdir -p '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
++	$(RM) $(bindir_PROGRAMS:%=3D'$(DESTDIR_SQ)$(bindir_SQ)'/%)
++	-rmdir -p '$(DESTDIR_SQ)$(bindir_SQ)'
+=20
+ ### Maintainer's dist rules
+=20
+@@ -1921,7 +1937,7 @@ ifndef NO_TCLTK
+ endif
+ 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-GUI-VARS GIT-BUILD-OPTIONS
+=20
+-.PHONY: all install clean strip
++.PHONY: all install uninstall clean strip
+ .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_moder=
+n_shell
+ .PHONY: .FORCE-GIT-VERSION-FILE TAGS tags cscope .FORCE-GIT-CFLAGS
+ .PHONY: .FORCE-GIT-BUILD-OPTIONS
+diff --git a/gitk-git/Makefile b/gitk-git/Makefile
+index e1b6045..d68f19a 100644
+--- a/gitk-git/Makefile
++++ b/gitk-git/Makefile
+@@ -47,6 +47,8 @@ install:: all
+ uninstall::
+ 	$(foreach p,$(ALL_MSGFILES), $(RM) '$(DESTDIR_SQ)$(msgsdir_SQ)'/$(not=
+dir $p) &&) true
+ 	$(RM) '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
++	-rmdir -p '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
++	-rmdir -p '$(DESTDIR_SQ)$(msgsdir_SQ)'
+=20
+ clean::
+ 	$(RM) gitk-wish po/*.msg
+diff --git a/perl/Makefile b/perl/Makefile
+index 4ab21d6..25fc304 100644
+--- a/perl/Makefile
++++ b/perl/Makefile
+@@ -10,7 +10,7 @@ ifndef V
+ 	QUIET =3D @
+ endif
+=20
+-all install instlibdir: $(makfile)
++all install instlibdir uninstall: $(makfile)
+ 	$(QUIET)$(MAKE) -f $(makfile) $@
+=20
+ clean:
+diff --git a/templates/Makefile b/templates/Makefile
+index 408f013..f4048d9 100644
+--- a/templates/Makefile
++++ b/templates/Makefile
+@@ -51,3 +51,8 @@ install: all
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(template_instdir_SQ)'
+ 	(cd blt && $(TAR) cf - .) | \
+ 	(cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && umask 022 && $(TAR) xof =
+-)
 +
- # Now we are rebasing commits $upstream..$branch (or with --root,
- # everything leading up to $branch) on top of $onto
- 
- # Check if we are already based on $onto with linear history,
- # but this should be done only when upstream and onto are the same.
--mb=$(git merge-base "$onto" "$branch")
- if test "$upstream" = "$onto" && test "$mb" = "$onto" &&
- 	# linear history?
- 	! (git rev-list --parents "$onto".."$branch" | sane_grep " .* ") > /dev/null
-@@ -489,10 +508,10 @@ if test -n "$diffstat"
- then
- 	if test -n "$verbose"
- 	then
--		echo "Changes from $mb to $onto:"
-+		echo "Changes $revisions:"
- 	fi
- 	# We want color (if set), but no pager
--	GIT_PAGER='' git diff --stat --summary "$mb" "$onto"
-+	GIT_PAGER='' git diff --stat --summary "$revisions"
- fi
- 
- # If the $onto is a proper descendant of the tip of the branch, then
-@@ -504,13 +523,6 @@ then
- 	exit 0
- fi
- 
--if test -n "$rebase_root"
--then
--	revisions="$onto..$orig_head"
--else
--	revisions="$upstream..$orig_head"
--fi
--
- if test -z "$do_merge"
- then
- 	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
--- 
-1.6.6.rc1.43.gf55cc
++uninstall:
++	-(cd blt && find . -type f) | (cd '$(DESTDIR_SQ)$(template_instdir_SQ=
+)' && xargs $(RM))
++	-(cd blt && find . -mindepth 1 -type d) | (cd '$(DESTDIR_SQ)$(templat=
+e_instdir_SQ)' && xargs rmdir)
++	-rmdir -p '$(DESTDIR_SQ)$(template_instdir_SQ)'
+--=20
+1.6.5.2.182.g1a756
+
+
+
+--=20
+Jan Nieuwenhuizen <janneke@gnu.org> | GNU LilyPond - The music typesett=
+er
+Avatar=C2=AE: http://AvatarAcademy.nl    | http://lilypond.org
