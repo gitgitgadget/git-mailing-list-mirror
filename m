@@ -1,117 +1,93 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [msysGit] [PATCH/RFC 03/11] mingw: implement syslog
-Date: Tue, 8 Dec 2009 15:01:16 +0100
-Message-ID: <40aa078e0912080601p3d73f8b4k469ba5229c931575@mail.gmail.com>
-References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com>
-	 <200911262223.22777.j6t@kdbg.org>
-	 <40aa078e0911270009u7569cfe5gb250092c8d2c0eac@mail.gmail.com>
-	 <200911272023.58262.j6t@kdbg.org>
-Reply-To: kusmabite@gmail.com
+From: "James P. Howard, II" <jh@jameshoward.us>
+Subject: Re: [PATCH] Add commit.status, --status, and --no-status
+Date: Tue, 8 Dec 2009 09:07:33 -0500
+Message-ID: <88a2333a0912080607q1881ce68j269eeba75769b1fa@mail.gmail.com>
+References: <20091206131217.GA12851@sigill.intra.peff.net>
+	 <1260225927-33612-1-git-send-email-jh@jameshoward.us>
+	 <20091208060415.GC9951@coredump.intra.peff.net>
+	 <7vr5r6ndkz.fsf@alter.siamese.dyndns.org>
+Reply-To: jh@jameshoward.us
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: msysgit@googlegroups.com, git@vger.kernel.org, dotzenlabs@gmail.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Dec 08 15:01:30 2009
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 08 15:07:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NI0d7-00073N-Nw
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 15:01:30 +0100
+	id 1NI0jA-000165-Cd
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 15:07:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755264AbZLHOBM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2009 09:01:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755242AbZLHOBM
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 09:01:12 -0500
-Received: from mail-ew0-f209.google.com ([209.85.219.209]:62776 "EHLO
+	id S1755391AbZLHOHa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2009 09:07:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755369AbZLHOH3
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 09:07:29 -0500
+Received: from mail-ew0-f209.google.com ([209.85.219.209]:53146 "EHLO
 	mail-ew0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755204AbZLHOBL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Dec 2009 09:01:11 -0500
-Received: by ewy1 with SMTP id 1so2764110ewy.28
-        for <git@vger.kernel.org>; Tue, 08 Dec 2009 06:01:16 -0800 (PST)
+	with ESMTP id S1755347AbZLHOH2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Dec 2009 09:07:28 -0500
+Received: by ewy1 with SMTP id 1so2772335ewy.28
+        for <git@vger.kernel.org>; Tue, 08 Dec 2009 06:07:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=wIv5LBlmKfQWQza9d50RkhMU5BKbgJwZ5pt+Xdq6nIs=;
-        b=JnJHVhaYZgzjo06w1V7QOSaH6jZH3EAQ1rzcKa7v+339rNDZ6R0uw66uFJPwaq4Oki
-         sChqLc7qvDCjfpWGNXXUa7pcojpYqBKaYxO7oHeb+ASyO+t0Bxrj87T2g9Ry7e/mO5yH
-         2bTThpX67bXZgVncreZXWblsj7gK3HtZ6+4pg=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:reply-to:received
+         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=IpWvopFI/bw08gQP2VgmQWOxiRxAP5SaeizZkhq8+Bs=;
+        b=O2KVe30HaCI9D3zaR7bVXT6X2oKUcNOdFtb123ecAU5CHPXmsxe+WdRyHd4tBgfpDt
+         Mpo86ZgVRWZN1CjMAUdCLb1414wx3HG1W95G3PAQrExf3VToVpMegT4pZkvzzljXPogh
+         KQvjJdRdqL+/GtZbdqdVDzb68D5hVRkSqZB/8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=cE2HS4HxxeddeHy68kqz0JFlHF9Om+bQsLlcvIX7lX577Rpgj3banq9566L/EHbNid
-         /Zl8FU6b+DkrcfkuCU37a3gsVlUXcY5XDgTjoskqylKSywyj0A9pY9Gayko+swtxxQwr
-         BZhRYqCotx+5ACnugrdr3jAujpIqv0XNDod0s=
-Received: by 10.216.86.142 with SMTP id w14mr2972854wee.74.1260280876054; Tue, 
-	08 Dec 2009 06:01:16 -0800 (PST)
-In-Reply-To: <200911272023.58262.j6t@kdbg.org>
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:reply-to:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=C1/FKlLmpT64rZVu3L+wxMhek1MPqCnVq7Mm6ipFno+X4jMcCL2AUbAgxbO2JDFKP1
+         mFSH447uVg4YNt/EyilXoQcAqr2IYJkthyTArw3MFcyR42CwvSQNT7/V9NmLMX8rkzRZ
+         aKzdlvAojb2nvbG9FjZIf+y0/DqOTnQFB2PSo=
+Received: by 10.216.89.209 with SMTP id c59mr170564wef.181.1260281253705; Tue, 
+	08 Dec 2009 06:07:33 -0800 (PST)
+In-Reply-To: <7vr5r6ndkz.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: 3806ecc7f54722e6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134875>
 
-On Fri, Nov 27, 2009 at 8:23 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> On Freitag, 27. November 2009, Erik Faye-Lund wrote:
->> On Thu, Nov 26, 2009 at 10:23 PM, Johannes Sixt <j6t@kdbg.org> wrote=
-:
->> > I would
->> >
->> > =A0 =A0 =A0 =A0const char* arg;
->> > =A0 =A0 =A0 =A0if (strcmp(fmt, "%s"))
->> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0die("format string of syslog() not =
-implemented")
->> > =A0 =A0 =A0 =A0va_start(va, fmt);
->> > =A0 =A0 =A0 =A0arg =3D va_arg(va, char*);
->> > =A0 =A0 =A0 =A0va_end(va);
->> >
->> > because we have exactly one invocation of syslog(), which passes "=
-%s" as
->> > format string. Then strbuf_vaddf is not needed. Or even simpler: d=
-eclare
->> > the function as
->> >
->> > void syslog(int priority, const char *fmt, const char*arg);
+On Tue, Dec 8, 2009 at 02:13, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>> On Mon, Dec 07, 2009 at 05:45:27PM -0500, James P. Howard, II wrote:
 >>
->> After reading this again, I agree that this is the best solution. I'=
-ll
->> update for the next iteration.
->
-> Except that you shouldn't die like I proposed because here we are alr=
-eady in
-> the die_routine, no?
->
-
-Might be. Either way, I think loosing a log-entry is better than
-taking down the server. I'm just doing a warning() and return. If
-we're lucky, the warning gets somewhere. If not, well, something
-happened and no one was around to see it.
-
->> > "Note that the string that you log cannot contain %n, where n is a=
+>>> This commit provides support for commit.status, --status, and
+>>> --no-status, which control whether or not the git status informatio=
 n
->> > integer value (for example, %1) because the event viewer treats it=
- as an
->> > insertion string. ..."
->> >
->> > How are the chances that this condition applies to our use of the
->> > function?
+>>> is included in the commit message template when using an editor to
+>>> prepare the commit message. =C2=A0It does not affect the effects of=
+ a
+>>> user's commit.template settings.
 >>
->> Ugh, increasingly high since we're adding IPv6 support, I guess.
->> Perhaps some form of escaping needs to be done?
+>> Thanks, this looks very cleanly done. The only complaint I would mak=
+e is
+>> that it should probably include a simple test case.
 >
-> I think so, but actually I have no clue.
->
+> Yes. =C2=A0Also I am a _bit_ worried about the name "status", as the =
+longer
+> term direction is to make "status" not "a preview of commit", may con=
+fuse
+> people who do read Release Notes.
 
-Bah, according to Microsoft Support (1), there's no simple way to
-escape this. I'm tempted to leave this bug in, and rather try to fix
-the symptoms when/if they start popping up. Unless someone else comes
-up with something better, that is.
+Right now, this option does not affect how the commit message is prepar=
+ed
+in git tag.  If the option were extended to cover that case as well, wh=
+at would
+a sensible name for the option be, then?
 
-(1) http://support.microsoft.com/kb/934640
+James
 
 --=20
-Erik "kusma" Faye-Lund
+James P. Howard, II, MPA MBCS
+jh@jameshoward.us
