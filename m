@@ -1,7 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 1/6] reset: add a few tests for "git reset --merge"
-Date: Tue, 08 Dec 2009 08:56:10 +0100
-Message-ID: <20091208075616.4475.21452.chriscool@tuxfamily.org>
+Subject: [PATCH v4 6/6] Documentation: reset: add some tables to describe the
+	different options
+Date: Tue, 08 Dec 2009 08:56:15 +0100
+Message-ID: <20091208075616.4475.78725.chriscool@tuxfamily.org>
 References: <20091208075005.4475.26582.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
@@ -12,152 +13,130 @@ Cc: git@vger.kernel.org,
 	Paolo Bonzini <bonzini@gnu.org>,
 	Johannes Sixt <j.sixt@viscovery.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 08 09:05:16 2009
+X-From: git-owner@vger.kernel.org Tue Dec 08 09:05:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHv4N-00014T-9B
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 09:05:15 +0100
+	id 1NHv4Q-00014T-CY
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 09:05:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755948AbZLHIEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2009 03:04:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755927AbZLHIEp
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 03:04:45 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:38826 "EHLO smtp3-g21.free.fr"
+	id S1756005AbZLHIE6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2009 03:04:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755911AbZLHIE4
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 03:04:56 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:38924 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755908AbZLHIEo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2009 03:04:44 -0500
+	id S1755927AbZLHIEs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2009 03:04:48 -0500
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 0EBF581802D;
-	Tue,  8 Dec 2009 09:04:40 +0100 (CET)
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 81F068180CC;
+	Tue,  8 Dec 2009 09:04:42 +0100 (CET)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id EE3DF8180AB;
-	Tue,  8 Dec 2009 09:04:37 +0100 (CET)
-X-git-sha1: 9b115cefd2732598efe78bca2a02fa0885391959 
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 29F78818082;
+	Tue,  8 Dec 2009 09:04:40 +0100 (CET)
+X-git-sha1: f2646114ef113307e36b4c156a099124186a0d4a 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20091208075005.4475.26582.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134836>
 
-Commit 9e8eceab ("Add 'merge' mode to 'git reset'", 2008-12-01),
-added the --merge option to git reset, but there were no test cases
-for it.
-
-This was not a big problem because "git reset" was just forking and
-execing "git read-tree", but this will change in a following patch.
-
-So let's add a few test cases to make sure that there will be no
-regression.
+This patch adds a DISCUSSION section that contains some tables to
+show how the different "git reset" options work depending on the
+states of the files in the working tree, the index, HEAD and the
+target commit.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t7110-reset-merge.sh |   94 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 94 insertions(+), 0 deletions(-)
- create mode 100755 t/t7110-reset-merge.sh
+ Documentation/git-reset.txt |   73 +++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 73 insertions(+), 0 deletions(-)
 
-diff --git a/t/t7110-reset-merge.sh b/t/t7110-reset-merge.sh
-new file mode 100755
-index 0000000..8190da1
---- /dev/null
-+++ b/t/t7110-reset-merge.sh
-@@ -0,0 +1,94 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2009 Christian Couder
-+#
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index a6c080e..8bc8808 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -72,6 +72,79 @@ linkgit:git-add[1]).
+ <commit>::
+ 	Commit to make the current HEAD. If not given defaults to HEAD.
+ 
++DISCUSSION
++----------
 +
-+test_description='Tests for "git reset --merge"'
++The tables below show what happens when running:
 +
-+. ./test-lib.sh
++----------
++git reset --option target
++----------
 +
-+test_expect_success 'creating initial files' '
-+     echo "line 1" >> file1 &&
-+     echo "line 2" >> file1 &&
-+     echo "line 3" >> file1 &&
-+     cp file1 file2 &&
-+     git add file1 file2 &&
-+     test_tick &&
-+     git commit -m "Initial commit"
-+'
++to reset the HEAD to another commit (`target`) with the different
++reset options (`--keep-local-changes` is abreviated --k-l-c)
++depending on the state of the files.
 +
-+test_expect_success 'reset --merge is ok with changes in file it does not touch' '
-+     echo "line 4" >> file1 &&
-+     echo "line 4" >> file2 &&
-+     test_tick &&
-+     git commit -m "add line 4" file1 &&
-+     git reset --merge HEAD^ &&
-+     ! grep 4 file1 &&
-+     grep 4 file2 &&
-+     git reset --merge HEAD@{1} &&
-+     grep 4 file1 &&
-+     grep 4 file2
-+'
++      working index HEAD target         working index HEAD
++      ----------------------------------------------------
++       A       B     C    D     --soft   A       B     D
++                                --mixed  A       D     D
++                                --hard   D       D     D
++                                --merge (disallowed)
++                                --k-l-c (disallowed)
 +
-+test_expect_success 'reset --merge discards changes added to index (1)' '
-+     echo "line 5" >> file1 &&
-+     git add file1 &&
-+     git reset --merge HEAD^ &&
-+     ! grep 4 file1 &&
-+     ! grep 5 file1 &&
-+     grep 4 file2 &&
-+     echo "line 5" >> file2 &&
-+     git add file2 &&
-+     git reset --merge HEAD@{1} &&
-+     ! grep 4 file2 &&
-+     ! grep 5 file1 &&
-+     grep 4 file1
-+'
++      working index HEAD target         working index HEAD
++      ----------------------------------------------------
++       A       B     C    C     --soft   A       B     C
++                                --mixed  A       C     C
++                                --hard   C       C     C
++                                --merge (disallowed)
++                                --k-l-c  A       C     C
 +
-+test_expect_success 'reset --merge discards changes added to index (2)' '
-+     echo "line 4" >> file2 &&
-+     git add file2 &&
-+     git reset --merge HEAD^ &&
-+     ! grep 4 file2 &&
-+     git reset --merge HEAD@{1} &&
-+     ! grep 4 file2 &&
-+     grep 4 file1
-+'
++      working index HEAD target         working index HEAD
++      ----------------------------------------------------
++       B       B     C    D     --soft   B       B     D
++                                --mixed  B       D     D
++                                --hard   D       D     D
++                                --merge  D       D     D
++                                --k-l-c (disallowed)
 +
-+test_expect_success 'reset --merge fails with changes in file it touches' '
-+     echo "line 5" >> file1 &&
-+     test_tick &&
-+     git commit -m "add line 5" file1 &&
-+     sed -e "s/line 1/changed line 1/" <file1 >file3 &&
-+     mv file3 file1 &&
-+     test_must_fail git reset --merge HEAD^ 2>err.log &&
-+     grep file1 err.log | grep "not uptodate" &&
-+     git reset --hard HEAD^
-+'
++      working index HEAD target         working index HEAD
++      ----------------------------------------------------
++       B       B     C    C     --soft   B       B     C
++                                --mixed  B       C     C
++                                --hard   C       C     C
++                                --merge  C       C     C
++                                --k-l-c  B       C     C
 +
-+test_expect_success 'setup 2 different branches' '
-+     git branch branch1 &&
-+     git branch branch2 &&
-+     git checkout branch1 &&
-+     echo "line 5 in branch1" >> file1 &&
-+     test_tick &&
-+     git commit -a -m "change in branch1" &&
-+     git checkout branch2 &&
-+     echo "line 5 in branch2" >> file1 &&
-+     test_tick &&
-+     git commit -a -m "change in branch2"
-+'
++In these tables, A, B, C and D are some different states of a
++file. For example, the last line of the last table means that if a
++file is in state B in the working tree and the index, and in a
++different state C in HEAD and in the target, then "git reset
++--keep-local-changes target" will put the file in state B in the
++working tree and in state C in the index and HEAD.
 +
-+test_expect_success '"reset --merge HEAD^" fails with pending merge' '
-+     test_must_fail git merge branch1 &&
-+     test_must_fail git reset --merge HEAD^ &&
-+     git reset --hard HEAD
-+'
++The following tables show what happens when there are unmerged
++entries:
 +
-+test_expect_success '"reset --merge HEAD" fails with pending merge' '
-+     test_must_fail git merge branch1 &&
-+     test_must_fail git reset --merge HEAD &&
-+     git reset --hard HEAD
-+'
++      working index HEAD target         working index HEAD
++      ----------------------------------------------------
++       X       U     A    B     --k-l-c  X       B     B
++                                --merge  X       B     B
++                                --hard   B       B     B
++                                --mixed  X       B     B
++                                --soft  (disallowed)
 +
-+test_done
++      working index HEAD target         working index HEAD
++      ----------------------------------------------------
++       X       U     A    A     --k-l-c  X       A     A
++                                --merge (disallowed)
++                                --hard   A       A     A
++                                --mixed  X       A     A
++                                --soft  (disallowed)
++
++X means any state and U means an unmerged index.
++
+ Examples
+ --------
+ 
 -- 
 1.6.5.1.gaf97d
