@@ -1,161 +1,124 @@
-From: walter harms <wharms@bfs.de>
-Subject: Re: help: bisect single file from repos
-Date: Tue, 08 Dec 2009 14:41:42 +0100
-Message-ID: <4B1E5796.2090201@bfs.de>
-References: <4B1CFC4C.6090406@bfs.de> <4B1D1A5A.9060004@drmicha.warpmail.net> <4B1D27B6.7010900@bfs.de> <200912080917.17220.chriscool@tuxfamily.org>
-Reply-To: wharms@bfs.de
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH/RFC 07/11] run-command: support input-fd
+Date: Tue, 8 Dec 2009 14:46:19 +0100
+Message-ID: <40aa078e0912080546v544451c6yd3a3b15cb05a08ed@mail.gmail.com>
+References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com>
+	 <200911262253.59641.j6t@kdbg.org>
+	 <40aa078e0911270639n1de36517w5fdf6ef38e931b19@mail.gmail.com>
+	 <200911272114.13107.j6t@kdbg.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Dec 08 14:42:19 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Cc: msysgit@googlegroups.com, git@vger.kernel.org, dotzenlabs@gmail.com
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: 3r1geSwkOB3EZjhbPQXiTVddVaTbPXa.RdbbhnhVXiVddVaTVgdjeh.Rdb@listserv.bounces.google.com Tue Dec 08 14:46:43 2009
+Return-path: <3r1geSwkOB3EZjhbPQXiTVddVaTbPXa.RdbbhnhVXiVddVaTVgdjeh.Rdb@listserv.bounces.google.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-gx0-f190.google.com ([209.85.217.190])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NI0KY-00081f-3z
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 14:42:18 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755129AbZLHNlu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2009 08:41:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755069AbZLHNlu
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 08:41:50 -0500
-Received: from mx.sz.bfs.de ([194.94.69.70]:51853 "EHLO mx.sz.bfs.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754966AbZLHNlt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2009 08:41:49 -0500
-Received: from mail.sz.bfs.de (mail.sz.bfs.de [192.168.0.1])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	by mx.sz.bfs.de (BfS Mail Relay SZ) with ESMTP
-	id 291AC288AD1; Tue,  8 Dec 2009 14:41:55 +0100 (CET)
-Received: from localhost (unknown [192.168.2.47])
-	by mail.sz.bfs.de (BfS Mail Hub) with ESMTP id 005D4E38EA;
-	Tue,  8 Dec 2009 14:41:54 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at bfs.de
-Received: from mail.sz.bfs.de ([192.168.2.193])
-	by localhost (amavis-sz.sz.bfs.de [192.168.2.47]) (amavisd-new, port 10024)
-	with ESMTP id YYL7LfIihhcp; Tue,  8 Dec 2009 14:41:44 +0100 (CET)
-Received: from dc-slave2-fr.fr.bfs.de (unknown [10.177.18.200])
-	by mail.sz.bfs.de (BfS Mail Hub) with ESMTP id E4519E38FA;
-	Tue,  8 Dec 2009 14:41:43 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dc-slave2-fr.fr.bfs.de (Postfix) with ESMTP id 78F2ADB26D;
-	Tue,  8 Dec 2009 14:41:43 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dc-slave2-fr.fr.bfs.de (Postfix) with ESMTP id 45E9FDB261;
-	Tue,  8 Dec 2009 14:41:43 +0100 (CET)
-X-Virus-Scanned: by amavisd-new-2.4.2 (20060627) (Debian) at fr.bfs.de
-Received: from dc-slave2-fr.fr.bfs.de ([127.0.0.1])
-	by localhost (dc-slave2-fr.fr.bfs.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1fM4cLcmxIso; Tue,  8 Dec 2009 14:41:42 +0100 (CET)
-Received: from [134.92.181.33] (unknown [134.92.181.33])
-	by dc-slave2-fr.fr.bfs.de (Postfix) with ESMTP id C9A24DB260;
-	Tue,  8 Dec 2009 14:41:42 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <200912080917.17220.chriscool@tuxfamily.org>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134870>
+	id 1NI0Op-0001Ak-2l
+	for gcvm-msysgit@m.gmane.org; Tue, 08 Dec 2009 14:46:43 +0100
+Received: by gxk6 with SMTP id 6sf8649587gxk.13
+        for <gcvm-msysgit@m.gmane.org>; Tue, 08 Dec 2009 05:46:41 -0800 (PST)
+Received: by 10.91.181.17 with SMTP id i17mr196226agp.7.1260279983834;
+        Tue, 08 Dec 2009 05:46:23 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.213.37.194 with SMTP id y2ls209828ebd.3.p; Tue, 08 Dec 2009 
+	05:46:20 -0800 (PST)
+Received: by 10.213.41.5 with SMTP id m5mr966940ebe.26.1260279980617;
+        Tue, 08 Dec 2009 05:46:20 -0800 (PST)
+Received: by 10.213.41.5 with SMTP id m5mr966939ebe.26.1260279980589;
+        Tue, 08 Dec 2009 05:46:20 -0800 (PST)
+Received: from ey-out-1920.google.com (ey-out-1920.google.com [74.125.78.144])
+        by gmr-mx.google.com with ESMTP id 18si667902ewy.8.2009.12.08.05.46.19;
+        Tue, 08 Dec 2009 05:46:19 -0800 (PST)
+Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 74.125.78.144 as permitted sender) client-ip=74.125.78.144;
+Received: by ey-out-1920.google.com with SMTP id 5so545308eyb.20
+        for <msysgit@googlegroups.com>; Tue, 08 Dec 2009 05:46:19 -0800 (PST)
+Received: by 10.216.87.209 with SMTP id y59mr3139716wee.21.1260279979289; Tue, 
+	08 Dec 2009 05:46:19 -0800 (PST)
+In-Reply-To: <200911272114.13107.j6t@kdbg.org>
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: 
+	domain of kusmabite@googlemail.com designates 74.125.78.144 as permitted 
+	sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) 
+	header.i=@googlemail.com
+X-Original-Sender: <kusmabite@googlemail.com>
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+List-Post: <http://groups.google.com/group/msysgit/post?hl=>, 
+	<mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=>
+X-Thread-Url: http://groups.google.com/group/msysgit/t/15f3dd983aa85143
+X-Message-Url: http://groups.google.com/group/msysgit/msg/8ced271e6016d90d
+Sender: msysgit+owner@googlegroups.com
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=>, 
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=>, 
+	<mailto:msysgit+subscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134871>
 
+On Fri, Nov 27, 2009 at 9:14 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> On Freitag, 27. November 2009, Erik Faye-Lund wrote:
+>> What do you find confusing about it? The idea is to use a provided
+>> bi-directional fd instead of a pipe if async->out is non-zero. The
+>> currently defined rules for async is that async->out must be zero
+>> (since the structure should be zero-initialized).
+>
+> It is just the code structure that is confusing. It should be
+>
+> =A0 =A0 =A0 =A0if (async->out) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0/* fd was provided */
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0do all that is needed in this case
+> =A0 =A0 =A0 =A0} else {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0/* fd was requested */
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0do all for this other case
+> =A0 =A0 =A0 =A0}
+> =A0 =A0 =A0 =A0/* nothing to do anymore here */
+>
+> (Of course, this should only replace the part that is cited above, not th=
+e
+> whole function.)
+>
 
+OK. I've reimplemented the change for the next round, taking this into acco=
+unt.
 
-Christian Couder schrieb:
-> Hi,
->=20
-> On lundi 07 d=C3=A9cembre 2009, walter harms wrote:
->> Michael J Gruber schrieb:
->>> walter harms venit, vidit, dixit 07.12.2009 13:59:
->>>> Hi list,
->>>> i am new to git (using: git version 1.6.0.2).
->>> though your git is not that new ;)
->>>
->>>> I would like to bisect a single file but i have only commit id, no
->>>> tags.
->>>>
->>>> Background:
->>>> I have a copy of the busybox git repos, and i know there is (perha=
-ps)
->>>> a bug in ash.c.
->>>>
->>>> how can i do that ?
->>> You don't need any tags for bisecting. The man page of git-bisect h=
-as
->>> several examples on how to use it. Do you have a test script which
->>> exposes the bug?
->> unfortunately no, the error shows up very nicely when booting my
->> embdedded system but not else (this is the reason i would to bisect =
-that
->> file only and not busybox completely). And from the man pages i got =
-the
->> impression that it is only possible the start with a tag.
->=20
-> The man page says:
->=20
-> git bisect start [<bad> [<good>...]] [--] [<paths>...]
->=20
-> and then:
->=20
-> "This command uses git rev-list --bisect to help drive the binary sea=
-rch=20
-> process to find which change introduced a bug, given an old "good" co=
-mmit=20
-> object name and a later "bad" commit object name."
+>> Indeed it does. Do we want to extend it to support a set of
+>> unidirectional channels instead?
+>
+> Yes, I think so. We could pass a regular int fd[2] array around with the =
+clear
+> definition that both can be closed independently, i.e. one must be a dup(=
+) of
+> the other. struct async would also have such an array.
+>
 
+OK. This has been included for the next round. Instead of an array,
+I've tried to be consistent with start_command, and used two
+variables, "in" and "out".
 
-i am sorry, i am not familiar with git and when i am stating i am looki=
-ng
-for examples first. the examples in my man page are like
-git bisect start v2.6.20-rc6 v2.6.20-rc4
-there is nothing like:
-git bisect start 6a87a68a6a8 65a76a8a68a7
+> Speaking of dup(): The underlying function is DuplicateHandle(), and its
+> documentation says:
+>
+> "You should not use DuplicateHandle to duplicate handles to the following
+> objects: ... o Sockets. ... use WSADuplicateSocket."
+>
+> But then the docs of WSADuplicateSocket() talk only about duplicating a s=
+ocket
+> to a separate process. Perhaps DuplicateHandle() of a socket within the s=
+ame
+> process Just Works?
+>
 
-I ASSUME that you can use tags like "v2.6.20-rc6" and commit-id like "6=
-a87a68a6a8"
-interchangeable but that was not clear from beginning.
-BTW did you notice the sentence says "commit object name" not "commit i=
-d" ? when
-you are starting you are not familiar with the wording so you do not ma=
-ke the connection.
+It seems the rest of the Windows-world depends on DuplicateHandle()
+working for sockets, so I'm not too worried. I can't find anything
+documentation(1) for _dup, and I don't think we have our own
+dup()-implementation.
 
+(1) http://msdn.microsoft.com/en-us/library/8syseb29(VS.71).aspx
 
->> i already had the hint that i need to do:
->> git bisect start bad_commit_id good_commit_id -- ash.c
->=20
-> So did you try that?
->=20
-
-not yet, we are still using an older version of BB for production. So t=
-here is no hurry.
-The problem is that we can not found the reason for the bug. NTL i plan=
- for this week.
-
-
->> Ntl, there is one more question, how can i make sure that
->> i use the right version ?
->=20
-> If you mean the right git version, then I think any 1.6.X should be e=
-nough.
->=20
->> first i toughed  that cherry-pick is the right=20
->> idea but it seems that that will apply onyl certain patches ?
->=20
-> If you want to find the commit that introduced a bug, then you should=
- not=20
-> need cherry-pick.
->=20
-
-mmh, no, the idea was to use something like
-
-git "checkou" <id>  and having a version that represents THAT moment.
-
-
-re,
- wh
-
-> Regards,
-> Christian.
->=20
+--=20
+Erik "kusma" Faye-Lund
