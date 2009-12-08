@@ -1,251 +1,118 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH 0/3] Add a "fix" command to "rebase --interactive"
-Date: Tue, 08 Dec 2009 12:13:14 +0900
-Message-ID: <20091208121314.6117@nanako3.lavabit.com>
-References: <cover.1259934977.git.mhagger@alum.mit.edu> <4B192701.4000308@drmicha.warpmail.net> <vpqfx7qocwl.fsf@bauges.imag.fr> <7vws12r5v2.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0912041945161.21557@intel-tinevez-2-302> <20091205062708.6117@nanako3.lavabit.com> <7vd42t6f9i.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [RFC/PATCHv10 08/11] Notes API: get_note(): Return the note
+ annotating the given object
+Date: Tue, 08 Dec 2009 04:18:06 +0100
+Message-ID: <200912080418.06233.johan@herland.net>
+References: <1260185254-1523-1-git-send-email-johan@herland.net>
+ <1260185254-1523-9-git-send-email-johan@herland.net>
+ <7vk4wy1p8d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, spearce@spearce.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 08 04:13:42 2009
+X-From: git-owner@vger.kernel.org Tue Dec 08 04:18:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NHqWD-0007IY-Bl
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 04:13:41 +0100
+	id 1NHqar-0008S7-1K
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 04:18:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934378AbZLHDNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2009 22:13:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934184AbZLHDNU
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 22:13:20 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:48674 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933138AbZLHDNT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2009 22:13:19 -0500
-Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
-	by karen.lavabit.com (Postfix) with ESMTP id 1F651157554;
-	Mon,  7 Dec 2009 21:13:26 -0600 (CST)
-Received: from 7809.lavabit.com (212.62.97.23)
-	by lavabit.com with ESMTP id IQV0V8F9ZW7W; Mon, 07 Dec 2009 21:13:26 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=VxKzOkUf3+4HsY/z/MfDDb5ERvhyRf2TruuWq7TEydf0wkSOyVVkx8nY7lrot0TbMLda3RWxGCvp6xe+N66vkSuOnGdMZkuLX1NLt9wQA2L8LiV7wXcZfscsiFVnzzSYEp/Jbo6inC/zchYthh17Xr4xqEOm1JsD8h/Mbnucu+k=;
-  h=From:To:Cc:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <7vd42t6f9i.fsf@alter.siamese.dyndns.org>
-Subject: [PATCH] rebase -i --autosquash: auto-squash commits
+	id S934810AbZLHDSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2009 22:18:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935785AbZLHDSF
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Dec 2009 22:18:05 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:60693 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S934488AbZLHDSD (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Dec 2009 22:18:03 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KUB00KA8D68AB30@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 08 Dec 2009 04:18:09 +0100 (MET)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KUB00ED9D66V430@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 08 Dec 2009 04:18:08 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.12.8.30625
+User-Agent: KMail/1.12.4 (Linux/2.6.31-ARCH; KDE/4.3.4; x86_64; ; )
+In-reply-to: <7vk4wy1p8d.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134808>
 
-Teach a new option, --autosquash, to the interactive rebase.
-When the commit log message begins with "!fixup ...", and there
-is a commit whose title begins with the same ..., automatically
-modify the todo list of rebase -i so that the commit marked for
-squashing come right after the commit to be modified, and change
-the action of the moved commit from pick to squash.
+On Monday 07 December 2009, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > Created by a simple cleanup and rename of lookup_notes().
+> >
+> > Signed-off-by: Johan Herland <johan@herland.net>
+> > ---
+> >  notes.c |   15 ++++++++-------
+> >  notes.h |    3 +++
+> >  2 files changed, 11 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/notes.c b/notes.c
+> > index 79bfa24..110404a 100644
+> > --- a/notes.c
+> > +++ b/notes.c
+> > @@ -379,12 +379,13 @@ void add_note(const unsigned char *object_sha1,
+> > const unsigned char *note_sha1) note_tree_insert(&root_node, 0, l,
+> > PTR_TYPE_NOTE);
+> >  }
+> >
+> > -static unsigned char *lookup_notes(const unsigned char *object_sha1)
+> > +const unsigned char *get_note(const unsigned char *object_sha1)
+> 
+> Is there a need to find "note for this commit in the set of notes 3 days
+> ago"?  IOW, reading note for the given commit not from the tip of the
+> history of the refs/notes/commits but from say refs/notes/commits~4?
+> Similarly, is there a need to ask for a history of notes for a given
+> commit, something like "git log refs/notes/commit/$this_commit" in a
+>  world without any fanout?
+>
+> Obviously, "there is no need because..." is the best answer I'd be happy
+> with.  "There may be in the future but we haven't identified a good use
+> case and we don't implement what we do not need now." is also perfectly
+> acceptable.
 
-Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
----
+There may be in the future but we haven't identified a good use case and we 
+don't implement what we do not need now.
 
- Junio C Hamano <gitster@pobox.com> writes:
+;)
 
- > If Michael rolls his second round with your "--autosquash", or you do so
- > yourself on top of his patch, I think it _might_ be safer to mark the ones
- > automatically moved as "squash", and not as "fix", and have the users
- > explicitly change the "squash" they want to "fix" themselves.
- > Alternatively, you can also use two magic tokens (i.e. instead of one
- > "fixup!", allow people to use "squash!" and "fixup!")  and change the
- > action chosen for the moved commits to "squash" and "fixup" respectively.
+> IOW, I am not suggesting to change it---I just want to know how much
+> thought went in before deciding to implement the interface this way.
 
- Here is a rebased and updated version of my patch from June 
- 2009. It should apply cleanly on top of Michael's patch.
+Well, this later part of the series (from patch #6) was built mainly to 
+support the fast-import patch (which is no longer based on this API), but 
+also with an eye towards keeping things fairly flexible and generic. 
+Furthermore I expect to use most of these patches when I get around to 
+builtin-ifying the git-notes shell script (which currently is oblivious the 
+notes API and things like fanout and rebalancing).
 
- Documentation/git-rebase.txt |   10 +++++++
- git-rebase--interactive.sh   |   43 +++++++++++++++++++++++++++++++
- t/t3415-rebase-autosquash.sh |   58 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 111 insertions(+), 0 deletions(-)
- create mode 100755 t/t3415-rebase-autosquash.sh
+In any case, if you look at patch #10/11, you'll see I introduce the concept 
+of multiple notes trees. This was originally done to allow fast-import to 
+edit notes in several branches simultaneously, but it now occurs to me that 
+this is exactly what we need to answer your questions above: If you want to 
+look at an older version of your notes tree, you simply instantiate another 
+notes tree with:
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 9b648ec..87cb62d 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -308,6 +308,16 @@ which makes little sense.
- 	root commits will be rewritten to have <newbase> as parent
- 	instead.
- 
-+--autosquash::
-+	When the commit log message begins with "!squash ..." (or
-+	"!fixup ..."), and there is a commit whose title begins with
-+	the same ..., automatically modify the todo list of rebase -i
-+	so that the commit marked for quashing come right after the 
-+	commit to be modified, and change the action of the moved 
-+	commit from `pick` to `squash` (or `fixup`).
-++
-+This option is only valid when '--interactive' option is used.
-+
- include::merge-strategies.txt[]
- 
- NOTES
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 30de96e..b014231 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -28,6 +28,7 @@ abort              abort rebasing process and restore original branch
- skip               skip current patch and continue rebasing process
- no-verify          override pre-rebase hook from stopping the operation
- root               rebase all reachable commmits up to the root(s)
-+autosquash         move commits that begin with !squash/!fixup
- "
- 
- . git-sh-setup
-@@ -46,6 +47,7 @@ ONTO=
- VERBOSE=
- OK_TO_SKIP_PRE_REBASE=
- REBASE_ROOT=
-+AUTOSQUASH=
- 
- GIT_CHERRY_PICK_HELP="  After resolving the conflicts,
- mark the corrected paths with 'git add <paths>', and
-@@ -519,6 +521,43 @@ get_saved_options () {
- 	test -f "$DOTEST"/rebase-root && REBASE_ROOT=t
- }
- 
-+# Rearrange the todo list that has both "pick sha1 msg" and
-+# "pick sha1 !fixup/!squash msg" appears in it so that the latter
-+# comes immediately after the former, and change "pick" to
-+# "fixup"/"squash".
-+rearrange_squash () {
-+	sed -n -e 's/^pick \([0-9a-f]*\) !\(squash\) /\1 \2 /p' \
-+		-e 's/^pick \([0-9a-f]*\) !\(fixup\) /\1 \2 /p' \
-+		"$1" >"$1.sq"
-+	test -s "$1.sq" || return
-+
-+	sed -e '/^pick [0-9a-f]* !squash /d' \
-+		-e '/^pick [0-9a-f]* !fixup /d' \
-+		"$1" |
-+	(
-+		used=
-+		while read pick sha1 message
-+		do
-+			echo "$pick $sha1 $message"
-+			while read squash action msg
-+			do
-+				case " $used" in
-+				*" $squash "*)
-+					continue ;;
-+				esac
-+				case "$message" in
-+				"$msg"*)
-+					echo "$action $squash !$action $msg"
-+					used="$used$squash "
-+					;;
-+				esac
-+			done <"$1.sq"
-+		done >"$1.rearranged"
-+	)
-+	cat "$1.rearranged" >"$1"
-+	rm -f "$1.sq"
-+}
-+
- while test $# != 0
- do
- 	case "$1" in
-@@ -624,6 +663,9 @@ first and then run 'git rebase --continue' again."
- 	--root)
- 		REBASE_ROOT=t
- 		;;
-+	--autosquash)
-+		AUTOSQUASH=t
-+		;;
- 	--onto)
- 		shift
- 		ONTO=$(git rev-parse --verify "$1") ||
-@@ -783,6 +825,7 @@ first and then run 'git rebase --continue' again."
- 		fi
- 
- 		test -s "$TODO" || echo noop >> "$TODO"
-+		test -n "$AUTOSQUASH" && rearrange_squash "$TODO"
- 		cat >> "$TODO" << EOF
- 
- # Rebase $SHORTREVISIONS onto $SHORTONTO
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-new file mode 100755
-index 0000000..5ea2073
---- /dev/null
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -0,0 +1,58 @@
-+#!/bin/sh
-+
-+test_description='auto squash'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	echo 0 > file0 &&
-+	git add . &&
-+	test_tick &&
-+	git commit -m "initial commit" &&
-+	echo 0 > file1 &&
-+	echo 2 > file2 &&
-+	git add . &&
-+	test_tick &&
-+	git commit -m "first commit" &&
-+	echo 3 > file3 &&
-+	git add . &&
-+	test_tick &&
-+	git commit -m "second commit" &&
-+	git tag base
-+'
-+
-+test_expect_success 'auto fixup' '
-+	git reset --hard base &&
-+	echo 1 > file1 &&
-+	git add -u &&
-+	test_tick &&
-+	git commit -m "!fixup first"
-+
-+	git tag final-fixup &&
-+	test_tick &&
-+	git rebase --autosquash -i HEAD^^^ &&
-+	git log --oneline >actual &&
-+	test 3 = $(wc -l <actual) &&
-+	git diff --exit-code final-fixup &&
-+	test 1 = "$(git cat-file blob HEAD^:file1)" &&
-+	test 1 = $(git cat-file commit HEAD^ | grep first | wc -l)
-+'
-+
-+test_expect_success 'auto squash' '
-+	git reset --hard base &&
-+	echo 1 > file1 &&
-+	git add -u &&
-+	test_tick &&
-+	git commit -m "!squash first"
-+
-+	git tag final-squash &&
-+	test_tick &&
-+	git rebase --autosquash -i HEAD^^^ &&
-+	git log --oneline >actual &&
-+	test 3 = $(wc -l <actual) &&
-+	git diff --exit-code final-squash &&
-+	test 1 = "$(git cat-file blob HEAD^:file1)" &&
-+	test 2 = $(git cat-file commit HEAD^ | grep first | wc -l)
-+'
-+
-+test_done
--- 
-1.6.6.rc0.60.g4926
+	struct notes_tree my_notes;
+	init_notes(my_notes, "refs/notes/commits~4", ...);
+
+and you can now compare notes between my_notes and the current (or any 
+other) notes tree.
 
 
+Have fun! :)
 
+...Johan
 
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Johan Herland, <johan@herland.net>
+www.herland.net
