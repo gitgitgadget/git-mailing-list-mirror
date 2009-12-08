@@ -1,94 +1,83 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v2 3/3] transport-helper.c::push_refs(): emit "no refs"
- error message
-Date: Tue, 8 Dec 2009 22:37:33 +0800
-Message-ID: <20091208223733.5528e781.rctay89@gmail.com>
-References: <20091208223649.d9ff4fed.rctay89@gmail.com>,
- <20091208223543.c7f88afe.rctay89@gmail.com>,
- <20091208223413.98e99d3e.rctay89@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 0/3] Add a "fix" command to "rebase --interactive"
+Date: Tue, 08 Dec 2009 15:39:53 +0100
+Message-ID: <vpqfx7l1qdi.fsf@bauges.imag.fr>
+References: <cover.1259934977.git.mhagger@alum.mit.edu>
+	<4B192701.4000308@drmicha.warpmail.net>
+	<vpqfx7qocwl.fsf@bauges.imag.fr>
+	<7vws12r5v2.fsf@alter.siamese.dyndns.org>
+	<alpine.DEB.1.00.0912041945161.21557@intel-tinevez-2-302>
+	<20091205062708.6117@nanako3.lavabit.com>
+	<7vd42t6f9i.fsf@alter.siamese.dyndns.org>
+	<20091208121314.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Daniel Barkalow" <barkalow@iabervon.org>,
-	"Sverre Rabbelier" <srabbelier@gmail.com>,
-	"Clemens Buchacher" <drizzd@aon.at>, "Jeff King" <peff@peff.net>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 08 15:37:49 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Tue Dec 08 15:43:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NI1CE-0005mu-Sh
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 15:37:47 +0100
+	id 1NI1HZ-00081i-Db
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 15:43:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755550AbZLHOhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2009 09:37:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755463AbZLHOhf
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 09:37:35 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:58907 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754966AbZLHOhe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2009 09:37:34 -0500
-Received: by yxe17 with SMTP id 17so4930833yxe.33
-        for <git@vger.kernel.org>; Tue, 08 Dec 2009 06:37:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:in-reply-to:references:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=KV9bmKZsyY4kQn9l0Yg+TsazRlsu8pB1Hv3Sk+Uc5OI=;
-        b=aNs1KCpbvZhcikMHWruEyTVWvM9F+neXacg8X5JIBXyMsqeG+BOYB9sCT2n95GJyW/
-         RcFkhVilrj0nlFBESZsjXogv8rgrOoLE2bX/Q70yVNI6l6g9lKs/PoGxiE2KXvQtigTP
-         AUiEWcnMxxT7q0emwTNEEZoOAV+I/vnxzQos0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        b=Tq7nuH+gunh/xWcf9k8wDd5DpPTuFrKBz0DZzhMMsycjvdp5483O2o2Vu+gpYuphZk
-         BeGXK2pRu2ObA3xvITunAPwHIgPu42UGu+IlQ1RlFAJjFd5D0T0+iod2F2yrlFbpMxp2
-         sx5kCPuPo8J3zPdOpNKRU90qWSaBwnRffx1sI=
-Received: by 10.150.174.33 with SMTP id w33mr14128546ybe.2.1260283061042;
-        Tue, 08 Dec 2009 06:37:41 -0800 (PST)
-Received: from your-cukc5e3z5n (cm67.zeta153.maxonline.com.sg [116.87.153.67])
-        by mx.google.com with ESMTPS id 14sm3356297gxk.6.2009.12.08.06.37.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 08 Dec 2009 06:37:40 -0800 (PST)
-In-Reply-To: <20091208223413.98e99d3e.rctay89@gmail.com>
-X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1754966AbZLHOnE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2009 09:43:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752997AbZLHOnE
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 09:43:04 -0500
+Received: from imag.imag.fr ([129.88.30.1]:49640 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753779AbZLHOnD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2009 09:43:03 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id nB8EdslI018471
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 8 Dec 2009 15:39:54 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NI1EI-0005Yb-6z; Tue, 08 Dec 2009 15:39:54 +0100
+In-Reply-To: <20091208121314.6117@nanako3.lavabit.com> (Nanako Shiraishi's message of "Tue\, 08 Dec 2009 12\:13\:14 +0900")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 08 Dec 2009 15:39:55 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134882>
 
-Emit an error message when remote_refs is not set.
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-This behaviour is consistent with that of builtin-send-pack.c and
-http-push.c.
+> Teach a new option, --autosquash, to the interactive rebase.
+> When the commit log message begins with "!fixup ...", and there
+> is a commit whose title begins with the same ...
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
- transport-helper.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+You should be clearer than "title" here. My understanding is that this
+is the _message_ (man git-commit talks about log message or commit
+message).
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 6b1f778..96fc48b 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -321,8 +321,11 @@ static int push_refs(struct transport *transport,
- 	struct child_process *helper;
- 	struct ref *ref;
+It's a detail, but I could make sense to allow putting something other
+than the commit message here, like an object name:
 
--	if (!remote_refs)
-+	if (!remote_refs) {
-+		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
-+			"Perhaps you should specify a branch such as 'master'.\n");
- 		return 0;
-+	}
+git commit -m "fixup! 66eb61bd"
+git commit -m "fixup! HEAD^^"
 
- 	helper = get_helper(transport);
- 	if (!data->push)
---
-1.6.4.4
+The last one is a bit tricky, since it should mean "HEAD^^" right
+before I did the commit.
+
+
+All that said, I probably won't be a user of that particular feature
+(although I love the new "fixup" command for rebase -i), so don't see
+any complaint here, just food for thoughts ;-).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
