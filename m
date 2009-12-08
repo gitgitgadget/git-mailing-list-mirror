@@ -1,108 +1,166 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [RFC PATCH v2 2/2] MSVC: Fix an "incompatible pointer types"
- compiler warning
-Date: Tue, 08 Dec 2009 19:48:42 +0000
-Message-ID: <4B1EAD9A.3090205@ramsay1.demon.co.uk>
-References: <4B1997A0.9000004@ramsay1.demon.co.uk> <200912051257.21386.j6t@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Marius Storm-Olsen <mstormo@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Dec 08 20:51:51 2009
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH] mergetool--lib: add diffmerge as a pre-configured mergetool option
+Date: Tue,  8 Dec 2009 12:01:17 -0800
+Message-ID: <1260302477-49412-1-git-send-email-jaysoffian@gmail.com>
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	David Aguilar <davvid@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 08 21:01:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NI66A-0004pd-Ew
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 20:51:50 +0100
+	id 1NI6Ff-0002PF-HH
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Dec 2009 21:01:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965918AbZLHTvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2009 14:51:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965894AbZLHTva
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 14:51:30 -0500
-Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:36607 "EHLO
-	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965890AbZLHTva (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Dec 2009 14:51:30 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1NI65v-00040o-XN; Tue, 08 Dec 2009 19:51:36 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <200912051257.21386.j6t@kdbg.org>
+	id S965928AbZLHUB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2009 15:01:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965890AbZLHUB1
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 15:01:27 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:47207 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756266AbZLHUB0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2009 15:01:26 -0500
+Received: by yxe17 with SMTP id 17so5238044yxe.33
+        for <git@vger.kernel.org>; Tue, 08 Dec 2009 12:01:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=rBGtzXqPjWh5I1uWkmLF2fi5c0SiJ06YUlSEmJ8MmUM=;
+        b=w+gnahKqWJ8MW5oMfHp5mfaYllGJWPbGyfaMCx6AyxqJwGrS4r0wG0o3g0DiYWG1+9
+         Pp9hpErNwMr1a6KyPDvHZY5CcX5ma+tJ7NZBmeamSENId6Kjp+wsc6Ru3vPwsZe1qoEu
+         n60W/g1a2vdO8HVOhqv/MURAl3SrPUmZQSS/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ZSSjR4cHv7awvhlKm12dnTYQngNHWbTeZX4a+j5HVuPH1ZjdcNxb9NyNtf/mCigcVI
+         v7gVENj8g8BNtPvPvk/kHdTaFCaRMe0mP9+g2kMRP7ByHnwUsJEaK8Ng56TNfYBg36FG
+         svDmqgpPO0Dq49vn5lamgDa4LYBaDmREYglLo=
+Received: by 10.101.163.1 with SMTP id q1mr661733ano.67.1260302492439;
+        Tue, 08 Dec 2009 12:01:32 -0800 (PST)
+Received: from localhost (173-13-134-217-sfba.hfc.comcastbusiness.net [173.13.134.217])
+        by mx.google.com with ESMTPS id 34sm3148884yxf.29.2009.12.08.12.01.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 08 Dec 2009 12:01:31 -0800 (PST)
+X-Mailer: git-send-email 1.6.6.rc1.296.ge77fc.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134906>
 
-Johannes Sixt wrote:
-> On Samstag, 5. Dezember 2009, Ramsay Jones wrote:
->> The patch is still marked RFC because:
->>     - I'm still not sure if the flexibility to support both 32- and 64-bit
->>       time_t is required.
->>     - should -D_USE_32BIT_TIME_T be added to the Makefile?
-> 
-> If *not* using -D_USE_32BIT_TIME_T  produces a build or code base that is in 
-> some way superior, why should we require it? For example, its absence could 
-> help a 64bit build.
+Add SourceGear DiffMerge to the set of built-in diff/merge tools, and update
+bash completion and documentation.
+---
+ Documentation/git-difftool.txt         |    2 +-
+ Documentation/git-mergetool.txt        |    2 +-
+ Documentation/merge-config.txt         |    4 ++--
+ contrib/completion/git-completion.bash |    2 +-
+ git-mergetool--lib.sh                  |   22 ++++++++++++++++++++--
+ 5 files changed, 25 insertions(+), 7 deletions(-)
 
-Indeed.
-
-I only added the second bullet because you seemed to be advocating it, in your
-last email, so I'm waiting for your answer on that. :-D
-
-Unfortunately the patch can not be a simple as the first version (Dscho was
-quite right to complain about adding too much clutter to mingw.h with msvc
-related code), but the moral equivalent would have msvc.h look like:
-
-    25	/* Use mingw_lstat() instead of lstat()/stat() and mingw_fstat() instead
-    26	 * of fstat(). We add the declaration of these functions here, suppressing
-    27	 * the corresponding declarations in mingw.h, so that we can use the
-    28	 * appropriate structure type (and function) names from the msvc headers.
-    29	 */
-    30	#define stat _stat64
-    31	int mingw_lstat(const char *file_name, struct stat *buf);
-    32	int mingw_fstat(int fd, struct stat *buf);
-    33	#define fstat mingw_fstat
-    34	#define lstat mingw_lstat
-    35	#define _stat64(x,y) mingw_lstat(x,y)
-    36	#define ALREADY_DECLARED_STAT_FUNCS
-    37	
-    38	#include "compat/mingw.h"
-    39	
-    40	#undef ALREADY_DECLARED_STAT_FUNCS
-
-This works fine, *provided* you do not need to compile with -D_USE_32BIT_TIME_T,
-which would produce this warning:
-
-    ...mingw.c(223) : warning C4133: 'function' : incompatible types - \
-    from '_stat64 *' to '_stat32i64 *'
-
-This would actually be *worse* than the original code, since the struct _stat64
-would not have the same "shape" as the struct _stat32i64; it would not write
-outside of the allocated memory, at least, but the time fields would obviously
-be written to the wrong offsets etc,. In the original code, the struct _stati64
-would have the correct "shape", since the time fields are declared with time_t.
-
-At first I thought there would be no need to set _USE_32BIT_TIME_T.  After some
-thought, however, I could not be confident that it would *never* be necessary.
-(my only concern was to revert to 32-bit time_t, perhaps only temporarily, while
-fixing a breakage; I did not consider wanting to keep "compatibility" with the
-MinGW code). This lead to the more complicated/flexible RFC patch.
-
-I was hoping for someone to say: "Hey, we will *never* need to compile with
--D_USE_32BIT_TIME_T, so just get rid of those #if conditionals and simplify
-the code ...". :-P
-
-Since nobody has said any such thing, I have to conclude that the extra
-flexibility is required. That being the case, I have to be happy with the
-patch as-is and propose to remove the RFC.
-
-Before I do that, do you have any further comments or concerns about the
-v2 patch that you want me to address?
-
-ATB,
-Ramsay Jones
+diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+index 8e9aed6..28178da 100644
+--- a/Documentation/git-difftool.txt
++++ b/Documentation/git-difftool.txt
+@@ -31,7 +31,7 @@ OPTIONS
+ 	Use the diff tool specified by <tool>.
+ 	Valid merge tools are:
+ 	kdiff3, kompare, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff,
+-	ecmerge, diffuse, opendiff, p4merge and araxis.
++	ecmerge, diffuse, opendiff, p4merge, araxis and diffmerge.
+ +
+ If a diff tool is not specified, 'git-difftool'
+ will use the configuration variable `diff.tool`.  If the
+diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+index 4a6f7f3..7f00269 100644
+--- a/Documentation/git-mergetool.txt
++++ b/Documentation/git-mergetool.txt
+@@ -27,7 +27,7 @@ OPTIONS
+ 	Use the merge resolution program specified by <tool>.
+ 	Valid merge tools are:
+ 	kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, ecmerge,
+-	diffuse, tortoisemerge, opendiff, p4merge and araxis.
++	diffuse, tortoisemerge, opendiff, p4merge, araxis and diffmerge.
+ +
+ If a merge resolution program is not specified, 'git-mergetool'
+ will use the configuration variable `merge.tool`.  If the
+diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
+index a403155..a68a205 100644
+--- a/Documentation/merge-config.txt
++++ b/Documentation/merge-config.txt
+@@ -23,8 +23,8 @@ merge.tool::
+ 	Controls which merge resolution program is used by
+ 	linkgit:git-mergetool[1].  Valid built-in values are: "kdiff3",
+ 	"tkdiff", "meld", "xxdiff", "emerge", "vimdiff", "gvimdiff",
+-	"diffuse", "ecmerge", "tortoisemerge", "p4merge", "araxis" and
+-	"opendiff".  Any other value is treated is custom merge tool
++	"diffuse", "ecmerge", "tortoisemerge", "p4merge", "araxis", "opendiff"
++	and "diffmerge".  Any other value is treated is custom merge tool
+ 	and there must be a corresponding mergetool.<tool>.cmd option.
+ 
+ merge.verbosity::
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 7c18b0c..5cc5ee7 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -975,7 +975,7 @@ _git_diff ()
+ }
+ 
+ __git_mergetools_common="diffuse ecmerge emerge kdiff3 meld opendiff
+-			tkdiff vimdiff gvimdiff xxdiff araxis p4merge
++			tkdiff vimdiff gvimdiff xxdiff araxis p4merge diffmerge
+ "
+ 
+ _git_difftool ()
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index 5b62785..5b29fef 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -46,7 +46,8 @@ check_unchanged () {
+ valid_tool () {
+ 	case "$1" in
+ 	kdiff3 | tkdiff | xxdiff | meld | opendiff | \
+-	emerge | vimdiff | gvimdiff | ecmerge | diffuse | araxis | p4merge)
++	emerge | vimdiff | gvimdiff | ecmerge | diffuse | araxis | p4merge | \
++	diffmerge)
+ 		;; # happy
+ 	tortoisemerge)
+ 		if ! merge_mode; then
+@@ -297,6 +298,23 @@ run_merge_tool () {
+ 				>/dev/null 2>&1
+ 		fi
+ 		;;
++	diffmerge)
++		if merge_mode; then
++			if $base_present; then
++				"$merge_tool_path" -nosplash -merge -result="$MERGED" \
++					"$LOCAL" "$BASE" "$REMOTE"
++					>/dev/null 2>&1
++			else
++				"$merge_tool_path" -nosplash -merge \
++					"$LOCAL" "$MERGED" "$REMOTE"
++					>/dev/null 2>&1
++			fi
++			status=$?
++		else
++			"$merge_tool_path" -nosplash "$LOCAL" "$REMOTE" \
++				>/dev/null 2>&1
++		fi
++		;;
+ 	*)
+ 		merge_tool_cmd="$(get_merge_tool_cmd "$1")"
+ 		if test -z "$merge_tool_cmd"; then
+@@ -336,7 +354,7 @@ guess_merge_tool () {
+ 		else
+ 			tools="opendiff kdiff3 tkdiff xxdiff meld $tools"
+ 		fi
+-		tools="$tools gvimdiff diffuse ecmerge p4merge araxis"
++		tools="$tools gvimdiff diffuse ecmerge p4merge araxis diffmerge"
+ 	fi
+ 	case "${VISUAL:-$EDITOR}" in
+ 	*vim*)
+-- 
+1.6.6.rc1.296.ge77fc.dirty
