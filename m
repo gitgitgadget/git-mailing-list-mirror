@@ -1,60 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
 Subject: Re: [PATCH RFC] rebase: add --revisions flag
-Date: Wed, 09 Dec 2009 11:55:44 +0100
-Message-ID: <vpqaaxswh5b.fsf@bauges.imag.fr>
+Date: Wed, 9 Dec 2009 12:22:37 +0100
+Message-ID: <20091209112237.GA27740@atjola.homenet>
 References: <20091208144740.GA30830@redhat.com>
-	<7vfx7lcj18.fsf@alter.siamese.dyndns.org>
-	<20091209103850.GD2977@redhat.com>
+ <7vfx7lcj18.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.2.00.0912090941420.470@ds9.cixit.se>
+ <20091209093758.GA2977@redhat.com>
+ <alpine.DEB.2.00.0912091150470.470@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Wed Dec 09 11:56:11 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Wed Dec 09 12:22:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIKDI-0005Jx-8P
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 11:56:08 +0100
+	id 1NIKdG-0007AS-B5
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 12:22:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755002AbZLIKz4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Dec 2009 05:55:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754978AbZLIKz4
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 05:55:56 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:41796 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754855AbZLIKz4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2009 05:55:56 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id nB9ArJZY019066
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 9 Dec 2009 11:53:19 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NIKCu-0005H7-Sn; Wed, 09 Dec 2009 11:55:44 +0100
-In-Reply-To: <20091209103850.GD2977@redhat.com> (Michael S. Tsirkin's message of "Wed\, 9 Dec 2009 12\:38\:50 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 09 Dec 2009 11:53:19 +0100 (CET)
+	id S1754504AbZLILWh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 06:22:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754019AbZLILWg
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 06:22:36 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60403 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750792AbZLILWg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2009 06:22:36 -0500
+Received: (qmail invoked by alias); 09 Dec 2009 11:22:41 -0000
+Received: from i59F5468C.versanet.de (EHLO atjola.homenet) [89.245.70.140]
+  by mail.gmx.net (mp013) with SMTP; 09 Dec 2009 12:22:41 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+LK65MFGeLEwpC9dfF1skx9KIQmpx/SSvmA4Pcff
+	jng1yKiK3tGsrt
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.00.0912091150470.470@ds9.cixit.se>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134959>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+On 2009.12.09 11:52:41 +0100, Peter Krefting wrote:
+> Michael S. Tsirkin:
+>=20
+> >>Maybe this could also be used to implement a "git merge --squash
+> >>A..B", a.k.a a "partial merge".
+> >What exactly should it do?
+>=20
+> The same thing, apply a set of changes on top of the current branch,
+> just using the "merge" name, and not "rebase" or "cherry-pick".
+> "merge --squash" is just "cherry-pick" with a different name.
 
-> cherry-pick is a binary though while rebase is a shell script.
-> Should I just exec git rebase? git-rebase?
+Err, no. "git merge --squash foo" merges all changes from the merge bas=
+e
+of HEAD and foo up to foo. "git cherry-pick foo" takes just the changes
+from foo^ to foo. For example:
 
-See run-command.h :
+A---B---C (master)
+ \
+  D---E---F (foo)
 
-#define RUN_GIT_CMD	     2	/*If this is to be git sub-command */
-int run_command_v_opt(const char **argv, int opt);
+git cherry-pick foo # Tries to create a new commit with the changes fro=
+m
+                    # "git diff D F"
 
-That should do the trick (grep 'run_command_v_opt.*GIT_CMD' *.c for
-some example of uses).
+git merge --squash foo # Tries to create a new commit with the changes
+                       # from "git diff A F"
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Bj=F6rn
