@@ -1,95 +1,90 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH RFC] rebase: add --revisions flag
-Date: Wed, 9 Dec 2009 06:30:28 +0100
-Message-ID: <200912090630.28506.chriscool@tuxfamily.org>
-References: <20091208144740.GA30830@redhat.com> <7vfx7lcj18.fsf@alter.siamese.dyndns.org> <fabb9a1e0912081229l7990a148j9cd2daa338662dd@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] t7508-status: test all modes with color
+Date: Tue, 08 Dec 2009 21:32:35 -0800
+Message-ID: <7vzl5sww3w.fsf@alter.siamese.dyndns.org>
+References: <cover.1260266027.git.git@drmicha.warpmail.net>
+ <39211ecec866882503d1188d359e1183341faeb1.1260266027.git.git@drmicha.warpmail.net> <hflc82$sf8$1@ger.gmane.org> <4B1E798C.5050204@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <christian@couder.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 09 06:28:10 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Dec 09 06:32:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIF5t-0001I8-4X
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 06:28:09 +0100
+	id 1NIFAS-0002lD-F1
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 06:32:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752775AbZLIF16 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 00:27:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752264AbZLIF15
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 00:27:57 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:59945 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751311AbZLIF14 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Dec 2009 00:27:56 -0500
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 2CAAF818064;
-	Wed,  9 Dec 2009 06:27:54 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 55343818043;
-	Wed,  9 Dec 2009 06:27:51 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <fabb9a1e0912081229l7990a148j9cd2daa338662dd@mail.gmail.com>
-Content-Disposition: inline
+	id S1753138AbZLIFcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Dec 2009 00:32:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753073AbZLIFcj
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 00:32:39 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57715 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752843AbZLIFci (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2009 00:32:38 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C7750A5D40;
+	Wed,  9 Dec 2009 00:32:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=g5EkMUU6hzdvxgfqK+liopMAZK4=; b=BMNcK+
+	T3ELJlgX9IG2VZ6xwszwXOfyW4QSDvfByiiGSM0PwANQTooOQXggMj+3uEEwPDCa
+	eNSLfWBkIccHw6syrjWvOkeIt2wv1dJmTcyBNb/O4oe0u7sI4h75KZHT7jnIan1f
+	DHt8bnpUVPd3xsVi4jffJVlxP7zFxkHsDGDBw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=J5Mq8BUM1+o+Dx1afEP8dgvb3/tgiLNe
+	fh/7VHiuntOnprkv16mHRCI18FiKTqXjWp5D+QuQHzhOXn3ENCXA+b9E7mdUAFMH
+	WY8zaOgOYcOGN3JyigmMEfhTmddO9AuIPELfldAuabJnD8X8qIl5g/oxYlxbYPTl
+	o7wZMqrngFk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9680EA5D3F;
+	Wed,  9 Dec 2009 00:32:41 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 21C3AA5D3E; Wed,  9 Dec 2009
+ 00:32:36 -0500 (EST)
+In-Reply-To: <4B1E798C.5050204@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Tue\, 08 Dec 2009 17\:06\:36 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 45361896-E484-11DE-8160-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134938>
 
-Hi,
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-On mardi 08 d=E9cembre 2009, Sverre Rabbelier wrote:
-> Heya,
+> Jakub Narebski venit, vidit, dixit 08.12.2009 12:10:
+>> Michael J Gruber wrote:
+>> 
+>>> +decrypt_color () {
+>>> +       sed \
+>>> +               -e 's/.\[1m/<WHITE>/g' \
+>>> +               -e 's/.\[31m/<RED>/g' \
+>>> +               -e 's/.\[32m/<GREEN>/g' \
+>>> +               -e 's/.\[34m/<BLUE>/g' \
+>>> +               -e 's/.\[m/<RESET>/g'
+>>> +}
+>> 
+>> Shouldn't this be better in test-lib.sh, or some common lib 
+>> (lib-color.sh or color-lib.sh; we are unfortunately a bit inconsistent
+>> in naming here)?
 >
-> On Tue, Dec 8, 2009 at 21:22, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> > But I think it is a reasonable thing to _implement_ the feature to
-> > range-pick commits reusing the sequencing logic already in "rebase"=
- and
-> > "rebase -i". =A0That essentially is what we wanted to do with "git
-> > sequencer" that would be a sequencing logic backend shared among
-> > rebase, cherry-pick, and perhaps am.
->
-> Speaking of which, what's the status of git sequencer? I seem to
-> remember some activity recently to slowly rewrite git rebase in c, bu=
-t
-> I haven't seen anything since then. Is it still moving forward? Is
-> anyone interested in doing so? Just curious...
+> Well, so far it's used in two places (and somewhat differently). I would
+> say test-libification starts at 3 :)
 
-Last June and July, I sent some patch series to port "rebase -i" to C u=
-sing=20
-code from the sequencer project. My goal was to save some interesting c=
-ode=20
-from the sequencer GSoC 2008 project and at the same time to move=20
-forward "rebase -i" code toward a sequencer.
+That is a pretty lame excuse and is a bad way to keep things maintainable.
 
-But Dscho and Junio didn't like the fact that the code from the sequenc=
-er I=20
-added was duplicating existing code and was not properly refactored, th=
-ough=20
-it also added things that would be needed later for the sequencer. My p=
-lan=20
-was to refactor later, once I had a sequencer, but Junio and Dscho did =
-not=20
-like that plan. They said it would be a too big maintenance burden.
+Having two copies now means that you will *double* the chance for the next
+person to copy and paste one of the existing copies that are found in the
+non-library-ish part of the test script set to create the third duplicate,
+without even realizing that there already are two copies that should have
+been consolidated in the first place.  The worst part is that once that
+duplication is pointed out, s/he will use the existing two copies as an
+excuse for copy and paste.
 
-So I agreed to not duplicate any existing code and to properly refactor=
-=20
-everything. And I have been trying to take interesting and useful code =
-from=20
-the sequencer project and to integrate it into existing commands. And t=
-his=20
-is why I sent yesterday the 4th version of my '"git reset --merge" rela=
-ted=20
-improvements' patch series.
-
-Best regards,
-Christian.
+Please don't.
