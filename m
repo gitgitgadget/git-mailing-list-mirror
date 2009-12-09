@@ -1,94 +1,103 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: help: bisect single file from repos
-Date: Wed, 9 Dec 2009 10:45:32 +0100
-Message-ID: <20091209094532.GS18686@neumann>
-References: <4B1CFC4C.6090406@bfs.de> <4B1D1A5A.9060004@drmicha.warpmail.net>
-	<4B1D27B6.7010900@bfs.de>
-	<200912080917.17220.chriscool@tuxfamily.org>
-	<4B1E5796.2090201@bfs.de> <7vein5e2lc.fsf@alter.siamese.dyndns.org>
-	<20091209012855.GA3208@neumann>
-	<20091209172737.6117@nanako3.lavabit.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: rerere failed to parse conflict hunks
+Date: Wed, 09 Dec 2009 10:47:10 +0100
+Message-ID: <4B1F721E.9050609@drmicha.warpmail.net>
+References: <20091209084648.GA30139@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>, wharms@bfs.de
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Wed Dec 09 10:45:45 2009
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Uwe_Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Wed Dec 09 10:48:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIJ7B-0001DT-05
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 10:45:45 +0100
+	id 1NIJ9w-0002Ee-KM
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 10:48:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753154AbZLIJpc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 04:45:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753091AbZLIJpc
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 04:45:32 -0500
-Received: from moutng.kundenserver.de ([212.227.17.10]:53768 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752809AbZLIJpb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2009 04:45:31 -0500
-Received: from [127.0.1.1] (p5B13032B.dip0.t-ipconnect.de [91.19.3.43])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0Lg6Fn-1NsyUo2YkV-00pXWt; Wed, 09 Dec 2009 10:45:35 +0100
-Content-Disposition: inline
-In-Reply-To: <20091209172737.6117@nanako3.lavabit.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Provags-ID: V01U2FsdGVkX18sxz04bkX41el0C0T3dDs6BXWZGvUZGcM089Z
- SUmbKoePmlBezkgPr52sgzULwbQ1gbS79/GwpbLVh1QcIxmjqH
- QltPdoBMVfN4a4OXmIiiA==
+	id S1753244AbZLIJs0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 04:48:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753196AbZLIJsZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 04:48:25 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33998 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753130AbZLIJsY (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Dec 2009 04:48:24 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id B3961C5FCA;
+	Wed,  9 Dec 2009 04:48:27 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 09 Dec 2009 04:48:27 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=MFaQLgr0t5hqYn3RjvM7acqFIYw=; b=Ye9Bv3uCRHH5U5s+yvfmGayRuVVADyuaV+yF3/9kU2JvcrEwDw+TflUSxXezFg0gcxfS2wWRNrV1TF/kjflt8UGzpMOIGZpmip6TrXiRl/ZmJ+atFZiNX1tyt75/KfS3UaXXOnqQUBLogtlVvvpueQ77CCDlNsuALbQxnPUmXbo=
+X-Sasl-enc: bkiff8k4Gpag/sFc/ataCZPQ01IzmcJTgYLh8rRed1Q0 1260352107
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id F12BD1FFA4;
+	Wed,  9 Dec 2009 04:48:26 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7pre) Gecko/20091204 Lightning/1.0b1pre Shredder/3.0.1pre
+In-Reply-To: <20091209084648.GA30139@pengutronix.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134954>
 
-Hi,
-
-
-On Wed, Dec 09, 2009 at 05:27:37PM +0900, Nanako Shiraishi wrote:
-> Quoting SZEDER G=E1bor <szeder@ira.uka.de>
+Uwe Kleine-K=F6nig venit, vidit, dixit 09.12.2009 09:46:
+> Hello,
 >=20
-> > [1] - 'git cherry-pick' doc says the following:
-> >
-> >   <commit>
-> >     Commit to cherry-pick. For a more complete list of ways to spel=
-l
-> >     commits, see the "SPECIFYING REVISIONS" section in git-rev-pars=
-e(1).
-> >
-> > What?  "A _more_ complete list"!?  Well, it's not very hard to be m=
-ore
-> > complete than this, there is not a single way described here (;
+> I just tried to merge linux-next
+> (5c1af82119f11c5b322156b09d38cc37318849c4) into my private tree
+> (based on 2b876f95d03e226394b5d360c86127cbefaf614b) and this
+> happened:
+>=20
+> 	...
+> 	Removing sound/soc/au1x/sample-ac97.c
+> 	Recorded preimage for 'arch/Kconfig'
+> 	Recorded preimage for 'arch/arm/mach-s3c2440/mach-anubis.c'
+> 	Recorded preimage for 'arch/arm/plat-mxc/Makefile'
+> 	error: Could not parse conflict hunks in arch/arm/plat-s3c/dev-hsmmc=
+2.c
+> 	Recorded preimage for 'arch/arm/plat-s3c/include/plat/sdhci.h'
+> 	Recorded preimage for 'arch/arm/plat-samsung/Kconfig'
+> 	Recorded preimage for 'arch/x86/include/asm/x86_init.h'
+> 	Recorded preimage for 'arch/x86/kernel/x86_init.c'
+> 	Recorded preimage for 'drivers/net/wireless/ray_cs.c'
+> 	Recorded preimage for 'kernel/Makefile'
+> 	Recorded preimage for 'kernel/power/hibernate.c'
+> 	Recorded preimage for 'net/sctp/sysctl.c'
+> 	Automatic merge failed; fix conflicts and then commit the result.
+>=20
+> If you are interested, I can provide you the two trees above.  When
+> reproducing the line "error: ..." came later, but is still present.
+>=20
+> I guess this should be reproduceable with
+>=20
+> 	git clone -n git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/=
+linux-2.6.git
+> 	cd linux-2.6
+> 	git remote add -f next git://git.kernel.org/pub/scm/linux/kernel/git=
+/next/linux-next.git
+> 	git checkout 2b876f95d03e226394b5d360c86127cbefaf614b
+> 	git merge 5c1af82119f11c5b322156b09d38cc37318849c4
+>=20
+> I havn't tried though.
+>=20
+> The only non-trivial conflict is:
+>=20
+> 	#include <plat/sdhci.h>
+> 	#include <plat/devs.h>
+> 	<<<<<<< HEAD
+> 	=3D=3D=3D=3D=3D=3D=3D
+> 	<<<<<<< HEAD
+> 	#include <plat/cpu.h>
+> 	=3D=3D=3D=3D=3D=3D=3D
+> 	>>>>>>> next-s5pc1xx
+> 	>>>>>>> next/master
 >=20
 
-> I agree that "more" shouldn't be in that sentence, and I understand
-> your hesitation to read plumbing manual pages, but I don't think it
-> is a sane solution to the issue to repeat how to name a commit in
-> manual pages for every single command to bloat the two line
-> description you quoted into a half-page paragraph.  Even within that
-> two lines, the real information that should be in the manual for
-> cherry-pick is only three words "Commit to cherry-pick" and the rest
-> is to help people who don't know.
+Someone committed a file with conflict markers. Bad bad boy. I guess
+a8c4f01 (fixup sdhci merge failure, 2009-11-23) did not quite what it
+promised.
 
-I agree, that's why I proposed "a _section_ about specifying these
-commits" in the more relevant part of my previous email you did not
-quote.
-
-The description of the "<commit>" option would remain almost the same,
-but it will now refer to a dedicated section about specifying commits
-below, but still in the same manpage.  This new dedicated section
-would contain the list of three, five, N most common ways to specify a
-commit, avoiding the bloatage in the options section.  And for those
-who really want to dig deep, this dedicated section will refer to 'git
-rev-parse' for the complete list.
-
-And this would not be the first time we document something in many
-places, think of '--pretty' and diff options, for example.
-
-
-Best,
-G=E1bor
+Michael
