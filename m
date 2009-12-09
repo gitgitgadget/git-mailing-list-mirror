@@ -1,84 +1,80 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH RFC] rebase: add --revisions flag
-Date: Wed, 9 Dec 2009 09:47:56 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.0912090941420.470@ds9.cixit.se>
-References: <20091208144740.GA30830@redhat.com> <7vfx7lcj18.fsf@alter.siamese.dyndns.org>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [REROLL PATCH 3/8] Pass unknown protocols to external protocol 
+	handlers
+Date: Wed, 9 Dec 2009 09:55:01 +0100
+Message-ID: <36ca99e90912090055s32d5ebc5p917dd7e528218f68@mail.gmail.com>
+References: <1260278177-9029-1-git-send-email-ilari.liusvaara@elisanet.fi>
+	 <1260278177-9029-4-git-send-email-ilari.liusvaara@elisanet.fi>
+	 <7vskbl59ai.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 09 09:48:27 2009
+X-From: git-owner@vger.kernel.org Wed Dec 09 09:55:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIIDi-0006Ap-Gl
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 09:48:27 +0100
+	id 1NIIKD-0008NB-76
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 09:55:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751988AbZLIIsP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 03:48:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751925AbZLIIsP
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 03:48:15 -0500
-Received: from upper-gw.cixit.se ([92.43.32.133]:33992 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751809AbZLIIsO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2009 03:48:14 -0500
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id nB98lu0H009253
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 9 Dec 2009 09:47:57 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id nB98lux2009249;
-	Wed, 9 Dec 2009 09:47:56 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <7vfx7lcj18.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Wed, 09 Dec 2009 09:47:57 +0100 (CET)
+	id S1752275AbZLIIy4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 03:54:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752139AbZLIIy4
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 03:54:56 -0500
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:60462 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752134AbZLIIyz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Dec 2009 03:54:55 -0500
+Received: by fxm5 with SMTP id 5so7204257fxm.28
+        for <git@vger.kernel.org>; Wed, 09 Dec 2009 00:55:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=tz68qi/IVuwpq3Hzt36its2dAOzW7kJxh1CJJ4UV4XI=;
+        b=hp4ftN2OPsM24IP+GJbq2ChlpqFXQTIAJDBR71y7xh6Qa+pIqxdoUv34X3nRWX20Sd
+         T4+Xezj8PNsqCnNMaZ8B1fbXVI0Tyimb1u+/s60Mh3VQAkr+nfhH4qAvOJNmKQ7AvrON
+         FN/SygrpEiijir7w2lzlD6/dBHbIKh5ppiViE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=WN4GuyhzfhitjotqBJ/0pQB4v0kfbahZ+fOgtHliyaQ4+Eadiy1yROtLebcmMAVWUq
+         93MeF3ru7I/iwTx5ICJRcwfGuf2xsJNP9udE5bgbOmD60eVUaIF7sFG8l2VDuuKQXBXv
+         Pk3ox+9i5zJlnbv+Z8s4YHcDIPEzskn8Oi7tM=
+Received: by 10.223.5.18 with SMTP id 18mr1404062fat.58.1260348901336; Wed, 09 
+	Dec 2009 00:55:01 -0800 (PST)
+In-Reply-To: <7vskbl59ai.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134949>
 
-Junio C Hamano:
+On Wed, Dec 9, 2009 at 00:35, Junio C Hamano <gitster@pobox.com> wrote:
+> Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
+>> + =C2=A0 =C2=A0 } else if (!is_url(url)
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 || !prefixcmp(url, "file=
+://")
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 || !prefixcmp(url, "git:=
+//")
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 || !prefixcmp(url, "ssh:=
+//")
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 || !prefixcmp(url, "git+=
+ssh://")
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 || !prefixcmp(url, "ssh+=
+git://")) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* These are builtin sma=
+rt transports. */
+>
+> Hmm, what is !is_url(url) at the beginning for, if this lists "builti=
+n"
+> smart transports?
+I think/hope this should catch theses use cases:
 
-> Many people wanted to have "pick many commits onto the current HEAD" =
-and I=20
-> think it would be a natural, uncontroversial and welcome addition to =
-allow=20
-> "git cherry-pick A..B".
-
-Or even "git cherry-pick branch", as I na=EFvely tried doing before I=20
-understood what it did. This is definitely a feature that would help me=
-=2E
-
-The question of where it goes is actually a bit difficult, it is the sa=
-me=20
-mode of operation as "git rebase", only the other way around. It is the=
- same=20
-as "git cherry-pick", but called multiple times. And it is the same as =
-"git=20
-merge --squash", but without squashing the commits into one.
-
-So does this new mode go into rebase, cherry-pick or merge, or into all=
-=20
-three? No matter which, proper documentation is needed.
-
-
-Maybe this could also be used to implement a "git merge --squash A..B",=
- a.k.a=20
-a "partial merge". (And if it could be implemented to allow a "git merg=
-e A..B"=20
-and later do a "git merge B" to merge the rest of the side-branch, that=
-=20
-would be interesting).
-
---=20
-\\// Peter - http://www.softwolves.pp.se/
+       ?   [user@]host.xz:/path/to/repo.git/
+       ?   [user@]host.xz:~user/path/to/repo.git/
+       ?   [user@]host.xz:path/to/repo.git
