@@ -1,76 +1,78 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH v2 1/3] refactor ref status logic for pushing
-Date: Wed, 9 Dec 2009 11:40:40 +0800
-Message-ID: <be6fef0d0912081940p63628d5eoab93a1a1f2676baa@mail.gmail.com>
-References: <20091208223413.98e99d3e.rctay89@gmail.com>
-	 <20091208223543.c7f88afe.rctay89@gmail.com>
-	 <alpine.LNX.2.00.0912081158040.14365@iabervon.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH 0/3] Add a "fix" command to "rebase --interactive"
+Date: Wed, 09 Dec 2009 12:55:55 +0900
+Message-ID: <20091209125555.6117@nanako3.lavabit.com>
+References: <cover.1259934977.git.mhagger@alum.mit.edu> <4B192701.4000308@drmicha.warpmail.net> <vpqfx7qocwl.fsf@bauges.imag.fr> <7vws12r5v2.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0912041945161.21557@intel-tinevez-2-302> <20091205062708.6117@nanako3.lavabit.com> <7vd42t6f9i.fsf@alter.siamese.dyndns.org> <20091208121314.6117@nanako3.lavabit.com> <7viqchhl7h.fsf@alter.siamese.dyndns.org> <20091208093515.GA32655@sigill.intra.peff.net> <fabb9a1e0912080551s32295cfahf05bdc715360360@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Clemens Buchacher <drizzd@aon.at>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Dec 09 04:40:47 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 09 05:00:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIDPz-0001k8-2p
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 04:40:47 +0100
+	id 1NIDis-0007IQ-FI
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 05:00:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756502AbZLIDkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2009 22:40:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756493AbZLIDke
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 22:40:34 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:51345 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756386AbZLIDke (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2009 22:40:34 -0500
-Received: by iwn1 with SMTP id 1so4276751iwn.33
-        for <git@vger.kernel.org>; Tue, 08 Dec 2009 19:40:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=ZfYcfbosvfT0DZL9MMwovSR8LyaWEDzdSso4sBkxiQQ=;
-        b=txQRqbRXEM7mVO+6wPrBO+9tqXkv2Ac9f/8yX/QGLPB9SWHYr8q6QjKnUqQtZV3w8S
-         2PO2YCIi56eVdSq0kICm/ytuzzXD8nGr94L2ga/RqaD7dx2b+xkU0KFRlHpC5qSnNKIL
-         JSJehQc3tm39E0mGH0bPf88d7Iqv9Mh4S2Ce0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=CKFci7JsV6Puyxjxsbf9XZ/O8rNFTQjCoYGDRpVsAwQIY040TwG0JuRG1Ie1m94Pn7
-         bGdiRMye5Uw5BS6Hcgvsr16RPMPmikzkAKoO7xR941HDKsZlXszvCaGfFbvVReBphdX4
-         GcHKSJdz3BxO9fLFeMdbTw8WGN5QSJRNM5/V0=
-Received: by 10.231.150.149 with SMTP id y21mr714117ibv.56.1260330040734; Tue, 
-	08 Dec 2009 19:40:40 -0800 (PST)
-In-Reply-To: <alpine.LNX.2.00.0912081158040.14365@iabervon.org>
+	id S933516AbZLIEAC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2009 23:00:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756638AbZLIEAB
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 23:00:01 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:37732 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756642AbZLID77 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2009 22:59:59 -0500
+Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
+	by karen.lavabit.com (Postfix) with ESMTP id 8DDE011B864;
+	Tue,  8 Dec 2009 22:00:06 -0600 (CST)
+Received: from 4204.lavabit.com (212.62.97.20)
+	by lavabit.com with ESMTP id 1TB777OINL46; Tue, 08 Dec 2009 22:00:06 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=3ssKyPDvj6wEsgSnke26cmNdjBnaPhDSuEjS9Edxhwm9kqpgJMuOfl1n2JwhLKbbGaDUqAFyTXTdRc5q4p08aLC9BroI34f09j2E+EaHW/wlRTnyST4PIwqCNKbi9M+LpPqelCCDI0fdzhc5Lkw5X4imrwi/F9UuRwfHOi0x09Y=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <fabb9a1e0912080551s32295cfahf05bdc715360360@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134931>
 
-Hi,
+Quoting Sverre Rabbelier <srabbelier@gmail.com>
 
-On Wed, Dec 9, 2009 at 1:17 AM, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> On Tue, 8 Dec 2009, Tay Ray Chuan wrote:
+> Heya,
 >
->> Move the logic that detects up-to-date and non-fast-forward refs to a
->> new function in remote.[ch], set_ref_status_for_push().
+> On Tue, Dec 8, 2009 at 10:35, Jeff King <peff@peff.net> wrote:
+>> $ bash
+>> $ echo "!fixup commit"
+>> bash: !fixup: event not found
+>> $ echo "fixup! commit"
+>> fixup! commit
 >
-> Is there some reason to not have set_ref_status_for_push() be static in
-> transport.c now? (Sorry for not suggesting this before.)
+> Speaking of which, must we use that annoying bang? I hate how bash
+> gets in my way when I try to write a commit message with a a bang in
+> it, I'd much rather use a different character that is not in risk of
+> being mistreated by my shell. (Although it seems that bash does do TRT
+> in the 'fixup!' case.)
+>
+> -- 
+> Cheers,
+>
+> Sverre Rabbelier
 
-it can't be static, because builtin-send-pack.c::main() needs it too.
-
-> Other than that, it looks good to me.
-
-Thanks.
+There was a strong objection (I think from Johanes) against not 
+using 'unusual' letters during the initial round back in June 
+2009. Even when explicitly giving '--auto-squash' from the 
+command line, there can be commits with confusing titles 
+like "fixup the ancient bug in cat-file" in addition to 
+the ones you wanted to mark with the "fixup!" marker.
 
 -- 
-Cheers,
-Ray Chuan
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
