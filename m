@@ -1,84 +1,71 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Generic filters for git archive?
-Date: Wed, 09 Dec 2009 23:48:37 +0100
-Message-ID: <4B202945.50200@lsrfire.ath.cx>
-References: <f9d2a5e10912071706m10ed7112ob7db47cdfac510d6@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] mergetool--lib: add diffmerge as a pre-configured 
+	mergetool option
+Date: Wed, 9 Dec 2009 15:14:23 -0800
+Message-ID: <76718490912091514l16f6dd71g3f644ccf4ef5835c@mail.gmail.com>
+References: <1260302477-49412-1-git-send-email-jaysoffian@gmail.com>
+	 <20091209223409.GA32744@hashpling.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Russ Dill <russ.dill@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 09 23:48:57 2009
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Thu Dec 10 00:14:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIVL7-0004JV-4G
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 23:48:57 +0100
+	id 1NIVjr-00023B-S4
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Dec 2009 00:14:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758520AbZLIWsp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 17:48:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758507AbZLIWsp
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 17:48:45 -0500
-Received: from india601.server4you.de ([85.25.151.105]:46064 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758429AbZLIWsp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2009 17:48:45 -0500
-Received: from [10.0.1.101] (p57B7F921.dip.t-dialin.net [87.183.249.33])
-	by india601.server4you.de (Postfix) with ESMTPSA id EB0002F80B4;
-	Wed,  9 Dec 2009 23:48:44 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
-In-Reply-To: <f9d2a5e10912071706m10ed7112ob7db47cdfac510d6@mail.gmail.com>
+	id S1758661AbZLIXOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Dec 2009 18:14:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758637AbZLIXOR
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 18:14:17 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:55769 "EHLO
+	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758561AbZLIXOQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2009 18:14:16 -0500
+Received: by iwn1 with SMTP id 1so4963098iwn.33
+        for <git@vger.kernel.org>; Wed, 09 Dec 2009 15:14:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=kIb6cqc2O7r0H6Y8srkZ7lo9M2LKt3zf5YPmaT5afjU=;
+        b=mj9unFa4oM/fQi3UDbHJp2BuAGwpgQJ/6CgEaDAbXIfeKRWPcxVmerw9HQIQCVJBVC
+         6zaBpSPAoj6nzrybNmbV28JuaE+FlVFP0cN+POP8X1acCnFFnF07DWTJOR2ECl7wUAWL
+         mxG4TjLFcwaGTnMLKVBAuNqss+MaSY1Q9z4Is=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=VyplRFgIQvQFTL/6wPscSa88RM/XM/GpGwudJaY8GHxCOMK5cdW56uYsjFoecFK+is
+         4RK9mUXWyTvdWfcDIX1uQScL/otrt75JHcinht7BUA0uJdDXHWFVLl8d7zCGZa2lrCTg
+         NuK0W63QCFDM0/hghP3dGTF8ck5mmOanUQvr0=
+Received: by 10.231.125.28 with SMTP id w28mr936975ibr.50.1260400463077; Wed, 
+	09 Dec 2009 15:14:23 -0800 (PST)
+In-Reply-To: <20091209223409.GA32744@hashpling.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135005>
 
-Am 08.12.2009 02:06, schrieb Russ Dill:
-> I'm trying to add copyright headers to my source files as they are
-> exported via git archive. eg:
->=20
-> * $Copyright$
->=20
-> to
->=20
->  * Copyright (c) 2003-2009 by Foo Bar
->  *
->  * This program is free software; you can redistribute it and/or modi=
-fy it
->  * under the terms of the GNU General Public License as published by =
-the
->  * Free Software Foundation; either version 2 of the License, or (at =
-your
->  * option) any later version.
->  *
->  * This program is distributed in the hope that it will be useful, bu=
-t
->  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHAN=
-TABILITY
->  * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public L=
-icense
->  * for more details.
->  *
->  * You should have received a copy of the GNU General Public License
->  * along with this program; if not, write to the Free Software Founda=
-tion,
->  * Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
->=20
-> And properly handling things like '# $Copyright$', '// $Copyright$',
-> etc. I have a sed script that does this, but no way to apply it to th=
-e
-> output of git archive. I tried setting up a smudge filter that would
-> only smudge output on archive exports, but it doesn't appear that the
-> smudge filters get run on git archive.
->=20
-> I am currently running 1.6.3.3
+On Wed, Dec 9, 2009 at 2:34 PM, Charles Bailey <charles@hashpling.org> wrote:
+> Is diffmerge free but not Free?
 
-Is the filter attribute contained in a .gitattribute file that's part o=
-f
-the tree you are trying to export?  If it's only in the worktree copy,
-then you need to use the option --worktree-attributes to make git
-archive use it.
+Correct, it's free as in beer, not as in speech. It is multi-platform
+though (Linux, Windows, OS X). I've tested only on MacOS X. If someone
+else wants to give it a test on Linux, that would be good. Looks like
+there's both a deb and an rpm:
 
-Ren=C3=A9
+http://www.sourcegear.com/diffmerge/downloads.html
+
+> Any reason for holding back on sign-off?
+
+Oversight:
+
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+
+j.
