@@ -1,91 +1,71 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: error: git-svn died of signal 13
-Date: Tue, 8 Dec 2009 21:58:24 -0800
-Message-ID: <20091209055824.GA22941@dcvr.yhbt.net>
-References: <20091209053602.GA2739@progeny.tock>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Weird message when pulling git version 1.6.6.rc1.39.g9a42
+Date: Tue, 08 Dec 2009 22:00:00 -0800
+Message-ID: <7vskbkvg9r.fsf@alter.siamese.dyndns.org>
+References: <hfmijf$dl1$1@ger.gmane.org>
+ <7vmy1t6nye.fsf@alter.siamese.dyndns.org>
+ <20091209125556.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 09 06:58:31 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Alejandro Riveira <ariveira@gmail.com>, git@vger.kernel.org,
+	"Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Wed Dec 09 07:00:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIFZG-0002NG-SV
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 06:58:31 +0100
+	id 1NIFbM-0002ug-Qb
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 07:00:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751908AbZLIF6S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 00:58:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751647AbZLIF6S
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 00:58:18 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:44725 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751130AbZLIF6S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2009 00:58:18 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8451F1FA9D;
-	Wed,  9 Dec 2009 05:58:24 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20091209053602.GA2739@progeny.tock>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753153AbZLIGAa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Dec 2009 01:00:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751647AbZLIGA3
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 01:00:29 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63341 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750823AbZLIGA2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2009 01:00:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D1A7486F65;
+	Wed,  9 Dec 2009 01:00:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=z6L4zTrZpgjIaWw168V6b0IXzGY=; b=P4mpokFttDzMdk2TvFoTSHL
+	9STBUv2REacg8xCjK95Ce2D0FmlCmLlYaFiKj6qwazQ2uNpA/lfdvMJinKyvJVMy
+	QIlfTPrb7cO+FOuQFkpPAmp9JJH7qyetOGE+1FIdEFSJvhFX8cccFaG5M3dPxfi7
+	NilS3EedYDYYiWrj8pPk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=NQvrz1Zt+k0Wov9IL09JUmCNx3PxOfEU7AjfW6JCA6MuH/HCy
+	VxoFuXYzVSIFAj4z6Dv/jAQrks7SGGfkP4ZKIovMkZ4NPdkaVK3tL5Q01w5TLyFO
+	MngbXNZ31hUIuauBITjd/Liw+B1ARvSUDV9lW8K+EIlEUzLvztB6RI/yvU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BCB7186F5F;
+	Wed,  9 Dec 2009 01:00:11 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A4D886F4C; Wed,  9 Dec
+ 2009 01:00:02 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1CBEACC6-E488-11DE-A6BF-9F3FEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134941>
 
-Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
->=20
-> Just wanted to pass on a few reports about git-svn dying with SIGPIPE
-> when trying to fetch large repositories.  It seems to fetch a few
-> revisions, then die; the repositories can eventually be fetched
-> successfully by restarting 'git svn fetch' again and again.
->=20
-> Some bug reporters have been very patient, but I don=E2=80=99t really=
- know
-> where to look or ask in solving this.  Attempts at tracing so far hav=
-e
-> given either too little or too much information to make any sense.
->=20
-> The problem goes back at least to v1.5.6.5.
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-Hi Jonathan,
+> Quoting Junio C Hamano <gitster@pobox.com>
+>
+>> Reverting them will still keep 76bf488 (Do not misidentify "git merge foo
+>> HEAD" as an old-style invocation, 2009-12-02) that resulted in the change
+>> we are reverting here, so we are still ahead ;-)
+>>
+>>   http://thread.gmane.org/gmane.comp.version-control.git/134103/focus=134145
+>
+> Sorry for causing too much trouble. I feel bad.
 
-Thanks for taking the time to look into this.  This has been a
-problem for a long time and very difficult to track down.
-
-One factor is that git svn continues happily afterwards so it's hard to
-reproduce and there's less incentive to look for a fix.
-
-> At the end of the git-svn process=E2=80=99s life, the last few functi=
-on calls
-> are these:
->=20
->  - SVN::Ra::Reporter::finish_report and related functions
->  - _p_apr_pool_t::DESTROY (libsvn-perl cleaning up, presumably)
->  - SVN::Ra::Callbacks::open_tmp_file, called from
->    SVN::_Ra::svn_ra_do_update, called from
->    Git::SVN::Ra::do_update, called from
->    Git::SVN::Ra::gs_do_update
->  - Git::SVN::_set_repos_root
->  - starting a 'git update-index -z --index-info' to feed commands to
->=20
-> Maybe /tmp is filling up?  It is hard to know, since the SIGPIPE stop=
-s
-> everything and we do not get any nice, simple error message describin=
-g
-> what read or write would have received EPIPE.
->=20
-> See <http://bugs.debian.org/526989>, <http://bugs.debian.org/540150>,
-> <http://thread.gmane.org/gmane.comp.version-control.git/85868/>.
->=20
-> Any insights?
-
-Can somebody get an strace or core dump for the "git update-index"
-call?  Or even an strace -f of the entire git svn invocation as well...
-
---=20
-Eric Wong
+Oh, please don't be.  You reported a real problem, and we do not shoot the
+messengers.
