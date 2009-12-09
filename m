@@ -1,125 +1,115 @@
-From: walter harms <wharms@bfs.de>
-Subject: Re: help: bisect single file from repos
-Date: Wed, 09 Dec 2009 13:12:52 +0100
-Message-ID: <4B1F9444.9030000@bfs.de>
-References: <4B1CFC4C.6090406@bfs.de> <4B1D1A5A.9060004@drmicha.warpmail.net>	<4B1D27B6.7010900@bfs.de>	<200912080917.17220.chriscool@tuxfamily.org>	<4B1E5796.2090201@bfs.de> <7vein5e2lc.fsf@alter.siamese.dyndns.org>	<20091209012855.GA3208@neumann>	<20091209172737.6117@nanako3.lavabit.com> <20091209094532.GS18686@neumann>
-Reply-To: wharms@bfs.de
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH RFC] rebase: add --revisions flag
+Date: Wed, 9 Dec 2009 14:06:53 +0100
+Message-ID: <20091209130653.GA30218@atjola.homenet>
+References: <20091208144740.GA30830@redhat.com>
+ <7vfx7lcj18.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.2.00.0912090941420.470@ds9.cixit.se>
+ <20091209093758.GA2977@redhat.com>
+ <alpine.DEB.2.00.0912091150470.470@ds9.cixit.se>
+ <20091209112237.GA27740@atjola.homenet>
+ <m2pr6ocqrb.fsf@igel.home>
+ <20091209120610.GA29430@atjola.homenet>
+ <20091209120748.GI2977@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed Dec 09 13:17:30 2009
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Wed Dec 09 14:07:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NILPv-0004hN-1S
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 13:13:15 +0100
+	id 1NIMG0-0005XM-TZ
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 14:07:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755390AbZLIMND convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 07:13:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755387AbZLIMND
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 07:13:03 -0500
-Received: from mx.sz.bfs.de ([194.94.69.70]:54646 "EHLO mx.sz.bfs.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755383AbZLIMNB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2009 07:13:01 -0500
-Received: from mail.sz.bfs.de (mail.sz.bfs.de [192.168.0.1])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	by mx.sz.bfs.de (BfS Mail Relay SZ) with ESMTP
-	id 6F7F4288E64; Wed,  9 Dec 2009 13:13:07 +0100 (CET)
-Received: from localhost (unknown [192.168.2.47])
-	by mail.sz.bfs.de (BfS Mail Hub) with ESMTP id 2B580E3908;
-	Wed,  9 Dec 2009 13:13:07 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at bfs.de
-Received: from mail.sz.bfs.de ([192.168.2.193])
-	by localhost (amavis-sz.sz.bfs.de [192.168.2.47]) (amavisd-new, port 10024)
-	with ESMTP id FtWDXZtuFB62; Wed,  9 Dec 2009 13:12:55 +0100 (CET)
-Received: from dc-slave2-fr.fr.bfs.de (unknown [10.177.18.200])
-	by mail.sz.bfs.de (BfS Mail Hub) with ESMTP id DCDACE38ED;
-	Wed,  9 Dec 2009 13:12:53 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dc-slave2-fr.fr.bfs.de (Postfix) with ESMTP id 5DEB4DB260;
-	Wed,  9 Dec 2009 13:12:53 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dc-slave2-fr.fr.bfs.de (Postfix) with ESMTP id 206E1DB26F;
-	Wed,  9 Dec 2009 13:12:53 +0100 (CET)
-X-Virus-Scanned: by amavisd-new-2.4.2 (20060627) (Debian) at fr.bfs.de
-Received: from dc-slave2-fr.fr.bfs.de ([127.0.0.1])
-	by localhost (dc-slave2-fr.fr.bfs.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Cj2SJxuSn73X; Wed,  9 Dec 2009 13:12:52 +0100 (CET)
-Received: from [134.92.181.33] (unknown [134.92.181.33])
-	by dc-slave2-fr.fr.bfs.de (Postfix) with ESMTP id 7D021DB260;
-	Wed,  9 Dec 2009 13:12:52 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <20091209094532.GS18686@neumann>
+	id S1755516AbZLINGx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 08:06:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755498AbZLINGw
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 08:06:52 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52576 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755489AbZLINGv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2009 08:06:51 -0500
+Received: (qmail invoked by alias); 09 Dec 2009 13:06:57 -0000
+Received: from i59F5468C.versanet.de (EHLO atjola.homenet) [89.245.70.140]
+  by mail.gmx.net (mp001) with SMTP; 09 Dec 2009 14:06:57 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18+oHQuRO4+FI1B4BxPOUodLJQS/0IIr0pX9dPMpB
+	iygpphiKFEFSqR
+Content-Disposition: inline
+In-Reply-To: <20091209120748.GI2977@redhat.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134964>
 
+On 2009.12.09 14:07:48 +0200, Michael S. Tsirkin wrote:
+> On Wed, Dec 09, 2009 at 01:06:10PM +0100, Bj=F6rn Steinbrink wrote:
+> > On 2009.12.09 12:48:24 +0100, Andreas Schwab wrote:
+> > > Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> writes:
+> > >=20
+> > > > Err, no. "git merge --squash foo" merges all changes from the m=
+erge base
+> > > > of HEAD and foo up to foo. "git cherry-pick foo" takes just the=
+ changes
+> > > > from foo^ to foo. For example:
+> > > >
+> > > > A---B---C (master)
+> > > >  \
+> > > >   D---E---F (foo)
+> > > >
+> > > > git cherry-pick foo # Tries to create a new commit with the cha=
+nges from
+> > > >                     # "git diff D F"
+> > >=20
+> > > Did you mean "git diff E F"?
+> >=20
+> > Ugh, yes, of course. Thanks.
+>=20
+> So this will be best written as
+> git cherry-pick ..foo
 
+No, "git cherry-pick ..foo" should pick the individual commits, and not
+create a single big commit like "git merge --squash". So such a command
+should make you end up with:
 
-SZEDER G=E1bor schrieb:
-> Hi,
->=20
->=20
-> On Wed, Dec 09, 2009 at 05:27:37PM +0900, Nanako Shiraishi wrote:
->> Quoting SZEDER G=E1bor <szeder@ira.uka.de>
->>
->>> [1] - 'git cherry-pick' doc says the following:
->>>
->>>   <commit>
->>>     Commit to cherry-pick. For a more complete list of ways to spel=
-l
->>>     commits, see the "SPECIFYING REVISIONS" section in git-rev-pars=
-e(1).
->>>
->>> What?  "A _more_ complete list"!?  Well, it's not very hard to be m=
-ore
->>> complete than this, there is not a single way described here (;
->=20
->> I agree that "more" shouldn't be in that sentence, and I understand
->> your hesitation to read plumbing manual pages, but I don't think it
->> is a sane solution to the issue to repeat how to name a commit in
->> manual pages for every single command to bloat the two line
->> description you quoted into a half-page paragraph.  Even within that
->> two lines, the real information that should be in the manual for
->> cherry-pick is only three words "Commit to cherry-pick" and the rest
->> is to help people who don't know.
->=20
-> I agree, that's why I proposed "a _section_ about specifying these
-> commits" in the more relevant part of my previous email you did not
-> quote.
->=20
-> The description of the "<commit>" option would remain almost the same=
-,
-> but it will now refer to a dedicated section about specifying commits
-> below, but still in the same manpage.  This new dedicated section
-> would contain the list of three, five, N most common ways to specify =
-a
-> commit, avoiding the bloatage in the options section.  And for those
-> who really want to dig deep, this dedicated section will refer to 'gi=
+A---B---C---D'--E'--F' (master)
+         \
+          D---E---F
+
+Not:
+A---B---C---M (master)
+         \
+          D---E---F (foo)
+
+[M being the "sqash-merge"]
+
+"merge --squash" is one of the things I really dislike, because it turn=
+s
+off the "history" part of the merge. You can say "Merging in git is abo=
+ut
+histories, merging in svn is about changes only" to describe the major
+difference for the merge commands in the two systems... "But then
+there's --squash which turns git into svn".
+
+I think a "cherry-pick --squash <range>" command would be nicer from a
+conceptual point of view, but it's way too late for merge --squash to b=
+e
+dropped. And I guess it wouldn't be trivial to add such a flag, and not
+worth the effort, as you could as well use the interactive mode and
+replace "pick" with "squash" manually. (An el cheapo implementation tha=
 t
-> rev-parse' for the complete list.
->=20
-> And this would not be the first time we document something in many
-> places, think of '--pretty' and diff options, for example.
->=20
->=20
+automatically replaces it would likely confuse the user, because he
+asked for a single commit, but might get to fix conflicts for all the
+individual commits).
 
-It would be no problem when you have the description multiple times.
-Important is that they use the same words for the same things
-and add examples. Most people that use git have a fair idea what they
-want but not how to do it. git is new an you can not assume that
-even basic principles are known to the general (programmer) community.
-So you need to make extra effort to explain it all over again.
-
-re,
- wh
+Bj=F6rn
