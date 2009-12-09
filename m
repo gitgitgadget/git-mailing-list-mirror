@@ -1,85 +1,105 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: help: bisect single file from repos
-Date: Wed, 09 Dec 2009 17:27:37 +0900
-Message-ID: <20091209172737.6117@nanako3.lavabit.com>
-References: <4B1CFC4C.6090406@bfs.de> <4B1D1A5A.9060004@drmicha.warpmail.net> <4B1D27B6.7010900@bfs.de> <200912080917.17220.chriscool@tuxfamily.org> <4B1E5796.2090201@bfs.de> <7vein5e2lc.fsf@alter.siamese.dyndns.org> <20091209012855.GA3208@neumann>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: rerere failed to parse conflict hunks
+Date: Wed, 9 Dec 2009 09:46:48 +0100
+Message-ID: <20091209084648.GA30139@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>, wharms@bfs.de
-To: szeder@ira.uka.de
-X-From: git-owner@vger.kernel.org Wed Dec 09 09:28:11 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 09 09:47:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIHu5-0007Sm-Aa
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 09:28:09 +0100
+	id 1NIICT-0005iA-1M
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 09:47:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751571AbZLII16 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 03:27:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751816AbZLII16
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 03:27:58 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:43236 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751795AbZLII1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2009 03:27:54 -0500
-Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
-	by karen.lavabit.com (Postfix) with ESMTP id A8D7F15754A;
-	Wed,  9 Dec 2009 02:28:01 -0600 (CST)
-Received: from 8275.lavabit.com (212.62.97.23)
-	by lavabit.com with ESMTP id UA92KWVNRYMC; Wed, 09 Dec 2009 02:28:01 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=E5A+jq44Ul0w5wdnMBv1cq2qg9oQjpMrUwMtJbNASFR0ERT7F+AM+YUNgKtsprvZmrAMIaNMwHWX0tgXAuX8Ki15BYDmqOY+T0J6eKdmC2QzZYFXASSpDEhwLjl81uXmj2HodsG2eFN/kGbfBpFJbczPz4BLyRb8kCOWPP6PFpw=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <20091209012855.GA3208@neumann>
+	id S1752182AbZLIIqo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 03:46:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752144AbZLIIqn
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 03:46:43 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:60845 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752139AbZLIIqm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2009 03:46:42 -0500
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1NIIC8-0005yq-Ea
+	for git@vger.kernel.org; Wed, 09 Dec 2009 09:46:48 +0100
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1NIIC8-0001OR-DN
+	for git@vger.kernel.org; Wed, 09 Dec 2009 09:46:48 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134947>
 
-Quoting SZEDER G=C3=A1bor <szeder@ira.uka.de>
+Hello,
 
-> [1] - 'git cherry-pick' doc says the following:
->
->   <commit>
->     Commit to cherry-pick. For a more complete list of ways to spell
->     commits, see the "SPECIFYING REVISIONS" section in git-rev-parse(=
-1).
->
-> What?  "A _more_ complete list"!?  Well, it's not very hard to be mor=
-e
-> complete than this, there is not a single way described here (;
+I just tried to merge linux-next
+(5c1af82119f11c5b322156b09d38cc37318849c4) into my private tree
+(based on 2b876f95d03e226394b5d360c86127cbefaf614b) and this
+happened:
 
-I agree that "more" shouldn't be in that sentence, and I understand you=
-r hesitation to read plumbing manual pages, but I don't think it is a s=
-ane solution to the issue to repeat how to name a commit in manual page=
-s for every single command to bloat the two line description you quoted=
- into a half-page paragraph. Even within that two lines, the real infor=
-mation that should be in the manual for cherry-pick is only three words=
- "Commit to cherry-pick" and the rest is to help people who don't know.
+	...
+	Removing sound/soc/au1x/sample-ac97.c
+	Recorded preimage for 'arch/Kconfig'
+	Recorded preimage for 'arch/arm/mach-s3c2440/mach-anubis.c'
+	Recorded preimage for 'arch/arm/plat-mxc/Makefile'
+	error: Could not parse conflict hunks in arch/arm/plat-s3c/dev-hsmmc2.=
+c
+	Recorded preimage for 'arch/arm/plat-s3c/include/plat/sdhci.h'
+	Recorded preimage for 'arch/arm/plat-samsung/Kconfig'
+	Recorded preimage for 'arch/x86/include/asm/x86_init.h'
+	Recorded preimage for 'arch/x86/kernel/x86_init.c'
+	Recorded preimage for 'drivers/net/wireless/ray_cs.c'
+	Recorded preimage for 'kernel/Makefile'
+	Recorded preimage for 'kernel/power/hibernate.c'
+	Recorded preimage for 'net/sctp/sysctl.c'
+	Automatic merge failed; fix conflicts and then commit the result.
 
-Maybe it is a better idea to rewrite this to "See 'basic concepts' manu=
-al for how to specify a commit", and create a new 'basic concepts' manu=
-al that describes these things the readers must know to effectively use=
- the main part of the manual.  And make sure that we try very hard to k=
-eep the 'basic concepts' manual short, by eg. making a goal to keep it =
-less than N printed pages.
+If you are interested, I can provide you the two trees above.  When
+reproducing the line "error: ..." came later, but is still present.
 
-To decide the value of 'N', somebody needs to first think and list the =
-topics that need to be covered by 'basic concepts'. Something like this=
-?
+I guess this should be reproduceable with
 
- * What are committed states, the state in the index and the state in t=
-he working tree.
- * How to name a commit.
- * How to name a range of commit (move part from the rev-parse manual).
- * How to specify options, revisions and files on command line (move pa=
-rt from the gitcli manual).
+	git clone -n git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/li=
+nux-2.6.git
+	cd linux-2.6
+	git remote add -f next git://git.kernel.org/pub/scm/linux/kernel/git/n=
+ext/linux-next.git
+	git checkout 2b876f95d03e226394b5d360c86127cbefaf614b
+	git merge 5c1af82119f11c5b322156b09d38cc37318849c4
+
+I havn't tried though.
+
+The only non-trivial conflict is:
+
+	#include <plat/sdhci.h>
+	#include <plat/devs.h>
+	<<<<<<< HEAD
+	=3D=3D=3D=3D=3D=3D=3D
+	<<<<<<< HEAD
+	#include <plat/cpu.h>
+	=3D=3D=3D=3D=3D=3D=3D
+	>>>>>>> next-s5pc1xx
+	>>>>>>> next/master
+
+Best regards
+Uwe
 
 --=20
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
+       |
+Industrial Linux Solutions                    | http://www.pengutronix.=
+de/  |
