@@ -1,77 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [REROLL PATCH 7/8] Support remote archive from external protocol
- helpers
-Date: Tue, 08 Dec 2009 15:39:42 -0800
-Message-ID: <7v7hsx5935.fsf@alter.siamese.dyndns.org>
-References: <1260278177-9029-1-git-send-email-ilari.liusvaara@elisanet.fi>
- <1260278177-9029-8-git-send-email-ilari.liusvaara@elisanet.fi>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: PATCH/RFC] gitweb.js: Workaround for IE8 bug
+Date: Tue, 08 Dec 2009 16:08:58 -0800
+Message-ID: <1260317338.5658.101.camel@swboyd-laptop>
+References: <1258659887-5244-1-git-send-email-bebarino@gmail.com>
+	 <200912081729.11890.jnareb@gmail.com>
+	 <1260309382.5658.41.camel@swboyd-laptop>
+	 <200912082332.29925.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Wed Dec 09 00:41:30 2009
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 09 01:09:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NI9es-0007hu-38
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 00:39:54 +0100
+	id 1NIA78-0003Uy-KI
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 01:09:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966714AbZLHXjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2009 18:39:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966705AbZLHXjm
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 18:39:42 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60288 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966694AbZLHXjm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2009 18:39:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E9700A5310;
-	Tue,  8 Dec 2009 18:39:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=2TbaVtVdeKF/KFxzaubhBmJQb6o=; b=XMKSKf2V6aZlPoq6oq7OeIH
-	UlXXDxB+tTQNW13c1zvxaIiUyNwKaEqTTtqxjZjeFm6RPNUU73qf0VO3+CsesnqY
-	vuiktlIAbPQmyaBS50Ae0i0pz+2bbmL9qUNYtRh1HZJJ3xMGUvy4F1x/vOrpprzN
-	F4iSAUP+E8N4c09HhkUM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=pqazmyJn0KjGv7KExYTpkTsLCv6t8Y29H+1CfI4xkqQ6V9AD6
-	1FxGWlAA4he68QR0bpMZIhSSSUvSm+lzBZAKsQvAnQB0bApkgMZBD8Pos+WbCApH
-	9dfryHCQh17B3oj/7GYqT4Nj1vePwE6+8CHU7whA6NXgp1MbvmJhAaaQZk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C6E67A530F;
-	Tue,  8 Dec 2009 18:39:46 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CD729A5309; Tue,  8 Dec 2009
- 18:39:43 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F80C651A-E452-11DE-9AC5-EF34BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S966948AbZLIAI4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2009 19:08:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966789AbZLIAIz
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Dec 2009 19:08:55 -0500
+Received: from mail-pz0-f171.google.com ([209.85.222.171]:35424 "EHLO
+	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966786AbZLIAIy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2009 19:08:54 -0500
+Received: by pzk1 with SMTP id 1so2539210pzk.33
+        for <git@vger.kernel.org>; Tue, 08 Dec 2009 16:09:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=W9Pt9pabBDFSkQT/hL9Y25v18duZHZd2xDucB1M+yR8=;
+        b=wU5CSE20u7rfksDJhJ/Tzxl23AxExRv2399TVBjh2nm8xuZCj1wGZaElq5R1ifObhW
+         A5PA/4Wpor+zwXhWPBtFyRcCH36msCJPJWiUlvAlAg7rrWm4TYSr6nCKL4zGpjT1nMJ/
+         rAQzw3BZTnB3RFk6Y8iklQpLGrT6OS/CloQu8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=D4uTlBav66MGl7hwCTFMy0da4U5qZhptmEkVKXDOMy8pkH9UqWZFte6ETPxVjK8mMM
+         x/Pg8YIJDILBHn/ml00OJbxOi8+WCHMiGHH4diyT7DA7UD7vkW/GJaU5BWZjVQAEjRR2
+         BpBaiXcGXdqvhhMPUnvCpub0bazm/UnD7GYK4=
+Received: by 10.114.33.33 with SMTP id g33mr16594636wag.212.1260317340474;
+        Tue, 08 Dec 2009 16:09:00 -0800 (PST)
+Received: from ?192.168.1.5? (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 21sm553979pzk.11.2009.12.08.16.08.59
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 08 Dec 2009 16:08:59 -0800 (PST)
+In-Reply-To: <200912082332.29925.jnareb@gmail.com>
+X-Mailer: Evolution 2.28.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134927>
 
-Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
+On Tue, 2009-12-08 at 23:32 +0100, Jakub Narebski wrote:
+> Dnia wtorek 8. grudnia 2009 22:56, Stephen Boyd napisa=C5=82:
+> > Yes, there is no longer an error but IE8 still locks up and takes a=
+bout
+> > 30 seconds. It doesn't seem to be any more responsive. Isn't puttin=
+g the
+> > error in a try-catch just papering over the issue?
+>=20
+> Does increasing interval in setInterval call at the end of startBlame
+> finction in gitweb.js from 1000 (1 second) to e.g. 2000 (2 seconds)
+> help there?
+>=20
 
-> Helpers which support connect also should support remote archive
-> snapshot (or at least there's only one way to attempt it). So support
-> remote snapshotting for protocol helpers.
-
-Sorry, but I cannot parse this "should", and cannot understand how the
-first sentence leads to the conclusion ("So") that we must have this
-patch.
-
-"They should support it when able, because doing so gives them _this nice
-property_ (that is unspecified)"???
-
-Or "They must support it because we are changing the code not to work
-without"???
-
-Or "Because the transport layer has been restructured cleanly enough to
-allow passing general payload, there is no reason not to do this change to
-pass 'archive' output in addition to the 'git smart fetch/push protocol'
-payload, and this allows the archive command to take advantage of the
-helper based transports"???
+I tried numbers from 100 to 10000 and didn't see a difference. Files
+with only a few hundred lines or less don't lock up though. I've been
+using builtin-apply.c for testing.
