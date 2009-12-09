@@ -1,69 +1,84 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH] mergetool--lib: add diffmerge as a pre-configured
-	mergetool option
-Date: Wed, 9 Dec 2009 22:34:09 +0000
-Message-ID: <20091209223409.GA32744@hashpling.org>
-References: <1260302477-49412-1-git-send-email-jaysoffian@gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Generic filters for git archive?
+Date: Wed, 09 Dec 2009 23:48:37 +0100
+Message-ID: <4B202945.50200@lsrfire.ath.cx>
+References: <f9d2a5e10912071706m10ed7112ob7db47cdfac510d6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 09 23:45:43 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Russ Dill <russ.dill@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 09 23:48:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIVHz-00031L-3t
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 23:45:43 +0100
+	id 1NIVL7-0004JV-4G
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 23:48:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758501AbZLIWpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Dec 2009 17:45:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758487AbZLIWpb
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 17:45:31 -0500
-Received: from relay.ptn-ipout02.plus.net ([212.159.7.36]:22535 "EHLO
-	relay.ptn-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758467AbZLIWpa (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Dec 2009 17:45:30 -0500
-X-Greylist: delayed 673 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Dec 2009 17:45:30 EST
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoEACi1H0tUXebq/2dsb2JhbADWfIQsBIMX
-Received: from relay07.plus.net ([84.93.230.234])
-  by relay.ptn-ipout02.plus.net with ESMTP; 09 Dec 2009 22:34:10 +0000
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by relay07.plus.net with esmtp (Exim) id 1NIV6n-0003am-RC; Wed, 09 Dec 2009 22:34:09 +0000
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id nB9MY9W4000835
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 9 Dec 2009 22:34:09 GMT
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id nB9MY97K000834;
-	Wed, 9 Dec 2009 22:34:09 GMT
-Content-Disposition: inline
-In-Reply-To: <1260302477-49412-1-git-send-email-jaysoffian@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: 05f94bd81ec9f21a545893f448d73a5a
+	id S1758520AbZLIWsp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 17:48:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758507AbZLIWsp
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 17:48:45 -0500
+Received: from india601.server4you.de ([85.25.151.105]:46064 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758429AbZLIWsp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2009 17:48:45 -0500
+Received: from [10.0.1.101] (p57B7F921.dip.t-dialin.net [87.183.249.33])
+	by india601.server4you.de (Postfix) with ESMTPSA id EB0002F80B4;
+	Wed,  9 Dec 2009 23:48:44 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
+In-Reply-To: <f9d2a5e10912071706m10ed7112ob7db47cdfac510d6@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135004>
 
-On Tue, Dec 08, 2009 at 12:01:17PM -0800, Jay Soffian wrote:
-> Add SourceGear DiffMerge to the set of built-in diff/merge tools, and update
-> bash completion and documentation.
-> ---
->  Documentation/git-difftool.txt         |    2 +-
->  Documentation/git-mergetool.txt        |    2 +-
->  Documentation/merge-config.txt         |    4 ++--
->  contrib/completion/git-completion.bash |    2 +-
->  git-mergetool--lib.sh                  |   22 ++++++++++++++++++++--
->  5 files changed, 25 insertions(+), 7 deletions(-)
+Am 08.12.2009 02:06, schrieb Russ Dill:
+> I'm trying to add copyright headers to my source files as they are
+> exported via git archive. eg:
+>=20
+> * $Copyright$
+>=20
+> to
+>=20
+>  * Copyright (c) 2003-2009 by Foo Bar
+>  *
+>  * This program is free software; you can redistribute it and/or modi=
+fy it
+>  * under the terms of the GNU General Public License as published by =
+the
+>  * Free Software Foundation; either version 2 of the License, or (at =
+your
+>  * option) any later version.
+>  *
+>  * This program is distributed in the hope that it will be useful, bu=
+t
+>  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHAN=
+TABILITY
+>  * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public L=
+icense
+>  * for more details.
+>  *
+>  * You should have received a copy of the GNU General Public License
+>  * along with this program; if not, write to the Free Software Founda=
+tion,
+>  * Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+>=20
+> And properly handling things like '# $Copyright$', '// $Copyright$',
+> etc. I have a sed script that does this, but no way to apply it to th=
+e
+> output of git archive. I tried setting up a smudge filter that would
+> only smudge output on archive exports, but it doesn't appear that the
+> smudge filters get run on git archive.
+>=20
+> I am currently running 1.6.3.3
 
-I'm not a diffmerge user but the patch looks fine to me.
+Is the filter attribute contained in a .gitattribute file that's part o=
+f
+the tree you are trying to export?  If it's only in the worktree copy,
+then you need to use the option --worktree-attributes to make git
+archive use it.
 
-Is diffmerge free but not Free?
-
-Any reason for holding back on sign-off?
-
-Charles.
+Ren=C3=A9
