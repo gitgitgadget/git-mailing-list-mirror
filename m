@@ -1,34 +1,34 @@
 From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [REROLL PATCH v2 6/8] Support remote helpers implementing smart transports
-Date: Wed,  9 Dec 2009 17:26:32 +0200
-Message-ID: <1260372394-16427-7-git-send-email-ilari.liusvaara@elisanet.fi>
+Subject: [REROLL PATCH v2 3/8] Pass unknown protocols to external protocol handlers
+Date: Wed,  9 Dec 2009 17:26:29 +0200
+Message-ID: <1260372394-16427-4-git-send-email-ilari.liusvaara@elisanet.fi>
 References: <1260372394-16427-1-git-send-email-ilari.liusvaara@elisanet.fi>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 09 16:27:18 2009
+X-From: git-owner@vger.kernel.org Wed Dec 09 16:27:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIORh-0002on-Od
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 16:27:18 +0100
+	id 1NIORf-0002on-66
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 16:27:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755576AbZLIP0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Dec 2009 10:26:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755539AbZLIP0o
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 10:26:44 -0500
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:42211 "EHLO
-	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755481AbZLIP0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2009 10:26:38 -0500
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 70EE3C80F8
-	for <git@vger.kernel.org>; Wed,  9 Dec 2009 17:26:44 +0200 (EET)
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A069C63971E; Wed, 09 Dec 2009 17:26:44 +0200
+	id S1755152AbZLIP0j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Dec 2009 10:26:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755427AbZLIP0h
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 10:26:37 -0500
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:54044 "EHLO
+	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755285AbZLIP0e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2009 10:26:34 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id 95F4BEF442
+	for <git@vger.kernel.org>; Wed,  9 Dec 2009 17:26:40 +0200 (EET)
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A06E1E90F74; Wed, 09 Dec 2009 17:26:40 +0200
 Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id 3AA1F1C638D
-	for <git@vger.kernel.org>; Wed,  9 Dec 2009 17:26:43 +0200 (EET)
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 705F32BD44
+	for <git@vger.kernel.org>; Wed,  9 Dec 2009 17:26:39 +0200 (EET)
 X-Mailer: git-send-email 1.6.6.rc1.300.gfbc27
 In-Reply-To: <1260372394-16427-1-git-send-email-ilari.liusvaara@elisanet.fi>
 X-Antivirus: VAMS
@@ -36,282 +36,161 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134984>
+
+Change URL handling to allow external protocol handlers to implement
+new protocols without the '::' syntax if helper name does not conflict
+with any built-in protocol.
+
+foo:// now invokes git-remote-foo with foo:// as the URL.
 
 Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 ---
- Documentation/git-remote-helpers.txt |   25 +++++++-
- transport-helper.c                   |  126 ++++++++++++++++++++++++++++++++--
- 2 files changed, 144 insertions(+), 7 deletions(-)
+ transport-helper.c |   12 +++++++-
+ transport.c        |   76 +++++++++++++++++++++++++++++++++++++++++----------
+ 2 files changed, 72 insertions(+), 16 deletions(-)
 
-diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-index 20a05fe..4685a89 100644
---- a/Documentation/git-remote-helpers.txt
-+++ b/Documentation/git-remote-helpers.txt
-@@ -93,6 +93,20 @@ Supported if the helper has the "push" capability.
- +
- Supported if the helper has the "import" capability.
- 
-+'connect' <service>::
-+	Connects to given service. Standard input and standard output
-+	of helper are connected to specified service (git prefix is
-+	included in service name so e.g. fetching uses 'git-upload-pack'
-+	as service) on remote side. Valid replies to this command are
-+	empty line (connection established), 'fallback' (no smart
-+	transport support, fall back to dumb transports) and just
-+	exiting with error message printed (can't connect, don't
-+	bother trying to fall back). After line feed terminating the
-+	positive (empty) response, the output of service starts. After
-+	the connection ends, the remote helper exits.
-++
-+Supported if the helper has the "connect" capability.
-+
- If a fatal error occurs, the program writes the error message to
- stderr and exits. The caller should expect that a suitable error
- message has been printed if the child closes the connection without
-@@ -126,6 +140,9 @@ CAPABILITIES
- 	all, it must cover all refs reported by the list command; if
- 	it is not used, it is effectively "*:*"
- 
-+'connect'::
-+	This helper supports the 'connect' command.
-+
- REF LIST ATTRIBUTES
- -------------------
- 
-@@ -168,9 +185,15 @@ OPTIONS
- 	but don't actually change any repository data.	For most
- 	helpers this only applies to the 'push', if supported.
- 
-+'option servpath <c-style-quoted-path>'::
-+	Set service path (--upload-pack, --receive-pack etc.) for
-+	next connect. Remote helper MAY support this option. Remote
-+	helper MUST NOT rely on this option being set before
-+	connect request occurs.
-+
- Documentation
- -------------
--Documentation by Daniel Barkalow.
-+Documentation by Daniel Barkalow and Ilari Liusvaara
- 
- GIT
- ---
 diff --git a/transport-helper.c b/transport-helper.c
-index 97eed6c..216af87 100644
+index 4b17aaa..271af34 100644
 --- a/transport-helper.c
 +++ b/transport-helper.c
-@@ -18,7 +18,9 @@ struct helper_data
- 	unsigned fetch : 1,
- 		import : 1,
- 		option : 1,
--		push : 1;
-+		push : 1,
-+		connect : 1,
-+		no_disconnect_req : 1;
- 	/* These go from remote name (as in "list") to private name */
- 	struct refspec *refspecs;
- 	int refspec_nr;
-@@ -37,12 +39,12 @@ static void sendline(struct helper_data *helper, struct strbuf *buffer)
+@@ -63,6 +63,16 @@ static void write_constant(int fd, const char *str)
  		die_errno("Full write to remote helper failed");
  }
  
--static int recvline(struct helper_data *helper, struct strbuf *buffer)
-+static int recvline_fh(FILE *helper, struct strbuf *buffer)
- {
- 	strbuf_reset(buffer);
- 	if (debug)
- 		fprintf(stderr, "Debug: Remote helper: Waiting...\n");
--	if (strbuf_getline(buffer, helper->out, '\n') == EOF) {
-+	if (strbuf_getline(buffer, helper, '\n') == EOF) {
- 		if (debug)
- 			fprintf(stderr, "Debug: Remote helper quit.\n");
- 		exit(128);
-@@ -53,6 +55,11 @@ static int recvline(struct helper_data *helper, struct strbuf *buffer)
- 	return 0;
- }
- 
-+static int recvline(struct helper_data *helper, struct strbuf *buffer)
++const char *remove_ext_force(const char *url)
 +{
-+	return recvline_fh(helper->out, buffer);
-+}
-+
- static void xchgline(struct helper_data *helper, struct strbuf *buffer)
- {
- 	sendline(helper, buffer);
-@@ -77,6 +84,15 @@ const char *remove_ext_force(const char *url)
- 	return url;
- }
- 
-+static void do_take_over(struct transport *transport)
-+{
-+	struct helper_data *data;
-+	data = (struct helper_data*)transport->data;
-+	transport_take_over(transport, data->helper);
-+	fclose(data->out);
-+	free(data);
++	if (url) {
++		const char *colon = strchr(url, ':');
++		if (colon && colon[1] == ':')
++			return colon + 2;
++	}
++	return url;
 +}
 +
  static struct child_process *get_helper(struct transport *transport)
  {
  	struct helper_data *data = transport->data;
-@@ -103,12 +119,12 @@ static struct child_process *get_helper(struct transport *transport)
+@@ -83,7 +93,7 @@ static struct child_process *get_helper(struct transport *transport)
+ 	strbuf_addf(&buf, "remote-%s", data->name);
+ 	helper->argv[0] = strbuf_detach(&buf, NULL);
+ 	helper->argv[1] = transport->remote->name;
+-	helper->argv[2] = transport->url;
++	helper->argv[2] = remove_ext_force(transport->url);
+ 	helper->git_cmd = 1;
  	if (start_command(helper))
  		die("Unable to run helper: git %s", helper->argv[0]);
- 	data->helper = helper;
-+	data->no_disconnect_req = 0;
- 
- 	/*
- 	 * Open the output as FILE* so strbuf_getline() can be used.
- 	 * Do this with duped fd because fclose() will close the fd,
- 	 * and stuff like taking over will require the fd to remain.
--	 *
- 	 */
- 	duped = dup(helper->out);
- 	if (duped < 0)
-@@ -146,6 +162,8 @@ static struct child_process *get_helper(struct transport *transport)
- 				   refspec_nr + 1,
- 				   refspec_alloc);
- 			refspecs[refspec_nr++] = strdup(buf.buf + strlen("refspec "));
-+		} else if (!strcmp(capname, "connect")) {
-+			data->connect = 1;
- 		} else if (mandatory) {
- 			die("Unknown madatory capability %s. This remote "
- 			    "helper probably needs newer version of Git.\n",
-@@ -175,8 +193,10 @@ static int disconnect_helper(struct transport *transport)
- 	if (data->helper) {
- 		if (debug)
- 			fprintf(stderr, "Debug: Disconnecting.\n");
--		strbuf_addf(&buf, "\n");
--		sendline(data, &buf);
-+		if(!data->no_disconnect_req) {
-+			strbuf_addf(&buf, "\n");
-+			sendline(data, &buf);
-+		}
- 		close(data->helper->in);
- 		close(data->helper->out);
- 		fclose(data->out);
-@@ -370,12 +390,96 @@ static int fetch_with_import(struct transport *transport,
- 	return 0;
+diff --git a/transport.c b/transport.c
+index 3eea836..dea37d0 100644
+--- a/transport.c
++++ b/transport.c
+@@ -780,6 +780,44 @@ static int is_file(const char *url)
+ 	return S_ISREG(buf.st_mode);
  }
  
-+static int process_connect_service(struct transport *transport,
-+				   const char *name, const char *exec)
++static int is_url(const char *url)
 +{
-+	struct helper_data *data = transport->data;
-+	struct strbuf cmdbuf = STRBUF_INIT;
-+	struct child_process *helper;
-+	int r, duped, ret = 0;
-+	FILE *input;
++	const char *url2, *first_slash;
 +
-+	helper = get_helper(transport);
++	if (!url)
++		return 0;
++	url2 = url;
++	first_slash = strchr(url, '/');
 +
++	/* Input with no slash at all or slash first can't be URL. */
++	if (!first_slash || first_slash == url)
++		return 0;
++	/* Character before must be : and next must be /. */
++	if (first_slash[-1] != ':' || first_slash[1] != '/')
++		return 0;
++	/* There must be something before the :// */
++	if (first_slash == url + 1)
++		return 0;
 +	/*
-+	 * Yes, dup the pipe another time, as we need unbuffered version
-+	 * of input pipe as FILE*. fclose() closes the underlying fd and
-+	 * stream buffering only can be changed before first I/O operation
-+	 * on it.
++	 * Check all characters up to first slash - 1. Only alphanum
++	 * is allowed.
 +	 */
-+	duped = dup(helper->out);
-+	if (duped < 0)
-+		die_errno("Can't dup helper output fd");
-+	input = xfdopen(duped, "r");
-+	setvbuf(input, NULL, _IONBF, 0);
-+
-+	/*
-+	 * Handle --upload-pack and friends. This is fire and forget...
-+	 * just warn if it fails.
-+	 */
-+	if (strcmp(name, exec)) {
-+		r = set_helper_option(transport, "servpath", exec);
-+		if (r > 0)
-+			fprintf(stderr, "Warning: Setting remote service path "
-+				"not supported by protocol.\n");
-+		else if (r < 0)
-+			fprintf(stderr, "Warning: Invalid remote service "
-+				"path.\n");
++	url2 = url;
++	while (url2 < first_slash - 1) {
++		if (!isalnum((unsigned char)*url2))
++			return 0;
++		url2++;
 +	}
 +
-+	if (data->connect)
-+		strbuf_addf(&cmdbuf, "connect %s\n", name);
-+	else
-+		goto exit;
-+
-+	sendline(data, &cmdbuf);
-+	recvline_fh(input, &cmdbuf);
-+	if (!strcmp(cmdbuf.buf, "")) {
-+		data->no_disconnect_req = 1;
-+		if (debug)
-+			fprintf(stderr, "Debug: Smart transport connection "
-+				"ready.\n");
-+		ret = 1;
-+	} else if (!strcmp(cmdbuf.buf, "fallback")) {
-+		if (debug)
-+			fprintf(stderr, "Debug: Falling back to dumb "
-+				"transport.\n");
-+	} else
-+		die("Unknown response to connect: %s",
-+			cmdbuf.buf);
-+
-+exit:
-+	fclose(input);
-+	return ret;
++	/* Valid enough. */
++	return 1;
 +}
 +
-+static int process_connect(struct transport *transport,
-+				     int for_push)
++static int external_specification_len(const char *url)
 +{
-+	struct helper_data *data = transport->data;
-+	const char *name;
-+	const char *exec;
-+
-+	name = for_push ? "git-receive-pack" : "git-upload-pack";
-+	if (for_push)
-+		exec = data->transport_options.receivepack;
-+	else
-+		exec = data->transport_options.uploadpack;
-+
-+	return process_connect_service(transport, name, exec);
++	return strchr(url, ':') - url;
 +}
 +
- static int fetch(struct transport *transport,
- 		 int nr_heads, struct ref **to_fetch)
+ struct transport *transport_get(struct remote *remote, const char *url)
  {
- 	struct helper_data *data = transport->data;
- 	int i, count;
+ 	struct transport *ret = xcalloc(1, sizeof(*ret));
+@@ -805,30 +843,23 @@ struct transport *transport_get(struct remote *remote, const char *url)
  
-+	if (process_connect(transport, 0)) {
-+		do_take_over(transport);
-+		return transport->fetch(transport, nr_heads, to_fetch);
-+	}
-+
- 	count = 0;
- 	for (i = 0; i < nr_heads; i++)
- 		if (!(to_fetch[i]->status & REF_STATUS_UPTODATE))
-@@ -403,6 +507,11 @@ static int push_refs(struct transport *transport,
- 	struct child_process *helper;
- 	struct ref *ref;
+ 	if (remote && remote->foreign_vcs) {
+ 		transport_helper_init(ret, remote->foreign_vcs);
+-		return ret;
+-	}
+-
+-	if (!prefixcmp(url, "rsync:")) {
++	} else if (!prefixcmp(url, "rsync:")) {
+ 		ret->get_refs_list = get_refs_via_rsync;
+ 		ret->fetch = fetch_objs_via_rsync;
+ 		ret->push = rsync_transport_push;
+-
+-	} else if (!prefixcmp(url, "http://")
+-	        || !prefixcmp(url, "https://")
+-	        || !prefixcmp(url, "ftp://")) {
+-		transport_helper_init(ret, "curl");
+-#ifdef NO_CURL
+-		error("git was compiled without libcurl support.");
+-#endif
+-
+ 	} else if (is_local(url) && is_file(url)) {
+ 		struct bundle_transport_data *data = xcalloc(1, sizeof(*data));
+ 		ret->data = data;
+ 		ret->get_refs_list = get_refs_from_bundle;
+ 		ret->fetch = fetch_refs_from_bundle;
+ 		ret->disconnect = close_bundle;
+-
+-	} else {
++	} else if (!is_url(url)
++		|| !prefixcmp(url, "file://")
++		|| !prefixcmp(url, "git://")
++		|| !prefixcmp(url, "ssh://")
++		|| !prefixcmp(url, "git+ssh://")
++		|| !prefixcmp(url, "ssh+git://")) {
++		/* These are builtin smart transports. */
+ 		struct git_transport_data *data = xcalloc(1, sizeof(*data));
+ 		ret->data = data;
+ 		ret->set_option = set_git_option;
+@@ -845,6 +876,21 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		data->receivepack = "git-receive-pack";
+ 		if (remote->receivepack)
+ 			data->receivepack = remote->receivepack;
++	} else if (!prefixcmp(url, "http://")
++		|| !prefixcmp(url, "https://")
++		|| !prefixcmp(url, "ftp://")) {
++		/* These three are just plain special. */
++		transport_helper_init(ret, "curl");
++#ifdef NO_CURL
++		error("git was compiled without libcurl support.");
++#endif
++	} else {
++		/* Unknown protocol in URL. Pass to external handler. */
++		int len = external_specification_len(url);
++		char *handler = xmalloc(len + 1);
++		handler[len] = 0;
++		strncpy(handler, url, len);
++		transport_helper_init(ret, handler);
+ 	}
  
-+	if (process_connect(transport, 1)) {
-+		do_take_over(transport);
-+		return transport->push_refs(transport, remote_refs, flags);
-+	}
-+
- 	if (!remote_refs)
- 		return 0;
- 
-@@ -543,6 +652,11 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
- 
- 	helper = get_helper(transport);
- 
-+	if (process_connect(transport, for_push)) {
-+		do_take_over(transport);
-+		return transport->get_refs_list(transport, for_push);
-+	}
-+
- 	if (data->push && for_push)
- 		write_str_in_full(helper->in, "list for-push\n");
- 	else
+ 	return ret;
 -- 
 1.6.6.rc1.300.gfbc27
