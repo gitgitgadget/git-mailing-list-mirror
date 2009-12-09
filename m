@@ -1,121 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: error: git-svn died of signal 13
-Date: Wed, 9 Dec 2009 01:53:19 -0600
-Message-ID: <20091209075319.GA4201@progeny.tock>
-References: <20091209053602.GA2739@progeny.tock>
- <20091209055824.GA22941@dcvr.yhbt.net>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: help: bisect single file from repos
+Date: Wed, 09 Dec 2009 17:27:37 +0900
+Message-ID: <20091209172737.6117@nanako3.lavabit.com>
+References: <4B1CFC4C.6090406@bfs.de> <4B1D1A5A.9060004@drmicha.warpmail.net> <4B1D27B6.7010900@bfs.de> <200912080917.17220.chriscool@tuxfamily.org> <4B1E5796.2090201@bfs.de> <7vein5e2lc.fsf@alter.siamese.dyndns.org> <20091209012855.GA3208@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: Frederik Hohlfeld <frederik.hohlfeld@gmail.com>,
-	Adam Borowski <kilobyte@angband.pl>,
-	David =?iso-8859-1?Q?F=F6rster?= <david@dfoerster.de>
-X-From: git-owner@vger.kernel.org Wed Dec 09 08:40:10 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>, wharms@bfs.de
+To: szeder@ira.uka.de
+X-From: git-owner@vger.kernel.org Wed Dec 09 09:28:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIH9a-0007nA-23
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 08:40:06 +0100
+	id 1NIHu5-0007Sm-Aa
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 09:28:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757293AbZLIHjx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 02:39:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757280AbZLIHjw
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 02:39:52 -0500
-Received: from mail-gx0-f226.google.com ([209.85.217.226]:40086 "EHLO
-	mail-gx0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757270AbZLIHjw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2009 02:39:52 -0500
-Received: by gxk26 with SMTP id 26so5883702gxk.1
-        for <git@vger.kernel.org>; Tue, 08 Dec 2009 23:39:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=w1xXZwNTMPOM8DHYgWO8GZVP5AFhyCuSN0vSLFQmaU4=;
-        b=BPKQBAgEbLwe1Gy2Mdy0klgoik4PdAVqB6y7BopvfC3S6o4ihTo7PmJsHUBJXpkLhU
-         ptLOi0EUcqWBLq8ay25ECUvpojt0M7F0H4Aug8BDpGHMwkRwOY+bitiTaIAPw//MHsTG
-         kiTCB/HUKWMTV3aY9w8ONWNzD2zdidhW5ykrw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=dU2oajN+N9tQXhTqpmqycJLk64nLwZZWec6zEXyJqDb1cZ1dQ0z09SYrtdggfht7yC
-         V+gyOnreqJAasSG7x2yiTm5xsGsr+aka/3t6rRrkbq8pVkf6xuONIhvJ/AUnSE5KqhjZ
-         9+WC0wbcfF/SlEGq72vsr7UKhg/ElRmHlRS8s=
-Received: by 10.91.18.5 with SMTP id v5mr1636926agi.91.1260344398303;
-        Tue, 08 Dec 2009 23:39:58 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm4658117iwn.14.2009.12.08.23.39.56
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 08 Dec 2009 23:39:57 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20091209055824.GA22941@dcvr.yhbt.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751571AbZLII16 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 03:27:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751816AbZLII16
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 03:27:58 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:43236 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751795AbZLII1y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2009 03:27:54 -0500
+Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
+	by karen.lavabit.com (Postfix) with ESMTP id A8D7F15754A;
+	Wed,  9 Dec 2009 02:28:01 -0600 (CST)
+Received: from 8275.lavabit.com (212.62.97.23)
+	by lavabit.com with ESMTP id UA92KWVNRYMC; Wed, 09 Dec 2009 02:28:01 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=E5A+jq44Ul0w5wdnMBv1cq2qg9oQjpMrUwMtJbNASFR0ERT7F+AM+YUNgKtsprvZmrAMIaNMwHWX0tgXAuX8Ki15BYDmqOY+T0J6eKdmC2QzZYFXASSpDEhwLjl81uXmj2HodsG2eFN/kGbfBpFJbczPz4BLyRb8kCOWPP6PFpw=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <20091209012855.GA3208@neumann>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134946>
 
-CCing those who reported the problem.  There is some debugging advice b=
-elow,
-for anyone who wants to take a further stab at tracking this down.
+Quoting SZEDER G=C3=A1bor <szeder@ira.uka.de>
 
-Eric Wong wrote:
-> Jonathan Nieder <jrnieder@gmail.com> wrote:
+> [1] - 'git cherry-pick' doc says the following:
+>
+>   <commit>
+>     Commit to cherry-pick. For a more complete list of ways to spell
+>     commits, see the "SPECIFYING REVISIONS" section in git-rev-parse(=
+1).
+>
+> What?  "A _more_ complete list"!?  Well, it's not very hard to be mor=
+e
+> complete than this, there is not a single way described here (;
 
->> Just wanted to pass on a few reports about git-svn dying with SIGPIP=
-E
->> when trying to fetch large repositories.  It seems to fetch a few
->> revisions, then die; the repositories can eventually be fetched
->> successfully by restarting 'git svn fetch' again and again.
->>=20
->> Some bug reporters have been very patient, but I don=E2=80=99t reall=
-y know
->> where to look or ask in solving this.  Attempts at tracing so far ha=
-ve
->> given either too little or too much information to make any sense.
->>=20
->> The problem goes back at least to v1.5.6.5.
->
-> Hi Jonathan,
->
-> Thanks for taking the time to look into this.  This has been a
-> problem for a long time and very difficult to track down.
->
-> One factor is that git svn continues happily afterwards so it's hard =
-to
-> reproduce and there's less incentive to look for a fix.
->
->> At the end of the git-svn process=E2=80=99s life, the last few funct=
-ion calls
->> are these:
->>=20
->>  - SVN::Ra::Reporter::finish_report and related functions
->>  - _p_apr_pool_t::DESTROY (libsvn-perl cleaning up, presumably)
->>  - SVN::Ra::Callbacks::open_tmp_file, called from
->>    SVN::_Ra::svn_ra_do_update, called from
->>    Git::SVN::Ra::do_update, called from
->>    Git::SVN::Ra::gs_do_update
->>  - Git::SVN::_set_repos_root
->>  - starting a 'git update-index -z --index-info' to feed commands to
->>=20
->> Maybe /tmp is filling up?  It is hard to know, since the SIGPIPE sto=
-ps
->> everything and we do not get any nice, simple error message describi=
-ng
->> what read or write would have received EPIPE.
->>=20
->> See <http://bugs.debian.org/526989>, <http://bugs.debian.org/540150>=
-,
->> <http://thread.gmane.org/gmane.comp.version-control.git/85868/>.
->>=20
->> Any insights?
->
-> Can somebody get an strace or core dump for the "git update-index"
-> call?  Or even an strace -f of the entire git svn invocation as well.=
-=2E.
+I agree that "more" shouldn't be in that sentence, and I understand you=
+r hesitation to read plumbing manual pages, but I don't think it is a s=
+ane solution to the issue to repeat how to name a commit in manual page=
+s for every single command to bloat the two line description you quoted=
+ into a half-page paragraph. Even within that two lines, the real infor=
+mation that should be in the manual for cherry-pick is only three words=
+ "Commit to cherry-pick" and the rest is to help people who don't know.
+
+Maybe it is a better idea to rewrite this to "See 'basic concepts' manu=
+al for how to specify a commit", and create a new 'basic concepts' manu=
+al that describes these things the readers must know to effectively use=
+ the main part of the manual.  And make sure that we try very hard to k=
+eep the 'basic concepts' manual short, by eg. making a goal to keep it =
+less than N printed pages.
+
+To decide the value of 'N', somebody needs to first think and list the =
+topics that need to be covered by 'basic concepts'. Something like this=
+?
+
+ * What are committed states, the state in the index and the state in t=
+he working tree.
+ * How to name a commit.
+ * How to name a range of commit (move part from the rev-parse manual).
+ * How to specify options, revisions and files on command line (move pa=
+rt from the gitcli manual).
+
+--=20
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
