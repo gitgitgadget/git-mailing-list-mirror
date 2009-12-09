@@ -1,65 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] t7508-status: test all modes with color
-Date: Wed, 09 Dec 2009 13:59:15 -0800
-Message-ID: <7vpr6nn70s.fsf@alter.siamese.dyndns.org>
-References: <cover.1260266027.git.git@drmicha.warpmail.net>
- <39211ecec866882503d1188d359e1183341faeb1.1260266027.git.git@drmicha.warpmail.net> <hflc82$sf8$1@ger.gmane.org> <4B1E798C.5050204@drmicha.warpmail.net> <7vzl5sww3w.fsf@alter.siamese.dyndns.org> <7vmy1swvjc.fsf@alter.siamese.dyndns.org> <4B1F6B77.80108@drmicha.warpmail.net>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH] mergetool--lib: add diffmerge as a pre-configured
+	mergetool option
+Date: Wed, 9 Dec 2009 22:34:09 +0000
+Message-ID: <20091209223409.GA32744@hashpling.org>
+References: <1260302477-49412-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Dec 09 22:59:38 2009
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 09 23:45:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIUZO-0007xr-BL
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 22:59:38 +0100
+	id 1NIVHz-00031L-3t
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 23:45:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758028AbZLIV70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Dec 2009 16:59:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757304AbZLIV70
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 16:59:26 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49447 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756054AbZLIV7Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2009 16:59:25 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A782286B3A;
-	Wed,  9 Dec 2009 16:59:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ugDh645vUc17Ipq8JRnBmQi62A8=; b=OM0UtE
-	bAaUwHTMAnNqh3DpIMinVkOMYZGOrlnUc2pfQqmLhV2xXodAuKobVae5zBeV7bLf
-	6CjRSLdtA4iq/a0ExyIIPU9ZMvRAdEHCoEXcHd0lvglqA2ecU+sXef0lkKrptvss
-	1l74bCfmE3/YN/5AKHZlEmENhChAX+4pVvFWE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JtlknapwmsLnyO5j+jBg4cBG6Us4SzNS
-	liHHmsYaxko4WxBpTTBbw0ROSmHhflnoBCiJnm2ZV5E1VI2Qr+r1oJZXkJpH4pQ1
-	6tA870Kd6N2pxZIwZNjzEijNr8x95OcscrLBmwjBRFxY1boXBPixxiEA/shwZG23
-	Eauww0xtdic=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D5E286B35;
-	Wed,  9 Dec 2009 16:59:25 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E67F586B33; Wed,  9 Dec
- 2009 16:59:16 -0500 (EST)
-In-Reply-To: <4B1F6B77.80108@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Wed\, 09 Dec 2009 10\:18\:47 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1D417F3A-E50E-11DE-AAF8-DC0DEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758501AbZLIWpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Dec 2009 17:45:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758487AbZLIWpb
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 17:45:31 -0500
+Received: from relay.ptn-ipout02.plus.net ([212.159.7.36]:22535 "EHLO
+	relay.ptn-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758467AbZLIWpa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Dec 2009 17:45:30 -0500
+X-Greylist: delayed 673 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Dec 2009 17:45:30 EST
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApoEACi1H0tUXebq/2dsb2JhbADWfIQsBIMX
+Received: from relay07.plus.net ([84.93.230.234])
+  by relay.ptn-ipout02.plus.net with ESMTP; 09 Dec 2009 22:34:10 +0000
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by relay07.plus.net with esmtp (Exim) id 1NIV6n-0003am-RC; Wed, 09 Dec 2009 22:34:09 +0000
+Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
+	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id nB9MY9W4000835
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 9 Dec 2009 22:34:09 GMT
+Received: (from charles@localhost)
+	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id nB9MY97K000834;
+	Wed, 9 Dec 2009 22:34:09 GMT
+Content-Disposition: inline
+In-Reply-To: <1260302477-49412-1-git-send-email-jaysoffian@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Plusnet-Relay: 05f94bd81ec9f21a545893f448d73a5a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135003>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Tue, Dec 08, 2009 at 12:01:17PM -0800, Jay Soffian wrote:
+> Add SourceGear DiffMerge to the set of built-in diff/merge tools, and update
+> bash completion and documentation.
+> ---
+>  Documentation/git-difftool.txt         |    2 +-
+>  Documentation/git-mergetool.txt        |    2 +-
+>  Documentation/merge-config.txt         |    4 ++--
+>  contrib/completion/git-completion.bash |    2 +-
+>  git-mergetool--lib.sh                  |   22 ++++++++++++++++++++--
+>  5 files changed, 25 insertions(+), 7 deletions(-)
 
-> Regarding the larger part of your change: Is there a specific reason for
-> ...
-> ">output" rather than "> output" or just a style issue?
+I'm not a diffmerge user but the patch looks fine to me.
 
-Yeah, I shouldn't have included these style fixes in there.
+Is diffmerge free but not Free?
+
+Any reason for holding back on sign-off?
+
+Charles.
