@@ -1,115 +1,119 @@
 From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
 Subject: Re: [PATCH RFC] rebase: add --revisions flag
-Date: Wed, 9 Dec 2009 14:06:53 +0100
-Message-ID: <20091209130653.GA30218@atjola.homenet>
+Date: Wed, 9 Dec 2009 14:19:45 +0100
+Message-ID: <20091209131945.GB30218@atjola.homenet>
 References: <20091208144740.GA30830@redhat.com>
- <7vfx7lcj18.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.2.00.0912090941420.470@ds9.cixit.se>
- <20091209093758.GA2977@redhat.com>
- <alpine.DEB.2.00.0912091150470.470@ds9.cixit.se>
- <20091209112237.GA27740@atjola.homenet>
- <m2pr6ocqrb.fsf@igel.home>
- <20091209120610.GA29430@atjola.homenet>
- <20091209120748.GI2977@redhat.com>
+ <20091208160822.GA1299@atjola.homenet>
+ <20091208161406.GB32045@redhat.com>
+ <20091208163737.GA2005@atjola.homenet>
+ <20091208164449.GA32204@redhat.com>
+ <20091208191107.GA4103@atjola.homenet>
+ <20091208200017.GA827@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Wed Dec 09 14:07:06 2009
+X-From: git-owner@vger.kernel.org Wed Dec 09 14:19:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIMG0-0005XM-TZ
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 14:07:05 +0100
+	id 1NIMSR-0002NI-Ds
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Dec 2009 14:19:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755516AbZLINGx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 08:06:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755498AbZLINGw
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 08:06:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52576 "HELO mail.gmx.net"
+	id S1755555AbZLINTn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 08:19:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755539AbZLINTn
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 08:19:43 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46101 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755489AbZLINGv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2009 08:06:51 -0500
-Received: (qmail invoked by alias); 09 Dec 2009 13:06:57 -0000
+	id S1755489AbZLINTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2009 08:19:42 -0500
+Received: (qmail invoked by alias); 09 Dec 2009 13:19:47 -0000
 Received: from i59F5468C.versanet.de (EHLO atjola.homenet) [89.245.70.140]
-  by mail.gmx.net (mp001) with SMTP; 09 Dec 2009 14:06:57 +0100
+  by mail.gmx.net (mp034) with SMTP; 09 Dec 2009 14:19:47 +0100
 X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18+oHQuRO4+FI1B4BxPOUodLJQS/0IIr0pX9dPMpB
-	iygpphiKFEFSqR
+X-Provags-ID: V01U2FsdGVkX19w8vgVroZwjuvQmGMNhcwE9GKDjinOJn86mBoDQg
+	JoP6huM/Sx3cwl
 Content-Disposition: inline
-In-Reply-To: <20091209120748.GI2977@redhat.com>
+In-Reply-To: <20091208200017.GA827@redhat.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/134965>
 
-On 2009.12.09 14:07:48 +0200, Michael S. Tsirkin wrote:
-> On Wed, Dec 09, 2009 at 01:06:10PM +0100, Bj=F6rn Steinbrink wrote:
-> > On 2009.12.09 12:48:24 +0100, Andreas Schwab wrote:
-> > > Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> writes:
-> > >=20
-> > > > Err, no. "git merge --squash foo" merges all changes from the m=
-erge base
-> > > > of HEAD and foo up to foo. "git cherry-pick foo" takes just the=
- changes
-> > > > from foo^ to foo. For example:
-> > > >
-> > > > A---B---C (master)
-> > > >  \
-> > > >   D---E---F (foo)
-> > > >
-> > > > git cherry-pick foo # Tries to create a new commit with the cha=
-nges from
-> > > >                     # "git diff D F"
-> > >=20
-> > > Did you mean "git diff E F"?
-> >=20
-> > Ugh, yes, of course. Thanks.
+On 2009.12.08 22:00:17 +0200, Michael S. Tsirkin wrote:
+> On Tue, Dec 08, 2009 at 08:11:07PM +0100, Bj=F6rn Steinbrink wrote:
+> > So you can already do what you want to do, but wrapping it in a sin=
+gle
+> > porcelain might still be useful because it's obviously a  lot easie=
+r and
+> > safer that way. That said, I wonder what kind of workflow you're us=
+ing
+> > though, and why you require that feature. I've never needed somethi=
+ng
+> > like that.
 >=20
-> So this will be best written as
-> git cherry-pick ..foo
+> I need this often for many reasons:
+> -	Imagine developing a patchset with a complex bugfix on master branc=
+h.
+> 	Then I decide to also apply (backport) this patchset to stable branc=
+h.
 
-No, "git cherry-pick ..foo" should pick the individual commits, and not
-create a single big commit like "git merge --squash". So such a command
-should make you end up with:
+Hm, I'd also imagine that you want a separate branch then, and not
+directly mess up the stable branch, so I'd do:
+git branch foo-stable foo # Create a branch for the backport
+git rebase --onto stable master foo-stable # Backport
 
-A---B---C---D'--E'--F' (master)
-         \
-          D---E---F
+Now you got your backported version and can merge it to "stable".
 
-Not:
-A---B---C---M (master)
-         \
-          D---E---F (foo)
+Common wisdom is do things the other way around though. Create the
+bugfix for the oldest branch that it applies to, then merge it forward,
+either doing:
 
-[M being the "sqash-merge"]
+"bugfix -> stable" and "stable -> master" merges, or
+"bugfix -> stable" and "bugfix -> master" merges.
 
-"merge --squash" is one of the things I really dislike, because it turn=
-s
-off the "history" part of the merge. You can say "Merging in git is abo=
-ut
-histories, merging in svn is about changes only" to describe the major
-difference for the merge commands in the two systems... "But then
-there's --squash which turns git into svn".
+That approach has the advantage that you don't get multiple commits
+doing the same thing, which you get with rebasing/cherry-picking.
 
-I think a "cherry-pick --squash <range>" command would be nicer from a
-conceptual point of view, but it's way too late for merge --squash to b=
-e
-dropped. And I guess it wouldn't be trivial to add such a flag, and not
-worth the effort, as you could as well use the interactive mode and
-replace "pick" with "squash" manually. (An el cheapo implementation tha=
-t
-automatically replaces it would likely confuse the user, because he
-asked for a single commit, but might get to fix conflicts for all the
-individual commits).
+IIRC the gitworkflows manpage describe that in some more detail.
+
+> -	Imagine developing a bugfix/feature patchset on master branch.
+> 	Then I decide the patchset is too large/unsafe and want to
+> 	switch it to staging branch.
+
+Hm, so you have a topic branch "foo" based upon master, but it's too
+experimental so you don't want to merge it to master, but "staging". I
+don't see why you even have to rebase it then. "staging" is likely ahea=
+d
+of master, so the merge base of "foo" and "master" is also reachable
+through "staging", and simply merging "foo" to "staging" should work
+without any ill-effects.
+
+> -	I have a large queue of patches on staging branch, I decide that
+> 	a range of patches is mature enough for master.
+
+Basically, same deal as with the first two cases. If the series is
+directly on "staging" (i.e. you didn't create a topic branch), you can
+create one now:
+git branch foo $last_commit_for_foo
+git rebase --onto master $first_commit_for_foo^ foo
+
+And you got your backported topic branch for "foo".
+
+Or you already have a topic branch "foo-staging", but it's based upon
+some commit only in "staging" but not in "master", so a plain merge
+would mess things up. Same deal as with backporting from "master" to
+"stable"
+
+And in this case it's also true that basing the topic branches on
+"master" instead of "staging" makes things easier. That way, you can
+merge to either "staging" or "master" without any ill-effects.
 
 Bj=F6rn
