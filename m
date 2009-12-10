@@ -1,83 +1,87 @@
-From: Jeff King <peff@peff.net>
+From: Jari Aalto <jari.aalto@cante.net>
 Subject: Re: [PATCH] tag -d: print sha1 of deleted tag
-Date: Thu, 10 Dec 2009 07:49:29 -0500
-Message-ID: <20091210124929.GA444@coredump.intra.peff.net>
+Date: Thu, 10 Dec 2009 15:16:07 +0200
+Message-ID: <87hbrz6kbs.fsf@jondo.cante.net>
 References: <87ljhb87nj.fsf@jondo.cante.net>
- <3b0a7bfa75126e4c13ec15a4357645b2bfd14b5b.1260447713.git.git@drmicha.warpmail.net>
+	<3b0a7bfa75126e4c13ec15a4357645b2bfd14b5b.1260447713.git.git@drmicha.warpmail.net>
+	<20091210124929.GA444@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Jari Aalto <jari.aalto@cante.net>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Dec 10 13:49:42 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 10 14:22:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIiSj-0002O9-2a
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Dec 2009 13:49:41 +0100
+	id 1NIiyM-0007mQ-Vs
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Dec 2009 14:22:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758705AbZLJMt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Dec 2009 07:49:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758561AbZLJMt3
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Dec 2009 07:49:29 -0500
-Received: from peff.net ([208.65.91.99]:56875 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753571AbZLJMt3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Dec 2009 07:49:29 -0500
-Received: (qmail 23025 invoked by uid 107); 10 Dec 2009 12:54:06 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 10 Dec 2009 07:54:06 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Dec 2009 07:49:29 -0500
-Content-Disposition: inline
-In-Reply-To: <3b0a7bfa75126e4c13ec15a4357645b2bfd14b5b.1260447713.git.git@drmicha.warpmail.net>
+	id S1757986AbZLJNWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Dec 2009 08:22:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753804AbZLJNWF
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Dec 2009 08:22:05 -0500
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:35356 "EHLO
+	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752494AbZLJNWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Dec 2009 08:22:04 -0500
+X-Greylist: delayed 355 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Dec 2009 08:22:04 EST
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 0C8478C9AB;
+	Thu, 10 Dec 2009 15:16:14 +0200 (EET)
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A04D3D07819; Thu, 10 Dec 2009 15:16:14 +0200
+Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id 805E0E51A3;
+	Thu, 10 Dec 2009 15:16:08 +0200 (EET)
+Received: from proxy.cante.net ([192.168.1.7] helo=jondo.cante.net)
+	by picasso.cante.net with esmtp (Exim 4.69)
+	(envelope-from <jari.aalto@cante.net>)
+	id 1NIisI-0007WL-8T; Thu, 10 Dec 2009 15:16:06 +0200
+Received: from jaalto by jondo.cante.net with local (Exim 4.69)
+	(envelope-from <jari.aalto@cante.net>)
+	id 1NIisJ-0004tK-BG; Thu, 10 Dec 2009 15:16:07 +0200
+In-Reply-To: <20091210124929.GA444@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 10 Dec 2009 07:49:29 -0500")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
+X-SA-Exim-Connect-IP: 192.168.1.7
+X-SA-Exim-Mail-From: jari.aalto@cante.net
+X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135023>
 
-On Thu, Dec 10, 2009 at 01:23:43PM +0100, Michael J Gruber wrote:
+Jeff King <peff@peff.net> writes:
 
-> Print the sha1 of the deleted tag (in addition to the tag name) so that
-> one can easily recreate a mistakenly deleted tag:
-> 
-> git tag -d tagname
-> Deleted tag 'tagname' DEADBEEF
-> git tag 'tagname' DEADBEEF # for lightweight tags
-> git update-ref refs/tags/'tagname' DEADBEEF # for annotated tags
+> On Thu, Dec 10, 2009 at 01:23:43PM +0100, Michael J Gruber wrote:
+>
+>> Print the sha1 of the deleted tag (in addition to the tag name) so that
+>> one can easily recreate a mistakenly deleted tag:
+>> 
+>> git tag -d tagname
+>> Deleted tag 'tagname' DEADBEEF
+>> git tag 'tagname' DEADBEEF # for lightweight tags
+>> git update-ref refs/tags/'tagname' DEADBEEF # for annotated tags
 
-I think this is a good idea, and we already do the same for branch
-deletion.
+> That being said, I am not a fan of the cut-and-paste format. This is not
+> something that happens so frequently
 
-I'm not sure your example is right. If "tag -d" always prints out the
-sha1 in the tag ref, can't you just use "git tag 'tagname' DEADBEEF" to
-recreate both lightweight and annotated tags? That is, making a
-lightweight tag of an annotated tag's sha1 should just recreate the
-original annotated tag.
+It dpends on user. For me it it does.
 
-That being said, I am not a fan of the cut-and-paste format. This is not
-something that happens so frequently that I think we need to go out of
-our way to save some typing. And for a user seeing this message for the
-first time:
+>   1. It is not immediately obvious to a user seeing this message
+>      for this first time exactly what the trailing sha1 means.
+>
+>   2. Even if they know what it means, it is not immediately obvious that
+>      the error line is meant to be cut-and-pasted.
 
-  1. It is not immediately obvious to a user seeing this message
-     for this first time exactly what the trailing sha1 means. We
-     already had this discussion with "git branch -d" and decided
-     that "(was DEADBEEF)" was more readable.
+"not meant" specifically, but it's very convenient to have it in format
+that happens to be "cut-n-paste ready". The SHA itself is easily
+understood in the context.
 
-  2. Even if they know what it means, it is not immediately obvious that
-     the error line is meant to be cut-and-pasted. If you are going to
-     give something to cut-and-paste, I think you are better off making
-     it obvious, like:
-
-        Deleted tag 'foo'; you can recreate it with
-
-           git tag 'foo' DEADBEEF
-
-     Of course that is painfully long for a message that is meant to be
-     a "just in case" notification of a successful command (I can see it
-     more for an actual error, where git is telling you "I couldn't do
-     what you wanted, but you might try running this command first").
-
--Peff
+Thanks for all that have so quickly implemented this,
+Jari
