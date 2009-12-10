@@ -1,78 +1,183 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] mergetool--lib: add diffmerge as a pre-configured 
-	mergetool option
-Date: Wed, 9 Dec 2009 16:16:39 -0800
-Message-ID: <76718490912091616n250a4b93h941c91b572c5be1c@mail.gmail.com>
-References: <1260302477-49412-1-git-send-email-jaysoffian@gmail.com>
-	 <7vaaxrn10o.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git 1.6.6.rc2
+Date: Wed, 09 Dec 2009 17:44:02 -0800
+Message-ID: <7vocm7li1p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 10 01:16:49 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 10 02:44:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIWi9-0007il-8h
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Dec 2009 01:16:49 +0100
+	id 1NIY4y-0001UN-S3
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Dec 2009 02:44:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759106AbZLJAQg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 19:16:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759091AbZLJAQg
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 19:16:36 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:63620 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758864AbZLJAQf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Dec 2009 19:16:35 -0500
-Received: by iwn1 with SMTP id 1so4997323iwn.33
-        for <git@vger.kernel.org>; Wed, 09 Dec 2009 16:16:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3wi1YBlXIDrUtsdynrtc6DREvDiMOwpnfE6aVIcGf54=;
-        b=H1suDHltGaz6QekGqaPdn8Zo1zOxzQbJX35oPdrpybcI4zqBdn1gw/DbQCNTL1QEfk
-         oSbsBTObpYrzpcr79u7P0aSktjn7OIDs1LIki7czX2Z/1wJZJHQq4IAI0PxioUXasu77
-         7+UHqBwd4xSo5FxUK5q49X4P/fLhm2viuvDCc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=A0UzEDF87qshq68TFSMgz73I+GdgXKsr95M4wZRqTridMLOrNf7whsJ/Uj3Pn57ysh
-         97HMuGEpmo/LqcNiiu24L80uJR74/Us2z9idKREB3l1QWEpTFRbigTjQIOF7EjTmjKfw
-         ftFyaIEaZCG7iEYYJztAIEBIcBRBHXqmgaEig=
-Received: by 10.231.167.65 with SMTP id p1mr264013iby.20.1260404199323; Wed, 
-	09 Dec 2009 16:16:39 -0800 (PST)
-In-Reply-To: <7vaaxrn10o.fsf@alter.siamese.dyndns.org>
+	id S1759401AbZLJBoO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2009 20:44:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759392AbZLJBoN
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Dec 2009 20:44:13 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45346 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759396AbZLJBoK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Dec 2009 20:44:10 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D315A86120;
+	Wed,  9 Dec 2009 20:44:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=aaLVSTzWX1kHc/7lqkUgF79tg
+	mA=; b=JlHs487P+ya9WHDUHC+DEJdqBp7Ji0VxJRAZDh6IGcTtBqlYvWVkQ+zPc
+	MZHNzLn1Crs8nUPruexH3p7doPLVtsH+0JoIDD+Zlc+Om5AJjyM1vjOL13rNgIZS
+	TjKRJ6xvPm6IYPR2GeGv8PEQDlQvwpMTx8k4ekKD+La9LXRcKY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=TAGVY2r9VGXbzYhIVeq
+	Niusbd07qR73x2kUrVpwTNyYaKzLHWB0MU6klRYQNWNiVCABR8I4cORP2s+kuoqh
+	tKDEFAdSY/lcAbxtdJ29wh9/5a5bfXKP4vGH5TtXJjYC2nwv+UPMTm/khIX0Bd9K
+	b4na7s3dWkNXFhS2eocDsC9U=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 551238611D;
+	Wed,  9 Dec 2009 20:44:10 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9CB0986115; Wed,  9 Dec
+ 2009 20:44:03 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 83145E30-E52D-11DE-A5E1-DC0DEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135008>
 
-On Wed, Dec 9, 2009 at 4:08 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Perhaps it is a better approach to first eject bulk of code for the
-> backends we currently support under these case statements into separa=
-te
-> files, one per backend, move them to mergetool/ subdirectory in the s=
-ource
-> tree, install them as "$(share)/git-core/mergetool/$toolname", and at
-> runtime source them? =C2=A0That way, a patch to add a new backend can=
- be as
-> simple as adding a new file in mergetool/ and doing nothing else. =C2=
-=A0Also an
-> end user can privately add support to a new backend much more easily.
->
-> Anybody want to try that approach?
+A release candidate Git 1.6.6.rc2 is available at the usual places
+for testing:
 
-Sure. There may also be value in emulating the mercurial approach:
+  http://www.kernel.org/pub/software/scm/git/
 
-  http://mercurial.selenic.com/wiki/MergeToolConfiguration
+  git-1.6.6.rc2.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.6.6.rc2.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.6.6.rc2.tar.{gz,bz2}		(preformatted docs)
 
-I'll give both a shot.
+The RPM binary packages for a few architectures are found in:
 
-j.
+  testing/git-*-1.6.6.rc2-1.fc11.$arch.rpm	(RPM)
+
+The changes since rc1 are mostly updates to the subsystems.
+
+The regression to "git pull" that made the command give annoying warnin=
+g
+message when there is no local commit has been fixed; it appeared in rc=
+1.
+
+----------------------------------------------------------------
+
+Changes since v1.6.6-rc1 are as follows:
+
+Alex Vandiver (3):
+      git-svn: sort svk merge tickets to account for minimal parents
+      git-svn: Set svn.authorsfile to an absolute path when cloning
+      git-svn: set svn.authorsfile earlier when cloning
+
+Alexander Gavrilov (1):
+      git-gui: Increase blame viewer usability on MacOS.
+
+Bernt Hansen (1):
+      gitk: Skip translation of "wrong Tcl version" message
+
+Brandon Casey (2):
+      t4201: use ISO8859-1 rather than ISO-8859-1
+      t9001: use older Getopt::Long boolean prefix '--no' rather than '=
+--no-'
+
+Clemens Buchacher (1):
+      git-gui: search 4 directories to improve statistic of gc hint
+
+Eric Wong (1):
+      git svn: log removals of empty directories
+
+Greg Price (1):
+      git svn: Don't create empty directories whose parents were delete=
+d
+
+Guillermo S. Romero (1):
+      gitk: Add configuration for UI colour scheme
+
+Heiko Voigt (1):
+      git gui: make current branch default in "remote delete branch" me=
+rge check
+
+Jakub Narebski (1):
+      gitweb: Describe (possible) gitweb.js minification in gitweb/READ=
+ME
+
+Jan Kr=C3=BCger (1):
+      pull: clarify advice for the unconfigured error case
+
+Jeff King (3):
+      rerere: don't segfault on failure to open rr-cache
+      reset: improve worktree safety valves
+      add-interactive: fix deletion of non-empty files
+
+Jens Lehmann (2):
+      gitk: Fix diffing committed -> staged (typo in diffcmd)
+      gitk: Use the --submodule option for displaying diffs when availa=
+ble
+
+Jindrich Makovicka (1):
+      git-gui: suppress RenderBadPicture X error caused by Tk bug
+
+Johan Herland (1):
+      Fix crasher on encountering SHA1-like non-note in notes tree
+
+Junio C Hamano (9):
+      Documentation/Makefile: allow man.base.url.for.relative.link to b=
+e set from Make
+      Unconditionally set man.base.url.for.relative.links
+      Git 1.6.5.4
+      Documentation: xmlto 0.0.18 does not know --stringparam
+      Prepare for 1.6.5.5
+      Git 1.6.5.5
+      Revert recent "git merge <msg> HEAD <commit>..." deprecation
+      Update draft release notes to 1.6.6 before -rc2
+      Git 1.6.6-rc2
+
+Linus Torvalds (1):
+      Fix diff -B/--dirstat miscounting of newly added contents
+
+Markus Heidelberg (1):
+      gitk: Fix "git gui blame" invocation when called from top-level d=
+irectory
+
+Mizar (2):
+      gitk: Add Japanese translation
+      gitk: Update Japanese translation
+
+Pat Thoyts (4):
+      gitk: Use themed tk widgets
+      gitk: Fix errors in the theme patch
+      gitk: Default to the system colours on Windows
+      gitk: Fix selection of tags
+
+Paul Mackerras (5):
+      gitk: Restore scrolling position of diff pane on back/forward in =
+history
+      gitk: Add a user preference to enable/disable use of themed widge=
+ts
+      gitk: Show diff of commits at end of compare-commits output
+      gitk: Don't compare fake children when comparing commits
+      gitk: Improve appearance of radiobuttons and checkbuttons
+
+Ren=C3=A9 Scharfe (1):
+      archive: clarify description of path parameter
+
+SZEDER G=C3=A1bor (1):
+      bash: update 'git commit' completion
+
+Sitaram Chamarty (1):
+      gitk: Disable checkout of remote branches
+
+Todd Zullinger (1):
+      Documentation: Avoid use of xmlto --stringparam
