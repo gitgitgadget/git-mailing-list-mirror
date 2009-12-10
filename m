@@ -1,79 +1,103 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: How can I get full filenames from Git difftool (for Microsoft
- Word =?utf-8?Q?=E2=80=9CCompare_Documents=E2=80=9D?= feature)?
-Date: Mon, 14 Dec 2009 08:55:53 +0100
-Message-ID: <vpqd42i56ra.fsf@bauges.imag.fr>
-References: <b507cb050912132222x7e1daa9cw73b13f3db0ee22c6@mail.gmail.com>
-	<b507cb050912132225j1bdc39c2v42a3bf6bddf1cb1a@mail.gmail.com>
+From: Yann Dirson <ydirson@linagora.com>
+Subject: Re: [BUG] Bad msysgit/egit interaction over dotfiles
+Date: Thu, 10 Dec 2009 09:35:14 +0100
+Message-ID: <20091210083514.GA5971@linagora.com>
+References: <20091208132857.GB5425@linagora.com>
+ <40aa078e0912080534x32fe9724xcda47ad46dbdb7c0@mail.gmail.com>
+ <4B1E57BF.1000500@pelagic.nl>
+ <40aa078e0912080623q108b2affk80534ccd5fd7ace3@mail.gmail.com>
+ <20091208143700.GC5425@linagora.com>
+ <4B200EF5.2060606@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Doug Ireton <dougireton@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 14 08:56:13 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: kusmabite@gmail.com, Ferry Huberts <ferry.huberts@pelagic.nl>,
+	GIT ml <git@vger.kernel.org>
+To: Marius Storm-Olsen <mstormo@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 14 09:36:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NK5mu-0002dC-Gb
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 08:56:12 +0100
+	id 1NK6QL-0007qC-Tt
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 09:36:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755051AbZLNH4E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2009 02:56:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754890AbZLNH4B
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 02:56:01 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:33700 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754848AbZLNH4B (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2009 02:56:01 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id nBE7thtS006600
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 14 Dec 2009 08:55:43 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NK5mc-0007x7-7t; Mon, 14 Dec 2009 08:55:54 +0100
-In-Reply-To: <b507cb050912132225j1bdc39c2v42a3bf6bddf1cb1a@mail.gmail.com> (Doug Ireton's message of "Sun\, 13 Dec 2009 22\:25\:30 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 14 Dec 2009 08:55:43 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: nBE7thtS006600
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1261382143.48267@NeDDQdmTtdHkVHI0LFc27A
+	id S1753139AbZLNIgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2009 03:36:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752371AbZLNIgi
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 03:36:38 -0500
+Received: from [194.206.158.221] ([194.206.158.221]:34507 "EHLO
+	cyann.linagora.lan" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752131AbZLNIgh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2009 03:36:37 -0500
+Received: from yann by cyann.linagora.lan with local (Exim 4.69)
+	(envelope-from <yann@linagora.com>)
+	id 1NIeUU-0001fO-An; Thu, 10 Dec 2009 09:35:14 +0100
+Content-Disposition: inline
+In-Reply-To: <4B200EF5.2060606@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135171>
 
-Doug Ireton <dougireton@gmail.com> writes:
+On Wed, Dec 09, 2009 at 09:56:21PM +0100, Marius Storm-Olsen wrote:
+> Yann Dirson said the following on 08.12.2009 15:37:
+> >On Tue, Dec 08, 2009 at 03:23:55PM +0100, Erik Faye-Lund wrote:
+> >>You can follow the discussion here:
+> >>http://code.google.com/p/msysgit/issues/detail?id=288
+> >>
+> >>I believe the reason is something like "because someone suggested
+> >>it, and no one disagreed". Do you have a good argument why it
+> >>shouldn't be the default (other than "it's a change", because
+> >>changing it back now would also be a change)?
+> >
+> >Depending on the opinion of the Eclipse guys on this issue about
+> >"writing to hidden files only says 'could not write'", which
+> >arguably could be seen as a bug on their side, we can see changing
+> >this behaviour back to the default on the msysgit side as either a
+> >(possibly temporary) workaround for a known eclipse bug, or as
+> >getting again interoperable with egit.
+> 
+> Dot-files on unix are considered hidden. It's the only way files are
+> hidden there. Not so on Windows. Dot-files are just like any normal
+> file, and you need to mark a file hidden.
+> 
+> So, the logic of egit, that *actually* hidden files should not be
+> written to, but dot-files should, seems to me to be a bug in egit.
+> There should be no reason why egit shouldn't be able to write to any
+> file, pending permissions. I'd say file a bug report with egit.
 
-> I am using the latest version of=A0Git (1.6.6)=A0on a Mac. My wife wa=
-nts
-> to use Git to manage her fiction writing as long as she can still use
-> Microsoft Word 2008=A0(Mac). Instead of pushing her into saving
-> everything as plain text, I would like to use Git Difftool to pass th=
-e
-> files to Word and use Word's Compare Documents feature. She wouldn't
-> be able to use Git Diff since Word docs are binary files but she coul=
-d
-> still use Git Difftool.
+Actually it is not egit who is unable to write to the file, but
+eclipse itself, and I do tend to think it is a bug in eclipse.  But
+now, even if we can convince the eclipse guys that it is a bug, it
+will be some time before a new release with this bug fixed gets
+published.
 
-If you're interested in diff-ing the _text_ itself, you can use the
-textconv filter of Git, together with antiword (or catdoc, which does
-the same thing, but I think antiword works better).
+So IMHO it would makes sense, for the sake of usability, to not
+activate the "hide dotfiles" feature by default.  It is easier for
+someone seeing unwanted dotfiles to find the switch to hide them, than
+for someone getting a "could not write" message from eclipse to
+understand that there is a seemingly-unrelate switch for msysgit to
+avoid this situation.
 
-See this:
+But maybe the situation is not so clear.  That "hide dotfiles" was
+implemented so that ".git" at first, and then ".git*" files do not
+clutter the view of the project.  But then, if a git repo has other
+dotfiles, those are really *part of* the versionned stuff, so I do not
+see why those should be hidden at all.  After all, the .project,
+.classpath, and other eclipse project files have that name on windows
+too, and it will indeed *confuse* people to get them hidden.
 
-http://git.or.cz/gitwiki/GitTips#HowtousegittotrackOpenDocument.28OpenO=
-ffice.2CKoffice.29files.3F
+So should we have 2 classes of dotfiles, those "private to git", and
+the others, one class being hidden while the others are not ?  I am
+not sure at all this would be a good idea either.  Or maybe we should
+only get .git hidden - after all, that one is the only real metadata
+not part of the versionned stuff itself ?
 
-and adapt by replacing "OpenOffice" with MS Word, and odt2txt with
-antiword.
+Maybe we should add some sort of "core.hidedotfiles = dotgitonly"
+setting, and make that the default ?  That one does not appear to
+cause any problems to jgit, and eclipse itself has not business with
+it, so it would IMHO make sense.
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Opinions ?
