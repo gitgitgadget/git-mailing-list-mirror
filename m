@@ -1,88 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix archive format with -- on the command line
-Date: Thu, 10 Dec 2009 15:31:40 -0800
-Message-ID: <7vd42m8kyr.fsf@alter.siamese.dyndns.org>
-References: <20091210212636.GA27722@Knoppix>
- <7v1vj2a3ik.fsf@alter.siamese.dyndns.org>
- <20091210222258.GQ4114@genesis.frugalware.org>
- <7vws0u8n99.fsf@alter.siamese.dyndns.org>
- <7vhbry8l54.fsf_-_@alter.siamese.dyndns.org>
+From: "John 'Warthog9' Hawley" <warthog9@kernel.org>
+Subject: [PATCH 2/6] GITWEB - Missmatching git w/ gitweb
+Date: Thu, 10 Dec 2009 23:45:39 +0000
+Message-ID: <1260488743-25855-3-git-send-email-warthog9@kernel.org>
+References: <1260488743-25855-1-git-send-email-warthog9@kernel.org>
+ <1260488743-25855-2-git-send-email-warthog9@kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Fri Dec 11 00:32:04 2009
+Content-Type: multipart/mixed; boundary="------------1.6.5.2"
+Cc: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 11 00:47:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIsUI-00009V-0b
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Dec 2009 00:31:58 +0100
+	id 1NIsj3-0005nb-D7
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Dec 2009 00:47:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761652AbZLJXbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Dec 2009 18:31:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761636AbZLJXbq
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Dec 2009 18:31:46 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50779 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757023AbZLJXbp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Dec 2009 18:31:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 09996A55E7;
-	Thu, 10 Dec 2009 18:31:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sXbZ9Er2oPhkdUQ4Eq/OfbTSqaA=; b=FmL1YT
-	LxQb/iRxFjtOsloCwYLrSSjKiOeP0n871aLOKEAH1qbXVRu83D05ih02hjM6dv89
-	RVcAjWSAfoXPA6EZ9LpWWPiw9QbsFu3ojYZWnYlkeMURl5PdECUl6Dh3/t6YoltX
-	7EElTQ0CZgfWtfleCqodeavHxqabotAu+6dL8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=INzTc2h3PoOLnIeIalkBGCdPqGG1J9um
-	kSJwnKbJl7oVpxJRRiJNJpYsW9mbz/PA84m5LXAxHU9jpqlvYmlEKxAHLhxBll/c
-	ptRI9X/kTYgCr2gOUNZYIOzrFmoh5T2q6BuABy5Bo8CrEHENveLSGzav1Q59YOXP
-	e6AfzZmrcJ4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C0E22A55E5;
-	Thu, 10 Dec 2009 18:31:47 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EE420A55E4; Thu, 10 Dec 2009
- 18:31:41 -0500 (EST)
-In-Reply-To: <7vhbry8l54.fsf_-_@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu\, 10 Dec 2009 15\:27\:51 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2F59B3FA-E5E4-11DE-9600-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1757493AbZLJXq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Dec 2009 18:46:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757287AbZLJXq4
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Dec 2009 18:46:56 -0500
+Received: from hera.kernel.org ([140.211.167.34]:39923 "EHLO hera.kernel.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757067AbZLJXqy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Dec 2009 18:46:54 -0500
+Received: from hera.kernel.org (localhost [127.0.0.1])
+	by hera.kernel.org (8.14.3/8.14.3) with ESMTP id nBANjuof025983
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 10 Dec 2009 23:45:56 GMT
+Received: (from warthog9@localhost)
+	by hera.kernel.org (8.14.3/8.14.2/Submit) id nBANjuII025982;
+	Thu, 10 Dec 2009 23:45:56 GMT
+X-Mailer: git-send-email 1.6.5.5
+In-Reply-To: <1260488743-25855-2-git-send-email-warthog9@kernel.org>
+X-Spam-Status: No, score=-2.2 required=5.0 tests=AWL,BAYES_00,
+	UNPARSEABLE_RELAY autolearn=ham version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on hera.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135051>
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: John 'Warthog9' Hawley <warthog9@eaglescrag.net>
 
-> Giving --format from the command line, or using output file extention to
-> DWIM the output format, with a pathspec that is disambiguated with an
-> explicit double-dash on the command line, e.g.
->
->     git archive -o file --format=zip HEAD -- path
->     git archive -o file.zip HEAD -- path
->
-> didn't work correctly.
->
-> This was because the code reordered (when one was given) or added (when
-> the former was inferred) a --format argument at the end, effectively
-> making it to "archive HEAD -- path --format=zip", i.e. an extra pathspec
-> that is unlikely to match anything.
+This is a multi-part message in MIME format.
+--------------1.6.5.2
+Content-Type: text/plain; charset=UTF-8; format=fixed
+Content-Transfer-Encoding: 8bit
 
-A side note to this issue is that
 
-    $ git add non-existing-path
+This adds $missmatch_git so that gitweb can run with a miss-matched
+git install.  Gitweb, generally, runs fine on a very broad range of
+git versions, but it's not always practicle or useful to upgrade it
+every time you upgrade git.
 
-complains but
+This allows the administrator to realize they are miss-matched, and
+should they be so inclined, disable the check entirely and run in
+a miss-matched fasion.
 
-    $ git archive HEAD non-existing-path
+This is more here to give an obvious warning as to whats going on
+vs. silently failing.
 
-doesn't.  Is this something we should consider a bug, or a feature?
+Signed-off-by: John 'Warthog9' Hawley <warthog9@eaglescrag.net>
+---
+ gitweb/gitweb.perl |   22 ++++++++++++++++++++++
+ 1 files changed, 22 insertions(+), 0 deletions(-)
+
+
+--------------1.6.5.2
+Content-Type: text/x-patch; name="0002-GITWEB-Missmatching-git-w-gitweb.patch"
+Content-Transfer-Encoding: 8bit
+Content-Disposition: attachment; filename="0002-GITWEB-Missmatching-git-w-gitweb.patch"
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 813e48f..d84f4c0 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -221,6 +221,9 @@ our %avatar_size = (
+ 	'double'  => 32
+ );
+ 
++# This is here to allow for missmatch git & gitweb versions
++our $missmatch_git = '';
++
+ # Used to set the maximum load that we will still respond to gitweb queries.
+ # if we exceed this than we do the processing to figure out if there's a mirror
+ # and redirect to it, or to just return 503 server busy
+@@ -579,6 +582,25 @@ if (get_loadavg() > $maxload) {
+ our $git_version = qx("$GIT" --version) =~ m/git version (.*)$/ ? $1 : "unknown";
+ $number_of_git_cmds++;
+ 
++# There's a pretty serious flaw that we silently fail if git doesn't find something it needs
++# a quick and simple check is to have gitweb do a simple check - are we running on the same
++# version of git that we shipped with - if not, throw up an error so that people doing
++# first installs don't have to debug perl to figure out whats going on
++if (
++	$git_version ne $version
++	&&
++	$missmatch_git eq ''
++){
++	git_header_html();
++	print "<p><b>*** Warning ***</b></p>\n";
++	print "<p>\n";
++	print "This version of gitweb was compiled for <b>$version</b> however git version <b>$git_version</b> was found<br/>\n";
++	print "If you are sure this version of git works with this version of gitweb - please define <b>\$missmatch_git</b> to a non empty string in your git config file.\n";
++	print "</p>\n";
++	git_footer_html();
++	exit;
++}
++
+ $projects_list ||= $projectroot;
+ 
+ # ======================================================================
+
+--------------1.6.5.2--
