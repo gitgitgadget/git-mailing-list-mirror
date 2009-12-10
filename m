@@ -1,64 +1,60 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] tag -d: print sha1 of deleted tag
-Date: Thu, 10 Dec 2009 13:23:43 +0100
-Message-ID: <3b0a7bfa75126e4c13ec15a4357645b2bfd14b5b.1260447713.git.git@drmicha.warpmail.net>
-References: <87ljhb87nj.fsf@jondo.cante.net>
-Cc: Jari Aalto <jari.aalto@cante.net>,
-	Junio C Hamano <gitster@pobox.com>
+From: =?UTF-8?q?Zolt=C3=A1n=20F=C3=BCzesi?= <zfuzesi@eaglet.hu>
+Subject: [RFC/PATCH] tag: display original sha1 of deleted/overwritten tag
+Date: Thu, 10 Dec 2009 13:34:56 +0100
+Message-ID: <1260448496-527-1-git-send-email-zfuzesi@eaglet.hu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: jari.aalto@cante.net,
+	=?UTF-8?q?Zolt=C3=A1n=20F=C3=BCzesi?= <zfuzesi@eaglet.hu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 10 13:25:21 2009
+X-From: git-owner@vger.kernel.org Thu Dec 10 13:41:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIi59-0000iT-Qk
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Dec 2009 13:25:20 +0100
+	id 1NIiL4-0007SW-Gr
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Dec 2009 13:41:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933023AbZLJMY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Dec 2009 07:24:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932929AbZLJMY7
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Dec 2009 07:24:59 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52071 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932871AbZLJMY6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Dec 2009 07:24:58 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 6AE30C60CF;
-	Thu, 10 Dec 2009 07:25:05 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 10 Dec 2009 07:25:05 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=GtSn9sXfU9eSy95+MrsfHz679EU=; b=PvodAA8pHMpb7tNAKGuEuSKTLVjqecS/Udo7CCya1pNDQMqCjb53aagzKJX3CJA7Hg3Ub/94TbDuZIk92oRClgCn2WJTOwVvgb+ku+e5dnbOVE3uenmOCNwvWlRM5stCqNizR6DY9LlQvuL+kzD8+tpzhLWsEAjrvA9q0fe7TM0=
-X-Sasl-enc: hD3M4GAouccRBli09DwMyHkVO+zWiCbGDeP9gTyTHlXW 1260447904
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id BDD9D208C0;
-	Thu, 10 Dec 2009 07:25:04 -0500 (EST)
-X-Mailer: git-send-email 1.6.6.rc1.292.gd8fe
-In-Reply-To: <87ljhb87nj.fsf@jondo.cante.net>
+	id S1758543AbZLJMl2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Dec 2009 07:41:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758524AbZLJMl1
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Dec 2009 07:41:27 -0500
+Received: from mail.icell.hu ([80.99.238.252]:54962 "EHLO mail.icell.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934415AbZLJMlJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Dec 2009 07:41:09 -0500
+X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Dec 2009 07:41:08 EST
+Received: from source.ifleet (unknown [10.1.1.250])
+	by mail.icell.hu (Postfix) with ESMTP id 3CA9684;
+	Thu, 10 Dec 2009 13:37:29 +0100 (CET)
+Received: from fuge by source.ifleet with local (Exim 4.69)
+	(envelope-from <zoltan.fuzesi@icell.hu>)
+	id 1NIiEZ-0000Ak-4A; Thu, 10 Dec 2009 13:35:03 +0100
+X-Mailer: git-send-email 1.6.6.rc2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135020>
 
-Print the sha1 of the deleted tag (in addition to the tag name) so that
-one can easily recreate a mistakenly deleted tag:
+It makes possible to undo accidental tag deletion and overwriting.
 
-git tag -d tagname
-Deleted tag 'tagname' DEADBEEF
-git tag 'tagname' DEADBEEF # for lightweight tags
-git update-ref refs/tags/'tagname' DEADBEEF # for annotated tags
-
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-Suggested-by: Jari Aalto <jari.aalto@cante.net>
+Signed-off-by: Zolt=C3=A1n F=C3=BCzesi <zfuzesi@eaglet.hu>
 ---
- builtin-tag.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+This patch was created in response to this feature request:
+http://article.gmane.org/gmane.comp.version-control.git/135016
+I named it "RFC" because of the overwriting part.
+
+ builtin-tag.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
 diff --git a/builtin-tag.c b/builtin-tag.c
-index c479018..39d0ce2 100644
+index c479018..8dca364 100644
 --- a/builtin-tag.c
 +++ b/builtin-tag.c
-@@ -140,7 +140,7 @@ static int delete_tag(const char *name, const char *ref,
+@@ -140,7 +140,7 @@ static int delete_tag(const char *name, const char =
+*ref,
  {
  	if (delete_ref(ref, sha1, 0))
  		return 1;
@@ -66,6 +62,16 @@ index c479018..39d0ce2 100644
 +	printf("Deleted tag '%s' %s\n", name, sha1_to_hex(sha1));
  	return 0;
  }
- 
--- 
-1.6.6.rc1.292.gd8fe
+=20
+@@ -479,6 +479,8 @@ int cmd_tag(int argc, const char **argv, const char=
+ *prefix)
+ 		die("%s: cannot lock the ref", ref);
+ 	if (write_ref_sha1(lock, object, NULL) < 0)
+ 		die("%s: cannot update the ref", ref);
++	else if (force && hashcmp(object, prev))
++		printf("Overwritten tag '%s' (%s)\n", ref, sha1_to_hex(prev));
+=20
+ 	strbuf_release(&buf);
+ 	return 0;
+--=20
+1.6.6.rc2
