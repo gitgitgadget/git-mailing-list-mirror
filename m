@@ -1,73 +1,64 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 Subject: Re: [BUG] git archive formats and dashdash
-Date: Thu, 10 Dec 2009 23:22:58 +0100
-Message-ID: <20091210222258.GQ4114@genesis.frugalware.org>
+Date: Fri, 11 Dec 2009 00:25:03 +0200
+Message-ID: <20091210222503.GA27840@Knoppix>
 References: <20091210212636.GA27722@Knoppix>
  <7v1vj2a3ik.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+JUInw4efm7IfTNU"
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 10 23:23:06 2009
+X-From: git-owner@vger.kernel.org Thu Dec 10 23:25:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIrPc-00055F-Lf
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Dec 2009 23:23:05 +0100
+	id 1NIrRh-0005uT-CW
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Dec 2009 23:25:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761901AbZLJWWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Dec 2009 17:22:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761900AbZLJWWx
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Dec 2009 17:22:53 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:48859 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761859AbZLJWWw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Dec 2009 17:22:52 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 0889358084;
-	Thu, 10 Dec 2009 23:22:59 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 0B52942F0A;
-	Thu, 10 Dec 2009 23:22:58 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 561191240014; Thu, 10 Dec 2009 23:22:58 +0100 (CET)
+	id S1761960AbZLJWZB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Dec 2009 17:25:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761937AbZLJWZB
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Dec 2009 17:25:01 -0500
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:59942 "EHLO
+	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761248AbZLJWZA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Dec 2009 17:25:00 -0500
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 91F3E18D299;
+	Fri, 11 Dec 2009 00:25:06 +0200 (EET)
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A00B5C8A04A; Fri, 11 Dec 2009 00:25:06 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id 7B32C41BE3;
+	Fri, 11 Dec 2009 00:25:04 +0200 (EET)
 Content-Disposition: inline
 In-Reply-To: <7v1vj2a3ik.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135045>
 
-
---+JUInw4efm7IfTNU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Dec 10, 2009 at 02:05:39PM -0800, Junio C Hamano <gitster@pobox.com=
-> wrote:
+On Thu, Dec 10, 2009 at 02:05:39PM -0800, Junio C Hamano wrote:
+> Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
+> 
+> > --format option of git archive stops working if -- is used:
+> 
 > Good catch.  Is this a regression between 1.6.5 and the current code?
 
-Ah, you version is much shorter. :)
+Doesn't appear to be so:
 
-I think it was introduced by 0f4b377c (git-archive: infer output format
-=66rom filename when unspecified, 2009-09-14), so it was introduced
-before 1.6.5.
+Based on quick look at source, it seems that this is indeed regression,
+and the commit which introduced it is:
 
---+JUInw4efm7IfTNU
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+commit 0f4b377c20fb7d93f8bfeec39efb2b9392d6aebc
+Author: Dmitry Potapov <dpotapov@gmail.com>
+Date:   Mon Sep 14 00:17:01 2009 +0400
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Describe: v1.6.5-rc1-7-g0f4b377 / v1.6.5-rc2~34
 
-iEYEARECAAYFAkshdMIACgkQe81tAgORUJZyeQCgqaIZ2DX+t8GQmfYCe3Krwp90
-dhQAnAvnsuIp8lt5zR9gPpPsPUZLH9GH
-=eSjx
------END PGP SIGNATURE-----
-
---+JUInw4efm7IfTNU--
+-Ilari
