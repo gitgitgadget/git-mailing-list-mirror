@@ -1,98 +1,90 @@
-From: =?UTF-8?q?Zolt=C3=A1n=20F=C3=BCzesi?= <zfuzesi@eaglet.hu>
-Subject: [RFC/PATCH v2] tag: display original sha1 of deleted/overwritten tag
-Date: Thu, 10 Dec 2009 14:26:19 +0100
-Message-ID: <1260451579-4400-1-git-send-email-zfuzesi@eaglet.hu>
-References: <1260448496-527-1-git-send-email-zfuzesi@eaglet.hu>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] tag -d: print sha1 of deleted tag
+Date: Thu, 10 Dec 2009 14:27:15 +0100
+Message-ID: <4B20F733.6010401@drmicha.warpmail.net>
+References: <87ljhb87nj.fsf@jondo.cante.net> <3b0a7bfa75126e4c13ec15a4357645b2bfd14b5b.1260447713.git.git@drmicha.warpmail.net> <20091210124929.GA444@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: jari.aalto@cante.net,
-	=?UTF-8?q?Zolt=C3=A1n=20F=C3=BCzesi?= <zfuzesi@eaglet.hu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 10 14:26:01 2009
+Cc: git@vger.kernel.org, Jari Aalto <jari.aalto@cante.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 10 14:29:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIj1n-0000xx-TP
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Dec 2009 14:25:56 +0100
+	id 1NIj4l-0002Gf-DM
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Dec 2009 14:28:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759079AbZLJNZo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Dec 2009 08:25:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758969AbZLJNZo
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Dec 2009 08:25:44 -0500
-Received: from mail.icell.hu ([80.99.238.252]:53694 "EHLO mail.icell.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758659AbZLJNZo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Dec 2009 08:25:44 -0500
-Received: from source.ifleet (unknown [10.1.1.250])
-	by mail.icell.hu (Postfix) with ESMTP id A8832AD;
-	Thu, 10 Dec 2009 14:28:46 +0100 (CET)
-Received: from fuge by source.ifleet with local (Exim 4.69)
-	(envelope-from <zoltan.fuzesi@icell.hu>)
-	id 1NIj2C-00019W-KA; Thu, 10 Dec 2009 14:26:20 +0100
-X-Mailer: git-send-email 1.6.6.rc2
-In-Reply-To: <1260448496-527-1-git-send-email-zfuzesi@eaglet.hu>
+	id S1760368AbZLJN2b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Dec 2009 08:28:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759694AbZLJN2b
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Dec 2009 08:28:31 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:44300 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759910AbZLJN2a (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Dec 2009 08:28:30 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 16CF6B505F;
+	Thu, 10 Dec 2009 08:28:37 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Thu, 10 Dec 2009 08:28:37 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=Gzy+Tmc6YMRV/ftm+9cRzvt73lw=; b=DtV7WG5Yl0REch+Tm5p6BG3ZdI7JN9x/D/iq/8bgWrKBH7AlBUqdcIG3VteyOT0u1JvJ2dRJUok2FHcqyWVkr1yhDsELdQD8GpTiyD5MiE1zGeKs0Uy+Qs/IDYfScNxybq02seSMzz17hiwhJHiUjECQzVHOTN4Cq4HamqEG9VE=
+X-Sasl-enc: osOEr7hX4VEd6GNd2qSCeB7HXk0bwEmpoxecFUX33unh 1260451716
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5374820942;
+	Thu, 10 Dec 2009 08:28:36 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7pre) Gecko/20091209 Lightning/1.0b2pre Shredder/3.0.1pre
+In-Reply-To: <20091210124929.GA444@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135026>
 
-It makes possible to undo accidental tag deletion and overwriting.
+Jeff King venit, vidit, dixit 10.12.2009 13:49:
+> On Thu, Dec 10, 2009 at 01:23:43PM +0100, Michael J Gruber wrote:
+>=20
+>> Print the sha1 of the deleted tag (in addition to the tag name) so t=
+hat
+>> one can easily recreate a mistakenly deleted tag:
+>>
+>> git tag -d tagname
+>> Deleted tag 'tagname' DEADBEEF
+>> git tag 'tagname' DEADBEEF # for lightweight tags
+>> git update-ref refs/tags/'tagname' DEADBEEF # for annotated tags
+>=20
+> I think this is a good idea, and we already do the same for branch
+> deletion.
+>=20
+> I'm not sure your example is right. If "tag -d" always prints out the
+> sha1 in the tag ref, can't you just use "git tag 'tagname' DEADBEEF" =
+to
+> recreate both lightweight and annotated tags? That is, making a
+> lightweight tag of an annotated tag's sha1 should just recreate the
+> original annotated tag.
 
-Signed-off-by: Zolt=C3=A1n F=C3=BCzesi <zfuzesi@eaglet.hu>
----
-This patch was created in response to this feature request:
-http://article.gmane.org/gmane.comp.version-control.git/135016
-I named it "RFC" because of the overwriting part.
+While my example is right it is unnecessarily complex. I learned that
+through Bj=C3=B6rns and your remark.
 
-v2: works when tag object is created.
+> That being said, I am not a fan of the cut-and-paste format. This is =
+not
+> something that happens so frequently that I think we need to go out o=
+f
+> our way to save some typing. And for a user seeing this message for t=
+he
+> first time:
+>=20
+>   1. It is not immediately obvious to a user seeing this message
+>      for this first time exactly what the trailing sha1 means. We
+>      already had this discussion with "git branch -d" and decided
+>      that "(was DEADBEEF)" was more readable.
 
- builtin-tag.c |    8 +++++---
- 1 files changed, 5 insertions(+), 3 deletions(-)
+So, should we simply go with that then?
 
-diff --git a/builtin-tag.c b/builtin-tag.c
-index c479018..1265b84 100644
---- a/builtin-tag.c
-+++ b/builtin-tag.c
-@@ -140,7 +140,7 @@ static int delete_tag(const char *name, const char =
-*ref,
- {
- 	if (delete_ref(ref, sha1, 0))
- 		return 1;
--	printf("Deleted tag '%s'\n", name);
-+	printf("Deleted tag '%s' %s\n", name, sha1_to_hex(sha1));
- 	return 0;
- }
-=20
-@@ -363,7 +363,7 @@ static int parse_msg_arg(const struct option *opt, =
-const char *arg, int unset)
- int cmd_tag(int argc, const char **argv, const char *prefix)
- {
- 	struct strbuf buf =3D STRBUF_INIT;
--	unsigned char object[20], prev[20];
-+	unsigned char object[20], prev[20], tag_object[20];
- 	char ref[PATH_MAX];
- 	const char *object_ref, *tag;
- 	struct ref_lock *lock;
-@@ -472,13 +472,15 @@ int cmd_tag(int argc, const char **argv, const ch=
-ar *prefix)
-=20
- 	if (annotate)
- 		create_tag(object, tag, &buf, msg.given || msgfile,
--			   sign, prev, object);
-+			   sign, prev, tag_object);
-=20
- 	lock =3D lock_any_ref_for_update(ref, prev, 0);
- 	if (!lock)
- 		die("%s: cannot lock the ref", ref);
- 	if (write_ref_sha1(lock, object, NULL) < 0)
- 		die("%s: cannot update the ref", ref);
-+	else if (force && hashcmp(object, prev))
-+		printf("Overwritten tag '%s' (%s)\n", ref, sha1_to_hex(prev));
-=20
- 	strbuf_release(&buf);
- 	return 0;
---=20
-1.6.6.rc2
+Meanwhile, RFCs/PATCHes crossed paths. I take it that Zoltan suggests
+giving the same output for force-overwritten existing tags. I beat him
+by 11 minutes, though ;)
+
+Michael
