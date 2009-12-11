@@ -1,142 +1,100 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How to selectively recreate merge state?
-Date: Fri, 11 Dec 2009 12:20:40 +0100
-Message-ID: <200912111220.40844.jnareb@gmail.com>
-References: <76718490912101556o3e2911e8t32b48c0b735fd98c@mail.gmail.com> <200912110233.18756.jnareb@gmail.com> <4B222289.6000004@drmicha.warpmail.net>
+From: Gert Palok <gert_p@ut.ee>
+Subject: git fetch with GIT_SSH fails with "The remote end hung up 
+	unexpectedly"
+Date: Fri, 11 Dec 2009 13:57:54 +0200
+Message-ID: <c39db29a0912110357t2390e2bcv4c447e320ea379a4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Dec 11 12:19:29 2009
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 11 12:58:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NJ3Wy-00042d-GV
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Dec 2009 12:19:28 +0100
+	id 1NJ48f-0006iN-D2
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Dec 2009 12:58:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757980AbZLKLTN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Dec 2009 06:19:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757302AbZLKLTN
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Dec 2009 06:19:13 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:8841 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756970AbZLKLTM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Dec 2009 06:19:12 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so450259fgg.1
-        for <git@vger.kernel.org>; Fri, 11 Dec 2009 03:19:18 -0800 (PST)
+	id S1754857AbZLKL6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Dec 2009 06:58:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755396AbZLKL6J
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Dec 2009 06:58:09 -0500
+Received: from mail-fx0-f221.google.com ([209.85.220.221]:60123 "EHLO
+	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754925AbZLKL6I (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Dec 2009 06:58:08 -0500
+Received: by fxm21 with SMTP id 21so898234fxm.1
+        for <git@vger.kernel.org>; Fri, 11 Dec 2009 03:58:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=Unnadeppg1w1lvtfI4tF+N89LGNUaTMVZLLisb2OWsQ=;
-        b=Jd1QbyQhKcMovWdJ25jZ4vqNRQ7TRmrkncyLvEhPI0lZya91u6BEFWWRAvp08yqWzn
-         EOOz5Y8EN2nHCe/gzMGGv/spPXMDZzojIDnYsDe2QqLqa67J8RL2JpiT2gDxmb+rylFc
-         l5ECWjgshRc1Y+kOLrJOiJ2k13xjv8SD/tkSc=
+        h=domainkey-signature:mime-version:sender:received:from:date
+         :x-google-sender-auth:message-id:subject:to:content-type;
+        bh=0Yqrih3HyxX9U1+P1PKRYmusG6/blPAV2G9uzomQvVY=;
+        b=GAXyitZPAmsQ96dYj5oWJ7OSmXIcJhjliu22w1XpvaOryN3sjcuL7Jyiw8mlq0bLor
+         /BdYNHNci+deD1G7pbV2sjuwO6P36h8ju7U6g2nJrrltgpN/qV6I+diLTVoQ+O4Crqg5
+         7R5GNJMYlcxVRdB8CWtAEvABc/bhB9wnznEGo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=oiM+W8UWSz06D6A1E47iHBwxZfUdE/mj9XySYCcSXlPs//3bsiuehvF7X7qZyDUCIo
-         KoZ/WWIrkg3iG11A7mQ63OGBz/76rM1Z9fhrSHh/PnckVMIGeiub9YAvtNLVHzrsppF3
-         F3H4X6Nh4VGB3aLOyZOy7jQhIlmp45Ziua7+o=
-Received: by 10.103.84.15 with SMTP id m15mr473153mul.105.1260530357900;
-        Fri, 11 Dec 2009 03:19:17 -0800 (PST)
-Received: from ?192.168.1.13? (abvh202.neoplus.adsl.tpnet.pl [83.8.205.202])
-        by mx.google.com with ESMTPS id i5sm4621077mue.57.2009.12.11.03.19.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 11 Dec 2009 03:19:16 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4B222289.6000004@drmicha.warpmail.net>
-Content-Disposition: inline
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type;
+        b=pEj13CEt3Aub+VOWvnXIadUpo1l/vk/Tuzq4UAs5l0ER2KpyWyMKDF2BJzLBG1zLJp
+         vf2B13PANkCgX04R5igxfTWxACZRIDpePWhZUMoycyMud4OCE9S9c5z1dO2JVZGCX/01
+         kVx/5RhWiBYP9+v0rvUCpo7ocLR00N4LvVGWA=
+Received: by 10.102.160.15 with SMTP id i15mr485382mue.130.1260532694266; Fri, 
+	11 Dec 2009 03:58:14 -0800 (PST)
+X-Google-Sender-Auth: 4d263d935596cf73
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135081>
 
-Dnia pi=B1tek 11. grudnia 2009 11:44, Michael J Gruber napisa=B3:
-> Jakub Narebski venit, vidit, dixit 11.12.2009 02:33:
->> Dnia pi=B1tek 11. grudnia 2009 02:11, Junio C Hamano napisa=B3:
->>> Jakub Narebski <jnareb@gmail.com> writes:
->>>
->>>>   --unresolve::
->>>>         Restores the 'unmerged' or 'needs updating' state of a
->>>>         file during a merge if it was cleared by accident.
->>>>
->>>> Unless "git add foo" not only adds current contents of foo at stag=
-e 0,
->>>> but also removes higher stages from index...
->>>
->>> By definition, adding anything at stage #0 is to remove higher stag=
-es.
->>=20
->> Hmmm... let's test it:
->>=20
->>  $ git merge side-branch=20
->>  Auto-merging foo
->>  CONFLICT (content): Merge conflict in foo
->>  Automatic merge failed; fix conflicts and then commit the result.
->>  $ git ls-files --stage
->>  100644 257cc5642cb1a054f08cc83f2d943e56fd3ebe99 1       foo
->>  100644 3bd1f0e29744a1f32b08d5650e62e2e62afb177c 2       foo
->>  100644 469a41eda5c8b45503a3bfc32ad6b5decc658132 3       foo
->>  $ <edit foo>
->>  $ git add foo
->>  $ git ls-files --stage
->>  100644 a1b58d38ffa61e8e99b7cb95cdf540aedf2a96b3 0       foo
+At my work I have to use an intermediate gateway to ssh to the outer
+world. I have set up private-public keys to allow easy connection:
+ssh gateway ssh user@outside
 
-I thought that "git add foo" only adds current contents of foo in stage=
- 0,
-and does not delete other stages.
-=20
-Unless "git add foo" does more than "git update-index foo" does here.
+Now, I want to fetch from outside repo, so I created a GIT_SSH wrapper:
 
->> Now let's test '--unresolve' option of git-update-index:
->>=20
->>  $ git update-index --unresolve foo
->>  $ git ls-files --stage foo
->>  100644 3bd1f0e29744a1f32b08d5650e62e2e62afb177c 2       foo
->>  100644 469a41eda5c8b45503a3bfc32ad6b5decc658132 3       foo
->>=20
->> WTF? What happened to stage 1 (ancestor)?
->=20
-> 2 and 3 are easy (cheap) to recreate from HEAD and MERGE_HEAD, 1 is n=
-ot.
-> I guess that's why --unresolve doesn't even attempt to do anything wi=
-th 1.
+#! /bin/bash
 
-But then "git update-index --unresolve <file>" is next to useless.
+LOG="/path/to/git-ssh-wrapper.
+log"
+HOST="$1"
+COMMAND="$2"
 
->>=20
->>  $ git checkout --conflict=3Dmerge foo
->>  error: path 'foo' does not have all three versions
->>=20
->> Let's recover it by hand:
->>=20
->>  $ echo -e "100644 257cc5642cb1a054f08cc83f2d943e56fd3ebe99 1\tfoo" =
-|=20
->>    git update-index --index-info
->>  $ git ls-files --stage foo
->>  100644 257cc5642cb1a054f08cc83f2d943e56fd3ebe99 1       foo
->>  100644 3bd1f0e29744a1f32b08d5650e62e2e62afb177c 2       foo
->>  100644 469a41eda5c8b45503a3bfc32ad6b5decc658132 3       foo
->>  $ git checkout --conflict=3Dmerge foo
->=20
-> Yeah, if we knew that sha1...
+echo host: $HOST >>"$LOG"
+echo command: $COMMAND >>"$LOG"
+echo exec: ssh gateway ssh "$HOST" $COMMAND >>"$LOG"
+ssh gateway ssh "$HOST" $COMMAND
 
-Isn't it:
+And ran:
+$ GIT_SSH="/path/to/git-ssh-wrapper" git clone ssh://user@outside/path/to/repo
+Initialized empty Git repository in /path/to/local-repo/.git/
+warning: You appear to have cloned an empty repository.
+$ fatal: The remote end hung up unexpectedly
 
-  $ git ls-tree $(git merge-base HEAD MERGE_HEAD) -- foo
+And again just to be sure:
+$ GIT_SSH="/path/to/git-ssh-wrapper" git fetch origin
+$ fatal: The remote end hung up unexpectedly
+fatal: The remote end hung up unexpectedly
 
-or
+Now, the log says:
+host: user@outside
+command: git-upload-pack '/path/to/repo'
+exec: ssh gateway ssh user@outside git-upload-pack '/path/to/repo'
 
-  $ git rev-parse "$(git merge-base HEAD MERGE_HEAD):foo"
+When I ran the command from shell I got:
+$ "$GIT_SSH" user@outside "git-upload-pack '/path/to/repo'"
+0000
 
---=20
-Jakub Narebski
-Poland
+And the connection was kept open (waiting for input, got protocol
+error after entering something)
+
+Local environment: Windows Vista 32-bit, cygwin 1.7
+Local git version (installed by cygwin): 1.6.4.2
+Remote git version: 1.6.4.4
+
+What might be the cause(s)? Have there been compatibility breaking
+protocol changes between those version?
+
+--
+Gert Palok
