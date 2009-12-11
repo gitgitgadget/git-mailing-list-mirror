@@ -1,165 +1,113 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 4/6] GITWEB - Makefile changes
-Date: Fri, 11 Dec 2009 17:41:51 +0100
-Message-ID: <200912111741.51760.jnareb@gmail.com>
-References: <1260488743-25855-1-git-send-email-warthog9@kernel.org> <m3pr6ld1p2.fsf@localhost.localdomain> <4B2271B4.2010301@kernel.org>
+Subject: Re: [PATCH 0/6] Gitweb caching changes v2
+Date: Fri, 11 Dec 2009 19:01:34 +0100
+Message-ID: <200912111901.35781.jnareb@gmail.com>
+References: <1260488743-25855-1-git-send-email-warthog9@kernel.org> <m3hbrxcxuu.fsf@localhost.localdomain> <4B226D56.7000004@kernel.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "J.H." <warthog9@kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 11 17:40:40 2009
+To: "J.H." <warthog9@kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 11 19:00:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NJ8Xn-000286-5F
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Dec 2009 17:40:39 +0100
+	id 1NJ9mt-0006hQ-P2
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Dec 2009 19:00:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752098AbZLKQk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Dec 2009 11:40:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751184AbZLKQk0
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Dec 2009 11:40:26 -0500
-Received: from fg-out-1718.google.com ([72.14.220.153]:7691 "EHLO
+	id S1754973AbZLKSAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Dec 2009 13:00:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754127AbZLKSAH
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Dec 2009 13:00:07 -0500
+Received: from fg-out-1718.google.com ([72.14.220.153]:4720 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751022AbZLKQk0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Dec 2009 11:40:26 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so247830fgg.1
-        for <git@vger.kernel.org>; Fri, 11 Dec 2009 08:40:31 -0800 (PST)
+	with ESMTP id S1753873AbZLKSAG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Dec 2009 13:00:06 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so614452fgg.1
+        for <git@vger.kernel.org>; Fri, 11 Dec 2009 10:00:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :user-agent:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=eOWLjefI7KmNC7ZLQoKnZBHTSqM2bzLsSzXrYhMqBJU=;
-        b=Fbq6xfp8nMBGa397KJUyTOavpu75uJi+MBscIUZupljMIOgvEtyYns2WniXLeAyrst
-         /QtgXw+7KX/kdnXjj9hrerNgreFYhZi9Zv1o9mpj/zKn2bs+zmUGbbN9snr242sxZF95
-         +6zs29ddXyIA5S9SSVvnD/2xDL+S2N3utd3FY=
+        bh=jFcoXCNJe+WG3b6ejqNYdeU8anIlZuXLBTxy/KOgVtM=;
+        b=E4KLzqItcGXIsQyJMRfZNVfaXxLctlsNvKJnWCCJVUui4N2YiXy+tM+P3mBodPzvgK
+         O+yDqNGyuHn+F53ZwoGEmGJTFKnd56YxtTMOz3muT8iJqrMXtnHNXkKdGzIeaWkviVsu
+         fx/FWfLazus9IYizJGbnfQtWaLu/dMC97dhmM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=r5bu4AQZVnIMaVu9+E/JnxgoBWtO19hf8RPzQ/d0nvQprt3z3hLkIE0EveUBJKnldD
-         VouKagQdK1dl2MFydyEhwFUoJ8Ajlh8KZggGntMeHZkDusc9l8EySd+M82AJoOVZKWQQ
-         0Vfxesa6SoWG0V/Dy7LTaq3e/I6kIBtG6a8Q4=
-Received: by 10.86.254.17 with SMTP id b17mr2025630fgi.65.1260549631733;
-        Fri, 11 Dec 2009 08:40:31 -0800 (PST)
+        h=from:to:subject:date:user-agent:references:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id;
+        b=H1Ky2pwDAIwwg7C0bPwmx8Wi+L/gQItCbEpaZwBo3RMnoPo7w0ip1H0PpbRYdUTCqa
+         3gC/v2F4GTPsiHes9R3l/Vbc1ewZ2jHcqvqLi2u4YH7FJ1Q+/brOhK3dQc8o2PCux4Zn
+         iYVLLjGxBokFyr1Q0yjBwfg0SHEucwJ1TAIUk=
+Received: by 10.86.108.18 with SMTP id g18mr2114173fgc.64.1260554411826;
+        Fri, 11 Dec 2009 10:00:11 -0800 (PST)
 Received: from ?192.168.1.13? (abvh202.neoplus.adsl.tpnet.pl [83.8.205.202])
-        by mx.google.com with ESMTPS id d4sm4591755fga.16.2009.12.11.08.40.30
+        by mx.google.com with ESMTPS id e3sm8797679fga.21.2009.12.11.10.00.10
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 11 Dec 2009 08:40:30 -0800 (PST)
+        Fri, 11 Dec 2009 10:00:11 -0800 (PST)
 User-Agent: KMail/1.9.3
-In-Reply-To: <4B2271B4.2010301@kernel.org>
+In-Reply-To: <4B226D56.7000004@kernel.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135097>
 
-On Fri, 11 Dec 2009, J.H. wrote:
+On Fri, 11 Dec 2009, J.H. (John 'Warthog9' Hawley) wrote:
+> Jakub Narebski wrote:
+>> "John 'Warthog9' Hawley" <warthog9@kernel.org> writes:
 
->> IMPORTANT!
+>>> John 'Warthog9' Hawley (6):
+>>>   GITWEB - Load Checking
+>>>   GITWEB - Missmatching git w/ gitweb
+>>>   GITWEB - Add git:// link to summary pages
+>>>   GITWEB - Makefile changes
+>>>   GITWEB - File based caching layer
 >> 
->> A note about this change: I think it would be better to move creating
->> gitweb.cgi (and optionally gitweb.min.js) to gitweb/Makefile, and make
->> main Makefile call gitweb/Makefile, and not vice versa like in your
->> solution.
+>> This patch didn't made it to git mailing list.  I suspect that you ran
+>> afoul vger anti-SPAM filter.
 >> 
->> If it is possible.
+>> Does this "File based caching layer" have anything common with GSoC
+>> 2008 project, available at git://repo.or.cz/git/gitweb-caching.git ?
 > 
-> It's quite possible, and I'm fine with doing that.  If no one has any 
-> objections I can re-work those with the understanding that the build 
-> process for gitweb shift to the gitweb/ directory instead of the main 
-> Makefile.
-
-In my opinion it would be better solution because it would reduce size
-of main (master) Makefile, and not be much larger than this solution.
- 
-git-gui/, Documentation/, perl/ all have their own makefiles, which do
-the work, and are called from main (master) Makefile.
-
->>> diff --git a/Makefile b/Makefile
->>> index 4a1e5bc..8db9d01 100644
->>> --- a/Makefile
->>> +++ b/Makefile
->>> @@ -1509,6 +1509,8 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
->>>  	chmod +x $@+ && \
->>>  	mv $@+ $@
->>>  
->>> +.PHONY: gitweb
->> 
->> Why it is here, and not with the .PHONY block at line 1924 of
->> Makefile?  It would be nice to have comment supporting this choice in
->> email with this patch (or in commit message).
+> Yeah, it does seem that way (like I said eaten by a grue), it 
+> *currently* has nothing to do with Lea's GSoC code but it is still my 
+> intention, long term, to integrate the two.
 > 
-> There are 6 other instances of .PHONY in the makefile, having the .PHONY 
-> localized seemed to make it the most obvious since it was right next to 
-> the actual target.
-
-I was thinking here about this large block of .PHONY declarations,
-the one which is not inside conditional.
- 
->>> +gitweb: gitweb/gitweb.cgi
->>>  ifdef JSMIN
->>>  OTHER_PROGRAMS += gitweb/gitweb.cgi   gitweb/gitweb.min.js
->>>  gitweb/gitweb.cgi: gitweb/gitweb.perl gitweb/gitweb.min.js
->>> @@ -1537,7 +1539,7 @@ endif
->>>  	    -e 's|++GITWEB_JS++|$(GITWEB_JS)|g' \
->>>  	    -e 's|++GITWEB_SITE_HEADER++|$(GITWEB_SITE_HEADER)|g' \
->>>  	    -e 's|++GITWEB_SITE_FOOTER++|$(GITWEB_SITE_FOOTER)|g' \
->>> -	    $< >$@+ && \
->>> +	    $(patsubst %.cgi,%.perl,$@) >$@+ && \
->> 
->> Why this change?
+> The patch, in all it's glory can be viewed at: 
+> http://git.kernel.org/?p=git/warthog9/gitweb.git;a=commitdiff;h=42641b1e3bfae14d5cc2e0150355e89cb87951db
 > 
-> Preparation for a later change.  The change could happen all at the same 
-> time if it makes more logical sense.
+> It is anything but a small patch to gitweb, the patch is 117K and 
+> comprises 3539 lines (including git header commit information).  There's 
+> not any real good way to break it up as it's a bit of an all or nothing 
+> patch.
 
-Please at least describe this change in commit message.
+First, why do you reinvent the wheel instead of using one of existing
+caching interfaces like CHI or Cache::Cache (perhaps creating a custom
+backend or middle layer which incorporates required features, like being
+load-aware)?  This way changing from file-based cache to e.g. mmap based
+one or to memcached would be very simple.  And you would avoid pitfals
+in doing your own cache management.  perl-Cache-Cache should be available
+package in extras repositories.
 
-But I think it could be moved to other patch, or put in separate patch.
-This change has nothing to do with easier gitweb generation.
- 
->>>  	chmod +x $@+ && \
->>>  	mv $@+ $@
->>>  
->>> diff --git a/gitweb/Makefile b/gitweb/Makefile
->>> new file mode 100644
->>> index 0000000..8d318b3
->>> --- /dev/null
->>> +++ b/gitweb/Makefile
->>> @@ -0,0 +1,14 @@
->>> +SHELL = /bin/bash
->> 
->> Why is this needed?
-
-Why do you need to define SHELL?
- 
->>> +
->>> +FILES = gitweb.cgi
->>> +
->>> +.PHONY: $(FILES)
->> 
->> Why .PHONY?  $(FILES) are created.
-> 
->  From this makefile I wanted to explicitly call up to the main makefile 
-> no matter what, the main makefile doesn't consider the targets .PHONY 
-> and it has all the dependencies that it would expect.
-
-What is the reason of this phony .PHONY?  If gitweb.cgi is newer than
-gitweb.perl (and other sources), then without .PHONY it wouldn't be 
-regenerated.  With .PHONY it would call master Makefile... which would
-notice that gitweb.cgi is newer than gitweb.perl and do not regenerate.
- 
-So what this .PHONY does is unnecessary call make on master Makefile...
+If module is no available this would simply mean no caching, like in many
+(or not so many) other cases with optional features in gitweb.
 
 
+Second, if you can't use CGI::Cache directly, you can always steal the
+idea from it, then the change to gitweb itself would be minimal:
 
-But I guess this issue would be moot if it was the other way around,
-i.e. master Makefile calling gitweb/Makefile.
+  "Internally, the CGI::Cache module ties the output file descriptor
+  (usually STDOUT) to an internal variable to which all output is saved."
+
+
+P.S. I'll postpone critique of the patch itself for now.  The above issues
+are much more important.
 
 -- 
 Jakub Narebski
