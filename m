@@ -1,115 +1,159 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How to selectively recreate merge state?
-Date: Fri, 11 Dec 2009 02:33:18 +0100
-Message-ID: <200912110233.18756.jnareb@gmail.com>
-References: <76718490912101556o3e2911e8t32b48c0b735fd98c@mail.gmail.com> <m38wdae4k4.fsf@localhost.localdomain> <7vzl5q71rp.fsf@alter.siamese.dyndns.org>
+From: "J.H." <warthog9@kernel.org>
+Subject: Re: [PATCH 1/6] GITWEB - Load Checking
+Date: Thu, 10 Dec 2009 18:19:57 -0800
+Message-ID: <4B21AC4D.2020407@kernel.org>
+References: <1260488743-25855-1-git-send-email-warthog9@kernel.org>	<1260488743-25855-2-git-send-email-warthog9@kernel.org> <m34onye3h8.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 11 02:32:11 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	"John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 11 03:20:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NIuMc-0003g2-MF
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Dec 2009 02:32:11 +0100
+	id 1NIv7Q-0003US-Tl
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Dec 2009 03:20:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762164AbZLKBb5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Dec 2009 20:31:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762156AbZLKBb5
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Dec 2009 20:31:57 -0500
-Received: from mail-fx0-f221.google.com ([209.85.220.221]:45023 "EHLO
-	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762155AbZLKBb4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Dec 2009 20:31:56 -0500
-Received: by fxm21 with SMTP id 21so543592fxm.1
-        for <git@vger.kernel.org>; Thu, 10 Dec 2009 17:32:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=dsTgoJEc0HSzdCc95Trh6xHI4BHFeyhgJgy4F9jlikQ=;
-        b=I9ExAWnkB0eiQID8wfq9FhbZhK0lH7c1s7zHTBOuj1auh/mXIGn7/H8QH+ZpEEuAHP
-         Nc/q67onF0RwtBMGiluDW/bQHu60cvfP399oskYhRTHpJ8Tnplpm+bjjiCO+hnFgGlb/
-         Dvbuh7NPXvPAlBYgdAReZEVq86k07KDONHsnE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=baHq+C5r3/ECDDm1x9B/HdCQXhEt7qzsUFBfIBov2qmjn3HJamYrcJX8/dqSgGr0no
-         m2SpexpupM/dxGAFs0Ag8vTVX4rqo35hqll72iYUqTT4+UCTVWzX5EqDKEAxFxsjFVk6
-         4V1FLWhPTmDwcYw5+LkjHEnZGFcRQ0zHiQ1fo=
-Received: by 10.103.64.19 with SMTP id r19mr276680muk.8.1260495122292;
-        Thu, 10 Dec 2009 17:32:02 -0800 (PST)
-Received: from ?192.168.1.13? (abvy165.neoplus.adsl.tpnet.pl [83.8.222.165])
-        by mx.google.com with ESMTPS id e9sm3603532muf.23.2009.12.10.17.32.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 10 Dec 2009 17:32:01 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vzl5q71rp.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1762152AbZLKCUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Dec 2009 21:20:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762147AbZLKCUV
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Dec 2009 21:20:21 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:60289 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761999AbZLKCUT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Dec 2009 21:20:19 -0500
+Received: from voot-cruiser.eaglescrag.net (76-10-145-13.dsl.ncf.ca [76.10.145.13] (may be forged))
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id nBB2Jvwx020595
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 10 Dec 2009 18:19:58 -0800
+User-Agent: Thunderbird 2.0.0.23 (X11/20090825)
+In-Reply-To: <m34onye3h8.fsf@localhost.localdomain>
+X-Enigmail-Version: 0.95.6
+X-Virus-Scanned: ClamAV 0.88.7/10149/Thu Dec 10 14:26:20 2009 on shards.monkeyblade.net
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.1.1 (shards.monkeyblade.net [198.137.202.13]); Thu, 10 Dec 2009 18:19:59 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135066>
 
-Dnia pi=B1tek 11. grudnia 2009 02:11, Junio C Hamano napisa=B3:
-> Jakub Narebski <jnareb@gmail.com> writes:
->=20
-> >   --unresolve::
-> >         Restores the 'unmerged' or 'needs updating' state of a
-> >         file during a merge if it was cleared by accident.
-> >
-> > Unless "git add foo" not only adds current contents of foo at stage=
- 0,
-> > but also removes higher stages from index...
->=20
-> By definition, adding anything at stage #0 is to remove higher stages=
-=2E
+<snip>
+>> adds $maxload configuration variable.  Default is a load of 300,
+>> which for most cases should never be hit.
+> 
+> Your patch doesn't allow for *turning off* this feature.  Reasonable
+> solution would be to use 'undef' or negative number to turn off this
+> check (this feature).
 
-Hmmm... let's test it:
+Well there's the opposite argument that setting the number arbitrarily 
+high, 4096 for instance would also in essence negate this (though I'll 
+admit I've reached and exceeded those numbers before)
 
- $ git merge side-branch=20
- Auto-merging foo
- CONFLICT (content): Merge conflict in foo
- Automatic merge failed; fix conflicts and then commit the result.
- $ git ls-files --stage
- 100644 257cc5642cb1a054f08cc83f2d943e56fd3ebe99 1       foo
- 100644 3bd1f0e29744a1f32b08d5650e62e2e62afb177c 2       foo
- 100644 469a41eda5c8b45503a3bfc32ad6b5decc658132 3       foo
- $ <edit foo>
- $ git add foo
- $ git ls-files --stage
- 100644 a1b58d38ffa61e8e99b7cb95cdf540aedf2a96b3 0       foo
+That said I agree, being able to turn this off needs to be added and 
+will be shortly.
 
-Now let's test '--unresolve' option of git-update-index:
+>> Please note this makes the assumption that /proc/loadavg exists
+>> as there is no good way to read load averages on a great number of
+>> platforms [READ: Windows], or that it's reasonably accurate.
+> 
+> What about MacOS X, or FreeBSD, or OpenSolaris?
 
- $ git update-index --unresolve foo
- $ git ls-files --stage foo
- 100644 3bd1f0e29744a1f32b08d5650e62e2e62afb177c 2       foo
- 100644 469a41eda5c8b45503a3bfc32ad6b5decc658132 3       foo
+Will comment on this further down
 
-WTF? What happened to stage 1 (ancestor)?
+> You should mention that it is intended that if gitweb cannot read load
+> average (for example /proc/loadavg does not exist), then the feature
+> is turned off, i.e. the check always succeeds.  Which is reasonable.
 
+That's fine.
 
- $ git checkout --conflict=3Dmerge foo
- error: path 'foo' does not have all three versions
+> 
+>> Signed-off-by: John 'Warthog9' Hawley <warthog9@eaglescrag.net>
+> 
+> Why signoff is different from author (warthog9@kernel.org)?  Why this
+> email for signoff?  Just curious...
 
-Let's recover it by hand:
+My bad, did the patches up on my laptop but had to send them out from 
+kernel.org, thus the miss-match: I.E. user error.
 
- $ echo -e "100644 257cc5642cb1a054f08cc83f2d943e56fd3ebe99 1\tfoo" |=20
-   git update-index --index-info
- $ git ls-files --stage foo
- 100644 257cc5642cb1a054f08cc83f2d943e56fd3ebe99 1       foo
- 100644 3bd1f0e29744a1f32b08d5650e62e2e62afb177c 2       foo
- 100644 469a41eda5c8b45503a3bfc32ad6b5decc658132 3       foo
- $ git checkout --conflict=3Dmerge foo
+<snip>
 
---=20
-Jakub Narebski
-Poland
+>> +# loadavg throttle
+>> +sub get_loadavg() {
+>> +    my $load;
+>> +    my @loads;
+>> +
+>> +    open($load, '<', '/proc/loadavg') or return 0;
+> 
+> Why not use one of existing CPAN modules: Sys::Info::Device::CPU,
+> BSD::getloadavg, Sys::CpuLoad?
+
+Here's the fundamental problem:
+
+Sys:Info:Device:CPU
+	Windows:
+		Using this method under Windows is not recommended
+		since, the WMI interface will possibly take at least 2
+		seconds to complete the request.
+
+BSD::getloadavg
+	While this more or less supports anything with a libc getloadavg
+	(and thus might be the best one I've seen, I'll admit I didn't
+	notice this one when I looked years ago) getting it to work on
+	windows looks, exciting.
+
+Sys::CpuLoad:
+	http://cpansearch.perl.org/src/CLINTDW/Sys-CpuLoad-0.03/README
+	Specifically:
+		- Currently FreeBSD and OpenBSD are supported.
+		- Wanted: HPUX 11.11 ...
+		- Todo: Win32 support
+
+	So this doesn't really buy me anything but, maybe, BSD support.
+	
+So at the end of the day, none of those really gets me a "useful" cross 
+platform load checker (though like I said BSD::getloadavg looks to be 
+the best of the ones you mentioned) and more or less Windows is going to 
+lose this as a usable feature no matter what.
+
+I think I'd almost rather set this up so that if it can't get something 
+useful (I.E. /proc/loadavg is missing) it just skips past it as if the 
+load was 0.
+
+I might try out the BSD::getloadavg but I want to take a look and see if 
+that's easily installed or not, if it's not it might be difficult to 
+justify that as a dependency.
+
+<snip>
+
+>> +if (get_loadavg() > $maxload) {
+>> +    print "Content-Type: text/plain\n";
+>> +    print "Status: 503 Excessive load on server\n";
+>> +    print "\n";
+>> +    print "The load average on the server is too high\n";
+>> +    exit 0;
+> 
+> Why not use die_error subroutine?  Is it to have generate absolutely
+> minimal load, and that is why you do not use die_error(), or even
+> $cgi->header()?
+> 
+> Wouldn't a better solution be to use here-doc syntax?
+> 
+> +    print <<'EOF';
+> +Content-Type: text/plain; charset=utf-8
+> +Status: 503 Excessive load on server
+> +
+> +The load average on the server is too high
+> +EOF
+> +    exit 0;
+
+It was intended to be the most minimal possible, mainly get in, get out. 
+  Also not sure the die_error existed in gitweb when this was originally 
+written.  Probably worth switching to it now since it's there either 
+way, and I don't think using it would add enough overhead to matter.
+
+- John 'Warthog9' Hawley
