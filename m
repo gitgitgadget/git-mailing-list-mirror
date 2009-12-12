@@ -1,78 +1,130 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 0/3] Update advice in commit/status output
-Date: Sat, 12 Dec 2009 17:06:07 -0500
-Message-ID: <76718490912121406q31ddcd12s3d813659d5096a22@mail.gmail.com>
-References: <7vk4wtysyu.fsf@alter.siamese.dyndns.org>
-	 <1260608523-15579-1-git-send-email-gitster@pobox.com>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] Fix archive format with -- on the command line
+Date: Sat, 12 Dec 2009 16:00:41 +0100
+Message-ID: <4B23B019.40106@lsrfire.ath.cx>
+References: <20091210212636.GA27722@Knoppix> <7v1vj2a3ik.fsf@alter.siamese.dyndns.org> <20091210222258.GQ4114@genesis.frugalware.org> <7vws0u8n99.fsf@alter.siamese.dyndns.org> <7vhbry8l54.fsf_-_@alter.siamese.dyndns.org> <7vd42m8kyr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 13 02:55:33 2009
+X-From: git-owner@vger.kernel.org Sun Dec 13 03:16:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NJdgE-00040b-BY
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Dec 2009 02:55:26 +0100
+	id 1NJe0d-0001by-DB
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Dec 2009 03:16:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933414AbZLMBxt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Dec 2009 20:53:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933354AbZLMBxr
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Dec 2009 20:53:47 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:42071 "HELO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S933140AbZLMBxp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Dec 2009 20:53:45 -0500
-Received: by iwn1 with SMTP id 1so1261065iwn.33
-        for <git@vger.kernel.org>; Sat, 12 Dec 2009 17:53:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=PwsP1SpE9L5+mSBARg+aVytz8iHAHI0fQ0xxOvYQarE=;
-        b=eS6Yl0VVv+99GkenUuUIYKRThjVlnzK2O8FmMYPwAAgH5hXcY+YwdafCQglHwNJlVF
-         pMU5xErksz3qJvouB+0/BjCAFFfXnkq798aNulPWRYoHeuMCwBktHNlU+8v7V4AGnR8m
-         wJ8//VLbzErZuRFTRp8sUjeiOGyvQze8i11sM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=WZ5KAZghi1iY352vrNNpGrqcXkb8ujyFwGQE+QLwMIeO20f4rQyueNeLjkFhWATwDE
-         9oxyZ9dAZn7YFBtch20KOQhs1wIZWkF9E6t5J8PBhUwzKfMzgRuoOv8nJyhyotChGNpN
-         ISkGzuwIFCvwEEA0CzCFUS3+3m1kOIJl+fqtI=
-Received: by 10.231.9.218 with SMTP id m26mr3217816ibm.29.1260655567599; Sat, 
-	12 Dec 2009 14:06:07 -0800 (PST)
-In-Reply-To: <1260608523-15579-1-git-send-email-gitster@pobox.com>
+	id S932153AbZLMCQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Dec 2009 21:16:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756865AbZLMCQU
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Dec 2009 21:16:20 -0500
+Received: from india601.server4you.de ([85.25.151.105]:52936 "HELO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1756827AbZLMCQT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Dec 2009 21:16:19 -0500
+Received: from [10.0.1.101] (p57B7F6F9.dip.t-dialin.net [87.183.246.249])
+	by india601.server4you.de (Postfix) with ESMTPSA id 4EA9A2F804F;
+	Sat, 12 Dec 2009 16:00:55 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
+In-Reply-To: <7vd42m8kyr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135147>
 
-On Sat, Dec 12, 2009 at 4:02 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Jay Soffian noticed that we give "git reset HEAD <path>" as an instru=
-ction
-> to get rid of the local change that has already been added to the ind=
-ex
-> even when <path> is unmerged, or it is merged and we are about to com=
-mit a
-> merge.
->
-> In neither case, "git reset HEAD <path>" is absolutely a wrong thing =
-to do
-> while merging.
->
-> This miniseries updates the advices given in status/commit. =C2=A0It =
-applies on
-> top of the jk/1.7.0-status topic, and has trivial conflicts in wt-sta=
-tus.c
-> with the jk/unwanted-advices topic that has already graduated to 'mai=
-nt'.
+Am 11.12.2009 00:31, schrieb Junio C Hamano:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Giving --format from the command line, or using output file extention to
+>> DWIM the output format, with a pathspec that is disambiguated with an
+>> explicit double-dash on the command line, e.g.
+>>
+>>     git archive -o file --format=zip HEAD -- path
+>>     git archive -o file.zip HEAD -- path
+>>
+>> didn't work correctly.
+>>
+>> This was because the code reordered (when one was given) or added (when
+>> the former was inferred) a --format argument at the end, effectively
+>> making it to "archive HEAD -- path --format=zip", i.e. an extra pathspec
+>> that is unlikely to match anything.
+> 
+> A side note to this issue is that
+> 
+>     $ git add non-existing-path
+> 
+> complains but
+> 
+>     $ git archive HEAD non-existing-path
+> 
+> doesn't.  Is this something we should consider a bug, or a feature?
 
-Series looks good to me after the spelling correction. Thank you.
+I wouldn't go so far as to call it a bug, but it's certainly a missing
+feature.  If the user asks for something we can't give him or her, it's
+better to report that fact.  We didn't do that because it doesn't fall
+out naturally from the archive streaming loop.  ls-tree doesn't do it,
+either, by the way.
 
-j.
+Something like this?
+
+-- >8 --
+Subject: archive: complain about path specs that don't match anything
+
+Verify that all path specs match at least one path in the specified
+tree and reject those that don't.
+
+This would have made the bug fixed by 782a0005 easier to find.
+
+This implementation is simple to the point of being stupid.  It walks
+the full tree for each path spec until it matches something.  It's short
+and seems to be fast enough, though.
+
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ archive.c |   25 ++++++++++++++++++++++++-
+ 1 files changed, 24 insertions(+), 1 deletions(-)
+
+diff --git a/archive.c b/archive.c
+index 55b2732..5b88507 100644
+--- a/archive.c
++++ b/archive.c
+@@ -211,10 +211,33 @@ static const struct archiver *lookup_archiver(const char *name)
+ 	return NULL;
+ }
+ 
++static int reject_entry(const unsigned char *sha1, const char *base,
++			int baselen, const char *filename, unsigned mode,
++			int stage, void *context)
++{
++	return -1;
++}
++
++static int path_exists(struct tree *tree, const char *path)
++{
++	const char *pathspec[] = { path, NULL };
++
++	if (read_tree_recursive(tree, "", 0, 0, pathspec, reject_entry, NULL))
++		return 1;
++	return 0;
++}
++
+ static void parse_pathspec_arg(const char **pathspec,
+ 		struct archiver_args *ar_args)
+ {
+-	ar_args->pathspec = get_pathspec("", pathspec);
++	ar_args->pathspec = pathspec = get_pathspec("", pathspec);
++	if (pathspec) {
++		while (*pathspec) {
++			if (!path_exists(ar_args->tree, *pathspec))
++				die("path not found: %s", *pathspec);
++			pathspec++;
++		}
++	}
+ }
+ 
+ static void parse_treeish_arg(const char **argv,
