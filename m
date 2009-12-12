@@ -1,147 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to selectively recreate merge state?
-Date: Fri, 11 Dec 2009 15:46:33 -0800
-Message-ID: <7vk4wtysyu.fsf@alter.siamese.dyndns.org>
-References: <76718490912101556o3e2911e8t32b48c0b735fd98c@mail.gmail.com>
- <200912111220.40844.jnareb@gmail.com> <4B223C1E.6010403@drmicha.warpmail.net>
- <200912111500.51982.jnareb@gmail.com>
- <7v3a3h48lz.fsf@alter.siamese.dyndns.org>
- <76718490912111418i6b59056eq69671979613749f7@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 12 00:46:55 2009
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCH 2/3] octopus: reenable fast-forward merges
+Date: Fri, 11 Dec 2009 16:38:58 -0800
+Message-ID: <1260578339-30750-2-git-send-email-bebarino@gmail.com>
+References: <87zl5p1gsp.fsf@jondo.cante.net>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 12 01:39:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NJFCJ-00046k-2q
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Dec 2009 00:46:55 +0100
+	id 1NJG0t-0006zo-LM
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Dec 2009 01:39:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761493AbZLKXqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Dec 2009 18:46:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761491AbZLKXqm
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Dec 2009 18:46:42 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54946 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759162AbZLKXql (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Dec 2009 18:46:41 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8573E87D49;
-	Fri, 11 Dec 2009 18:46:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iJpwD2FvEC0e0CWPVjKXw/WQa2Q=; b=gTvivz
-	9NekimB1GcAbTdKpwhiSLIAQRFayJX26j+Cl2fnLF9qV+fEtnrDe8al5/bT1TpIY
-	TKIDDW9GgvADgyyVy6t2ErSen/9+n7mxJ6XNA2CIP3kFilzT/maHF66ZD2Ma8xlv
-	NdRrdeAVYAb/i5ANvYSNVThYECdM/WYBeWKHU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EAx+WiYgtVzaFWFe/yVwcmI+OrzimbOR
-	WiHstquCo3YPrxZ7ZQM9C95BUaI5plV9JO1iTWITuTVGpl3cGm/lAMxUCJdYMn2a
-	fHBvExyQSF30N4RNhKtoZ6V2VMN1zR4SbU6ZqEXpJ7i95eG6ARAChvC47A+KNJev
-	YHDfpp2pE9w=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3579187D48;
-	Fri, 11 Dec 2009 18:46:41 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EFBB787D47; Fri, 11 Dec
- 2009 18:46:34 -0500 (EST)
-In-Reply-To: <76718490912111418i6b59056eq69671979613749f7@mail.gmail.com>
- (Jay Soffian's message of "Fri\, 11 Dec 2009 17\:18\:32 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6E4D0974-E6AF-11DE-99E3-DC0DEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1761432AbZLLAjB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Dec 2009 19:39:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758460AbZLLAi7
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Dec 2009 19:38:59 -0500
+Received: from mail-gx0-f212.google.com ([209.85.217.212]:58000 "EHLO
+	mail-gx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761258AbZLLAi6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Dec 2009 19:38:58 -0500
+Received: by mail-gx0-f212.google.com with SMTP id 4so1681109gxk.8
+        for <git@vger.kernel.org>; Fri, 11 Dec 2009 16:39:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=8fnsU8SY1wsNcsCHqlSy7zZ4IlJs9TCSdSAJAn4agLQ=;
+        b=b7l1BPjZ5JcmTIqwlm8Sx1DZCwuOShxMd1sqZkcrVZsPuO0GDgXjkPmYZ+D2E+nl0z
+         idMLZkkIybEummFa2Wb4ASPSL9SWLjLUUskshByuWn9vDVLtQgSCKUImn5N7PzJhNqcX
+         qygiYtDAI3OL90ZjZozFFi46Whn67fc6Locu8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Q9HByUn9f0pzgeWLcyZG+f2xJ0AnRGxeKgfTA0y01izHzPAE4FT1CkistpIimNuPZ/
+         HgcaI3dW5Adrr2+bmEmVyUvxYhqvF72A+ao14ZHKDzxvbRud8UxD2imV1p6RDOxj8xKy
+         +KEzZE1GUjSp5+96weydD2QU0Cf/4rxiNjLwU=
+Received: by 10.101.175.15 with SMTP id c15mr3316518anp.84.1260578345416;
+        Fri, 11 Dec 2009 16:39:05 -0800 (PST)
+Received: from localhost (cpe-72-129-49-143.socal.res.rr.com [72.129.49.143])
+        by mx.google.com with ESMTPS id 23sm1514334iwn.3.2009.12.11.16.39.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 11 Dec 2009 16:39:04 -0800 (PST)
+X-Mailer: git-send-email 1.6.6.rc1.45.g9aadbb
+In-Reply-To: <87zl5p1gsp.fsf@jondo.cante.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135108>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+The fast-forward logic is never being triggered because $common and
+$MRC are never equivalent. $common is initialized to a commit id by
+merge-base and MRC is initialized to HEAD. Fix this by initializing
+$MRC to the commit id for HEAD so that its possible for $MRC and
+$common to be equal.
 
-> Also, I think we could improve the output of "git status" during merge
-> resolution, both before and after conflicts have been resolved in a
-> file.
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+---
 
-I think you are talking about something that is largely unrelated, even
-though they would be a pair of good issues to discuss.  The solution to
-them does not have much to do with what we have been discussing so far in
-this thread, and actually should be much simpler, which is a good news
-;-).
+Found this while making tests up for part 1 of this series.
 
-> $ git status
-> foo: needs merge
-> # On branch master
-> # Changed but not updated:
-> #   (use "git add <file>..." to update what will be committed)
-> #   (use "git checkout -- <file>..." to discard changes in working directory)
-> #
-> #	unmerged:   foo
-> #
-> no changes added to commit (use "git add" and/or "git commit -a")
->
-> "unmerged" is good. But the instruction to use "git checkout --
-> <file>" to discard changes is wrong in this context:
+ git-merge-octopus.sh          |    2 +-
+ t/t7602-merge-octopus-many.sh |   18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletions(-)
 
-You should be able to change this without any "unresolve" index extension
-added to the index.  Just notice an unmerged entry in the index and reword
-the message accordingly.
-
-More importantly, note that "git status" lists "unmerged" entries in a
-separate section in its output in 1.6.6 (and has been so on 'master' for
-some time) and your problem report needs to be adjusted for a more recent
-reality.  Here is what you would get:
-
-        $ git status
-        # On branch pu
-        # Changes to be committed:
-        #   (use "git reset HEAD <file>..." to unstage)
-        #
-        #       modified:   builtin-send-pack.c
-        #       modified:   remote.c
-        #       modified:   remote.h
-        #       modified:   transport.c
-        #
-        # Unmerged paths:
-        #   (use "git reset HEAD <file>..." to unstage)
-        #   (use "git add <file>..." to mark resolution)
-        #
-        #       both modified:      transport-helper.c
-        #
-
-One problem we can see is that 'use "git reset HEAD <file>..." to unstage'
-is an invalid advice if we are in the middle of a merge, but is perfectly
-valid if this were during "rebase", "am -3", "cherry-pick" and "revert".
-
-The solution to this issue is exactly the same as the next one.
-
-> $ git status
-> # On branch master
-> # Changes to be committed:
-> #   (use "git reset HEAD <file>..." to unstage)
-> #
-> #	modified:   foo
-> #
->
-> Well, yes, I can use git reset, but that just keeps my side of the merge.
-
-If the conflict was coming from "rebase", "cherry-pick", etc., there is
-nothing but one side, as there is no merge going on, and what "git reset"
-does is exactly what the message tells you---to unstage.
-
-I think "git status" should notice that the next commit you would make
-from this state will be a merge commit, and remove these "reset HEAD"
-lines.  Once you "git add" to resolve, it makes _no_ sense to reset to
-HEAD, if you are concluding a merge.  Until "update-index --unresolve" is
-revived as a modern version (and I suspect that a more logical Porcelain
-interface would be a new option "reset --unmerge <paths>..."), we should
-simply drop "reset HEAD" advice when we are in a merge.
-
-Note that the "unresolve" index extension will not help you at all in
-order for you to decide if you are going to make a merge commit.  You
-should instead ask "does .git/MERGE_HEAD exist?", and it is something you
-should be able to implement directly on top of upcoming 1.6.6 release.
+diff --git a/git-merge-octopus.sh b/git-merge-octopus.sh
+index 1c8ee0a..99b6f8a 100755
+--- a/git-merge-octopus.sh
++++ b/git-merge-octopus.sh
+@@ -44,7 +44,7 @@ esac
+ # MRC is the current "merge reference commit"
+ # MRT is the current "merge result tree"
+ 
+-MRC=$head MSG= PARENT="-p $head"
++MRC=$(git rev-parse --verify -q $head) MSG= PARENT="-p $head"
+ MRT=$(git write-tree)
+ CNT=1 ;# counting our head
+ NON_FF_MERGE=0
+diff --git a/t/t7602-merge-octopus-many.sh b/t/t7602-merge-octopus-many.sh
+index 7377033..2746169 100755
+--- a/t/t7602-merge-octopus-many.sh
++++ b/t/t7602-merge-octopus-many.sh
+@@ -82,4 +82,22 @@ test_expect_success 'merge up-to-date output uses pretty names' '
+ 	git merge c4 c5 >actual &&
+ 	test_cmp actual expected
+ '
++
++cat >expected <<\EOF
++Fast-forwarding to: c1
++Trying simple merge with c2
++Merge made by octopus.
++ c1.c |    1 +
++ c2.c |    1 +
++ 2 files changed, 2 insertions(+), 0 deletions(-)
++ create mode 100644 c1.c
++ create mode 100644 c2.c
++EOF
++
++test_expect_success 'merge fast-forward output uses pretty names' '
++	git reset --hard c0 &&
++	git merge c1 c2 >actual &&
++	test_cmp actual expected
++'
++
+ test_done
+-- 
+1.6.6.rc1.45.g9aadbb
