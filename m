@@ -1,75 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] octopus: remove dead code
-Date: Fri, 11 Dec 2009 17:01:18 -0800
-Message-ID: <7viqcdxaxt.fsf@alter.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: FEATURE REQUEST: Announce branch name with merge comamnd
+Date: Sat, 12 Dec 2009 02:35:49 +0100
+Message-ID: <81b0412b0912111735v474a9d3k5a24024c2d51587b@mail.gmail.com>
 References: <87zl5p1gsp.fsf@jondo.cante.net>
- <1260578339-30750-3-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 12 02:02:20 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Sat Dec 12 02:36:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NJGN4-0006D2-Hc
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Dec 2009 02:02:06 +0100
+	id 1NJGtx-00084z-OO
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Dec 2009 02:36:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763084AbZLLBBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Dec 2009 20:01:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763066AbZLLBBw
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Dec 2009 20:01:52 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60024 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934416AbZLLBBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Dec 2009 20:01:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BDE7F87264;
-	Fri, 11 Dec 2009 20:01:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=n2Ug0LfSWtGiwonWdC6QTBCIvI0=; b=i0yWSp
-	QsaQcPUDVyGnfocn/HbNPbC+AH4NkGnVTHkQ6a5RiGrQ5DcOuktgPGexFQ6HLze/
-	hM9aM8Fzg1mgeSs2UCEhW5eJYlGtIQNadyLCpbJhDUkpBMqMhi+Dnak2Yg+AOMXy
-	Lx6OAZoNGivOK/KsuA/A07Ne9DfG45em5T3eM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WZYz9cwxJJtwMyxae8moEhJHKwvNQzcY
-	kyo++WgodWLtW4JA+HvkEDu8xun/upYnYqnXW59/VRl/xkDnpfuTmrKjPq5gusi4
-	AeV49ObGY82hdxt7QqE3EDVm3967GsqmGSFRNUbUOoGCngnTpsoZmiynuhYgtXXB
-	f/pRxydZtFc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 977EB87263;
-	Fri, 11 Dec 2009 20:01:23 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D980487261; Fri, 11 Dec
- 2009 20:01:19 -0500 (EST)
-In-Reply-To: <1260578339-30750-3-git-send-email-bebarino@gmail.com> (Stephen
- Boyd's message of "Fri\, 11 Dec 2009 16\:38\:59 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: DE0543BC-E6B9-11DE-B653-DC0DEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1761455AbZLLBfp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Dec 2009 20:35:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761390AbZLLBfo
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Dec 2009 20:35:44 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:45313 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758394AbZLLBfo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Dec 2009 20:35:44 -0500
+Received: by bwz27 with SMTP id 27so1017176bwz.21
+        for <git@vger.kernel.org>; Fri, 11 Dec 2009 17:35:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=itNtNJbNqC+B64WAUGL2N2USN1ARg4aiwfTZKoXIc+Q=;
+        b=RU/GmGmsyW4fVnva7TJIh1LCiFulVD3i+6U7io5RJbYf+N2Z4uVLaZkt7KZD/FB34T
+         oFobI95sfrjriuiahHcpzsCgTwhwwSvmeMoCj2bczztXvtGE9IxLUnL7q4v8mbLIUysQ
+         dFhlfabxjjJ0iJT2Wmh0wsc5jn/2vz9AYDkF0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=cpIgiAqS+BYR3eyxvrW1zKD6ON9qd7Oqj3WWU1D13oE8uJRzWiol70IwWKeHRTDmLG
+         PV+UZi+VsTAw2rJB5y4uOBb9gbaTLVH0KDOg3+3vIc/Ws1tkpGU6MGSMiWsQTrCyixXn
+         u6rJjz5qZJWzYvw2MYRGiyIhaTGjuCK9qQ4rQ=
+Received: by 10.204.34.69 with SMTP id k5mr1217099bkd.9.1260581749486; Fri, 11 
+	Dec 2009 17:35:49 -0800 (PST)
+In-Reply-To: <87zl5p1gsp.fsf@jondo.cante.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135112>
 
-Stephen Boyd <bebarino@gmail.com> writes:
-
-> MSG, PARENT, and CNT are never used, just assigned to.
+On Fri, Dec 11, 2009 at 19:55, Jari Aalto <jari.aalto@cante.net> wrote:
+> Please announce the branch name being merged so that the listing is
+> easier to follow (possibly only with --verbose, -v option). Add
+> "Branch: <name>" just before the merge is attempted. somethiglike thi=
+s
 >
-> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
-> ---
->
-> I don't know if this is wanted. Looks like maybe they're used
-> as simple debug aides?
+> =C2=A0 =C2=A0Branch: bug--manpage-fix-hyphen
+> =C2=A0 =C2=A0Trying simple merge with c87c49b1e413e5dc378d7e6b1695176=
+1a1e82f6d
 
-No, thanks for spotting.  It is the right thing to do to just get rid of
-them.
-
-IIRC, they are remnants of ancient logic of the script, even before
-91063bb (Multi-backend merge driver., 2005-09-08) that added it to the
-official git history, and were used to update MRC and to come up with the
-end result (experimental versions of the script used to run "commit-tree"
-itself).
+It is not exactly "easier" to follow in your case. It is more
+text and there is no immediately visible cue that the two
+lines are related. You have to give the observer this information.
+Put reference name and SHA-1 on the same line?
