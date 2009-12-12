@@ -1,82 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] commit/status: "git add <path>" is not necessarily
- how to resolve
-Date: Sat, 12 Dec 2009 01:24:27 -0800
-Message-ID: <7vbpi4v92s.fsf@alter.siamese.dyndns.org>
-References: <1260608523-15579-1-git-send-email-gitster@pobox.com>
- <1260608523-15579-2-git-send-email-gitster@pobox.com>
- <1260608523-15579-3-git-send-email-gitster@pobox.com>
- <20091212091556.GA30509@coredump.intra.peff.net>
+From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
+Subject: [PATCH] bash: Support new 'git fetch' options
+Date: Sat, 12 Dec 2009 11:21:46 +0100
+Message-ID: <4B236EBA.6050806@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 12 10:24:44 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Dec 12 11:21:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NJODT-0000wj-0y
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Dec 2009 10:24:43 +0100
+	id 1NJP6p-0000pW-8g
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Dec 2009 11:21:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759500AbZLLJYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Dec 2009 04:24:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758855AbZLLJYb
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Dec 2009 04:24:31 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46093 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758781AbZLLJYa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Dec 2009 04:24:30 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3AD3787989;
-	Sat, 12 Dec 2009 04:24:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9pP/Zf7rjR4DS+05zSu/GJSgU/o=; b=Nr3B0v
-	GbjDrY0Gw7/UN5bSlm+8GhfagMhxqC7FELNHbYaE+PRD+ZcIXX0/USbhfviNyXNW
-	1BTGTuGTZ0ayb1/u7wrsduAIQMO+CxlcKyN7VDgddmxjKskFgqVFzwkYxEhy/NCw
-	1Y5O1O8PXjuFN3092EKQ70jchZWkfaRgs+2u8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZCopvGQYc2m2liody7x6y4YCtyq+6fwe
-	AVStC7xn7Z5mMJlVnkVx6ue4xmFAzP2mKoUoxirl4cE0YHoDszD29K9NHxlNmCCY
-	HqcH4wh2DTWk6128j67CRjnLMRUdGfIMGiOv2l151kF8mpWojpovXqjyZzgFlzi4
-	TZJTFsZOvY0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0FB2587988;
-	Sat, 12 Dec 2009 04:24:33 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0863F87987; Sat, 12 Dec
- 2009 04:24:28 -0500 (EST)
-In-Reply-To: <20091212091556.GA30509@coredump.intra.peff.net> (Jeff King's
- message of "Sat\, 12 Dec 2009 04\:15\:56 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 283CBE6A-E700-11DE-8AD8-DC0DEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1761303AbZLLKVo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Dec 2009 05:21:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756162AbZLLKVn
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Dec 2009 05:21:43 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:49100 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754702AbZLLKVm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Dec 2009 05:21:42 -0500
+Received: by ewy19 with SMTP id 19so1851830ewy.21
+        for <git@vger.kernel.org>; Sat, 12 Dec 2009 02:21:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:content-type
+         :content-transfer-encoding;
+        bh=ujsqmQsuLRmlXekzRe1KNHTh7Hw0+ou5K19WTgAVWkY=;
+        b=ZG72Kv4FiWfjpiBgAh1FeqJKZPPG+cCLZGSm32a5cug75o3qFY/mgPDaia1pCR0iJL
+         grd5VjFsh/uQTLd9gzMfG5vSGjqb9/5Sm/gJ1p9LLRfjCJxuQeb75Zml8VnWnzCR17iL
+         HRm/8bOjFE2KUHMEmqvkp2mMoJmIOYSEOBzxE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=OldII+3JgD+zm3VJatOwSDt2/jILc3I2KmaL5GNlBFF3gY49jENLh/LjuvyNW+V5SL
+         IHTJcZldtESNuf1r2W3y048OlI1WJiadPDhNMCODqPrcnRPcbOIoyVgk2eTArw6JwMzp
+         B1b0d9K1jReLJ3w1Zps61LxGPKpEiOtRCdXdE=
+Received: by 10.216.89.194 with SMTP id c44mr973953wef.199.1260613308455;
+        Sat, 12 Dec 2009 02:21:48 -0800 (PST)
+Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
+        by mx.google.com with ESMTPS id 5sm1201517eyf.2.2009.12.12.02.21.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 12 Dec 2009 02:21:47 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135133>
 
-Jeff King <peff@peff.net> writes:
+Support the new options --all, --prune, and --dry-run for
+'git fetch'.
 
-> On Sat, Dec 12, 2009 at 01:02:02AM -0800, Junio C Hamano wrote:
->
->> When the desired resolution is to remove the path, "git rm <path>" is the
->> command the user needs to use.  Just like in "Changed but not updated"
->> section, suggest to use "git add/rm" as appropriate.
->
-> I no longer even see these messages due to advice.statushints, but the
-> overall direction of the series looks sane to me.
->
-> However:
->
->> -	color_fprintf_ln(s->fp, c, "#   (use \"git add <file>...\" to mark resolution)");
->> +	color_fprintf_ln(s->fp, c, "#   (use \"git add/rm <file>...\" as appropriately to mark resolution)");
->
-> This should be "as appropriate".
+As the --multiple option was primarily introduced to enable
+'git remote update' to be re-implemented in terms of 'git fetch'
+(16679e37) and is not likely to be used much from the command
+line, it does not seems worthwhile to complicate the code
+(to support completion of multiple remotes) to handle it.
 
-Heh, I kant speel.  Fixed and re-pushed out on 'pu'.
+Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
+---
+ contrib/completion/git-completion.bash |   14 ++++++++++++--
+ 1 files changed, 12 insertions(+), 2 deletions(-)
 
-Thanks.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 7c18b0c..fbfa5f2 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -417,7 +417,17 @@ __git_complete_remote_or_refspec ()
+ 	while [ $c -lt $COMP_CWORD ]; do
+ 		i=3D"${COMP_WORDS[c]}"
+ 		case "$i" in
+-		--all|--mirror) [ "$cmd" =3D "push" ] && no_complete_refspec=3D1 ;;
++		--mirror) [ "$cmd" =3D "push" ] && no_complete_refspec=3D1 ;;
++		--all)
++			case "$cmd" in
++			push) no_complete_refspec=3D1 ;;
++			fetch)
++				COMPREPLY=3D()
++				return
++				;;
++			*) ;;
++			esac
++			;;
+ 		-*) ;;
+ 		*) remote=3D"$i"; break ;;
+ 		esac
+@@ -1002,7 +1012,7 @@ _git_difftool ()
+=20
+ __git_fetch_options=3D"
+ 	--quiet --verbose --append --upload-pack --force --keep --depth=3D
+-	--tags --no-tags
++	--tags --no-tags --all --prune --dry-run
+ "
+=20
+ _git_fetch ()
+--=20
+1.6.6.rc2
