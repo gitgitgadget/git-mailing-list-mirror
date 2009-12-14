@@ -1,235 +1,219 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 22/23] Add tests for sparse checkout
-Date: Mon, 14 Dec 2009 17:31:05 +0700
-Message-ID: <1260786666-8405-23-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 04/23] update-index: ignore update request if it's skip-worktree
+Date: Mon, 14 Dec 2009 17:30:47 +0700
+Message-ID: <1260786666-8405-5-git-send-email-pclouds@gmail.com>
 References: <1260786666-8405-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+	<pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 14 11:35:19 2009
+X-From: git-owner@vger.kernel.org Mon Dec 14 11:35:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NK8Gm-0008VO-3p
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 11:35:12 +0100
+	id 1NK8Gu-0008VO-0q
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 11:35:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756394AbZLNKd5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2009 05:33:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756366AbZLNKdy
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 05:33:54 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:34948 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756279AbZLNKdk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2009 05:33:40 -0500
-Received: by mail-pw0-f42.google.com with SMTP id 9so1839222pwj.21
-        for <git@vger.kernel.org>; Mon, 14 Dec 2009 02:33:40 -0800 (PST)
+	id S1754992AbZLNKfR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2009 05:35:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753095AbZLNKcR
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 05:32:17 -0500
+Received: from mail-pz0-f171.google.com ([209.85.222.171]:47974 "EHLO
+	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752104AbZLNKcP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2009 05:32:15 -0500
+Received: by mail-pz0-f171.google.com with SMTP id 1so2177665pzk.33
+        for <git@vger.kernel.org>; Mon, 14 Dec 2009 02:32:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=/toteNvuDJmn0LmWL3+aENaSmU/xCesAtHPj09JYoF4=;
-        b=coXIEM5Aw1JsS90QSgLuuMnyi6ivq2UN7EhhPIcgDsu1qIY+r7dsXy/BarFwYO8+f0
-         Evmi9PTmxnEzykeIuK/xck1PYm1zwXsQZ6a33COz8TQEkrjIls8aBJHaDWfp0duidzDj
-         CCde2nd2gXMyOn9AF5fdkUdkflhDXEVrZV9XU=
+        bh=od854Or+VwhjDX6KpNMg3Z06keG4VQsq9dQnliHozFE=;
+        b=noNYlKDJmhxVBM0OYdUTqNZdCY3TdKe6CcRuNocFv7OOiwQuVNql6pnExt0btZQov0
+         eSsLeDmS/jXhmh2Y4SBxfYXok7GVZ15fRV98rpi8fgDFREhxEThle8Hk34V8/tAC4c5M
+         ALTxStxB9fBfFD5j2tx8YmO5r7ql8GA6xTLZc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=CJ+Sc+54JKJPhhLVhGKhK5omttpm2qa8hpImmlt7F3wYj0a+ImXqZyh+2LnzcjkQin
-         6dI7X3YceVLp1/wYlvp6s+7ojyw4H9z/Ev8o7R9MdZo6pWGihAZ8OPhpA/azmg0illAp
-         bp1pqkTKNRJFi4zjUQNYyaPPrJ1vJGvkd4mL4=
-Received: by 10.141.130.14 with SMTP id h14mr3179795rvn.296.1260786820014;
-        Mon, 14 Dec 2009 02:33:40 -0800 (PST)
+        b=ijQJQtcIXC2fmUyg7FRsXUNsB5yGlgw4J3+S10sI/5w11pS27XGwYy1n1cESEvmhxr
+         AHXZnFIUfVQDtSNkEbGiPJFPSVQ3mvnSBCcUHGkNOWfERVOE7Q2vITiBlY6zOCC3Ihwl
+         Y5QE0Lmf8VH8lCah5GjwXtHWjeEb2ZN6+C2X4=
+Received: by 10.141.100.18 with SMTP id c18mr3234436rvm.30.1260786735161;
+        Mon, 14 Dec 2009 02:32:15 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.233.253])
-        by mx.google.com with ESMTPS id 23sm4917195pzk.0.2009.12.14.02.33.38
+        by mx.google.com with ESMTPS id 21sm4902878pzk.11.2009.12.14.02.32.13
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 14 Dec 2009 02:33:39 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 14 Dec 2009 17:32:58 +0700
+        Mon, 14 Dec 2009 02:32:14 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 14 Dec 2009 17:31:33 +0700
 X-Mailer: git-send-email 1.6.5.2.216.g9c1ec
 In-Reply-To: <1260786666-8405-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135193>
+
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t1011-read-tree-sparse-checkout.sh |  154 ++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 154 insertions(+), 0 deletions(-)
- create mode 100755 t/t1011-read-tree-sparse-checkout.sh
+ builtin-apply.c |    2 +-
+ cache.h         |    2 ++
+ entry.c         |    2 +-
+ read-cache.c    |   17 ++++++++++++++---
+ unpack-trees.c  |    6 +++---
+ 5 files changed, 21 insertions(+), 8 deletions(-)
 
-diff --git a/t/t1011-read-tree-sparse-checkout.sh b/t/t1011-read-tree-s=
-parse-checkout.sh
-new file mode 100755
-index 0000000..2192f5a
---- /dev/null
-+++ b/t/t1011-read-tree-sparse-checkout.sh
-@@ -0,0 +1,154 @@
-+#!/bin/sh
-+
-+test_description=3D'sparse checkout tests'
-+
-+. ./test-lib.sh
-+
-+cat >expected <<EOF
-+100644 77f0ba1734ed79d12881f81b36ee134de6a3327b 0	init.t
-+100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	sub/added
-+EOF
-+test_expect_success 'setup' '
-+	test_commit init &&
-+	echo modified >> init.t &&
-+	mkdir sub &&
-+	touch sub/added &&
-+	git add init.t sub/added &&
-+	git commit -m "modified and added" &&
-+	git tag top &&
-+	git rm sub/added &&
-+	git commit -m removed &&
-+	git tag removed &&
-+	git checkout top &&
-+	git ls-files --stage > result &&
-+	test_cmp expected result
-+'
-+
-+cat >expected.swt <<EOF
-+H init.t
-+H sub/added
-+EOF
-+test_expect_success 'read-tree without .git/info/sparse-checkout' '
-+	git read-tree -m -u HEAD &&
-+	git ls-files --stage > result &&
-+	test_cmp expected result &&
-+	git ls-files -t > result &&
-+	test_cmp expected.swt result
-+'
-+
-+test_expect_success 'read-tree with .git/info/sparse-checkout but disa=
-bled' '
-+	echo > .git/info/sparse-checkout
-+	git read-tree -m -u HEAD &&
-+	git ls-files -t > result &&
-+	test_cmp expected.swt result &&
-+	test -f init.t &&
-+	test -f sub/added
-+'
-+
-+test_expect_success 'read-tree --no-sparse-checkout with empty .git/in=
-fo/sparse-checkout and enabled' '
-+	git config core.sparsecheckout true &&
-+	echo > .git/info/sparse-checkout &&
-+	git read-tree --no-sparse-checkout -m -u HEAD &&
-+	git ls-files -t > result &&
-+	test_cmp expected.swt result &&
-+	test -f init.t &&
-+	test -f sub/added
-+'
-+
-+cat >expected.swt <<EOF
-+S init.t
-+S sub/added
-+EOF
-+test_expect_success 'read-tree with empty .git/info/sparse-checkout' '
-+	git config core.sparsecheckout true &&
-+	echo > .git/info/sparse-checkout &&
-+	git read-tree -m -u HEAD &&
-+	git ls-files --stage > result &&
-+	test_cmp expected result &&
-+	git ls-files -t > result &&
-+	test_cmp expected.swt result &&
-+	test ! -f init.t &&
-+	test ! -f sub/added
-+'
-+
-+cat >expected.swt <<EOF
-+S init.t
-+H sub/added
-+EOF
-+test_expect_success 'match directories with trailing slash' '
-+	echo sub/ > .git/info/sparse-checkout &&
-+	git read-tree -m -u HEAD &&
-+	git ls-files -t > result &&
-+	test_cmp expected.swt result &&
-+	test ! -f init.t &&
-+	test -f sub/added
-+'
-+
-+cat >expected.swt <<EOF
-+H init.t
-+H sub/added
-+EOF
-+test_expect_failure 'match directories without trailing slash' '
-+	echo init.t > .git/info/sparse-checkout &&
-+	echo sub >> .git/info/sparse-checkout &&
-+	git read-tree -m -u HEAD &&
-+	git ls-files -t > result &&
-+	test_cmp expected.swt result &&
-+	test ! -f init.t &&
-+	test -f sub/added
-+'
-+
-+cat >expected.swt <<EOF
-+H init.t
-+S sub/added
-+EOF
-+test_expect_success 'checkout area changes' '
-+	echo init.t > .git/info/sparse-checkout &&
-+	git read-tree -m -u HEAD &&
-+	git ls-files -t > result &&
-+	test_cmp expected.swt result &&
-+	test -f init.t &&
-+	test ! -f sub/added
-+'
-+
-+test_expect_success 'read-tree updates worktree, absent case' '
-+	echo sub/added > .git/info/sparse-checkout &&
-+	git checkout -f top &&
-+	git read-tree -m -u HEAD^ &&
-+	test ! -f init.t
-+'
-+
-+test_expect_success 'read-tree updates worktree, dirty case' '
-+	echo sub/added > .git/info/sparse-checkout &&
-+	git checkout -f top &&
-+	echo dirty > init.t &&
-+	git read-tree -m -u HEAD^ &&
-+	grep -q dirty init.t &&
-+	rm init.t
-+'
-+
-+test_expect_success 'read-tree removes worktree, dirty case' '
-+	echo init.t > .git/info/sparse-checkout &&
-+	git checkout -f top &&
-+	echo dirty > added &&
-+	git read-tree -m -u HEAD^ &&
-+	grep -q dirty added
-+'
-+
-+test_expect_success 'read-tree adds to worktree, absent case' '
-+	echo init.t > .git/info/sparse-checkout &&
-+	git checkout -f removed &&
-+	git read-tree -u -m HEAD^ &&
-+	test ! -f sub/added
-+'
-+
-+test_expect_success 'read-tree adds to worktree, dirty case' '
-+	echo init.t > .git/info/sparse-checkout &&
-+	git checkout -f removed &&
-+	mkdir sub &&
-+	echo dirty > sub/added &&
-+	git read-tree -u -m HEAD^ &&
-+	grep -q dirty sub/added
-+'
-+
-+test_done
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 39dc96a..7717a66 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -2505,7 +2505,7 @@ static int verify_index_match(struct cache_entry =
+*ce, struct stat *st)
+ 			return -1;
+ 		return 0;
+ 	}
+-	return ce_match_stat(ce, st, CE_MATCH_IGNORE_VALID);
++	return ce_match_stat(ce, st, CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SK=
+IP_WORKTREE);
+ }
+=20
+ static int check_preimage(struct patch *patch, struct cache_entry **ce=
+, struct stat *st)
+diff --git a/cache.h b/cache.h
+index f266246..f040f24 100644
+--- a/cache.h
++++ b/cache.h
+@@ -462,6 +462,8 @@ extern int index_name_is_other(const struct index_s=
+tate *, const char *, int);
+ #define CE_MATCH_IGNORE_VALID		01
+ /* do not check the contents but report dirty on racily-clean entries =
+*/
+ #define CE_MATCH_RACY_IS_DIRTY	02
++/* do stat comparison even if CE_SKIP_WORKTREE is true */
++#define CE_MATCH_IGNORE_SKIP_WORKTREE		04
+ extern int ie_match_stat(const struct index_state *, struct cache_entr=
+y *, struct stat *, unsigned int);
+ extern int ie_modified(const struct index_state *, struct cache_entry =
+*, struct stat *, unsigned int);
+=20
+diff --git a/entry.c b/entry.c
+index f276cf3..efee21f 100644
+--- a/entry.c
++++ b/entry.c
+@@ -202,7 +202,7 @@ int checkout_entry(struct cache_entry *ce, const st=
+ruct checkout *state, char *t
+ 	len +=3D ce_namelen(ce);
+=20
+ 	if (!check_path(path, len, &st)) {
+-		unsigned changed =3D ce_match_stat(ce, &st, CE_MATCH_IGNORE_VALID);
++		unsigned changed =3D ce_match_stat(ce, &st, CE_MATCH_IGNORE_VALID|CE=
+_MATCH_IGNORE_SKIP_WORKTREE);
+ 		if (!changed)
+ 			return 0;
+ 		if (!state->force) {
+diff --git a/read-cache.c b/read-cache.c
+index 4e3e272..b31861c 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -259,12 +259,17 @@ int ie_match_stat(const struct index_state *istat=
+e,
+ {
+ 	unsigned int changed;
+ 	int ignore_valid =3D options & CE_MATCH_IGNORE_VALID;
++	int ignore_skip_worktree =3D options & CE_MATCH_IGNORE_SKIP_WORKTREE;
+ 	int assume_racy_is_modified =3D options & CE_MATCH_RACY_IS_DIRTY;
+=20
+ 	/*
+ 	 * If it's marked as always valid in the index, it's
+ 	 * valid whatever the checked-out copy says.
++	 *
++	 * skip-worktree has the same effect with higher precedence
+ 	 */
++	if (!ignore_skip_worktree && ce_skip_worktree(ce))
++		return 0;
+ 	if (!ignore_valid && (ce->ce_flags & CE_VALID))
+ 		return 0;
+=20
+@@ -564,7 +569,7 @@ int add_to_index(struct index_state *istate, const =
+char *path, struct stat *st,
+ 	int size, namelen, was_same;
+ 	mode_t st_mode =3D st->st_mode;
+ 	struct cache_entry *ce, *alias;
+-	unsigned ce_option =3D CE_MATCH_IGNORE_VALID|CE_MATCH_RACY_IS_DIRTY;
++	unsigned ce_option =3D CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WOR=
+KTREE|CE_MATCH_RACY_IS_DIRTY;
+ 	int verbose =3D flags & (ADD_CACHE_VERBOSE | ADD_CACHE_PRETEND);
+ 	int pretend =3D flags & ADD_CACHE_PRETEND;
+ 	int intent_only =3D flags & ADD_CACHE_INTENT;
+@@ -1000,14 +1005,20 @@ static struct cache_entry *refresh_cache_ent(st=
+ruct index_state *istate,
+ 	struct cache_entry *updated;
+ 	int changed, size;
+ 	int ignore_valid =3D options & CE_MATCH_IGNORE_VALID;
++	int ignore_skip_worktree =3D options & CE_MATCH_IGNORE_SKIP_WORKTREE;
+=20
+ 	if (ce_uptodate(ce))
+ 		return ce;
+=20
+ 	/*
+-	 * CE_VALID means the user promised us that the change to
+-	 * the work tree does not matter and told us not to worry.
++	 * CE_VALID or CE_SKIP_WORKTREE means the user promised us
++	 * that the change to the work tree does not matter and told
++	 * us not to worry.
+ 	 */
++	if (!ignore_skip_worktree && ce_skip_worktree(ce)) {
++		ce_mark_uptodate(ce);
++		return ce;
++	}
+ 	if (!ignore_valid && (ce->ce_flags & CE_VALID)) {
+ 		ce_mark_uptodate(ce);
+ 		return ce;
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 720f7a1..4870da9 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -454,7 +454,7 @@ static int verify_uptodate(struct cache_entry *ce,
+ 		return 0;
+=20
+ 	if (!lstat(ce->name, &st)) {
+-		unsigned changed =3D ie_match_stat(o->src_index, ce, &st, CE_MATCH_I=
+GNORE_VALID);
++		unsigned changed =3D ie_match_stat(o->src_index, ce, &st, CE_MATCH_I=
+GNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE);
+ 		if (!changed)
+ 			return 0;
+ 		/*
+@@ -572,7 +572,7 @@ static int icase_exists(struct unpack_trees_options=
+ *o, struct cache_entry *dst,
+ 	struct cache_entry *src;
+=20
+ 	src =3D index_name_exists(o->src_index, dst->name, ce_namelen(dst), 1=
+);
+-	return src && !ie_match_stat(o->src_index, src, st, CE_MATCH_IGNORE_V=
+ALID);
++	return src && !ie_match_stat(o->src_index, src, st, CE_MATCH_IGNORE_V=
+ALID|CE_MATCH_IGNORE_SKIP_WORKTREE);
+ }
+=20
+ /*
+@@ -1007,7 +1007,7 @@ int oneway_merge(struct cache_entry **src, struct=
+ unpack_trees_options *o)
+ 		if (o->reset && !ce_uptodate(old)) {
+ 			struct stat st;
+ 			if (lstat(old->name, &st) ||
+-			    ie_match_stat(o->src_index, old, &st, CE_MATCH_IGNORE_VALID))
++			    ie_match_stat(o->src_index, old, &st, CE_MATCH_IGNORE_VALID|CE_=
+MATCH_IGNORE_SKIP_WORKTREE))
+ 				update |=3D CE_UPDATE;
+ 		}
+ 		add_entry(o, old, update, 0);
 --=20
 1.6.5.2.216.g9c1ec
