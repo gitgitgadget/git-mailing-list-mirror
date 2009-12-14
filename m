@@ -1,61 +1,102 @@
-From: Tomas Carnecky <tom@dbservice.com>
-Subject: Re: Can't handle renamed resources on case insensitive filesystems.
-Date: Mon, 14 Dec 2009 15:52:15 +0100
-Message-ID: <4B26511F.5040804@dbservice.com>
-References: <63135FDB-C8EF-4DBC-AEF5-4B0636C8D349@gmail.com>
+From: Richard Rossel <rrossel@inf.utfsm.cl>
+Subject: git gc logs to standard error
+Date: Mon, 14 Dec 2009 11:45:15 -0300
+Message-ID: <4B264F7B.8070504@inf.utfsm.cl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Lhunath (Maarten B.)" <lhunath@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 14 15:52:35 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 14 16:28:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKCHi-0001ZL-1T
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 15:52:26 +0100
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1NKCqa-0000yk-M3
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 16:28:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757245AbZLNOwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2009 09:52:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756910AbZLNOwV
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 09:52:21 -0500
-Received: from office.neopsis.com ([78.46.209.98]:35492 "EHLO
-	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756891AbZLNOwU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2009 09:52:20 -0500
-Received: from calvin.caurea.org ([147.88.200.144])
-	(authenticated user tom@dbservice.com)
-	by office.neopsis.com
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
-	Mon, 14 Dec 2009 15:52:16 +0100
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.3a1pre) Gecko/20091214 Lightning/1.1a1pre Shredder/3.1a1pre
-In-Reply-To: <63135FDB-C8EF-4DBC-AEF5-4B0636C8D349@gmail.com>
+	id S1757522AbZLNPYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2009 10:24:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757519AbZLNPYL
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 10:24:11 -0500
+Received: from alegre.inf.utfsm.cl ([204.87.169.3]:46858 "EHLO
+	alegre.inf.utfsm.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757525AbZLNPYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2009 10:24:10 -0500
+X-Greylist: delayed 2328 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Dec 2009 10:24:10 EST
+Received: from trompe.intra.wiseocean.cl (red-corfo.tecnoera.net [200.24.238.226] (may be forged))
+	(authenticated bits=0)
+	by alegre.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id nBEEjFSh001138
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Mon, 14 Dec 2009 11:45:16 -0300
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
+X-Virus-Scanned: ClamAV 0.94.2/10164/Mon Dec 14 10:49:22 2009 on alegre.inf.utfsm.cl
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00,RDNS_NONE
+	autolearn=no version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on alegre.inf.utfsm.cl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135217>
 
-On 12/14/09 3:27 PM, Lhunath (Maarten B.) wrote:
-> GIT has quite a few issues concerning renamed files on case insensitive filesystems, such as Mac OS X's default HFS+.
->
-> For instance:
->
-> lhunath@Myst t $ git mv Foo foo
-> fatal: destination exists, source=Foo, destination=foo
->
-> Moreover, when a repository contains Foo and foo in one commit and in a subsequent commit, "foo" is removed; "Foo" will also disappear when checking out the latter.
->
-> Most of these issues are likely just a result of the underlying file system's handling of GIT's commands; though considering that Mac OS X's default fs is case insensitive by default, and the Mac and Windows userbases combined are quite large; it might be very much appropriate to do a check for this (if needed) and handle renames (and other operations?) in a way that they would not cause conflicts on these file systems (eg. rename to a temporary filename first and then rename to destination).
->
-> In particular; these issues make it awfully painful to refactor Java class names from things like JndiUtils ->  JNDIUtils.  Not only is it hard to get the commit INTO the repository correctly; it is also hard to check the commit OUT for somebody who has no idea any of this is needed.--
+Hi,
+I have a question related to the output of git gc logs. Let me explain,
 
-Create a disk image and format it with case-sensitive HFS+, create a new 
-partition and format it with case-sensitive HFS+, or reinstall Mac OS X 
-and choose case-sensitive HFS+ as the filesystem for the system partition.
+I have a git commands in crontab (for redmine purpose) doing this stuff:
+' git fetch -q origin && git reset -q --soft refs/remotes/origin/master '
+for each project.
 
-After I found out that the default install of Mac OS X uses 
-case-insensitive filesystem, the first thing I did was reinstall the OS.
+The problem is that am getting mail from crontab each time that somebody
+do a push to the central server. Its really annoying. I try to avoid 
+those messages
+redirecting the standard output with no results, then adding a quiet 
+option  and no results.
+This is the kind of mails that am receiving:
 
-tom
+
+remote: Counting objects: 6, done.
+remote: Compressing objects:  25% (1/4)
+remote: Compressing objects:  50% (2/4)
+remote: Compressing objects:  75% (3/4        )remote:
+remote: Compressing objects: 100% (4/4)
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 4 (delta 2), reused 0 (delta 0)
+ From git@boss:drivings
+   0f35f06..5bc8866  master     -> origin/master
+
+
+Then I realized that the message is git gc logs looks like, so I did:
+
+$ git gc
+Counting objects: 51, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (35/35), done.
+Writing objects: 100% (51/51), done.
+Total 51 (delta 12), reused 51 (delta 12)
+
+The message are pretty similar, so I sent the logs to dev/null but:
+
+$ git gc >/dev/null
+Counting objects: 51, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (35/35), done.
+Writing objects: 100% (51/51), done.
+Total 51 (delta 12), reused 51 (delta 12)
+
+I realized that the message are sent to standard error,
+so the question is why is the reason to do that?
+
+The quick solution to my problem of annoying mails is send the output 
+error to /dev/null
+but what happens when an error really occur, there will be no message to 
+alert me.
+
+thanks for your help
+
+saludos.-
+
+--
+Richard Rossel
+Software Engineer at Airsage Inc.
+Valparaiso - Chile
