@@ -1,83 +1,66 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] help.autocorrect: do not run a command if the command given
- is junk
-Date: Mon, 14 Dec 2009 14:03:19 +0100
-Message-ID: <4B263797.5070808@viscovery.net>
+From: Jeff Epler <jepler@unpythonic.net>
+Subject: Re: How can I get full =?utf-8?Q?filenames?=
+	=?utf-8?Q?_from_Git_difftool_=28for_Microsoft_Word_=E2=80=9CCompare_Docum?=
+	=?utf-8?B?ZW50c+KAnQ==?= feature)?
+Date: Mon, 14 Dec 2009 07:11:12 -0600
+Message-ID: <20091214131112.GC22735@unpythonic.net>
+References: <b507cb050912132222x7e1daa9cw73b13f3db0ee22c6@mail.gmail.com> <b507cb050912132225j1bdc39c2v42a3bf6bddf1cb1a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 14 14:03:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Doug Ireton <dougireton@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 14 14:11:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKAaR-0001xl-BW
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 14:03:39 +0100
+	id 1NKAhr-0004kr-GQ
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 14:11:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751866AbZLNND2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2009 08:03:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751255AbZLNND0
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 08:03:26 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:14801 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751212AbZLNNDX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2009 08:03:23 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NKAa7-0002ok-RT; Mon, 14 Dec 2009 14:03:20 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 7E3F31660F;
-	Mon, 14 Dec 2009 14:03:19 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1751255AbZLNNLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2009 08:11:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750960AbZLNNLP
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 08:11:15 -0500
+Received: from dsl.unpythonic.net ([206.222.212.217]:42710 "EHLO
+	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750850AbZLNNLO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2009 08:11:14 -0500
+Received: by unpythonic.net (Postfix, from userid 1000)
+	id 062281148EA; Mon, 14 Dec 2009 07:11:13 -0600 (CST)
+Content-Disposition: inline
+In-Reply-To: <b507cb050912132225j1bdc39c2v42a3bf6bddf1cb1a@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135207>
 
-From: Johannes Sixt <j6t@kdbg.org>
+In the bash shell, you can convert a relative path to absolute by prepending
+the directory name:
+    mkabs () {
+        case "$1" in
+        /*) echo "$1" ;;
+        *)  echo "$(pwd)/$1" ;;
+        esac
+    }
 
-If a given command is not found, then help.c tries to guess which one the
-user could have meant. If help.autocorrect is 0 or unset, then a list of
-suggestions is given as long as the dissimilarity between the given command
-and the candidates is not excessively high. But if help.autocorrect was
-non-zero (i.e., a delay after which the command is run automatically), the
-latter restriction on dissimilarity was not obeyed.
+Using it at the shell prompt:
+    $ mkabs example
+    /home/jepler/example
+    $ ls -l $(mkabs example)
+    -rw-r--r-- 1 jepler jepler 0 2009-12-14 07:08 /home/jepler/example
 
-In my case, this happened:
+If mac has a gnu-like readlink(1), then use 'readlink -f' instead of the
+mkabs shell function:
+    $ readlink -f example
+    /home/jepler/example
 
- $ git ..daab02
- WARNING: You called a Git command named '..daab02', which does not exist.
- Continuing under the assumption that you meant 'read-tree'
- in 4.0 seconds automatically...
+You should be able to write a shell script which does the conversion
+from relative to absolute using one of these patterns, and then invokes
+the applescript.
 
-The similarity limit that this patch introduces is already used a few lines
-later where the list of suggested commands is printed.
+It may turn out that there's a way to convert a path from relative to
+absolute in applescript as well, but I wouldn't know it.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- help.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/help.c b/help.c
-index e8db31f..db888cf 100644
---- a/help.c
-+++ b/help.c
-@@ -331,7 +331,7 @@ const char *help_unknown_cmd(const char *cmd)
- 	n = 1;
- 	while (n < main_cmds.cnt && best_similarity == main_cmds.names[n]->len)
- 		++n;
--	if (autocorrect && n == 1) {
-+	if (autocorrect && n == 1 && best_similarity < 6) {
- 		const char *assumed = main_cmds.names[0]->name;
- 		main_cmds.names[0] = NULL;
- 		clean_cmdnames(&main_cmds);
--- 
-1.6.6.rc1.46.g1635
+Jeff
