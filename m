@@ -1,110 +1,139 @@
-From: B Smith-Mannschott <bsmith.occs@gmail.com>
-Subject: Re: git --version wrong
-Date: Mon, 14 Dec 2009 19:41:51 +0100
-Message-ID: <28c656e20912141041v3dbbbe3dh6a87f59aa2e789b9@mail.gmail.com>
-References: <26770625.post@talk.nabble.com>
-	 <28c656e20912132217u4e1aeb27y9b957c8e75210e9e@mail.gmail.com>
-	 <4b308ad10912140852k15b5b815ge77c54525634d454@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] help.autocorrect: do not run a command if the command
+ given is junk
+Date: Mon, 14 Dec 2009 12:08:09 -0800
+Message-ID: <7v7hspjp3q.fsf@alter.siamese.dyndns.org>
+References: <4B263797.5070808@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Brad Hutchins <oshybrid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 14 19:42:00 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Dec 14 21:08:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKFrq-0001XN-Bl
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 19:41:58 +0100
+	id 1NKHDx-0000eK-1G
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 21:08:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756355AbZLNSlx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2009 13:41:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756138AbZLNSlx
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 13:41:53 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:34926 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755876AbZLNSlw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Dec 2009 13:41:52 -0500
-Received: by ewy19 with SMTP id 19so3701885ewy.21
-        for <git@vger.kernel.org>; Mon, 14 Dec 2009 10:41:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=bFwYfqUbYEC0eJKyz3etKp/pB+BxV0o4hmwXONK8ZIc=;
-        b=akSMH4Fi/75AhoIUOqnJ5aeIULh93NtvXY9Qq21NkZsBbLFN2fL1lGri7H3fBXXGgb
-         RxvjwvgvVrDzLFEmbJ+MYAndVLHnarsQXRJVtAcFvsw8d/y8NJrKIlU/2MlK3I8j/nP8
-         kPlW4IsSpbCg8OPlddoYfg6o9xhky+PSv6QsU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Rcf7ERmaXEuq0EyzT3dxVqrCCvND+nUYXao0neoalcgI91bxtmu2PVL0hGo2vktmva
-         Xrn9+xVccxqR/PNU7K2/aK+lpbFjdYMQk+WbyDkPPjoL4l3wVaSekzcO029JlEwB0Su8
-         9ClzzmBCXQJ4ajimucWU+vetxaBJU3Tq3MSUo=
-Received: by 10.213.24.2 with SMTP id t2mr3919250ebb.6.1260816111163; Mon, 14 
-	Dec 2009 10:41:51 -0800 (PST)
-In-Reply-To: <4b308ad10912140852k15b5b815ge77c54525634d454@mail.gmail.com>
+	id S1758007AbZLNUI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2009 15:08:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757949AbZLNUI2
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 15:08:28 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39614 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757915AbZLNUI0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2009 15:08:26 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 32A0CA6925;
+	Mon, 14 Dec 2009 15:08:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=q7yN5WELYOSOtvWikVRXi0KxALE=; b=gzVoV/
+	W/Gn8et0pUUb8a5GhXhX+EZNvfax62iaSL71QeSSAV4IJGy351fEWKSwN9v5kG0Y
+	9CRCrMhPk8fUmzmkj7Q9CQQXy/h9BwfBCQJzr39sxcD9vfk9bzkcXTEA8yW+Mw76
+	2dk65aNLrAnxVVCrUS53OIVD7vXEQ0otLyqSs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=k18HYiYeGz7c2LqQMFyvHTKrpostVm2o
+	du7byqm0QcYc9qXtXmqfnvswztB5XFsBcslpm5Ys5SPr5KVW1Au3PyodBlTHmnLk
+	EGpWSo8Itm4YAj38POV0IGFt5gdV56xUC/5io6koCyBMCxmPRJ9FB/TkJPFAkqRk
+	vGp0pEfLKjU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E9AA6A6924;
+	Mon, 14 Dec 2009 15:08:16 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 41623A6923; Mon, 14 Dec 2009
+ 15:08:10 -0500 (EST)
+In-Reply-To: <4B263797.5070808@viscovery.net> (Johannes Sixt's message of
+ "Mon\, 14 Dec 2009 14\:03\:19 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6AC86DEA-E8EC-11DE-BF42-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135231>
 
-> On Sun, Dec 13, 2009 at 10:17 PM, B Smith-Mannschott <bsmith.occs@gma=
-il.com>
-> wrote:
->>
->> On Sun, Dec 13, 2009 at 23:51, oshybrid <oshybrid@gmail.com> wrote:
->> >
->> > After i Instal 1.6.5.5 my "git --version" =C2=A0still shows 1.6.0.=
-5
->> >
->>
->> How, exactly, did you install it?
->> What's the output when you type "which git" at the command line?
->>
->> // Ben
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-On Mon, Dec 14, 2009 at 17:52, Brad Hutchins <oshybrid@gmail.com> wrote=
-:
-> /opt/local/bin/git
+> From: Johannes Sixt <j6t@kdbg.org>
+>
+> If a given command is not found, then help.c tries to guess which one the
+> user could have meant. If help.autocorrect is 0 or unset, then a list of
+> suggestions is given as long as the dissimilarity between the given command
+> and the candidates is not excessively high. But if help.autocorrect was
+> non-zero (i.e., a delay after which the command is run automatically), the
+> latter restriction on dissimilarity was not obeyed.
+>
+> In my case, this happened:
+>
+>  $ git ..daab02
+>  WARNING: You called a Git command named '..daab02', which does not exist.
+>  Continuing under the assumption that you meant 'read-tree'
+>  in 4.0 seconds automatically...
+>
+> The similarity limit that this patch introduces is already used a few lines
+> later where the list of suggested commands is printed.
+>
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+>  help.c |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
 
-Judging by the path, it looks like the git that is actually running on
-your machine was installed through macports. Is that accurate? The
-current version of git offered by macports, however, is 1.6.5.3
-<http://trac.macports.org/browser/trunk/dports/devel/git-core/Portfile>
-which is neither the version you are expecting, nor the version you
-actually have installed.
+Thanks.  Will apply to 'maint'.
 
-Here's my guess, based on insufficient information:
+But I am curious about and would prefer to see the story behind '6'
+someday.
 
-(1) You have macports package manager installed.
+This is not entirely a new problem that you are introducing, as the same
+comparison-with-six appears in a later part of the code, but this patch
+duplicates the magic number whose two instances need to match, so in that
+sense it makes it more necessary than before to document the choice of
+magic number somewhere in a comment in the code.
 
-(2) It's been a while since you've updated it, so...
+Did 8af84da (git wrapper: DWIM mistyped commands, 2008-08-31) made up just
+a random number out of thin-air?  What bad things would happen if we used
+'600' (or '1') instead of '6'?  What kind of correlation does the cut-off
+value we use here should have with some intrinsic numbers your git
+installation has (e.g. perhaps "must be at least 80% of average length of
+available commands" or something like that)?
 
-(3) The git installed by macports is outdated (1.6.0.5)
+In the meantime, I think squashing the following in would help us keep the
+two magic numbers in sync.
 
-(4) You tried to install git 1.6.5.5 via some other mechanism other
-than macports.  Maybe one of the stand-alone git installers floating
-around. Maybe you built it from source. I can't tell, because you
-haven't told me.
-
-(5) Where ever that install placed your new git, it wasn't in /opt/loca=
-l/bin
-
-(6) Your PATH environment variable either does not contain the
-directory where the newer git is installed or it contains it, but said
-directory is after /opt/local/bin in PATH.
-(type "echo $PATH" in the shell to see what's in PATH).
-
-I'd look in /usr/local/bin and /usr/local/git/bin to see if you can't
-find the newer git there.
-
-=46ailing that, please come back with an answer to the question "How,
-exactly, did you install it?" from my first reply and I'll see if I
-can help you further.
-
-// Ben
+diff --git a/help.c b/help.c
+index db888cf..fbf80d9 100644
+--- a/help.c
++++ b/help.c
+@@ -297,6 +297,9 @@ static void add_cmd_list(struct cmdnames *cmds, struct cmdnames *old)
+ 	old->names = NULL;
+ }
+ 
++/* how did we decide this is a good cutoff??? */
++#define SIMILAR_ENOUGH(x) ((x) < 6)
++
+ const char *help_unknown_cmd(const char *cmd)
+ {
+ 	int i, n, best_similarity = 0;
+@@ -331,7 +334,7 @@ const char *help_unknown_cmd(const char *cmd)
+ 	n = 1;
+ 	while (n < main_cmds.cnt && best_similarity == main_cmds.names[n]->len)
+ 		++n;
+-	if (autocorrect && n == 1 && best_similarity < 6) {
++	if (autocorrect && n == 1 && SIMILAR_ENOUGH(best_similarity)) {
+ 		const char *assumed = main_cmds.names[0]->name;
+ 		main_cmds.names[0] = NULL;
+ 		clean_cmdnames(&main_cmds);
+@@ -349,7 +352,7 @@ const char *help_unknown_cmd(const char *cmd)
+ 
+ 	fprintf(stderr, "git: '%s' is not a git-command. See 'git --help'.\n", cmd);
+ 
+-	if (best_similarity < 6) {
++	if (SIMILAR_ENOUGH(best_similarity)) {
+ 		fprintf(stderr, "\nDid you mean %s?\n",
+ 			n < 2 ? "this": "one of these");
+ 
