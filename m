@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 05/23] Teach ls-files and update-index to respect skip-worktree bit
-Date: Mon, 14 Dec 2009 17:30:48 +0700
-Message-ID: <1260786666-8405-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 08/23] Teach commit to respect skip-worktree bit
+Date: Mon, 14 Dec 2009 17:30:51 +0700
+Message-ID: <1260786666-8405-9-git-send-email-pclouds@gmail.com>
 References: <1260786666-8405-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,265 +10,132 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 14 11:33:36 2009
+X-From: git-owner@vger.kernel.org Mon Dec 14 11:33:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NK8FE-0007wL-5L
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 11:33:36 +0100
+	id 1NK8FJ-0007wL-57
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 11:33:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754919AbZLNKc3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2009 05:32:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbZLNKcZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 05:32:25 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:60353 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753073AbZLNKcU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2009 05:32:20 -0500
-Received: by mail-pw0-f42.google.com with SMTP id 9so1838737pwj.21
-        for <git@vger.kernel.org>; Mon, 14 Dec 2009 02:32:19 -0800 (PST)
+	id S1756193AbZLNKdN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2009 05:33:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753664AbZLNKci
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 05:32:38 -0500
+Received: from mail-px0-f174.google.com ([209.85.216.174]:62201 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756014AbZLNKce (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2009 05:32:34 -0500
+Received: by pxi4 with SMTP id 4so1691169pxi.33
+        for <git@vger.kernel.org>; Mon, 14 Dec 2009 02:32:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=A3yZtsjTaE0NJ4poLu0YPHpencrgF84CGV4b6VETp7k=;
-        b=NNMHzsEci2iU4IqR0elVYrcdrkwAvB95xVXBxCtJee3GZsteufJlkdIykO1xBCdmzC
-         6hEHFbRWNRqxsA7L+P0Ovxr5Lo9yhVnXpptkJswEFU4aD8TXUbdqw6KQaOeg2j+8me1l
-         dTdldIgnfDn1Y/eEkSH+rk6ftHGQ7anZyn5D4=
+        bh=MNh6D3PxBNS8ku6/1SCy8jSU2tFt8/EX0EV2CEEhhz0=;
+        b=wkjngx6Bp3BrgmdsvDO59Ax7XRrvS7nkPbTay6N0V1TuHV0IhwQdtGob51OJwzOiOG
+         e+85UOV1nkUmwUFgaRAHr/MRl0F9SNNOnyCqt1IFF67zmrxNWML+IDeDTVrL+IPtJeqP
+         h3Q33YqXKgYbpGdR9sz/IX5MUvc4rRLAqcKEA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=Thn4obM5ggH6q09mWmeWzoFRT791gNE3ac27OhJ6Du7UbBogPsmWPEcMdn9XKflXEo
-         AK3NYrM56/B7tNNY7r7o0h/RSJoMrW2LXLJialEP3u+7EUqUi44PlkzBPk9yeF8uNcU2
-         JMAYp6glgek8n3Hsu7DpV78NlQND3quc5MqQI=
-Received: by 10.141.187.19 with SMTP id o19mr3179402rvp.134.1260786739768;
-        Mon, 14 Dec 2009 02:32:19 -0800 (PST)
+        b=ezB6G8WFBtuFC59a5B11QsJ4Z7yG1eac2wTJqr9DO0QSegJk3uapoe2wzt04jHQ424
+         clw3Fg1vif4aD8FGRP8lHMMdkcYia2BjF7ZXe6UXnwfvaixyyk8oj0cza7oSnkrp2/kU
+         QMYsr8/6tXLSGuuXCk4EXQtMNeF0ZSAMfeRVg=
+Received: by 10.140.58.1 with SMTP id g1mr3191901rva.179.1260786754542;
+        Mon, 14 Dec 2009 02:32:34 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.233.253])
-        by mx.google.com with ESMTPS id 22sm4897686pzk.10.2009.12.14.02.32.17
+        by mx.google.com with ESMTPS id 23sm4910300pzk.12.2009.12.14.02.32.32
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 14 Dec 2009 02:32:19 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 14 Dec 2009 17:31:38 +0700
+        Mon, 14 Dec 2009 02:32:34 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 14 Dec 2009 17:31:53 +0700
 X-Mailer: git-send-email 1.6.5.2.216.g9c1ec
 In-Reply-To: <1260786666-8405-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135175>
 
+There is nothing much to do when the index is committed as-is. But
+when partial commit is used, the index will be reset to HEAD. This
+leads to loss of skip-worktree bits in the original index. Those bits
+are kept (for committed paths only) so git-commit will know which
+paths to ignore later on.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin-ls-files.c               |    2 +
- builtin-update-index.c           |   38 +++++++-----
- t/t7011-skip-worktree-reading.sh |  114 ++++++++++++++++++++++++++++++=
-++++++++
- 3 files changed, 138 insertions(+), 16 deletions(-)
- create mode 100755 t/t7011-skip-worktree-reading.sh
+ builtin-commit.c                 |   11 +++++++++--
+ t/t7011-skip-worktree-reading.sh |   12 ++++++++++++
+ 2 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index c1afbad..ad7e447 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -194,6 +194,8 @@ static void show_files(struct dir_struct *dir, cons=
-t char *prefix)
- 				continue;
- 			if (ce->ce_flags & CE_UPDATE)
- 				continue;
-+			if (ce_skip_worktree(ce))
-+				continue;
- 			err =3D lstat(ce->name, &st);
- 			if (show_deleted && err)
- 				show_ce_entry(tag_removed, ce);
-diff --git a/builtin-update-index.c b/builtin-update-index.c
-index 5e97d09..97b9ea6 100644
---- a/builtin-update-index.c
-+++ b/builtin-update-index.c
-@@ -172,29 +172,29 @@ static int process_directory(const char *path, in=
-t len, struct stat *st)
- 	return error("%s: is a directory - add files inside instead", path);
- }
-=20
--/*
-- * Process a regular file
-- */
--static int process_file(const char *path, int len, struct stat *st)
--{
--	int pos =3D cache_name_pos(path, len);
--	struct cache_entry *ce =3D pos < 0 ? NULL : active_cache[pos];
--
--	if (ce && S_ISGITLINK(ce->ce_mode))
--		return error("%s is already a gitlink, not replacing", path);
--
--	return add_one_path(ce, path, len, st);
--}
--
- static int process_path(const char *path)
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 4bcce06..9fe5c25 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -152,7 +152,7 @@ static int commit_index_files(void)
+ static int list_paths(struct string_list *list, const char *with_tree,
+ 		      const char *prefix, const char **pattern)
  {
--	int len;
-+	int pos, len;
- 	struct stat st;
-+	struct cache_entry *ce;
+-	int i;
++	static int i;
+ 	char *m;
 =20
- 	len =3D strlen(path);
- 	if (has_symlink_leading_path(path, len))
- 		return error("'%s' is beyond a symbolic link", path);
+ 	for (i =3D 0; pattern[i]; i++)
+@@ -164,11 +164,15 @@ static int list_paths(struct string_list *list, c=
+onst char *with_tree,
 =20
-+	pos =3D cache_name_pos(path, len);
-+	ce =3D pos < 0 ? NULL : active_cache[pos];
-+	if (ce && ce_skip_worktree(ce)) {
-+		/*
-+		 * working directory version is assumed "good"
-+		 * so updating it does not make sense.
-+		 * On the other hand, removing it from index should work
-+		 */
-+		if (allow_remove && remove_file_from_cache(path))
-+			return error("%s: cannot remove from the index", path);
-+		return 0;
-+	}
+ 	for (i =3D 0; i < active_nr; i++) {
+ 		struct cache_entry *ce =3D active_cache[i];
++		struct string_list_item *item;
 +
- 	/*
- 	 * First things first: get the stat information, to decide
- 	 * what to do about the pathname!
-@@ -205,7 +205,13 @@ static int process_path(const char *path)
- 	if (S_ISDIR(st.st_mode))
- 		return process_directory(path, len, &st);
+ 		if (ce->ce_flags & CE_UPDATE)
+ 			continue;
+ 		if (!match_pathspec(pattern, ce->name, ce_namelen(ce), 0, m))
+ 			continue;
+-		string_list_insert(ce->name, list);
++		item =3D string_list_insert(ce->name, list);
++		if (ce_skip_worktree(ce))
++			item->util =3D &i; /* better a valid pointer than a fake one */
+ 	}
 =20
--	return process_file(path, len, &st);
-+	/*
-+	 * Process a regular file
-+	 */
-+	if (ce && S_ISGITLINK(ce->ce_mode))
-+		return error("%s is already a gitlink, not replacing", path);
+ 	return report_path_error(m, pattern, prefix ? strlen(prefix) : 0);
+@@ -181,6 +185,9 @@ static void add_remove_files(struct string_list *li=
+st)
+ 		struct stat st;
+ 		struct string_list_item *p =3D &(list->items[i]);
+=20
++		if (p->util)
++			continue;
 +
-+	return add_one_path(ce, path, len, &st);
- }
-=20
- static int add_cacheinfo(unsigned int mode, const unsigned char *sha1,
+ 		if (!lstat(p->string, &st)) {
+ 			if (add_to_cache(p->string, &st, 0))
+ 				die("updating files failed");
 diff --git a/t/t7011-skip-worktree-reading.sh b/t/t7011-skip-worktree-r=
 eading.sh
-new file mode 100755
-index 0000000..ede3ee1
---- /dev/null
+index 2ec677a..5cf2cb8 100755
+--- a/t/t7011-skip-worktree-reading.sh
 +++ b/t/t7011-skip-worktree-reading.sh
-@@ -0,0 +1,114 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2008 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
-+#
-+
-+test_description=3D'skip-worktree bit test'
-+
-+. ./test-lib.sh
-+
-+cat >expect.full <<EOF
-+H 1
-+H 2
-+H init.t
-+H sub/1
-+H sub/2
-+EOF
-+
-+cat >expect.skip <<EOF
-+S 1
-+H 2
-+H init.t
-+S sub/1
-+H sub/2
-+EOF
-+
-+NULL_SHA1=3De69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-+ZERO_SHA1=3D0000000000000000000000000000000000000000
-+setup_absent() {
-+	test -f 1 && rm 1
-+	git update-index --remove 1 &&
-+	git update-index --add --cacheinfo 100644 $NULL_SHA1 1 &&
-+	git update-index --skip-worktree 1
-+}
-+
-+test_absent() {
-+	echo "100644 $NULL_SHA1 0	1" > expected &&
-+	git ls-files --stage 1 > result &&
-+	test_cmp expected result &&
-+	test ! -f 1
-+}
-+
-+setup_dirty() {
-+	git update-index --force-remove 1 &&
-+	echo dirty > 1 &&
-+	git update-index --add --cacheinfo 100644 $NULL_SHA1 1 &&
-+	git update-index --skip-worktree 1
-+}
-+
-+test_dirty() {
-+	echo "100644 $NULL_SHA1 0	1" > expected &&
-+	git ls-files --stage 1 > result &&
-+	test_cmp expected result &&
-+	echo dirty > expected
-+	test_cmp expected 1
-+}
-+
-+test_expect_success 'setup' '
-+	test_commit init &&
-+	mkdir sub &&
-+	touch ./1 ./2 sub/1 sub/2 &&
-+	git add 1 2 sub/1 sub/2 &&
-+	git update-index --skip-worktree 1 sub/1 &&
-+	git ls-files -t > result &&
-+	test_cmp expect.skip result
-+'
-+
-+test_expect_success 'update-index' '
+@@ -143,4 +143,16 @@ test_expect_success 'diff-files does not examine s=
+kip-worktree dirty entries' '
+ 	test -z "$(git diff-files -- one)"
+ '
+=20
++test_expect_success 'commit on skip-worktree absent entries' '
++	git reset &&
 +	setup_absent &&
-+	git update-index 1 &&
-+	test_absent
++	test_must_fail git commit -m null 1
 +'
 +
-+test_expect_success 'update-index' '
++test_expect_success 'commit on skip-worktree dirty entries' '
++	git reset &&
 +	setup_dirty &&
-+	git update-index 1 &&
-+	test_dirty
++	test_must_fail git commit -m null 1
 +'
 +
-+test_expect_success 'update-index --remove' '
-+	setup_absent &&
-+	git update-index --remove 1 &&
-+	test -z "$(git ls-files 1)" &&
-+	test ! -f 1
-+'
-+
-+test_expect_success 'update-index --remove' '
-+	setup_dirty &&
-+	git update-index --remove 1 &&
-+	test -z "$(git ls-files 1)" &&
-+	echo dirty > expected &&
-+	test_cmp expected 1
-+'
-+
-+test_expect_success 'ls-files --delete' '
-+	setup_absent &&
-+	test -z "$(git ls-files -d)"
-+'
-+
-+test_expect_success 'ls-files --delete' '
-+	setup_dirty &&
-+	test -z "$(git ls-files -d)"
-+'
-+
-+test_expect_success 'ls-files --modified' '
-+	setup_absent &&
-+	test -z "$(git ls-files -m)"
-+'
-+
-+test_expect_success 'ls-files --modified' '
-+	setup_dirty &&
-+	test -z "$(git ls-files -m)"
-+'
-+
-+test_done
+ test_done
 --=20
 1.6.5.2.216.g9c1ec
