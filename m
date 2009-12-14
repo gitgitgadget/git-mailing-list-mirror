@@ -1,99 +1,110 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: am fails to apply patches for files with CRLF lineendings
-Date: Mon, 14 Dec 2009 19:33:37 +0100
-Message-ID: <20091214183337.GA25462@atjola.homenet>
+From: B Smith-Mannschott <bsmith.occs@gmail.com>
+Subject: Re: git --version wrong
+Date: Mon, 14 Dec 2009 19:41:51 +0100
+Message-ID: <28c656e20912141041v3dbbbe3dh6a87f59aa2e789b9@mail.gmail.com>
+References: <26770625.post@talk.nabble.com>
+	 <28c656e20912132217u4e1aeb27y9b957c8e75210e9e@mail.gmail.com>
+	 <4b308ad10912140852k15b5b815ge77c54525634d454@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: jk@silentcow.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 14 19:33:51 2009
+Cc: git <git@vger.kernel.org>
+To: Brad Hutchins <oshybrid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 14 19:42:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKFjz-0005u4-3l
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 19:33:51 +0100
+	id 1NKFrq-0001XN-Bl
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 19:41:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753062AbZLNSdq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2009 13:33:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbZLNSdq
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 13:33:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57940 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750997AbZLNSdp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2009 13:33:45 -0500
-Received: (qmail invoked by alias); 14 Dec 2009 18:33:42 -0000
-Received: from i59F56AFC.versanet.de (EHLO atjola.homenet) [89.245.106.252]
-  by mail.gmx.net (mp050) with SMTP; 14 Dec 2009 19:33:42 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/e6iFJHZ3eBt/oGOdCzUQ/VHCu4NtOOksiibPBUQ
-	TKSjZO9RWzUhhb
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.51
+	id S1756355AbZLNSlx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2009 13:41:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756138AbZLNSlx
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 13:41:53 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:34926 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755876AbZLNSlw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Dec 2009 13:41:52 -0500
+Received: by ewy19 with SMTP id 19so3701885ewy.21
+        for <git@vger.kernel.org>; Mon, 14 Dec 2009 10:41:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=bFwYfqUbYEC0eJKyz3etKp/pB+BxV0o4hmwXONK8ZIc=;
+        b=akSMH4Fi/75AhoIUOqnJ5aeIULh93NtvXY9Qq21NkZsBbLFN2fL1lGri7H3fBXXGgb
+         RxvjwvgvVrDzLFEmbJ+MYAndVLHnarsQXRJVtAcFvsw8d/y8NJrKIlU/2MlK3I8j/nP8
+         kPlW4IsSpbCg8OPlddoYfg6o9xhky+PSv6QsU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Rcf7ERmaXEuq0EyzT3dxVqrCCvND+nUYXao0neoalcgI91bxtmu2PVL0hGo2vktmva
+         Xrn9+xVccxqR/PNU7K2/aK+lpbFjdYMQk+WbyDkPPjoL4l3wVaSekzcO029JlEwB0Su8
+         9ClzzmBCXQJ4ajimucWU+vetxaBJU3Tq3MSUo=
+Received: by 10.213.24.2 with SMTP id t2mr3919250ebb.6.1260816111163; Mon, 14 
+	Dec 2009 10:41:51 -0800 (PST)
+In-Reply-To: <4b308ad10912140852k15b5b815ge77c54525634d454@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135230>
 
-Hi,
+> On Sun, Dec 13, 2009 at 10:17 PM, B Smith-Mannschott <bsmith.occs@gma=
+il.com>
+> wrote:
+>>
+>> On Sun, Dec 13, 2009 at 23:51, oshybrid <oshybrid@gmail.com> wrote:
+>> >
+>> > After i Instal 1.6.5.5 my "git --version" =C2=A0still shows 1.6.0.=
+5
+>> >
+>>
+>> How, exactly, did you install it?
+>> What's the output when you type "which git" at the command line?
+>>
+>> // Ben
 
-Jason King (cc'd) reported that a patch for a file with CRLF lineending=
-s
-fails to apply, even if generated and applied in the same repo.
+On Mon, Dec 14, 2009 at 17:52, Brad Hutchins <oshybrid@gmail.com> wrote=
+:
+> /opt/local/bin/git
 
-doener@atjola:x $ git init
+Judging by the path, it looks like the git that is actually running on
+your machine was installed through macports. Is that accurate? The
+current version of git offered by macports, however, is 1.6.5.3
+<http://trac.macports.org/browser/trunk/dports/devel/git-core/Portfile>
+which is neither the version you are expecting, nor the version you
+actually have installed.
 
-doener@atjola:x (master) $ for x in $(seq 10); do echo -e "$x\r" >> foo=
-; done
-doener@atjola:x (master) $ vim foo
-doener@atjola:x (master) $ git add foo; git commit -m init
-[master (root-commit) b59b963] init
- 1 files changed, 10 insertions(+), 0 deletions(-)
- create mode 100644 foo
+Here's my guess, based on insufficient information:
 
-doener@atjola:x (master) $ sed -ie s/5/changed/ foo
-doener@atjola:x (master) $ git commit -am changed
-[master fe4ee44] changed
- 1 files changed, 1 insertions(+), 1 deletions(-)
+(1) You have macports package manager installed.
 
-doener@atjola:x (master) $ git format-patch HEAD^
-0001-changed.patch
+(2) It's been a while since you've updated it, so...
 
-doener@atjola:x (master) $ git checkout HEAD^
-Note: moving to 'HEAD^' which isn't a local branch
+(3) The git installed by macports is outdated (1.6.0.5)
 
-doener@atjola:x ((b59b963...)) $ git am 0001-changed.patch
-Applying: changed
-error: patch failed: foo:2
-error: foo: patch does not apply
-Patch failed at 0001 changed
-When you have resolved this problem run "git am --resolved".
-If you would prefer to skip this patch, instead run "git am --skip".
-To restore the original branch and stop patching run "git am --abort".
+(4) You tried to install git 1.6.5.5 via some other mechanism other
+than macports.  Maybe one of the stand-alone git installers floating
+around. Maybe you built it from source. I can't tell, because you
+haven't told me.
 
-Using "--whitespace=3Dfix" makes the patch apply, but converts the chan=
-ged
-line and the context area from CRLF to LF.
+(5) Where ever that install placed your new git, it wasn't in /opt/loca=
+l/bin
 
-Commit c2ca1d7 "Allow mailsplit ... to handle mails with CRLF line-endi=
-ngs"
-seems to be responsible. Using "git am --rebasing" to trigger the
---keep-cr flag to mailsplit makes things work:
+(6) Your PATH environment variable either does not contain the
+directory where the newer git is installed or it contains it, but said
+directory is after /opt/local/bin in PATH.
+(type "echo $PATH" in the shell to see what's in PATH).
 
-doener@atjola:x ((b59b963...)) $ git am --rebasing 0001-changed.patch
-Applying: changed
+I'd look in /usr/local/bin and /usr/local/git/bin to see if you can't
+find the newer git there.
 
-And reverting that commit also gives the expected whitespace warning
-(which is somehow squelched by the --rebasing flag it seems).
+=46ailing that, please come back with an answer to the question "How,
+exactly, did you install it?" from my first reply and I'll see if I
+can help you further.
 
-doener@atjola:x ((b59b963...)) $ git am 0001-changed.patch
-Applying: changed
-/home/doener/x/.git/rebase-apply/patch:14: trailing whitespace.
-changed
-warning: 1 line adds whitespace errors.
-
-Bj=F6rn
+// Ben
