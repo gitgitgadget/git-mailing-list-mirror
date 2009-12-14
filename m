@@ -1,90 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: am fails to apply patches for files with CRLF lineendings
-Date: Mon, 14 Dec 2009 12:34:34 -0800
-Message-ID: <7viqc9i9b9.fsf@alter.siamese.dyndns.org>
-References: <20091214183337.GA25462@atjola.homenet>
- <7vvdg9i9mn.fsf@alter.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Help: approach for rebasing to older commits after merging more 
+	recent commits
+Date: Mon, 14 Dec 2009 15:38:32 -0500
+Message-ID: <76718490912141238k4ca1ba55jeff928efe875f020@mail.gmail.com>
+References: <76718490912091204u3a4596fdi504005624d5a5bce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
-	jk@silentcow.com, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 14 21:34:53 2009
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Dec 14 21:38:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKHd7-00046M-A3
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 21:34:53 +0100
+	id 1NKHgn-0005q8-9g
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 21:38:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751327AbZLNUes convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2009 15:34:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751081AbZLNUes
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 15:34:48 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49550 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750905AbZLNUer convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Dec 2009 15:34:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B3A65A6BCC;
-	Mon, 14 Dec 2009 15:34:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=8xq6VWVerzB4
-	Qt/PYwvXN061epM=; b=ruTmxriMry00Ai7ielFoIHg+iZWX/dbMmJCYBauQuIup
-	MtWNknBRB70lVbEYCVFDKGKwha2buJkXmvhdDvrUje+i16JPlVCsyxaiBrtEvtBU
-	jgjt8SYgW9e23TpcV5bffFwOHQXFCfCVxSnYz5klfX/XVHnhKnTXtF653kcfCCc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ehYCsf
-	xJhyC8O+J4IEeonLcDgyv8MgMBoZydogLdBqCtNscA6iJw0N8EaA45kT7FFjdK+I
-	E4vyGTARwKkbjaRXWw+hQIZhcUA0lFqKAuuQJRgigFFtTECunhOOpSQuMd0zrs7m
-	SXPWCN/Iq6tkCf2X9jdzmYc0+bp1EkSYypSP0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 72C3EA6BC5;
-	Mon, 14 Dec 2009 15:34:42 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 92B6BA6BC0; Mon, 14 Dec 2009
- 15:34:35 -0500 (EST)
-In-Reply-To: <7vvdg9i9mn.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon\, 14 Dec 2009 12\:27\:44 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1BCF619A-E8F0-11DE-97B4-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1755060AbZLNUih convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2009 15:38:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754106AbZLNUif
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 15:38:35 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:60946 "EHLO
+	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753853AbZLNUid convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Dec 2009 15:38:33 -0500
+Received: by iwn1 with SMTP id 1so444789iwn.33
+        for <git@vger.kernel.org>; Mon, 14 Dec 2009 12:38:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=CmEtYTLL73p9diTlPpaWYPV2ynZNc+OOf6sWImTVl34=;
+        b=NDd6GiSMA38JlwpLp+trLJOtEEuTq5MCQFrIQvT9Erwae+++iKrs6F4Afyynp6QLbI
+         bpb2YPwdX/Rr2bgJeWA2msMW2GZNkT59F7RpXms3BcCU9ZCVNbMU8TZe76BCiHiJdhrt
+         MugS/vjsz0KYJVApWgF0LqvriEEw0/dmKE9HY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=wPZiyrdnf3OR6DJztBeHgIIu4b35lOKpyueIIxXbi27fXUHwxNR3UY2LKvm+MF9eTW
+         sW4kW/HdIVgBR01HgWVgBlg7zgfrD4ZedWTAIIhx5QkiGC/tBYmbdKhcRAHxnYNZdB8l
+         lWfhmCNqiYDoSKm2/JkBV+pVRE+ezLMffYuC8=
+Received: by 10.231.122.139 with SMTP id l11mr328550ibr.53.1260823112966; Mon, 
+	14 Dec 2009 12:38:32 -0800 (PST)
+In-Reply-To: <76718490912091204u3a4596fdi504005624d5a5bce@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135235>
 
-Junio C Hamano <gitster@pobox.com> writes:
+[He asks again...]
 
-> Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
->
->> Commit c2ca1d7 "Allow mailsplit ... to handle mails with CRLF line-e=
-ndings"
->> seems to be responsible.
->
-> Yes, that commit is not only responsible but was deliberate.  For a b=
-etter
-> backstory, see:
->
->   http://thread.gmane.org/gmane.comp.version-control.git/124718/focus=
-=3D124721
->
-> You'd notice that I was one of the people who didn't want to have thi=
-s
-> change, so you don't need to convince _me_ that this was not a change=
- to
-> keep everybody happy, but you'd need to try a better job than I did b=
-ack
-> then to convince people who thought that "am" should directly work on
-> "Thunderbird saved mails" that what they want was a bad idea X-<.
+I have an interesting problem I'm not sure how best to tackle.
 
-Having said that, I think you can tell "format-patch" to emit it as mim=
-e
-attachment to work this around.  It _might_ even make sense to do so
-automatically when the payload contains CRLF but that is a separate iss=
-ue.
+A small development team is basing its product on an upstream git repo =
+that is
+itself an svn clone. Currently the process looks like this:
+
+r1--r2--r3--r4--r5 =C2=A0 upstream trunk =C2=A0 (git svn clone)
+=C2=A0\ =C2=A0 =C2=A0 =C2=A0 \ =C2=A0 =C2=A0 =C2=A0 \
+=C2=A0A---B---C---D---E =C2=A0local trunk =C2=A0 =C2=A0 =C2=A0(git clon=
+e of upstream)
+=C2=A0 =C2=A0 =C2=A0 \ =C2=A0 =C2=A0 /
+=C2=A0 =C2=A0 =C2=A0 =C2=A0F---G =C2=A0 =C2=A0 =C2=A0 =C2=A0developerN =
+trunk (git clones of local)
+
+So local trunk has both daily merges from the local developers, as well=
+ as
+less periodic (typically weekly) merges from upstream trunk. The reason=
+ being
+that it is necessary to remain on top of the upstream bleeding edge.
+
+This works out okay, but there is a minor problem and a major problem.
+
+The minor problem is that the local trunk is cluttered with the develop=
+erN
+merges. That is easy to solve by having local developers rebase before =
+pushing
+to local trunk. That would look like:
+
+r1--r2--r3--r4--r5 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0upstream tr=
+unk
+=C2=A0\ =C2=A0 =C2=A0 =C2=A0 \ =C2=A0 =C2=A0 =C2=A0 \
+=C2=A0A---B---C---D---E---F'---G' =C2=A0local trunk
+
+The major problem is that local trunk is also cluttered with merges fro=
+m
+upstream. The is a problem because at some point in the future, upstrea=
+m
+is going to declare some rN as being officially blessed. And we're goin=
+g to
+want to rewind any rN changes past that point.
+
+So the question is, what's the best way to do this? Say r2 is blessed b=
+y
+upstream. The obvious thing to do (I think...) is:
+
+(local-trunk)$ git rebase -i r2
+
+removing C and E from the pick list.
+
+But, occassionally the merges from upstream require much conflict resol=
+ution.
+Would enabling rerere during merges help with the rebasing? I would wan=
+t to
+reuse as much conflict resolution as possible.
+
+Is there a better approach altogether? Should we be doing something oth=
+er
+than merging to stay atop upstream?
+
+Suggestions/comments greatly appreciated.
+
+j.
