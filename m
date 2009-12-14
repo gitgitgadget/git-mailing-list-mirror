@@ -1,139 +1,83 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 2/2] commit: correctly respect skip-worktree bit
-Date: Mon, 14 Dec 2009 18:43:59 +0700
-Message-ID: <1260791039-12316-2-git-send-email-pclouds@gmail.com>
-References: <1260791039-12316-1-git-send-email-pclouds@gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 2/2] Add gitk-git Hungarian translation
+Date: Mon, 14 Dec 2009 13:30:57 +0100
+Message-ID: <20091214123057.GL25474@genesis.frugalware.org>
+References: <1258284204-17247-1-git-send-email-djszapi@archlinux.us>
+ <19205.2740.244981.703612@cargo.ozlabs.ibm.com>
+ <a362e8010911220005u1783cd44yf84ae5bc5b42d980@mail.gmail.com>
+ <a362e8010911281833p58058a06sbe305d61709ac051@mail.gmail.com>
+ <a362e8010912131030v4c1ef231r7246d7291f6a5677@mail.gmail.com>
+ <20091213230305.GA8135@brick.ozlabs.ibm.com>
+ <7vskbejmrw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Mon Dec 14 12:45:01 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="wtjvnLv0o8UUzur2"
+Cc: Paul Mackerras <paulus@samba.org>,
+	Laszlo Papp <djszapi@archlinux.us>,
+	Laszlo Papp <djszapi2@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 14 13:31:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NK9MK-0003QU-Oc
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 12:45:01 +0100
+	id 1NKA58-0006EQ-7M
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 13:31:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756995AbZLNLoy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2009 06:44:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756993AbZLNLoy
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 06:44:54 -0500
-Received: from mail-pz0-f171.google.com ([209.85.222.171]:58796 "EHLO
-	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756987AbZLNLox (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2009 06:44:53 -0500
-Received: by pzk1 with SMTP id 1so2212996pzk.33
-        for <git@vger.kernel.org>; Mon, 14 Dec 2009 03:44:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=x/T6HbE9IrS01xoNkkukDh0BkfwqtTi9NtfhpZOtEUI=;
-        b=N6wPmA8Xe3brXETe4pr9lEGWJuZ0KDKmJt2tCARAecTLLPE6SSmCo52pFZc5MSjSjK
-         V9ZdQ8FIlvJtVYZYR/gOz4PZFe8t84SelXLxnBj2ccC+hdHMdNoRTzgPuPH8rfdNGWBO
-         AN+b4E03ZyYNXE0TThr/+Tnk9VIIxZyl5G97I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=f6kTYvY9U3hShE0qu56/VTvPZ+pZpVYaQMqNhBv+bGWg+LhuMPQTXmF4du5ILHWMDw
-         junyDg3Ou/Y84mh/JcbAVdJfo6KtYmRefLvNfiDAmM5iA86M30DOif/s4Zja1WUoQOGJ
-         C+2/3skZejRk0Zlj/OO17Xkymi/6JCERf+vFI=
-Received: by 10.141.15.10 with SMTP id s10mr3258777rvi.218.1260791092606;
-        Mon, 14 Dec 2009 03:44:52 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.233.253])
-        by mx.google.com with ESMTPS id 23sm4965193pzk.0.2009.12.14.03.44.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 14 Dec 2009 03:44:52 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 14 Dec 2009 18:44:10 +0700
-X-Mailer: git-send-email 1.6.5.2.216.g9c1ec
-In-Reply-To: <1260791039-12316-1-git-send-email-pclouds@gmail.com>
+	id S1751966AbZLNMbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2009 07:31:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750997AbZLNMbI
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 07:31:08 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:45046 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752088AbZLNMbA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2009 07:31:00 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 7AD9A58082;
+	Mon, 14 Dec 2009 13:30:58 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id C235644965;
+	Mon, 14 Dec 2009 13:30:57 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id A2FF41240014; Mon, 14 Dec 2009 13:30:57 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vskbejmrw.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135205>
 
-Commit b4d1690 (Teach Git to respect skip-worktree bit (reading part))
-fails to make "git commit -- a b c" respect skip-worktree
-(i.e. not committing paths that are skip-worktree). This is because
-when the index is reset back to HEAD, all skip-worktree information is
-gone.
 
-This patch saves skip-worktree information in the string list of
-committed paths, then reuse it later on to skip skip-worktree paths.
+--wtjvnLv0o8UUzur2
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin-commit.c                 |   11 +++++++----
- t/t7011-skip-worktree-reading.sh |    4 ++--
- 2 files changed, 9 insertions(+), 6 deletions(-)
+On Sun, Dec 13, 2009 at 06:46:11PM -0800, Junio C Hamano <gitster@pobox.com=
+> wrote:
+> Now, I don't read _any_ Hungarian, so it could very well be that my fix-up
+> is wrong and there shouldn't be any SP between two words in 'f=E1jlon bel=
+=FCl'
+> and 'm=E9g nincsenek'; if we hear from some Hungarian capable readers tha=
+t the
+> fix-up below makes sense, perhaps squashing it in would be the easiest way
+> to move forward?
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index a11e585..6e368f0 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -180,11 +180,15 @@ static int list_paths(struct string_list *list, c=
-onst char *with_tree,
-=20
- 	for (i =3D 0; i < active_nr; i++) {
- 		struct cache_entry *ce =3D active_cache[i];
-+		struct string_list_item *item;
-+
- 		if (ce->ce_flags & CE_UPDATE)
- 			continue;
- 		if (!match_pathspec(pattern, ce->name, ce_namelen(ce), 0, m))
- 			continue;
--		string_list_insert(ce->name, list);
-+		item =3D string_list_insert(ce->name, list);
-+		if (ce_skip_worktree(ce))
-+			item->util =3D item; /* better a valid pointer than a fake one */
- 	}
-=20
- 	return report_path_error(m, pattern, prefix ? strlen(prefix) : 0);
-@@ -196,10 +200,9 @@ static void add_remove_files(struct string_list *l=
-ist)
- 	for (i =3D 0; i < list->nr; i++) {
- 		struct stat st;
- 		struct string_list_item *p =3D &(list->items[i]);
--		int pos =3D index_name_pos(&the_index, p->string, strlen(p->string))=
-;
--		struct cache_entry *ce =3D pos < 0 ? NULL : active_cache[pos];
-=20
--		if (ce && ce_skip_worktree(ce))
-+		/* p->util is skip-worktree */
-+		if (p->util)
- 			continue;
-=20
- 		if (!lstat(p->string, &st)) {
-diff --git a/t/t7011-skip-worktree-reading.sh b/t/t7011-skip-worktree-r=
-eading.sh
-index e996928..bb4066f 100755
---- a/t/t7011-skip-worktree-reading.sh
-+++ b/t/t7011-skip-worktree-reading.sh
-@@ -148,13 +148,13 @@ test_expect_success 'git-rm succeeds on skip-work=
-tree absent entries' '
- 	git rm 1
- '
-=20
--test_expect_failure 'commit on skip-worktree absent entries' '
-+test_expect_success 'commit on skip-worktree absent entries' '
- 	git reset &&
- 	setup_absent &&
- 	test_must_fail git commit -m null 1
- '
-=20
--test_expect_failure 'commit on skip-worktree dirty entries' '
-+test_expect_success 'commit on skip-worktree dirty entries' '
- 	git reset &&
- 	setup_dirty &&
- 	test_must_fail git commit -m null 1
---=20
-1.6.5.2.216.g9c1ec
+Yeah, it make sense. Obviously Laszlo forgot to run 'make' in gitk-git
+before sending the patch. ;-)
+
+--wtjvnLv0o8UUzur2
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAksmMAEACgkQe81tAgORUJZdMACfUyFW9jTLM88XBvyiPDQf7lJt
+PiwAnRvLRjSoohzrGAuh9XBqKUbQVkxX
+=FQrP
+-----END PGP SIGNATURE-----
+
+--wtjvnLv0o8UUzur2--
