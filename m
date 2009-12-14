@@ -1,63 +1,62 @@
-From: Eric Paris <eparis@redhat.com>
-Subject: Re: git-reflog 70 minutes at 100% cpu and counting
-Date: Mon, 14 Dec 2009 16:56:30 -0500
-Message-ID: <1260827790.9379.59.camel@localhost>
-References: <1260822484.9379.53.camel@localhost>
-	 <20091214211142.GC9364@coredump.intra.peff.net>
-	 <1260825629.9379.56.camel@localhost>
-	 <20091214212343.GA11131@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] help.autocorrect: do not run a command if the command
+ given is junk
+Date: Mon, 14 Dec 2009 23:04:29 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0912142303270.4985@pacific.mpi-cbg.de>
+References: <4B263797.5070808@viscovery.net> <7v7hspjp3q.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0912142146590.4985@pacific.mpi-cbg.de> <7vocm1grdb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 14 22:56:54 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 14 23:04:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKIuR-0003VB-QW
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 22:56:52 +0100
+	id 1NKJ1e-0006qX-3r
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 23:04:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758426AbZLNV4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2009 16:56:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758419AbZLNV4f
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 16:56:35 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:48798 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758415AbZLNV4e (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2009 16:56:34 -0500
-Received: from int-mx08.intmail.prod.int.phx2.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com [10.5.11.21])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id nBELuWAM007537
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Mon, 14 Dec 2009 16:56:32 -0500
-Received: from [10.11.9.84] (vpn-9-84.rdu.redhat.com [10.11.9.84])
-	by int-mx08.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id nBELuVPd024159;
-	Mon, 14 Dec 2009 16:56:31 -0500
-In-Reply-To: <20091214212343.GA11131@coredump.intra.peff.net>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.21
+	id S1758604AbZLNWDp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2009 17:03:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758594AbZLNWDm
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 17:03:42 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50235 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758516AbZLNWDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2009 17:03:39 -0500
+Received: (qmail invoked by alias); 14 Dec 2009 21:59:50 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp068) with SMTP; 14 Dec 2009 22:59:50 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+L+fATrYWLwW1r1f8/ZEg1wVvlVVfkr9Q5hehLG9
+	whUfnbGTQ5eSr4
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vocm1grdb.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135246>
 
-On Mon, 2009-12-14 at 16:23 -0500, Jeff King wrote:
-> On Mon, Dec 14, 2009 at 04:20:29PM -0500, Eric Paris wrote:
-> 
-> > Updated to git-1.6.5.3-1 from Fedora rawhide and still git reflog ran
-> > for >5 minutes at 100% cpu (I killed it, it didn't finish)
-> > 
-> > I'm pushing a copy of the whole repo (all 1.9G after bzip compression)
-> > to
-> > 
-> > http://people.redhat.com/~eparis/git-tar/
-> 
-> Wowzers, that's big. Can you send just what's in .git?
+Hi,
 
-So I zipped up just .git   1.2G.  I did a make clean and zipped up the
-whole repo  1.3G.
+On Mon, 14 Dec 2009, Junio C Hamano wrote:
 
-Just started pushing the 1.3G file.
+> I somehow suspect that a good mathematician can come up with a rationale 
+> for 6 after the fact that sounds convincing, along the lines of "the 
+> average length of commands being N, and levenshtein penalties being 
+> <0,2,1,4>, you can insert X mistaken keystroke and/or omit Y mistaken 
+> keystroke per every correct keystroke without exceeding this value 6, 
+> and the percentage X and/or Y represents is not too low to be practical 
+> but low enough to reject false positives".
 
-Maybe having a .git directory that large is the problem?
+Being a mathematician, I was tempted to invent such a reasoning in 
+hindsight.
+
+But I decided to be truthful instead,
+Dscho
