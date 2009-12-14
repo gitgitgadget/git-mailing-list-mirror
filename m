@@ -1,56 +1,49 @@
-From: Jacob Helwig <jacob.helwig@gmail.com>
+From: Richard Rossel <rrossel@inf.utfsm.cl>
 Subject: Re: git gc logs to standard error
-Date: Mon, 14 Dec 2009 08:04:08 -0800
-Message-ID: <8c9a060912140804t409030b4g168014bd80a0b88c@mail.gmail.com>
+Date: Mon, 14 Dec 2009 13:10:25 -0300
+Message-ID: <4B266371.9040106@inf.utfsm.cl>
 References: <4B264F7B.8070504@inf.utfsm.cl> <200912141655.01268.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Richard Rossel <rrossel@inf.utfsm.cl>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Dec 14 17:04:36 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 14 17:10:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKDPX-0001RV-Fj
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 17:04:35 +0100
+	id 1NKDVN-0004Ij-TS
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 17:10:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757624AbZLNQEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2009 11:04:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757622AbZLNQEa
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 11:04:30 -0500
-Received: from mail-px0-f174.google.com ([209.85.216.174]:45516 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757619AbZLNQE3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2009 11:04:29 -0500
-Received: by pxi4 with SMTP id 4so1881870pxi.33
-        for <git@vger.kernel.org>; Mon, 14 Dec 2009 08:04:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=fXJSLxiztXfNAc4jt2//Esy0QZNvvEncAARI0qOkI+Y=;
-        b=F0OFCRKPdugcpzISZYFPDL4RCaA7fw4O/0+5Sy6+T/RqGNmbfh/xV83Tq53Aj7Ig/S
-         FZW4clXHnokBdGQux2TlpASCdlmti+2MBSqER54yn0qyNpQJ/lKC/sVdSe+FOSyuLOe/
-         WUcUqIkRBUiyb9y42Ryri0aHA9aDpg8682UsE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=YBBSfQP0+xYX5W6eiCxZ0E8rl2cysZl1RqmyW6wS6kmzQ/K7ClYQpaKwYvjjOOx9M3
-         cjESFbqQoU0bWmMtkWhEAk3pCAVovGv8tftnEGJSBgX/IG9XOzwSLhRR+eWuQ4mbgZfw
-         KzP+r4tiNqvlw5wvKwKwnCGgm6no6OqB3ALEA=
-Received: by 10.141.107.6 with SMTP id j6mr2474228rvm.3.1260806668448; Mon, 14 
-	Dec 2009 08:04:28 -0800 (PST)
+	id S1757672AbZLNQKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2009 11:10:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757668AbZLNQKc
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 11:10:32 -0500
+Received: from alegre.inf.utfsm.cl ([204.87.169.3]:56343 "EHLO
+	alegre.inf.utfsm.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757663AbZLNQKb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2009 11:10:31 -0500
+Received: from trompe.intra.wiseocean.cl (red-corfo.tecnoera.net [200.24.238.226] (may be forged))
+	(authenticated bits=0)
+	by alegre.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id nBEGAPgt006867
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Mon, 14 Dec 2009 13:10:25 -0300
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
 In-Reply-To: <200912141655.01268.johan@herland.net>
+X-Virus-Scanned: ClamAV 0.94.2/10164/Mon Dec 14 10:49:22 2009 on alegre.inf.utfsm.cl
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00,RDNS_NONE
+	autolearn=no version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on alegre.inf.utfsm.cl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135222>
 
-On Mon, Dec 14, 2009 at 07:55, Johan Herland <johan@herland.net> wrote:
+>
 > On Monday 14 December 2009, Richard Rossel wrote:
+>    
 >> Hi,
 >> I have a question related to the output of git gc logs. Let me
 >> explain,
@@ -64,26 +57,31 @@ On Mon, Dec 14, 2009 at 07:55, Johan Herland <johan@herland.net> wrote:
 >> error to /dev/null
 >> but what happens when an error really occur, there will be no message
 >> to alert me.
->
+>>      
 > Try the --quiet parameter to "git gc" (and other git commands).
 >
 >
 > ...Johan
 >
-> --
-> Johan Herland, <johan@herland.net>
-> www.herland.net
+>    
 
-I think the real problem that Richard is experiencing is that git
-fetch isn't respecting the --quiet option.  The output being similar
-to git gc, and also being on STDERR seems to be a red-herring.
 
-Richard,
+Yes,  the quiet option works when I do 'git gc', but in the cron file 
+there is no
+git-gc command, only fetch and reset. I suppose that  those commands 
+calls (internally)
+to git-gc.
+Also I try with -q option in fetch and reset but without results, the 
+only thing that
+works was with 2>/dev/null, but as I mention before, is not a good idea 
+because
+I will miss the real errors messages.
 
-What version of git are you using?
+The real question here is why git-gc send those logs to the standard 
+error instead of
+standard output?
 
-Also, what is the output from 'git fetch --q; echo $?' if you just run
-that in your repo?  If the last line you see is '0', then that should
-be the only output you see.
-
--Jacob
+--
+Richard Rossel
+Airsage Inc.
+Valparaiso - Chile
