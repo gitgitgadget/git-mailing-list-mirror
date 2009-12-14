@@ -1,57 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] help.autocorrect: do not run a command if the command 
- given is junk
-Date: Mon, 14 Dec 2009 15:17:29 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0912141516180.4985@pacific.mpi-cbg.de>
-References: <4B263797.5070808@viscovery.net> <81b0412b0912140529w4a15418ewf304b9d6f4c1f007@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 14 15:13:09 2009
+From: "Lhunath (Maarten B.)" <lhunath@gmail.com>
+Subject: Can't handle renamed resources on case insensitive filesystems.
+Date: Mon, 14 Dec 2009 15:27:30 +0100
+Message-ID: <63135FDB-C8EF-4DBC-AEF5-4B0636C8D349@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1077)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Dec 14 15:27:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKBfV-0007nG-1m
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 15:12:57 +0100
+	id 1NKBtk-00085j-Ej
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 15:27:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757345AbZLNOMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2009 09:12:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757323AbZLNOMw
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 09:12:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53606 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756318AbZLNOMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2009 09:12:52 -0500
-Received: (qmail invoked by alias); 14 Dec 2009 14:12:50 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp048) with SMTP; 14 Dec 2009 15:12:50 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX184R/s/qfI4/2mmcz0azXAdRJIJEC5hQ/sjF8zkJp
-	xR3gGZpyOAAV55
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <81b0412b0912140529w4a15418ewf304b9d6f4c1f007@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.73
+	id S1757436AbZLNO1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2009 09:27:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757433AbZLNO1f
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 09:27:35 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:53989 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757422AbZLNO1e convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Dec 2009 09:27:34 -0500
+Received: by ewy19 with SMTP id 19so3431516ewy.21
+        for <git@vger.kernel.org>; Mon, 14 Dec 2009 06:27:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:content-type
+         :content-transfer-encoding:subject:date:message-id:to:mime-version
+         :x-mailer;
+        bh=scNAbECmb6O+RwMvRjXQImSKCIbR1sL5radngTbhJtc=;
+        b=Fcx7iY8YGadnjyC7hi8Gmoqn2U8YrKQaBSVdZXNF9h8DoFmqA4IHAubJUHk23DCiFC
+         03OuCJN185FFOt7XaMZRb24i722Qby/bbGDG+58Prnu3bHe3qGZRs3Z3yl34NL9ENIZZ
+         +sEws0Gly+P41kUd0uuNJu0YYCM07daK9+46A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:content-type:content-transfer-encoding:subject:date:message-id
+         :to:mime-version:x-mailer;
+        b=HH0JnROtFvUXAaFhrgLZZigYffKa3zXwA/SsRrKyrRwhLVchLpnagLNERg/b3be8Qj
+         h73WagVLMcuFJKdJTZPkjO6OIfWTLg3zECxIOcaWkbSObgWZiWvtV/wSFRdX+9vtBwHb
+         V6oTglgOKrhgfiHkTT0+epw/suom5qITIz+zQ=
+Received: by 10.213.25.79 with SMTP id y15mr5758359ebb.78.1260800852672;
+        Mon, 14 Dec 2009 06:27:32 -0800 (PST)
+Received: from mbillemo.lin-k.net ([80.169.61.18])
+        by mx.google.com with ESMTPS id 10sm3958263eyz.31.2009.12.14.06.27.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 14 Dec 2009 06:27:32 -0800 (PST)
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135214>
 
-Hi,
+GIT has quite a few issues concerning renamed files on case insensitive filesystems, such as Mac OS X's default HFS+.
 
-On Mon, 14 Dec 2009, Alex Riesen wrote:
+For instance:
 
-> I don't use autocorrect myself apart from the testing. I assume Johannes 
-> doesn't, too
+lhunath@Myst t $ git mv Foo foo
+fatal: destination exists, source=Foo, destination=foo
 
-As a matter of fact, I do.  But my common mistakes are not in forgetting 
-the subcommand, rather in mispelign them.  So I never hit the problem.
+Moreover, when a repository contains Foo and foo in one commit and in a subsequent commit, "foo" is removed; "Foo" will also disappear when checking out the latter.
 
-Ciao,
-Dscho
+Most of these issues are likely just a result of the underlying file system's handling of GIT's commands; though considering that Mac OS X's default fs is case insensitive by default, and the Mac and Windows userbases combined are quite large; it might be very much appropriate to do a check for this (if needed) and handle renames (and other operations?) in a way that they would not cause conflicts on these file systems (eg. rename to a temporary filename first and then rename to destination).
+
+In particular; these issues make it awfully painful to refactor Java class names from things like JndiUtils -> JNDIUtils.  Not only is it hard to get the commit INTO the repository correctly; it is also hard to check the commit OUT for somebody who has no idea any of this is needed.
