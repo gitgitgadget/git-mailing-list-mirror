@@ -1,107 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [BUG] Bad msysgit/egit interaction over dotfiles
-Date: Mon, 14 Dec 2009 12:45:09 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0912141241000.4985@pacific.mpi-cbg.de>
-References: <20091208132857.GB5425@linagora.com>  <40aa078e0912080534x32fe9724xcda47ad46dbdb7c0@mail.gmail.com>  <4B1E57BF.1000500@pelagic.nl>  <40aa078e0912080623q108b2affk80534ccd5fd7ace3@mail.gmail.com>  <20091208143700.GC5425@linagora.com>
- <4B200EF5.2060606@gmail.com>  <20091210083514.GA5971@linagora.com> <40aa078e0912140113w23823058h4ca691963761d3be@mail.gmail.com>
+From: "Richard" <richard@webdezign.co.uk>
+Subject: RE: Undoing merges
+Date: Mon, 14 Dec 2009 11:42:02 -0000
+Message-ID: <8440EA2C12E50645A68C4AA98871665131D9AC@SERVER.webdezign.local>
+References: <8440EA2C12E50645A68C4AA98871665131D8D8@SERVER.webdezign.local> <vpqpr6pqrvq.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1666513806-1260791110=:4985"
-Cc: Yann Dirson <ydirson@linagora.com>,
-	Marius Storm-Olsen <mstormo@gmail.com>,
-	Ferry Huberts <ferry.huberts@pelagic.nl>,
-	GIT ml <git@vger.kernel.org>
-To: Erik Faye-Lund <kusmabite@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 14 12:40:39 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Dec 14 12:42:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NK9I6-0001jW-SH
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 12:40:39 +0100
+	id 1NK9Jk-0002Vz-78
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Dec 2009 12:42:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756754AbZLNLke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2009 06:40:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756292AbZLNLke
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 06:40:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54908 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756091AbZLNLkd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2009 06:40:33 -0500
-Received: (qmail invoked by alias); 14 Dec 2009 11:40:31 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp049) with SMTP; 14 Dec 2009 12:40:31 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+BDtAZGkGB9hpKOdF+1VGy/DYn8GDBQNKj6oRhoW
-	/WrCjVzWOETD46
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <40aa078e0912140113w23823058h4ca691963761d3be@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1756944AbZLNLmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2009 06:42:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756931AbZLNLmF
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 06:42:05 -0500
+Received: from mail.webdezign.co.uk ([213.123.201.79]:46645 "EHLO
+	webdezign.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756788AbZLNLmE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Dec 2009 06:42:04 -0500
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <vpqpr6pqrvq.fsf@bauges.imag.fr>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Undoing merges
+Thread-Index: Acp4LqD6hlnLFxlQSuiCz9gPZumegwEgkuUg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135202>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi again Matt,
 
---8323328-1666513806-1260791110=:4985
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+Thanks for the reply.
 
-Hi,
-
-On Mon, 14 Dec 2009, Erik Faye-Lund wrote:
-
-> On Thu, Dec 10, 2009 at 9:35 AM, Yann Dirson <ydirson@linagora.com> wrote:
->
-> > [discussion revolving around ".*" being marked hidden on Windows]
+> > Hi git list,
 > >
-> > But maybe the situation is not so clear.  That "hide dotfiles" was 
-> > implemented so that ".git" at first, and then ".git*" files do not 
-> > clutter the view of the project.  But then, if a git repo has other 
-> > dotfiles, those are really *part of* the versionned stuff, so I do not 
-> > see why those should be hidden at all.  After all, the .project, 
-> > .classpath, and other eclipse project files have that name on windows 
-> > too, and it will indeed *confuse* people to get them hidden.
-> >
-> > So should we have 2 classes of dotfiles, those "private to git", and
-> > the others, one class being hidden while the others are not ?  I am
-> > not sure at all this would be a good idea either.  Or maybe we should
-> > only get .git hidden - after all, that one is the only real metadata
-> > not part of the versionned stuff itself ?
-> >
-> > Maybe we should add some sort of "core.hidedotfiles = dotgitonly"
-> > setting, and make that the default ?  That one does not appear to
-> > cause any problems to jgit, and eclipse itself has not business with
-> > it, so it would IMHO make sense.
-> >
-> > Opinions ?
-> >
+> > I'm trying to find out how to undo a merge.
 > 
-> IF we were to go down this path, perhaps it would be even better to
-> use some sort of file-pattern or even squeeze this into gitattributes?
-> I guess something like ".* +hidden" should emulate the unix behaviour
-> (given that we add a hidden attribute). I don't think we have a global
-> gitattributes file though, so it'd have to be added to each repo where
-> the effect is desired, I guess.
+> When sitting on a merge commit,
+> 
+>   git reset --merge HEAD^
+> 
+> will undo this merge commit (i.e. pretend the merge has never
+> occurred, at least in your branch). Don't do that if you already
+> published this merge commit.
 
-Actually, I think the original request was really for all the dot files, 
-not just for .git.
+The problem that I'm far past the merge commit.
 
-But I can see the reasoning behind hiding only .git, which I would not 
-like to make the default, though.  I would like to make Eclipse users set 
-this explicitely in their /etc/gitconfig (possibly via the Git for Windows 
-installer, just like the infamous -- and still broken -- core.autocrlf 
-setting, if Sebastian is nice enough to make yet another page in the 
-installer).
+> > I know that my branches are independent and that I can just carry on
+> > working on them and merge again later, but I'm just trying to keep
+> > my revision graph tidier. Should I even be undoing merges?
+> 
+> If it's about cleaning up your history, "git rebase" is your friend,
+> too (with the same limitation: don't do that on published history). By
+> default, it does some kind of history flattening.
 
-So: I would definitely take a patch implementing "core.hidedotfiles = 
-dotgitonly", but would hesitate to make it the default.
+I had a look at the git-rebase man page and it showed to remove a commit
+from the middle of a range of commits. I think as I am on longer on the
+merge commit and cannot use "git reset --merge HEAD^", I can rebase all
+the commits from the commit just after the merge onto the commit just
+before the merge and that will remove the merge. Unfortunately I didn't
+get a change to try that out so I don't know whether it will work or
+not.
 
-Ciao,
-Dscho
-
---8323328-1666513806-1260791110=:4985--
+Richard
