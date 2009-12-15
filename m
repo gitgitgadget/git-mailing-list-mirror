@@ -1,62 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 03/23] Introduce "skip-worktree" bit in index, teach Git
-    to get/set this bit
-Date: Tue, 15 Dec 2009 08:20:49 +0100
-Message-ID: <4B2738D1.90002@viscovery.net>
-References: <1260786666-8405-4-git-send-email-pclouds@gmail.com> 	<20091214230619.GA30538@dr-wily.mit.edu> <fcaeb9bf0912141951l5bbb4baanb991354aa3f11ae4@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] octopus: make merge process simpler to follow
+Date: Mon, 14 Dec 2009 23:32:50 -0800
+Message-ID: <7v3a3c3d5p.fsf@alter.siamese.dyndns.org>
+References: <7vk4wrrkce.fsf@alter.siamese.dyndns.org>
+ <1260859755-3990-1-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Greg Price <price@ksplice.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 15 08:21:03 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>, Jari Aalto <jari.aalto@cante.net>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 15 08:33:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKRiN-0006su-VL
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Dec 2009 08:21:00 +0100
+	id 1NKRuE-0002Rv-6P
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Dec 2009 08:33:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756981AbZLOHU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Dec 2009 02:20:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756955AbZLOHUy
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Dec 2009 02:20:54 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:35385 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756949AbZLOHUw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Dec 2009 02:20:52 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NKRiD-0003d5-OQ; Tue, 15 Dec 2009 08:20:49 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 481DD1660F;
-	Tue, 15 Dec 2009 08:20:49 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <fcaeb9bf0912141951l5bbb4baanb991354aa3f11ae4@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1756683AbZLOHdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2009 02:33:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756607AbZLOHdJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Dec 2009 02:33:09 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44706 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751692AbZLOHdH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2009 02:33:07 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B58F6A7D0F;
+	Tue, 15 Dec 2009 02:33:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=B4SC4o9l9Nyee0GK1bUQrSTCcEk=; b=frppUa
+	zZrrB07GNNnwEUNj18uWGs7YImsNGe0QrCKfh7RhZMwTKtLmmi81W2Z6KNu4sh2U
+	+kgNJ8ruK6n2MX+Bcik422gX/p0NE9AlgPussR8FycN+JA2FrY8LWpfLowb4Xqn5
+	rkazd9jZsZPxsqkFLjNiXK43p+hpgphGZBHhM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Zsod+NjqZ2d1ZztHCxOvo7mcslveCdxp
+	mcz7v1sD7luJkEq6WYpbmqEMWUVYFD2C/wO90bHnKcIPzx19Efd3I1QruqNUysbw
+	adh16aHD35IjU/8cz1RqnbEK5f4rosY/Ic0vurN3NLCM0bl3IctpqJWxLZ6VHsEZ
+	kFLDeDDo1lc=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 73BBFA7D0C;
+	Tue, 15 Dec 2009 02:32:59 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D364FA7D08; Tue, 15 Dec 2009
+ 02:32:52 -0500 (EST)
+In-Reply-To: <1260859755-3990-1-git-send-email-bebarino@gmail.com> (Stephen
+ Boyd's message of "Mon\, 14 Dec 2009 22\:49\:15 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 11DF9798-E94C-11DE-911D-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135276>
 
-Nguyen Thai Ngoc Duy schrieb:
-> 2009/12/15 Greg Price <price@ksplice.com>:
->> I confess I can't tell how the skip-worktree bit does differ from
->> assume-unchanged.  Is its 'goal' different only in that you have a
->> different motivation for introducing it, or does it actually have a
->> different effect -- and what is that different effect?
-> 
-> On the fun side, you could use both bits in the same worktree, to
-> narrow your worktree and have some assume-unchanged files.
-> 
-> Another difference is that with assume-unchanged bit, you make a
-> promise to Git that those assume-unchanged files are "good", Git does
-> not have to care for them. If somehow you violate the promise, Git can
-> harm your files on worktree.
+Stephen Boyd <bebarino@gmail.com> writes:
 
-So, the difference is that skip-worktree will not overwrite a file that is
-different from the version in the index, but assume-unchanged can? Right?
+> Its not very easy to understand what heads are being merged given
+> the current output of an octopus merge. Fix this by replacing the
+> sha1 with the (usually) better description in GITHEAD_<SHA1>.
+>
+> Suggested-by: Jari Aalto <jari.aalto@cante.net>
+> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+> ---
+>
+> Thanks both. Here's a replacement. Let me know if you want a reroll.
 
--- Hannes
+Ah, thanks and sorry for having you do an extra work.  I amended the
+assignment further like thi,s but haven't got a chance to push the result out...
+
+	eval pretty_name=\${GITHEAD_$SHA1:-$SHA1}
