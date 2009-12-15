@@ -1,78 +1,151 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Giving command line parameter to textconv command?
-Date: Tue, 15 Dec 2009 09:23:06 -0800
-Message-ID: <7vy6l4179h.fsf@alter.siamese.dyndns.org>
-References: <20091215071735.6117@nanako3.lavabit.com>
- <7vvdg9ceud.fsf@alter.siamese.dyndns.org>
- <20091215170321.GB21322@coredump.intra.peff.net>
+From: Joey Hess <joey@kitenet.net>
+Subject: the 100 mb push
+Date: Tue, 15 Dec 2009 14:23:38 -0500
+Message-ID: <20091215192338.GA16654@gnu.kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 15 18:23:23 2009
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="Q68bSM7Ycu6FN28Q"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 15 20:34:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKb7L-00015d-DB
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Dec 2009 18:23:23 +0100
+	id 1NKdAP-0008G5-DA
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Dec 2009 20:34:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760659AbZLORXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Dec 2009 12:23:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760656AbZLORXS
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Dec 2009 12:23:18 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49094 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760655AbZLORXR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Dec 2009 12:23:17 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B5D22A72C2;
-	Tue, 15 Dec 2009 12:23:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iGl3LuRypQGyPqP7Zxn0PITOyLc=; b=QZrXyM
-	XJL6JjYF+Yp8T3lGIkPgZYVqAETynpJ8+Q6YEU034iQboVGJDgijI/rgrsU6EIxB
-	7gjlHsXFd/bN4Hfw/uYERcAzfh4j+At0ldl0PnBAzYZpS9vI5TA7iQxRR0XSjVjE
-	juhwUcfo94nnWCzPe/tI2vBOdzrUwP4EXt1R4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fiYyBKGI3xWgs4xKpLTqYIp4t5v/0Yhd
-	a13EpAGSpT0JDTReOz/UrRmztJZpxWd4sJJLUg7ZHDpKoNXREW7az0Fryg0An6PP
-	WC4oGkKqN6Wr/cfoDtBClg8bCe3bTxue98opgxPotv+cnN0wqpxXZ6li104XE3wB
-	EMfU6O8Kj9A=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 87B19A72C1;
-	Tue, 15 Dec 2009 12:23:13 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 11456A72C0; Tue, 15 Dec 2009
- 12:23:07 -0500 (EST)
-In-Reply-To: <20091215170321.GB21322@coredump.intra.peff.net> (Jeff King's
- message of "Tue\, 15 Dec 2009 12\:03\:21 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 864F704C-E99E-11DE-AD5C-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S933529AbZLOTea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2009 14:34:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933520AbZLOTe3
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Dec 2009 14:34:29 -0500
+Received: from wren.kitenet.net ([80.68.85.49]:41382 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933475AbZLOTe2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2009 14:34:28 -0500
+X-Greylist: delayed 645 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Dec 2009 14:34:28 EST
+Received: from gnu.kitenet.net (tn-76-5-155-2.dhcp.embarqhsd.net [76.5.155.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 4130A118FE4
+	for <git@vger.kernel.org>; Tue, 15 Dec 2009 14:23:41 -0500 (EST)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 575EC2981CE; Tue, 15 Dec 2009 14:23:38 -0500 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135293>
 
-Jeff King <peff@peff.net> writes:
 
-> [1] The current textconv interface is really nice for things like just
-> using "antiword" out of the box. But I wrote a new interface which can
-> be much faster: it calls the textconv filter with the blob name, and
-> then the filter is responsible for using cat-file to get at the blob.
-> This means the filter can look at only part of a blob (e.g., if we are
-> interested in the metadata tags at the beginning of a large media file),
-> and it can cache answers as it sees fit, avoiding access to the blob
-> entirely.
->
-> I need to polish the code a bit and submit it. Obviously this is not
-> meant to replace the existing textconv, but rather to supplement it, for
-> when "fast and inconvenient" is better than "slow and simple". What is
-> the best way to configure this? I can imagine "diff.*.textconvType =
-> fast", or also "diff.*.fastTextconv".
+--Q68bSM7Ycu6FN28Q
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-"diff.*.blobfilter"?
+Is it normal for git push to sometimes transfer much more data
+than seems necessary? Here is a case where that happens:
+
+joey@gnu:~/src/p.t>git branch
+* master
+  pristine-tar
+  testsuite
+joey@gnu:~/src/p.t>git remote show origin
+* remote origin
+  Fetch URL: ssh://joey@git.kitenet.net/srv/git/pristine-tar.test
+  Push  URL: ssh://joey@git.kitenet.net/srv/git/pristine-tar.test
+  HEAD branch: master
+  Remote branches:
+    master       tracked
+    pristine-tar tracked
+    testsuite    tracked
+  Local branches configured for 'git pull':
+    master       merges with remote master
+    pristine-tar merges with remote pristine-tar
+    testsuite    merges with remote testsuite
+  Local refs configured for 'git push':
+    master       pushes to master       (fast forwardable)
+    pristine-tar pushes to pristine-tar (up to date)
+    testsuite    pushes to testsuite    (local out of date)
+
+Here, master is a typical small project branch. It has a 1 line change
+made locally.
+
+Meanwhile, the testsuite branch is a 100+ mb monster, containing a lot
+of big binaries. In it, a small change has been made in the origin
+repo. In the local repo, a *lot* of *big* files have been deleted from
+the same branch, about 20 mb of files were removed all told. But the diff
+for this change should be quite small.
+
+So, testsuite needs to be merged before it can be pushed, but git push
+doesn't tell me that. Instead, it goes off and does this for 2+ hours:
+
+joey@gnu:~/src/p.t>git push
+Counting objects: 241, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (206/206), done.
+Writing objects:  15% (36/237), 2.16 MiB | 15 KiB/s=20
+^C
+
+It seems to be uploading the entire repo over the wire, and this is a
+typical asymmetric network connection, so that goes slow. (Took me a
+while to realize it was not just auto-gcing the repo locally.)
+
+Once I realized what was going on, it was easy to merge it as shown
+below, and then the push transferred an appropriatly small amount of data.
+So, my question is, assuming this is not a straight up bug in git, would
+it make sense to avoid this gotcha in some way?
+
+joey@gnu:~/src/p.t2>git checkout testsuite
+Switched to branch 'testsuite'
+Your branch is ahead of 'origin/testsuite' by 1 commit.
+joey@gnu:~/src/p.t2>git pull
+remote: Counting objects: 5, done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 2), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+=46rom ssh://git.kitenet.net/srv/git/pristine-tar.test
+   3c16948..fce7ec1  testsuite  -> origin/testsuite
+Merge made by recursive.
+ Makefile |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+joey@gnu:~/src/p.t2>git push
+Counting objects: 13, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 889 bytes, done.
+Total 8 (delta 5), reused 0 (delta 0)
+To ssh://joey@git.kitenet.net/srv/git/pristine-tar.test
+   aab45a1..cc93945  master -> master
+   fce7ec1..d82f225  testsuite -> testsuite
+
+git version 1.6.5.3
+
+--=20
+see shy jo
+
+--Q68bSM7Ycu6FN28Q
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQIVAwUBSyfiN8kQ2SIlEuPHAQhmBw//eX1wW8te9WwJti4fCqO6D9OwJU/kbVVK
+tqrVf4kmjDlUD0eJLmo4T249TSqejEjq3E6ETSjzXeL2Odf7fprBgQYX1pshFIVI
+vuVT5jnvOlzkgjW8kYKnmGJWUjlrtkK5uY7VXYS0iOymIhtWFX4dyhadiaQvX0+H
+2Du4uLtYWInaBV2944Z4d3Wxct1M4xiG2L1zrDP+hbGsnX3OSKO5EbX5hr2EeDas
++beHi8W4SjjRNU93a4ReRuqeaU6eFNGStPgt1RBnfgExWNsUJxhI1fIg1beB8GHD
+oDlOrydakG3i5wu55fPP5r5iFViFH8mFHELVr4rqjxZnh798x7CJPvw3vFJDhKZI
+NiMioxbrM2Jt5quCsE60aYWseIb3WzqDRe//ct+bNExSWML0l/tFR4v0Ql/j91qJ
+tyYyPgcRHedxfbjp3eVUiXlboz/iVj7B35wn3KSFvoRsjXznxxBlJmAkCYGIhED6
+IYx1o25v2W1+ddKIGKwhmp9NDv7fGQgAnlBAI0AZCDKFZr9dvdkM/MGwVGIsXNoM
+Gke5iYWiQDEnAE73QFfcUmvDCrU3K0jsiFqBoGWZKKXHticFnkJQRo4TWnp4PCus
+1LinAD7aSR+JzgSU6fT4O/EO7ToQ2ONUUJw1rfKguDgzlEfV+V0r0DuAGb4RatRM
+s+O8hEgyZZs=
+=tTDG
+-----END PGP SIGNATURE-----
+
+--Q68bSM7Ycu6FN28Q--
