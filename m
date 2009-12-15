@@ -1,88 +1,55 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Generic filters for git archive?
-Date: Tue, 15 Dec 2009 14:06:54 +0100
-Message-ID: <4B2789EE.1030104@lsrfire.ath.cx>
-References: <f9d2a5e10912071706m10ed7112ob7db47cdfac510d6@mail.gmail.com>	 <4B202945.50200@lsrfire.ath.cx> <f9d2a5e10912142308o50c8b9edy63bb485658c93a03@mail.gmail.com>
+From: Laszlo Papp <djszapi@archlinux.us>
+Subject: TortoiseGIT
+Date: Tue, 15 Dec 2009 16:41:04 +0100
+Message-ID: <a362e8010912150741x2c39c01bh1f64e669726dafab@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Russ Dill <russ.dill@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 15 14:07:35 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 15 16:41:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKX7m-0005zA-68
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Dec 2009 14:07:34 +0100
+	id 1NKZWV-0008R1-7g
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Dec 2009 16:41:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759503AbZLONH2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Dec 2009 08:07:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759464AbZLONH2
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Dec 2009 08:07:28 -0500
-Received: from india601.server4you.de ([85.25.151.105]:53293 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759435AbZLONH1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Dec 2009 08:07:27 -0500
-Received: from [10.0.1.101] (p57B7CC50.dip.t-dialin.net [87.183.204.80])
-	by india601.server4you.de (Postfix) with ESMTPSA id 6AE9E2F8045;
-	Tue, 15 Dec 2009 14:07:24 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
-In-Reply-To: <f9d2a5e10912142308o50c8b9edy63bb485658c93a03@mail.gmail.com>
+	id S1752241AbZLOPlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2009 10:41:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750951AbZLOPlJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Dec 2009 10:41:09 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:39090 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750850AbZLOPlH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2009 10:41:07 -0500
+Received: by yxe17 with SMTP id 17so3740306yxe.33
+        for <git@vger.kernel.org>; Tue, 15 Dec 2009 07:41:04 -0800 (PST)
+Received: by 10.101.132.11 with SMTP id j11mr8037557ann.142.1260891664428; 
+	Tue, 15 Dec 2009 07:41:04 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135286>
 
-Am 15.12.2009 08:08, schrieb Russ Dill:
-> hmm..It does seem to be running. But I'd really like to use the
-> gitattributes from the tagged version I'm exporting and I don't want
-> the smudge filter to run on files I'm working on in my source tree,
-> just on the export.
+Hello,
 
-This seems to work here:
+I had got a problem in the past with cr + lf between windows and linux
+client(maybe now too).
+I heard that from more experienced users I need to set autocrlf +
+safecrlf on windows, and core.autocrlf false on linux (which is the
+default), but If I set core.autocrlf true on linux too, it worked
+normally, after a git pull on windows I don't see any modified file
+that should be committed, not the case in core.autocrlf false.
 
-   $ git version
-   git version 1.6.3.3
+Could someone explain this habbit of git, please ?
 
-   $ mkdir /tmp/x
-   $ cd /tmp/x
-   $ git init
-   Initialized empty Git repository in /tmp/x/.git/
+Everybody said I need to set autocrlf for false, but it doesn't work
+so, just with true on linux client, what do I do wrong ?
+It's okay now for me, because it works without any problem, I just
+don't understand the behaviour of it, and I don't know whether it will
+cause further problems.
 
-   $ echo sc >a
-   $ git add a
+Thanks in advance!
 
-   $ echo '#!/bin/sh' >f
-   $ echo 'sed "s/sc/Santa Claus/"' >>f
-   $ chmod 755 f
-   $ git config filter.sc.smudge ./f
-
-   $ echo 'a filter=3Dsc' >.gitattributes
-   $ git add .gitattributes
-
-   $ git commit -m.
-   [master (root-commit) 57f6bef] .
-    2 files changed, 2 insertions(+), 0 deletions(-)
-    create mode 100644 .gitattributes
-    create mode 100644 a
-
-   $ rm .gitattributes
-
-   $ git archive --prefix=3Dx HEAD | tar xf - xa
-   $ cat xa
-   Santa Claus
-
-   $ git archive --prefix=3Dy --worktree-attributes HEAD | tar xf - ya
-   $ cat ya
-   sc
-
-The first archive call uses the committed .gitattributes file and runs
-the file through the smudge filter.  The second one uses the worktree
-version, which doesn't exist, so no filtering occurs.
-
-What commands do you use?
-
-Thanks,
-Ren=C3=A9
+Best Regards,
+Laszlo Papp
