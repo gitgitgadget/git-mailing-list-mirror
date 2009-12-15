@@ -1,77 +1,125 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH 2/2] read-tree: at least one tree-ish argument is required
-Date: Tue, 15 Dec 2009 09:43:38 +0100
-Message-ID: <4B274C3A.4060808@viscovery.net>
-References: <4B274BDE.8000504@viscovery.net>
+From: Jiri Slaby <jirislaby@gmail.com>
+Subject: potential null dereference
+Date: Tue, 15 Dec 2009 13:41:01 +0100
+Message-ID: <4B2783DD.5060301@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-2
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 15 09:43:57 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 15 13:41:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKT0e-0003Hd-52
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Dec 2009 09:43:56 +0100
+	id 1NKWiH-0003kU-9y
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Dec 2009 13:41:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752579AbZLOInm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Dec 2009 03:43:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751961AbZLOInm
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Dec 2009 03:43:42 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:47053 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751757AbZLOInl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Dec 2009 03:43:41 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NKT0N-0006WD-6G; Tue, 15 Dec 2009 09:43:39 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id F11931660F;
-	Tue, 15 Dec 2009 09:43:38 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <4B274BDE.8000504@viscovery.net>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1751628AbZLOMlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2009 07:41:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750902AbZLOMlH
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Dec 2009 07:41:07 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:46395 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750850AbZLOMlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2009 07:41:03 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so398543fga.1
+        for <git@vger.kernel.org>; Tue, 15 Dec 2009 04:41:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=z+kHNU/i9E+BOWuYh3486MJG5wcHioplljuFvAEe7SM=;
+        b=UYfaUqkuxx+nrcHerjDdzz+LJDKeFNyfNRMS9KBc0UIcOIhXvAnLGkhZdn/7XXUMkL
+         ucJ1UPTOvmvd+GfkBNJMVGTwehJveBzaS4bixVrT6/z2RHK6x80Y/0ho2zsrBqg6WJTN
+         AuT4IHmyGntpNUYUQvl49/XTA1P0ZyokNWGjQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        b=S92GJkMForK3ZthGQbnaA28dqo6ZMRU6t/LmO6UcxzBffY+P2PNDiZjRtcs+zVdVCw
+         /sHqHwVsXoc50qHOnsMMUZkzOQ1vLTDUqSiLE0khWeHAlErDEx1T4um6DtUpZCj1O3Rn
+         ytErbw5inAL7oWJIxnBAhnkJgvliva2utifys=
+Received: by 10.87.38.33 with SMTP id q33mr138767fgj.3.1260880862495;
+        Tue, 15 Dec 2009 04:41:02 -0800 (PST)
+Received: from ?192.168.2.129? ([217.66.174.142])
+        by mx.google.com with ESMTPS id d8sm13155771fga.18.2009.12.15.04.41.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 15 Dec 2009 04:41:02 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; cs-CZ; rv:1.9.1.5) Gecko/20091130 SUSE/3.0.0-13.1 Thunderbird/3.0
+X-Enigmail-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135284>
 
-From: Johannes Sixt <j6t@kdbg.org>
+Hi,
 
-Previously, it was possible to run read-tree without any arguments,
-whereupon it purged the index!
+Stanse found the following error in unpack-trees.c:
+dereferencing NULL pointer here.[. * o src_index]
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- Discovered by typing
+int unpack_trees(unsigned len, struct tree_desc *t, struct
+unpack_trees_options *o)
+{
+ int ret;
+ static struct cache_entry *dfc;
+...
+ if (o->src_index) {                   <-- loc0
+  o->result.timestamp.sec = o->src_index->timestamp.sec;
+  o->result.timestamp.nsec = o->src_index->timestamp.nsec;
+ }
+ o->merge_size = len;
 
-   git ..daab02
+ if (!dfc)
+  dfc = xcalloc(1, ((1 + (0) + 8) & ~7));
+ o->df_conflict_entry = dfc;
 
- with help.autocorrect > 0 :-)
+ if (len) {
+...
+ }
 
- -- Hannes
+ if (o->merge) {
+  while (o->pos < o->src_index->cache_nr) { <-- here
 
- builtin-read-tree.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+It triggers, because there is a test for o->src_index being NULL at
+loc0, but here, it is dereferenced without a check. Can this happen
+(e.g. does o->merge != NULL imply o->src_index != NULL)?
 
-diff --git a/builtin-read-tree.c b/builtin-read-tree.c
-index 50413ca..31623b9 100644
---- a/builtin-read-tree.c
-+++ b/builtin-read-tree.c
-@@ -125,6 +125,9 @@ int cmd_read_tree(int argc, const char **argv,
- 		stage = opts.merge = 1;
- 	}
 
-+	if (argc == 0)
-+		usage_with_options(read_tree_usage, read_tree_options);
-+
- 	for (i = 0; i < argc; i++) {
- 		const char *arg = argv[i];
 
+
+
+
+Further, there is a warning in log-tree.c:
+pointer always points to valid memory here, but checking for not
+NULL.[parents]
+
+static int log_tree_diff(struct rev_info *opt, struct commit *commit,
+struct log_info *log)
+{
+ int showed_log;
+ struct commit_list *parents;
+ unsigned const char *sha1 = commit->object.sha1;
+
+ if (!opt->diff && !((&opt->diffopt)->flags & (1 << 14)))
+  return 0;
+
+
+ parents = commit->parents;
+ if (!parents) {            <-- loc0
+  if (opt->show_root_diff) {
+   diff_root_tree_sha1(sha1, "", &opt->diffopt);
+   log_tree_diff_flush(opt);
+  }
+  return !opt->loginfo;     <-- loc1
+ }
+
+ if (parents && parents->next) { <-- here
+
+I.e. if parents was NULL at loc0, we escaped at loc1. But we check
+parents against NULL here again.
+
+thanks,
 -- 
-1.6.6.rc1.46.g1635
+js
