@@ -1,158 +1,107 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Fwd: am fails to apply patches for files with CRLF lineendings
-Date: Mon, 14 Dec 2009 20:09:46 -0600
-Message-ID: <ee63ef30912141809k27bc73edp20abddd5e9c7c063@mail.gmail.com>
-References: <20091214183337.GA25462@atjola.homenet>
-	 <7vvdg9i9mn.fsf@alter.siamese.dyndns.org>
-	 <tCQlJn153g8Oa6Z9HKe6xOUQJdcf2PCIVthlTrLgYE-wJ5jFyXVXWw@cipher.nrlssc.navy.mil>
-	 <7vhbrtdtth.fsf@alter.siamese.dyndns.org>
-	 <ee63ef30912141650ie05baf4kab8505adf160c62e@mail.gmail.com>
+From: Eric Paris <eparis@redhat.com>
+Subject: Re: git-reflog 70 minutes at 100% cpu and counting
+Date: Mon, 14 Dec 2009 21:11:51 -0500
+Message-ID: <1260843111.9379.86.camel@localhost>
+References: <1260822484.9379.53.camel@localhost>
+	 <20091214211142.GC9364@coredump.intra.peff.net>
+	 <1260825629.9379.56.camel@localhost>
+	 <20091214212343.GA11131@coredump.intra.peff.net>
+	 <1260827790.9379.59.camel@localhost>
+	 <alpine.LFD.2.00.0912141924030.23173@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 15 03:10:03 2009
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Tue Dec 15 03:12:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKMrQ-00032y-JD
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Dec 2009 03:10:00 +0100
+	id 1NKMtQ-0003f0-Jd
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Dec 2009 03:12:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758772AbZLOCJv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2009 21:09:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758447AbZLOCJu
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 21:09:50 -0500
-Received: from mail-px0-f174.google.com ([209.85.216.174]:48194 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758853AbZLOCJt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Dec 2009 21:09:49 -0500
-Received: by pxi4 with SMTP id 4so2247242pxi.33
-        for <git@vger.kernel.org>; Mon, 14 Dec 2009 18:09:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=tuvpX439/LDEyTusNTdYyWTOREEkkmFpqQk30YzR0yk=;
-        b=pSTkuuquVH/2lzMtgh4/MRiwWeLBRbGEHiVtx5tL8Q+utCn51omkqxVhBAjQcmGceN
-         6mG3E9eGZr6TNyNfF4W4VE2+poiKLJMgT4zdsz46rIHCCgk471xjNSNY3VQlmk1q6lN5
-         tzmYGDlXcsE3J/b63OuybjNVVrSDVTA6q5WZA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=tY1U7oQ9pAX5kthjnZoTVrVYkKVXQ04KJzRZyWYMpfJG+VtcDA96fbCUfLSpeyPWSp
-         rBWaxkr7inrr93vL3302RU9dkk6kW3/Xun3RHI63dAUMAd7L2AMaynIH84cro13vWogy
-         0S5k7Cl4fYi2gDcSEtsty7NPkkZc7wtNef8eM=
-Received: by 10.114.237.30 with SMTP id k30mr3815255wah.102.1260842986817; 
-	Mon, 14 Dec 2009 18:09:46 -0800 (PST)
-In-Reply-To: <ee63ef30912141650ie05baf4kab8505adf160c62e@mail.gmail.com>
+	id S1758589AbZLOCL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2009 21:11:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758231AbZLOCL5
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Dec 2009 21:11:57 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:52188 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756885AbZLOCL4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2009 21:11:56 -0500
+Received: from int-mx04.intmail.prod.int.phx2.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.17])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id nBF2Bqti032535
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Mon, 14 Dec 2009 21:11:52 -0500
+Received: from [10.11.9.84] (vpn-9-84.rdu.redhat.com [10.11.9.84])
+	by int-mx04.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id nBF2Bpp4026515;
+	Mon, 14 Dec 2009 21:11:51 -0500
+In-Reply-To: <alpine.LFD.2.00.0912141924030.23173@xanadu.home>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.17
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135261>
 
-=46orwarding to the list.  The original was bounced since gmail sent a
-multipart mime version with html.  Seems we can't disable html
-composing in the gmail settings anymore (I thought we used to be able
-to).
+On Mon, 2009-12-14 at 19:26 -0500, Nicolas Pitre wrote:
+> On Mon, 14 Dec 2009, Eric Paris wrote:
+> 
+> > On Mon, 2009-12-14 at 16:23 -0500, Jeff King wrote:
+> > > On Mon, Dec 14, 2009 at 04:20:29PM -0500, Eric Paris wrote:
+> > > 
+> > > > Updated to git-1.6.5.3-1 from Fedora rawhide and still git reflog ran
+> > > > for >5 minutes at 100% cpu (I killed it, it didn't finish)
+> > > > 
+> > > > I'm pushing a copy of the whole repo (all 1.9G after bzip compression)
+> > > > to
+> > > > 
+> > > > http://people.redhat.com/~eparis/git-tar/
+> > > 
+> > > Wowzers, that's big. Can you send just what's in .git?
+> > 
+> > So I zipped up just .git   1.2G.  I did a make clean and zipped up the
+> > whole repo  1.3G.
+> > 
+> > Just started pushing the 1.3G file.
+> > 
+> > Maybe having a .git directory that large is the problem?
+> 
+> Shouldn't be, unless your repo is really badly packed.
+> 
+> What's the output of 'git count-objects -v' ?
+
+count: 87065
+size: 866744
+in-pack: 1203497
+packs: 148
+size-pack: 976474
+prune-packable: 1611
+garbage: 0
 
 
----------- Forwarded message ----------
-=46rom: Brandon Casey <drafnel@gmail.com>
-Date: Mon, Dec 14, 2009 at 6:50 PM
-Subject: Re: am fails to apply patches for files with CRLF lineendings
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>, Bj=C3=B6rn
-Steinbrink <B.Steinbrink@gmx.de>, jk@silentcow.com,
-git@vger.kernel.org
+It's not home movies   :)  .  It's a kernel trees with about 5
+'upstream' trees that are remotes, which I update daily.  One of the
+remotes constantly rebases every day starting with Linus' tree and
+pulling in about 150+ branches of work from others all of which might
+rebase.  I have (needlessly) the tags he keeps of that repo every day.
+I daily rebase my work on top of that constantly rebasing tree
+(linux-next) using stgit.
 
+I noticed just blindly poking at sizes in my .git/object/pack that the
+largest pack is a lot larger than the second and third largest....
 
-On Mon, Dec 14, 2009 at 5:22 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->
-> Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil> writes:
->
-> > My understanding of the problem is that rfc2822 dictates that...
->
-> I think the fundamental problem is that what MUA uses as the internal
-> storage format doesn't necessarily have to even be RFC-2822, which on=
-ly
-> specifies what should be on-the-wire.
+-r--r--r-- 1 paris paris 108031039 Feb 12  2009 pack-71a9c0f08c76b8ffd1cf0a14d7cfe991fbc9db80.pack
+-r--r--r-- 1 paris paris  32670479 Apr  7  2009 pack-5c8333301012d9b70d70648b287cf540afcc63ed.pack
+-r--r--r-- 1 paris paris  26728958 Dec 30  2008 pack-fb8ceb5a33d9881fe771860c6006f55f73ecdf65.pack
 
-If CRLF is what is on-the-wire, how can the MUA tell whether the
-original was also CRLF or whether it was only LF?=C2=A0 My assumption w=
-as
-that the MUA cannot tell, and that things worked for most people
-because those people who wanted LF terminated output were on platforms
-that used LF termination and their MUA produced output using the
-native line termination.=C2=A0 Things broke recently for some people si=
-nce
-thunderbird devels decided to start saving emails with CRLF
-termination on linux.
+And all total there is almost 1G of data in .git/object/pack
 
->
-> =C2=A0The blamed commit took things too
-> far.
->
-> It actually is the norm to use LF as the line terminator in the body =
-text
-> in saved messages (and trailing CR as a true part of the payload), an=
-d
-> "am" traditionally used that definition. =C2=A0It is meant to read fr=
-om "mbox"
-> format to begin with.
+If the answer really is that I just have too much data and it can't be
+handled, I'm fine exporting my patches getting some clean trees and
+starting over till I get in this situation again, but if it really is a
+problem/bug that can be solved, the full tar ball of my repo is at
 
-But isn't each email in the mbox file supposed to be RFC-2822
-formatted anyway?=C2=A0 If so, then my reading of RFC-2822 says that th=
-ere
-should only be CRLF everywhere and no bare CR or bare LF.=C2=A0 But may=
-be
-everyone has just been ignoring that part of RFC-2822?=C2=A0 I'm not an
-email expert, so I really don't know.
+http://people.redhat.com/~eparis/git-tar/
 
->
-> Before the blamed commit, "am" took what was given literally, and it
-> treated the trailing CR as part of the payload in a text file, each o=
-f
-> whose line is LF terminated. =C2=A0This meant that if you sent and yo=
-ur MUA
-> didn't corrupt, or more importantly if you ran format-patch yourself =
-to
-> produce a patch on content with CRLF line endings and fed it to am wi=
-thout
-> any e-mail involved, your CRLF would have been preserved. =C2=A0So in=
- that
-> sense, unlike what you said in your message, the blamed commit didn't
-> decide that the line termination must be LF. =C2=A0It decided that th=
-e line
-> termination does not matter, which is a lot worse.
-
-I think it is more correct to say that the line termination in an
-email is ambiguous.=C2=A0 CRLF does not necessarily mean that the origi=
-nal
-had CRLF line termination if RFC-2822 is followed explicitly.
-
-> As long as the use of CR is an internal storage matter and "Save As..=
-=2E"
-> doesn't add extra CR that wasn't in the original contents, I wouldn't=
- say
-> that such a MUA is broken. =C2=A0In the use case that led to the blam=
-ed commit,
-> the user is choosing to read directly from the internal storage of MU=
-A,
-> bypassing its "Save As..." interface meant to be used to externalize =
-the
-> messages,
-
-No, we're using "Save As..." in thunderbird, and it saves with CRLF
-line endings.=C2=A0 I don't really care for thunderbird and its procliv=
-ity
-for munging my emails and _not_ doing-the-right-thing in my opinion.
-
-Maybe someone can suggest a mail client that can use imap and provide
-the nice sorting of emails into folders like thunderbird does.
-
--brandon
+-Eric
