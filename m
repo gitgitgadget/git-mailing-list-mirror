@@ -1,112 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git on QNX
-Date: Tue, 15 Dec 2009 13:42:57 -0800
-Message-ID: <7v6387zzfi.fsf@alter.siamese.dyndns.org>
-References: <905315640912151323s4b158565o2e74ce018b64dc72@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: New Proposal (simple) for Metadata in Git Commits: git-meta
+Date: Tue, 15 Dec 2009 14:05:29 -0800
+Message-ID: <20091215220529.GD18319@spearce.org>
+References: <93857A5A-744E-4A7C-B42D-23A56A48AAF7@lenary.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>, mkraai@beckman.com
-To: Tarmigan <tarmigan+git@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 15 22:43:20 2009
+Cc: git@vger.kernel.org
+To: Sam Elliott <sam@lenary.co.uk>
+X-From: git-owner@vger.kernel.org Tue Dec 15 23:06:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKfAr-0001p2-HZ
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Dec 2009 22:43:17 +0100
+	id 1NKfXH-0004bF-1P
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Dec 2009 23:06:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757074AbZLOVnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Dec 2009 16:43:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756684AbZLOVnM
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Dec 2009 16:43:12 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46078 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756587AbZLOVnL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Dec 2009 16:43:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AA9B785A40;
-	Tue, 15 Dec 2009 16:43:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uZg/wzbrKDJqh6fX7JlHrD38srg=; b=BaBqRO
-	37Smq1xR+0Dk2eONr5SxSNn2o1ucLLZoMv9J9DoGadbZ977zGP6b5fFp2Wm+M5G3
-	qdabY2ueWgW/gXpi1Hti4HesLSxGaDecNcnrlwInN6p9LIPHjH8kKVeKgLHMk0K0
-	3DqSoq6GUczjd0DQsmEZjcUOaQHkMV6ruBaLk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fpEN0cUl/a6J40R9KK64h1qRUzuHBMok
-	XKICfWEyfCMPSwvXwTdqhS1XkXKCwmGR8Zt/sqldcISnrfi+SIh+3k6QOOspPRrq
-	hF2/RTmQ844wdWi4Ptszn1/nSlinrGUyL3XxpJ0n4pKbNf9nd4XolfUMibnLzR3v
-	rl7kXCw+l0c=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 31E5C85A3F;
-	Tue, 15 Dec 2009 16:43:03 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1ED1D85A3E; Tue, 15 Dec
- 2009 16:42:58 -0500 (EST)
-In-Reply-To: <905315640912151323s4b158565o2e74ce018b64dc72@mail.gmail.com>
- (Tarmigan's message of "Tue\, 15 Dec 2009 13\:23\:37 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D278CA62-E9C2-11DE-A95A-DC0DEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1761341AbZLOWFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2009 17:05:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761314AbZLOWFh
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Dec 2009 17:05:37 -0500
+Received: from mail-yw0-f182.google.com ([209.85.211.182]:46111 "EHLO
+	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755618AbZLOWFe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2009 17:05:34 -0500
+Received: by ywh12 with SMTP id 12so416825ywh.21
+        for <git@vger.kernel.org>; Tue, 15 Dec 2009 14:05:33 -0800 (PST)
+Received: by 10.150.47.16 with SMTP id u16mr422424ybu.149.1260914733314;
+        Tue, 15 Dec 2009 14:05:33 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 5sm121767yxg.10.2009.12.15.14.05.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 15 Dec 2009 14:05:31 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <93857A5A-744E-4A7C-B42D-23A56A48AAF7@lenary.co.uk>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135302>
 
-Tarmigan <tarmigan+git@gmail.com> writes:
+Sam Elliott <sam@lenary.co.uk> wrote:
+> I had this idea a day or so again, and have written a simple  
+> implementation to storing some semi-structured data in a git commit  
+> message. This means that it's much easier for data to be found and  
+> scraped from a certain commit, for instance what issue numbers commits  
+> refer to or close.
 
-> diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
-> index 8ed4a6f..5cbc16c 100644
-> --- a/builtin-fetch-pack.c
-> +++ b/builtin-fetch-pack.c
-> @@ -778,7 +778,7 @@ static int fetch_pack_config(const char *var,
-> const char *value, void *cb)
->  	return git_default_config(var, value, cb);
->  }
->
-> -static struct lock_file lock;
-> +static struct lock_file lockfile;
->
->  static void fetch_pack_setup(void)
->  {
-> @@ -958,14 +958,14 @@ struct ref *fetch_pack(struct fetch_pack_args *my_args,
->  			  )
->  			die("shallow file was changed during fetch");
->
-> -		fd = hold_lock_file_for_update(&lock, shallow,
-> +		fd = hold_lock_file_for_update(&lockfile, shallow,
->  					       LOCK_DIE_ON_ERROR);
->  		if (!write_shallow_commits(&sb, 0)
->  		 || write_in_full(fd, sb.buf, sb.len) != sb.len) {
->  			unlink_or_warn(shallow);
-> -			rollback_lock_file(&lock);
-> +			rollback_lock_file(&lockfile);
->  		} else {
-> -			commit_lock_file(&lock);
-> +			commit_lock_file(&lockfile);
->  		}
->  		strbuf_release(&sb);
->  	}
+So from your web page, this is basically just YAML shoved into the
+footer of the message:
 
-Is this because QNX uses "lock" as some global identifier for some other
-purpose?  I think moving the file-scope-static definition to the scope
-it is used in without renaming would make a cleaner patch.
+--8<--
+	Written half of the functionality. Namely the querying half.
 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 5c59687..857e938 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -79,6 +84,7 @@
->  #include <stdlib.h>
->  #include <stdarg.h>
->  #include <string.h>
-> +#include <strings.h>
->  #include <errno.h>
->  #include <limits.h>
->  #include <sys/param.h>
+	---git-meta---
+	awesome: true
+	Github:
+	  user: lenary
+	---git-meta---
+-->8--
 
-Other hunks are QNX specific enough but this hunk is worrisome; you cannot
-tell how you are hurting other platforms with this change.  Can you tell
-declarations of which functions are missing on QNX without this change?
+
+Why do we need the --git-meta-- delimiter lines?
+
+JGit and Gerrit Code Review have already been following Git tradition
+by using footer messages as metadata.  E.g. we have lines like:
+
+--8<--
+    init: Don't abort on empty directory
+    
+    The following sequence should work:
+    
+      mkdir testgit
+      java -jar gerrit.war init -d testgit
+    
+    Since testgit is empty, it should be acceptable for us to populate the
+    directory with our files.
+    
+    Bug: issue 358
+    Change-Id: Ia85f31802066f8d39b042d3d057d33950a5035fd
+    Signed-off-by: Shawn O. Pearce <sop@google.com>
+-->8--
+
+The JGit commit message parser has special logic to handle lines
+that smell like one of these tag lines.  So long as there is no
+blank line in the footer paragraph, each of these tags can be read
+and processed.  Continuation lines should start with whitespace.
+
+I don't remember my YAML well enough, but isn't this existing
+standard still parseable by a YAML processor?
+
+If you dropped the --git-meta-- tags above, JGit would happily
+recognize the awesome: and Github: tags, but it might need a bit
+more work to recognize the nested user: tag.  Also, you'd be able
+to use git-meta on the git and Linux kernel repositories to pull
+out and work with Signed-off-by, Acked-by, etc.
+
+-- 
+Shawn.
