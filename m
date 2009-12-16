@@ -1,107 +1,91 @@
-From: Mark Jerkovic <mjerkovic@aconex.com>
-Subject: Re: git svn clone just stops
-Date: Thu, 17 Dec 2009 07:47:38 +1100
-Message-ID: <1260996458.6475.11.camel@mark.engr.acx>
-References: <1260915555.6475.8.camel@mark.engr.acx>
-	 <20091216081514.GB26038@dcvr.yhbt.net>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: git-reflog 70 minutes at 100% cpu and counting
+Date: Wed, 16 Dec 2009 16:06:32 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0912161526080.23173@xanadu.home>
+References: <1260822484.9379.53.camel@localhost>
+ <20091214211142.GC9364@coredump.intra.peff.net>
+ <1260825629.9379.56.camel@localhost>
+ <20091215023918.GA14689@coredump.intra.peff.net>
+ <alpine.LFD.2.00.0912142245240.23173@xanadu.home>
+ <1260851180.9379.88.camel@localhost>
+ <alpine.LFD.2.00.0912152201300.23173@xanadu.home>
+ <1260970885.2788.87.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Dec 16 21:48:18 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Eric Paris <eparis@redhat.com>
+X-From: git-owner@vger.kernel.org Wed Dec 16 22:06:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NL0nB-0004uy-MD
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Dec 2009 21:48:18 +0100
+	id 1NL14y-0005a1-Mp
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Dec 2009 22:06:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753371AbZLPUr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2009 15:47:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751487AbZLPUrx
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 15:47:53 -0500
-Received: from mail.aconex.com ([203.89.202.182]:58444 "EHLO
-	postoffice2.aconex.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753371AbZLPUrq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2009 15:47:46 -0500
-X-ASG-Debug-ID: 1260996463-7f4300100000-QuoKaX
-X-Barracuda-URL: http://postoffice2.aconex.com:8000/cgi-bin/mark.cgi
-Received: from postoffice.aconex.com (localhost [127.0.0.1])
-	by postoffice2.aconex.com (Spam & Virus Firewall) with ESMTP
-	id 57270B4319; Thu, 17 Dec 2009 07:47:43 +1100 (EST)
-Received: from postoffice.aconex.com (postoffice.yarra.acx [192.168.102.1]) by postoffice2.aconex.com with ESMTP id MXUW7SLt6RGCDQ6h; Thu, 17 Dec 2009 07:47:43 +1100 (EST)
-X-Barracuda-Envelope-From: mjerkovic@aconex.com
-Received: from gatekeeper.aconex.com (gatekeeper.yarra.acx [192.168.102.10])
-	by postoffice.aconex.com (Postfix) with ESMTP id 11DFEA501BD;
-	Thu, 17 Dec 2009 07:45:46 +1100 (EST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gatekeeper.aconex.com (Postfix) with ESMTP id 291194892DF;
-	Thu, 17 Dec 2009 07:47:43 +1100 (EST)
-X-Virus-Scanned: amavisd-new at aconex.com
-Received: from gatekeeper.aconex.com ([127.0.0.1])
-	by localhost (gatekeeper.aconex.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id FeyWlR74gtce; Thu, 17 Dec 2009 07:47:38 +1100 (EST)
-Received: from [192.168.7.137] (melho0.aconex.com [203.89.192.141])
-	by gatekeeper.aconex.com (Postfix) with ESMTP id 2DD344892D7;
-	Thu, 17 Dec 2009 07:47:38 +1100 (EST)
-X-ASG-Orig-Subj: Re: git svn clone just stops
-In-Reply-To: <20091216081514.GB26038@dcvr.yhbt.net>
-X-Mailer: Evolution 2.26.1 
-X-Barracuda-Connect: postoffice.yarra.acx[192.168.102.1]
-X-Barracuda-Start-Time: 1260996463
-X-Barracuda-Virus-Scanned: by Aconex Staff Email Spam Firewall at aconex.com
+	id S1755838AbZLPVGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2009 16:06:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754516AbZLPVGe
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 16:06:34 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:36699 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754132AbZLPVGd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2009 16:06:33 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KUR00GM3JYWTSF0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 16 Dec 2009 16:06:33 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <1260970885.2788.87.camel@localhost>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135340>
 
-On Wed, 2009-12-16 at 00:15 -0800, Eric Wong wrote:
-> Mark Jerkovic <mjerkovic@aconex.com> wrote:
-> > Hi all,
-> > 
-> > I am new to Git and I am attempting to clone a SVN repository
-> > (containing approximately 60,000 commits) to Git.
-> > 
-> > Using Git v1.6.0.4 with the following command:
-> > 
-> > git svn clone https://path/to/svn/repo/trunk project.git
-> > --authors-file=svnauthors.txt --no-metadata
-> > 
-> > the process just ends without any messages and the Git repository is
-> > empty.  I have attempted this four times already, and each time it has
-> > stopped after a different revision, so I can't pin it down to a
-> > particular commit.
-> 
-> Hi Mark,
-> 
-> Any chance you're OOM-ing (extremely large file) or running
-> out of space somewhere?  What exit code do you get when it exits?
-> 
-> > Has anyone experienced this before?  Is there a log anywhere that
-> > records what is happening during this process?
-> 
-> Not without error messages of some sort.  git svn was designed with poor
-> network conditions in mind and clone is resumable, so you can just
-> resume like this:
-> 
->    cd project.git && git svn fetch
-> 
-That is an excellent tip.  Thanks a lot!
-> I wouldn't use --no-metadata at this point, though, as it makes it much
-> harder to debug/fix things or recover from errors.
-> 
-> Once you're comfortable with it, you should be able to write
-> "git filter-branch" invocation to remove the metadata lines.
-I have done some more investigating and it appears that at some point a
-branch was moved to replace our trunk.  When the migration process hits
-this I it goes back to the beginning and starts migrating the branch
-history too.  I think when it gets to the end of it is not able to
-resume from the "move" point.  
+On Wed, 16 Dec 2009, Eric Paris wrote:
 
-I will try your resume tip to see if I can get it started again.
-
-Many thanks,
-Mark.
+> On Tue, 2009-12-15 at 22:03 -0500, Nicolas Pitre wrote:
+> > On Mon, 14 Dec 2009, Eric Paris wrote:
+> > 
+> > > The alternative repo is slowing pushing up to that same location.  That
+> > > tar is 855838982, so just a tad bit smaller.
+> > 
+> > It doesn't appear to be complete yet, and not progressing either.
 > 
+> The alternative repo is now available (but the original is down)
+> 
+> I tried to run git gc --aggressive last night while I slept and got this
+> as output, maybe it helps point to a solution/problem?  The git reflog
+> portion ran for 5 hours and 36 minutes and appears to have finished.
+
+Yes.  I was able to reproduce your issue.  And because of the *horrible* 
+repository packing, the reflog expiration process is taking ages when 
+determining object reachability at a rate of one reflog entry every 2 
+seconds or so.  With 4214 entries for the fsnotify-syscall branch, and 
+1352 entries for the fsnotify branch, this already takes up asignificant 
+portion of the actual run time.  I'm sure if your repository was 
+properly packed this would take less than a minute.
+
+Now, repacking doesn't work because...
+
+> $ git gc --aggressive
+> error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+> error: Could not read 29b6c2fb1390b4fd350a5ecc78f1156fc5d91e9f
+
+Those objects are indeed missing from the repository.  Without them your 
+repository is "broken".  Either you can find them somewhere else and 
+copy them over, or salvage as much as you can by fetching the 
+interesting branches into another freshly made repository.  This is 
+unfortunate because I would have liked to see by how much this 
+repository would have shrunk after a successful repack.
+
+Of course, usage of alternates is recommended _only_ with repositories 
+that are stable, i.e. don't ever add repositories to 
+.git/objects/info/alternates if those repositories are rewinded/rebased 
+and/or branches in them are deleted/replaced.  That could be a reason 
+why some objects are now missing from the repository using alternates.
+
+
+Nicolas
