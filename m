@@ -1,61 +1,67 @@
-From: Eric Paris <eparis@redhat.com>
-Subject: Re: git-reflog 70 minutes at 100% cpu and counting
-Date: Tue, 15 Dec 2009 22:31:29 -0500
-Message-ID: <1260934289.2788.82.camel@localhost>
-References: <1260822484.9379.53.camel@localhost>
-	 <20091214211142.GC9364@coredump.intra.peff.net>
-	 <1260825629.9379.56.camel@localhost>
-	 <20091215023918.GA14689@coredump.intra.peff.net>
-	 <alpine.LFD.2.00.0912142245240.23173@xanadu.home>
-	 <1260851180.9379.88.camel@localhost>
-	 <alpine.LFD.2.00.0912152201300.23173@xanadu.home>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC] ignore unknown color configuration
+Date: Tue, 15 Dec 2009 22:45:29 -0500
+Message-ID: <20091216034529.GA9742@sigill.intra.peff.net>
+References: <20091212122524.GA17547@coredump.intra.peff.net>
+ <7vzl5nn9x2.fsf@alter.siamese.dyndns.org>
+ <20091212222046.GA25973@coredump.intra.peff.net>
+ <7vzl5mjndi.fsf@alter.siamese.dyndns.org>
+ <7v3a3bwvzj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Wed Dec 16 04:31:40 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 16 04:45:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKkbz-0001Np-LN
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Dec 2009 04:31:39 +0100
+	id 1NKkpW-0004zu-UB
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Dec 2009 04:45:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760926AbZLPDbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Dec 2009 22:31:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760912AbZLPDbf
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Dec 2009 22:31:35 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:32462 "EHLO mx1.redhat.com"
+	id S1751408AbZLPDpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2009 22:45:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751910AbZLPDpe
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Dec 2009 22:45:34 -0500
+Received: from peff.net ([208.65.91.99]:58944 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755707AbZLPDbe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Dec 2009 22:31:34 -0500
-Received: from int-mx04.intmail.prod.int.phx2.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.17])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id nBG3VUih008823
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 15 Dec 2009 22:31:30 -0500
-Received: from [10.11.8.210] (vpn-8-210.rdu.redhat.com [10.11.8.210])
-	by int-mx04.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id nBG3VUhD022423;
-	Tue, 15 Dec 2009 22:31:30 -0500
-In-Reply-To: <alpine.LFD.2.00.0912152201300.23173@xanadu.home>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.17
+	id S1751698AbZLPDpd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2009 22:45:33 -0500
+Received: (qmail 1424 invoked by uid 107); 16 Dec 2009 03:50:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 15 Dec 2009 22:50:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Dec 2009 22:45:29 -0500
+Content-Disposition: inline
+In-Reply-To: <7v3a3bwvzj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135320>
 
-On Tue, 2009-12-15 at 22:03 -0500, Nicolas Pitre wrote:
-> On Mon, 14 Dec 2009, Eric Paris wrote:
+On Tue, Dec 15, 2009 at 05:25:36PM -0800, Junio C Hamano wrote:
+
+> >> I would be more sympathetic to that user if this weren't the _only_ set
+> >> of variables with this property. They don't get warned for diff.externel
+> >> or color.show-branch.
+> >
+> > True and fair enough.  Let's have this in 1.6.6 then.
 > 
-> > The alternative repo is slowing pushing up to that same location.  That
-> > tar is 855838982, so just a tad bit smaller.
-> 
-> It doesn't appear to be complete yet, and not progressing either.
+> Actually I think we should have this in 1.6.5.X as well for it to be
+> useful.  Am I mistaken?
 
-I ran out of quota and ask for more, but IT departments moves at the
-speed of IT departments.  I'll delete the first one and just push the
-alternative repo.  Once I get more space I'll try to get them both up at
-once....
+The earlier the better for making it useful, but it is still somewhat of
+a lost cause for color.diff.func. The problem comes from using git
+v1.6.6, setting the variable, and then going to back to some older
+version (either because you are testing multiple versions, or because
+your config is shared across multiple machines).
 
--Eric
+So yes, putting it in v1.6.5.x means switching back there will not be as
+painful. But switching back to existing versions will still be broken
+until all older versions you might want to switch to have this patch.
+
+So we are not so much fixing this color.diff.func problem as
+future-proofing against this happening again.
+
+-Peff
