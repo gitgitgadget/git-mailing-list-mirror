@@ -1,70 +1,92 @@
-From: bd@bc-bd.org
-Subject: How do I show only log messages for commits on a specific branch?
-Date: Wed, 16 Dec 2009 10:16:47 +0000
-Message-ID: <20091216101647.GB27373@bc-bd.org>
+From: Eric Paris <eparis@redhat.com>
+Subject: Re: git-reflog 70 minutes at 100% cpu and counting
+Date: Wed, 16 Dec 2009 08:41:25 -0500
+Message-ID: <1260970885.2788.87.camel@localhost>
+References: <1260822484.9379.53.camel@localhost>
+	 <20091214211142.GC9364@coredump.intra.peff.net>
+	 <1260825629.9379.56.camel@localhost>
+	 <20091215023918.GA14689@coredump.intra.peff.net>
+	 <alpine.LFD.2.00.0912142245240.23173@xanadu.home>
+	 <1260851180.9379.88.camel@localhost>
+	 <alpine.LFD.2.00.0912152201300.23173@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 16 11:43:27 2009
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Wed Dec 16 14:41:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKrLo-0004wu-Ua
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Dec 2009 11:43:25 +0100
+	id 1NKu8I-0005Rz-MZ
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Dec 2009 14:41:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754538AbZLPKnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2009 05:43:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751889AbZLPKnT
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 05:43:19 -0500
-Received: from mail.bc-bd.org ([88.217.195.190]:33237 "EHLO bc-bd.org"
+	id S933910AbZLPNlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2009 08:41:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933892AbZLPNlc
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 08:41:32 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:19384 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751466AbZLPKnS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2009 05:43:18 -0500
-X-Greylist: delayed 1710 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Dec 2009 05:43:18 EST
-Received: from bd by bc-bd.org with local (Exim 4.69)
-	(envelope-from <bd@bc-bd.org>)
-	id 1NKqw3-0007Bx-Sk
-	for git@vger.kernel.org; Wed, 16 Dec 2009 10:16:47 +0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: bd@bc-bd.org
-X-SA-Exim-Scanned: No (on bc-bd.org); SAEximRunCond expanded to false
+	id S932547AbZLPNlb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2009 08:41:31 -0500
+Received: from int-mx03.intmail.prod.int.phx2.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com [10.5.11.16])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id nBGDfRsF023468
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Wed, 16 Dec 2009 08:41:27 -0500
+Received: from [10.11.8.210] (vpn-8-210.rdu.redhat.com [10.11.8.210])
+	by int-mx03.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id nBGDfQV6000647;
+	Wed, 16 Dec 2009 08:41:26 -0500
+In-Reply-To: <alpine.LFD.2.00.0912152201300.23173@xanadu.home>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.16
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135328>
 
-Hello list,
+On Tue, 2009-12-15 at 22:03 -0500, Nicolas Pitre wrote:
+> On Mon, 14 Dec 2009, Eric Paris wrote:
+> 
+> > The alternative repo is slowing pushing up to that same location.  That
+> > tar is 855838982, so just a tad bit smaller.
+> 
+> It doesn't appear to be complete yet, and not progressing either.
 
-[ git v1.6.3.3 ]
+The alternative repo is now available (but the original is down)
 
-imagine this:
+I tried to run git gc --aggressive last night while I slept and got this
+as output, maybe it helps point to a solution/problem?  The git reflog
+portion ran for 5 hours and 36 minutes and appears to have finished.
 
-	     --A--*--B (new)
-	    /
-	*--X--*--Y (master)
-
-Now I'd like to list only log messages for A..B (X..B would be okay too).
-
-I know of 
-
-	git log master..new
-
-however then I need to remember that I branched new of master, and to be honest,
-sometimes I forget.
-
-So how do I:
-
-	git please-tell-me-the-branch-I-started-this-branch-from new
-
-Thanks in advance,
-
-	Stefan
-
--- 
-BOFH excuse #181:
-
-Atilla the Hub
+$ git gc --aggressive
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+error: Could not read d936ff8a7b0841b51ddf96afa24a30b016824cb2
+warning: reflog of 'refs/remotes/audit/master' references pruned commits
+warning: reflog of 'refs/remotes/btrfs/enospc' references pruned commits
+warning: reflog of 'refs/remotes/btrfs/merge' references pruned commits
+warning: reflog of 'refs/remotes/btrfs/for-linus' references pruned commits
+warning: reflog of 'refs/remotes/security-testing/for-linus' references pruned commits
+error: Could not read 29b6c2fb1390b4fd350a5ecc78f1156fc5d91e9f
+fatal: bad tree object 29b6c2fb1390b4fd350a5ecc78f1156fc5d91e9f
+error: failed to run repack
