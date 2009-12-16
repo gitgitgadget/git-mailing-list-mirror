@@ -1,147 +1,70 @@
-From: Thomas Koch <thomas@koch.ro>
-Subject: elegant(?) debian topgit workflow?
-Date: Wed, 16 Dec 2009 11:13:38 +0100
-Message-ID: <200912161113.38396.thomas@koch.ro>
-Reply-To: thomas@koch.ro
+From: bd@bc-bd.org
+Subject: How do I show only log messages for commits on a specific branch?
+Date: Wed, 16 Dec 2009 10:16:47 +0000
+Message-ID: <20091216101647.GB27373@bc-bd.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
- debian-devel@lists.debian.org
-To: vcs-pkg-discuss@lists.alioth.debian.org
-X-From: bounce-debian-devel=debian-devel=m.gmane.org@lists.debian.org Wed Dec 16 11:14:17 2009
-Return-path: <bounce-debian-devel=debian-devel=m.gmane.org@lists.debian.org>
-Envelope-to: debian-devel@m.gmane.org
-Received: from liszt.debian.org ([82.195.75.100])
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 16 11:43:27 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKqtX-0001j1-6n
-	for debian-devel@m.gmane.org; Wed, 16 Dec 2009 11:14:11 +0100
-Received: from localhost (localhost [127.0.0.1])
-	by liszt.debian.org (Postfix) with QMQP
-	id 5586F2D0D24; Wed, 16 Dec 2009 10:14:08 +0000 (UTC)
-Old-Return-Path: <thomas@koch.ro>
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on liszt.debian.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=4.0 tests=FOURLA,LDO_WHITELIST,
-	MURPHY_DRUGS_REL8,WWWRO autolearn=no version=3.2.5
-X-Original-To: lists-debian-devel@liszt.debian.org
-Delivered-To: lists-debian-devel@liszt.debian.org
-Received: from localhost (localhost [127.0.0.1])
-	by liszt.debian.org (Postfix) with ESMTP id C1A5613A6207
-	for <lists-debian-devel@liszt.debian.org>; Wed, 16 Dec 2009 10:14:01 +0000 (UTC)
-X-Virus-Scanned: at lists.debian.org with policy bank en-ht
-X-Amavis-Spam-Status: No, score=-4.88 tagged_above=-10000 required=5.3
-	tests=[BAYES_00=-2, FOURLA=0.1, LDO_WHITELIST=-5,
-	MURPHY_DRUGS_REL8=0.02, WWWRO=2] autolearn=no
-Received: from liszt.debian.org ([127.0.0.1])
-	by localhost (lists.debian.org [127.0.0.1]) (amavisd-new, port 2525)
-	with ESMTP id ib+wkcHoA9cv for <lists-debian-devel@liszt.debian.org>;
-	Wed, 16 Dec 2009 10:13:54 +0000 (UTC)
-X-policyd-weight: DYN_NJABL=SKIP(0) NOT_IN_SBL_XBL_SPAMHAUS=-1.5 NOT_IN_BL_NJABL=-1.5 DSBL_ORG=SKIP(0) CL_IP_EQ_FROM_MX=-3.1; rate: -6.1
-Received: from koch.ro (koch.ro [88.198.2.104])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by liszt.debian.org (Postfix) with ESMTPS id 9502A13A6206
-	for <debian-devel@lists.debian.org>; Wed, 16 Dec 2009 10:13:48 +0000 (UTC)
-Received: from 84-72-85-88.dclient.hispeed.ch ([84.72.85.88] helo=jona.localnet)
-	by koch.ro with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <thomas@koch.ro>)
-	id 1NKqmF-0003Fa-IO; Wed, 16 Dec 2009 11:06:39 +0100
-User-Agent: KMail/1.12.4 (Linux/2.6.31-1-amd64; KDE/4.3.4; x86_64; ; )
-X-Rc-Virus: 2007-09-13_01
-X-Rc-Spam: 2008-11-04_01
-Resent-Message-ID: <SqVTfNZ6kDG.A.v3F.wLLKLB@liszt>
-Resent-From: debian-devel@lists.debian.org
-X-Mailing-List: <debian-devel@lists.debian.org> archive/latest/257967
-X-Loop: debian-devel@lists.debian.org
-List-Id: <debian-devel.lists.debian.org>
-List-Post: <mailto:debian-devel@lists.debian.org>
-List-Help: <mailto:debian-devel-request@lists.debian.org?subject=help>
-List-Subscribe: <mailto:debian-devel-request@lists.debian.org?subject=subscribe>
-List-Unsubscribe: <mailto:debian-devel-request@lists.debian.org?subject=unsubscribe>
-Precedence: list
-Resent-Sender: debian-devel-request@lists.debian.org
-Resent-Date: Wed, 16 Dec 2009 10:14:08 +0000 (UTC)
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135326>
+	id 1NKrLo-0004wu-Ua
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Dec 2009 11:43:25 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754538AbZLPKnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2009 05:43:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751889AbZLPKnT
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 05:43:19 -0500
+Received: from mail.bc-bd.org ([88.217.195.190]:33237 "EHLO bc-bd.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751466AbZLPKnS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2009 05:43:18 -0500
+X-Greylist: delayed 1710 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Dec 2009 05:43:18 EST
+Received: from bd by bc-bd.org with local (Exim 4.69)
+	(envelope-from <bd@bc-bd.org>)
+	id 1NKqw3-0007Bx-Sk
+	for git@vger.kernel.org; Wed, 16 Dec 2009 10:16:47 +0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: bd@bc-bd.org
+X-SA-Exim-Scanned: No (on bc-bd.org); SAEximRunCond expanded to false
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135327>
 
-CC (FYI) to git and debian-devel. see http://vcs-pkg.org
+Hello list,
 
-Hi,
+[ git v1.6.3.3 ]
 
-would you be so kind to review my workflow proposal?
+imagine this:
 
-branches
---------
+	     --A--*--B (new)
+	    /
+	*--X--*--Y (master)
 
-upstream
-debian/*, fixes/*, features/* - topgit branches based on upstream
-patches - the hero
-master - contains the debian/ dir and is the branch we build from
+Now I'd like to list only log messages for A..B (X..B would be okay too).
 
-All topgit branches are integrated in the patches branch, which is afterwards 
-merged into master. The magic is, that the integration is not a regular merge, 
-but a handcrafted merge and commit with quilt and git plumbing.
+I know of 
 
-workflow
---------
+	git log master..new
 
-Every merge starts with reseting "patches" to the state of upstream:
+however then I need to remember that I branched new of master, and to be honest,
+sometimes I forget.
 
-#> git checkout upstream
-(for the first time: git checkout -b patches, otherwise:)
-#> git symbolic-ref HEAD refs/heads/patches
+So how do I:
 
-Now we're on branch patches with the working tree and index in the pristine 
-state of upstream. We can now integrate the topgit branches:
+	git please-tell-me-the-branch-I-started-this-branch-from new
 
-#> tg export --quilt debian/patches \
- -b debian/use-debian-java-libraries,debian/disable-tests-that-break-on-buildd
+Thanks in advance,
 
-#> quilt push -a
-#> git add debian/
-#> rm -rf .pc
-#> git add -u
+	Stefan
 
-Now let's create the commit and specify, which topgit branches were manually 
-merged:
+-- 
+BOFH excuse #181:
 
-#> TREE=$(git write-tree)
-
-#> COMMIT=$(git commit-tree $TREE \
-     -p debian/use-debian-java-libraries \
-     -p debian/disable-tests-that-break-on-buildd)
-
-#> git update-ref refs/heads/patches $COMMIT
-
-Now I can happily merge patches into master.
-
-advantages
-----------
-
-- The commits of all ever merged topgit branches are preserved, even after tg 
-delete
-
-- easy to understand, non cluttered history
-
-- Easy to retire topgit branches
-
-- Easy to work on old package versions(?): just make a branch from master at 
-desired version, eventually also branch patches branch to work on old patches
-
-- The quilt patches are used and therefore tested in the same way, as dpkg-
-source uses them in version 3
-
-- Integrates with git-buildpackage
-
-- Doesn't need anything, that topgit hasn't ATM
-
-Todo
-----
-
-discuss, test, script
-
-Best regards,
-
-Thomas Koch, http://www.koch.ro
+Atilla the Hub
