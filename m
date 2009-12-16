@@ -1,81 +1,81 @@
-From: Sean Boudreau <seanb@qnx.com>
-Subject: Re: Git on QNX
-Date: Wed, 16 Dec 2009 22:38:39 +0000 (UTC)
-Message-ID: <loom.20091216T233122-388@post.gmane.org>
-References: <905315640912151323s4b158565o2e74ce018b64dc72@mail.gmail.com>  <7v6387zzfi.fsf@alter.siamese.dyndns.org> <905315640912151413g10ee5befh58fbd171237e7659@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: How do I show only log messages for commits on a specific
+ branch?
+Date: Thu, 17 Dec 2009 00:26:42 +0100
+Message-ID: <20091216232641.GK25474@genesis.frugalware.org>
+References: <20091216101647.GB27373@bc-bd.org>
+ <51419b2c0912161005n1596d4a1n92ed555c98aee4c6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 16 23:40:15 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="dMdWWqg3F2Dv/qfw"
+Cc: bd@bc-bd.org, git@vger.kernel.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 17 00:27:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NL2XW-0000d0-MA
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Dec 2009 23:40:15 +0100
+	id 1NL3Gr-0002qN-C2
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 00:27:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935432AbZLPWkJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Dec 2009 17:40:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935165AbZLPWkI
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 17:40:08 -0500
-Received: from lo.gmane.org ([80.91.229.12]:38819 "EHLO lo.gmane.org"
+	id S935924AbZLPX0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2009 18:26:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935923AbZLPX0q
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 18:26:46 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:38804 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935197AbZLPWkH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2009 17:40:07 -0500
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1NL2XM-0000ZV-Eh
-	for git@vger.kernel.org; Wed, 16 Dec 2009 23:40:04 +0100
-Received: from CPE000102c510cf-CM001ac3117044.cpe.net.cable.rogers.com ([174.112.215.61])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 Dec 2009 23:40:04 +0100
-Received: from seanb by CPE000102c510cf-CM001ac3117044.cpe.net.cable.rogers.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 Dec 2009 23:40:04 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 174.112.215.61 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.15) Gecko/2009102815 Ubuntu/9.04 (jaunty) Firefox/3.0.15)
+	id S935919AbZLPX0o (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2009 18:26:44 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id A2E7D58055;
+	Thu, 17 Dec 2009 00:26:42 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 6E2C344965;
+	Thu, 17 Dec 2009 00:26:42 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 113D01240014; Thu, 17 Dec 2009 00:26:42 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <51419b2c0912161005n1596d4a1n92ed555c98aee4c6@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135343>
-
-Tarmigan <tarmigan+git <at> gmail.com> writes:
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135344>
 
 
-> >
-> > Other hunks are QNX specific enough but this hunk is worrisome; you=
- cannot
-> > tell how you are hurting other platforms with this change. =C2=A0Ca=
-n you tell
-> > declarations of which functions are missing on QNX without this cha=
-nge?
->=20
-> strcasecmp()
-> http://www.opengroup.org/onlinepubs/000095399/functions/strcasecmp.ht=
-ml
->=20
-> I agree that this change could affect other platforms and they've
-> gotten along fine without it so far.  I'm surprised no others have
-> needed it.  Would it be better wrapped in a #ifdef?
->=20
-> Thanks,
-> Tarmigan
->=20
+--dMdWWqg3F2Dv/qfw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-What version of qnx is this on.  <strings.h> is
-now brought in by <string.h> and the lock() /
-unlock() prototypes have been removed from <unistd.h>
-AS OF 6.4.1 (the current release).
+On Wed, Dec 16, 2009 at 11:05:52AM -0700, Elijah Newren <newren@gmail.com> wrote:
+>   git log new@{30.years.ago}..new
+> (You'll get a warning that 'new' hasn't existed for 30 years but it
+> doesn't hurt anything)
 
-There's a package for git-4.3.20 here that also has a work around
-for the SA_RESTART issue.
+That's the same as "git log new", if I'm not mistaken.
 
-ftp://ftp.netbsd.org/pub/pkgsrc/packages/QNX/i386/6.4.1_head_20090724/A=
-ll
+What Stefan wants to do is to let git log show the commits which are
+only in the "new" branch, but I don't think there is an out-of-the-box
+solution for that.
 
--seanb
+One solution I can think of is to iterate over each ref using "git
+for-each-ref --format='%(refname)' 'refs/heads/*'", then run "git
+merge-base $i new", run git rev-list $mb..new|wc -l and then you could
+decide what is the first commit that does not belong to any other
+branch. But that's just an idea, I don't have the motivation to script
+it properly.
+
+--dMdWWqg3F2Dv/qfw
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkspbLEACgkQe81tAgORUJacnACfW8sL7lW+c784cpXOj5IVzTUZ
+njEAnioaBu6uisPuCZuscn9G6oOcZU+J
+=L7RW
+-----END PGP SIGNATURE-----
+
+--dMdWWqg3F2Dv/qfw--
