@@ -1,62 +1,61 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: New Proposal (simple) for Metadata in Git Commits: git-meta
-Date: Wed, 16 Dec 2009 08:30:36 -0800
-Message-ID: <20091216163036.GE18319@spearce.org>
-References: <93857A5A-744E-4A7C-B42D-23A56A48AAF7@lenary.co.uk> <20091215220529.GD18319@spearce.org> <7349A827-41D5-434F-85FE-D49980A7D501@lenary.co.uk>
+From: Nick Triantos <nick@perceptivepixel.com>
+Subject: RE: Huge pack file from small unpacked objects
+Date: Wed, 16 Dec 2009 11:34:43 -0500
+Message-ID: <75B8C0BEE0AE2A44AA971D218D9FE99E3DD8C61C@VMBX125.ihostexchange.net>
+References: <404585ED79625A40AB5A9884ECA9A63B3E02083F@VMBX125.ihostexchange.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sam Elliott <sam@lenary.co.uk>
-X-From: git-owner@vger.kernel.org Wed Dec 16 17:30:53 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "'git@vger.kernel.org'" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 16 17:34:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKwlz-0005Et-5X
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Dec 2009 17:30:47 +0100
+	id 1NKwpv-0007CB-CO
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Dec 2009 17:34:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935020AbZLPQam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2009 11:30:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935013AbZLPQal
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 11:30:41 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:51162 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935011AbZLPQal (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2009 11:30:41 -0500
-Received: by yxe17 with SMTP id 17so1053218yxe.33
-        for <git@vger.kernel.org>; Wed, 16 Dec 2009 08:30:40 -0800 (PST)
-Received: by 10.150.35.18 with SMTP id i18mr2001390ybi.153.1260981040368;
-        Wed, 16 Dec 2009 08:30:40 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 9sm460901yxf.41.2009.12.16.08.30.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 16 Dec 2009 08:30:38 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7349A827-41D5-434F-85FE-D49980A7D501@lenary.co.uk>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755809AbZLPQer convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Dec 2009 11:34:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753584AbZLPQeq
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 11:34:46 -0500
+Received: from relay.ihostexchange.net ([66.46.182.55]:48069 "EHLO
+	relay.ihostexchange.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752650AbZLPQeq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Dec 2009 11:34:46 -0500
+Received: from VMBX125.ihostexchange.net ([192.168.40.5]) by
+ hub105.ihostexchange.net ([66.46.182.55]) with mapi; Wed, 16 Dec 2009
+ 11:34:44 -0500
+Thread-Topic: Huge pack file from small unpacked objects
+Thread-Index: Acp+YiGNC+Sm/dKxS4imFtBblGe/sQAC3zOQ
+In-Reply-To: <404585ED79625A40AB5A9884ECA9A63B3E02083F@VMBX125.ihostexchange.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135332>
 
-Sam Elliott <sam@lenary.co.uk> wrote:
-> On 15 Dec 2009, at 23:05, Shawn O. Pearce wrote:
->> If you dropped the --git-meta-- tags above, JGit would happily
->> recognize the awesome: and Github: tags, but it might need a bit
->> more work to recognize the nested user: tag.  Also, you'd be able
->> to use git-meta on the git and Linux kernel repositories to pull
->> out and work with Signed-off-by, Acked-by, etc.
->
-> I'm not entirely sure about this approach. The current implementation  
-> also works with PGP-signed tags, where the information is not  
-> necessarily going to be at the bottom of the message when i use `git- 
-> cat-file -p`. I think it shouldn't be too hard to also have git-meta  
-> read any YAML-like data just before the signing message.
+Hi,
 
-Ah, good point.  But as you point out, it should be simple enough
-to detect a PGP signature on the bottom and just clip that off the
-end, and then perform the YAML-like data parsing on the footer.
+I recently created a repo from SVN via git-svn.=A0 The bare repo was ab=
+out ~600MB.=A0 I cloned it, and on the clone, I added 2 small files (.g=
+itignore and .gitattributes) to a branch, merged them to master, and pu=
+shed that back to the origin.=A0 The cloned repo remains at about 600MB=
+, while my origin repo (the one from svn) is now about 2.4GB.=A0 I foun=
+d that it created a file in objects/pack which accounts for this huge s=
+ize.
 
--- 
-Shawn.
+I've tried running 'git repack -a -d' but that didn't shrink the size o=
+f this pack file.
+
+Any ideas why the pack file is so huge?=A0 Anything I can do to shrink =
+it?=A0 My coworkers are understandably unhappy that the repo is so huge=
+ now (makes for very slow pulls)
+
+thanks,
+-Nick
