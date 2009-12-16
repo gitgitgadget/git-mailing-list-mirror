@@ -1,81 +1,76 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: How do I show only log messages for commits on a specific
- branch?
-Date: Thu, 17 Dec 2009 00:26:42 +0100
-Message-ID: <20091216232641.GK25474@genesis.frugalware.org>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: How do I show only log messages for commits on a specific branch?
+Date: Thu, 17 Dec 2009 00:58:47 +0100
+Message-ID: <adf1fd3d0912161558u36d9674eid36e3042d181ed8f@mail.gmail.com>
 References: <20091216101647.GB27373@bc-bd.org>
- <51419b2c0912161005n1596d4a1n92ed555c98aee4c6@mail.gmail.com>
+	 <51419b2c0912161005n1596d4a1n92ed555c98aee4c6@mail.gmail.com>
+	 <20091216232641.GK25474@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="dMdWWqg3F2Dv/qfw"
-Cc: bd@bc-bd.org, git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 00:27:06 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Elijah Newren <newren@gmail.com>, bd@bc-bd.org, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Thu Dec 17 00:59:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NL3Gr-0002qN-C2
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 00:27:05 +0100
+	id 1NL3lj-0007ij-IO
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 00:58:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935924AbZLPX0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2009 18:26:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935923AbZLPX0q
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 18:26:46 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:38804 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935919AbZLPX0o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2009 18:26:44 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id A2E7D58055;
-	Thu, 17 Dec 2009 00:26:42 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 6E2C344965;
-	Thu, 17 Dec 2009 00:26:42 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 113D01240014; Thu, 17 Dec 2009 00:26:42 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <51419b2c0912161005n1596d4a1n92ed555c98aee4c6@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1763397AbZLPX6z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Dec 2009 18:58:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763387AbZLPX6y
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 18:58:54 -0500
+Received: from mail-fx0-f221.google.com ([209.85.220.221]:57014 "EHLO
+	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762708AbZLPX6t convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Dec 2009 18:58:49 -0500
+Received: by fxm21 with SMTP id 21so1469261fxm.21
+        for <git@vger.kernel.org>; Wed, 16 Dec 2009 15:58:48 -0800 (PST)
+Received: by 10.103.80.20 with SMTP id h20mr818941mul.130.1261007927932; Wed, 
+	16 Dec 2009 15:58:47 -0800 (PST)
+In-Reply-To: <20091216232641.GK25474@genesis.frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135345>
 
+On Thu, Dec 17, 2009 at 12:26 AM, Miklos Vajna <vmiklos@frugalware.org>=
+ wrote:
+> On Wed, Dec 16, 2009 at 11:05:52AM -0700, Elijah Newren <newren@gmail=
+=2Ecom> wrote:
+>> =A0 git log new@{30.years.ago}..new
+>> (You'll get a warning that 'new' hasn't existed for 30 years but it
+>> doesn't hurt anything)
+>
+> That's the same as "git log new", if I'm not mistaken.
+>
+> What Stefan wants to do is to let git log show the commits which are
+> only in the "new" branch, but I don't think there is an out-of-the-bo=
+x
+> solution for that.
 
---dMdWWqg3F2Dv/qfw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Not out-of-the-box but this does exactly what you said, print all
+commits only reachable from the "new" branch:
 
-On Wed, Dec 16, 2009 at 11:05:52AM -0700, Elijah Newren <newren@gmail.com> wrote:
->   git log new@{30.years.ago}..new
-> (You'll get a warning that 'new' hasn't existed for 30 years but it
-> doesn't hurt anything)
+git log new --not $(git for-each-ref --format=3D'%(refname)'
+'refs/heads/*' | grep -v refs/heads/new)
 
-That's the same as "git log new", if I'm not mistaken.
+=46or the original question, I think what makes most sense in this case
+is asking for the commits since the upstream branch. Some time ago
+there was a discussion about a syntax for the tracking branch and
+there was even a patch:
 
-What Stefan wants to do is to let git log show the commits which are
-only in the "new" branch, but I don't think there is an out-of-the-box
-solution for that.
+Subject: [PATCH v2] Introduce <branch>@{upstream} as shortcut to the
+tracked branch
+Date: 2009-09-10 15:25:57 GMT
 
-One solution I can think of is to iterate over each ref using "git
-for-each-ref --format='%(refname)' 'refs/heads/*'", then run "git
-merge-base $i new", run git rev-list $mb..new|wc -l and then you could
-decide what is the first commit that does not belong to any other
-branch. But that's just an idea, I don't have the motivation to script
-it properly.
+http://news.gmane.org/find-root.php?message_id=3D%3calpine.DEB.1.00.090=
+9101724520.8306%40pacific.mpi%2dcbg.de%3e
 
---dMdWWqg3F2Dv/qfw
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+but it's not in git.git.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkspbLEACgkQe81tAgORUJacnACfW8sL7lW+c784cpXOj5IVzTUZ
-njEAnioaBu6uisPuCZuscn9G6oOcZU+J
-=L7RW
------END PGP SIGNATURE-----
-
---dMdWWqg3F2Dv/qfw--
+HTH,
+Santi
