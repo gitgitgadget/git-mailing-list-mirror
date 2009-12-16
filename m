@@ -1,83 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Giving command line parameter to textconv command?
-Date: Tue, 15 Dec 2009 20:13:31 -0500
-Message-ID: <20091216011330.GA28523@coredump.intra.peff.net>
-References: <20091215071735.6117@nanako3.lavabit.com>
- <7vvdg9ceud.fsf@alter.siamese.dyndns.org>
- <20091215121110.6117@nanako3.lavabit.com>
- <7vfx7c3hmb.fsf@alter.siamese.dyndns.org>
- <20091215164959.GA21322@coredump.intra.peff.net>
- <7vljh3wwwf.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/6] GITWEB - Separate defaults from main file
+Date: Tue, 15 Dec 2009 17:22:42 -0800
+Message-ID: <7v8wd3ww4d.fsf@alter.siamese.dyndns.org>
+References: <1260488743-25855-1-git-send-email-warthog9@kernel.org>
+ <m3ljh9cy3b.fsf@localhost.localdomain> <4B226C0F.2070407@kernel.org>
+ <200912112353.11034.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 16 02:15:01 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "J.H." <warthog9@kernel.org>, git@vger.kernel.org,
+	"John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 16 02:23:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKiT7-0001Cl-Qm
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Dec 2009 02:14:22 +0100
+	id 1NKibe-0005pO-PB
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Dec 2009 02:23:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934415AbZLPBNk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Dec 2009 20:13:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934414AbZLPBNi
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Dec 2009 20:13:38 -0500
-Received: from peff.net ([208.65.91.99]:51420 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934412AbZLPBNg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Dec 2009 20:13:36 -0500
-Received: (qmail 32056 invoked by uid 107); 16 Dec 2009 01:18:10 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 15 Dec 2009 20:18:10 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Dec 2009 20:13:31 -0500
-Content-Disposition: inline
-In-Reply-To: <7vljh3wwwf.fsf@alter.siamese.dyndns.org>
+	id S932128AbZLPBXF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2009 20:23:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756729AbZLPBXB
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Dec 2009 20:23:01 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43279 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756454AbZLPBW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2009 20:22:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8ED29A7B6A;
+	Tue, 15 Dec 2009 20:22:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yandlPLI3pHFBS/CLER035K50rY=; b=SaCmd3
+	l5COQlP6HpXbripgZ03bn+ivR96/pcC+kHRecBq/fgYW6vS2femmZzoiMGbA90ue
+	PcasYrf92DGmKJMjWPvtj0IE7lXyF8T1RgkEjzsevIaoXMtNV47F6mPRRZxi1ta9
+	B18mRtnRNKplTxMmlEhf+1KVnG9tHOMlwG2yU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hCyfakzbMJKy28ZIHrx22fXu1dghovfJ
+	5G1xNiGHhZvy2dXmNdRLvbm+K+RixidJ7iO4D9o+TEcWyt+D04P6qJg1qlQ+SQrM
+	Rxr+4m9xbCp40znOk5QH8tVhRK6iAS0BvNUEgSZeUONYCNRCoRE8797xoIQq/F1Q
+	FTleMo+9gtE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4E96EA7B68;
+	Tue, 15 Dec 2009 20:22:50 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9765CA7B66; Tue, 15 Dec 2009
+ 20:22:44 -0500 (EST)
+In-Reply-To: <200912112353.11034.jnareb@gmail.com> (Jakub Narebski's message
+ of "Fri\, 11 Dec 2009 23\:53\:09 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8698B638-E9E1-11DE-8E8E-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135313>
 
-On Tue, Dec 15, 2009 at 05:05:52PM -0800, Junio C Hamano wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> > There is also diff.*.command, which I think people _do_ set manually (I
-> > used to, until I wrote textconv. :) ).
-> 
-> I had to spend fair amount of time to find where "diff.*.command" is
-> described.  We may want to update the documentation.
+> On Fri, 11 Dec 2009, J.H. wrote:
+>
+>>>> This is also a not-so-subtle start of trying to break up gitweb into
+>>>> separate files for easier maintainability, having everything in a
+>>>> single file is just a mess and makes the whole thing more complicated
+>>>> than it needs to be.  This is a bit of a baby step towards breaking it
+>>>> up for easier maintenance.
+>>> 
+>>> The question is if easier maintenance and development by spliting
+>>> gitweb for developers offsets ease of install for users.
+>> 
+>> This would just get dropped into the same location that gitweb.cgi 
+>> exists in, there is no real difference in installation, and thus I can't 
+>> see this as an issue for users.
+>
+> To be more exact you have to know that you have to drop _generated files_,
+> which means (for this version of patch) gitweb.cgi and gitweb_defaults.pl
+> (or whatever the generated file with config variables would be named).
+>
+>
+> ATTENTION!
 
-Yeah, I think textconv is similarly hard to find. We should probably
-have a pointer in "git-diff.txt" to the attributes documentation.
+You didn't have to shout.
 
-I also think it would be much more obvious as "diff.*.external", but it
-is probably not worth changing at this point.
+Any progress on this front?
 
-> > .... I agree that people almost certainly have to write a shell-script
-> > wrapper anyway. But I wonder if we should pass it through the shell,
-> > just for the sake of consistency with the other variables (in
-> > particular, if textconv changes,
-> 
-> This covers GIT_EXTERNAL_DIFF, diff.external, and diff.<driver>.command
-> trio, if I am not mistaken.
-
-It does cover all three. We could do them separately, I guess, but I
-think that is just making things confusingly more inconsistent.
-
-> If we changed run_external_diff(), in practice nobody would notice, except
-> for people who have installed the difftool helper in a directory with IFS
-> in the path.  That's one downside but I don't offhand see a use case where
-> the change would make somebody vastly happier.
-
-Yeah, the only upside I can see is consistency. Which I do value, but it
-will be a hard sell to somebody whose setup has been broken. ;P
-
-> But maybe people will find good uses and we'll never know until we try.
-> Care to roll a patch for that as well, to be queued for 1.7.0 (which will
-> be the one after 1.6.6)?
-
-Will do, but it will probably be a few days as I'm about to do some
-holiday traveling. I'll do the textconv change with it as a series.
-
--Peff
+Not that I am anxious to queue new topics to 'next' right now (we are
+frozen for 1.6.6), but I think having what is proven to work well at a
+real site like k.org is much better than waiting for an unproven
+reimplementation using somebody else's framework only for your theoretical
+cleanliness.  John has better things to do than doing such a rewrite
+himself, and even if you helped the process by producing a competing
+caching scheme based on existing web caching engines, the aggregated
+result (not just the web caching engine you base your work on) needs to
+get a similar field exposure to prove itself that it can scale to the load
+k.org sees, which would be quite a lot of work, no?
