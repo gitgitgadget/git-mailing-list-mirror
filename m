@@ -1,76 +1,62 @@
-From: Jason Felice <jason.m.felice@gmail.com>
-Subject: Re: error: git-svn died of signal 13
-Date: Wed, 16 Dec 2009 14:56:48 +0000 (UTC)
-Message-ID: <loom.20091216T154525-417@post.gmane.org>
-References: <20091209053602.GA2739@progeny.tock> <20091209055824.GA22941@dcvr.yhbt.net> <20091209075319.GA4201@progeny.tock>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: New Proposal (simple) for Metadata in Git Commits: git-meta
+Date: Wed, 16 Dec 2009 08:30:36 -0800
+Message-ID: <20091216163036.GE18319@spearce.org>
+References: <93857A5A-744E-4A7C-B42D-23A56A48AAF7@lenary.co.uk> <20091215220529.GD18319@spearce.org> <7349A827-41D5-434F-85FE-D49980A7D501@lenary.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 16 16:00:30 2009
+Cc: git@vger.kernel.org
+To: Sam Elliott <sam@lenary.co.uk>
+X-From: git-owner@vger.kernel.org Wed Dec 16 17:30:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NKvMa-0007zy-Kv
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Dec 2009 16:00:29 +0100
+	id 1NKwlz-0005Et-5X
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Dec 2009 17:30:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758588AbZLPPAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2009 10:00:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758383AbZLPPAV
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 10:00:21 -0500
-Received: from lo.gmane.org ([80.91.229.12]:32813 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758102AbZLPPAT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2009 10:00:19 -0500
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1NKvMM-0007s0-4o
-	for git@vger.kernel.org; Wed, 16 Dec 2009 16:00:14 +0100
-Received: from 205.242.72.5 ([205.242.72.5])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 Dec 2009 16:00:14 +0100
-Received: from jason.m.felice by 205.242.72.5 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 Dec 2009 16:00:14 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 205.242.72.5 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.5) Gecko/20091102 Firefox/3.5.5 (.NET CLR 3.5.30729))
+	id S935020AbZLPQam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2009 11:30:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935013AbZLPQal
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 11:30:41 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:51162 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935011AbZLPQal (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2009 11:30:41 -0500
+Received: by yxe17 with SMTP id 17so1053218yxe.33
+        for <git@vger.kernel.org>; Wed, 16 Dec 2009 08:30:40 -0800 (PST)
+Received: by 10.150.35.18 with SMTP id i18mr2001390ybi.153.1260981040368;
+        Wed, 16 Dec 2009 08:30:40 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 9sm460901yxf.41.2009.12.16.08.30.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 16 Dec 2009 08:30:38 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7349A827-41D5-434F-85FE-D49980A7D501@lenary.co.uk>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135331>
 
-Jonathan Nieder <jrnieder <at> gmail.com> writes:
+Sam Elliott <sam@lenary.co.uk> wrote:
+> On 15 Dec 2009, at 23:05, Shawn O. Pearce wrote:
+>> If you dropped the --git-meta-- tags above, JGit would happily
+>> recognize the awesome: and Github: tags, but it might need a bit
+>> more work to recognize the nested user: tag.  Also, you'd be able
+>> to use git-meta on the git and Linux kernel repositories to pull
+>> out and work with Signed-off-by, Acked-by, etc.
+>
+> I'm not entirely sure about this approach. The current implementation  
+> also works with PGP-signed tags, where the information is not  
+> necessarily going to be at the bottom of the message when i use `git- 
+> cat-file -p`. I think it shouldn't be too hard to also have git-meta  
+> read any YAML-like data just before the signing message.
 
-> 
-> CCing those who reported the problem.  There is some debugging advice below,
-> for anyone who wants to take a further stab at tracking this down.
-> 
-> Eric Wong wrote:
-> > Can somebody get an strace or core dump for the "git update-index"
-> > call?  Or even an strace -f of the entire git svn invocation as well...
-> 
+Ah, good point.  But as you point out, it should be simple enough
+to detect a PGP signature on the bottom and just clip that off the
+end, and then perform the YAML-like data parsing on the footer.
 
-I am having the same issue, pulling a HTTPS repo being served with Subversion
-1.4.5.  Other info: The repo has many, many tags (~300?), and ~5000 revisions,
-and I've been pulling it since Saturday!  Each iteration of git svn fetch takes
-longer and longer before producing output.  It "feels" like  It The tags seem to
-be what's slowing it down.)  I can't make this repo or shell access available
-(sorry).
-
-I got an strace:
-
-jfelice@lx-cclamp:~/xpay-core$ strace -f -o /tmp/strace git svn fetch
-r3176 = 816a8e7ffd28a2224a75037cf6a983883532c76e (refs/remotes/tags/v01_01_87)
-error: git-svn died of signal 13
-
-The strace output is at:
-
-http://eraserhead.net/files/strace.bz2
-
-I originally suspected that our crufty HTTPS server was closing the connection
-on us due to some kind of timeout.
+-- 
+Shawn.
