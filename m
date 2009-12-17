@@ -1,98 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Let format-patch and rebase ignore trivial merges.
-Date: Thu, 17 Dec 2009 14:44:37 -0800
-Message-ID: <7vaaxhfcfe.fsf@alter.siamese.dyndns.org>
-References: <20091216164553.GA22471@pcpool00.mathematik.uni-freiburg.de>
- <4B29106C.1040501@viscovery.net>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: [RFC PATCH] Record a single transaction for conflicting push
+	operations
+Date: Thu, 17 Dec 2009 23:22:12 +0000
+Message-ID: <20091217232212.4869.43002.stgit@toshiba-laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Bernhard R. Link" <brlink@debian.org>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Dec 17 23:44:59 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Gustav =?utf-8?b?SMOlbGxiZXJn?= <gustav@virtutech.com>,
+	Karl Wiberg <kha@treskal.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 18 00:22:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLP5c-0001VM-7R
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 23:44:56 +0100
+	id 1NLPfs-0008Op-8J
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 00:22:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965177AbZLQWou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2009 17:44:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965132AbZLQWou
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 17:44:50 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47095 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964988AbZLQWot (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2009 17:44:49 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C012AA7111;
-	Thu, 17 Dec 2009 17:44:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cKzvlwZGrvbgkmXM98FOKRd36GU=; b=YTsxwT
-	zQPRFAax0/zl8xoMmEwYPzNtCyGfJ0p9sndk9yHLnR1LT9fYim1nATRC2PKXf//w
-	ra6lVPlAaomhbwx9dUcL/4HRvsSnzHZeEsCa8J2hQnDPA2qxBfo+HLZXivqBuP9m
-	yS1BS6lDJAc/fody4Tjf7t+78vyxppmqS+fVs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=glmljbK1VDTXqYG6Si3OIVZcd7DrYru6
-	+ySvsQDIH9lh1XD1GhUvaFLHiG963Wyqloi4M+ydhayf8mROn/SHuhK1grmrU+T5
-	D07TQWEXmYL5cC+jSd0D0WE4om2TUJP/LLS1RtQqMCTC0cAj/xIQ1L/866kg+z+o
-	DYeCAiTPp3c=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9012BA710F;
-	Thu, 17 Dec 2009 17:44:43 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 14AE5A710E; Thu, 17 Dec 2009
- 17:44:38 -0500 (EST)
-In-Reply-To: <4B29106C.1040501@viscovery.net> (Johannes Sixt's message of
- "Wed\, 16 Dec 2009 17\:53\:00 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C4CF1E24-EB5D-11DE-B3C6-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1759484AbZLQXWT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Dec 2009 18:22:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759197AbZLQXWS
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 18:22:18 -0500
+Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:21383 "EHLO
+	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758100AbZLQXWQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Dec 2009 18:22:16 -0500
+Received: from aamtaout01-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout03-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20091217232215.EEAH17277.mtaout03-winn.ispmail.ntl.com@aamtaout01-winn.ispmail.ntl.com>;
+          Thu, 17 Dec 2009 23:22:15 +0000
+Received: from [127.0.1.1] (really [86.9.126.106])
+          by aamtaout01-winn.ispmail.ntl.com
+          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
+          id <20091217232215.OIQ13254.aamtaout01-winn.ispmail.ntl.com@[127.0.1.1]>;
+          Thu, 17 Dec 2009 23:22:15 +0000
+User-Agent: StGit/0.15-28-gdf0b9
+X-Cloudmark-Analysis: v=1.1 cv=1ggfb5FlKZQUfF3vzm9UBYZ2uTfLsbs/8dSljwg5+mE= c=1 sm=0 a=FpfSDvT_KwoA:10 a=pGLkceISAAAA:8 a=5HExe6NRAAAA:8 a=hHMng47ZAAAA:8 a=V2qzGUorRXw6kvE2wJIA:9 a=CpuUN7WvwZsqgPzhN8AA:7 a=iZ_Gk-l8eQUDHdbjbBQppFCWVUcA:4 a=MSl-tDqOz04A:10 a=G3pnvarxzbsA:10 a=ePXRMeZs6ywA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135386>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+StGit commands resulting in a conflicting patch pushing record two
+transactions in the log (with one of them being inconsistent with HEAD
+!=3D top). Undoing such operations requires two "stg undo" (possibly wi=
+th
+--hard) commands which is unintuitive. This patch changes such
+operations to only record one log entry and "stg undo" reverts the stac=
+k
+to the state prior to the operation.
 
-> Please do not set Mail-Followup-To (and use reply-to-all to keep the Cc list).
->
-> Bernhard R. Link schrieb:
->> --prune-tree makes rev-list without paths equivalent to
->> "git rev-list $options -- ." (or .. or ../.. and so on,
->> if you are in some subdirectory).
->> This is the new default for format-patch and rebase
->
-> Why do you need a new option when you can just add "-- ." to the rev-list
-> invocation?
+Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
+Cc: Gustav H=C3=A5llberg <gustav@virtutech.com>
+Cc: Karl Wiberg <kha@treskal.com>
+---
+ stgit/lib/transaction.py |    5 +++--
+ t/t3103-undo-hard.sh     |    4 ++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-I agree that --[no-]prune-tree options are unnecessary.  The patch to
-builtin-log.c, the second hunk to revision.c, and revision.h would be
-sufficient and all others should be dropped.  Instead, the shell script
-Porcelains can simply add "-- ." at the end of their rev-list invocations.
-
-That way, we don't have to add anything to the documentation either.
-
-But I wonder if it is an indication of something screwy in the workflow,
-if a branch that merges others with "-s ours" is where the patches for
-upstream submission is taken from with format-patch, or what is rebased
-and internally gets its patches extracted with format-patch.
-
-A branch that merges with "-s ours" is typically done so that others can
-pull and build against (and "-s ours" is used to cauterize the history of
-a bad side branch), and good bits merged into it would also have come from
-a different clean branch that is merged into that branch.  It might make
-more sense to format-patch that clean branch when preparing for upstream
-submission, than the "aggregated mesh of commits" branch with "-s ours"
-fix-ups.
-
-On the other hand, a branch that will be rebased to keep up with others is
-by definition private, and I don't see a reason to mark with "-s ours" to
-cauterize history of an unrelated side branch that tried to do something
-similar to what the branch is trying to achieve in that setting.  You can
-instead ignore such a side branch and not merge with it.  So I don't know
-how a sane history you are going to rebase ends up containing a "-s ours"
-merge to begin with.
+diff --git a/stgit/lib/transaction.py b/stgit/lib/transaction.py
+index 30a153b..fad5ab4 100644
+--- a/stgit/lib/transaction.py
++++ b/stgit/lib/transaction.py
+@@ -232,8 +232,9 @@ class StackTransaction(object):
+             self.__stack.patchorder.hidden =3D self.__hidden
+             log.log_entry(self.__stack, msg)
+         old_applied =3D self.__stack.patchorder.applied
+-        write(self.__msg)
+-        if self.__conflicting_push !=3D None:
++        if not self.__conflicting_push:
++            write(self.__msg)
++        else:
+             self.__patches =3D _TransPatchMap(self.__stack)
+             self.__conflicting_push()
+             write(self.__msg + ' (CONFLICT)')
+diff --git a/t/t3103-undo-hard.sh b/t/t3103-undo-hard.sh
+index 2d0f382..df14b1f 100755
+--- a/t/t3103-undo-hard.sh
++++ b/t/t3103-undo-hard.sh
+@@ -46,11 +46,11 @@ test_expect_success 'Try to undo without --hard' '
+=20
+ cat > expected.txt <<EOF
+ EOF
+-test_expect_failure 'Try to undo with --hard' '
++test_expect_success 'Try to undo with --hard' '
+     stg undo --hard &&
+     stg status a > actual.txt &&
+     test_cmp expected.txt actual.txt &&
+-    test "$(echo $(stg series))" =3D "> p1 - p2 - p3" &&
++    test "$(echo $(stg series))" =3D "+ p1 + p2 > p3" &&
+     test "$(stg id)" =3D "$(stg id $(stg top))"
+ '
+=20
