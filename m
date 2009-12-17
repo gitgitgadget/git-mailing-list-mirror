@@ -1,99 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: adding additional remote refs to a remote repo
-Date: Thu, 17 Dec 2009 10:19:01 -0800
-Message-ID: <7v4onpo44q.fsf@alter.siamese.dyndns.org>
-References: <a422b4da0912170943q2613faeao208eaa674d1a0afa@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git svn mkdirs ignores compressed unhandled.log files
+Date: Thu, 17 Dec 2009 12:08:52 -0800
+Message-ID: <20091217200852.GA5797@dcvr.yhbt.net>
+References: <8BB233FB-4269-4B14-8703-A4FF1E25FB0D@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Peter Petrakis <peter.petrakis@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 19:19:24 2009
+To: Robert Zeh <robert.a.zeh@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 17 21:09:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLKwZ-0000Oi-Tn
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 19:19:20 +0100
+	id 1NLMeg-00081o-Lo
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 21:08:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935234AbZLQSTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2009 13:19:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935226AbZLQSTN
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 13:19:13 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35526 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935124AbZLQSTL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2009 13:19:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0C321A76EE;
-	Thu, 17 Dec 2009 13:19:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SgUBXaoFn41QHN7SwlNaB/EhZG4=; b=kGO2+4
-	Ebyz9/iT+ExtvGpvkqUc72dJAKDgAqB/+Jsp2FRrWHLTrenSsVI5fzLDw0XxkdkJ
-	IXjA9vUnHqkXYELEkCfz99HPb867Zg4y0z3FB2FEs+9I1QjKEQ9oOJmqU9oeYGaY
-	7gtiPBZ04KSnYveI6/fCe+VNiql6k9/YFDqQM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=R11EUI/E2f07g9msb0ok8l4E46xabM4x
-	1ZluJWmtE+WzEC+N6BSvWI+8IBBd1VcfhaztAjpU/idO2XUl/VwA4fkrvPhO8XuV
-	rUMSjFJV+3wginTB29SSlkwem10kYhe57UsRTgS+EYyMMKNLNbBDdO+qk4LlzJsm
-	NKCMt8s0ey4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DF4CBA76EB;
-	Thu, 17 Dec 2009 13:19:06 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E1C7FA76EA; Thu, 17 Dec 2009
- 13:19:03 -0500 (EST)
-In-Reply-To: <a422b4da0912170943q2613faeao208eaa674d1a0afa@mail.gmail.com>
- (Peter Petrakis's message of "Thu\, 17 Dec 2009 12\:43\:19 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A9E476B0-EB38-11DE-A5E1-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1761119AbZLQUI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2009 15:08:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935840AbZLQUIz
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 15:08:55 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:35158 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757870AbZLQUIx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2009 15:08:53 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B5E71F50E;
+	Thu, 17 Dec 2009 20:08:52 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <8BB233FB-4269-4B14-8703-A4FF1E25FB0D@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135380>
 
-Peter Petrakis <peter.petrakis@gmail.com> writes:
+Robert Zeh <robert.a.zeh@gmail.com> wrote:
+> It looks like there is a conflict between git svn gc and git svn
+> mkdirs.  The git svn mkdirs command only looks at unhandled.log files.
+> Shouldn't it also look at any compressed unhandled.log files too?
 
-> Now if I push this drbd-8.2.7-merge-branch to the central repo, the next
-> guy won't know for sure what this was tracking. I also don't want to
-> have to 'add remote ...'  every time I clone a new copy. Thanks.
+Hi Robert,
 
-The kind of information you listed above are kept in $GIT_DIR/config of
-each repository.  This file is kept private to each repository, i.e. not
-cloned, fetched or pushed across repositories [*1*].
+Yes, an oversight. Does this patch work for you? (Highly untested)
 
-This is a deliberate design decision.
+Would you mind writing a test case, been a bit busy with other stuff.
+Thanks.
 
- - The file records mostly personal preferences, e.g. how user works with
-   his branches in the repository, if the integration is done via rebase
-   instead of merge, how the output is colored, etc.  Your colleagues can
-   and will use branches other than the ones that may be publicly shared
-   (like drbd-8.2.7-merge-branch), and how they use their private branches
-   is not something you want to dictate nor interfere with.
-
- - The [remote "foo"] sections and friends (e.g. [branch "bar"]) in the
-   "$GIT_DIR/config" in that bare repository you created specifies how
-   that particular repository interacts with the remote named "foo" and
-   how branch "bar" is integrated with other things.  These may not
-   necessarily match, and if you are using it as a middleman repository
-   between your developers and the project upstream, they will in general
-   not match, the setting the developer repositories want to use.  This
-   should be obvious if you think about where remote.origin.url should
-   point at.  In the middleman repository, you would want "git fetch"
-   without "origin" to slurp from the upstream and in the developer clones
-   of this repository, you would want to "git fetch" to update from this
-   middleman repository.
-
- - The file can has pointers to external programs to be used as filters;
-   blindly copying it upon clone has security implications as well.
-
-
-[Footnote]
-
-*1* Often people use README-like document in-tree to tell developers about
-the specific settings the project wants them to use (i.e. "how to work
-with this project"), together with coding styles, submission guidelines,
-etc., that are not tied to the use of git.
+diff --git a/git-svn.perl b/git-svn.perl
+index a4b052c..d362de7 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2740,21 +2740,44 @@ sub do_fetch {
+ 
+ sub mkemptydirs {
+ 	my ($self, $r) = @_;
++
++	sub scan {
++		my ($r, $empty_dirs, $line) = @_;
++		if (defined $r && $line =~ /^r(\d+)$/) {
++			return 0 if $1 > $r;
++		} elsif ($line =~ /^  \+empty_dir: (.+)$/) {
++			$empty_dirs->{$1} = 1;
++		} elsif ($line =~ /^  \-empty_dir: (.+)$/) {
++			my @d = grep {m[^\Q$1\E(/|$)]} (keys %$empty_dirs);
++			delete @$empty_dirs{@d};
++		}
++		1; # continue
++	};
++
+ 	my %empty_dirs = ();
++	my $gz_file = "$self->{dir}/unhandled.log.gz";
++	if (-f $gz_file) {
++		if (!$can_compress) {
++			warn "Compress::Zlib could not be found; ",
++			     "empty directories in $gz_file will not be read\n";
++		} else {
++			my $gz = Compress::Zlib::gzopen($gz_file, "rb") or
++				die "Unable to open $gz_file: $!\n";
++			my $line;
++			while ($gz->gzreadline($line) > 0) {
++				scan($r, \%empty_dirs, $line) or last;
++			}
++			$gz->gzclose;
++		}
++	}
+ 
+-	open my $fh, '<', "$self->{dir}/unhandled.log" or return;
+-	binmode $fh or croak "binmode: $!";
+-	while (<$fh>) {
+-		if (defined $r && /^r(\d+)$/) {
+-			last if $1 > $r;
+-		} elsif (/^  \+empty_dir: (.+)$/) {
+-			$empty_dirs{$1} = 1;
+-		} elsif (/^  \-empty_dir: (.+)$/) {
+-			my @d = grep {m[^\Q$1\E(/|$)]} (keys %empty_dirs);
+-			delete @empty_dirs{@d};
++	if (open my $fh, '<', "$self->{dir}/unhandled.log") {
++		binmode $fh or croak "binmode: $!";
++		while (<$fh>) {
++			scan($r, \%empty_dirs, $_) or last;
+ 		}
++		close $fh;
+ 	}
+-	close $fh;
+ 
+ 	my $strip = qr/\A\Q$self->{path}\E(?:\/|$)/;
+ 	foreach my $d (sort keys %empty_dirs) {
+-- 
+Eric Wong
