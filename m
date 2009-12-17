@@ -1,86 +1,157 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: b5227d8 changes meaning of "ls-files -x 'pattern'"
-Date: Thu, 17 Dec 2009 18:24:55 +0530
-Message-ID: <2e24e5b90912170454x699ed26fm973e2fb7133b3bbf@mail.gmail.com>
-References: <2e24e5b90912140751y5d769f15pa6782914bdb04dbd@mail.gmail.com>
-	 <20091214182420.GA31594@coredump.intra.peff.net>
+From: Etienne Vallette d'Osia <Etienne.VallettedOsia@gmail.com>
+Subject: Re: [RFC/PATCH] gitweb: link to toggle 'no merges' option
+Date: Thu, 17 Dec 2009 14:03:58 +0100
+Message-ID: <hgda76$tf5$1@ger.gmane.org>
+References: <1261040753-4859-1-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 17 13:55:09 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 17 14:04:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLFsq-0000ig-H1
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 13:55:08 +0100
+	id 1NLG1h-0004JY-L2
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 14:04:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761501AbZLQMy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2009 07:54:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbZLQMy6
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 07:54:58 -0500
-Received: from mail-px0-f174.google.com ([209.85.216.174]:49161 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757700AbZLQMy5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2009 07:54:57 -0500
-Received: by pxi4 with SMTP id 4so1475047pxi.33
-        for <git@vger.kernel.org>; Thu, 17 Dec 2009 04:54:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=qpButjsgBT75FxdjkLpYmW0BzghUa084CXv02OAR6Z4=;
-        b=rSYDPaZgHRlfGv+HuCx4EpcSCf76GVKdJ3qIzfqkjgYQ/A0J4TJBw0KhbIA3s+dS+7
-         e/5s4Img+bq8Qq2hUPrGk4IiZlYZSPcUursVLT6kQVy27ElfSUAtfoEtlouqt7pLV+JO
-         UHcdSDgqaDLdrxRPCdCVtpJaWBY7iN1PA1Erk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=EpnNyIYyA3Ep3VvDHLf4bxYB/hdraFDdYKjCMdJADjCFyZojNIm9hChDTP6Q3FbwZL
-         QuM3ZpxX9QHi5TR57bpbGyoPUs8aADhLWO/P9MR3AzSITeGrnUjRQqXECGDB5EW2zQjY
-         GjOF2nY8xf4y8Y0JsETb3+n+RD9Alz+E2BV3s=
-Received: by 10.114.6.25 with SMTP id 25mr1692995waf.25.1261054495737; Thu, 17 
-	Dec 2009 04:54:55 -0800 (PST)
-In-Reply-To: <20091214182420.GA31594@coredump.intra.peff.net>
+	id S932609AbZLQNEK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Dec 2009 08:04:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932065AbZLQNEJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 08:04:09 -0500
+Received: from lo.gmane.org ([80.91.229.12]:58932 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932566AbZLQNEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2009 08:04:07 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NLG1O-0004Dt-EU
+	for git@vger.kernel.org; Thu, 17 Dec 2009 14:03:58 +0100
+Received: from ram94-11-88-187-113-157.fbx.proxad.net ([88.187.113.157])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 17 Dec 2009 14:03:58 +0100
+Received: from Etienne.VallettedOsia by ram94-11-88-187-113-157.fbx.proxad.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 17 Dec 2009 14:03:58 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: ram94-11-88-187-113-157.fbx.proxad.net
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.5) Gecko/20091204 Lightning/1.0pre Thunderbird/3.0
+In-Reply-To: <1261040753-4859-1-git-send-email-giuseppe.bilotta@gmail.com>
+X-Enigmail-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135370>
 
-On Mon, Dec 14, 2009 at 11:55 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Dec 14, 2009 at 09:21:06PM +0530, Sitaram Chamarty wrote:
+Oh, this is exactly what I wanted for a long long time...
+I hope this feature will be merged soon !
 
->> Before b5227d8, the following two commands would produce different
->> outputs (say on git.git):
->>
->>       git ls-files
->>       git ls-files -x '*.c'
->>
->> From b5227d8 onward, they produce the same output.   The second command
->> no longer excludes *.c files.
->>
->> I was unable to understand the commit message completely but it sounds
->> like this was intentionally changed to do this.
+Le 12/17/2009 10:05 AM, Giuseppe Bilotta a =E9crit :
+> In views that support --no-merges, introduce a link that toggles the
+> option.
+>=20
+> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+>=20
+> ---
+>  gitweb/gitweb.css  |   11 +++++++++++
+>  gitweb/gitweb.perl |   14 ++++++++++++++
+>  2 files changed, 25 insertions(+), 0 deletions(-)
+>=20
+> This is something I've been wanting for a while. There are a number o=
+f
+> things that don't 'click' with this proof of concept, and I'm coming =
+to
+> the list to hear the opinion of users and developers on how to improv=
+e
+> the thing.
+>=20
+> The patch is live at http://git.oblomov.eu/, an example affected page=
+ is
+> http://git.oblomov.eu/git/shortlog
+>=20
+> Things that are sure to change:
+>=20
+>  * the aesthetics and location of the toggle link (it shows on mouseh=
+over
+>    in the title). Other options I've considered are:
+>     + next to pagination (first | prev | next), either before or afte=
+r
+>       the existing entries
+>     + on mouseover for the table section that refers to the (short)lo=
+g;
+>       this would make it possible to put it summary view too, for exa=
+mple
+>=20
+>  * if you toggle merge view when not on the first page, the reference
+>    (first) commit in the view is likely to change drastically, which
+>    causes confusion. I have not found a satisfactory solution for thi=
+s,
+>    since the obvious way to 'lock' the view (start paginating from th=
+e
+>    current top commit) prevents prev/next navigation
+>=20
+> diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+> index 50067f2..0da6ef0 100644
+> --- a/gitweb/gitweb.css
+> +++ b/gitweb/gitweb.css
+> @@ -572,3 +572,14 @@ span.match {
+>  div.binary {
+>  	font-style: italic;
+>  }
+> +
+> +span.merge_toggle a {
+> +	font-size: 66%;
+> +	color: white !important;
+> +	font-weight: normal;
+> +	vertical-align: top;
+> +	text-decoration:none;
+> +	visibility: hidden;
+> +}
+> +
+> +*:hover > span.merge_toggle a { visibility:visible }
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 7e477af..a63f419 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -3118,11 +3118,15 @@ sub git_header_html {
+>  	my $status =3D shift || "200 OK";
+>  	my $expires =3D shift;
+> =20
+> +	my $can_have_merges =3D grep(/^$action$/, @{$allowed_options{'--no-=
+merges'}});
+> +	my $has_merges =3D !grep(/^--no-merges$/, @extra_options);
+> +
+>  	my $title =3D "$site_name";
+>  	if (defined $project) {
+>  		$title .=3D " - " . to_utf8($project);
+>  		if (defined $action) {
+>  			$title .=3D "/$action";
+> +			$title .=3D " (no merges)" unless $has_merges;
+>  			if (defined $file_name) {
+>  				$title .=3D " - " . esc_path($file_name);
+>  				if ($action eq "tree" && $file_name !~ m|/$|) {
+> @@ -3235,6 +3239,16 @@ EOF
+>  		print $cgi->a({-href =3D> href(action=3D>"summary")}, esc_html($pr=
+oject));
+>  		if (defined $action) {
+>  			print " / $action";
+> +			if ($can_have_merges) {
+> +				print " <span class=3D'merge_toggle'>";
+> +				if ($has_merges) {
+> +					printf('<a href=3D"%s">hide merges</a>', href(-replay=3D>1, 'ex=
+tra_options'=3D>('--no-merges', @extra_options)));
+> +				} else {
+> +					my @href_extra =3D grep(!/^--no-merges$/, @extra_options);
+> +					printf('<a href=3D"%s">show merges</a>', href(-replay=3D>1, 'ex=
+tra_options'=3D>@href_extra));
+> +				}
+> +				print "</span>";
+> +			}
+>  		}
+>  		print "\n";
+>  	}
 
-> Yes, it was intentional. Excludes are about untracked files, not about
-> restricting parts of the index. The point of the change was to bring
-> "ls-files" in harmony with other parts of git. For example, prior to
-
-OK; makes sense -- thanks for the explanation.
-
-> However, for your use case, I can see the utility of an option to limit
-> the output of ls-files for a particular invocation. It's just that "-x"
-> is tied into the excludes mechanism, which doesn't do that.
->
-> I would not be opposed to a patch to add an option that means "exclude
-> these index entries from the output list." And for the sake of backwards
-
-I rather doubt if my C skills extend that far these days; I'll figure out
-other ways of doing this if I need it :-)
-
-Thanks again,
-
-Sitaram
+--
+Etienne Vallette d'Osia
