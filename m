@@ -1,111 +1,70 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git svn mkdirs ignores compressed unhandled.log files
-Date: Thu, 17 Dec 2009 12:08:52 -0800
-Message-ID: <20091217200852.GA5797@dcvr.yhbt.net>
-References: <8BB233FB-4269-4B14-8703-A4FF1E25FB0D@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: diff attribute ignored by show and log -p
+Date: Thu, 17 Dec 2009 15:24:59 -0500
+Message-ID: <20091217202459.GC11367@sigill.intra.peff.net>
+References: <76718490912162046k36e2a275gaf7672b38c7a63e4@mail.gmail.com>
+ <76718490912162123r49f9bd90n8e032c144d0cdbac@mail.gmail.com>
+ <20091217221740.6117@nanako3.lavabit.com>
+ <76718490912170844i7d5f25d1hc32590b877dbf295@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robert Zeh <robert.a.zeh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 21:09:12 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 17 21:25:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLMeg-00081o-Lo
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 21:08:59 +0100
+	id 1NLMuf-0007Dg-Ho
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 21:25:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761119AbZLQUI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2009 15:08:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935840AbZLQUIz
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 15:08:55 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:35158 "EHLO dcvr.yhbt.net"
+	id S1759028AbZLQUZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2009 15:25:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762600AbZLQUZI
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 15:25:08 -0500
+Received: from peff.net ([208.65.91.99]:47900 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757870AbZLQUIx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2009 15:08:53 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B5E71F50E;
-	Thu, 17 Dec 2009 20:08:52 +0000 (UTC)
+	id S1759028AbZLQUZF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2009 15:25:05 -0500
+Received: (qmail 25485 invoked by uid 107); 17 Dec 2009 20:29:37 -0000
+Received: from c-71-206-170-120.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.170.120)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 17 Dec 2009 15:29:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Dec 2009 15:24:59 -0500
 Content-Disposition: inline
-In-Reply-To: <8BB233FB-4269-4B14-8703-A4FF1E25FB0D@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <76718490912170844i7d5f25d1hc32590b877dbf295@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135381>
 
-Robert Zeh <robert.a.zeh@gmail.com> wrote:
-> It looks like there is a conflict between git svn gc and git svn
-> mkdirs.  The git svn mkdirs command only looks at unhandled.log files.
-> Shouldn't it also look at any compressed unhandled.log files too?
+On Thu, Dec 17, 2009 at 11:44:16AM -0500, Jay Soffian wrote:
 
-Hi Robert,
+> > The need to give --ext-diff is mentioned in 72909be (Add diff-option
+> > --ext-diff, 2007-06-30) but its log message doesn't 'explain' why external
+> > diff isn't used by default and you need to pass that extra option.
+> 
+> "To prevent funky games with external diff engines, git-log and
+> friends prevent external diff engines from being called."
+> 
+> Seemed reason enough to me.
 
-Yes, an oversight. Does this patch work for you? (Highly untested)
+I don't remember discussing it at that time, but much later when
+touching the external diff code and adding textconv, Junio and I came to
+the conclusion that textconv was reasonable to do as part of "git log
+-p", as the result is just an internal conversion that still results in
+a text diff. Whereas an external diff might be terribly confusing, as it
+could be spawning graphical viewers or producing output which does not
+match well with the log output.
 
-Would you mind writing a test case, been a bit busy with other stuff.
-Thanks.
+> > Probably --ext-diff should be the default?
+> 
+> Or available via a config option anyway.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index a4b052c..d362de7 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2740,21 +2740,44 @@ sub do_fetch {
- 
- sub mkemptydirs {
- 	my ($self, $r) = @_;
-+
-+	sub scan {
-+		my ($r, $empty_dirs, $line) = @_;
-+		if (defined $r && $line =~ /^r(\d+)$/) {
-+			return 0 if $1 > $r;
-+		} elsif ($line =~ /^  \+empty_dir: (.+)$/) {
-+			$empty_dirs->{$1} = 1;
-+		} elsif ($line =~ /^  \-empty_dir: (.+)$/) {
-+			my @d = grep {m[^\Q$1\E(/|$)]} (keys %$empty_dirs);
-+			delete @$empty_dirs{@d};
-+		}
-+		1; # continue
-+	};
-+
- 	my %empty_dirs = ();
-+	my $gz_file = "$self->{dir}/unhandled.log.gz";
-+	if (-f $gz_file) {
-+		if (!$can_compress) {
-+			warn "Compress::Zlib could not be found; ",
-+			     "empty directories in $gz_file will not be read\n";
-+		} else {
-+			my $gz = Compress::Zlib::gzopen($gz_file, "rb") or
-+				die "Unable to open $gz_file: $!\n";
-+			my $line;
-+			while ($gz->gzreadline($line) > 0) {
-+				scan($r, \%empty_dirs, $line) or last;
-+			}
-+			$gz->gzclose;
-+		}
-+	}
- 
--	open my $fh, '<', "$self->{dir}/unhandled.log" or return;
--	binmode $fh or croak "binmode: $!";
--	while (<$fh>) {
--		if (defined $r && /^r(\d+)$/) {
--			last if $1 > $r;
--		} elsif (/^  \+empty_dir: (.+)$/) {
--			$empty_dirs{$1} = 1;
--		} elsif (/^  \-empty_dir: (.+)$/) {
--			my @d = grep {m[^\Q$1\E(/|$)]} (keys %empty_dirs);
--			delete @empty_dirs{@d};
-+	if (open my $fh, '<', "$self->{dir}/unhandled.log") {
-+		binmode $fh or croak "binmode: $!";
-+		while (<$fh>) {
-+			scan($r, \%empty_dirs, $_) or last;
- 		}
-+		close $fh;
- 	}
--	close $fh;
- 
- 	my $strip = qr/\A\Q$self->{path}\E(?:\/|$)/;
- 	foreach my $d (sort keys %empty_dirs) {
--- 
-Eric Wong
+If you were going to do such a config option, it might make sense to
+make it an attribute of the diff driver rather than a global "use
+external diff". Then each diff driver could say "Yes, I am reasonable to
+be run as part of log -p".
+
+-Peff
