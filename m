@@ -1,82 +1,109 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Let format-patch and rebase ignore trivial merges.
-Date: Thu, 17 Dec 2009 12:40:05 +0100
-Message-ID: <4B2A1895.2000803@viscovery.net>
-References: <20091216164553.GA22471@pcpool00.mathematik.uni-freiburg.de> <4B29106C.1040501@viscovery.net> <20091217093547.GA25451@pcpool00.mathematik.uni-freiburg.de>
+From: =?ISO-8859-2?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: potential null dereference
+Date: Thu, 17 Dec 2009 13:30:55 +0100
+Message-ID: <4B2A247F.4070705@lsrfire.ath.cx>
+References: <4B2783DD.5060301@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 17 12:40:26 2009
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jiri Slaby <jirislaby@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 17 13:31:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLEiY-0007Qh-8G
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 12:40:26 +0100
+	id 1NLFVm-0007XJ-P3
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 13:31:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764509AbZLQLkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2009 06:40:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764520AbZLQLkK
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 06:40:10 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:22787 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764515AbZLQLkJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2009 06:40:09 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NLEiD-0000gv-Lj
-	for git@vger.kernel.org; Thu, 17 Dec 2009 12:40:05 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 4B8151660F
-	for <git@vger.kernel.org>; Thu, 17 Dec 2009 12:40:05 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <20091217093547.GA25451@pcpool00.mathematik.uni-freiburg.de>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1758917AbZLQMbM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Dec 2009 07:31:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756877AbZLQMbM
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 07:31:12 -0500
+Received: from india601.server4you.de ([85.25.151.105]:52213 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754129AbZLQMbJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2009 07:31:09 -0500
+Received: from [10.0.1.101] (p57B7F8B9.dip.t-dialin.net [87.183.248.185])
+	by india601.server4you.de (Postfix) with ESMTPSA id 9FD6D2F803F;
+	Thu, 17 Dec 2009 13:31:04 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
+In-Reply-To: <4B2783DD.5060301@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135368>
 
-Bernhard R. Link schrieb:
-> * Johannes Sixt <j.sixt@viscovery.net> [091216 17:53]:
->> Bernhard R. Link schrieb:
->>> --prune-tree makes rev-list without paths equivalent to
->>> "git rev-list $options -- ." (or .. or ../.. and so on,
->>> if you are in some subdirectory).
->>> This is the new default for format-patch and rebase
->> Why do you need a new option when you can just add "-- ." to the rev-list
->> invocation?
-> 
-> I want the default for format-patch changed.
+Am 15.12.2009 13:41, schrieb Jiri Slaby:
+> Hi,
+>=20
+> Stanse found the following error in unpack-trees.c:
+> dereferencing NULL pointer here.[. * o src_index]
+>=20
+> int unpack_trees(unsigned len, struct tree_desc *t, struct
+> unpack_trees_options *o)
+> {
+>  int ret;
+>  static struct cache_entry *dfc;
+> ...
+>  if (o->src_index) {                   <-- loc0
+>   o->result.timestamp.sec =3D o->src_index->timestamp.sec;
+>   o->result.timestamp.nsec =3D o->src_index->timestamp.nsec;
+>  }
+>  o->merge_size =3D len;
+>=20
+>  if (!dfc)
+>   dfc =3D xcalloc(1, ((1 + (0) + 8) & ~7));
+>  o->df_conflict_entry =3D dfc;
+>=20
+>  if (len) {
+> ...
+>  }
+>=20
+>  if (o->merge) {
+>   while (o->pos < o->src_index->cache_nr) { <-- here
+>=20
+> It triggers, because there is a test for o->src_index being NULL at
+> loc0, but here, it is dereferenced without a check. Can this happen
+> (e.g. does o->merge !=3D NULL imply o->src_index !=3D NULL)?
 
-I do not see why format-patch would have to be changed. The case that you
-outline (a merge -s ours happened and you want to follow only one parent)
-is rare enough and even more rarly will somebody want to apply
-format-patch to such a history.
+Running "git grep -w -B70 unpack_trees" and looking for "src_index"
+using less' search command showed me that src_index is never NULL when
+unpack_trees() is called.
 
-But I guess that you are actually not interested in format-patch per se,
-but rather in rebase (which uses format-patch).
+> Further, there is a warning in log-tree.c:
+> pointer always points to valid memory here, but checking for not
+> NULL.[parents]
+>=20
+> static int log_tree_diff(struct rev_info *opt, struct commit *commit,
+> struct log_info *log)
+> {
+>  int showed_log;
+>  struct commit_list *parents;
+>  unsigned const char *sha1 =3D commit->object.sha1;
+>=20
+>  if (!opt->diff && !((&opt->diffopt)->flags & (1 << 14)))
+>   return 0;
+>=20
+>=20
+>  parents =3D commit->parents;
+>  if (!parents) {            <-- loc0
+>   if (opt->show_root_diff) {
+>    diff_root_tree_sha1(sha1, "", &opt->diffopt);
+>    log_tree_diff_flush(opt);
+>   }
+>   return !opt->loginfo;     <-- loc1
+>  }
+>=20
+>  if (parents && parents->next) { <-- here
+>=20
+> I.e. if parents was NULL at loc0, we escaped at loc1. But we check
+> parents against NULL here again.
 
-> For this I think it is easiest to add a new rev_info flag, as otherwise
-> format-patch would need to duplicate parsing the rev_list options
-> and either duplicate applying revs->prune_data or changing the argv for
-> setup_revisions with some special casing of bare repository and non-bare
-> repository cases.
+The check may be duplicate, but I suspect removing it won't change the
+resulting object code -- the compiler should be smart enough to come to
+the same conclusion.
 
-I haven't looked at the code, but wouldn't it be matter of "if we do not
-have any pathspec, add '.'" *after* all options are parsed?
-
-> And when there is that option, I think it is more robust to use that
-> in merge -m and merge -i, as "-- ." only does the right thing by chance
-> because both only work with a non-bare repository and have
-> cd_to_toplevel.
-
-git rev-list -- . works in a bare repository, too. If you hard-code "-- ."
-in the rev-list invocations in git-rebase[--interactive], then it cannot
-be said that this works "by chance" due to cd_to_toplevel.
-
--- Hannes
+Thanks,
+Ren=E9
