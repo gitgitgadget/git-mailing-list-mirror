@@ -1,76 +1,59 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: diff attribute ignored by show and log -p
-Date: Thu, 17 Dec 2009 11:44:16 -0500
-Message-ID: <76718490912170844i7d5f25d1hc32590b877dbf295@mail.gmail.com>
-References: <76718490912162046k36e2a275gaf7672b38c7a63e4@mail.gmail.com>
-	 <76718490912162123r49f9bd90n8e032c144d0cdbac@mail.gmail.com>
-	 <20091217221740.6117@nanako3.lavabit.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 17:44:27 2009
+From: Robert Zeh <robert.a.zeh@gmail.com>
+Subject: git svn mkdirs ignores compressed unhandled.log files
+Date: Thu, 17 Dec 2009 11:10:03 -0600
+Message-ID: <8BB233FB-4269-4B14-8703-A4FF1E25FB0D@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1077)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Eric Wong <normalperson@yhbt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 17 18:20:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLJSk-0004yn-Aq
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 17:44:26 +0100
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1NLJwu-0007pr-EJ
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 18:15:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764637AbZLQQoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2009 11:44:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764572AbZLQQoS
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 11:44:18 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:60948 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759493AbZLQQoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2009 11:44:18 -0500
-Received: by iwn1 with SMTP id 1so1558777iwn.33
-        for <git@vger.kernel.org>; Thu, 17 Dec 2009 08:44:16 -0800 (PST)
+	id S1764970AbZLQRKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2009 12:10:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764966AbZLQRKT
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 12:10:19 -0500
+Received: from qw-out-2122.google.com ([74.125.92.27]:14490 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757585AbZLQRKQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Dec 2009 12:10:16 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so434399qwe.37
+        for <git@vger.kernel.org>; Thu, 17 Dec 2009 09:10:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=JNt50L/zOs5sB23SBjeq+jmOF9IiFI9uYWLQgZH0oU8=;
-        b=LmQ/vIr1VGRg8rtgYUsKMEa7tZDn4kQ2c548NalbopCUi2RBUEIqH4bG3779eQyxtJ
-         ytiqMEE8EUJ7BC2j/FpUB27rZz5hsoGZBNHWP9blxFQSngfczd98fYxYfwAjT9BQFony
-         4HBfSZWcaG6n18GM70MgH5MDHUOflZ4T+5mVM=
+        h=domainkey-signature:received:received:from:content-type
+         :content-transfer-encoding:subject:date:message-id:cc:to
+         :mime-version:x-mailer;
+        bh=QG7BjgL8xZ5qpwWQPI1Md8H7EDEVBn3GasBSD8ZytLQ=;
+        b=AoLRwSbxzYYJNQIyT7eQDyMR20xdsx0G5eu/i6GRPpcSFUicqA4n08CR/p4s9Y5QPN
+         xTcXr4wfNjwaH3MqwccsRWqPQVlvEQpv83sqH8pJP9TfZcO24mEbNX9Df2aAn3Q3xriQ
+         yRSkwX0R7a448GSPnOr1w6peJGbMtNXr6/8gw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=L8kF7drbWST4NgL/Tb4O/m3Mc7gWYZ12SRRd+WP8V7c8jCYOwPexw1X/grKlAd7G+D
-         eVK9d4tZkrRUEYBtmX3i3QmGnnGJt9B5kNuxdu2z6CCWWWaA90eLMIyQCB+FcLOViS3B
-         kIsKdC52xLtxLSX4vzPPy9JpkDuSkDGStvxO8=
-Received: by 10.231.153.69 with SMTP id j5mr203814ibw.33.1261068256133; Thu, 
-	17 Dec 2009 08:44:16 -0800 (PST)
-In-Reply-To: <20091217221740.6117@nanako3.lavabit.com>
+        h=from:content-type:content-transfer-encoding:subject:date:message-id
+         :cc:to:mime-version:x-mailer;
+        b=WLJSwLisAWLmCN3Y9JxXhRA1DY0S3qhSiF+hkaKYIRsjt07KyYOgTkf7b90zUrLOK8
+         PVA4TmTWD1/cst15vC/MHi09ccSjitbFBHOKrOenDODjuyf5443QKSMnen3jmV7QpGfz
+         3mQTwRNkNSh7gLk6JwZbReEMudSbPqV6AqU8E=
+Received: by 10.229.11.215 with SMTP id u23mr1510848qcu.91.1261069815033;
+        Thu, 17 Dec 2009 09:10:15 -0800 (PST)
+Received: from macintosh-5.getco.com ([66.250.141.2])
+        by mx.google.com with ESMTPS id 20sm1510333iwn.9.2009.12.17.09.10.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 17 Dec 2009 09:10:14 -0800 (PST)
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135377>
 
-On Thu, Dec 17, 2009 at 8:17 AM, Nanako Shiraishi <nanako3@lavabit.com> wrote:
-> Quoting Jay Soffian <jaysoffian@gmail.com>
->
->>> But is apparently ignored by "git log -p" and "git show" which just
->>> use internal diff. Is this behavior intentional?
->>
->> Ah, --ext-diff, and the reasoning behind requiring it for log/show is
->> explained in 72909be.
->
-> The need to give --ext-diff is mentioned in 72909be (Add diff-option
-> --ext-diff, 2007-06-30) but its log message doesn't 'explain' why external
-> diff isn't used by default and you need to pass that extra option.
+It looks like there is a conflict between git svn gc and git svn mkdirs.  The git svn mkdirs command only looks at unhandled.log files.   Shouldn't it also look at any compressed unhandled.log files too?
 
-"To prevent funky games with external diff engines, git-log and
-friends prevent external diff engines from being called."
-
-Seemed reason enough to me.
-
-> Probably --ext-diff should be the default?
-
-Or available via a config option anyway.
-
-j.
+Robert
