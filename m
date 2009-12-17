@@ -1,105 +1,112 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] gitweb: link to toggle 'no merges' option
-Date: Thu, 17 Dec 2009 22:14:25 +0100
-Message-ID: <200912172214.27001.jnareb@gmail.com>
-References: <1261040753-4859-1-git-send-email-giuseppe.bilotta@gmail.com> <200912171637.45810.jnareb@gmail.com> <cb7bb73a0912171241j56ecd2f1y3dc66cf3b86bd784@mail.gmail.com>
+From: "Bernhard R. Link" <brlink@debian.org>
+Subject: Re: [PATCH] Let format-patch and rebase ignore trivial merges.
+Date: Thu, 17 Dec 2009 22:48:43 +0100
+Message-ID: <20091217214843.GA414@pcpool00.mathematik.uni-freiburg.de>
+References: <20091216164553.GA22471@pcpool00.mathematik.uni-freiburg.de> <4B29106C.1040501@viscovery.net> <20091217093547.GA25451@pcpool00.mathematik.uni-freiburg.de> <4B2A1895.2000803@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 22:14:48 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 17 22:48:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLNgL-0004un-2P
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 22:14:45 +0100
+	id 1NLODJ-0007Nd-NK
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 22:48:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765250AbZLQVOe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Dec 2009 16:14:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764580AbZLQVOe
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 16:14:34 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:56783 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753504AbZLQVOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2009 16:14:32 -0500
-Received: by fg-out-1718.google.com with SMTP id 22so908479fge.1
-        for <git@vger.kernel.org>; Thu, 17 Dec 2009 13:14:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=yN3bbKmwglCP8uT9vEFXpMpF5y11wJSoBomgki/B/SE=;
-        b=jczGgtF+Ll0SJOfxxMGFZvnx7ravL7iRVIw9RapnoSOsl58PyXGSTnRyBxB32U3JH5
-         hjFepEbceZq3UJnXqTCv2xGHX3H9I+ePxssWLjtPVsgzb9znWp44EaLRyqNWItmGda73
-         iBpas93SD6BVYIXNPGMDHhipmv080bLeBs1KU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=BBih+wlvbUS1owhcpmS88hj56O6SRVx1n+t2Z+T4cmMZaeIfVam2F/pA8AH1ltm8CU
-         dE73wFD1zSyTWKei11JhCQr2sHl1GNQ/IZIBdMKz/3+OPrXG1Tr0GrWB9l+jbr7/ECP8
-         DqlkCcw8r6tbEeFV/0/shcwbZK1sNnG/iOSvo=
-Received: by 10.87.76.8 with SMTP id d8mr3881803fgl.66.1261084470231;
-        Thu, 17 Dec 2009 13:14:30 -0800 (PST)
-Received: from ?192.168.1.13? (abvp4.neoplus.adsl.tpnet.pl [83.8.213.4])
-        by mx.google.com with ESMTPS id l12sm5993440fgb.10.2009.12.17.13.14.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 17 Dec 2009 13:14:28 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0912171241j56ecd2f1y3dc66cf3b86bd784@mail.gmail.com>
+	id S1765432AbZLQVsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2009 16:48:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765429AbZLQVsp
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 16:48:45 -0500
+Received: from pcpool00.mathematik.uni-freiburg.de ([132.230.30.150]:59488
+	"EHLO pcpool00.mathematik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1765421AbZLQVso (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Dec 2009 16:48:44 -0500
+Received: from pcpool09.mathematik.uni-freiburg.de ([132.230.30.159])
+	by pcpool00.mathematik.uni-freiburg.de with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <brl@pcpool00.mathematik.uni-freiburg.de>)
+	id 1NLODD-0003AV-Iy; Thu, 17 Dec 2009 22:48:43 +0100
+Received: from brl by pcpool09.mathematik.uni-freiburg.de with local (Exim 4.69)
+	(envelope-from <brl@pcpool00.mathematik.uni-freiburg.de>)
+	id 1NLODD-0000CA-H0; Thu, 17 Dec 2009 22:48:43 +0100
+Mail-Followup-To: git@vger.kernel.org, j.sixt@viscovery.net
 Content-Disposition: inline
+In-Reply-To: <4B2A1895.2000803@viscovery.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135384>
 
-Giuseppe Bilotta wrote:
-> 2009/12/17 Jakub Narebski <jnareb@gmail.com>:
->> On Thu, 17 Dec 2009 10:05 +0100, Giuseppe Bilotta wrote:
+* Johannes Sixt <j.sixt@viscovery.net> [091217 12:40]:
+> > I want the default for format-patch changed.
+>
+> I do not see why format-patch would have to be changed. The case that you
+> outline (a merge -s ours happened and you want to follow only one parent)
+> is rare enough
 
-[...]
->>> + =A0 =A0 my $can_have_merges =3D grep(/^$action$/, @{$allowed_opti=
-ons{'--no-merges'}});
->>> + =A0 =A0 my $has_merges =3D !grep(/^--no-merges$/, @extra_options)=
-;
->>> +
->>
->> Wouldn't it be better to use straight
->>
->> =A0+ =A0 =A0 =A0my $no_merges =3D grep(/^--no-merges$/, @extra_optio=
-ns);
->>
->> Because $has_merges is true also for example for 'tree' view... whic=
-h
->> absolutely doesn't make any sense whatsoever.
->=20
-> The reason why I have two vars is that one checks if we care about th=
-e
-> option, and the other is to see if it's enabled or not. We don't want
-> the 'show merges' toggle to appear in view which don't handle the
-> --no-merge option.
+While it is rare, the result format-patch currently produces is quite a
+desaster without any need.
 
-Perhaps I didn't made myself clear.
+> and even more rarly will somebody want to apply format-patch to such a history.
+> But I guess that you are actually not interested in format-patch per se,
+> but rather in rebase (which uses format-patch).
 
-What I wanted to ask is to switch $has_merges to $no_merges, not to rem=
-ove
-$can_have_merges.  Its a question of semantics of $has_merges, which do=
- not
-mean that action has (handles) merges.
+I'm looking for a nice way to store the history of a patches in a Debian package.
+Currently the best way is to use quilt and store the patches in git.
+Topgit is quite overkill, git directly preserving history means no way to
+export sane patches. And git rebase -i means losing history of previous
+states and pullability.
 
-This is of course the question of style, but I think this would make co=
-de
-more maintainable.
+An way to combine those is doing many trivial merges, but that kills
+rebase and format-patch. (While the patch exporting for creating the
+debian source packages could change to the right directory and give the
+proper arguments, needing to remember the extra argument and teaching
+anyone else involved how to call it to get what to sent to upstream
+is annoying).
 
+> I haven't looked at the code, but wouldn't it be matter of "if we do not
+> have any pathspec, add '.'" *after* all options are parsed?
 
-Of course if you go %extra_options hash route this issue wouldn't matte=
-r.
+That's what I would say my patch is doing.
 
---=20
-Jakub Narebski
-Poland
+> git rev-list -- . works in a bare repository, too. If you hard-code "-- ."
+> in the rev-list invocations in git-rebase[--interactive], then it cannot
+> be said that this works "by chance" due to cd_to_toplevel.
+
+It works in a bare repository. But it does not work when called from a
+subdirectory of the working dir.
+
+The easiest way I see to express generally
+
+git rev-list --prune-tree $args
+
+is
+
+topdir=$(git rev-parse --show-cdup)
+if test -z "$topdir" ; then
+        topdir=.
+fi
+set -- $args
+while test $# -gt 0 ; do
+        if test "x$1" = "x--" ; then
+                break
+        fi
+        shift
+done
+if test $# -gt 1 ; then
+        git rev-list $args
+elif test $# -eq 1 ; then
+        git rev-list $args $topdir
+else
+        git rev-list $args -- $topdir
+fi
+
+Hochachtungsvoll,
+	Bernhard R. Link
+-- 
+"Never contain programs so few bugs, as when no debugging tools are available!"
+	Niklaus Wirth
