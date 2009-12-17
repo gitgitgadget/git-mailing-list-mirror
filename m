@@ -1,103 +1,76 @@
-From: Eric Paris <eparis@redhat.com>
-Subject: Re: git-reflog 70 minutes at 100% cpu and counting
-Date: Thu, 17 Dec 2009 11:29:29 -0500
-Message-ID: <1261067369.2868.10.camel@localhost>
-References: <1260822484.9379.53.camel@localhost>
-	 <20091214211142.GC9364@coredump.intra.peff.net>
-	 <1260825629.9379.56.camel@localhost>
-	 <20091215023918.GA14689@coredump.intra.peff.net>
-	 <alpine.LFD.2.00.0912142245240.23173@xanadu.home>
-	 <1260851180.9379.88.camel@localhost>
-	 <alpine.LFD.2.00.0912152201300.23173@xanadu.home>
-	 <1260970885.2788.87.camel@localhost>
-	 <alpine.LFD.2.00.0912161526080.23173@xanadu.home>
-	 <1261003041.2788.142.camel@localhost>
-	 <alpine.LFD.2.00.0912161841210.23173@xanadu.home>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: diff attribute ignored by show and log -p
+Date: Thu, 17 Dec 2009 11:44:16 -0500
+Message-ID: <76718490912170844i7d5f25d1hc32590b877dbf295@mail.gmail.com>
+References: <76718490912162046k36e2a275gaf7672b38c7a63e4@mail.gmail.com>
+	 <76718490912162123r49f9bd90n8e032c144d0cdbac@mail.gmail.com>
+	 <20091217221740.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Dec 17 17:29:44 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Thu Dec 17 17:44:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLJET-0005WK-Cz
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 17:29:41 +0100
+	id 1NLJSk-0004yn-Aq
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 17:44:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759458AbZLQQ3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2009 11:29:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759261AbZLQQ3e
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 11:29:34 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:64822 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753777AbZLQQ3e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2009 11:29:34 -0500
-Received: from int-mx05.intmail.prod.int.phx2.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com [10.5.11.18])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id nBHGTUBi012617
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Thu, 17 Dec 2009 11:29:30 -0500
-Received: from [10.11.235.74] (dhcp235-74.rdu.redhat.com [10.11.235.74])
-	by int-mx05.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id nBHGTTHT022738;
-	Thu, 17 Dec 2009 11:29:29 -0500
-In-Reply-To: <alpine.LFD.2.00.0912161841210.23173@xanadu.home>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.18
+	id S1764637AbZLQQoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2009 11:44:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764572AbZLQQoS
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 11:44:18 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:60948 "EHLO
+	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759493AbZLQQoS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2009 11:44:18 -0500
+Received: by iwn1 with SMTP id 1so1558777iwn.33
+        for <git@vger.kernel.org>; Thu, 17 Dec 2009 08:44:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=JNt50L/zOs5sB23SBjeq+jmOF9IiFI9uYWLQgZH0oU8=;
+        b=LmQ/vIr1VGRg8rtgYUsKMEa7tZDn4kQ2c548NalbopCUi2RBUEIqH4bG3779eQyxtJ
+         ytiqMEE8EUJ7BC2j/FpUB27rZz5hsoGZBNHWP9blxFQSngfczd98fYxYfwAjT9BQFony
+         4HBfSZWcaG6n18GM70MgH5MDHUOflZ4T+5mVM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=L8kF7drbWST4NgL/Tb4O/m3Mc7gWYZ12SRRd+WP8V7c8jCYOwPexw1X/grKlAd7G+D
+         eVK9d4tZkrRUEYBtmX3i3QmGnnGJt9B5kNuxdu2z6CCWWWaA90eLMIyQCB+FcLOViS3B
+         kIsKdC52xLtxLSX4vzPPy9JpkDuSkDGStvxO8=
+Received: by 10.231.153.69 with SMTP id j5mr203814ibw.33.1261068256133; Thu, 
+	17 Dec 2009 08:44:16 -0800 (PST)
+In-Reply-To: <20091217221740.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135376>
 
-On Thu, 2009-12-17 at 00:38 -0500, Nicolas Pitre wrote:
+On Thu, Dec 17, 2009 at 8:17 AM, Nanako Shiraishi <nanako3@lavabit.com> wrote:
+> Quoting Jay Soffian <jaysoffian@gmail.com>
+>
+>>> But is apparently ignored by "git log -p" and "git show" which just
+>>> use internal diff. Is this behavior intentional?
+>>
+>> Ah, --ext-diff, and the reasoning behind requiring it for log/show is
+>> explained in 72909be.
+>
+> The need to give --ext-diff is mentioned in 72909be (Add diff-option
+> --ext-diff, 2007-06-30) but its log message doesn't 'explain' why external
+> diff isn't used by default and you need to pass that extra option.
 
-> Moving the reflog data aside (i.e. mv .git/logs .git/logs.bak) it seems 
-> that d936ff8 is not referenced anymore.
-> 
-> I found the other one as follows:
-> 
-> First I tried
-> 
-> $ git rev-list --all --objects
-> 
-> This resulted in:
-> 
-> [...]
-> 4f7911b0b0dbd187131a109cf00161a0c6a9d727 arch/x86
-> ea868257c1eabc31e0ea7941efa42b543978b3fa arch/x86/kvm
-> a0c11ead723956c667172a9f3fb6787684fe7ff5 arch/x86/kvm/paging_tmpl.h
-> b556b6aad8b1aacfecb1dd4a56dbd389674687b5 arch/x86/kvm/x86.c
-> 68a9733ae3315d7e2bfec2037dfeee4db8a6f6a1 drivers
-> error: Could not read 29b6c2fb1390b4fd350a5ecc78f1156fc5d91e9f
-> fatal: bad tree object 29b6c2fb1390b4fd350a5ecc78f1156fc5d91e9f
-> 
-> Because of the way objects are enumerated, we can be pretty sure that 
-> the bad tree object is referenced by the tree object 68a9733a 
-> corresponding to drivers/.  Let's verify that:
-> 
-> $ git ls-tree 68a9733a
-> 100644 blob 00cf9553f74065291612b0971337f79995933a06    Kconfig
-> 100644 blob c1bf41737936ab00be4a87563a0bb0638074785d    Makefile
-> 040000 tree d4e847de9bf2450842936582ea7cc6778413825b    accessibility
-> 040000 tree 29b6c2fb1390b4fd350a5ecc78f1156fc5d91e9f    acpi
+"To prevent funky games with external diff engines, git-log and
+friends prevent external diff engines from being called."
 
-This alone almost certainly tells me how I broke it.
+Seemed reason enough to me.
 
-For quite some time (a period of months) linux-next was broken and I had
-to carry a patch to ACPI to make it boot.  I dropped that patch at the
-head of my stgit trees in all of my repositories.  So I wouldn't be at
-all surprised to learn that eventually kernel-2 found that object in
-kernel-1.  Sometime when I dropped that patch from kernel-1 (because it
-finally got fixed upstream) I can see how it broke.
+> Probably --ext-diff should be the default?
 
-But now that patch shouldn't be needed by any tree since I have long
-since dropped it from the stgit stack.  So if we cleaned up all of the
-useless objects in this tree I bet this object wouldn't be needed.  Not
-exactly a situation that I'd expect git to be able to dig out of itself
-thought.
+Or available via a config option anyway.
 
-I'm creating clean repos and going to do no work in my -alt    :)
-
-Thanks everyone!
-
--Eric
+j.
