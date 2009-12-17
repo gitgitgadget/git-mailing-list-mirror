@@ -1,64 +1,94 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: How do I show only log messages for commits on a specific branch?
-Date: Wed, 16 Dec 2009 17:04:11 -0700
-Message-ID: <51419b2c0912161604j4e3d6a9ft4b0e48d6ca74d5c9@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: How do I show only log messages for commits on a specific
+ branch?
+Date: Thu, 17 Dec 2009 01:20:24 +0100
+Message-ID: <20091217002024.GM25474@genesis.frugalware.org>
 References: <20091216101647.GB27373@bc-bd.org>
-	 <51419b2c0912161005n1596d4a1n92ed555c98aee4c6@mail.gmail.com>
-	 <20091216232641.GK25474@genesis.frugalware.org>
-	 <adf1fd3d0912161558u36d9674eid36e3042d181ed8f@mail.gmail.com>
+ <51419b2c0912161005n1596d4a1n92ed555c98aee4c6@mail.gmail.com>
+ <20091216232641.GK25474@genesis.frugalware.org>
+ <51419b2c0912161559x4de94464pe06df2845dbe3b78@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Miklos Vajna <vmiklos@frugalware.org>, bd@bc-bd.org,
-	git@vger.kernel.org
-To: =?UTF-8?B?U2FudGkgQsOpamFy?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Thu Dec 17 01:04:29 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="n83H03bbH672hrlY"
+Cc: bd@bc-bd.org, git@vger.kernel.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 17 01:20:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NL3r2-0001VK-E7
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 01:04:28 +0100
+	id 1NL46c-0007Sb-7B
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 01:20:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763415AbZLQAE0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Dec 2009 19:04:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762952AbZLQAEO
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 19:04:14 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:58520 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759184AbZLQAEM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Dec 2009 19:04:12 -0500
-Received: by pwj9 with SMTP id 9so959010pwj.21
-        for <git@vger.kernel.org>; Wed, 16 Dec 2009 16:04:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hSLa73e1aDutaTw/RAz59A5iNcIij7suPvlgNId3uFw=;
-        b=LtzLMohFexxrmOpXH/V3MJYZeJABAPshi1/jXKbKjUfsA//mZhMm2UIOE7t/6IZL1N
-         e8AyUQrbf4bbaCnNMSoAXa1l5EiGCADfRl48Tj13LeLypM23skvA8UgB7LcrtmHxKruJ
-         bZMJUQSl8YHgjsm7REdV7DOcb+pf0lgIX5ipA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=BxKkhaA1TvWltjSNl0Mc9OXRREseGkqHPCkiUpbma/6O5Xkkh/Z/3q6jIfQ4QMGr8Q
-         yoTUGuNrdbFmruRj7r/wL6hjKW34vU/0nlomWRlYpr3Uxh62C0vGx+OoByLyYzQPZiMb
-         P3EDXxjrB2aBVUvC84Bc7zLVkHFym3ZoQflnY=
-Received: by 10.114.188.31 with SMTP id l31mr1124980waf.201.1261008251761; 
-	Wed, 16 Dec 2009 16:04:11 -0800 (PST)
-In-Reply-To: <adf1fd3d0912161558u36d9674eid36e3042d181ed8f@mail.gmail.com>
+	id S1762877AbZLQAU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2009 19:20:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762857AbZLQAU2
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 19:20:28 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:34104 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758220AbZLQAU2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2009 19:20:28 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id C258E58055;
+	Thu, 17 Dec 2009 01:20:24 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id AA08B44965;
+	Thu, 17 Dec 2009 01:20:24 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id E3AEE1240014; Thu, 17 Dec 2009 01:20:24 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <51419b2c0912161559x4de94464pe06df2845dbe3b78@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135348>
 
-On Wed, Dec 16, 2009 at 4:58 PM, Santi B=C3=A9jar <santi@agolina.net> w=
-rote:
-> git log new --not $(git for-each-ref --format=3D'%(refname)'
-> 'refs/heads/*' | grep -v refs/heads/new)
 
-How did I miss '--not' as a git log option?  Thanks for pointing it out=
-!
+--n83H03bbH672hrlY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Dec 16, 2009 at 04:59:54PM -0700, Elijah Newren <newren@gmail.com> =
+wrote:
+> Did you try it with a 'new' branch in your repository that started at
+> the beginning of history rather than at some commit?  "git log new"
+> and "git log new@{30.years.ago}..new" are not the same for me with
+> git-1.6.5.5:
+>=20
+> $ git init repo
+> $ cd repo
+> $ echo content> foo && git add foo && git commit -mone foo
+> $ echo more content >> foo && git commit -mtwo foo
+> $ git checkout -b new master~1
+> $ echo stuff >> foo && git commit -mthree foo
+> $ git log new@{30.years.ago}..new
+
+Aah, thanks. Then you can just avoid the warning using
+
+git log $(git reflog show new|sed -n 's/ .*//;$ p')..new
+
+> Are you sure?  I'm more inclined to believe he'd like to see all the
+> commits that have been added to the "new" branch since he created it
+> (which may be the same as what you say, but not necessarily).  Of
+> course, neither my assumption or yours match what he actually asked
+> for (though I think what he asked for isn't possible and is merely an
+> means to the end he really wants).
+
+No, I'm not sure about what he thought, but I hope he will clarify. :)
+
+--n83H03bbH672hrlY
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkspeUgACgkQe81tAgORUJadvgCfWHthLw2gjTinztfh+edaHPi3
+EZgAn1Dt+tCUxvBT6PJmfuOvKm/6qYcR
+=77t5
+-----END PGP SIGNATURE-----
+
+--n83H03bbH672hrlY--
