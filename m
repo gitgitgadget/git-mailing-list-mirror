@@ -1,84 +1,118 @@
-From: Sean Boudreau <seanb@qnx.com>
-Subject: Re: Git on QNX
-Date: Wed, 16 Dec 2009 20:37:39 -0500
-Message-ID: <20091217013739.GG17970@qnx.com>
-References: <905315640912151323s4b158565o2e74ce018b64dc72@mail.gmail.com> <7v6387zzfi.fsf@alter.siamese.dyndns.org> <905315640912151413g10ee5befh58fbd171237e7659@mail.gmail.com> <loom.20091216T233122-388@post.gmane.org> <905315640912161703u3920178cm93851ddc8480ac8@mail.gmail.com>
+From: David Antliff <david.antliff@gmail.com>
+Subject: Re: core.autocrlf & Cygwin - files incorrectly flagged as modified
+Date: Thu, 17 Dec 2009 02:01:14 +0000 (UTC)
+Message-ID: <loom.20091217T024907-524@post.gmane.org>
+References: <loom.20091215T225528-115@post.gmane.org> <be6fef0d0912161705q1ef23634rccdc170d69cf9484@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>,
-	mkraai@beckman.com
-To: Tarmigan <tarmigan+git@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 02:44:25 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 17 03:01:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NL5Pj-0000t9-Gn
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 02:44:23 +0100
+	id 1NL5gY-00068A-Fp
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 03:01:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936120AbZLQBno convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Dec 2009 20:43:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762556AbZLQBni
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 20:43:38 -0500
-Received: from qnxmail.qnx.com ([209.226.137.76]:2436 "EHLO qnxmail.qnx.com"
+	id S1763695AbZLQCBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2009 21:01:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763312AbZLQCBk
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 21:01:40 -0500
+Received: from lo.gmane.org ([80.91.229.12]:43623 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758559AbZLQBne (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2009 20:43:34 -0500
-X-Greylist: delayed 347 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Dec 2009 20:43:33 EST
-Received: from Nebula.ott.qnx.com (nebula.ott.qnx.com [10.42.3.30])
-	by hub.ott.qnx.com (8.9.3/8.9.3) with ESMTP id UAA07299;
-	Wed, 16 Dec 2009 20:37:33 -0500
-Received: from qnx.com ([192.168.20.114]) by Nebula.ott.qnx.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 16 Dec 2009 20:37:41 -0500
-Received: (from seanb@localhost)
-	by qnx.com (8.14.3/8.14.3/Submit) id nBH1bd0O005805;
-	Wed, 16 Dec 2009 20:37:39 -0500
-Content-Disposition: inline
-In-Reply-To: <905315640912161703u3920178cm93851ddc8480ac8@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 17 Dec 2009 01:37:41.0596 (UTC) FILETIME=[860451C0:01CA7EB9]
+	id S1754226AbZLQCBj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2009 21:01:39 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NL5gO-00065c-E7
+	for git@vger.kernel.org; Thu, 17 Dec 2009 03:01:37 +0100
+Received: from 202-27-34-1.dia.global-gateway.net.nz ([202-27-34-1.dia.global-gateway.net.nz])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 17 Dec 2009 03:01:36 +0100
+Received: from david.antliff by 202-27-34-1.dia.global-gateway.net.nz with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 17 Dec 2009 03:01:36 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 202.27.34.1 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.5) Gecko/20091102 Firefox/3.5.5 (.NET CLR 3.5.30729))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135355>
 
-On Wed, Dec 16, 2009 at 05:03:16PM -0800, Tarmigan wrote:
-> On Wed, Dec 16, 2009 at 2:38 PM, Sean Boudreau <seanb@qnx.com> wrote:
-> > What version of qnx is this on. =A0<strings.h> is
-> > now brought in by <string.h> and the lock() /
-> > unlock() prototypes have been removed from <unistd.h>
-> > AS OF 6.4.1 (the current release).
->=20
-> Ahh, that's nice.  At a client's request, I have been working on QNX =
-6.3.2.
->=20
-> I just installed 6.4.1 in another VM, and it's a bit different.  The
-> common way to handle binary packages (iconv and perl) seems to have
-> changed to pkg_add so the PATHs I had set might not make sense
-> anymore.
->=20
-> Also the weird failing test at t0000.42 seems to be fixed.  Funny.
->=20
-> As I might be the only person to run git on 6.3.2 instead of a more
-> modern QNX, it might make sense for me to just submit the minimum
-> patches needed for QNX 6.4.1 and then carry the strings.h,
-> getpagesize, and lock() changes for 6.3.2 on my own.
+Tay Ray Chuan writes:
+> On Wed, Dec 16, 2009 at 6:24 AM, David Antliff wrote:
+> > I suspect what is happening is that the line conversion routine in git
+> > might be
+> > stripping trailing whitespace, as well as converting the line endings. This
+> > operation is not properly accounted for in the reverse direction, and the
+> > file is flagged as modified.
+> 
+> I am not a Git expert, but could it be your editor on Windows?
 
-That's why I spoke up :)
+Hi Ray, thank you for responding.
 
->=20
-> > There's a package for git-4.3.20 here that also has a work around
-> > for the SA_RESTART issue.
->=20
-> I think that might be a different program that also used to be named
-> "git".  I think it has now been renamed gnuit.
+This observation is made immediately after the clone, before any editor (or any
+other program) even touches the files. If you can imagine doing a fresh clone
+and then immediately doing 'git-status' and seeing modified files, you'd have a
+pretty good idea of what I'm seeing. Git itself has somehow marked the files as
+modified on check-out. I am fairly certain it's related to trailing whitespace
+on one or more lines within the affected files.
 
-You're probably right, try this one:
+If there's no trailing whitespace, git converts the file to CRLF on checkout
+and shows no modification (since it knows to convert back when referring to
+local repository).
 
-ftp://ftp.netbsd.org/pub/pkgsrc/packages/QNX/i386/6.4.1_head_20090724/A=
-ll/scmgit-base-1.6.2.5.tgz
+> > Also, as cloned files are converted to DOS-line-endings, by default Cygwins
+> > bash cannot run any scripts as they have the wrong line endings. I have to 
+> > set the 'permanent' bash variable SHELLOPTS to include 'igncr' before bash
+> > scripts can run. Perhaps this is wrong and git on Cygwin (with binary 
+> > mounts) should be converting to UNIX line endings instead?
+> 
+> Again, IANAGE, but according to the manual, this should be expected,
+> because Git, when writing to the filesystem, converts LF to CRLF:
+> 
+>   If true, makes git convert CRLF at the end of lines in text files to
+>   LF when reading from the filesystem, and convert in reverse when
+>   writing to the filesystem.
+
+Yes, perhaps the advice to use autocrlf=true on Cygwin (in binary mount mode,
+since in text mode git doesn't work *at all*) is misplaced since Cygwin is not
+expecting CRLF endings in that mode. Apparently it's required for apps like
+Kdiff3 however... all so confusing really...
+
+The inability to run bash scripts straight out of git when using autocrlf=true
+is almost enough to suggest to me that this mode really shouldn't be used in
+Cygwin.
+ 
+> > At one point I tried switching off core.autocrlf for myself but this
+> > caused a lot of conflicts due to mismatched line-endings. It seems to me
+> > that if we want to switch to this, *everyone* has to do it at once.
+> 
+> Just make this conversion a commit, and depending on your project's
+> workflow, push/pull it.
+
+Yes, I think that's how it has to be done. Unfortunately I have 20+ projects
+each with many active branches. The entire conversion is possible but it's
+going to take a while... :)
+
+> Although the whole file will be marked as changed, you can always
+> double-check that only whitespace changes have been made by running
+> git-diff with --ignore-space-at-eol or -b.
+
+That's a helpful option - thank you.
 
 
--seanb=20
+I'd be quite interested to know if people are successfully using git in Cygwin
+with autocrlf=true, and if so how they are working around these modified-files
+and bash-compatibility problems.
+
+Also, is anyone using autocrlf=false in Cygwin successfully?
+
+Thanks again for your reply.
+
+-- David.
