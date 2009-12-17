@@ -1,267 +1,103 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] gitweb: link to toggle 'no merges' option
-Date: Thu, 17 Dec 2009 16:37:44 +0100
-Message-ID: <200912171637.45810.jnareb@gmail.com>
-References: <1261040753-4859-1-git-send-email-giuseppe.bilotta@gmail.com>
+From: Eric Paris <eparis@redhat.com>
+Subject: Re: git-reflog 70 minutes at 100% cpu and counting
+Date: Thu, 17 Dec 2009 11:29:29 -0500
+Message-ID: <1261067369.2868.10.camel@localhost>
+References: <1260822484.9379.53.camel@localhost>
+	 <20091214211142.GC9364@coredump.intra.peff.net>
+	 <1260825629.9379.56.camel@localhost>
+	 <20091215023918.GA14689@coredump.intra.peff.net>
+	 <alpine.LFD.2.00.0912142245240.23173@xanadu.home>
+	 <1260851180.9379.88.camel@localhost>
+	 <alpine.LFD.2.00.0912152201300.23173@xanadu.home>
+	 <1260970885.2788.87.camel@localhost>
+	 <alpine.LFD.2.00.0912161526080.23173@xanadu.home>
+	 <1261003041.2788.142.camel@localhost>
+	 <alpine.LFD.2.00.0912161841210.23173@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 16:38:45 2009
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Thu Dec 17 17:29:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLIR4-0008Ck-3Q
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 16:38:38 +0100
+	id 1NLJET-0005WK-Cz
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 17:29:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965185AbZLQPh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2009 10:37:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965183AbZLQPh7
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 10:37:59 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:44704 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965172AbZLQPh6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2009 10:37:58 -0500
-Received: by bwz27 with SMTP id 27so1574002bwz.21
-        for <git@vger.kernel.org>; Thu, 17 Dec 2009 07:37:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=hRkNQK7TwkwxG2uPa8ABosZhWN8T9CQv8HDYq3UhHPs=;
-        b=MqS6uPgx0y19g+0DzvMoYILXXAD1+fUscMwQL54CZ2prIECVP0vyq3UcMGr6jynPkf
-         hVcIRuTS2sXyEtCkkRNwoyHXeUwwKKbbNFONzIwyVAkwHQTBgbTE5kWGeD4na4BWqeer
-         5ri2VuRAM9Li4rKrDR8jPko8ziPH7nKoIIX58=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=YNDCJOfedF6ipOCJrqYW09la8/OjDD+UVq2EBXtWCMIR6P2eHGs7B00ga/Hsm8/wYU
-         4QYfALo5La+f+2MQSB+HZVlAJkqTjI01e7miFZWxArCvKTqNTDr9OXFW9wyh+gxhLu4D
-         bByO2VpLHBVhumstDbK5GpTuRr6NVXTr1U4yc=
-Received: by 10.204.34.14 with SMTP id j14mr1542300bkd.76.1261064275859;
-        Thu, 17 Dec 2009 07:37:55 -0800 (PST)
-Received: from ?192.168.1.13? (abvp4.neoplus.adsl.tpnet.pl [83.8.213.4])
-        by mx.google.com with ESMTPS id 14sm645610bwz.1.2009.12.17.07.37.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 17 Dec 2009 07:37:53 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1261040753-4859-1-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+	id S1759458AbZLQQ3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2009 11:29:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759261AbZLQQ3e
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 11:29:34 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:64822 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753777AbZLQQ3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2009 11:29:34 -0500
+Received: from int-mx05.intmail.prod.int.phx2.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com [10.5.11.18])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id nBHGTUBi012617
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Thu, 17 Dec 2009 11:29:30 -0500
+Received: from [10.11.235.74] (dhcp235-74.rdu.redhat.com [10.11.235.74])
+	by int-mx05.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id nBHGTTHT022738;
+	Thu, 17 Dec 2009 11:29:29 -0500
+In-Reply-To: <alpine.LFD.2.00.0912161841210.23173@xanadu.home>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.18
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135375>
 
-On Thu, 17 Dec 2009 10:05 +0100, Giuseppe Bilotta wrote:
+On Thu, 2009-12-17 at 00:38 -0500, Nicolas Pitre wrote:
 
-> In views that support --no-merges, introduce a link that toggles the
-> option.
-
-I like this idea of introducing interface for so far hidden feature
-(well, except hidden in one of feed <link ...> in page header).
- 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+> Moving the reflog data aside (i.e. mv .git/logs .git/logs.bak) it seems 
+> that d936ff8 is not referenced anymore.
 > 
-> ---
->  gitweb/gitweb.css  |   11 +++++++++++
->  gitweb/gitweb.perl |   14 ++++++++++++++
->  2 files changed, 25 insertions(+), 0 deletions(-)
+> I found the other one as follows:
 > 
-> This is something I've been wanting for a while. There are a number of
-> things that don't 'click' with this proof of concept, and I'm coming to
-> the list to hear the opinion of users and developers on how to improve
-> the thing.
+> First I tried
 > 
-> The patch is live at http://git.oblomov.eu/, an example affected page is
-> http://git.oblomov.eu/git/shortlog
-
-You should tell here that one must put mouse over main header (the one
-with 'projects / project / action' breadcrumbs) for the new link to be
-visible... because I was wondering where is this new link.
-
+> $ git rev-list --all --objects
 > 
-> Things that are sure to change:
+> This resulted in:
 > 
->  * the aesthetics and location of the toggle link (it shows on mousehover
->    in the title). 
-
-It is not only the question where to put link, but also where to put
-the *code* (where the code should belong to).
-
-At first I thought: WTF? Why the feature that deals with log-like views
-is put in very generic and common for all actions/views git_header_html
-subroutine?  Especially after change that made all loglike views use
-common infrastructure of git_log_generic.
-
-But then I realized that it is specific example of *generic* feature
-that deals with extra_options... which admittedly is currently limited
-to '--no-merges' only.  So if it is put in git_header_html, then all
-views with HTML output (which does not include 'atom' and 'rss' actions,
-but which actions IIRC have their own handling of '--no-merges')
-which have support for extra_options would have ability to turn them
-on and off.
-
-What you need to add (if this link is to be in git_header_html) is
-to create links only when $status == 200, because otherwise the link
-would be present also for error pages, which I think is wrong.
-
->    Other options I've considered are: 
->     + next to pagination (first | prev | next), either before or after
->       the existing entries
-
-This would fit with the fact that sometimes present "patches" link is on
-the line with pagination links, after pagination links.
-
-But this secondary navigation bar is about other views, and extra_options
-is about modifying current view, and functions more like toggles.  OTOH
-we have such toggle for 'blame' <-> 'blame_incremental' switch in 
-secondary navigation bar.
-
-Also this would mean that each view type would have to handle extra_options
-itself, as secondary navigation bar is very much action-specific.  Not
-that it matters now, with only single '--no-merges' option supported.
-
->     + on mouseover for the table section that refers to the (short)log;
->       this would make it possible to put it summary view too, for example
-
-This would mean having link inside link, as those headers in summary view
-functions as link to 'shortlog' view (quite useful I think), and to the
-project summary in the 'shortlog' view itself (I'm not sure how useful 
-that is).  We already have problems with ref markers being links inside
-links and having broken layout in some strict XHTML conformance browsers.
-
-
-In short: I am not sure what would be the best solution.  Nevertheless
-I think that link should be more visible, and perhaps more toggle-like.
-
->  * if you toggle merge view when not on the first page, the reference
->    (first) commit in the view is likely to change drastically, which
->    causes confusion. I have not found a satisfactory solution for this,
->    since the obvious way to 'lock' the view (start paginating from the
->    current top commit) prevents prev/next navigation
-
-Alternate solution would be to clean page (start from 0th page) when
-changing to '--no-merges'.
-
-You would probably need something like 'skip' option, with number of
-commits, not number of pages to skip, and/or 'skip_to' which takes
-commit-id.  But i have not thought about this much... 
-
+> [...]
+> 4f7911b0b0dbd187131a109cf00161a0c6a9d727 arch/x86
+> ea868257c1eabc31e0ea7941efa42b543978b3fa arch/x86/kvm
+> a0c11ead723956c667172a9f3fb6787684fe7ff5 arch/x86/kvm/paging_tmpl.h
+> b556b6aad8b1aacfecb1dd4a56dbd389674687b5 arch/x86/kvm/x86.c
+> 68a9733ae3315d7e2bfec2037dfeee4db8a6f6a1 drivers
+> error: Could not read 29b6c2fb1390b4fd350a5ecc78f1156fc5d91e9f
+> fatal: bad tree object 29b6c2fb1390b4fd350a5ecc78f1156fc5d91e9f
 > 
-> diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-> index 50067f2..0da6ef0 100644
-> --- a/gitweb/gitweb.css
-> +++ b/gitweb/gitweb.css
-> @@ -572,3 +572,14 @@ span.match {
->  div.binary {
->  	font-style: italic;
->  }
-> +
-> +span.merge_toggle a {
-> +	font-size: 66%;
-> +	color: white !important;
-> +	font-weight: normal;
-> +	vertical-align: top;
-> +	text-decoration:none;
-> +	visibility: hidden;
-> +}
-
-I think it should be more visible.
-
-Otherwise only people "in the know" would be able to use this.
-
-> +
-> +*:hover > span.merge_toggle a { visibility:visible }
-
-I'd rather not have this rule to have different style, i.e. not all
-in single line.  Unless it is for RFC only...
-
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 7e477af..a63f419 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -3118,11 +3118,15 @@ sub git_header_html {
->  	my $status = shift || "200 OK";
->  	my $expires = shift;
->  
-> +	my $can_have_merges = grep(/^$action$/, @{$allowed_options{'--no-merges'}});
-> +	my $has_merges = !grep(/^--no-merges$/, @extra_options);
-> +
-
-Wouldn't it be better to use straight
-
- +	my $no_merges = grep(/^--no-merges$/, @extra_options);
-
-Because $has_merges is true also for example for 'tree' view... which
-absolutely doesn't make any sense whatsoever.
-
-
-In more generic solution (which could be perhaps put in a separate commit)
-it could be:
-
-  +	my %extra_options = map { $_ => 0 } keys %$allowed_options;
-  +	$extra_options{$_} = 1 foreach @extra_options;
-
-which means that %extra_options is hash which keys are allowed options,
-and which has true value for allowed option which is actually used.
-
-Or something like that, if above is to cryptic.
-
->  	my $title = "$site_name";
->  	if (defined $project) {
->  		$title .= " - " . to_utf8($project);
->  		if (defined $action) {
->  			$title .= "/$action";
-> +			$title .= " (no merges)" unless $has_merges;
-
-Wouldn't it be better to use
-
-  +			$title .= " (no merges)" if $no_merges;
-
-More straightforward, and without misleading $has_merges.
-
->  			if (defined $file_name) {
->  				$title .= " - " . esc_path($file_name);
->  				if ($action eq "tree" && $file_name !~ m|/$|) {
-> @@ -3235,6 +3239,16 @@ EOF
->  		print $cgi->a({-href => href(action=>"summary")}, esc_html($project));
->  		if (defined $action) {
->  			print " / $action";
-> +			if ($can_have_merges) {
-> +				print " <span class='merge_toggle'>";
-> +				if ($has_merges) {
-> +					printf('<a href="%s">hide merges</a>', href(-replay=>1, 'extra_options'=>('--no-merges', @extra_options)));
-
-It would be more symmetric to use:
-
-  +					my @href_extra = ('--no-merges', @extra_options);
-  +					printf('<a href="%s">hide merges</a>', href(-replay=>1, 'extra_options'=>@href_extra));
-
-
-> +				} else {
-> +					my @href_extra = grep(!/^--no-merges$/, @extra_options);
-> +					printf('<a href="%s">show merges</a>', href(-replay=>1, 'extra_options'=>@href_extra));
-> +				}
-
-and then this conditional could be simplified a bit.
-
-> +				print "</span>";
-> +			}
->  		}
->  		print "\n";
->  	}
-> -- 
-> 1.6.3.rc1.192.gdbfcb
+> Because of the way objects are enumerated, we can be pretty sure that 
+> the bad tree object is referenced by the tree object 68a9733a 
+> corresponding to drivers/.  Let's verify that:
 > 
-> 
+> $ git ls-tree 68a9733a
+> 100644 blob 00cf9553f74065291612b0971337f79995933a06    Kconfig
+> 100644 blob c1bf41737936ab00be4a87563a0bb0638074785d    Makefile
+> 040000 tree d4e847de9bf2450842936582ea7cc6778413825b    accessibility
+> 040000 tree 29b6c2fb1390b4fd350a5ecc78f1156fc5d91e9f    acpi
 
--- 
-Jakub Narebski
-Poland
+This alone almost certainly tells me how I broke it.
+
+For quite some time (a period of months) linux-next was broken and I had
+to carry a patch to ACPI to make it boot.  I dropped that patch at the
+head of my stgit trees in all of my repositories.  So I wouldn't be at
+all surprised to learn that eventually kernel-2 found that object in
+kernel-1.  Sometime when I dropped that patch from kernel-1 (because it
+finally got fixed upstream) I can see how it broke.
+
+But now that patch shouldn't be needed by any tree since I have long
+since dropped it from the stgit stack.  So if we cleaned up all of the
+useless objects in this tree I bet this object wouldn't be needed.  Not
+exactly a situation that I'd expect git to be able to dig out of itself
+thought.
+
+I'm creating clean repos and going to do no work in my -alt    :)
+
+Thanks everyone!
+
+-Eric
