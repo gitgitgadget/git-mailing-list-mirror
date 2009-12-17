@@ -1,100 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.6.6.rc3
-Date: Wed, 16 Dec 2009 16:30:57 -0800
-Message-ID: <7vaaxiqw5a.fsf@alter.siamese.dyndns.org>
+From: Tarmigan <tarmigan+git@gmail.com>
+Subject: Re: Git on QNX
+Date: Wed, 16 Dec 2009 17:03:16 -0800
+Message-ID: <905315640912161703u3920178cm93851ddc8480ac8@mail.gmail.com>
+References: <905315640912151323s4b158565o2e74ce018b64dc72@mail.gmail.com> 
+	<7v6387zzfi.fsf@alter.siamese.dyndns.org> <905315640912151413g10ee5befh58fbd171237e7659@mail.gmail.com> 
+	<loom.20091216T233122-388@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alex Riesen <raa.lkml@gmail.com>, Sean Boudreau <seanb@qnx.com>,
+	mkraai@beckman.com
 To: git@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1763458AbZLQAbQ@vger.kernel.org Thu Dec 17 01:31:34 2009
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1763458AbZLQAbQ@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+X-From: git-owner@vger.kernel.org Thu Dec 17 02:04:05 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NL4HF-0002ob-Ew
-	for glk-linux-kernel-3@lo.gmane.org; Thu, 17 Dec 2009 01:31:33 +0100
+	id 1NL4mc-0005Iq-Bp
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 02:03:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763458AbZLQAbQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 16 Dec 2009 19:31:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763430AbZLQAbN
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Wed, 16 Dec 2009 19:31:13 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48096 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763111AbZLQAbL convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 16 Dec 2009 19:31:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 65B7588737;
-	Wed, 16 Dec 2009 19:31:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=n8uRH9bpeTa3Anc/IcW4BAuPW
-	KU=; b=At9Rfj6LCV2DFeYcj9DrVC756wdDCUp43g2VsgBtAywcGle/XRZv1WTmh
-	tG9A5E6gmGdqB0fUG8Ebv2QEWatp0lQCWYKHBl7Z4m9I+Jwj6mh8OkzVgTfo7XgU
-	IwuZr0ygagb3UaTQ23QR4aMsjrS9Svs89zpHPI7f0ZA30xx5Ho=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=P77Zy7VoVnMd2APt/xi
-	RVr2uHQCXEMNzLDxonrwOeEryg3FWQX/mS63yZ39FAUOHClVpR4vXHCyslTX5YsS
-	+6vVi+BMdjyrLS/ioYixHgMJvhUjsQWnwlqtolWqDtggABEs7pP9mAJfncm9y6Z7
-	/1Heg1g8yXens4FuXVoxhjco=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E33088736;
-	Wed, 16 Dec 2009 19:31:04 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 235B68872D; Wed, 16 Dec
- 2009 19:30:58 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 758A6E00-EAA3-11DE-9671-DC0DEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1763536AbZLQBDj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Dec 2009 20:03:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763484AbZLQBDi
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 20:03:38 -0500
+Received: from mail-pz0-f171.google.com ([209.85.222.171]:36348 "EHLO
+	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763269AbZLQBDh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Dec 2009 20:03:37 -0500
+Received: by pzk1 with SMTP id 1so1110329pzk.33
+        for <git@vger.kernel.org>; Wed, 16 Dec 2009 17:03:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=bXgBhpSYtXLBcURpEbS26v+k1tNt3mJPk6qztCqX+Vs=;
+        b=jcmT4gydx/s8BvI9KWCDmNCRJb9AJkyJrR4V2j4mNLauMS5DS11Y9NLmEjR1zoQeLl
+         xNfjZ9A6QOZCeX4EZEPWtyx+8rUUNVpy2H7IBi8O92Ek9xcuj5rKckJTGUVsA77OGn75
+         hdfGxbBeeYSyVxurelq1uO8G3XqO3AjAzCRos=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=KD+KDZlO8EeTI/ltC8uAyp47CfWAFyVX/A8LSdygEq/s7TXp3yEdwzYNAr2P2/OkAH
+         at/GE7H2hbZfSJMgS7CCpoudmoCpRGwNn8zlRbtugIG2LiOAMPYGQC0Uvn0m8HMP7z3O
+         sjJY9Z6FS2q2tdnf8YUNS8sUSxf4fUxEt/al4=
+Received: by 10.142.118.3 with SMTP id q3mr1227539wfc.9.1261011816511; Wed, 16 
+	Dec 2009 17:03:36 -0800 (PST)
+In-Reply-To: <loom.20091216T233122-388@post.gmane.org>
+X-Google-Sender-Auth: f9516a659acc9f86
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135351>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135352>
 
-A release candidate Git 1.6.6.rc3 is available at the usual places
-for testing:
+On Wed, Dec 16, 2009 at 2:38 PM, Sean Boudreau <seanb@qnx.com> wrote:
+> What version of qnx is this on. =A0<strings.h> is
+> now brought in by <string.h> and the lock() /
+> unlock() prototypes have been removed from <unistd.h>
+> AS OF 6.4.1 (the current release).
 
-  http://www.kernel.org/pub/software/scm/git/
+Ahh, that's nice.  At a client's request, I have been working on QNX 6.=
+3.2.
 
-  git-1.6.6.rc3.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.6.6.rc3.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.6.6.rc3.tar.{gz,bz2}		(preformatted docs)
+I just installed 6.4.1 in another VM, and it's a bit different.  The
+common way to handle binary packages (iconv and perl) seems to have
+changed to pkg_add so the PATHs I had set might not make sense
+anymore.
 
-The RPM binary packages for a few architectures are found in:
+Also the weird failing test at t0000.42 seems to be fixed.  Funny.
 
-  testing/git-*-1.6.6.rc3-1.fc11.$arch.rpm	(RPM)
+As I might be the only person to run git on 6.3.2 instead of a more
+modern QNX, it might make sense for me to just submit the minimum
+patches needed for QNX 6.4.1 and then carry the strings.h,
+getpagesize, and lock() changes for 6.3.2 on my own.
 
-Things have really calmed down and hopefully we can give the final rele=
-ase
-as holiday present to everybody in time ;-)
+> There's a package for git-4.3.20 here that also has a work around
+> for the SA_RESTART issue.
 
-----------------------------------------------------------------
+I think that might be a different program that also used to be named
+"git".  I think it has now been renamed gnuit.
 
-Changes since v1.6.6-rc2 are as follows:
-
-Bj=C3=B6rn Gustavsson (1):
-      bash: Support new 'git fetch' options
-
-Jeff King (1):
-      ignore unknown color configuration
-
-Johannes Sixt (1):
-      help.autocorrect: do not run a command if the command given is ju=
-nk
-
-Junio C Hamano (7):
-      Remove post-upload-hook
-      Fix archive format with -- on the command line
-      Git 1.6.5.6
-      Update Release Notes for 1.6.6 to remove old bugfixes
-      worktree: don't segfault with an absolute pathspec without a work=
- tree
-      Git 1.6.5.7
-      Git 1.6.6-rc3
-
-Nanako Shiraishi (1):
-      Illustrate "filter" attribute with an example
+Thanks,
+Tarmigan
