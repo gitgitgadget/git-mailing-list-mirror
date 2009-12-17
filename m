@@ -1,109 +1,86 @@
-From: =?ISO-8859-2?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: potential null dereference
-Date: Thu, 17 Dec 2009 13:30:55 +0100
-Message-ID: <4B2A247F.4070705@lsrfire.ath.cx>
-References: <4B2783DD.5060301@gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: b5227d8 changes meaning of "ls-files -x 'pattern'"
+Date: Thu, 17 Dec 2009 18:24:55 +0530
+Message-ID: <2e24e5b90912170454x699ed26fm973e2fb7133b3bbf@mail.gmail.com>
+References: <2e24e5b90912140751y5d769f15pa6782914bdb04dbd@mail.gmail.com>
+	 <20091214182420.GA31594@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jiri Slaby <jirislaby@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 13:31:20 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 17 13:55:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLFVm-0007XJ-P3
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 13:31:19 +0100
+	id 1NLFsq-0000ig-H1
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 13:55:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758917AbZLQMbM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Dec 2009 07:31:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756877AbZLQMbM
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 07:31:12 -0500
-Received: from india601.server4you.de ([85.25.151.105]:52213 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754129AbZLQMbJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2009 07:31:09 -0500
-Received: from [10.0.1.101] (p57B7F8B9.dip.t-dialin.net [87.183.248.185])
-	by india601.server4you.de (Postfix) with ESMTPSA id 9FD6D2F803F;
-	Thu, 17 Dec 2009 13:31:04 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
-In-Reply-To: <4B2783DD.5060301@gmail.com>
+	id S1761501AbZLQMy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2009 07:54:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbZLQMy6
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 07:54:58 -0500
+Received: from mail-px0-f174.google.com ([209.85.216.174]:49161 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757700AbZLQMy5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2009 07:54:57 -0500
+Received: by pxi4 with SMTP id 4so1475047pxi.33
+        for <git@vger.kernel.org>; Thu, 17 Dec 2009 04:54:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=qpButjsgBT75FxdjkLpYmW0BzghUa084CXv02OAR6Z4=;
+        b=rSYDPaZgHRlfGv+HuCx4EpcSCf76GVKdJ3qIzfqkjgYQ/A0J4TJBw0KhbIA3s+dS+7
+         e/5s4Img+bq8Qq2hUPrGk4IiZlYZSPcUursVLT6kQVy27ElfSUAtfoEtlouqt7pLV+JO
+         UHcdSDgqaDLdrxRPCdCVtpJaWBY7iN1PA1Erk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=EpnNyIYyA3Ep3VvDHLf4bxYB/hdraFDdYKjCMdJADjCFyZojNIm9hChDTP6Q3FbwZL
+         QuM3ZpxX9QHi5TR57bpbGyoPUs8aADhLWO/P9MR3AzSITeGrnUjRQqXECGDB5EW2zQjY
+         GjOF2nY8xf4y8Y0JsETb3+n+RD9Alz+E2BV3s=
+Received: by 10.114.6.25 with SMTP id 25mr1692995waf.25.1261054495737; Thu, 17 
+	Dec 2009 04:54:55 -0800 (PST)
+In-Reply-To: <20091214182420.GA31594@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135369>
 
-Am 15.12.2009 13:41, schrieb Jiri Slaby:
-> Hi,
->=20
-> Stanse found the following error in unpack-trees.c:
-> dereferencing NULL pointer here.[. * o src_index]
->=20
-> int unpack_trees(unsigned len, struct tree_desc *t, struct
-> unpack_trees_options *o)
-> {
->  int ret;
->  static struct cache_entry *dfc;
-> ...
->  if (o->src_index) {                   <-- loc0
->   o->result.timestamp.sec =3D o->src_index->timestamp.sec;
->   o->result.timestamp.nsec =3D o->src_index->timestamp.nsec;
->  }
->  o->merge_size =3D len;
->=20
->  if (!dfc)
->   dfc =3D xcalloc(1, ((1 + (0) + 8) & ~7));
->  o->df_conflict_entry =3D dfc;
->=20
->  if (len) {
-> ...
->  }
->=20
->  if (o->merge) {
->   while (o->pos < o->src_index->cache_nr) { <-- here
->=20
-> It triggers, because there is a test for o->src_index being NULL at
-> loc0, but here, it is dereferenced without a check. Can this happen
-> (e.g. does o->merge !=3D NULL imply o->src_index !=3D NULL)?
+On Mon, Dec 14, 2009 at 11:55 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Dec 14, 2009 at 09:21:06PM +0530, Sitaram Chamarty wrote:
 
-Running "git grep -w -B70 unpack_trees" and looking for "src_index"
-using less' search command showed me that src_index is never NULL when
-unpack_trees() is called.
+>> Before b5227d8, the following two commands would produce different
+>> outputs (say on git.git):
+>>
+>>       git ls-files
+>>       git ls-files -x '*.c'
+>>
+>> From b5227d8 onward, they produce the same output.   The second command
+>> no longer excludes *.c files.
+>>
+>> I was unable to understand the commit message completely but it sounds
+>> like this was intentionally changed to do this.
 
-> Further, there is a warning in log-tree.c:
-> pointer always points to valid memory here, but checking for not
-> NULL.[parents]
->=20
-> static int log_tree_diff(struct rev_info *opt, struct commit *commit,
-> struct log_info *log)
-> {
->  int showed_log;
->  struct commit_list *parents;
->  unsigned const char *sha1 =3D commit->object.sha1;
->=20
->  if (!opt->diff && !((&opt->diffopt)->flags & (1 << 14)))
->   return 0;
->=20
->=20
->  parents =3D commit->parents;
->  if (!parents) {            <-- loc0
->   if (opt->show_root_diff) {
->    diff_root_tree_sha1(sha1, "", &opt->diffopt);
->    log_tree_diff_flush(opt);
->   }
->   return !opt->loginfo;     <-- loc1
->  }
->=20
->  if (parents && parents->next) { <-- here
->=20
-> I.e. if parents was NULL at loc0, we escaped at loc1. But we check
-> parents against NULL here again.
+> Yes, it was intentional. Excludes are about untracked files, not about
+> restricting parts of the index. The point of the change was to bring
+> "ls-files" in harmony with other parts of git. For example, prior to
 
-The check may be duplicate, but I suspect removing it won't change the
-resulting object code -- the compiler should be smart enough to come to
-the same conclusion.
+OK; makes sense -- thanks for the explanation.
 
-Thanks,
-Ren=E9
+> However, for your use case, I can see the utility of an option to limit
+> the output of ls-files for a particular invocation. It's just that "-x"
+> is tied into the excludes mechanism, which doesn't do that.
+>
+> I would not be opposed to a patch to add an option that means "exclude
+> these index entries from the output list." And for the sake of backwards
+
+I rather doubt if my C skills extend that far these days; I'll figure out
+other ways of doing this if I need it :-)
+
+Thanks again,
+
+Sitaram
