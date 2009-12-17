@@ -1,94 +1,91 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: How do I show only log messages for commits on a specific
- branch?
-Date: Thu, 17 Dec 2009 01:20:24 +0100
-Message-ID: <20091217002024.GM25474@genesis.frugalware.org>
-References: <20091216101647.GB27373@bc-bd.org>
- <51419b2c0912161005n1596d4a1n92ed555c98aee4c6@mail.gmail.com>
- <20091216232641.GK25474@genesis.frugalware.org>
- <51419b2c0912161559x4de94464pe06df2845dbe3b78@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: New Proposal (simple) for Metadata in Git Commits: git-meta
+Date: Thu, 17 Dec 2009 01:26:40 +0100
+Message-ID: <200912170126.40566.johan@herland.net>
+References: <93857A5A-744E-4A7C-B42D-23A56A48AAF7@lenary.co.uk>
+ <7349A827-41D5-434F-85FE-D49980A7D501@lenary.co.uk>
+ <20091216163036.GE18319@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="n83H03bbH672hrlY"
-Cc: bd@bc-bd.org, git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 01:20:35 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Sam Elliott <sam@lenary.co.uk>
+X-From: git-owner@vger.kernel.org Thu Dec 17 01:26:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NL46c-0007Sb-7B
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 01:20:34 +0100
+	id 1NL4Ck-0001EK-3C
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Dec 2009 01:26:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762877AbZLQAU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2009 19:20:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762857AbZLQAU2
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 19:20:28 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:34104 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758220AbZLQAU2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2009 19:20:28 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id C258E58055;
-	Thu, 17 Dec 2009 01:20:24 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id AA08B44965;
-	Thu, 17 Dec 2009 01:20:24 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id E3AEE1240014; Thu, 17 Dec 2009 01:20:24 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <51419b2c0912161559x4de94464pe06df2845dbe3b78@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1762916AbZLQA0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2009 19:26:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762873AbZLQA0q
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Dec 2009 19:26:46 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:53794 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1758247AbZLQA0o (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Dec 2009 19:26:44 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KUR00G8BT8H0PB0@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 17 Dec 2009 01:26:41 +0100 (MET)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KUR00GYKT8G5Q20@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 17 Dec 2009 01:26:41 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.12.17.1221
+User-Agent: KMail/1.12.4 (Linux/2.6.31-ARCH; KDE/4.3.4; x86_64; ; )
+In-reply-to: <20091216163036.GE18319@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135349>
+
+On Wednesday 16 December 2009, Shawn O. Pearce wrote:
+> Sam Elliott <sam@lenary.co.uk> wrote:
+> > On 15 Dec 2009, at 23:05, Shawn O. Pearce wrote:
+> >> If you dropped the --git-meta-- tags above, JGit would happily
+> >> recognize the awesome: and Github: tags, but it might need a bit
+> >> more work to recognize the nested user: tag.  Also, you'd be able
+> >> to use git-meta on the git and Linux kernel repositories to pull
+> >> out and work with Signed-off-by, Acked-by, etc.
+> >
+> > I'm not entirely sure about this approach. The current implementation
+> > also works with PGP-signed tags, where the information is not
+> > necessarily going to be at the bottom of the message when i use `git-
+> > cat-file -p`. I think it shouldn't be too hard to also have git-meta
+> > read any YAML-like data just before the signing message.
+> 
+> Ah, good point.  But as you point out, it should be simple enough
+> to detect a PGP signature on the bottom and just clip that off the
+> end, and then perform the YAML-like data parsing on the footer.
+
+I agree with Shawn's point that it should be possible to do this without 
+embedding it in custom ---tags---.
+
+I would even try to parse the _entire_ commit message, and then discard 
+everything that didn't match the "<word>: <free-form value>" format (with 
+possible continuation lines). Even though this will generate some false 
+positives (probably non-sensical "key: value" pairs), I don't see this as a 
+major problem , since most users of this functionality are looking for a 
+small set of specific keywords (which are even more unlikely to turn up as 
+false positives)
+
+In future versions of Git, you might also want to check for YAML-like data 
+in the notes object corresponding to the commit in question (see git-notes 
+in v1.6.6 for more details on the new notes feature). This would allow users 
+to add/edit such metadata after the commit was made, without having to 
+rewrite the commit itself.
 
 
---n83H03bbH672hrlY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Have fun! :)
 
-On Wed, Dec 16, 2009 at 04:59:54PM -0700, Elijah Newren <newren@gmail.com> =
-wrote:
-> Did you try it with a 'new' branch in your repository that started at
-> the beginning of history rather than at some commit?  "git log new"
-> and "git log new@{30.years.ago}..new" are not the same for me with
-> git-1.6.5.5:
->=20
-> $ git init repo
-> $ cd repo
-> $ echo content> foo && git add foo && git commit -mone foo
-> $ echo more content >> foo && git commit -mtwo foo
-> $ git checkout -b new master~1
-> $ echo stuff >> foo && git commit -mthree foo
-> $ git log new@{30.years.ago}..new
+...Johan
 
-Aah, thanks. Then you can just avoid the warning using
-
-git log $(git reflog show new|sed -n 's/ .*//;$ p')..new
-
-> Are you sure?  I'm more inclined to believe he'd like to see all the
-> commits that have been added to the "new" branch since he created it
-> (which may be the same as what you say, but not necessarily).  Of
-> course, neither my assumption or yours match what he actually asked
-> for (though I think what he asked for isn't possible and is merely an
-> means to the end he really wants).
-
-No, I'm not sure about what he thought, but I hope he will clarify. :)
-
---n83H03bbH672hrlY
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkspeUgACgkQe81tAgORUJadvgCfWHthLw2gjTinztfh+edaHPi3
-EZgAn1Dt+tCUxvBT6PJmfuOvKm/6qYcR
-=77t5
------END PGP SIGNATURE-----
-
---n83H03bbH672hrlY--
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
