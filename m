@@ -1,106 +1,129 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: git remote set-head not working?
-Date: Fri, 18 Dec 2009 16:28:35 -0500
-Message-ID: <76718490912181328k5f87d82u499b7a1eba471126@mail.gmail.com>
-References: <76c5b8580912180825t17bfc90eq20dfc05cafa8c02e@mail.gmail.com>
-	 <20091218165302.GA1746@sigill.intra.peff.net>
-	 <76c5b8580912180938s2b885efax33be860f963ba92f@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 18 22:28:44 2009
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCHv2] am: fix patch format detection for Thunderbird "Save As" emails
+Date: Fri, 18 Dec 2009 13:34:38 -0800
+Message-ID: <1261172078-9174-1-git-send-email-bebarino@gmail.com>
+References: <7vtyvpcf36.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 18 22:34:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLkNO-0000vT-Po
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 22:28:43 +0100
+	id 1NLkTK-0003Vv-8x
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 22:34:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932797AbZLRV2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2009 16:28:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932717AbZLRV2h
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 16:28:37 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:55211 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932703AbZLRV2f (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2009 16:28:35 -0500
-Received: by iwn1 with SMTP id 1so2459551iwn.33
-        for <git@vger.kernel.org>; Fri, 18 Dec 2009 13:28:35 -0800 (PST)
+	id S932940AbZLRVep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2009 16:34:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755557AbZLRVep
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 16:34:45 -0500
+Received: from mail-gx0-f211.google.com ([209.85.217.211]:60715 "EHLO
+	mail-gx0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753786AbZLRVeo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2009 16:34:44 -0500
+Received: by gxk3 with SMTP id 3so2455125gxk.1
+        for <git@vger.kernel.org>; Fri, 18 Dec 2009 13:34:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=vmmetPI4A0Bd9MpSwjqufFnoBNIWesl9TCB0bFJ1aBE=;
-        b=a/e/ua0MCwBTp2fzCPNJwdLNi2LYAlO9qTA8vxYYYFZqElflqEw4SedaWyCtrzDeWV
-         YAlia2QcM9M60XpC1joGh5Eyn3ZZYYSfFYOZq3N6MExehlS9pxk4CFzjuQ6GYA/HvnCN
-         0SHF4QpYMiLjUUFQGJ6frsfSPhWZEg063+oQg=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=lKd7sCAYdVoQcNhn1gHf5NYTe2wqtqYjUAqiWVLxRio=;
+        b=l04qZpWreN3H0XvezGjcFdFGux7pF9TZB4b9GavaZEZdBNg4I6Tbmniuzo/n0d4oTG
+         FP6DA6k1GrQT0nA6RGvxg4QsIWPlV4wMP+NsKwPF6QcnTnMqVZasun2QgchZZYcb+WDP
+         aJ91pJaQCtI2UDnuK3p/GHnWamWbuiDgLtkm0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=CIsjgNgBqneaGLBZPaFG40ULrBrNr/WHZixrZtfCDfFoQFkwDL4J/6P55LFflB0Ajs
-         OOv4r/OfO1umQDf+O6Lj2knbg6ywsvZ2OQHH6S+DVqm9vTCEuV69X6MhKH7DFPTYO6S+
-         tiluZdCyussdhc0fYEIpRrAWc5wfjzeEJJD3k=
-Received: by 10.231.121.164 with SMTP id h36mr1731043ibr.9.1261171715323; Fri, 
-	18 Dec 2009 13:28:35 -0800 (PST)
-In-Reply-To: <76c5b8580912180938s2b885efax33be860f963ba92f@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=XAAaGeTQ4dhK7O5y6c7xfG7zbjc0aiB2ScYQfxQUVO55Q6p3Idqn44NIhJrDGVYTTG
+         Uab99xpU1Jl482WYZhVZ9ZiOYK0kaoSc7AOBc7vw5DtbYPnwMJh9+WuCm7VGkp4imMhl
+         RfPZHF8O1k98AJf/A9/f9Ex7TsuuAgtC0enxQ=
+Received: by 10.150.24.2 with SMTP id 2mr7266390ybx.172.1261172081987;
+        Fri, 18 Dec 2009 13:34:41 -0800 (PST)
+Received: from localhost (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 20sm1358178yxe.20.2009.12.18.13.34.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 18 Dec 2009 13:34:41 -0800 (PST)
+X-Mailer: git-send-email 1.6.6.rc3.1.g8df51
+In-Reply-To: <7vtyvpcf36.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135439>
 
-On Fri, Dec 18, 2009 at 12:38 PM, Eugene Sajine <euguess@gmail.com> wrote:
-> Yes. I was trying to change the HEAD on the bare remote (origin) repo
-> and the concept here is really confusing.
+The patch detection wants to inspect all the headers of a rfc2822 message
+and ensure that they look like header field names. The headers are always
+separated from the message body with a blank line. When Thunderbird saves
+the message the blank line separating the headers from the body includes a
+CR. The patch detection is failing because a CRLF doesn't match /^$/. Fix
+this by allowing a CR to exist on the separating line.
 
-The remote command is about updating things under .git/refs/remotes,
-not about updating a remote server. For updating a remote server,
-there is really only push. Clear as mud?
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+---
 
-> Firstly, when i cloned from some repo "clone" comand is setting HEAD
-> branch for remote in accordance to where the HEAD is pointing on
-> origin side. I just recently realized that and i'm not sure it is best
-> thing to do - i think it should default to origin/master first, if it
-> doesn't exist then to where the HEAD is pointing.
+Changes since v1:
+ - More portable code using tr (thanks Junio)
+ - More portable testing by manually adding CRLFs
 
-It is expected that the person setting up the bare repo is the person
-who knows best which is the "default" branch. Which is why clone uses
-the remote HEAD as the default branch to checkout.
+ git-am.sh     |    3 ++-
+ t/t4150-am.sh |   24 ++++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 1 deletions(-)
 
-But, if you don't like that, you can always use:
-
-% git clone -b master ...
-
-And you'll get master checked out instead of whatever the remote HEAD is.
-
-> Secondly, I don't really understand what is the purpose of "git remote
-> set-head" if the change cannot be transferred to the actual origin
-> repo, so it will start serving another branch as default?
-
-Hmm, the man page says:
-
-       set-head
-           Sets or deletes the default branch ($GIT_DIR/remotes/<name>/HEAD)
-           for the named remote. Having a default branch for a remote is not
-           required, but allows the name of the remote to be specified in lieu
-           of a specific branch. For example, if the default branch for origin
-           is set to master, then origin may be specified wherever you would
-           normally specify origin/master.
-
-This seems clear to me, but I guess if you expect that "git remote"
-updates the remote server I can see some confusion. Perhaps the
-DESCRIPTION for git remote should include something like:
-
-"This command updates the local repository only. For updating a remote
-repository, see git push."
-
-> I might not
-> have access to the server to perform git symbolic-ref on my bare repo
-> (imagine the repo on github), so it might be not an option.
-
-Understood. I'm not sure whether the send-pack/receive-pack protocol
-supports the notion of "I want to change what HEAD points to."
-
-j.
+diff --git a/git-am.sh b/git-am.sh
+index 4838cdb..9e64deb 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -204,7 +204,8 @@ check_patch_format () {
+ 			# discarding the indented remainder of folded lines,
+ 			# and see if it looks like that they all begin with the
+ 			# header field names...
+-			sed -n -e '/^$/q' -e '/^[ 	]/d' -e p "$1" |
++			tr -d '\015' <"$1" |
++			sed -n -e '/^$/q' -e '/^[ 	]/d' -e p |
+ 			sane_egrep -v '^[!-9;-~]+:' >/dev/null ||
+ 			patch_format=mbox
+ 		fi
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index 8296605..7b6269d 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -83,6 +83,21 @@ test_expect_success setup '
+ 		echo "X-Fake-Field: Line Three" &&
+ 		git format-patch --stdout first | sed -e "1d"
+ 	} > patch1.eml &&
++	{
++		echo "X-Fake-Field: Line One\015" &&
++		echo "X-Fake-Field: Line Two\015" &&
++		echo "X-Fake-Field: Line Three\015" &&
++		git format-patch --stdout first |
++		sed -e "1d" -e "3,\$d" | tr -d "\n" &&
++		echo "\015" &&
++		git format-patch --stdout first |
++		sed -e "1,2d" -e "4,\$d" | tr -d "\n" &&
++		echo "\015" &&
++		git format-patch --stdout first |
++		sed -e "1,3d" -e "5,\$d" | tr -d "\n" &&
++		echo "\015\n\015" &&
++		git format-patch --stdout first | sed -e "1,5d"
++	} > patch1-crlf.eml &&
+ 	sed -n -e "3,\$p" msg >file &&
+ 	git add file &&
+ 	test_tick &&
+@@ -123,6 +138,15 @@ test_expect_success 'am applies patch e-mail not in a mbox' '
+ 	test "$(git rev-parse second^)" = "$(git rev-parse HEAD^)"
+ '
+ 
++test_expect_success 'am applies patch e-mail not in a mbox with CRLF' '
++	git checkout first &&
++	git am patch1-crlf.eml &&
++	! test -d .git/rebase-apply &&
++	test -z "$(git diff second)" &&
++	test "$(git rev-parse second)" = "$(git rev-parse HEAD)" &&
++	test "$(git rev-parse second^)" = "$(git rev-parse HEAD^)"
++'
++
+ GIT_AUTHOR_NAME="Another Thor"
+ GIT_AUTHOR_EMAIL="a.thor@example.com"
+ GIT_COMMITTER_NAME="Co M Miter"
+-- 
+1.6.6.rc3.1.g8df51
