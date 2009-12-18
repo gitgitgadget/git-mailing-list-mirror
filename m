@@ -1,74 +1,73 @@
 From: Eugene Sajine <euguess@gmail.com>
 Subject: Re: repo corruption - Egit's fault?
-Date: Fri, 18 Dec 2009 13:30:45 -0500
-Message-ID: <76c5b8580912181030k56cb7dd7l811c0a0d4773d309@mail.gmail.com>
+Date: Fri, 18 Dec 2009 13:51:11 -0500
+Message-ID: <76c5b8580912181051j7e2ceb34p98127b316a0118ee@mail.gmail.com>
 References: <76c5b8580912181006p2aef9d2fj95bb4c8456d965b@mail.gmail.com>
 	 <20091218181613.GA10687@spearce.org>
+	 <76c5b8580912181030k56cb7dd7l811c0a0d4773d309@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Dec 18 19:31:03 2009
+X-From: git-owner@vger.kernel.org Fri Dec 18 19:51:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLhbQ-000476-IS
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 19:31:00 +0100
+	id 1NLhv7-0007Ot-DZ
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 19:51:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932526AbZLRSav convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Dec 2009 13:30:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932496AbZLRSat
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 13:30:49 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:37012 "EHLO
+	id S932378AbZLRSvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2009 13:51:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755390AbZLRSvQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 13:51:16 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:47698 "EHLO
 	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932343AbZLRSaq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Dec 2009 13:30:46 -0500
-Received: by iwn1 with SMTP id 1so2347204iwn.33
-        for <git@vger.kernel.org>; Fri, 18 Dec 2009 10:30:46 -0800 (PST)
+	with ESMTP id S1755365AbZLRSvM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2009 13:51:12 -0500
+Received: by iwn1 with SMTP id 1so2360067iwn.33
+        for <git@vger.kernel.org>; Fri, 18 Dec 2009 10:51:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=soH4Ml4jkG9e9gffDYt8Qf+3FeFBrc7CfVoAvpIpALQ=;
-        b=Ygj5ixXv6f7/SVhzmliVI/B6DSqUdwy80c3/L5RC8cUhvWvnlqYbm95AFJ7V8/FVFG
-         hqYF6usWwel3mcDF3RlHkLVcguYWSqI/S4sOeaSt0Nikgadbj/bO3Ouaq9MBVpTnUCOB
-         H3+ehU0EqMh8qhMQRZD/FcjNFJP+AwYVeZxbs=
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=uy+1u4UIEeFldbCXFs7B2FjNnVae5Of/YHs9jz1JS1Q=;
+        b=wmdJDZZV8EJG8B44iYjSejRJ1VprjxMMiO2XGRljp4hU7Fg9krE1NWbCIRbgtrQk/Q
+         NtQRyu9Z/YmY3zvLJLTXB3gm4z+7AHuFoEgWqf8d1FjwvgNXQyRX9Yf0hR/lcP6mjR5T
+         4Tc01VGLTZNhZ2TcsikxX1D5H+8ozOQKHBIY4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=segF1TRI3P22M2GeEdxrhBxXrLYQQBCzdtQaqGD2kX26k8RJ0MsdWn7r5b6GWX6w0X
-         LIrv2gpLphlje+q7wcY8lU7jXV1KlYHnoiNdcBGekIxWarrI9eEZuBDC/7mxGP1/VRd6
-         MYBfD7e3VLCd3n314iD+MfIB9+YG/zq1iZ71Q=
-Received: by 10.231.123.41 with SMTP id n41mr2117952ibr.46.1261161045920; Fri, 
-	18 Dec 2009 10:30:45 -0800 (PST)
-In-Reply-To: <20091218181613.GA10687@spearce.org>
+         :cc:content-type;
+        b=ES9ubKmMCsejwW/tVCd4azLkN7OXKn0q/+v1oUxPyFhdJvSN7crAvf22YDQHx0sBBo
+         EqN8Yq1zE3rc8OP1NzUcO9T0w93YmOkeDXtUE9LO0dCC3n6Lv1klSKcuv8NwTOLAab61
+         0vtu3HjncjJeNcmGYMScwW/73c1auoIBRkxbw=
+Received: by 10.231.5.90 with SMTP id 26mr867213ibu.42.1261162271861; Fri, 18 
+	Dec 2009 10:51:11 -0800 (PST)
+In-Reply-To: <76c5b8580912181030k56cb7dd7l811c0a0d4773d309@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135427>
 
-> To prevent this in the future, you can force a server to check during
-> push by enabling receive.fsckObjects in the server repository's
-> configuration file. =C2=A0A broken EGit client will have the push
-> rejected immediately.
+> Thank you for prompt answer, Shawn!
 >
-> --
-> Shawn.
+> The problem is that as i'm maintaining multiple repos and their
+> quantity will grow i would need to apply this setting site wide. Do
+> you know if i can specify this service for git daemon? It seems like
+> in git deamon docs this service is not listed, but just in case the
+> docs are not up to date... I really don't want to set this up for
+> every repo manually...
+>
+> Thanks,
+> Eugene
 >
 
-Thank you for prompt answer, Shawn!
+I found it.
+$ git config --global receive.fsckObjects true
 
-The problem is that as i'm maintaining multiple repos and their
-quantity will grow i would need to apply this setting site wide. Do
-you know if i can specify this service for git daemon? It seems like
-in git deamon docs this service is not listed, but just in case the
-docs are not up to date... I really don't want to set this up for
-every repo manually...
+should do the trick.
 
 Thanks,
 Eugene
