@@ -1,105 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] branch: new option --will-track
-Date: Thu, 17 Dec 2009 16:07:08 -0800
-Message-ID: <7vaaxhdu1f.fsf@alter.siamese.dyndns.org>
-References: <1260956399-13802-1-git-send-email-cxreg@pobox.com>
+Subject: Re: [PATCH] am: fix patch format detection for Thunderbird "Save As"
+ emails
+Date: Thu, 17 Dec 2009 16:15:25 -0800
+Message-ID: <7vtyvpcf36.fsf@alter.siamese.dyndns.org>
+References: <1261094299-22930-1-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Dave Olszewski <cxreg@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 18 01:07:27 2009
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 18 01:15:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLQNR-0000ZV-Kx
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 01:07:25 +0100
+	id 1NLQVR-0004EC-Hg
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 01:15:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751261AbZLRAHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2009 19:07:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbZLRAHS
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 19:07:18 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49029 "EHLO
+	id S1751436AbZLRAPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2009 19:15:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbZLRAPg
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 19:15:36 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48232 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750829AbZLRAHQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2009 19:07:16 -0500
+	with ESMTP id S1750895AbZLRAPf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2009 19:15:35 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A3C3E89066;
-	Thu, 17 Dec 2009 19:07:14 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F043FA78A3;
+	Thu, 17 Dec 2009 19:15:32 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1fVy39WSbeBIVWpE5vkC0WEngqo=; b=fouhbb
-	707b94Adq7OiTBJy78FntbrDXMED2wthFuUX5+WDUAPhIURSn9iQPb9GQ4LcEfLx
-	0OE9YIUxThO2L4UfUWVMAjv8HpmjgGtGpVDAoia/wU5AZn0Keml9maHAlCAw/Q5R
-	NXldBqJLzOpto6BC6k6p2oZtvKnf0lHU7SWdc=
+	:content-type; s=sasl; bh=HwS5FJQnOJDL+vnhdIqcro/ibx8=; b=aYo4UZ
+	eOvYNIKZPmlhmSJlmKelNC6nx9XN2fQqNCJNSocrK0tn0A3D7dMEgcmEnIKxAAyH
+	bZAd/YutslcBtyTFO0dttH7XLUO9YqxxozPRpR9bGVGRgEujobwxsKMHDGYjrPQL
+	ZzfiE6lUfkvQGqz1ZQ2/HutwH4D5IHCXTBGIw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Axpjr6sdl0iJl7XOZaMZs/ldEdfb7fSL
-	qQVptE9GQ7xpzdsMVq1LL9KddH+p3iy5HhOnwuqeog2Qv4ud2spPDuXCkXyUeKC9
-	kFecyovA/jdGtPgyP/bh0q8dER38DlcamvzCQMOACuknxX7SeZf/hwlCIQuCUilI
-	OMsTJl1bTuo=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D37C89065;
-	Thu, 17 Dec 2009 19:07:12 -0500 (EST)
+	:content-type; q=dns; s=sasl; b=Tqq7inkYvZ4srqOJ9QSnKJFK4sf/WHqx
+	+WW+AzzwcIdAZOxw6HrT2oM1oXUzMnYMVKSS40u2lYRXRkkct1MLR68Bd5JVMxKj
+	r+7f0fey4/ZwBo+Qdx8d/oqzZlK6+8g6PGI1LyR9HerEyplo6ujeykC1BfiB2BI/
+	3VVTbmOevgw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D0195A78A2;
+	Thu, 17 Dec 2009 19:15:30 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AEFCE89064; Thu, 17 Dec
- 2009 19:07:09 -0500 (EST)
-In-Reply-To: <1260956399-13802-1-git-send-email-cxreg@pobox.com> (Dave
- Olszewski's message of "Wed\, 16 Dec 2009 01\:39\:59 -0800")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DCEC1A78A1; Thu, 17 Dec 2009
+ 19:15:27 -0500 (EST)
+In-Reply-To: <1261094299-22930-1-git-send-email-bebarino@gmail.com> (Stephen
+ Boyd's message of "Thu\, 17 Dec 2009 15\:58\:19 -0800")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4AAF3AA0-EB69-11DE-9ED2-DC0DEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 73B66E36-EB6A-11DE-B9C6-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135391>
 
-Dave Olszewski <cxreg@pobox.com> writes:
+Stephen Boyd <bebarino@gmail.com> writes:
 
-> A common question from users creating branches in an environment where
-> they intend to push the branch to a shared bare repository, and then
-> later pull commits from upstream into the branch that they initially
-> created, is how do they create the branch with this tracking info
-> already set up.
+> I'm not sure how portable \r in a sed invocation is.
 
-We try reasonably hard not to force users to make a decision before it
-gets absolutely necessary [*1*].  This option seems to only help users who
-can decide upfront upon "git branch" time if the branch is worth sharing
-with others and if the name of the branch will be the final one, and
-people who forget to give this new option when they ran "git branch", or
-those who changed their mind as to what the newly created branch with this
-option should interact with, will still need to use "git config" to update
-the settings.
+Not very portable.
 
-Not very nice, not because it solves only a part of the problem, but
-because it force users to decide early and not change their mind.
+Adding
 
-Instead perhaps we would want to add an option to retarget an existing
-branch any time the user wants, e.g. "git branch --reconfigure"?  Once we
-have such an option, people who *can* decide upfront can use that feature
-when creating a new branch at the same time.
+	tr -d '\015' <"$1" |
 
-Also "git pull --remember $there $this" might be a good way to tell the
-configuration mechanism from the UI to remember that "I always want to
-merge $this branch from $there while on the branch I am currently on", and
-its implementation may probably use "git branch --reconfigure" internally.
+in front of the original "sed" invocation might be a better choice.
 
-Having said all that, I am not very interested in topics on the mechanism
-that updates or uses these variables, as I tend to avoid relying on them
-myself, and instead teach people to spell them out (which seems to foster
-better understanding of what goes on, with reduced user confusion).
-Hence, I wouldn't claim I have thought things through in this area, and
-the above is just me thinking aloud [*2*].
+> but seems necessary because check_patch_format() is called before any
+> splitting with mailsplit is done (where I assume the fix for the issue
+> will be done).
 
-
-[Footnote]
-
-*1* There are ample examples, ranging from detached HEAD (you do not have
-to decide if the experiment you are going to do deserves a separate branch
-to store the result permanently) to the separation between commit and push
-(what you commit does not have to be perfect and you have a chance to tidy
-them up before publishing).
-
-*2* IOW don't take my "I am not interested" as "patches in this area have
-little chance of getting applied."
+I agree that the way non-native mbox format was bolted onto "am" is
+somewhat unfortunate.
