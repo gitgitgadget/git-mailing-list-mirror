@@ -1,66 +1,87 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 2/2] read-tree: at least one tree-ish argument is required
-Date: Fri, 18 Dec 2009 13:24:32 -0600
-Message-ID: <fabb9a1e0912181124nef40a2dxac1b93f9dcc19bb8@mail.gmail.com>
-References: <4B274BDE.8000504@viscovery.net> <4B2B5085.1050906@viscovery.net> 
-	<7v4onoywws.fsf@alter.siamese.dyndns.org> <200912182004.25520.j.sixt@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] read-tree: at least one tree-ish argument is
+ required
+Date: Fri, 18 Dec 2009 11:32:08 -0800
+Message-ID: <7voclwxemf.fsf@alter.siamese.dyndns.org>
+References: <4B274BDE.8000504@viscovery.net> <4B2B5085.1050906@viscovery.net>
+ <7v4onoywws.fsf@alter.siamese.dyndns.org>
+ <200912182004.25520.j.sixt@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Dec 18 20:25:55 2009
+X-From: git-owner@vger.kernel.org Fri Dec 18 20:32:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLiS4-0006Qw-Hc
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 20:25:24 +0100
+	id 1NLiYq-0001n4-Au
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 20:32:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932616AbZLRTY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2009 14:24:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932597AbZLRTYz
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 14:24:55 -0500
-Received: from mail-vw0-f192.google.com ([209.85.212.192]:40697 "EHLO
-	mail-vw0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932418AbZLRTYy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2009 14:24:54 -0500
-Received: by vws30 with SMTP id 30so1102409vws.33
-        for <git@vger.kernel.org>; Fri, 18 Dec 2009 11:24:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=pWv8IWe93X9yzIGM/Iz5piW3L6O96fPf7W2hOKCbr4M=;
-        b=wk330VvA7h/5S7JzZGqsqGYjowqBlToRpPFIpybMn1ULgMUUmFQZ40v7jPP7dreGTk
-         ufkzeGnZ1nsIulTBkHbGGFmOK+R0Twz/yxo1vrZhlOzLfT7S/J3mmXzNWaEcSPhzKpFa
-         S5qRZphdQ9DTz7uqrFfFpJnefxWHNH8NSuQWQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=mgVsJYO0rEInaRjD3+FQQqc7wsMVvgpNMp0Qn2MaW6Vuc4CzHVCmr9RxJLi6gKvUgU
-         ibn2f6PBTykGPExZonuTfRsa7uaQdh8TFye3ol7T4fUcWETDCPSPM4JVTiwyjD3kQIxu
-         WFZtpPisyBYo8cBKf3/CohsfLBGJ0eyhBGaEM=
-Received: by 10.220.126.224 with SMTP id d32mr3107151vcs.117.1261164292113; 
-	Fri, 18 Dec 2009 11:24:52 -0800 (PST)
-In-Reply-To: <200912182004.25520.j.sixt@viscovery.net>
+	id S1750844AbZLRTcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2009 14:32:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750779AbZLRTcS
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 14:32:18 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51652 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750752AbZLRTcR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2009 14:32:17 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EDF6D8904F;
+	Fri, 18 Dec 2009 14:32:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/TW6vHLO6j7TIsVDquMxQJfITKc=; b=C74GkX
+	WzvdTHRk9nMBfutJ1PcpIFuOSvzm5sMYlp1J77kmhBEc7hmmhQKecEu8BZv3R8Wr
+	+x6GBb4TR7zKRz7GP3O6AiR5k6xuYfBQHWA4qAsThtiV5bMnegYUEymsjbAQ/P4U
+	pJ4otbSCcdqLVZc3pnkirSjUTdhK1zbq9dT+k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IJJoorhVXnvjXc51MfvmCD7FGefzeVx8
+	mUZ1kYR1ErTymHxWPfsh/tl4zJ0Lkb5I+0NmhZQqzVOmugLvsEHMDqtD0KtjwL9Q
+	JgRgl9XFyyEsFWAB92XG8/dpjpCqGXB2hJbLgAjW/g5YvnSL6n+RRynKislhrLJE
+	nG2Cz8Exqy0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C60178904E;
+	Fri, 18 Dec 2009 14:32:12 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 193BD8904D; Fri, 18 Dec
+ 2009 14:32:09 -0500 (EST)
+In-Reply-To: <200912182004.25520.j.sixt@viscovery.net> (Johannes Sixt's
+ message of "Fri\, 18 Dec 2009 20\:04\:25 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0A81189C-EC0C-11DE-ACD5-DC0DEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135431>
 
-Heya,
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-On Fri, Dec 18, 2009 at 13:04, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Sorry to drag you into this discussion, but I felt this change is maint-worthy
-> (because the behavior is not only risky, but dangerous).
+> Sorry to drag you into this discussion, but I felt this change is
+> maint-worthy (because the behavior is not only risky, but dangerous).
+>
+> -- Hannes
 
-I agree, shouldn't such a dangerous function at least require a flag?
-'git read-tree --empty' or something?
+In short, that is where we differ, as I don't think it is dangerous at
+all in the "maint-worthy" sense.  
 
--- 
-Cheers,
+"read-tree" without -m is to "populate the index from emptiness with given
+trees".  Unless you are hit by the bug in the auto-correction (whose fix
+was maint-worthy), nobody would say read-tree without parameter and expect
+that it wouldn't touch the index.
 
-Sverre Rabbelier
+Sure, it will empty the index, so it is dangerous in the same sense that
+"reset --hard" is dangerous because it will wipe all your local changes,
+or "rm -rf it" will remove everything underneath it.  But these are all
+features that are "dangerous if you didn't mean to do so but wanted to do
+something else."
+
+Removal of such features might turn out to be maint-worthy but 
+
+    Previously, it was possible to run read-tree without any arguments,
+    whereupon it purged the index!
+
+doesn't justify it well enough.
