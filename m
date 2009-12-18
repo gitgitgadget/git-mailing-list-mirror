@@ -1,131 +1,81 @@
-From: "Bernhard R. Link" <brlink@debian.org>
-Subject: [PATCH v2] Let format-patch and rebase ignore trivial merges.
-Date: Fri, 18 Dec 2009 16:11:02 +0100
-Message-ID: <20091218151102.GB7211@pcpool00.mathematik.uni-freiburg.de>
-References: <20091216164553.GA22471@pcpool00.mathematik.uni-freiburg.de> <4B29106C.1040501@viscovery.net> <7vaaxhfcfe.fsf@alter.siamese.dyndns.org>
+From: Howard Miller <howardsmiller@googlemail.com>
+Subject: Re: How to commit bug fixes from old revisions
+Date: Fri, 18 Dec 2009 15:15:46 +0000
+Message-ID: <26ae428a0912180715v15d85fbcm9fef7c33f6ccf448@mail.gmail.com>
+References: <4B2B996D.9070302@inf.utfsm.cl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 18 16:11:22 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Richard Rossel <rrossel@inf.utfsm.cl>
+X-From: git-owner@vger.kernel.org Fri Dec 18 16:15:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLeU9-0007l6-Dr
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 16:11:17 +0100
+	id 1NLeYd-0002L2-16
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 16:15:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754293AbZLRPLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2009 10:11:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754491AbZLRPLH
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 10:11:07 -0500
-Received: from pcpool00.mathematik.uni-freiburg.de ([132.230.30.150]:36355
-	"EHLO pcpool00.mathematik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754210AbZLRPLF (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Dec 2009 10:11:05 -0500
-Received: from pcpool09.mathematik.uni-freiburg.de ([132.230.30.159])
-	by pcpool00.mathematik.uni-freiburg.de with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <brl@pcpool00.mathematik.uni-freiburg.de>)
-	id 1NLeTu-00050c-PB; Fri, 18 Dec 2009 16:11:02 +0100
-Received: from brl by pcpool09.mathematik.uni-freiburg.de with local (Exim 4.69)
-	(envelope-from <brl@pcpool00.mathematik.uni-freiburg.de>)
-	id 1NLeTu-0003GJ-My; Fri, 18 Dec 2009 16:11:02 +0100
-Mail-Followup-To: git@vger.kernel.org, gitster@pobox.com,
-	j.sixt@viscovery.net
-Content-Disposition: inline
-In-Reply-To: <7vaaxhfcfe.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753870AbZLRPPu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Dec 2009 10:15:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753804AbZLRPPu
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 10:15:50 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:52195 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753627AbZLRPPt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Dec 2009 10:15:49 -0500
+Received: by ewy19 with SMTP id 19so1587741ewy.21
+        for <git@vger.kernel.org>; Fri, 18 Dec 2009 07:15:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=J8AYiI0hOGEZWM8NlOTnUvajlagmmzq55a26PJXZUc0=;
+        b=OinDdfRDKmgJY7oCbH/LhXCSSmPw19Mb/Zb91jiP4zLMulxMQbg+mwOb4VreB1gS0z
+         vZEQI3yx4NqTL1GkfXHVHCEvcvTUOovbtoMa1xV5Mpsa1aFAYm1MrYjmCcym0T+H3U+k
+         Mdap+7NXz3c9gulHa7o9WpWi5Ot5fiDWa28d8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=BQjGLHn2gHSM1Eu/+n8uk4uM0RADZlHL6UTfRtXHuDPGvwWr6GWbmVhLzbR/3Jk8bA
+         hi7m0ZGZ95SbXItvhoj5T3o2B6pLsRELpDmQ07v9zh3zALFZ2sBqlxrevTi2ATadtKQq
+         cjn9WnYM5O3RExHO/BXHU1sM4PF0zmkhbr8gw=
+Received: by 10.213.37.137 with SMTP id x9mr501781ebd.78.1261149346710; Fri, 
+	18 Dec 2009 07:15:46 -0800 (PST)
+In-Reply-To: <4B2B996D.9070302@inf.utfsm.cl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135415>
 
-As git rebase and git format-patch linearize commits,
-having the same change in different branches causes in the
-best case duplicate patches in the produced series and in the
-worst case conflicts. If there are trivial merges involved
-(i.e. merges that do not change the tree), then this patch
-will cause git to only look at one branch, thereby avoiding
-duplicates and reducing the chance of conflicts.
+2009/12/18 Richard Rossel <rrossel@inf.utfsm.cl>:
+> Hi,
+> I'm confused with how to commit bug fixes from old tagged version.
+> Lets says that I have a serie of tags (v1.0, v1.1, v1.2, v2.0) in mas=
+ter,
+> and there is a bug from v.1.2. The bug was fixed, but I don't
+> want to merge to v2.0, because there are not compatibles. The bug fix=
+ed
+> should be
+> tagged as v1.3
+>
+> So the question is how to commit between revisions( in the example, b=
+etween
+> v.1.2 and v2.0),
+> without made any change in the HEAD of master (v2.0)
+>
+> Or maybe the solution is to separate the versions =A0in different bra=
+nches or
+> different repos.
 
-Signed-off-by: Bernhard R. Link <brlink@debian.org>
----
- builtin-log.c              |    1 +
- git-rebase--interactive.sh |    2 +-
- git-rebase.sh              |    2 +-
- revision.c                 |    7 ++++++-
- revision.h                 |    1 +
- 5 files changed, 10 insertions(+), 3 deletions(-)
+I think it depends on how you look at it.  The tag implies that v1.3
+is a fixed release but what you say implies a branch. What I would do
+is have a (say) '1.3_RELEASE" branch and that has the various fixes
+merged on it. To put it another way, does your fix mean that there'll
+be a v1.3.1? If so you would be tagging that on the 1.3 branch
+(probably).
 
-diff --git a/builtin-log.c b/builtin-log.c
-index 1766349..efc2f40 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -960,6 +960,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	rev.diff = 1;
- 	rev.combine_merges = 0;
- 	rev.ignore_merges = 1;
-+	rev.prune_tree = 1;
- 	DIFF_OPT_SET(&rev.diffopt, RECURSIVE);
- 
- 	rev.subject_prefix = fmt_patch_subject_prefix;
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 0bd3bf7..e5c134b 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -703,7 +703,7 @@ first and then run 'git rebase --continue' again."
- 		fi
- 		git rev-list $MERGES_OPTION --pretty=oneline --abbrev-commit \
- 			--abbrev=7 --reverse --left-right --topo-order \
--			$REVISIONS | \
-+			$REVISIONS -- . | \
- 			sed -n "s/^>//p" | while read shortsha1 rest
- 		do
- 			if test t != "$PRESERVE_MERGES"
-diff --git a/git-rebase.sh b/git-rebase.sh
-index b121f45..dab6949 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -539,7 +539,7 @@ echo "$head_name" > "$dotest/head-name"
- echo "$GIT_QUIET" > "$dotest/quiet"
- 
- msgnum=0
--for cmt in `git rev-list --reverse --no-merges "$revisions"`
-+for cmt in `git rev-list --reverse --no-merges "$revisions" -- .`
- do
- 	msgnum=$(($msgnum + 1))
- 	echo "$cmt" > "$dotest/cmt.$msgnum"
-diff --git a/revision.c b/revision.c
-index a8a3c3a..b27b682 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1408,8 +1408,13 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 		}
- 	}
- 
--	if (prune_data)
-+	if (prune_data) {
- 		revs->prune_data = get_pathspec(revs->prefix, prune_data);
-+	} else if (revs->prune_tree) {
-+		/* limit whole tree (limits trivial merges to one side) */
-+		static const char *whole_tree[2] = { "", NULL };
-+		revs->prune_data = whole_tree;
-+	}
- 
- 	if (revs->def == NULL)
- 		revs->def = def;
-diff --git a/revision.h b/revision.h
-index d368003..d007aaa 100644
---- a/revision.h
-+++ b/revision.h
-@@ -38,6 +38,7 @@ struct rev_info {
- 	/* Traversal flags */
- 	unsigned int	dense:1,
- 			prune:1,
-+			prune_tree:1,
- 			no_merges:1,
- 			merges_only:1,
- 			no_walk:1,
+HTH
