@@ -1,90 +1,105 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH 1/2] api-strbuf.txt: fix typos and document launch_editor()
-Date: Thu, 17 Dec 2009 16:05:28 -0800
-Message-ID: <1261094729-24128-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 18 01:06:18 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] branch: new option --will-track
+Date: Thu, 17 Dec 2009 16:07:08 -0800
+Message-ID: <7vaaxhdu1f.fsf@alter.siamese.dyndns.org>
+References: <1260956399-13802-1-git-send-email-cxreg@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dave Olszewski <cxreg@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 18 01:07:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLQM1-0007zL-GY
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 01:05:57 +0100
+	id 1NLQNR-0000ZV-Kx
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 01:07:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751780AbZLRAFf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2009 19:05:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750950AbZLRAFf
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 19:05:35 -0500
-Received: from mail-gx0-f211.google.com ([209.85.217.211]:46546 "EHLO
-	mail-gx0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750833AbZLRAFd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2009 19:05:33 -0500
-Received: by gxk3 with SMTP id 3so1606121gxk.1
-        for <git@vger.kernel.org>; Thu, 17 Dec 2009 16:05:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=ZloZo8zDY4N/CojVNGCm4CoAhtqHr827fQ5YFTvljTM=;
-        b=VIbbyVaRvU5ne17aDfbjkSV4yJphgiSqn7/+EFf/nq9RAbwQDSppN2pB223NDAH2jr
-         iqJQePI0R9mPehE+BXuGVgmokrtIX5kt41nKDZu1NKdcQYZA4wgVJ0JpvHOm2vhM17iB
-         unRvVzDeHuQLDAXhizPro02DA/pHo1kx4i/+Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=dKhaY5hnwvMsIDh4TFbWGdZxk/60ocQdKkFlFZ5ZtleSwYzpXwKkrEw1AHk4IPJR0N
-         ma7E7mMeodL6R3LpXUkM4KtU82WZtaMQCBOZYnAPfPkiTEUmtStNtwXwNZxEgFWrD7jv
-         RupGdWtDqluTsqZ/FQ5waUOw+nM2DvyPJlrJc=
-Received: by 10.90.46.19 with SMTP id t19mr3447264agt.45.1261094732190;
-        Thu, 17 Dec 2009 16:05:32 -0800 (PST)
-Received: from localhost (user-0c9haca.cable.mindspring.com [24.152.169.138])
-        by mx.google.com with ESMTPS id 7sm534658ywc.6.2009.12.17.16.05.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 17 Dec 2009 16:05:31 -0800 (PST)
-X-Mailer: git-send-email 1.6.6.rc3.1.g8df51
+	id S1751261AbZLRAHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2009 19:07:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbZLRAHS
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 19:07:18 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49029 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750829AbZLRAHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2009 19:07:16 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A3C3E89066;
+	Thu, 17 Dec 2009 19:07:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1fVy39WSbeBIVWpE5vkC0WEngqo=; b=fouhbb
+	707b94Adq7OiTBJy78FntbrDXMED2wthFuUX5+WDUAPhIURSn9iQPb9GQ4LcEfLx
+	0OE9YIUxThO2L4UfUWVMAjv8HpmjgGtGpVDAoia/wU5AZn0Keml9maHAlCAw/Q5R
+	NXldBqJLzOpto6BC6k6p2oZtvKnf0lHU7SWdc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Axpjr6sdl0iJl7XOZaMZs/ldEdfb7fSL
+	qQVptE9GQ7xpzdsMVq1LL9KddH+p3iy5HhOnwuqeog2Qv4ud2spPDuXCkXyUeKC9
+	kFecyovA/jdGtPgyP/bh0q8dER38DlcamvzCQMOACuknxX7SeZf/hwlCIQuCUilI
+	OMsTJl1bTuo=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D37C89065;
+	Thu, 17 Dec 2009 19:07:12 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AEFCE89064; Thu, 17 Dec
+ 2009 19:07:09 -0500 (EST)
+In-Reply-To: <1260956399-13802-1-git-send-email-cxreg@pobox.com> (Dave
+ Olszewski's message of "Wed\, 16 Dec 2009 01\:39\:59 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4AAF3AA0-EB69-11DE-9ED2-DC0DEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135390>
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
- Documentation/technical/api-strbuf.txt |   10 ++++++++--
- 1 files changed, 8 insertions(+), 2 deletions(-)
+Dave Olszewski <cxreg@pobox.com> writes:
 
-diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
-index 7438149..a0e0f85 100644
---- a/Documentation/technical/api-strbuf.txt
-+++ b/Documentation/technical/api-strbuf.txt
-@@ -12,7 +12,7 @@ strbuf API actually relies on the string being free of NULs.
- 
- strbufs has some invariants that are very important to keep in mind:
- 
--. The `buf` member is never NULL, so you it can be used in any usual C
-+. The `buf` member is never NULL, so it can be used in any usual C
- string operations safely. strbuf's _have_ to be initialized either by
- `strbuf_init()` or by `= STRBUF_INIT` before the invariants, though.
- +
-@@ -55,7 +55,7 @@ Data structures
- 
- * `struct strbuf`
- 
--This is string buffer structure. The `len` member can be used to
-+This is the string buffer structure. The `len` member can be used to
- determine the current length of the string, and `buf` member provides access to
- the string itself.
- 
-@@ -253,3 +253,9 @@ same behaviour as well.
- 	comments are considered contents to be removed or not.
- 
- `launch_editor`::
-+
-+	Launch the user preferred editor to edit a file and fill the buffer
-+	with the file's contents upon the user completing their editing. The
-+	third argument can be used to set the environment which the editor is
-+	run in. If the buffer is NULL the editor is launched as usual but the
-+	file's contents are not read into the buffer upon completion.
--- 
-1.6.6.rc3.1.g8df51
+> A common question from users creating branches in an environment where
+> they intend to push the branch to a shared bare repository, and then
+> later pull commits from upstream into the branch that they initially
+> created, is how do they create the branch with this tracking info
+> already set up.
+
+We try reasonably hard not to force users to make a decision before it
+gets absolutely necessary [*1*].  This option seems to only help users who
+can decide upfront upon "git branch" time if the branch is worth sharing
+with others and if the name of the branch will be the final one, and
+people who forget to give this new option when they ran "git branch", or
+those who changed their mind as to what the newly created branch with this
+option should interact with, will still need to use "git config" to update
+the settings.
+
+Not very nice, not because it solves only a part of the problem, but
+because it force users to decide early and not change their mind.
+
+Instead perhaps we would want to add an option to retarget an existing
+branch any time the user wants, e.g. "git branch --reconfigure"?  Once we
+have such an option, people who *can* decide upfront can use that feature
+when creating a new branch at the same time.
+
+Also "git pull --remember $there $this" might be a good way to tell the
+configuration mechanism from the UI to remember that "I always want to
+merge $this branch from $there while on the branch I am currently on", and
+its implementation may probably use "git branch --reconfigure" internally.
+
+Having said all that, I am not very interested in topics on the mechanism
+that updates or uses these variables, as I tend to avoid relying on them
+myself, and instead teach people to spell them out (which seems to foster
+better understanding of what goes on, with reduced user confusion).
+Hence, I wouldn't claim I have thought things through in this area, and
+the above is just me thinking aloud [*2*].
+
+
+[Footnote]
+
+*1* There are ample examples, ranging from detached HEAD (you do not have
+to decide if the experiment you are going to do deserves a separate branch
+to store the result permanently) to the separation between commit and push
+(what you commit does not have to be perfect and you have a chance to tidy
+them up before publishing).
+
+*2* IOW don't take my "I am not interested" as "patches in this area have
+little chance of getting applied."
