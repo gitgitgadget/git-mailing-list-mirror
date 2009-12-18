@@ -1,85 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/2] read-tree: at least one tree-ish argument is required
-Date: Fri, 18 Dec 2009 14:17:15 -0800 (PST)
-Message-ID: <m3d42cc4i8.fsf@localhost.localdomain>
-References: <4B274BDE.8000504@viscovery.net>
-	<fabb9a1e0912181137t1265f86cs9e02019da136a0a@mail.gmail.com>
-	<7veimsvz8a.fsf@alter.siamese.dyndns.org>
-	<200912182304.27656.j.sixt@viscovery.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: git remote set-head not working?
+Date: Fri, 18 Dec 2009 17:24:48 -0500
+Message-ID: <76718490912181424l3815ce95o6dcde77ea00cbd11@mail.gmail.com>
+References: <76c5b8580912180825t17bfc90eq20dfc05cafa8c02e@mail.gmail.com>
+	 <20091218165302.GA1746@sigill.intra.peff.net>
+	 <76c5b8580912180938s2b885efax33be860f963ba92f@mail.gmail.com>
+	 <76718490912181328k5f87d82u499b7a1eba471126@mail.gmail.com>
+	 <7veimst0w6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Dec 18 23:17:49 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Eugene Sajine <euguess@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 18 23:24:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLl8t-0003Mz-Je
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 23:17:47 +0100
+	id 1NLlFn-0005lb-HH
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 23:24:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751252AbZLRWRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2009 17:17:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbZLRWRS
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 17:17:18 -0500
-Received: from mail-fx0-f221.google.com ([209.85.220.221]:44127 "EHLO
-	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750967AbZLRWRR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2009 17:17:17 -0500
-Received: by fxm21 with SMTP id 21so3257378fxm.21
-        for <git@vger.kernel.org>; Fri, 18 Dec 2009 14:17:16 -0800 (PST)
+	id S1753972AbZLRWYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2009 17:24:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932419AbZLRWYu
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 17:24:50 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:32863 "EHLO
+	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753786AbZLRWYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2009 17:24:49 -0500
+Received: by iwn1 with SMTP id 1so2489450iwn.33
+        for <git@vger.kernel.org>; Fri, 18 Dec 2009 14:24:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=AJtqG0Lq2CpciSHSjF2/gec9tPNBCL+ZjKle+ZOQfgk=;
-        b=FNohgZg1EKsRvYfQs6gIl5ZS3fF0mMIiK0BPKVWfxLaDDxWTRLn5vwAdt+GEvSppHy
-         5nQeTNiw96LcuZoFkF3AwaXe4Fx+z6YHCxhFwoGxX3WG+aeN4m5ZpAz6siGcxJGvnL4p
-         5YdoFQxrMlDP38DlKS56KSOUvtyWkdRS9u5zo=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=wmkw70hrYQehFNZ6VlurpMB+wFVbesSL1W74tsj5PB0=;
+        b=CfX5Ximf9s9WkzEzMK/AWI2jqTF6naz5lX9Gc7kmy76tNPzjmmb3JEn3IKhbBkq3bM
+         qNIk+k8++G0y3E+riGaQvpgJObrsgtx73k9PLL0kucILxOTfQ52BzJQwVps/kxMxW9ZI
+         vZJNIumZr6Q9dCqUIyb/vymqU2P3wuBurR+y0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=FG6fvdFckOoUEgiXaVq0qYGAr6IsKKasyIXkIj0jt+Q+apzDA+2nhjs/Si5sNbDdTb
-         XNDRryePuj6mvAIUMgb0j5lpF+idNendmkWvZy9XDmF+x648I1BJ7LZHN8aV/sw1VNjJ
-         nQzSxbunbbt/MzZlXwgU/5uZON6nov2AzjAyI=
-Received: by 10.223.17.65 with SMTP id r1mr6059654faa.5.1261174636364;
-        Fri, 18 Dec 2009 14:17:16 -0800 (PST)
-Received: from localhost.localdomain (abwt9.neoplus.adsl.tpnet.pl [83.8.243.9])
-        by mx.google.com with ESMTPS id 26sm5584541fks.50.2009.12.18.14.17.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 18 Dec 2009 14:17:15 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id nBIMGdrP015070;
-	Fri, 18 Dec 2009 23:16:49 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id nBIMGGou015056;
-	Fri, 18 Dec 2009 23:16:16 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <200912182304.27656.j.sixt@viscovery.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=tTscvM2W0ZNvl/Ieg2pJnfIoh4OYk2L5PNEf4RhGa3RHAsCV2xd/xdE7dnZ6gWn06A
+         pEArI3WfFXO+3OVoyg/PVQ+h2LR8Pt7Yk0G08UBw0ZYd0vu8aqvNTqVghu9PS6p3bTuI
+         8yRxjLrWP66WsuKQ4g0OXziqrtp6e2Uc6fhs8=
+Received: by 10.231.167.65 with SMTP id p1mr1287195iby.20.1261175088998; Fri, 
+	18 Dec 2009 14:24:48 -0800 (PST)
+In-Reply-To: <7veimst0w6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135445>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+On Fri, Dec 18, 2009 at 4:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jay Soffian <jaysoffian@gmail.com> writes:
+>
+>> The remote command is about updating things under .git/refs/remotes,
+>> not about updating a remote server. For updating a remote server,
+>> there is really only push. Clear as mud?
+>
+> We still support (and unfortunately we would probably end up supporting
+> for a long time) "remote update" so it is not strictly true, but that is
+> the original motivation behind "git remote" subcommand.
 
-> Running read-tree without any arguments purges the index, but this is not
-> documented. This behavior is dubious at best because contrary to many
-> other commands, it does not use HEAD if nothing else is specified.
-> 
-> If one really wants to clear the index, this can be achieved with
-> 'git rm --cached .' or 'rm -f .git/index' in a more explicit way.
+But "remote update" updates the local repo from the remote, it doesn't
+do anything to the remote itself. That is the point I was trying to
+make clear -- "git remote" doesn't ever do anything to the remote
+repo, it only updates things on the local repo.
 
-One can (I think) also always use "git read-tree <empty tree>",
-where <empty tree> = 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+>> Understood. I'm not sure whether the send-pack/receive-pack protocol
+>> supports the notion of "I want to change what HEAD points to."
+>
+> It does not support it, but that is not because there is a strong reason
+> it shouldn't.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Okay. I'm sure deciding where to place the command "I want to update
+what HEAD on remote points to" would be a fun discussion. :-)
+
+j.
