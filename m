@@ -1,93 +1,102 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: repo corruption - Egit's fault?
-Date: Fri, 18 Dec 2009 13:06:49 -0500
-Message-ID: <76c5b8580912181006p2aef9d2fj95bb4c8456d965b@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] read-tree: at least one tree-ish argument is
+ required
+Date: Fri, 18 Dec 2009 10:11:47 -0800
+Message-ID: <7v4onoywws.fsf@alter.siamese.dyndns.org>
+References: <4B274BDE.8000504@viscovery.net> <4B274C3A.4060808@viscovery.net>
+ <4B2B5085.1050906@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Dec 18 19:06:58 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Dec 18 19:13:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLhE9-0001bI-AA
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 19:06:57 +0100
+	id 1NLhKS-0004U4-J2
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 19:13:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932312AbZLRSGv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Dec 2009 13:06:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932265AbZLRSGv
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 13:06:51 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:59743 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932264AbZLRSGu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Dec 2009 13:06:50 -0500
-Received: by iwn1 with SMTP id 1so2331323iwn.33
-        for <git@vger.kernel.org>; Fri, 18 Dec 2009 10:06:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=RRhw6RJ7ejHfDhyFC/wI+ZR9bmM2Fwsn7I9rO2YY7cs=;
-        b=R203VQppxm3AN1epBJhHPOwRsyp0AsMcVzhum+YCyOHmZ+n3bkrN5kUzGO+9GN/zj6
-         S5wp3vMXZF7AIdn4cI2FAuJViLylxHr3fD075WsDTpTr2GgDn/X32qOkaW2rl37WVXAW
-         TZMNdM+qplhZE8XC0Is4yF9QwPPJ8wmtsvSaM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=oEZBZDtvNjGs4SKKFmBt0xYxqruxRDOTn/2mTBLmMbF3PH5MwBBuwRfqc/exYuYjJ7
-         dDkhA35YP9YIrNT7pfRjQDJ7/9ZF0sC0wdZwf42Avv89uBqiRSj4V1VU1S4gEYhnJ03F
-         lMRYz7QNynWX3fGCKVIcTwaagu5UI3MpfIr/Q=
-Received: by 10.231.61.195 with SMTP id u3mr435368ibh.12.1261159609848; Fri, 
-	18 Dec 2009 10:06:49 -0800 (PST)
+	id S932456AbZLRSMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2009 13:12:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932479AbZLRSMJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 13:12:09 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35762 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932461AbZLRSL5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2009 13:11:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 77AC2A7FEB;
+	Fri, 18 Dec 2009 13:11:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Za2PUAapdt5rtTK+ybI2x9zWqc4=; b=WpPGzd
+	L6/LFLbBcdYycP7+rcwShYFQWkxD/q0hEBaCQBRqG88IVL1N/Ywu3Uoh68dJd2MN
+	+8wGqEBnWb1/kP9CYzRP+Orqakd2ogg1VgWG0bJXHvlZtmQzWUKlRfTylHMAWhUB
+	5cpd+CuYUCZVMaATlJFT5Kj4RAGYBiHNUM4kY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TrJmRuUgyXYcm5kB28joGkb1nktGFFIu
+	b9x7sOP1fvC+obq/X1kIe5FQow9FWIBx7xQ9OJ6+aSWgS5naUhjbQuUl1xcirZwe
+	MTdNtcmjl9WsO/qNbjOlSsZXUHP0rukms39FF7TW6KY55NEFZDTCqZzLptvS5w0J
+	BDe+nPI+lXI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5660EA7FE9;
+	Fri, 18 Dec 2009 13:11:52 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4547BA7FE5; Fri, 18 Dec 2009
+ 13:11:48 -0500 (EST)
+In-Reply-To: <4B2B5085.1050906@viscovery.net> (Johannes Sixt's message of
+ "Fri\, 18 Dec 2009 10\:51\:01 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D1498448-EC00-11DE-8B7C-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135423>
 
-Hi,
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-We have imported a project from CVS. Then created a bare repo and
-placed on the central server. From the server repos are served via git
-protocol for push and pull operations (no SSH is involved for intranet
-set up)
-After this operations there were several extensive changes made (3
-commits but they were pretty big) in development branch which were
-then pushed to the server. So the branch was pushed too.
-All changes and commits and pushes were performed under eclipse 3.5
-using Egit plugin v0.5.
+> You have queued 1/2 (filter-branch: remove an unnecessary use of
+> 'git read-tree') of this 2-patch series, but I haven't seen any comments
+> about this 2/2 nor is it queued. Did it fall through the cracks?
 
-After it I could not clone this repo from the server as it was giving
-me an error like this (I will shorten it up a bit using =E2=80=9C=E2=80=
-=A6=E2=80=9D as I have
-no way to copy paste):
+No.  I think saying "is not allowed" is going a bit too far [*1*].  The
+documentation does not list it as a commonly useful thing, that's all.
 
-$git clone git://server/repo.git
-Initialized empty git=E2=80=A6
-remote:counting=E2=80=A6done
-remote:compressing=E2=80=A6done
-remote: aborting due to possible repository corruption on the remote si=
-de.
-Receiving object: 100% =E2=80=A6done
-Resolving deltas: 100% =E2=80=A6done
-error: waitpid (async) failed
-fatal: error in sideband demultiplexer (I know right words to curse now=
-;))
+When a user wants to have an empty index, and does not want to touch files
+under $GIT_DIR with any non-git tools (e.g. "rm -f $GIT_DIR/index) for
+some religious reasons, "read-tree" without a tree would be one valid way
+to do so [*2*].  That is not documented (the synopsis section even hints
+that read-tree wants to take at least one tree), and I think it is a
+problem that the documentation does not match what the program actually
+allows.
 
-When I=E2=80=99m looking at the bare repo in CGit =C2=A0it shows me =C2=
-=A0Bad object:
-and object SHA-1 instead of =C2=A0the tree.
+The approach taken by [2/2] is to match the program to the documentation
+by forbidding what has been allowed and what people may have been relying
+on being able to do,
 
-As the only difference between this project and about 30 others was
-that there was an additional branch pushed via Egit I suspect that
-this is what screwed up things, but I =E2=80=98m not sure=E2=80=A6 I=E2=
-=80=99m in progress of
-testing it I don=E2=80=99t know if I will be able to reproduce.
+It was obvious that the line removed by [1/2] was a no-op not only in the
+usual case but also in an error case (i.e. when the user does not have
+write access to the repository), as I wrote in my review of the patch.
+Compared to that, I do not think it is cut-and-dried clear that [2/2] is
+the right kind of improvement.  An alternative approach to document the
+zero-tree case would be a valid way to address the documentation mismatch
+problem.
 
-Please, advise if this can be fixed and which options I have if it
-will happen again (how to properly and quickly restore bare repo)
+We need to make arguments like "'read-tree' given by mistake to empty the
+index is risky", "'read-tree' as 'rm -f $GIT_DIR/index' replacement has
+little value", and "'read-tree' as 'rm -f $GIT_DIR/index' replacement is
+the best way to get an empty index" to weigh pros and cons between two
+possible approaches before deciding which way to go, but in a pre-release
+freeze, I wasn't in the mood to be one who is doing the arguments myself.
 
-Thanks,
-Eugene
+
+[Footnote]
+
+*1* Didn't I say that somewhere?
+
+*2* I suspect "rm --cached ." might be another, but it would probably be
+much more expensive.
