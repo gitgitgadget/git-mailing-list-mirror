@@ -1,115 +1,76 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: git remote set-head not working?
-Date: Fri, 18 Dec 2009 18:55:32 -0500
-Message-ID: <76c5b8580912181555i39484811t3aa641254c07dcce@mail.gmail.com>
-References: <76c5b8580912180825t17bfc90eq20dfc05cafa8c02e@mail.gmail.com>
-	 <20091218165302.GA1746@sigill.intra.peff.net>
-	 <76c5b8580912180938s2b885efax33be860f963ba92f@mail.gmail.com>
-	 <76718490912181328k5f87d82u499b7a1eba471126@mail.gmail.com>
+From: Joey Korkames <joey+floss@kidfixit.com>
+Subject: Feature suggestion: support arguments for GIT_PROXY_COMMAND &
+         core.gitproxy
+Date: Fri, 18 Dec 2009 16:39:22 -0700
+Message-ID: <cone.1261179562.490491.4033.1000@toolshiner.phx1.kidfixit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 19 00:55:39 2009
+Content-Type: text/plain; format=flowed; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 19 01:05:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLmfa-0006rK-CJ
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 00:55:38 +0100
+	id 1NLmoq-0001XZ-2s
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 01:05:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932636AbZLRXze convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Dec 2009 18:55:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754688AbZLRXzd
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 18:55:33 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:46173 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754679AbZLRXzd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Dec 2009 18:55:33 -0500
-Received: by iwn1 with SMTP id 1so2529198iwn.33
-        for <git@vger.kernel.org>; Fri, 18 Dec 2009 15:55:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=D07wJ/mMnXwGC3byCAjhIDdsxYEAMt16/yYC6A25hSs=;
-        b=wmV22VLer4RjkhZs8krioT/lqVdZ/sEJTbY4fujjr+v9C7RnPUAnFILvsPdzHpvHx8
-         04pmtuahGLspAp1dm0mNzGGbrv2G3gTQa3BGbroM02qIlGEVxlpnaPHu51pZ9xw/GrEx
-         CjxbhvsYXWzbM3Rbclv5dmUliMtsWweD8/fWY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=cfdfL7BmzK4y3KeI76iixlxR1TkbFGOIV2waCX6ENUpYFlHOk9K6nF2zYpDwjFiXz+
-         Z0ryHi6pks1sxV6G5aQ75XiBQg2ksbkfMjsvb/1Q+6LyLwAnqXtdGdCukfS9LyK9vjCx
-         ndv/Km5Y1tO8A139nMYc1/dajufunb3rSTAbM=
-Received: by 10.231.123.41 with SMTP id n41mr2445341ibr.46.1261180532564; Fri, 
-	18 Dec 2009 15:55:32 -0800 (PST)
-In-Reply-To: <76718490912181328k5f87d82u499b7a1eba471126@mail.gmail.com>
+	id S1755818AbZLSAFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2009 19:05:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755572AbZLSAFE
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 19:05:04 -0500
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:59822 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753833AbZLSAFB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2009 19:05:01 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 Dec 2009 19:05:01 EST
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.8.00.01.00 201-2244-105-20090324) with ESMTP
+          id <20091218235820.FRZE8308.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>
+          for <git@vger.kernel.org>; Fri, 18 Dec 2009 18:58:20 -0500
+Received: from mail.phx1.kidfixit.com ([68.110.127.170])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id JnyK1d00B3gixDg03nyKww; Fri, 18 Dec 2009 18:58:19 -0500
+X-VR-Score: 0.00
+X-Authority-Analysis: v=1.1 cv=dPH3qklg8Vic3E1mcpSlAaa4ZLB04ixhaZIb8bf8Di4=
+ c=1 sm=1 a=Db2MooHyVcAA:10 a=wuBMPUXIKj/V06tqseGGQw==:17 a=F-RN8XJYAAAA:8
+ a=H1VwqQI0AAAA:8 a=FUDrNtPjzEhlTNwmMjMA:9 a=FPNSHdURgbRXQvHNk78w2q7XtTAA:4
+ a=VxaxaHa4ttIA:10 a=wuBMPUXIKj/V06tqseGGQw==:117
+X-CM-Score: 0.00
+Received: from toolshiner.phx1.kidfixit.com (unknown [10.1.0.2])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.phx1.kidfixit.com (Postfix) with ESMTP id 0067D808D8B6
+	for <git@vger.kernel.org>; Fri, 18 Dec 2009 23:39:22 +0000 (UTC)
+X-Mailer: http://www.courier-mta.org/cone/
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135451>
 
-> The remote command is about updating things under .git/refs/remotes,
-> not about updating a remote server. For updating a remote server,
-> there is really only push. Clear as mud?
->
-> It is expected that the person setting up the bare repo is the person
-> who knows best which is the "default" branch. Which is why clone uses
-> the remote HEAD as the default branch to checkout.
->
-> But, if you don't like that, you can always use:
->
-> % git clone -b master ...
+Could /connect.c be patched to support multiple arguments in 
+ENV[GIT_PROXY_COMMAND] and git config core.gitproxy?
 
-didn't know that, thanks!
+For instance, something like :
+  GIT_PROXY_COMMAND="myproxyscript arg1 arg2"
 
->> Secondly, I don't really understand what is the purpose of "git remo=
-te
->> set-head" if the change cannot be transferred to the actual origin
->> repo, so it will start serving another branch as default?
->
-> Hmm, the man page says:
->
-> =C2=A0 =C2=A0 =C2=A0 set-head
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Sets or deletes the default branch=
- ($GIT_DIR/remotes/<name>/HEAD)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for the named remote. Having a def=
-ault branch for a remote is not
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 required, but allows the name of t=
-he remote to be specified in lieu
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 of a specific branch. For example,=
- if the default branch for origin
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 is set to master, then origin may =
-be specified wherever you would
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 normally specify origin/master.
->
-> This seems clear to me, but I guess if you expect that "git remote"..=
-=2E
+or (way more useful):
+ git config core.gitproxy \
+  '"myproxyscript -mode git -proxy joey@gw.myhouse.com -proxy joey@bastion.foocorp.com" for foocorp.com$'
 
-terms i'll use here:
-remote - instance created using git remote add or by cloning
-origin - actual remote repo I cloned from
+Its slightly annoying to maintain and distribute custom copies of myproxyscript 
+that carry the repo-specific proxy arguments inline just because git won't 
+pass those arguments itself (arguments that a repo's .git/config can easily 
+store).
 
-If it would be exactly as you said then it would probably not be so con=
-fusing.
-The problem here is that if set-head is only about the remote, then
-why after i change it from master to qa and "git show remote origin"
-doesn't show this change? Bug? Probably, because "git show remote
-origin" actually queries origin for this info and always shows origin
-HEAD branch, as Jeff pointed out. If this is the case then there is an
-inconsistency between those two commands which caused this confusion.
-Please, correct me If i'm wrong but i really think that there should
-be a way to not only set it up for remote but also for origin , where
-the remote points to if you have push rights of course.
+I think supporting tokens (ala ssh's ProxyCommand - %h=repohost, 
+%p=repoport, %u=repouser) would be awesome, but that change would not be 
+backward-compatible with existing .git/config files or GIT_PROXY_COMMAND 
+utilizing-scripts. Its enough to assume that "$host $port" will always be 
+appended to the gitproxy arg list.
 
-Of course all of this could be avoided if I knew that i have to be
-explicit during cloning from my colleagues, because their HEAD may be
-pointing to some BUTT, which I don't even want to know about;)
-
-Thanks,
-Eugene
+Thanks for reading, (and thnaks for git!)
+-joey
