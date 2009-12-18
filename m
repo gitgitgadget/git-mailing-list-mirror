@@ -1,76 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] am: fix patch format detection for Thunderbird "Save As"
- emails
-Date: Thu, 17 Dec 2009 16:15:25 -0800
-Message-ID: <7vtyvpcf36.fsf@alter.siamese.dyndns.org>
-References: <1261094299-22930-1-git-send-email-bebarino@gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 1/2] api-strbuf.txt: fix typos and document
+ launch_editor()
+Date: Fri, 18 Dec 2009 01:42:58 +0100
+Message-ID: <20091218004258.GV25474@genesis.frugalware.org>
+References: <1261094729-24128-1-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="hHiQ9nAwW5IGN2dL"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 18 01:15:51 2009
+X-From: git-owner@vger.kernel.org Fri Dec 18 01:43:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLQVR-0004EC-Hg
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 01:15:41 +0100
+	id 1NLQwH-0005th-G7
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 01:43:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751436AbZLRAPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2009 19:15:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbZLRAPg
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 19:15:36 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48232 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750895AbZLRAPf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2009 19:15:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F043FA78A3;
-	Thu, 17 Dec 2009 19:15:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HwS5FJQnOJDL+vnhdIqcro/ibx8=; b=aYo4UZ
-	eOvYNIKZPmlhmSJlmKelNC6nx9XN2fQqNCJNSocrK0tn0A3D7dMEgcmEnIKxAAyH
-	bZAd/YutslcBtyTFO0dttH7XLUO9YqxxozPRpR9bGVGRgEujobwxsKMHDGYjrPQL
-	ZzfiE6lUfkvQGqz1ZQ2/HutwH4D5IHCXTBGIw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Tqq7inkYvZ4srqOJ9QSnKJFK4sf/WHqx
-	+WW+AzzwcIdAZOxw6HrT2oM1oXUzMnYMVKSS40u2lYRXRkkct1MLR68Bd5JVMxKj
-	r+7f0fey4/ZwBo+Qdx8d/oqzZlK6+8g6PGI1LyR9HerEyplo6ujeykC1BfiB2BI/
-	3VVTbmOevgw=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D0195A78A2;
-	Thu, 17 Dec 2009 19:15:30 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DCEC1A78A1; Thu, 17 Dec 2009
- 19:15:27 -0500 (EST)
-In-Reply-To: <1261094299-22930-1-git-send-email-bebarino@gmail.com> (Stephen
- Boyd's message of "Thu\, 17 Dec 2009 15\:58\:19 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 73B66E36-EB6A-11DE-B9C6-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753460AbZLRAnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2009 19:43:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753771AbZLRAnF
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Dec 2009 19:43:05 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:55550 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752221AbZLRAnC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2009 19:43:02 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 4619E58098;
+	Fri, 18 Dec 2009 01:42:59 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 978C144965;
+	Fri, 18 Dec 2009 01:42:58 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id C27B420E0002; Fri, 18 Dec 2009 01:42:58 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <1261094729-24128-1-git-send-email-bebarino@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135392>
 
-Stephen Boyd <bebarino@gmail.com> writes:
 
-> I'm not sure how portable \r in a sed invocation is.
+--hHiQ9nAwW5IGN2dL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Not very portable.
+On Thu, Dec 17, 2009 at 04:05:28PM -0800, Stephen Boyd <bebarino@gmail.com> wrote:
+> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+> ---
+>  Documentation/technical/api-strbuf.txt |   10 ++++++++--
+>  1 files changed, 8 insertions(+), 2 deletions(-)
 
-Adding
+Thanks, I really should have read these sentences once again before
+sending them in. ;-)
 
-	tr -d '\015' <"$1" |
+--hHiQ9nAwW5IGN2dL
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-in front of the original "sed" invocation might be a better choice.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-> but seems necessary because check_patch_format() is called before any
-> splitting with mailsplit is done (where I assume the fix for the issue
-> will be done).
+iEYEARECAAYFAksq0BIACgkQe81tAgORUJakrgCgnNEl+uBRRmB/OxYH1QmolOFg
+OE4An25diAATwLgAmtSiYWC8KM9BDrxX
+=R2lP
+-----END PGP SIGNATURE-----
 
-I agree that the way non-native mbox format was bolted onto "am" is
-somewhat unfortunate.
+--hHiQ9nAwW5IGN2dL--
