@@ -1,141 +1,106 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCHv2 3/6] gitweb: Optionally add "git" links in project list page
-Date: Fri, 18 Dec 2009 22:02:46 +0100
-Message-ID: <1261170166-14088-1-git-send-email-jnareb@gmail.com>
-References: <m3tyvxd3pr.fsf@localhost.localdomain>
-Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 18 22:03:06 2009
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: git remote set-head not working?
+Date: Fri, 18 Dec 2009 16:28:35 -0500
+Message-ID: <76718490912181328k5f87d82u499b7a1eba471126@mail.gmail.com>
+References: <76c5b8580912180825t17bfc90eq20dfc05cafa8c02e@mail.gmail.com>
+	 <20091218165302.GA1746@sigill.intra.peff.net>
+	 <76c5b8580912180938s2b885efax33be860f963ba92f@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 18 22:28:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLjyZ-00068A-CY
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 22:03:03 +0100
+	id 1NLkNO-0000vT-Po
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 22:28:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932738AbZLRVC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2009 16:02:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932686AbZLRVC5
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 16:02:57 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:22843 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932703AbZLRVC4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2009 16:02:56 -0500
-Received: by fg-out-1718.google.com with SMTP id 22so1337727fge.1
-        for <git@vger.kernel.org>; Fri, 18 Dec 2009 13:02:55 -0800 (PST)
+	id S932797AbZLRV2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2009 16:28:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932717AbZLRV2h
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 16:28:37 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:55211 "EHLO
+	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932703AbZLRV2f (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2009 16:28:35 -0500
+Received: by iwn1 with SMTP id 1so2459551iwn.33
+        for <git@vger.kernel.org>; Fri, 18 Dec 2009 13:28:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=kSDTI25mLflHdu092u5O9crG8sgaDJmm6HN2J75h5WA=;
-        b=pGuftnsVaBkGQnDl1/Lh3uoN9PTgltQ0dHYOQyqWzYBZ+bdO2iyJP5LBzYtdfWsVy8
-         ZFClMYQP23ra9qcANohvdvULAX0UJ4dR1yb/Y6DEj7yhjoT30mTMS1sYHPC+i1wgoyDZ
-         JNiqK5TDJQtWldHwk3oJqeFRpUxM0+gJynJoY=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=vmmetPI4A0Bd9MpSwjqufFnoBNIWesl9TCB0bFJ1aBE=;
+        b=a/e/ua0MCwBTp2fzCPNJwdLNi2LYAlO9qTA8vxYYYFZqElflqEw4SedaWyCtrzDeWV
+         YAlia2QcM9M60XpC1joGh5Eyn3ZZYYSfFYOZq3N6MExehlS9pxk4CFzjuQ6GYA/HvnCN
+         0SHF4QpYMiLjUUFQGJ6frsfSPhWZEg063+oQg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=dYc4cFizASSVBKHhPMzmpYmWl6TWU1gm+m8SXrSsunoao07BdVe8Zv9U3T/T2M6Di3
-         hKJQClV5Froz5JCeUFudpoFnmPS6161qnncLQMbglAyscfdENLw7u9xP5rKmeO2MyexL
-         7+77mgZsOWsHsilKXLIsG6HXxXYc3ITZ/uFcI=
-Received: by 10.103.64.28 with SMTP id r28mr2030242muk.11.1261170175067;
-        Fri, 18 Dec 2009 13:02:55 -0800 (PST)
-Received: from localhost.localdomain (abwt9.neoplus.adsl.tpnet.pl [83.8.243.9])
-        by mx.google.com with ESMTPS id j2sm11112450mue.35.2009.12.18.13.02.53
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 18 Dec 2009 13:02:54 -0800 (PST)
-X-Mailer: git-send-email 1.6.5.3
-In-Reply-To: <m3tyvxd3pr.fsf@localhost.localdomain>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=CIsjgNgBqneaGLBZPaFG40ULrBrNr/WHZixrZtfCDfFoQFkwDL4J/6P55LFflB0Ajs
+         OOv4r/OfO1umQDf+O6Lj2knbg6ywsvZ2OQHH6S+DVqm9vTCEuV69X6MhKH7DFPTYO6S+
+         tiluZdCyussdhc0fYEIpRrAWc5wfjzeEJJD3k=
+Received: by 10.231.121.164 with SMTP id h36mr1731043ibr.9.1261171715323; Fri, 
+	18 Dec 2009 13:28:35 -0800 (PST)
+In-Reply-To: <76c5b8580912180938s2b885efax33be860f963ba92f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135438>
 
-From: John 'Warthog9' Hawley <warthog9@kernel.org>
+On Fri, Dec 18, 2009 at 12:38 PM, Eugene Sajine <euguess@gmail.com> wrote:
+> Yes. I was trying to change the HEAD on the bare remote (origin) repo
+> and the concept here is really confusing.
 
-This adds a "git" link for each project in the project list page,
-should a common $gitlinkurl_base be defined and not empty.  The full
-URL of each link is composed of $gitlinkurl_base and project name.
-It is intended for git:// links, and in fact GITWEB_BASE_URL build
-variable is used as its default value only if it starts with git://
+The remote command is about updating things under .git/refs/remotes,
+not about updating a remote server. For updating a remote server,
+there is really only push. Clear as mud?
 
-This does make the assumption that the git repositories share a common
-path.  Nothing to date is known to actually make use of introduced
-link.
+> Firstly, when i cloned from some repo "clone" comand is setting HEAD
+> branch for remote in accordance to where the HEAD is pointing on
+> origin side. I just recently realized that and i'm not sure it is best
+> thing to do - i think it should default to origin/master first, if it
+> doesn't exist then to where the HEAD is pointing.
 
-Created "git" link follows rel=vcs-* microformat specification:
-  http://kitenet.net/~joey/rfc/rel-vcs/
+It is expected that the person setting up the bare repo is the person
+who knows best which is the "default" branch. Which is why clone uses
+the remote HEAD as the default branch to checkout.
 
-Signed-off-by: John 'Warthog9' Hawley <warthog9@kernel.org>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-I think it might be good idea... but for the fact "Nothing to date is
-known to actually make use of introduced link".  What's its intended
-use?
+But, if you don't like that, you can always use:
 
-Differences to original version by John 'Warthog9' Hawley (J.H.):
-* It doesn't cause syntax error ;-)
-* Escaping of attribute value is left to CGI.pm
-* $gitlinkurl got renamed to $gitlinkurl_base, now includes git://
-  prefix, and defaults to GITWEB_BASE_URL if it begins with git://
-* Added description to gitweb/README
-* Uses rel=vcs-* microformat by Joey Hess
+% git clone -b master ...
 
-I assume that nobody sane would define $gitlinkurl_base to "0"...
+And you'll get master checked out instead of whatever the remote HEAD is.
 
- gitweb/README      |    4 ++++
- gitweb/gitweb.perl |    8 ++++++++
- 2 files changed, 12 insertions(+), 0 deletions(-)
+> Secondly, I don't really understand what is the purpose of "git remote
+> set-head" if the change cannot be transferred to the actual origin
+> repo, so it will start serving another branch as default?
 
-diff --git a/gitweb/README b/gitweb/README
-index 608b0f8..36fb059 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -71,6 +71,7 @@ You can specify the following configuration variables when building GIT:
-  * GITWEB_BASE_URL
-    Git base URLs used for URL to where fetch project from, i.e. full
-    URL is "$git_base_url/$project".  Shown on projects summary page.
-+   If it begins with "git://" it is also used for $gitlinkurl_base, see below.
-    Repository URL for project can be also configured per repository; this
-    takes precedence over URLs composed from base URL and a project name.
-    Note that you can setup multiple base URLs (for example one for
-@@ -204,6 +205,9 @@ not include variables usually directly set during build):
-    access, and one for http:// "dumb" protocol access).  Note that per
-    repository configuration in 'cloneurl' file, or as values of gitweb.url
-    project config.
-+ * $gitlinkurl_base
-+   Git base URL used (if it is defined and not empty) for "git" link in
-+   projects list, for each project.  Full URL is "$gitlinkurl_base/$project".
-  * $default_blob_plain_mimetype
-    Default mimetype for blob_plain (raw) view, if mimetype checking
-    doesn't result in some other type; by default 'text/plain'.
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index b9bd865..efb6471 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -224,6 +224,10 @@ our %avatar_size = (
- # If it is true, exit if gitweb version and git binary version don't match
- our $git_versions_must_match = 0;
- 
-+# If this variable is set and not empty, add an extra link called "git"
-+# for each project in project list.  Full URL is "$gitlinkurl_base/$project".
-+our $gitlinkurl_base = ("++GITWEB_BASE_URL++" =~ m!^(git://.*)$!) ? $1 : '';
-+
- # Used to set the maximum load that we will still respond to gitweb queries.
- # If server load exceed this value then return "503 server busy" error.
- # If gitweb cannot determined server load, it is taken to be 0.
-@@ -4472,6 +4476,10 @@ sub git_project_list_body {
- 		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"log")}, "log") . " | " .
- 		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"tree")}, "tree") .
- 		      ($pr->{'forks'} ? " | " . $cgi->a({-href => href(project=>$pr->{'path'}, action=>"forks")}, "forks") : '') .
-+		      ($gitlinkurl_base ?
-+		       " | " . $cgi->a({-href=>"$gitlinkurl_base/$pr->{'path'}",
-+		                        -rel=>"vcs-git"}, "git")
-+		      : '') .
- 		      "</td>\n" .
- 		      "</tr>\n";
- 	}
--- 
-1.6.5.3
+Hmm, the man page says:
+
+       set-head
+           Sets or deletes the default branch ($GIT_DIR/remotes/<name>/HEAD)
+           for the named remote. Having a default branch for a remote is not
+           required, but allows the name of the remote to be specified in lieu
+           of a specific branch. For example, if the default branch for origin
+           is set to master, then origin may be specified wherever you would
+           normally specify origin/master.
+
+This seems clear to me, but I guess if you expect that "git remote"
+updates the remote server I can see some confusion. Perhaps the
+DESCRIPTION for git remote should include something like:
+
+"This command updates the local repository only. For updating a remote
+repository, see git push."
+
+> I might not
+> have access to the server to perform git symbolic-ref on my bare repo
+> (imagine the repo on github), so it might be not an option.
+
+Understood. I'm not sure whether the send-pack/receive-pack protocol
+supports the notion of "I want to change what HEAD points to."
+
+j.
