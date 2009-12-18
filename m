@@ -1,80 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git remote set-head not working?
-Date: Fri, 18 Dec 2009 13:42:17 -0800
-Message-ID: <7veimst0w6.fsf@alter.siamese.dyndns.org>
-References: <76c5b8580912180825t17bfc90eq20dfc05cafa8c02e@mail.gmail.com>
- <20091218165302.GA1746@sigill.intra.peff.net>
- <76c5b8580912180938s2b885efax33be860f963ba92f@mail.gmail.com>
- <76718490912181328k5f87d82u499b7a1eba471126@mail.gmail.com>
+From: Eric Blake <ebb9@byu.net>
+Subject: Re: [PATCHv2] am: fix patch format detection for Thunderbird "Save As" emails
+Date: Fri, 18 Dec 2009 21:42:49 +0000 (UTC)
+Message-ID: <loom.20091218T223918-175@post.gmane.org>
+References: <7vtyvpcf36.fsf@alter.siamese.dyndns.org> <1261172078-9174-1-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Eugene Sajine <euguess@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 18 22:42:38 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 18 22:43:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLkaq-0006aD-CA
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 22:42:36 +0100
+	id 1NLkbX-0006oM-BO
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Dec 2009 22:43:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755674AbZLRVmb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2009 16:42:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932703AbZLRVmb
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 16:42:31 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35216 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755612AbZLRVma (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2009 16:42:30 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2EC38A8FB4;
-	Fri, 18 Dec 2009 16:42:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=C8GoGpNYgnDqLv7UeLfug5m0fQE=; b=snJe8L
-	HNgwigOoOmdsLupxsNEXFzKkz7fh9KTN/6ZSeXhRhyjxj3HqTAwOgTCC9CgyUfhC
-	IhNSHW8hCN2pZlEoagibqLPxUrPdnFZgxQJuSg+3sqs0DM1P979GuOuiJ1JFGas6
-	LdrLmuvx2JVVHv2CH6oadxdSAOTcRMpMRb5LI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rour7CRg7nvhixC5qCNJjtOAkiLRMabi
-	uFrZThSCAMRiysSENLKMboSKiMGvZ+nFBpno3MBqxc6HUHriLwVXSEnD+eeiC60z
-	hf4Xz5vw446HO8yANCOEYTlcVQ8tMKPcjkz0zPFSQvoLK2nBO511aJiv1MUmtJ/9
-	k5ey6V24juI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E4AB4A8FB2;
-	Fri, 18 Dec 2009 16:42:24 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 91CCFA8FB1; Fri, 18 Dec 2009
- 16:42:19 -0500 (EST)
-In-Reply-To: <76718490912181328k5f87d82u499b7a1eba471126@mail.gmail.com> (Jay
- Soffian's message of "Fri\, 18 Dec 2009 16\:28\:35 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3AE533DA-EC1E-11DE-89C2-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1754257AbZLRVnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2009 16:43:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755704AbZLRVnP
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 16:43:15 -0500
+Received: from lo.gmane.org ([80.91.229.12]:51038 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755646AbZLRVnO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2009 16:43:14 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NLkbQ-0006mA-5q
+	for git@vger.kernel.org; Fri, 18 Dec 2009 22:43:12 +0100
+Received: from l3-128-170-36-102.l-3com.com ([128.170.36.102])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 18 Dec 2009 22:43:12 +0100
+Received: from ebb9 by l3-128-170-36-102.l-3com.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 18 Dec 2009 22:43:12 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 128.170.36.102 (Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; InfoPath.2; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; OfficeLiveConnector.1.4; OfficeLivePatch.1.3))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135441>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+Stephen Boyd <bebarino <at> gmail.com> writes:
 
-> On Fri, Dec 18, 2009 at 12:38 PM, Eugene Sajine <euguess@gmail.com> wrote:
->> Yes. I was trying to change the HEAD on the bare remote (origin) repo
->> and the concept here is really confusing.
->
-> The remote command is about updating things under .git/refs/remotes,
-> not about updating a remote server. For updating a remote server,
-> there is really only push. Clear as mud?
+> +	{
+> +		echo "X-Fake-Field: Line One\015" &&
 
-We still support (and unfortunately we would probably end up supporting
-for a long time) "remote update" so it is not strictly true, but that is
-the original motivation behind "git remote" subcommand.
+echo and \ do not portably mix.  For that matter, shell double quotes and 
+backslash escapes that are not required by POSIX do not portably mix.  To 
+reliably create carriage returns in shell, you need to use printf, or else 
+something like:
 
-> Understood. I'm not sure whether the send-pack/receive-pack protocol
-> supports the notion of "I want to change what HEAD points to."
+echo "...@" | tr '@' '\015'
 
-It does not support it, but that is not because there is a strong reason
-it shouldn't.
+-- 
+Eric Blake
