@@ -1,75 +1,83 @@
-From: Johan 't Hart <johanthart@gmail.com>
-Subject: Re: Git as electronic lab notebook
-Date: Sun, 20 Dec 2009 01:15:33 +0100
-Message-ID: <4B2D6CA5.3070304@gmail.com>
-References: <loom.20091219T130946-844@post.gmane.org> <8e04b5820912190538v2e9ef109me3a1515040127b39@mail.gmail.com>
+From: "James P. Howard, II" <jh@jameshoward.us>
+Subject: Re: Delete a commit
+Date: Sat, 19 Dec 2009 18:43:27 -0500
+Message-ID: <20091219234327.GA45385@byzantine.jameshoward.us>
+References: <20091219233957.GC29111@marge.bs.l>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Johnson <thomas.j.johnson@gmail.com>, git@vger.kernel.org
-To: "Ciprian Dorin, Craciun" <ciprian.craciun@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 20 01:15:53 2009
+Content-Type: multipart/signed; micalg=x-unknown;
+	protocol="application/pgp-signature"; boundary="6TrnltStXW4iwmi0"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 20 01:16:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NM9Sh-0003HD-UQ
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Dec 2009 01:15:52 +0100
+	id 1NM9TW-0003Vk-F8
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Dec 2009 01:16:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753398AbZLTAPq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Dec 2009 19:15:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752110AbZLTAPq
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 19:15:46 -0500
-Received: from mail-ew0-f209.google.com ([209.85.219.209]:39931 "EHLO
-	mail-ew0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751415AbZLTAPp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Dec 2009 19:15:45 -0500
-Received: by ewy1 with SMTP id 1so4971169ewy.28
-        for <git@vger.kernel.org>; Sat, 19 Dec 2009 16:15:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:newsgroups:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=Yb0vyYAphkFpR2l5N7ju+aTG3Bl0C7x2aFzx5f7BrnU=;
-        b=J1KnoiyQKuMsVsyANOxYpmF1kHSKFEZ2fq7Hxs2Ljiu4fz8OcxYjiTZYYW6W6XC9cv
-         Oec/zEGMABiifSszEEAfxxxy5elhzkzBWcdv6VYWF+Ah4LH3HA3Dfqkmf+LXk0QhEHeo
-         bJNGoU1PqXfVY7e1EnjeKOZE5vKdigSRg/v+4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:newsgroups:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=wYHfLtmmhPXvFBrpQlGdovGlMvcFCOTCNu3fLw9yy8mNdXxtYKptr/N9qjGLrRF3xh
-         8OiZ73ldKV5Ww87EBj8FPdj6LZQDa6ZtC2MOyyB9Xt2o4UF06U04W64cTLXtjG63eVDm
-         +lrcFVq9eXfmKbcAfmzpnCcYacCqUGKrWZQ0c=
-Received: by 10.213.96.226 with SMTP id i34mr2189953ebn.4.1261268142992;
-        Sat, 19 Dec 2009 16:15:42 -0800 (PST)
-Received: from ?192.168.2.101? (dsl-083-247-086-199.solcon.nl [83.247.86.199])
-        by mx.google.com with ESMTPS id 24sm7920678eyx.22.2009.12.19.16.15.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 19 Dec 2009 16:15:42 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <8e04b5820912190538v2e9ef109me3a1515040127b39@mail.gmail.com>
+	id S1753952AbZLTAQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Dec 2009 19:16:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753828AbZLTAQh
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 19:16:37 -0500
+Received: from byzantine.jameshoward.us ([204.109.63.101]:29707 "EHLO
+	byzantine.jameshoward.us" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753797AbZLTAQh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Dec 2009 19:16:37 -0500
+X-Greylist: delayed 1990 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Dec 2009 19:16:37 EST
+Received: from byzantine.jameshoward.us (localhost [127.0.0.1])
+	by byzantine.jameshoward.us (8.14.3/8.14.3) with ESMTP id nBJNhRdX045417
+	for <git@vger.kernel.org>; Sat, 19 Dec 2009 23:43:27 GMT
+	(envelope-from jh@jameshoward.us)
+Received: (from howardjp@localhost)
+	by byzantine.jameshoward.us (8.14.3/8.14.3/Submit) id nBJNhRaS045416
+	for git@vger.kernel.org; Sat, 19 Dec 2009 18:43:27 -0500 (EST)
+	(envelope-from jh@jameshoward.us)
+X-Authentication-Warning: byzantine.jameshoward.us: howardjp set sender to jh@jameshoward.us using -f
+Content-Disposition: inline
+In-Reply-To: <20091219233957.GC29111@marge.bs.l>
+User-Agent: Mutt/1.4.2.3i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135510>
 
-Ciprian Dorin, Craciun schreef:
-> On Sat, Dec 19, 2009 at 2:23 PM, Thomas Johnson
-> <thomas.j.johnson@gmail.com> wrote:
 
->> 4. Run the program, which generates a giant (10MB-4G) output text file,
->> Experiment123.log. Update my LabNotebook.txt file.
+--6TrnltStXW4iwmi0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->     * even if you prefer having the logs, it's best to let Git handle
-> the compression; because even if only some small parts change from the
-> original txt file, I would guess that the BZip-ped file looks quite
-> different;
->
+On Sun, Dec 20, 2009 at 12:39:57AM +0100, Bertram Scharpf wrote:
 
-Is git able to handle 4Gig files? I've heard git loads every file 
-completely in memory before handling it...
+> I fetched a line from the shell's history and accidentally hit
+> enter before editing it. Then I had commited some work that was
+> not completed. Is there a way to get rid of that commit as if it
+> never were there?
+
+If you have committed nothing else in the interim,=20
+
+  git reset HEAD~1
+
+James
+
+--=20
+James P. Howard, II, MPA MBCS
+jh@jameshoward.us
+
+--6TrnltStXW4iwmi0
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBCAAGBQJLLWUeAAoJEHPMAEw+5CSeuccIAI8LVzeUoveBOV/yvt0NbtBq
+nbNKHVlgsNGrW9c7r5dbbFmtguqhdMEdh8qQ9xDH+4DQgkZjrVzNzzHjOg6leB1v
+j7bAXzRcSVBe+LILLdp1CX+rCJyGvyY5u5navoLW9nrZqKN6BFa/DgIlr0/3+OGF
+zRMJ80Gv09QMyiMUVE5hctNoPko4i7x1TIufn+kkpkJZ3KfBJVeYm1QUnefuGjb+
+hZQWFdpAPtJhT/rmc88a9FDEpyDZYBU9e9cOac4R++RGLoIVw9Z3oF582ILQ4Z0q
+r+N8W7K5/RFjsGKeMxg4+Mbs4LZpyQhKeUPUEE5uZCpaY867DqIXCt9+eJwXWXg=
+=dxIH
+-----END PGP SIGNATURE-----
+
+--6TrnltStXW4iwmi0--
