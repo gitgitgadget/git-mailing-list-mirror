@@ -1,90 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Introduce the GIT_HOME environment variable
-Date: Sat, 19 Dec 2009 11:21:57 -0800
-Message-ID: <7vhbrmahwq.fsf@alter.siamese.dyndns.org>
-References: <4B2C0828.4010505@signalbeam.net>
- <20091219013246.GD25474@genesis.frugalware.org>
- <7vhbrnodd9.fsf@alter.siamese.dyndns.org> <4B2C5A1A.8000201@signalbeam.net>
- <7vzl5fik3o.fsf@alter.siamese.dyndns.org>
- <20091219153046.GG25474@genesis.frugalware.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Query remote repository files, blobs
+Date: Sat, 19 Dec 2009 11:24:15 -0800
+Message-ID: <20091219192415.GC10687@spearce.org>
+References: <d16b1c80912182345h4163430bv810adb860575d67a@mail.gmail.com> <alpine.DEB.1.00.0912191159280.4985@pacific.mpi-cbg.de> <19244.54684.250532.801766@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Moe <moe@signalbeam.net>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sat Dec 19 20:22:17 2009
+Cc: Bill Lear <rael@zopyra.com>,
+	Shakthi Kannan <shakthimaan@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Dec 19 20:24:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NM4sZ-0000hR-OU
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 20:22:16 +0100
+	id 1NM4uf-0001Gb-Rr
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 20:24:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753234AbZLSTWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Dec 2009 14:22:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753188AbZLSTWK
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 14:22:10 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64883 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752992AbZLSTWJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Dec 2009 14:22:09 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A9387893B6;
-	Sat, 19 Dec 2009 14:22:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=VkzdxlggK1ZBV1vUi0minjFRtoQ=; b=LHV0ogFfeRYofzBfK6aSxXh
-	b3Gc2GJyqy1XL3EQeTXc5LgxvQDwucS7Cr0ncQnD7PUVTWkFAkibpKaBZfzPN/Wo
-	ipu5pW0ncrXR+bEtxpJmWmS+OVrLhQqLWPlnhhkShRa1ji6dX6WhImA8beH9s90G
-	5yPcN69sca0ubkpotUvw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=yiGqELeKYBecyG7Zv5QzpSsUEz7KEiAVZmI2UEtgkqCZ+k00I
-	0lEa3IWba6sxxLsebvmgHGSieNmJBAXeXFhvKIY/4ma+TCtBZmdQImZ5Poc69/EO
-	Ktn/TobMlvK4pWZjhs3/8N0ZO3ZV3iFJ/4UQkcHXal02sybMa5UHyMhiGQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 74045893B5;
-	Sat, 19 Dec 2009 14:22:03 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A1EE6893B1; Sat, 19 Dec
- 2009 14:21:59 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C9BAACEC-ECD3-11DE-807E-DC0DEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753168AbZLSTYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Dec 2009 14:24:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752671AbZLSTYU
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 14:24:20 -0500
+Received: from mail-yw0-f182.google.com ([209.85.211.182]:57098 "EHLO
+	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751319AbZLSTYU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Dec 2009 14:24:20 -0500
+Received: by ywh12 with SMTP id 12so4491202ywh.21
+        for <git@vger.kernel.org>; Sat, 19 Dec 2009 11:24:19 -0800 (PST)
+Received: by 10.150.21.20 with SMTP id 20mr8632827ybu.117.1261250658934;
+        Sat, 19 Dec 2009 11:24:18 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 21sm3191288iwn.10.2009.12.19.11.24.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 19 Dec 2009 11:24:17 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <19244.54684.250532.801766@lisa.zopyra.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135498>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+Bill Lear <rael@zopyra.com> wrote:
+> On Saturday, December 19, 2009 at 12:02:02 (+0100) Johannes Schindelin writes:
+> >On Sat, 19 Dec 2009, Shakthi Kannan wrote:
+> >...
+> >> I am able to query for list of remote heads, and tags. I would like to
+> >> know if it is possible to query for information on remote files, or
+> >> blobs?
+> >
+> >This has been discussed a number of times, but we cannot allow that for 
+> >security reasons.  A blob might contain confidential information, in which 
+> >case the branch has to be rewritten and force-pushed.  However, that does 
+> >not make the blob go away, but makes it only unreachable.  Until the next 
+> >garbage collection kicks in, that is (which you typically cannot control).
+> 
+> Hmm, I thought this had been addressed by git in a different way (removing
+> confidential information).  A company will not be satisfied that its
+> proprietary information is "unreachable" in your software repository.
+> They want absolute assurance that the information is completely
+> removed.
+> 
+> Have I remembered wrongly --- is this still not possible with git?
 
-> diff --git a/builtin-config.c b/builtin-config.c
-> index a2d656e..da9ebd4 100644
-> --- a/builtin-config.c
-> +++ b/builtin-config.c
-> @@ -146,7 +146,9 @@ static int get_value(const char *key_, const char *regex_)
->  
->  	local = config_exclusive_filename;
->  	if (!local) {
-> -		const char *home = getenv("HOME");
-> +		const char *home = getenv("GIT_HOME");
-> +		if (!home)
-> +			home = getenv("HOME");
+Its still possible, but you have to wipe out the reflog record(s)
+that had the object in it, and you have to repack to evict it from
+the pack files, and you have to run `git prune --expire=0` to force
+it to wipe out the object immediately.
 
-If you introduce a helper like this:
+We already support dumping back random commits via upload-archive, if
+its enabled in the daemon, and I think a lot of people do turn it on.
+There is no validation that the requested tree-ish is reachable.
 
-	const char *git_custom_home(void)
-        {
-        	const char *val = getenv("GIT_HOME");
-                if (!val)
-                	val = getenv("HOME");
-		return val;
-	}
+I think gitweb winds up doing the same thing, it doesn't actually
+try to validate the object is reachable, it just serves whatever
+it was asked for, if its present in the repository.
 
-then a mechanical s/getenv("GIT_HOME")/gitcustom_home()/; will make the
-resulting code a lot simpler and a new callsite somebody may add in the
-future would not have to duplicate three lines.
 
-But I sense that Moe is retracting his claim that the unmodified git
-doesn't do what he needs to do, after Dscho suggested to use more specific
-environment variables to the task at hand?
+I'm getting some mild suggestions over here at $DAY_JOB to implement
+shallow clones by lazily downloading large blobs on demand.
+We've resisted doing this in git because of the reachability test
+Dscho mentioned above... but many people skip that anyway due
+to gitweb and upload-archive being enabled.  Which is making me
+start to question who is broken... upload-pack for not being more
+willing to serve arbitrary content, or gitweb/upload-archive for
+not validating their requests are reachable.
+
+-- 
+Shawn.
