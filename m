@@ -1,110 +1,87 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Introduce the GIT_HOME environment variable
-Date: Sat, 19 Dec 2009 18:10:41 +0100
-Message-ID: <vpqeimq51pq.fsf@bauges.imag.fr>
+Date: Sat, 19 Dec 2009 11:13:09 -0800
+Message-ID: <7vskb6bwvu.fsf@alter.siamese.dyndns.org>
 References: <4B2C0828.4010505@signalbeam.net>
-	<20091219013246.GD25474@genesis.frugalware.org>
-	<7vhbrnodd9.fsf@alter.siamese.dyndns.org>
-	<4B2C5A1A.8000201@signalbeam.net>
-	<7vzl5fik3o.fsf@alter.siamese.dyndns.org>
-	<20091219153046.GG25474@genesis.frugalware.org>
+ <20091219013246.GD25474@genesis.frugalware.org>
+ <7vhbrnodd9.fsf@alter.siamese.dyndns.org> <4B2C5A1A.8000201@signalbeam.net>
+ <7vzl5fik3o.fsf@alter.siamese.dyndns.org>
+ <20091219153046.GG25474@genesis.frugalware.org>
+ <vpqeimq51pq.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Moe <moe@signalbeam.net>,
+Cc: Miklos Vajna <vmiklos@frugalware.org>, Moe <moe@signalbeam.net>,
 	git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sat Dec 19 18:11:18 2009
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sat Dec 19 20:14:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NM2pp-0005qX-Ep
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 18:11:17 +0100
+	id 1NM4lO-0006Pp-0B
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 20:14:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752401AbZLSRLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Dec 2009 12:11:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752671AbZLSRLM
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 12:11:12 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:51501 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752133AbZLSRLF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Dec 2009 12:11:05 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id nBJHAEXF000907
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 19 Dec 2009 18:10:14 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NM2pG-00077f-6r; Sat, 19 Dec 2009 18:10:42 +0100
-In-Reply-To: <20091219153046.GG25474@genesis.frugalware.org> (Miklos Vajna's message of "Sat\, 19 Dec 2009 16\:30\:46 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 19 Dec 2009 18:10:15 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: nBJHAEXF000907
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1261847419.09746@VX6yX/WxgqS+19NruOP6SQ
+	id S1752176AbZLSTNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Dec 2009 14:13:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751206AbZLSTNY
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 14:13:24 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52685 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752102AbZLSTNX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Dec 2009 14:13:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0F1DAA8EB4;
+	Sat, 19 Dec 2009 14:13:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Xd8BCWplu71tudY62fLgnes+GpY=; b=CqToWk
+	QQ4vV3oYxYE32FzQ0v+2UOWmBxTlDjq0qeH+jGSSgM/YcH7FGxJ2+PsC5qphHjKX
+	5Fv+gULzC9tT8niyBY5kTXgpp095CfjFCyGiVTMzEUCpTq/7GPZZvgBvzWQTyaNJ
+	VZ2o6ciSAdwVowhGaTIDIIzhsdN1sPF2E5PVM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dXSpjLEe9rlKBAk1gBPPksBAdSU5Rr2S
+	TkrA4uMzzZ9yyWJZFYzlDXAIxzKAyHXql1vCOOWADDyzgY/PsLFFr0ftmA/3zHK9
+	vaFJc27nS0v7GK6ZtLHpQw0fJFQSG952Ce1MT1h8Cjpy5XzMpGJIhqysnQq19bvD
+	A7FG+bu50WI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BEB63A8EB3;
+	Sat, 19 Dec 2009 14:13:16 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6830DA8EB2; Sat, 19 Dec 2009
+ 14:13:11 -0500 (EST)
+In-Reply-To: <vpqeimq51pq.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Sat\, 19 Dec 2009 18\:10\:41 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8FC7C9B2-ECD2-11DE-868A-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135496>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Honor $GIT_HOME that is favoured over $HOME,
+> http://standards.freedesktop.org/basedir-spec/basedir-spec-0.6.html
+>
+> It solves the same problem ("set on environment variable, and change
+> my whole Git config"), but
+>
+> * It's a standard. It's really nice to be able to ...
+> * It avoids hidden files. With $GIT_CONFIG, a user doing
 
-I'd personally prefer obeying $XDG_CONFIG_HOME, and read
-$XDG_CONFIG_HOME/git/config (defaulting to $HOME/.config/git/config)
-or something like this :
+I think the above are actually three bullet points (i.e. you lack line
+break and bullet before "It's really nice").  And the third bullet is more
+or less a small subset of the second one, since you need "ls -a" without
+making them non-dot,  And I personally don't care very much about that
+second "It's really nice to be able to" point.
 
-http://standards.freedesktop.org/basedir-spec/basedir-spec-0.6.html
-
-It solves the same problem ("set on environment variable, and change
-my whole Git config"), but
-
-* It's a standard. It's really nice to be able to
-
-cd ~/.config
-ls
-
-to see a user's configuration for many applications at a time, and
-
-cd ~/.config
-git init
-
-to version-control it.
-
-* It avoids hidden files. With $GIT_CONFIG, a user doing
-
-cd $GIT_HOME
-ls
-
-sees nothing. I understand why $HOME/something config files are
-hidden, but a config file stored in a separate directory shouldn't be
-hidden (just like $GIT_DIR/config is not hidden).
-
-> -		const char *home = getenv("HOME");
-> +		const char *home = getenv("GIT_HOME");
-> +		if (!home)
-> +			home = getenv("HOME");
-
-If you go this way, why not define
-
-const char *getenv_home()
-{
-	const char *home = getenv("GIT_HOME");
-	if (!home)
-		home = getenv("HOME");
-	return home;
-}
-
-?
-
-(probably in git-compat-util.h)
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+As to the particular "standard" cited, I don't know how relevant it is to
+us at this moment, or in this topic.  Judging from the fact that it
+doesn't even define the scope of the standard (e.g. what classes of
+applications are expected to follow it, for what benefit do they follow
+it, how are they expected to handle differences between their historical
+practice and the new world order it introduces, etc. etc....), I suspect
+it is a very early draft that will be heavily copyedited before final,
+once professional standard writers start looking at it.
