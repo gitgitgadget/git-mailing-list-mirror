@@ -1,67 +1,79 @@
-From: Shakthi Kannan <shakthimaan@gmail.com>
-Subject: Query remote repository files, blobs
-Date: Sat, 19 Dec 2009 13:15:55 +0530
-Message-ID: <d16b1c80912182345h4163430bv810adb860575d67a@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCHv2] am: fix patch format detection for Thunderbird "Save As" emails
+Date: Sat, 19 Dec 2009 11:26:47 +0100
+Message-ID: <m2y6kzi7iw.fsf@igel.home>
+References: <7vtyvpcf36.fsf@alter.siamese.dyndns.org>
+	<1261172078-9174-1-git-send-email-bebarino@gmail.com>
+	<loom.20091218T223918-175@post.gmane.org>
+	<1261173577.14059.5.camel@swboyd-laptop>
+	<loom.20091218T234129-280@post.gmane.org> <4B2C395A.6080300@gmail.com>
+	<4B2C66D3.1070508@byu.net> <4B2C70ED.1020602@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 19 08:46:33 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Blake <ebb9@byu.net>, git@vger.kernel.org
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 19 11:27:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLu1I-0001R8-Rw
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 08:46:33 +0100
+	id 1NLwWX-0000Sp-BJ
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 11:26:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751989AbZLSHp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Dec 2009 02:45:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751982AbZLSHp5
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 02:45:57 -0500
-Received: from mail-yw0-f182.google.com ([209.85.211.182]:63496 "EHLO
-	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751602AbZLSHp4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Dec 2009 02:45:56 -0500
-Received: by ywh12 with SMTP id 12so4177611ywh.21
-        for <git@vger.kernel.org>; Fri, 18 Dec 2009 23:45:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=9mrG1aUQmdSwbQ5wDPhvNTiT9f+qc06fQ3i/o91If4o=;
-        b=CKIU3Mu89qC48EeYR7jSvlZaRNyjQOMvzF5m4wS93yvFUVuz+mTAYfagFA7dN9NEVJ
-         vXBkrKzGwUolSvv3QLFksEg9w13AO1CcUaUBifKboDl6PLUSkiw14WPUHpU9djrgG87O
-         fySNKCAvbRGS1h5bg28zipAeDcEXoh2RKRTQ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=Q1weAdog/ADmYg4U8ihrMQLyQhpocqtsqDYFg6vJr7Ztha/3PzlxSzJkUYYZYbgAOo
-         7mjYrHCJEjFLi0+gbt2rACNF0jcCtRXollX89uk5FJB9netJsIU2fzEU8QG0dkiMaR/V
-         ldJLRkaNOarv1JiiRANiWTTNCsx5MKRBwYehg=
-Received: by 10.90.150.17 with SMTP id x17mr5200087agd.57.1261208755295; Fri, 
-	18 Dec 2009 23:45:55 -0800 (PST)
+	id S1751433AbZLSK0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Dec 2009 05:26:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751319AbZLSK0x
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 05:26:53 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:45776 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750760AbZLSK0v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Dec 2009 05:26:51 -0500
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id 0721E1C15C3C;
+	Sat, 19 Dec 2009 11:26:49 +0100 (CET)
+Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
+	by mail.m-online.net (Postfix) with ESMTP id 0560F9048A;
+	Sat, 19 Dec 2009 11:26:49 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
+	with ESMTP id yIz3AP1Mzdlv; Sat, 19 Dec 2009 11:26:47 +0100 (CET)
+Received: from igel.home (DSL01.83.171.167.154.ip-pool.NEFkom.net [83.171.167.154])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Sat, 19 Dec 2009 11:26:47 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 9EBDFCA28C; Sat, 19 Dec 2009 11:26:47 +0100 (CET)
+X-Yow: Hmmm...  a PINHEAD, during an EARTHQUAKE, encounters an ALL-MIDGET FIDDLE
+ ORCHESTRA...  ha..  ha..
+In-Reply-To: <4B2C70ED.1020602@gmail.com> (Stephen Boyd's message of "Fri, 18
+	Dec 2009 22:21:33 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.90 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135470>
 
-Hi,
+Stephen Boyd <bebarino@gmail.com> writes:
 
->From git-ls-remote:
-http://www.kernel.org/pub/software/scm/git/docs/git-ls-remote.html
+> On 12/18/2009 09:38 PM, Eric Blake wrote:
+>> Closer, but not there yet.  "$/" is still not defined.  Then, as a matter
+>> of style, '\' is more readable than "\\" for representing a backslash.  So
+>> as long as we are shifting to '', we might as well do it everywhere in
+>> that line - write it like this:
+>>
+>> } | sed -e 's/$/;/' | tr ';' '\015'>  patch1-crlf.eml
+>>
+>> and you should be set.
+>
+> Ah, I think you missed that this stuff is inside single quotes already. I
+> would love to just do what you suggest here.
 
-I am able to query for list of remote heads, and tags. I would like to
-know if it is possible to query for information on remote files, or
-blobs? Sometimes, I am on a slow Internet connection, and I just want
-to be able to see the remote file diffs, or new file, branch
-additions, or changes without having to clone the repository.
+You can replace every use of ' by '\''.
 
-Appreciate any inputs on this regard,
-
-Thanks!
-
-SK
+Andreas.
 
 -- 
-Shakthi Kannan
-http://www.shakthimaan.com
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
