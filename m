@@ -1,89 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] rebase -i: abort cleanly if the editor fails to launch
-Date: Sat, 19 Dec 2009 21:57:16 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0912192156030.4985@pacific.mpi-cbg.de>
-References: <4B2CC133.9010704@gmail.com> <7v8wcy7kyc.fsf@alter.siamese.dyndns.org>
+From: Andrew Myrick <amyrick@gmail.com>
+Subject: Re: Efficiency and correctness patches for git-svn mergeinfo support
+Date: Sat, 19 Dec 2009 14:15:56 -0800
+Message-ID: <6b2f9b1d0912191415n560a5a58xbe6390b1fcade854@mail.gmail.com>
+References: <1261240435-8948-1-git-send-email-sam@vilain.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1808364961-1261256236=:4985"
-Cc: =?ISO-8859-15?Q?Bj=F6rn_Gustavsson?= <bgustavsson@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 19 21:56:13 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Sat Dec 19 23:18:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NM6Hy-0007BB-OP
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 21:52:35 +0100
+	id 1NM7d7-0008Em-9j
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 23:18:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753467AbZLSUw3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Dec 2009 15:52:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753313AbZLSUw3
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 15:52:29 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57026 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752775AbZLSUw2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Dec 2009 15:52:28 -0500
-Received: (qmail invoked by alias); 19 Dec 2009 20:52:27 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp054) with SMTP; 19 Dec 2009 21:52:27 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18zYexFpmQzVQI1/TgTkRQHOpcGt3X1HHjy3pF/iB
-	126f++DEXwPK3s
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7v8wcy7kyc.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1753557AbZLSWQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Dec 2009 17:16:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753472AbZLSWQR
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 17:16:17 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:51063 "EHLO
+	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753445AbZLSWQQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Dec 2009 17:16:16 -0500
+Received: by iwn1 with SMTP id 1so2929837iwn.33
+        for <git@vger.kernel.org>; Sat, 19 Dec 2009 14:16:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=h03AGnvDKusPCQZAYO1kFwpwTtwGAv6VmEHaBXAYOBQ=;
+        b=YkwI+R0Ew8SSVDyNPxU4yfz380z+VtIOEq0saiKO12y8H6/0ScQQo0UzgFYcPSjpuf
+         6NBrkZq7btWM4EGgqzYaSSjryqbC8J8a07xRJBN1ygTRvVVSBkop3r4dRCfGDr3cF7DI
+         2E2XuJV9+X0Fgu8eb7m86UQ9i8ji5CBdZonkI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=hZs1BalgRIbv3fjt618JsA/AqNFkuobVy+II7Bsy57WFTkjVlePb4Lagq8hM/aBxP4
+         XYzyz0YOLXv3sud+DoZUjveAfodKcjuy1z4MgHtnHT4KExbn1fN6WU2ZDn4RUe0xb6j7
+         aHerQxUvQVXHROgKsYUIaJD381uWggt8H8Tcc=
+Received: by 10.231.125.100 with SMTP id x36mr3265950ibr.52.1261260976070; 
+	Sat, 19 Dec 2009 14:16:16 -0800 (PST)
+In-Reply-To: <1261240435-8948-1-git-send-email-sam@vilain.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135503>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+> It would be nice if the people who have experienced slow git-svn
+> performance in these situations could test that this fixes the
+> performance issues, and that the resulting repositories seem to have
+> correct contents.
 
---8323328-1808364961-1261256236=:4985
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+I tried cloning from a fairly recent revision that I knew was after
+our switchover to svn 1.5, and I received a number of these errors:
 
-Hi,
+   Couldn't find revmap for [branch]
+   Exiting subroutine via next at /Users/adm/libexec/git-core/git-svn line 2983.
+   Exiting subroutine via next at /Users/adm/libexec/git-core/git-svn line 2983.
+   Exiting subroutine via next at /Users/adm/libexec/git-core/git-svn line 2983.
 
-On Sat, 19 Dec 2009, Junio C Hamano wrote:
+I'm not sure if this is expected, since I didn't clone from the whole
+repo, but it did cause a lot of spew.  I'm starting a fresh clone now,
+but it takes a few days to get through the whole repository.  I'm
+fairly new to git, so I would welcome any tips on how I can test this
+more quickly.
 
-> Björn Gustavsson <bgustavsson@gmail.com> writes:
-> 
-> > If the user's configured editor is emacsclient, the editor
-> > will fail to launch if emacs is not running and the git
-> > command that tried to lanuch the editor will abort. For most
-> > commands, all you have to do is to start emacs and repeat
-> > the command.
-> >
-> > The "git rebase -i" command, however, aborts without cleaning
-> > the "$GIT_DIR/rebase-merge" directory if it fails to launch the
-> > editor, so you'll need to do "git rebase --abort" before
-> > repeating the rebase command.
-> >
-> > Change "git rebase -i" to terminate using "die_abort" (instead of
-> > with "die") if the initial launch of the editor fails.
-> >
-> > Signed-off-by: Björn Gustavsson <bgustavsson@gmail.com>
-> 
-> Two questions:
-> 
->  - Is emacsclient the _only_ editor that can exit with non-zero status to
->    signal an error condition "the user invoked me to edit an existing
->    file, but I ended up not letting the user edit it"?
-
-The non-existent editor also aborts with a non-zero status.
-
-> An editor that can exit with non-zero status on demand could use this
-> codepath to abort the rebase,
-
-Removing all lines of the edit script will abort an interactive rebase.
-
-Ciao,
-Dscho
-
---8323328-1808364961-1261256236=:4985--
+-Andrew
