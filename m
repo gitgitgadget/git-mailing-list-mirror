@@ -1,65 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Query remote repository files, blobs
-Date: Sat, 19 Dec 2009 12:02:02 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0912191159280.4985@pacific.mpi-cbg.de>
-References: <d16b1c80912182345h4163430bv810adb860575d67a@mail.gmail.com>
+From: Moe <moe@signalbeam.net>
+Subject: Re: [PATCH] Introduce the GIT_CONFIG_EXTRA environment variable
+Date: Sat, 19 Dec 2009 12:38:59 +0100
+Message-ID: <4B2CBB53.5000804@signalbeam.net>
+References: <4B2C0828.4010505@signalbeam.net> <20091219013246.GD25474@genesis.frugalware.org> <7vhbrnodd9.fsf@alter.siamese.dyndns.org> <4B2C5A1A.8000201@signalbeam.net> <7vzl5fik3o.fsf@alter.siamese.dyndns.org> <4B2C7EC3.6070501@signalbeam.net> <alpine.DEB.1.00.0912191150450.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Shakthi Kannan <shakthimaan@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 19 12:01:49 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Dec 19 12:39:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLx4H-0001tA-2I
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 12:01:49 +0100
+	id 1NLxeT-00040l-R0
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 12:39:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750859AbZLSK5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Dec 2009 05:57:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750825AbZLSK5Q
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 05:57:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49291 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750800AbZLSK5P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Dec 2009 05:57:15 -0500
-Received: (qmail invoked by alias); 19 Dec 2009 10:57:13 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp065) with SMTP; 19 Dec 2009 11:57:13 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/jv1oRvEnjz+DreARj12LdZi7NrgQB2+ft7rJHpe
-	5Fp3hE05QKhHsW
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <d16b1c80912182345h4163430bv810adb860575d67a@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1751268AbZLSLjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Dec 2009 06:39:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751193AbZLSLjG
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 06:39:06 -0500
+Received: from s2.mbox.bz ([85.214.91.204]:42566 "EHLO s2.mbox.bz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751178AbZLSLjE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Dec 2009 06:39:04 -0500
+Received: from mini.local (unknown [92.206.21.223])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by s2.mbox.bz (Postfix) with ESMTPSA id BFCEBE04B6C;
+	Sat, 19 Dec 2009 12:39:00 +0100 (CET)
+User-Agent: Postbox 1.1.0 (Macintosh/20091201)
+In-Reply-To: <alpine.DEB.1.00.0912191150450.4985@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135474>
 
-Hi,
-
-On Sat, 19 Dec 2009, Shakthi Kannan wrote:
-
+Johannes Schindelin wrote:
 > Hi,
 > 
-> >From git-ls-remote:
-> http://www.kernel.org/pub/software/scm/git/docs/git-ls-remote.html
+> On Sat, 19 Dec 2009, Moe wrote:
 > 
-> I am able to query for list of remote heads, and tags. I would like to
-> know if it is possible to query for information on remote files, or
-> blobs?
+>> What we do is, we put our entire runtime environment [for a web 
+>> application] under a dedicated user and under version control. This is a 
+>> very comfortable way to maintain an identical environment across the 
+>> board, we even deploy this way to our production servers by the means of 
+>> a git pull on a dedicated branch.
+> 
+> Just ignoring the fact that you version control a version controlled 
+> directory (including the repository), which is inefficient, and even 
+> further ignoring the fact that you open the door for concurrent -- 
+> incompatible -- modifications, if all you want to do is:
 
-This has been discussed a number of times, but we cannot allow that for 
-security reasons.  A blob might contain confidential information, in which 
-case the branch has to be rewritten and force-pushed.  However, that does 
-not make the blob go away, but makes it only unreachable.  Until the next 
-garbage collection kicks in, that is (which you typically cannot control).
+Neither is true.
 
-So: sorry, your feature request cannot be granted.
+>> In practice our developers will su or ssh to this user to get working 
+>> and generally they need only a very small set of divertions from the 
+>> common configuration - such as their personal git identity and their 
+>> preferred editor settings.
+> 
+> ... then I suggest reading up on GIT_EDITOR, GIT_AUTHOR_IDENT and 
+> GIT_COMMITTER_IDENT, and leaving the $HOME/.gitconfig alone.
 
-Ciao,
-Dscho
+Thanks, that solved my problem.
+Seems I started by asking the wrong question.
