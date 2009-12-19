@@ -1,79 +1,68 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCHv2] am: fix patch format detection for Thunderbird "Save As" emails
-Date: Sat, 19 Dec 2009 11:26:47 +0100
-Message-ID: <m2y6kzi7iw.fsf@igel.home>
-References: <7vtyvpcf36.fsf@alter.siamese.dyndns.org>
-	<1261172078-9174-1-git-send-email-bebarino@gmail.com>
-	<loom.20091218T223918-175@post.gmane.org>
-	<1261173577.14059.5.camel@swboyd-laptop>
-	<loom.20091218T234129-280@post.gmane.org> <4B2C395A.6080300@gmail.com>
-	<4B2C66D3.1070508@byu.net> <4B2C70ED.1020602@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Introduce the GIT_CONFIG_EXTRA environment variable
+Date: Sat, 19 Dec 2009 11:54:07 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0912191150450.4985@pacific.mpi-cbg.de>
+References: <4B2C0828.4010505@signalbeam.net> <20091219013246.GD25474@genesis.frugalware.org> <7vhbrnodd9.fsf@alter.siamese.dyndns.org> <4B2C5A1A.8000201@signalbeam.net> <7vzl5fik3o.fsf@alter.siamese.dyndns.org> <4B2C7EC3.6070501@signalbeam.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Blake <ebb9@byu.net>, git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 19 11:27:00 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Moe <moe@signalbeam.net>
+X-From: git-owner@vger.kernel.org Sat Dec 19 11:49:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLwWX-0000Sp-BJ
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 11:26:57 +0100
+	id 1NLwsQ-0006mI-3K
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 11:49:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751433AbZLSK0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Dec 2009 05:26:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751319AbZLSK0x
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 05:26:53 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:45776 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750760AbZLSK0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Dec 2009 05:26:51 -0500
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id 0721E1C15C3C;
-	Sat, 19 Dec 2009 11:26:49 +0100 (CET)
-Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
-	by mail.m-online.net (Postfix) with ESMTP id 0560F9048A;
-	Sat, 19 Dec 2009 11:26:49 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
-	with ESMTP id yIz3AP1Mzdlv; Sat, 19 Dec 2009 11:26:47 +0100 (CET)
-Received: from igel.home (DSL01.83.171.167.154.ip-pool.NEFkom.net [83.171.167.154])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Sat, 19 Dec 2009 11:26:47 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 9EBDFCA28C; Sat, 19 Dec 2009 11:26:47 +0100 (CET)
-X-Yow: Hmmm...  a PINHEAD, during an EARTHQUAKE, encounters an ALL-MIDGET FIDDLE
- ORCHESTRA...  ha..  ha..
-In-Reply-To: <4B2C70ED.1020602@gmail.com> (Stephen Boyd's message of "Fri, 18
-	Dec 2009 22:21:33 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.90 (gnu/linux)
+	id S1751559AbZLSKtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Dec 2009 05:49:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751506AbZLSKtY
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 05:49:24 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39567 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751502AbZLSKtW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Dec 2009 05:49:22 -0500
+Received: (qmail invoked by alias); 19 Dec 2009 10:49:20 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp011) with SMTP; 19 Dec 2009 11:49:20 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+RA+EaT5+RZyZAgESBWRZbETT7y2Xq6C5jy0WGbj
+	w8Mc2QD22Z7NOA
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <4B2C7EC3.6070501@signalbeam.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135471>
 
-Stephen Boyd <bebarino@gmail.com> writes:
+Hi,
 
-> On 12/18/2009 09:38 PM, Eric Blake wrote:
->> Closer, but not there yet.  "$/" is still not defined.  Then, as a matter
->> of style, '\' is more readable than "\\" for representing a backslash.  So
->> as long as we are shifting to '', we might as well do it everywhere in
->> that line - write it like this:
->>
->> } | sed -e 's/$/;/' | tr ';' '\015'>  patch1-crlf.eml
->>
->> and you should be set.
->
-> Ah, I think you missed that this stuff is inside single quotes already. I
-> would love to just do what you suggest here.
+On Sat, 19 Dec 2009, Moe wrote:
 
-You can replace every use of ' by '\''.
+> What we do is, we put our entire runtime environment [for a web 
+> application] under a dedicated user and under version control. This is a 
+> very comfortable way to maintain an identical environment across the 
+> board, we even deploy this way to our production servers by the means of 
+> a git pull on a dedicated branch.
 
-Andreas.
+Just ignoring the fact that you version control a version controlled 
+directory (including the repository), which is inefficient, and even 
+further ignoring the fact that you open the door for concurrent -- 
+incompatible -- modifications, if all you want to do is:
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+> In practice our developers will su or ssh to this user to get working 
+> and generally they need only a very small set of divertions from the 
+> common configuration - such as their personal git identity and their 
+> preferred editor settings.
+
+... then I suggest reading up on GIT_EDITOR, GIT_AUTHOR_IDENT and 
+GIT_COMMITTER_IDENT, and leaving the $HOME/.gitconfig alone.
+
+Ciao,
+Dscho
