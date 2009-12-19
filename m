@@ -1,71 +1,44 @@
-From: Andrew Myrick <amyrick@gmail.com>
-Subject: Re: Efficiency and correctness patches for git-svn mergeinfo support
-Date: Sat, 19 Dec 2009 14:15:56 -0800
-Message-ID: <6b2f9b1d0912191415n560a5a58xbe6390b1fcade854@mail.gmail.com>
-References: <1261240435-8948-1-git-send-email-sam@vilain.net>
-Mime-Version: 1.0
+From: Alex Vandiver <alex@chmrr.net>
+Subject: Re: [spf:guess] Re: [PATCH 2/5] git-svn: Make merge metadata accessible to make_log_entry
+Date: Sat, 19 Dec 2009 17:24:07 -0500
+Message-ID: <1261261405-sup-6506@utwig>
+References: <1259780874-14706-1-git-send-email-alex@chmrr.net> <1259780874-14706-3-git-send-email-alex@chmrr.net> <1259786690-sup-8337@utwig> <20091205223241.GB2120@dcvr.yhbt.net> <1260052934-sup-9563@utwig> <1260053972.22680.5.camel@denix>
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+Content-Transfer-Encoding: 8bit
+Cc: Eric Wong <normalperson@yhbt.net>, git <git@vger.kernel.org>
 To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Sat Dec 19 23:18:29 2009
+X-From: git-owner@vger.kernel.org Sat Dec 19 23:24:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NM7d7-0008Em-9j
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 23:18:29 +0100
+	id 1NM7ii-0001fS-N1
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 23:24:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753557AbZLSWQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Dec 2009 17:16:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753472AbZLSWQR
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 17:16:17 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:51063 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753445AbZLSWQQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Dec 2009 17:16:16 -0500
-Received: by iwn1 with SMTP id 1so2929837iwn.33
-        for <git@vger.kernel.org>; Sat, 19 Dec 2009 14:16:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=h03AGnvDKusPCQZAYO1kFwpwTtwGAv6VmEHaBXAYOBQ=;
-        b=YkwI+R0Ew8SSVDyNPxU4yfz380z+VtIOEq0saiKO12y8H6/0ScQQo0UzgFYcPSjpuf
-         6NBrkZq7btWM4EGgqzYaSSjryqbC8J8a07xRJBN1ygTRvVVSBkop3r4dRCfGDr3cF7DI
-         2E2XuJV9+X0Fgu8eb7m86UQ9i8ji5CBdZonkI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=hZs1BalgRIbv3fjt618JsA/AqNFkuobVy+II7Bsy57WFTkjVlePb4Lagq8hM/aBxP4
-         XYzyz0YOLXv3sud+DoZUjveAfodKcjuy1z4MgHtnHT4KExbn1fN6WU2ZDn4RUe0xb6j7
-         aHerQxUvQVXHROgKsYUIaJD381uWggt8H8Tcc=
-Received: by 10.231.125.100 with SMTP id x36mr3265950ibr.52.1261260976070; 
-	Sat, 19 Dec 2009 14:16:16 -0800 (PST)
-In-Reply-To: <1261240435-8948-1-git-send-email-sam@vilain.net>
+	id S1753940AbZLSWYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Dec 2009 17:24:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753902AbZLSWYK
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 17:24:10 -0500
+Received: from chmrr.net ([209.67.253.66]:41518 "EHLO utwig.chmrr.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753897AbZLSWYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Dec 2009 17:24:09 -0500
+Received: from chmrr by utwig.chmrr.net with local (Exim 4.69)
+	(envelope-from <chmrr@chmrr.net>)
+	id 1NM7iZ-0000uD-Ux; Sat, 19 Dec 2009 17:24:07 -0500
+In-reply-to: <1260053972.22680.5.camel@denix>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135504>
 
-> It would be nice if the people who have experienced slow git-svn
-> performance in these situations could test that this fixes the
-> performance issues, and that the resulting repositories seem to have
-> correct contents.
+At Sat Dec 05 17:59:32 -0500 2009, Sam Vilain wrote:
+> Hi, I've just seen the series, looks like a good idea.  Just a couple of
+> questions then I'll review the code;
 
-I tried cloning from a fairly recent revision that I knew was after
-our switchover to svn 1.5, and I received a number of these errors:
-
-   Couldn't find revmap for [branch]
-   Exiting subroutine via next at /Users/adm/libexec/git-core/git-svn line 2983.
-   Exiting subroutine via next at /Users/adm/libexec/git-core/git-svn line 2983.
-   Exiting subroutine via next at /Users/adm/libexec/git-core/git-svn line 2983.
-
-I'm not sure if this is expected, since I didn't clone from the whole
-repo, but it did cause a lot of spew.  I'm starting a fresh clone now,
-but it takes a few days to get through the whole repository.  I'm
-fairly new to git, so I would welcome any tips on how I can test this
-more quickly.
-
--Andrew
+Have you had time to take a look at these?
+ - Alex
+-- 
+Networking -- only one letter away from not working
