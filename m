@@ -1,68 +1,112 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH 2/2] read-tree: at least one tree-ish argument is required
-Date: Sat, 19 Dec 2009 12:25:09 +0900
-Message-ID: <20091219122509.6117@nanako3.lavabit.com>
-References: <4B274BDE.8000504@viscovery.net> <fabb9a1e0912181137t1265f86cs9e02019da136a0a@mail.gmail.com> <7veimsvz8a.fsf@alter.siamese.dyndns.org> <200912182304.27656.j.sixt@viscovery.net> <m3d42cc4i8.fsf@localhost.localdomain> <7vr5qrsv4g.fsf@alter.siamese.dyndns.org>
+From: Moe <moe@signalbeam.net>
+Subject: Re: [PATCH] Introduce the GIT_CONFIG_EXTRA environment variable
+Date: Sat, 19 Dec 2009 05:44:10 +0100
+Message-ID: <4B2C5A1A.8000201@signalbeam.net>
+References: <4B2C0828.4010505@signalbeam.net> <20091219013246.GD25474@genesis.frugalware.org> <7vhbrnodd9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 19 04:29:14 2009
+X-From: git-owner@vger.kernel.org Sat Dec 19 05:44:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NLq0G-0003uf-CX
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 04:29:12 +0100
+	id 1NLrAw-00049E-EW
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 05:44:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754846AbZLSD3G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2009 22:29:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754111AbZLSD3F
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 22:29:05 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:35128 "EHLO karen.lavabit.com"
+	id S1756144AbZLSEoO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2009 23:44:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755230AbZLSEoO
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Dec 2009 23:44:14 -0500
+Received: from s2.mbox.bz ([85.214.91.204]:52508 "EHLO s2.mbox.bz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753783AbZLSD3E (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2009 22:29:04 -0500
-Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
-	by karen.lavabit.com (Postfix) with ESMTP id D7842157552;
-	Fri, 18 Dec 2009 21:28:59 -0600 (CST)
-Received: from 1890.lavabit.com (212.62.97.23)
-	by lavabit.com with ESMTP id R8CB4833TQYJ; Fri, 18 Dec 2009 21:28:59 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=GnAL9tpTP2Sa64pgQK3ZqemRb/Xo4N9vGq6rqJFnb0oz9++sDb0JeWp+udQ7V286jVK0DHDVd36rz3hxop/YLpUp67xrWTv+lq4dv5ZeMMkCpiq0pnm5/gi78dj5DxUzv/AjEim8pkUTXeuRPMiR21vidDjhyp4vbzMUwFg/vdE=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <7vr5qrsv4g.fsf@alter.siamese.dyndns.org>
+	id S1756138AbZLSEoM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2009 23:44:12 -0500
+Received: from mini.local (unknown [92.206.21.223])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by s2.mbox.bz (Postfix) with ESMTPSA id 12CA1E04B6C;
+	Sat, 19 Dec 2009 05:44:11 +0100 (CET)
+User-Agent: Postbox 1.1.0 (Macintosh/20091201)
+In-Reply-To: <7vhbrnodd9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135460>
 
-Quoting Junio C Hamano <gitster@pobox.com>
+Junio C Hamano wrote:
+> Miklos Vajna <vmiklos@frugalware.org> writes:
+> 
+>> This is like GIT_CONFIG but it is not read instead of .git/config, but
+>> in addtition to it.
+>>
+>> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+>> ---
+>>
+>> On Fri, Dec 18, 2009 at 11:54:32PM +0100, Moe <moe@signalbeam.net> wrote:
+>>> $GIT_CONFIG doesn't work for this purpose because when set
+>>> git will *only* read the referenced file and ignore the
+>>> repository settings.
+>> What about this?
+> 
+> 
+> The patch text itself may be fine, in the sense that it makes "we read
+> from three" to "we now read from four", but I am not impressed.
+> 
+> I find the original use case highly moronic.
+>
+> For people to be sharing an account, hence $HOME, there must be a reason.
+> They want to (rather, the administrator wants them to) use a common shared
+> set of settings, so $HOME/.gitconfig should be shared among them, just
+> like $HOME/.emacs and $HOME/.login are, unless there is some strong reason
+> to treat .gitconfig any differently from all the other $HOME/.whatever
+> files.  But I don't think there wasn't any argument to defend that.
 
-> Come back with a proof that there has never existed any script that uses
-> "read-tree" without arguments to purge the index, and I'd immediately
-> accept and apply the patch to retroactively forbid what the implementation
-> has allowed users to do for a long time.
+I'm not arguing to treat .gitconfig differently from other
+dot-files, but to treat it differently from .git/config.
 
-For what it's worth, I compiled the very first version of git
+The former is user-specific, the latter is repository-specific.
 
- commit e83c5163316f89bfbde7d9ab23ca2e25604af290
- Author: Linus Torvalds <torvalds@ppc970.osdl.org>
- Date:   Thu Apr 7 15:13:13 2005 -0700
+For a contrived analogy: Imagine apache would ignore the contents
+of .htaccess files when you start httpd with the "-f" switch to
+load a different configuration file.
 
-     Initial revision of "git", the information manager from hell
+> That makes the patch doubly suspect and throws it into "because we can",
+> not "because we should".
+> 
+> Wouldn't it be just a matter of giving different HOME after they log-in?
+> 
+> After all, Moe will be giving _some_ way to his users set different value
+> to GIT_CONFIG_EXTRA depending on who they really are, and that same
+> mechanism should be usable to set different HOME to them, no?
 
-and its read-tree fails with 
+The individual users are identified by their ssh key. Ssh sets a
+distinct environment variable for each, which in turn is used in
+.bash_profile to read an additional user-profile.
 
-  read-tree: read-tree <key>
+Yes, we could overwrite $HOME but that would defeat the purpose.
 
-Is it a proof enough?
+The goal of this setup is to share almost all settings.
+Overwriting $HOME would turn this upside down. Instead of diverting
+the two bits that we want to customize (git identity and editor
+preferences) we would then have to duplicate all other dot-files
+for each virtual user - and probably watch out for unforeseen side-effects.
+
+> As $HOME/.gitconfig is relative to the value of that environment variable,
+> I don't see a reason for us to fall into this "three is not enough, but
+> when we add another, we are fine" attitude, which makes me suspect that
+> there is something fundamentally wrong there.
+
+I understand the sentiment.
+
+Without drifting into a discussion about the merit of shared
+unix-accounts (they do make a lot of sense in some scenarios)
+I hope this can still make it, considering the small size of
+the patch and the .git/config vs ~/.gitconfig argument.
+
 
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Kind regards, Moe
