@@ -1,81 +1,71 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
 Subject: Re: [PATCH] Introduce the GIT_CONFIG_EXTRA environment variable
-Date: Sat, 19 Dec 2009 15:25:59 +0100
-Message-ID: <20091219142559.GF25474@genesis.frugalware.org>
-References: <4B2C0828.4010505@signalbeam.net>
- <20091219013246.GD25474@genesis.frugalware.org>
- <20091219020947.GB10687@spearce.org>
+Date: Sat, 19 Dec 2009 23:45:01 +0900
+Message-ID: <20091219234501.6117@nanako3.lavabit.com>
+References: <4B2C0828.4010505@signalbeam.net> <20091219013246.GD25474@genesis.frugalware.org> <7vhbrnodd9.fsf@alter.siamese.dyndns.org> <4B2C5A1A.8000201@signalbeam.net> <7vzl5fik3o.fsf@alter.siamese.dyndns.org> <4B2C7EC3.6070501@signalbeam.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="6eUvXotnMb6+obQB"
-Cc: Junio C Hamano <gitster@pobox.com>, Moe <moe@signalbeam.net>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Dec 19 15:26:29 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Moe <moe@signalbeam.net>
+X-From: git-owner@vger.kernel.org Sat Dec 19 15:46:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NM0GL-0002Tv-4Y
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 15:26:29 +0100
+	id 1NM0ZD-0000Zy-ST
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Dec 2009 15:46:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752391AbZLSO0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Dec 2009 09:26:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752534AbZLSO0I
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 09:26:08 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:35648 "EHLO virgo.iok.hu"
+	id S1752616AbZLSOpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Dec 2009 09:45:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752367AbZLSOpe
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 09:45:34 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:46737 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752489AbZLSO0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Dec 2009 09:26:05 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id AB2C858094;
-	Sat, 19 Dec 2009 15:25:59 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 5A2BE44965;
-	Sat, 19 Dec 2009 15:25:59 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 552E41240014; Sat, 19 Dec 2009 15:25:59 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20091219020947.GB10687@spearce.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752608AbZLSOpc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Dec 2009 09:45:32 -0500
+Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
+	by karen.lavabit.com (Postfix) with ESMTP id F19C911B730;
+	Sat, 19 Dec 2009 08:45:31 -0600 (CST)
+Received: from 5981.lavabit.com (212.62.97.23)
+	by lavabit.com with ESMTP id T30LPTP9UEYT; Sat, 19 Dec 2009 08:45:31 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=QK1hPzslDKSJwck5X78N2xvgr7u0caK+l81yhcLQjaE9A0nUz/SAGN++Kbv0HE1wSMQfImxVSyBaoEetkA74w5aZX6m7szQbHsZfwqkZxYnv62oHLc2Svum0p6oYeD+y57ZfQRcRkqEZPsa5iRFjsmdU3ae6H0IXy2FiqGE0y6Q=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <4B2C7EC3.6070501@signalbeam.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135483>
 
+Quoting Moe <moe@signalbeam.net>
 
---6eUvXotnMb6+obQB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> In practice our developers will su or ssh to this user to get working
+> and generally they need only a very small set of divertions from the
+> common configuration - such as their personal git identity and their
+> preferred editor settings.
 
-On Fri, Dec 18, 2009 at 06:09:47PM -0800, "Shawn O. Pearce" <spearce@spearce.org> wrote:
-> What file does `git config --add` modify?  Should we be able to
-> modify the GIT_CONFIG_EXTRA file?
+Do "preferred editor settings" mean $HOME/.vim that was one of 
+Junio's examples? How do you handle it?
 
-git config --add will still write .git/config (or $GIT_CONFIG) as
-before. At the moment there is no way to modify a GIT_CONFIG_EXTRA file
-using git-config.
+It sounds like you are only interested in user.name and 
+user.email, and you don't need to override $HOME/.gitconfig as 
+a whole.  Because you already have a section in $HOME/.bashrc 
+that does different things based on the user's SSH key, you 
+may want to set variables GIT_AUTHOR_NAME and GIT_AUTHOR_EMAIL 
+in there without doing anything else if that is the case.
 
-> What order is GIT_CONFIG_EXTRA applied in relative to other files
-> that git config would also have read?
+> One may argue that a bunch of host-specific symlinks could achieve a
+> similar effect - and that would be correct - but having literally
+> everything under version control yields certain advantages that we
+> wouldn't want to miss.
 
-The config file from GIT_CONFIG_EXTRA is the last one that is read.
+Sorry, but I don't understand. What do symlinks have to do 
+with keeping everything under version control? git can track 
+symbolic links just fine, if that is what is troubling you.
 
-Adding the above feature and documenting the later answer could be done
-in a second version of such a patch, but as far as I see it's no good
-doing so because then patch solves a non-exsiting problem. ;-)
-
---6eUvXotnMb6+obQB
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkss4ncACgkQe81tAgORUJaGpQCgpJVxRWPLEWlG8gKWR5eesCKQ
-3TwAn05a8ezV3I2dYw5mA8AUiJYGJQho
-=aBrR
------END PGP SIGNATURE-----
-
---6eUvXotnMb6+obQB--
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
