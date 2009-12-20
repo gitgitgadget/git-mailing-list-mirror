@@ -1,87 +1,71 @@
-From: Andrew Myrick <amyrick@gmail.com>
-Subject: Re: git-svn mergeinfo support performance problem
-Date: Sat, 19 Dec 2009 16:39:24 -0800
-Message-ID: <6b2f9b1d0912191639m3c4feeaaw72a52adb674ad744@mail.gmail.com>
-References: <6b2f9b1d0912181708g32645b48j3886b74101e77d80@mail.gmail.com> 
-	<4B2D6FB0.6080103@gmail.com>
+From: Bertram Scharpf <lists@bertram-scharpf.de>
+Subject: Re: Delete a commit
+Date: Sun, 20 Dec 2009 01:43:40 +0100
+Message-ID: <20091220004340.GA30440@marge.bs.l>
+References: <20091219233957.GC29111@marge.bs.l> <hgjpqu$dos$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Johan 't Hart" <johanthart@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 20 01:39:58 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 20 01:43:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NM9q1-0000io-KT
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Dec 2009 01:39:57 +0100
+	id 1NM9ti-0001fv-8G
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Dec 2009 01:43:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754605AbZLTAjq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Dec 2009 19:39:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754713AbZLTAjq
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 19:39:46 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:51880 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754481AbZLTAjp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Dec 2009 19:39:45 -0500
-Received: by iwn1 with SMTP id 1so2965333iwn.33
-        for <git@vger.kernel.org>; Sat, 19 Dec 2009 16:39:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sZaQv4CHhHikSATw3SzUZZpfEHcDPvH45TdT9gr0JZo=;
-        b=X/N645LamrE8MHwDQ7uFYtU7a3Z7gMUPeD66pAIs59yYUZIOBhqftoOmOzGfJT/abw
-         bagbhVJZsIvNqZotpS1tCHvZDt2+OC4wvZjGw+n5ZItwqgru71oZKxSbtzhZKOXvRZV5
-         5mF+zBwNWv5vjV9lD8l9+rTVPzG5VNvrhTdB8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=YnZh0iW5R+W/MXW7P+vBKY+PpOfHMYe6hDtVxJjiAHQnn2dPYN+ytiB3y2CoKMKNrs
-         pi6F+14vdXSaJ1kDQh1WK5qGNX+DUN4x0bgeymgElD+jLcCmW209rt4DVWGArsEpTnkq
-         fLa84nuXg+o+szS1crN1Oq0X2pjKzdTe6VdsU=
-Received: by 10.231.6.79 with SMTP id 15mr4265550iby.36.1261269584078; Sat, 19 
-	Dec 2009 16:39:44 -0800 (PST)
-In-Reply-To: <4B2D6FB0.6080103@gmail.com>
+	id S1754713AbZLTAnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Dec 2009 19:43:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754649AbZLTAnm
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Dec 2009 19:43:42 -0500
+Received: from moutng.kundenserver.de ([212.227.17.8]:59875 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754643AbZLTAnl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Dec 2009 19:43:41 -0500
+Received: from bs.l (e180000188.adsl.alicedsl.de [85.180.0.188])
+	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
+	id 0MQM5U-1NRZHk2ELk-00UJQC; Sun, 20 Dec 2009 01:43:40 +0100
+Received: from bsch by bs.l with local (Exim 4.69)
+	(envelope-from <lists@bertram-scharpf.de>)
+	id 1NM9tc-0007yt-3z
+	for git@vger.kernel.org; Sun, 20 Dec 2009 01:43:40 +0100
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <hgjpqu$dos$1@ger.gmane.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-Provags-ID: V01U2FsdGVkX1+bVIS4prlhnlSSryl9TXIuuQAUuuKcs1vIG/L
+ 9MZbWHQJVjIUV7xnVagt5779phKmLCaEPWoMvVYGEESXu/fLVR
+ uyx8fRkqtxZSniYNGh3F73SWkKdjwvW4RYLA2mdt7E=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135514>
 
-On Sat, Dec 19, 2009 at 4:28 PM, Johan 't Hart <johanthart@gmail.com> w=
-rote:
-> Andrew Myrick schreef:
->>
->> I've been testing git-svn v1.6.6-rc3's mergeinfo support on a large
->> svn repository (60,000+ revisions, 20+ GiB) that uses a very
->> branch-heavy integration model in which every change gets its own
->> branch before being committed to trunk. =C2=A0As a result of the mod=
-el,
->> there are currently over 1000 lines in the svn:mergeinfo property on
->> trunk.
+Hi,
+
+Am Sonntag, 20. Dez 2009, 01:06:46 +0100 schrieb Johan 't Hart:
+> Bertram Scharpf schreef:
+>> I fetched a line from the shell's history and accidentally hit
+>> enter before editing it. Then I had commited some work that was
+>> not completed. Is there a way to get rid of that commit as if it
+>> never were there?
 >
-> Just wondering: Isnt this workflow stalling svn itself alot too?
+> Try:
+> git reset --soft HEAD~1
+>
+> You could also:
+> git commit --amend ...
 
-Nope, svn seems to handle it fine.
+  % git fsck --lost-found
+  dangling commit 6abc221327e896c850c56dafae92277bcfe68e2b
 
-> And also:
-> Do you delete the branches after you reintegrated them? If so, I thin=
-k its
-> safe for you to cleanup the svn mergeinfo once in a while. That shoul=
-d not
-> affect 'svn log -g' because the mergeinfo is still there in older rev=
-isions.
-> I think svn benefits from this too...
+It is still there. This is the one I want to delete.
 
-We do not delete branches after they've been reintegrated.  Bug fix
-and feature branches can get reintegrated into multiple release
-branches, so it's not obvious when a branch can be deleted.  There's
-already enough process overhead that it's simpler just to leave all of
-the branches around.  Since this doesn't seem to affect svn's
-performance, we haven't really worried about it.
+Bertram
 
--Andrew
+
+-- 
+Bertram Scharpf
+Stuttgart, Deutschland/Germany
+http://www.bertram-scharpf.de
