@@ -1,101 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.6.6.rc4
-Date: Sun, 20 Dec 2009 14:59:47 -0800
-Message-ID: <7vmy1d9rq4.fsf@alter.siamese.dyndns.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [RFC PATCH] Record a single transaction for conflicting push 
+	operations
+Date: Sun, 20 Dec 2009 23:21:53 +0000
+Message-ID: <b0943d9e0912201521k73bdcb5fl333e845028954050@mail.gmail.com>
+References: <20091217232212.4869.43002.stgit@toshiba-laptop>
+	 <b8197bcb0912180123l4657839ctc121636af3724bee@mail.gmail.com>
+	 <b0943d9e0912180749ga8857d9j975e119937db9674@mail.gmail.com>
+	 <b8197bcb0912191550u300a9c20o351eba66c85292bb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 21 00:00:32 2009
+Cc: git@vger.kernel.org,
+	=?ISO-8859-1?Q?Gustav_H=E5llberg?= <gustav@virtutech.com>
+To: Karl Wiberg <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Dec 21 00:22:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NMUlL-0006ah-Kg
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Dec 2009 00:00:31 +0100
+	id 1NMV6G-0004iQ-30
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Dec 2009 00:22:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754919AbZLTXAG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Dec 2009 18:00:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754482AbZLTXAB
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Dec 2009 18:00:01 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51328 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754286AbZLTXAA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Dec 2009 18:00:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C0591892A6;
-	Sun, 20 Dec 2009 17:59:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=eabxOl1Xbj/eNolNwNm2+Y2Xc
-	1E=; b=HNRPOXRtxc+QU8Yer5PNeuBF97SOkn8HobH4gz4ivhd1NaibzwIL3PTbj
-	VuldSRnIt8IAIrsqj8Z3fPdixnkssZEtJPVbx9ZKEtipoWMK2eafWd1LMNAK1YqT
-	yYfBYAgWWMMBOJ7Z2eCol5sp1egWfi4oiuwNhQFXDBlsSjBYA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=Ld++2RGc0r3ZhKrBtzB
-	OxOcVdOQOlV7te5RBOMURtsRTdZj1J8pGyWo+ZHqYxCixDOdQnBEz8AsicWLKgjf
-	2HZgxbBqpq2sbAvtmP7eeXQdvtuVFsbWKKvazy6VniPOAju9un7+2tet4ClgZrjc
-	Gs3ilJYvaBuPPCvv1yQz8NxM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FBD48929F;
-	Sun, 20 Dec 2009 17:59:53 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A22BC8929C; Sun, 20 Dec
- 2009 17:59:48 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 62804BF2-EDBB-11DE-A875-DC0DEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755024AbZLTXV5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Dec 2009 18:21:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755006AbZLTXV4
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Dec 2009 18:21:56 -0500
+Received: from mail-fx0-f221.google.com ([209.85.220.221]:49444 "EHLO
+	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754968AbZLTXV4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Dec 2009 18:21:56 -0500
+Received: by fxm21 with SMTP id 21so4271195fxm.21
+        for <git@vger.kernel.org>; Sun, 20 Dec 2009 15:21:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5zeoFIVrycggKVV3yykh027HI1WnKrgirnYSHsq957Y=;
+        b=bxGZPHMp1ugWDDD3yVD25TGiirrQ+CIjnGzpA/0WDSVT+G0MGp87+9QFMYCFsIdFpi
+         2v0fdG9GrjATMSvSmBwKtgZI/Wsf532wJiaEqAscyWf8vcptG/qr00/FW64s6UxpH7iw
+         NA+A4hrguS9bplqBx1WJyjVZJsC7imjSC7qtI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rtlwx8BxJcX2cuHL8zQ8PScRAQpdaO2Nv91+WW+iCNwAAPacK76gRMCblhXKL/Hs2P
+         wl/MgN+NUD2YMjSi4mhPwBjxKgIIT7GHiMjzzzzAUTUyEdRgMgTXcJDU+MoeeHeNowjc
+         rurjRxFJQ5czNIRKEFZ+D5ID0qWE5a9U42J5E=
+Received: by 10.223.6.9 with SMTP id 9mr8567871fax.84.1261351313902; Sun, 20 
+	Dec 2009 15:21:53 -0800 (PST)
+In-Reply-To: <b8197bcb0912191550u300a9c20o351eba66c85292bb@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135539>
 
-A release candidate Git 1.6.6.rc4 is available at the usual places
-for final testing:
+2009/12/19 Karl Wiberg <kha@treskal.com>:
+> On Fri, Dec 18, 2009 at 4:49 PM, Catalin Marinas
+> <catalin.marinas@gmail.com> wrote:
+>
+>> @@ -371,12 +369,10 @@ class StackTransaction(object):
+>> =A0 =A0 =A0 =A0 =A0 =A0 # We've just caused conflicts, so we must al=
+low them in
+>> =A0 =A0 =A0 =A0 =A0 =A0 # the final checkout.
+>> =A0 =A0 =A0 =A0 =A0 =A0 self.__allow_conflicts =3D lambda trans: Tru=
+e
+>> -
+>> - =A0 =A0 =A0 =A0 =A0 =A0# Save this update so that we can run it a =
+little later.
+>> - =A0 =A0 =A0 =A0 =A0 =A0self.__conflicting_push =3D update
+>> + =A0 =A0 =A0 =A0 =A0 =A0self.__patches =3D _TransPatchMap(self.__st=
+ack)
+>> + =A0 =A0 =A0 =A0 =A0 =A0update()
+>> =A0 =A0 =A0 =A0 =A0 =A0 self.__halt("%d merge conflict(s)" % len(sel=
+f.__conflicts))
+>> =A0 =A0 =A0 =A0 else:
+>> - =A0 =A0 =A0 =A0 =A0 =A0# Update immediately.
+>> =A0 =A0 =A0 =A0 =A0 =A0 update()
+>>
+>> =A0 =A0 def push_tree(self, pn):
+>
+> Better. But couldn't you remove the update function completely and
+> just inline the code in it, since it's called immediately?
 
-  http://www.kernel.org/pub/software/scm/git/
+Of course, I tried, but couldn't get it to work. I get HEAD and top
+not equal unless I call update() between _TransPatchMap and
+self.__halt(). For the non-conflicting case we need to call update
+before or after this "if merge_conflict".
 
-  git-1.6.6.rc4.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.6.6.rc4.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.6.6.rc4.tar.{gz,bz2}		(preformatted docs)
+One solution is to split the "if merge_conflict" in two but maybe you
+have a better idea.
 
-The RPM binary packages for a few architectures are found in:
+Thanks,
 
-  testing/git-*-1.6.6.rc4-1.fc11.$arch.rpm	(RPM)
-
-Hopefully I'll do the final this Wednesday to make 1.6.6 a holiday gift=
- to
-everybody.
-
-I would very much prefer news outlets like kernelpodcast.org and lwn.ne=
-t
-_not_ to say "... is released; it comes with many _fixes_".  Fixes to
-released versions have indeed been included in the 'master' branch, but
-they all appear in the maintenance release.  The main _point_ of using =
-a
-new feature release like 1.6.6 is to get new _features_, so it is more
-appropriate to say "it comes with many new features."
-
-Thanks for all contributors who have worked hard to whip this release i=
-nto
-shape.
-
-----------------------------------------------------------------
-
-Changes since v1.6.6-rc3 are as follows:
-
-Bj=C3=B6rn Gustavsson (1):
-      rebase -i: abort cleanly if the editor fails to launch
-
-Eric Wong (2):
-      git svn: make empty directory creation gc-aware
-      t9146: use 'svn_cmd' wrapper
-
-Junio C Hamano (1):
-      Git 1.6.6-rc4
-
-Stephen Boyd (2):
-      api-strbuf.txt: fix typos and document launch_editor()
-      technical-docs: document hash API
+--=20
+Catalin
