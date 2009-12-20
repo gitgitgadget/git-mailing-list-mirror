@@ -1,57 +1,67 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: Re: [PATCH] rebase -i: print the editor name if it fails to launch
-Date: Sun, 20 Dec 2009 09:40:14 +0100
-Message-ID: <6672d0160912200040s6fbf5833q252b40bef4ea42b0@mail.gmail.com>
-References: <4B2DE132.1080700@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git svn clone just stops
+Date: Sun, 20 Dec 2009 08:57:31 +0000
+Message-ID: <20091220085731.GA11535@dcvr.yhbt.net>
+References: <1260915555.6475.8.camel@mark.engr.acx> <20091216081514.GB26038@dcvr.yhbt.net> <4B2B990B.9060502@obry.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 20 09:40:23 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Mark Jerkovic <mjerkovic@aconex.com>, git@vger.kernel.org
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Sun Dec 20 10:00:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NMHKw-0006NR-Mr
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Dec 2009 09:40:23 +0100
+	id 1NMHe8-0003BJ-Ui
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Dec 2009 10:00:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752145AbZLTIkS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Dec 2009 03:40:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751535AbZLTIkR
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Dec 2009 03:40:17 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:36061 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750709AbZLTIkQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Dec 2009 03:40:16 -0500
-Received: by bwz27 with SMTP id 27so2935190bwz.21
-        for <git@vger.kernel.org>; Sun, 20 Dec 2009 00:40:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=08gSQVxhiGabP/K8+/2EGm/nvIVp5UHW3XrP4AEebVQ=;
-        b=uBBF3PyFAE+tr8qJmS9D0x9CXedPG9SPbmk8h1I45BWuw7RI1pHJbegjdINir5Vr8A
-         RfjB1pP8KR19tdctmeprvqOoZ1MGol4cDUpTgPXL17kq3tR/yZHltgEAdiQvlieG2DK4
-         7nxlcKwDPd4MhFRQ80oeAyEApoS/oCQLiEIps=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=E1ip9qhzNuQnXZ6EbfAiGVmUfX8i1vxqaw7FnMJE0EkiuowlyQSsI5HT5ltebCrKdv
-         uv0jOZ/ve2zzNriRcYs24tvBkFdg5W1poAxxBqpUJw13PvbrIxpEn5f8udy7lsVfew7H
-         DmiyDMRiFtJqU2uGuey0Xm8h55AvsfYrrunx8=
-Received: by 10.204.29.22 with SMTP id o22mr3875718bkc.78.1261298414497; Sun, 
-	20 Dec 2009 00:40:14 -0800 (PST)
-In-Reply-To: <4B2DE132.1080700@gmail.com>
+	id S1752129AbZLTI5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Dec 2009 03:57:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752010AbZLTI5d
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Dec 2009 03:57:33 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:51978 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751801AbZLTI5c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Dec 2009 03:57:32 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 768E21F516;
+	Sun, 20 Dec 2009 08:57:32 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <4B2B990B.9060502@obry.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135527>
 
-Oops, I seem to have hit the Send button too early. Please ignore the
-first email that stops in mid sentence.
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+Pascal Obry <pascal@obry.net> wrote:
+> Eric,
+> 
+> > Not without error messages of some sort.  git svn was designed with poor
+> > network conditions in mind and clone is resumable, so you can just
+> > resume like this:
+> > 
+> >    cd project.git && git svn fetch
+> 
+> What about --revision option. I mean if I have this clone interrupted:
+> 
+>    $ git svn clone --revision=345:HEAD svn+ssh://...
+> 
+> Should I specify --revision when restarting with fetch? I think I had an
+> issue with this...
+> 
+> Maybe some other options are also to be passed to fetch?
+
+Hi Pascal,
+
+--revision may be passed to fetch, but its optional.  fetch should
+always know where to pickup after it left off.
+
+"git svn $command -h" shows you all options a particular $command
+allows.
+
+-- 
+Eric Wong
