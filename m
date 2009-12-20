@@ -1,81 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [msysGit] [PATCH] git-gui: use themed tk widgets with Tk 8.5
-Date: Sun, 20 Dec 2009 13:05:58 -0800
-Message-ID: <7vskb59wzt.fsf@alter.siamese.dyndns.org>
-References: <87my1ev4gi.fsf@users.sourceforge.net>
- <alpine.DEB.1.00.0912201412420.4985@pacific.mpi-cbg.de>
- <a5b261830912200723s131f0b93w2f5ab94f19faf86a@mail.gmail.com>
- <7vws0ha2mt.fsf@alter.siamese.dyndns.org>
- <a5b261830912201225q7d596b55qb54676922301954e@mail.gmail.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Efficiency and correctness patches for git-svn mergeinfo
+ support
+Date: Mon, 21 Dec 2009 10:07:20 +1300
+Message-ID: <1261343240.20752.20.camel@denix>
+References: <1261240435-8948-1-git-send-email-sam@vilain.net>
+	 <6b2f9b1d0912191415n560a5a58xbe6390b1fcade854@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	msysgit@googlegroups.com
-To: Pat Thoyts <patthoyts@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 20 22:06:22 2009
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Andrew Myrick <amyrick@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 20 22:07:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NMSyr-0004Gg-AA
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Dec 2009 22:06:21 +0100
+	id 1NMT02-0004fo-E6
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Dec 2009 22:07:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754582AbZLTVGQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Dec 2009 16:06:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754526AbZLTVGQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Dec 2009 16:06:16 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63263 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753167AbZLTVGP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Dec 2009 16:06:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7C470A88AD;
-	Sun, 20 Dec 2009 16:06:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CZTT53b+uqd5vtnRUImgZ3kVoMU=; b=vVbsEW
-	Mw5jNFmFMjBf0SrbmMKlkDn6UifurvViTepfZBKVs/w0hFLgXGqNsHdj5M+ZwDX1
-	xBs2PHRdJQ3ZlA0GUfYsnEm7brjWHE2bVz2QaFIfZI5Y3m1OsOPD94A37UEYufn6
-	FDcC7cbMIxHtzWxBeq/L3XnDT6qPgP97DtVvY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UiD7A7gPwqJb6A08bamn/n22ZG+Tj1hm
-	oedO0l76ePp0EjHAEYC3Tx9AeFO7lkjYV5FyqL/PH5pqbzNyleyrLiGXgz0k1cAm
-	hjATx4M4Iat2/O50p+P5/7UR3001YWctnUhw78gn8KS6RBTUDniaXF5j9UOGrSyS
-	n9Kgvdn2gC0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 20F70A88AC;
-	Sun, 20 Dec 2009 16:06:08 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 68B74A88AB; Sun, 20 Dec 2009
- 16:06:00 -0500 (EST)
-In-Reply-To: <a5b261830912201225q7d596b55qb54676922301954e@mail.gmail.com>
- (Pat Thoyts's message of "Sun\, 20 Dec 2009 20\:25\:02 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7E3F4808-EDAB-11DE-8998-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753985AbZLTVHc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Dec 2009 16:07:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753745AbZLTVHb
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Dec 2009 16:07:31 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:57845 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753838AbZLTVHa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Dec 2009 16:07:30 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id CC05521C41D; Mon, 21 Dec 2009 10:07:26 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.5 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.69.234] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 1200621C3F6;
+	Mon, 21 Dec 2009 10:07:21 +1300 (NZDT)
+In-Reply-To: <6b2f9b1d0912191415n560a5a58xbe6390b1fcade854@mail.gmail.com>
+X-Mailer: Evolution 2.28.0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135535>
 
-Pat Thoyts <patthoyts@googlemail.com> writes:
+On Sat, 2009-12-19 at 14:15 -0800, Andrew Myrick wrote:
+> I tried cloning from a fairly recent revision that I knew was after
+> our switchover to svn 1.5, and I received a number of these errors:
+> 
+>    Couldn't find revmap for [branch]
+>    Exiting subroutine via next at /Users/adm/libexec/git-core/git-svn line 2983.
+>    Exiting subroutine via next at /Users/adm/libexec/git-core/git-svn line 2983.
+>    Exiting subroutine via next at /Users/adm/libexec/git-core/git-svn line 2983.
+> 
+> I'm not sure if this is expected, since I didn't clone from the whole
+> repo, but it did cause a lot of spew.  I'm starting a fresh clone now,
+> but it takes a few days to get through the whole repository.  I'm
+> fairly new to git, so I would welcome any tips on how I can test this
+> more quickly.
 
-> 2009/12/20 Junio C Hamano <gitster@pobox.com>:
->>
->> On X, does the "default: thin borders, kind of windows98ish" look very
->> different from the non-themed classic Tk style?
->>
->
-> Here is a big set of screenshots then:
+Whoops, no, not expected, I'll post a minor correction.  That means that
+the branch which was merged in does not have git-svn metadata; ie, it's
+not being tracked explicitly.  If people are doing merging of things
+which aren't roots of branches you would expect this.  SVN, like
+Perforce, supports a confusing amount of flexibility in its merge
+tracking.  If [branch] is a real branch, then you'll want to see why it
+doesn't have metadata yet.  Is it really a sub-tree of a real branch?
+You could fetch it independently using a separate git-svn remote, or you
+could ignore the warning; it should be relatively self-evident what
+happened from the merge message and the contents of the changeset.
 
-Which is probably very helpful to others.  Thanks.
+Note if your repository was significantly re-organized at any point, it
+will pay to treat each section of history as a separate import project,
+and stitch the results together afterwards using grafts and
+filter-branch.
 
-On the other hand, if you wanted to give me just a quick answer, you
-simply could have said "The default X11 theme looks like the good old
-classic Tk that draws diamond shaped radio-buttons". (which is the
-impression I got after running the current git-gui installation on my box
-and comparing it with your "Tk 8.5 themed with unix default").
+This version should be *significantly* faster than the old one.  ie, it
+should not take a minute per commit while importing the heavily
+merged-into integration branch.  Possibly a few seconds at most.
+
+Sam
