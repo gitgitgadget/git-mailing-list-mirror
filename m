@@ -1,59 +1,77 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: possible code error at run_command.c
-Date: Mon, 21 Dec 2009 14:46:41 +0800
-Message-ID: <1976ea660912202246k45732bf2p111bbeb78047693e@mail.gmail.com>
+From: Karl Wiberg <kha@treskal.com>
+Subject: Re: [RFC PATCH] Record a single transaction for conflicting push 
+	operations
+Date: Mon, 21 Dec 2009 08:08:46 +0100
+Message-ID: <b8197bcb0912202308p296207av416cd5590a11251b@mail.gmail.com>
+References: <20091217232212.4869.43002.stgit@toshiba-laptop>
+	 <b8197bcb0912180123l4657839ctc121636af3724bee@mail.gmail.com>
+	 <b0943d9e0912180749ga8857d9j975e119937db9674@mail.gmail.com>
+	 <b8197bcb0912191550u300a9c20o351eba66c85292bb@mail.gmail.com>
+	 <b0943d9e0912201521k73bdcb5fl333e845028954050@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 21 07:46:51 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org,
+	=?UTF-8?Q?Gustav_H=C3=A5llberg?= <gustav@virtutech.com>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 21 08:08:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NMc2c-0002YF-4d
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Dec 2009 07:46:50 +0100
+	id 1NMcO0-0000Dm-35
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Dec 2009 08:08:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555AbZLUGqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Dec 2009 01:46:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751324AbZLUGqm
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Dec 2009 01:46:42 -0500
-Received: from mail-yw0-f182.google.com ([209.85.211.182]:61538 "EHLO
-	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750882AbZLUGql (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Dec 2009 01:46:41 -0500
-Received: by ywh12 with SMTP id 12so5357302ywh.21
-        for <git@vger.kernel.org>; Sun, 20 Dec 2009 22:46:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=GHJibp5yD2ZGYy8h/YXvuyjbAfwlkiycAzNRqfykpl8=;
-        b=fA6GysnnnHzhqYkjPFOcn+5+1QWYqzNOJKcWR0hb6UuePk8phO04JM6F4O8YE/26Oc
-         BIbbz73Hfm/GYyPmP0ZfXeLIEW7mJCrc67F68CiCD0UNByiDVSurt8mwMmg9yqk/04PC
-         uNOnpBidjj2aiaTj0cs98yVPMvWVmQWQC5IIc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=xXtqwMoVd1X9Xvft4zHX6LVdDGHMjM7Lynaz+IYUOH0P6l9AWJaxEr/z/9pyIU2rl/
-         kmx+wquKXQ4uXj04KsKqMp12nwCW4DUfkK3gzs2jrmgWydGYB2DimCZe23SffLfkdgCo
-         6F9WCI/1xN0QptT/GuqSZQh2cQ7c/8U8L5mhQ=
-Received: by 10.150.46.21 with SMTP id t21mr10478173ybt.234.1261378001016; 
-	Sun, 20 Dec 2009 22:46:41 -0800 (PST)
+	id S1751219AbZLUHIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Dec 2009 02:08:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751131AbZLUHIu
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Dec 2009 02:08:50 -0500
+Received: from mail1.space2u.com ([62.20.1.135]:59980 "EHLO mail1.space2u.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751123AbZLUHIu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Dec 2009 02:08:50 -0500
+Received: from mail-fx0-f215.google.com (mail-fx0-f215.google.com [209.85.220.215])
+	(authenticated bits=0)
+	by mail1.space2u.com (8.14.3/8.14.3) with ESMTP id nBL78edU030728
+	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NOT)
+	for <git@vger.kernel.org>; Mon, 21 Dec 2009 08:08:41 +0100
+Received: by fxm7 with SMTP id 7so4543998fxm.29
+        for <git@vger.kernel.org>; Sun, 20 Dec 2009 23:08:46 -0800 (PST)
+Received: by 10.103.84.13 with SMTP id m13mr3216190mul.10.1261379326648; Sun, 
+	20 Dec 2009 23:08:46 -0800 (PST)
+In-Reply-To: <b0943d9e0912201521k73bdcb5fl333e845028954050@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135541>
 
-int start_command(struct child_process *cmd)
-{
-	int need_in, need_out, need_err;
-	int fdin[2], fdout[2], fderr[2];
-	int failed_errno = failed_errno;
+On Mon, Dec 21, 2009 at 12:21 AM, Catalin Marinas
+<catalin.marinas@gmail.com> wrote:
+> 2009/12/19 Karl Wiberg <kha@treskal.com>:
+>
+>> Better. But couldn't you remove the update function completely and
+>> just inline the code in it, since it's called immediately?
+>
+> Of course, I tried, but couldn't get it to work. I get HEAD and top
+> not equal unless I call update() between _TransPatchMap and
+> self.__halt(). For the non-conflicting case we need to call update
+> before or after this "if merge_conflict".
+>
+> One solution is to split the "if merge_conflict" in two but maybe
+> you have a better idea.
 
-I have not found failed_errno as global variable.
-failed_errno = failed_errno means nothing.
+Yes, duplicating the conditional was what I had in mind. But if you
+don't find it to improve the readability of the code (as compared to
+having a function), I certainly won't insist.
 
-It is possible coding error and should be
-int failed_errno= 0 or
-failed_errno=errno.
+Thanks for working on this.
+
+By the way, you do realize there's another command that requires two
+steps to undo completely: refresh? And that one is harder to get out
+of---undoing it all in one step would mean throwing away the updates
+to the patch.
+
+-- 
+Karl Wiberg, kha@treskal.com
+   subrabbit.wordpress.com
+   www.treskal.com/kalle
