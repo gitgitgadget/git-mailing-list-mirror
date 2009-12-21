@@ -1,73 +1,98 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Delete a commit
-Date: Mon, 21 Dec 2009 19:17:51 +0100
-Message-ID: <m2bphsdwds.fsf@igel.home>
-References: <20091219233957.GC29111@marge.bs.l> <hgjpqu$dos$1@ger.gmane.org>
-	<20091220004340.GA30440@marge.bs.l> <hgocfi$pge$1@ger.gmane.org>
+From: J Chapman Flack <jflack@math.purdue.edu>
+Subject: git's fascination with absolute paths
+Date: Mon, 21 Dec 2009 13:42:02 -0500
+Message-ID: <4B2FC17A.3010705@math.purdue.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johan 't Hart <johanthart@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 21 19:18:03 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 21 20:06:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NMmpV-0003n1-VY
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Dec 2009 19:18:02 +0100
+	id 1NMnaP-0000ci-Tg
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Dec 2009 20:06:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755635AbZLUSR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Dec 2009 13:17:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754130AbZLUSR4
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Dec 2009 13:17:56 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:52479 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752484AbZLUSRz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Dec 2009 13:17:55 -0500
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id 4994E1C001D7;
-	Mon, 21 Dec 2009 19:17:53 +0100 (CET)
-Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
-	by mail.m-online.net (Postfix) with ESMTP id 4267690137;
-	Mon, 21 Dec 2009 19:17:53 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
-	with ESMTP id 4zCcPrDUEfxj; Mon, 21 Dec 2009 19:17:52 +0100 (CET)
-Received: from igel.home (DSL01.83.171.179.141.ip-pool.NEFkom.net [83.171.179.141])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Mon, 21 Dec 2009 19:17:52 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id BD82CCA28C; Mon, 21 Dec 2009 19:17:51 +0100 (CET)
-X-Yow: Thousands of days of civilians ...  have produced a...
- feeling for the aesthetic modules --
-In-Reply-To: <hgocfi$pge$1@ger.gmane.org> (Johan t. Hart's message of "Mon, 21
-	Dec 2009 18:49:36 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.90 (gnu/linux)
+	id S1757020AbZLUTGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Dec 2009 14:06:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756998AbZLUTGX
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Dec 2009 14:06:23 -0500
+Received: from mailhub131.itcs.purdue.edu ([128.210.5.131]:54713 "EHLO
+	mailhub131.itcs.purdue.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756177AbZLUTGW (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Dec 2009 14:06:22 -0500
+X-Greylist: delayed 1449 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Dec 2009 14:06:22 EST
+Received: from math.purdue.edu (zorn.math.purdue.edu [128.210.3.177])
+	by mailhub131.itcs.purdue.edu (8.14.2/8.14.2/smtp.purdue.edu) with ESMTP id nBLIg9eS021009
+	for <git@vger.kernel.org>; Mon, 21 Dec 2009 13:42:09 -0500
+Received: from mailrelay.math.purdue.edu (mailrelay.math.purdue.edu [128.210.3.183])
+	by math.purdue.edu (8.13.8+Sun/8.13.6/RPM-20060601-1) with SMTP id nBLIg99m006289
+	for <git@vger.kernel.org>; Mon, 21 Dec 2009 13:42:09 -0500 (EST)
+Received: From mailrelay.math.purdue.edu ([128.210.3.183]) by mailrelay.math.purdue.edu (WebShield SMTP v4.5 MR3)
+	id 1261420929270; Mon, 21 Dec 2009 13:42:09 -0500
+Received: from hardy.math.purdue.edu [128.210.3.54]
+	by mailrelay.math.purdue.edu (Alligate(TM) SMTP Gateway v3.9.7.13)
+	with ESMPT id <A534CA0617A454A9.98F6E8DC8DC26213@mailrelay.math.purdue.edu>
+	for <git@vger.kernel.org>; Mon, 21 Dec 2009 13:42:03 -0500
+User-Agent: Thunderbird 2.0.0.22 (X11/20090609)
+X-Alligate-SMTP: Whitelisted
+X-Alligate-ReceivingIP: [128.210.3.183]
+X-Originating-IP: 128.210.3.54
+X-Destination-IP: 
+X-Alligate-ID: 372752
+X-Alligate-Out: IGNORED - WhiteListed From: (@*purdue.edu)
+X-PMX-Version: 5.5.7.378829
+X-PerlMx-Virus-Scanned: Yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135563>
 
-Johan 't Hart <johanthart@gmail.com> writes:
 
-> Bertram Scharpf schreef:
->> Hi,
->
->>   % git fsck --lost-found
->>   dangling commit 6abc221327e896c850c56dafae92277bcfe68e2b
->>
->> It is still there. This is the one I want to delete.
->
-> It is not in the history of any head anymore, so you could consider it
-> deleted. ('git log' does not show this commit)
+Hi list,
 
-Except through the reflog, most likely.
+I have a requirement involving the reasonably common Unix-y design
+pattern where a directory owned by a particular user lives in a
+directory that user can't access, with a setuid gate that chdirs to
+the right place and then drops to the real user's id to do certain
+allowed things.
 
-Andreas.
+I wanted to use git for some of those allowed things and I can't,
+because the code seems to call make_absolute_path on approximately
+everything, and this is one of the situations that illustrates why it
+isn't safe to assume you can get an absolute path that's even
+usable (let alone race-free) corresponding to a relative path
+in general.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+git init tries to do this on the db path (even if
+it's specified explicitly in GIT_DIR), and even if I do the git init
+as root in advance, all the other git subcommands I've tried also
+try to do it and fail when they chdir up out of the
+working directory and try to chdir (not fchdir) back in.
+
+In general it seems best for a program to stay free of assumptions
+about absolute paths except when there is a specific functional
+requirement that needs them.  I assume there is something git does
+that requires it to have this limitation, but it's not intuitive
+to me if I just think about what I expect an scm system to do.
+I've searched on 'absolute' in the list archive to see if there
+was a past discussion like "we've decided we need absolute paths
+everywhere because X" but I didn't find any.  Can someone
+describe what the reasoning was?  A security concern perhaps?
+(And one more serious than the race condition built into
+make_absolute_path?)
+
+Or, perhaps I should be asking, what is there in git that will
+break if I recompile it with make_absolute_path(p){return p;}?
+Does it store absolute paths in the db?  Would a recompiled
+version produce a db other gits couldn't read?
+
+(Or less drastic perhaps, what if there were a version of m_a_p
+that still returned an absolute path when possible and safe, and
+just returned p otherwise so the program could still be usable?)
+
+Thanks,
+Chapman Flack
+mathematics, purdue university
