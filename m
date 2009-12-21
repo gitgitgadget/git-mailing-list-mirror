@@ -1,92 +1,64 @@
-From: Wincent Colaiuta <win@wincent.com>
+From: Frank Li <lznuaa@gmail.com>
 Subject: Re: possible code error at run_command.c
-Date: Mon, 21 Dec 2009 08:09:36 +0100
-Message-ID: <2E55A685-834C-4C64-99F1-4060FEC7C2DB@wincent.com>
+Date: Mon, 21 Dec 2009 15:29:34 +0800
+Message-ID: <1976ea660912202329x42f6add3j9175867e8723a4bd@mail.gmail.com>
 References: <1976ea660912202246k45732bf2p111bbeb78047693e@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1076)
-Content-Type: text/plain; charset=iso-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+	 <4B2F214D.2020905@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 21 08:23:06 2009
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Dec 21 08:29:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NMcbh-0006NJ-Iq
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Dec 2009 08:23:06 +0100
+	id 1NMciB-0008PY-Rp
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Dec 2009 08:29:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751296AbZLUHW7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Dec 2009 02:22:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbZLUHW6
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Dec 2009 02:22:58 -0500
-Received: from outmail128067.authsmtp.com ([62.13.128.67]:50075 "EHLO
-	outmail128067.authsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751163AbZLUHW6 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Dec 2009 02:22:58 -0500
-X-Greylist: delayed 793 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Dec 2009 02:22:57 EST
-Received: from mail-c194.authsmtp.com (mail-c194.authsmtp.com [62.13.128.121])
-	by punt10.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id nBL79gdR056136;
-	Mon, 21 Dec 2009 07:09:42 GMT
-Received: from wincent1.inetu.net (wincent1.inetu.net [209.235.192.161])
-	(authenticated bits=128)
-	by mail.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id nBL79e9o025698
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 21 Dec 2009 07:09:41 GMT
-Received: from [192.168.1.2] (231.Red-83-60-136.dynamicIP.rima-tde.net [83.60.136.231])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id nBL79aG1005048
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 21 Dec 2009 02:09:39 -0500
-In-Reply-To: <1976ea660912202246k45732bf2p111bbeb78047693e@mail.gmail.com>
-X-Mailer: Apple Mail (2.1076)
-X-Server-Quench: cf49fe2d-edff-11de-80b9-0022640b883e
-X-Report-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
-X-AuthRoute: OCd3ZggRAFZKTQIy FSICByJGVUMuIRha BAIHMQpCJFdJD0VH aB8dAldYdwdEHQAR A2EBW11eVFw/W2N8 dQhSaBtca0hQXgNr T0pMXVMcSncUBhVU D0EeUBx0fg0IfXt2 bQgxCHRSChF4IVso FhgCCGwHMTJ9YGBN WV1YdwFWdgdKLBdN aQUxNiYHcSVYJTk5 FQs+dzs2MTgXJT5P RRtFJE5aW1sNKTU7 QhULGzlpFiUA
-X-Authentic-SMTP: 61633436303433.1015:706/Kp
-X-AuthFastPath: 255
-X-Virus-Status: No virus detected - but ensure you scan with your own anti-virus system.
+	id S1752135AbZLUH3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Dec 2009 02:29:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752100AbZLUH3h
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Dec 2009 02:29:37 -0500
+Received: from mail-yw0-f182.google.com ([209.85.211.182]:34933 "EHLO
+	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752064AbZLUH3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Dec 2009 02:29:35 -0500
+Received: by ywh12 with SMTP id 12so5377502ywh.21
+        for <git@vger.kernel.org>; Sun, 20 Dec 2009 23:29:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=rhgH2D0SSGy72yBwWg4xVOlozIciM5WroKUbWKa5lWc=;
+        b=jOOQDWrHm1z4kz36eT3oWhJyTvpg3QD/GvyKxvZz4ithTrUQtDiqhPjhrz3JYzl2Ao
+         ulF2wbJxMmfr52/uABoSXnvCpgT5JFErLuk88xQQf9rxQlbU9ZkN+0skTv/RjQM0Yq1b
+         19sWSKWb3Evaxnqd2IF+FAXx943HMFIBs6Ysw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=XgwHMczl95ltCKxWX5+dFJr7GnhgT62LkBXub4WCgoxzyIpZVYllbIooKTtJTvFpqz
+         7NNSeLxXkenxtuPWlSg5qmbrM+07UI3lW9PnTEgL8KvFzTOrIzHZctfjYlZo20n40vT0
+         uEK0b//wE+j879wmGdKadp6dmRPDy+ymfWsAA=
+Received: by 10.150.250.21 with SMTP id x21mr10631564ybh.181.1261380574409; 
+	Sun, 20 Dec 2009 23:29:34 -0800 (PST)
+In-Reply-To: <4B2F214D.2020905@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135544>
 
-El 21/12/2009, a las 07:46, Frank Li escribi=F3:
-
-> int start_command(struct child_process *cmd)
-> {
-> 	int need_in, need_out, need_err;
-> 	int fdin[2], fdout[2], fderr[2];
-> 	int failed_errno =3D failed_errno;
+> This is a commonly used idiom to avoid an (incorrect) compiler warning
+> about an uninitialized variable.
 >
-> I have not found failed_errno as global variable.
-> failed_errno =3D failed_errno means nothing.
+> Strictly speaking, I think that you are right by saying "means nothing"
+> because the use of the uninitialized variable invokes undefined behavior
+> (and for this reason, I dislike this construct), but in practice it will
+> not make a difference.
 >
-> It is possible coding error and should be
-> int failed_errno=3D 0 or
-> failed_errno=3Derrno.
 
-Via "git blame":
-
-commit 5a7a3671b74c043216549b94a718da04cc3ffcd6
-Author: David Soria Parra <dsp@php.net>
-Date:   Tue Aug 4 11:28:40 2009 +0200
-
-     run-command.c: squelch a "use before assignment" warning
-
-     i686-apple-darwin9-gcc-4.0.1 (GCC) 4.0.1 (Apple Inc. build 5490) =20
-compiler
-     (and probably others) mistakenly thinks variable failed_errno is =20
-used
-     before assigned.  Work it around by giving it a fake =20
-initialization.
-
-     Signed-off-by: David Soria Parra <dsp@php.net>
-     Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-
-Cheers,
-Wincent
+This error is captured at MSVC environment by run time varible check.
+I prefer change it to
+int failed_errno = errno;
