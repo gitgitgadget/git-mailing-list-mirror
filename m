@@ -1,76 +1,73 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: Re: [PATCH] rebase -i: print the editor name if it fails to launch
-Date: Mon, 21 Dec 2009 08:54:05 +0100
-Message-ID: <6672d0160912202354m124700dbw6e2089446d88b24@mail.gmail.com>
-References: <4B2DE132.1080700@gmail.com>
-	 <7v4onlbi3q.fsf@alter.siamese.dyndns.org>
+From: Frank Li <lznuaa@gmail.com>
+Subject: Re: possible code error at run_command.c
+Date: Mon, 21 Dec 2009 16:18:26 +0800
+Message-ID: <1976ea660912210018y15acfe32o78841d5e0968f793@mail.gmail.com>
+References: <1976ea660912202246k45732bf2p111bbeb78047693e@mail.gmail.com>
+	 <4B2F214D.2020905@viscovery.net>
+	 <1976ea660912202329x42f6add3j9175867e8723a4bd@mail.gmail.com>
+	 <4B2F2727.4060405@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 21 08:54:30 2009
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Dec 21 09:18:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NMd5t-0001Ue-Fx
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Dec 2009 08:54:17 +0100
+	id 1NMdTN-0000At-LC
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Dec 2009 09:18:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752609AbZLUHyL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Dec 2009 02:54:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752375AbZLUHyK
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Dec 2009 02:54:10 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:63404 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752556AbZLUHyJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Dec 2009 02:54:09 -0500
-Received: by bwz27 with SMTP id 27so3277415bwz.21
-        for <git@vger.kernel.org>; Sun, 20 Dec 2009 23:54:06 -0800 (PST)
+	id S1752662AbZLUIS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Dec 2009 03:18:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752260AbZLUIS2
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Dec 2009 03:18:28 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:42698 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751025AbZLUIS2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Dec 2009 03:18:28 -0500
+Received: by yxe17 with SMTP id 17so4646397yxe.33
+        for <git@vger.kernel.org>; Mon, 21 Dec 2009 00:18:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=cVT8X6SZ3OsFDJzqvOe3ucGAspquoYhLHACz/ghlx8k=;
-        b=IxnR2kEXyGVDwTE3PZv5UiuBdaNNW6dxxNlW5G2uBuZBlbfjwXtVObgst0SAWld53d
-         Tzc82GdPH3t66Tp2Yx+cmWl/E5hnMbR5KRBM+CZZy/rk7WzfINWyZD3jlvF6fT7UKqB5
-         okq6XPfaUGcK1L2BIDNR1u+I5XTlug4grFzFA=
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=Tba3cCWPGWqoaQKE4zvCuWC6cDpjlnUhhhwifB5JBtg=;
+        b=gSQiP9ufVdZGUaglvRLzk0F+rPpZXmtPNVhc7+k0MBhh4NWauBDzo7Vz/rTncnvxKT
+         pL+Y2bUHZg93+ePqu+k5SkqxWqXNyHCwbYC/qFXie6yc5CpJbl7gKeguHm099HlDun7N
+         VShNBa84cGrrF4x+1I5BHgHYCqdZGLK6VtyAM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=eMIFk+9tsPqBTNHD/n6bO1zAQStPVPHLtWDTxBQ8/0D5sORrCRuNJ1CpxSoHMQV/L+
-         ACdCqfO8gwMBMdFW7TsUga/sR0IjTPSxFkpwLKkTzz9rbE7rpNgzSvKwKPZ1WcRxcgnm
-         IA/VhniAH0FDSPYS4xMH5uEDka1p78qUtCIdc=
-Received: by 10.204.20.142 with SMTP id f14mr4528734bkb.64.1261382045870; Sun, 
-	20 Dec 2009 23:54:05 -0800 (PST)
-In-Reply-To: <7v4onlbi3q.fsf@alter.siamese.dyndns.org>
+         :cc:content-type;
+        b=aONewW+sMB8ezSzRCGXaOgwf1IziTSPQmt5faaedsX8vpa5TwIvWjsWN6Mnr4D9wb7
+         39DGIPXVnoTzyqDyf7XMqhCOivGCUTzZXij2oOgixUnGEYj2XtskAlaGgXmIbl9wAK58
+         8ZiZItcYNMMBlC7HlRiwhydhPC7mU+U8N7u+I=
+Received: by 10.150.250.21 with SMTP id x21mr10692891ybh.181.1261383506623; 
+	Mon, 21 Dec 2009 00:18:26 -0800 (PST)
+In-Reply-To: <4B2F2727.4060405@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135546>
-
-2009/12/20 Junio C Hamano <gitster@pobox.com>:
-
-> Isn't this too elaborate? =C2=A0git_editor() has already run and when=
- it
-> attempted to launch the editor it assigned to GIT_EDITOR in order to =
-use
-> it as an eval string.
-
-I wanted to hide the details about the inner working of git_editor(),
-but since it is only called in one place, yes, it is too elaborate.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135547>
 
 >
-> =C2=A0 =C2=A0git_editor "$TODO" ||
-> =C2=A0 =C2=A0die_abort "Failed to run '${GIT_EDITOR:-your editor}'"
+> Disable this check - it just takes away performance. :-)
+
+Release version will disable this.
+Debug version enable this by default is just for find out code error.
+
 >
-> would suffice, no?
+> (If you don't disable the check, then keep the required changes private.)
+>
+>> I prefer change it to
+>> int failed_errno = errno;
+>
+> You don't need to initialize the variable at all because it is always
+> initialized elsewhere before it is used. Perhaps MSVC is clever enough to
+> see it?
+>
 
-Yes. Much better. I will rewrite my patch when I'll get home from
-work later today.
-
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+Maybe some excute path miss initialized it. Otherwise compiler will
+not report warning.
