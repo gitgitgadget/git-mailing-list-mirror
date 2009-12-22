@@ -1,145 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC 4/4] rebase -i: add --refs option to rewrite heads
- within branch
-Date: Tue, 22 Dec 2009 15:37:54 -0800
-Message-ID: <7vzl5awpf1.fsf@alter.siamese.dyndns.org>
-References: <20091222222032.GU30538@dr-wily.mit.edu>
- <20091222222316.GY30538@dr-wily.mit.edu>
-Mime-Version: 1.0
+From: Andrew Myrick <amyrick@apple.com>
+Subject: Re: Regression: git-svn clone failure
+Date: Tue, 22 Dec 2009 15:50:12 -0800
+Message-ID: <B39991E2-D632-4FD5-B5DA-0B6B502BBFC8@apple.com>
+References: <8BD646EB-3F47-41F8-918C-19133CCCA89C@apple.com> <20091222192115.GA10313@dcvr.yhbt.net> <B82A784D-C8D7-4DDF-AE63-390C7AE1CC2D@apple.com> <1261516416.23944.44.camel@denix>
+Mime-Version: 1.0 (Apple Message framework v1130)
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Greg Price <price@ksplice.com>
-X-From: git-owner@vger.kernel.org Wed Dec 23 00:38:21 2009
+Content-Transfer-Encoding: 8BIT
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Wed Dec 23 00:50:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NNEJ2-0000nX-2f
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Dec 2009 00:38:20 +0100
+	id 1NNEUn-0004yi-JM
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Dec 2009 00:50:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752202AbZLVXiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2009 18:38:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752183AbZLVXiI
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Dec 2009 18:38:08 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56924 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752093AbZLVXiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2009 18:38:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 75FBB8AFCA;
-	Tue, 22 Dec 2009 18:38:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=j9yNLELbobMuTKxc/lHfk06VGyc=; b=OPVmsP
-	jgJye4JUaKU3uIG278GKltq8sxMRwqEpebPotLQtAGBxlhUwfM6Vjg2rkryYh5xX
-	gUePsJGHeJxTngihuMcWj6MLXwFvfPi+f/cbJD/m5McG24ahcLtR2dk4Z9uRSsnM
-	5eUTjqFPVT+tC3SL4BikkigIuwJMFKn7DcMjM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mcxZ54nX0d+6X+4VTnzIksFU444ttYN+
-	FlliNi7IyM+rqe2vSyKDh6VI/6QuG+9knlcfPJW7saEn0LZPxvpd+QsATRCbRKUK
-	WkdLRhZzniJpsalrgsriBVIwAAuHO5DwEAm+LHhzE5Y8h8fi+MQDryuKg43SAGvJ
-	RMbCoe0NU0U=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 42AF48AFC9;
-	Tue, 22 Dec 2009 18:38:00 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 510578AFC8; Tue, 22 Dec
- 2009 18:37:56 -0500 (EST)
-In-Reply-To: <20091222222316.GY30538@dr-wily.mit.edu> (Greg Price's message
- of "Tue\, 22 Dec 2009 17\:23\:16 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0A55E862-EF53-11DE-BC1C-033CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752018AbZLVXuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2009 18:50:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751538AbZLVXuQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Dec 2009 18:50:16 -0500
+Received: from mail-out3.apple.com ([17.254.13.22]:63877 "EHLO
+	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751253AbZLVXuO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Dec 2009 18:50:14 -0500
+Received: from relay15.apple.com (relay15.apple.com [17.128.113.54])
+	by mail-out3.apple.com (Postfix) with ESMTP id B09B87DDD90E;
+	Tue, 22 Dec 2009 15:50:12 -0800 (PST)
+X-AuditID: 11807136-b7bafae000000e8d-a5-4b315b347291
+Received: from agility.apple.com (agility.apple.com [17.201.24.116])
+	(using TLS with cipher AES128-SHA (AES128-SHA/128 bits))
+	(Client did not present a certificate)
+	by relay15.apple.com (Apple SCV relay) with SMTP id B5.5D.03725.43B513B4; Tue, 22 Dec 2009 15:50:12 -0800 (PST)
+In-Reply-To: <1261516416.23944.44.camel@denix>
+X-Mailer: Apple Mail (2.1130)
+X-Brightmail-Tracker: AAAAAQAAAZE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135607>
 
-Greg Price <price@ksplice.com> writes:
 
-> The new option --refs causes the TODO file to contain a "ref" command
-> for each head pointing to a selected commit, other than the one we are
-> already rebasing.  The effect of this is that when a branch contains
-> intermediate branches, like so:
->
->       part1 part2 topic
->         |     |     |
->         v     v     v
->   A--*--*--*--*--*--*
->    \
->     B <--master
->
-> a single command like "git rebase -i --refs master topic" suffices to
-> rewrite all the heads that are part of the topic, like so:
->
->         part1 part2 topic
->   A       |     |     |
->    \      v     v     v
->     B--*--*--*--*--*--*
->     ^
->     |
->     master
->
-> Signed-off-by: Greg Price <price@ksplice.com>
-> ---
+On Dec 22, 2009, at 1:13 PM, Sam Vilain wrote:
 
-Two comments and a half.
+> On Tue, 2009-12-22 at 11:38 -0800, Andrew Myrick wrote:
+>> Worked like a charm; the fetch is proceeding now.  Thanks, Eric!
+>> 
+>> Do you know what the "svn cherry-pick ignored" warnings mean, and if it's
+>> something I should be concerned about?  This particular project is missing
+>> up to 65 commits at some revisions.
+> 
+> With git, merge parent relationships imply (conceptually, anyway) that
+> all of the changes reachable from that branch are included in the
+> commit.  If someone is doing cherry-picking, then they are specifically
+> excluding some commits, so adding a merge parent to that branch isn't
+> right.  This is what the warning is saying.  It's happening every commit
+> because that section of code doesn't know whether a mergeinfo record is
+> new or not.
+> 
+> This wasn't happening with the old code, because it was simply not
+> detecting them correctly and adding merge parents anyway.
 
- - As decoration is a fairly expensive operation (which is the reason why
-   loading_ref_decorations() is called lazily by format_decoration() in
-   the first place, especially in repositories with tons of refs), you
-   shouldn't give --format=%D to rev-list when the new feature is not
-   asked for.
+This makes perfect sense now.  Thank you for clarifying.  Unfortunately, I don't think the patch you provided will help my particular problem.  Allow me to elaborate.
 
- - This seems to rewrite only branch heads; don't you want to allow users
-   to rewrite lightweight tags and possibly annotated ones as well, by
-   perhaps giving "--rewrite-refs=refs/heads/" or "--rewrite-refs=refs/"
-   to limit what parts of the ref namespace to consider rewriting?
+As I mentioned before, my project's integration model is to create a separate branch for every change.  Specifically, we create a branch from a recent internal tag.  So, the model for a simple bug fix looks something like this:
 
- - Otherwise the option should not be called "refs" but be named using the
-   word "branch" to clarify that it affects _only_ branches.
+            F---G  branch1
+          /           \
+        D  tag1  \    E  tag2
+       /                 \  /
+A---B                 C  trunk
 
-Obviously the series also needs tests.
+Revision B on trunk was tagged with tag1.  A bug was found in that version, so a branch was created from tag1, a fix was committed to the branch, and then the branch was merged back to trunk.  Finally, trunk is tagged with tag2.
 
-I also have to wonder if this feature should also handle a case like this:
+The "missing commit" messages show up when git svn fetch is fetching revision C.  It warns the there is a cherry-pick from branch1, and states that commits D and F are missing.  These commits are just copies, however; there is no code change.  The svn:mergeinfo property on trunk also only points at commit G.  Should git-svn be ignoring commits D and F, which are copy operations, not code changes?
 
-                  side
-                  |
-                  V
-                  *
-                 /
-        part1   *    topic
-          |    /      |
-          v   /       v
-    A--*--*--*--*--*--*
-     \
-      B <--master
+Also of note is that we very, very rarely cherry-pick commits, and never directly from a branch to trunk.  Branches are always integrated back to trunk in their entirety.
 
-===>
-
-                     side
-                     |
-                     V
-                     *
-                    /
-           part1   *    topic
-     A       |    /      |
-      \      v   /       v
-       B--*--*--*--*--*--*
-       ^
-       |
-       master
-
-especially if it were to be specific to branch management.
-
-On the other hand, if the "partN" markers in your example workflow are
-primarily meant to be used to mark places on a branch (as opposed to
-arbitrary branch tips that independent development starting from them can
-further continue), it would make a lot more sense to use lightweight or
-annotated tags for them, and instead of "--refs" that rewrites only other
-branch tips, it might make a lot more sense to have "--rewrite-tags" that
-rewrites tags that point at the commits that are rewritten, without
-touching any branch tip.
+-Andrew
