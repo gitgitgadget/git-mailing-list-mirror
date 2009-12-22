@@ -1,76 +1,91 @@
-From: B Smith-Mannschott <bsmith.occs@gmail.com>
-Subject: Re: Huge pack file from small unpacked objects
-Date: Tue, 22 Dec 2009 09:54:40 +0100
-Message-ID: <28c656e20912220054qc7b6497t79e135c913865c22@mail.gmail.com>
-References: <404585ED79625A40AB5A9884ECA9A63B3E02083F@VMBX125.ihostexchange.net>
-	 <75B8C0BEE0AE2A44AA971D218D9FE99E3DD8C61C@VMBX125.ihostexchange.net>
+From: Tomas Carnecky <tomas.carnecky@gmail.com>
+Subject: Where did Documentation/perf_counter disappear from linux-2.6-tip.git
+ ?
+Date: Tue, 22 Dec 2009 11:04:21 +0100
+Message-ID: <4B3099A5.6040808@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Nick Triantos <nick@perceptivepixel.com>
-X-From: git-owner@vger.kernel.org Tue Dec 22 09:54:49 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 22 11:05:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NN0W0-0005Qf-Hm
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Dec 2009 09:54:48 +0100
+	id 1NN1bu-0000A0-8j
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Dec 2009 11:04:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751591AbZLVIyn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Dec 2009 03:54:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751939AbZLVIyn
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Dec 2009 03:54:43 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:60392 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751409AbZLVIym convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Dec 2009 03:54:42 -0500
-Received: by ewy19 with SMTP id 19so5020365ewy.21
-        for <git@vger.kernel.org>; Tue, 22 Dec 2009 00:54:40 -0800 (PST)
+	id S1751139AbZLVKEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2009 05:04:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750937AbZLVKEZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Dec 2009 05:04:25 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:60150 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750822AbZLVKEY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2009 05:04:24 -0500
+Received: by bwz27 with SMTP id 27so3997826bwz.21
+        for <git@vger.kernel.org>; Tue, 22 Dec 2009 02:04:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
          :content-transfer-encoding;
-        bh=xwagDCk63tz44xi9sWzGqHl6E74gvThCdx5+vmVXUFY=;
-        b=Isnh39xcu7WzwQ4C4f/bosSNyVzoewwWvyWGNBXDhQZHRgzbwWf9EgonUG6muW78Kj
-         jIu30dOOTw0h/z0l19fSrDMJt1Wmpch3pYJQStBDRJDz0KuqJk7OqAlNIzfzwMcRPlGV
-         AAAm9iDal3PkqfqQKObcJhKLfeK3139gpcVuc=
+        bh=8TJq5G+oskl1hrEXvDz1oQoMk2alL1A9UitrAa2w3cA=;
+        b=TamAG7baMd/XyfOsJ8QyKk5U4UaZxwgGVodZ63dV/+Q8g8Hhl9Ksa4h0LO6BQr1A3x
+         /xl4qo0JhisIF2+oTPVy6D0ZrA3AZLu12c5LCIzBEDM9MX3aze29Zt1FUUQK+cWDi8h+
+         D3rfc3vubGAesHPZwl/PbIG637lc5HoUOUKrg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xn2zlmlPUhp88XBEeXcXIbnzxUk8yJbdD/zWq6BqpSBQtTKQZurNdV8pj5wN2r4cp1
-         xs56Wj8w6Z1YxV5iQpAMxtNDKJteWcyAQOD8U5YNQX16T2cfkP/qu+nX0Tlmor4u17kF
-         3C9RfWrvkNBINs1aR5rLLWpWwqvgRSHsqKxO4=
-Received: by 10.213.0.144 with SMTP id 16mr9837134ebb.38.1261472080275; Tue, 
-	22 Dec 2009 00:54:40 -0800 (PST)
-In-Reply-To: <75B8C0BEE0AE2A44AA971D218D9FE99E3DD8C61C@VMBX125.ihostexchange.net>
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=HEtUFvdDDe+dlYy1geAWvvxGNC4CV7HQjjk0Ug0W4KGs3IprsAwvkTB+NJXoxBGCWE
+         6s+Bit/ORIsZaGX5B5hisfl4ozKRrrYmOCidlKHj4mPvtH6kXPzlL6QdKzmTDolAp+yI
+         MkZLQkfhah7JsObTj5PLofwX7eUINGIzHCFCE=
+Received: by 10.204.156.210 with SMTP id y18mr4518452bkw.37.1261476262424;
+        Tue, 22 Dec 2009 02:04:22 -0800 (PST)
+Received: from calvin.caurea.org (gw.ptr-62-65-141-13.customer.ch.netstream.com [62.65.141.13])
+        by mx.google.com with ESMTPS id 16sm1838039bwz.3.2009.12.22.02.04.21
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 22 Dec 2009 02:04:21 -0800 (PST)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.3a1pre) Gecko/20091222 Lightning/1.1a1pre Shredder/3.1a1pre
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135576>
 
-On Wed, Dec 16, 2009 at 17:34, Nick Triantos <nick@perceptivepixel.com>=
- wrote:
-> Hi,
->
-> I recently created a repo from SVN via git-svn.=C2=A0 The bare repo w=
-as about ~600MB.=C2=A0 I cloned it, and on the clone, I added 2 small f=
-iles (.gitignore and .gitattributes) to a branch, merged them to master=
-, and pushed that back to the origin.=C2=A0 The cloned repo remains at =
-about 600MB, while my origin repo (the one from svn) is now about 2.4GB=
-=2E=C2=A0 I found that it created a file in objects/pack which accounts=
- for this huge size.
->
-> I've tried running 'git repack -a -d' but that didn't shrink the size=
- of this pack file.
->
-> Any ideas why the pack file is so huge?=C2=A0 Anything I can do to sh=
-rink it?=C2=A0 My coworkers are understandably unhappy that the repo is=
- so huge now (makes for very slow pulls)
+  $ git --version
+git version 1.6.6.rc4
 
-Have you tried "git prune"?
+# Documentation/perf_counter is missing from the master branch, so first 
+let's find
+# out what the last commit was that touched that subdirectory:
+$ git log --all -1 -- Documentation/perf_counter
+commit 436224a6d8bb3e29fe0cc18122f8d1f593da67b8
+Author: Peter Zijlstra <a.p.zijlstra@chello.nl>
+Date:   Tue Jun 2 21:02:36 2009 +0200
+...
+M       Documentation/perf_counter/builtin-report.c
 
-// Ben
+# Great, let's look in which branch that commit is
+$ git branch --contains 436224a6d8bb3e29fe0cc18122f8d1f593da67b8
+* master
+
+# So, let's look at the log of master and limit it to that subdirectory:
+$ git log master -- Documentation/perf_counter
+$
+
+# Damn, that doesn't make any sense. In commit 43622 there were files in 
+that subdirectory, in master they have gone missing and yet log doesn't 
+show any commit touching that subdirectory?
+# Let's try something different:
+$ git log --diff-filter=D --name-status --all -- Documentation/perf_counter
+...
+
+# Ah, now we're getting somewhere, but still no sight of a commit which 
+removed for example Documentation/perf_counter/.gitignore
+# I'm sure I'm probably just missing a tiny little switch for git-log. I 
+also tried other combination of name-status, diff-filter etc, but soon 
+after gave up.
+
+tom
