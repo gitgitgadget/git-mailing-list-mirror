@@ -1,61 +1,116 @@
-From: Andrew Myrick <amyrick@apple.com>
-Subject: Regression: git-svn clone failure
-Date: Tue, 22 Dec 2009 10:43:20 -0800
-Message-ID: <8BD646EB-3F47-41F8-918C-19133CCCA89C@apple.com>
-Mime-Version: 1.0 (Apple Message framework v1130)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Eric Wong <normalperson@yhbt.net>, sam@vilain.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 19:43:30 2009
+From: David Reiss <dreiss@facebook.com>
+Subject: [PATCH] Prevent git blame from segfaulting on a missing author name
+Date: Tue, 22 Dec 2009 10:51:41 -0800
+Message-ID: <4B31153D.4@facebook.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 22 19:51:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NN9hh-00074W-H1
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Dec 2009 19:43:29 +0100
+	id 1NN9pn-0002J9-F2
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Dec 2009 19:51:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754297AbZLVSnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2009 13:43:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751858AbZLVSnX
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Dec 2009 13:43:23 -0500
-Received: from mail-out3.apple.com ([17.254.13.22]:57329 "EHLO
-	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751846AbZLVSnX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Dec 2009 13:43:23 -0500
-Received: from relay13.apple.com (relay13.apple.com [17.128.113.29])
-	by mail-out3.apple.com (Postfix) with ESMTP id 0B0487DD564D;
-	Tue, 22 Dec 2009 10:43:21 -0800 (PST)
-X-AuditID: 1180711d-b7b18ae000001001-94-4b311348646a
-Received: from agility.apple.com (agility.apple.com [17.201.24.116])
-	(using TLS with cipher AES128-SHA (AES128-SHA/128 bits))
-	(Client did not present a certificate)
-	by relay13.apple.com (Apple SCV relay) with SMTP id EC.F4.04097.843113B4; Tue, 22 Dec 2009 10:43:20 -0800 (PST)
-X-Mailer: Apple Mail (2.1130)
-X-Brightmail-Tracker: AAAAAQAAAZE=
+	id S1752407AbZLVSvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2009 13:51:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751869AbZLVSvr
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Dec 2009 13:51:47 -0500
+Received: from mailout-snc1.facebook.com ([69.63.179.25]:58660 "EHLO
+	mailout-sf2p.facebook.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751858AbZLVSvq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Dec 2009 13:51:46 -0500
+Received: from mail.thefacebook.com (intlb01.snat.snc1.facebook.com [10.128.203.15] (may be forged))
+	by pp02.snc1.tfbnw.net (8.14.1/8.14.1) with ESMTP id nBMIpNQs029664
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Tue, 22 Dec 2009 10:51:23 -0800
+Received: from [172.24.132.94] (192.168.18.252) by mail.TheFacebook.com
+ (192.168.18.105) with Microsoft SMTP Server (TLS) id 8.2.213.0; Tue, 22 Dec
+ 2009 10:51:44 -0800
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.8161:2.4.5,1.2.40,4.0.166 definitions=2009-12-22_09:2009-12-12,2009-12-22,2009-12-22 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=5.0.0-0908210000 definitions=main-0912220154
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135594>
 
-[Resending because I forgot to make the message plain text]
+The author name should never be missing in a valid commit, but
+git shouldn't segfault no matter what is in the object database.
+(Most of the C code was written by Junio.)
 
-I was testing the latest changes to git-svn pushed to Eric's repo (git://git.bogomips.org/git-svn) by cloning a few other projects that I work on, and one of those clones failed where it had succeeded with git 1.6.5.  The error message I received is:
+Signed-off-by: David Reiss <dreiss@facebook.com>
+---
+ builtin-blame.c  |   13 ++++++++++---
+ t/t8003-blame.sh |   13 +++++++++++++
+ 2 files changed, 23 insertions(+), 3 deletions(-)
 
-W:svn cherry-pick ignored (/branches/BranchA:3933-3950) - missing 1 commit(s) (eg 3fc50d3a7e0f555547ab34bb570db47ce71e1abb)
-W:svn cherry-pick ignored (/branches/BranchB:3951-3970) - missing 1 commit(s) (eg 3beb9f2fde0a91aa0e8097e05f9054b23b221daf)
-W:svn cherry-pick ignored (/branches/BranchC:3971-3985) - missing 1 commit(s) (eg a7ae202254604f8a78cca391be36c58efc79eb20)
-Found merge parent (svn:mergeinfo prop): 8b2cf9e9250b5ff1fe47c68215d0a178cfe35a3b
-Found merge parent (svn:mergeinfo prop): 59f8c571ae77885469bb31f007b0048ee7812e07
-fatal: ambiguous argument '0..1': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions
-rev-list -1 0..1: command returned error: 128
-
-At this point, the clone got stuck in a loop and I had to kill it.
-
-Note that all of the projects I cloned had "svn cherry-pick ignored" warnings sprinkled throughout the fetch logs; I'm not sure how much they matter.  It comes from find_extra_svn_parents(), which I would guess is a best-effort algorithm, and any failures to detect extra parents aren't anything to worry about.
-
-Does anyone have suggestions on how I can debug this?  If you want to poke around, I can't provide access to the repository, but I can run commands and relay (sanitized) output if it will aid in debugging.
-
--Andrew
+diff --git a/builtin-blame.c b/builtin-blame.c
+index d4e25a5..14830a3 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -1305,6 +1305,7 @@ static void get_ac_line(const char *inbuf, const char *what,
+ 	error_out:
+ 		/* Ugh */
+ 		*tz = "(unknown)";
++		strcpy(person, *tz);
+ 		strcpy(mail, *tz);
+ 		*time = 0;
+ 		return;
+@@ -1314,20 +1315,26 @@ static void get_ac_line(const char *inbuf, const char *what,
+ 	tmp = person;
+ 	tmp += len;
+ 	*tmp = 0;
+-	while (*tmp != ' ')
++	while (person < tmp && *tmp != ' ')
+ 		tmp--;
++	if (tmp == person)
++		goto error_out;
+ 	*tz = tmp+1;
+ 	tzlen = (person+len)-(tmp+1);
+ 
+ 	*tmp = 0;
+-	while (*tmp != ' ')
++	while (person < tmp && *tmp != ' ')
+ 		tmp--;
++	if (tmp == person)
++		goto error_out;
+ 	*time = strtoul(tmp, NULL, 10);
+ 	timepos = tmp;
+ 
+ 	*tmp = 0;
+-	while (*tmp != ' ')
++	while (person < tmp && *tmp != ' ')
+ 		tmp--;
++	if (tmp <= person)
++		return;
+ 	mailpos = tmp + 1;
+ 	*tmp = 0;
+ 	maillen = timepos - tmp;
+diff --git a/t/t8003-blame.sh b/t/t8003-blame.sh
+index 13c25f1..ad834f2 100755
+--- a/t/t8003-blame.sh
++++ b/t/t8003-blame.sh
+@@ -144,4 +144,17 @@ test_expect_success 'blame path that used to be a directory' '
+ 	git blame HEAD^.. -- path
+ '
+ 
++test_expect_success 'blame to a commit with no author name' '
++  TREE=`git rev-parse HEAD:`
++  cat >badcommit <<EOF
++tree $TREE
++author <noname> 1234567890 +0000
++committer David Reiss <dreiss@facebook.com> 1234567890 +0000
++
++some message
++EOF
++  COMMIT=`git hash-object -t commit -w badcommit`
++  git --no-pager blame $COMMIT -- uno >/dev/null
++'
++
+ test_done
+-- 
+1.6.3.3
