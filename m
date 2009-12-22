@@ -1,88 +1,134 @@
-From: David Reiss <dreiss@facebook.com>
-Subject: [PATCH] Prevent git blame from segfaulting on a missing author name
-Date: Mon, 21 Dec 2009 20:22:43 -0800
-Message-ID: <4B304993.2040600@facebook.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Prevent git blame from segfaulting on a missing author
+ name
+Date: Mon, 21 Dec 2009 23:25:15 -0800
+Message-ID: <7viqbz4gis.fsf@alter.siamese.dyndns.org>
+References: <4B304993.2040600@facebook.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 22 07:52:37 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: David Reiss <dreiss@facebook.com>
+X-From: git-owner@vger.kernel.org Tue Dec 22 08:25:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NMybl-0000eE-GN
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Dec 2009 07:52:37 +0100
+	id 1NMz7Z-0002cC-SF
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Dec 2009 08:25:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751539AbZLVGiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2009 01:38:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751378AbZLVGiK
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Dec 2009 01:38:10 -0500
-Received: from mailout-snc1.facebook.com ([69.63.179.25]:58799 "EHLO
-	mailout-snc1.facebook.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751295AbZLVGiJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2009 01:38:09 -0500
-X-Greylist: delayed 8135 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Dec 2009 01:38:09 EST
-Received: from mail.thefacebook.com (intlb01.snat.snc1.facebook.com [10.128.203.18] (may be forged))
-	by pp01.snc1.tfbnw.net (8.14.1/8.14.1) with ESMTP id nBM4MYAO022885
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 21 Dec 2009 20:22:34 -0800
-Received: from [192.168.1.138] (192.168.18.252) by mail.TheFacebook.com
- (192.168.18.105) with Microsoft SMTP Server (TLS) id 8.2.213.0; Mon, 21 Dec
- 2009 20:22:44 -0800
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.8161:2.4.5,1.2.40,4.0.166 definitions=2009-12-21_14:2009-12-12,2009-12-21,2009-12-21 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=5.0.0-0908210000 definitions=main-0912210278
+	id S1752411AbZLVHZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2009 02:25:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752093AbZLVHZY
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Dec 2009 02:25:24 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52504 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752067AbZLVHZX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2009 02:25:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6720AA8128;
+	Tue, 22 Dec 2009 02:25:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HvB+JEkCv4FEeFAa2qw++/ccB2E=; b=siySle
+	NeiS5Vpo2EsXtx8SblUbDxeQIUGzfstZmUZ0UDG/HvrKVPlPr7lKt3LBn8ezozdu
+	D23RiI52CTjiZBhhXodGZSe+47sQJcdsWTmL791wHRz9B9WvqhL76h13V7yM7Oyj
+	wWI8tgQwYTpB6z348FaS8fmYUAaABDTl0v2Qs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TFXYLI+MLF4ygTt+9qsd47qgb/dGdXyL
+	wZqRoM5cG89mV8OFxXcDXUB8oOrSoJuCLLV9Yhcatar1P6k5cxblkroJOxVNckQr
+	IbnfgI4V4NbRMua6nTgxo265LcVk5Juz7/J+9OxW7p3QdLbIbk3t4IxMQCetUqRw
+	fQxUzqjboJw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 448FFA8125;
+	Tue, 22 Dec 2009 02:25:20 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3C460A8122; Tue, 22 Dec 2009
+ 02:25:16 -0500 (EST)
+In-Reply-To: <4B304993.2040600@facebook.com> (David Reiss's message of "Mon\,
+ 21 Dec 2009 20\:22\:43 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 2910924E-EECB-11DE-A5A1-B34DBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135573>
 
-The author name should never be missing in a valid commit, but
-git shouldn't segfault no matter what is in the object database.
+David Reiss <dreiss@facebook.com> writes:
 
-Signed-off-by: David Reiss <dreiss@facebook.com>
----
-git blame was segfaulting on a repro produced by piping mtn git_export
-from the Pidgin repository to git fast-import.  This was the most obvious
-fix, but I'm not sure if it is the best solution.
+> The author name should never be missing in a valid commit, but
+> git shouldn't segfault no matter what is in the object database.
+>
+> Signed-off-by: David Reiss <dreiss@facebook.com>
+> ---
+> git blame was segfaulting on a repro produced by piping mtn git_export
+> from the Pidgin repository to git fast-import.  This was the most obvious
+> fix, but I'm not sure if it is the best solution.
 
-Here's a script that reproduces the segfault.
+Thanks.
 
-#!/bin/sh
-set -e
-git init
-echo line > afile
-git add afile
-TREE=`git write-tree`
-cat >badcommit <<EOF
-tree $TREE
-author <noname> 1234567890 +0000
-committer David Reiss <dreiss@facebook.com> 1234567890 +0000
+While it is _unusual_ not to have a human readable name, if the commits
+come from foreign systems (e.g. CVS/SVN), there often are not sufficient
+information in the source to fabricate names, so we should tolerate them.
 
-some message
-EOF
-COMMIT=`git hash-object -t commit -w badcommit`
-echo "git --no-pager blame $COMMIT -- afile"
-git --no-pager blame $COMMIT -- afile
+We might want to also teach fast-import to warn when asked (i.e. when we
+are feeding from a foreign interface that is designed to read from a
+source that is capable of recording real names), but we shouldn't prevent
+it from creating such a commit.
+
+> Here's a script that reproduces the segfault.
+
+Please make that into a new test in an existing test suite somewhere in t/
+directory.
 
 
- builtin-blame.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I think we probably should prepare ourselves to be fed with even more
+broken commits, perhaps like this, if we are fixing it..
+
+ builtin-blame.c |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/builtin-blame.c b/builtin-blame.c
-index d4e25a5..5e19c79 100644
+index d4e25a5..14830a3 100644
 --- a/builtin-blame.c
 +++ b/builtin-blame.c
-@@ -1326,7 +1326,7 @@ static void get_ac_line(const char *inbuf, const char *what,
+@@ -1305,6 +1305,7 @@ static void get_ac_line(const char *inbuf, const char *what,
+ 	error_out:
+ 		/* Ugh */
+ 		*tz = "(unknown)";
++		strcpy(person, *tz);
+ 		strcpy(mail, *tz);
+ 		*time = 0;
+ 		return;
+@@ -1314,20 +1315,26 @@ static void get_ac_line(const char *inbuf, const char *what,
+ 	tmp = person;
+ 	tmp += len;
+ 	*tmp = 0;
+-	while (*tmp != ' ')
++	while (person < tmp && *tmp != ' ')
+ 		tmp--;
++	if (tmp == person)
++		goto error_out;
+ 	*tz = tmp+1;
+ 	tzlen = (person+len)-(tmp+1);
+ 
+ 	*tmp = 0;
+-	while (*tmp != ' ')
++	while (person < tmp && *tmp != ' ')
+ 		tmp--;
++	if (tmp == person)
++		goto error_out;
+ 	*time = strtoul(tmp, NULL, 10);
  	timepos = tmp;
  
  	*tmp = 0;
 -	while (*tmp != ' ')
-+	while (tmp > person && *tmp != ' ')
++	while (person < tmp && *tmp != ' ')
  		tmp--;
++	if (tmp <= person)
++		return;
  	mailpos = tmp + 1;
  	*tmp = 0;
--- 
-1.6.3.3
+ 	maillen = timepos - tmp;
