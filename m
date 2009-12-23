@@ -1,69 +1,108 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Regression: git-svn clone failure
-Date: Wed, 23 Dec 2009 13:09:14 +1300
-Message-ID: <4B315FAA.2090708@vilain.net>
-References: <8BD646EB-3F47-41F8-918C-19133CCCA89C@apple.com> <20091222192115.GA10313@dcvr.yhbt.net> <B82A784D-C8D7-4DDF-AE63-390C7AE1CC2D@apple.com> <1261516416.23944.44.camel@denix> <7vbphqzo2y.fsf@alter.siamese.dyndns.org>
+From: Robert Zeh <robert.a.zeh@gmail.com>
+Subject: [PATCH] git svn: add (failing) test for a git svn gc followed by a 
+	git svn mkdirs
+Date: Tue, 22 Dec 2009 22:08:15 -0600
+Message-ID: <57d579150912222008j19b16b1aq88ebd0938c2553e9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Andrew Myrick <amyrick@apple.com>,
-	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 23 01:09:32 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Dec 23 05:08:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NNEnD-0002vK-Qm
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Dec 2009 01:09:32 +0100
+	id 1NNIWQ-0005dD-TC
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Dec 2009 05:08:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752058AbZLWAJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2009 19:09:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751548AbZLWAJS
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Dec 2009 19:09:18 -0500
-Received: from bertrand.catalyst.net.nz ([202.78.240.40]:44005 "EHLO
-	mail.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751847AbZLWAJR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2009 19:09:17 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail.catalyst.net.nz (Postfix) with ESMTP id 7063E31D4E;
-	Wed, 23 Dec 2009 13:09:15 +1300 (NZDT)
-X-Virus-Scanned: Debian amavisd-new at catalyst.net.nz
-Received: from mail.catalyst.net.nz ([127.0.0.1])
-	by localhost (bertrand.catalyst.net.nz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZZ4FdIinPQzR; Wed, 23 Dec 2009 13:09:14 +1300 (NZDT)
-Received: from [IPv6:2404:130:0:1000:21d:7dff:fe90:5fe0] (unknown [IPv6:2404:130:0:1000:21d:7dff:fe90:5fe0])
-	(Authenticated sender: samv)
-	by mail.catalyst.net.nz (Postfix) with ESMTPSA id D874731C7A;
-	Wed, 23 Dec 2009 13:09:14 +1300 (NZDT)
-User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
-In-Reply-To: <7vbphqzo2y.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.0
+	id S1752771AbZLWEIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2009 23:08:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752768AbZLWEIT
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Dec 2009 23:08:19 -0500
+Received: from mail-yw0-f182.google.com ([209.85.211.182]:64784 "EHLO
+	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752771AbZLWEIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2009 23:08:16 -0500
+Received: by ywh12 with SMTP id 12so7474397ywh.21
+        for <git@vger.kernel.org>; Tue, 22 Dec 2009 20:08:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=UpT4E3TuLCB3+0nAB277yBzrE7dHapd8b9PbO0IQLXM=;
+        b=jU4IBv89Pbi0YtTmsIFRBobPr5wv14VVZigcFQ0NQHyspLfqSo+fs8xT/33dyy9/nk
+         dCXdGU1J0lRShHdGbKEMUZX2Ebe19H1m7bOwwiHYrCa94IdObcmBV/Kv1BIjrdfYSTii
+         jB7gdin4dfbG3H8fbeHmPn0e5NnH7658l+kEc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=XyQFZFigsBTZaVYUzCVS1KN6btAu3dbfjJ5bBKTax8alW4GTUYg1KDFIw5/U0j3ZqK
+         fzP+sWfbDBzzOrH3M3/VPvkWYmzww+vEk0GGYBDVucv6xO4BWYzTAD7DIGBkwJ8AfIHO
+         FR30FcdEAqTeJ1kkyRUpPRnX3xT8vuL3G0cVU=
+Received: by 10.150.118.37 with SMTP id q37mr13766443ybc.322.1261541295738; 
+	Tue, 22 Dec 2009 20:08:15 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135610>
 
-Junio C Hamano wrote:
-> Sam Vilain <sam@vilain.net> writes:
->   
->> With git, merge parent relationships imply (conceptually, anyway) that all of the changes reachable from that branch are included in the commit.  If someone is doing cherry-picking, then they are specifically excluding some commits, so adding a merge parent to that branch isn't right.
->> ...
->> Subject: [PATCH] git-svn: consider 90% of a branch cherry picked to be a merge
->>
->> Be slightly fuzzy when deciding if a branch is a merge or a cherry pick; ... might ... if ...
->>
->> Signed-off-by: Sam Vilain <sam@vilain.net>
->>     
->
-> If I were _using_ git-svn (or any other tool), I would rather be forced to ... sort out the conflict myself ... rather than an automated but unreliable operation that drops changes randomly, ... and reports "everything is peachy".
->
-> That sounds horrible, as you cannot trust your merges anymore.  I hope I
-> am mis-interpreting what you wrote above.
->   
+git svn gc will compress the unhandled.log files that git svn mkdirs reads,
+causing git svn mkdirs to skip directory creation.
+---
+ t/t9152-svn-empty-dirs-after-gc.sh |   41 ++++++++++++++++++++++++++++++++++++
+ 1 files changed, 41 insertions(+), 0 deletions(-)
+ create mode 100755 t/t9152-svn-empty-dirs-after-gc.sh
 
-Welcome to the world of SVN, Junio. It's a world of sunshine and
-happiness, pain and despair.
-
-Sam.
+diff --git a/t/t9152-svn-empty-dirs-after-gc.sh
+b/t/t9152-svn-empty-dirs-after-gc.sh
+new file mode 100755
+index 0000000..9ac6ea9
+--- /dev/null
++++ b/t/t9152-svn-empty-dirs-after-gc.sh
+@@ -0,0 +1,41 @@
++#!/bin/sh
++#
++# Copyright (c) 2009 Robert Zeh
++
++test_description='git svn creates empty directories, calls git gc,
+makes sure they are still empty'
++. ./lib-git-svn.sh
++
++test_expect_success 'initialize repo' '
++	for i in a b c d d/e d/e/f "weird file name"
++	do
++		svn_cmd mkdir -m "mkdir $i" "$svnrepo"/"$i"
++	done
++'
++
++test_expect_success 'clone' 'git svn clone "$svnrepo" cloned'
++
++test_expect_success 'git svn gc runs' '
++	(
++		cd cloned &&
++		git svn gc
++	)
++'
++
++test_expect_success 'git svn mkdirs recreates empty directories after
+git svn gc' '
++	(
++		cd cloned &&
++		rm -r * &&
++		git svn mkdirs &&
++		for i in a b c d d/e d/e/f "weird file name"
++		do
++			if ! test -d "$i"
++			then
++				echo >&2 "$i does not exist"
++				exit 1
++			fi
++		done
++	)
++'
++
++
++test_done
+-- 
+1.6.6.rc3.dirty
