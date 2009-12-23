@@ -1,76 +1,107 @@
-From: "NODA, Kai" <nodakai@gmail.com>
-Subject: Re: git tag --contains <commit> -n=1 ?
-Date: Thu, 24 Dec 2009 05:37:35 +0900
-Message-ID: <4B327F8F.2060106@gmail.com>
-References: <4B324327.5010809@gmail.com> <m2fx71pq0p.fsf@whitebox.home>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn: handling merge-base failures
+Date: Wed, 23 Dec 2009 20:57:51 +0000
+Message-ID: <20091223205751.GE13735@dcvr.yhbt.net>
+References: <931B0483-7628-488E-BB9F-C40346353149@apple.com> <20091223200936.GA13735@dcvr.yhbt.net> <940F72F6-8FE5-42AE-84A1-8C4A77B57188@apple.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 23 21:38:06 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>
+To: Andrew Myrick <amyrick@apple.com>
+X-From: git-owner@vger.kernel.org Wed Dec 23 21:57:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NNXy9-0002en-AX
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Dec 2009 21:38:05 +0100
+	id 1NNYHM-0002Fy-7b
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Dec 2009 21:57:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754496AbZLWUhl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Dec 2009 15:37:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752153AbZLWUhl
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Dec 2009 15:37:41 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:50675 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751889AbZLWUhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Dec 2009 15:37:39 -0500
-Received: by yxe17 with SMTP id 17so7114007yxe.33
-        for <git@vger.kernel.org>; Wed, 23 Dec 2009 12:37:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=X79+9WN3uzAYCo3pgp1uM2j6m8kBF242+b5oa5CB3Io=;
-        b=GZRRiwmg15S1Us1vvJKqae64w/226naDLjt0bUqYxuZSNQp4rHt0hTW9nssWFOHttP
-         XVXo1iLM1VNpanQYshQInhDjoDyHR+o4J/GbBUo2oTcj7SzJfcD92ZXwgXRxB/851REr
-         edlX0F/hBNUaYy1hgC8XyiwubGR703bpttWhE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        b=tENgmEq+p2YpWk2vdHcoA85CKnDoAm0MjT/YMKmQGeVMVjA6ZTTTugocTg07kwfC4a
-         CfjfXDvXEwuz2WmBYQNR9AYhndJTmqFnhrV/QPrEaSzC9FJuqPEZPl/pdipQyliOR8Le
-         P3bzNuu3h1MEEpaVrjEME35X+wnOc+ZfqXQZs=
-Received: by 10.150.130.38 with SMTP id c38mr7573324ybd.213.1261600659300;
-        Wed, 23 Dec 2009 12:37:39 -0800 (PST)
-Received: from ?192.168.1.50? (i254229.dynamic.ppp.asahi-net.or.jp [61.125.254.229])
-        by mx.google.com with ESMTPS id 20sm2898808ywh.47.2009.12.23.12.37.37
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 23 Dec 2009 12:37:38 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <m2fx71pq0p.fsf@whitebox.home>
+	id S1753803AbZLWU5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Dec 2009 15:57:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753582AbZLWU5w
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Dec 2009 15:57:52 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:53618 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753345AbZLWU5w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Dec 2009 15:57:52 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id B1A761F525;
+	Wed, 23 Dec 2009 20:57:51 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <940F72F6-8FE5-42AE-84A1-8C4A77B57188@apple.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135636>
 
-Thank you for your reply, Andreas
-
-Andreas Schwab wrote:
-...
->> Here I wonder whether "head -1" is generally correct or not when I want
->> the oldest tag.
+Andrew Myrick <amyrick@apple.com> wrote:
+> On Dec 23, 2009, at 12:09 PM, Eric Wong wrote:
+> > Andrew Myrick <amyrick@apple.com> wrote:
+> >> One of my projects is failing to clone because merge-base is failing
+> >> on one of the revisions; the branch is a partial branch, so merge-base
+> >> can't find a common ancestor with trunk.  I'd like to catch the
+> >> exception that command_oneline should throw when merge-base fails, but
+> >> my perl is very rusty and I'm struggling to get git-svn.perl to grok
+> >> the Git::Error::Command class.  What is the appropriate way to import
+> >> that class?  Or more generally, is there a better solution to handling
+> >> this error case?
+> > 
+> > Hi Andrew,
+> > 
+> > Git::Error::Command should be imported with the rest of Git.pm
+> > 
+> > It's a special way of doing exceptions in Perl which I don't see much
+> > point of...  Looking at git-send-email as an example, it does this:
+> > 
+> > 	use Error qw(:try);
+> > 	use Git;
+> > 
+> > 	try {
+> > 		# something that will throw
+> > 	} catch Git::Error::Command with {
+> > 		# error handling
+> > 	}
 > 
-> Since the output of git tag is sorted by name, generally not.
+> I looked at git-send-email's example, but I wanted to do a bit more:
+> 	
+> 	try {
+> 		# command_oneline(...);
+> 	} catch Git::Error::Command with {
+> 		$E = shift;
+> 		if ($E->value() == 1) {
+> 			# do something
+> 		} else {
+> 			# do something else
+> 		}
+> 	}
+>  	
+> This is used in perl/Git.pm, but when I tried it in git-svn.perl, it
+> fails with the error "Can't locate object method 'value' via package
+> 'Git::SVN'".
 
-Wow, I didn't know that.
-But then, under the assumption that tags have names like verNNN,
-that behavior ensures me that "head -1" works as intended.
+That's strange.  I'm at a bit of a loss here so I'll wait for somebody
+with more Perl knowledge than myself.
 
-Maybe I look at its implementation ( refs.c:do_for_each_ref , right?)
-but this seems a tough code to comprehend, especially around
-packed/loose/extra ...
+What happens when you dump @_ in your catch block?
 
-Thanks,
-Kai
+	use Data::Dumper;
+	try {
+	} catch Git::Error::Command with {
+		print STDERR Dumper(\@_);
+	}
+
+> Presumably $@ contains the Git::Error::Command object, which leaves me
+> in the same spot, unfortunately.
+> 
+> > But yes, it is Perl after all and TMTOWTDI :)
+> 
+> Is there ever :)
+
+Yes I'm lost here, too, so in these cases I default to putting
+print statements everywhere and Data::Dumper :)
+
+-- 
+Eric Wong
