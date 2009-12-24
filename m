@@ -1,63 +1,53 @@
-From: Fyn Fynn <fynfynn@gmail.com>
-Subject: Specifying excludesfile in a portable way?
-Date: Wed, 23 Dec 2009 19:45:14 -0800
-Message-ID: <1a04eebf0912231945l3235bc4dpdd8c541feef9bdd3@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git tag --contains <commit> -n=1 ?
+Date: Thu, 24 Dec 2009 00:52:58 -0500
+Message-ID: <20091224055257.GA419@sigill.intra.peff.net>
+References: <4B324327.5010809@gmail.com>
+ <m2fx71pq0p.fsf@whitebox.home>
+ <4B327F8F.2060106@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 24 04:47:23 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "NODA, Kai" <nodakai@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 24 06:53:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NNefX-0002lm-MY
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Dec 2009 04:47:20 +0100
+	id 1NNgdQ-000344-8q
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Dec 2009 06:53:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751896AbZLXDpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Dec 2009 22:45:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751574AbZLXDpQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Dec 2009 22:45:16 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:62714 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751341AbZLXDpP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Dec 2009 22:45:15 -0500
-Received: by yxe17 with SMTP id 17so7345795yxe.33
-        for <git@vger.kernel.org>; Wed, 23 Dec 2009 19:45:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=TXGxaNLndufN50A7+Emp6qe+x7OqxWwuZkKkuOvl6rk=;
-        b=P5b8W9AWVhKOuJiPm++BfJ4b+Wbe8EeQxrzhsiS5jUN0i1OskFYElKkiQ+UDQI4wLO
-         gumlHdQGtHgkzcfrCCiZv2S3bEw2DeM29YOuAdE1wk1CeTWGFHwQ2JtQWXAiG+oR/FLd
-         h3uuUOTEjmKvGsBuVOGiBkAxmnlvTMwE0k7lU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=bBx0qPbsxxqAmzkT9aAsLGwbqovZuCYcs9atkS4jT7x9UbfxJ8x38q6tna7Wl5+FB+
-         E4A/17XSO27ikEIYklioyXpF5vbFX3C1iPVhveqatqnriro08CEBAvjOybGzQmUH1KKD
-         Re3AJXJJE8BVyEQDRsiPXy3zxgaMn+ch8HoMk=
-Received: by 10.101.178.20 with SMTP id f20mr10226479anp.67.1261626314662; 
-	Wed, 23 Dec 2009 19:45:14 -0800 (PST)
+	id S1752152AbZLXFxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Dec 2009 00:53:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751792AbZLXFxE
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Dec 2009 00:53:04 -0500
+Received: from peff.net ([208.65.91.99]:36217 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751574AbZLXFxB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Dec 2009 00:53:01 -0500
+Received: (qmail 21401 invoked by uid 107); 24 Dec 2009 05:57:39 -0000
+Received: from c-71-206-170-120.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.170.120)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 24 Dec 2009 00:57:39 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Dec 2009 00:52:58 -0500
+Content-Disposition: inline
+In-Reply-To: <4B327F8F.2060106@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135640>
 
-I have specify an excludesfile in my ~/.gitconfig:
+On Thu, Dec 24, 2009 at 05:37:35AM +0900, NODA, Kai wrote:
 
-  [core]
-      excludesfile = /Users/fynn/.gitexcludes
+> >Since the output of git tag is sorted by name, generally not.
+> 
+> Wow, I didn't know that.
+> But then, under the assumption that tags have names like verNNN,
+> that behavior ensures me that "head -1" works as intended.
 
-This works fine for my OS X workstation. But when I sync this
-.gitconfig to our Linux server, the excludesfile is ignored because my
-home directory there is /home/fynn.
+If that assumption does not hold, you can also sort by date. See:
 
-Is there a way to specify that in a portable way?  I tried both
-~/.gitexcludes and $HOME/.gitexcludes; neither worked on any platform.
+  http://article.gmane.org/gmane.comp.version-control.git/133586
 
-git version on both platforms is 1.6.4
-
-Thanks,
-Fynn
+-Peff
