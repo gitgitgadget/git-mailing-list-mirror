@@ -1,103 +1,80 @@
-From: David Greaves <david@dgreaves.com>
-Subject: Re: elegant(?) debian topgit workflow?
-Date: Thu, 24 Dec 2009 16:34:10 +0000
-Message-ID: <4B339802.7040003@dgreaves.com>
-References: <200912161113.38396.thomas@koch.ro> <94a0d4530912240714y798085d8r3bf88011e8ec782b@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: thomas@koch.ro, debian-devel@lists.debian.org, git@vger.kernel.org, 
- vcs-pkg-discuss@lists.alioth.debian.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: bounce-debian-devel=debian-devel=m.gmane.org@lists.debian.org Thu Dec 24 17:51:20 2009
-Return-path: <bounce-debian-devel=debian-devel=m.gmane.org@lists.debian.org>
-Envelope-to: debian-devel@m.gmane.org
-Received: from liszt.debian.org ([82.195.75.100])
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: [RFC PATCH 2/2] Improve transport helper exec failure reporting
+Date: Thu, 24 Dec 2009 19:49:31 +0200
+Message-ID: <1261676971-3285-3-git-send-email-ilari.liusvaara@elisanet.fi>
+References: <1261676971-3285-1-git-send-email-ilari.liusvaara@elisanet.fi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 24 18:49:44 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NNqu7-0006RO-AV
-	for debian-devel@m.gmane.org; Thu, 24 Dec 2009 17:51:11 +0100
-Received: from localhost (localhost [127.0.0.1])
-	by liszt.debian.org (Postfix) with QMQP
-	id 8173013A6CAA; Thu, 24 Dec 2009 16:51:08 +0000 (UTC)
-Old-Return-Path: <david@dgreaves.com>
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on liszt.debian.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=4.0 tests=LDO_WHITELIST,
-	MURPHY_DRUGS_REL8 autolearn=failed version=3.2.5
-X-Original-To: lists-debian-devel@liszt.debian.org
-Delivered-To: lists-debian-devel@liszt.debian.org
-Received: from localhost (localhost [127.0.0.1])
-	by liszt.debian.org (Postfix) with ESMTP id AE6EB2D0D65
-	for <lists-debian-devel@liszt.debian.org>; Thu, 24 Dec 2009 16:34:22 +0000 (UTC)
-X-Virus-Scanned: at lists.debian.org with policy bank en-ht
-X-Amavis-Spam-Status: No, score=-6.98 tagged_above=-10000 required=5.3
-	tests=[BAYES_00=-2, LDO_WHITELIST=-5, MURPHY_DRUGS_REL8=0.02]
-	autolearn=ham
-Received: from liszt.debian.org ([127.0.0.1])
-	by localhost (lists.debian.org [127.0.0.1]) (amavisd-new, port 2525)
-	with ESMTP id gl6pR+e2IfIY for <lists-debian-devel@liszt.debian.org>;
-	Thu, 24 Dec 2009 16:34:15 +0000 (UTC)
-X-policyd-weight: DYN_NJABL=SKIP(0) NOT_IN_SBL_XBL_SPAMHAUS=-1.5 NOT_IN_BL_NJABL=-1.5 DSBL_ORG=SKIP(0) CL_IP_EQ_FROM_MX=-3.1; rate: -6.1
-Received: from mail.ukfsn.org (mail.ukfsn.org [77.75.108.10])
-	by liszt.debian.org (Postfix) with ESMTP id 4C0252D0D20
-	for <debian-devel@lists.debian.org>; Thu, 24 Dec 2009 16:34:14 +0000 (UTC)
-Received: from localhost (smtp-filter.ukfsn.org [192.168.54.205])
-	by mail.ukfsn.org (Postfix) with ESMTP id 283BDDEFBE;
-	Thu, 24 Dec 2009 16:34:12 +0000 (GMT)
-Received: from mail.ukfsn.org ([192.168.54.25])
-	by localhost (smtp-filter.ukfsn.org [192.168.54.205]) (amavisd-new, port 10024)
-	with ESMTP id N0AL0iWlkoG4; Thu, 24 Dec 2009 16:34:11 +0000 (GMT)
-Received: from elm.dgreaves.com (unknown [78.32.229.233])
-	by mail.ukfsn.org (Postfix) with ESMTP id E8F2FDEC8F;
-	Thu, 24 Dec 2009 16:34:11 +0000 (GMT)
-Received: from ash.dgreaves.com ([10.0.0.111])
-	by elm.dgreaves.com with esmtp (Exim 4.69)
-	(envelope-from <david@dgreaves.com>)
-	id 1NNqdf-0004fJ-B0; Thu, 24 Dec 2009 16:34:11 +0000
-User-Agent: Mozilla-Thunderbird 2.0.0.22 (X11/20090701)
-In-Reply-To: <94a0d4530912240714y798085d8r3bf88011e8ec782b@mail.gmail.com>
-X-Enigmail-Version: 0.95.0
-X-Rc-Spam: 2008-11-04_01
-X-Rc-Virus: 2007-09-13_01
-X-Rc-Spam: 2008-11-04_01
-Resent-Message-ID: <MqGIYf3aGhJ.A.aMD.8v5MLB@liszt>
-Resent-From: debian-devel@lists.debian.org
-X-Mailing-List: <debian-devel@lists.debian.org> archive/latest/258235
-X-Loop: debian-devel@lists.debian.org
-List-Id: <debian-devel.lists.debian.org>
-List-Post: <mailto:debian-devel@lists.debian.org>
-List-Help: <mailto:debian-devel-request@lists.debian.org?subject=help>
-List-Subscribe: <mailto:debian-devel-request@lists.debian.org?subject=subscribe>
-List-Unsubscribe: <mailto:debian-devel-request@lists.debian.org?subject=unsubscribe>
-Precedence: list
-Resent-Sender: debian-devel-request@lists.debian.org
-Resent-Date: Thu, 24 Dec 2009 16:51:08 +0000 (UTC)
+	id 1NNrok-0000Y9-Cv
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Dec 2009 18:49:42 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756911AbZLXRtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Dec 2009 12:49:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755921AbZLXRti
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Dec 2009 12:49:38 -0500
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:53583 "EHLO
+	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750772AbZLXRtg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Dec 2009 12:49:36 -0500
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 6B65BC7DCC
+	for <git@vger.kernel.org>; Thu, 24 Dec 2009 19:49:35 +0200 (EET)
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A01B4F6860D; Thu, 24 Dec 2009 19:49:35 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 4DDFC2BD5A
+	for <git@vger.kernel.org>; Thu, 24 Dec 2009 19:49:34 +0200 (EET)
+X-Mailer: git-send-email 1.6.6.3.gaa2e1
+In-Reply-To: <1261676971-3285-1-git-send-email-ilari.liusvaara@elisanet.fi>
+X-Antivirus: VAMS
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135656>
 
-Felipe Contreras wrote:
-> On Wed, Dec 16, 2009 at 12:13 PM, Thomas Koch <thomas@koch.ro> wrote:
->> branches
->> --------
->>
->> upstream
-> 
-> I would call it 'master'. That's how upstream would call it.
-> 
->> debian/*, fixes/*, features/* - topgit branches based on upstream
->> patches - the hero
->> master - contains the debian/ dir and is the branch we build from
-> 
-> Think about other systems, like Ubuntu and Maemo, it would be nice to
-> have branches both for Maemo and Debian on the same repo:
-> debian - what you call 'master'
-> debian-patches - what you call 'patches'
-> maemo5 - contains the debian/ dir, but for Maemo 5
-> maemo5-patches - patches for Maemo 5, might be based on top of debian-patches
+Previously transport-helper exec failure error reporting was pretty
+much useless as it didn't report errors from execve, only from pipe
+and fork. Now that run-command passes errno from exec, use the
+improved support to actually print useful errors if execution fails.
 
-I've been touting for feedback on this for a while :)
+Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+---
+ transport-helper.c |   14 ++++++++++----
+ 1 files changed, 10 insertions(+), 4 deletions(-)
 
-http://wiki.maemo.org/Mer/Build/UsingGitorious
-
-David
-
+diff --git a/transport-helper.c b/transport-helper.c
+index 5078c71..0965c9b 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -31,13 +31,19 @@ static struct child_process *get_helper(struct transport *transport)
+ 	helper->out = -1;
+ 	helper->err = 0;
+ 	helper->argv = xcalloc(4, sizeof(*helper->argv));
+-	strbuf_addf(&buf, "remote-%s", data->name);
++	strbuf_addf(&buf, "git-remote-%s", data->name);
+ 	helper->argv[0] = strbuf_detach(&buf, NULL);
+ 	helper->argv[1] = transport->remote->name;
+ 	helper->argv[2] = transport->url;
+-	helper->git_cmd = 1;
+-	if (start_command(helper))
+-		die("Unable to run helper: git %s", helper->argv[0]);
++	helper->git_cmd = 0;
++	if (start_command(helper)) {
++		if (errno == ENOENT)
++			die("Unable to find remote helper for \"%s\"",
++				data->name);
++		else
++			die("Unable to run helper %s: %s", helper->argv[0],
++				strerror(errno));
++	}
+ 	data->helper = helper;
+ 
+ 	write_str_in_full(helper->in, "capabilities\n");
 -- 
-"Don't worry, you'll be fine; I saw it work in a cartoon once..."
+1.6.6.3.gaa2e1
