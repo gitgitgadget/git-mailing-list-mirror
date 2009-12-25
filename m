@@ -1,83 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 1/2] Report exec errors from run-command
-Date: Fri, 25 Dec 2009 00:40:11 -0800
-Message-ID: <7vd423e9as.fsf@alter.siamese.dyndns.org>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [RFC PATCH 2/2] Improve transport helper exec failure reporting
+Date: Fri, 25 Dec 2009 11:32:20 +0200
+Message-ID: <20091225093220.GA8319@Knoppix>
 References: <1261676971-3285-1-git-send-email-ilari.liusvaara@elisanet.fi>
- <1261676971-3285-2-git-send-email-ilari.liusvaara@elisanet.fi>
- <7vr5qjecbb.fsf@alter.siamese.dyndns.org>
+ <1261676971-3285-3-git-send-email-ilari.liusvaara@elisanet.fi>
+ <7vljgrebv2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Fri Dec 25 09:44:01 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 25 10:34:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NO5mD-0002kZ-Ft
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Dec 2009 09:44:01 +0100
+	id 1NO6YX-000618-Kd
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Dec 2009 10:33:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752520AbZLYIkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Dec 2009 03:40:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752360AbZLYIkV
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Dec 2009 03:40:21 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55899 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752165AbZLYIkU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Dec 2009 03:40:20 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D498DAA032;
-	Fri, 25 Dec 2009 03:40:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bEC+pG8zXZYdr6vsJ4bTlpbZXVs=; b=tqXLjT
-	RbpScuVeVZPux7fU/Pa2pb5DN5VYqO9oXpoq3H4viHSgevMwV5eSIOLiwT22w9X7
-	qMXcj9uNkRK6SHLTYsqeBT8K7YVdZuIqMd4tKL9zPaYxu0hthjGxuSBTI/xqet2w
-	0j6RoUx2+/vrRfyWvllZTUdy7uB/3lo7KggcE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sgGbirPhFxmyqefqIEWH0pzaykGy2AzO
-	9gSpxUVH6ymRymJ9qtuvn0OMNjQRdXjSct1qtCyUE4Ok1E3IUNfwqW7bSGtBcddc
-	jvFJJ4lAKBJRv5PLFzxoxT1tIgHuo6zWTN44ICHBO+BuQ+4iouZwT5GoC6ASGSk3
-	Kp2nrb+8hgA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B1F5CAA031;
-	Fri, 25 Dec 2009 03:40:15 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DA868AA02A; Fri, 25 Dec 2009
- 03:40:12 -0500 (EST)
-In-Reply-To: <7vr5qjecbb.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu\, 24 Dec 2009 23\:35\:04 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1FCC14AC-F131-11DE-AC95-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1752708AbZLYJc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Dec 2009 04:32:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752518AbZLYJc1
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Dec 2009 04:32:27 -0500
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:56447 "EHLO
+	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751900AbZLYJc0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Dec 2009 04:32:26 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 3CC498C14E;
+	Fri, 25 Dec 2009 11:32:25 +0200 (EET)
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A078E737858; Fri, 25 Dec 2009 11:32:25 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id ECCD9407D;
+	Fri, 25 Dec 2009 11:32:21 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <7vljgrebv2.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135669>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Dec 24, 2009 at 11:44:49PM -0800, Junio C Hamano wrote:
+> Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
+> 
+> Looks pretty straightforward, except that I have this nagging feeling that
+> we should *not* be married to the idea of "'proc->git_cmd = 1' is merely a
+> way to save you from typing 'git-' prefix in start_command(proc)".
 
->  - At first reading, the "while (close(fd) < 0 && errno != EBADF);"
->    pattern was a bit of eyesore.  It might be worth factoring that out to
->    a small static helper function that a smart compiler would
->    automatically inline (or mark it as a static inline).
+That is already broken. If nothing previous broke it, then 1/2 of this
+series did.
 
-This also is a minor style thing, but we prefer your
+The immediate executable to run for 'git-foo' && git_cmd = 0: 'git-foo'.
+The immediate executable to run for 'foo' && git_cmd = 1: 'git'(!).
 
->>+		while(close(report_pipe[1]) < 0 && errno != EBADF);
-
-formatted like this:
-
-	while (foobar)
-        	; /* noop */
-
-to
-
- (1) have SP after syntactic keyword like while/if/switch to differentiate
-     from function calls; and 
-
- (2) make the no-op stand out for a bit more visibility.
-
+And one wants exec status for 'git-remote-foo', NOT for 'git'. Thus,
+git_cmd must be 0 (at least without additional flags or flag values).
  
+> For example, we might later want to use different $PATH only when running
+> a git subcommand, and telling run_command() explicitly that we are running
+> a git thing would help if you don't add "git-" to the command line and
+> drop "proc->git_cmd = 1" in the caller like your patch does.
+
+Well, that would require new flag (or git_cmd field value) to mean do direct
+exec with gitexecdir in $PATH. Otherwise, you would either break this piece
+of code, or it would be already broken (depending on value of git_cmd).
+
+-Ilari
