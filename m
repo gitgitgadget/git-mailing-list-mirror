@@ -1,63 +1,95 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [RFC PATCH 1/2] Report exec errors from run-command
-Date: Fri, 25 Dec 2009 15:39:34 +0100
-Message-ID: <200912251539.35201.j6t@kdbg.org>
-References: <1261676971-3285-1-git-send-email-ilari.liusvaara@elisanet.fi> <1261676971-3285-2-git-send-email-ilari.liusvaara@elisanet.fi>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Fri Dec 25 15:40:31 2009
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH 0/4] clone: use --progress to mean -v
+Date: Sat, 26 Dec 2009 01:12:02 +0800
+Message-ID: <1261761126-5784-1-git-send-email-rctay89@gmail.com>
+References: <18831.46833.862.196815@hungover.brentg.com>
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 25 18:12:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NOBLD-0003Pb-C1
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Dec 2009 15:40:31 +0100
+	id 1NODiG-0002S5-Ba
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Dec 2009 18:12:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755232AbZLYOkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Dec 2009 09:40:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755114AbZLYOkS
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Dec 2009 09:40:18 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:39211 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753713AbZLYOkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Dec 2009 09:40:17 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 956642C4007;
-	Fri, 25 Dec 2009 15:40:14 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 8565F19F5C6;
-	Fri, 25 Dec 2009 15:39:35 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <1261676971-3285-2-git-send-email-ilari.liusvaara@elisanet.fi>
-Content-Disposition: inline
+	id S1756347AbZLYRMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Dec 2009 12:12:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755114AbZLYRMX
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Dec 2009 12:12:23 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:34685 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756255AbZLYRMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Dec 2009 12:12:22 -0500
+Received: by ywh6 with SMTP id 6so9018585ywh.4
+        for <git@vger.kernel.org>; Fri, 25 Dec 2009 09:12:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:references;
+        bh=KtGR818TM5EajgBvVPshCxePOAd92EkA5cO+amP9NtE=;
+        b=s9xjtao6TsQhCESpHWH+Q2WWaPOKC5tpL+dz45NsAvX1NCYew0ksKzxJGKmqNJF1xa
+         6pQD/Pi5jT0+MVP9u4RXNbnU5erZL4TGCBnvKdvtPDRMGUqKeB7OiLbdOuj6kWJFAp7E
+         Z7RcupNpq0GYalbLdKPKDyCUe2hh8oAwkk0Vg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:references;
+        b=bwsmKzthQHQr//T1gfN3gotLEfE6YRjOlCT77MeOz41nu8/0DOPjS8UqyvlCj0BwqF
+         DDS7eoJoQh+Ih9UZpcp1x+zKrNVURbewTG5BPutRflE8Rqnd/zghjl+P6Na6jBmY4vV3
+         3u9KBEqDXogpZ4L287Ffnu5iD1JlpDTG6Rp94=
+Received: by 10.91.151.14 with SMTP id d14mr4876184ago.20.1261761141278;
+        Fri, 25 Dec 2009 09:12:21 -0800 (PST)
+Received: from localhost.localdomain (cm133.zeta152.maxonline.com.sg [116.87.152.133])
+        by mx.google.com with ESMTPS id 14sm4629570gxk.2.2009.12.25.09.12.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 25 Dec 2009 09:12:20 -0800 (PST)
+X-Mailer: git-send-email 1.6.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135676>
 
-On Donnerstag, 24. Dezember 2009, Ilari Liusvaara wrote:
-> Previously run-command was unable to report errors happening in exec
-> call. Change it to pass errno from failed exec to errno value at
-> return.
->
-> The errno value passing can be done by opening close-on-exec pipe and
-> piping the error code through in case of failure. In case of success,
-> close-on-exec closes the pipe on successful exec and parent process
-> gets end of file on read.
+This series makes git-clone follow the "argument convention" of
+git-pack-objects, where the option --progress is used to force
+reporting of reporting. This was previously done with -v/--verbose.
 
-The only really *important* errno of a failed exec is ENOENT. For this case, 
-wouldn't it be easier to do the PATH lookup manually in the parent (before 
-the fork()), and use execv() in the forked child rather than execvp()?
+This in effect ensures a single consistent convention regarding
+progress reporting for git commands. Having two conventions may
+potentially confuse users.
 
-There is already a path lookup function in compat/mingw.c; it could certainly 
-need some improvement, but it is a starter.
+On a related note, Brent wrote a patch a while back [1]. This series is
+not as ambitious his and does not deal with the main git options. In
+fact, only the last patch effects the titular change. If a consensus is
+reached on this though, I don't rule out a separate patch/series to
+set the convention at the main git level.
 
-That said, we don't need the stunt that you implemented on WIN32, because by 
-the time mingw_spawnvpe() returns, we have a running child process.
+PS. If someone can enlighten me on the proper noun for the git
+    executable (I said "main git"), I would be very thankful.
 
--- Hannes
+PPS. Merry Christmas and happy holidays. :)
+
+Tay Ray Chuan (4):
+  check stderr with isatty() instead of stdout when deciding to show
+    progress
+  git-clone.txt: reword description of progress behaviour
+  clone: set transport->verbose when -v/--verbose is used
+  clone: use --progress to force progress reporting
+
+ Documentation/git-clone.txt |   12 +++++++++---
+ builtin-clone.c             |    6 ++++++
+ t/t5702-clone-options.sh    |    3 ++-
+ transport-helper.c          |    2 +-
+ transport.c                 |    2 +-
+ transport.h                 |    2 +-
+ 6 files changed, 20 insertions(+), 7 deletions(-)
+
+Footnotes:
+[1] http://marc.info/?l=git&m=123415527432713
+
+--
+Cheers,
+Ray Chuan
