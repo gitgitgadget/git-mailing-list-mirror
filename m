@@ -1,64 +1,62 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] user-manual: use standarized quoting
-Date: Fri, 25 Dec 2009 15:05:49 +0200
-Message-ID: <1261746350-26990-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 25 14:06:14 2009
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: You have local changes; cannot switch branches error question
+Date: Fri, 25 Dec 2009 15:32:03 +0100
+Message-ID: <vpqpr63cefw.fsf@bauges.imag.fr>
+References: <76c5b8580912241425k741b24e9ie8ed92ca7cb8a659@mail.gmail.com>
+	<7vhbrghrsn.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 25 15:32:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NO9rv-0006Zq-Qr
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Dec 2009 14:06:12 +0100
+	id 1NOBDO-0001FH-UW
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Dec 2009 15:32:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752635AbZLYNGA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Dec 2009 08:06:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752312AbZLYNF7
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Dec 2009 08:05:59 -0500
-Received: from mail-fx0-f225.google.com ([209.85.220.225]:44791 "EHLO
-	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752074AbZLYNF7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Dec 2009 08:05:59 -0500
-Received: by fxm25 with SMTP id 25so3288144fxm.21
-        for <git@vger.kernel.org>; Fri, 25 Dec 2009 05:05:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=UWI9AxE/gXJCo0tcv3M+G4XxuJMrpOw+H+XPEeFE5is=;
-        b=Riui8UZbCZVnLH85Omc/c5tN90DWRF6fPu5gdp/ucELjYNPRJr6uyu9iu6PdObEA5D
-         b9Dumoq8cLPW31I2WrpqF0Tkhc6bGRXbCwAj9QEqAn49XIA30H40MHlYg/TCGhZUnv3b
-         t6jlvmli39gyGLYtNoSy3VpQqTeTJUuaWDp6Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=LmKkCqcblz05daYrcENr37gEM3UTmi54R90yC11jh3MbhypXUaZT/DX/eh7uEyYloC
-         FixMSss5mhlkFd5STMWZ+jp8jrbkNC96kR00oAmAr2RBBgc0r6/M2gWS9Vg6JbSy/dhj
-         PevaRU7IA1SxMJ4GgWWcqvBt0zOiyBDUr28tw=
-Received: by 10.223.16.72 with SMTP id n8mr1361311faa.26.1261746356706;
-        Fri, 25 Dec 2009 05:05:56 -0800 (PST)
-Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
-        by mx.google.com with ESMTPS id 15sm3184067fxm.10.2009.12.25.05.05.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 25 Dec 2009 05:05:55 -0800 (PST)
-X-Mailer: git-send-email 1.6.6
+	id S1754920AbZLYOcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Dec 2009 09:32:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754623AbZLYOcR
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Dec 2009 09:32:17 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:57735 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753713AbZLYOcQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Dec 2009 09:32:16 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id nBPEVJgx001707
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 25 Dec 2009 15:31:19 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NOBD1-00054H-Nt; Fri, 25 Dec 2009 15:32:03 +0100
+In-Reply-To: <7vhbrghrsn.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 24 Dec 2009 15\:32\:24 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 25 Dec 2009 15:31:21 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: nBPEVJgx001707
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1262356281.72582@g8keskH+kt5wP+6ADgQk+w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135674>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-This is a big patch that was sent before, but now I'm explaining my rationale
-for the quoting style I used. I noticed a few deviations on my own rules, so I
-fixed them.
+> There are two ways to deal with this situation, one safely, and another
+> quickly.
 
-What do you think?
+And a third one : commit, and then rebase onto the other branch. It's
+safe, and nice when your local changes are ready to commit (then, you
+can write the commit message before bothering about potential merge
+conflicts).
 
-Felipe Contreras (1):
-  user-manual: general quoting improvements
-
- Documentation/user-manual.txt |  884 ++++++++++++++++++++--------------------
- 1 files changed, 442 insertions(+), 442 deletions(-)
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
