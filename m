@@ -1,62 +1,63 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: You have local changes; cannot switch branches error question
-Date: Fri, 25 Dec 2009 15:32:03 +0100
-Message-ID: <vpqpr63cefw.fsf@bauges.imag.fr>
-References: <76c5b8580912241425k741b24e9ie8ed92ca7cb8a659@mail.gmail.com>
-	<7vhbrghrsn.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [RFC PATCH 1/2] Report exec errors from run-command
+Date: Fri, 25 Dec 2009 15:39:34 +0100
+Message-ID: <200912251539.35201.j6t@kdbg.org>
+References: <1261676971-3285-1-git-send-email-ilari.liusvaara@elisanet.fi> <1261676971-3285-2-git-send-email-ilari.liusvaara@elisanet.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 25 15:32:28 2009
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Fri Dec 25 15:40:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NOBDO-0001FH-UW
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Dec 2009 15:32:27 +0100
+	id 1NOBLD-0003Pb-C1
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Dec 2009 15:40:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754920AbZLYOcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Dec 2009 09:32:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754623AbZLYOcR
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Dec 2009 09:32:17 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:57735 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753713AbZLYOcQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Dec 2009 09:32:16 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id nBPEVJgx001707
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 25 Dec 2009 15:31:19 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NOBD1-00054H-Nt; Fri, 25 Dec 2009 15:32:03 +0100
-In-Reply-To: <7vhbrghrsn.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 24 Dec 2009 15\:32\:24 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 25 Dec 2009 15:31:21 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: nBPEVJgx001707
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1262356281.72582@g8keskH+kt5wP+6ADgQk+w
+	id S1755232AbZLYOkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Dec 2009 09:40:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755114AbZLYOkS
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Dec 2009 09:40:18 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:39211 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753713AbZLYOkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Dec 2009 09:40:17 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 956642C4007;
+	Fri, 25 Dec 2009 15:40:14 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 8565F19F5C6;
+	Fri, 25 Dec 2009 15:39:35 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <1261676971-3285-2-git-send-email-ilari.liusvaara@elisanet.fi>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135675>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Donnerstag, 24. Dezember 2009, Ilari Liusvaara wrote:
+> Previously run-command was unable to report errors happening in exec
+> call. Change it to pass errno from failed exec to errno value at
+> return.
+>
+> The errno value passing can be done by opening close-on-exec pipe and
+> piping the error code through in case of failure. In case of success,
+> close-on-exec closes the pipe on successful exec and parent process
+> gets end of file on read.
 
-> There are two ways to deal with this situation, one safely, and another
-> quickly.
+The only really *important* errno of a failed exec is ENOENT. For this case, 
+wouldn't it be easier to do the PATH lookup manually in the parent (before 
+the fork()), and use execv() in the forked child rather than execvp()?
 
-And a third one : commit, and then rebase onto the other branch. It's
-safe, and nice when your local changes are ready to commit (then, you
-can write the commit message before bothering about potential merge
-conflicts).
+There is already a path lookup function in compat/mingw.c; it could certainly 
+need some improvement, but it is a starter.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+That said, we don't need the stunt that you implemented on WIN32, because by 
+the time mingw_spawnvpe() returns, we have a running child process.
+
+-- Hannes
