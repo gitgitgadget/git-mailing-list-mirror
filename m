@@ -1,42 +1,42 @@
-From: Steven Noonan <steven@uplinklabs.net>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
 Subject: Re: Set the repository as it was on an earlier commit
-Date: Fri, 25 Dec 2009 15:24:59 -0800
-Message-ID: <f488382f0912251524i12bf53a4xf381606705abff4b@mail.gmail.com>
+Date: Sat, 26 Dec 2009 00:36:24 +0100
+Message-ID: <adf1fd3d0912251536kbf25272ob0ab8ee90e53861d@mail.gmail.com>
 References: <8c6f7f450912251509i67da4665t78be0bb79f2c40d6@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Sergio Belkin <sebelk@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 26 00:25:09 2009
+X-From: git-owner@vger.kernel.org Sat Dec 26 00:36:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NOJWv-0004HX-CT
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Dec 2009 00:25:09 +0100
+	id 1NOJiE-0007mB-VY
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Dec 2009 00:36:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756786AbZLYXZA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Dec 2009 18:25:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756431AbZLYXZA
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Dec 2009 18:25:00 -0500
-Received: from mail-px0-f189.google.com ([209.85.216.189]:49383 "EHLO
-	mail-px0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753243AbZLYXZA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Dec 2009 18:25:00 -0500
-Received: by pxi27 with SMTP id 27so4570959pxi.4
-        for <git@vger.kernel.org>; Fri, 25 Dec 2009 15:24:59 -0800 (PST)
-Received: by 10.142.122.2 with SMTP id u2mr8669502wfc.46.1261783499938; Fri, 
-	25 Dec 2009 15:24:59 -0800 (PST)
+	id S1756425AbZLYXg2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Dec 2009 18:36:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756255AbZLYXg2
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Dec 2009 18:36:28 -0500
+Received: from mail-fx0-f225.google.com ([209.85.220.225]:57474 "EHLO
+	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753203AbZLYXg2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Dec 2009 18:36:28 -0500
+Received: by fxm25 with SMTP id 25so3490118fxm.21
+        for <git@vger.kernel.org>; Fri, 25 Dec 2009 15:36:24 -0800 (PST)
+Received: by 10.102.207.10 with SMTP id e10mr3462547mug.18.1261784184355; Fri, 
+	25 Dec 2009 15:36:24 -0800 (PST)
 In-Reply-To: <8c6f7f450912251509i67da4665t78be0bb79f2c40d6@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135684>
 
-On Fri, Dec 25, 2009 at 3:09 PM, Sergio Belkin <sebelk@gmail.com> wrote=
-:
+On Sat, Dec 26, 2009 at 12:09 AM, Sergio Belkin <sebelk@gmail.com> wrot=
+e:
 > Hi,
 >
 > Firstly merry Christmas everyone.
@@ -58,14 +58,14 @@ as follows:
 > A---B---C---D to A---B losing C and D commits,
 >
 > I'd like to keep on history C and D commits, can git to do that?
->
-> Thanks in advance!
->
 
-git revert D
-git revert C
+I don't know if it is possible with porcelain commands, but with
+plumbing you can:
 
-Maybe? It would create two revert commits, but it would get you back
-to the state of B.
+# begin with a clean working dir
+git read-tree B
+git commit
+git reset --hard
 
-- Steven
+HTH,
+Santi
