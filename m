@@ -1,58 +1,75 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: [RFC PATCH 1/2] Report exec errors from run-command
-Date: Fri, 25 Dec 2009 19:15:05 +0200
-Message-ID: <20091225171505.GA11830@Knoppix>
-References: <1261676971-3285-1-git-send-email-ilari.liusvaara@elisanet.fi>
- <1261676971-3285-2-git-send-email-ilari.liusvaara@elisanet.fi>
- <200912251539.35201.j6t@kdbg.org>
+From: Sergio Belkin <sebelk@gmail.com>
+Subject: Set the repository as it was on an earlier commit
+Date: Fri, 25 Dec 2009 20:09:24 -0300
+Message-ID: <8c6f7f450912251509i67da4665t78be0bb79f2c40d6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Dec 25 18:15:23 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 26 00:09:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NODl1-0003In-RP
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Dec 2009 18:15:20 +0100
+	id 1NOJHv-00070h-07
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Dec 2009 00:09:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756579AbZLYRPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Dec 2009 12:15:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756558AbZLYRPN
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Dec 2009 12:15:13 -0500
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:45988 "EHLO
-	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756541AbZLYRPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Dec 2009 12:15:11 -0500
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 2179618D03C;
-	Fri, 25 Dec 2009 19:15:09 +0200 (EET)
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A02A22EBCDC; Fri, 25 Dec 2009 19:15:08 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id 0800227D8C;
-	Fri, 25 Dec 2009 19:15:07 +0200 (EET)
-Content-Disposition: inline
-In-Reply-To: <200912251539.35201.j6t@kdbg.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
+	id S1756431AbZLYXJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Dec 2009 18:09:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753071AbZLYXJZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Dec 2009 18:09:25 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:50641 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752128AbZLYXJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Dec 2009 18:09:25 -0500
+Received: by yxe17 with SMTP id 17so8280115yxe.33
+        for <git@vger.kernel.org>; Fri, 25 Dec 2009 15:09:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=tVIqhXUmg3hAzP0Yi4LnLtHwZBRota03WZKxSOqJyu8=;
+        b=UktrFogkwJVPXrcx5YVG6lL1vsIL2WdsII8kRvMwZ61XPeVHhzqXkIu3DIt1dMlJpB
+         nCRJOK8a0Uc9Z833vi2aJOH+iXRtKbI/BWWL/FA7WHHtoVbHo2rS+/9PFdPQt6097M3/
+         p6lTsRKSW5SE+5j0SizXVzz0IQmhwR3rZsuls=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=BHCuRWBZ/7OrtVPpTdzugzhM4FMjbuk6bUgt8YD/N6dxTGAP+6qI6iHH8RSq1nxnNH
+         Fglodf2EC3Plgl5sI9Izq0jHxPSfvJ3CUoc7oXpb7VGt31ruEPeJnDHvesfxYFdG0aZ8
+         hRk9X4Vw/D5YEWGnfjRskC+tt1uKvIXnYawPY=
+Received: by 10.150.29.30 with SMTP id c30mr19226199ybc.246.1261782564234; 
+	Fri, 25 Dec 2009 15:09:24 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135682>
 
-On Fri, Dec 25, 2009 at 03:39:34PM +0100, Johannes Sixt wrote:
-> 
-> The only really *important* errno of a failed exec is ENOENT. For this case, 
-> wouldn't it be easier to do the PATH lookup manually in the parent (before 
-> the fork()), and use execv() in the forked child rather than execvp()?
+Hi,
 
-In fact there is API for getting all valid commands on $PATH for given command
-prefix. That would take care of ENOENT and most of EACCESS.
+Firstly merry Christmas everyone.
 
-But OTOH, its nice to be able to report any error.
+I am somewhat new to git, and I've found great, but still I have some
+doubts about it, let's say I have the following repo with:
 
--Ilari
+A---B---C---D
+
+Being A the first commit,  B the second one an D the last one.
+
+How I do to go back to let's say... B commit status, I mean somewhat as follows:
+
+A---B---C---D---B'
+
+B' would be the same as B. I am not asking to do something so:
+
+A---B---C---D to A---B losing C and D commits,
+
+I'd like to keep on history C and D commits, can git to do that?
+
+Thanks in advance!
+
+-- 
+--
+Open Kairos http://www.sergiobelkin.com
+Watch More TV http://sebelk.blogspot.com
+Sergio Belkin -
