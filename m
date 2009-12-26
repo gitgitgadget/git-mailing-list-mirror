@@ -1,198 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] t4019 "grep" portability fix
-Date: Sat, 26 Dec 2009 13:53:17 -0800
-Message-ID: <7vvdftxv02.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 26 22:54:50 2009
+From: Tarmigan Casebolt <tarmigan+git@gmail.com>
+Subject: [PATCH 2/2] Smart-http: check if repository is OK to export before serving it
+Date: Sat, 26 Dec 2009 18:29:13 -0500
+Message-ID: <1261870153-57572-2-git-send-email-tarmigan+git@gmail.com>
+References: <7vk4w963np.fsf@alter.siamese.dyndns.org>
+ <1261870153-57572-1-git-send-email-tarmigan+git@gmail.com>
+Cc: spearce@spearce.org, git@vger.kernel.org, rctay89@gmail.com,
+	drizzd@aon.at, warthog9@kernel.org,
+	Tarmigan Casebolt <tarmigan+git@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 27 00:30:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NOeb0-0005Qp-7m
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Dec 2009 22:54:46 +0100
+	id 1NOg5I-0004C1-Vz
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Dec 2009 00:30:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752010AbZLZVx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Dec 2009 16:53:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595AbZLZVx1
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Dec 2009 16:53:27 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44433 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751427AbZLZVx0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Dec 2009 16:53:26 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 36A89AA40E;
-	Sat, 26 Dec 2009 16:53:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=P7Hx
-	M3JdJIouKVl8sL1+NgxNoNw=; b=KUfVEhH9hFilsc/DfUvO9YQWDUBnUWx/9v0v
-	B+G9rvvoqxqXJro3xwQMnFq3/jsGGhRsMwwk5pLL12iYXGJKvnMHPjewbRIYgy2s
-	0v+Uo/hopmh+ivo9iC7B6rAO4M/ljrWtCGXK4Rmh6FHFOL/srC+22RDSyQ7sRHqC
-	gRvtOe8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=g1E
-	dVuoi6vkXRWwG2cmQzTM248bPqPj6a1WUsW57PTsp2e3n1hJmOzc6BledU0L1CHG
-	LZdOA9Rqxv16y8y7BnV6b6dAVuECxn6BoC8zh0DI3/WJ6fFPeQEcyJsJdQi34EL7
-	DnW6jzpVtZ5gXN3De/p2fe6tdw4Q7LmvmJ8FP86E=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 240FCAA40D;
-	Sat, 26 Dec 2009 16:53:22 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1A0FCAA40C; Sat, 26 Dec 2009
- 16:53:19 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 15EDA8CC-F269-11DE-B02D-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1752725AbZLZX3w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Dec 2009 18:29:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752194AbZLZX3v
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Dec 2009 18:29:51 -0500
+Received: from mail-qy0-f192.google.com ([209.85.221.192]:33163 "EHLO
+	mail-qy0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752154AbZLZX3v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Dec 2009 18:29:51 -0500
+Received: by mail-qy0-f192.google.com with SMTP id 30so4402376qyk.33
+        for <git@vger.kernel.org>; Sat, 26 Dec 2009 15:29:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=Z8+NVyBQ8mLN3rYkJzpJ0VGJsvV5K7ejaXRKFEt8f+E=;
+        b=W34yUrvXB0TpsLH6dhH/YhIKN85vcpKDPRYm8tj7TqnTgx8VrmM9N3rvCiwZBUWX3r
+         MF7EgcbbXmKx7+jvx3sfWpE93DaRdRLVEDrIgGRRzbOsFPn7aVKFD4lKxOYkX130jXB4
+         LgW8uUhieW/nqXkoZ0WKpxQhGmKdzaCC1pMvo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        b=fd/Gm6JVjl91+bFD1sv6fiSPiozRUz/+zHnAJLqhb2qAfTwBYcHKNcIr0Q8g7zS+dZ
+         XYXAcLh0w6DKQ3heRX5cDcZMy3ffYGWDjtpsbk4Uxi2DpHySvbMcRYqfp26Oa3r+guoF
+         Wn4bfXSkVp+c/n/heSo6MID7vO5RyaVfQh5yM=
+Received: by 10.224.104.132 with SMTP id p4mr6859760qao.256.1261870190682;
+        Sat, 26 Dec 2009 15:29:50 -0800 (PST)
+Received: from localhost.localdomain (c-69-141-159-197.hsd1.nj.comcast.net [69.141.159.197])
+        by mx.google.com with ESMTPS id 22sm9238679qyk.2.2009.12.26.15.29.48
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 26 Dec 2009 15:29:49 -0800 (PST)
+X-Mailer: git-send-email 1.6.6.2.g5daf2
+In-Reply-To: <1261870153-57572-1-git-send-email-tarmigan+git@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135695>
 
-Input to "grep" is supposed to be "text", but we deliberately feed output
-from "git diff --color" to sift it into two sets of lines (ones with
-errors, the other without).  Some implementations of "grep" only report
-matches with the exit status, without showing the matched lines in their
-output (e.g. OpenBSD 4.6, which says "Binary file .. matches").
+Similar to how git-daemon checks whether a repository is OK to be
+exported, smart-http should also check.  This check can be satisfied
+in two different ways: the environmental variable GIT_HTTP_EXPORT_ALL
+may be set to export all repositories, or the individual repository
+may have the file git-daemon-export-ok.
 
-Fortunately, "grep -a" is often a way to force the command to treat its
-input as text.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Tarmigan Casebolt <tarmigan+git@gmail.com>
 ---
- t/t4019-diff-wserror.sh |   56 +++++++++++++++++++++++-----------------------
- 1 files changed, 28 insertions(+), 28 deletions(-)
+ http-backend.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-diff --git a/t/t4019-diff-wserror.sh b/t/t4019-diff-wserror.sh
-index 3a3663f..f6d1f1e 100755
---- a/t/t4019-diff-wserror.sh
-+++ b/t/t4019-diff-wserror.sh
-@@ -20,11 +20,27 @@ test_expect_success setup '
+diff --git a/http-backend.c b/http-backend.c
+index f729488..345c12b 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -648,6 +648,9 @@ int main(int argc, char **argv)
+ 	setup_path();
+ 	if (!enter_repo(dir, 0))
+ 		not_found("Not a git repository: '%s'", dir);
++	if (!getenv("GIT_HTTP_EXPORT_ALL") &&
++	    access("git-daemon-export-ok", F_OK) )
++		not_found("Repository not exported: '%s'", dir);
  
- blue_grep='7;34m' ;# ESC [ 7 ; 3 4 m
- 
-+printf "\033[%s" "$blue_grep" >check-grep
-+if (grep "$blue_grep" <check-grep | grep "$blue_grep") >/dev/null 2>&1
-+then
-+	grep_a=grep
-+elif (grep -a "$blue_grep" <check-grep | grep -a "$blue_grep") >/dev/null 2>&1
-+then
-+	grep_a='grep -a'
-+else
-+	grep_a=grep ;# expected to fail...
-+fi
-+rm -f check-grep
-+
-+prepare_output () {
-+	git diff --color >output
-+	$grep_a "$blue_grep" output >error
-+	$grep_a -v "$blue_grep" output >normal
-+}
-+
- test_expect_success default '
- 
--	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	prepare_output
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT error >/dev/null &&
-@@ -37,9 +53,7 @@ test_expect_success default '
- test_expect_success 'without -trail' '
- 
- 	git config core.whitespace -trail
--	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	prepare_output
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT error >/dev/null &&
-@@ -53,9 +67,7 @@ test_expect_success 'without -trail (attribute)' '
- 
- 	git config --unset core.whitespace
- 	echo "F whitespace=-trail" >.gitattributes
--	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	prepare_output
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT error >/dev/null &&
-@@ -69,9 +81,7 @@ test_expect_success 'without -space' '
- 
- 	rm -f .gitattributes
- 	git config core.whitespace -space
--	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	prepare_output
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT normal >/dev/null &&
-@@ -85,9 +95,7 @@ test_expect_success 'without -space (attribute)' '
- 
- 	git config --unset core.whitespace
- 	echo "F whitespace=-space" >.gitattributes
--	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	prepare_output
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT normal >/dev/null &&
-@@ -101,9 +109,7 @@ test_expect_success 'with indent-non-tab only' '
- 
- 	rm -f .gitattributes
- 	git config core.whitespace indent,-trailing,-space
--	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	prepare_output
- 
- 	grep Eight error >/dev/null &&
- 	grep HT normal >/dev/null &&
-@@ -117,9 +123,7 @@ test_expect_success 'with indent-non-tab only (attribute)' '
- 
- 	git config --unset core.whitespace
- 	echo "F whitespace=indent,-trailing,-space" >.gitattributes
--	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	prepare_output
- 
- 	grep Eight error >/dev/null &&
- 	grep HT normal >/dev/null &&
-@@ -133,9 +137,7 @@ test_expect_success 'with cr-at-eol' '
- 
- 	rm -f .gitattributes
- 	git config core.whitespace cr-at-eol
--	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	prepare_output
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT error >/dev/null &&
-@@ -149,9 +151,7 @@ test_expect_success 'with cr-at-eol (attribute)' '
- 
- 	git config --unset core.whitespace
- 	echo "F whitespace=trailing,cr-at-eol" >.gitattributes
--	git diff --color >output
--	grep "$blue_grep" output >error
--	grep -v "$blue_grep" output >normal
-+	prepare_output
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT error >/dev/null &&
-@@ -195,7 +195,7 @@ test_expect_success 'color new trailing blank lines' '
- 	git add x &&
- 	{ echo a; echo; echo; echo; echo c; echo; echo; echo; echo; } >x &&
- 	git diff --color x >output &&
--	cnt=$(grep "${blue_grep}" output | wc -l) &&
-+	cnt=$($grep_a "${blue_grep}" output | wc -l) &&
- 	test $cnt = 2
- '
- 
+ 	git_config(http_config, NULL);
+ 	cmd->imp(cmd_arg);
+-- 
+1.6.6.2.g5daf2
