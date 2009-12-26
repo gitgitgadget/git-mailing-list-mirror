@@ -1,76 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Does smart-http need git-daemon-export-ok?
-Date: Sat, 26 Dec 2009 09:33:46 -0800
-Message-ID: <7vk4w963np.fsf@alter.siamese.dyndns.org>
-References: <905315640912260821k2fb149b3je69dbea5463afaa3@mail.gmail.com>
+Subject: [PATCH] t1200: work around a bug in some implementations of "find"
+Date: Sat, 26 Dec 2009 13:53:45 -0800
+Message-ID: <7vocllxuza.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Clemens Buchacher <drizzd@aon.at>, "J.H." <warthog9@kernel.org>
-To: Tarmigan <tarmigan+git@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 26 18:34:18 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 26 22:54:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NOaWr-0004OI-DO
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Dec 2009 18:34:13 +0100
+	id 1NOeb0-0005Qp-VM
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Dec 2009 22:54:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752725AbZLZReI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Dec 2009 12:34:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752675AbZLZReH
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Dec 2009 12:34:07 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56344 "EHLO
+	id S1752929AbZLZVxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Dec 2009 16:53:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752873AbZLZVxv
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Dec 2009 16:53:51 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60879 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752593AbZLZReG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Dec 2009 12:34:06 -0500
+	with ESMTP id S1752299AbZLZVxv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Dec 2009 16:53:51 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 77A61AA915;
-	Sat, 26 Dec 2009 12:34:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eMDZpmKsV6pBit4HW8NxcjttMeo=; b=m3+1iN
-	i+iallN5T8RdsU0auoxwckK2u6QvQCdUPf32Z21E9Ig6H7mMXm0ZXQHuGu2UbK3k
-	m86sN2/+hs1FiPSmOUl+KPWo5GkrQN2MsfoiMk9H5zrtCIYjVdRY7QyPGP4j1iRg
-	6CpCvpj93PzGJ7XLL5fpCe3XXkKX58zniLyDI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LF5jlPKhjP4u2B4Obea9nQU30sPHXP71
-	ZuZvIHmlmocOXdhvYWfby2uCSiQ9qmj8hxmtaWuqVYyVpuy+uS68koP8QuXLeank
-	XIQgFFUG2gNoOubCIlMMTPjjCsljzbeTwW1+1cHn8GwdDGcYg9UBAOk9onq7ZvXR
-	Y9s39xBdtys=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 19C62AA914;
-	Sat, 26 Dec 2009 12:33:56 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F08C98B49D;
+	Sat, 26 Dec 2009 16:53:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=8Di2
+	cAHm5tVfMhNDFLy+Sly0jbs=; b=KcjB9HOS41+2eQC5qLeuOjVQzZ1CQTTrUpSC
+	jzJfxhf9YFzE2MbATs+vpbD9k+HoeJoFWhVa343jC51n6Z1ZnpzQWOzPppV1gACo
+	QRGg229IDIhMXHrvjf41A/lt+jsazaGgbRLrD3hbaY8/U94Ei01II/wU4OwPymOl
+	a27uliY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=FiB
+	1TxoH3OJLOs7aJgrN69Syot/ABdqwyrXp6qq133ZQ8q4F88L4MDf95UCe8aViCJN
+	GkA7HJGtKCfZ5IuiwQxiZB5J4v/dk4iSi/O/pBuxgiCBIAXTPLQPpZu6L2mM8+3D
+	v6rg3zRD+q2LS0Sw6e7skysciClJis0ahiR+J9NY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D4D648B49C;
+	Sat, 26 Dec 2009 16:53:47 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 65525AA913; Sat, 26 Dec 2009
- 12:33:48 -0500 (EST)
-In-Reply-To: <905315640912260821k2fb149b3je69dbea5463afaa3@mail.gmail.com>
- (Tarmigan's message of "Sat\, 26 Dec 2009 11\:21\:23 -0500")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 54ABE8B496; Sat, 26 Dec
+ 2009 16:53:46 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D7D81852-F244-11DE-8732-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 254236E4-F269-11DE-9D81-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135693>
 
-Tarmigan <tarmigan+git@gmail.com> writes:
+"find path ..." command should exit with zero status only when all path
+operands were traversed successfully.  When a non-existent path is given,
+however, some implementations of "find" (e.g. OpenBSD 4.6) exit with zero
+status and break the last test in t1200.
 
-> Should the git-http-backend check something like git-daemon-export-ok
-> before serving a repository?
+Rewrite the test to check that there is no regular files in the objects
+fan-out directories to work around this bug; it is closer to what we are
+testing anyway.
 
-I'd agree that it would make sense to have a way to mark individual
-repository for (or not for) export.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t1200-tutorial.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-In "native" case, the chain of events are: client talks to the daemon, the
-daemon checks and decides to (or not to) export, and it runs upload-pack.
-
-In "smart http" case, http-backend is one half of what corresponds to the
-daemon (the other half being your http server configuration), and it is
-more flexible and git specific half, so I'd say it would make sense to
-implement the check that honors the same git-daemon-export-ok flag file in
-it.
+diff --git a/t/t1200-tutorial.sh b/t/t1200-tutorial.sh
+index 238c2f1..ab55eda 100755
+--- a/t/t1200-tutorial.sh
++++ b/t/t1200-tutorial.sh
+@@ -259,7 +259,7 @@ test_expect_success 'git repack' 'git repack'
+ test_expect_success 'git prune-packed' 'git prune-packed'
+ test_expect_success '-> only packed objects' '
+ 	git prune && # Remove conflict marked blobs
+-	! find .git/objects/[0-9a-f][0-9a-f] -type f
++	test $(find .git/objects/[0-9a-f][0-9a-f] -type f -print 2>/dev/null | wc -l) = 0
+ '
+ 
+ test_done
