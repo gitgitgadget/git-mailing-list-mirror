@@ -1,71 +1,61 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: Set the repository as it was on an earlier commit
-Date: Sat, 26 Dec 2009 00:36:24 +0100
-Message-ID: <adf1fd3d0912251536kbf25272ob0ab8ee90e53861d@mail.gmail.com>
-References: <8c6f7f450912251509i67da4665t78be0bb79f2c40d6@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Branch shuffling after 1.6.6 release plans
+Date: Sat, 26 Dec 2009 03:01:24 -0500
+Message-ID: <20091226080124.GA10337@sigill.intra.peff.net>
+References: <7vpr65kwnt.fsf@alter.siamese.dyndns.org>
+ <7vljgrgar9.fsf@alter.siamese.dyndns.org>
+ <200912251230.48243.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Sergio Belkin <sebelk@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 26 00:36:52 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat Dec 26 09:03:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NOJiE-0007mB-VY
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Dec 2009 00:36:51 +0100
+	id 1NORc3-0002pt-BC
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Dec 2009 09:02:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756425AbZLYXg2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Dec 2009 18:36:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756255AbZLYXg2
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Dec 2009 18:36:28 -0500
-Received: from mail-fx0-f225.google.com ([209.85.220.225]:57474 "EHLO
-	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753203AbZLYXg2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Dec 2009 18:36:28 -0500
-Received: by fxm25 with SMTP id 25so3490118fxm.21
-        for <git@vger.kernel.org>; Fri, 25 Dec 2009 15:36:24 -0800 (PST)
-Received: by 10.102.207.10 with SMTP id e10mr3462547mug.18.1261784184355; Fri, 
-	25 Dec 2009 15:36:24 -0800 (PST)
-In-Reply-To: <8c6f7f450912251509i67da4665t78be0bb79f2c40d6@mail.gmail.com>
+	id S1751278AbZLZIB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Dec 2009 03:01:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751115AbZLZIB1
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Dec 2009 03:01:27 -0500
+Received: from peff.net ([208.65.91.99]:46587 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751089AbZLZIB1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Dec 2009 03:01:27 -0500
+Received: (qmail 14509 invoked by uid 107); 26 Dec 2009 08:06:06 -0000
+Received: from c-71-206-170-120.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.170.120)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sat, 26 Dec 2009 03:06:06 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 26 Dec 2009 03:01:24 -0500
+Content-Disposition: inline
+In-Reply-To: <200912251230.48243.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135685>
 
-On Sat, Dec 26, 2009 at 12:09 AM, Sergio Belkin <sebelk@gmail.com> wrot=
-e:
-> Hi,
->
-> Firstly merry Christmas everyone.
->
-> I am somewhat new to git, and I've found great, but still I have some
-> doubts about it, let's say I have the following repo with:
->
-> A---B---C---D
->
-> Being A the first commit, =A0B the second one an D the last one.
->
-> How I do to go back to let's say... B commit status, I mean somewhat =
-as follows:
->
-> A---B---C---D---B'
->
-> B' would be the same as B. I am not asking to do something so:
->
-> A---B---C---D to A---B losing C and D commits,
->
-> I'd like to keep on history C and D commits, can git to do that?
+On Fri, Dec 25, 2009 at 12:30:34PM +0100, Thomas Rast wrote:
 
-I don't know if it is possible with porcelain commands, but with
-plumbing you can:
+> >      * tr/reset-checkout-patch (2009-11-19) 1 commit
+> >       - {checkout,reset} -p: make patch direction configurable
+> > 
+> >      I do not particularly like a configuration like this that changes the
+> >      behaviour of a command in a drastic way---it will make helping others
+> >      much harder.
+> 
+> I think it's not quite as drastic as you make it sound ;-)
+> 
+> But I don't need this feature, and Peff mentioned something about
+> being happy except for the patch editing mode.  Unfortunately the
+> above pretty much hits the limits of add--interactive's flexibility,
+> so an interactive direction toggling feature would need some rewiring.
 
-# begin with a clean working dir
-git read-tree B
-git commit
-git reset --hard
+Let's drop it for now. I'm reasonably happy, and I don't want to waste
+your time trying to do something more invasive. And I haven't seen any
+evidence that anybody else is dissatisfied with what's in master.
 
-HTH,
-Santi
+-Peff
