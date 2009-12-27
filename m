@@ -1,71 +1,86 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Smart-http documentation: add example of how to
-	execute from userdir
-Date: Sun, 27 Dec 2009 13:15:57 -0800
-Message-ID: <20091227211557.GC609@spearce.org>
-References: <1261847255-13970-1-git-send-email-tarmigan+git@gmail.com>
+From: <mysql.jorge@decimal.pt>
+Subject: Re: Newbie to git
+Date: Sun, 27 Dec 2009 21:55:46 +0000
+Message-ID: <0a78ff1d3ae5d236fa45c31f7bb8bd54@192.168.1.222>
+References: <1435.87.196.47.196.1261932152.squirrel@webmail.decimal.pt>	 <3a9710ae6b01fabf3b462da607af2534@192.168.1.222> <26ae428a0912271212j70857e29m6248f6ec653f7551@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Tarmigan Casebolt <tarmigan+git@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 27 22:16:31 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Dec 27 22:55:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NP0TU-0006th-VK
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Dec 2009 22:16:29 +0100
+	id 1NP15R-0001K6-Hp
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Dec 2009 22:55:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751235AbZL0VQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Dec 2009 16:16:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751137AbZL0VQY
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Dec 2009 16:16:24 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:64537 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751127AbZL0VQY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Dec 2009 16:16:24 -0500
-Received: by yxe17 with SMTP id 17so8953255yxe.33
-        for <git@vger.kernel.org>; Sun, 27 Dec 2009 13:16:23 -0800 (PST)
-Received: by 10.150.70.39 with SMTP id s39mr21659363yba.167.1261948560391;
-        Sun, 27 Dec 2009 13:16:00 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 20sm10385307iwn.13.2009.12.27.13.15.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 27 Dec 2009 13:15:59 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1261847255-13970-1-git-send-email-tarmigan+git@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751594AbZL0Vzh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Dec 2009 16:55:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751454AbZL0Vzg
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Dec 2009 16:55:36 -0500
+Received: from mailrly08.isp.novis.pt ([195.23.133.218]:36285 "EHLO
+	mailrly08.isp.novis.pt" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751378AbZL0Vzg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Dec 2009 16:55:36 -0500
+Received: (qmail 9539 invoked from network); 27 Dec 2009 21:55:33 -0000
+Received: from unknown (HELO mailfrt08.isp.novis.pt) ([195.23.133.200])
+          (envelope-sender <mysql.jorge@decimal.pt>)
+          by mailrly08.isp.novis.pt with compressed SMTP; 27 Dec 2009 21:55:33 -0000
+Received: (qmail 22892 invoked from network); 27 Dec 2009 21:55:33 -0000
+Received: from unknown (HELO web.decimal.pt) (Sent_by_authenticated_user_nm087018@[195.23.114.74])
+          (envelope-sender <mysql.jorge@decimal.pt>)
+          by mailfrt08.isp.novis.pt with SMTP; 27 Dec 2009 21:55:33 -0000
+Received: from webmail.decimal.pt (localhost [127.0.0.1])
+	by web.decimal.pt (Postfix) with ESMTP id 46E1E3D53B
+	for <git@vger.kernel.org>; Sun, 27 Dec 2009 21:55:46 +0000 (WET)
+In-Reply-To: <26ae428a0912271212j70857e29m6248f6ec653f7551@mail.gmail.com>
+X-Sender: mysql.jorge@decimal.pt
+User-Agent: RoundCube Webmail
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135716>
 
-Tarmigan Casebolt <tarmigan+git@gmail.com> wrote:
-> Smart-http may be an attactive and easy way for people to setup git
-> hosting on shared servers whose primary web server configuration they
-> do not control.  To facilite this, provide an example of how it may be
-> done.
-...
-> +       \~/public_html/cgi-bin/.htaccess:
-> ++
-> +----------------------------------------------------------------
-> +SetHandler cgi-script
-> +Options +SymLinksIfOwnerMatch
-> +SetEnv GIT_PROJECT_ROOT /home/$username/devel
-> +----------------------------------------------------------------
+Hi Howard,
 
-At this point, isn't this just easier?
+> Firstly, I would have a serious look at 'gitosis' for the server end
+> (there are other similar projects I believe).
+> 
+> Secondly, the push command is wrong. You don't need to supply the
+> remote URL again... that's what 'origin' is telling the push command,
+> which remote to use. This would have been established by the original
+> clone.
+> 
+> Also, again, be careful with 'empty' repositories. (again AFAIK) an
+> empty repository is just that, it doesn't even have a master branch so
+> you really need to check out a branch and commit something before
+> pushing makes much sense. I'm sure this is not 100% correct but you'll
+> be safe that way!
 
-  mkdir ~/public_html/git
-  vi ~/public_html/git/.htaccess
+Well, gitosis even made me more confused :P
 
-  SetEnv GIT_PROJECT_ROOT /home/$username/devel
-  ScriptAlias / /usr/libexec/git-core/git-http-backend/
+Let me reask:
+I'm running git deamon under supervisor with:
 
-No need to mess around with SymlinksIfOwnerMatch and all of that fun.
-If you have .htaccess override allows, you should be able to setup
-a ScriptAlias without needing to use a cgi-bin directory.
+/usr/lib/git-core/git-daemon --syslog --export-all --enable=receive-pack
+--verbose --base-path=/home/apache/gitprojects
 
--- 
-Shawn.
+then i went to /home/apache/gitprojects and runned:
+
+git init
+git add .
+
+but for example, CGIT web interface says:
+
+--
+Not a git repository: '/home/apache/gitprojects'
+generated by cgit at 2009-12-27 21:54:47 (GMT)
+--
+
+what could i be missing here?
+I've been reading howto's i find on the web, but all lead me to the same
+point, what i did and non work.. (with me).
+
+Jorge,
