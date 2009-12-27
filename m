@@ -1,58 +1,71 @@
-From: "Jorge Bastos" <mysql.jorge@decimal.pt>
-Subject: Newbie to git
-Date: Sun, 27 Dec 2009 16:42:32 -0000 (WET)
-Message-ID: <1435.87.196.47.196.1261932152.squirrel@webmail.decimal.pt>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH RESEND] gitk: add "--no-replace-objects" option
+Date: Sun, 27 Dec 2009 18:26:18 +0100
+Message-ID: <200912271826.19058.chriscool@tuxfamily.org>
+References: <20091212045240.4249.66874.chriscool@tuxfamily.org> <20091213230923.GB8135@brick.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 27 17:49:19 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	bill lam <cbill.lam@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sun Dec 27 18:23:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NOwIt-00006E-EC
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Dec 2009 17:49:15 +0100
+	id 1NOwqL-0001Sc-I3
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Dec 2009 18:23:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752566AbZL0QtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Dec 2009 11:49:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752561AbZL0QtJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Dec 2009 11:49:09 -0500
-Received: from mailrly07.isp.novis.pt ([195.23.133.217]:46886 "EHLO
-	mailrly07.isp.novis.pt" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752342AbZL0QtI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Dec 2009 11:49:08 -0500
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Sun, 27 Dec 2009 11:49:08 EST
-Received: (qmail 6146 invoked from network); 27 Dec 2009 16:42:24 -0000
-Received: from unknown (HELO mailfrt08.isp.novis.pt) ([195.23.133.200])
-          (envelope-sender <mysql.jorge@decimal.pt>)
-          by mailrly07.isp.novis.pt with compressed SMTP; 27 Dec 2009 16:42:24 -0000
-Received: (qmail 1735 invoked from network); 27 Dec 2009 16:42:24 -0000
-Received: from unknown (HELO web.decimal.pt) (Sent_by_authenticated_user_nm087018@[195.23.114.74])
-          (envelope-sender <mysql.jorge@decimal.pt>)
-          by mailfrt08.isp.novis.pt with SMTP; 27 Dec 2009 16:42:24 -0000
-Received: from webmail.decimal.pt (localhost [127.0.0.1])
-	by web.decimal.pt (Postfix) with ESMTP id 6514A3D539
-	for <git@vger.kernel.org>; Sun, 27 Dec 2009 16:42:32 +0000 (WET)
-Received: from 87.196.47.196
-        (SquirrelMail authenticated user mysql.jorge@decimal.pt)
-        by webmail.decimal.pt with HTTP;
-        Sun, 27 Dec 2009 16:42:32 -0000 (WET)
-User-Agent: SquirrelMail/1.4.9 [CVS]
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1752584AbZL0RXp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Dec 2009 12:23:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752580AbZL0RXo
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Dec 2009 12:23:44 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:48506 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752516AbZL0RXo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Dec 2009 12:23:44 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 8874681811B;
+	Sun, 27 Dec 2009 18:23:33 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id E4762818096;
+	Sun, 27 Dec 2009 18:23:30 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20091213230923.GB8135@brick.ozlabs.ibm.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135707>
 
-Howdy people,
+On lundi 14 d=E9cembre 2009, Paul Mackerras wrote:
+> On Sat, Dec 12, 2009 at 05:52:39AM +0100, Christian Couder wrote:
+> > Replace refs are useful to change some git objects after they
+> > have started to be shared between different repositories. One
+> > might want to ignore them to see the original state, and
+> > "--no-replace-objects" option can be used from the command
+> > line to do so.
+> >
+> > This option simply sets the GIT_NO_REPLACE_OBJECTS environment
+> > variable, and that is enough to make gitk ignore replace refs.
+> >
+> > The GIT_NO_REPLACE_OBJECTS is set to "1" instead of "" as it is
+> > safer on some platforms, thanks to Johannes Sixt and Michael J
+> > Gruber.
+> >
+> > Tested-by: Michael J Gruber <git@drmicha.warpmail.net>
+> > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>
+> Thanks, applied.
 
-I'm a using of git for several time, but now I have the need to a git server.
-My question, where can get a howto for reallyyyy newbies on git server?
+Thanks, but it looks like the patch is not in v1.6.6.
+Could you ask Junio to pull from you?
 
-I have part of it setup but still not working.
-
-Thanks in advanced,
-Jorge,
+Best regards,
+Christian.
