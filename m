@@ -1,88 +1,100 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH 0/4] clone: use --progress to mean -v
-Date: Sun, 27 Dec 2009 11:27:05 +0800
-Message-ID: <be6fef0d0912261927p4aff3ecet5cc26bd6dfc7e1c2@mail.gmail.com>
-References: <18831.46833.862.196815@hungover.brentg.com>
-	 <1261761126-5784-1-git-send-email-rctay89@gmail.com>
-	 <alpine.DEB.1.00.0912260952020.4985@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Miklos Vajna <vmiklos@frugalware.org>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Dec 27 04:27:18 2009
+From: Tomas Carnecky <tom@dbservice.com>
+Subject: [PATCH] Don't pass CFLAGS to the linker
+Date: Sun, 27 Dec 2009 07:55:18 +0100
+Message-ID: <1261896918-1953-1-git-send-email-tom@dbservice.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 27 06:56:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NOjml-0003eM-32
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Dec 2009 04:27:15 +0100
+	id 1NOm6v-0002PC-Nh
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Dec 2009 06:56:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754140AbZL0D1J convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Dec 2009 22:27:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752421AbZL0D1J
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Dec 2009 22:27:09 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:61235 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751467AbZL0D1F convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Dec 2009 22:27:05 -0500
-Received: by iwn1 with SMTP id 1so6749850iwn.33
-        for <git@vger.kernel.org>; Sat, 26 Dec 2009 19:27:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ARr2nNeunVJ1JAjdhQzq4RbVBsewPdmP5A234QTmwPo=;
-        b=HeVGd1HLrRpRpzfEQJVFXleq3XkYq2617Fb91MyuRrydAWO8gTxwXLQ4u7ofGgRPYF
-         AvVMaf5PXtntfl5nE45PbrmSPnVdfFDAzG0Zvf/jfhdNjtMWfkHXnaoUlBfgrJtOx1h5
-         1gsegVQAcE/z0rAYEerASoiy0qHa1XIvIDpbI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jDXwxH9feh/8dwxi+FXVi6F30Z6bklv/IGDUa6rk0I/OlKKN8C5tPzgK6rOY2Ij2lV
-         4V+ckUizKhfC/B/JZOieEZqt9gKgtDoPuTWhOcWwNcebInxhPpAEV8giTkhA9jbTiHDX
-         NQO4k3kbSaCpUCgF0E8FYWXEFSYkkScfVbw2I=
-Received: by 10.231.147.210 with SMTP id m18mr2267544ibv.48.1261884425031; 
-	Sat, 26 Dec 2009 19:27:05 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0912260952020.4985@pacific.mpi-cbg.de>
+	id S1750804AbZL0Fzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Dec 2009 00:55:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750762AbZL0Fzm
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Dec 2009 00:55:42 -0500
+Received: from office.neopsis.com ([78.46.209.98]:39996 "EHLO
+	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750761AbZL0Fzm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Dec 2009 00:55:42 -0500
+Received: from susie ([62.65.141.13])
+	(authenticated user tom@dbservice.com)
+	by office.neopsis.com
+	for git@vger.kernel.org;
+	Sun, 27 Dec 2009 06:55:40 +0100
+X-Mailer: git-send-email 1.6.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135701>
 
-Hi,
+Signed-off-by: Tomas Carnecky <tom@dbservice.com>
+---
 
-On Sat, Dec 26, 2009 at 4:53 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Sat, 26 Dec 2009, Tay Ray Chuan wrote:
->
->> This series makes git-clone follow the "argument convention" of
->> git-pack-objects, where the option --progress is used to force repor=
-ting
->> of reporting. This was previously done with -v/--verbose.
->
-> No objections from my side, although you might want to advertise more=
- that
-> this is a change in behavior. =A0(Meaning in the release notes)
+I don't remember exactly which tool had problems with CFLAGS being passed
+to the linker. Maybe it was the clang static analyzer, or some other
+tool that I let run on git.git. Anyway, I don't think there's any
+reason to pass CFLAGS to the linker.
 
-Indeed, -v/--verbose to force reporting of progress was done sometime
-last year (Thu Oct 9 2008) so there may be scripts/applications
-dependent on this option.
+ Makefile |   15 +++++++--------
+ 1 files changed, 7 insertions(+), 8 deletions(-)
 
-Junio, do you have any advice on this front?
-
->> PS. If someone can enlighten me on the proper noun for the git
->> =A0 =A0 executable (I said "main git"), I would be very thankful.
->
-> I call it the "Git wrapper", although less polite words exist, too.
-
-I see. Thanks!
-
---=20
-Cheers,
-Ray Chuan
+diff --git a/Makefile b/Makefile
+index c11719c..d9cd189 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1473,8 +1473,7 @@ git.o: git.c common-cmds.h GIT-CFLAGS
+ 		$(ALL_CFLAGS) -o $@ -c $(filter %.c,$^)
+ 
+ git$X: git.o $(BUILTIN_OBJS) $(GITLIBS)
+-	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ git.o \
+-		$(BUILTIN_OBJS) $(ALL_LDFLAGS) $(LIBS)
++	$(QUIET_LINK)$(CC) -o $@ git.o $(BUILTIN_OBJS) $(ALL_LDFLAGS) $(LIBS)
+ 
+ builtin-help.o: builtin-help.c common-cmds.h GIT-CFLAGS
+ 	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) \
+@@ -1660,10 +1659,10 @@ http-walker.o: http-walker.c http.h GIT-CFLAGS
+ endif
+ 
+ git-%$X: %.o $(GITLIBS)
+-	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
++	$(QUIET_LINK)$(CC) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
+ 
+ git-imap-send$X: imap-send.o $(GITLIBS)
+-	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
++	$(QUIET_LINK)$(CC) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
+ 
+ http.o http-walker.o http-push.o: http.h
+@@ -1671,14 +1670,14 @@ http.o http-walker.o http-push.o: http.h
+ http.o http-walker.o: $(LIB_H)
+ 
+ git-http-fetch$X: revision.o http.o http-walker.o http-fetch.o $(GITLIBS)
+-	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
++	$(QUIET_LINK)$(CC) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(CURL_LIBCURL)
+ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
+-	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
++	$(QUIET_LINK)$(CC) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+ 
+ git-remote-curl$X: remote-curl.o http.o http-walker.o $(GITLIBS)
+-	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
++	$(QUIET_LINK)$(CC) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+ 
+ $(LIB_OBJS) $(BUILTIN_OBJS): $(LIB_H)
+@@ -1798,7 +1797,7 @@ test-parse-options.o: parse-options.h
+ .PRECIOUS: $(patsubst test-%$X,test-%.o,$(TEST_PROGRAMS))
+ 
+ test-%$X: test-%.o $(GITLIBS)
+-	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
++	$(QUIET_LINK)$(CC) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
+ 
+ check-sha1:: test-sha1$X
+ 	./test-sha1.sh
+-- 
+1.6.6
