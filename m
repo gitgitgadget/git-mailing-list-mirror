@@ -1,71 +1,78 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH RESEND] gitk: add "--no-replace-objects" option
-Date: Sun, 27 Dec 2009 18:26:18 +0100
-Message-ID: <200912271826.19058.chriscool@tuxfamily.org>
-References: <20091212045240.4249.66874.chriscool@tuxfamily.org> <20091213230923.GB8135@brick.ozlabs.ibm.com>
+From: <mysql.jorge@decimal.pt>
+Subject: Re: Newbie to git
+Date: Sun, 27 Dec 2009 17:45:29 +0000
+Message-ID: <3a9710ae6b01fabf3b462da607af2534@192.168.1.222>
+References: <1435.87.196.47.196.1261932152.squirrel@webmail.decimal.pt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	bill lam <cbill.lam@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sun Dec 27 18:23:50 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Dec 27 18:50:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NOwqL-0001Sc-I3
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Dec 2009 18:23:49 +0100
+	id 1NOxGJ-0000wN-Qg
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Dec 2009 18:50:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752584AbZL0RXp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Dec 2009 12:23:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752580AbZL0RXo
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Dec 2009 12:23:44 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:48506 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752516AbZL0RXo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Dec 2009 12:23:44 -0500
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 8874681811B;
-	Sun, 27 Dec 2009 18:23:33 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id E4762818096;
-	Sun, 27 Dec 2009 18:23:30 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20091213230923.GB8135@brick.ozlabs.ibm.com>
-Content-Disposition: inline
+	id S1750837AbZL0Rp0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Dec 2009 12:45:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750777AbZL0RpZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Dec 2009 12:45:25 -0500
+Received: from mailrly03.isp.novis.pt ([195.23.133.213]:51946 "EHLO
+	mailrly03.isp.novis.pt" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750819AbZL0RpZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Dec 2009 12:45:25 -0500
+Received: (qmail 7315 invoked from network); 27 Dec 2009 17:45:20 -0000
+Received: from unknown (HELO mailfrt06.isp.novis.pt) ([195.23.133.198])
+          (envelope-sender <mysql.jorge@decimal.pt>)
+          by mailrly03.isp.novis.pt with compressed SMTP; 27 Dec 2009 17:45:20 -0000
+Received: (qmail 28943 invoked from network); 27 Dec 2009 17:45:20 -0000
+Received: from unknown (HELO web.decimal.pt) (Sent_by_authenticated_user_nm087018@[195.23.114.74])
+          (envelope-sender <mysql.jorge@decimal.pt>)
+          by mailfrt06.isp.novis.pt with SMTP; 27 Dec 2009 17:45:20 -0000
+Received: from webmail.decimal.pt (localhost [127.0.0.1])
+	by web.decimal.pt (Postfix) with ESMTP id 4DA3EEB68
+	for <git@vger.kernel.org>; Sun, 27 Dec 2009 17:45:29 +0000 (WET)
+In-Reply-To: <1435.87.196.47.196.1261932152.squirrel@webmail.decimal.pt>
+X-Sender: mysql.jorge@decimal.pt
+User-Agent: RoundCube Webmail
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135708>
 
-On lundi 14 d=E9cembre 2009, Paul Mackerras wrote:
-> On Sat, Dec 12, 2009 at 05:52:39AM +0100, Christian Couder wrote:
-> > Replace refs are useful to change some git objects after they
-> > have started to be shared between different repositories. One
-> > might want to ignore them to see the original state, and
-> > "--no-replace-objects" option can be used from the command
-> > line to do so.
-> >
-> > This option simply sets the GIT_NO_REPLACE_OBJECTS environment
-> > variable, and that is enough to make gitk ignore replace refs.
-> >
-> > The GIT_NO_REPLACE_OBJECTS is set to "1" instead of "" as it is
-> > safer on some platforms, thanks to Johannes Sixt and Michael J
-> > Gruber.
-> >
-> > Tested-by: Michael J Gruber <git@drmicha.warpmail.net>
-> > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->
-> Thanks, applied.
+> I'm a using of git for several time, but now I have the need to a git
+> server.
+> My question, where can get a howto for reallyyyy newbies on git server?
 
-Thanks, but it looks like the patch is not in v1.6.6.
-Could you ask Junio to pull from you?
+One question:
 
-Best regards,
-Christian.
+I've created a project on the server with:
+
+mkdir project.git
+cd project.git
+git init
+
+-and now locally, created a directory, and cloned this, it said that i was
+cloning an empty repo, fine about that.
+-now i added something locally, i get: (locally this is on a windows
+machine with tortoiso git)
+
+--
+git.exe push  --tags  "origin" master:git://192.168.1.206/projects.git
+
+error: src refspec master:git does not match any.
+error: failed to push some refs to 'git://192.168.1.206/projects.git'
+--
+
+I've read somewhere that i have to init both repos, remote and local to
+the same branch, is it correct?
+
+My idea is:
+
+- clone remote repo
+- add projects locally and commit them to remote
+
+how can this be done easylly?
