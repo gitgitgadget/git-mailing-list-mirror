@@ -1,77 +1,58 @@
-From: Nathaniel W Filardo <nwf@cs.jhu.edu>
-Subject: Re: [RESEND] [PATCH] Endianness bug in index cache logic
-Date: Sun, 27 Dec 2009 11:12:46 -0500
-Message-ID: <20091227161246.GQ14941@gradx.cs.jhu.edu>
-References: <20091204202928.GW17192@gradx.cs.jhu.edu> <20091227061121.GP14941@gradx.cs.jhu.edu> <40aa078e0912270439i3948a38fw9784e23e7cdc4407@mail.gmail.com>
+From: "Jorge Bastos" <mysql.jorge@decimal.pt>
+Subject: Newbie to git
+Date: Sun, 27 Dec 2009 16:42:32 -0000 (WET)
+Message-ID: <1435.87.196.47.196.1261932152.squirrel@webmail.decimal.pt>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="oDto3OTLsk6uOlQH"
-Cc: Nathaniel W Filardo <nwf@cs.jhu.edu>, git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Sun Dec 27 17:13:26 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 27 17:49:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NOvkB-00060Y-Qx
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Dec 2009 17:13:24 +0100
+	id 1NOwIt-00006E-EC
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Dec 2009 17:49:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752291AbZL0QNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Dec 2009 11:13:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752248AbZL0QNS
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Dec 2009 11:13:18 -0500
-Received: from blaze.cs.jhu.edu ([128.220.13.50]:53219 "EHLO blaze.cs.jhu.edu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751915AbZL0QNR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Dec 2009 11:13:17 -0500
-Received: from gradx.cs.jhu.edu (gradx.cs.jhu.edu [128.220.13.52])
-	by blaze.cs.jhu.edu (8.14.3/8.14.3) with ESMTP id nBRGCkJX007809
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 27 Dec 2009 11:12:46 -0500 (EST)
-Received: from gradx.cs.jhu.edu (localhost.localdomain [127.0.0.1])
-	by gradx.cs.jhu.edu (8.14.2/8.13.1) with ESMTP id nBRGCktv022851;
-	Sun, 27 Dec 2009 11:12:46 -0500
-Received: (from nwf@localhost)
-	by gradx.cs.jhu.edu (8.14.2/8.13.8/Submit) id nBRGCkkh022850;
-	Sun, 27 Dec 2009 11:12:46 -0500
-Content-Disposition: inline
-In-Reply-To: <40aa078e0912270439i3948a38fw9784e23e7cdc4407@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752566AbZL0QtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Dec 2009 11:49:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752561AbZL0QtJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Dec 2009 11:49:09 -0500
+Received: from mailrly07.isp.novis.pt ([195.23.133.217]:46886 "EHLO
+	mailrly07.isp.novis.pt" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752342AbZL0QtI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Dec 2009 11:49:08 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Sun, 27 Dec 2009 11:49:08 EST
+Received: (qmail 6146 invoked from network); 27 Dec 2009 16:42:24 -0000
+Received: from unknown (HELO mailfrt08.isp.novis.pt) ([195.23.133.200])
+          (envelope-sender <mysql.jorge@decimal.pt>)
+          by mailrly07.isp.novis.pt with compressed SMTP; 27 Dec 2009 16:42:24 -0000
+Received: (qmail 1735 invoked from network); 27 Dec 2009 16:42:24 -0000
+Received: from unknown (HELO web.decimal.pt) (Sent_by_authenticated_user_nm087018@[195.23.114.74])
+          (envelope-sender <mysql.jorge@decimal.pt>)
+          by mailfrt08.isp.novis.pt with SMTP; 27 Dec 2009 16:42:24 -0000
+Received: from webmail.decimal.pt (localhost [127.0.0.1])
+	by web.decimal.pt (Postfix) with ESMTP id 6514A3D539
+	for <git@vger.kernel.org>; Sun, 27 Dec 2009 16:42:32 +0000 (WET)
+Received: from 87.196.47.196
+        (SquirrelMail authenticated user mysql.jorge@decimal.pt)
+        by webmail.decimal.pt with HTTP;
+        Sun, 27 Dec 2009 16:42:32 -0000 (WET)
+User-Agent: SquirrelMail/1.4.9 [CVS]
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135706>
 
+Howdy people,
 
---oDto3OTLsk6uOlQH
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm a using of git for several time, but now I have the need to a git server.
+My question, where can get a howto for reallyyyy newbies on git server?
 
-On Sun, Dec 27, 2009 at 01:39:24PM +0100, Erik Faye-Lund wrote:
-> On Sun, Dec 27, 2009 at 7:11 AM, Nathaniel W Filardo <nwf@cs.jhu.edu> wro=
-te:
-> > I got some free time and tracked it down. =A0The following one-line del=
-ta
-> > fixes this issue for me; AIUI on sparc64 "unsigned long" is 8 bits and =
-in
->=20
-> You mean 8 bytes, right?
+I have part of it setup but still not working.
 
-Yes, sorry.  How embarrassing. :)
---nwf;
-
---oDto3OTLsk6uOlQH
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAks3h34ACgkQTeQabvr9Tc/qUwCfXgJxh9wFTc9YOEituzwen9Es
-684Aniy1j16TLyWHupKbkfppUzTCazKb
-=aFLH
------END PGP SIGNATURE-----
-
---oDto3OTLsk6uOlQH--
+Thanks in advanced,
+Jorge,
