@@ -1,125 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Newbie to git
-Date: Sun, 27 Dec 2009 18:18:57 -0800
-Message-ID: <7v8wcnx2lq.fsf@alter.siamese.dyndns.org>
-References: <1435.87.196.47.196.1261932152.squirrel@webmail.decimal.pt>
- <3a9710ae6b01fabf3b462da607af2534@192.168.1.222>
- <26ae428a0912271212j70857e29m6248f6ec653f7551@mail.gmail.com>
- <0a78ff1d3ae5d236fa45c31f7bb8bd54@192.168.1.222>
- <m27hs8t5b7.fsf@whitebox.home>
- <ecddd9ed719d3d854b2248970cdb9cdf@192.168.1.222>
+From: Tarmigan <tarmigan+git@gmail.com>
+Subject: Re: [PATCH] Smart-http documentation: add example of how to execute 
+	from userdir
+Date: Sun, 27 Dec 2009 23:06:59 -0500
+Message-ID: <905315640912272006o6a8fecddiebb66cc243593fad@mail.gmail.com>
+References: <1261847255-13970-1-git-send-email-tarmigan+git@gmail.com> 
+	<20091227211557.GC609@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: <mysql.jorge@decimal.pt>
-X-From: git-owner@vger.kernel.org Mon Dec 28 03:20:38 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Dec 28 05:08:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NP5Dn-0005l7-9E
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 03:20:35 +0100
+	id 1NP6uZ-0001EE-6e
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 05:08:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751073AbZL1CTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Dec 2009 21:19:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751004AbZL1CTK
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Dec 2009 21:19:10 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42212 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750913AbZL1CTJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Dec 2009 21:19:09 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B0CE1AAC8F;
-	Sun, 27 Dec 2009 21:19:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8rj7+6RFeW4T3tE+vznryVBc2+s=; b=HYNbf9
-	KeeZQEjMqRLjcSsEjYHS5wSe30TXFNqLGN7xMw+G5MECY+9AwiF0ylr5NJSyIKPA
-	QsoNw8r1SlN2eOhD+P/8r23Vg0P4gKWmRTdOiZNSeS6FaUXzSlxYAEJEkRRy6Iaa
-	fun8gflb2/crRyMeAbhjN47qP6k2QRR+eLcdM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Zkr+V4NgwA2GioSnO6EnZolNtyQqwyqs
-	3KkNgT43Lsb1b1T69tSGzG7D82QAdqgI2Phy+fs2zXCLcEbAzE+Fh7geaZrIERep
-	r5vgjEjZG7axKH21MuuY1Sn0d3gZCAAbZ5qumnGlxa0CfgKPvpWyCeK6OUHCzHv2
-	Y+d8rxAauC4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8E951AAC89;
-	Sun, 27 Dec 2009 21:19:02 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 80B2AAAC87; Sun, 27 Dec 2009
- 21:18:59 -0500 (EST)
-In-Reply-To: <ecddd9ed719d3d854b2248970cdb9cdf@192.168.1.222> (mysql jorge's
- message of "Sun\, 27 Dec 2009 23\:00\:04 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5D952A8A-F357-11DE-8485-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1751048AbZL1EHV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Dec 2009 23:07:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750995AbZL1EHU
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Dec 2009 23:07:20 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:62872 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750913AbZL1EHT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Dec 2009 23:07:19 -0500
+Received: by pwj9 with SMTP id 9so6086552pwj.21
+        for <git@vger.kernel.org>; Sun, 27 Dec 2009 20:07:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=5frgqpVJgkz5XSa6zYY9eBz/gXcnhh/gqTRmE5JlN/o=;
+        b=dvW33xhED9sxpH4rdIPmf7/SXlmh6WA/MdrAek2txkb6r2EGuL+kRDbYGMF+db9MNp
+         Udk5DF3FHzgiGYfuVW1MmDf+VdujECaoNvKjdxgbRAEIvJ2Ujz8Ef8gheDS5fOrHmH/e
+         4t6FR3W+vA3dZmpZEIJeeYd+1lvIzz6vafPfc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=UxtCo8rh5/5e73xtDv0/NXiltZPxO4TG34TNGA17OuJ5eDJWIWeVhXx9sMUt2WZzmA
+         eazz/DYArsiHONhwMjqVCzKCzGCvWmBbjR+Fsxf8VwU0ftf8Ep3oBQ772AJBPxVeYaqM
+         Pzgk56dU5SRDHVmtbVqwvGaGFVlgweq/Il5Uo=
+Received: by 10.143.25.29 with SMTP id c29mr10160711wfj.255.1261973239117; 
+	Sun, 27 Dec 2009 20:07:19 -0800 (PST)
+In-Reply-To: <20091227211557.GC609@spearce.org>
+X-Google-Sender-Auth: 7399d18e73ca6b18
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135722>
 
-<mysql.jorge@decimal.pt> writes:
-
-> Hi Andreas,
-
-If you are addressing Andreas, why does your mail have:
-
-    To: <git@vger.kernel.org>
-    Cc: <git@vger.kernel.org>
-
-and no other addressee???
-
-> not i have:
-> /home/apache/gitprojects/mydir.git
+On Sun, Dec 27, 2009 at 4:15 PM, Shawn O. Pearce <spearce@spearce.org> =
+wrote:
+> Tarmigan Casebolt <tarmigan+git@gmail.com> wrote:
+>> Smart-http may be an attactive and easy way for people to setup git
+>> hosting on shared servers whose primary web server configuration the=
+y
+>> do not control. =A0To facilite this, provide an example of how it ma=
+y be
+>> done.
+> ...
+>> + =A0 =A0 =A0 \~/public_html/cgi-bin/.htaccess:
+>> ++
+>> +----------------------------------------------------------------
+>> +SetHandler cgi-script
+>> +Options +SymLinksIfOwnerMatch
+>> +SetEnv GIT_PROJECT_ROOT /home/$username/devel
+>> +----------------------------------------------------------------
 >
-> created with: git init --base mydir.git
+> At this point, isn't this just easier?
 >
-> Now, inside here, what should i do to create my projects:
+> =A0mkdir ~/public_html/git
+> =A0vi ~/public_html/git/.htaccess
 >
-> mkdir myproject1
-> cd myproject1
-> git init
-> touch a.txt
-> git add .
-> git commit -m "1st commit"
->
-> am i correct or not really?
+> =A0SetEnv GIT_PROJECT_ROOT /home/$username/devel
+> =A0ScriptAlias / /usr/libexec/git-core/git-http-backend/
 
-You created "myproject1" somewhere you started "mkdir" in (perhaps in
-$HOME?) [*1*] and that project tracks a single file "a.txt"; you are
-correct if that was what you wanted to do.
+Yes, that would be perfect.  But ScriptAlias is only valid in the
+"server config" or "virtual host" contexts which is why the
+symlink/copy executable convolutions might be needed.  Can you see a
+simpler way around it?
 
-The new repository "myproject1" doesn't have any relation to the bare
-repository at /home/apache/gitprojects/mydir.git/ you created earlier.
-The next steps I recommend new people are:
-
- (1) push into the public repository, by doing:
-
-     cd myproject1
-     git push /home/apache/gitprojects/mydir.git/ master
-
- (2) make sure push went correctly by trying to clone from there:
-
-     cd ..
-     mv myproject1 myproject1.old
-     git clone /home/apache/gitprojects/mydir.git/ myproject1
-
- (3) check if the clone is what you expect
-
-     diff myproject1.old/a.txt myproject1/a.txt
-
- (4) once satisfied, remove the old one
-
-     rm -fr myproject1.old
-
-And keep working in the myproject1 repository from there on.
-
-
-[Footnote]
-
-*1* If you started that "mkdir" somewhere else you may want to remove it
-and redo that step, especially if you did so inside that bare repository
-you created earlier, i.e. /home/apache/gitprojects/mydir.git directory.
-You don't want to have it there.
+Thanks,
+Tarmigan
