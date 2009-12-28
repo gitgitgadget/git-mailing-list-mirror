@@ -1,111 +1,149 @@
-From: Sergio Belkin <sebelk@gmail.com>
-Subject: Fwd: Set the repository as it was on an earlier commit
-Date: Mon, 28 Dec 2009 02:18:03 -0300
-Message-ID: <8c6f7f450912272118x384cd840j238b39efa9a87a3b@mail.gmail.com>
-References: <8c6f7f450912251509i67da4665t78be0bb79f2c40d6@mail.gmail.com>
-	 <adf1fd3d0912251536kbf25272ob0ab8ee90e53861d@mail.gmail.com>
-	 <vpqiqbt95e7.fsf@bauges.imag.fr>
-	 <8c6f7f450912272019t4b9c721dt2630a8d32607013e@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] Fix core.worktree being used when GIT_DIR is not set
+Date: Mon, 28 Dec 2009 12:41:24 +0700
+Message-ID: <fcaeb9bf0912272141j1def76e7v6f581636188e65f0@mail.gmail.com>
+References: <200912071115.48085.robin.rosenberg.lists@dewire.com>
+	 <1261920513-25189-1-git-send-email-pclouds@gmail.com>
+	 <7viqbsw2vn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 28 06:18:13 2009
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 28 06:41:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NP7zg-0004eB-Kk
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 06:18:12 +0100
+	id 1NP8MP-00013d-VM
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 06:41:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751122AbZL1FSI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Dec 2009 00:18:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750936AbZL1FSH
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 00:18:07 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:37348 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750810AbZL1FSE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Dec 2009 00:18:04 -0500
-Received: by yxe17 with SMTP id 17so9108803yxe.33
-        for <git@vger.kernel.org>; Sun, 27 Dec 2009 21:18:04 -0800 (PST)
+	id S1751218AbZL1Fl0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Dec 2009 00:41:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751192AbZL1Fl0
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 00:41:26 -0500
+Received: from mail-px0-f189.google.com ([209.85.216.189]:54439 "EHLO
+	mail-px0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750975AbZL1FlZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Dec 2009 00:41:25 -0500
+Received: by pxi27 with SMTP id 27so5398066pxi.4
+        for <git@vger.kernel.org>; Sun, 27 Dec 2009 21:41:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=Ye9kHblePwua+HIEwDCd2QdhtgXqFikd8/ES1NyE5pw=;
-        b=Zu67O7H61JXt1QhnX59LqNl9rrON7iqLxkrSjYM0jUNTt5ycs/fK8TJK5zqciNu8Md
-         ghFplat3nwaDsPa3hEVqaKfl2BzEj45xzzwtqTmdJhdegWsxOw2Qstt/E5bZBOEP9O2J
-         bwWUKkRgr/2bY7DCDiRBSH09oW8Z0VzHMLhJs=
+        bh=UWqcHEXwiPGkFN4pIkSLrj/Sw/BqMMgocMibJrDIC+U=;
+        b=QsvSvNM03UuRzhoq5uvurbHQqcHLhWxQyRloYNMc1n2Ex532cJ+RcAAFa2HGIial+g
+         1U6KTHbNBDLpr3H5sQ544YzZrRLxVAzuvfLA9JEUTn8IbPEdy57XtMeUmNmpO6xLXL4V
+         maCmPy8Y7JHe+N1CZIbgB22JaO4SkH6CLp9yQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=JbRvDOsfsYVCt/0WXWHbo4LmU7E9wDyrH4jrzyv+MPxHKKgWwJYqCI/v1lmukq3/hP
-         ++deAn74HVt4lQrbw22raIe86e9kmc0h4u0gPJAkIPtbLoR4bl2gD5gKHqHIpgsEiA9/
-         mqKcRh02HWh1iYD5POQJ85oTwyIDmxHXf0SGE=
-Received: by 10.150.129.28 with SMTP id b28mr21749655ybd.318.1261977483498; 
-	Sun, 27 Dec 2009 21:18:03 -0800 (PST)
-In-Reply-To: <8c6f7f450912272019t4b9c721dt2630a8d32607013e@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        b=TOxomvzTBSOXg9S4HJJ0cozUq/1m9iXs4HxFHann0JdgDXEOJzOauy0NW0o2Mwmyhg
+         Kc+jBU2QiSe+UJEK9pZqm7X4mDqGe0FXOEVd/ZnwlaNXFDWqDFWdQ8/hqEcDsWpDtEwd
+         ixHkT+7FeaUE17IJUPRmlHMlOwbNXvR3lZgJ4=
+Received: by 10.114.189.24 with SMTP id m24mr10465333waf.29.1261978884349; 
+	Sun, 27 Dec 2009 21:41:24 -0800 (PST)
+In-Reply-To: <7viqbsw2vn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135729>
 
-Ooops I wanted to say Santi answer was the best
-
-
----------- Forwarded message ----------
-=46rom: Sergio Belkin <sebelk@gmail.com>
-Date: 2009/12/28
-Subject: Re: Set the repository as it was on an earlier commit
-To: git@vger.kernel.org
-
-
-2009/12/26 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
-> Santi B=E9jar <santi@agolina.net> writes:
+On 12/28/09, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
 >
->> I don't know if it is possible with porcelain commands, but with
->> plumbing you can:
->>
->> # begin with a clean working dir
->> git read-tree B
->> git commit
->> git reset --hard
+>  > According to config.txt:
+>  >> core.worktree::
+>  >>         Set the path to the working tree.  The value will not be
+>  >>         used in combination with repositories found automatically=
+ in
+>  >>         a .git directory (i.e. $GIT_DIR is not set).
+>  >
+>  > This behavior was changed after e90fdc3 (Clean up work-tree handli=
+ng -
+>  > 2007-08-01) and 9459aa7 (Do check_repository_format() early (re-fi=
+x) -
+>  > 2007-12-05). If core.worktree is set, even if git_dir automaticall=
+y
+>  > found (and git_work_tree_cfg set), git_work_tree_cfg will be reset=
+ to
+>  > core.worktree. This makes core.worktree effective even if GIT_DIR =
+is
+>  > not set, in contrast to config.txt.
+>  >
+>  > This patch makes sure it only checks for core.worktree if GIT_DIR =
+is set.
 >
-> I guess
 >
-> (at the root of the repo)
+> The work-tree area got too complicated over time for a small Panda br=
+ain
+>  to grasp, so let me think aloud here.
 >
-> git checkout B -- .
-> # git status if you want to check.
-> git commit
+>  ...
 >
-> does this. The "-- ." part of "git checkout" asks Git to checkout the
-> files, but the path limiter prevents it from updating HEAD, so the
-> HEAD still points to the tip of the branch.
+>  Given these background, I am not sure the "fix" is addressing the ri=
+ght
+>  issue.  What does it mean to have "core.worktree" in a configuration=
+ file,
+>  but that configuration file was found in a "git directory" that was =
+found
+>  thorough the repository discovery process due to lack of $GIT_DIR?  =
+There
+>  are only two cases I can see:
 >
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
+>   - The user is in the "git directory" itself, which is bare (iow,
+>    /srv/git/proj.git in the above example).  This is not the case the
+>    documentation snippet you quoted is about, and I don't think your =
+patch
+>    changes (nor should change) the behaviour for;
 >
+>   - The "git directory" is a ".git/" subdirectory of some work tree, =
+and
+>    the value of core.worktree may or may not match that work tree.  T=
+his
+>    is the case the documentation talks about, and your patch addresse=
+s.
+>
+>  For the former case, while I don't see much point, we do seem to sup=
+port
+>  this use case (continuing the example scenario):
+>
+>     $ unset GIT_DIR GIT_WORK_TREE
+>     $ cd /srv/git/proj.git
+>     $ git checkout -b newbranch master
+>
+>  We find that "." is our "git directory", and through its config file=
+, we
+>  know core.worktree points at /scratch/proj/, and the checkout update=
+s
+>  files over there, not in /srv/git/proj.git/.  While it is not obviou=
+s why
+>  anybody finds this useful to me, I think the behaviour makes _some_ =
+sense,
+>  and I don't think your patch breaks it by changing the behaviour for=
+ this
+>  case [*1*].
+>
+>  The latter, unless core.worktree matches the parent directory of the=
+ "git
+>  directory" in question, seems to me a misconfiguration and nothing e=
+lse.
+>  Shouldn't it be diagnosed as an error, instead of matching the
+>  documentation to the letter?
 
-Sorry but really answer given by Steven was better, because last one
-omit the case when B had less files that D for example...
-
-Thanks everyone
-
---
---
-Open Kairos http://www.sergiobelkin.com
-Watch More TV http://sebelk.blogspot.com
-Sergio Belkin -
-
-
-
+I had not read that part of the documentation until Robin pointed out
+and always thought core.worktree was in effect if set. I thought the
+author intention was not to let core.worktree get in the way if not
+requested, but given that the worktree is moved to somewhere else
+already, that does not make sense as it could use parent directory of
+the "git directory" as worktree (unless core.worktree matches the
+parent directory as you said). Probably best fixing documentation.
 --=20
---
-Open Kairos http://www.sergiobelkin.com
-Watch More TV http://sebelk.blogspot.com
-Sergio Belkin -
+Duy
