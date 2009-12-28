@@ -1,105 +1,117 @@
-From: <mysql.jorge@decimal.pt>
-Subject: Re: Newbie to git
-Date: Mon, 28 Dec 2009 10:34:57 +0000
-Message-ID: <7a0ae9cb57a1bc55653872ab254ea922@192.168.1.222>
-References: <1435.87.196.47.196.1261932152.squirrel@webmail.decimal.pt> <3a9710ae6b01fabf3b462da607af2534@192.168.1.222> <26ae428a0912271212j70857e29m6248f6ec653f7551@mail.gmail.com> <0a78ff1d3ae5d236fa45c31f7bb8bd54@192.168.1.222> <m27hs8t5b7.fsf@whitebox.home> <ec <7v8wcnx2lq.fsf@alter.siamese.dyndns.org>
+From: =?iso-8859-1?q?L=E9na=EFc_Huard?= <lenaic@lhuard.fr.eu.org>
+Subject: [PATCH] Allow git to use any HTTP authentication method.
+Date: Mon, 28 Dec 2009 11:54:06 +0100
+Message-ID: <200912281154.09442.lenaic@lhuard.fr.eu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 28 11:34:50 2009
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_R5IOLTMEW+jNmZl"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 28 12:29:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPCw5-0001cA-Ry
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 11:34:50 +0100
+	id 1NPDmo-0005o3-MT
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 12:29:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752319AbZL1Kem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Dec 2009 05:34:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752289AbZL1Kek
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 05:34:40 -0500
-Received: from mailrly08.isp.novis.pt ([195.23.133.218]:41107 "EHLO
-	mailrly08.isp.novis.pt" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751423AbZL1Keg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Dec 2009 05:34:36 -0500
-Received: (qmail 12156 invoked from network); 28 Dec 2009 10:34:34 -0000
-Received: from unknown (HELO mailfrt08.isp.novis.pt) ([195.23.133.200])
-          (envelope-sender <mysql.jorge@decimal.pt>)
-          by mailrly08.isp.novis.pt with compressed SMTP; 28 Dec 2009 10:34:34 -0000
-Received: (qmail 1417 invoked from network); 28 Dec 2009 10:34:34 -0000
-Received: from unknown (HELO web.decimal.pt) (Sent_by_authenticated_user_nm087018@[195.23.114.74])
-          (envelope-sender <mysql.jorge@decimal.pt>)
-          by mailfrt08.isp.novis.pt with SMTP; 28 Dec 2009 10:34:34 -0000
-Received: from webmail.decimal.pt (localhost [127.0.0.1])
-	by web.decimal.pt (Postfix) with ESMTP id D86531A4290;
-	Mon, 28 Dec 2009 10:34:57 +0000 (WET)
-In-Reply-To: <7v8wcnx2lq.fsf@alter.siamese.dyndns.org>
-X-Sender: mysql.jorge@decimal.pt
-User-Agent: RoundCube Webmail
+	id S1751237AbZL1L3O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Dec 2009 06:29:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751214AbZL1L3O
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 06:29:14 -0500
+Received: from freebox.lhuard.fr.eu.org ([88.182.161.122]:33568 "EHLO
+	coruscant.lhuard.fr.eu.org" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751020AbZL1L3N (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Dec 2009 06:29:13 -0500
+X-Greylist: delayed 2099 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Dec 2009 06:29:13 EST
+Received: from lenaic by coruscant.lhuard.fr.eu.org with local (Exim 4.71)
+	(envelope-from <lenaic@lhuard.fr.eu.org>)
+	id 1NPDEn-0008HV-Fc
+	for git@vger.kernel.org; Mon, 28 Dec 2009 11:54:09 +0100
+User-Agent: KMail/1.12.4 (Linux/2.6.32-trunk-amd64; KDE/4.3.4; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135735>
 
-> If you are addressing Andreas, why does your mail have:
-> 
->     To: <git@vger.kernel.org>
->     Cc: <git@vger.kernel.org>
-> 
-> and no other addressee???
+--Boundary-00=_R5IOLTMEW+jNmZl
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-My error, sorry :)
+Hello,
 
-> You created "myproject1" somewhere you started "mkdir" in (perhaps in
-> $HOME?) [*1*] and that project tracks a single file "a.txt"; you are
-> correct if that was what you wanted to do.
-> 
-> The new repository "myproject1" doesn't have any relation to the bare
-> repository at /home/apache/gitprojects/mydir.git/ you created earlier.
-> The next steps I recommend new people are:
-> 
->  (1) push into the public repository, by doing:
-> 
->      cd myproject1
->      git push /home/apache/gitprojects/mydir.git/ master
-> 
->  (2) make sure push went correctly by trying to clone from there:
-> 
->      cd ..
->      mv myproject1 myproject1.old
->      git clone /home/apache/gitprojects/mydir.git/ myproject1
-> 
->  (3) check if the clone is what you expect
-> 
->      diff myproject1.old/a.txt myproject1/a.txt
-> 
->  (4) once satisfied, remove the old one
-> 
->      rm -fr myproject1.old
-> 
-> And keep working in the myproject1 repository from there on.
+As I need to access some of my git repositories behind a corporate company=
+=20
+firewall, I use the http access method. And, as I don't want my passwords t=
+o be=20
+sent in clear text over the network, I have configured my web server to use=
+ =AB=20
+Digest =BB authentication instead of the old =AB Basic =BB authentication.
+This authentication method is now well handled by modern software.
 
-Thank you, i understood, i believe i really did. did that test and it's
-OK.
-But let me reask in another way:
+Unfortunately, current git version only handles =AB Basic =BB authenticatio=
+n.
+When attempting to access my repository, I get the following error message:
 
-I want to setup the git server, to accept new branch's created in a remote
-place that will be push'ed to it, please correct me, 'cause i'm doing
-something wrong and i don't know what yet.
+error: The requested URL returned error: 401 while accessing=20
+http://XXX@YYY.ZZ/test.git/info/refs
 
-- setup git server to run with:
-/usr/lib/git-core/git-daemon --reuseaddr --syslog --export-all
---enable=receive-pack --verbose --base-path=/home/apache/gitprojects
+The web server, on its side, has refused the transaction because of the wro=
+ng=20
+authentication method used:
 
-- created directory /home/apache/gitprojects
-- git init --bare /home/apache/gitprojects
+Digest: client used wrong authentication scheme `Basic': /test.git/info/refs
 
-- what will be my link on the remote? "git://192.168.1.206" just?
-- From now on, how can I have access to push projects that exist on other
-machine?
+The attached patch makes git configure libcurl to negotiate the most suitab=
+le=20
+HTTP authentication method.
+Thanks to that patch, I manage to clone and fetch my git repository hosted =
+on=20
+my web server requesting an authentication through the =AB Digest  =BB meth=
+od.
 
-Sorry for the questions... they are newbie!
-Jorge,
+L=E9na=EFc.
+
+--Boundary-00=_R5IOLTMEW+jNmZl
+Content-Type: text/x-patch;
+  charset="ISO-8859-1";
+  name="0001-Allow-git-to-use-any-HTTP-authentication-method.patch"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+	filename="0001-Allow-git-to-use-any-HTTP-authentication-method.patch"
+
+=46rom 2acab3ae894c3ea835279a864e654e1c5e956e80 Mon Sep 17 00:00:00 2001
+=46rom: =3D?UTF-8?q?L=3DC3=3DA9na=3DC3=3DAFc=3D20Huard?=3D <lenaic@lhuard.f=
+r.eu.org>
+Date: Mon, 28 Dec 2009 10:52:35 +0100
+Subject: [PATCH] Allow git to use any HTTP authentication method.
+
+By default, libcurl performs "Basic" HTTP authentication.
+This method transmits passwords in clear text.
+libcurl needs some settings in order to use a safest HTTP authentication
+method like "Digest" for example.
+=2D--
+ http.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/http.c b/http.c
+index ed6414a..2d9df76 100644
+=2D-- a/http.c
++++ b/http.c
+@@ -233,6 +233,10 @@ static CURL *get_curl_handle(void)
+=20
+ 	init_curl_http_auth(result);
+=20
++#if LIBCURL_VERSION_NUM >=3D 0x070a06
++	curl_easy_setopt(result, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
++#endif
++
+ 	if (ssl_cert !=3D NULL)
+ 		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
+ 	if (has_cert_password())
+=2D-=20
+1.6.5.7
+
+
+--Boundary-00=_R5IOLTMEW+jNmZl--
