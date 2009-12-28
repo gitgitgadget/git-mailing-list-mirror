@@ -1,72 +1,81 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 2/2] Smart-http: check if repository is OK to export
-	before serving it
-Date: Mon, 28 Dec 2009 09:08:11 -0800
-Message-ID: <20091228170811.GE2252@spearce.org>
-References: <7vk4w963np.fsf@alter.siamese.dyndns.org> <1261870153-57572-1-git-send-email-tarmigan+git@gmail.com> <1261870153-57572-2-git-send-email-tarmigan+git@gmail.com> <20091227211033.GB609@spearce.org> <905315640912272007i8b4904dv2b93879789b453fb@mail.gmail.com> <20091228155931.GC2252@spearce.org> <905315640912280857g710b45fcne21a21d53ff0fedf@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH] Allow git to use any HTTP authentication method.
+Date: Tue, 29 Dec 2009 01:15:48 +0800
+Message-ID: <be6fef0d0912280915k1320110o6a361a0950aa60f6@mail.gmail.com>
+References: <200912281154.09442.lenaic@lhuard.fr.eu.org>
+	 <alpine.DEB.2.00.0912281406210.5582@cone.home.martin.st>
+	 <be6fef0d0912280412w58401f10n972f9198144cd580@mail.gmail.com>
+	 <20091228153701.GA2252@spearce.org>
+	 <alpine.DEB.2.00.0912281745540.5582@cone.home.martin.st>
+	 <20091228155346.GB2252@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	rctay89@gmail.com, drizzd@aon.at, warthog9@kernel.org
-To: Tarmigan <tarmigan+git@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 28 18:09:20 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Martin Storsj?" <martin@martin.st>,
+	=?ISO-8859-1?B?TOluYe9jIEh1YXJk?= <lenaic@lhuard.fr.eu.org>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Dec 28 18:16:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPJ5r-00050Z-Jy
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 18:09:19 +0100
+	id 1NPJCJ-0007X9-Pl
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 18:16:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752005AbZL1RIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Dec 2009 12:08:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751894AbZL1RIP
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 12:08:15 -0500
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:37841 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751790AbZL1RIP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Dec 2009 12:08:15 -0500
-Received: by ywh6 with SMTP id 6so10543917ywh.4
-        for <git@vger.kernel.org>; Mon, 28 Dec 2009 09:08:14 -0800 (PST)
-Received: by 10.150.19.4 with SMTP id 4mr10333141ybs.216.1262020094437;
-        Mon, 28 Dec 2009 09:08:14 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 5sm4109420ywd.38.2009.12.28.09.08.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 28 Dec 2009 09:08:13 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <905315640912280857g710b45fcne21a21d53ff0fedf@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752210AbZL1RPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Dec 2009 12:15:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751899AbZL1RPu
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 12:15:50 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:39913 "EHLO
+	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751671AbZL1RPu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Dec 2009 12:15:50 -0500
+Received: by iwn1 with SMTP id 1so7381372iwn.33
+        for <git@vger.kernel.org>; Mon, 28 Dec 2009 09:15:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=YphTBFtGTscp40STnXo6k+sL9RZ/mAZ3dA03st90SY0=;
+        b=ezO5gD3DF2IPuyh7l82G/OeYPh0Ssmzz9kFU3a+AtRXKsQKOVCmqMWbM009NaQOe+B
+         C8hipdHbXwQbWQl/JOd9xVyEwCoYyB5qYGZfaHbwKMYnbfX2wfqLwDthbL+82fneLq6g
+         2qNtHn2OAeJyOqeU27M/l8jQJMLiqLz3ftaGg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=hywZtX7EmyceM+KBQsyWCitjVla/ejK53Al4tNZl2fGIRlP5HI628pcHD1l2yIBLQI
+         jHpNvtO8L114fp7RpH4YCOS74B7YP4XjBTKhLSOqvQUxIxPt6MCyhHp98yu7+wCmcpOQ
+         +JIpe7/jeLADRjNoERGZ1rcRMPpolR6NSpI78=
+Received: by 10.231.170.136 with SMTP id d8mr711521ibz.17.1262020548092; Mon, 
+	28 Dec 2009 09:15:48 -0800 (PST)
+In-Reply-To: <20091228155346.GB2252@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135749>
 
-Tarmigan <tarmigan+git@gmail.com> wrote:
-> On Mon, Dec 28, 2009 at 10:59 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > Tarmigan <tarmigan+git@gmail.com> wrote:
-> >> I've been thinking that the not_found() to a forbidden() instead.
-> >
-> > Because you can't resolve the access error by authenticating to
-> > the server, we may actually want to just return not_found() here
-> > with a message in the log of "Repository not exported: '%s'".
-> 
-> I'm no http expert, but isn't that what 401 would be?  From
-> http://tools.ietf.org/html/rfc2616#section-10.4.4
-> 403 Forbidden
->    The server understood the request, but is refusing to fulfill it.
->    Authorization will not help and the request SHOULD NOT be repeated.
->    If the request method was not HEAD and the server wishes to make
->    public why the request has not been fulfilled, it SHOULD describe the
->    reason for the refusal in the entity.  If the server does not wish to
->    make this information available to the client, the status code 404
->    (Not Found) can be used instead.
-> which to me points to 403 instead of 404.
+Hi,
 
-Good point, that is 403.  But the last sentance leads me to believe
-404 might be a better use here.  Under git-daemon we don't tell
-the client the difference between "Not Found" and "Not Exported",
-so I think we should be doing the same thing here under HTTP.
- 
+On Mon, Dec 28, 2009 at 11:53 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Martin Storsj? <martin@martin.st> wrote:
+>> Should I send in a new patch that removes the http.authAny option and
+>> always enables this, or send a rewritten version of the patch that already
+>> is in 'next'?
+>
+> I'm not Junio, but I would suggest sending in a new patch series,
+> and asking Junio politely to revert the one that is currently in
+> next before merging in the new series.
+>
+> If we really are killing http.authAny before it hits master, there
+> is no reason for it to appear in the final project history.
+
+hmm, a few days back Junio (added to Cc list) sent out an email
+regarding branch shuffling and dropping topics from 'next'. Junio,
+could we piggyback on this?
+
 -- 
-Shawn.
+Cheers,
+Ray Chuan
