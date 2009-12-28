@@ -1,69 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Allow git to use any HTTP authentication method.
-Date: Mon, 28 Dec 2009 13:37:40 +0100
-Message-ID: <vpqeimf9svf.fsf@bauges.imag.fr>
-References: <200912281154.09442.lenaic@lhuard.fr.eu.org>
+From: Sylvain RABOT <srabot@steek.com>
+Subject: Need some help with git rebase
+Date: Mon, 28 Dec 2009 14:33:27 +0100
+Message-ID: <4B38B3A7.6010900@steek.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?L=E9na=EFc?= Huard <lenaic@lhuard.fr.eu.org>
-X-From: git-owner@vger.kernel.org Mon Dec 28 13:38:31 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 28 14:40:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPErG-0007ur-Bt
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 13:37:58 +0100
+	id 1NPFpn-0008By-M1
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 14:40:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751322AbZL1Mhy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Dec 2009 07:37:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751268AbZL1Mhy
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 07:37:54 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:37131 "EHLO rominette.imag.fr"
+	id S1751197AbZL1Nk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Dec 2009 08:40:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751145AbZL1Nk0
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 08:40:26 -0500
+Received: from sarca.steek.com ([62.39.111.200]:54115 "EHLO sarca.steek.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750905AbZL1Mhx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Dec 2009 07:37:53 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id nBSCalIl018873
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 28 Dec 2009 13:36:47 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NPEqy-0004uI-D3; Mon, 28 Dec 2009 13:37:40 +0100
-In-Reply-To: <200912281154.09442.lenaic@lhuard.fr.eu.org>
- (=?iso-8859-1?Q?=22L=E9na=EFc?= Huard"'s message of "Mon\, 28 Dec 2009
- 11\:54\:06 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 28 Dec 2009 13:36:47 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: nBSCalIl018873
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1262608608.03244@bRDDAIJ3R/IMSd5i9YCp8g
+	id S1751103AbZL1Nk0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Dec 2009 08:40:26 -0500
+X-Greylist: delayed 413 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Dec 2009 08:40:26 EST
+Received: from localhost (localhost [127.0.0.1])
+	by sarca.steek.com (Postfix) with ESMTP id 4B95246A82
+	for <git@vger.kernel.org>; Mon, 28 Dec 2009 14:33:30 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at sarca.steek.com
+Received: from sarca.steek.com ([127.0.0.1])
+	by localhost (sarca.steek.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id tC1WeTbP-rgO for <git@vger.kernel.org>;
+	Mon, 28 Dec 2009 14:33:28 +0100 (CET)
+Received: from [192.168.1.190] (LMontsouris-152-62-23-90.w80-13.abo.wanadoo.fr [80.13.22.90])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: srabot@steek.com)
+	by sarca.steek.com (Postfix) with ESMTPSA id 5837046A81
+	for <git@vger.kernel.org>; Mon, 28 Dec 2009 14:33:28 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135739>
 
-L=E9na=EFc Huard <lenaic@lhuard.fr.eu.org> writes:
+Hello everybody,
 
-> The attached patch makes git configure libcurl to negotiate the most =
-suitable=20
-> HTTP authentication method.
+I'm trying to backport a feature branch which is based on the master 
+branch into another branch also based on master but older :
 
-Thanks for your contribution.
+                         a--a--a--a--a--a--a--a--a feature
+                        /
+--x--x--x--x--x--x--x--x--x--x--x--x master
+   \
+    o--o--o--o--o--o--o 12.72.1
+   
+   
+This is what I would like :
+   
+   
+                         a--a--a--a--a--a--a--a--a feature
+                        /
+--x--x--x--x--x--x--x--x--x--x--x--x master
+   \
+    o--o--o--o--o--o--o--a--a--a--a--a--a--a--a--a 12.72.1
+   
 
-Read other people's reply about the need for this patch.
+And this is what I get with git rebase --onto 12.72.1 master feature
+   
+    o--o--o--o--o--o--o--a--a--a--a--a--a--a--a--a feature
+   /
+--x--x--x--x--x--x--x--x--x--x--x--x master
+   \
+    o--o--o--o--o--o--o--a--a--a--a--a--a--a--a--a 12.72.1
 
-Other than that, please read git/Documentation/SubmittingPatches in
-Git's source code. In short: inline patches, don't attach them, and
-use Signed-Off-By to acknowledge that your patch can be legally
-included in Git's official version.
+Can you exlain to me what I need to do to get what I expect.
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Best regards.
+
+-- 
+Sylvain
