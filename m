@@ -1,93 +1,117 @@
-From: Carlos Santana <neubyr@gmail.com>
-Subject: Re: immutable tags?
-Date: Mon, 28 Dec 2009 16:22:40 -0600
-Message-ID: <92c9564e0912281422h1a69b5b7u15090f91327c237e@mail.gmail.com>
-References: <92c9564e0912281204h13c6a566w95069023e6909eda@mail.gmail.com>
-	 <87d41yvlpm.fsf@krank.kagedal.org>
+From: Jorge Bastos <mysql.jorge@decimal.pt>
+Subject: Re: Newbie to git
+Date: Mon, 28 Dec 2009 22:23:52 +0000
+Message-ID: <4e972734347b7ad47786807a7abe1c0e@192.168.1.222>
+References: <1435.87.196.47.196.1261932152.squirrel@webmail.decimal.pt>	 <3a9710ae6b01fabf3b462da607af2534@192.168.1.222>	 <26ae428a0912271212j70857e29m6248f6ec653f7551@mail.gmail.com>	 <0a78ff1d3ae5d236fa45c31f7bb8bd54@192.168.1.222>	 <m27hs8t5b7.fsf@whitebox.home> <76c5b8580912280851k141bc6cev36df72b1993b8359@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: davidk@lysator.liu.se
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 28 23:22:53 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 28 23:23:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPNzI-0006I4-F2
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 23:22:52 +0100
+	id 1NPNzs-0006UY-1Q
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 23:23:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751919AbZL1WWm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Dec 2009 17:22:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751653AbZL1WWl
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 17:22:41 -0500
-Received: from mail-fx0-f225.google.com ([209.85.220.225]:48373 "EHLO
-	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751294AbZL1WWl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Dec 2009 17:22:41 -0500
-Received: by mail-fx0-f225.google.com with SMTP id 25so4885136fxm.21
-        for <git@vger.kernel.org>; Mon, 28 Dec 2009 14:22:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=f83cSr7STHycKF5T29+k51OentC9Jl7bGUh/mGarhqE=;
-        b=Idgq+FadhiX011cvDIFSXQeuhvlS4Y+O9QHvHsPEzKZavaAOtS/h0PsFKPnH18LhyH
-         Liis7B7kJRy9xgx1ISqUAd6JnbFRP4ku19jxtJa8yZJ6c5gfwTktTg+9ioFq1i/GDSba
-         1O1raUxPKNL+/tl+MlYckLXFI0jooOhv5T8rE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QmPqY2NwBwaGZPBrrwSlr4bdDAFYvMBjLSAeAtVWrifeJAd7EpvpODobbiZb95S2T8
-         9YzSm0wJMVFSLmGBILmVpmBDhKL6XzUpz9Bs0QBJiMm2mTnbf1kkM5QhI83RHKqhdqWF
-         TCqrvf4GuvhvlT79RGtfQH3FLcLrQVTctNofg=
-Received: by 10.223.15.148 with SMTP id k20mr20874740faa.6.1262038960285; Mon, 
-	28 Dec 2009 14:22:40 -0800 (PST)
-In-Reply-To: <87d41yvlpm.fsf@krank.kagedal.org>
+	id S1751928AbZL1WXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Dec 2009 17:23:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751925AbZL1WXW
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 17:23:22 -0500
+Received: from mailrly07.isp.novis.pt ([195.23.133.217]:60411 "EHLO
+	mailrly07.isp.novis.pt" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751703AbZL1WXW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Dec 2009 17:23:22 -0500
+Received: (qmail 24933 invoked from network); 28 Dec 2009 22:23:19 -0000
+Received: from unknown (HELO mailfrt10.isp.novis.pt) ([195.23.133.202])
+          (envelope-sender <mysql.jorge@decimal.pt>)
+          by mailrly07.isp.novis.pt with compressed SMTP; 28 Dec 2009 22:23:19 -0000
+Received: (qmail 20644 invoked from network); 28 Dec 2009 22:23:19 -0000
+Received: from unknown (HELO web.decimal.pt) (Sent_by_authenticated_user_nm087018@[195.23.114.74])
+          (envelope-sender <mysql.jorge@decimal.pt>)
+          by mailfrt10.isp.novis.pt with SMTP; 28 Dec 2009 22:23:19 -0000
+Received: from webmail.decimal.pt (localhost [127.0.0.1])
+	by web.decimal.pt (Postfix) with ESMTP id 9A6F51878E0;
+	Mon, 28 Dec 2009 22:23:52 +0000 (WET)
+In-Reply-To: <76c5b8580912280851k141bc6cev36df72b1993b8359@mail.gmail.com>
+X-Sender: mysql.jorge@decimal.pt
+User-Agent: RoundCube Webmail
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135770>
 
-Got it now.
-Thank you all for explanation...
+> Your /home/apache/gitprojects is a folder where your git repositories
+> are supposed to be placed.
+> Your Git repository = your project.
+> 
+> By running a git daemon the way you do - you say that you are going to
+> serve all repositories from /home/apache/gitprojects.
+> 
+> Bare repo = repo without working copy - the one which contains only
+> history and git objects (imagine it to be only .git folder from normal
+> repo) Therefore for bare repos there is a naming convention so they
+> have .git extension, while normal repo doesn't. So, myProject.git is
+> server based bare repo, while myProject is a local repo.
+> 
+> Finally you have /home/apache/gitprojects/myProject.git
+> 
+> The URL to clone from there will be - should be shown to you by CGIT
+> if you have everything correctly set up
+> git://192.168.1.206/myProject.git
 
--
-CS.
+Lets see if i understood:
+
+my steps:
+
+git init --bare /home/apache/gitbare
+cd /home/apache/gitprojects
+mkdir project
+cd project
+git init myproject.git
+
+on gitweb, i see the project names in this format:
+"myproject.git/.git"
+
+for example, for the git repo on git.kernel.org, it is shown as:
+"git/git.git"
+
+shouldn't it appear in the same way here?
+
+i have:
+$projectroot = "/home/apache/gitprojects/project/";
+
+for CGIT, i have:
+repo.path=/home/apache/gitprojects/project/myproject.git
+
+but it doesn't show nothing after i click it.
 
 
-On Mon, Dec 28, 2009 at 3:21 PM, David K=E5gedal <davidk@lysator.liu.se=
-> wrote:
-> The following message is a courtesy copy of an article
-> that has been posted to gmane.comp.version-control.git as well.
->
-> Carlos Santana <neubyr@gmail.com> writes:
->
->> I would like to know if there is any difference between branches and
->> tags. Is it only conceptual - convention to be followed by a develop=
-er
->> or some technical difference? =A0e.g. : Is it possible to create
->> immutable tags so that nothing can be checked in to that 'tagged
->> directory'?
->
-> You are always in full control of your own repository, and have no
-> control over what other people do with their's. So you can't prevent
-> other people from changing the tags in their private repos, but you c=
-an
-> prevent them from propagating these changes back to you, or to a cent=
-ral
-> repository you control.
->
-> But perhaps there is nothing to worry about. I think the git commands
-> won't modify a tag unless you force it.
->
-> Also, if you use signed tags, you can be sure that they are not silen=
-tly
-> replaced while still claiming to be tagged by you.
->
-> --
-> David K=E5gedal
->
+on the other hand, i cannot push changes via remote, after cloned the
+repository with:
+
+
+git clone git://192.168.1.206/project/myproject.git
+
+add some files
+
+git add .
+git commit -m "aaaa"
+git push --tags "origin" master:master
+
+
+and get:
+
+error: unpack failed: unpack-objects abnormal exit
+To git://192.168.1.206/project/myproject.git
+ ! [remote rejected] master -> master (n/a (unpacker error))
+error: failed to push some refs to
+'git://192.168.1.206/project/myproject.git'
+Failed
+
+
+i feel i'm almost there but something is missing here... sorry my
+newbienest!
