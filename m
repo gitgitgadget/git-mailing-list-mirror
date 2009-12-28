@@ -1,149 +1,157 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] Fix core.worktree being used when GIT_DIR is not set
-Date: Mon, 28 Dec 2009 12:41:24 +0700
-Message-ID: <fcaeb9bf0912272141j1def76e7v6f581636188e65f0@mail.gmail.com>
-References: <200912071115.48085.robin.rosenberg.lists@dewire.com>
-	 <1261920513-25189-1-git-send-email-pclouds@gmail.com>
-	 <7viqbsw2vn.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] Documentation: always respect core.worktree if set
+Date: Mon, 28 Dec 2009 12:55:04 +0700
+Message-ID: <1261979704-30074-1-git-send-email-pclouds@gmail.com>
+References: <fcaeb9bf0912272141j1def76e7v6f581636188e65f0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 28 06:41:42 2009
+X-From: git-owner@vger.kernel.org Mon Dec 28 06:55:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NP8MP-00013d-VM
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 06:41:42 +0100
+	id 1NP8aD-0003Ma-QR
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 06:55:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751218AbZL1Fl0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Dec 2009 00:41:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751192AbZL1Fl0
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 00:41:26 -0500
-Received: from mail-px0-f189.google.com ([209.85.216.189]:54439 "EHLO
-	mail-px0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750975AbZL1FlZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Dec 2009 00:41:25 -0500
-Received: by pxi27 with SMTP id 27so5398066pxi.4
-        for <git@vger.kernel.org>; Sun, 27 Dec 2009 21:41:24 -0800 (PST)
+	id S1751556AbZL1Fzx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Dec 2009 00:55:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbZL1Fzx
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 00:55:53 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:64100 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750963AbZL1Fzw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Dec 2009 00:55:52 -0500
+Received: by mail-yw0-f176.google.com with SMTP id 6so10185133ywh.4
+        for <git@vger.kernel.org>; Sun, 27 Dec 2009 21:55:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=UWqcHEXwiPGkFN4pIkSLrj/Sw/BqMMgocMibJrDIC+U=;
-        b=QsvSvNM03UuRzhoq5uvurbHQqcHLhWxQyRloYNMc1n2Ex532cJ+RcAAFa2HGIial+g
-         1U6KTHbNBDLpr3H5sQ544YzZrRLxVAzuvfLA9JEUTn8IbPEdy57XtMeUmNmpO6xLXL4V
-         maCmPy8Y7JHe+N1CZIbgB22JaO4SkH6CLp9yQ=
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=Xx99FuwJpcKZ1kq+DBZdKH7JZZw1OGNyy8/5mCluvvg=;
+        b=iYKY3qEa8Q3afy8PTLUsqNqkFzxG5b3l59QBpaB4ugH1BgmGMYRf3ZGeR/4nhKYoM+
+         K4DPu5SQ8dlBVdufUbkBSd8Isj97pzbE2a/G7POITjYw4Fd9dMbFeDBnvUwkVJWO5dYc
+         4IR6luBR9nMoOhIkG8E+A1xqbhleYzmhW5OVM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=TOxomvzTBSOXg9S4HJJ0cozUq/1m9iXs4HxFHann0JdgDXEOJzOauy0NW0o2Mwmyhg
-         Kc+jBU2QiSe+UJEK9pZqm7X4mDqGe0FXOEVd/ZnwlaNXFDWqDFWdQ8/hqEcDsWpDtEwd
-         ixHkT+7FeaUE17IJUPRmlHMlOwbNXvR3lZgJ4=
-Received: by 10.114.189.24 with SMTP id m24mr10465333waf.29.1261978884349; 
-	Sun, 27 Dec 2009 21:41:24 -0800 (PST)
-In-Reply-To: <7viqbsw2vn.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=xsUCawv1tyVhfV3bpQw1sNuWakK3XjJfwF0e+Xsg1HCfuigIK/ydl6HCb04PvTvjuo
+         vs/YGi+mJ+BsXZ0QdhIprw/F9qAnbN3Ria2UonKiXX77Ml7d0BzI/iNmGOAlcidlRmN0
+         3eFJIie5KFHJw+s4NdHhkfrsYqcoMdI1OKUns=
+Received: by 10.150.176.15 with SMTP id y15mr21958675ybe.242.1261979751801;
+        Sun, 27 Dec 2009 21:55:51 -0800 (PST)
+Received: from pclouds@gmail.com ([115.73.211.127])
+        by mx.google.com with ESMTPS id 23sm4002384ywh.33.2009.12.27.21.55.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 27 Dec 2009 21:55:51 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 28 Dec 2009 12:55:05 +0700
+X-Mailer: git-send-email 1.6.5.2.216.g9c1ec
+In-Reply-To: <fcaeb9bf0912272141j1def76e7v6f581636188e65f0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135730>
 
-On 12/28/09, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->  > According to config.txt:
->  >> core.worktree::
->  >>         Set the path to the working tree.  The value will not be
->  >>         used in combination with repositories found automatically=
- in
->  >>         a .git directory (i.e. $GIT_DIR is not set).
->  >
->  > This behavior was changed after e90fdc3 (Clean up work-tree handli=
-ng -
->  > 2007-08-01) and 9459aa7 (Do check_repository_format() early (re-fi=
-x) -
->  > 2007-12-05). If core.worktree is set, even if git_dir automaticall=
+In the beginning, there was GIT_DIR environment variable.  We had a ver=
 y
->  > found (and git_work_tree_cfg set), git_work_tree_cfg will be reset=
- to
->  > core.worktree. This makes core.worktree effective even if GIT_DIR =
-is
->  > not set, in contrast to config.txt.
->  >
->  > This patch makes sure it only checks for core.worktree if GIT_DIR =
-is set.
->
->
-> The work-tree area got too complicated over time for a small Panda br=
-ain
->  to grasp, so let me think aloud here.
->
->  ...
->
->  Given these background, I am not sure the "fix" is addressing the ri=
-ght
->  issue.  What does it mean to have "core.worktree" in a configuration=
- file,
->  but that configuration file was found in a "git directory" that was =
-found
->  thorough the repository discovery process due to lack of $GIT_DIR?  =
-There
->  are only two cases I can see:
->
->   - The user is in the "git directory" itself, which is bare (iow,
->    /srv/git/proj.git in the above example).  This is not the case the
->    documentation snippet you quoted is about, and I don't think your =
-patch
->    changes (nor should change) the behaviour for;
->
->   - The "git directory" is a ".git/" subdirectory of some work tree, =
-and
->    the value of core.worktree may or may not match that work tree.  T=
-his
->    is the case the documentation talks about, and your patch addresse=
-s.
->
->  For the former case, while I don't see much point, we do seem to sup=
-port
->  this use case (continuing the example scenario):
->
->     $ unset GIT_DIR GIT_WORK_TREE
->     $ cd /srv/git/proj.git
->     $ git checkout -b newbranch master
->
->  We find that "." is our "git directory", and through its config file=
-, we
->  know core.worktree points at /scratch/proj/, and the checkout update=
-s
->  files over there, not in /srv/git/proj.git/.  While it is not obviou=
-s why
->  anybody finds this useful to me, I think the behaviour makes _some_ =
-sense,
->  and I don't think your patch breaks it by changing the behaviour for=
- this
->  case [*1*].
->
->  The latter, unless core.worktree matches the parent directory of the=
- "git
->  directory" in question, seems to me a misconfiguration and nothing e=
-lse.
->  Shouldn't it be diagnosed as an error, instead of matching the
->  documentation to the letter?
+simple semantics:
 
-I had not read that part of the documentation until Robin pointed out
-and always thought core.worktree was in effect if set. I thought the
-author intention was not to let core.worktree get in the way if not
-requested, but given that the worktree is moved to somewhere else
-already, that does not make sense as it could use parent directory of
-the "git directory" as worktree (unless core.worktree matches the
-parent directory as you said). Probably best fixing documentation.
+ - When there is no GIT_DIR environment variable:
+
+   - if "." is a "git directory", i.e. it has the set of git things lik=
+e
+     refs/, objects/ and HEAD, then you are working in a bare repositor=
+y.
+
+   - if ./.git exists and it is a "git directory", then "." is the top =
+of
+     the work tree;
+
+   - otherwise, try the parent directory of "." for the second rule
+     repeatedly to find the git directory and the top of the work tree.
+
+ - When there is GIT_DIR environment variable:
+
+   - $GIT_DIR is (and must be) the "git directory" and "." is the top o=
+f
+     the work tree.
+
+People wanted to have a work tree that is at a location totally unrelat=
+ed
+to where the "git directory" and setting $GIT_DIR at runtime was the on=
+ly
+way to do so, but that restricted them to work only at the top of the w=
+ork
+tree.  $GIT_WORK_TREE was invented as a way to say "this is the top of =
+the
+work tree".  So that people can do something like:
+
+    $ GIT_DIR=3D/srv/git/proj.git GIT_WORK_TREE=3D/scratch/proj
+    $ export GIT_DIR GIT_WORK_TREE
+    $ cd $GIT_WORK_TREE/Documentation
+    $ edit; git diff; git commit -a; ...
+
+Because the facility was meant to allow separation of "git directory" a=
+nd
+its associated work tree, and not meant to allow more than one work tre=
+es
+sharing the same "git directory" (which does not make any sense, as the=
+re
+is only one index in "git directory" that describes the state of the wo=
+rk
+tree), it was an unnecessary nuisanse that you had to set two environme=
+nt
+variables.  core.worktree was invented---by recording the location of t=
+he
+work tree in the config file in the "git directory", the above can be m=
+ade
+into this:
+
+    $ GIT_DIR=3D/srv/git/proj.git
+    $ cd /scratch/proj/Documentation
+    $ edit; git diff; git commit -a; ...
+
+According to the current documentation, if GIT_DIR is not set,
+core.worktree is not respected, and the parent directory of the "git
+directory" may be used as worktree. This case, unless core.worktree
+matches the parent directory of the "git directory" in question, seems
+a misconfiguration and nothing else. So remove this part of the
+documentation.
+
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Junio may find the description highly familiar :) only slightly modifi=
+ed
+ at the end
+
+ Documentation/config.txt |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 7d10a21..4b3d568 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -297,9 +297,7 @@ false), while all other repositories are assumed to=
+ be bare (bare
+ =3D true).
+=20
+ core.worktree::
+-	Set the path to the working tree.  The value will not be
+-	used in combination with repositories found automatically in
+-	a .git directory (i.e. $GIT_DIR is not set).
++	Set the path to the working tree.
+ 	This can be overridden by the GIT_WORK_TREE environment
+ 	variable and the '--work-tree' command line option. It can be
+ 	a absolute path or relative path to the directory specified by
 --=20
-Duy
+1.6.5.2.216.g9c1ec
