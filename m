@@ -1,152 +1,90 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: Newbie to git
-Date: Mon, 28 Dec 2009 11:51:54 -0500
-Message-ID: <76c5b8580912280851k141bc6cev36df72b1993b8359@mail.gmail.com>
-References: <1435.87.196.47.196.1261932152.squirrel@webmail.decimal.pt>
-	 <3a9710ae6b01fabf3b462da607af2534@192.168.1.222>
-	 <26ae428a0912271212j70857e29m6248f6ec653f7551@mail.gmail.com>
-	 <0a78ff1d3ae5d236fa45c31f7bb8bd54@192.168.1.222>
-	 <m27hs8t5b7.fsf@whitebox.home>
-	 <7v8wcnx2lq.fsf@alter.siamese.dyndns.org>
-	 <7a0ae9cb57a1bc55653872ab254ea922@192.168.1.222>
+From: Tarmigan <tarmigan+git@gmail.com>
+Subject: Re: [PATCH 2/2] Smart-http: check if repository is OK to export 
+	before serving it
+Date: Mon, 28 Dec 2009 11:57:18 -0500
+Message-ID: <905315640912280857g710b45fcne21a21d53ff0fedf@mail.gmail.com>
+References: <7vk4w963np.fsf@alter.siamese.dyndns.org> <1261870153-57572-1-git-send-email-tarmigan+git@gmail.com> 
+	<1261870153-57572-2-git-send-email-tarmigan+git@gmail.com> 
+	<20091227211033.GB609@spearce.org> <905315640912272007i8b4904dv2b93879789b453fb@mail.gmail.com> 
+	<20091228155931.GC2252@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: mysql.jorge@decimal.pt
-X-From: git-owner@vger.kernel.org Mon Dec 28 17:52:04 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	rctay89@gmail.com, drizzd@aon.at, warthog9@kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Dec 28 17:57:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPIp7-0006yt-TV
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 17:52:02 +0100
+	id 1NPIud-0000yg-RJ
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 17:57:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751894AbZL1Qv4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Dec 2009 11:51:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751774AbZL1Qvz
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 11:51:55 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:39848 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751298AbZL1Qvz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Dec 2009 11:51:55 -0500
-Received: by iwn1 with SMTP id 1so7368160iwn.33
-        for <git@vger.kernel.org>; Mon, 28 Dec 2009 08:51:54 -0800 (PST)
+	id S1752146AbZL1Q5j convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Dec 2009 11:57:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751966AbZL1Q5j
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 11:57:39 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:39443 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751919AbZL1Q5i convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Dec 2009 11:57:38 -0500
+Received: by pwj9 with SMTP id 9so6353910pwj.21
+        for <git@vger.kernel.org>; Mon, 28 Dec 2009 08:57:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=1DaTREfzQqBNo3VLxLxwkOXCryiMGDKcHi5A93/RrhY=;
-        b=eR3UZkuTDtXqZmH7wqg3oeCgI6eqpT3fWDItd2lNLInaFyOs4hSgU7xAUJykV9PJnx
-         TGsA62kPlHvB31Jt7VwSmHAb0pkJUzOTVc22ZWUbg9kEtv8lG88iwSASQr8VqAy2s9Wl
-         DqwPE+xPrHzVPs3ph6pD4CJdO0k35/qk+Zi5M=
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=KduUqqWIr9nR8v02oGSGdeLe0Fj1Z4ituL+OB57044Y=;
+        b=bduFknKbE6zPqB1CsCqwBmOqNAafUyL0fivro/HjSdZE4jRBRfZ+l6so/IXUV7LPsc
+         j/1FVX5xfcK3qbYVaBl2L3GwqkiTuOt/f1ltz7FirIk3mdaOc+0gbUMHpEko+UPTWxAr
+         I9reqCV69BNEp1aVBpuHyTrlXdPKZxiRLP6sE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lW0SrSRTIhCLuJUF2j78QrAsyhe70sGnymXESCcx2LFgLjJlwSB3So8qLkvQ0DlXba
-         ZXSbNuw+XBaq87YniM0ZNGU9ifntcr/LNujakO4CsGkhKA8jWfw18MrPlCnhqNvDtOsT
-         qNgv9LyjnzFMjEmUlzUerQUr0k796hlq4jaqg=
-Received: by 10.231.170.136 with SMTP id d8mr687328ibz.17.1262019114260; Mon, 
-	28 Dec 2009 08:51:54 -0800 (PST)
-In-Reply-To: <7a0ae9cb57a1bc55653872ab254ea922@192.168.1.222>
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=ZZLzXICn1xs7PcXszA84Bv4yqpduV/ZXOeOXdTSvtfjQWu2GhAj81MC4C821m3d4ae
+         7br5MpjBteIsErAMizYCak9Lbl9+i757HXir+4H5gWzDuBuO6OVUKev5ihaj02MWzw90
+         YsALfBiPmlKH0cWcUapsWzLKXBtuQw8vC743g=
+Received: by 10.142.4.10 with SMTP id 10mr2879743wfd.124.1262019458114; Mon, 
+	28 Dec 2009 08:57:38 -0800 (PST)
+In-Reply-To: <20091228155931.GC2252@spearce.org>
+X-Google-Sender-Auth: 625d27d60005c469
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135747>
 
-On Mon, Dec 28, 2009 at 5:34 AM, =C2=A0<mysql.jorge@decimal.pt> wrote:
->> If you are addressing Andreas, why does your mail have:
->>
->> =C2=A0 =C2=A0 To: <git@vger.kernel.org>
->> =C2=A0 =C2=A0 Cc: <git@vger.kernel.org>
->>
->> and no other addressee???
+On Mon, Dec 28, 2009 at 10:59 AM, Shawn O. Pearce <spearce@spearce.org>=
+ wrote:
+> Tarmigan <tarmigan+git@gmail.com> wrote:
+>> I've been thinking that the not_found() to a forbidden() instead.
 >
-> My error, sorry :)
+> Oh. =A0Interesting question.
 >
->> You created "myproject1" somewhere you started "mkdir" in (perhaps i=
-n
->> $HOME?) [*1*] and that project tracks a single file "a.txt"; you are
->> correct if that was what you wanted to do.
->>
->> The new repository "myproject1" doesn't have any relation to the bar=
+> Because you can't resolve the access error by authenticating to
+> the server, we may actually want to just return not_found() here
+> with a message in the log of "Repository not exported: '%s'".
+
+I'm no http expert, but isn't that what 401 would be?  From
+http://tools.ietf.org/html/rfc2616#section-10.4.4
+403 Forbidden
+   The server understood the request, but is refusing to fulfill it.
+   Authorization will not help and the request SHOULD NOT be repeated.
+   If the request method was not HEAD and the server wishes to make
+   public why the request has not been fulfilled, it SHOULD describe th=
 e
->> repository at /home/apache/gitprojects/mydir.git/ you created earlie=
-r.
->> The next steps I recommend new people are:
->>
->> =C2=A0(1) push into the public repository, by doing:
->>
->> =C2=A0 =C2=A0 =C2=A0cd myproject1
->> =C2=A0 =C2=A0 =C2=A0git push /home/apache/gitprojects/mydir.git/ mas=
-ter
->>
->> =C2=A0(2) make sure push went correctly by trying to clone from ther=
-e:
->>
->> =C2=A0 =C2=A0 =C2=A0cd ..
->> =C2=A0 =C2=A0 =C2=A0mv myproject1 myproject1.old
->> =C2=A0 =C2=A0 =C2=A0git clone /home/apache/gitprojects/mydir.git/ my=
-project1
->>
->> =C2=A0(3) check if the clone is what you expect
->>
->> =C2=A0 =C2=A0 =C2=A0diff myproject1.old/a.txt myproject1/a.txt
->>
->> =C2=A0(4) once satisfied, remove the old one
->>
->> =C2=A0 =C2=A0 =C2=A0rm -fr myproject1.old
->>
->> And keep working in the myproject1 repository from there on.
->
-> Thank you, i understood, i believe i really did. did that test and it=
-'s
-> OK.
-> But let me reask in another way:
->
-> I want to setup the git server, to accept new branch's created in a r=
-emote
-> place that will be push'ed to it, please correct me, 'cause i'm doing
-> something wrong and i don't know what yet.
->
-> - setup git server to run with:
-> /usr/lib/git-core/git-daemon --reuseaddr --syslog --export-all
-> --enable=3Dreceive-pack --verbose --base-path=3D/home/apache/gitproje=
-cts
->
-> - created directory /home/apache/gitprojects
-> - git init --bare /home/apache/gitprojects
->
-> - what will be my link on the remote? "git://192.168.1.206" just?
-> - From now on, how can I have access to push projects that exist on o=
-ther
-> machine?
->
-> Sorry for the questions... they are newbie!
-> Jorge,
+   reason for the refusal in the entity.  If the server does not wish t=
+o
+   make this information available to the client, the status code 404
+   (Not Found) can be used instead.
+which to me points to 403 instead of 404.
 
+I don't have a strong preference, and will resend with those changes
+if you'd prefer 404.
 
-Your /home/apache/gitprojects is a folder where your git repositories
-are supposed to be placed.
-Your Git repository =3D your project.
-
-By running a git daemon the way you do - you say that you are going to
-serve all repositories from /home/apache/gitprojects.
-
-Bare repo =3D repo without working copy - the one which contains only
-history and git objects (imagine it to be only .git folder from normal
-repo) Therefore for bare repos there is a naming convention so they
-have .git extension, while normal repo doesn't. So, myProject.git is
-server based bare repo, while myProject is a local repo.
-
-=46inally you have /home/apache/gitprojects/myProject.git
-
-The URL to clone from there will be - should be shown to you by CGIT
-if you have everything correctly set up
-git://192.168.1.206/myProject.git
-
-Hope that helps,
-Eugene
+Thanks,
+Tarmigan
