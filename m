@@ -1,82 +1,70 @@
-From: Sylvain RABOT <srabot@steek.com>
-Subject: Need some help with git rebase
-Date: Mon, 28 Dec 2009 14:33:27 +0100
-Message-ID: <4B38B3A7.6010900@steek.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Allow git to use any HTTP authentication method.
+Date: Mon, 28 Dec 2009 07:37:01 -0800
+Message-ID: <20091228153701.GA2252@spearce.org>
+References: <200912281154.09442.lenaic@lhuard.fr.eu.org> <alpine.DEB.2.00.0912281406210.5582@cone.home.martin.st> <be6fef0d0912280412w58401f10n972f9198144cd580@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 28 14:40:32 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Storsj? <martin@martin.st>,
+	L?na?c Huard <lenaic@lhuard.fr.eu.org>, git@vger.kernel.org
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 28 16:37:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPFpn-0008By-M1
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 14:40:32 +0100
+	id 1NPHf9-0001Kk-Ft
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Dec 2009 16:37:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751197AbZL1Nk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Dec 2009 08:40:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751145AbZL1Nk0
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 08:40:26 -0500
-Received: from sarca.steek.com ([62.39.111.200]:54115 "EHLO sarca.steek.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751103AbZL1Nk0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Dec 2009 08:40:26 -0500
-X-Greylist: delayed 413 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Dec 2009 08:40:26 EST
-Received: from localhost (localhost [127.0.0.1])
-	by sarca.steek.com (Postfix) with ESMTP id 4B95246A82
-	for <git@vger.kernel.org>; Mon, 28 Dec 2009 14:33:30 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at sarca.steek.com
-Received: from sarca.steek.com ([127.0.0.1])
-	by localhost (sarca.steek.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tC1WeTbP-rgO for <git@vger.kernel.org>;
-	Mon, 28 Dec 2009 14:33:28 +0100 (CET)
-Received: from [192.168.1.190] (LMontsouris-152-62-23-90.w80-13.abo.wanadoo.fr [80.13.22.90])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: srabot@steek.com)
-	by sarca.steek.com (Postfix) with ESMTPSA id 5837046A81
-	for <git@vger.kernel.org>; Mon, 28 Dec 2009 14:33:28 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+	id S1751868AbZL1Ph3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Dec 2009 10:37:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751739AbZL1Ph2
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Dec 2009 10:37:28 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:47851 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751548AbZL1Ph2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Dec 2009 10:37:28 -0500
+Received: by ywh6 with SMTP id 6so10468103ywh.4
+        for <git@vger.kernel.org>; Mon, 28 Dec 2009 07:37:27 -0800 (PST)
+Received: by 10.151.88.28 with SMTP id q28mr22493491ybl.337.1262014647517;
+        Mon, 28 Dec 2009 07:37:27 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 8sm4720754yxb.43.2009.12.28.07.37.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 28 Dec 2009 07:37:05 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <be6fef0d0912280412w58401f10n972f9198144cd580@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135741>
 
-Hello everybody,
+Tay Ray Chuan <rctay89@gmail.com> wrote:
+> On Mon, Dec 28, 2009 at 8:09 PM, Martin Storsj?? <martin@martin.st> wrote:
+> > On Mon, 28 Dec 2009, L??na??c Huard wrote:
+> >
+> >> The attached patch makes git configure libcurl to negotiate the most suitable
+> >> HTTP authentication method.
+...
+> > Something similar has already been queued for inclusion, and is available
+> > in the branch 'next', in commit b8ac923010484908d8426cb8ded5ad7e8c21a7f6.
+> > The patch available there requires you to set http.authAny for the libcurl
+> > option to be enabled.
 
-I'm trying to backport a feature branch which is based on the master 
-branch into another branch also based on master but older :
+Uh, stupid question, but why must we enable this option?  I don't
+have to enable something in my browser before I use digest auth to
+visit a website, why do I need to enable it in git?
 
-                         a--a--a--a--a--a--a--a--a feature
-                        /
---x--x--x--x--x--x--x--x--x--x--x--x master
-   \
-    o--o--o--o--o--o--o 12.72.1
-   
-   
-This is what I would like :
-   
-   
-                         a--a--a--a--a--a--a--a--a feature
-                        /
---x--x--x--x--x--x--x--x--x--x--x--x master
-   \
-    o--o--o--o--o--o--o--a--a--a--a--a--a--a--a--a 12.72.1
-   
+How does one use git clone with an http:// URL with digest
+authentication?  Its not obvious to the user that you would need
+to first export an obtuse environment variable to get something
+that should Just Work(tm).
 
-And this is what I get with git rebase --onto 12.72.1 master feature
-   
-    o--o--o--o--o--o--o--a--a--a--a--a--a--a--a--a feature
-   /
---x--x--x--x--x--x--x--x--x--x--x--x master
-   \
-    o--o--o--o--o--o--o--a--a--a--a--a--a--a--a--a 12.72.1
-
-Can you exlain to me what I need to do to get what I expect.
-
-Best regards.
+Yes, I realize you may need to perform an extra HTTP request to
+start the transaction, but why aren't we doing that?  Isn't it only
+1 additional request to discover the desired authentication method?
 
 -- 
-Sylvain
+Shawn.
