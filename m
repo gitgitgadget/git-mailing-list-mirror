@@ -1,78 +1,153 @@
-From: Luciano Rocha <luciano@eurotux.com>
-Subject: Re: Help on CGIT
-Date: Tue, 29 Dec 2009 12:31:27 +0000
-Message-ID: <20091229123127.GA6154@bit.office.eurotux.com>
-References: <31576a6d119e2edd66bd8bcc3281e9ad@192.168.1.222>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Qxx1br4bt0+wmkIi"
-Cc: git@vger.kernel.org
-To: Jorge Bastos <mysql.jorge@decimal.pt>
-X-From: git-owner@vger.kernel.org Tue Dec 29 13:38:22 2009
+From: Gisle Aas <gisle.aas@it.uib.no>
+Subject: [PATCH] Add --path-prefix option to git-fast-import
+Date: Tue, 29 Dec 2009 13:51:23 +0100
+Message-ID: <1262091083-25401-1-git-send-email-gisle.aas@it.uib.no>
+Cc: gitster@pobox.com, Gisle Aas <gisle@aas.no>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 29 14:18:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPbLB-0005Yw-SA
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 13:38:22 +0100
+	id 1NPbyM-0002WQ-9b
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 14:18:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751810AbZL2MiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2009 07:38:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751812AbZL2MiN
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 07:38:13 -0500
-Received: from os.eurotux.com ([216.75.63.6]:44526 "EHLO os.eurotux.com"
+	id S1751311AbZL2NSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2009 08:18:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751237AbZL2NSo
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 08:18:44 -0500
+Received: from alfons.uib.no ([129.177.30.72]:41777 "EHLO alfons.uib.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751529AbZL2MiM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2009 07:38:12 -0500
-X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Dec 2009 07:38:12 EST
-Received: (qmail 26447 invoked from network); 29 Dec 2009 12:31:31 -0000
-Received: from unknown (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
-  by 0 with AES128-SHA encrypted SMTP; 29 Dec 2009 12:31:31 -0000
-Content-Disposition: inline
-In-Reply-To: <31576a6d119e2edd66bd8bcc3281e9ad@192.168.1.222>
-User-Agent: Mutt/1.5.20 (2009-08-27)
+	id S1751206AbZL2NSn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2009 08:18:43 -0500
+X-Greylist: delayed 1606 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Dec 2009 08:18:43 EST
+Received: from thoralf.uib.no (smtp.uib.no) [129.177.13.16] 
+	by alfons.uib.no  with esmtp  (Exim 4.69)
+	id 1NPbYI-0006O6-UP; Tue, 29 Dec 2009 13:51:55 +0100
+Received: from void.uib.no [129.177.5.125]:45679 
+	by smtp.uib.no  with esmtps (Exim 4.69)
+	id 1NPbYI-0000ni-To; Tue, 29 Dec 2009 13:51:54 +0100
+Received: from gaa041 by void.uib.no  with local (Exim 4.63)
+	id 1NPbYI-0006cE-RJ; Tue, 29 Dec 2009 13:51:54 +0100
+X-Mailer: git-send-email 1.6.6.rc4.12.g269e7
+X-checked-clean: by exiscan on alfons
+X-Scanner: 159c6f94f43b0a61927463fb17c179ec http://tjinfo.uib.no/virus.html
+X-UiB-SpamFlag: NO UIB: -23.9 hits, 8.0 required
+X-UiB-SpamReport: spamassassin found;
+  -15 From is listed in 'whitelist_SA'
+ -9.0 Message received from UIB
+  0.1 BODY: UIB_MAILWON
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135796>
 
+From: Gisle Aas <gisle@aas.no>
 
---Qxx1br4bt0+wmkIi
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I found this useful when import multiple external repositories to be merged
+into a single git repo.  Not having the files be renamed during the merge
+made it easier to follow the history of the individual files.
 
-On Tue, Dec 29, 2009 at 12:18:38PM +0000, Jorge Bastos wrote:
-> Howdy people,=20
->=20
-> Since i cannot find any CGIT web interface mailing list on their webpage,
-> i'm asking here.=20
->=20
-> I have CGIT working at 50%.=20
->=20
-> The 1st page show's correctly, but when i click the project name, it
-> becames unconfigured and wierd, and apache complains about this:=20
->=20
-> [Tue Dec 29 12:12:25 2009] [error] [client 192.168.1.3] [cgit] Unable to
-> lock slot /var/cache/cgit/53200000.lock: No such file or directory (2)
+Signed-off-by: Gisle Aas <gisle@aas.no>
+---
+ Documentation/git-fast-import.txt |    6 ++++++
+ fast-import.c                     |   24 ++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+), 0 deletions(-)
 
-Does the directory /var/cache/cgit/ exist?
-
---=20
-Luciano Rocha <luciano@eurotux.com>
-Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
-
---Qxx1br4bt0+wmkIi
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAks59p8ACgkQinSul6a7oB8kNgCdE0UpsxWW7/q5JMg7NBVrzfSJ
-m18AnR9d0e1ZArTMicI4O7nqyxd0gz0N
-=yVRs
------END PGP SIGNATURE-----
-
---Qxx1br4bt0+wmkIi--
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 288032c..b8f9593 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -58,6 +58,12 @@ OPTIONS
+ 	Maximum number of branches to maintain active at once.
+ 	See ``Memory Utilization'' below for details.  Default is 5.
+ 
++--path-prefix=<str>:
++	Prepend the given prefix to all the paths imported.
++	This can be used to import stuff into a subdirectory
++	of where the original files where located.  Most likely
++	you want <str> to end with a slash.
++
+ --export-marks=<file>::
+ 	Dumps the internal marks table to <file> when complete.
+ 	Marks are written one per line as `:markid SHA-1`.
+diff --git a/fast-import.c b/fast-import.c
+index dd3c99d..32b0d70 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -351,6 +351,8 @@ static struct recent_command *rc_free;
+ static unsigned int cmd_save = 100;
+ static uintmax_t next_mark;
+ static struct strbuf new_data = STRBUF_INIT;
++static const char *path_prefix;
++static size_t path_prefix_len;
+ 
+ static void write_branch_report(FILE *rpt, struct branch *b)
+ {
+@@ -1860,6 +1862,16 @@ static void load_branch(struct branch *b)
+ 	}
+ }
+ 
++static const char *path_prefix_prepend(struct strbuf *sb, const char *p)
++{
++	if (p != sb->buf) {
++	    strbuf_reset(sb);
++	    strbuf_addstr(sb, p);
++	}
++	strbuf_insert(sb, 0, path_prefix, path_prefix_len);
++	return sb->buf;
++}
++
+ static void file_change_m(struct branch *b)
+ {
+ 	const char *p = command_buf.buf + 2;
+@@ -1909,6 +1921,8 @@ static void file_change_m(struct branch *b)
+ 			die("Garbage after path in: %s", command_buf.buf);
+ 		p = uq.buf;
+ 	}
++	if (path_prefix)
++	    p = path_prefix_prepend(&uq, p);
+ 
+ 	if (S_ISGITLINK(mode)) {
+ 		if (inline_data)
+@@ -1961,6 +1975,8 @@ static void file_change_d(struct branch *b)
+ 			die("Garbage after path in: %s", command_buf.buf);
+ 		p = uq.buf;
+ 	}
++	if (path_prefix)
++	    p = path_prefix_prepend(&uq, p);
+ 	tree_content_remove(&b->branch_tree, p, NULL);
+ }
+ 
+@@ -1984,6 +2000,8 @@ static void file_change_cr(struct branch *b, int rename)
+ 		strbuf_add(&s_uq, s, endp - s);
+ 	}
+ 	s = s_uq.buf;
++	if (path_prefix)
++	    s = path_prefix_prepend(&s_uq, s);
+ 
+ 	endp++;
+ 	if (!*endp)
+@@ -1996,6 +2014,8 @@ static void file_change_cr(struct branch *b, int rename)
+ 			die("Garbage after dest in: %s", command_buf.buf);
+ 		d = d_uq.buf;
+ 	}
++	if (path_prefix)
++	    d = path_prefix_prepend(&d_uq, d);
+ 
+ 	memset(&leaf, 0, sizeof(leaf));
+ 	if (rename)
+@@ -2523,6 +2543,10 @@ int main(int argc, const char **argv)
+ 			if (max_depth > MAX_DEPTH)
+ 				die("--depth cannot exceed %u", MAX_DEPTH);
+ 		}
++		else if (!prefixcmp(a, "--path-prefix=")) {
++			path_prefix = a + 14;
++			path_prefix_len = strlen(path_prefix);
++		}
+ 		else if (!prefixcmp(a, "--active-branches="))
+ 			max_active_branches = strtoul(a + 18, NULL, 0);
+ 		else if (!prefixcmp(a, "--import-marks="))
+-- 
+1.6.6.rc4.12.g269e7
