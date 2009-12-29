@@ -1,59 +1,80 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] user-manual: use standarized quoting
-Date: Wed, 30 Dec 2009 00:19:46 +0200
-Message-ID: <94a0d4530912291419o795660c0yb2096f86b978a4ad@mail.gmail.com>
-References: <1261746350-26990-1-git-send-email-felipe.contreras@gmail.com>
-	 <20091230065436.6117@nanako3.lavabit.com>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: Re: Question about 'branch -d' safety
+Date: Tue, 29 Dec 2009 23:31:23 +0100
+Message-ID: <20091229223123.GA12965@vidovic>
+References: <20091230065442.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
 To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Tue Dec 29 23:19:53 2009
+X-From: git-owner@vger.kernel.org Tue Dec 29 23:31:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPkPx-00043v-4e
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 23:19:53 +0100
+	id 1NPkbS-0000Jg-SC
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 23:31:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752590AbZL2WTs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2009 17:19:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751701AbZL2WTs
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 17:19:48 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:42929 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751570AbZL2WTr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2009 17:19:47 -0500
-Received: by iwn1 with SMTP id 1so8138036iwn.33
-        for <git@vger.kernel.org>; Tue, 29 Dec 2009 14:19:46 -0800 (PST)
+	id S1753063AbZL2Wbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2009 17:31:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751307AbZL2Wbc
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 17:31:32 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:60443 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752240AbZL2Wbb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2009 17:31:31 -0500
+Received: by ewy19 with SMTP id 19so3180730ewy.21
+        for <git@vger.kernel.org>; Tue, 29 Dec 2009 14:31:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=+fXFZ7FzPe1WcEWAtBV8bWUvzuWhJ9D7KMYOAdViTp0=;
-        b=YVfmvc0a91vUvb/AmcUdU3BO6on+nJrltBV8W0qwlPtMf/s3xXXaOU3kwHNpk+MeEv
-         7eYNYjkNcdhamw0GKXknV3ovgOoA79g6agXo0fHIWGMVc2tUA6Ugdhn+g9Uhtt+td0yQ
-         pbZM6+A6p4KQyyLPLUZn738iTWKNFVdEHFMEc=
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=rnuh6+uyln3xZMxIpJFVDONLkNWHfcBkGQdG8k1qHS8=;
+        b=pbY0QwsX2hr6MTJWsCVd1vpaiIjX9Kfxp6C5W3C81EwzqED7KeDXKxjhrWp6ijTDvE
+         myO/be7LIKajc1ut8vL6o5N9PWuYdh+neNMc2VmPcWH+C3iD3YtHMRSQsqq/MSA7TSS7
+         qfHKNdoBAIeUTJarokEAa83TDa9yTSuaUHR98=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=WVRGM5Ihx2nUZo0HNjyd3V3T54YO9Av8M2ZNvQsxAo2yk5BwXHXhJeQ7crc69gSxmx
-         LxhzZeS00biQTBuyNv4tz8xzFnglkXXYUWFe77P7fxvDdixCppLDkYkMwMTJF1kIbz6G
-         k04suvsAifnAZC/t7eb2nzfauPOWVx0Sza6fQ=
-Received: by 10.231.157.131 with SMTP id b3mr331837ibx.19.1262125186531; Tue, 
-	29 Dec 2009 14:19:46 -0800 (PST)
-In-Reply-To: <20091230065436.6117@nanako3.lavabit.com>
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=EkmD/yfraxo0qxfivO+O0AVj2Gse3pxtFVNkxjswy9JqxT6B8D6zHBz9UOrYPwjruw
+         MdqbSphrOE3AaOaymAaAxr86rZDR160IqwUOYNe8wUgSrXPZGVProjwqXlsnVU8ARvtU
+         nIaKQSoK+tu4Q7wMjjl8HhCWWfR4fHLGgBWOQ=
+Received: by 10.213.42.210 with SMTP id t18mr5641469ebe.49.1262125890056;
+        Tue, 29 Dec 2009 14:31:30 -0800 (PST)
+Received: from @ (83-154-173-109.rev.libertysurf.net [83.154.173.109])
+        by mx.google.com with ESMTPS id 15sm9169004ewy.0.2009.12.29.14.31.25
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 29 Dec 2009 14:31:26 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20091230065442.6117@nanako3.lavabit.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135841>
 
-On Tue, Dec 29, 2009 at 11:54 PM, Nanako Shiraishi <nanako3@lavabit.com> wrote:
-> It is a little hard to comment on a diffstat without the patch text, isn't it?
+The 30/12/09, Nanako Shiraishi wrote:
 
-Apparently it was silently dropped (again). How should I send it?
+> I think the safety feature should check if the branch to be deleted is merged to the remote tracking branch it was forked from, instead of checking the current branch.
+> 
+> What do you think?
+
+I think we shouldn't. At first, every repository don't have a remote.
+This may easily be passed by a "double check" with a logical OR between
+the two statements.
+
+But even with it, we would hit some foreign workflow. Think: Bob
+directly push to Alice and Alice does the same to Bob. I don't use this
+kind of workflow myself but I consider them to be sensible enough to
+have our attention.
+
+Now, I'm talking about what users may expect from the default behaviour.
+I'm not against a new configuration variable. It would certainly give
+more granularity to the expectation of "what is safe for me".
+
 
 -- 
-Felipe Contreras
+Nicolas Sebrecht
