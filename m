@@ -1,56 +1,72 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [PATCH] Documentation: always respect core.worktree if set
-Date: Tue, 29 Dec 2009 18:05:55 +0100
-Message-ID: <200912291805.55272.robin.rosenberg@dewire.com>
-References: <7viqbrv4pa.fsf@alter.siamese.dyndns.org> <1262072921-11280-1-git-send-email-pclouds@gmail.com> <7v7hs5hg46.fsf@alter.siamese.dyndns.org>
+From: Daniel Convissor <danielc@analysisandsolutions.com>
+Subject: Re: config for merging master to test branch
+Date: Tue, 29 Dec 2009 12:56:08 -0500
+Message-ID: <20091229175607.GA3683@panix.com>
+References: <20091228233838.GA28052@panix.com> <20091229164343.GA17546@panix.com> <7vvdfphgbu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: =?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 29 18:06:14 2009
+Content-Type: text/plain; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 29 18:56:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPfWL-0007X8-H0
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 18:06:09 +0100
+	id 1NPgJC-0004n2-WB
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 18:56:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752187AbZL2RGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2009 12:06:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752044AbZL2RGF
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 12:06:05 -0500
-Received: from mail.dewire.com ([83.140.172.130]:25770 "EHLO dewire.com"
+	id S1751340AbZL2R4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2009 12:56:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751223AbZL2R4K
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 12:56:10 -0500
+Received: from mail1.panix.com ([166.84.1.72]:50399 "EHLO mail1.panix.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751808AbZL2RGE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2009 12:06:04 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 8B5DA8026C6;
-	Tue, 29 Dec 2009 18:05:58 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8L9+EZ8NMgmf; Tue, 29 Dec 2009 18:05:57 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 71AA8145A5B1;
-	Tue, 29 Dec 2009 18:05:57 +0100 (CET)
-User-Agent: KMail/1.12.2 (Linux/2.6.31-17-generic; KDE/4.3.2; i686; ; )
-In-Reply-To: <7v7hs5hg46.fsf@alter.siamese.dyndns.org>
+	id S1751005AbZL2R4J (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2009 12:56:09 -0500
+Received: from panix5.panix.com (panix5.panix.com [166.84.1.5])
+	by mail1.panix.com (Postfix) with ESMTP id 3E3C91F091
+	for <git@vger.kernel.org>; Tue, 29 Dec 2009 12:56:08 -0500 (EST)
+Received: by panix5.panix.com (Postfix, from userid 14662)
+	id 295282422B; Tue, 29 Dec 2009 12:56:08 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vvdfphgbu.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135816>
 
-tisdagen den 29 december 2009 17.58.17 skrev  Junio C Hamano:
-> Thanks; I'll take this "match documentation to reality with caveats" patch
-> for now, but I personally think we should revisit the issue someday.
+Hi Junio:
+
+> Good.  That is how it was designed to be used ;-)
+
+Thanks for the reassurance.
+
+
+>     [branch "test"]
+>         remote = origin
+>         merge = refs/heads/master
 > 
+>     When on branch "test", "pull" and "fetch" by default interact with the
+>     "origin" repository, and "pull" integrates what was found on the
+>     'master' branch from that remote into your history.
 
-I'm happy with this.
+Excellent.  Initially, I wasn't sure what the following commands did:
 
--- robin
+   git config branch.test.remote origin
+   git config branch.test.merge refs/heads/master
+
+Between further reading and your explanation I now understand it better. 
+"refs/heads/master" refers items displayed by "git show-ref".
+
+So what is "refs/remotes/origin/master", please?
+
+Thanks,
+
+--Dan
+
+-- 
+ T H E   A N A L Y S I S   A N D   S O L U T I O N S   C O M P A N Y
+            data intensive web and database programming
+                http://www.AnalysisAndSolutions.com/
+ 4015 7th Ave #4, Brooklyn NY 11232  v: 718-854-0335 f: 718-854-0409
