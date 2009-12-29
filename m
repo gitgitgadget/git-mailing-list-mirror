@@ -1,115 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: commit: explain the non-meaning of S-o-b
-Date: Mon, 28 Dec 2009 23:54:15 -0800
-Message-ID: <7voclimd08.fsf@alter.siamese.dyndns.org>
-References: <20091228194001.7b4c68f4@perceptron>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Possible bug in 1.6.6 with reset --hard and $GIT_WORK_TREE
+Date: Tue, 29 Dec 2009 16:12:41 +0800
+Message-ID: <be6fef0d0912290012m3d64669fw4315960274baecb9@mail.gmail.com>
+References: <1a04eebf0912282247p6975a96el8076cb39378bd104@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git ML <git@vger.kernel.org>
-To: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Tue Dec 29 08:54:33 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Fyn Fynn <fynfynn@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 29 09:12:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPWuS-0000Ng-Ut
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 08:54:29 +0100
+	id 1NPXCB-0005Qn-Iu
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 09:12:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752650AbZL2HyY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Dec 2009 02:54:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751700AbZL2HyY
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 02:54:24 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41239 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750775AbZL2HyX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Dec 2009 02:54:23 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 79FD5AA853;
-	Tue, 29 Dec 2009 02:54:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=K4kZRBtw8js0
-	Q0C5WdM5XnTONQo=; b=OzPw6COeSd+VyiDP1ZCaCZzaIFjPy3/goWAxW1Xp87m9
-	cONjfW9aSmonHceeV/5mLg/EBAcViAa0aCx3aNBQIoLWiIXk2D/g7+0Ten2+g/6D
-	IPwLcIDLZNfQW0GZ1zuX+WrCcVNTb70+sGHkwGaEMn5QHTZGqKLiMP4zw6k6jlw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=s++UT9
-	RvfDMtdIrQD9H2h1QXPsNm0B3K8bHgHZM8jeiv9hrfAd6c4U4iFrBXCx16hJ16ZT
-	j6wvKN/tZJQ3WR03nPxOcAgLKjmKJ8m4xxDeowE0uXZhp3ngQllBpKHY8Ah2SJKf
-	D/AUFEas1BZ2eNqPOV1Aox1j9inLZ+IHMpjG4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 58D71AA852;
-	Tue, 29 Dec 2009 02:54:20 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6593BAA851; Tue, 29 Dec 2009
- 02:54:17 -0500 (EST)
-In-Reply-To: <20091228194001.7b4c68f4@perceptron> ("Jan =?utf-8?Q?Kr=C3=BC?=
- =?utf-8?Q?ger=22's?= message of "Mon\, 28 Dec 2009 19\:40\:01 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5F207366-F44F-11DE-8CBC-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1752585AbZL2IMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2009 03:12:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752472AbZL2IMn
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 03:12:43 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:33463 "EHLO
+	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751533AbZL2IMm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2009 03:12:42 -0500
+Received: by iwn1 with SMTP id 1so7742999iwn.33
+        for <git@vger.kernel.org>; Tue, 29 Dec 2009 00:12:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=j/wqmeYqSEQNdxOla7ULgkAasJwf2DqaZ8xwmgQuNa4=;
+        b=b8UqHn3c6eewal/wFD7lTh6TzRvazShe5TBbV66uAiTbg834O10/7PUrAiflS2ZLlY
+         KnX5rzj0tDRqswAK6icgz9gT1EPis5tSmkmF7BwJ1qO87ZAn3PcygFJ47SN1h2kmPdSV
+         yylELU5H8fVWyrAPVycQy6q0q6+WFzttujvpI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=ftLM/TQjgJQcScXJPnQbhIxKKwohj8/DACEkv8RC9P9vN3OAhNnsrrF3istsj2MuCt
+         o+WctvGZf33gQ/E5/QEYDgWgAqHa0DLQez1eC9VL+W/saTPviRb5Qimb5YY1I9XsXWsp
+         Cyn1nckdxtQCUzaQm6NuYK/m/gtBrp3k5HDJM=
+Received: by 10.231.24.142 with SMTP id v14mr229058ibb.55.1262074361588; Tue, 
+	29 Dec 2009 00:12:41 -0800 (PST)
+In-Reply-To: <1a04eebf0912282247p6975a96el8076cb39378bd104@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135782>
 
-Jan Kr=C3=BCger <jk@jk.gs> writes:
+Hi,
 
-> In the manpage for git commit, the option --signoff is mentioned but
-> there is no explanation of what it actually means. Add a brief hint t=
-hat
-> S-o-b doesn't have a pre-defined meaning.
-
-The commands am, cherry-pick, commit, format-patch, and revert all shar=
-e
-the "sign-off" and they more or less deliberately refused to define wha=
-t
-it means to sign-off a patch; as your patch says, it is up to the proje=
-ct
-policy.
-
-config.txt gives a description for format.signoff option that is too
-specific to git and the kernel, which I think is a mistake given the mu=
-ch
-wider audience we have these days.
-
-How similar should the document for the "sign-off" options to these
-commands be?  I am wondering if we should have the same description cop=
-ied
-and pasted to all of them, or avoid repeating ourselves and instead hav=
-e
-them refer to a central place, perhaps somewhere in the Tutorial or the
-Workflow document.
-
-
-> Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
-> ---
-> Semi-resend. Nobody commented on this when I first sent it in early
-> December, so here it is again, with a slightly more verbose
-> explanation. The repetition is intentional.
+On Tue, Dec 29, 2009 at 2:47 PM, Fyn Fynn <fynfynn@gmail.com> wrote:
+> The exact same git reset command that works in 1.6.4, fails to work
+> under 1.6.6:
 >
->  Documentation/git-commit.txt |    3 ++-
->  1 files changed, 2 insertions(+), 1 deletions(-)
+> $ GIT_WORK_TREE=$HOME/rawdata/ GIT_DIR=$HOME/rawdata/.git
+> /usr/local/git-1.6.6/bin/git reset --hard
+> fatal: hard reset requires a work tree
+> $ GIT_WORK_TREE=$HOME/rawdata/ GIT_DIR=$HOME/rawdata/.git
+> /usr/local/git-1.6.4/bin/git reset --hard
+> HEAD is now at 77ec73f...
 >
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.=
-txt
-> index d227cec..cae510b 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -114,7 +114,10 @@ OPTIONS
->  -s::
->  --signoff::
->  	Add Signed-off-by line by the committer at the end of the commit
-> -	log message.
-> +	log message. This line has no inherent meaning; it is up to the
-> +	potential recipient of the commit to decide what it stands for.
-> +	It is typically understood as an assurance by the committer that
-> +	the commit conforms to the receiving project's commit guidelines.
-> =20
->  -n::
->  --no-verify::
-> --=20
-> 1.6.5.3.171.ge36e
+> What gives?
+
+perhaps you should also specify the --exec-path option or
+GIT_EXEC_PATH environment variable.
+
+Assuming a full installation in /usr/local/git-1.6.6/ and thus that
+the git commands are installed at
+/usr/local/git-1.6.6/libexec/git-core/, the reset for 1.6.6 would look
+like this:
+
+$ GIT_WORK_TREE=$HOME/rawdata/ \
+GIT_DIR=$HOME/rawdata/.git \
+GIT_EXEC_PATH=/usr/local/git-1.6.6/libexec/git-core/ \
+/usr/local/git-1.6.6/bin/git reset --hard
+
+-- 
+Cheers,
+Ray Chuan
