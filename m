@@ -1,81 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: config for merging master to test branch
-Date: Tue, 29 Dec 2009 10:32:51 -0800
-Message-ID: <7vskatd418.fsf@alter.siamese.dyndns.org>
-References: <20091228233838.GA28052@panix.com>
- <20091229164343.GA17546@panix.com> <7vvdfphgbu.fsf@alter.siamese.dyndns.org>
- <20091229175607.GA3683@panix.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: [PATCH] git count-objects: handle packs bigger than 4G
+Date: Tue, 29 Dec 2009 20:09:15 +0100
+Message-ID: <m2637pbns4.fsf@igel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Daniel Convissor <danielc@analysisandsolutions.com>
-X-From: git-owner@vger.kernel.org Tue Dec 29 19:33:14 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 29 20:09:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPgsV-00059X-Q0
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 19:33:08 +0100
+	id 1NPhRm-0002Nu-Vc
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 20:09:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751988AbZL2SdB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2009 13:33:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751944AbZL2SdB
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 13:33:01 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39512 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751985AbZL2SdA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2009 13:33:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CE418CBC4;
-	Tue, 29 Dec 2009 13:32:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=b3kZYjZMv8TUz6/2vAYxxMtOlRM=; b=MSgCrj
-	ufMFq6/fdWmftkkmd2e7F2GBAk86nJ/2Es9R4G+2OtV2B8J7Eo9zdVphDBhNNby/
-	99XnKwK+0Hn/qvuCkenSnwN4pS/OMaCrpJeiNILbgGeeXl8n/MHOyq0ZWZ2Z4v4i
-	1WK6Srytsr730qzp99iN/sRYl9f0ZwMUVMDN0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r9GKoQZaa2vQDOM8OWJbucoy/mDwYSX5
-	N+5cFCFzN8Ryx0plWUD1hdYlMUGF5fVumM6xZXnidt9WnXOO3Hwy/J96healUShi
-	FLs6Pe5MGIFmyv9Es0pJx346XAcTdRaGEnAZE7wyYc1lcJW8pQ4rHIRFlc79Bci3
-	wP5PfVxtGBQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 52AE48CBC3;
-	Tue, 29 Dec 2009 13:32:55 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AE20B8CBBE; Tue, 29 Dec
- 2009 13:32:52 -0500 (EST)
-In-Reply-To: <20091229175607.GA3683@panix.com> (Daniel Convissor's message of
- "Tue\, 29 Dec 2009 12\:56\:08 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 94A15CA4-F4A8-11DE-9722-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752416AbZL2TJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2009 14:09:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbZL2TJW
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 14:09:22 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:42147 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752380AbZL2TJU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2009 14:09:20 -0500
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id 9D8E41C1582E
+	for <git@vger.kernel.org>; Tue, 29 Dec 2009 20:09:18 +0100 (CET)
+Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
+	by mail.m-online.net (Postfix) with ESMTP id 39B079019D
+	for <git@vger.kernel.org>; Tue, 29 Dec 2009 20:09:18 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
+	with ESMTP id un1NR30VyUQp for <git@vger.kernel.org>;
+	Tue, 29 Dec 2009 20:09:17 +0100 (CET)
+Received: from igel.home (DSL01.83.171.175.195.ip-pool.NEFkom.net [83.171.175.195])
+	by mail.mnet-online.de (Postfix) with ESMTP
+	for <git@vger.kernel.org>; Tue, 29 Dec 2009 20:09:17 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id A2A2ECA28C; Tue, 29 Dec 2009 20:09:16 +0100 (CET)
+X-Yow: FUN is never having to say you're SUSHI!!
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.90 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135818>
 
-Daniel Convissor <danielc@analysisandsolutions.com> writes:
+Use off_t to count sizes of packs and objects to avoid overflow after
+4Gb.
 
-> Excellent.  Initially, I wasn't sure what the following commands did:
->
->    git config branch.test.remote origin
->    git config branch.test.merge refs/heads/master
->
-> Between further reading and your explanation I now understand it better. 
-> "refs/heads/master" refers items displayed by "git show-ref".
+Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
+---
+ builtin-count-objects.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
-Not quite.  refs/heads/master there refers to the _local_ master branch,
-but it is _local_ with respect to the origin repository, not your
-repository.  "git show-ref" is about showing refs in _your_ repository.
+diff --git a/builtin-count-objects.c b/builtin-count-objects.c
+index 1b0b6c8..2bdd8eb 100644
+--- a/builtin-count-objects.c
++++ b/builtin-count-objects.c
+@@ -11,7 +11,7 @@
+ 
+ static void count_objects(DIR *d, char *path, int len, int verbose,
+ 			  unsigned long *loose,
+-			  unsigned long *loose_size,
++			  off_t *loose_size,
+ 			  unsigned long *packed_loose,
+ 			  unsigned long *garbage)
+ {
+@@ -77,7 +77,7 @@ int cmd_count_objects(int argc, const char **argv, const char *prefix)
+ 	int len = strlen(objdir);
+ 	char *path = xmalloc(len + 50);
+ 	unsigned long loose = 0, packed = 0, packed_loose = 0, garbage = 0;
+-	unsigned long loose_size = 0;
++	off_t loose_size = 0;
+ 	struct option opts[] = {
+ 		OPT__VERBOSE(&verbose),
+ 		OPT_END(),
+@@ -103,7 +103,7 @@ int cmd_count_objects(int argc, const char **argv, const char *prefix)
+ 	if (verbose) {
+ 		struct packed_git *p;
+ 		unsigned long num_pack = 0;
+-		unsigned long size_pack = 0;
++		off_t size_pack = 0;
+ 		if (!packed_git)
+ 			prepare_packed_git();
+ 		for (p = packed_git; p; p = p->next) {
+@@ -116,15 +116,15 @@ int cmd_count_objects(int argc, const char **argv, const char *prefix)
+ 			num_pack++;
+ 		}
+ 		printf("count: %lu\n", loose);
+-		printf("size: %lu\n", loose_size / 1024);
++		printf("size: %lu\n", (unsigned long) (loose_size / 1024));
+ 		printf("in-pack: %lu\n", packed);
+ 		printf("packs: %lu\n", num_pack);
+-		printf("size-pack: %lu\n", size_pack / 1024);
++		printf("size-pack: %lu\n", (unsigned long) (size_pack / 1024));
+ 		printf("prune-packable: %lu\n", packed_loose);
+ 		printf("garbage: %lu\n", garbage);
+ 	}
+ 	else
+ 		printf("%lu objects, %lu kilobytes\n",
+-		       loose, loose_size / 1024);
++		       loose, (unsigned long) (loose_size / 1024));
+ 	return 0;
+ }
+-- 
+1.6.6
 
-> So what is "refs/remotes/origin/master", please?
-
-    http://gitster.livejournal.com/30313.html
-
-If you read Japanese, you may also want to read Ch.13 of my book ;-)
-
-The refs/remotes/ hierarchy is used to store a copy of the branch tips
-fetched from the named remotes (like "origin").
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
