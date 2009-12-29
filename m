@@ -1,71 +1,53 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Add --path-prefix option to git-fast-import
-Date: Tue, 29 Dec 2009 07:08:44 -0800
-Message-ID: <20091229150844.GC6152@spearce.org>
-References: <1262091083-25401-1-git-send-email-gisle.aas@it.uib.no>
+From: Jorge Bastos <mysql.jorge@decimal.pt>
+Subject: Re: Help on CGIT
+Date: Tue, 29 Dec 2009 15:21:03 +0000
+Message-ID: <11086b46ef152d6e2aadb1c5f655fe72@192.168.1.222>
+References: <31576a6d119e2edd66bd8bcc3281e9ad@192.168.1.222> <94a0d4530912290658m70075ad1u95e3692c01fb44b7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, Gisle Aas <gisle@aas.no>
-To: Gisle Aas <gisle.aas@it.uib.no>
-X-From: git-owner@vger.kernel.org Tue Dec 29 16:09:02 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 29 16:20:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPdgz-00085v-1N
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 16:09:01 +0100
+	id 1NPdsL-0006Ok-MD
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 16:20:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752227AbZL2PIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2009 10:08:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752174AbZL2PIs
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 10:08:48 -0500
-Received: from mail-gx0-f211.google.com ([209.85.217.211]:40153 "EHLO
-	mail-gx0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752161AbZL2PIr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2009 10:08:47 -0500
-Received: by gxk3 with SMTP id 3so5244479gxk.1
-        for <git@vger.kernel.org>; Tue, 29 Dec 2009 07:08:46 -0800 (PST)
-Received: by 10.100.243.16 with SMTP id q16mr19753790anh.113.1262099326818;
-        Tue, 29 Dec 2009 07:08:46 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 23sm11903228iwn.11.2009.12.29.07.08.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 29 Dec 2009 07:08:45 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1262091083-25401-1-git-send-email-gisle.aas@it.uib.no>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753121AbZL2PU1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2009 10:20:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753113AbZL2PUX
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 10:20:23 -0500
+Received: from mailrly04.isp.novis.pt ([195.23.133.224]:56105 "EHLO
+	mailrly04.isp.novis.pt" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753060AbZL2PUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2009 10:20:18 -0500
+Received: (qmail 11570 invoked from network); 29 Dec 2009 15:20:16 -0000
+Received: from unknown (HELO mailfrt07.isp.novis.pt) ([195.23.133.199])
+          (envelope-sender <mysql.jorge@decimal.pt>)
+          by mailrly04.isp.novis.pt with compressed SMTP; 29 Dec 2009 15:20:16 -0000
+Received: (qmail 22859 invoked from network); 29 Dec 2009 15:20:15 -0000
+Received: from unknown (HELO web.decimal.pt) (Sent_by_authenticated_user_nm087018@[195.23.114.74])
+          (envelope-sender <mysql.jorge@decimal.pt>)
+          by mailfrt07.isp.novis.pt with SMTP; 29 Dec 2009 15:20:15 -0000
+Received: from webmail.decimal.pt (localhost [127.0.0.1])
+	by web.decimal.pt (Postfix) with ESMTP id C1BF73D53B;
+	Tue, 29 Dec 2009 15:21:03 +0000 (WET)
+In-Reply-To: <94a0d4530912290658m70075ad1u95e3692c01fb44b7@mail.gmail.com>
+X-Sender: mysql.jorge@decimal.pt
+User-Agent: RoundCube Webmail
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135806>
 
-Gisle Aas <gisle.aas@it.uib.no> wrote:
-> I found this useful when import multiple external repositories to be merged
-> into a single git repo.  Not having the files be renamed during the merge
-> made it easier to follow the history of the individual files.
+> This is what I do:
+> ScriptAlias /cgit /var/www/cgit-files/cgit.cgi
 > 
-> Signed-off-by: Gisle Aas <gisle@aas.no>
-> ---
->  Documentation/git-fast-import.txt |    6 ++++++
->  fast-import.c                     |   24 ++++++++++++++++++++++++
->  2 files changed, 30 insertions(+), 0 deletions(-)
+> You need a new cgit to use that properly, I use 0.8.3.
 
-Interesting.  Test cases?
- 
-> +static const char *path_prefix_prepend(struct strbuf *sb, const char *p)
-> +{
-> +	if (p != sb->buf) {
-> +	    strbuf_reset(sb);
-> +	    strbuf_addstr(sb, p);
-> +	}
-
-I'd be a bit happier about the change if you could check not only
-that p != sb->buf, but that p is not within sb->buf + sb->alloc.
-
-I can't remember if all of the cases below are safe such that
-any time you call the function with a p that p isn't pointing to
-something within the strbuf you are handing in.
-
--- 
-Shawn.
+I tried that way, no luck, apache always show on the errors that cannot
+create the lock slot and it show all unconfigured on the page.
