@@ -1,77 +1,50 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Smart-http: check if repository is OK to export before
- serving it
-Date: Tue, 29 Dec 2009 01:19:51 -0800
-Message-ID: <7vy6kmjfwo.fsf@alter.siamese.dyndns.org>
-References: <20091228170811.GE2252@spearce.org>
- <1262036940-9678-1-git-send-email-tarmigan+git@gmail.com>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: Allowing push --dry-run through fetch url
+Date: Tue, 29 Dec 2009 20:05:17 +0900
+Message-ID: <20091229200517.6117@nanako3.lavabit.com>
+References: <20091106073707.GA14881@glandium.org> <7vfx8s0yy1.fsf@alter.siamese.dyndns.org> <20091106095357.GA13389@glandium.org> <7vfx8obz2o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, spearce@spearce.org
-To: Tarmigan Casebolt <tarmigan+git@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 29 10:20:25 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, Mike Hommey <mh@glandium.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 29 12:05:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPYFT-0006gz-7m
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 10:20:15 +0100
+	id 1NPZtK-0001O2-D9
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 12:05:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752675AbZL2JUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2009 04:20:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752665AbZL2JUF
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 04:20:05 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56947 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752645AbZL2JUD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2009 04:20:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 44346AAB9C;
-	Tue, 29 Dec 2009 04:20:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=WtBqrtY+HUm5kD5Qe5MHMX6wEqQ=; b=VRMOw3tZCZq925oYnfZaIWz
-	F1kyiboL0fVyjsiilF37KGrZ+p+Kwuud+6y8Q/nL5WQzUrYuzq9EvSjt6XFEGWv9
-	VSLaX6xeD/0eviks6xuyoZ8DDouw+H+K1jId6I/ywu1duqgbKK8kmQJCyLlIRXCn
-	rieP4OKFjFVTnvKoaeOo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=HdyOCsuEviAJwEzQ7RNFKBzFkryenHdtE9gKCfY484xLBD9jt
-	QtY5nBsmVXxMbqm8dLAiP+YMAgadCBxCbKPG2ZDk4pq/Gwo6YNozWVT7EyYJ/7We
-	tkaS8JLtCfrZpWluD7aeA4UKGjad/e+aYCT2g8brgeOTAfLITQB0Aryamc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 14898AAB9B;
-	Tue, 29 Dec 2009 04:19:57 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 02A22AAB9A; Tue, 29 Dec 2009
- 04:19:52 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 54D9A79A-F45B-11DE-B7C6-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1752767AbZL2LFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2009 06:05:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752766AbZL2LFZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 06:05:25 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:39000 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752763AbZL2LFW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2009 06:05:22 -0500
+Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
+	by karen.lavabit.com (Postfix) with ESMTP id 9A13611B8BB;
+	Tue, 29 Dec 2009 05:05:22 -0600 (CST)
+Received: from 4391.lavabit.com (212.62.97.20)
+	by lavabit.com with ESMTP id AA2H2OQH8RAC; Tue, 29 Dec 2009 05:05:22 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=GEU3mHh7M2h3J9Sx66ACUODyhfM/yxwfvTP4Yju36uCEhvcK/2n5cIAPuM9DelN2RNpTrvmdMov1ngXOwuZOaAsT9/cHe9TDNYWEhPSyfhRgLzNdvUVcHdnxM7MvcsGHiW2uhRtA6kA+apq5T+Krlz1mvlSwuINZznU63c2EHBA=;
+  h=From:To:Cc:Subject:References:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Message-Id;
+In-Reply-To: <7vfx8obz2o.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135786>
 
-Tarmigan Casebolt <tarmigan+git@gmail.com> writes:
+Junio, could you tell us what happened to this thread?
 
-> Similar to how git-daemon checks whether a repository is OK to be
-> exported, smart-http should also check.  This check can be satisfied
-> in two different ways: the environmental variable GIT_HTTP_EXPORT_ALL
-> may be set to export all repositories, or the individual repository
-> may have the file git-daemon-export-ok.
->
-> Acked-by: Shawn O. Pearce <spearce@spearce.org>
-> Signed-off-by: Tarmigan Casebolt <tarmigan+git@gmail.com>
-> ---
-> OK, I see what you're saying Shawn.  I've changed it back to "404 
-> Not Found" again.
->
-> I've also reordered the new tests since the last time I sent it out.
-> The new tests use the same test as in
-> "static file is ok"
-> so put the new tests after that test in case that test breaks.
+After discussing "git push --dry-run" that looks at URL used for
+fetching, because pushURL might require authentication, the
+maintainer recalls an earlier "git push --confirm" patch
 
-Looks sane to me, although I am afraid that I am not as familiar with the
-codepath involved as I should be.  Shawn, is your Ack still good?
+http://thread.gmane.org/gmane.comp.version-control.git/128426/focus=128429
+
+but nothing happens after that.
