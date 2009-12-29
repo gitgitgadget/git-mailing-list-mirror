@@ -1,265 +1,230 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/9] resolve-undo: basic tests
-Date: Tue, 29 Dec 2009 13:42:32 -0800
-Message-ID: <1262122958-9378-4-git-send-email-gitster@pobox.com>
+Subject: [PATCH 8/9] rerere: refactor rerere logic to make it independent
+ from I/O
+Date: Tue, 29 Dec 2009 13:42:37 -0800
+Message-ID: <1262122958-9378-9-git-send-email-gitster@pobox.com>
 References: <1262122958-9378-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 29 22:43:43 2009
+X-From: git-owner@vger.kernel.org Tue Dec 29 22:43:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPjqT-0003SS-Nz
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 22:43:14 +0100
+	id 1NPjqV-0003SS-Hu
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 22:43:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751753AbZL2Vmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2009 16:42:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751630AbZL2Vmt
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 16:42:49 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59204 "EHLO
+	id S1751983AbZL2VnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2009 16:43:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751995AbZL2VnB
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 16:43:01 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39823 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751571AbZL2Vmr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2009 16:42:47 -0500
+	with ESMTP id S1751751AbZL2Vm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2009 16:42:57 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EECC4ABFB7
-	for <git@vger.kernel.org>; Tue, 29 Dec 2009 16:42:46 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AB3DC8C7F3
+	for <git@vger.kernel.org>; Tue, 29 Dec 2009 16:42:56 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=6eRq
-	AObax2WZeUrCBfuond4Tz/8=; b=DxcEz3qTsC6gd04SW68iTPUfRxwe6UJMUobr
-	aEmSTsPHkGjOoI/lqO4lu3bHF3D/HPxKhNN+ar6kfiGuwh2jKFBF1zyDvk9/wKdk
-	MiBeMh/A6Qi+L23V5P55A78t1pxfq0Ge+/tNsPhUWFqsnvPE2WR9PwoCss6SaSOx
-	2d5ylZ8=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=wH7a
+	EryfC5UGHxImLDy7ozBX3Qs=; b=o7ForlPx4S7qSWXIciGf/sRdPSMHxCZLKF+v
+	tBwnToAqVvitxqTycmd6cQfpCraBynYOvXDAOhdnTOMf1x7P1vCVdlBMZ+Is0Lif
+	NEBUuRbBlT8UxeOI95hXcnxMMJRy1w3JHPap0eZicxUczxKFf8XqUXDt1kXv9wo/
+	jxPxdFc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=xmgTkB
-	94VWx9dncLc1p162PazIw6Hd6ewDtmKAnniYFjbjoFdmC2qEaAAma3h/0a0wqBxa
-	FlwuZeeYlt4Ca/4PZ3UuPQl7IkZBJ8y75yrYbdnSZ0ZR5mqxLFECp3rb9p2MmU4J
-	65Df5girgCAi6HHHFR+QSzygQJqt+yHxNJHok=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EB631ABFB6
-	for <git@vger.kernel.org>; Tue, 29 Dec 2009 16:42:46 -0500 (EST)
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=F9hjks
+	Qa3LLXBmAql3GpadLhylRpfJgz2iLwaYLsUcMYQLyu6D1LXnoXuQIanADWKgYdb+
+	tErCFWiEmm5Idr8zHep6R0E9BDNwsQO5br7dvZAqp/14rx4kLDrTtwgxiLsBfHxa
+	wNaNIq1lx7iUAKmX9a0O02+Z+JMb9vPFdpTEM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A77CD8C7F2
+	for <git@vger.kernel.org>; Tue, 29 Dec 2009 16:42:56 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1CF07ABFB5 for
- <git@vger.kernel.org>; Tue, 29 Dec 2009 16:42:45 -0500 (EST)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 096D38C7F1 for
+ <git@vger.kernel.org>; Tue, 29 Dec 2009 16:42:55 -0500 (EST)
 X-Mailer: git-send-email 1.6.6.60.gc2ff1
 In-Reply-To: <1262122958-9378-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 1A91B11E-F4C3-11DE-AB55-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 205DFC1A-F4C3-11DE-83E2-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135827>
 
-Make sure that resolving a failed merge with git add records
-the conflicted state, committing the result keeps that state,
-and checking out another commit clears the state.
-
-"git ls-files" learns a new option --resolve-undo to show the
-recorded information.
+This splits the handle_file() function into in-core part and I/O
+parts of the logic to create the preimage, so that we can compute
+the conflict identifier without having to use temporary files.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin-ls-files.c        |   43 +++++++++++++++++++++-
- t/t2030-unresolve-info.sh |   88 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 130 insertions(+), 1 deletions(-)
- create mode 100755 t/t2030-unresolve-info.sh
+ rerere.c |  117 +++++++++++++++++++++++++++++++++++++++++++------------------
+ 1 files changed, 82 insertions(+), 35 deletions(-)
 
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index c9a03e5..ef3a068 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -11,6 +11,8 @@
- #include "builtin.h"
- #include "tree.h"
- #include "parse-options.h"
-+#include "resolve-undo.h"
-+#include "string-list.h"
- 
- static int abbrev;
- static int show_deleted;
-@@ -18,6 +20,7 @@ static int show_cached;
- static int show_others;
- static int show_stage;
- static int show_unmerged;
-+static int show_resolve_undo;
- static int show_modified;
- static int show_killed;
- static int show_valid_bit;
-@@ -37,6 +40,7 @@ static const char *tag_removed = "";
- static const char *tag_other = "";
- static const char *tag_killed = "";
- static const char *tag_modified = "";
-+static const char *tag_resolve_undo = "";
- 
- static void show_dir_entry(const char *tag, struct dir_entry *ent)
- {
-@@ -155,6 +159,38 @@ static void show_ce_entry(const char *tag, struct cache_entry *ce)
- 	write_name_quoted(ce->name + offset, stdout, line_terminator);
+diff --git a/rerere.c b/rerere.c
+index 88bb4f1..f013ae7 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -83,8 +83,41 @@ static inline void ferr_puts(const char *s, FILE *fp, int *err)
+ 	ferr_write(s, strlen(s), fp, err);
  }
  
-+static int show_one_ru(struct string_list_item *item, void *cbdata)
-+{
-+	int offset = prefix_offset;
-+	const char *path = item->string;
-+	struct resolve_undo_info *ui = item->util;
-+	int i, len;
+-static int handle_file(const char *path,
+-	 unsigned char *sha1, const char *output)
++struct rerere_io {
++	int (*getline)(struct strbuf *, struct rerere_io *);
++	void (*putstr)(const char *, struct rerere_io *);
++	void (*putmem)(const char *, size_t, struct rerere_io *);
++	/* some more stuff */
++};
 +
-+	len = strlen(path);
-+	if (len < prefix_len)
-+		return 0; /* outside of the prefix */
-+	if (!match_pathspec(pathspec, path, len, prefix_len, ps_matched))
-+		return 0; /* uninterested */
-+	for (i = 0; i < 3; i++) {
-+		if (!ui->mode[i])
-+			continue;
-+		printf("%s%06o %s %d\t", tag_resolve_undo, ui->mode[i],
-+		       abbrev
-+		       ? find_unique_abbrev(ui->sha1[i], abbrev)
-+		       : sha1_to_hex(ui->sha1[i]),
-+		       i + 1);
-+		write_name_quoted(path + offset, stdout, line_terminator);
-+	}
-+	return 0;
++struct rerere_io_file {
++	struct rerere_io io;
++	FILE *input;
++	FILE *output;
++	int wrerror;
++};
++
++static int rerere_file_getline(struct strbuf *sb, struct rerere_io *io_)
++{
++	struct rerere_io_file *io = (struct rerere_io_file *)io_;
++	return strbuf_getwholeline(sb, io->input, '\n');
 +}
 +
-+static void show_ru_info(const char *prefix)
++static void rerere_file_putstr(const char *str, struct rerere_io *io_)
 +{
-+	if (!the_index.resolve_undo)
-+		return;
-+	for_each_string_list(show_one_ru, the_index.resolve_undo, NULL);
++	struct rerere_io_file *io = (struct rerere_io_file *)io_;
++	if (io->output)
++		ferr_puts(str, io->output, &io->wrerror);
 +}
 +
- static void show_files(struct dir_struct *dir, const char *prefix)
++static void rerere_file_putmem(const char *mem, size_t sz, struct rerere_io *io_)
++{
++	struct rerere_io_file *io = (struct rerere_io_file *)io_;
++	if (io->output)
++		ferr_write(mem, sz, io->output, &io->wrerror);
++}
++
++static int handle_path(unsigned char *sha1, struct rerere_io *io)
  {
- 	int i;
-@@ -454,6 +490,8 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 			DIR_HIDE_EMPTY_DIRECTORIES),
- 		OPT_BOOLEAN('u', "unmerged", &show_unmerged,
- 			"show unmerged files in the output"),
-+		OPT_BOOLEAN(0, "resolve-undo", &show_resolve_undo,
-+			    "show resolve-undo information"),
- 		{ OPTION_CALLBACK, 'x', "exclude", &dir.exclude_list[EXC_CMDL], "pattern",
- 			"skip files matching pattern",
- 			0, option_parse_exclude },
-@@ -490,6 +528,7 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 		tag_modified = "C ";
- 		tag_other = "? ";
- 		tag_killed = "K ";
-+		tag_resolve_undo = "U ";
- 	}
- 	if (show_modified || show_others || show_deleted || (dir.flags & DIR_SHOW_IGNORED) || show_killed)
- 		require_work_tree = 1;
-@@ -529,7 +568,7 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+ 	git_SHA_CTX ctx;
+ 	int hunk_no = 0;
+@@ -93,25 +126,11 @@ static int handle_file(const char *path,
+ 	} hunk = RR_CONTEXT;
+ 	struct strbuf one = STRBUF_INIT, two = STRBUF_INIT;
+ 	struct strbuf buf = STRBUF_INIT;
+-	FILE *f = fopen(path, "r");
+-	FILE *out = NULL;
+-	int wrerror = 0;
+-
+-	if (!f)
+-		return error("Could not open %s", path);
+-
+-	if (output) {
+-		out = fopen(output, "w");
+-		if (!out) {
+-			fclose(f);
+-			return error("Could not write %s", output);
+-		}
+-	}
  
- 	/* With no flags, we default to showing the cached files */
- 	if (!(show_stage | show_deleted | show_others | show_unmerged |
--	      show_killed | show_modified))
-+	      show_killed | show_modified | show_resolve_undo))
- 		show_cached = 1;
+ 	if (sha1)
+ 		git_SHA1_Init(&ctx);
  
- 	if (prefix)
-@@ -544,6 +583,8 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 		overlay_tree_on_cache(with_tree, prefix);
- 	}
- 	show_files(&dir, prefix);
-+	if (show_resolve_undo)
-+		show_ru_info(prefix);
+-	while (!strbuf_getwholeline(&buf, f, '\n')) {
++	while (!io->getline(&buf, io)) {
+ 		if (!prefixcmp(buf.buf, "<<<<<<< ")) {
+ 			if (hunk != RR_CONTEXT)
+ 				goto bad;
+@@ -131,13 +150,11 @@ static int handle_file(const char *path,
+ 				strbuf_swap(&one, &two);
+ 			hunk_no++;
+ 			hunk = RR_CONTEXT;
+-			if (out) {
+-				ferr_puts("<<<<<<<\n", out, &wrerror);
+-				ferr_write(one.buf, one.len, out, &wrerror);
+-				ferr_puts("=======\n", out, &wrerror);
+-				ferr_write(two.buf, two.len, out, &wrerror);
+-				ferr_puts(">>>>>>>\n", out, &wrerror);
+-			}
++			io->putstr("<<<<<<<\n", io);
++			io->putmem(one.buf, one.len, io);
++			io->putstr("=======\n", io);
++			io->putmem(two.buf, two.len, io);
++			io->putstr(">>>>>>>\n", io);
+ 			if (sha1) {
+ 				git_SHA1_Update(&ctx, one.buf ? one.buf : "",
+ 					    one.len + 1);
+@@ -152,8 +169,8 @@ static int handle_file(const char *path,
+ 			; /* discard */
+ 		else if (hunk == RR_SIDE_2)
+ 			strbuf_addstr(&two, buf.buf);
+-		else if (out)
+-			ferr_puts(buf.buf, out, &wrerror);
++		else
++			io->putstr(buf.buf, io);
+ 		continue;
+ 	bad:
+ 		hunk = 99; /* force error exit */
+@@ -163,21 +180,51 @@ static int handle_file(const char *path,
+ 	strbuf_release(&two);
+ 	strbuf_release(&buf);
  
- 	if (ps_matched) {
- 		int bad;
-diff --git a/t/t2030-unresolve-info.sh b/t/t2030-unresolve-info.sh
-new file mode 100755
-index 0000000..785c8b3
---- /dev/null
-+++ b/t/t2030-unresolve-info.sh
-@@ -0,0 +1,88 @@
-+#!/bin/sh
-+
-+test_description='undoing resolution'
-+
-+. ./test-lib.sh
-+
-+check_resolve_undo () {
-+	msg=$1
-+	shift
-+	while case $# in
-+	0)	break ;;
-+	1|2|3)	die "Bug in check-resolve-undo test" ;;
-+	esac
-+	do
-+		path=$1
-+		shift
-+		for stage in 1 2 3
-+		do
-+			sha1=$1
-+			shift
-+			case "$sha1" in
-+			'') continue ;;
-+			esac
-+			sha1=$(git rev-parse --verify "$sha1")
-+			printf "100644 %s %s\t%s\n" $sha1 $stage $path
-+		done
-+	done >"$msg.expect" &&
-+	git ls-files --resolve-undo >"$msg.actual" &&
-+	test_cmp "$msg.expect" "$msg.actual"
+-	fclose(f);
+-	if (wrerror)
+-		error("There were errors while writing %s (%s)",
+-		      path, strerror(wrerror));
+-	if (out && fclose(out))
+-		wrerror = error("Failed to flush %s: %s",
+-				path, strerror(errno));
+ 	if (sha1)
+ 		git_SHA1_Final(sha1, &ctx);
+-	if (hunk != RR_CONTEXT) {
++	if (hunk != RR_CONTEXT)
++		return -1;
++	return hunk_no;
 +}
 +
-+prime_resolve_undo () {
-+	git reset --hard &&
-+	git checkout second^0 &&
-+	test_tick &&
-+	test_must_fail git merge third^0 &&
-+	echo merge does not leave anything &&
-+	check_resolve_undo empty &&
-+	echo different >file &&
-+	git add file &&
-+	echo resolving records &&
-+	check_resolve_undo recorded file initial:file second:file third:file
-+}
++static int handle_file(const char *path, unsigned char *sha1, const char *output)
++{
++	int hunk_no = 0;
++	struct rerere_io_file io;
 +
-+test_expect_success setup '
-+	test_commit initial file first &&
-+	git branch side &&
-+	git branch another &&
-+	test_commit second file second &&
-+	git checkout side &&
-+	test_commit third file third &&
-+	git checkout another &&
-+	test_commit fourth file fourth &&
-+	git checkout master
-+'
++	memset(&io, 0, sizeof(io));
++	io.io.getline = rerere_file_getline;
++	io.io.putstr = rerere_file_putstr;
++	io.io.putmem = rerere_file_putmem;
++	io.input = fopen(path, "r");
++	io.wrerror = 0;
++	if (!io.input)
++		return error("Could not open %s", path);
 +
-+test_expect_success 'add records switch clears' '
-+	prime_resolve_undo &&
-+	test_tick &&
-+	git commit -m merged &&
-+	echo committing keeps &&
-+	check_resolve_undo kept file initial:file second:file third:file &&
-+	git checkout second^0 &&
-+	echo switching clears &&
-+	check_resolve_undo cleared
-+'
++	if (output) {
++		io.output = fopen(output, "w");
++		if (!io.output) {
++			fclose(io.input);
++			return error("Could not write %s", output);
++		}
++	}
 +
-+test_expect_success 'rm records reset clears' '
-+	prime_resolve_undo &&
-+	test_tick &&
-+	git commit -m merged &&
-+	echo committing keeps &&
-+	check_resolve_undo kept file initial:file second:file third:file &&
++	hunk_no = handle_path(sha1, (struct rerere_io *)&io);
 +
-+	echo merge clears upfront &&
-+	test_must_fail git merge fourth^0 &&
-+	check_resolve_undo nuked &&
++	fclose(io.input);
++	if (io.wrerror)
++		error("There were errors while writing %s (%s)",
++		      path, strerror(io.wrerror));
++	if (io.output && fclose(io.output))
++		io.wrerror = error("Failed to flush %s: %s",
++				   path, strerror(errno));
 +
-+	git rm -f file &&
-+	echo resolving records &&
-+	check_resolve_undo recorded file initial:file HEAD:file fourth:file &&
-+
-+	git reset --hard &&
-+	echo resetting discards &&
-+	check_resolve_undo discarded
-+'
-+
-+test_done
++	if (hunk_no < 0) {
+ 		if (output)
+ 			unlink_or_warn(output);
+ 		return error("Could not parse conflict hunks in %s", path);
+ 	}
+-	if (wrerror)
++	if (io.wrerror)
+ 		return -1;
+ 	return hunk_no;
+ }
 -- 
 1.6.6
