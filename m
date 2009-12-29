@@ -1,115 +1,115 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] Documentation: always respect core.worktree if set
-Date: Tue, 29 Dec 2009 14:48:41 +0700
-Message-ID: <1262072921-11280-1-git-send-email-pclouds@gmail.com>
-References: <7viqbrv4pa.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: commit: explain the non-meaning of S-o-b
+Date: Mon, 28 Dec 2009 23:54:15 -0800
+Message-ID: <7voclimd08.fsf@alter.siamese.dyndns.org>
+References: <20091228194001.7b4c68f4@perceptron>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Dec 29 08:50:32 2009
+Cc: Git ML <git@vger.kernel.org>
+To: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
+X-From: git-owner@vger.kernel.org Tue Dec 29 08:54:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPWpl-0006BG-Q6
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 08:49:38 +0100
+	id 1NPWuS-0000Ng-Ut
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 08:54:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752646AbZL2Htb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Dec 2009 02:49:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752585AbZL2Htb
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 02:49:31 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:50283 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752579AbZL2Htb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2009 02:49:31 -0500
-Received: by iwn1 with SMTP id 1so7735585iwn.33
-        for <git@vger.kernel.org>; Mon, 28 Dec 2009 23:49:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=fD8ad6tPJqufvLFrhdggClBbNBlu2h3bzm8j1l8KF6c=;
-        b=kepqtwEujhIab0J6vg1Yshcep9Vu9UVa3PPeUNPUB3bzUO2a6yE3TtRmJvq8HKumR6
-         rgXKD61JoIcbgmuGmKXFAu1Jd5oElqE7aP017pAZh9NehWtyJyfHNHfKFKWfJLax37iy
-         89W4f5dj/VgFMPPXfvoKWsiiLmJr7DLfP2kDE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=hSHMytlvws8Z3UGRwEuF2Op0qLjctTLXrz/pSeoTg0oVOdAev5Wns0zPqTUF/e6+gp
-         RThOeYSj931+JgeYoRB5UJViXEI1sRtibDzsqthmpPuMkIY6EP3sRryB839V+FD6e9CQ
-         WejOWBGfmgoYi9wKIAiUdHYjUviR4mYOZDrNg=
-Received: by 10.231.25.199 with SMTP id a7mr1352655ibc.51.1262072969202;
-        Mon, 28 Dec 2009 23:49:29 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.227.183])
-        by mx.google.com with ESMTPS id 22sm11726381iwn.12.2009.12.28.23.49.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 28 Dec 2009 23:49:27 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 29 Dec 2009 14:48:42 +0700
-X-Mailer: git-send-email 1.6.5.2.216.g9c1ec
-In-Reply-To: <7viqbrv4pa.fsf@alter.siamese.dyndns.org>
+	id S1752650AbZL2HyY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Dec 2009 02:54:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751700AbZL2HyY
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 02:54:24 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41239 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750775AbZL2HyX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Dec 2009 02:54:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 79FD5AA853;
+	Tue, 29 Dec 2009 02:54:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=K4kZRBtw8js0
+	Q0C5WdM5XnTONQo=; b=OzPw6COeSd+VyiDP1ZCaCZzaIFjPy3/goWAxW1Xp87m9
+	cONjfW9aSmonHceeV/5mLg/EBAcViAa0aCx3aNBQIoLWiIXk2D/g7+0Ten2+g/6D
+	IPwLcIDLZNfQW0GZ1zuX+WrCcVNTb70+sGHkwGaEMn5QHTZGqKLiMP4zw6k6jlw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=s++UT9
+	RvfDMtdIrQD9H2h1QXPsNm0B3K8bHgHZM8jeiv9hrfAd6c4U4iFrBXCx16hJ16ZT
+	j6wvKN/tZJQ3WR03nPxOcAgLKjmKJ8m4xxDeowE0uXZhp3ngQllBpKHY8Ah2SJKf
+	D/AUFEas1BZ2eNqPOV1Aox1j9inLZ+IHMpjG4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 58D71AA852;
+	Tue, 29 Dec 2009 02:54:20 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6593BAA851; Tue, 29 Dec 2009
+ 02:54:17 -0500 (EST)
+In-Reply-To: <20091228194001.7b4c68f4@perceptron> ("Jan =?utf-8?Q?Kr=C3=BC?=
+ =?utf-8?Q?ger=22's?= message of "Mon\, 28 Dec 2009 19\:40\:01 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5F207366-F44F-11DE-8CBC-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135781>
 
-The value of core.worktree in a ".git/config" is honored even when it
-differs from the directory that has the ".git" directory as its
-subdirectory.  This is likely to be a misconfiguration, so warn users
-about it.  Also, drop the part of the documentation that incorrectly
-claimed that we ignore such a misconfigured value.
+Jan Kr=C3=BCger <jk@jk.gs> writes:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/config.txt |   23 +++++++++++++++--------
- 1 files changed, 15 insertions(+), 8 deletions(-)
+> In the manpage for git commit, the option --signoff is mentioned but
+> there is no explanation of what it actually means. Add a brief hint t=
+hat
+> S-o-b doesn't have a pre-defined meaning.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 7d10a21..2eb9758 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -297,17 +297,24 @@ false), while all other repositories are assumed =
-to be bare (bare
- =3D true).
-=20
- core.worktree::
--	Set the path to the working tree.  The value will not be
--	used in combination with repositories found automatically in
--	a .git directory (i.e. $GIT_DIR is not set).
-+	Set the path to the root of the work tree.
- 	This can be overridden by the GIT_WORK_TREE environment
- 	variable and the '--work-tree' command line option. It can be
--	a absolute path or relative path to the directory specified by
--	--git-dir or GIT_DIR.
--	Note: If --git-dir or GIT_DIR are specified but none of
-+	an absolute path or a relative path to the .git directory,
-+	either specified by --git-dir or GIT_DIR, or automatically
-+	discovered.
-+	If --git-dir or GIT_DIR are specified but none of
- 	--work-tree, GIT_WORK_TREE and core.worktree is specified,
--	the current working directory is regarded as the top directory
--	of your working tree.
-+	the current working directory is regarded as the root of the
-+	work tree.
-++
-+Note that this variable is honored even when set in a configuration
-+file in a ".git" subdirectory of a directory, and its value differs
-+from the latter directory (e.g. "/path/to/.git/config" has
-+core.worktree set to "/different/path"), which is most likely a
-+misconfiguration.  Running git commands in "/path/to" directory will
-+still use "/different/path" as the root of the work tree and can cause
-+great confusion to the users.
-=20
- core.logAllRefUpdates::
- 	Enable the reflog. Updates to a ref <ref> is logged to the file
---=20
-1.6.5.2.216.g9c1ec
+The commands am, cherry-pick, commit, format-patch, and revert all shar=
+e
+the "sign-off" and they more or less deliberately refused to define wha=
+t
+it means to sign-off a patch; as your patch says, it is up to the proje=
+ct
+policy.
+
+config.txt gives a description for format.signoff option that is too
+specific to git and the kernel, which I think is a mistake given the mu=
+ch
+wider audience we have these days.
+
+How similar should the document for the "sign-off" options to these
+commands be?  I am wondering if we should have the same description cop=
+ied
+and pasted to all of them, or avoid repeating ourselves and instead hav=
+e
+them refer to a central place, perhaps somewhere in the Tutorial or the
+Workflow document.
+
+
+> Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
+> ---
+> Semi-resend. Nobody commented on this when I first sent it in early
+> December, so here it is again, with a slightly more verbose
+> explanation. The repetition is intentional.
+>
+>  Documentation/git-commit.txt |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
+>
+> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.=
+txt
+> index d227cec..cae510b 100644
+> --- a/Documentation/git-commit.txt
+> +++ b/Documentation/git-commit.txt
+> @@ -114,7 +114,10 @@ OPTIONS
+>  -s::
+>  --signoff::
+>  	Add Signed-off-by line by the committer at the end of the commit
+> -	log message.
+> +	log message. This line has no inherent meaning; it is up to the
+> +	potential recipient of the commit to decide what it stands for.
+> +	It is typically understood as an assurance by the committer that
+> +	the commit conforms to the receiving project's commit guidelines.
+> =20
+>  -n::
+>  --no-verify::
+> --=20
+> 1.6.5.3.171.ge36e
