@@ -1,79 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pull: refuse complete src:dst fetchspec arguments
-Date: Tue, 29 Dec 2009 08:58:43 -0800
-Message-ID: <7vk4w5g1j0.fsf@alter.siamese.dyndns.org>
-References: <d561e70f0aa802ceb96eba16d3bb2316134d69c8.1256062808.git.trast@student.ethz.ch> <20091229200513.6117@nanako3.lavabit.com>
+Subject: Re: [PATCH] Wrap completions in `type git' conditional statement.
+Date: Tue, 29 Dec 2009 08:58:35 -0800
+Message-ID: <7vpr5xg1j8.fsf@alter.siamese.dyndns.org>
+References: <44A6FDEB-71B6-42E1-99E3-D6A595FF1B58@metablu.com>
+ <20091229200530.6117@nanako3.lavabit.com> <20091229150217.GB6152@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, <git@vger.kernel.org>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Tue Dec 29 17:59:01 2009
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sung Pae <sung@metablu.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Dec 29 17:59:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPfPP-0004je-NA
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 17:59:00 +0100
+	id 1NPfPP-0004je-70
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 17:58:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752277AbZL2Q6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2009 11:58:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752266AbZL2Q6x
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 11:58:53 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58430 "EHLO
+	id S1752249AbZL2Q6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2009 11:58:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbZL2Q6t
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 11:58:49 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51680 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752264AbZL2Q6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2009 11:58:52 -0500
+	with ESMTP id S1752110AbZL2Q6s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2009 11:58:48 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 17F508C535;
-	Tue, 29 Dec 2009 11:58:52 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 113B9ABF76;
+	Tue, 29 Dec 2009 11:58:48 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=Elm1wUH5ayJ76U1cI1Y8QXkI/xc=; b=OtbtbyMBi/H/vUOcj6e1HbE
-	lont5Q02k0aM487unKLyou1Nxq/arsUFtu+nmy7/wj7Dbpsn6h24Ys3KjA1o3OSh
-	dUe2z9s1SCKod02LV6AmiHXbLWdz79wuHtSXG/CY9LsnTqzPoheAnCNhIzd5zQWk
-	M8K3pVDZ0+pfGYravd4w=
+	sasl; bh=nsJrVmTeFKERW/FYML3dM9nOTXs=; b=C9OgS7N+HGNBp4Tt04UFZ8T
+	mIIRSiRkPdVp5udNizpZwEMbn+dcyWcuHY9xiYmHEkXaofUiY9RjpyJcQUkbdCAG
+	V6Gcw2K+X4rZpT36kpCx11qAR3sagskosZjqlYZ9yeksb2kiJFvd+ZOT/lyi6X22
+	ynj/mn3Z4OpKL0L8iIIM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=OZiTfsjapriRoq3QsYg6hEE9+TR5JznlNBRA9m/bodHxlF/sg
-	STMsp2bsIwZ06ZQHL4tytQkSfyg9hG1cU7UQhacsUOiaaUxVz95VZqDcEZJEmhwG
-	FLa4MHzLGTBneMvVbhP8B5KWDeyf+nKkwZQVSUXWlZNvXh/sfvprnb4K7k=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D56AC8C533;
-	Tue, 29 Dec 2009 11:58:48 -0500 (EST)
+	dns; s=sasl; b=F0H4yh+a0kyz1wB0EFFZyYMspZArRT7gblcMXNdTFoAMATf+i
+	PxiaTxdI9Ykp75VI8IuYPYmQad3/Mqq3NeQjiFV6EhTB8hOEyWDTOIPDxJf/YreU
+	hDMoWN4BHQGwuyeqia2q5ZZwmtWreitojANAg0vL6dU9r3YG4PePsgWt0k=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C4809ABF74;
+	Tue, 29 Dec 2009 11:58:43 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2A0618C531; Tue, 29 Dec
- 2009 11:58:45 -0500 (EST)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3A358ABF73; Tue, 29 Dec 2009
+ 11:58:36 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6F13BA0C-F49B-11DE-BCC7-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6C0DF69C-F49B-11DE-8DCE-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135814>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> Junio, could you tell us what happened to this thread?
+> Nanako Shiraishi <nanako3@lavabit.com> wrote:
+>> Junio, could you tell us what happened to this thread?
+>> 
+>> The patch avoids failing completion script when git is not there.
+>> No discussion.
 >
-> The patch rejects "git pull repo A:B" because it is almost always a mistake;
-> I think it makes sense.
+> Actually, that's probably my fault.  I never sent an ack or nak,
+> or anything else really, on this thread.
+>
+> Originally this was because the completion was trying to run git
+> as it loaded.  In 1.6.6 this is no longer true, the completion list
+> is generated lazily on demand during the first completion attempt.
+>
+> With the lazy loading, I didn't see a reason to add this ugly block
+> around the entire script.
 
-It seems that we got sidetracked into a long thread on different (but
-interesting) side topics.  I think what the patch attempts to do is quite
-sane, and the implementation is very straightforward.  Perhaps we should
-resurrect it, but with a proper "declare deprecation now, first warn then
-refuse in two releases" steps.  I.e. the actual refusal would happen in
-1.7.1 or later.
-
-One side topic was Daniel wondering if we should restrict the value of B
-for "git fetch repo A:B" so that "fetch" is not used to update the refs
-outside refs/remotes namespace.  I personally think it is an unwarranted
-restriction, and also it is more or less an unrelated issue anyway.
-
-Another side topic that distracted us was about the difference between the
-autogenerated commit log messages for "git pull origin topic" and "git
-fetch && git merge origin/topic".  I personally think it is very good that
-the latter already says "Merge remote branch 'origin/topic'" and there is
-no need to turn that into "Merge 'topic' of ..." (actually I'd prefer it
-the way it is).
+Thanks, both.
