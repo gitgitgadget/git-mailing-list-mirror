@@ -1,62 +1,61 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Help on CGIT
-Date: Tue, 29 Dec 2009 16:58:36 +0200
-Message-ID: <94a0d4530912290658m70075ad1u95e3692c01fb44b7@mail.gmail.com>
-References: <31576a6d119e2edd66bd8bcc3281e9ad@192.168.1.222>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Smart-http: check if repository is OK to export before
+	serving it
+Date: Tue, 29 Dec 2009 07:00:16 -0800
+Message-ID: <20091229150016.GA6152@spearce.org>
+References: <20091228170811.GE2252@spearce.org> <1262036940-9678-1-git-send-email-tarmigan+git@gmail.com> <7vy6kmjfwo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Jorge Bastos <mysql.jorge@decimal.pt>
-X-From: git-owner@vger.kernel.org Tue Dec 29 15:58:43 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Tarmigan Casebolt <tarmigan+git@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 29 16:00:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPdX0-0004Ww-C7
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 15:58:42 +0100
+	id 1NPdYf-000566-9s
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Dec 2009 16:00:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752320AbZL2O6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2009 09:58:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752303AbZL2O6i
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 09:58:38 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:63412 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752300AbZL2O6h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2009 09:58:37 -0500
-Received: by iwn1 with SMTP id 1so7895180iwn.33
-        for <git@vger.kernel.org>; Tue, 29 Dec 2009 06:58:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=h4jG+JIr14S0Atqc8VjhV7k73Y16f//Y617OuDo66/w=;
-        b=ojHzKXqndat+GiiIXfL8QFuHneOXfCMbbQaxLHVxx0/W+KDLpg2DrGuadYziY+Tvei
-         rkAORkO8UtEBqkVjM2MVRNwT1NlWziEGilyLcM5b0b8TJuTTTaJW8iUlmEfhuj9hFObt
-         sHQxRZ6RNX2SrM/E1k+ZdkRhfcxXLPV9mJIYo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=H2tMdUanVkFX7IFQ9erOuFuG7UsuSobEW9YHVE9arU2pBEqf3zs8Lm6ieEo2XCSYYx
-         3DlzyUV2EW1LPoFt5C/owE+z3Her3j2JEJ1+qB483KdyD2UbtqFzrjLW6SQ3D7ltO035
-         9Rcs7+E4QjiHwxVTGZATqmpAmDK5mM7VJbpUs=
-Received: by 10.231.153.69 with SMTP id j5mr1138486ibw.33.1262098716998; Tue, 
-	29 Dec 2009 06:58:36 -0800 (PST)
-In-Reply-To: <31576a6d119e2edd66bd8bcc3281e9ad@192.168.1.222>
+	id S1752374AbZL2PAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2009 10:00:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752363AbZL2PAV
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 10:00:21 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:41108 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752358AbZL2PAU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2009 10:00:20 -0500
+Received: by yxe17 with SMTP id 17so10098040yxe.33
+        for <git@vger.kernel.org>; Tue, 29 Dec 2009 07:00:19 -0800 (PST)
+Received: by 10.101.182.33 with SMTP id j33mr10443452anp.114.1262098819342;
+        Tue, 29 Dec 2009 07:00:19 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 21sm11947370iwn.6.2009.12.29.07.00.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 29 Dec 2009 07:00:18 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vy6kmjfwo.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135803>
 
-On Tue, Dec 29, 2009 at 2:18 PM, Jorge Bastos <mysql.jorge@decimal.pt> wrote:
-> Am i missing something else? I've asked google but there's not much info
-> on the web about it.
+Junio C Hamano <gitster@pobox.com> wrote:
+> Tarmigan Casebolt <tarmigan+git@gmail.com> writes:
+> 
+> > Similar to how git-daemon checks whether a repository is OK to be
+> > exported, smart-http should also check.  This check can be satisfied
+> > in two different ways: the environmental variable GIT_HTTP_EXPORT_ALL
+> > may be set to export all repositories, or the individual repository
+> > may have the file git-daemon-export-ok.
+> >
+> > Acked-by: Shawn O. Pearce <spearce@spearce.org>
+...
+> Looks sane to me, although I am afraid that I am not as familiar with the
+> codepath involved as I should be.  Shawn, is your Ack still good?
 
-This is what I do:
-ScriptAlias /cgit /var/www/cgit-files/cgit.cgi
-
-You need a new cgit to use that properly, I use 0.8.3.
+Yes, my ACK is still good.  :-)
 
 -- 
-Felipe Contreras
+Shawn.
