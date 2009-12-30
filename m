@@ -1,190 +1,72 @@
-From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
-Subject: [PATCH v3] builtin-push: add --delete as syntactic sugar for :foo
-Date: Wed, 30 Dec 2009 10:52:44 +0100
-Message-ID: <20091230105244.67f5969e@perceptron>
-References: <20091109130935.2bea7771@perceptron>
-	<7v8wefy6pi.fsf@alter.siamese.dyndns.org>
-	<20091109192044.605e50ba@perceptron>
-	<20091229200523.6117@nanako3.lavabit.com>
-	<7vvdfpg1je.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Giving command line parameter to textconv command?
+Date: Wed, 30 Dec 2009 04:56:34 -0500
+Message-ID: <20091230095634.GA16349@coredump.intra.peff.net>
+References: <20091215071735.6117@nanako3.lavabit.com>
+ <7vvdg9ceud.fsf@alter.siamese.dyndns.org>
+ <20091230121325.6117@nanako3.lavabit.com>
+ <7vr5qc51kv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Git ML <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 30 10:55:41 2009
+X-From: git-owner@vger.kernel.org Wed Dec 30 10:56:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPvHI-00064K-SL
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 10:55:41 +0100
+	id 1NPvIM-0006Tl-NI
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 10:56:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752575AbZL3JxU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Dec 2009 04:53:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752520AbZL3JxU
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 04:53:20 -0500
-Received: from zoidberg.org ([88.198.6.61]:37856 "EHLO cthulhu.zoidberg.org"
+	id S1752628AbZL3J4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2009 04:56:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752598AbZL3J4h
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 04:56:37 -0500
+Received: from peff.net ([208.65.91.99]:59959 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752407AbZL3JxT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Dec 2009 04:53:19 -0500
-Received: from perceptron (pC19EA91E.dip.t-dialin.net [::ffff:193.158.169.30])
-  (AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-  by cthulhu.zoidberg.org with esmtp; Wed, 30 Dec 2009 10:53:17 +0100
-  id 004D4112.4B3B230D.000076E3
-In-Reply-To: <7vvdfpg1je.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.7.3 (GTK+ 2.18.3; i486-pc-linux-gnu)
-X-Obscure-Spam: http://music-jk.net/
+	id S1752545AbZL3J4g (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2009 04:56:36 -0500
+Received: (qmail 4857 invoked by uid 107); 30 Dec 2009 10:01:19 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 30 Dec 2009 05:01:19 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Dec 2009 04:56:34 -0500
+Content-Disposition: inline
+In-Reply-To: <7vr5qc51kv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135876>
 
-Refspecs without a source side have been reported as confusing by many.
-As an alternative, this adds support for commands like:
+On Wed, Dec 30, 2009 at 12:05:20AM -0800, Junio C Hamano wrote:
 
-    git push origin --delete somebranch
-    git push origin --delete tag sometag
+> I stopped promoting the patch after Peff mentioned he was planning a
+> rework of textconv, but now I re-read it, I think his rework would be
+> orthogonal to the patch.
 
-Specifically, --delete will prepend a colon to all colon-less refspecs
-given on the command line, and will refuse to accept refspecs with
-colons to prevent undue confusion.
+Actually, I thought I volunteered to produce a patch series converting
+textconv and diff.
 
-Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
----
+> Also Peff gives a good hint about borrowing how launch_editor() calls out
+> to the shell.  I think the codepath we fork&exec user-defined commands
+> (not hooks, but filters like smudge/clean/textconv and EDITOR/PAGER that
+> take a command line) need to be first enumerated, then we need to see if
+> we can refactor what launch_editor() does into a common helper function.
 
-Junio C Hamano <gitster@pobox.com> wrote:
+I think the helper function is not too hard. Whereas the patch you
+posted earlier actually runs { "sh", "-c", "%s %s" } for textconv, it is
+a bit simpler to do { "sh", "-c", "%s \"$@\"", ... } as launch_editor
+does. And then we don't have to worry about quoting the arguments (which
+your patch gets wrong).
 
-> namely, (1) barf and abort if src:dst is given; (2) touch only refs
-> given from the command line, "push there --delete" without any
-> refspec is an error; (3) be careful about "git push there tag v1.0.0"
-> form.
->=20
-> So if Jan or Sverre want to resurrect the topic, I am all for it.
+> I felt it was unclear what we would want to do with GIT_EXTERNAL_DIFF,
+> diff.external, and diff.<driver>.command trio, but I tend to agree that we
+> should run things the same way, honoring $IFS and shell everywhere.
 
-Alrighty. I assume by (3) you meant that it should be possible to use
-something like "push there --delete tag v1.0.0". Version 3 of the patch
-adds this, and it also includes updated tests and (brief) documentation=
-=2E
+I thought it was left at "maybe for 1.7.0", but perhaps we don't have
+time now to issue sufficient warning.
 
- Documentation/git-push.txt |    4 ++++
- builtin-push.c             |   26 +++++++++++++++++++++++---
- t/t5516-fetch-push.sh      |   16 ++++++++++++++++
- 3 files changed, 43 insertions(+), 3 deletions(-)
+Anyway, I'm working on a series which will hopefully be done in a few
+minutes.
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 52c0538..e3eb1e8 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -91,6 +91,10 @@ nor in any Push line of the corresponding remotes fi=
-le---see below).
- 	will be tab-separated and sent to stdout instead of stderr.  The full
- 	symbolic names of the refs will be given.
-=20
-+--delete::
-+	All listed refs are deleted from the remote repository. This is
-+	the same as prefixing all refs with a colon.
-+
- --tags::
- 	All refs under `$GIT_DIR/refs/tags` are pushed, in
- 	addition to refspecs explicitly listed on the command
-diff --git a/builtin-push.c b/builtin-push.c
-index dcfb53f..f7661d2 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -15,6 +15,7 @@ static const char * const push_usage[] =3D {
- };
-=20
- static int thin;
-+static int deleterefs;
- static const char *receivepack;
-=20
- static const char **refspec;
-@@ -39,11 +40,24 @@ static void set_refspecs(const char **refs, int nr)
- 			if (nr <=3D ++i)
- 				die("tag shorthand without <tag>");
- 			len =3D strlen(refs[i]) + 11;
--			tag =3D xmalloc(len);
--			strcpy(tag, "refs/tags/");
-+			if (deleterefs) {
-+				tag =3D xmalloc(len+1);
-+				strcpy(tag, ":refs/tags/");
-+			} else {
-+				tag =3D xmalloc(len);
-+				strcpy(tag, "refs/tags/");
-+			}
- 			strcat(tag, refs[i]);
- 			ref =3D tag;
--		}
-+		} else if (deleterefs && !strchr(ref, ':')) {
-+			char *delref;
-+			int len =3D strlen(ref)+1;
-+			delref =3D xmalloc(len);
-+			strcpy(delref, ":");
-+			strcat(delref, ref);
-+			ref =3D delref;
-+		} else if (deleterefs)
-+			die("--delete only accepts plain target ref names");
- 		add_refspec(ref);
- 	}
- }
-@@ -196,6 +210,7 @@ int cmd_push(int argc, const char **argv, const cha=
-r *prefix)
- 		OPT_BIT( 0 , "all", &flags, "push all refs", TRANSPORT_PUSH_ALL),
- 		OPT_BIT( 0 , "mirror", &flags, "mirror all refs",
- 			    (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE)),
-+		OPT_BOOLEAN( 0, "delete", &deleterefs, "delete refs"),
- 		OPT_BOOLEAN( 0 , "tags", &tags, "push tags (can't be used with --all=
- or --mirror)"),
- 		OPT_BIT('n' , "dry-run", &flags, "dry run", TRANSPORT_PUSH_DRY_RUN),
- 		OPT_BIT( 0,  "porcelain", &flags, "machine-readable output", TRANSPO=
-RT_PUSH_PORCELAIN),
-@@ -209,6 +224,11 @@ int cmd_push(int argc, const char **argv, const ch=
-ar *prefix)
- 	git_config(git_default_config, NULL);
- 	argc =3D parse_options(argc, argv, prefix, options, push_usage, 0);
-=20
-+	if (deleterefs && (tags || (flags & (TRANSPORT_PUSH_ALL | TRANSPORT_P=
-USH_MIRROR))))
-+		die("--delete is incompatible with --all, --mirror and --tags");
-+	if (deleterefs && argc < 2)
-+		die("--delete doesn't make sense without any refs");
-+
- 	if (tags)
- 		add_refspec("refs/tags/*");
-=20
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 516127b..a17666c 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -547,6 +547,22 @@ test_expect_success 'allow deleting an invalid rem=
-ote ref' '
-=20
- '
-=20
-+test_expect_success 'allow deleting a ref using --delete' '
-+	mk_test heads/master &&
-+	(cd testrepo && git config receive.denyDeleteCurrent warn) &&
-+	git push testrepo --delete master &&
-+	(cd testrepo && test_must_fail git rev-parse --verify refs/heads/mast=
-er)
-+'
-+
-+test_expect_success 'allow deleting a tag using --delete' '
-+	mk_test heads/master &&
-+	git tag -a -m dummy_message deltag heads/master &&
-+	git push testrepo --tags &&
-+	(cd testrepo && git rev-parse --verify -q refs/tags/deltag) &&
-+	git push testrepo --delete tag deltag &&
-+	(cd testrepo && test_must_fail git rev-parse --verify refs/tags/delta=
-g)
-+'
-+
- test_expect_success 'warn on push to HEAD of non-bare repository' '
- 	mk_test heads/master
- 	(cd testrepo &&
---=20
-1.6.6.60.gc2ff1
+-Peff
