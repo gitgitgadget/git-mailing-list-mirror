@@ -1,73 +1,79 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] Makefile: determine the list of header files using a
- glob
-Date: Wed, 30 Dec 2009 09:00:02 +0100
-Message-ID: <20091230080002.GA31088@glandium.org>
-References: <4B0F8825.3040107@viscovery.net>
- <20091127082624.GA19875@glandium.org>
- <4B0F92E7.8090403@viscovery.net>
- <20091127085802.GA21217@glandium.org>
- <7v7htbom95.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Giving command line parameter to textconv command?
+Date: Wed, 30 Dec 2009 00:05:20 -0800
+Message-ID: <7vr5qc51kv.fsf@alter.siamese.dyndns.org>
+References: <20091215071735.6117@nanako3.lavabit.com>
+ <7vvdg9ceud.fsf@alter.siamese.dyndns.org>
+ <20091230121325.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 30 09:00:47 2009
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Wed Dec 30 09:05:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPtU4-0005Si-4h
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 09:00:44 +0100
+	id 1NPtYm-0006bX-Bk
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 09:05:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752496AbZL3IAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Dec 2009 03:00:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752494AbZL3IAS
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 03:00:18 -0500
-Received: from vuizook.err.no ([85.19.221.46]:58652 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752475AbZL3IAP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2009 03:00:15 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1NPtTP-0000RL-9d; Wed, 30 Dec 2009 09:00:06 +0100
-Received: from mh by jigen with local (Exim 4.71)
-	(envelope-from <mh@jigen>)
-	id 1NPtTO-00086K-A2; Wed, 30 Dec 2009 09:00:02 +0100
-Content-Disposition: inline
-In-Reply-To: <7v7htbom95.fsf@alter.siamese.dyndns.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1752447AbZL3IFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2009 03:05:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752389AbZL3IFc
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 03:05:32 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61504 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752246AbZL3IFb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2009 03:05:31 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BA5D5ABC5C;
+	Wed, 30 Dec 2009 03:05:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5EJ5yApGv809qom5Bvn0i6PEsUQ=; b=PxAhy/
+	VMLeDsxhOckX1PiTegllykbVG3/Ym2sPMEhrAJCKPz+ADBmLyOKa1fNg09TCErTi
+	pqpDAL6xqk+YVD1woobSUfI2RXNF+tNegnPNMVgQb+ZrX5bDv8DI0c81bF457xQA
+	a7Q2R+5h/Y7pn3zdzlvwHZG6DVnsIP+dpst3w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BA7fVTmcze8n3gMYaem26ilNzaEwleCi
+	t36HY2qHAhiJFnESmuWnBhlfe//l5FiOztj/I1opV+GBG5HF8zX3LOhhyza5FWQX
+	ilRYRmjVsxjBWdSaq1qOM8pv9u+/opx5XnIjmVPVtU81SSPTts4xrgCi/0UJ8S39
+	j/PBaCrOBkI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8AEFDABC5B;
+	Wed, 30 Dec 2009 03:05:26 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 764D4ABC5A; Wed, 30 Dec 2009
+ 03:05:22 -0500 (EST)
+In-Reply-To: <20091230121325.6117@nanako3.lavabit.com> (Nanako Shiraishi's
+ message of "Wed\, 30 Dec 2009 12\:13\:25 +0900")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 16A0EA00-F51A-11DE-A661-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135868>
 
-(Nanako's bunch of reminders reminded me of this thread)
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-On Fri, Nov 27, 2009 at 10:28:38AM -0800, Junio C Hamano wrote:
-> Mike Hommey <mh@glandium.org> writes:
-> 
-> > On Fri, Nov 27, 2009 at 09:50:47AM +0100, Johannes Sixt wrote:
-> >> Mike Hommey schrieb:
-> >> > I don't know if the current Makefile works with Solaris' make,...
-> >> 
-> >> No, it doesn't. You have to use GNU make anyway.
-> >
-> > Then it's fine. But shouldn't that be noted somewhere, like in the
-> > INSTALL file ?
-> 
-> Surely.  Please make it so.
+> Junio, could you tell us what happened to this thread?
+>
+> I use this patch myself, and it works really well.
 
-I had another idea in the interim. If GNU make is necessary, why not
-make the Makefile an explicit GNU make only Makefile, by renaming it
-GNUmakefile ?
+I stopped promoting the patch after Peff mentioned he was planning a
+rework of textconv, but now I re-read it, I think his rework would be
+orthogonal to the patch.
 
-That wouldn't remove the need to add a note in the INSTALL file, though.
+Also Peff gives a good hint about borrowing how launch_editor() calls out
+to the shell.  I think the codepath we fork&exec user-defined commands
+(not hooks, but filters like smudge/clean/textconv and EDITOR/PAGER that
+take a command line) need to be first enumerated, then we need to see if
+we can refactor what launch_editor() does into a common helper function.
+I felt it was unclear what we would want to do with GIT_EXTERNAL_DIFF,
+diff.external, and diff.<driver>.command trio, but I tend to agree that we
+should run things the same way, honoring $IFS and shell everywhere.
 
-Mike
+http://thread.gmane.org/gmane.comp.version-control.git/135250/focus=135312
