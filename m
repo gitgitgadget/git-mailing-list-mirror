@@ -1,113 +1,76 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] grep: do not do external grep on skip-worktree entries
-Date: Wed, 30 Dec 2009 21:11:44 +0700
-Message-ID: <1262182304-19911-1-git-send-email-pclouds@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] Let core.excludesfile default to ~/.gitexcludes.
+Date: Wed, 30 Dec 2009 15:31:44 +0100
+Message-ID: <vpqhbr8ttwv.fsf@bauges.imag.fr>
+References: <4B06A7EE.2090801@atlas-elektronik.com>
+	<1258840832-22130-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20091230224135.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 30 15:15:14 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Wed Dec 30 15:32:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPzKO-0002TG-67
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 15:15:08 +0100
+	id 1NPzal-0000iK-Qt
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 15:32:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752801AbZL3OMf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Dec 2009 09:12:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752794AbZL3OMf
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 09:12:35 -0500
-Received: from mail-px0-f189.google.com ([209.85.216.189]:40958 "EHLO
-	mail-px0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752214AbZL3OMe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2009 09:12:34 -0500
-Received: by pxi27 with SMTP id 27so6865311pxi.4
-        for <git@vger.kernel.org>; Wed, 30 Dec 2009 06:12:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=syEW1iL1/xVz00L9ZU3oMLcWFZxrrZqLDHX7WcZZK0Y=;
-        b=WOQWeRx6Ohn2+eAtn80GqLInIoe14D2agtGcI7E2dNsHZn7/garhVg3bGvQkz6P7se
-         ENFJ+wzLd7ckiwGeMuEK8JJfDyBGMSp5EGVQqGU9F9p1qFc8hdMyG9FHs+ZCJP9Ft/xp
-         cPkjyqD61XJf9VnC1F2frRDb8AXKMqpMcidIU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=HopIOIN4kR39bHLUw0/F2OIIZDEN0bTd2IwHM7hGiyWo2uGYSOX7j2q/FbmFPJT/wu
-         x5YHgxIQAuLdIUDku4mECYQ/rGlY7/d7RJtvapWHwnHYXeVgJtQlei0g+3gC0f8qgHNP
-         7daKsyBp9j7MNOAva/1IkNwKcQo8YZil41g90=
-Received: by 10.142.2.24 with SMTP id 24mr12195262wfb.139.1262182354263;
-        Wed, 30 Dec 2009 06:12:34 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.227.183])
-        by mx.google.com with ESMTPS id 21sm13547991pzk.15.2009.12.30.06.12.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 30 Dec 2009 06:12:33 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 30 Dec 2009 21:11:49 +0700
-X-Mailer: git-send-email 1.6.6.315.g1a406
+	id S1752776AbZL3Ob7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2009 09:31:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752749AbZL3Ob7
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 09:31:59 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:42068 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752670AbZL3Ob6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2009 09:31:58 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id nBUEUiV3021803
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 30 Dec 2009 15:30:44 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NPzaS-0005jG-VN; Wed, 30 Dec 2009 15:31:45 +0100
+In-Reply-To: <20091230224135.6117@nanako3.lavabit.com> (Nanako Shiraishi's message of "Wed\, 30 Dec 2009 22\:41\:35 +0900")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 30 Dec 2009 15:30:47 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: nBUEUiV3021803
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1262788248.49542@7RxEi0U5WnHjbqKeuTJQsw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135901>
 
-Skip-worktree entries are not on disk. There is no reason to call
-external grep in such cases.
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-A trace message is also added to aid debugging external grep cases.
+> Junio, could you tell us what happened to this thread?
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin-grep.c |   19 ++++++++++++++++++-
- 1 files changed, 18 insertions(+), 1 deletions(-)
+I'm not Junio, but I can try ...
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index d582232..d49c637 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -488,17 +488,34 @@ static int grep_cache(struct grep_opt *opt, const=
- char **paths, int cached,
- 	read_cache();
-=20
- #if !NO_EXTERNAL_GREP
-+	if (cached)
-+		external_grep_allowed =3D 0;
-+	if (external_grep_allowed) {
-+		for (nr =3D 0; nr < active_nr; nr++) {
-+			struct cache_entry *ce =3D active_cache[nr];
-+			if (!S_ISREG(ce->ce_mode))
-+				continue;
-+			if (!pathspec_matches(paths, ce->name, opt->max_depth))
-+				continue;
-+			if (ce_skip_worktree(ce)) {
-+				external_grep_allowed =3D 0;
-+				break;
-+			}
-+		}
-+	}
- 	/*
- 	 * Use the external "grep" command for the case where
- 	 * we grep through the checked-out files. It tends to
- 	 * be a lot more optimized
- 	 */
--	if (!cached && external_grep_allowed) {
-+	if (external_grep_allowed) {
- 		hit =3D external_grep(opt, paths, cached);
- 		if (hit >=3D 0)
- 			return hit;
- 		hit =3D 0;
- 	}
-+	else
-+		trace_printf("grep: external grep not used\n");
- #endif
-=20
- 	for (nr =3D 0; nr < active_nr; nr++) {
---=20
-1.6.6.315.g1a406
+Setting a default for core.excludesfile implies that changing it later
+is hard. In particular, _if_ we chose one day to move from multiple
+$HOME/.gitsomething files to $HOME/something-else/multiple-files
+($XDG_CONFIG_HOME and $HOME/.gitglobal/{config,excludes,...} have been
+suggested, as well as a $GIT_HOME variable), then the transition is
+made harder by having a default.
+
+So, while I think having a default is good, chosing the default
+shouldn't be taken lightly.
+
+I personally like the idea of a user config _directory_ with multiple
+files in it, but I'm not clear on exactly what it should be, how the
+transition plan would be, ...
+
+So, I dropped the patch until we get closer to a consensus on what the
+default value should be.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
