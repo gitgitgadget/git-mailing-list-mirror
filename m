@@ -1,79 +1,85 @@
-From: Tarmigan <tarmigan+git@gmail.com>
-Subject: Re: [PATCH RFC 1/2] Smart-http tests: Break test t5560-http-backend 
-	into pieces
-Date: Wed, 30 Dec 2009 13:09:38 -0500
-Message-ID: <905315640912301009x491f957al839f66de7aba56ed@mail.gmail.com>
-References: <1262037899-16786-1-git-send-email-tarmigan+git@gmail.com> 
-	<7veimc2vq0.fsf@alter.siamese.dyndns.org>
+From: Sylvain Rabot <sylvain@abstraction.fr>
+Subject: Re: Minor bug in bash completion
+Date: Wed, 30 Dec 2009 18:59:38 +0100
+Message-ID: <1262195978.3552.4.camel@kheops>
+References: <4B3A140A.60302@steek.com>  <20091230112222.GA493@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: "Shawn O . Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 30 19:10:04 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 30 19:10:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQ2zj-000620-Ib
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 19:10:03 +0100
+	id 1NQ2zw-000685-Rg
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 19:10:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753137AbZL3SJ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Dec 2009 13:09:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752394AbZL3SJ7
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 13:09:59 -0500
-Received: from mail-px0-f189.google.com ([209.85.216.189]:55442 "EHLO
-	mail-px0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751876AbZL3SJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2009 13:09:58 -0500
-Received: by pxi27 with SMTP id 27so6991773pxi.4
-        for <git@vger.kernel.org>; Wed, 30 Dec 2009 10:09:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
-         :content-type;
-        bh=aev5gJY+UDxvu7vrvtf5OLVj5m/FwDS5qCECbl9kzW8=;
-        b=Hj/Rb1snIWgXRDdyH90YOdAJUj6BuwgHD+X6S1Dq88/ngxTehJdi2lIPyNwkumZcio
-         eJpgIF4djWhbNrMSlFHyImeVp30EzQyXsZha8f9Us4myWE2QiybGZgWsCxTlzV0mszVo
-         CXldgTxnUKuaQcvTOZVVi9LcbzRnzgVwO4FwY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        b=Ceg81Zz48fUb4cy3V7TRmhC8hPo3djwic88JshWOFEwCyPQv6MmRIAOHCNo0sSqGjy
-         kpPFrWDKaVbH+Y/RCsf6SUnG0KCrHwH2skd+75fGeejDgZ8p7epu1+c55fz1GpkdINIX
-         mfxdDbBxEKRYp1WDhaNhypzfyIOoseBsERUXQ=
-Received: by 10.142.63.25 with SMTP id l25mr11883541wfa.333.1262196598126; 
-	Wed, 30 Dec 2009 10:09:58 -0800 (PST)
-In-Reply-To: <7veimc2vq0.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: a532e1f79221b0df
+	id S1753155AbZL3SKK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Dec 2009 13:10:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752989AbZL3SKJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 13:10:09 -0500
+Received: from lo.gmane.org ([80.91.229.12]:41817 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752786AbZL3SKI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Dec 2009 13:10:08 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NQ2zk-00062i-Pd
+	for git@vger.kernel.org; Wed, 30 Dec 2009 19:10:04 +0100
+Received: from smj33-1-82-233-66-33.fbx.proxad.net ([82.233.66.33])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 30 Dec 2009 19:10:04 +0100
+Received: from sylvain by smj33-1-82-233-66-33.fbx.proxad.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 30 Dec 2009 19:10:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: smj33-1-82-233-66-33.fbx.proxad.net
+In-Reply-To: <20091230112222.GA493@neumann>
+X-Mailer: Evolution 2.28.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135913>
 
-On Wed, Dec 30, 2009 at 12:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Tarmigan Casebolt <tarmigan+git@gmail.com> writes:
->
->> This should introduce no functional change in the tests or the amount
->> of test coverage.
->>
->> Signed-off-by: Tarmigan Casebolt <tarmigan+git@gmail.com>
->
-> This seems to crash rather badly with your own "Smart-http: check if
-> repository is OK to export before serving it".
+On Wed, 2009-12-30 at 12:22 +0100, SZEDER G=C3=A1bor wrote:
+> Hi Sylvain,
+>=20
+>=20
+> On Tue, Dec 29, 2009 at 03:36:58PM +0100, Sylvain RABOT wrote:
+> > I found a bug in the git bash completion.
+> > It occurs when I press tab to complete branch name when I want to p=
+ull =20
+> > from the origin.
+> > Instead of completing the branch name it prompts me directly for my=
+ =20
+> > password on the origin remote.
+>=20
+> I don't think it's a bug.  The completion script should offer the
+> currently available refs in the remote repository after a 'git pull
+> <remote> <TAB>'.  In order to do that it contacts the remote
+> repository for the list of refs available there.  Depending on the
+> access method, it might need to authenticate, in your case via ssh.
+> To silence the password prompts you should change your ssh
+> configuration to use key-based authentication when logging in to the
+> remote repository's server (just google for 'ssh login without
+> password').
+>=20
+>=20
+> Best,
+> G=C3=A1bor
 
-Yes, they were both separately based on 'master' a few days ago.
+Haaa,
 
-If you think the goal (more about that is in the commit log of 2/2) is
-worthwhile, I am happy to rebase on top of pu and resend.
+I understand now, tough, I thought that the list of origin's branches
+where stored somewhere in my local repository and that I needed to do a
+"git remote update origin" to get the current origin branches list.
 
-One reason it's labeled RFC is that I'm not very confident in my
-ability to write portable shell script.  It works for me with bash,
-but I'm not completely confident that is would work on ksh or dash.
-So it would be nice if you could specifically take a look at the new
-POST() and GET() and see if you notice anything obviously wrong there.
+Thanks for your answer.
 
-Thanks,
-Tarmigan
+Regards.
+
+--=20
+Sylvain Rabot <sylvain@abstraction.fr>
