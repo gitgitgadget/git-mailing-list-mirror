@@ -1,164 +1,140 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/6] run-command: add "use shell" option
-Date: Wed, 30 Dec 2009 05:53:16 -0500
-Message-ID: <20091230105316.GA22959@coredump.intra.peff.net>
+Subject: [PATCH 2/6] run-command: convert simple callsites to use_shell
+Date: Wed, 30 Dec 2009 05:53:57 -0500
+Message-ID: <20091230105357.GB22959@coredump.intra.peff.net>
 References: <20091230095634.GA16349@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 30 11:53:25 2009
+X-From: git-owner@vger.kernel.org Wed Dec 30 11:54:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPwBA-0002Fc-RM
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 11:53:25 +0100
+	id 1NPwBq-0002QR-RU
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 11:54:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752483AbZL3KxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Dec 2009 05:53:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752473AbZL3KxT
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 05:53:19 -0500
-Received: from peff.net ([208.65.91.99]:37122 "EHLO peff.net"
+	id S1752633AbZL3KyD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2009 05:54:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752630AbZL3KyC
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 05:54:02 -0500
+Received: from peff.net ([208.65.91.99]:37127 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751581AbZL3KxT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2009 05:53:19 -0500
-Received: (qmail 5121 invoked by uid 107); 30 Dec 2009 10:58:01 -0000
+	id S1752426AbZL3KyA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2009 05:54:00 -0500
+Received: (qmail 5144 invoked by uid 107); 30 Dec 2009 10:58:43 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 30 Dec 2009 05:58:01 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Dec 2009 05:53:16 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 30 Dec 2009 05:58:43 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Dec 2009 05:53:57 -0500
 Content-Disposition: inline
 In-Reply-To: <20091230095634.GA16349@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135882>
 
-Many callsites run "sh -c $CMD" to run $CMD. We can make it
-a little simpler for them by factoring out the munging of
-argv.
-
-For simple cases with no arguments, this doesn't help much, but:
-
-  1. For cases with arguments, we save the caller from
-     having to build the appropriate shell snippet.
-
-  2. We can later optimize to avoid the shell when
-     there are no metacharacters in the program.
+Now that we have the use_shell feature, these callsites can
+all be converted with small changes.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I made the matching tweak to the Windows half of run-command, but I
-don't actually have a box to test it on.
+These should be non-controversial.
 
-I modeled this after execv_git_cmd. Like that function, I try to release
-the allocated argv on error. However, we do actually leak the strbuf
-memory in one case. I'm not sure how much we care. On unix, this will
-always happen in a forked process which will either exec or die. On
-Windows, we seem to already be leaking the prepared argv for the git_cmd
-case (and now we leak the shell_cmd case, too).
+ convert.c   |    3 ++-
+ imap-send.c |    8 ++------
+ ll-merge.c  |    6 +++---
+ pager.c     |    5 +++--
+ 4 files changed, 10 insertions(+), 12 deletions(-)
 
- run-command.c |   45 +++++++++++++++++++++++++++++++++++++++++++++
- run-command.h |    2 ++
- 2 files changed, 47 insertions(+), 0 deletions(-)
-
-diff --git a/run-command.c b/run-command.c
-index cf2d8f7..dc65903 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -15,6 +15,46 @@ static inline void dup_devnull(int to)
- 	close(fd);
+diff --git a/convert.c b/convert.c
+index 491e714..950b1f9 100644
+--- a/convert.c
++++ b/convert.c
+@@ -249,10 +249,11 @@ static int filter_buffer(int fd, void *data)
+ 	struct child_process child_process;
+ 	struct filter_params *params = (struct filter_params *)data;
+ 	int write_err, status;
+-	const char *argv[] = { "sh", "-c", params->cmd, NULL };
++	const char *argv[] = { params->cmd, NULL };
+ 
+ 	memset(&child_process, 0, sizeof(child_process));
+ 	child_process.argv = argv;
++	child_process.use_shell = 1;
+ 	child_process.in = -1;
+ 	child_process.out = fd;
+ 
+diff --git a/imap-send.c b/imap-send.c
+index de8114b..51f371b 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -965,17 +965,13 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
+ 	/* open connection to IMAP server */
+ 
+ 	if (srvc->tunnel) {
+-		const char *argv[4];
++		const char *argv[] = { srvc->tunnel, NULL };
+ 		struct child_process tunnel = {0};
+ 
+ 		imap_info("Starting tunnel '%s'... ", srvc->tunnel);
+ 
+-		argv[0] = "sh";
+-		argv[1] = "-c";
+-		argv[2] = srvc->tunnel;
+-		argv[3] = NULL;
+-
+ 		tunnel.argv = argv;
++		tunnel.use_shell = 1;
+ 		tunnel.in = -1;
+ 		tunnel.out = -1;
+ 		if (start_command(&tunnel))
+diff --git a/ll-merge.c b/ll-merge.c
+index 2d6b6d6..18511e2 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -175,7 +175,7 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
+ 		{ "B", temp[2] },
+ 		{ NULL }
+ 	};
+-	const char *args[] = { "sh", "-c", NULL, NULL };
++	const char *args[] = { NULL, NULL };
+ 	int status, fd, i;
+ 	struct stat st;
+ 
+@@ -190,8 +190,8 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
+ 
+ 	strbuf_expand(&cmd, fn->cmdline, strbuf_expand_dict_cb, &dict);
+ 
+-	args[2] = cmd.buf;
+-	status = run_command_v_opt(args, 0);
++	args[0] = cmd.buf;
++	status = run_command_v_opt(args, RUN_USING_SHELL);
+ 	fd = open(temp[1], O_RDONLY);
+ 	if (fd < 0)
+ 		goto bad;
+diff --git a/pager.c b/pager.c
+index 92c03f6..2c7e8ec 100644
+--- a/pager.c
++++ b/pager.c
+@@ -28,7 +28,7 @@ static void pager_preexec(void)
  }
+ #endif
  
-+static const char **prepare_shell_cmd(const char **argv)
-+{
-+	int argc, nargc = 0;
-+	const char **nargv;
-+
-+	for (argc = 0; argv[argc]; argc++)
-+		; /* just counting */
-+	/* +1 for NULL, +3 for "sh -c" plus extra $0 */
-+	nargv = xmalloc(sizeof(*nargv) * (argc + 1 + 3));
-+
-+	if (argc < 1)
-+		die("BUG: shell command is empty");
-+
-+	nargv[nargc++] = "sh";
-+	nargv[nargc++] = "-c";
-+
-+	if (argc < 2)
-+		nargv[nargc++] = argv[0];
-+	else {
-+		struct strbuf arg0 = STRBUF_INIT;
-+		strbuf_addf(&arg0, "%s \"$@\"", argv[0]);
-+		nargv[nargc++] = strbuf_detach(&arg0, NULL);
-+	}
-+
-+	for (argc = 0; argv[argc]; argc++)
-+		nargv[nargc++] = argv[argc];
-+	nargv[nargc] = NULL;
-+
-+	return nargv;
-+}
-+
-+static int execv_shell_cmd(const char **argv)
-+{
-+	const char **nargv = prepare_shell_cmd(argv);
-+	trace_argv_printf(nargv, "trace: exec:");
-+	execvp(nargv[0], (char **)nargv);
-+	free(nargv);
-+	return -1;
-+}
-+
- int start_command(struct child_process *cmd)
- {
- 	int need_in, need_out, need_err;
-@@ -123,6 +163,8 @@ fail_pipe:
- 			cmd->preexec_cb();
- 		if (cmd->git_cmd) {
- 			execv_git_cmd(cmd->argv);
-+		} else if (cmd->use_shell) {
-+			execv_shell_cmd(cmd->argv);
- 		} else {
- 			execvp(cmd->argv[0], (char *const*) cmd->argv);
- 		}
-@@ -179,6 +221,8 @@ fail_pipe:
+-static const char *pager_argv[] = { "sh", "-c", NULL, NULL };
++static const char *pager_argv[] = { NULL, NULL };
+ static struct child_process pager_process;
  
- 	if (cmd->git_cmd) {
- 		cmd->argv = prepare_git_cmd(cmd->argv);
-+	} else if (cmd->use_shell) {
-+		cmd->argv = prepare_shell_cmd(cmd->argv);
- 	}
+ static void wait_for_pager(void)
+@@ -81,7 +81,8 @@ void setup_pager(void)
+ 	spawned_pager = 1; /* means we are emitting to terminal */
  
- 	cmd->pid = mingw_spawnvpe(cmd->argv[0], cmd->argv, env);
-@@ -297,6 +341,7 @@ static void prepare_run_command_v_opt(struct child_process *cmd,
- 	cmd->git_cmd = opt & RUN_GIT_CMD ? 1 : 0;
- 	cmd->stdout_to_stderr = opt & RUN_COMMAND_STDOUT_TO_STDERR ? 1 : 0;
- 	cmd->silent_exec_failure = opt & RUN_SILENT_EXEC_FAILURE ? 1 : 0;
-+	cmd->use_shell = opt & RUN_USING_SHELL ? 1 : 0;
- }
- 
- int run_command_v_opt(const char **argv, int opt)
-diff --git a/run-command.h b/run-command.h
-index fb34209..967ba8c 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -33,6 +33,7 @@ struct child_process {
- 	unsigned git_cmd:1; /* if this is to be git sub-command */
- 	unsigned silent_exec_failure:1;
- 	unsigned stdout_to_stderr:1;
-+	unsigned use_shell:1;
- 	void (*preexec_cb)(void);
- };
- 
-@@ -46,6 +47,7 @@ extern int run_hook(const char *index_file, const char *name, ...);
- #define RUN_GIT_CMD	     2	/*If this is to be git sub-command */
- #define RUN_COMMAND_STDOUT_TO_STDERR 4
- #define RUN_SILENT_EXEC_FAILURE 8
-+#define RUN_USING_SHELL 16
- int run_command_v_opt(const char **argv, int opt);
- 
- /*
+ 	/* spawn the pager */
+-	pager_argv[2] = pager;
++	pager_argv[0] = pager;
++	pager_process.use_shell = 1;
+ 	pager_process.argv = pager_argv;
+ 	pager_process.in = -1;
+ 	if (!getenv("LESS")) {
 -- 
 1.6.6.65.g050d2.dirty
