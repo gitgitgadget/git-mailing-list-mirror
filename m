@@ -1,77 +1,55 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH 1/6] run-command: add "use shell" option
-Date: Wed, 30 Dec 2009 14:55:43 +0100
-Message-ID: <40aa078e0912300555x5beb1f0ejc27fd544856f6da1@mail.gmail.com>
-References: <20091230095634.GA16349@coredump.intra.peff.net>
-	 <20091230105316.GA22959@coredump.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+From: Sebastian Thiel <byronimo@gmail.com>
+Subject: Re: [PATCH] git-update-index: report(...) now flushes stdout after printing the report line
+Date: Wed, 30 Dec 2009 13:56:32 +0000 (UTC)
+Message-ID: <loom.20091230T145525-818@post.gmane.org>
+References: <loom.20091119T221732-624@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 30 14:55:51 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 30 14:57:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPz1j-0001yV-9r
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 14:55:51 +0100
+	id 1NPz2r-0002U7-JH
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 14:57:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752940AbZL3Nzq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Dec 2009 08:55:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752937AbZL3Nzq
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 08:55:46 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:46612 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752934AbZL3Nzp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Dec 2009 08:55:45 -0500
-Received: by ewy19 with SMTP id 19so3679845ewy.21
-        for <git@vger.kernel.org>; Wed, 30 Dec 2009 05:55:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dFcOOqv4Lnw1rebQOoP8XbM3vE4xFTukJq7okLvfH3k=;
-        b=l+b0VvdE9NPvtRKJZ0mh9cBsFwiumHVem4HGyHZ7LVxOxJ6RBQwaKJyvWxKafEwcYs
-         plCNX2Z/xs8jeyOXWxUbCGrFUj7aKzQeWb9lQXSusawqnbaI4IC/Y1yV6CtnwHQMAVxi
-         Rv/CMn23TGK/6/+WNYZkmS0h3QOkTPgfrpkGE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=gpyMZN26c+mqy2Sg49/sgPLRbNgsqhrvM+YrBjogj6z7Gf8b6/4By0T1o/Q85efqFS
-         l4sm6uZBdGm+IlVa9WsToPO4XgaDnqQGxSHl+t/JSZxr/s0YILF68opPttOCd+Q8Yvnb
-         UuQyB3RKFQe5mH12YtsJnnJJwFx0N75EEAaw4=
-Received: by 10.216.86.213 with SMTP id w63mr6530449wee.71.1262181344007; Wed, 
-	30 Dec 2009 05:55:44 -0800 (PST)
-In-Reply-To: <20091230105316.GA22959@coredump.intra.peff.net>
+	id S1752763AbZL3N46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2009 08:56:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752327AbZL3N45
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 08:56:57 -0500
+Received: from lo.gmane.org ([80.91.229.12]:48842 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751900AbZL3N45 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2009 08:56:57 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NPz2k-0002Rk-I7
+	for git@vger.kernel.org; Wed, 30 Dec 2009 14:56:54 +0100
+Received: from 91-64-162-37-dynip.superkabel.de ([91.64.162.37])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 30 Dec 2009 14:56:54 +0100
+Received: from byronimo by 91-64-162-37-dynip.superkabel.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 30 Dec 2009 14:56:54 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 91.64.162.37 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; de; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135899>
 
-On Wed, Dec 30, 2009 at 11:53 AM, Jeff King <peff@peff.net> wrote:
-> Many callsites run "sh -c $CMD" to run $CMD. We can make it
-> a little simpler for them by factoring out the munging of
-> argv.
->
-> For simple cases with no arguments, this doesn't help much, but:
->
-> =A01. For cases with arguments, we save the caller from
-> =A0 =A0 having to build the appropriate shell snippet.
->
-> =A02. We can later optimize to avoid the shell when
-> =A0 =A0 there are no metacharacters in the program.
->
+I'd like to add that since version 1.6.5, non-tty's do not receive any progress
+information anymore. The patch causing this says it wants to, in short words,
+unify the push and fetch handling regarding the way progress messages are sent.
 
-Nice. This could be helpful if we ever decide not to depend on a
-sh-compatible shell on Windows (since one isn't included by default no
-Windows, and installing msys/cygwin has some compatibility-issues with
-previous installations).
+Now third-party wrappers, such as git-python, are unable to provide any progress
+information anymore for possibly lengthy operations.
 
---=20
-Erik "kusma" Faye-Lund
+This is why I clearly recommend to add some kind of a "progress-force" flag that
+turns progress messages on again for send-pack and receive-pack.
