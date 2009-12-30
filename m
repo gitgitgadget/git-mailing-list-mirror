@@ -1,81 +1,68 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH 1/2] MinGW: Use pid_t more consequently, introduce uid_t 
-	for greater compatibility
-Date: Wed, 30 Dec 2009 02:16:59 +0100
-Message-ID: <bdca99240912291716g74c35f22r7599f2c254fb1b09@mail.gmail.com>
-References: <hhbldr$di8$1@ger.gmane.org> <4B3A7000.4050308@kdbg.org>
-	 <bdca99240912291649h1c727072q3b1e4099cab426df@mail.gmail.com>
-	 <40aa078e0912291655m57ea0081vddf3b64bf27e1d02@mail.gmail.com>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: Question about 'branch -d' safety
+Date: Wed, 30 Dec 2009 12:12:38 +0900
+Message-ID: <20091230121238.6117@nanako3.lavabit.com>
+References: <20091230065442.6117@nanako3.lavabit.com> <20091229223123.GA12965@vidovic>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Wed Dec 30 02:17:13 2009
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Wed Dec 30 04:13:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPnBX-0007z9-QN
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 02:17:12 +0100
+	id 1NPozq-0004sc-W8
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 04:13:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751969AbZL3BRE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2009 20:17:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751848AbZL3BRD
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 20:17:03 -0500
-Received: from fg-out-1718.google.com ([72.14.220.154]:10793 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751953AbZL3BRB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2009 20:17:01 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so4935025fgg.1
-        for <git@vger.kernel.org>; Tue, 29 Dec 2009 17:17:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=vzChscsI41VNKW+z/myc9BH5Jux9cLSu3qiYublEVfs=;
-        b=eXumLfC2OH3xKtynH2V4WNOWG7fbTF4lFKPAuI5xtTZFwI4wROporGUBRr6X7B2iD0
-         SXRZV8wqjXZA6J4adAY8MGbNpopzkQJP+ZLmnI401v78rFL6qUuFD2phwegUhHyvGQmp
-         /ipLSZ17Obc940+QzX6Cu5SHf4YRnkLCPUKoc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=whIVHjnasMWV0wkDycDdDtkWFVzaxVftUUy8AJcJzQdb7+Vxib7FLQn6exNoVNCDQC
-         OahCBASy/v5/1wd02YPD/eTZvmCu+ZwrZhZ7x7SFDxbHnWMq7e4y2TnY3TSortfy+gS0
-         JhlxykJqcCq7QfvU2mwK3Kn2SRedi7KlSUNd0=
-Received: by 10.87.73.2 with SMTP id a2mr14713414fgl.34.1262135819786; Tue, 29 
-	Dec 2009 17:16:59 -0800 (PST)
-In-Reply-To: <40aa078e0912291655m57ea0081vddf3b64bf27e1d02@mail.gmail.com>
+	id S1751800AbZL3DNK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2009 22:13:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751794AbZL3DNJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 22:13:09 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:39598 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751524AbZL3DNJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2009 22:13:09 -0500
+Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
+	by karen.lavabit.com (Postfix) with ESMTP id CB18911B89A;
+	Tue, 29 Dec 2009 21:13:07 -0600 (CST)
+Received: from 9683.lavabit.com (212.62.97.23)
+	by lavabit.com with ESMTP id 7IJI8GIBULZQ; Tue, 29 Dec 2009 21:13:07 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=MXzO4DmvO5PNLpHWKiOXUrqVfGBJktKm5M0fQ5OhLo0xwhEBxYC3o2KD/qM5Z4GGT8Ugoq/hpGYjs9mbT0DhnKt0doGCdc8NWkoIro81b2+GoqjuulqfC8jn7altqisHCohU2n2SQT6/EChBWgBoZehl1CFwT0rFB62A8VkGdaU=;
+  h=From:To:Cc:Subject:X-Draft-From:References:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Message-Id;
+X-Draft-From: ("nntp+news.gmane.org:gmane.comp.version-control.git" 135841)
+In-Reply-To: <20091229223123.GA12965@vidovic>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135850>
 
-On Wed, Dec 30, 2009 at 01:55, Erik Faye-Lund <kusmabite@googlemail.com> wrote:
+Quoting Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
 
->>> Why this? Compatibility with what? What's the problem with the status quo?
->>
->> I wanted to include Hany's Dos2Unix tool (hd2u) into msysGit. h2du
->> depends on libpopt, and either of the two requires the uid_t type, I
->> do not recall which. And while adding the missing uid_t, I felt it
->> would be right to actually use uid_t / pid_t in the function
->> prototypes.
+> The 30/12/09, Nanako Shiraishi wrote:
 >
-> Perhaps I'm missing something here... why do you need to modify the
-> git-sources in order to include an external tool?
+>> I think the safety feature should check if the branch to be deleted is merged to the remote tracking branch it was forked from, instead of checking the current branch.
+>> 
+>> What do you think?
+>
+> I think we shouldn't. At first, every repository don't have a remote.
+> This may easily be passed by a "double check" with a logical OR between
+> the two statements.
 
-Because I'm building that external tool in the msysGit environment. As
-you know, the way we include external tools (like vim, unzip etc.) to
-the msysGit distribution is to create release.sh scripts that download
-the sources, apply patches, and build the tool. Patching the original
-hd2u sources to include compat/mingw.h was the best way that I saw to
-get some required symbols, with only two symbols missing, and those
-missing symbols are added by my patches.
+Sorry, I was unclear. What I meant was that checking with the branch the branch to be deleted was forked from, if and only if such a branch exists. Otherwise, we can keep using the old default behavior to check with the current branch.
 
-Anyway, IMHO the correct declaration of e.g. getuid() is not "int
-getuid()", but "uid_t getuid()" etc. So even if the uid_t type was not
-required, it's a good change I think.
+> But even with it, we would hit some foreign workflow. Think: Bob
+> directly push to Alice and Alice does the same to Bob. I don't use this
+> kind of workflow myself but I consider them to be sensible enough to
+> have our attention.
+
+Here is what I think about your scenario.
+
+Bob directly pushes to Alice and Alice does the same to Bob, both to their refs/remotes/<other person>/ tracking branches, and their own local branches fork from the remote tracking branches that keep track of other person's work. You would still want the check based on that tracking branch, not based on 'master' that has no relationship with the branches they are exchanging.
 
 -- 
-Sebastian Schuberth
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
