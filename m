@@ -1,76 +1,195 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Let core.excludesfile default to ~/.gitexcludes.
-Date: Wed, 30 Dec 2009 11:49:25 -0800
-Message-ID: <7vk4w4z1h6.fsf@alter.siamese.dyndns.org>
-References: <4B06A7EE.2090801@atlas-elektronik.com>
- <1258840832-22130-1-git-send-email-Matthieu.Moy@imag.fr>
- <20091230224135.6117@nanako3.lavabit.com> <vpqhbr8ttwv.fsf@bauges.imag.fr>
+From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
+Subject: [PATCH v4] builtin-push: add --delete as syntactic sugar for :foo
+Date: Wed, 30 Dec 2009 20:57:42 +0100
+Message-ID: <20091230205742.23d73eb6@perceptron>
+References: <20091109130935.2bea7771@perceptron>
+	<7v8wefy6pi.fsf@alter.siamese.dyndns.org>
+	<20091109192044.605e50ba@perceptron>
+	<20091229200523.6117@nanako3.lavabit.com>
+	<7vvdfpg1je.fsf@alter.siamese.dyndns.org>
+	<20091230105244.67f5969e@perceptron>
+	<7vvdfoz1hi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Dec 30 20:50:46 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Git ML <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 30 20:57:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQ4YU-0001ii-Gv
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 20:50:02 +0100
+	id 1NQ4g6-00053c-Ic
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 20:57:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753245AbZL3Ttg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Dec 2009 14:49:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753173AbZL3Ttf
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 14:49:35 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40359 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753398AbZL3Tte (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2009 14:49:34 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 18ED3ABCA2;
-	Wed, 30 Dec 2009 14:49:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=06X8xHCSDWrl9ZVYnGNVDa9TPUk=; b=arIAIhPO/iK9nDyeTXZE0ig
-	emwnnypGtElY6/zEC+I38OnjypQt5MRFLD9edwQhAfL7sr9bhsXjKaY9j0Gk4Umu
-	B5tcJlPsPovaeXqDYHw0AmjcysHC4jiOWs1DRg7IEHlAJMUEh6HVlL3u0SIO0hEY
-	8te9DEg+Vol931Z94xck=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=FdfvowMzbJ2NC21wArp0KMkxG/YC6D5VWtkANHhljsDkP2DOP
-	pt4LDCgFV9qC4O8Xu9Gsc6ntop5qgtVn/UXxrMLHLa0i9NX0fPbNsAv56wTDb1Wz
-	EbCfo5bCimDDzh4zgbB0j/F3GkmKxsU0FyzapmLDtc+oZVSdsskUwJMUgs=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DC1B7ABCA1;
-	Wed, 30 Dec 2009 14:49:30 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B7526ABCA0; Wed, 30 Dec 2009
- 14:49:26 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7236983A-F57C-11DE-9D23-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753229AbZL3T5u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Dec 2009 14:57:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752996AbZL3T5u
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 14:57:50 -0500
+Received: from zoidberg.org ([88.198.6.61]:57084 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752914AbZL3T5t convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Dec 2009 14:57:49 -0500
+Received: from perceptron (xdsl-78-35-135-121.netcologne.de [::ffff:78.35.135.121])
+  (AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by cthulhu.zoidberg.org with esmtp; Wed, 30 Dec 2009 20:57:46 +0100
+  id 004D0244.4B3BB0BB.00006C79
+In-Reply-To: <7vvdfoz1hi.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.7.3 (GTK+ 2.18.3; i486-pc-linux-gnu)
+X-Obscure-Spam: http://music-jk.net/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135922>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Refspecs without a source side have been reported as confusing by many.
+As an alternative, this adds support for commands like:
 
-> Nanako Shiraishi <nanako3@lavabit.com> writes:
->
->> Junio, could you tell us what happened to this thread?
->
-> I'm not Junio, but I can try ...
-> ...
-> So, I dropped the patch until we get closer to a consensus on what the
-> default value should be.
+    git push origin --delete somebranch
+    git push origin --delete tag sometag
 
-Thanks for status updates.  Should we start trying to reach a consensus on
-how to move forward, or is it not your itch?
+Specifically, --delete will prepend a colon to all colon-less refspecs
+given on the command line, and will refuse to accept refspecs with
+colons to prevent undue confusion.
 
-It is not _too_ bad to treat ~/.gitconfig specially and support reading
-from ~/.$SOMEGITTTYNAME/{excludes,attributes} files.  We can also add
-support for ~/.$SOMEGITTYNAME/config and try reading from it as well, but
-even if we did so I don't think we should stop reading from ~/.gitconfig.
+Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
+---
+ Documentation/git-push.txt |    4 ++++
+ builtin-push.c             |   26 +++++++++++++++++++++++---
+ t/t5516-fetch-push.sh      |   26 ++++++++++++++++++++++++++
+ 3 files changed, 53 insertions(+), 3 deletions(-)
 
-I don't have strong preference myself either way.
+Junio C Hamano <gitster@pobox.com> wrote:
+
+> Thanks.  From a cursory read, the patch looks good.  We would however
+> want to have a test that has test_must_fail to protect the error
+> codepath from getting broken in the future.
+
+Here you are.
+
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 52c0538..e3eb1e8 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -91,6 +91,10 @@ nor in any Push line of the corresponding remotes fi=
+le---see below).
+ 	will be tab-separated and sent to stdout instead of stderr.  The full
+ 	symbolic names of the refs will be given.
+=20
++--delete::
++	All listed refs are deleted from the remote repository. This is
++	the same as prefixing all refs with a colon.
++
+ --tags::
+ 	All refs under `$GIT_DIR/refs/tags` are pushed, in
+ 	addition to refspecs explicitly listed on the command
+diff --git a/builtin-push.c b/builtin-push.c
+index dcfb53f..f7661d2 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -15,6 +15,7 @@ static const char * const push_usage[] =3D {
+ };
+=20
+ static int thin;
++static int deleterefs;
+ static const char *receivepack;
+=20
+ static const char **refspec;
+@@ -39,11 +40,24 @@ static void set_refspecs(const char **refs, int nr)
+ 			if (nr <=3D ++i)
+ 				die("tag shorthand without <tag>");
+ 			len =3D strlen(refs[i]) + 11;
+-			tag =3D xmalloc(len);
+-			strcpy(tag, "refs/tags/");
++			if (deleterefs) {
++				tag =3D xmalloc(len+1);
++				strcpy(tag, ":refs/tags/");
++			} else {
++				tag =3D xmalloc(len);
++				strcpy(tag, "refs/tags/");
++			}
+ 			strcat(tag, refs[i]);
+ 			ref =3D tag;
+-		}
++		} else if (deleterefs && !strchr(ref, ':')) {
++			char *delref;
++			int len =3D strlen(ref)+1;
++			delref =3D xmalloc(len);
++			strcpy(delref, ":");
++			strcat(delref, ref);
++			ref =3D delref;
++		} else if (deleterefs)
++			die("--delete only accepts plain target ref names");
+ 		add_refspec(ref);
+ 	}
+ }
+@@ -196,6 +210,7 @@ int cmd_push(int argc, const char **argv, const cha=
+r *prefix)
+ 		OPT_BIT( 0 , "all", &flags, "push all refs", TRANSPORT_PUSH_ALL),
+ 		OPT_BIT( 0 , "mirror", &flags, "mirror all refs",
+ 			    (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE)),
++		OPT_BOOLEAN( 0, "delete", &deleterefs, "delete refs"),
+ 		OPT_BOOLEAN( 0 , "tags", &tags, "push tags (can't be used with --all=
+ or --mirror)"),
+ 		OPT_BIT('n' , "dry-run", &flags, "dry run", TRANSPORT_PUSH_DRY_RUN),
+ 		OPT_BIT( 0,  "porcelain", &flags, "machine-readable output", TRANSPO=
+RT_PUSH_PORCELAIN),
+@@ -209,6 +224,11 @@ int cmd_push(int argc, const char **argv, const ch=
+ar *prefix)
+ 	git_config(git_default_config, NULL);
+ 	argc =3D parse_options(argc, argv, prefix, options, push_usage, 0);
+=20
++	if (deleterefs && (tags || (flags & (TRANSPORT_PUSH_ALL | TRANSPORT_P=
+USH_MIRROR))))
++		die("--delete is incompatible with --all, --mirror and --tags");
++	if (deleterefs && argc < 2)
++		die("--delete doesn't make sense without any refs");
++
+ 	if (tags)
+ 		add_refspec("refs/tags/*");
+=20
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 516127b..0f04b2e 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -547,6 +547,32 @@ test_expect_success 'allow deleting an invalid rem=
+ote ref' '
+=20
+ '
+=20
++test_expect_success 'allow deleting a ref using --delete' '
++	mk_test heads/master &&
++	(cd testrepo && git config receive.denyDeleteCurrent warn) &&
++	git push testrepo --delete master &&
++	(cd testrepo && test_must_fail git rev-parse --verify refs/heads/mast=
+er)
++'
++
++test_expect_success 'allow deleting a tag using --delete' '
++	mk_test heads/master &&
++	git tag -a -m dummy_message deltag heads/master &&
++	git push testrepo --tags &&
++	(cd testrepo && git rev-parse --verify -q refs/tags/deltag) &&
++	git push testrepo --delete tag deltag &&
++	(cd testrepo && test_must_fail git rev-parse --verify refs/tags/delta=
+g)
++'
++
++test_expect_success 'push --delete without args aborts' '
++	mk_test heads/master &&
++	test_must_fail git push testrepo --delete
++'
++
++test_expect_success 'push --delete refuses src:dest refspecs' '
++	mk_test heads/master &&
++	test_must_fail git push testrepo --delete master:foo
++'
++
+ test_expect_success 'warn on push to HEAD of non-bare repository' '
+ 	mk_test heads/master
+ 	(cd testrepo &&
+--=20
+1.6.6.60.gc2ff1
