@@ -1,195 +1,169 @@
-From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
-Subject: [PATCH v4] builtin-push: add --delete as syntactic sugar for :foo
-Date: Wed, 30 Dec 2009 20:57:42 +0100
-Message-ID: <20091230205742.23d73eb6@perceptron>
-References: <20091109130935.2bea7771@perceptron>
-	<7v8wefy6pi.fsf@alter.siamese.dyndns.org>
-	<20091109192044.605e50ba@perceptron>
-	<20091229200523.6117@nanako3.lavabit.com>
-	<7vvdfpg1je.fsf@alter.siamese.dyndns.org>
-	<20091230105244.67f5969e@perceptron>
-	<7vvdfoz1hi.fsf@alter.siamese.dyndns.org>
+From: Phil Miller <mille121@illinois.edu>
+Subject: Re: [PATCH/resend] CVS Server: Support reading base and roots from 
+	environment
+Date: Wed, 30 Dec 2009 14:12:55 -0600
+Message-ID: <81f018ac0912301212l68ebd7y91004acc93d36779@mail.gmail.com>
+References: <81f018ac0911200805g55bd1607u651334c1ed7f1303@mail.gmail.com> 
+	<7vocmwvmvr.fsf@alter.siamese.dyndns.org> <20091230224108.6117@nanako3.lavabit.com> 
+	<81f018ac0912300912g25887523g1bdf29fd6e31d011@mail.gmail.com> 
+	<7vpr5wz1hb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Git ML <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 30 20:57:55 2009
+X-From: git-owner@vger.kernel.org Wed Dec 30 21:13:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQ4g6-00053c-Ic
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 20:57:55 +0100
+	id 1NQ4v5-00028f-NU
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 21:13:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753229AbZL3T5u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Dec 2009 14:57:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752996AbZL3T5u
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 14:57:50 -0500
-Received: from zoidberg.org ([88.198.6.61]:57084 "EHLO cthulhu.zoidberg.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752914AbZL3T5t convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Dec 2009 14:57:49 -0500
-Received: from perceptron (xdsl-78-35-135-121.netcologne.de [::ffff:78.35.135.121])
-  (AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-  by cthulhu.zoidberg.org with esmtp; Wed, 30 Dec 2009 20:57:46 +0100
-  id 004D0244.4B3BB0BB.00006C79
-In-Reply-To: <7vvdfoz1hi.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.7.3 (GTK+ 2.18.3; i486-pc-linux-gnu)
-X-Obscure-Spam: http://music-jk.net/
+	id S1753492AbZL3UNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2009 15:13:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753489AbZL3UNS
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 15:13:18 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:55008 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753486AbZL3UNQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2009 15:13:16 -0500
+Received: by ewy19 with SMTP id 19so4035154ewy.21
+        for <git@vger.kernel.org>; Wed, 30 Dec 2009 12:13:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type;
+        bh=w0ztcL1kHPv/Bpq5kFjwOS0s2ULQNndEOlhKg3Zef6w=;
+        b=s2tF86b8uUPFNsQ3z6RV7T3iYoOukZfvNDgFA0SYdiBuXX5eaNnQlwgPtT7bWYqocE
+         SyBHOGnNCdKjyeIfqIRs1bqrtDeXX+MJFQ7EkufWKo04rjrNiv2tOQExeXNc33HVxCcY
+         S0o5SwduQXkglwoF2ur+Lj3B81Rhuf+hdj5V8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        b=ekbrmac+u0OH/DKswsR4cc2Bwe5GVHbFly6fIvpOfz8DHIFospUXXBCWysszPEPd85
+         BtmVL72dYcjLX+qQsBW/RtD0pA7oLnmWIhtg4IXjlNCC73UuAgJtChjFeRgpdTMmRAUj
+         QduxHlO3/clfYC8hlN3LJzVJU98bamojVg29Q=
+Received: by 10.216.93.77 with SMTP id k55mr7043459wef.196.1262203995160; Wed, 
+	30 Dec 2009 12:13:15 -0800 (PST)
+In-Reply-To: <7vpr5wz1hb.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: 984baeffe3c79107
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135923>
 
-Refspecs without a source side have been reported as confusing by many.
-As an alternative, this adds support for commands like:
+The Gitosis single-account Git/ssh hosting system runs git commands
+through git-shell after confirming that the connecting user is
+authorized to access the requested repository. This works well for
+upload-pack and receive-pack, which take a repository argument through
+git-shell. This doesn't work so well for `cvs server', which is passed
+through literally, with no arguments. Allowing arguments risks
+sneaking in `--export-all', so that restriction should be maintained.
 
-    git push origin --delete somebranch
-    git push origin --delete tag sometag
+Despite that, passing a repository root is necessary for per-user
+access control by the hosting software, and passing a base path
+improves usability without weakening security. Thus, git-cvsserver
+needs to come up with these values at runtime by some other
+means. Since git-shell preserves the environment for other purposes,
+the environment can carry these arguments as well.
 
-Specifically, --delete will prepend a colon to all colon-less refspecs
-given on the command line, and will refuse to accept refspecs with
-colons to prevent undue confusion.
+Thus, modify git-cvsserver to read $GIT_CVSSERVER_{BASE_PATH,ROOT} in
+the absence of equivalent command line arguments.
 
-Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
+Signed-off-by: Phil Miller <mille121@illinois.edu>
 ---
- Documentation/git-push.txt |    4 ++++
- builtin-push.c             |   26 +++++++++++++++++++++++---
- t/t5516-fetch-push.sh      |   26 ++++++++++++++++++++++++++
- 3 files changed, 53 insertions(+), 3 deletions(-)
+I believe this revision addresses all of your comments on the first submission.
 
-Junio C Hamano <gitster@pobox.com> wrote:
+Your comment about cramming multiple values into one environment variable made
+me realize that more than one simply was unnecessary complexity, since gitosis
+expects to authenticate access to a single repository anyway.
 
-> Thanks.  From a cursory read, the patch looks good.  We would however
-> want to have a test that has test_must_fail to protect the error
-> codepath from getting broken in the future.
+I've not documented what GIT_CVSSERVER_BASE_PATH is relative to, because it
+behaves identically to the --base-path command line argument. Documenting
+what that is relative to is a separate issue.
 
-Here you are.
+ Documentation/git-cvsserver.txt |   15 +++++++++++++++
+ git-cvsserver.perl              |   22 +++++++++++++++++++++-
+ 2 files changed, 36 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 52c0538..e3eb1e8 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -91,6 +91,10 @@ nor in any Push line of the corresponding remotes fi=
-le---see below).
- 	will be tab-separated and sent to stdout instead of stderr.  The full
- 	symbolic names of the refs will be given.
-=20
-+--delete::
-+	All listed refs are deleted from the remote repository. This is
-+	the same as prefixing all refs with a colon.
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index 99a7c14..fbab295 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -277,6 +277,21 @@ In `dbdriver` and `dbuser` you can use the
+following variables:
+ 	If no name can be determined, the
+ 	numeric uid is used.
+
++ENVIRONMENT
++-----------
 +
- --tags::
- 	All refs under `$GIT_DIR/refs/tags` are pushed, in
- 	addition to refspecs explicitly listed on the command
-diff --git a/builtin-push.c b/builtin-push.c
-index dcfb53f..f7661d2 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -15,6 +15,7 @@ static const char * const push_usage[] =3D {
- };
-=20
- static int thin;
-+static int deleterefs;
- static const char *receivepack;
-=20
- static const char **refspec;
-@@ -39,11 +40,24 @@ static void set_refspecs(const char **refs, int nr)
- 			if (nr <=3D ++i)
- 				die("tag shorthand without <tag>");
- 			len =3D strlen(refs[i]) + 11;
--			tag =3D xmalloc(len);
--			strcpy(tag, "refs/tags/");
-+			if (deleterefs) {
-+				tag =3D xmalloc(len+1);
-+				strcpy(tag, ":refs/tags/");
-+			} else {
-+				tag =3D xmalloc(len);
-+				strcpy(tag, "refs/tags/");
-+			}
- 			strcat(tag, refs[i]);
- 			ref =3D tag;
--		}
-+		} else if (deleterefs && !strchr(ref, ':')) {
-+			char *delref;
-+			int len =3D strlen(ref)+1;
-+			delref =3D xmalloc(len);
-+			strcpy(delref, ":");
-+			strcat(delref, ref);
-+			ref =3D delref;
-+		} else if (deleterefs)
-+			die("--delete only accepts plain target ref names");
- 		add_refspec(ref);
- 	}
++These variables obviate the need for command-line options in some
++circumstances, allowing easier restricted usage through git-shell.
++
++GIT_CVSSERVER_BASE_PATH takes the place of the argument to --base-path.
++
++GIT_CVSSERVER_ROOT specifies a single-directory whitelist. The
++repository must still be configured to allow access through
++git-cvsserver, as described above.
++
++When these environment variables are set, the corresponding
++command-line arguments may not be used.
++
+ Eclipse CVS Client Notes
+ ------------------------
+
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 6dc45f5..f5b57b9 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -104,6 +104,7 @@ $log->info("--------------- STARTING -----------------");
+ my $usage =
+     "Usage: git cvsserver [options] [pserver|server] [<directory> ...]\n".
+     "    --base-path <path>  : Prepend to requested CVSROOT\n".
++    "                          Can be read from GIT_CVSSERVER_BASE_PATH\n".
+     "    --strict-paths      : Don't allow recursing into subdirectories\n".
+     "    --export-all        : Don't check for gitcvs.enabled in config\n".
+     "    --version, -V       : Print version information and exit\n".
+@@ -111,7 +112,8 @@ my $usage =
+     "\n".
+     "<directory> ... is a list of allowed directories. If no directories\n".
+     "are given, all are allowed. This is an additional restriction, gitcvs\n".
+-    "access still needs to be enabled by the gitcvs.enabled config option.\n";
++    "access still needs to be enabled by the gitcvs.enabled config option.\n".
++    "Alternately, one directory may be specified in GIT_CVSSERVER_ROOT.\n";
+
+ my @opts = ( 'help|h|H', 'version|V',
+ 	     'base-path=s', 'strict-paths', 'export-all' );
+@@ -148,6 +150,24 @@ if ($state->{'export-all'} &&
+!@{$state->{allowed_roots}}) {
+     die "--export-all can only be used together with an explicit whitelist\n";
  }
-@@ -196,6 +210,7 @@ int cmd_push(int argc, const char **argv, const cha=
-r *prefix)
- 		OPT_BIT( 0 , "all", &flags, "push all refs", TRANSPORT_PUSH_ALL),
- 		OPT_BIT( 0 , "mirror", &flags, "mirror all refs",
- 			    (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE)),
-+		OPT_BOOLEAN( 0, "delete", &deleterefs, "delete refs"),
- 		OPT_BOOLEAN( 0 , "tags", &tags, "push tags (can't be used with --all=
- or --mirror)"),
- 		OPT_BIT('n' , "dry-run", &flags, "dry run", TRANSPORT_PUSH_DRY_RUN),
- 		OPT_BIT( 0,  "porcelain", &flags, "machine-readable output", TRANSPO=
-RT_PUSH_PORCELAIN),
-@@ -209,6 +224,11 @@ int cmd_push(int argc, const char **argv, const ch=
-ar *prefix)
- 	git_config(git_default_config, NULL);
- 	argc =3D parse_options(argc, argv, prefix, options, push_usage, 0);
-=20
-+	if (deleterefs && (tags || (flags & (TRANSPORT_PUSH_ALL | TRANSPORT_P=
-USH_MIRROR))))
-+		die("--delete is incompatible with --all, --mirror and --tags");
-+	if (deleterefs && argc < 2)
-+		die("--delete doesn't make sense without any refs");
+
++# Environment handling for running under git-shell
++if (exists $ENV{GIT_CVSSERVER_BASE_PATH}) {
++    if ($state->{'base-path'}) {
++	die "Cannot specify base path both ways.\n";
++    }
++    my $base_path = $ENV{GIT_CVSSERVER_BASE_PATH};
++    $state->{'base-path'} = $base_path;
++    $log->debug("Picked up base path '$base_path' from environment.\n");
++}
++if (exists $ENV{GIT_CVSSERVER_ROOT}) {
++    if (@{$state->{allowed_roots}}) {
++	die "Cannot specify roots both ways: @ARGV\n";
++    }
++    my $allowed_root = $ENV{GIT_CVSSERVER_ROOT};
++    $state->{allowed_roots} = [ $allowed_root ];
++    $log->debug("Picked up allowed root '$allowed_root' from environment.\n");
++}
 +
- 	if (tags)
- 		add_refspec("refs/tags/*");
-=20
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 516127b..0f04b2e 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -547,6 +547,32 @@ test_expect_success 'allow deleting an invalid rem=
-ote ref' '
-=20
- '
-=20
-+test_expect_success 'allow deleting a ref using --delete' '
-+	mk_test heads/master &&
-+	(cd testrepo && git config receive.denyDeleteCurrent warn) &&
-+	git push testrepo --delete master &&
-+	(cd testrepo && test_must_fail git rev-parse --verify refs/heads/mast=
-er)
-+'
-+
-+test_expect_success 'allow deleting a tag using --delete' '
-+	mk_test heads/master &&
-+	git tag -a -m dummy_message deltag heads/master &&
-+	git push testrepo --tags &&
-+	(cd testrepo && git rev-parse --verify -q refs/tags/deltag) &&
-+	git push testrepo --delete tag deltag &&
-+	(cd testrepo && test_must_fail git rev-parse --verify refs/tags/delta=
-g)
-+'
-+
-+test_expect_success 'push --delete without args aborts' '
-+	mk_test heads/master &&
-+	test_must_fail git push testrepo --delete
-+'
-+
-+test_expect_success 'push --delete refuses src:dest refspecs' '
-+	mk_test heads/master &&
-+	test_must_fail git push testrepo --delete master:foo
-+'
-+
- test_expect_success 'warn on push to HEAD of non-bare repository' '
- 	mk_test heads/master
- 	(cd testrepo &&
---=20
-1.6.6.60.gc2ff1
+ # if we are called with a pserver argument,
+ # deal with the authentication cat before entering the
+ # main loop
+-- 
+debian.1.6.6_rc2.1.7.gc3ed7
