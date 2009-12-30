@@ -1,87 +1,68 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 1/4] reset: improve mixed reset error message when in a
-	bare repo
-Date: Wed, 30 Dec 2009 06:54:44 +0100
-Message-ID: <20091230055448.4475.94394.chriscool@tuxfamily.org>
-References: <20091230055008.4475.95755.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Paolo Bonzini <bonzini@gnu.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 30 06:53:16 2009
+From: David Reiss <dreiss@facebook.com>
+Subject: Re: git fast-import not verifying commit author lines?
+Date: Tue, 29 Dec 2009 22:04:22 -0800
+Message-ID: <4B3AED66.3030803@facebook.com>
+References: <4B304987.7030201@facebook.com> <20091222150649.GI10687@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Dec 30 07:05:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPrUM-0005vC-VA
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 06:52:55 +0100
+	id 1NPrgb-0000kb-P3
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 07:05:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752148AbZL3Fwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Dec 2009 00:52:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752054AbZL3Fwp
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 00:52:45 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:55874 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751630AbZL3Fwp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2009 00:52:45 -0500
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 3FD6881807C;
-	Wed, 30 Dec 2009 06:52:34 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 27A8D818078;
-	Wed, 30 Dec 2009 06:52:32 +0100 (CET)
-X-git-sha1: ef74e1f63f81820980b8c7a20a124ad77d6c8cf4 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20091230055008.4475.95755.chriscool@tuxfamily.org>
+	id S1752036AbZL3GEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2009 01:04:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751810AbZL3GEb
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 01:04:31 -0500
+Received: from mailout-snc1.facebook.com ([69.63.179.25]:36039 "EHLO
+	mailout-snc1.facebook.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751565AbZL3GEb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2009 01:04:31 -0500
+Received: from mail.thefacebook.com (intlb01.snat.snc1.facebook.com [10.128.203.15] (may be forged))
+	by pp01.snc1.tfbnw.net (8.14.1/8.14.1) with ESMTP id nBU64I4m008210
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT);
+	Tue, 29 Dec 2009 22:04:18 -0800
+Received: from [192.168.1.138] (192.168.18.252) by mail.TheFacebook.com
+ (192.168.18.105) with Microsoft SMTP Server (TLS) id 8.2.213.0; Tue, 29 Dec
+ 2009 22:04:25 -0800
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+In-Reply-To: <20091222150649.GI10687@spearce.org>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.8161:2.4.5,1.2.40,4.0.166 definitions=2009-12-30_02:2009-12-12,2009-12-30,2009-12-30 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=5.0.0-0908210000 definitions=main-0912290277
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135862>
 
-When running a "git reset --mixed" in a bare repository, the
-message displayed is something like:
+>> author <somename> 1261454209 +0000
+>> committer <somename> 1261454209 +0000
+> a foreign system where the data might not reasonably exist.
+But shouldn't there still be an extra space?  One to separate "author"
+from the empty name, and one to separate the empty name from the email?
+If not, then I think this change should be made.  (I couldn't find any
+authoritative documentation on what constitutes a valid commit object.)
 
-fatal: This operation must be run in a work tree
-fatal: Could not reset index file to revision 'HEAD^'.
+(Sorry, this has been sitting in my outbox for a week.)
 
-This message is a little bit misleading because a mixed reset is
-ok in a git directory, so it is not absolutely needed to run it in
-a work tree.
+--David
 
-So this patch improves upon the above by changing the message to:
-
-fatal: mixed reset is not allowed in a bare repository
-
-And if "git reset" is ever sped up by using unpack_tree() directly
-(instead of execing "git read-tree"), this patch will also make
-sure that a mixed reset is still disallowed in a bare repository.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin-reset.c |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-reset.c b/builtin-reset.c
-index 11d1c6e..3180c2b 100644
---- a/builtin-reset.c
-+++ b/builtin-reset.c
-@@ -291,6 +291,10 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		die("%s reset requires a work tree",
- 		    reset_type_names[reset_type]);
- 
-+	if (reset_type == MIXED && is_bare_repository())
-+		die("%s reset is not allowed in a bare repository",
-+		    reset_type_names[reset_type]);
-+
- 	/* Soft reset does not touch the index file nor the working tree
- 	 * at all, but requires them in a good order.  Other resets reset
- 	 * the index file to the tree object we are switching to. */
--- 
-1.6.6.rc2.5.g49666
+diff --git i/Documentation/git-fast-import.txt w/Documentation/git-fast-import.txt
+index 288032c..6917739 100644
+--- i/Documentation/git-fast-import.txt
++++ w/Documentation/git-fast-import.txt
+@@ -312,6 +312,6 @@ change to the project.
+        'commit' SP <ref> LF
+        mark?
+-       ('author' SP <name> SP LT <email> GT SP <when> LF)?
+-       'committer' SP <name> SP LT <email> GT SP <when> LF
++       ('author' (SP <name>)? SP LT <email> GT SP <when> LF)?
++       'committer' (SP <name>)? SP LT <email> GT SP <when> LF
+        data
+        ('from' SP <committish> LF)?
