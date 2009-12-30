@@ -1,105 +1,152 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bash completion: add space between branch name and
- status flags
-Date: Wed, 30 Dec 2009 11:27:25 -0800
-Message-ID: <7veimc1cv6.fsf@alter.siamese.dyndns.org>
-References: <200911201309.16193.roman.fietze@telemotive.de>
- <7v4oopxeuf.fsf@alter.siamese.dyndns.org>
- <20091230224129.6117@nanako3.lavabit.com> <20091230145751.GE6914@spearce.org>
+From: Phil Miller <mille121@illinois.edu>
+Subject: [PATCH/resend] CVS Server: Support reading base and roots from 
+ environment
+Date: Wed, 30 Dec 2009 13:35:31 -0600
+Message-ID: <1262201731.30213.23.camel@phil-laptop>
+References: <81f018ac0911200805g55bd1607u651334c1ed7f1303@mail.gmail.com>
+	 <7vocmwvmvr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
-	Roman Fietze <roman.fietze@telemotive.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Dec 30 20:27:44 2009
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 30 20:35:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQ4Ct-0000hf-Pe
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 20:27:44 +0100
+	id 1NQ4Kc-0003ad-SP
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 20:35:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752685AbZL3T1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Dec 2009 14:27:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752574AbZL3T1j
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 14:27:39 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38473 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752065AbZL3T1i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2009 14:27:38 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A0748C57D;
-	Wed, 30 Dec 2009 14:27:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=P+6f1NpcTl1yn/Pye5B0SldJhak=; b=cNwAa8
-	vjP9nMLP6iCHsrRAD75wa2QdknQXBiA3As0vh8BJVCBT5rmQMqzzS+L1PVsoNxyC
-	4Ml3JZTf0OP8pibjsU3sFEoScEf52r3vL+RiMgevfr0+GyMAkx7v5xEGA/YSnozu
-	79dE2dPASXP5lgcgJOjByfF2Dtqqj2CzVcJ0Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=N63voxSIgPrY4VQg4rM+tM89eKWuGh2V
-	CfPpMDCCjYSgMeTahb4r2vdlE7MwkaZvQXDI5+spF1J6aGaMf2a/ayvr2eXIWSYA
-	DkD/03nL3xiaZKzyRCFCmjSOmiU4V+w73WbCWRYJsegg1eba8fyaTFyid1xJPFN0
-	Anw6bD56quc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 38C6A8C572;
-	Wed, 30 Dec 2009 14:27:32 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2E0A18C56F; Wed, 30 Dec
- 2009 14:27:27 -0500 (EST)
-In-Reply-To: <20091230145751.GE6914@spearce.org> (Shawn O. Pearce's message
- of "Wed\, 30 Dec 2009 06\:57\:51 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 60395094-F579-11DE-9681-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753241AbZL3Tfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2009 14:35:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753165AbZL3Tfh
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 14:35:37 -0500
+Received: from qmta09.emeryville.ca.mail.comcast.net ([76.96.30.96]:47043 "EHLO
+	QMTA09.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753128AbZL3Tfh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Dec 2009 14:35:37 -0500
+Received: from OMTA22.emeryville.ca.mail.comcast.net ([76.96.30.89])
+	by QMTA09.emeryville.ca.mail.comcast.net with comcast
+	id PW9F1d0041vN32cA9Xbcfs; Wed, 30 Dec 2009 19:35:36 +0000
+Received: from [192.168.1.100] ([98.212.229.232])
+	by OMTA22.emeryville.ca.mail.comcast.net with comcast
+	id PXd81d00851ViH68iXd9GZ; Wed, 30 Dec 2009 19:37:10 +0000
+In-Reply-To: <7vocmwvmvr.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.24.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135917>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+The Gitosis single-account Git/ssh hosting system runs git commands
+through git-shell after confirming that the connecting user is
+authorized to access the requested repository. This works well for
+upload-pack and receive-pack, which take a repository argument through
+git-shell. This doesn't work so well for `cvs server', which is passed
+through literally, with no arguments. Allowing arguments risks
+sneaking in `--export-all', so that restriction should be maintained.
 
-> Nanako Shiraishi <nanako3@lavabit.com> wrote:
->> Junio, could you tell us what happened to this thread?
->> 
->> In response to a patch from Roman Fietze to outline a better way
->> to do it.  Nothing happened.
->
-> Junio responded with a suggestion on how to improve the patch when
-> GIT_PS1_SHOWDIRTYSTATE was not set, but Roman Fietze didn't send
-> a revised patch, so it got dropped.
->
-> Here is the revised patch, Junio, still think its a good idea?
+Despite that, passing a repository root is necessary for per-user
+access control by the hosting software, and passing a base path
+improves usability without weakening security. Thus, git-cvsserver
+needs to come up with these values at runtime by some other
+means. Since git-shell preserves the environment for other purposes,
+the environment can carry these arguments as well.
 
-Thanks for following up.
+Thus, modify git-cvsserver to read $GIT_CVSSERVER_{BASE_PATH,ROOT} in
+the absence of equivalent command line arguments.
 
-As I don't use $[wisu] myself, I don't have a very strong opinion either
-way, but the user has spent cycles to compute them, so we'd better present
-them in a way that is easier to read, I guess.
+Signed-off-by: Phil Miller <mille121@illinois.edu>
+---
+I believe this revision addresses all of your comments on the first submission.
 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index fbfa5f2..3c8b6df 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -163,10 +163,12 @@ __git_ps1 ()
->  			fi
->  		fi
->  
-> +		local f="$w$i$s$u"
-> +		f="${f:+ $f}$r"
->  		if [ -n "${1-}" ]; then
-> -			printf "$1" "$c${b##refs/heads/}$w$i$s$u$r"
-> +			printf "$1" "$c${b##refs/heads/}$f"
->  		else
-> -			printf " (%s)" "$c${b##refs/heads/}$w$i$s$u$r"
-> +			printf " (%s)" "$c${b##refs/heads/}$f"
->  		fi
+Your comment about cramming multiple values into one environment variable made
+me realize that more than one simply was unnecessary complexity, since gitosis
+expects to authenticate access to a single repository anyway.
 
-I notice that printf argument look very similar.  Maybe we want to do
-something like
+I've not documented what GIT_CVSSERVER_BASE_PATH is relative to, because it
+behaves identically to the --base-path command line argument. Documenting
+what that is relative to is a separate issue.
 
-    printf "${1:-" (%s)"}" ...
+ Documentation/git-cvsserver.txt |   15 +++++++++++++++
+ git-cvsserver.perl              |   22 +++++++++++++++++++++-
+ 2 files changed, 36 insertions(+), 1 deletions(-)
 
-to avoid duplication?
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index 99a7c14..fbab295 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -277,6 +277,21 @@ In `dbdriver` and `dbuser` you can use the following variables:
+ 	If no name can be determined, the
+ 	numeric uid is used.
+ 
++ENVIRONMENT
++-----------
++
++These variables obviate the need for command-line options in some
++circumstances, allowing easier restricted usage through git-shell.
++
++GIT_CVSSERVER_BASE_PATH takes the place of the argument to --base-path.
++
++GIT_CVSSERVER_ROOT specifies a single-directory whitelist. The
++repository must still be configured to allow access through
++git-cvsserver, as described above.
++
++When these environment variables are set, the corresponding
++command-line arguments may not be used.
++
+ Eclipse CVS Client Notes
+ ------------------------
+ 
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 6dc45f5..f5b57b9 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -104,6 +104,7 @@ $log->info("--------------- STARTING -----------------");
+ my $usage =
+     "Usage: git cvsserver [options] [pserver|server] [<directory> ...]\n".
+     "    --base-path <path>  : Prepend to requested CVSROOT\n".
++    "                          Can be read from GIT_CVSSERVER_BASE_PATH\n".
+     "    --strict-paths      : Don't allow recursing into subdirectories\n".
+     "    --export-all        : Don't check for gitcvs.enabled in config\n".
+     "    --version, -V       : Print version information and exit\n".
+@@ -111,7 +112,8 @@ my $usage =
+     "\n".
+     "<directory> ... is a list of allowed directories. If no directories\n".
+     "are given, all are allowed. This is an additional restriction, gitcvs\n".
+-    "access still needs to be enabled by the gitcvs.enabled config option.\n";
++    "access still needs to be enabled by the gitcvs.enabled config option.\n".
++    "Alternately, one directory may be specified in GIT_CVSSERVER_ROOT.\n";
+ 
+ my @opts = ( 'help|h|H', 'version|V',
+ 	     'base-path=s', 'strict-paths', 'export-all' );
+@@ -148,6 +150,24 @@ if ($state->{'export-all'} && !@{$state->{allowed_roots}}) {
+     die "--export-all can only be used together with an explicit whitelist\n";
+ }
+ 
++# Environment handling for running under git-shell
++if (exists $ENV{GIT_CVSSERVER_BASE_PATH}) {
++    if ($state->{'base-path'}) {
++	die "Cannot specify base path both ways.\n";
++    }
++    my $base_path = $ENV{GIT_CVSSERVER_BASE_PATH};
++    $state->{'base-path'} = $base_path;
++    $log->debug("Picked up base path '$base_path' from environment.\n");
++}
++if (exists $ENV{GIT_CVSSERVER_ROOT}) {
++    if (@{$state->{allowed_roots}}) {
++	die "Cannot specify roots both ways: @ARGV\n";
++    }
++    my $allowed_root = $ENV{GIT_CVSSERVER_ROOT};
++    $state->{allowed_roots} = [ $allowed_root ];
++    $log->debug("Picked up allowed root '$allowed_root' from environment.\n");
++}
++
+ # if we are called with a pserver argument,
+ # deal with the authentication cat before entering the
+ # main loop
+-- 
+debian.1.6.6_rc2.1.7.gc3ed7
