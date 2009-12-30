@@ -1,92 +1,64 @@
-From: Phil Miller <mille121@illinois.edu>
-Subject: Re: [PATCH/resend] CVS Server: Support reading base and roots from 
-	environment
-Date: Wed, 30 Dec 2009 11:12:26 -0600
-Message-ID: <81f018ac0912300912g25887523g1bdf29fd6e31d011@mail.gmail.com>
-References: <81f018ac0911200805g55bd1607u651334c1ed7f1303@mail.gmail.com> 
-	<7vocmwvmvr.fsf@alter.siamese.dyndns.org> <20091230224108.6117@nanako3.lavabit.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH RFC 1/2] Smart-http tests: Break test t5560-http-backend
+ into pieces
+Date: Wed, 30 Dec 2009 09:54:47 -0800
+Message-ID: <7veimc2vq0.fsf@alter.siamese.dyndns.org>
+References: <1262037899-16786-1-git-send-email-tarmigan+git@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Wed Dec 30 18:15:49 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O . Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Tarmigan Casebolt <tarmigan+git@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 30 18:55:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQ28V-0008Mg-NY
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 18:15:04 +0100
+	id 1NQ2lG-0008Pt-Mx
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 18:55:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752011AbZL3ROG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Dec 2009 12:14:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751889AbZL3ROF
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 12:14:05 -0500
-Received: from ey-out-2122.google.com ([74.125.78.26]:50339 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751683AbZL3ROD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Dec 2009 12:14:03 -0500
-Received: by ey-out-2122.google.com with SMTP id 25so1765853eya.19
-        for <git@vger.kernel.org>; Wed, 30 Dec 2009 09:14:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=1taq+X6lUJsifbzGmP2qvIsHxE69WkeAOzM1r7DrY+U=;
-        b=HQLW5EGnIR4c88mlY9J/5ye5LpwqE0Qm/3qQezhRLntZVv2ddcAilc8kgzewug4ScV
-         4qp5lcDSpwqMEUnzR/MhpqJxUGTLr91CY2C6fbQsxNAZS4pP9imY1/uOtc5uvP1CCeaV
-         qHbqJsdmgQgqVamxGVkNp8dwE77jo4tYQ+pMU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=RARxx2PQ1rD9Bk/br6PFVJXdyNnyOt2+gTb6odiCE/q30uNNEWEzZ9CC4rp9sgwcFV
-         iBU9RFMOkvRORW/8O9IMRLB5yHS0pLGBkFQuzYQtwO7XIUjgb2DdetcwiLSNoQCuO6Lg
-         vi1O3nz32rF0gr7yKolcODrSwdFw9Hro8k/UM=
-Received: by 10.216.86.16 with SMTP id v16mr1255270wee.162.1262193241925; Wed, 
-	30 Dec 2009 09:14:01 -0800 (PST)
-In-Reply-To: <20091230224108.6117@nanako3.lavabit.com>
-X-Google-Sender-Auth: 9a8504dc5562869d
+	id S1752932AbZL3RzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2009 12:55:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752594AbZL3Ry7
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 12:54:59 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45447 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752802AbZL3Ry7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2009 12:54:59 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4453FAB62C;
+	Wed, 30 Dec 2009 12:54:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=1kpqr5+89+zMV3ziNXsArtAsDv0=; b=JrKTNt3167VMmpMxlTxFvwd
+	gJ0LN/rcdh+GWxiD17Kj0isp7S/JBITMkcL49/cZEZat1JZnM4ZuPXKRQqhrdUQc
+	mF909Sq8mnyMbphpd1B6+mej6a8uv1ab7dMcsjEWMbKC0WeBsrWxGQ9cgZxhUFs4
+	PjXsVihV7t2VQeL3Mbws=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=mEAwy3Bq4c3YL6+EmyYUt2BJITQL5YBSosFD6vGQ38yJJ/+fX
+	w5DKwHeL0y2RHCJ8z7YKQ9YYVF/lr/c/AZibiB+gtsLIPhbMnk5VZwXUQO91y/9V
+	qemwDqBMK19rffH6p0lixE+90lTAX37hWaZ63ZmQwLDXSt84/wAIJnH9QE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0DC3FAB624;
+	Wed, 30 Dec 2009 12:54:54 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E72DDAB623; Wed, 30 Dec 2009
+ 12:54:49 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6F4B4B62-F56C-11DE-B00E-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135909>
 
-On Wed, Dec 30, 2009 at 07:41, Nanako Shiraishi <nanako3@lavabit.com> w=
-rote:
-> Junio, could you tell us what happened to this thread?
+Tarmigan Casebolt <tarmigan+git@gmail.com> writes:
+
+> This should introduce no functional change in the tests or the amount
+> of test coverage.
 >
-> Phil Miller's patch to help gitosis installation. =C2=A0No response f=
-rom
-> git-cvsserver users.
+> Signed-off-by: Tarmigan Casebolt <tarmigan+git@gmail.com>
 
-I never resent with modifications as Junio requested. I've been busy
-with some end-of-year close-out stuff, and actually wanted to
-dramatically simplify part of the patch before the resend. I'll do
-that shortly.
-
-Since Gitosis wants to do repository-level access control before
-running any Git commands, I figured out a CVSROOT format that would
-let it do this. Given that, there's only one repository that an
-invocation of git-cvsserver should be allowed to access, and so the
-issue of "list separator" and so forth is moot. The resultant CVS
-command line looks something like
-
-cvs -d ":ext;CVS_SERVER=3Dcvs
-'/path/to/module':charmgit/path/to/module.git" co -d module
-
-Note that I have had to modify Gitosis to make this, and various other
-things, work. I had wanted to clean up my work before announcing it,
-but if it would help you now, it is publicly available from github
-now:
-
-git://github.com/PhilMiller/gitosis.git
-
-The documentation hasn't been updated, but the recent history makes as
-least some usage clear. I'll send more details in a follow-up.
-
-Phil
+This seems to crash rather badly with your own "Smart-http: check if
+repository is OK to export before serving it".
