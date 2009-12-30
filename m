@@ -1,69 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitk: Use git-difftool for external diffs
-Date: Tue, 29 Dec 2009 23:49:52 -0800
-Message-ID: <7vy6kk52an.fsf@alter.siamese.dyndns.org>
-References: <1258341126-2108-1-git-send-email-davvid@gmail.com>
- <20091230121319.6117@nanako3.lavabit.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Makefile: determine the list of header files using a
+ glob
+Date: Wed, 30 Dec 2009 09:00:02 +0100
+Message-ID: <20091230080002.GA31088@glandium.org>
+References: <4B0F8825.3040107@viscovery.net>
+ <20091127082624.GA19875@glandium.org>
+ <4B0F92E7.8090403@viscovery.net>
+ <20091127085802.GA21217@glandium.org>
+ <7v7htbom95.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, peff@peff.net, sam@vilain.net,
-	git@vger.kernel.org, paulus@samba.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Wed Dec 30 08:50:17 2009
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 30 09:00:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPtJv-0002WO-7s
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 08:50:15 +0100
+	id 1NPtU4-0005Si-4h
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 09:00:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752427AbZL3HuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Dec 2009 02:50:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752369AbZL3HuJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 02:50:09 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57287 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751461AbZL3HuI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2009 02:50:08 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B7798CB77;
-	Wed, 30 Dec 2009 02:50:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Xs3xcEStFEqPs5mhg9vqzNhTbZ8=; b=LEeiZJ
-	Yx9G04+mY2Gf6cueF1XJT+DHvAUtdpuwXAYCLOUBYHvO6+t4o8MJHtvMARBeSmm6
-	Oy1pfV3oXPOYcR3INk+62lMgF7bvZ5g9c/ns69NWbIyAxMLol3W7YQv8T/CaCyKH
-	xhGkUuaSwSTtvSSbA+BNq/3UAVc7/kzb5IU/Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M8W3vm7l8kqO3e8V4Yr1p62dXXApxuKh
-	UhneswyDNbxiEyJBRyOxYQazE9z66cDmdcVCZjGOo03NZKV06eQhHhr3gSOcWlWx
-	4LmU/7Ao6J8FKIQRne76j+tLqP3ucF6ApItfH6+U4zdAE2hU4z/dMdlkxvR48KT/
-	0jrPW3jrrYk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 127988CB76;
-	Wed, 30 Dec 2009 02:50:01 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 02CA48CB70; Wed, 30 Dec
- 2009 02:49:53 -0500 (EST)
-In-Reply-To: <20091230121319.6117@nanako3.lavabit.com> (Nanako Shiraishi's
- message of "Wed\, 30 Dec 2009 12\:13\:19 +0900")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EEFEAE30-F517-11DE-A474-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752496AbZL3IAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2009 03:00:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752494AbZL3IAS
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 03:00:18 -0500
+Received: from vuizook.err.no ([85.19.221.46]:58652 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752475AbZL3IAP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2009 03:00:15 -0500
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1NPtTP-0000RL-9d; Wed, 30 Dec 2009 09:00:06 +0100
+Received: from mh by jigen with local (Exim 4.71)
+	(envelope-from <mh@jigen>)
+	id 1NPtTO-00086K-A2; Wed, 30 Dec 2009 09:00:02 +0100
+Content-Disposition: inline
+In-Reply-To: <7v7htbom95.fsf@alter.siamese.dyndns.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135867>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+(Nanako's bunch of reminders reminded me of this thread)
 
-> Junio, could you tell us what happened to this thread?
+On Fri, Nov 27, 2009 at 10:28:38AM -0800, Junio C Hamano wrote:
+> Mike Hommey <mh@glandium.org> writes:
+> 
+> > On Fri, Nov 27, 2009 at 09:50:47AM +0100, Johannes Sixt wrote:
+> >> Mike Hommey schrieb:
+> >> > I don't know if the current Makefile works with Solaris' make,...
+> >> 
+> >> No, it doesn't. You have to use GNU make anyway.
+> >
+> > Then it's fine. But shouldn't that be noted somewhere, like in the
+> > INSTALL file ?
+> 
+> Surely.  Please make it so.
 
-See http://thread.gmane.org/gmane.comp.version-control.git/132983/focus=133414
+I had another idea in the interim. If GNU make is necessary, why not
+make the Makefile an explicit GNU make only Makefile, by renaming it
+GNUmakefile ?
 
-In short, the particular way to call difftool this patch implements was
-found to be inadequate to support existing external diff support by gitk
-and a small difftool update will happen first, followed by a patch to gitk
-to use the updated difftool, to avoid regression.
+That wouldn't remove the need to add a note in the INSTALL file, though.
+
+Mike
