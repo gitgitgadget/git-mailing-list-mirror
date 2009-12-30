@@ -1,75 +1,96 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH 1/2] MinGW: Use pid_t more consequently, introduce uid_t 
-	for greater compatibility
-Date: Wed, 30 Dec 2009 01:55:57 +0100
-Message-ID: <40aa078e0912291655m57ea0081vddf3b64bf27e1d02@mail.gmail.com>
-References: <hhbldr$di8$1@ger.gmane.org> <4B3A7000.4050308@kdbg.org>
-	 <bdca99240912291649h1c727072q3b1e4099cab426df@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 30 01:56:04 2009
+From: Robert Zeh <robert.a.zeh@gmail.com>
+Subject: [PATCH] Add completion for git-svn mkdirs,reset,and gc
+Date: Tue, 29 Dec 2009 18:58:48 -0600
+Message-ID: <C065517F-C829-46D1-8D1A-88C18EE2112F@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1077)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Wed Dec 30 01:58:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPmr5-0002gm-E7
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 01:56:04 +0100
+	id 1NPmtt-0003Zs-FS
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 01:58:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751403AbZL3Az7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2009 19:55:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751340AbZL3Az7
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 19:55:59 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:40844 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750803AbZL3Az6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2009 19:55:58 -0500
-Received: by ewy19 with SMTP id 19so3264469ewy.21
-        for <git@vger.kernel.org>; Tue, 29 Dec 2009 16:55:57 -0800 (PST)
+	id S1751471AbZL3A6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2009 19:58:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751441AbZL3A6x
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Dec 2009 19:58:53 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:37224 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751311AbZL3A6x convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Dec 2009 19:58:53 -0500
+Received: by yxe17 with SMTP id 17so10494995yxe.33
+        for <git@vger.kernel.org>; Tue, 29 Dec 2009 16:58:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=h70I0V5LjDLLzmavBxlt9+tjEK1kp8rYoBxU/LVZv8Q=;
-        b=yGGm8ODT8QePZHsaB+eogyL4hn1sXvUd/NH+stIpsDg+CdocuDgJo9TE46VPS9dJVS
-         mjfE0VySh/MXY5HDE27rDhf4hKcOFJbOAx/cCbdOd3JBDTlJp/WWj9Vy9ng5X495nIZY
-         1+MfFaKzbdIOcW2Ryol4puN+VIEIDoRwEhleo=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:content-type
+         :content-transfer-encoding:subject:date:message-id:cc:to
+         :mime-version:x-mailer;
+        bh=ffWOhH9nPcPbG69tFaX76IVb4V/b5QOKnDsPu0Ljd2E=;
+        b=nzhLDLLlQQ8N9WC6bosBaDDA8iUNDzzOPHQnQDiIzJKv2zNXQuwnvQ6X9W+jgjynBz
+         uslP7YRvpsmjM/OIUqsbcvDqDQDy5xX0vP8YfLZhQaVO7TC8MQIYGMOD6DguSjzr7meq
+         O/hvLQT7mzw9snkcncbGlkzeTx0o2lT5QqJS8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        b=O6ACLqcqthawHlAZWQhcP6ZmEMCB8gXoLEfj5iN7/K79CVtY6TY1rxKpyTn7+MW6Bd
-         55Rwq5H1NcgaMV649cB3Okxy6+vYTsrnOck5v+7sFYD4DpbYDmSPk8bzHhW0D+86yAmW
-         rxxcCNGyhPbmDzdsJTddWRKQ8WdEOM9twrjew=
-Received: by 10.216.87.71 with SMTP id x49mr2057815wee.11.1262134557095; Tue, 
-	29 Dec 2009 16:55:57 -0800 (PST)
-In-Reply-To: <bdca99240912291649h1c727072q3b1e4099cab426df@mail.gmail.com>
+        d=gmail.com; s=gamma;
+        h=from:content-type:content-transfer-encoding:subject:date:message-id
+         :cc:to:mime-version:x-mailer;
+        b=vasJvslUWftN+8C7j0/m0rJW4vCj/FGVBU13p0EqU6Y8j7V9Q4uVoP5cRKyAaOuVHd
+         c8mn29E4E8T/yF5RFfzJnkgeZgUIKjO3O64+BEDDaAZdh6bHoA5Q6XYcZcVJxRz3Idgz
+         iL8KqbgRpGTA9BGKKGwBDB+uAsNyHWud8LMyw=
+Received: by 10.150.234.15 with SMTP id g15mr1224904ybh.194.1262134732397;
+        Tue, 29 Dec 2009 16:58:52 -0800 (PST)
+Received: from ?10.0.1.101? (user-102i1dh.dsl.mindspring.com [64.41.5.177])
+        by mx.google.com with ESMTPS id 6sm4601617ywc.24.2009.12.29.16.58.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 29 Dec 2009 16:58:51 -0800 (PST)
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135847>
 
-On Wed, Dec 30, 2009 at 1:49 AM, Sebastian Schuberth
-<sschuberth@gmail.com> wrote:
-> On Tue, Dec 29, 2009 at 22:09, Johannes Sixt <j6t@kdbg.org> wrote:
->
->>> MinGW: Use pid_t more consequently, introduce uid_t for greater
->>> compatibility
->>
->> Why this? Compatibility with what? What's the problem with the status quo?
->
-> I wanted to include Hany's Dos2Unix tool (hd2u) into msysGit. h2du
-> depends on libpopt, and either of the two requires the uid_t type, I
-> do not recall which. And while adding the missing uid_t, I felt it
-> would be right to actually use uid_t / pid_t in the function
-> prototypes.
->
 
-Perhaps I'm missing something here... why do you need to modify the
-git-sources in order to include an external tool?
+Signed-off-by: Robert Zeh <robert.a.zeh@gmail.com>
+---
+contrib/completion/git-completion.bash |    7 +++++--
+1 files changed, 5 insertions(+), 2 deletions(-)
 
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index fbfa5f2..c65462c 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2022,7 +2022,7 @@ _git_svn ()
+		init fetch clone rebase dcommit log find-rev
+		set-tree commit-diff info create-ignore propget
+		proplist show-ignore show-externals branch tag blame
+-		migrate
++		migrate mkdirs reset gc
+		"
+	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+	if [ -z "$subcommand" ]; then
+@@ -2069,7 +2069,7 @@ _git_svn ()
+			__gitcomp "--stdin $cmt_opts $fc_opts"
+			;;
+		create-ignore,--*|propget,--*|proplist,--*|show-ignore,--*|\
+-		show-externals,--*)
++		show-externals,--*|mkdirs,--*)
+			__gitcomp "--revision="
+			;;
+		log,--*)
+@@ -2106,6 +2106,9 @@ _git_svn ()
+				--no-auth-cache --username=
+				"
+			;;
++		reset,--*)
++			__gitcomp "--revision= --parent"
++			;;
+		*)
+			COMPREPLY=()
+			;;
 -- 
-Erik "kusma" Faye-Lund
+1.6.6.rc3.dirty
