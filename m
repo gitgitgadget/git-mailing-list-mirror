@@ -1,83 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix archive format with -- on the command line
-Date: Wed, 30 Dec 2009 00:11:52 -0800
-Message-ID: <7vhbr8519z.fsf@alter.siamese.dyndns.org>
-References: <20091210212636.GA27722@Knoppix>
- <7v1vj2a3ik.fsf@alter.siamese.dyndns.org>
- <20091210222258.GQ4114@genesis.frugalware.org>
- <7vws0u8n99.fsf@alter.siamese.dyndns.org>
- <7vhbry8l54.fsf_-_@alter.siamese.dyndns.org>
- <7vd42m8kyr.fsf@alter.siamese.dyndns.org> <4B23B019.40106@lsrfire.ath.cx>
- <20091230121309.6117@nanako3.lavabit.com>
-Mime-Version: 1.0
+From: Gisle Aas <gisle.aas@it.uib.no>
+Subject: Re: [PATCH] Add --path-prefix option to git-fast-import
+Date: Wed, 30 Dec 2009 09:17:39 +0100
+Message-ID: <6B75CF25-4EE4-4475-975D-BB1F9A5B8CC2@it.uib.no>
+References: <1262091083-25401-1-git-send-email-gisle.aas@it.uib.no> <fabb9a1e0912290606ib1f2e46y1ddbae9aa68e5194@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1077)
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Wed Dec 30 09:12:16 2009
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, gitster@pobox.com, Gisle Aas <gisle@aas.no>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 30 09:17:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NPtfC-00005V-Gh
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 09:12:14 +0100
+	id 1NPtkb-0002Nq-3N
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Dec 2009 09:17:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752510AbZL3IMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Dec 2009 03:12:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752503AbZL3IMJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 03:12:09 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62378 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752498AbZL3IMG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2009 03:12:06 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EBA6BABC86;
-	Wed, 30 Dec 2009 03:12:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AWMoSJIW0STL5aRSvep5B4YUTeg=; b=mQgif7
-	2OdWjZGqwhl1NYIh6ZDmHIh1Njx6KL0AbXg45IMfXtO6bssHOemaHVSJJc9QXxJ+
-	TB2E+RjtiAN4At3/Wx222vAXfKIj+eQWSXJ50zBKwKVPOMHPpzy711dxDVtsy1Zy
-	7b9RmKstaoAwTQ3kae6363sofYjpHsKktOHlg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=W027StSLNu4kVAmoJEJsu9RvlsNJrHZA
-	n0YoPZsgxlsiH/QR9Ufb79wm8IWKNL4jhwgccTODZjk75On/aklj9rFbW6bjkWfA
-	M4Ti0do+VJNj9KMQR2uViRstlvS9q0XuYeQjql72Dw3jn+Vy5vozEOwaHMiDlAcT
-	liobqSSAvKQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A077CABC85;
-	Wed, 30 Dec 2009 03:12:00 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2477CABC84; Wed, 30 Dec 2009
- 03:11:53 -0500 (EST)
-In-Reply-To: <20091230121309.6117@nanako3.lavabit.com> (Nanako Shiraishi's
- message of "Wed\, 30 Dec 2009 12\:13\:09 +0900")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 01863AD4-F51B-11DE-830D-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1752515AbZL3IRn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2009 03:17:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752468AbZL3IRn
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Dec 2009 03:17:43 -0500
+Received: from alfons.uib.no ([129.177.30.72]:49840 "EHLO alfons.uib.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752458AbZL3IRm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Dec 2009 03:17:42 -0500
+Received: from thoralf.uib.no (smtp.uib.no) [129.177.13.16] 
+	by alfons.uib.no  with esmtp  (Exim 4.69)
+	id 1NPtkS-0000Gh-AV; Wed, 30 Dec 2009 09:17:40 +0100
+Received: from gala.klientdrift.uib.no [129.177.9.234]:55271 
+	by smtp.uib.no  with esmtps (Exim 4.69)
+	id 1NPtkS-0006VT-9x; Wed, 30 Dec 2009 09:17:40 +0100
+In-Reply-To: <fabb9a1e0912290606ib1f2e46y1ddbae9aa68e5194@mail.gmail.com>
+X-Mailer: Apple Mail (2.1077)
+X-checked-clean: by exiscan on alfons
+X-Scanner: d2a14965e0aa1161211a18145a350088 http://tjinfo.uib.no/virus.html
+X-UiB-SpamFlag: NO UIB: -24 hits, 8.0 required
+X-UiB-SpamReport: spamassassin found;
+  -15 From is listed in 'whitelist_SA'
+ -9.0 Message received from UIB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135871>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+On Dec 29, 2009, at 15:06, Sverre Rabbelier wrote:
 
-> Junio, could you tell us what happened to this thread?
->
-> "git archive HEAD non-existing-path" doesn't complain like "git
-> add" does, and the patch is to fix it.  No discussion.
+> Heya,
+> 
+> On Tue, Dec 29, 2009 at 06:51, Gisle Aas <gisle.aas@it.uib.no> wrote:
+>> +static const char *path_prefix_prepend(struct strbuf *sb, const char *p)
+>> +{
+>> +       if (p != sb->buf) {
+>> +           strbuf_reset(sb);
+>> +           strbuf_addstr(sb, p);
+>> +       }
+>> +       strbuf_insert(sb, 0, path_prefix, path_prefix_len);
+>> +       return sb->buf;
+>> +}
+>> +
+>>  static void file_change_m(struct branch *b)
+>>  {
+>>        const char *p = command_buf.buf + 2;
+>> @@ -1909,6 +1921,8 @@ static void file_change_m(struct branch *b)
+>>                        die("Garbage after path in: %s", command_buf.buf);
+>>                p = uq.buf;
+>>        }
+>> +       if (path_prefix)
+>> +           p = path_prefix_prepend(&uq, p);
+> 
+> You could reduce the size of this change by having path_prefix_prepend
+> check for path_prefix and just do nothing if it is not set.
 
-It walks the tree twice, once for the checking and then another for doing
-its real work.  Doing that way obviously looks stupid and inefficient but
-on the other hand it can fail before doing anything, which may be a big
-plus.  I couldn't decide the pros-and-cons at the moment.
+I felt the explict test was better style -- more obvious that nothing happens to p
+when there is no path_prefix.
 
-Probably it is worth queuing the patch as is, and if there are motivated
-people who want to, let them "optimize" it by rolling that check into the
-main loop.
-
-I dunno.
+--Gisle
