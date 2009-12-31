@@ -1,104 +1,92 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [Updated PATCH 2/2] Improve transport helper exec failure reporting
-Date: Thu, 31 Dec 2009 18:48:02 +0100
-Message-ID: <4B3CE3D2.5010502@kdbg.org>
-References: <1262170338-11574-1-git-send-email-ilari.liusvaara@elisanet.fi> <1262170338-11574-3-git-send-email-ilari.liusvaara@elisanet.fi> <4B3CC6E5.7090404@kdbg.org> <20091231165904.GA24243@Knoppix>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [Updated PATCH 2/2] Improve transport helper exec failure
+ reporting
+Date: Thu, 31 Dec 2009 20:24:36 +0200
+Message-ID: <20091231182436.GA1326@Knoppix>
+References: <1262170338-11574-1-git-send-email-ilari.liusvaara@elisanet.fi>
+ <1262170338-11574-3-git-send-email-ilari.liusvaara@elisanet.fi>
+ <4B3CC6E5.7090404@kdbg.org>
+ <20091231165904.GA24243@Knoppix>
+ <4B3CE3D2.5010502@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Thu Dec 31 18:52:50 2009
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Dec 31 19:24:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQPCb-0002Yg-4e
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 18:52:49 +0100
+	id 1NQPhU-0005WE-Pa
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 19:24:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752755AbZLaRsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2009 12:48:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752739AbZLaRsF
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 12:48:05 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:23202 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750722AbZLaRsF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2009 12:48:05 -0500
-Received: from [192.168.0.200] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 04F9F10002;
-	Thu, 31 Dec 2009 18:48:00 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <20091231165904.GA24243@Knoppix>
+	id S1751395AbZLaSYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2009 13:24:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751202AbZLaSYl
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 13:24:41 -0500
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:36012 "EHLO
+	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751162AbZLaSYk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2009 13:24:40 -0500
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 0D0268C044;
+	Thu, 31 Dec 2009 20:24:39 +0200 (EET)
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A07AFEB5453; Thu, 31 Dec 2009 20:24:38 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id D0BD6158A64;
+	Thu, 31 Dec 2009 20:24:36 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <4B3CE3D2.5010502@kdbg.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135960>
 
-Ilari Liusvaara schrieb:
-> On Thu, Dec 31, 2009 at 04:44:37PM +0100, Johannes Sixt wrote:
->> Ilari Liusvaara schrieb:
->>> @@ -31,13 +31,19 @@ static struct child_process *get_helper(struct transport *transport)
->> You should set helper->silent_exec_failure = 1 when you give your
->> own error message for the ENOENT case.
+On Thu, Dec 31, 2009 at 06:48:02PM +0100, Johannes Sixt wrote:
+> Ilari Liusvaara schrieb:
+> >On Thu, Dec 31, 2009 at 04:44:37PM +0100, Johannes Sixt wrote:
+> >>Ilari Liusvaara schrieb:
+ 
+> And you change this by treating the helper command not as a git
+> command, but as a normal command that happens to start with 'git-'.
+> Whether this interpretation is suitable for the transport layer, I
+> do not want to decide and I will certainly not object. :-)
+
+The transport helpers are special: they shouldn't be built-in.
+
+> An alternative solution would be to forward the silent_exec_failure
+> flag to exec_git_cmd() to unify the treatment of the error condition
+> with the non-git-command error path.
+
+Won't work. The error in git command case would be noted in another memory
+image. And passing that back would be nasty to say the least.
+ 
+> In case 3, it is expected that the child process prints a suitable
+> error message. Therefore, you should start with merely replacing the
+> unconditional
 > 
-> Ah yeah, might matter for Win32.
-
-Actually, no. I forgot to mention that your modified start_command should 
-treat ENOENT differently by looking at cmd->silent_exec_failure. But see 
-below.
-
->> BTW, which error message do you see without your change in this
->> case? You only say "pretty much useless", but do not give an
->> example.
+> 	exit(127);
+> by
+> 	if (errno == ENOENT)
+> 		exit(127);
+> 	else
+> 		die_errno("Cannot exec %s", cmd->argv[0]);
 > 
-> git: 'remote-foo' is not a git-command. See 'git --help'.
+> And then you can think about how you support the ENOENT case better.
+> My proposal for this was to do the PATH lookup manually before the
+> fork(), and then the above conditional would melt down to simply:
 > 
-> And as first line of output, such thing is utterly confusing.
-
-And you change this by treating the helper command not as a git command, 
-but as a normal command that happens to start with 'git-'. Whether this 
-interpretation is suitable for the transport layer, I do not want to 
-decide and I will certainly not object. :-)
-
-An alternative solution would be to forward the silent_exec_failure flag 
-to exec_git_cmd() to unify the treatment of the error condition with the 
-non-git-command error path.
-
->>> +		else
->>> +			die("Unable to run helper %s: %s", helper->argv[0],
->>> +				strerror(errno));
->> You shouldn't write an error message here because start_command has
->> already reported the error.
+> 	die_errno("Cannot exec %s", cmd->argv[0]);
 > 
-> Its not printed on Unix.
 
-I see.
+The child process can't sanely print anything. Stderr would go to
+who knows where. Parent process should have much better idea what to
+do with errors.
 
-Documentation/technical/api-run-command.txt documents the error behavior. 
-There are three error cases:
 
-1. system call failures
-2. exec failure due to ENOENT
-3. non-zero exit of the child and death through signal
-
-Your patch makes all exec failures into category 1, but IMO, these are 
-actually category 3 (except for the ENOENT case).
-
-In case 3, it is expected that the child process prints a suitable error 
-message. Therefore, you should start with merely replacing the unconditional
-
-	exit(127);
-by
-	if (errno == ENOENT)
-		exit(127);
-	else
-		die_errno("Cannot exec %s", cmd->argv[0]);
-
-And then you can think about how you support the ENOENT case better. My 
-proposal for this was to do the PATH lookup manually before the fork(), 
-and then the above conditional would melt down to simply:
-
-	die_errno("Cannot exec %s", cmd->argv[0]);
-
--- Hannes
+-Ilari
