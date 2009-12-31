@@ -1,78 +1,78 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [msysGit] Problem with apply
-Date: Thu, 31 Dec 2009 13:49:57 +0100
-Message-ID: <40aa078e0912310449g4d503ba7t612e532f5069051f@mail.gmail.com>
-References: <SNT131-ds16B1679EFC8F74B62D4630C4780@phx.gbl>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: msysgit@googlegroups.com, Git Mailing List <git@vger.kernel.org>
-To: richardpreen@hotmail.com
-X-From: git-owner@vger.kernel.org Thu Dec 31 13:50:11 2009
+From: public_vi@tut.by
+Subject: [PATCH] git-gui: Add hotkeys for "Unstage from commit" and "Revert changes"
+Date: Thu, 31 Dec 2009 15:32:53 +0200
+Message-ID: <1262266373-7314-1-git-send-email-public_vi@tut.by>
+Cc: public_vi@tut.by
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 31 14:33:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQKTi-0008Su-7i
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 13:50:10 +0100
+	id 1NQLA1-0006up-TK
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 14:33:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510AbZLaMuD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Dec 2009 07:50:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbZLaMuD
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 07:50:03 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:39889 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751414AbZLaMuA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Dec 2009 07:50:00 -0500
-Received: by ewy19 with SMTP id 19so4580909ewy.21
-        for <git@vger.kernel.org>; Thu, 31 Dec 2009 04:49:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3MmPFdqMit3iSgSFKGzBhPUmylMDlwl6Wb/mZ/1GmhY=;
-        b=VR8wZKpiSUNfAlh6KmrDPrwK4ajOjd0fg70J9MioKC4yrQDrV8Ldss8rfHZm547kPV
-         M3DWFLO9cAgtej3fC2/+1u3Te+TTa0BrHK5Ymvc5ALgVYuCOHE2xLLa92GhpouTw9+XK
-         YQcNPdLfoCI1F5n2cMf9CLcNx+POPArZTB49A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=wT0xvz4bS95LCQ73IimB6ouEN5ozF85XQTgMWD32yTTRmnbQnKPhSF8SlkJwPrPTMq
-         gD0eEMUBNzivxqIcUXqcRjPCCSThKo+PruCuF1jYc/7y7VeyUodiG7hJWfcYacOX3AiR
-         R2JRWCB7OLHOH63Zs4NfjcXhsLJGZ125jNsrI=
-Received: by 10.216.87.66 with SMTP id x44mr7308019wee.96.1262263797340; Thu, 
-	31 Dec 2009 04:49:57 -0800 (PST)
-In-Reply-To: <SNT131-ds16B1679EFC8F74B62D4630C4780@phx.gbl>
+	id S1751951AbZLaNdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2009 08:33:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751944AbZLaNdt
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 08:33:49 -0500
+Received: from mail-fx0-f225.google.com ([209.85.220.225]:54577 "EHLO
+	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750898AbZLaNds (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2009 08:33:48 -0500
+Received: by fxm25 with SMTP id 25so6676579fxm.21
+        for <git@vger.kernel.org>; Thu, 31 Dec 2009 05:33:46 -0800 (PST)
+Received: by 10.223.103.25 with SMTP id i25mr13440466fao.64.1262266426436;
+        Thu, 31 Dec 2009 05:33:46 -0800 (PST)
+Received: from localhost.localdomain ([93.125.23.47])
+        by mx.google.com with ESMTPS id 16sm4910353fxm.12.2009.12.31.05.33.44
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 31 Dec 2009 05:33:45 -0800 (PST)
+X-Mailer: git-send-email 1.6.5.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135948>
 
-This isn't a Windows specific question, and would be better for the
-main git mailing list. I'm CC'ing it in hope that someone there knows
-the answer.
+From: Vitaly _Vi Shukela <public_vi@tut.by>
 
-On Thu, Dec 31, 2009 at 1:26 PM,  <richardpreen@hotmail.com> wrote:
-> I'm trying to use git to create a binary diff of two files and then a=
-pply
-> the diff to the=A0first file in an attempt to make both files the sam=
-e (just
-> testing the concept);
->
-> git diff --binary --no-index original\t1.ppt modified\t1.ppt >
-> original\my.diff
-> cd original
-> git apply my.diff
->
-> This is giving me the following error message;
-> fatal: git diff header lacks filename information (line 3)
->
-> Any suggestions as to where I've gone wrong?
-> Thanks.
+Signed-off-by: Vitaly _Vi Shukela <public_vi@tut.by>
+---
+ git-gui/git-gui.sh |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
 
---=20
-Erik "kusma" Faye-Lund
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 14b92ba..28270ad 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -2509,12 +2509,14 @@ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
+ 		[list .mbar.commit entryconf [.mbar.commit index last] -state]
+ 
+ 	.mbar.commit add command -label [mc "Unstage From Commit"] \
+-		-command do_unstage_selection
++		-command do_unstage_selection \
++		-accelerator $M1T-U
+ 	lappend disable_on_lock \
+ 		[list .mbar.commit entryconf [.mbar.commit index last] -state]
+ 
+ 	.mbar.commit add command -label [mc "Revert Changes"] \
+-		-command do_revert_selection
++		-command do_revert_selection \
++		-accelerator $M1T-J
+ 	lappend disable_on_lock \
+ 		[list .mbar.commit entryconf [.mbar.commit index last] -state]
+ 
+@@ -3254,6 +3256,10 @@ unset gm
+ bind $ui_comm <$M1B-Key-Return> {do_commit;break}
+ bind $ui_comm <$M1B-Key-t> {do_add_selection;break}
+ bind $ui_comm <$M1B-Key-T> {do_add_selection;break}
++bind $ui_comm <$M1B-Key-u> {do_unstage_selection;break}
++bind $ui_comm <$M1B-Key-U> {do_unstage_selection;break}
++bind $ui_comm <$M1B-Key-j> {do_revert_selection;break}
++bind $ui_comm <$M1B-Key-J> {do_revert_selection;break}
+ bind $ui_comm <$M1B-Key-i> {do_add_all;break}
+ bind $ui_comm <$M1B-Key-I> {do_add_all;break}
+ bind $ui_comm <$M1B-Key-x> {tk_textCut %W;break}
+-- 
+1.6.5.6
