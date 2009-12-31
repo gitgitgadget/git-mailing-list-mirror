@@ -1,70 +1,99 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [Updated PATCH 2/2] Improve transport helper exec failure reporting
-Date: Thu, 31 Dec 2009 16:44:37 +0100
-Message-ID: <4B3CC6E5.7090404@kdbg.org>
-References: <1262170338-11574-1-git-send-email-ilari.liusvaara@elisanet.fi> <1262170338-11574-3-git-send-email-ilari.liusvaara@elisanet.fi>
+Subject: Re: [updated patch v2 1/2] Report exec errors from run-command
+Date: Thu, 31 Dec 2009 17:22:02 +0100
+Message-ID: <4B3CCFAA.7060702@kdbg.org>
+References: <1262256488-22985-1-git-send-email-ilari.liusvaara@elisanet.fi> <1262256488-22985-2-git-send-email-ilari.liusvaara@elisanet.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Thu Dec 31 16:44:44 2009
+X-From: git-owner@vger.kernel.org Thu Dec 31 17:22:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQNCc-0006oF-CY
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 16:44:42 +0100
+	id 1NQNms-0004JW-LR
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 17:22:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752453AbZLaPoi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2009 10:44:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752340AbZLaPoh
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 10:44:37 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:11537 "EHLO bsmtp.bon.at"
+	id S1752575AbZLaQWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2009 11:22:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752394AbZLaQWF
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 11:22:05 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:36277 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750722AbZLaPoh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2009 10:44:37 -0500
+	id S1752184AbZLaQWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2009 11:22:04 -0500
 Received: from [192.168.0.200] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 5FFB710017;
-	Thu, 31 Dec 2009 16:44:35 +0100 (CET)
+	by bsmtp.bon.at (Postfix) with ESMTP id 3F6162C4013;
+	Thu, 31 Dec 2009 17:22:00 +0100 (CET)
 User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <1262170338-11574-3-git-send-email-ilari.liusvaara@elisanet.fi>
+In-Reply-To: <1262256488-22985-2-git-send-email-ilari.liusvaara@elisanet.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135956>
 
 Ilari Liusvaara schrieb:
-> @@ -31,13 +31,19 @@ static struct child_process *get_helper(struct transport *transport)
->  	helper->out = -1;
->  	helper->err = 0;
->  	helper->argv = xcalloc(4, sizeof(*helper->argv));
-> -	strbuf_addf(&buf, "remote-%s", data->name);
-> +	strbuf_addf(&buf, "git-remote-%s", data->name);
->  	helper->argv[0] = strbuf_detach(&buf, NULL);
->  	helper->argv[1] = transport->remote->name;
->  	helper->argv[2] = transport->url;
-> -	helper->git_cmd = 1;
-> -	if (start_command(helper))
-> -		die("Unable to run helper: git %s", helper->argv[0]);
-> +	helper->git_cmd = 0;
-> +	if (start_command(helper)) {
-> +		if (errno == ENOENT)
-> +			die("Unable to find remote helper for \"%s\"",
-> +				data->name);
+> +static inline void force_close(int fd)
+> +{
+> +	int err = 0;
+> +	/*
+> +	 * Retry EINTRs undefinitely, exit on EBADF immediately, other
+> +	 * errors retry only up to three times (even if pipe close
+> +	 * shouldn't cause other errors, but you never know with
+> +	 * what broken systems may return on closed file descriptor).
+> +	 * consequences of failure to close pipe here may include
+> +	 * deadlocking.
+> +	 */
+> +	while (close(fd) < 0 && errno != EBADF && err < 3)
+> +		if(errno != EINTR)
+> +			err++;
 
-You should set helper->silent_exec_failure = 1 when you give your own 
-error message for the ENOENT case.
+What's the point to iterate on all errors except EBADF? If the close() 
+fails once, it will fail again.
 
-BTW, which error message do you see without your change in this case? You 
-only say "pretty much useless", but do not give an example.
+> +			/*
+> +			 * Clean up the process that did the failed execution
+> +			 * so no zombies remain.
+> +			 */
+> +wait_again:
+> +			r = waitpid(cmd->pid, &ret, 0);
+> +			if (r < 0 && errno != ECHILD)
+> +				goto wait_again;
 
-> +		else
-> +			die("Unable to run helper %s: %s", helper->argv[0],
-> +				strerror(errno));
+You really should iterate only on well-known errors. What's wrong with
 
-You shouldn't write an error message here because start_command has 
-already reported the error.
+		while (waitpid(pid, &status, 0) < 0 && errno == EINTR)
+			;	/* nothing */
+
+similar to wait_or_whine()'s call to waitpid() and to avoid goto.
+
+> +int main(int argc, char **argv)
+> +{
+> +	char* procs[2];
+> +	struct child_process proc;
+> +	memset(&proc, 0, sizeof(proc));
+> +
+> +	if(argc < 2)
+> +		return 1;
+> +
+> +	if (argv[1][1] == '1')
+> +		procs[0] = "does-not-exist-62896869286";
+> +	procs[1] = NULL;
+> +	proc.argv = (const char **)procs;
+> +
+> +	if (!run_command(&proc))
+> +		return 1;
+> +	if (errno != ENOENT)
+> +		return 1;
+> +	return 0;
+> +}
+
+This test is not specific enough: It would pass even without your change 
+to start_command(), because finish_command() detects the ENOENT case. You 
+really want to test that you see ENOENT after start_command() (i.e., 
+before finish_command()).
 
 -- Hannes
