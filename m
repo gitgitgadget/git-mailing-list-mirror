@@ -1,93 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitk: Use git-difftool for external diffs
-Date: Thu, 31 Dec 2009 12:37:31 -0800
-Message-ID: <7vbpheswvo.fsf@alter.siamese.dyndns.org>
-References: <1258341126-2108-1-git-send-email-davvid@gmail.com>
- <20091230121319.6117@nanako3.lavabit.com>
- <7vy6kk52an.fsf@alter.siamese.dyndns.org> <20091231071642.GA10067@gmail.com>
+From: Pat Thoyts <patthoyts@googlemail.com>
+Subject: Re: [msysGit] [PATCH] Provide a window icon on Windows platforms
+Date: Thu, 31 Dec 2009 21:12:18 +0000
+Message-ID: <a5b261830912311312if3d71aax5bb693a907dc5c0f@mail.gmail.com>
+References: <1262289470-4208-1-git-send-email-kirillathome@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, peff@peff.net,
-	sam@vilain.net, git@vger.kernel.org, paulus@samba.org,
-	Markus Heidelberg <markus.heidelberg@web.de>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 31 21:38:00 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Kirill <kirillathome@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 31 22:13:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQRmS-0003hY-IA
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 21:38:00 +0100
+	id 1NQSJl-0005oF-Tg
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 22:12:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751567AbZLaUhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2009 15:37:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbZLaUhz
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 15:37:55 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63240 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751441AbZLaUhy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2009 15:37:54 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7C963AB7C8;
-	Thu, 31 Dec 2009 15:37:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dIlKCGhZ3pmFPSyLRZaV8ENaR8c=; b=rApJ0x
-	D/uADUl3xvwaCU31iI8IkRGUd9HtmBZ06Z3tdxU+C9QgL08lGmbk97pHjFkKzICX
-	s8MoWKVi7y7IXi2O+GCceeyKXjF29jwjTTclAMB/Z/TH02qxZrAj+vJ66v/sTPWK
-	6aHfWXgEXs7JrOP13h8MtPYfp689sSuC23djE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G7W/nz1GPCOZA9+m+is1ckUxl0iNkYDz
-	24L37ApJ8Y9spvPz/AIGlgu0GoVFZ9TaqJPdCiJMu/uaUuaAelrfpuq+onJp9u6f
-	2KXPuq03keEAJbTAicfK5VrCj3didj9FXB7ni1qAf5LpNRpH4ystPZliTNNiNmJa
-	JLs2NHmOe8Y=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 02644AB7C6;
-	Thu, 31 Dec 2009 15:37:43 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8B81EAB7C4; Thu, 31 Dec 2009
- 15:37:33 -0500 (EST)
-In-Reply-To: <20091231071642.GA10067@gmail.com> (David Aguilar's message of
- "Wed\, 30 Dec 2009 23\:16\:45 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 590D1340-F64C-11DE-A6AD-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1751574AbZLaVMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2009 16:12:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbZLaVMV
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 16:12:21 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:55755 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751336AbZLaVMV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2009 16:12:21 -0500
+Received: by ewy19 with SMTP id 19so4965309ewy.21
+        for <git@vger.kernel.org>; Thu, 31 Dec 2009 13:12:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=Vw9yqAIJ1XvkjyJ712IcD2TRYdqI9RO4VtVghu9VfWE=;
+        b=IsBb3lokVepI2YcOXLVSHoLoLx1+wckFhzMQOPwJhK8IfNaVqscgWPoosCz+LZJp7Z
+         ZP2h7qjeK8ngnUE9gTVmr6p1wgj9rkqJ5ONPjg5bI0BjM9aqd7AbzR3lCuY+Y4h/CeqK
+         oj2UNL8iksJIdO4H2n+z4KNn3+02/k0+2aOKU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=M4uzCz9vQmnKuRHeIeIm3IjW1lSMkGK3vUf5QWVlnyVfBFwNy/59kggHJw8Y/eIoM8
+         4KyHuiWYY5HL0WOiGRiq2vJ30qWV4Xgkm/iHV3qXf9qgN9M5FjubJwP066oGzamgePr3
+         USBmrQPlCp0/IRVqSH/xeTj4sCiziQc0n4lYQ=
+Received: by 10.213.104.10 with SMTP id m10mr21664731ebo.62.1262293938682; 
+	Thu, 31 Dec 2009 13:12:18 -0800 (PST)
+In-Reply-To: <1262289470-4208-1-git-send-email-kirillathome@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135975>
 
-David Aguilar <davvid@gmail.com> writes:
+2009/12/31 Kirill <kirillathome@gmail.com>:
+> Looks like 37871b73 by Giuseppe Bilotta does not work very well on Windows.
+> Instead of a former tcl/tk icon, the window has a black square as an icon.
 
-> I started the first step:
->
-> http://thread.gmane.org/gmane.comp.version-control.git/135613
-> http://thread.gmane.org/gmane.comp.version-control.git/135613/focus=135612
-
-Thanks.
-
-> The 2nd patch implements the the --gui option which Markus
-> pointed out would be needed to avoid issues such as calling
-> "vimdiff" from a console-less gitk:
->
-> http://article.gmane.org/gmane.comp.version-control.git/133386
->
-> I marked the --gui patch as "RFC" since it introduced a new
-> config variable and I want to make sure that we agreed on its
-> name.  I didn't get any feedback about that patch
-> (my fault-- we were in RC freeze and I forgot to CC: Markus).
-
-I don't think "diff.guitool" would hurt.  However,...
-
-I think the "--gui" patch is a more or less independent issue to "gitk
-runs external diff through difftool", because difftool/mergetool already
-have a built-in way to auto-guess which backend to use depending on what
-its environment looks like (e.g. do we have $DISPLAY etc.).
-
-The "--gui" patch is about giving a more explicit way for the caller to
-control that backend picking decision process and it is more like icing
-than a prerequisite for the issue.  IOW, I think the end result will be
-usable by gitk users even if they do not configure "diff.guitool".
+I've been using versions of gitk on Windows with that patch since it
+was applied in March and it has been fine. On Windows XP and Windows
+7. So there is more to this than you are telling. Are you using
+windows via remote desktop? There was a patch committed to Tk a while
+ago about the program icon displaying as a black square over remote
+desktop. If so, this requires an updated Tk and not a patch to gitk -
+tk 8.5.8 should be ok if this is the problem.
