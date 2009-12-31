@@ -1,115 +1,83 @@
-From: Jeff King <peff@peff.net>
+From: Johannes Sixt <j6t@kdbg.org>
 Subject: Re: [PATCH 3/6] run-command: optimize out useless shell calls
-Date: Thu, 31 Dec 2009 16:41:35 -0500
-Message-ID: <20091231214134.GA31399@coredump.intra.peff.net>
-References: <20091230095634.GA16349@coredump.intra.peff.net>
- <20091230105536.GC22959@coredump.intra.peff.net>
- <4B3CD74D.7020605@kdbg.org>
+Date: Thu, 31 Dec 2009 22:41:37 +0100
+Message-ID: <200912312241.37895.j6t@kdbg.org>
+References: <20091230095634.GA16349@coredump.intra.peff.net> <4B3CD74D.7020605@kdbg.org> <7v4on7x6w1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Dec 31 22:42:10 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Nanako Shiraishi <nanako3@lavabit.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 31 22:43:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQSmX-0001p5-Dy
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 22:42:09 +0100
+	id 1NQSnb-00024o-21
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 22:43:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751696AbZLaVlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2009 16:41:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751643AbZLaVlj
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 16:41:39 -0500
-Received: from peff.net ([208.65.91.99]:53008 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751594AbZLaVli (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2009 16:41:38 -0500
-Received: (qmail 29941 invoked by uid 107); 31 Dec 2009 21:46:21 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 31 Dec 2009 16:46:21 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Dec 2009 16:41:35 -0500
+	id S1751847AbZLaVmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2009 16:42:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751810AbZLaVmY
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 16:42:24 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:44188 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751764AbZLaVmY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2009 16:42:24 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id BFFD110013;
+	Thu, 31 Dec 2009 22:42:21 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 0FE6F19F586;
+	Thu, 31 Dec 2009 22:41:38 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <7v4on7x6w1.fsf@alter.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <4B3CD74D.7020605@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135978>
 
-On Thu, Dec 31, 2009 at 05:54:37PM +0100, Johannes Sixt wrote:
+On Donnerstag, 31. Dezember 2009, Junio C Hamano wrote:
+> It is a cute idea that covers 70-80% of the cases, as you also have to
+> assume that you don't have to specify your own pager on a path with IFS
+> (e.g. "Program files" in your example) and give your parameter to the
+> pager at the same time, e.g.
+>
+>     PAGER="C:\Program Files\cygwin\bin\less -FRSX"
+>
+> Because it has its own LESS environment to set FRSX and you can get away
+> with:
+>
+>     PAGER="C:\Program Files\cygwin\bin\less"
+>     LESS=FRSX
+>
+> "less" is not a representative example for this issue.  In real life I
+> suspect that custom programs that we don't ship with git (or you don't
+> ship with msysgit) would lack such a workaround, (and that is why I didn't
+> say "98% of the cases").
 
-> The git version that msysgit ships (and the one that I use on
-> Windows) has this sequence in pager.c:
-> 
-> static const char *pager_argv[] = { "sh", "-c", NULL, NULL };
-> ...
-> 	pager_process.argv = &pager_argv[2];
-> 	pager_process.in = -1;
-> 	if (start_command(&pager_process)) {
-> 		pager_process.argv = pager_argv;
-> 		pager_process.in = -1;
-> 		if (start_command(&pager_process))
-> 			return;
-> 	}
+OTOH, once you see that you would have to set
 
-As a side note to what you are saying, my patch 2/6 will break this. The
-"new" way to do it would be:
+	PAGER: C:\Program Files\cygwin\bin\less -FRSX
 
-  /* do not set pager_argv[2] specially */
-  pager_process.in = -1;
-  if (start_command(&pager_process)) {
-          pager_process.use_shell = 1;
-          pager_process.in = -1;
-          if (start_command(&pager_process))
-                  return;
-  }
+(I'm not using shell syntax here; think of a dialog that has name and value in 
+separate edit boxes) then it is rather obvious that this cannot work. If you 
+are clever (and you probably are - after all, you are modifying something 
+esoteric: the environment!), then you will have heard about the magic 
+double-quotes, and you will write this as
 
-though I am happy to also just revert the pager.c changes and leave it
-to handle the shell itself.
+	PAGER: "C:\Program Files\cygwin\bin\less" -FRSX
 
-But of course if we use your trick internally in run-command, then your
-pager-specific change can just go away.
+instead, and it will work as intended.
 
-> to help people set
-> 
->  PAGER=C:\Program Files\cygwin\bin\less
-> 
-> That is, we first try to run the program without the shell, then
-> retry wrapped in sh -c.
-> 
-> Wouldn't it be possible to do the same here, assuming that we don't
-> have programs such as "editor -f" in the path?
+Granted, "less" is not representative.
 
-Hmm. That is somewhat clever. And it would actually solve the
-backward-compatibility problem for helpers moving to shell execution. If
-you have a textconv of "/path with space/foo", it will continue to
-work transparently, but now "/path_without_space/foo --option" will also
-Just Work.
+	GIT_EDITOR: "C:\Program Files\Notepad++\notepad++" -multiInst
 
-The two downsides I see are:
+is probably more realistic (but I didn't test it).
 
-  1. You want to run "foo" with "-bar" in your path but you have "foo
-     -bar" in your path (your "editor -f" example). This just seems
-     insane to me.
-
-  2. There is a little bit of an interface inconsistency. You can do
-     PAGER="/path with space/foo", but once you want to add an option,
-     PAGER="/path with space/foo -bar" does not do what you mean. You
-     have to understand the magic that is going on, and that you now
-     need to quote the first part.
-
-     I'm not sure that is not a feature, though. You are paying that
-     cost in the transition, but getting the DWYM magic for the common
-     case.
-
-> It does assume that we are able to detect execvp failure due to
-> ENOENT which is currently proposed elsewhere by Ilari Liusvaara (and
-> which is already possible on Windows).
-
-We could also simply do the path lookup ourselves, decide whether to use
-the shell, and then exec. Path lookup is not that hard, and I think we
-already have mingw compat routines for it anyway.
-
--Peff
+-- Hannes
