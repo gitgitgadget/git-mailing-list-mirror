@@ -1,52 +1,115 @@
-From: aaron smith <beingthexemplarylists@gmail.com>
-Subject: suppress fatal pathspec errors from "git add"?
-Date: Thu, 31 Dec 2009 13:24:59 -0800
-Message-ID: <d7ac1a680912311324i85b7a5anadaf2ac13f215873@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/6] run-command: optimize out useless shell calls
+Date: Thu, 31 Dec 2009 16:41:35 -0500
+Message-ID: <20091231214134.GA31399@coredump.intra.peff.net>
+References: <20091230095634.GA16349@coredump.intra.peff.net>
+ <20091230105536.GC22959@coredump.intra.peff.net>
+ <4B3CD74D.7020605@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 31 22:25:10 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Dec 31 22:42:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQSW5-0005ZJ-Hk
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 22:25:09 +0100
+	id 1NQSmX-0001p5-Dy
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 22:42:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751839AbZLaVZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2009 16:25:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751834AbZLaVZA
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 16:25:00 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:35157 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751594AbZLaVY7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2009 16:24:59 -0500
-Received: by pwj9 with SMTP id 9so8104986pwj.21
-        for <git@vger.kernel.org>; Thu, 31 Dec 2009 13:24:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=qSfL9AmbswQqcrIGXQvjVAqMFyO5iCbN/y144NislL8=;
-        b=h1RkJDokLemDuKroyOByk3t4abQJ0Ezmq1zI8bHVzqLYHOWrL188Ps94uVLXofCA/5
-         QGqFe9OrfuWOSWymBlZ2beBjbyfryMk5RU0YEuyIX2Zt2lV9qLvK36aUQxOF3S4HBzIW
-         qr3vtYQO+xiNqxtALTyIB0mGeRO//XbOjngcs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=lQrV6kZmRR5A2CiX5BpVdKaG/3WUsVWc6JXSMgGu0CARoxF/KRlgO4Lr3YoMtiW2/8
-         mo8+f+zRRRXL7Lbd7GrioQgTjlFf8XTm2RdZctlS3k/Rabh2ZnXRGzWO9cWXBR/hGB0l
-         qm2lifVfcENIS7SdJQCr2WvKR9daLghANN5tY=
-Received: by 10.142.7.40 with SMTP id 40mr13324787wfg.120.1262294699304; Thu, 
-	31 Dec 2009 13:24:59 -0800 (PST)
+	id S1751696AbZLaVlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2009 16:41:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751643AbZLaVlj
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 16:41:39 -0500
+Received: from peff.net ([208.65.91.99]:53008 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751594AbZLaVli (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2009 16:41:38 -0500
+Received: (qmail 29941 invoked by uid 107); 31 Dec 2009 21:46:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 31 Dec 2009 16:46:21 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Dec 2009 16:41:35 -0500
+Content-Disposition: inline
+In-Reply-To: <4B3CD74D.7020605@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135977>
 
-I'm looking through the add documentation, I don't see a way to
-suppress fatal pathspec errors? For example, if I'm adding 5 files,
-but one of them is mis-spelled, can I have git just supress the errors
-and add the other four?
-thanks much!
+On Thu, Dec 31, 2009 at 05:54:37PM +0100, Johannes Sixt wrote:
+
+> The git version that msysgit ships (and the one that I use on
+> Windows) has this sequence in pager.c:
+> 
+> static const char *pager_argv[] = { "sh", "-c", NULL, NULL };
+> ...
+> 	pager_process.argv = &pager_argv[2];
+> 	pager_process.in = -1;
+> 	if (start_command(&pager_process)) {
+> 		pager_process.argv = pager_argv;
+> 		pager_process.in = -1;
+> 		if (start_command(&pager_process))
+> 			return;
+> 	}
+
+As a side note to what you are saying, my patch 2/6 will break this. The
+"new" way to do it would be:
+
+  /* do not set pager_argv[2] specially */
+  pager_process.in = -1;
+  if (start_command(&pager_process)) {
+          pager_process.use_shell = 1;
+          pager_process.in = -1;
+          if (start_command(&pager_process))
+                  return;
+  }
+
+though I am happy to also just revert the pager.c changes and leave it
+to handle the shell itself.
+
+But of course if we use your trick internally in run-command, then your
+pager-specific change can just go away.
+
+> to help people set
+> 
+>  PAGER=C:\Program Files\cygwin\bin\less
+> 
+> That is, we first try to run the program without the shell, then
+> retry wrapped in sh -c.
+> 
+> Wouldn't it be possible to do the same here, assuming that we don't
+> have programs such as "editor -f" in the path?
+
+Hmm. That is somewhat clever. And it would actually solve the
+backward-compatibility problem for helpers moving to shell execution. If
+you have a textconv of "/path with space/foo", it will continue to
+work transparently, but now "/path_without_space/foo --option" will also
+Just Work.
+
+The two downsides I see are:
+
+  1. You want to run "foo" with "-bar" in your path but you have "foo
+     -bar" in your path (your "editor -f" example). This just seems
+     insane to me.
+
+  2. There is a little bit of an interface inconsistency. You can do
+     PAGER="/path with space/foo", but once you want to add an option,
+     PAGER="/path with space/foo -bar" does not do what you mean. You
+     have to understand the magic that is going on, and that you now
+     need to quote the first part.
+
+     I'm not sure that is not a feature, though. You are paying that
+     cost in the transition, but getting the DWYM magic for the common
+     case.
+
+> It does assume that we are able to detect execvp failure due to
+> ENOENT which is currently proposed elsewhere by Ilari Liusvaara (and
+> which is already possible on Windows).
+
+We could also simply do the path lookup ourselves, decide whether to use
+the shell, and then exec. Path lookup is not that hard, and I think we
+already have mingw compat routines for it anyway.
+
+-Peff
