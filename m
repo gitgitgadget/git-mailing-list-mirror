@@ -1,81 +1,70 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [PATCH v2] cvsserver: make the output of 'update' more compatible 
-	with cvs.
-Date: Thu, 31 Dec 2009 16:20:26 +0100
-Message-ID: <46a038f90912310720l4b1cbdebs2b85774ae7e33c0e@mail.gmail.com>
-References: <87zl5z4y0w.fsf@osv.gnss.ru> <87bpibdonj.fsf@osv.gnss.ru>
-	 <20091230224115.6117@nanako3.lavabit.com>
-	 <7vfx6rzlkg.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [Updated PATCH 2/2] Improve transport helper exec failure reporting
+Date: Thu, 31 Dec 2009 16:44:37 +0100
+Message-ID: <4B3CC6E5.7090404@kdbg.org>
+References: <1262170338-11574-1-git-send-email-ilari.liusvaara@elisanet.fi> <1262170338-11574-3-git-send-email-ilari.liusvaara@elisanet.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Sergei Organov <osv@javad.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 31 16:20:37 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Thu Dec 31 16:44:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQMpJ-0005MM-BS
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 16:20:37 +0100
+	id 1NQNCc-0006oF-CY
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 16:44:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752504AbZLaPU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2009 10:20:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752495AbZLaPU3
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 10:20:29 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:36085 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752488AbZLaPU2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2009 10:20:28 -0500
-Received: by ewy19 with SMTP id 19so4700573ewy.21
-        for <git@vger.kernel.org>; Thu, 31 Dec 2009 07:20:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=0RNw3SBUOxatVp/JdsFFRTivVlXaa0E1YHn2sm5OOFE=;
-        b=f7FiU2YxeG6NWnzeDBPIWBduOImSVLTPEc3lpEmNPg6opDRaA3GcNx5Fig+ttExmC1
-         GxgSMRTwCZ2Ed7VfbV1tB4gdK2WLL09/Anp2tz3abyoUfg+lKRfANMkjCmmJU57EX6oU
-         Jeqwqypgf0jebK1MBAZ+X6WLk332VMCYopQA4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=WJHxC+H6mpPQPZmaSVAArRW9Hd7dDtmNMpaZPCnLXkGAyCYl54DqVqk3Ffg88gqu6C
-         Cb7uvGr25eynxAIeqC1R0bMBM/XkJWzy3g23gG4c9w0xUr7Rg6pTxqUgu1Mguw+OO8N9
-         EuvWPsPq8kjJtVNIBibPUwNPXJtgxVC2FSrQQ=
-Received: by 10.213.2.82 with SMTP id 18mr23191174ebi.58.1262272826338; Thu, 
-	31 Dec 2009 07:20:26 -0800 (PST)
-In-Reply-To: <7vfx6rzlkg.fsf@alter.siamese.dyndns.org>
+	id S1752453AbZLaPoi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2009 10:44:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752340AbZLaPoh
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 10:44:37 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:11537 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750722AbZLaPoh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2009 10:44:37 -0500
+Received: from [192.168.0.200] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 5FFB710017;
+	Thu, 31 Dec 2009 16:44:35 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <1262170338-11574-3-git-send-email-ilari.liusvaara@elisanet.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135955>
 
-On Thu, Dec 31, 2009 at 7:47 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Well, since I don't use cvsserver myself, but this v2 was done with
-> improvements based on some review suggestions, I was waiting for a
-> response or two from people who know better and care more about cvs server
-> emulation than me, which unfortunately didn't happen.
+Ilari Liusvaara schrieb:
+> @@ -31,13 +31,19 @@ static struct child_process *get_helper(struct transport *transport)
+>  	helper->out = -1;
+>  	helper->err = 0;
+>  	helper->argv = xcalloc(4, sizeof(*helper->argv));
+> -	strbuf_addf(&buf, "remote-%s", data->name);
+> +	strbuf_addf(&buf, "git-remote-%s", data->name);
+>  	helper->argv[0] = strbuf_detach(&buf, NULL);
+>  	helper->argv[1] = transport->remote->name;
+>  	helper->argv[2] = transport->url;
+> -	helper->git_cmd = 1;
+> -	if (start_command(helper))
+> -		die("Unable to run helper: git %s", helper->argv[0]);
+> +	helper->git_cmd = 0;
+> +	if (start_command(helper)) {
+> +		if (errno == ENOENT)
+> +			die("Unable to find remote helper for \"%s\"",
+> +				data->name);
 
-Looks good to me -- good to get it into pu. While I continue to use
-git extensively, I don't use cvsserver anymore, nor work with people
-that do. Might have reason to revisit cvsserver in the near future
-though, to help Moodle transition to git.
+You should set helper->silent_exec_failure = 1 when you give your own 
+error message for the ENOENT case.
 
-That transition will bring a few top-posters and Eclipse lovers to the
-list. Looking past such details, they are fine people who may need a
-little bit of git-newbie help ;-)
+BTW, which error message do you see without your change in this case? You 
+only say "pretty much useless", but do not give an example.
 
-happy new year,
+> +		else
+> +			die("Unable to run helper %s: %s", helper->argv[0],
+> +				strerror(errno));
 
+You shouldn't write an error message here because start_command has 
+already reported the error.
 
-
-m
--- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+-- Hannes
