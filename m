@@ -1,117 +1,84 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] gitk: Use git-difftool for external diffs
-Date: Wed, 30 Dec 2009 23:16:45 -0800
-Message-ID: <20091231071642.GA10067@gmail.com>
-References: <1258341126-2108-1-git-send-email-davvid@gmail.com> <20091230121319.6117@nanako3.lavabit.com> <7vy6kk52an.fsf@alter.siamese.dyndns.org>
+From: Sylvain Rabot <sylvain@abstraction.fr>
+Subject: Re: Need some help with git rebase
+Date: Thu, 31 Dec 2009 10:02:12 +0100
+Message-ID: <7fce93be0912310102x53755120o31e42c4a7a92a709@mail.gmail.com>
+References: <4B38B3A7.6010900@steek.com> <1262211866.7068.1.camel@kheops>
+	 <CB5B49CA-0C66-4384-9B47-3675E517E203@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, peff@peff.net,
-	sam@vilain.net, git@vger.kernel.org, paulus@samba.org,
-	Markus Heidelberg <markus.heidelberg@web.de>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 31 08:17:07 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 31 10:02:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQFHO-0000Os-NN
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 08:17:07 +0100
+	id 1NQGvG-0004eo-Ee
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 10:02:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751815AbZLaHQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2009 02:16:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751666AbZLaHQ7
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 02:16:59 -0500
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:40934 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751471AbZLaHQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2009 02:16:58 -0500
-Received: by ywh6 with SMTP id 6so12707526ywh.4
-        for <git@vger.kernel.org>; Wed, 30 Dec 2009 23:16:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=GxcTLc7I8IYz6ug+G0LDVQ5Dpv8qQJi27VROhCMlrf0=;
-        b=cdysGwYsQfbXdGg/cCSeY8zr3XpsjxoPz2i+xTVvQ+pwkjjmF/NcgwnaM2HGtuMCgo
-         BxkD0n4b7DlOi0KooeeZiNsvY+aGTVsyNV7z4ZBGjlskb2WVog9X4BE8djNfzywywm55
-         dGVCFtXsGKF+Md0ZqYlcDA+pbsjIW4LN2XGKo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=C1m2hrq8PVQbSAu/PRqhAgQI8jFmI9tvNtYKcG/6cHxFbztdJHxy1nZJ91bzsldvp+
-         33aiojpG2TubsAWx4VtxbiduoAXS3inqgK1sMz/n/tEAve0ie8XrSuqRD+2mT81k2rP2
-         AIjwRmA8Tsig1159hGPuS2t02L59QgH/hG+IU=
-Received: by 10.150.77.13 with SMTP id z13mr27948852yba.23.1262243817947;
-        Wed, 30 Dec 2009 23:16:57 -0800 (PST)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 7sm5762296yxd.26.2009.12.30.23.16.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 30 Dec 2009 23:16:55 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vy6kk52an.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1751990AbZLaJCP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Dec 2009 04:02:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751883AbZLaJCO
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 04:02:14 -0500
+Received: from ey-out-2122.google.com ([74.125.78.26]:12297 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751605AbZLaJCO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Dec 2009 04:02:14 -0500
+Received: by ey-out-2122.google.com with SMTP id 25so1894029eya.19
+        for <git@vger.kernel.org>; Thu, 31 Dec 2009 01:02:12 -0800 (PST)
+Received: by 10.213.97.14 with SMTP id j14mr1224885ebn.52.1262250132807; Thu, 
+	31 Dec 2009 01:02:12 -0800 (PST)
+X-Originating-IP: [82.233.66.33]
+In-Reply-To: <CB5B49CA-0C66-4384-9B47-3675E517E203@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135938>
 
-On Tue, Dec 29, 2009 at 11:49:52PM -0800, Junio C Hamano wrote:
-> Nanako Shiraishi <nanako3@lavabit.com> writes:
-> 
-> > Junio, could you tell us what happened to this thread?
-> 
-> See http://thread.gmane.org/gmane.comp.version-control.git/132983/focus=133414
-> 
-> In short, the particular way to call difftool this patch implements was
-> found to be inadequate to support existing external diff support by gitk
-> and a small difftool update will happen first, followed by a patch to gitk
-> to use the updated difftool, to avoid regression.
+On Wed, Dec 30, 2009 at 23:46, Wincent Colaiuta=A0<win@wincent.com>=A0w=
+rote:
+>
+> Look at the "git-rebase" man page, particularly the order of the argu=
+ments, what they mean, and the usage examples of "--onto":
+>
+> =A0$ git rebase --onto 12.72.1 master feature
+>
+> Means, "replay these changes on top of 12.72.1", where "these changes=
+" refers to commits on branch "feature" with upstream "master", which i=
+s what "git rebase" did for you.
+>
+> If you actually want the "feature" branch to continue pointing at the=
+ old feature branch rather than your newly rebased one, you could just =
+look up the old SHA1 for it and update it with:
+>
+> =A0$ git branch -f feature abcd1234
+>
+> Where "abcd1234" is the hash of the old "feature" HEAD.
+>
+> But I don't really know why you'd want to do that. The purpose of "gi=
+t rebase" isn't to copy or cherry-pick commits from one branch onto ano=
+ther, but to actually _move_ (or transplant, or replay, if you prefer) =
+those commits.
+>
+> Maybe I misunderstood your intentions though.
+>
+> Cheers,
+> Wincent
+>
 
+In fact I want to backport the commits of the feature branch into=A012.=
+72.1.
+I used git rebase because the drawings of the man page looked like
+that I wanted to do and it does except for the part it resets the head
+of my feature branch.
 
-I started the first step:
+But the good behavior would be to cherry pick each commit of the
+feature branch and apply them into 12.72.1, right ?
 
-http://thread.gmane.org/gmane.comp.version-control.git/135613
-http://thread.gmane.org/gmane.comp.version-control.git/135613/focus=135612
+Thanks for your answer.
 
-The 2nd patch implements the the --gui option which Markus
-pointed out would be needed to avoid issues such as calling
-"vimdiff" from a console-less gitk:
+Regards.
 
-http://article.gmane.org/gmane.comp.version-control.git/133386
-
-
-I marked the --gui patch as "RFC" since it introduced a new
-config variable and I want to make sure that we agreed on its
-name.  I didn't get any feedback about that patch
-(my fault-- we were in RC freeze and I forgot to CC: Markus).
-
-If that looks like a good first step then we can do the next
-step which would be to introduce the --extcmd= option as
-mentioned here:
-
-http://thread.gmane.org/gmane.comp.version-control.git/132983/focus=133386
-
-I will try and prepare the changes for --extcmd= within
-the next week assuming the existing --gui patch is ok.
-
-
-On a related note, Jay Soffian recently submitted a
-git-mergetool--lib patch adding support for "diffmerge".
-It made it clear that there were parts of git-mergetool--lib
-that could use some refactoring:
-
-http://thread.gmane.org/gmane.comp.version-control.git/134906
-
-Jay did mention that he'd give it a shot at the time, though
-it does seems like the refactoring could wait until we see
-how --extcmd= fits into the world.
-
-
-Thank you for following up on this thread, Nanako.
-
--- 
-		David
+--
+Sylvain
