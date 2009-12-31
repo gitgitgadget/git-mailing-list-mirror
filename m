@@ -1,104 +1,126 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: Need some help with git rebase
-Date: Thu, 31 Dec 2009 10:32:00 +0100
-Message-ID: <20091231093200.GB24460@m62s10.vlinux.de>
-References: <4B38B3A7.6010900@steek.com> <1262211866.7068.1.camel@kheops> <CB5B49CA-0C66-4384-9B47-3675E517E203@wincent.com> <7fce93be0912310102x53755120o31e42c4a7a92a709@mail.gmail.com>
+From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
+Subject: [PATCH] Fix "git remote update" with remotes.defalt set
+Date: Thu, 31 Dec 2009 10:43:17 +0100
+Message-ID: <4B3C7235.2030707@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Sylvain Rabot <sylvain@abstraction.fr>
-X-From: git-owner@vger.kernel.org Thu Dec 31 10:32:39 2009
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 31 10:43:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQHOY-0004Al-Go
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 10:32:38 +0100
+	id 1NQHZ3-00070D-MF
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 10:43:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751648AbZLaJcJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Dec 2009 04:32:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751483AbZLaJcJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 04:32:09 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39557 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751443AbZLaJcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2009 04:32:08 -0500
-Received: (qmail invoked by alias); 31 Dec 2009 09:32:03 -0000
-Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
-  by mail.gmx.net (mp059) with SMTP; 31 Dec 2009 10:32:03 +0100
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX191Kc8Wzv51NQq7L8VUscieUV+MJeLM/DAPkGUYzw
-	avsYmAFFfElETc
-Received: by m62s10.vlinux.de (Postfix, from userid 1000)
-	id 0457EEC001; Thu, 31 Dec 2009 10:32:00 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7fce93be0912310102x53755120o31e42c4a7a92a709@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1752055AbZLaJnW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Dec 2009 04:43:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751647AbZLaJnW
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 04:43:22 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:56096 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751377AbZLaJnV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2009 04:43:21 -0500
+Received: by ewy19 with SMTP id 19so4455254ewy.21
+        for <git@vger.kernel.org>; Thu, 31 Dec 2009 01:43:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:content-type
+         :content-transfer-encoding;
+        bh=fI0l5P84gS36FdAc5gPdMnmwow6M4EwM1UPNreZmgEU=;
+        b=I4s7gCCRNrzO0kHKxQOr0X9lV0eyz0FWXOZjNZ8azncB7Jlx7HF++QQffcqBcIX/zc
+         kWwYhS9suhl00UBZ019B5fWZ+TMibtQ6rfKmX7zN4P3mqbMKPRRpPpc+X0ktdoHb51CC
+         hwX0BCd/vYQ+0UCCcype9sxgcM4Ii4QXJxpkc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=U4fGfjH7F5dOXBDc9+W0nTniNo3kxhwQc1rFaliVc0mtTMnpciOeyDhfXv4sz14iY3
+         np1EjhFAIL+CEkjBGPDDR3S8LveGrN65YUylEZ0YvEjDfFMPAQhKcy4HMpZPyqsqPALo
+         5pzKljCdsR10sW3hbc2S5W5FfIre3uT8of1Yg=
+Received: by 10.213.1.199 with SMTP id 7mr16833899ebg.23.1262252598767;
+        Thu, 31 Dec 2009 01:43:18 -0800 (PST)
+Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
+        by mx.google.com with ESMTPS id 15sm10089765ewy.0.2009.12.31.01.43.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 31 Dec 2009 01:43:18 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135940>
 
-On Thu, Dec 31, 2009 at 10:02:12AM +0100, Sylvain Rabot wrote:
-> On Wed, Dec 30, 2009 at 23:46, Wincent Colaiuta=A0<win@wincent.com>=A0=
-wrote:
-> >
-> > Look at the "git-rebase" man page, particularly the order of the ar=
-guments, what they mean, and the usage examples of "--onto":
-> >
-> > =A0$ git rebase --onto 12.72.1 master feature
-> >
-> > Means, "replay these changes on top of 12.72.1", where "these chang=
-es" refers to commits on branch "feature" with upstream "master", which=
- is what "git rebase" did for you.
-> >
-> > If you actually want the "feature" branch to continue pointing at t=
-he old feature branch rather than your newly rebased one, you could jus=
-t look up the old SHA1 for it and update it with:
-> >
-> > =A0$ git branch -f feature abcd1234
-> >
-> > Where "abcd1234" is the hash of the old "feature" HEAD.
-> >
-> > But I don't really know why you'd want to do that. The purpose of "=
-git rebase" isn't to copy or cherry-pick commits from one branch onto a=
-nother, but to actually _move_ (or transplant, or replay, if you prefer=
-) those commits.
-> >
-> > Maybe I misunderstood your intentions though.
-> >
-> > Cheers,
-> > Wincent
-> >
->=20
-> In fact I want to backport the commits of the feature branch into=A01=
-2.72.1.
-> I used git rebase because the drawings of the man page looked like
-> that I wanted to do and it does except for the part it resets the hea=
-d
-> of my feature branch.
->=20
-> But the good behavior would be to cherry pick each commit of the
-> feature branch and apply them into 12.72.1, right ?
->=20
+Starting from commit 8db35596, "git remote update" (with no
+group name given) will fail with the following message if
+remotes.default has been set in the config file:
 
-$ git checkout -b rebased_feature feature
-$ git rebase --onto 12.72.1 master rebased_feature
+fatal: 'default' does not appear to be a git repository
+fatal: The remote end hung up unexpectedly
 
-will create a temporary branch named "rebased_feature" pointing to the =
-same
-commit as the branch "feature". In fact, this will rebase the commits o=
-n the
-feature branch not reachable from master onto your 12.72.1 branch *and*=
- won't
-reset the feature branch. Instead the temporary branch named "rebased_f=
-eature"
-will be rebased ontop of 12.72.1.
+The problem is that the --multiple option is not passed to
+"git fetch" if no remote or group name is given on the command
+line. Fix the problem by always passing the --multiple
+option to "git fetch" (which actually simplifies the code).
 
-I would still prefere the rebase over doing multiple cherry picks.
+Reported-by: YONETANI Tomokazu
 
--Peter
+Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
+---
+ builtin-remote.c  |   10 ++++------
+ t/t5505-remote.sh |   14 ++++++++++++++
+ 2 files changed, 18 insertions(+), 6 deletions(-)
+
+diff --git a/builtin-remote.c b/builtin-remote.c
+index a501939..c4945b8 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -1238,13 +1238,11 @@ static int update(int argc, const char **argv)
+ 		fetch_argv[fetch_argc++] =3D "--prune";
+ 	if (verbose)
+ 		fetch_argv[fetch_argc++] =3D "-v";
+-	if (argc < 2) {
++	fetch_argv[fetch_argc++] =3D "--multiple";
++	if (argc < 2)
+ 		fetch_argv[fetch_argc++] =3D "default";
+-	} else {
+-		fetch_argv[fetch_argc++] =3D "--multiple";
+-		for (i =3D 1; i < argc; i++)
+-			fetch_argv[fetch_argc++] =3D argv[i];
+-	}
++	for (i =3D 1; i < argc; i++)
++		fetch_argv[fetch_argc++] =3D argv[i];
+=20
+ 	if (strcmp(fetch_argv[fetch_argc-1], "default") =3D=3D 0) {
+ 		git_config(get_remote_default, &default_defined);
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index fd166d9..936fe0a 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -419,6 +419,20 @@ test_expect_success 'update default (overridden, w=
+ith funny whitespace)' '
+=20
+ '
+=20
++test_expect_success 'update (with remotes.default defined)' '
++
++	(cd one &&
++	 for b in $(git branch -r)
++	 do
++		git branch -r -d $b || break
++	 done &&
++	 git config remotes.default "drosophila" &&
++	 git remote update &&
++	 git branch -r > output &&
++	 test_cmp expect output)
++
++'
++
+ test_expect_success '"remote show" does not show symbolic refs' '
+=20
+ 	git clone one three &&
+--=20
+1.6.6.69.gc18d
