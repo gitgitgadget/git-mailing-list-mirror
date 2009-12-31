@@ -1,111 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] grep: do not do external grep on skip-worktree entries
-Date: Wed, 30 Dec 2009 23:09:52 -0800
-Message-ID: <7vzl4zy5z3.fsf@alter.siamese.dyndns.org>
-References: <1262182304-19911-1-git-send-email-pclouds@gmail.com>
- <7v637nzky0.fsf@alter.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] gitk: Use git-difftool for external diffs
+Date: Wed, 30 Dec 2009 23:16:45 -0800
+Message-ID: <20091231071642.GA10067@gmail.com>
+References: <1258341126-2108-1-git-send-email-davvid@gmail.com> <20091230121319.6117@nanako3.lavabit.com> <7vy6kk52an.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 31 08:10:19 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, peff@peff.net,
+	sam@vilain.net, git@vger.kernel.org, paulus@samba.org,
+	Markus Heidelberg <markus.heidelberg@web.de>,
+	Jay Soffian <jaysoffian@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 31 08:17:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQFAn-0007Ko-3M
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 08:10:17 +0100
+	id 1NQFHO-0000Os-NN
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 08:17:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751706AbZLaHKF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2009 02:10:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751474AbZLaHKE
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 02:10:04 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53931 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751392AbZLaHKC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2009 02:10:02 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AC205ABDF6;
-	Thu, 31 Dec 2009 02:09:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bV9M1RuDi6jkEXaB07oopv9lzkw=; b=eVNU9P
-	MQVB0Tw0zaCVO1nkfguAqpFSLgmilr53tewpiPsvvtXCKntWrNsdnjQC6UB00sL1
-	jK4Vrf56cXvyOVcDar62WBewOIrLTi+X8V680som6IyzDZthp/TR3LusMnWgBptI
-	MMrP7m1q7BVvRqxk08RBa1agDDYpYriSay1Ew=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IPzCNy5hyufmfyFQkFlbFkZRwA51RI56
-	lyWeBkQyFDXmuwVMTgyzP4v5BszInEByFJbTq+0UVcRynQh9zE19qm8lEEDaH7/V
-	J11UmfZZA70Q158IBvdvIqEF42PLDoF5DA9Al1Mc6YPMf5rRSbAXbEJJdOtF4roI
-	t1t+Unh0T5Y=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8B138ABDF4;
-	Thu, 31 Dec 2009 02:09:57 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 736E0ABDF2; Thu, 31 Dec 2009
- 02:09:54 -0500 (EST)
-In-Reply-To: <7v637nzky0.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed\, 30 Dec 2009 23\:01\:11 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 80CD5096-F5DB-11DE-BC09-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1751815AbZLaHQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2009 02:16:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751666AbZLaHQ7
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 02:16:59 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:40934 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751471AbZLaHQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2009 02:16:58 -0500
+Received: by ywh6 with SMTP id 6so12707526ywh.4
+        for <git@vger.kernel.org>; Wed, 30 Dec 2009 23:16:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=GxcTLc7I8IYz6ug+G0LDVQ5Dpv8qQJi27VROhCMlrf0=;
+        b=cdysGwYsQfbXdGg/cCSeY8zr3XpsjxoPz2i+xTVvQ+pwkjjmF/NcgwnaM2HGtuMCgo
+         BxkD0n4b7DlOi0KooeeZiNsvY+aGTVsyNV7z4ZBGjlskb2WVog9X4BE8djNfzywywm55
+         dGVCFtXsGKF+Md0ZqYlcDA+pbsjIW4LN2XGKo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=C1m2hrq8PVQbSAu/PRqhAgQI8jFmI9tvNtYKcG/6cHxFbztdJHxy1nZJ91bzsldvp+
+         33aiojpG2TubsAWx4VtxbiduoAXS3inqgK1sMz/n/tEAve0ie8XrSuqRD+2mT81k2rP2
+         AIjwRmA8Tsig1159hGPuS2t02L59QgH/hG+IU=
+Received: by 10.150.77.13 with SMTP id z13mr27948852yba.23.1262243817947;
+        Wed, 30 Dec 2009 23:16:57 -0800 (PST)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id 7sm5762296yxd.26.2009.12.30.23.16.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 30 Dec 2009 23:16:55 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vy6kk52an.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135937>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Dec 29, 2009 at 11:49:52PM -0800, Junio C Hamano wrote:
+> Nanako Shiraishi <nanako3@lavabit.com> writes:
+> 
+> > Junio, could you tell us what happened to this thread?
+> 
+> See http://thread.gmane.org/gmane.comp.version-control.git/132983/focus=133414
+> 
+> In short, the particular way to call difftool this patch implements was
+> found to be inadequate to support existing external diff support by gitk
+> and a small difftool update will happen first, followed by a patch to gitk
+> to use the updated difftool, to avoid regression.
 
-> This looks a bit wrong for a couple of reasons:
->
->  - external_grep() is designed to return negative without running external
->    grep when it shouldn't be used (see the beginning of the function for
->    how it refuses to run when opt->extended is set and other conditions).
->    The new logic seems to belong there, i.e. "in addition to the existing
->    case we decline, if ce_skip_worktree() entry exists in the cache, we
->    decline";
 
-IOW, something like this instead of your patch.  You would want to tests
-to demonstrate the original breakage, perhaps?
+I started the first step:
 
- builtin-grep.c |   18 +++++++++++++++++-
- 1 files changed, 17 insertions(+), 1 deletions(-)
+http://thread.gmane.org/gmane.comp.version-control.git/135613
+http://thread.gmane.org/gmane.comp.version-control.git/135613/focus=135612
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 813fe97..25ee75d 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -357,6 +357,21 @@ static void grep_add_color(struct strbuf *sb, const char *escape_seq)
- 		strbuf_setlen(sb, sb->len - 1);
- }
- 
-+static int has_skip_worktree_entry(struct grep_opt *opt, const char **paths)
-+{
-+	int nr;
-+	for (nr = 0; nr < active_nr; nr++) {
-+		struct cache_entry *ce = active_cache[nr];
-+		if (!S_ISREG(ce->ce_mode))
-+			continue;
-+		if (!pathspec_matches(paths, ce->name, opt->max_depth))
-+			continue;
-+		if (ce_skip_worktree(ce))
-+			return 1;
-+	}
-+	return 0;
-+}
-+
- static int external_grep(struct grep_opt *opt, const char **paths, int cached)
- {
- 	int i, nr, argc, hit, len, status;
-@@ -365,7 +380,8 @@ static int external_grep(struct grep_opt *opt, const char **paths, int cached)
- 	char *argptr = randarg;
- 	struct grep_pat *p;
- 
--	if (opt->extended || (opt->relative && opt->prefix_length))
-+	if (opt->extended || (opt->relative && opt->prefix_length)
-+	    || has_skip_worktree_entry(opt, paths))
- 		return -1;
- 	len = nr = 0;
- 	push_arg("grep");
+The 2nd patch implements the the --gui option which Markus
+pointed out would be needed to avoid issues such as calling
+"vimdiff" from a console-less gitk:
+
+http://article.gmane.org/gmane.comp.version-control.git/133386
+
+
+I marked the --gui patch as "RFC" since it introduced a new
+config variable and I want to make sure that we agreed on its
+name.  I didn't get any feedback about that patch
+(my fault-- we were in RC freeze and I forgot to CC: Markus).
+
+If that looks like a good first step then we can do the next
+step which would be to introduce the --extcmd= option as
+mentioned here:
+
+http://thread.gmane.org/gmane.comp.version-control.git/132983/focus=133386
+
+I will try and prepare the changes for --extcmd= within
+the next week assuming the existing --gui patch is ok.
+
+
+On a related note, Jay Soffian recently submitted a
+git-mergetool--lib patch adding support for "diffmerge".
+It made it clear that there were parts of git-mergetool--lib
+that could use some refactoring:
+
+http://thread.gmane.org/gmane.comp.version-control.git/134906
+
+Jay did mention that he'd give it a shot at the time, though
+it does seems like the refactoring could wait until we see
+how --extcmd= fits into the world.
+
+
+Thank you for following up on this thread, Nanako.
+
+-- 
+		David
