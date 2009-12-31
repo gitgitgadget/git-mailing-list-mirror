@@ -1,91 +1,59 @@
-From: "Kirill" <kirillathome@gmail.com>
-Subject: RE: [PATCH] Provide a window icon on Windows platforms
-Date: Thu, 31 Dec 2009 17:42:05 -0500
-Message-ID: <000701ca8a6a$7c002070$74006150$@com>
-References: <1262289470-4208-1-git-send-email-kirillathome@gmail.com> <a5b261830912311312if3d71aax5bb693a907dc5c0f@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] branch: die explicitly why when calling "git branch
+ [-a|-r] branchname".
+Date: Thu, 31 Dec 2009 15:09:04 -0800
+Message-ID: <7vaawyrban.fsf@alter.siamese.dyndns.org>
+References: <1262184331-9102-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>, <msysgit@googlegroups.com>
-To: "'Pat Thoyts'" <patthoyts@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 31 23:42:32 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jan 01 00:10:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQTiv-000307-O7
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 23:42:30 +0100
+	id 1NQUAQ-0001iM-LR
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Jan 2010 00:10:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751834AbZLaWmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2009 17:42:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751766AbZLaWmM
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 17:42:12 -0500
-Received: from qw-out-2122.google.com ([74.125.92.24]:49056 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751643AbZLaWmL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Dec 2009 17:42:11 -0500
-Received: by qw-out-2122.google.com with SMTP id 8so1370531qwh.37
-        for <git@vger.kernel.org>; Thu, 31 Dec 2009 14:42:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:references
-         :in-reply-to:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding:x-mailer:thread-index:content-language;
-        bh=9Li/SJ0rB++2TpOdRxyRt97xo9JPjT8a7uJmzBe6nMo=;
-        b=xm4rnW8ooVFrdU9GjQAogcqMtt/5f6+7OQ2vzGMwoULQADQ3tJD2VuFcPpypxru2cX
-         wvV1zMGw82kUYipVdi5fkRKdh9kON7M1OZLz4Vqb4PRzPlJUoUaCEpbRD8NfWNrz2i16
-         cEZkZsoI05hJWAaTEbGDmH8F59mmxNDbTO424=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-type:content-transfer-encoding:x-mailer
-         :thread-index:content-language;
-        b=v2wpA8go9O9Ty0AaHaovDOop4UGJVEe/Y1SrOM3VOlbScU3AxMorLOrsNes/FRPtf9
-         SKiRcLi+ikNbdiYL/az9Sxq+bQpUUo0Ec1GI6qpk+82lozIQu+yYW1p0uirLybfDL6Ct
-         UJrfnGuQpzu5x8TK7DRvLJZvc74pkqN0NhsBM=
-Received: by 10.224.106.3 with SMTP id v3mr9460892qao.243.1262299329812;
-        Thu, 31 Dec 2009 14:42:09 -0800 (PST)
-Received: from midget (ip69-17-233-41.vif.net [69.17.233.41])
-        by mx.google.com with ESMTPS id 22sm13516169qyk.6.2009.12.31.14.42.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 31 Dec 2009 14:42:08 -0800 (PST)
-In-Reply-To: <a5b261830912311312if3d71aax5bb693a907dc5c0f@mail.gmail.com>
-X-Mailer: Microsoft Office Outlook 12.0
-Thread-Index: AcqKXe+bKq6es3tyT4uN6xx9JUHvFgACWUDg
-Content-Language: en-ca
+	id S1751978AbZLaXJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2009 18:09:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751970AbZLaXJN
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 18:09:13 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58040 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751949AbZLaXJN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2009 18:09:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EC6E58C66C;
+	Thu, 31 Dec 2009 18:09:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=Ft70sKORSGlpkEfksVd2rP9R96A=; b=lwcKzxrlg9e0BxopticGKp9
+	gNxBmdIJK2rAs76wmrN1y5NdBADkUd+Rjfqc9HyWfqsjXKykSSvc55/q8j1dfW6s
+	urpS4ZJT9E8S8bl0exSWfJbwdgdgglOShJkr++aO+svdh3e65j7l+8A36zTssz94
+	BEkXtUKPDDqqnds1pCkA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=JHR03MftK+3x88xwvMtib5EFPTMlp5TNgtT5GhPoIKCZVmyiD
+	QRhFpHVcJBp4b+jMcshcf0vSHTOdm3UbSg0bsj2NzhH29g11TyfY1EuBrtmzhv9y
+	YC1Ia9EC7uY/3MoQ3evCiQbRIrhqQQ/rpPmv8KkP6c07sR/4iVNOBPIMXM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C64518C665;
+	Thu, 31 Dec 2009 18:09:08 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3143B8C661; Thu, 31 Dec
+ 2009 18:09:06 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 80049530-F661-11DE-A363-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135981>
 
-Unfortunately, I have to insist on my patch :)
+Thanks; will apply to 'maint', together with the SubmittingPatches
+addition.
 
-> -----Original Message-----
-> From: Pat Thoyts [mailto:patthoyts@googlemail.com]
-> Sent: Thursday, December 31, 2009 4:12 PM
-
-> 2009/12/31 Kirill <kirillathome@gmail.com>:
-> > Looks like 37871b73 by Giuseppe Bilotta does not work very well on
-> > Windows. Instead of a former tcl/tk icon, the window has a black
-> > square as an icon.
-> 
-> I've been using versions of gitk on Windows with that patch since it
-> was applied in March and it has been fine. On Windows XP and Windows
-> 7. So there is more to this than you are telling. Are you using
-> windows via remote desktop?
-You're absolutely right about *unintentional* withdrawal of facts in my original message, but no, I'm not using Remote Desktop. However, my XP SP3 has 16-bit colors and apparently 8.5.7 can't display those photos correctly in this case either. Most probable reason why the issue was first discovered in Remote Desktop is because most of RDP sessions are limited to 16-bit colors.
-
-> If so, this requires an updated Tk and not a patch to gitk -
-> tk 8.5.8 should be ok if this is the problem.
-Unfortunately, the situation is improved with 8.5.8, but definitely not resolved (tested on msysGit devel branch). The sequence image create photo && wm iconphoto on 16-bit displays in XP SP3 renders the background black, not transparent. The fact that I'm using Classic color schema may play some role too. I'd speculate that 8.5.8 on Windows 7 (admittedly, it's much harder to switch to 16-bit colors there) may have exactly the same issue, given that 8.5.7 has exactly the same symptoms.
-
-Is there a way to replace the "simplistic"
-
-if {$::tcl_platform(platform) eq {windows}}
-
-with something more elaborate that takes into account 16-bit colors?
-
---
-Kirill.
+Interestingly, this revealed a long-standing breakage in t5403.
