@@ -1,90 +1,96 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: Need some help with git rebase
-Date: Thu, 31 Dec 2009 12:06:01 +0100
-Message-ID: <89AAB33C-89D4-46E9-A950-1CBFB4D2CBB3@wincent.com>
-References: <4B38B3A7.6010900@steek.com> <1262211866.7068.1.camel@kheops> <CB5B49CA-0C66-4384-9B47-3675E517E203@wincent.com> <7fce93be0912301502r77152c52sbccf762fb6c44610@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1076)
-Content-Type: text/plain; charset=iso-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Sylvain Rabot <sylvain@abstraction.fr>
-X-From: git-owner@vger.kernel.org Thu Dec 31 12:13:43 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] bash completion: factor submodules into dirty state
+Date: Thu, 31 Dec 2009 12:48:41 +0100
+Message-ID: <9108ae77c6551363407265de60c7f1def3fe60f0.1262259747.git.trast@student.ethz.ch>
+References: <200912310240.07741.johan@herland.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Johan Herland <johan@herland.net>, Kevin Ballard <kevin@sb.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 31 12:48:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQIyM-0003aC-Ty
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 12:13:43 +0100
+	id 1NQJWL-0004oy-7D
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 12:48:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752269AbZLaLNj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Dec 2009 06:13:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752126AbZLaLNi
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 06:13:38 -0500
-Received: from outmail136059.authsmtp.com ([62.13.136.59]:57599 "EHLO
-	outmail136059.authsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752086AbZLaLNi convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2009 06:13:38 -0500
-X-Greylist: delayed 446 seconds by postgrey-1.27 at vger.kernel.org; Thu, 31 Dec 2009 06:13:38 EST
-Received: from mail-c194.authsmtp.com (mail-c194.authsmtp.com [62.13.128.121])
-	by punt7.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id nBVB6942009615;
-	Thu, 31 Dec 2009 11:06:09 GMT
-Received: from wincent1.inetu.net (wincent1.inetu.net [209.235.192.161])
-	(authenticated bits=128)
-	by mail.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id nBVB66wO002909
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 31 Dec 2009 11:06:08 GMT
-Received: from [192.168.1.2] (231.Red-83-60-136.dynamicIP.rima-tde.net [83.60.136.231])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id nBVB61OY025586
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 31 Dec 2009 06:06:05 -0500
-In-Reply-To: <7fce93be0912301502r77152c52sbccf762fb6c44610@mail.gmail.com>
-X-Mailer: Apple Mail (2.1076)
-X-Server-Quench: 7f3c6a85-f5fc-11de-80b9-0022640b883e
-X-Report-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
-X-AuthRoute: OCd3ZggRAFZKTQIy FSICByJGVUMuIRha BAIHMQpCJFdJD0VH aR8dAldYdwdEHQAR AmcBW1JeUFU/W2N8 dQhSaBtca0hQXgNr T0pMXVMcSncOcxoH QWEeUht7dwwIf312 bQhlCHMIWhVycFsr RxgHCGwHMTJ9YGBN WV1YdwFWdgdKLBdN aQUxNiYHcRtSMy5w BAg2MngxMDFHYDtU XgFFIlMOCVwGFDcn SngA
-X-Authentic-SMTP: 61633436303433.1015:706/Kp
-X-AuthFastPath: 255
-X-Virus-Status: No virus detected - but ensure you scan with your own anti-virus system.
+	id S1750842AbZLaLsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2009 06:48:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750796AbZLaLso
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 06:48:44 -0500
+Received: from gwse.ethz.ch ([129.132.178.237]:44630 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750747AbZLaLso (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2009 06:48:44 -0500
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.213.0; Thu, 31 Dec
+ 2009 12:48:42 +0100
+Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.213.0; Thu, 31 Dec
+ 2009 12:48:42 +0100
+X-Mailer: git-send-email 1.6.6.337.g4932e
+In-Reply-To: <200912310240.07741.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135946>
 
-El 31/12/2009, a las 00:02, Sylvain Rabot escribi=F3:
+In the implementation of GIT_PS1_SHOWDIRTYSTATE in 738a94a (bash:
+offer to show (un)staged changes, 2009-02-03), I cut&pasted the
+git-diff invocations from dirty-worktree checks elsewhere, carrying
+along the --ignore-submodules option.
 
-> In fact I want to backport the commits of the feature branch into =20
-> 12.72.1.
->
-> I used git rebase because the drawings of the man page looked like =20
-> that I
-> wanted to do and it does except for the part it resets the head of my
-> feature branch.
->
-> But as you said the good behavior would be to cherry pick each =20
-> commit of the
-> feature branch and apply them into 12.72.1, right ?
+As pointed out by Kevin Ballard, this doesn't really make sense: to
+the _user_, a changed submodule counts towards uncommitted changes.
 
-Well rebasing is just a convenient way of cherry-picking a bunch of =20
-commits, so it's probably the right tool for the job.
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
-But as you've seen, it has the effect of "moving" or "transplanting" =20
-the feature branch (replacing the old feature HEAD). If you really =20
-want the original feature branch HEAD to continue existing after the =20
-rebase you'll need to take some specific action to preserve it =20
-beforehand (creating a temporary branch before doing the rebase like =20
-Peter Baumann suggested) or restore it afterwards (using "git branch" =20
-like I suggested).
+Johan Herland wrote:
+> On Wednesday 30 December 2009, Kevin Ballard wrote:
+> > Why does the __git_ps1 function in git-completion.bash explicitly ignore
+> >  submodules when showing the GIT_PS1_SHOWDIRTYSTATE status? The most
+> >  common issue with my current repository is not realizing when submodules
+> >  need to be updated because I blindly trust my prompt to tell me when I
+> >  have dirty state.
+> 
+> According to git blame, it has been there since GIT_PS1_SHOWDIRTYSTATE was 
+> introduced in 738a94a... by Thomas Rast (CCed), but the commit message does 
+> not say why submodules are explicitly ignored.
+> 
+> FWIW, I agree with Kevin, and would like changed submodules to be included 
+> in the status.
 
-But before you actually do that, I'd make sure that you actually have =20
-a valid reason for keeping that branch around. Maybe wanting to =20
-"backport" those commits onto various different branches might be a =20
-valid reason. But it's worth thinking through because Git gives you =20
-various tools for supporting different workflows (merging, rebasing, =20
-cherry-picking) and they each have their use cases.
+No good reason; I really do remember cut&pasting the checks, though
+I'm not sure from where.
 
-Cheers,
-Wincent
+I don't really use submodules, so I'll just trust your judgements that
+it's better to factor them into the status.
+
+
+ contrib/completion/git-completion.bash |    6 ++----
+ 1 files changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index c65462c..a455fe8 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -142,11 +142,9 @@ __git_ps1 ()
+ 		elif [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
+ 			if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ]; then
+ 				if [ "$(git config --bool bash.showDirtyState)" != "false" ]; then
+-					git diff --no-ext-diff --ignore-submodules \
+-						--quiet --exit-code || w="*"
++					git diff --no-ext-diff --quiet --exit-code || w="*"
+ 					if git rev-parse --quiet --verify HEAD >/dev/null; then
+-						git diff-index --cached --quiet \
+-							--ignore-submodules HEAD -- || i="+"
++						git diff-index --cached --quiet HEAD -- || i="+"
+ 					else
+ 						i="#"
+ 					fi
+-- 
+1.6.6.337.g4932e
