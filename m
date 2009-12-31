@@ -1,96 +1,78 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] bash completion: factor submodules into dirty state
-Date: Thu, 31 Dec 2009 12:48:41 +0100
-Message-ID: <9108ae77c6551363407265de60c7f1def3fe60f0.1262259747.git.trast@student.ethz.ch>
-References: <200912310240.07741.johan@herland.net>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [msysGit] Problem with apply
+Date: Thu, 31 Dec 2009 13:49:57 +0100
+Message-ID: <40aa078e0912310449g4d503ba7t612e532f5069051f@mail.gmail.com>
+References: <SNT131-ds16B1679EFC8F74B62D4630C4780@phx.gbl>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johan Herland <johan@herland.net>, Kevin Ballard <kevin@sb.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 31 12:48:49 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: msysgit@googlegroups.com, Git Mailing List <git@vger.kernel.org>
+To: richardpreen@hotmail.com
+X-From: git-owner@vger.kernel.org Thu Dec 31 13:50:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQJWL-0004oy-7D
-	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 12:48:49 +0100
+	id 1NQKTi-0008Su-7i
+	for gcvg-git-2@lo.gmane.org; Thu, 31 Dec 2009 13:50:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750842AbZLaLsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2009 06:48:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750796AbZLaLso
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 06:48:44 -0500
-Received: from gwse.ethz.ch ([129.132.178.237]:44630 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750747AbZLaLso (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2009 06:48:44 -0500
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.213.0; Thu, 31 Dec
- 2009 12:48:42 +0100
-Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.213.0; Thu, 31 Dec
- 2009 12:48:42 +0100
-X-Mailer: git-send-email 1.6.6.337.g4932e
-In-Reply-To: <200912310240.07741.johan@herland.net>
+	id S1751510AbZLaMuD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Dec 2009 07:50:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbZLaMuD
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 07:50:03 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:39889 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751414AbZLaMuA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Dec 2009 07:50:00 -0500
+Received: by ewy19 with SMTP id 19so4580909ewy.21
+        for <git@vger.kernel.org>; Thu, 31 Dec 2009 04:49:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3MmPFdqMit3iSgSFKGzBhPUmylMDlwl6Wb/mZ/1GmhY=;
+        b=VR8wZKpiSUNfAlh6KmrDPrwK4ajOjd0fg70J9MioKC4yrQDrV8Ldss8rfHZm547kPV
+         M3DWFLO9cAgtej3fC2/+1u3Te+TTa0BrHK5Ymvc5ALgVYuCOHE2xLLa92GhpouTw9+XK
+         YQcNPdLfoCI1F5n2cMf9CLcNx+POPArZTB49A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=wT0xvz4bS95LCQ73IimB6ouEN5ozF85XQTgMWD32yTTRmnbQnKPhSF8SlkJwPrPTMq
+         gD0eEMUBNzivxqIcUXqcRjPCCSThKo+PruCuF1jYc/7y7VeyUodiG7hJWfcYacOX3AiR
+         R2JRWCB7OLHOH63Zs4NfjcXhsLJGZ125jNsrI=
+Received: by 10.216.87.66 with SMTP id x44mr7308019wee.96.1262263797340; Thu, 
+	31 Dec 2009 04:49:57 -0800 (PST)
+In-Reply-To: <SNT131-ds16B1679EFC8F74B62D4630C4780@phx.gbl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135947>
 
-In the implementation of GIT_PS1_SHOWDIRTYSTATE in 738a94a (bash:
-offer to show (un)staged changes, 2009-02-03), I cut&pasted the
-git-diff invocations from dirty-worktree checks elsewhere, carrying
-along the --ignore-submodules option.
+This isn't a Windows specific question, and would be better for the
+main git mailing list. I'm CC'ing it in hope that someone there knows
+the answer.
 
-As pointed out by Kevin Ballard, this doesn't really make sense: to
-the _user_, a changed submodule counts towards uncommitted changes.
+On Thu, Dec 31, 2009 at 1:26 PM,  <richardpreen@hotmail.com> wrote:
+> I'm trying to use git to create a binary diff of two files and then a=
+pply
+> the diff to the=A0first file in an attempt to make both files the sam=
+e (just
+> testing the concept);
+>
+> git diff --binary --no-index original\t1.ppt modified\t1.ppt >
+> original\my.diff
+> cd original
+> git apply my.diff
+>
+> This is giving me the following error message;
+> fatal: git diff header lacks filename information (line 3)
+>
+> Any suggestions as to where I've gone wrong?
+> Thanks.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
-
-Johan Herland wrote:
-> On Wednesday 30 December 2009, Kevin Ballard wrote:
-> > Why does the __git_ps1 function in git-completion.bash explicitly ignore
-> >  submodules when showing the GIT_PS1_SHOWDIRTYSTATE status? The most
-> >  common issue with my current repository is not realizing when submodules
-> >  need to be updated because I blindly trust my prompt to tell me when I
-> >  have dirty state.
-> 
-> According to git blame, it has been there since GIT_PS1_SHOWDIRTYSTATE was 
-> introduced in 738a94a... by Thomas Rast (CCed), but the commit message does 
-> not say why submodules are explicitly ignored.
-> 
-> FWIW, I agree with Kevin, and would like changed submodules to be included 
-> in the status.
-
-No good reason; I really do remember cut&pasting the checks, though
-I'm not sure from where.
-
-I don't really use submodules, so I'll just trust your judgements that
-it's better to factor them into the status.
-
-
- contrib/completion/git-completion.bash |    6 ++----
- 1 files changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index c65462c..a455fe8 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -142,11 +142,9 @@ __git_ps1 ()
- 		elif [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
- 			if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ]; then
- 				if [ "$(git config --bool bash.showDirtyState)" != "false" ]; then
--					git diff --no-ext-diff --ignore-submodules \
--						--quiet --exit-code || w="*"
-+					git diff --no-ext-diff --quiet --exit-code || w="*"
- 					if git rev-parse --quiet --verify HEAD >/dev/null; then
--						git diff-index --cached --quiet \
--							--ignore-submodules HEAD -- || i="+"
-+						git diff-index --cached --quiet HEAD -- || i="+"
- 					else
- 						i="#"
- 					fi
--- 
-1.6.6.337.g4932e
+--=20
+Erik "kusma" Faye-Lund
