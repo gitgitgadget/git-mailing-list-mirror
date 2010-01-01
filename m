@@ -1,65 +1,54 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: Re: 65c042d4 broke `remote update' without named group
-Date: Fri, 1 Jan 2010 10:14:28 +0100
-Message-ID: <6672d0161001010114g1979eba0pf7de8a78cf979b7c@mail.gmail.com>
-References: <20091229234959.GA94644@les.ath.cx>
-	 <be6fef0d1001010100u7ebf25beydd2ff11ef71a9d66@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 3/6] run-command: optimize out useless shell calls
+Date: Fri, 01 Jan 2010 11:08:22 +0100
+Message-ID: <4B3DC996.1060801@kdbg.org>
+References: <20091230095634.GA16349@coredump.intra.peff.net> <4B3CD74D.7020605@kdbg.org> <20091231214134.GA31399@coredump.intra.peff.net> <200912312316.47925.j6t@kdbg.org> <20100101045017.GA20769@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: YONETANI Tomokazu <qhwt+git@les.ath.cx>, git@vger.kernel.org
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 01 10:14:36 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 01 11:15:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQdae-0006Pp-13
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Jan 2010 10:14:36 +0100
+	id 1NQeY2-0001hq-O0
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Jan 2010 11:15:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751466Ab0AAJOb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Jan 2010 04:14:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212Ab0AAJOb
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jan 2010 04:14:31 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:48723 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750813Ab0AAJOa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Jan 2010 04:14:30 -0500
-Received: by ewy19 with SMTP id 19so5204049ewy.21
-        for <git@vger.kernel.org>; Fri, 01 Jan 2010 01:14:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GvMvbzG1Hc4e9kPj6YpgVWDW5lBAbXtxbLmckuCqZ14=;
-        b=D9osdTdpIx49cGMrjyq8q+34DKsQIYXYSaH9QWU9QFDVPos4B6IQxu+aoILEMc6DeW
-         hE4fbvAYoACjPY4Uo4+nfF3eJfvHnucvq+ipm+DyQNjMRloKxnixeOFYh5JzunbFYkDU
-         1zu7VyBA9+a6PXLqlMPGotiy3N47+g+oVEuVc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=KVCEBrObcMQGTUW5J/ACgO9vf89jCpVripDOfz1jfvvjvy57+AUN91inZnyVmvrPvY
-         awbYTLQZGUCjMEo+QTifNh0TXTW198wCqxbcMvsmr3jilHmhLgvZZge79nORKqWCxDBm
-         VNWk5hNtvk+fbiDOXBp/F/FGbQLegzPU9tdcg=
-Received: by 10.216.88.75 with SMTP id z53mr7015470wee.46.1262337269074; Fri, 
-	01 Jan 2010 01:14:29 -0800 (PST)
-In-Reply-To: <be6fef0d1001010100u7ebf25beydd2ff11ef71a9d66@mail.gmail.com>
+	id S1751100Ab0AAKIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jan 2010 05:08:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750885Ab0AAKIa
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jan 2010 05:08:30 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:17481 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750802Ab0AAKI3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jan 2010 05:08:29 -0500
+Received: from [192.168.0.200] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 8E865CDF8D;
+	Fri,  1 Jan 2010 11:08:24 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <20100101045017.GA20769@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136007>
 
-2010/1/1 Tay Ray Chuan <rctay89@gmail.com>:
+Jeff King schrieb:
+> How should we proceed, then? The "DWIM with spaces" magic seems like
+> something that can come later, so I am tempted to recommend taking my
+> series now, fixing up msysgit as mentioned earlier (or just dropping the
+> pager.c portion of my 2/6), and then implementing DWIM once Ilari's
+> topic matures.
 
-> Bj=C3=B6rn (added to Cc list), you seem to have been the main author =
-of
-> 'bg/fetch-multi', do you have any idea on this?
+I think this procedure is fine. msysgit can resolve the conflict in 
+pager.c as suggested earlier.
 
-Yes. I have fixed the problem and my correction is included in
-the latest 'pu' (bg/maint-remote-update-default).
+> We might want to hold my 5/6 and 6/6 back from master until the DWIM
+> (which would make both totally safe, I think).
 
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+Would make sense, too.
+
+-- Hannes
