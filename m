@@ -1,57 +1,55 @@
 From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH] t9700-perl-git.sh: Fix a test failure on Cygwin
-Date: Fri, 01 Jan 2010 09:05:15 +0900
-Message-ID: <20100101090515.6117@nanako3.lavabit.com>
-References: <4B059150.5050303@ramsay1.demon.co.uk> <20091230224023.6117@nanako3.lavabit.com> <7vbphfzlgt.fsf@alter.siamese.dyndns.org>
+Subject: Re: git pull -s subtree doesn't work properly
+Date: Fri, 01 Jan 2010 09:05:42 +0900
+Message-ID: <20100101090542.6117@nanako3.lavabit.com>
+References: <20091105180905.GP17628@cs-wsok.swansea.ac.uk> <20091231193800.GB19537@cs-wsok.swansea.ac.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 01 01:05:47 2010
+Cc: git@vger.kernel.org
+To: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
+X-From: git-owner@vger.kernel.org Fri Jan 01 01:06:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQV1W-00064k-M6
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Jan 2010 01:05:47 +0100
+	id 1NQV1o-00069l-E6
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Jan 2010 01:06:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751284Ab0AAAFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2009 19:05:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078Ab0AAAFm
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 19:05:42 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:44433 "EHLO karen.lavabit.com"
+	id S1751934Ab0AAAFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2009 19:05:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751834Ab0AAAFq
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Dec 2009 19:05:46 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:44437 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750796Ab0AAAFl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2009 19:05:41 -0500
+	id S1751078Ab0AAAFp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2009 19:05:45 -0500
 Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
-	by karen.lavabit.com (Postfix) with ESMTP id 1DFC111B888;
-	Thu, 31 Dec 2009 18:05:41 -0600 (CST)
+	by karen.lavabit.com (Postfix) with ESMTP id 3523A11B89C;
+	Thu, 31 Dec 2009 18:05:45 -0600 (CST)
 Received: from 8965.lavabit.com (212.62.97.23)
-	by lavabit.com with ESMTP id ARH4204ZTMAX; Thu, 31 Dec 2009 18:05:41 -0600
+	by lavabit.com with ESMTP id C11KIYNOGD1B; Thu, 31 Dec 2009 18:05:45 -0600
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=DvZEtxurBO67wDHKCzWPzWs6d5Fb9u5GaLmTTf41Yg+8r1xQ+S4rm/qQdyoj4CSPJE6Cshkhb2djQ+jhM7BoQYzMdHjE/Oi3D0wrP6WwGlKXPZpSQPWes/LnxZjFCI1MIs8xp8+8WWy33tOaZG+EkXydkWlI8iwqRN6R3EYvn2g=;
-  h=From:To:Cc:Subject:X-Draft-From:References:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Message-Id;
-X-Draft-From: ("nnml:git-mail" 73297)
-In-Reply-To: <7vbphfzlgt.fsf@alter.siamese.dyndns.org>
+  b=KwslAvlYaUiVmtbdARzgmByLWGmLQahE4vWf7rdz14RN+kMws2Enfdg5zZpUSvNWepPXhQvcyOv+5XuFlcA9FcXrjgJO1vl6G3b0dEdMaD9KsO6wIYcof4yfu5iPESpvROKq18IBmpxKAW+KQgC2BwTm9BLPrJ2dZFmCraYLYH0=;
+  h=From:To:Cc:Subject:References:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Message-Id;
+In-Reply-To: <20091231193800.GB19537@cs-wsok.swansea.ac.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/135985>
 
-Quoting Junio C Hamano <gitster@pobox.com>
+Quoting Oliver Kullmann <O.Kullmann@swansea.ac.uk>
 
-> Nanako Shiraishi <nanako3@lavabit.com> writes:
->
->> Junio, could you tell us what happened to this thread?
->
-> Hmph, I think we have it as 81f4026 (t9700-perl-git.sh: Fix a test failure
-> on Cygwin, 2009-11-19).
+> it seems no reply yet (if I understand that web-email-interface
+> properly); has nobody any idea here, or is it a Git bug,
+> or my fault?
 
-Oh, my mistake. I'm very sorry for wasting your time.
+Because you don't specify where in your current directory hierarchy the root level of the tree you are merging goes when you run "git merge -s subtree", the merge mechanism has to find the most similar directory by itself, and if you have more than one similar directories, it can't guess correctly.
+
+It sounds similar to
+
+  http://thread.gmane.org/gmane.comp.version-control.git/135009/focus=135033
 
 -- 
 Nanako Shiraishi
