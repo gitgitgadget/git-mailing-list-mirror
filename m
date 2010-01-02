@@ -1,125 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: User-wide Git config directory (was Re: [PATCH v2] Let core.excludesfile default to ~/.gitexcludes.)
-Date: Sat, 02 Jan 2010 13:05:25 +0100
-Message-ID: <vpqk4w0lnju.fsf_-_@bauges.imag.fr>
-References: <4B06A7EE.2090801@atlas-elektronik.com>
-	<1258840832-22130-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20091230224135.6117@nanako3.lavabit.com>
-	<vpqhbr8ttwv.fsf@bauges.imag.fr>
-	<7vk4w4z1h6.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: RFC: display dirty submodule working directory in git gui and gitk
+Date: Sat, 02 Jan 2010 16:33:22 +0100
+Message-ID: <4B3F6742.6060402@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 02 13:08:51 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Paul Mackerras <paulus@samba.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Lars Hjemli <hjemli@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jan 02 16:33:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NR2mm-0002gC-BP
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Jan 2010 13:08:48 +0100
+	id 1NR5yz-0003YL-BX
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Jan 2010 16:33:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752042Ab0ABMIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Jan 2010 07:08:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752056Ab0ABMIf
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jan 2010 07:08:35 -0500
-Received: from imag.imag.fr ([129.88.30.1]:47234 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752042Ab0ABMIe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jan 2010 07:08:34 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o02C5PFQ010147
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 2 Jan 2010 13:05:25 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NR2jV-0006ys-M5; Sat, 02 Jan 2010 13:05:25 +0100
-In-Reply-To: <7vk4w4z1h6.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 30 Dec 2009 11\:49\:25 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sat, 02 Jan 2010 13:05:26 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1752753Ab0ABPdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Jan 2010 10:33:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752749Ab0ABPdb
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jan 2010 10:33:31 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:54937 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752666Ab0ABPda (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jan 2010 10:33:30 -0500
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate01.web.de (Postfix) with ESMTP id A15D3143FB38D;
+	Sat,  2 Jan 2010 16:33:29 +0100 (CET)
+Received: from [80.128.99.24] (helo=[192.168.178.26])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NR5yr-0002sO-00; Sat, 02 Jan 2010 16:33:29 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19nVvG4fwDsIQ9GNBIFlVkQrHX5IDubtnvbFhAv
+	asJeCYMrW9ZSwV3W419bwe4EXZlb+eHr7CMadyptE45T4BCpio
+	G/BELLSjIi7+m7xVBf3g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136029>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Now that we have much better output when displaying diffs of
+submodules in git gui and gitk (many thanks to all involved!),
+another usability issue shows up: A dirty working directory of
+a submodule isn't visible in git gui or gitk.
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Nanako Shiraishi <nanako3@lavabit.com> writes:
->>
->>> Junio, could you tell us what happened to this thread?
->>
->> I'm not Junio, but I can try ...
->> ...
->> So, I dropped the patch until we get closer to a consensus on what the
->> default value should be.
->
-> Thanks for status updates.  Should we start trying to reach a consensus on
-> how to move forward, or is it not your itch?
+So you might think a "submodule update" would be ok - as you
+see no changes - just too see it fail because the submodules
+working directory is dirty.
 
-I wouldn't say it's not my itch. But I'm not sure I'm the best person
-to do the job (job = comming close to a consensus, not writting the
-code, which shouldn't be hard). Still, I can at least participate ;-).
+Or - even worse - you /think/ you committed your changes in
+a submodule while you didn't. That can lead to 'interesting'
+problems which can be pretty hard to diagnose (like breaking
+builds on other peoples machines).
 
-> It is not _too_ bad to treat ~/.gitconfig specially and support reading
-> from ~/.$SOMEGITTTYNAME/{excludes,attributes} files.
 
-Let's throw in some ideas about what ~/$SOMEGITTTYNAME/ could be :
+A possible solution could look like this:
 
-1) ~/.git/ => no, that would clash with people versioning their $HOME.
+AFAICS, git gui and gitk use "git diff-files" both to get the
+file names of unstaged local changes and to later display the
+actual differences.
 
-2) ~/.gitconfig/ => no, there's already a file ~/.gitconfig
+If they could tell the diff core to also check the submodule
+working directories and to output an extra line - maybe
+something like "Submodule <name> contains uncommitted local
+changes" - when a submodules working directory is dirty,
+git gui and gitk could show the submodules state adequately.
 
-3) ~/.gitglobal/ => that's an option.
 
-4) ~/.config/git/ or, if set, $XDG_CONFIG_HOME/git/ (see
-   http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html )
-   => my prefered one, already discussed in a different context here :
-   http://thread.gmane.org/gmane.comp.version-control.git/135447/focus=135559
-
-Then, there's the question of what to put in this directory. I can see
-two and a half options:
-
-a) ~/.$SOMEGITTTYNAME/{excludes,attributes} as you propose.
-
-a') ~/.$SOMEGITTTYNAME/{ignore,attributes} => I think "ignore" is the
-   advertized vocabulary most of the time in porcelain, and "excludes"
-   exists mostly for historical reasons.
-
-b) ~/.$SOMEGITTTYNAME/<same thing as the content of $GIT_DIR>, that
-   is:
-   ~/.$SOMEGITTTYNAME/info/exclude
-   ~/.$SOMEGITTTYNAME/info/attributes
-   and perhaps
-   ~/.$SOMEGITTTYNAME/config
-   we could imagine also
-   ~/.$SOMEGITTTYNAME/hooks
-
-If I were really happy with the layout of $GIT_DIR, I'd vote for b)
-for consistancy. But I'm not _that_ happy with it: why are exclude and
-attributes not in the same directory as config? why is exclude
-singular and attributes plural?
-
-So, I dunno.
-
-> We can also add support for ~/.$SOMEGITTYNAME/config and try reading
-> from it as well, but even if we did so I don't think we should stop
-> reading from ~/.gitconfig.
-
-Yes, people having a ~/.gitconfig around should be able to continue to
-use it (for years at least, and most likely forever).
-
-And you're right to present it as a different problem. Perhaps we
-should solve the problem above before starting debating about this
-one.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+What do you think about this approach?
