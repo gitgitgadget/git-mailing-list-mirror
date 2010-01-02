@@ -1,111 +1,50 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v6 3/4] reset: add a few tests for "git reset --merge"
-Date: Sat, 2 Jan 2010 06:58:11 +0100
-Message-ID: <201001020658.12179.chriscool@tuxfamily.org>
-References: <20091230055008.4475.95755.chriscool@tuxfamily.org> <20091230055448.4475.42383.chriscool@tuxfamily.org> <7v7hs2o16j.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Paolo Bonzini <bonzini@gnu.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Stephen Boyd <bebarino@gmail.com>
+From: Alex Vandiver <alex@chmrr.net>
+Subject: Re: [PATCH] Reword -M, when in `git log`s documention, to suggest --follow
+Date: Sat, 02 Jan 2010 01:38:21 -0500
+Message-ID: <1262412622-sup-7473@utwig>
+References: <1261428059-31286-1-git-send-email-alex@chmrr.net> <7vhbr6phlx.fsf@alter.siamese.dyndns.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 02 06:55:37 2010
+X-From: git-owner@vger.kernel.org Sat Jan 02 07:40:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQwxc-0004WK-Iv
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Jan 2010 06:55:36 +0100
+	id 1NQxfF-0003fw-LP
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Jan 2010 07:40:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752502Ab0ABFzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Jan 2010 00:55:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752476Ab0ABFzc
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jan 2010 00:55:32 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:48999 "EHLO smtp3-g21.free.fr"
+	id S1752568Ab0ABGiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Jan 2010 01:38:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752491Ab0ABGiW
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jan 2010 01:38:22 -0500
+Received: from chmrr.net ([209.67.253.66]:36469 "EHLO utwig.chmrr.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752458Ab0ABFzb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jan 2010 00:55:31 -0500
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 0907D818075;
-	Sat,  2 Jan 2010 06:55:21 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 19FB681804B;
-	Sat,  2 Jan 2010 06:55:19 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7v7hs2o16j.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752480Ab0ABGiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jan 2010 01:38:22 -0500
+Received: from chmrr by utwig.chmrr.net with local (Exim 4.69)
+	(envelope-from <chmrr@chmrr.net>)
+	id 1NQxcz-0000bU-7W; Sat, 02 Jan 2010 01:38:21 -0500
+In-reply-to: <7vhbr6phlx.fsf@alter.siamese.dyndns.org>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136024>
 
-On vendredi 01 janvier 2010, Junio C Hamano wrote:
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > Commit 9e8eceab ("Add 'merge' mode to 'git reset'", 2008-12-01),
-> > added the --merge option to git reset, but there were no test cases
-> > for it.
-> >
-> > This was not a big problem because "git reset" was just forking and
-> > execing "git read-tree", but this will change in a following patch.
-> >
-> > So let's add a few test cases to make sure that there will be no
-> > regression.
-> >
-> > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->
-> Looks good.
+At Thu Dec 31 23:35:38 -0500 2009, Junio C Hamano wrote:
+> [snip]
 
-Thanks again.
-
-> > +# The next test will test the following:
-> > +#
-> > +#           working index HEAD target         working index HEAD
-> > +#           ----------------------------------------------------
-> > +# file1:     C       C     C    D     --merge  D       D     D
-> > +# file2:     C       D     D    D     --merge  C       D     D
-> > +test_expect_success 'reset --merge is ok with changes in file it does
-> > not touch' ' +    git reset --merge HEAD^ &&
-> > +    ! grep 4 file1 &&
-> > +    grep 4 file2 &&
-> > +    test "$(git rev-parse HEAD)" = "$(git rev-parse initial)" &&
-> > +    test -z "$(git diff --cached)"
-> > +'
-> > ...
-> > +# The next test will test the following:
-> > +#
-> > +#           working index HEAD target         working index HEAD
-> > +#           ----------------------------------------------------
-> > +# file1:     C       C     C    D     --merge  D       D     D
-> > +# file2:     C       C     D    D     --merge  D       D     D
-> > +test_expect_success 'reset --merge discards changes added to index
-> > (2)' ' +    git reset --hard second &&
-> > +    echo "line 4" >> file2 &&
-> > +    git add file2 &&
-> > +    git reset --merge HEAD^ &&
-> > +    ! grep 4 file2 &&
-> > +    test "$(git rev-parse HEAD)" = "$(git rev-parse initial)" &&
-> > +    test -z "$(git diff)" &&
-> > +    test -z "$(git diff --cached)"
-> > +'
->
-> These two seem to duplicate the same case for file1; is it necessary?
-
-No. I think I just copied the previous test and added the "git add file2" 
-line.
-
-> I am not pointing it out as something that needs to be removed; I am just
-> puzzled and wondering if there is some interaction between the ways two
-> paths are handled and the test is trying to check that (which I do not
-> think is the case).
-
-Best regards,
-Christian.
+Thinking about this more, I'm more convinced that this is just a
+symptom of a bigger problem -- why does the help for `git log` start
+off with the _diff_ options, which do nothing unless you also use the
+-p option?  It adds ~230 lines of options that are irrelevant to the
+most common usage model.  It seems to me like the more correct fix
+would be to move the diff options to later in the file (after the
+options that are `git log`-specific), or to remove them entirely, and
+replace them with a pointer to git diff's options.
+ - Alex
+-- 
+Networking -- only one letter away from not working
