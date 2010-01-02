@@ -1,153 +1,120 @@
-From: Tarmigan Casebolt <tarmigan+git@gmail.com>
-Subject: [PATCH v3 3/3] Smart-http tests: Test http-backend without curl or a webserver
-Date: Sat,  2 Jan 2010 12:45:19 -0800
-Message-ID: <1262465119-96115-3-git-send-email-tarmigan+git@gmail.com>
-References: <905315641001021244o522ac092g7fdaaab83a2609e2@mail.gmail.com>
-Cc: git@vger.kernel.org, "Shawn O . Pearce" <spearce@spearce.org>,
-	Tarmigan Casebolt <tarmigan+git@gmail.com>
+From: Andreas Gruenbacher <agruen@suse.de>
+Subject: Re: Filename quoting / parsing problem
+Date: Sat, 2 Jan 2010 21:48:47 +0100
+Organization: SUSE Labs
+Message-ID: <201001022148.47841.agruen@suse.de>
+References: <201001011844.23571.agruen@suse.de> <201001021236.26947.agruen@suse.de> <7v8wcge4kr.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 02 21:46:05 2010
+X-From: git-owner@vger.kernel.org Sat Jan 02 21:49:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRArM-0001QV-UK
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Jan 2010 21:46:05 +0100
+	id 1NRAuG-0002Dr-UL
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Jan 2010 21:49:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752112Ab0ABUpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Jan 2010 15:45:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751657Ab0ABUpt
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jan 2010 15:45:49 -0500
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:52644 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752092Ab0ABUps (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jan 2010 15:45:48 -0500
-Received: by mail-yw0-f176.google.com with SMTP id 6so14212004ywh.4
-        for <git@vger.kernel.org>; Sat, 02 Jan 2010 12:45:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=7zI4JS4EIQpD9NhZ6e5LgCKqS3rRqs5bitFwRHVkK7U=;
-        b=cn2b1895IUEHe7jYSy/GWmzgWf7/3Q6yn90gyTSurE9DxBxmGU8R2aQkcQEbElpFgb
-         ufd0gS7SjuIHFuDWgMnEjyqYYlesbcU3NI4PEn/W/xK5Gwvwod+XF+xY4gzd2/oRCoNb
-         ye1j1cEF/Vc87MW+b8MM/uTebPdfoI39BruU4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        b=LJ0ACOIRtAvN8gXpEUtEE7arPoXT0HF9J+fKleITuTDfFtlWmE+4JI1bnr4dbJzbe7
-         Gam4atViShJcS2Q0/2WGqEya0ypnx0BnOKkW3SwYGd7M3N1lT6bqFn3H/p1fJSkq+nJI
-         nRJSlDd7rXvZjP6ElSgkDXKsjyhmeh8OSRtH4=
-Received: by 10.150.48.12 with SMTP id v12mr4023697ybv.213.1262465148496;
-        Sat, 02 Jan 2010 12:45:48 -0800 (PST)
-Received: from localhost.localdomain (c-69-181-44-199.hsd1.ca.comcast.net [69.181.44.199])
-        by mx.google.com with ESMTPS id 5sm6541697yxd.35.2010.01.02.12.45.45
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 02 Jan 2010 12:45:47 -0800 (PST)
-X-Mailer: git-send-email 1.6.6
-In-Reply-To: <905315641001021244o522ac092g7fdaaab83a2609e2@mail.gmail.com>
+	id S1752141Ab0ABUsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Jan 2010 15:48:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751022Ab0ABUsw
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jan 2010 15:48:52 -0500
+Received: from cantor2.suse.de ([195.135.220.15]:36624 "EHLO mx2.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752141Ab0ABUsu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jan 2010 15:48:50 -0500
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.221.2])
+	by mx2.suse.de (Postfix) with ESMTP id 290778726A;
+	Sat,  2 Jan 2010 21:48:49 +0100 (CET)
+User-Agent: KMail/1.12.2 (Linux/2.6.31.5-0.1-desktop; KDE/4.3.1; x86_64; ; )
+In-Reply-To: <7v8wcge4kr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136049>
 
-This reuses many of the tests from t5560 but runs those tests without
-curl or a webserver.  This will hopefully increase the testing
-coverage for http-backend because it does not require users to set
-GIT_TEST_HTTPD.
+On Saturday 02 January 2010 07:37:08 pm Junio C Hamano wrote:
+> Andreas Gruenbacher <agruen@suse.de> writes:
+> > On Friday 01 January 2010 09:01:19 pm Junio C Hamano wrote:
+> >> > Both "b file" and "c file " are parsed by "git apply" perfectly fine.
+> >
+> > Right, the "diff --git" lines are technically still parseable when the
+> > file name stays the same.  With renames, lines like "diff --git a/f a/f
+> > b/f" or "diff --git a/f b/f b/f" are possible, but then there will also
+> > be "renamed from" and "renamed to" headers which will disambiguate
+> > things.  Still, it doesn't seem like a good idea to allow such
+> > ambiguities in the first place.
+> 
+> You already realized that there is no ambiguity because "diff --git" lines
+> are parsable and renames have explicit names.  Why do you still maintain
+> that we are allowing such "ambiguities" when there is none?
 
-Signed-off-by: Tarmigan Casebolt <tarmigan+git@gmail.com>
----
- t/t5561-http-backend-noserver.sh |   30 ++++++++++++++++++++++++------
- t/t556x_common                   |    3 +++
- 2 files changed, 27 insertions(+), 6 deletions(-)
+Don't get so aroused ...
 
-diff --git a/t/t5561-http-backend-noserver.sh b/t/t5561-http-backend-noserver.sh
-index a9ba2d9..9013824 100755
---- a/t/t5561-http-backend-noserver.sh
-+++ b/t/t5561-http-backend-noserver.sh
-@@ -6,18 +6,36 @@ test_description='test git-http-backend-noserver'
- HTTPD_DOCUMENT_ROOT_PATH="$TRASH_DIRECTORY"
- 
- run_backend() {
--	REQUEST_METHOD=GET \
-+	echo "$2"| \
-+	QUERY_STRING="${1#*\?}" \
- 	GIT_PROJECT_ROOT="$HTTPD_DOCUMENT_ROOT_PATH" \
--	PATH_INFO="$1" \
-+	PATH_INFO="${1%%\?*}" \
- 	git http-backend >act.out 2>act.err
- }
- 
- GET() {
--	return 0
-+	REQUEST_METHOD="GET" \
-+	run_backend "/repo.git/$1" &&
-+	grep "Status" act.out >act
-+	if [ $? -eq 1 ];
-+	then
-+		printf "Status: 200 OK\r\n" > act
-+	fi
-+	printf "Status: $2\r\n" > exp &&
-+	test_cmp exp act
- }
- 
- POST() {
--	return 0
-+	REQUEST_METHOD="POST" \
-+	CONTENT_TYPE="application/x-$1-request" \
-+	run_backend "/repo.git/$1" "$2" &&
-+	grep "Status" act.out >act
-+	if [ $? -eq 1 ];
-+	then
-+		printf "Status: 200 OK\r\n" > act
-+	fi
-+	printf "Status: $3\r\n" > exp &&
-+	test_cmp exp act
- }
- 
- log_div() {
-@@ -28,9 +46,9 @@ log_div() {
- 
- expect_aliased() {
- 	if test $1 = 0; then
--		run_backend "$2"
-+		REQUEST_METHOD=GET run_backend "$2"
- 	else
--		run_backend "$2" &&
-+		REQUEST_METHOD=GET run_backend "$2" &&
- 		echo "fatal: '$2': aliased" >exp.err &&
- 		test_cmp exp.err act.err
- 	fi
-diff --git a/t/t556x_common b/t/t556x_common
-index 1b4921c..be024e5 100755
---- a/t/t556x_common
-+++ b/t/t556x_common
-@@ -50,6 +50,7 @@ get_static_files() {
- }
- 
- SMART=smart
-+export GIT_HTTP_EXPORT_ALL=1
- test_expect_success 'direct refs/heads/master not found' '
- 	log_div "refs/heads/master"
- 	GET refs/heads/master "404 Not Found"
-@@ -59,6 +60,7 @@ test_expect_success 'static file is ok' '
- 	get_static_files "200 OK"
- '
- SMART=smart_noexport
-+unset GIT_HTTP_EXPORT_ALL
- test_expect_success 'no export by default' '
- 	log_div "no git-daemon-export-ok"
- 	get_static_files "404 Not Found"
-@@ -71,6 +73,7 @@ test_expect_success 'export if git-daemon-export-ok' '
-         get_static_files "200 OK"
- '
- SMART=smart
-+export GIT_HTTP_EXPORT_ALL=1
- test_expect_success 'static file if http.getanyfile true is ok' '
- 	log_div "getanyfile true"
- 	config http.getanyfile true &&
--- 
-1.6.6
+Right now, git generates lines like "diff --git a/f a/f b/f b/f" in some 
+corner cases, and from such lines alone, it is not possible to tell what the 
+two file names are (either "a/f a/f" and "b/f b/f", or "a/f a/f b/f" and 
+"b/f").  I can only find that out by looking at the other header lines.
+
+I would prefer a format which I can parse line by line without ambiguities in 
+the first place, because this would keep things much simpler and easier to 
+debug.  (Think of other implementations of the extended diff format which may 
+not produce the exact same output as git.)
+
+So I would be happy with either of this:
+
+  * Also quote spaces in the "diff --git" line so that I can always reliably
+    parse it, or
+
+  * Add an additional extended header line with the file name in case there
+    are no other header lines giving the file names away already (as for
+    renames, copies, or when there are "---" and "+++" lines).
+
+After our discussion so far, option two would probably be easier for everyone: 
+you could add it without risking to break anything, and I could avoid parsing 
+the "diff --git" line altogether.
+
+> >> Having said all that, I don't think we would mind a change to treat a
+> >> pathname with trailing SP a bit specially (iow, quoting "c file " in the
+> >> above failed attempt to reproduce the issue).
+> >
+> > I would prefer quoting file names which contain spaces anywhere,...
+> 
+> The only reason I said I don't think we would mind changing the trailing
+> SP case is because the reduced risk of getting our patches corrupted by
+> MUA _might_ outweigh the benefit of not quoting to avoid an eyesore [*1*].
+> 
+> But what you said would add to eyesore of quoted names (which you omitted
+> from your quote) without any justification other than "I would prefer".
+> The pros-and-cons in such a change is quite different; as we have already
+> established that there is no ambiguity, "disambuguation" is not a "pro" in
+> this comparison.
+>
+> [Footnote]
+> 
+> *1* Strictly speaking, it is not just "an eyesore" that is an issue.  Our
+> diff output without renames are designed to be grokkable by other people's
+> patch implementations (e.g. GNU patch), and the quoted pathnames are not
+> understandable by them.
+
+GNU patch doesn't look at "diff --git" lines or extended header lines at all 
+so far, so there are no compatibility issues yet.  Quoting spaces in "---" and 
+"+++" lines would lead to problems with current GNU patch though.  (So does 
+the quoting of several other characters like ", of course.)
+
+> Even though our final version of quoted path format came from the GNU
+> diff/patch maintainer (back then, at least):
+> 
+>     http://article.gmane.org/gmane.comp.version-control.git/10103
+> 
+> I don't think it happened in the GNU land yet, and you would be the person
+> to know about it ;-).
+
+I'm working on it ...
+
+Thanks,
+Andreas
