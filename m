@@ -1,75 +1,69 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: RFC: display dirty submodule working directory in git gui and gitk
-Date: Sat, 02 Jan 2010 16:33:22 +0100
-Message-ID: <4B3F6742.6060402@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>, Lars Hjemli <hjemli@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 02 16:33:41 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] stash: mention --patch in usage string.
+Date: Sat,  2 Jan 2010 17:35:32 +0100
+Message-ID: <1262450132-22048-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Jan 02 17:35:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NR5yz-0003YL-BX
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Jan 2010 16:33:37 +0100
+	id 1NR6xB-0004qq-FA
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Jan 2010 17:35:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752753Ab0ABPdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Jan 2010 10:33:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752749Ab0ABPdb
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jan 2010 10:33:31 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:54937 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752666Ab0ABPda (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jan 2010 10:33:30 -0500
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id A15D3143FB38D;
-	Sat,  2 Jan 2010 16:33:29 +0100 (CET)
-Received: from [80.128.99.24] (helo=[192.168.178.26])
-	by smtp06.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1NR5yr-0002sO-00; Sat, 02 Jan 2010 16:33:29 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19nVvG4fwDsIQ9GNBIFlVkQrHX5IDubtnvbFhAv
-	asJeCYMrW9ZSwV3W419bwe4EXZlb+eHr7CMadyptE45T4BCpio
-	G/BELLSjIi7+m7xVBf3g==
+	id S1752796Ab0ABQfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Jan 2010 11:35:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752764Ab0ABQfo
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jan 2010 11:35:44 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:59978 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752757Ab0ABQfo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jan 2010 11:35:44 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o02GYPPZ013745
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 2 Jan 2010 17:34:25 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1NR6ww-000812-GQ; Sat, 02 Jan 2010 17:35:34 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1NR6ww-0005kB-E5; Sat, 02 Jan 2010 17:35:34 +0100
+X-Mailer: git-send-email 1.6.6.76.gd6b23.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 02 Jan 2010 17:34:28 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o02GYPPZ013745
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1263054868.28229@NRWIwWMwAwjKdvNveeqZVg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136029>
-
-Now that we have much better output when displaying diffs of
-submodules in git gui and gitk (many thanks to all involved!),
-another usability issue shows up: A dirty working directory of
-a submodule isn't visible in git gui or gitk.
-
-So you might think a "submodule update" would be ok - as you
-see no changes - just too see it fail because the submodules
-working directory is dirty.
-
-Or - even worse - you /think/ you committed your changes in
-a submodule while you didn't. That can lead to 'interesting'
-problems which can be pretty hard to diagnose (like breaking
-builds on other peoples machines).
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136030>
 
 
-A possible solution could look like this:
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ git-stash.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-AFAICS, git gui and gitk use "git diff-files" both to get the
-file names of unstaged local changes and to later display the
-actual differences.
-
-If they could tell the diff core to also check the submodule
-working directories and to output an extra line - maybe
-something like "Submodule <name> contains uncommitted local
-changes" - when a submodules working directory is dirty,
-git gui and gitk could show the submodules state adequately.
-
-
-What do you think about this approach?
+diff --git a/git-stash.sh b/git-stash.sh
+index f796c2f..3a0685f 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -7,7 +7,7 @@ USAGE="list [<options>]
+    or: $dashless drop [-q|--quiet] [<stash>]
+    or: $dashless ( pop | apply ) [--index] [-q|--quiet] [<stash>]
+    or: $dashless branch <branchname> [<stash>]
+-   or: $dashless [save [-k|--keep-index] [-q|--quiet] [<message>]]
++   or: $dashless [save [--patch] [-k|--[no-]keep-index] [-q|--quiet] [<message>]]
+    or: $dashless clear"
+ 
+ SUBDIRECTORY_OK=Yes
+-- 
+1.6.6.76.gd6b23.dirty
