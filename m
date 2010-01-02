@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH 3/5] reset: add test cases for "--keep" option
-Date: Sat, 02 Jan 2010 06:39:31 +0100
-Message-ID: <20100102053934.30066.53176.chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 2/5] reset: add option "--keep" to "git reset"
+Date: Sat, 02 Jan 2010 06:39:30 +0100
+Message-ID: <20100102053934.30066.85625.chriscool@tuxfamily.org>
 References: <20100102053303.30066.26391.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
@@ -18,206 +18,195 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NQwil-00023x-Tx
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Jan 2010 06:40:16 +0100
+	id 1NQwin-00023x-Qu
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Jan 2010 06:40:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752341Ab0ABFjy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Jan 2010 00:39:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751685Ab0ABFjx
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jan 2010 00:39:53 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:53990 "EHLO smtp3-g21.free.fr"
+	id S1752426Ab0ABFj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Jan 2010 00:39:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752271Ab0ABFjy
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jan 2010 00:39:54 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:53982 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751250Ab0ABFjw (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751112Ab0ABFjw (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 2 Jan 2010 00:39:52 -0500
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 7E8F5818076;
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 028CF818075;
 	Sat,  2 Jan 2010 06:39:41 +0100 (CET)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 2016F818044;
-	Sat,  2 Jan 2010 06:39:39 +0100 (CET)
-X-git-sha1: afef2321a83e4732440e978a05520684bc6e31ff 
+	by smtp3-g21.free.fr (Postfix) with ESMTP id A0146818036;
+	Sat,  2 Jan 2010 06:39:38 +0100 (CET)
+X-git-sha1: dbfe1c9858bdb0dba67540617fd4b499bdf2e105 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20100102053303.30066.26391.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136020>
 
-This shows that with the "--keep" option, changes that are both in
-the work tree and the index are kept in the work tree after the
-reset (but discarded in the index). As with the "--merge" option,
-changes that are in both the work tree and the index are discarded
-after the reset.
+The purpose of this new option is to discard some of the
+last commits but to keep current changes in the work tree.
 
-In the case of unmerged entries, we can see that "git reset --merge"
-resets everything to the target, while with "--keep" it works only
-when the target state is the same as HEAD and the work tree is not
-reset.
+The use case is when you work on something and commit
+that work. And then you work on something else that touches
+other files, but you don't commit it yet. Then you realize
+that what you commited when you worked on the first thing
+is not good or belongs to another branch.
 
-And this shows that otherwise "--merge" and "--keep" have the same
-behavior.
+So you want to get rid of the previous commits (at least in
+the current branch) but you want to make sure that you keep
+the changes you have in the work tree. And you are pretty
+sure that your changes are independent from what you
+previously commited, so you don't want the reset to succeed
+if the previous commits changed a file that you also
+changed in your work tree.
 
+The table below shows what happens when running
+"git reset --option target" to reset the HEAD to another
+commit (as a special case "target" could be the same as
+HEAD) in the cases where "--merge" and "--keep" behave
+differently.
+
+working index HEAD target         working index HEAD
+----------------------------------------------------
+  A      B     C     D   --keep    (disallowed)
+                         --merge   (disallowed)
+  A      B     C     C   --keep     A      C     C
+                         --merge   (disallowed)
+  B      B     C     D   --keep    (disallowed)
+                         --merge    D      D     D
+  B      B     C     C   --keep     B      C     C
+                         --merge    C      C     C
+
+In this table, A, B and C are some different states of
+a file. For example the last line of the table means
+that if a file is in state B in the working tree and
+the index, and in a different state C in HEAD and in
+the target, then "git reset --merge target" will put
+the file in state C in the working tree, in the index
+and in HEAD.
+
+The following table shows what happens on unmerged entries:
+
+working index HEAD target         working index HEAD
+----------------------------------------------------
+ X       U     A    B     --keep  (disallowed)
+                          --merge  B       B     B
+ X       U     A    A     --keep   X       A     A
+                          --merge  A       A     A
+
+In this table X can be any state and U means an unmerged
+entry.
+
+Though the error message when "reset --keep" is disallowed
+on unmerged entries is something like:
+
+error: Entry 'file1' would be overwritten by merge. Cannot merge.
+fatal: Could not reset index file to revision 'HEAD^'.
+
+which is not very nice.
+
+A following patch will add some test cases for
+"--keep", where the differences between "--merge" and
+"--keep" can also be seen.
+
+The "--keep" option is implemented by doing a 2 way merge
+between HEAD and the reset target, and if this succeeds
+by doing a mixed reset to the target.
+
+The code comes from the sequencer GSoC project, where
+such an option was developed by Stephan Beyer:
+
+git://repo.or.cz/git/sbeyer.git
+
+(at commit 5a78908b70ceb5a4ea9fd4b82f07ceba1f019079)
+
+But in the sequencer project the "reset" flag was set
+in the "struct unpack_trees_options" passed to
+"unpack_trees()". With this flag the changes in the
+working tree were discarded if the file was different
+between HEAD and the reset target.
+
+Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t7110-reset-merge.sh |  105 +++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 104 insertions(+), 1 deletions(-)
+ builtin-reset.c |   29 ++++++++++++++++++++++++-----
+ 1 files changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/t/t7110-reset-merge.sh b/t/t7110-reset-merge.sh
-index 249df7c..a9b2fba 100755
---- a/t/t7110-reset-merge.sh
-+++ b/t/t7110-reset-merge.sh
-@@ -3,7 +3,7 @@
- # Copyright (c) 2009 Christian Couder
- #
+diff --git a/builtin-reset.c b/builtin-reset.c
+index 0f5022e..da61f20 100644
+--- a/builtin-reset.c
++++ b/builtin-reset.c
+@@ -22,13 +22,15 @@
+ #include "cache-tree.h"
  
--test_description='Tests for "git reset --merge"'
-+test_description='Tests for "git reset" with "--merge" and "--keep" options'
+ static const char * const git_reset_usage[] = {
+-	"git reset [--mixed | --soft | --hard | --merge] [-q] [<commit>]",
++	"git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]",
+ 	"git reset [--mixed] <commit> [--] <paths>...",
+ 	NULL
+ };
  
- . ./test-lib.sh
+-enum reset_type { MIXED, SOFT, HARD, MERGE, NONE };
+-static const char *reset_type_names[] = { "mixed", "soft", "hard", "merge", NULL };
++enum reset_type { MIXED, SOFT, HARD, MERGE, KEEP, NONE };
++static const char *reset_type_names[] = {
++	"mixed", "soft", "hard", "merge", "keep", NULL
++};
  
-@@ -47,6 +47,30 @@ test_expect_success 'reset --merge is ok when switching back' '
- #
- #           working index HEAD target         working index HEAD
- #           ----------------------------------------------------
-+# file1:     C       C     C    D     --keep   D       D     D
-+# file2:     C       D     D    D     --keep   C       D     D
-+test_expect_success 'reset --keep is ok with changes in file it does not touch' '
-+    git reset --hard second &&
-+    cat file1 >file2 &&
-+    git reset --keep HEAD^ &&
-+    ! grep 4 file1 &&
-+    grep 4 file2 &&
-+    test "$(git rev-parse HEAD)" = "$(git rev-parse initial)" &&
-+    test -z "$(git diff --cached)"
-+'
-+
-+test_expect_success 'reset --keep is ok when switching back' '
-+    git reset --keep second &&
-+    grep 4 file1 &&
-+    grep 4 file2 &&
-+    test "$(git rev-parse HEAD)" = "$(git rev-parse second)" &&
-+    test -z "$(git diff --cached)"
-+'
-+
-+# The next test will test the following:
-+#
-+#           working index HEAD target         working index HEAD
-+#           ----------------------------------------------------
- # file1:     B       B     C    D     --merge  D       D     D
- # file2:     C       D     D    D     --merge  C       D     D
- test_expect_success 'reset --merge discards changes added to index (1)' '
-@@ -78,6 +102,18 @@ test_expect_success 'reset --merge is ok again when switching back (1)' '
- #
- #           working index HEAD target         working index HEAD
- #           ----------------------------------------------------
-+# file1:     B       B     C    D     --keep   (disallowed)
-+test_expect_success 'reset --keep fails with changes in index in files it touches' '
-+    git reset --hard second &&
-+    echo "line 5" >> file1 &&
-+    git add file1 &&
-+    test_must_fail git reset --keep HEAD^
-+'
-+
-+# The next test will test the following:
-+#
-+#           working index HEAD target         working index HEAD
-+#           ----------------------------------------------------
- # file1:     C       C     C    D     --merge  D       D     D
- # file2:     C       C     D    D     --merge  D       D     D
- test_expect_success 'reset --merge discards changes added to index (2)' '
-@@ -104,6 +140,30 @@ test_expect_success 'reset --merge is ok again when switching back (2)' '
- #
- #           working index HEAD target         working index HEAD
- #           ----------------------------------------------------
-+# file1:     C       C     C    D     --keep   D       D     D
-+# file2:     C       C     D    D     --keep   C       D     D
-+test_expect_success 'reset --keep keeps changes it does not touch' '
-+    git reset --hard second &&
-+    echo "line 4" >> file2 &&
-+    git add file2 &&
-+    git reset --keep HEAD^ &&
-+    grep 4 file2 &&
-+    test "$(git rev-parse HEAD)" = "$(git rev-parse initial)" &&
-+    test -z "$(git diff --cached)"
-+'
-+
-+test_expect_success 'reset --keep keeps changes when switching back' '
-+    git reset --keep second &&
-+    grep 4 file2 &&
-+    grep 4 file1 &&
-+    test "$(git rev-parse HEAD)" = "$(git rev-parse second)" &&
-+    test -z "$(git diff --cached)"
-+'
-+
-+# The next test will test the following:
-+#
-+#           working index HEAD target         working index HEAD
-+#           ----------------------------------------------------
- # file1:     A       B     B    C     --merge  (disallowed)
- test_expect_success 'reset --merge fails with changes in file it touches' '
-     git reset --hard second &&
-@@ -116,6 +176,22 @@ test_expect_success 'reset --merge fails with changes in file it touches' '
-     grep file1 err.log | grep "not uptodate"
- '
+ static char *args_to_str(const char **argv)
+ {
+@@ -71,6 +73,7 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
+ 	if (!quiet)
+ 		opts.verbose_update = 1;
+ 	switch (reset_type) {
++	case KEEP:
+ 	case MERGE:
+ 		opts.update = 1;
+ 		break;
+@@ -85,6 +88,16 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
  
-+# The next test will test the following:
-+#
-+#           working index HEAD target         working index HEAD
-+#           ----------------------------------------------------
-+# file1:     A       B     B    C     --keep   (disallowed)
-+test_expect_success 'reset --keep fails with changes in file it touches' '
-+    git reset --hard second &&
-+    echo "line 5" >> file1 &&
-+    test_tick &&
-+    git commit -m "add line 5" file1 &&
-+    sed -e "s/line 1/changed line 1/" <file1 >file3 &&
-+    mv file3 file1 &&
-+    test_must_fail git reset --keep HEAD^ 2>err.log &&
-+    grep file1 err.log | grep "not uptodate"
-+'
-+
- test_expect_success 'setup 2 different branches' '
-     git reset --hard second &&
-     git branch branch1 &&
-@@ -148,6 +224,18 @@ test_expect_success '"reset --merge HEAD^" is ok with pending merge' '
- #
- #           working index HEAD target         working index HEAD
- #           ----------------------------------------------------
-+# file1:     X       U     B    C     --keep   (disallowed)
-+test_expect_success '"reset --keep HEAD^" fails with pending merge' '
-+    git reset --hard third &&
-+    test_must_fail git merge branch1 &&
-+    test_must_fail git reset --keep HEAD^ 2>err.log &&
-+    grep file1 err.log | grep "overwritten by merge"
-+'
-+
-+# The next test will test the following:
-+#
-+#           working index HEAD target         working index HEAD
-+#           ----------------------------------------------------
- # file1:     X       U     B    B     --merge  B       B     B
- test_expect_success '"reset --merge HEAD" is ok with pending merge' '
-     git reset --hard third &&
-@@ -158,4 +246,19 @@ test_expect_success '"reset --merge HEAD" is ok with pending merge' '
-     test -z "$(git diff)"
- '
+ 	read_cache_unmerged();
  
-+# The next test will test the following:
-+#
-+#           working index HEAD target         working index HEAD
-+#           ----------------------------------------------------
-+# file1:     X       U     B    B     --keep  X       B     B
-+test_expect_success '"reset --keep HEAD" is ok with pending merge' '
-+    git reset --hard third &&
-+    test_must_fail git merge branch1 &&
-+    cat file1 >orig_file1 &&
-+    git reset --keep HEAD &&
-+    test "$(git rev-parse HEAD)" = "$(git rev-parse third)" &&
-+    test -z "$(git diff --cached)" &&
-+    test_cmp file1 orig_file1
-+'
++	if (reset_type == KEEP) {
++		unsigned char head_sha1[20];
++		if (get_sha1("HEAD", head_sha1))
++			return error("You do not have a valid HEAD.");
++		if (!fill_tree_descriptor(desc, head_sha1))
++			return error("Failed to find tree of HEAD.");
++		nr++;
++		opts.fn = twoway_merge;
++	}
 +
- test_done
+ 	if (!fill_tree_descriptor(desc + nr - 1, sha1))
+ 		return error("Failed to find tree of %s.", sha1_to_hex(sha1));
+ 	if (unpack_trees(nr, desc, &opts))
+@@ -229,6 +242,8 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 				"reset HEAD, index and working tree", HARD),
+ 		OPT_SET_INT(0, "merge", &reset_type,
+ 				"reset HEAD, index and working tree", MERGE),
++		OPT_SET_INT(0, "keep", &reset_type,
++				"reset HEAD but keep local changes", KEEP),
+ 		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
+ 		OPT_END()
+ 	};
+@@ -317,9 +332,13 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	if (reset_type == SOFT) {
+ 		if (is_merge() || read_cache() < 0 || unmerged_cache())
+ 			die("Cannot do a soft reset in the middle of a merge.");
++	} else {
++		int err = reset_index_file(sha1, reset_type, quiet);
++		if (reset_type == KEEP)
++			err = err || reset_index_file(sha1, MIXED, quiet);
++		if (err)
++			die("Could not reset index file to revision '%s'.", rev);
+ 	}
+-	else if (reset_index_file(sha1, reset_type, quiet))
+-		die("Could not reset index file to revision '%s'.", rev);
+ 
+ 	/* Any resets update HEAD to the head being switched to,
+ 	 * saving the previous head in ORIG_HEAD before. */
 -- 
 1.6.6.rc2.5.g49666
