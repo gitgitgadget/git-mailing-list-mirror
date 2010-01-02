@@ -1,138 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 2/5] reset: add option "--keep" to "git reset"
-Date: Sat, 02 Jan 2010 11:50:59 -0800
-Message-ID: <7viqbk8evw.fsf@alter.siamese.dyndns.org>
-References: <20100102053303.30066.26391.chriscool@tuxfamily.org>
- <20100102053934.30066.85625.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Paolo Bonzini <bonzini@gnu.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Jan 02 20:51:32 2010
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: [PATCH] Use warning function instead of fprintf(stderr, "Warning: ...").
+Date: Sat,  2 Jan 2010 15:24:46 -0500
+Message-ID: <1262463886-8956-1-git-send-email-tfransosi@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 02 21:25:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRA0Y-0007ou-J1
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Jan 2010 20:51:31 +0100
+	id 1NRAXJ-0003SG-2G
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Jan 2010 21:25:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751492Ab0ABTv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Jan 2010 14:51:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416Ab0ABTv0
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jan 2010 14:51:26 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61196 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751206Ab0ABTvZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jan 2010 14:51:25 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 30686AC00B;
-	Sat,  2 Jan 2010 14:51:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=qsvQeI3OggxYV7ApPCV3p1kJ6FU=; b=U8uK2HexM//UXjf1h72o9GY
-	I+IfHKPXeFPh54vvyRvo2bsSrW+ln8KVWABJSQIUWpa1hk/725bTJsm3X1JZxP4/
-	TSXOfQ9ZoEmH5oVu6ohPpeatOcqZjfUDpSs7kxnFz7M+nqUSJhkMDYO3GlQjOuVn
-	TcO01khXcHsihn5EZXtM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=UxBLDzq8HU5F4v+HouKGaVQl+1RoaR1P+wFrcur7cCv812MKY
-	vTlTFHYg/Hq6tsfb6MAZbPeCHaRMU4lEtvfoILByXuvXAlJG5sBdgsODE+qLedCO
-	v6cEortBBPc296PhhYw4fE0aZp+VoC2dMn1PUuJ64g0L+xtSDPCtbTbbW8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 869EEAC009;
-	Sat,  2 Jan 2010 14:51:14 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7A0EBAC008; Sat,  2 Jan 2010
- 14:51:01 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2F384340-F7D8-11DE-87F6-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1751599Ab0ABUY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Jan 2010 15:24:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751446Ab0ABUY4
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jan 2010 15:24:56 -0500
+Received: from mail-qy0-f192.google.com ([209.85.221.192]:53290 "EHLO
+	mail-qy0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751212Ab0ABUYz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jan 2010 15:24:55 -0500
+Received: by qyk30 with SMTP id 30so6524688qyk.33
+        for <git@vger.kernel.org>; Sat, 02 Jan 2010 12:24:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:x-mailer;
+        bh=y2uVGYiGb6PWTSAxfQRULWU6VQU1iqPhdPh2oEdNYjQ=;
+        b=vZoegpNCnNITfPb5K6LSyV6e6KOSt1csrSgbLI7wCmt4Mdj310TTCeitf779I9NLXN
+         f/JCVTClsZ0rR4MIsGydFZFCRtBtUJyCnOT8lsf3evKLJllOCRXrGMVXZXq4W6F8We9F
+         APyk/KbAZIMAQ/+Tfacse+B2I+gFFK6rDBuhw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:message-id:x-mailer;
+        b=KJ2u1dRWnGigh6+PLhOBTEesPISbO4sXVa8NUSVsKqovzCpXx5pthz3NPQ+IDKIQh0
+         E13oTAvQUyYXaFOFYzX5enUu+kORnwoxciDh0MA3ascOgZeFT8MVLHkYC1vdDqn3tKhH
+         8iQaRyvwU6rzkRVuTKWULTdoZsqcww8emTzSU=
+Received: by 10.224.44.40 with SMTP id y40mr7448760qae.197.1262463894718;
+        Sat, 02 Jan 2010 12:24:54 -0800 (PST)
+Received: from localhost ([201.53.2.165])
+        by mx.google.com with ESMTPS id 6sm44924075qwd.16.2010.01.02.12.24.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 02 Jan 2010 12:24:54 -0800 (PST)
+X-Mailer: git-send-email 1.6.6.rc3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136044>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Signed-off-by: Thiago Farina <tfransosi@gmail.com>
+---
+ bisect.c     |    2 +-
+ builtin-mv.c |    4 +---
+ http.c       |    2 +-
+ 3 files changed, 3 insertions(+), 5 deletions(-)
 
-> The purpose of this new option is to discard some of the last commits
-> but to keep current changes in the work tree.
->
-> The use case is when you work on something and commit that work. And
-> then you work on something else that touches other files, but you don't
-> commit it yet. Then you realize that what you commited when you worked
-> on the first thing is not good or belongs to another branch.
->
-> So you want to get rid of the previous commits (at least in the current
-> branch) but you want to make sure that you keep the changes you have in
-> the work tree. And you are pretty sure that your changes are independent
-> from what you previously commited, so you don't want the reset to
-> succeed if the previous commits changed a file that you also changed in
-> your work tree.
->
-> The table below shows what happens when running "git reset --option
-> target" to reset the HEAD to another commit (as a special case "target"
-> could be the same as HEAD) in the cases where "--merge" and "--keep"
-> behave differently.
-
-I think this new option is unrelated to "--merge"; iow, the only relation
-to it is that it is an option to the same command "git reset", so it is
-related but it is related the same way and to the degree as "--mixed" is.
-
-Thinking about it even more, if the number of commits you are resetting
-away is zero in your use case (i.e. target is HEAD), shouldn't this new
-mode of operation degenerate to "--mixed"?  So in that sense, it might
-make sense to contrast it with "--mixed".
-
-But let's try not to contrast it with anything else, and see how well it
-stands on its own.  The below is my attempt.
-
-> working index HEAD target         working index HEAD
-> ----------------------------------------------------
->   A      B     C     D   --keep    (disallowed)
->   A      B     C     C   --keep     A      C     C
->   B      B     C     D   --keep    (disallowed)
->   B      B     C     C   --keep     B      C     C
-
-Let's give an explanation of the above in terms of what this means to the
-end users.
-
-    When you have changes to a path that the accumulated commits between
-    target..HEAD touch, you don't want to discard them.  It doesn't matter
-    if the changes in the work tree has been partially added (A != B) or
-    fully added (A == B) to the index.  In both cases, the operation is
-    disallowed, just like "checkout $another_branch" stops in such a case.
-
-    But if you have local modifications based on one version and dropping
-    the accumulated commits between target..HEAD does not involve that
-    path, we can safely "transplant" that change to the target.
-
-Presented this way, a future direction (iow, I am not suggesting you to do
-this before the current series solidifies) might be to allow users to do
-something similar to "checkout -m $the_other_branch".  IOW, instead of
-disallowing "I have changed from C to B and switching to D" case, perform
-a three-way merge to bring the work tree file to (D+(B-C)), transplanting
-the local change you made on top of the target.
-
-> The following table shows what happens on unmerged entries:
->
-> working index HEAD target         working index HEAD
-> ----------------------------------------------------
->  X       U     A    B     --keep  (disallowed)
->  X       U     A    A     --keep   X       A     A
-
-In a sense, this is consistent with the above; the local change attempted
-happens to be an unmerged result.
-
-But it is inconsistent with the intended use case you presented, which
-leaves no room for unmerged entries to enter in the index to begin with.
-It might be safer to error out on any unmerged entry in the index.  I
-dunno.
+diff --git a/bisect.c b/bisect.c
+index dc18db8..d1f8c42 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -813,7 +813,7 @@ static void handle_skipped_merge_base(const unsigned char *mb)
+ 	char *bad_hex = sha1_to_hex(current_bad_sha1);
+ 	char *good_hex = join_sha1_array_hex(&good_revs, ' ');
+ 
+-	fprintf(stderr, "Warning: the merge base between %s and [%s] "
++	warning("the merge base between %s and [%s] "
+ 		"must be skipped.\n"
+ 		"So we cannot be sure the first bad commit is "
+ 		"between %s and %s.\n"
+diff --git a/builtin-mv.c b/builtin-mv.c
+index f633d81..8ad7245 100644
+--- a/builtin-mv.c
++++ b/builtin-mv.c
+@@ -169,9 +169,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 				 * check both source and destination
+ 				 */
+ 				if (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode)) {
+-					fprintf(stderr, "Warning: %s;"
+-							" will overwrite!\n",
+-							bad);
++					warning("%s; will overwrite!\n", bad);
+ 					bad = NULL;
+ 				} else
+ 					bad = "Cannot overwrite";
+diff --git a/http.c b/http.c
+index ed6414a..afce7c3 100644
+--- a/http.c
++++ b/http.c
+@@ -1244,7 +1244,7 @@ int finish_http_object_request(struct http_object_request *freq)
+ 	process_http_object_request(freq);
+ 
+ 	if (freq->http_code == 416) {
+-		fprintf(stderr, "Warning: requested range invalid; we may already have all the data.\n");
++		warning("requested range invalid; we may already have all the data.\n");
+ 	} else if (freq->curl_result != CURLE_OK) {
+ 		if (stat(freq->tmpfile, &st) == 0)
+ 			if (st.st_size == 0)
+-- 
+1.6.6.rc3
