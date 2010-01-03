@@ -1,68 +1,71 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: A question about changing remote repo name
-Date: Mon, 4 Jan 2010 21:09:09 +0100
-Message-ID: <20100104200908.GS29803@genesis.frugalware.org>
-References: <60ce8d251001032245n4e0267b1o1ecc796f324f8179@mail.gmail.com>
+From: Adam Megacz <adam@megacz.com>
+Subject: edit Author/Date metadata as part of 'git commit' $EDITOR invocation?
+Date: Sun, 03 Jan 2010 23:32:57 +0000
+Organization: Myself
+Message-ID: <xuu2fx6m4vdi.fsf@nowhere.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="cN519qCC4CN1mUcX"
-Cc: git@vger.kernel.org
-To: Dongas <dongas86@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 04 21:09:30 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 04 21:20:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRtEx-0002sk-S6
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 21:09:24 +0100
+	id 1NRtPb-0008Fk-Pq
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 21:20:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753789Ab0ADUJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2010 15:09:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753095Ab0ADUJP
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 15:09:15 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:55700 "EHLO virgo.iok.hu"
+	id S1753025Ab0ADUUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2010 15:20:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218Ab0ADUUT
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 15:20:19 -0500
+Received: from lo.gmane.org ([80.91.229.12]:51504 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753789Ab0ADUJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2010 15:09:13 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 1CB7558087;
-	Mon,  4 Jan 2010 21:09:09 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 012E344967;
-	Mon,  4 Jan 2010 21:09:08 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 0B7681240014; Mon,  4 Jan 2010 21:09:09 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <60ce8d251001032245n4e0267b1o1ecc796f324f8179@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752755Ab0ADUUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2010 15:20:18 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NRtPK-00086e-1K
+	for git@vger.kernel.org; Mon, 04 Jan 2010 21:20:06 +0100
+Received: from gentzen.megacz.com ([65.23.129.159])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 04 Jan 2010 21:20:06 +0100
+Received: from adam by gentzen.megacz.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 04 Jan 2010 21:20:06 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: gentzen.megacz.com
+X-Home-Page: http://www.megacz.com/
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+Cancel-Lock: sha1:p7xLPV9yCtO4AdcsdKeuJ2GAGB4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136141>
 
 
---cN519qCC4CN1mUcX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Hi, folks.
 
-On Mon, Jan 04, 2010 at 02:45:09PM +0800, Dongas <dongas86@gmail.com> wrote:
-> I'm running ubuntu 9.04 and the git coming along with it doesn't
-> support git remote rename command.
+>From the output of 'git show', it appears that a commit has a few fields
+of metadata associated with it in addition to the comment.  These fields
+seem to include Author, AuthorDate, Committer, and CommitDate.
 
-It first appeared in v1.6.1, about a year ago. What does 'git version'
-say?
+  1. Are there other fields aside from these four?
 
---cN519qCC4CN1mUcX
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+  2. When I invoke 'git commit' without the '-m' argument I'm dropped
+     into the cozy $EDITOR of my choice and given the opportunity to
+     edit the commit message.  Is there any way to include the metadata
+     fields in this editing session?  That way I could both sanity-check
+     them as I perform the commit (important) and modify them if they're
+     wrong (less important).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+     I've been having problems lately with running git on machines where
+     I forgot to set up my .gitconfig; I wind up with patches that have
+     committers like root@mymachine and so forth.  Being automatically
+     shown the committer/author when I make the commit would help me
+     avoid these situations.
 
-iEYEARECAAYFAktCSuQACgkQe81tAgORUJZP9QCeIM+sS2KG/zS/VokkNaNhTVZw
-HYcAnidHLBIXQH81zJnequehQpCd494l
-=77Iz
------END PGP SIGNATURE-----
+Thanks,
 
---cN519qCC4CN1mUcX--
+  - a
