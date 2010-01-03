@@ -1,106 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: suppress fatal pathspec errors from "git add"?
-Date: Sun, 3 Jan 2010 03:28:05 -0500
-Message-ID: <20100103082804.GA23748@sigill.intra.peff.net>
-References: <d7ac1a680912311324i85b7a5anadaf2ac13f215873@mail.gmail.com>
- <20100103074058.GB23031@sigill.intra.peff.net>
- <7vk4vz38v0.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] Smart-http documentation: add example of how to
+ execute from userdir
+Date: Sun, 03 Jan 2010 00:34:50 -0800
+Message-ID: <7vzl4v1t91.fsf@alter.siamese.dyndns.org>
+References: <be6fef0d0912301818o678976ebqa3e339dc1ff1f2e8@mail.gmail.com>
+ <1262467101-5755-1-git-send-email-tarmigan+git@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: aaron smith <beingthexemplarylists@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 03 09:28:39 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Tarmigan Casebolt <tarmigan+git@gmail.com>
+To: Tay Ray Chuan <rctay89@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Jan 03 09:35:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRLpH-0005GU-46
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Jan 2010 09:28:39 +0100
+	id 1NRLvl-0006OS-1n
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Jan 2010 09:35:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751585Ab0ACI2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Jan 2010 03:28:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438Ab0ACI2J
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jan 2010 03:28:09 -0500
-Received: from peff.net ([208.65.91.99]:51034 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751096Ab0ACI2J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jan 2010 03:28:09 -0500
-Received: (qmail 740 invoked by uid 107); 3 Jan 2010 08:32:51 -0000
-Received: from 97-81-72-200.dhcp.athn.ga.charter.com (HELO sigill.intra.peff.net) (97.81.72.200)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 03 Jan 2010 03:32:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 03 Jan 2010 03:28:05 -0500
-Content-Disposition: inline
-In-Reply-To: <7vk4vz38v0.fsf@alter.siamese.dyndns.org>
+	id S1752219Ab0ACIfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Jan 2010 03:35:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751087Ab0ACIfH
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jan 2010 03:35:07 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42643 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751784Ab0ACIfF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Jan 2010 03:35:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E860D8DDCF;
+	Sun,  3 Jan 2010 03:35:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3SN/VCHSPXkh8jx9qcqksqR4CYo=; b=hC8+YY
+	uPY6fAHpQu2SjrC3Xo9Ryg8Cq6xm5yWvA60vE5sjtiUpWTi04KhHXZwj+Pb+OsMJ
+	KQJg9GxnlDb0voII8FIY11oG/yXukuRaV+HDT9P2ZSNCDqGDs0qkT6SNJL3+/7LV
+	uGrADENokVrSLb8cuHjJU3KWqajaS4Dp7vDKo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kbWWKBwqnNJ5ZBcw5noeaFR6Zg3EHJ6+
+	nNJzzaV1IrtBbt6JI1UsNWGwVYMGSGlzzlBHS1E+KcFBV5RoaKCW+qgWimwylN1C
+	1ahH5Y0rcI2aP+Fu4KJyIE8Ly83N7PvVVLUQjpgtmDRv3K12rZkCu5Ns7A9CZJkS
+	1cQn5n537KU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 58C7C8DDCD;
+	Sun,  3 Jan 2010 03:34:57 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A6C38DDCC; Sun,  3 Jan
+ 2010 03:34:52 -0500 (EST)
+In-Reply-To: <1262467101-5755-1-git-send-email-tarmigan+git@gmail.com>
+ (Tarmigan Casebolt's message of "Sat\,  2 Jan 2010 13\:18\:21 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DFBEB69E-F842-11DE-B4FA-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136072>
 
-On Sun, Jan 03, 2010 at 12:12:19AM -0800, Junio C Hamano wrote:
+Tarmigan Casebolt <tarmigan+git@gmail.com> writes:
 
-> If your primary activity that happens in the work tree were:
-> 
-> 	while :
->         do
->         	file=$(date +"random-%H%M%S")
->                 >"$file"
->                 rm -f "$file"
-> 	done
-> 
-> and your add were done in
-> 
-> 	while sleep 3600
->         do
-> 		git add $(for i in *; do test -e $i && echo $i; done)
->                 git commit -m "hourly snapshot"
-> 	done
-> 
-> totally asynchronously without coordinating with what the primary activity
-> is doing, your "test -e && echo" can race with a concurrent "rm".
+> Smart-http may be an attactive and easy way for people to setup git
+> hosting on shared servers whose primary web server configuration they
+> do not control.  To facilite this, provide an example of how it may be
+> done.
+>
+> cc:  Tay Ray Chuan <rctay89@gmail.com>
+> cc: Shawn O. Pearce <spearce@spearce.org>
+> Editing-by: Tay Ray Chuan <rctay89@gmail.com>
+> Signed-off-by: Tarmigan Casebolt <tarmigan+git@gmail.com>
 
-Of course. But in such a situation, you are almost certainly better off
-doing "git add -A". The external loop is really only useful if you want
-to add a subset of the files that may or may not exist for some reason.
-Which is getting pretty specific and crazy.
-
-I haven't checked to see whether "add -A" has a race in discovering
-files versus actually adding them (I suppose there has to be one...even
-if we open() immediately and use fstat() and friends for everything
-else, there still must be a race between getting the name from readdir()
-and calling open()).
-
-And I can see that as a potentially useful workflow: you are doing
-regular snapshots of a set of files which are being changed by an
-outside force. You care about errors, but not files disappearing between
-readdir() and stat(). The "find" command has an "--ignore-readdir-race"
-option, which is what you would want.
-
-But that is not "--ignore-errors should also ignore missing files". It
-is "I want to ignore missing files but not other errors".
-
-> Even though I think it is an insane use pattern that we shouldn't bother
-> to bend too much backwards to support it, --ignore-errors were added
-> primarily for a similar use case (i.e. by the time we try to read it, it
-> is either gone or it cannot be read by the user who runs "git add"), so in
-> that sense it _might_ make sense to ignore all errors with the option.  If
-> we choose to go in that direction, it would also make tons of sense to
-> update the documentation of the option to caution more strongly that its
-> use is a sign of insanity and is discouraged at the same time.
-
-I tracked down the original thread and it looks like the motivation was
-to handle repositories with a mixed set of readable and inaccessible
-(due to permissions) files:
-
- http://article.gmane.org/gmane.comp.version-control.git/75676
-
-So I think it's not _totally_ insane there. You would do "git add
---ignore-errors ." instead of having to manually write the shell loop of
-accessible items (though personally, I think I would just write the
-shell loop in that situation).
-
-That's just my two cents on the matter. I'm not personally planning on
-writing patches for either case.
-
--Peff
+I still see Cc: here; are people named above (and others commented on
+earlier versions) happy with this round?
