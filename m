@@ -1,68 +1,56 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH] grep: do not do external grep on skip-worktree entries
-Date: Sun, 03 Jan 2010 12:08:37 +0900
-Message-ID: <877hrzga16.fsf@catnip.gol.com>
-References: <1262182304-19911-1-git-send-email-pclouds@gmail.com>
-	<7v637nzky0.fsf@alter.siamese.dyndns.org>
-	<7vzl4zy5z3.fsf@alter.siamese.dyndns.org> <20100102115041.GA32381@do>
-	<7vtyv4cpna.fsf@alter.siamese.dyndns.org>
-	<fcaeb9bf1001021115j7b23264n42cfba7855c2253e@mail.gmail.com>
-	<7v7hs09tpi.fsf@alter.siamese.dyndns.org>
-	<87ljgfgbl0.fsf@catnip.gol.com>
-	<fc339e4a1001021847hf1e1a7fq894de7908839ff77@mail.gmail.com>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 7/6] t0021: use $SHELL_PATH for the filter script
+Date: Sun, 3 Jan 2010 02:24:08 -0500
+Message-ID: <20100103072408.GA23031@sigill.intra.peff.net>
+References: <20091230095634.GA16349@coredump.intra.peff.net>
+ <20091230110335.GF22959@coredump.intra.peff.net>
+ <4B3E73AE.6050003@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 03 04:09:30 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sun Jan 03 08:24:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRGqP-0008Dg-Cx
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Jan 2010 04:09:29 +0100
+	id 1NRKpN-0001sA-1l
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Jan 2010 08:24:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751502Ab0ACDIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Jan 2010 22:08:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751466Ab0ACDIr
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jan 2010 22:08:47 -0500
-Received: from smtp12.dentaku.gol.com ([203.216.5.74]:60471 "EHLO
-	smtp12.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751330Ab0ACDIr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jan 2010 22:08:47 -0500
-Received: from 218.231.177.74.eo.eaccess.ne.jp ([218.231.177.74] helo=catnip.gol.com)
-	by smtp12.dentaku.gol.com with esmtpa (Dentaku)
-	id 1NRGpa-0002u1-2E; Sun, 03 Jan 2010 12:08:38 +0900
-Received: by catnip.gol.com (Postfix, from userid 1000)
-	id 51AE3DF32; Sun,  3 Jan 2010 12:08:37 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-In-Reply-To: <fc339e4a1001021847hf1e1a7fq894de7908839ff77@mail.gmail.com>
-	(Miles Bader's message of "Sun, 3 Jan 2010 11:47:19 +0900")
-X-Virus-Scanned: ClamAV GOL (outbound)
-X-Abuse-Complaints: abuse@gol.com
+	id S1751213Ab0ACHYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Jan 2010 02:24:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751096Ab0ACHYM
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jan 2010 02:24:12 -0500
+Received: from peff.net ([208.65.91.99]:42164 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751087Ab0ACHYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Jan 2010 02:24:11 -0500
+Received: (qmail 31727 invoked by uid 107); 3 Jan 2010 07:28:55 -0000
+Received: from 97-81-72-200.dhcp.athn.ga.charter.com (HELO sigill.intra.peff.net) (97.81.72.200)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 03 Jan 2010 02:28:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 03 Jan 2010 02:24:08 -0500
+Content-Disposition: inline
+In-Reply-To: <4B3E73AE.6050003@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136067>
 
-Miles Bader <miles@gnu.org> writes:
->> Isn't "-e" a "classic" grep option tho?
->
-> Hmm, a bit of googling, and it seems that while 7th Edition unix (as
-> classic as I get) had -e, solaris indeed doesn't....
+On Fri, Jan 01, 2010 at 11:14:06PM +0100, Johannes Sixt wrote:
 
-Tho solaris does have it in /usr/xpg4/bin/grep...
+> On Windows, we need the shbang line to correctly invoke shell scripts via
+> a POSIX shell, except when the script is invoked via 'sh -c' because
+> sh (a bash) does "the right thing". Since nowadays the clean and smudge
+> filters are not always invoked via 'sh -c' anymore, we have to mark the
+> the one in t0021-conversion with #!$SHELL_PATH.
 
-Since it's a general attribute of solaris that the default (/usr/bin)
-tools are horrible sysv things and the actual useful tools are in
-e.g. /usr/xpg4/bin, maybe it would be better to just try and add that
-directory to the path...?
+Hrm. This does mean we might be breaking users who have helper scripts
+in a similar state to those in the test suite (of course, so does your
+pager hack, or anything which might optimize out a shell call).  But
+perhaps given that scripts without a shebang generally don't work on
+Windows, they are not too common and we don't need to worry about it.
 
--miles
-
--- 
-Americans are broad-minded people.  They'll accept the fact that a person can
-be an alcoholic, a dope fiend, a wife beater, and even a newspaperman, but if
-a man doesn't drive, there is something wrong with him.  -- Art Buchwald
+-Peff
