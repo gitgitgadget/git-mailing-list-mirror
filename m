@@ -1,108 +1,81 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: [PATCH v2] Use warning function instead of fprintf(stderr, "Warning: ...").
-Date: Sun,  3 Jan 2010 11:20:30 -0500
-Message-ID: <1262535630-3918-1-git-send-email-tfransosi@gmail.com>
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Jan 03 17:22:51 2010
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] grep: do not do external grep on skip-worktree entries
+Date: Sun, 3 Jan 2010 11:32:24 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.1001031124420.3630@localhost.localdomain>
+References: <1262182304-19911-1-git-send-email-pclouds@gmail.com> <7v637nzky0.fsf@alter.siamese.dyndns.org> <7vzl4zy5z3.fsf@alter.siamese.dyndns.org> <20100102115041.GA32381@do> <7vtyv4cpna.fsf@alter.siamese.dyndns.org> <fcaeb9bf1001021115j7b23264n42cfba7855c2253e@mail.gmail.com>
+ <7v7hs09tpi.fsf@alter.siamese.dyndns.org> <87ljgfgbl0.fsf@catnip.gol.com> <fc339e4a1001021847hf1e1a7fq894de7908839ff77@mail.gmail.com> <877hrzga16.fsf@catnip.gol.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Jan 03 20:32:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRTE8-0005Kn-Ea
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Jan 2010 17:22:48 +0100
+	id 1NRWBw-00065z-4d
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Jan 2010 20:32:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752435Ab0ACQUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Jan 2010 11:20:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751934Ab0ACQUm
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jan 2010 11:20:42 -0500
-Received: from mail-qy0-f192.google.com ([209.85.221.192]:54702 "EHLO
-	mail-qy0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751776Ab0ACQUm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jan 2010 11:20:42 -0500
-Received: by qyk30 with SMTP id 30so6700400qyk.33
-        for <git@vger.kernel.org>; Sun, 03 Jan 2010 08:20:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=K+Poa/S7RqX1tbCCPN5gQVA1VUjnwVxWOX8hJvUuBLU=;
-        b=GZgGifHBEZ7ojG/fCyUCFIgeDHyNp2yvN7Az092TY/4jW8ZgnzQ/yrBXe+WV+cYVLv
-         WuZcNGHQgoS7JlqDwPZEOsbbT3Rd2iId1238qH1fi0mz71J5Vs/t6JZ2y0R7FjsR4HP3
-         2Ff4p8j4F0lniyKcTAWtLkS6iDYnKy30xNfGo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=Xx4dJGl8eITtw4jL8ElsYhI/2RBS0NcS5CL7IlaaRXWeYsqIHr2/BLC331btMctt0J
-         R32ck8KhN7aKcPkWMgtwUIpqL3KR8BHan2A5C6/k4Puea5FJmty3ubLKSA0LBTSUS4Q6
-         i3lIcU3jTLLlCQbYNkK5clRhbh7jPNhMil69k=
-Received: by 10.224.25.205 with SMTP id a13mr10674490qac.202.1262535639113;
-        Sun, 03 Jan 2010 08:20:39 -0800 (PST)
-Received: from localhost ([201.53.2.165])
-        by mx.google.com with ESMTPS id 23sm15709852qyk.3.2010.01.03.08.20.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 03 Jan 2010 08:20:38 -0800 (PST)
-X-Mailer: git-send-email 1.6.6.75.g37bae
+	id S1752189Ab0ACTcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Jan 2010 14:32:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752072Ab0ACTcd
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jan 2010 14:32:33 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:58889 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751940Ab0ACTcc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Jan 2010 14:32:32 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o03JWOV9023834
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 3 Jan 2010 11:32:25 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o03JWONF020144;
+	Sun, 3 Jan 2010 11:32:24 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <877hrzga16.fsf@catnip.gol.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.67 required=5 tests=AWL,BAYES_00,FH_DATE_PAST_20XX,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136082>
 
-Signed-off-by: Thiago Farina <tfransosi@gmail.com>
----
-Removed the LF from the end of the strings.
 
- bisect.c     |    4 ++--
- builtin-mv.c |    4 +---
- http.c       |    2 +-
- 3 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index dc18db8..f1a1f84 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -813,11 +813,11 @@ static void handle_skipped_merge_base(const unsigned char *mb)
- 	char *bad_hex = sha1_to_hex(current_bad_sha1);
- 	char *good_hex = join_sha1_array_hex(&good_revs, ' ');
- 
--	fprintf(stderr, "Warning: the merge base between %s and [%s] "
-+	warning("the merge base between %s and [%s] "
- 		"must be skipped.\n"
- 		"So we cannot be sure the first bad commit is "
- 		"between %s and %s.\n"
--		"We continue anyway.\n",
-+		"We continue anyway.",
- 		bad_hex, good_hex, mb_hex, bad_hex);
- 	free(good_hex);
- }
-diff --git a/builtin-mv.c b/builtin-mv.c
-index f633d81..8247186 100644
---- a/builtin-mv.c
-+++ b/builtin-mv.c
-@@ -169,9 +169,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 				 * check both source and destination
- 				 */
- 				if (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode)) {
--					fprintf(stderr, "Warning: %s;"
--							" will overwrite!\n",
--							bad);
-+					warning("%s; will overwrite!", bad);
- 					bad = NULL;
- 				} else
- 					bad = "Cannot overwrite";
-diff --git a/http.c b/http.c
-index ed6414a..455732f 100644
---- a/http.c
-+++ b/http.c
-@@ -1244,7 +1244,7 @@ int finish_http_object_request(struct http_object_request *freq)
- 	process_http_object_request(freq);
- 
- 	if (freq->http_code == 416) {
--		fprintf(stderr, "Warning: requested range invalid; we may already have all the data.\n");
-+		warning("requested range invalid; we may already have all the data.");
- 	} else if (freq->curl_result != CURLE_OK) {
- 		if (stat(freq->tmpfile, &st) == 0)
- 			if (st.st_size == 0)
--- 
-1.6.6.75.g37bae
+On Sun, 3 Jan 2010, Miles Bader wrote:
+> 
+> Since it's a general attribute of solaris that the default (/usr/bin)
+> tools are horrible sysv things and the actual useful tools are in
+> e.g. /usr/xpg4/bin, maybe it would be better to just try and add that
+> directory to the path...?
+
+There is no generic way to make solaris sane, I'm afraid.
+
+Everybody agrees that the "normal" Solaris tools are so horrible that they 
+all set up some alternative. However, qutie often the preferred 
+alternative is the GNU versions, mostly installed in /usr/local, and then 
+they put that first in the path.
+
+Which means that if you put /usr/xpg4/bin before other paths in your PATH, 
+you'll totally break such systems, because now you get the (inferior) 
+tools in xpg4 before the preferred tools in /usr/local. Or - this also 
+happens - people end up installing their own versions in $HOME/bin, 
+because the system admin is uncaring or incompetent.
+
+In other words, there is no single normal or default Solaris installation 
+that we can work around. The normal/default installation is so horrible 
+that it's virtually never used in any environment where people actually 
+have shell access and do development.
+
+Don't ask me why. EVERYBODY knows that the default /usr/bin is total crap. 
+Even Sun people know. But there's apparently some very deep-seated reason 
+(probably not technical, but mental/historical) why they can't be fixed or 
+replaced, probably relating to "make world" and the whole build system.
+
+			Linus
