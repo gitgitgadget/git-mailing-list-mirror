@@ -1,87 +1,70 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] grep: do not do external grep on skip-worktree entries
-Date: Mon, 4 Jan 2010 08:24:43 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.1001040817420.3630@localhost.localdomain>
-References: <7vtyv4cpna.fsf@alter.siamese.dyndns.org> <fcaeb9bf1001021115j7b23264n42cfba7855c2253e@mail.gmail.com> <7v7hs09tpi.fsf@alter.siamese.dyndns.org> <87ljgfgbl0.fsf@catnip.gol.com> <fc339e4a1001021847hf1e1a7fq894de7908839ff77@mail.gmail.com>
- <877hrzga16.fsf@catnip.gol.com> <alpine.LFD.2.00.1001031124420.3630@localhost.localdomain> <7v3a2mzzg4.fsf@alter.siamese.dyndns.org> <20100104053125.GA5083@coredump.intra.peff.net> <7vbphaquwl.fsf@alter.siamese.dyndns.org> <20100104064408.GA7785@coredump.intra.peff.net>
- <alpine.LFD.2.00.1001040659150.3630@localhost.localdomain>
+From: Pedro Lemos <pedrolemos454@gmail.com>
+Subject: Git Server Authentication & Management
+Date: Mon, 4 Jan 2010 16:27:38 +0000
+Message-ID: <1a710981001040827q23f61bdew8db1ae76d5bfb855@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Miles Bader <miles@gnu.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 04 17:25:20 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 04 17:28:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRpk6-0004MF-0o
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 17:25:18 +0100
+	id 1NRpmf-0005YY-Lb
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 17:27:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753601Ab0ADQZN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2010 11:25:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753577Ab0ADQZN
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 11:25:13 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:50483 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753523Ab0ADQZL (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Jan 2010 11:25:11 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o04GOiBO006574
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 4 Jan 2010 08:24:45 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o04GOhux004401;
-	Mon, 4 Jan 2010 08:24:44 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.00.1001040659150.3630@localhost.localdomain>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-5.447 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753638Ab0ADQ1k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2010 11:27:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753068Ab0ADQ1k
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 11:27:40 -0500
+Received: from mail-fx0-f225.google.com ([209.85.220.225]:59645 "EHLO
+	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752923Ab0ADQ1j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2010 11:27:39 -0500
+Received: by mail-fx0-f225.google.com with SMTP id 25so8863621fxm.21
+        for <git@vger.kernel.org>; Mon, 04 Jan 2010 08:27:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=66jxXd8GZ7PRDga4+17INhl9iDEGdsVUMEy4MwAcIAU=;
+        b=B2FMCM2Zx103KGZdjJZJ3I86Qc2dp/qB4GEfjDdcm4hBXJShcp7DTCMsfw2jq9JBaV
+         Lc7/OfC/aVVq1XaNpMsTDo0P3Mp/TIyUFdy2yB7gW0cSN3RqnEz6u43l5opB7ueKAHED
+         bPoGdLhU6dPCkcc6WIA1jONu1l7hFk2QwAVS8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=jW+wOMPYaU1F9dhGI6OBLHnldFvyvFNTOWxiiZrkcBo9Qs6diPVHq7vYn6hJNaOgRj
+         B3NQlbP7wWLnnTt4HeFurOQ+oF2F0WO79/Ba/SvmNNfE88WoXOi9NJxytM1fhjg4Tyxo
+         RLaKoTaHsf65OZ3jVsIjIOW1vtIdWSlV8+wHA=
+Received: by 10.239.166.7 with SMTP id z7mr880162hbd.23.1262622458908; Mon, 04 
+	Jan 2010 08:27:38 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136127>
 
+Hi,
 
+I'm relatively new to Git.
+At the moment I'm trying to understand if it will be possible to:
 
-On Mon, 4 Jan 2010, Linus Torvalds wrote:
-> 
->  - external grep:
-> 
-> 	[torvalds@nehalem linux]$ time git grep qwerty
-> 	...
-> 	real	0m0.412s
-> 	user	0m0.196s
-> 	sys	0m0.132s
-> 
->  - NO_EXTERNAL_GREP:
-> 
-> 	[torvalds@nehalem linux]$ time ~/git/git grep qwerty
-> 	...
-> 	real	0m1.006s
-> 	user	0m0.900s
-> 	sys	0m0.096s
-> 
-> so that's not even close.
+1 - configure a central server (server A) to host all my git repositories.
+2 - also I would like to configure access to those Git repositories in
+order to use authentication:
+        - using LDAP;
+        - using MS Active Directory;
 
-Side note: at least for me, if we did some auto-parallelization, the 
-internal grep would make up for all its other suckiness. Do four or eight 
-greps in parallel, and buffer the results (you still need to show them in 
-the right order).
+3 - Moreover, I would like to know if is there any administration
+interface to use within git repositories?
+4 - And to close this email, I need a way to manage access permissions
+over the server repositories. Such as:
+        - read-write, read-only, or no access at all;
+        - deletes-allowed, renames-allowed, tags allowed;
 
-That might be an acceptable way to "fix" it. Developers pretty much all 
-have at least two cores these days, some of us have four+HT. We use 
-threads in other places, maybe this could be one more of them.
+Can anyone guide me through any items referred above?
+Any help appreciated!
 
-(Start 'n' threads, do an initial per-thread regex and 'regcomp()' to make 
-it thread-safer, and the only interesting issue would be serializing the 
-output. Whenever you get a result, you'd need to make sure that all files 
-before have been completed, but you could do that all under a specific 
-lock that protects completion information).
-
-		Linus
+Best Regards,
+Pedro Lemos
