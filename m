@@ -1,84 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] grep: do not do external grep on skip-worktree entries
-Date: Mon, 4 Jan 2010 01:44:08 -0500
-Message-ID: <20100104064408.GA7785@coredump.intra.peff.net>
-References: <7vtyv4cpna.fsf@alter.siamese.dyndns.org>
- <fcaeb9bf1001021115j7b23264n42cfba7855c2253e@mail.gmail.com>
- <7v7hs09tpi.fsf@alter.siamese.dyndns.org>
- <87ljgfgbl0.fsf@catnip.gol.com>
- <fc339e4a1001021847hf1e1a7fq894de7908839ff77@mail.gmail.com>
- <877hrzga16.fsf@catnip.gol.com>
- <alpine.LFD.2.00.1001031124420.3630@localhost.localdomain>
- <7v3a2mzzg4.fsf@alter.siamese.dyndns.org>
- <20100104053125.GA5083@coredump.intra.peff.net>
- <7vbphaquwl.fsf@alter.siamese.dyndns.org>
+From: Dongas <dongas86@gmail.com>
+Subject: A question about changing remote repo name
+Date: Mon, 4 Jan 2010 14:45:09 +0800
+Message-ID: <60ce8d251001032245n4e0267b1o1ecc796f324f8179@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Miles Bader <miles@gnu.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 04 07:44:56 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 04 07:45:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRggS-0006hR-06
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 07:44:56 +0100
+	id 1NRgh4-0006um-Fk
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 07:45:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752917Ab0ADGoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2010 01:44:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752878Ab0ADGoN
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 01:44:13 -0500
-Received: from peff.net ([208.65.91.99]:51383 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752439Ab0ADGoN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2010 01:44:13 -0500
-Received: (qmail 12707 invoked by uid 107); 4 Jan 2010 06:48:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 04 Jan 2010 01:48:56 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Jan 2010 01:44:08 -0500
-Content-Disposition: inline
-In-Reply-To: <7vbphaquwl.fsf@alter.siamese.dyndns.org>
+	id S1752923Ab0ADGpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2010 01:45:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751785Ab0ADGpO
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 01:45:14 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:53035 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751717Ab0ADGpM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2010 01:45:12 -0500
+Received: by ywh6 with SMTP id 6so15081714ywh.4
+        for <git@vger.kernel.org>; Sun, 03 Jan 2010 22:45:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=DPG+z8he0AqVC8ZvBPwHMDjCJswW5qk6SlhcGE8Bx40=;
+        b=NIHRxg4Uv4LGLfnva8zknXRqwsEvGtjqAvrW1uPwU/w6RyQ/PcEoAuau6B9BaWDTla
+         5N2V9Ah43dOpinOC4/1HF1zyRHBq3B0qI7N78v9L76zWEU2pMmbZ6Y7gFpc1jC+yyr+y
+         vGI3Eo04jc3fX0oPxASbUvWOVm1dsxTDLFxuE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=qRWZqLy0Vi69y94iyXBNVVfkSHt8JQNvfwhwTPmHCiSv835DLy/PuIcK7OjvAs5dbL
+         XnOSbZvo60G8QwRsrfESR0S40IxWfZFwkqp9fZgBhfRqLCdGxfBnpU1auUREIq84j7ZH
+         VApN25iDSarR90hlYkxyu/kwS9h+FmjDs78SU=
+Received: by 10.90.16.9 with SMTP id 9mr3219027agp.44.1262587509445; Sun, 03 
+	Jan 2010 22:45:09 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136096>
 
-On Sun, Jan 03, 2010 at 09:52:10PM -0800, Junio C Hamano wrote:
+Hi ALL,
 
-> > I agree that Solaris default tools are insane, but is there any reason
-> > to munge the PATH for a single feature like external grep? Why not
-> > EXTERNAL_GREP=/usr/xpg4/bin/grep (or /usr/local/bin/grep) in the
-> > Makefile? Why not GIT_EXTERNAL_GREP=$HOME/bin/grep in the environment?
-> 
-> That git-sh-setup "fix" is not for running external grep.  It is for our
-> scripted Porcelains that rely on working basic tools (sed, tr, who knows
-> what else is broken).
+I'm running ubuntu 9.04 and the git coming along with it doesn't
+support git remote rename command.
+Below is the man page of it:
+GIT-REMOTE(1)
+                                        Git Manual
 
-Right, but I thought this thread was about external grep, and I thought
-you were saying "if you want decent tools, you can use SANE_TOOL_PATH".
-And I think we can do much better for that particular case than
-recommending SANE_TOOL_PATH (but it seems that is not what you were
-actually recommending).
+     GIT-REMOTE(1)
 
-But I admit, I have never really wanted to specify my own external grep.
-Wanting your own grep for _features_ is probably insane, as some of your
-greps (on worktree files) will use the external grep, and some (on
-cached files) will not.  So it is really just an optimization, and I
-have never felt it so slow that I cared about messing with an
-alternative grep on Solaris.
+NAME
+       git-remote - manage set of tracked repositories
 
-I have to wonder, though...did anybody ever actually profile our
-internal grep to find out _why_ it was so much slower than GNU grep?
-Could we simply ship a better grep engine and obsolete external grep?
+SYNOPSIS
+           git remote [-v | --verbose]
+           git remote add [-t <branch>] [-m <master>] [-f] [--mirror]
+<name> <url>
+           git remote rm <name>
+           git remote show [-n] <name>
+           git remote prune [-n | --dry-run] <name>
+           git remote update [group]
+Note: There's no rename option.
 
-> In fact, our Makefile by default punts on external grep on Sun's.  Run
-> "git grep NO_EXTERNAL_GREP -- Makefile" to see for yourself --- it would
-> work even on Solaris ;-)
+So i need to change the remote name manually.
 
-Yes, I am even mentioned in the commit log of 01ae841c. :)
+I tried modifying the .git/config file locally but it didn't work.
 
--Peff
+Could someone help tell how to do it?
+
+Thanks
+
+Regards
+Dongas
