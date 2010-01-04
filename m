@@ -1,67 +1,81 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] grep: do not do external grep on skip-worktree entries
-Date: Mon, 4 Jan 2010 02:04:05 -0500
-Message-ID: <20100104070405.GE7785@coredump.intra.peff.net>
-References: <7vzl4zy5z3.fsf@alter.siamese.dyndns.org>
- <20100102115041.GA32381@do>
- <7vtyv4cpna.fsf@alter.siamese.dyndns.org>
+Date: Sun, 03 Jan 2010 23:08:46 -0800
+Message-ID: <7vhbr2pcsh.fsf@alter.siamese.dyndns.org>
+References: <7vtyv4cpna.fsf@alter.siamese.dyndns.org>
  <fcaeb9bf1001021115j7b23264n42cfba7855c2253e@mail.gmail.com>
- <7v7hs09tpi.fsf@alter.siamese.dyndns.org>
- <87ljgfgbl0.fsf@catnip.gol.com>
+ <7v7hs09tpi.fsf@alter.siamese.dyndns.org> <87ljgfgbl0.fsf@catnip.gol.com>
  <fc339e4a1001021847hf1e1a7fq894de7908839ff77@mail.gmail.com>
  <877hrzga16.fsf@catnip.gol.com>
  <alpine.LFD.2.00.1001031124420.3630@localhost.localdomain>
- <20100104060646.GA14520@glandium.org>
+ <7v3a2mzzg4.fsf@alter.siamese.dyndns.org>
+ <20100104053125.GA5083@coredump.intra.peff.net>
+ <7vbphaquwl.fsf@alter.siamese.dyndns.org>
+ <20100104064408.GA7785@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Miles Bader <miles@gnu.org>,
-	Junio C Hamano <gitster@pobox.com>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Mon Jan 04 08:04:17 2010
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 04 08:09:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRgzA-00029I-VB
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 08:04:17 +0100
+	id 1NRh3w-0003Fi-7i
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 08:09:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753265Ab0ADHEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2010 02:04:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753250Ab0ADHEM
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 02:04:12 -0500
-Received: from peff.net ([208.65.91.99]:37010 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753184Ab0ADHEM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2010 02:04:12 -0500
-Received: (qmail 12854 invoked by uid 107); 4 Jan 2010 07:08:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 04 Jan 2010 02:08:53 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Jan 2010 02:04:05 -0500
-Content-Disposition: inline
-In-Reply-To: <20100104060646.GA14520@glandium.org>
+	id S1753268Ab0ADHJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2010 02:09:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752971Ab0ADHJG
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 02:09:06 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49324 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751325Ab0ADHJF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2010 02:09:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D0FA9AB01D;
+	Mon,  4 Jan 2010 02:09:00 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6/t4QySJXlcdJkTG1WvIvy4OC7g=; b=hH9Hj8
+	06fOwevadhxLfUCCbmDB2w7GlrH+Pzj7WvpDV+vLqIM62nkTbDDQYQ7nmsE+M/il
+	VNb1cZzQwblWCzqDb7+sPEMp/jR87y4zrEPGf32+3SvpxCAMKyyH+/c/fQM8O6wu
+	fex8ehEHRPhizCQapvAzhn/dUNUAXeR3u1NQc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=J8bw9lKRqHiG9nqteBVTehdWxal9nJUu
+	aAnIFlBKuAMjj42Mm3LUWQAo2O8x4ErOKpNEwdXMdLBBqsUuhPTa0hYlEHotAruA
+	9qX56xLIFWWg7sR64IiiuD2/4tY7aBRZWYON3XqvwRs3PPr0NaaSG5bFI3umbZSg
+	Fp4NnRgc9N0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 84839AB01B;
+	Mon,  4 Jan 2010 02:08:55 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DC765AB01A; Mon,  4 Jan 2010
+ 02:08:48 -0500 (EST)
+In-Reply-To: <20100104064408.GA7785@coredump.intra.peff.net> (Jeff King's
+ message of "Mon\, 4 Jan 2010 01\:44\:08 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 057BAD8E-F900-11DE-A9BC-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136098>
 
-On Mon, Jan 04, 2010 at 07:06:46AM +0100, Mike Hommey wrote:
+Jeff King <peff@peff.net> writes:
 
-> Anyways, why not generate the hash-bang lines of the shell scripts from a
-> Makefile variable that would be set to /usr/xpg4/bin/sh on Solaris and
-> /bin/sh on others ?
+> I have to wonder, though...did anybody ever actually profile our
+> internal grep to find out _why_ it was so much slower than GNU grep?
 
-We do that already (though we default it to /bin/bash). SANE_TOOL_PATH
-is about picking up all the _other_ tools for use inside our shell
-scripts, like non-crappy sed, grep, etc.
+I vaguely recall that somebody fairly competent mentioned that modern grep
+implementations are based on DFA engines, but I offhand don't remember if
+the discussion had concrete numbers.
 
-Brandon did some testing with ksh and sent a patch to default to the
-stock ksh on Solaris and IRIX, which is probably saner than bash for a
-default, but it seems to have gotten dropped:
+> Could we simply ship a better grep engine and obsolete external grep?
 
-  http://article.gmane.org/gmane.comp.version-control.git/129830
-
--Peff
+Yes, that is a very constructive longer term solution.
