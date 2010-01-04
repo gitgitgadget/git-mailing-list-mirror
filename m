@@ -1,71 +1,67 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH v3] Smart-http documentation: add example of how to
-	execute from userdir
-Date: Mon, 4 Jan 2010 06:06:16 -0800
-Message-ID: <20100104140616.GB22872@spearce.org>
-References: <be6fef0d0912301818o678976ebqa3e339dc1ff1f2e8@mail.gmail.com> <1262467101-5755-1-git-send-email-tarmigan+git@gmail.com> <7vzl4v1t91.fsf@alter.siamese.dyndns.org>
+From: Wolfgang.Liebich@siemens-enterprise.com
+Subject: What is the best way to convert a multi module CVS repository to
+ git?
+Date: Mon, 4 Jan 2010 16:53:22 +0100
+Message-ID: <20100104155322.GC12195@atpcttvc.global-intra.net>
+Reply-To: Wolfgang.Liebich@siemens-enterprise.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org,
-	Tarmigan Casebolt <tarmigan+git@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 04 15:06:41 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 04 15:26:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRnZt-0000Jd-86
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 15:06:37 +0100
+	id 1NRnsf-0007vC-DS
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 15:26:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753476Ab0ADOGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2010 09:06:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752254Ab0ADOGW
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 09:06:22 -0500
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:35420 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753466Ab0ADOGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2010 09:06:21 -0500
-Received: by ywh6 with SMTP id 6so15323214ywh.4
-        for <git@vger.kernel.org>; Mon, 04 Jan 2010 06:06:19 -0800 (PST)
-Received: by 10.101.117.19 with SMTP id u19mr346930anm.79.1262613979564;
-        Mon, 04 Jan 2010 06:06:19 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 23sm17642557iwn.7.2010.01.04.06.06.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 04 Jan 2010 06:06:17 -0800 (PST)
+	id S1753309Ab0ADOZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2010 09:25:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753282Ab0ADOZ5
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 09:25:57 -0500
+Received: from m0019.fra.mmp.de.bt.com ([62.180.227.30]:57418 "EHLO
+	ms03.m0019.fra.mmp.de.bt.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752842Ab0ADOZ4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Jan 2010 09:25:56 -0500
+X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Jan 2010 09:25:56 EST
+Received: from senmx11-mx ([62.134.46.9] [62.134.46.9]) by ms03.m0020.fra.mmp.de.bt.com with ESMTP id BT-MMP-428135 for git@vger.kernel.org; Mon, 4 Jan 2010 15:10:54 +0100
+Received: from atpcttvc.global-intra.net (unknown [172.26.8.53])
+	by senmx11-mx (Server) with ESMTP id 3DE481EB8274
+	for <git@vger.kernel.org>; Mon,  4 Jan 2010 15:10:54 +0100 (CET)
+Received: by atpcttvc.global-intra.net (Postfix, from userid 20222)
+	id 5ADFE605E; Mon,  4 Jan 2010 16:53:22 +0100 (CET)
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vzl4v1t91.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136115>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Tarmigan Casebolt <tarmigan+git@gmail.com> writes:
-> 
-> > Smart-http may be an attactive and easy way for people to setup git
-> > hosting on shared servers whose primary web server configuration they
-> > do not control.  To facilite this, provide an example of how it may be
-> > done.
-> >
-> > cc:  Tay Ray Chuan <rctay89@gmail.com>
-> > cc: Shawn O. Pearce <spearce@spearce.org>
-> > Editing-by: Tay Ray Chuan <rctay89@gmail.com>
-> > Signed-off-by: Tarmigan Casebolt <tarmigan+git@gmail.com>
-> 
-> I still see Cc: here; are people named above (and others commented on
-> earlier versions) happy with this round?
+Hi,
+I have inherited a rather big, old, multi-module CVS repository which I
+want to convert to GIT.
+Most of the CVS modules do belong to one project now, i.e. the
+separation into multiple modules is something of a historical accident
+now. This means it does not make sense to put each CVS module into an
+own GIT project and use submodules.
+Furthermore the conversion will be one-way, i.e. afterwards the CVS repo
+will be shutdown forever and moved to offline storage. Incremental
+conversion is therefore not an issue.
+If I need one day to convert everything (the repo is about 3GB), so be
+it - the most important feature to me is correctness (I do NOT want to
+have to run manual verifications for N days/weeks/months, just to verify
+that everything was converted), and ideally even the possibility of
+re-creating the history of files which were moved across directories
+(this HAS happened sometimes - I did not fiddle around with the RCS
+files, but used straight rm+add, and accepted the loss of history forced
+on me by CVS).
 
-I don't get why Options +SymLinksIfOwnerMatch is needed here.
+What is the best (i.e. most trustworthy) method of conversion? For now
+it seems to me that cvs2git (the ...2git companion to cvs2svn) is the
+best choice (because it can handle multi-module projects in a sane way)
+- but I'm open to suggestions!
 
-If we are linking to the root installed git-http-backend Apache
-will actually reject the link, because the link owner is likely to
-be $USER while the target is owned by root.
-
-So I really can't ACK this, the instructions don't jive with my
-understanding of the Apache configuration.
-
--- 
-Shawn.
+Ciao,
+Wolfgang Liebich
