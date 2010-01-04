@@ -1,67 +1,76 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 7/6] t0021: use $SHELL_PATH for the filter script
-Date: Mon, 04 Jan 2010 17:46:38 +0100
-Message-ID: <4B421B6E.3070501@kdbg.org>
-References: <20091230095634.GA16349@coredump.intra.peff.net> <20091230110335.GF22959@coredump.intra.peff.net> <4B3E73AE.6050003@kdbg.org> <20100103072408.GA23031@sigill.intra.peff.net> <4B420E4F.1040706@kdbg.org> <20100104160317.GB9136@coredump.intra.peff.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: RFC: display dirty submodule working directory in git gui and
+ gitk
+Date: Mon, 04 Jan 2010 18:04:16 +0100
+Message-ID: <4B421F90.4090402@web.de>
+References: <4B3F6742.6060402@web.de> <alpine.DEB.1.00.1001041038520.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 04 17:46:56 2010
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Paul Mackerras <paulus@samba.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Lars Hjemli <hjemli@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 04 18:04:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRq51-0004O0-NB
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 17:46:56 +0100
+	id 1NRqM7-0002yG-5B
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 18:04:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753652Ab0ADQqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2010 11:46:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753556Ab0ADQqr
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 11:46:47 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:65132 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753478Ab0ADQqr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2010 11:46:47 -0500
-Received: from [77.117.74.72] (77.117.74.72.wireless.dyn.drei.com [77.117.74.72])
-	by bsmtp.bon.at (Postfix) with ESMTP id 84C06CDF88;
-	Mon,  4 Jan 2010 17:46:43 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <20100104160317.GB9136@coredump.intra.peff.net>
+	id S1753456Ab0ADREY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2010 12:04:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752601Ab0ADREW
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 12:04:22 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:55216 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753411Ab0ADREU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2010 12:04:20 -0500
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 37F88144275E7;
+	Mon,  4 Jan 2010 18:04:19 +0100 (CET)
+Received: from [80.128.60.62] (helo=[192.168.178.26])
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NRqLq-0003kW-00; Mon, 04 Jan 2010 18:04:19 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
+In-Reply-To: <alpine.DEB.1.00.1001041038520.4985@pacific.mpi-cbg.de>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18o1Rsclgzik7be+HgCYL/YCDkekBOsKXVpnNjA
+	ll9MgQqoqKYZiqPyAe8AfIEFCoPY/SN50DUSoQJhcjI0RAdwMQ
+	/K9IqzQGGGfNb+3trHWQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136131>
 
-Jeff King schrieb:
-> I converted more than that; see my 2/6. It is also the pager, the
-> imap-send tunnel helper, and external merge helpers. Not the editor,
-> since it already had the no-metacharacters optimization (though it, too,
-> could be affected if we implement your DWIM trick instead of the
-> metacharacter thing).
-> 
-> So I think we need to make a conscious decision that this is an
-> acceptable change of behavior (and I am totally fine with the change
-> happening -- I just want to be clear about the extent of what is being
-> changed).
+Am 04.01.2010 10:44, schrieb Johannes Schindelin:
+> The real problem is that submodules in the current form are not very well 
+> designed.
 
-Hm, ok, I see.
+IMVHO using the tree sha1 for a submodule seems to be the 'natural' way
+to include another git repo. And it gives the reproducibility i expect
+from a scm. Or am i missing something?
 
-- The clean and smudge filters are probably the most important cases.
+It looks to me as most shortcomings come from the fact that most git
+commands tend to ignore submodules (and if they don't, like git gui and
+gitk do now, they e.g. only show certain aspects of their state).
 
-- I *did* write my own merge script (to merge PNGs!), but I made sure to 
-begin it with #!/bin/bash, and I don't think anybody else is crazy enough 
-to write a custom merge script ;)
+Submodules are in heavy use in our company since last year. Virtually
+every patch i submitted for submodules came from that experience and
+scratched an itch i or one of my colleagues had (and the situation did
+already improve noticeably by the few things we changed). We are still
+convinced that using submodules was the right decision. But some work
+has still to be done to be able to use them easily and to get rid of
+some pitfalls.
 
-- imap-send on Windows is so new that I don't think anyone is already 
-using it with a custom tunneling script.
 
-- The change in pager.c is unimportant because all versions shipped so far 
-(via msysgit) have the conflicting change that tried without "sh -c" first.
+> In ths short run, we can paper over the shortcomings of the submodules by 
+> introducing a command line option "--include-submodules" to 
+> update-refresh, diff-files and diff-index, though.
 
-I think that these can be handled with an entry in the release notes.
-
--- Hannes
+Maybe this is the way to go for now (and hopefully we can turn this
+option on by default later because we did the right thing ;-).
