@@ -1,81 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: submodules, was Re: RFC: display dirty submodule working directory
- in git gui and      gitk
-Date: Mon, 4 Jan 2010 12:46:49 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001041157020.3695@intel-tinevez-2-302>
-References: <4B3F6742.6060402@web.de>    <alpine.DEB.1.00.1001041038520.4985@pacific.mpi-cbg.de> <61083.85.16.196.198.1262601871.squirrel@archive.darksea.de>
+From: "Christian C. Schouten" <info@zark3.net>
+Subject: Beginner's question on how to use git for multiple parallel versions
+Date: Mon, 4 Jan 2010 12:29:52 +0100
+Message-ID: <F8CC469C9CCA415696101414EA997C0.MAI@sohosted19.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jens Lehmann <jens.lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Lars Hjemli <hjemli@gmail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Mon Jan 04 12:46:58 2010
+Content-Type: multipart/mixed;
+	boundary="--=_Part_638CDCAF.3BFD42A7"
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 04 12:49:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRlOk-0005eq-AY
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 12:46:58 +0100
+	id 1NRlQj-0006Fn-LE
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 12:49:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751486Ab0ADLqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2010 06:46:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751298Ab0ADLqx
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 06:46:53 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36789 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750742Ab0ADLqx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2010 06:46:53 -0500
-Received: (qmail invoked by alias); 04 Jan 2010 11:46:50 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp064) with SMTP; 04 Jan 2010 12:46:50 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+crmInkbacSgLu/dZOikzRaSA/h23AAA0Ze3/6JZ
-	pRn/H2TKqVbHgc
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <61083.85.16.196.198.1262601871.squirrel@archive.darksea.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1751419Ab0ADLs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2010 06:48:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750778Ab0ADLs5
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 06:48:57 -0500
+Received: from ns1.sohosted19.com ([195.8.208.62]:3777 "EHLO sohosted19.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751096Ab0ADLs5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2010 06:48:57 -0500
+X-Greylist: delayed 1131 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Jan 2010 06:48:57 EST
+Received: from ([195.86.221.234]) by sohosted19.com with MailEnable WebMail; Mon, 4 Jan 2010 12:29:52 +0100
+X-Mailer: MailEnable Web Mail 1.1
+X-Read: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136109>
 
-Hi,
+This is a multi-part message in MIME format.
 
-On Mon, 4 Jan 2010, Heiko Voigt wrote:
+----=_Part_638CDCAF.3BFD42A7
+Content-type: text/plain; charset="US-ASCII"
 
-> Johannes wrote:
-> > The real problem is that submodules in the current form are not very 
-> > well designed.  For example, a submodule being at a different commit 
-> > than in the superproject's index is not as fatal as the submodule 
-> > having changes.
-> >
-> > So in the long run, IMHO a proper redesign of the submodules would not 
-> > make only a little sense (it does not help, though, that those who 
-> > implemented and furthered the current approach over other discussed 
-> > approaches do not use submodules themselves -- not even now).
-> 
-> Do you mean the complete workflow (submodules are links to other git 
-> repos) or the current implementation? Do you have links to other design 
-> approaches/threads? Would be nice if we could take that into account for 
-> any decision.
+Hello all,
 
-Unfortunately, I do not have any information about different approaches 
-except the approach Subversion takes.  While Subversion's externals are 
-not perfect for all applications, for some, they are.  So I consider this 
-a serious shortcoming that Git does not support that workflow (and in 
-fact, AFAIR Shawn's repo does not use submodules for that exact reason).
+I&#8217;ve got a project that I want to do version management on with git but being a beginner in
+cvs/svn/dvcs etc. terminology I don&#8217;t know yet how to set it up.
+My project needs to exist as several parallel copies, i.e. there is a &#8220;main version&#8221; in
+which I do my development but it needs to end up being available as a couple of different
+configurations.
+For instance, say there is a file table.xml then this needs to contain different rows for versions
+A and B. Likewise, a file process.bpel needs to be named identical for each version but contain
+different content depending on whether it is distributed as version A or version B. Any changes
+made in non-version specific files should be visible in all copies, but changes made to
+version-specific files need to remain isolated to that particular version.
 
-But I think that an important precondition to come up with a better design 
-of the submodules is to have suffered the current implementation in 
-real-world work using submodules. (Which reminds me very much of the 
-autocrlf mess.)
+I read about branching, merging, rebasing and cherry-picking commits but I don&#8217;t get it yet.
+Can anyone enlighten me on how I should approach this in a way that I can maintain easily
+throughout future development for my situation?
 
-Ciao,
-Dscho
+Thanks in advance for any pointers,
+
+Best,
+
+Chris
+
+
+----=_Part_638CDCAF.3BFD42A7--
