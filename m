@@ -1,88 +1,67 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git Server Authentication & Management
-Date: Mon, 4 Jan 2010 08:33:16 -0800
-Message-ID: <20100104163316.GC22872@spearce.org>
-References: <1a710981001040827q23f61bdew8db1ae76d5bfb855@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 7/6] t0021: use $SHELL_PATH for the filter script
+Date: Mon, 04 Jan 2010 17:46:38 +0100
+Message-ID: <4B421B6E.3070501@kdbg.org>
+References: <20091230095634.GA16349@coredump.intra.peff.net> <20091230110335.GF22959@coredump.intra.peff.net> <4B3E73AE.6050003@kdbg.org> <20100103072408.GA23031@sigill.intra.peff.net> <4B420E4F.1040706@kdbg.org> <20100104160317.GB9136@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: Pedro Lemos <pedrolemos454@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 04 17:33:26 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 04 17:46:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRprx-0007lz-TO
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 17:33:26 +0100
+	id 1NRq51-0004O0-NB
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 17:46:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753411Ab0ADQdV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2010 11:33:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753280Ab0ADQdV
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 11:33:21 -0500
-Received: from mail-yx0-f188.google.com ([209.85.210.188]:41818 "EHLO
-	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753221Ab0ADQdV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2010 11:33:21 -0500
-Received: by yxe26 with SMTP id 26so14686479yxe.4
-        for <git@vger.kernel.org>; Mon, 04 Jan 2010 08:33:19 -0800 (PST)
-Received: by 10.151.59.20 with SMTP id m20mr7631022ybk.325.1262622799389;
-        Mon, 04 Jan 2010 08:33:19 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 21sm7305742yxe.19.2010.01.04.08.33.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 04 Jan 2010 08:33:17 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1a710981001040827q23f61bdew8db1ae76d5bfb855@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753652Ab0ADQqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2010 11:46:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753556Ab0ADQqr
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 11:46:47 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:65132 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753478Ab0ADQqr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2010 11:46:47 -0500
+Received: from [77.117.74.72] (77.117.74.72.wireless.dyn.drei.com [77.117.74.72])
+	by bsmtp.bon.at (Postfix) with ESMTP id 84C06CDF88;
+	Mon,  4 Jan 2010 17:46:43 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <20100104160317.GB9136@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136130>
 
-Pedro Lemos <pedrolemos454@gmail.com> wrote:
-> I'm relatively new to Git.
-> At the moment I'm trying to understand if it will be possible to:
+Jeff King schrieb:
+> I converted more than that; see my 2/6. It is also the pager, the
+> imap-send tunnel helper, and external merge helpers. Not the editor,
+> since it already had the no-metacharacters optimization (though it, too,
+> could be affected if we implement your DWIM trick instead of the
+> metacharacter thing).
 > 
-> 1 - configure a central server (server A) to host all my git repositories.
-> 2 - also I would like to configure access to those Git repositories in
-> order to use authentication:
->         - using LDAP;
->         - using MS Active Directory;
+> So I think we need to make a conscious decision that this is an
+> acceptable change of behavior (and I am totally fine with the change
+> happening -- I just want to be clear about the extent of what is being
+> changed).
 
-You might want to look at Gerrit Code Review [1].  It has
-out-of-the-box support for integration with Active Directory.
+Hm, ok, I see.
 
-[1] http://code.google.com/p/gerrit/
- 
-> 3 - Moreover, I would like to know if is there any administration
-> interface to use within git repositories?
+- The clean and smudge filters are probably the most important cases.
 
-Gerrit Code Review uses a web based administration interface, though
-with an LDAP/Active Directory configuration access controls will
-most likely be managed in the directory server by user membership
-to groups.
+- I *did* write my own merge script (to merge PNGs!), but I made sure to 
+begin it with #!/bin/bash, and I don't think anybody else is crazy enough 
+to write a custom merge script ;)
 
-> 4 - And to close this email, I need a way to manage access permissions
-> over the server repositories. Such as:
->         - read-write, read-only, or no access at all;
->         - deletes-allowed, renames-allowed, tags allowed;
+- imap-send on Windows is so new that I don't think anyone is already 
+using it with a custom tunneling script.
 
-Yup, Gerrit Code Review can do that.
+- The change in pager.c is unimportant because all versions shipped so far 
+(via msysgit) have the conflicting change that tried without "sh -c" first.
 
-It also can be used as a code review system.  :-) But if you don't
-want to use the code review features, you can just grant out the
-Push Branch +1 (or +2 or +3) permission to allow pushing to a branch.
- 
+I think that these can be handled with an entry in the release notes.
 
-A different, but much more popular choice is gitosis [2], but that
-doesn't use LDAP for user authentication and access management.
-It uses its own SSH key repository.  To be fair, Gerrit Code Review
-also uses its own SSH key repository... but users can manage their
-keys individually through the web interface, which is authenticated
-by LDAP.
-
-[2] http://eagain.net/gitweb/?p=gitosis.git
-
--- 
-Shawn.
+-- Hannes
