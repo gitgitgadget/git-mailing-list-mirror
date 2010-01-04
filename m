@@ -1,123 +1,71 @@
-From: "Christian C. Schouten" <info@zark3.net>
-Subject: RE: Beginner's question on how to use git for multiple parallel versions
-Date: Mon, 4 Jan 2010 14:35:25 +0100
-Message-ID: <22D57EF90F8E4A2799F739FC14F8BA63@Duthler.local>
-References: <F8CC469C9CCA415696101414EA997C0.MAI@sohosted19.com> <19265.60728.17437.665860@blake.zopyra.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH v3] Smart-http documentation: add example of how to
+	execute from userdir
+Date: Mon, 4 Jan 2010 06:06:16 -0800
+Message-ID: <20100104140616.GB22872@spearce.org>
+References: <be6fef0d0912301818o678976ebqa3e339dc1ff1f2e8@mail.gmail.com> <1262467101-5755-1-git-send-email-tarmigan+git@gmail.com> <7vzl4v1t91.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 04 14:36:40 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org,
+	Tarmigan Casebolt <tarmigan+git@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 04 15:06:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRn6q-0007NY-Im
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 14:36:36 +0100
+	id 1NRnZt-0000Jd-86
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 15:06:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752193Ab0ADNfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2010 08:35:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752122Ab0ADNfb
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 08:35:31 -0500
-Received: from ns1.sohosted19.com ([195.8.208.62]:4883 "EHLO sohosted19.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752107Ab0ADNfa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2010 08:35:30 -0500
-Received: from spamfilter.sohosted.com ([127.0.0.1]) by sohosted19.com with MailEnable ESMTP; Mon, 04 Jan 2010 14:35:25 +0100
-Received: from hp6735b1 ([195.86.221.234] helo=hp6735b1) with IPv4:25 by
-	spamfilter.sohosted.com; 4 Jan 2010 14:35:25 +0100
-X-Mailer: Microsoft Office Outlook 11
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
-In-Reply-To: <19265.60728.17437.665860@blake.zopyra.com>
-Thread-Index: AcqNQfNu1qgCNtDtRp2xhIA/ts8aRgAADrUA
-X-Assp-ID: spamfilter.sohosted.com ()
-X-Assp-Version: 1.5.1.8(1.0.00)
+	id S1753476Ab0ADOGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2010 09:06:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752254Ab0ADOGW
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 09:06:22 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:35420 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753466Ab0ADOGV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2010 09:06:21 -0500
+Received: by ywh6 with SMTP id 6so15323214ywh.4
+        for <git@vger.kernel.org>; Mon, 04 Jan 2010 06:06:19 -0800 (PST)
+Received: by 10.101.117.19 with SMTP id u19mr346930anm.79.1262613979564;
+        Mon, 04 Jan 2010 06:06:19 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 23sm17642557iwn.7.2010.01.04.06.06.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 04 Jan 2010 06:06:17 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vzl4v1t91.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136114>
 
-Dear Bill,
+Junio C Hamano <gitster@pobox.com> wrote:
+> Tarmigan Casebolt <tarmigan+git@gmail.com> writes:
+> 
+> > Smart-http may be an attactive and easy way for people to setup git
+> > hosting on shared servers whose primary web server configuration they
+> > do not control.  To facilite this, provide an example of how it may be
+> > done.
+> >
+> > cc:  Tay Ray Chuan <rctay89@gmail.com>
+> > cc: Shawn O. Pearce <spearce@spearce.org>
+> > Editing-by: Tay Ray Chuan <rctay89@gmail.com>
+> > Signed-off-by: Tarmigan Casebolt <tarmigan+git@gmail.com>
+> 
+> I still see Cc: here; are people named above (and others commented on
+> earlier versions) happy with this round?
 
-Thanks for your prompt reply. It may very well be exactly what I need, but
-I'm afraid that I don't understand the syntax just yet (am still in the
-phase orienting on what version management is and how it should be set up).
+I don't get why Options +SymLinksIfOwnerMatch is needed here.
 
-Could you please add to your answer whether I am using branches or another
-git technique (terminology?) and whether these are instructions that I can
-use to commit a change once the system has already been set up or if these
-actually are the instructions for defining the multiplicity of my project
-versions?
+If we are linking to the root installed git-http-backend Apache
+will actually reject the link, because the link owner is likely to
+be $USER while the target is owned by root.
 
-Sorry for the newbie-ness and thanks in advance,
+So I really can't ACK this, the instructions don't jive with my
+understanding of the Apache configuration.
 
-Best,
-
-Chris
-
-
------Original Message-----
-From: Bill Lear [mailto:rael@zopyra.com] 
-Sent: maandag 4 januari 2010 14:29
-To: Christian C. Schouten
-Cc: git@vger.kernel.org
-Subject: Re: Beginner's question on how to use git for multiple parallel
-versions
-
-On Monday, January 4, 2010 at 12:29:52 (+0100) Christian C. Schouten writes:
->Hello all,
->
->I've got a project that I want to do version management on with
->git but being a beginner in cvs/svn/dvcs etc. terminology I
->don't know yet how to set it up.  My project needs to exist as
->several parallel copies, i.e. there is a "main version" in
->which I do my development but it needs to end up being available as a
->couple of different configurations.  For instance, say there is a file
->table.xml then this needs to contain different rows for versions A and
->B. Likewise, a file process.bpel needs to be named identical for each
->version but contain different content depending on whether it is
->distributed as version A or version B. Any changes made in non-version
->specific files should be visible in all copies, but changes made to
->version-specific files need to remain isolated to that particular
->version.
-
-What you are asking for is this, I think:
-
-% git checkout A
-% cat table.xml
-<table A>
-% echo "<table A v2>" > table.xml
-% git commit -a -m "fix table on Branch A"
-
-% git checkout B
-% cat table.xml
-<table B>
-% echo "<table B v2>" > table.xml
-% git commit -a -m "fix table on Branch B"
-
-% git checkout master
-% cat table.xml
-<non-version-specific table info>
-% cat process.bpel
-main line process stuff
-% echo "add more process stuff" >> process.bpel
-% git commit -a -m "fix process stuff on mainline"
-
-% git checkout A
-% git merge master
-% cat process.bpel
-main line process stuff
-add more process stuff
-
-% git checkout B
-% git merge master
-% cat process.bpel
-main line process stuff
-add more process stuff
-
-Is that not it?
-
-
-Bill
+-- 
+Shawn.
