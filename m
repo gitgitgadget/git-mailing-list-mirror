@@ -1,83 +1,103 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Beginner's question on how to use git for multiple parallel 
-	versions
-Date: Mon, 4 Jan 2010 17:35:23 +0300
-Message-ID: <37fcd2781001040635t12183269rd24f34bf05a5d788@mail.gmail.com>
+From: Bill Lear <rael@zopyra.com>
+Subject: RE: Beginner's question on how to use git for multiple parallel versions
+Date: Mon, 4 Jan 2010 09:44:13 -0600
+Message-ID: <19266.3277.221519.791489@blake.zopyra.com>
 References: <F8CC469C9CCA415696101414EA997C0.MAI@sohosted19.com>
+	<19265.60728.17437.665860@blake.zopyra.com>
+	<22D57EF90F8E4A2799F739FC14F8BA63@Duthler.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
 To: "Christian C. Schouten" <info@zark3.net>
-X-From: git-owner@vger.kernel.org Mon Jan 04 15:35:32 2010
+X-From: git-owner@vger.kernel.org Mon Jan 04 16:44:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRo1q-0003EE-FH
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 15:35:30 +0100
+	id 1NRp6W-0002iA-CC
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 16:44:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753462Ab0ADOf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2010 09:35:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753457Ab0ADOfZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 09:35:25 -0500
-Received: from mail-fx0-f225.google.com ([209.85.220.225]:50523 "EHLO
-	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753408Ab0ADOfZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2010 09:35:25 -0500
-Received: by fxm25 with SMTP id 25so8741659fxm.21
-        for <git@vger.kernel.org>; Mon, 04 Jan 2010 06:35:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=jiZN/melEZK+jYu4GNXzGDFKRG0Key3qtqRrqk/FRxI=;
-        b=Tq0PZYe9yYbVAMHc856RZlKavYJ+9Filgp7Gfe6CG/E5YT4EZ+S/eBx+1lv4TRa4fp
-         z5i1DTPINxjYkmbabufmtQJIVVrtbiRN9vmUyFnZSg8U6bKNURTHw3Wq3hFhDYj9YEep
-         18R3wvTwtTsvhycMaaPu7WD9wuhUwztAPmH5Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Neo79OOvnC2tiqgVe1E7uFeq0/gEz03uuDWbd1NIpAdkZNv5x7AWHhYn8FpDfAoO8/
-         Zz9g74EzbzBFvnIdvcbi7N4FPi5C9tm9fx+8Qf5MRWkR8ZCCgdjdFcdaO5wnlq1rDqg3
-         7HDbikAwr+Sy87zLZXEZVVd5hgto/PHDjXs38=
-Received: by 10.239.149.196 with SMTP id k4mr1618768hbb.1.1262615723654; Mon, 
-	04 Jan 2010 06:35:23 -0800 (PST)
-In-Reply-To: <F8CC469C9CCA415696101414EA997C0.MAI@sohosted19.com>
+	id S1753371Ab0ADPoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2010 10:44:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753466Ab0ADPoV
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 10:44:21 -0500
+Received: from 75-27-130-60.lightspeed.austtx.sbcglobal.net ([75.27.130.60]:33496
+	"HELO blake.zopyra.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1752524Ab0ADPoT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2010 10:44:19 -0500
+Received: (qmail 8915 invoked by uid 500); 4 Jan 2010 15:44:18 -0000
+In-Reply-To: <22D57EF90F8E4A2799F739FC14F8BA63@Duthler.local>
+X-Mailer: VM 8.1.0-beta under 23.1.1 (i386-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136117>
 
-Hi,
-
-On Mon, Jan 4, 2010 at 2:29 PM, Christian C. Schouten <info@zark3.net> wrote:
+On Monday, January 4, 2010 at 14:35:25 (+0100) Christian C. Schouten writes:
+>Dear Bill,
 >
-> I&#8217;ve got a project that I want to do version management on with git but being a beginner in
-> cvs/svn/dvcs etc. terminology I don&#8217;t know yet how to set it up.
-> My project needs to exist as several parallel copies, i.e. there is a &#8220;main version&#8221; in
-> which I do my development but it needs to end up being available as a couple of different
-> configurations.
+>Thanks for your prompt reply. It may very well be exactly what I need, but
+>I'm afraid that I don't understand the syntax just yet (am still in the
+>phase orienting on what version management is and how it should be set up).
+>
+>Could you please add to your answer whether I am using branches or another
+>git technique (terminology?) and whether these are instructions that I can
+>use to commit a change once the system has already been set up or if these
+>actually are the instructions for defining the multiplicity of my project
+>versions?
 
-One way to achieve that is to use branches. You create a mainline
-branch that will contain
-what is common for all versions, and then create a few specific
-branches from it. Each branch
-will contain their own files, as well as modifications to some common
-files if it is necessary.
+In my example, I used branches, but did not show how to set them up.
+Here is the complete example, complete with repository and branch
+creation; you would start your project here:
 
-Changes that a common to all branches should be committed to the
-mainline, which is merged
-to each version specific branch.
+# Set up repo and add first file to main branch:
+% mkdir my_project
+% cd my_project
+% git init
+% echo "main line process stuff" > process.bpel
+% git add process.bpel
+% echo "<non-version-specific table info>" > table.xml
+% git add table.xml
+% git commit -a -m "First commit on master branch"
 
-Git allows to quickly switch between branches, so you stay in all
-worktree all the time.
-Moreover, if you made modifications to some file on branchA but then
-realized that it should
-be commit to another branch, you can switch to another branch as usual
-as long as the
-modified files are the same on both branches. (If it is not the case,
-you can use git stash).
+# Create branch A and branch B:
+% git branch A
+% git branch B
 
-Dmitry
+# Modify file on branch A:
+% git checkout A
+% echo "<table A>" > table.xml
+% git commit -a -m "Modify table on Branch A"
+
+# Modify file on branch B:
+% git checkout B
+% echo "<table B>" > table.xml
+% git commit -a -m "Modify table on Branch B"
+
+# Now go back to master and make some changes on common file:
+% git checkout master
+% cat process.bpel
+main line process stuff
+% echo "add more process stuff" >> process.bpel
+% git commit -a -m "fix process stuff on master"
+
+# Now go to branch A and pull in the common file:
+% git checkout A
+% git merge master
+% cat process.bpel
+main line process stuff
+add more process stuff
+
+# Now go to branch B and pull in the common file:
+% git checkout B
+% git merge master
+% cat process.bpel
+main line process stuff
+add more process stuff
+
+That should be just about all you need.
+
+
+Bill
