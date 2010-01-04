@@ -1,37 +1,70 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Beginner's question on how to use git for multiple parallel versions
-Date: Mon, 4 Jan 2010 07:29:28 -0600
-Message-ID: <19265.60728.17437.665860@blake.zopyra.com>
-References: <F8CC469C9CCA415696101414EA997C0.MAI@sohosted19.com>
+From: "Christian C. Schouten" <info@zark3.net>
+Subject: RE: Beginner's question on how to use git for multiple parallel versions
+Date: Mon, 4 Jan 2010 14:35:25 +0100
+Message-ID: <22D57EF90F8E4A2799F739FC14F8BA63@Duthler.local>
+References: <F8CC469C9CCA415696101414EA997C0.MAI@sohosted19.com> <19265.60728.17437.665860@blake.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "Christian C. Schouten" <info@zark3.net>
-X-From: git-owner@vger.kernel.org Mon Jan 04 14:30:03 2010
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 04 14:36:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRn05-0004Yb-Nl
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 14:29:38 +0100
+	id 1NRn6q-0007NY-Im
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 14:36:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751977Ab0ADN3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2010 08:29:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941Ab0ADN3d
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 08:29:33 -0500
-Received: from 75-27-130-60.lightspeed.austtx.sbcglobal.net ([75.27.130.60]:34920
-	"HELO blake.zopyra.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1751551Ab0ADN3d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2010 08:29:33 -0500
-Received: (qmail 31964 invoked by uid 500); 4 Jan 2010 13:29:32 -0000
-In-Reply-To: <F8CC469C9CCA415696101414EA997C0.MAI@sohosted19.com>
-X-Mailer: VM 8.1.0-beta under 23.1.1 (i386-redhat-linux-gnu)
+	id S1752193Ab0ADNfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2010 08:35:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752122Ab0ADNfb
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 08:35:31 -0500
+Received: from ns1.sohosted19.com ([195.8.208.62]:4883 "EHLO sohosted19.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752107Ab0ADNfa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2010 08:35:30 -0500
+Received: from spamfilter.sohosted.com ([127.0.0.1]) by sohosted19.com with MailEnable ESMTP; Mon, 04 Jan 2010 14:35:25 +0100
+Received: from hp6735b1 ([195.86.221.234] helo=hp6735b1) with IPv4:25 by
+	spamfilter.sohosted.com; 4 Jan 2010 14:35:25 +0100
+X-Mailer: Microsoft Office Outlook 11
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
+In-Reply-To: <19265.60728.17437.665860@blake.zopyra.com>
+Thread-Index: AcqNQfNu1qgCNtDtRp2xhIA/ts8aRgAADrUA
+X-Assp-ID: spamfilter.sohosted.com ()
+X-Assp-Version: 1.5.1.8(1.0.00)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136113>
+
+Dear Bill,
+
+Thanks for your prompt reply. It may very well be exactly what I need, but
+I'm afraid that I don't understand the syntax just yet (am still in the
+phase orienting on what version management is and how it should be set up).
+
+Could you please add to your answer whether I am using branches or another
+git technique (terminology?) and whether these are instructions that I can
+use to commit a change once the system has already been set up or if these
+actually are the instructions for defining the multiplicity of my project
+versions?
+
+Sorry for the newbie-ness and thanks in advance,
+
+Best,
+
+Chris
+
+
+-----Original Message-----
+From: Bill Lear [mailto:rael@zopyra.com] 
+Sent: maandag 4 januari 2010 14:29
+To: Christian C. Schouten
+Cc: git@vger.kernel.org
+Subject: Re: Beginner's question on how to use git for multiple parallel
+versions
 
 On Monday, January 4, 2010 at 12:29:52 (+0100) Christian C. Schouten writes:
 >Hello all,
