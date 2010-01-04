@@ -1,87 +1,68 @@
-From: Andrew Myrick <amyrick@apple.com>
-Subject: Re: git-svn: handling merge-base failures
-Date: Sun, 3 Jan 2010 20:43:52 -0800
-Message-ID: <7B6F15D3-FCF3-4569-9617-62BA38C92B35@apple.com>
-References: <931B0483-7628-488E-BB9F-C40346353149@apple.com> <7878A426-9D87-43B5-A10A-38F3C9369165@apple.com> <20100104034540.GA4548@dcvr.yhbt.net>
-Mime-Version: 1.0 (Apple Message framework v1130)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Jan 04 05:44:05 2010
+From: Bas Driessen <bas.driessen@xobas.com>
+Subject: Re: git file sharing/versioning.
+Date: Mon, 04 Jan 2010 14:47:06 +1000
+Organization: Xobas Software
+Message-ID: <1262580426.9041.21.camel@ams.xobas.net>
+References: <1262579824.9041.15.camel@ams.xobas.net>
+	 <1262580346.9041.20.camel@ams.xobas.net>
+Reply-To: bas.driessen@xobas.com
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 04 05:47:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRenV-0003Uf-6z
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 05:44:05 +0100
+	id 1NReqd-0004IV-1j
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 05:47:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752908Ab0ADEn4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Jan 2010 23:43:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752878Ab0ADEn4
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jan 2010 23:43:56 -0500
-Received: from mail-out4.apple.com ([17.254.13.23]:62522 "EHLO
-	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752869Ab0ADEnz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Jan 2010 23:43:55 -0500
-Received: from relay15.apple.com (relay15.apple.com [17.128.113.54])
-	by mail-out4.apple.com (Postfix) with ESMTP id 6D9BB84E474F;
-	Sun,  3 Jan 2010 20:43:53 -0800 (PST)
-X-AuditID: 11807136-b7bafae000000e8d-b4-4b4172086f91
-Received: from [17.151.111.20] (Unknown_Domain [17.151.111.20])
-	(using TLS with cipher AES128-SHA (AES128-SHA/128 bits))
-	(Client did not present a certificate)
-	by relay15.apple.com (Apple SCV relay) with SMTP id 75.26.03725.902714B4; Sun,  3 Jan 2010 20:43:53 -0800 (PST)
-In-Reply-To: <20100104034540.GA4548@dcvr.yhbt.net>
-X-Mailer: Apple Mail (2.1130)
-X-Brightmail-Tracker: AAAAAQAAAZE=
+	id S1752919Ab0ADErO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Jan 2010 23:47:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752869Ab0ADErO
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jan 2010 23:47:14 -0500
+Received: from atl.xobas.net ([74.207.232.85]:35879 "EHLO atl.xobas.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752861Ab0ADErO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Jan 2010 23:47:14 -0500
+Received: from [192.168.1.14] (ppp214-42.static.internode.on.net [59.167.214.42])
+	(authenticated bits=0)
+	by atl.xobas.net (8.13.8/8.13.8) with ESMTP id o044l7hE021597
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Mon, 4 Jan 2010 14:47:10 +1000
+In-Reply-To: <1262580346.9041.20.camel@ams.xobas.net>
+X-Mailer: Evolution 2.26.3 (2.26.3-1.fc11) 
+X-xobas-MailScanner-Information: Please contact the ISP for more information
+X-xobas-MailScanner-ID: o044l7hE021597
+X-xobas-MailScanner: Found to be clean
+X-xobas-MailScanner-From: bas.driessen@xobas.com
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136091>
+
+Hello,
+
+I have a project where I have 2 trees with several hundreds of files.
+Let's call them tree1 and tree2. Only a handful of files in tree2 are
+different. What is the best way to set this up in GIT? Basically most
+files in tree2 should act as a symbolic link to tree1. So if the file
+changes in tree 1, it automatically changes in tree 2. Obviously, I
+don't want to store everything double. Branching does not appear to be
+an option as changes in tree1 would not be visible in the tree2 branch. 
+
+Any advise of how to set this up?
+
+Thanks in advance for your help.
+
+Bas.
 
 
-On Jan 3, 2010, at 7:45 PM, Eric Wong wrote:
 
-> Andrew Myrick <amyrick@apple.com> wrote:
->> On Dec 23, 2009, at 11:54 AM, Andrew Myrick wrote:
->>> One of my projects is failing to clone because merge-base is failing
->>> on one of the revisions; the branch is a partial branch, so
->>> merge-base can't find a common ancestor with trunk.  I'd like to
->>> catch the exception that command_oneline should throw when
->>> merge-base fails,
->> 
->> Instead of using the Error.pm module, I was able to handle the
->> exception with the more basic eval block.  However, there are some
->> details here I would like to discuss with the community.
->> 
->> When git-svn fetches a partial branch, it appears to refetch all of
->> the history of the subdirectory from which the branch was created.
->> This creates new commits for the old revisions, and these new commits
->> exist as a separate history for the partial branch.   When git-svn
->> fetches the revision at which this partial branch is merged back to
->> trunk, git-svn attempts to run merge-base to find a common ancestor.
->> However, because the partial branch has its own history, the
->> merge-base fails, and git-svn dies.
->> 
->> Naively handling the exception with an eval block and skipping the
->> merge ticket works fine in that it brings us back to parity with git
->> 1.6.5.7, but it means that the merge parent relationship between trunk
->> and the partial branch is lost.  Is there any way to preserve this
->> information, or does the separate commit history of the partial branch
->> make it fundamentally impossible?
-> 
-> Hi Andrew,
-> 
-> A method of preserving the $SVN_PATH <=> $PARENT@$REV mapping for
-> reusing follow_parent-created branches is definitely desired.
-> 
-> I've just been lacking time and motivation these days with other
-> projects taking priority.  Help (even if it's just to refactor/cleanup
-> existing code) would definitely be appreciated here.
-
-Thanks for the explanation, Eric.  Unfortunately, I also don't have the time to commit to taking this on for the foreseeable future.  I'll try to get my existing patches out in the next couple of days that at least fix the regressions from 1.6.5.7.
-
-Regards,
-Andrew
+-- 
+This message has been scanned for viruses and
+dangerous content by MailScanner, and is
+believed to be clean.
