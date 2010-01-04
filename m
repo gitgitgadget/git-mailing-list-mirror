@@ -1,80 +1,67 @@
-From: Dongas <dongas86@gmail.com>
-Subject: A question about changing remote repo name
-Date: Mon, 4 Jan 2010 14:45:09 +0800
-Message-ID: <60ce8d251001032245n4e0267b1o1ecc796f324f8179@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] grep: do not do external grep on skip-worktree entries
+Date: Mon, 4 Jan 2010 02:04:05 -0500
+Message-ID: <20100104070405.GE7785@coredump.intra.peff.net>
+References: <7vzl4zy5z3.fsf@alter.siamese.dyndns.org>
+ <20100102115041.GA32381@do>
+ <7vtyv4cpna.fsf@alter.siamese.dyndns.org>
+ <fcaeb9bf1001021115j7b23264n42cfba7855c2253e@mail.gmail.com>
+ <7v7hs09tpi.fsf@alter.siamese.dyndns.org>
+ <87ljgfgbl0.fsf@catnip.gol.com>
+ <fc339e4a1001021847hf1e1a7fq894de7908839ff77@mail.gmail.com>
+ <877hrzga16.fsf@catnip.gol.com>
+ <alpine.LFD.2.00.1001031124420.3630@localhost.localdomain>
+ <20100104060646.GA14520@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 04 07:45:35 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Miles Bader <miles@gnu.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Mon Jan 04 08:04:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NRgh4-0006um-Fk
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 07:45:34 +0100
+	id 1NRgzA-00029I-VB
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jan 2010 08:04:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752923Ab0ADGpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2010 01:45:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751785Ab0ADGpO
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 01:45:14 -0500
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:53035 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751717Ab0ADGpM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2010 01:45:12 -0500
-Received: by ywh6 with SMTP id 6so15081714ywh.4
-        for <git@vger.kernel.org>; Sun, 03 Jan 2010 22:45:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=DPG+z8he0AqVC8ZvBPwHMDjCJswW5qk6SlhcGE8Bx40=;
-        b=NIHRxg4Uv4LGLfnva8zknXRqwsEvGtjqAvrW1uPwU/w6RyQ/PcEoAuau6B9BaWDTla
-         5N2V9Ah43dOpinOC4/1HF1zyRHBq3B0qI7N78v9L76zWEU2pMmbZ6Y7gFpc1jC+yyr+y
-         vGI3Eo04jc3fX0oPxASbUvWOVm1dsxTDLFxuE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=qRWZqLy0Vi69y94iyXBNVVfkSHt8JQNvfwhwTPmHCiSv835DLy/PuIcK7OjvAs5dbL
-         XnOSbZvo60G8QwRsrfESR0S40IxWfZFwkqp9fZgBhfRqLCdGxfBnpU1auUREIq84j7ZH
-         VApN25iDSarR90hlYkxyu/kwS9h+FmjDs78SU=
-Received: by 10.90.16.9 with SMTP id 9mr3219027agp.44.1262587509445; Sun, 03 
-	Jan 2010 22:45:09 -0800 (PST)
+	id S1753265Ab0ADHEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2010 02:04:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753250Ab0ADHEM
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jan 2010 02:04:12 -0500
+Received: from peff.net ([208.65.91.99]:37010 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753184Ab0ADHEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2010 02:04:12 -0500
+Received: (qmail 12854 invoked by uid 107); 4 Jan 2010 07:08:53 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 04 Jan 2010 02:08:53 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Jan 2010 02:04:05 -0500
+Content-Disposition: inline
+In-Reply-To: <20100104060646.GA14520@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136097>
 
-Hi ALL,
+On Mon, Jan 04, 2010 at 07:06:46AM +0100, Mike Hommey wrote:
 
-I'm running ubuntu 9.04 and the git coming along with it doesn't
-support git remote rename command.
-Below is the man page of it:
-GIT-REMOTE(1)
-                                        Git Manual
+> Anyways, why not generate the hash-bang lines of the shell scripts from a
+> Makefile variable that would be set to /usr/xpg4/bin/sh on Solaris and
+> /bin/sh on others ?
 
-     GIT-REMOTE(1)
+We do that already (though we default it to /bin/bash). SANE_TOOL_PATH
+is about picking up all the _other_ tools for use inside our shell
+scripts, like non-crappy sed, grep, etc.
 
-NAME
-       git-remote - manage set of tracked repositories
+Brandon did some testing with ksh and sent a patch to default to the
+stock ksh on Solaris and IRIX, which is probably saner than bash for a
+default, but it seems to have gotten dropped:
 
-SYNOPSIS
-           git remote [-v | --verbose]
-           git remote add [-t <branch>] [-m <master>] [-f] [--mirror]
-<name> <url>
-           git remote rm <name>
-           git remote show [-n] <name>
-           git remote prune [-n | --dry-run] <name>
-           git remote update [group]
-Note: There's no rename option.
+  http://article.gmane.org/gmane.comp.version-control.git/129830
 
-So i need to change the remote name manually.
-
-I tried modifying the .git/config file locally but it didn't work.
-
-Could someone help tell how to do it?
-
-Thanks
-
-Regards
-Dongas
+-Peff
