@@ -1,68 +1,75 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: [PATCH/RFC] Add support for the google-chrome web browser
-Date: Tue, 5 Jan 2010 12:20:40 -0500
-Message-ID: <32541b131001050920j2a569ec8u8811f1b0358f21ef@mail.gmail.com>
-References: <20100105051906.GA22799@efarrerlx.appsig.com> <7vr5q56rew.fsf@alter.siamese.dyndns.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: How to exclude files from "git diff"
+Date: Tue, 5 Jan 2010 20:54:08 +0300
+Message-ID: <37fcd2781001050954y778ba661n7cee6cda699968c2@mail.gmail.com>
+References: <6dc9ffc80912180909q2e9cbe30r7c802a2152c5954@mail.gmail.com>
+	 <20100105064509.GC19025@coredump.intra.peff.net>
+	 <6dc9ffc81001050620q55c23072p93f58c8685d77f9d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Evan Farrer <evan.farrer@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 05 18:21:31 2010
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: "H.J. Lu" <hjl.tools@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 05 18:54:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSD62-0004sj-VD
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Jan 2010 18:21:31 +0100
+	id 1NSDbk-00037j-Eq
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Jan 2010 18:54:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932085Ab0AERVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jan 2010 12:21:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932083Ab0AERVJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 12:21:09 -0500
-Received: from mail-yx0-f188.google.com ([209.85.210.188]:53249 "EHLO
-	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755175Ab0AERVG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jan 2010 12:21:06 -0500
-Received: by yxe26 with SMTP id 26so15799564yxe.4
-        for <git@vger.kernel.org>; Tue, 05 Jan 2010 09:21:01 -0800 (PST)
+	id S1754773Ab0AERyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jan 2010 12:54:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754594Ab0AERyL
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 12:54:11 -0500
+Received: from fg-out-1718.google.com ([72.14.220.155]:5592 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754334Ab0AERyK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jan 2010 12:54:10 -0500
+Received: by fg-out-1718.google.com with SMTP id 22so6536849fge.1
+        for <git@vger.kernel.org>; Tue, 05 Jan 2010 09:54:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=WPN4NHGytVykMH1NreJ/5jKJ/w6WfWwc6xAyItdeCsQ=;
-        b=PGoaVV2Yi7+eWqYRVlSLaWTzQNO9DWVO5xTHE+E3zt70KYxFyVgV/tp+5RxIXzH3HK
-         JtsoNNbw4gyjDEmgl/Z6DHqUy3yhFpNQ6WBMAcGd5y02KwhOZ579Re2GIZ8aFR6xpcNe
-         Lj6PBEIUI9pxCQThPRHoi3OV+HtGdOEZnN0ns=
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=GYWZaqHnwtmUqUaUgWJTwK9f9mYrPxcQk5BuJuweKfo=;
+        b=PRU27C5APwp7fniJAequQt8prrsgn9kMXAOp6MXUECZbcsmNM0fiS1j5HnkNlXZ6WX
+         1E4atJhlCb9wX17/VjnFd1xD+uXCgcql111n0eJV3QcFnnrrZKClDCO9q3SyD9BfMk+A
+         nWiJPxZHliL0tmiUPjIDofbKSOvr8B1qs3zbo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        b=eXB/dHrkfcXDqwReLaFhIKvGQ4xhksClGC1AizHFaHCK0zylo0vRq6jqm6FyxEO31S
-         AK9bD60y3bf1KwRr3P51ehe+pkcRtiByRjKnU7bzRu4tmvPSzwWzUPQJjiySSUdyoKBC
-         WhwfhJJ55gYoFfgWVRc/FfCR5RHdZLrIPU7mo=
-Received: by 10.150.65.9 with SMTP id n9mr10414246yba.187.1262712061212; Tue, 
-	05 Jan 2010 09:21:01 -0800 (PST)
-In-Reply-To: <7vr5q56rew.fsf@alter.siamese.dyndns.org>
+        b=xUYPIllCoNMMIz9HRABaSQ+pLfkYJL3JYpMmrXUIsxQOWFl9Kg4sUBOoHss5I6udHU
+         XPO1mAqExOjhLADwVCgP1KL3x4U+L+TDUr3p867ICW/Y8kd5LFX48HzUtGTlELs4U58U
+         MBTcR7z4TZLsNcAF/7CfBQxOZeIGa5Gp515/o=
+Received: by 10.239.187.82 with SMTP id k18mr492183hbh.5.1262714048983; Tue, 
+	05 Jan 2010 09:54:08 -0800 (PST)
+In-Reply-To: <6dc9ffc81001050620q55c23072p93f58c8685d77f9d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136196>
 
-On Tue, Jan 5, 2010 at 12:40 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Then we don't even have to add any specific support for "google-chrome" or
-> anything that takes "$command $path..." and opens the documents.
+On Tue, Jan 5, 2010 at 5:20 PM, H.J. Lu <hjl.tools@gmail.com> wrote:
 >
-> Is there a downside in this approach?
+> Yes, I want those files in repository. They are for my personal use only.
 
-If someone has another firefox-derived browser installed with a
-different name and tries to use it, this default wouldn't do the right
-"firefoxy" thing, and would instead fail strangely.  On the other
-hand, right now it'll fail anyway, just not strangely.
+If you modified some file locally and do not want to see and commit
+those modifications, you may want to use:
 
-So your proposed change would decrease the number of failures, but
-increase the strangeness of the remaining failures.  Maybe that's the
-right thing to do though.
+git update-index --assume-unchanged foo
 
-Avery
+After that, git will not notice any change to `foo'. So, 'git diff' and any
+other command (such git commit -a) will ignore those changes.
+
+Warning: using  --assume-unchanged may result in losing your changes
+if you switch between branches containing different versions of 'foo'.
+
+Normally, when you try to do that, git will not allow switch to another
+branch saying that `foo' is modified. But using --assume-unchanged
+disables this check. But if you have the same `foo' on all branches
+then switching between branches will preserve your modifications.
+
+
+Dmitry
