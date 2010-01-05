@@ -1,81 +1,141 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: How to exclude files from "git diff"
-Date: Wed, 6 Jan 2010 01:31:24 +0700
-Message-ID: <fcaeb9bf1001051031j6723dc14v8d43944e3b8baa90@mail.gmail.com>
-References: <6dc9ffc80912180909q2e9cbe30r7c802a2152c5954@mail.gmail.com>
-	 <20100105064509.GC19025@coredump.intra.peff.net>
-	 <6dc9ffc81001050620q55c23072p93f58c8685d77f9d@mail.gmail.com>
-	 <37fcd2781001050954y778ba661n7cee6cda699968c2@mail.gmail.com>
-	 <6dc9ffc81001051015x3bebc994r3d475bdb59e12d39@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: submodules' shortcomings, was Re: RFC: display dirty submodule
+ working directory in git gui and gitk
+Date: Tue, 05 Jan 2010 10:31:26 -0800
+Message-ID: <7vd41oz9mp.fsf@alter.siamese.dyndns.org>
+References: <4B3F6742.6060402@web.de>
+ <alpine.DEB.1.00.1001041038520.4985@pacific.mpi-cbg.de>
+ <4B421F90.4090402@web.de>
+ <alpine.DEB.1.00.1001042217370.4985@pacific.mpi-cbg.de>
+ <4B42F425.4010901@web.de> <7v1vi428w0.fsf@alter.siamese.dyndns.org>
+ <4B43292C.5060106@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Dmitry Potapov <dpotapov@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: "H.J. Lu" <hjl.tools@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 05 19:31:46 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Paul Mackerras <paulus@samba.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Lars Hjemli <hjemli@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Jan 05 19:32:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSEBx-0003wy-UE
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Jan 2010 19:31:42 +0100
+	id 1NSECF-00046g-Ep
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Jan 2010 19:31:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755262Ab0AESb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jan 2010 13:31:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754889Ab0AESb1
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 13:31:27 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:60388 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753978Ab0AESb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jan 2010 13:31:26 -0500
-Received: by pwj9 with SMTP id 9so10411720pwj.21
-        for <git@vger.kernel.org>; Tue, 05 Jan 2010 10:31:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=icq0XttM9qvrfOPUj9G0ag96R8z8RScqbQQrlvjqZv8=;
-        b=nEkmCNkMYmYeYsvjC5RxO0BSswIv1dEUsV6gUGs+G7ebpUpsA9iHwBJrFeGGFK5tO+
-         ra9GbpyJX9iUEmyT6IIq1CNNaRpPXrPVjRNcliRCLQI4piDCppifF1u4KSFl8zR2YxRJ
-         FpBW0htGCypXJ704gU0Ksf0eXQbyqi4faWGrU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=u1ygw07drWm369ngvE/42/QDPY4sx51G5v1h3aoUSkc2KzhUX5ueDNuY1bJL9KpfMG
-         xRAl2zy3wPbt2yrHKNXJ/v/NtV/6kO6NC19sqI37GHm38jysH2hnjYtkJcSHK9V4UST2
-         WIC2yuzgJcpzSE4p6PuKVFvEMFT+XIr5AQzhM=
-Received: by 10.115.133.7 with SMTP id k7mr3410961wan.96.1262716284391; Tue, 
-	05 Jan 2010 10:31:24 -0800 (PST)
-In-Reply-To: <6dc9ffc81001051015x3bebc994r3d475bdb59e12d39@mail.gmail.com>
+	id S1755241Ab0AESbu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jan 2010 13:31:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754889Ab0AESbt
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 13:31:49 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51595 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754745Ab0AESbt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jan 2010 13:31:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C61638E22C;
+	Tue,  5 Jan 2010 13:31:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1zk0MukDbpTqM9lHKzi9QtzXXLk=; b=MNGtZV
+	AIgq3PJs5bwJuRDn0KQjeE+aNwFJqal1IWhifaQCnZYQm4C2M6DcxGxzx10g/v7K
+	AnNtwIO+BbTt0CiKEoRNmgPSx4feZl/xKfOFcPms3VNIG2chBWMAsANcifB6jxmn
+	R0McUwI8ThgVJZ2jcz2IhPFiYGyiy3vDQ217I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZxzSS7vYgMqvAt//SJ/usa6H2XWKHstY
+	8lkXSe1e7SAeTvZNrvsJ8plRgaWDJjvMeJyaxeJwiHzZPVw6xv+Gp0XdhijW6M6W
+	tSz1ZwIkPNsE4fXeKIP1vEEOCFmj1rAvrihYF5SBplDhYrVXDgTD/65SWFvmG2oS
+	VmjZCvrqAVI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C3728E228;
+	Tue,  5 Jan 2010 13:31:37 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AAB5E8E226; Tue,  5 Jan
+ 2010 13:31:27 -0500 (EST)
+In-Reply-To: <4B43292C.5060106@web.de> (Jens Lehmann's message of "Tue\, 05
+ Jan 2010 12\:57\:32 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8EFB2BA6-FA28-11DE-8DC6-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136200>
 
-On 1/6/10, H.J. Lu <hjl.tools@gmail.com> wrote:
-> On Tue, Jan 5, 2010 at 9:54 AM, Dmitry Potapov <dpotapov@gmail.com> wrote:
->  > On Tue, Jan 5, 2010 at 5:20 PM, H.J. Lu <hjl.tools@gmail.com> wrote:
->  >>
->  >> Yes, I want those files in repository. They are for my personal use only.
->  >
->  > If you modified some file locally and do not want to see and commit
->  > those modifications, you may want to use:
->  >
->  > git update-index --assume-unchanged foo
->  >
+Jens Lehmann <Jens.Lehmann@web.de> writes:
+
+> The only thing we show right now are the differences between submodule
+> commits and what the superproject has in its index and in its commits.
+> Missing are:
 >
+>   a) modified files
+> ...
+>   b) new unignored files
+>      IMO these files should show up too (the superproject doesn't show
+>      ignored files, the submodule state shouldn't do that either). But
+>      OTOH i don't see a possibility for loss of data when this state is
+>      not shown.
+
+I don't know if we are talking about the same scenario.  What I had in
+mind was:
+
+    cd sub
+    edit new-file
+    tests ok and be happy
+    git commit
+    cd ..
+    git status
+    git commit
+
+forgetting that only you have sub/new-file in the world.  It is not loss
+of data, but still bad.  Forgetting to add a new-file and committing in a
+project without submodule doesn't lose data, but the resulting commit will
+be seen as broken by other people.
+
+>   c) a detached HEAD not on any local *or* remote branch
+>      This can be fatal when doing a reset, revert or checkout, so it
+>      should be shown. Alternatively when applied on a submodule, forcing
+>      could be disabled to let the command fail instead of throwing stuff
+>      away.
+
+Sorry, I am lost.  Are you worried about "reset/revert/checkout" in the
+superproject?  What destructive things do these operations do that you
+consider "fatal"?  I am especially puzzled by "revert", as "commit",
+"cherry-pick", and "merge" would have the same "fatal" effect as "revert",
+but I don't get what "fatality" you are talking about here.
+
+>   d) a detached HEAD not on any remote branch
+>      AFAICS this is only important for a push, and could just error out
+>      there.
+
+Likewise.
+
+>> I think "clone" has a chicken-and-egg problem.  If all of your project
+>> ...
+>> what kind of participant you are.  It has to become two-step process;
+>> either "clone" going interactive in the middle, or you let the clone to
+>> happen and then "submodule init" to express that information.
 >
-> I added those files into my repository for bookkeeping purpose. It
->  shouldn't go out at all.
+> Yes, we can leave it that way for now (first "clone" and then "submodule
+> init <the submodules you need>"). We can migrate to the "group mapping"
+> functionality later (which would then allow to force certain submodules
+> to always be populated because they appear in every group).
 
-That could be a way to simulate git diff --exclude="foo*.bar*":
+Even with group mapping, you need to clone the superproject first, before
+seeing the mapping (which I would assume comes in the superproject).  And
+you need to see the mapping to decide what group you belong to.  After
+that you can finally drive sub-clone to continue (e.g. I work in the
+documentation area, and the group mapping has 'docs' that lets me pull in
+submodules for doc/ and common/ directories, without src/ submodule --- I
+can only learn that the submodules I am interested in are called 'docs' by
+group name or doc/ and common/ subdirectories _after_ I get the clone of
+the superproject).
 
-git ls-files -- 'foo*bar*'|xargs git update-index --assume-unchanged
-git diff
-git ls-files -- 'foo*bar*'|xargs git update-index --no-assume-unchanged
-
-assume that you don't use assume-unchanged for any other purposes
--- 
-Duy
+I don't know if "this appears in all groups so let's always sub-clone it"
+is very useful in practice, but some sort of mandatory clone/checkout
+mechanism would be handy.
