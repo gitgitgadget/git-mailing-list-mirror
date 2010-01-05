@@ -1,81 +1,91 @@
-From: "H.J. Lu" <hjl.tools@gmail.com>
-Subject: Re: How to exclude files from "git diff"
-Date: Tue, 5 Jan 2010 06:20:15 -0800
-Message-ID: <6dc9ffc81001050620q55c23072p93f58c8685d77f9d@mail.gmail.com>
-References: <6dc9ffc80912180909q2e9cbe30r7c802a2152c5954@mail.gmail.com>
-	 <20100105064509.GC19025@coredump.intra.peff.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: submodules' shortcomings, was Re: RFC: display dirty
+	submodule working directory in git gui and gitk
+Date: Tue, 5 Jan 2010 15:27:27 +0100
+Message-ID: <20100105142727.GA83546@book.hvoigt.net>
+References: <4B3F6742.6060402@web.de> <alpine.DEB.1.00.1001041038520.4985@pacific.mpi-cbg.de> <4B421F90.4090402@web.de> <alpine.DEB.1.00.1001042217370.4985@pacific.mpi-cbg.de> <4B42F425.4010901@web.de> <alpine.DEB.1.00.1001051032440.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 05 15:24:14 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Paul Mackerras <paulus@samba.org>,
+	Lars Hjemli <hjemli@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 05 15:28:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSAGq-0003MO-M7
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Jan 2010 15:20:29 +0100
+	id 1NSANl-0001LK-Nk
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Jan 2010 15:27:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754525Ab0AEOUU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Jan 2010 09:20:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754520Ab0AEOUS
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 09:20:18 -0500
-Received: from ey-out-2122.google.com ([74.125.78.26]:37820 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754292Ab0AEOUR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Jan 2010 09:20:17 -0500
-Received: by ey-out-2122.google.com with SMTP id 22so410193eye.19
-        for <git@vger.kernel.org>; Tue, 05 Jan 2010 06:20:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RsyLLrbtHTpNpUSHCJm342sTOViuKKjUgADaCQiAE4o=;
-        b=ffN3goWKX8Q+vC7zdRvbdIIaCOqeuW+Ym24MFZGEy5HUSOR85JU5THuDmKIXJ4Qlmo
-         Q63b1oH+4MyEnOtpujwjmqRcYxg9lzktL9bbu+DuM9GzLsagg1Qyhxao3c5eUeiPXbhn
-         dcnMCOphy+r3cMQQZnYWOwVCRHFQ4hea+hYME=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=x/yUAwI0RfXR32OaDgU4w9+aXwUcRWjUceFj3DAN54PFFXGZwxF+81fHKqTIkdd7bx
-         enWgtSPWIwW96MzYGOz/IpGxklj9SN/DBX9mfzih87pvlBszsuB9dbsekhmYNsC1nTeR
-         pRfumuuo5vqQaep36oLRI5wQjkKvETZ0MTxwY=
-Received: by 10.216.86.83 with SMTP id v61mr4169381wee.80.1262701215613; Tue, 
-	05 Jan 2010 06:20:15 -0800 (PST)
-In-Reply-To: <20100105064509.GC19025@coredump.intra.peff.net>
+	id S1754529Ab0AEO1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jan 2010 09:27:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754436Ab0AEO1b
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 09:27:31 -0500
+Received: from darksea.de ([83.133.111.250]:38779 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754212Ab0AEO13 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jan 2010 09:27:29 -0500
+Received: (qmail 13787 invoked from network); 5 Jan 2010 15:27:27 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 5 Jan 2010 15:27:27 +0100
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.1001051032440.4985@pacific.mpi-cbg.de>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136191>
 
-On Mon, Jan 4, 2010 at 10:45 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Dec 18, 2009 at 09:09:15AM -0800, H.J. Lu wrote:
->
->> I have some bookkeeping files in my git repository. =A0How do I
->> exclude them from "git diff"? Does "git diff" support
->>
->> # git diff --exclude=3D"foo.*.bar*"
->
-> No, I don't believe there is a way to do that. You would have to do
-> something like:
->
-> =A0git diff $(git ls-files | grep -v whatever)
->
-> The usual concept of "exclusion" for git is not to track files at all
-> via the .gitignore mechanism. =A0Are these files that have content yo=
-u
-> really _want_ in the repository, but you just don't want to see them
-> when doing some diffs? Or are they files that could not be in the
-> repository at all?
+On Tue, Jan 05, 2010 at 10:46:11AM +0100, Johannes Schindelin wrote:
+> On Tue, 5 Jan 2010, Jens Lehmann wrote:
+> > Yes. This synchronization could be either obsoleted by only using
+> > .gitmodules or automated.
+> 
+> I start to wonder whether the insistence that .gitmodules' settings must 
+> be overrideable makes any sense in practice.
 
-Yes, I want those files in repository. They are for my personal use onl=
-y.
+I just read this and felt the need to comment.
 
-Thanks.
+Yes, it definitely makes sense in practise to have it overrideable
+otherwise we loose the distributed nature of git for submodules.
 
---=20
-H.J.
+Imagine you fork a project and you want to work with others on a change
+that involves chaning a subproject. If you can not override .gitmodules
+you can only work on the central repository.
+
+I am actually working like this in practise. I have a private clone of
+all the subprojects msysgit has and commit/push locally first. Once I
+sense the change is going to be useful for a wider audience I send it
+upstream. This would be more uncomfortable if it is not overideable.
+
+But I know what you mean by the general confusion about manual updates.
+So how about an approach like this:
+
+* clone will initialise all submodules in .git/config from .gitmodules
+
+* if a change in .gitmodules happens git scans .git/config for that
+  entry and in case nothing is there it syncronises the new one and
+  notifies the user.
+
+* if a change in .gitmodules happens and the entry before was the same
+  in .git/config we also automatically update that entry there.
+
+* In every other case we just leave .git/config alone.
+
+Did I miss anything? I think you should get the idea and that it could
+get rid of the confusion caused by manual .gitmodule updates.
+
+cheers Heiko
+
+P.S.: Additionally (for my use case) we could add a "hint mechanism"
+which allows git to "guess" a new submodules address. For example in
+case I have all my local clones on "git@my.server.net:<modulename>.git".
+Now when a new submodule gets seen in .gitmodules it will infer the
+address from the hint configuration and not take the original one from
+upstream.
