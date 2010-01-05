@@ -1,106 +1,72 @@
-From: Evan Farrer <evan.farrer@gmail.com>
-Subject: [PATCH/RFC] Add support for the google-chrome web browser
-Date: Mon, 4 Jan 2010 22:19:06 -0700
-Message-ID: <20100105051906.GA22799@efarrerlx.appsig.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "git add -i" with path gives "Argument list too long"
+Date: Mon, 04 Jan 2010 21:31:02 -0800
+Message-ID: <7vzl4t6ru1.fsf@alter.siamese.dyndns.org>
+References: <36FEB8A0-968D-4B43-AEFB-9B0E227A1F88@wincent.com>
+ <20100105041438.GB12574@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 05 06:19:18 2010
+Cc: Wincent Colaiuta <win@wincent.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 05 06:31:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NS1p6-0002Gq-H5
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Jan 2010 06:19:16 +0100
+	id 1NS20z-0004ne-T4
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Jan 2010 06:31:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751563Ab0AEFTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jan 2010 00:19:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751255Ab0AEFTM
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 00:19:12 -0500
-Received: from mail-yx0-f188.google.com ([209.85.210.188]:64360 "EHLO
-	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751003Ab0AEFTL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jan 2010 00:19:11 -0500
-Received: by yxe26 with SMTP id 26so15310595yxe.4
-        for <git@vger.kernel.org>; Mon, 04 Jan 2010 21:19:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=sSlDOOpfkW9rsnA0mcWvUL55jMXQAQWX7D0NLnGvQ/E=;
-        b=C0wADxBWvEHwL1AE4c2aNGEnM1tbkVDJV1XvMAzoxdeJvxb4HSI60pyrHArB4sxOP/
-         mbgVtdDHU6KaJWkBdgedmk8kHpXXTWQkW+SvFxnqGzWHQRC2Y4jg1b9OdOvO3C0077Mq
-         TBwYHRlMxhjT4XAgbRpkJG+HGzYqxWCKvcr/k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=UZz9cjhdyXEFLoVBf5uwBMWKVkxb2OoH5L5cQOzY5J+GgG2NkFRuUFQ+qpxQMVJ6Wo
-         1gCyay10hinuK+rhLpYVBZ9+eNwE18NJRzkOC3xlb4ydB4AcVxAt4/FU3m1LI+wKhncT
-         Hu4JbXFTeCevUrN0SFZsqaHCzUd6wF7+Ao4og=
-Received: by 10.150.254.7 with SMTP id b7mr9156627ybi.137.1262668750386;
-        Mon, 04 Jan 2010 21:19:10 -0800 (PST)
-Received: from localhost (173-127-235-168.pools.spcsdns.net [173.127.235.168])
-        by mx.google.com with ESMTPS id 5sm7596776yxg.64.2010.01.04.21.19.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 04 Jan 2010 21:19:09 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753434Ab0AEFbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jan 2010 00:31:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753269Ab0AEFbP
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 00:31:15 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62899 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751396Ab0AEFbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jan 2010 00:31:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BCD638E00A;
+	Tue,  5 Jan 2010 00:31:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bVTfDlELFRl9gov4CSNg27RZpKg=; b=wOo7bH
+	gMspg7LU0cN/K1ffKx9pl+hXJcS7Vg0Ew0nGfnzgWh6BO+XU+KephNaDATrkd4WC
+	5dSI2lPKw7cH1N63sfk7ZDBuIRRWOMNRFM3kvK/2+uncMM3pd/h0uUihuuashjnH
+	Y1snHVFouaWUfL0HXn2ImBs+fhf4p8G8y8jk8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=suFANYQUu9oPpSaETov4TuV8mSOV3EpH
+	PUYKm3WOmjyKdXZLkmSuRTTiMxoDypi+2CPUZobcK6QDIFpi9rFRyV8nDCZFtAxb
+	PeCBb+jLp5N+wViFLni0bIAAjw0trxj5PGWFoFrAMw6eH1uILJJSHwfusZwViILo
+	TCfU3DCtm8E=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 847788E006;
+	Tue,  5 Jan 2010 00:31:07 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BF35B8E005; Tue,  5 Jan
+ 2010 00:31:03 -0500 (EST)
+In-Reply-To: <20100105041438.GB12574@coredump.intra.peff.net> (Jeff King's
+ message of "Mon\, 4 Jan 2010 23\:14\:38 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 864D9A74-F9BB-11DE-AF1A-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136163>
 
-Signed-off-by: Evan Farrer <Evan.Farrer@gmail.com>
----
- Documentation/git-web--browse.txt |    1 +
- git-web--browse.sh                |    6 +++---
- 2 files changed, 4 insertions(+), 3 deletions(-)
+Jeff King <peff@peff.net> writes:
 
-diff --git a/Documentation/git-web--browse.txt b/Documentation/git-web--browse.txt
-index 278cf73..0994139 100644
---- a/Documentation/git-web--browse.txt
-+++ b/Documentation/git-web--browse.txt
-@@ -25,6 +25,7 @@ The following browsers (or commands) are currently supported:
- * links
- * lynx
- * dillo
-+* google-chrome
- * open (this is the default under Mac OS X GUI)
- * start (this is the default under MinGW)
- 
-diff --git a/git-web--browse.sh b/git-web--browse.sh
-index a578c3a..0664b9e 100755
---- a/git-web--browse.sh
-+++ b/git-web--browse.sh
-@@ -31,7 +31,7 @@ valid_custom_tool()
- 
- valid_tool() {
- 	case "$1" in
--		firefox | iceweasel | konqueror | w3m | links | lynx | dillo | open | start)
-+		firefox | iceweasel | konqueror | w3m | links | lynx | dillo | google-chrome | open | start)
- 			;; # happy
- 		*)
- 			valid_custom_tool "$1" || return 1
-@@ -103,7 +103,7 @@ fi
- 
- if test -z "$browser" ; then
-     if test -n "$DISPLAY"; then
--	browser_candidates="firefox iceweasel konqueror w3m links lynx dillo"
-+	browser_candidates="firefox iceweasel konqueror w3m links lynx dillo google-chrome"
- 	if test "$KDE_FULL_SESSION" = "true"; then
- 	    browser_candidates="konqueror $browser_candidates"
- 	fi
-@@ -162,7 +162,7 @@ case "$browser" in
- 		;;
- 	esac
- 	;;
--    w3m|links|lynx|open)
-+    w3m|links|lynx|google-chrome|open)
- 	eval "$browser_path" "$@"
- 	;;
-     start)
--- 
-1.6.6.78.gbd757c
+> I seem to recall Junio noting in the past the inconsistencies in git
+> about what is a path and what is a pathspec. Is this one of those
+> inconsistencies, and would it be a positive thing to fix it?
+
+We actually never take paths and everything we take is pathspec.  One
+longstanding gripe I had around this area is there are two kinds of
+pathspecs.  "diff-tree" family of pathspecs only match "leading
+directories" while "dir.c" and "builtin-grep.c" pathspecs allow both
+"leading directories" and "glob" pathspecs.  Teaching "diff-tree" family
+to also grok globs would be a very nice thing to do, and the listing of
+paths with ls-files in the sample patch you are removing is indeed a
+workaround for this issue.
