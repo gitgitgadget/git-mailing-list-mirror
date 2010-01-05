@@ -1,96 +1,45 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Re: submodules' shortcomings, was Re: RFC: display dirty submodule
- working directory in git gui and gitk
-Date: Tue, 5 Jan 2010 16:30:49 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001051627250.3361@intel-tinevez-2-302>
-References: <4B3F6742.6060402@web.de> <alpine.DEB.1.00.1001041038520.4985@pacific.mpi-cbg.de> <4B421F90.4090402@web.de> <alpine.DEB.1.00.1001042217370.4985@pacific.mpi-cbg.de> <4B42F425.4010901@web.de> <alpine.DEB.1.00.1001051032440.4985@pacific.mpi-cbg.de>
- <20100105142727.GA83546@book.hvoigt.net>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: am fails to apply patches for files with CRLF lineendings
+Date: Tue, 05 Jan 2010 10:41:03 -0600
+Message-ID: <wtPFseZ4A1pT-STvrVsX7nC5hglK1gLCP4QZPtcSuvTN1jW0PYRUbQ@cipher.nrlssc.navy.mil>
+References: <20091214183337.GA25462@atjola.homenet> <7vvdg9i9mn.fsf@alter.siamese.dyndns.org> <tCQlJn153g8Oa6Z9HKe6xOUQJdcf2PCIVthlTrLgYE-wJ5jFyXVXWw@cipher.nrlssc.navy.mil> <7vhbrtdtth.fsf@alter.siamese.dyndns.org> <F25E4EFA-BDD8-4920-96FC-2347AD5A3605@silentcow.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Lars Hjemli <hjemli@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Jan 05 16:31:06 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-1?Q?Bj=F6rn_Steinbri?= =?ISO-8859-1?Q?nk?= 
+	<B.Steinbrink@gmx.de>, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Jason King <jk@silentcow.com>
+X-From: git-owner@vger.kernel.org Tue Jan 05 17:43:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSBN6-0008Co-AF
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Jan 2010 16:31:01 +0100
+	id 1NSCUE-0007Lx-6y
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Jan 2010 17:42:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754671Ab0AEPay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jan 2010 10:30:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754572Ab0AEPay
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 10:30:54 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52630 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754535Ab0AEPax (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jan 2010 10:30:53 -0500
-Received: (qmail invoked by alias); 05 Jan 2010 15:30:50 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp021) with SMTP; 05 Jan 2010 16:30:50 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18YnA9fkXQY2BDS5zvaR2C+nox6UQQaj/Qq02ktio
-	xDX4v0joUTKtC/
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20100105142727.GA83546@book.hvoigt.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1755140Ab0AEQls (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jan 2010 11:41:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755110Ab0AEQlf
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 11:41:35 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:43423 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932077Ab0AEQlL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jan 2010 11:41:11 -0500
+Received: by mail.nrlssc.navy.mil id o05Gf3Vf026335; Tue, 5 Jan 2010 10:41:03 -0600
+In-Reply-To: <F25E4EFA-BDD8-4920-96FC-2347AD5A3605@silentcow.com>
+X-OriginalArrivalTime: 05 Jan 2010 16:41:03.0502 (UTC) FILETIME=[DEB812E0:01CA8E25]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136194>
 
-Hi,
+Jason King wrote:
+> I just grabbed 1.6.6 and noticed that this problem still exists.  I just
+> wanted to ping this thread to make sure this hadn't been forgotten.
 
-On Tue, 5 Jan 2010, Heiko Voigt wrote:
+I am interested in fixing this but have not been able to get to it.
 
-> On Tue, Jan 05, 2010 at 10:46:11AM +0100, Johannes Schindelin wrote:
-> > On Tue, 5 Jan 2010, Jens Lehmann wrote:
-> > > Yes. This synchronization could be either obsoleted by only using
-> > > .gitmodules or automated.
-> > 
-> > I start to wonder whether the insistence that .gitmodules' settings must 
-> > be overrideable makes any sense in practice.
-> 
-> I just read this and felt the need to comment.
-> 
-> Yes, it definitely makes sense in practise to have it overrideable
-> otherwise we loose the distributed nature of git for submodules.
-
-AFAICT you can use url.<base>.insteadOf for that.
-
-Or maybe even better use a different remote for that, as you are likely 
-wanting to stay up-to-date with the upstream projects even if you work on 
-the stuff locally.
-
-> But I know what you mean by the general confusion about manual updates.
-> So how about an approach like this:
-> 
-> * clone will initialise all submodules in .git/config from .gitmodules
-> 
-> * if a change in .gitmodules happens git scans .git/config for that
->   entry and in case nothing is there it syncronises the new one and
->   notifies the user.
-> 
-> * if a change in .gitmodules happens and the entry before was the same
->   in .git/config we also automatically update that entry there.
-> 
-> * In every other case we just leave .git/config alone.
-
-I'm sorry, but this is the kind of stuff I am seeing in Git: a lot of 
-really complicated design with a lot of corner cases, put on top of a 
-really simple and elegant design.
-
-So I'd like to see a solution that is obviously superior by being 
-plain simple.
-
-Ciao,
-Dscho
+-brandon
