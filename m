@@ -1,183 +1,117 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: submodules' shortcomings, was Re: RFC: display dirty submodule
- working directory in git gui and gitk
-Date: Tue, 5 Jan 2010 10:46:11 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001051032440.4985@pacific.mpi-cbg.de>
-References: <4B3F6742.6060402@web.de> <alpine.DEB.1.00.1001041038520.4985@pacific.mpi-cbg.de> <4B421F90.4090402@web.de> <alpine.DEB.1.00.1001042217370.4985@pacific.mpi-cbg.de> <4B42F425.4010901@web.de>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH v3 5/6] transport-helper.c::push_refs(): ignore
+ helper-reported status if ref is not to be pushed
+Date: Tue, 5 Jan 2010 18:01:13 +0800
+Message-ID: <20100105180113.6e0572dc.rctay89@gmail.com>
+References: <20091224154352.ecefd242.rctay89@gmail.com>
+	<20091224154258.08b4fe44.rctay89@gmail.com>
+	<20091224154158.15ba580f.rctay89@gmail.com>
+	<20091224154057.33611ae7.rctay89@gmail.com>
+	<20091224154005.a642c8ec.rctay89@gmail.com>
+	<20091224154445.ad4b7a01.rctay89@gmail.com>
+	<20100105063253.GA19368@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Lars Hjemli <hjemli@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Jan 05 10:41:00 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 05 11:03:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NS5uN-0004a2-BV
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Jan 2010 10:40:59 +0100
+	id 1NS6GN-0003YM-2I
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Jan 2010 11:03:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754074Ab0AEJkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jan 2010 04:40:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753754Ab0AEJkz
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 04:40:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41967 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751563Ab0AEJkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jan 2010 04:40:53 -0500
-Received: (qmail invoked by alias); 05 Jan 2010 09:40:51 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp021) with SMTP; 05 Jan 2010 10:40:51 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX182/l9GnlE2Dhae8lpICGiaYWMXgTUPypCew6znPQ
-	R1LH+bSCMnS9VZ
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <4B42F425.4010901@web.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1751563Ab0AEKB0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Jan 2010 05:01:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751179Ab0AEKB0
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 05:01:26 -0500
+Received: from mail-gx0-f211.google.com ([209.85.217.211]:61198 "EHLO
+	mail-gx0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751086Ab0AEKBZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Jan 2010 05:01:25 -0500
+Received: by gxk3 with SMTP id 3so3564326gxk.1
+        for <git@vger.kernel.org>; Tue, 05 Jan 2010 02:01:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:in-reply-to:references:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=B7pJVW4wG8EanR9YD2hG2iONefJe5K/JhUlihaAkrcI=;
+        b=Iji0CdwT7IDXLJ4X8x3YbOpNT3rG8xmYnd0Q1VWhhximxWpVvteRM1pKGBqcvTrtrB
+         MuJnYA/8vuHBiBGY6vfvr7jbSZCxUmnUYBDUT51uND/d1H9M1huxgFTS2wv/iTJHw6yU
+         zAw0KCO3rVjufYlMse3Q8kI2XsEhr6xZMY1po=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        b=kufZaKd83HI48bIXIkLd9do1Teo1mWXqQyKVW0FUbozIYzAU2dcz5awODnRGrIoCBK
+         yA6zgR35ZXtgUpMcA4qBwwIPxKMlnGaLuU1D5Nv3UPizosmsJpN+BU6RKi4CoRt8+x8Q
+         jLAIbmMK1vu4/8wkDjlifOM/V19djQIvH0pqE=
+Received: by 10.91.51.23 with SMTP id d23mr1333395agk.94.1262685684347;
+        Tue, 05 Jan 2010 02:01:24 -0800 (PST)
+Received: from your-cukc5e3z5n (cm154.zeta152.maxonline.com.sg [116.87.152.154])
+        by mx.google.com with ESMTPS id 16sm9114132gxk.3.2010.01.05.02.01.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 05 Jan 2010 02:01:23 -0800 (PST)
+In-Reply-To: <20100105063253.GA19368@coredump.intra.peff.net>
+X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136180>
 
 Hi,
 
-On Tue, 5 Jan 2010, Jens Lehmann wrote:
+On Tue, Jan 5, 2010 at 2:32 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Dec 24, 2009 at 03:44:45PM +0800, Tay Ray Chuan wrote:
+>
+>> - =A0 =A0 =A0 =A0 =A0 =A0 ref->status =3D status;
+>> - =A0 =A0 =A0 =A0 =A0 =A0 ref->remote_status =3D msg;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 switch (ref->status) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 case REF_STATUS_REJECT_NONFASTFORWARD:
+>> + =A0 =A0 =A0 =A0 =A0 =A0 case REF_STATUS_UPTODATE:
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 /*
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0* Earlier, the ref was =
+marked not to be pushed, so ignore what
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0* the remote helper sai=
+d about the ref.
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0*/
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 continue;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 default:
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ref->status =3D status;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ref->remote_status =3D msg=
+;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 }
+>
+> It seems like this should be checking for REF_STATUS_NONE explicitly
+> instead of trying to enumerate the reasons we might not have tried to
+> push. Shouldn't helpers _only_ be pushing REF_STATUS_NONE refs?
+>
+> I think right now the two cases are equivalent, since non-ff and
+> uptodate are the only two states set before the helper is invoked. Bu=
+t
+> we have discussed in the past (and I still have a patch floating arou=
+nd
+> for) a REF_STATUS_REWIND which would treat strict rewinds differently
+> (silently ignoring them instead of making an error). Explicitly check=
+ing
+> REF_STATUS_NONE future-proofs against new states being added.
 
-> Am 04.01.2010 23:29, schrieb Johannes Schindelin:
-> 
-> > - submodules were designed with a strong emphasis on not being forced 
-> >   to check them out.  But Git makes it very unconvenient to actually 
-> >   check submodules out, let alone check them out at clone-time.  And 
-> >   it is outright impossible to _enforce_ a submodule to be checked 
-> >   out.
-> 
-> Absolutely. But i think the group mappings discussed by Junio and Heiko
-> are a good starting point to solve that problem:
-> http://thread.gmane.org/gmane.comp.version-control.git/130928/
-> 
-> This should be solvable by putting the necessary information into
-> .gitmodules and have git clone use it.
+I'm not really sure if this is true (ie. that if status is not non-ff
+or uptodate, then it is REF_STATUS_NONE), but we could step around this
+by introducing a property, say, ref->should_push, that is set to 1,
+after all the vetting has been carried out and just before we talk to
+the server.
 
-And of course, existing Git versions will not handle it correctly.  
-Judging from the rebasing-submodule patch, the next Git version will not 
-handle it either.
+That way, we just check that property, without having to know the ref
+statuses that would mark a ref not-for-pushing. Sounds future-proof (in
+your sense) to me.
 
-But you're correct, one has to start _somewhere_.
-
-> > - among other use cases, submodules are recommended for sharing 
-> >   content between two different repositories. But it is part of the 
-> >   design that it is _very_ easy to forget to commit, or push the 
-> >   changes in the submodule that are required for the integrity of the 
-> >   superproject.
-> 
-> Definitely (and if i got that right, svn externals have the same problem).
-
-Yes, svn externals have that problem.  But we do not need to take the svn 
-externals example more seriously than it deserves: it illustrates a valid 
-use case that is not handled by submodules.  But svn externals are not 
-what I would call "elegant design" either.
-
-> What about checking for every submodule before a push in the 
-> superproject that its HEAD is on a remote branch? I don't think we can 
-> provide full safety here, but we could handle the 99% case of a 
-> forgotten push in the submodule. This could even be done with a rather 
-> simple hook (if we had a pre-push hook that is :-).
-
-The problem with hooks is that for security reasons, every user has to 
-install them in every repository herself (unless she is working on a 
-machine serviced by an overzealous administrator).
-
-> > - that use case -- sharing content between different repositories -- 
-> >   is not really supported by submodules, but rather an afterthought.  
-> >   This is all too obvious when you look at the restriction that the 
-> >   shared content must be in a single subdirectory.
-> 
-> I don't see that as a problem (and it's the same with svn externals, no?).
-> 
-> And having worked for a long time with a RCS variant which allowed
-> "projects" to contain an arbitrary list of files, i don't think this is
-> a problem (but forgetting to add new files to this list really is, so
-> putting everything in one directory is *much* safer IMHO).
-> And: almost all files were properly grouped in directories after a decade
-> of development even though that was not enforced by the scm at all.
-
-That happens to be the case here, I agree.
-
-But I have a use case here where the shared content is _not_ a library 
-that can live in a subdirectory naturally.
-
-> > - related are the use cases where it is desired not to have a fixed 
-> >   submodule tip committed to the superproject, but always to update to 
-> >   the current, say, master (like Subversion's externals).  This use 
-> >   case has been wished away by the people who implemented submodules 
-> >   in Git.  But reality has this nasty habit of ignoring your wishes, 
-> >   does it not?
-> 
-> Having read up about svn externals in the meantime, what about something
-> like this:
-> - Add a command like "git submodule forward" (as update is already in
->   use) that takes an optional -b <branchname>. It does a fetch in the
->   submodule, then tries to fast forward (or rebase) to master or the
->   branch given and stages this commit in the superproject. This should
->   be the equivalent to doing an "svn update" in a repo with externals.
->   Or am i missing something?
-
-Yes.  It is not the decision of the fetcher, but of the guy who adds the 
-submodule to decide what it is.
-
-> - We could also add an option to "git submodule add" to specify the
->   default branch name for forward.
-
-That's an obvious precondition for proper always-tip-submodules.  But 
-Git's core data structure, the index, does not allow for it.  _That_ is 
-the difficulty, not what the user interface would look like.
-
-> > - while it might be called clever that the submodules' metadata are 
-> >   stored in .gitmodules in the superproject (and are therefore 
-> >   naturally tracked with Git), the synchronization with .git/config is 
-> >   performed exactly once -- when you initialize the submodule.  You 
-> >   are likely to miss out on _every_ change you pulled into the 
-> >   superproject.
-> 
-> Yes. This synchronization could be either obsoleted by only using
-> .gitmodules or automated.
-
-I start to wonder whether the insistence that .gitmodules' settings must 
-be overrideable makes any sense in practice.
-
-> > Besides, as long as there is enough reason to have out-of-Git 
-> > alternative solutions such as repo, submodules deserve to be 2nd-class 
-> > citizens.
-> 
-> I think in the long run to make submodules first class citizens the
-> following submodule commands must be obsoleted by their regular git
-> parts: init (by git clone), status (by git status), update (by git
-> checkout), summary (already in git diff thanks to your patch) and sync
-> (maybe Avery's idea of only relying on .gitmodules and not copying data
-> int .git/config would solve this).
-
-Avery's idea was to make .gitmodules overrideable in .git/config, which 
-would share almost all the shortcomings I listed for the current solution.
-
-> That would leave git submodule add, foreach and maybe a command to do 
-> what svn update does for externals and another to manipulate things like 
-> group membership etc..
-> 
-> Which reminds me of Sverre's quote from Alles Wird Git: "Yes, it is 
-> possible. But it will be hard."
-
-Yeah, it will be hard.  Especially since the fact that submodule is a 
-bloated shell script has outlived its usefulness by far.  (It would be 
-different if it was a nice, small, elegant script, but you have looked at 
-it, so you know why I am disgusted.)
-
-Ciao,
-Dscho
+--
+Cheers,
+Ray Chuan
