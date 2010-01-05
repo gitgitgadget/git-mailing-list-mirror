@@ -1,63 +1,61 @@
-From: Johan Herland <johan@herland.net>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 Subject: Re: What's cooking in git.git (Jan 2010, #01; Mon, 04)
-Date: Tue, 5 Jan 2010 12:31:42 +0100
-Message-ID: <201001051231.43048.johan@herland.net>
-References: <7vljgei7rs.fsf@alter.siamese.dyndns.org> <7vskal5c11.fsf@alter.siamese.dyndns.org>
+Date: Tue, 5 Jan 2010 13:56:20 +0200
+Message-ID: <20100105115620.GA27121@Knoppix>
+References: <7vljgei7rs.fsf@alter.siamese.dyndns.org>
+ <7vskal5c11.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 05 12:32:03 2010
+X-From: git-owner@vger.kernel.org Tue Jan 05 12:56:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NS7dq-0005m2-Nr
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Jan 2010 12:32:03 +0100
+	id 1NS81Z-0005VB-Av
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Jan 2010 12:56:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754173Ab0AELbz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jan 2010 06:31:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754117Ab0AELby
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 06:31:54 -0500
-Received: from smtp.opera.com ([213.236.208.81]:44065 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751234Ab0AELby (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jan 2010 06:31:54 -0500
-Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5) with ESMTP id o05BSwgf032550
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 5 Jan 2010 11:29:04 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vskal5c11.fsf@alter.siamese.dyndns.org>
+	id S1753816Ab0AEL40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jan 2010 06:56:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751096Ab0AEL40
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 06:56:26 -0500
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:41078 "EHLO
+	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750789Ab0AEL4Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jan 2010 06:56:25 -0500
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 52799C832C;
+	Tue,  5 Jan 2010 13:56:24 +0200 (EET)
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A04D834FD1C; Tue, 05 Jan 2010 13:56:24 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 221EC2BD49;
+	Tue,  5 Jan 2010 13:56:21 +0200 (EET)
 Content-Disposition: inline
+In-Reply-To: <7vskal5c11.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136184>
 
-On Tuesday 05 January 2010, Junio C Hamano wrote:
-> I am tempted to merge the following to 'next' soonish; please
-> complain and stop me before I do so in a few days if there are
-> issues.
->
-> * jh/notes (2009-12-07) 11 commits
->    I didn't see any negative comments after this round; is everybody
-> happy with this?  If so let's move it to 'next'.  If not, please
-> complain.
+On Mon, Jan 04, 2010 at 09:57:46PM -0800, Junio C Hamano wrote:
+> 
+>  * il/vcs-helper (2009-12-09) 8 commits
+>    According to http://thread.gmane.org/gmane.comp.version-control.git/134980
+>    this is very close to completion (or did I overlook a reroll after that?)
+>    but the final touch is not there yet.
 
-Please hold until I send a new iteration of the series (which will be 
-based on what is currently in 'next'). The new iteration should be 
-ready in a few days.
+AFAICT, the only nits about that series in that thread were:
+
+- SoB ping-pong
+- Not using warning()
+
+And AFAICT both have been fixed in current pu. Or did I overlook some nit?
 
 
-Have fun! :)
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+-Ilari
