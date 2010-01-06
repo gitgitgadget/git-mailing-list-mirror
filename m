@@ -1,172 +1,100 @@
-From: Hakim Cassimally <hakim.cassimally@gmail.com>
-Subject: Re: git-cherry-pick problem - directory not touched by commit is 
-	marked "added by us"
-Date: Wed, 6 Jan 2010 11:28:44 +0000
-Message-ID: <82cfa8031001060328r21aa8de3s5c2dd5dac005b679@mail.gmail.com>
-References: <82cfa8031001050433r6d705222qf905c929ad6395c4@mail.gmail.com>
-	 <1262727434.22597.8.camel@denix>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Jan 2010, #01; Mon, 04)
+Date: Wed, 6 Jan 2010 12:29:55 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1001061219180.11013@intel-tinevez-2-302>
+References: <7vljgei7rs.fsf@alter.siamese.dyndns.org> <7vskal5c11.fsf@alter.siamese.dyndns.org> <20100106191825.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Jan 06 12:28:52 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Wed Jan 06 12:30:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSU4K-0008GJ-En
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 12:28:52 +0100
+	id 1NSU5V-00008I-L3
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 12:30:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755429Ab0AFL2r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jan 2010 06:28:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755322Ab0AFL2r
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 06:28:47 -0500
-Received: from ey-out-2122.google.com ([74.125.78.27]:13655 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754944Ab0AFL2q convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Jan 2010 06:28:46 -0500
-Received: by ey-out-2122.google.com with SMTP id 22so638567eye.19
-        for <git@vger.kernel.org>; Wed, 06 Jan 2010 03:28:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=OUjQzhDd0tGRaEaz+sEM4bJrWQaOhwMeosVfp5cUiC8=;
-        b=pgRX5tXrtxeimovGUoZHeaubK9odvL3eb+sPDwYKctYKJDIF9qp3cmR3+6EjCor28d
-         LFxE3PXOT+uwQ3jn8hJ6KmDGK2isiEsPFj4q+CDF+tg+vBqvOMXxXAOAxBhHT/QpxEyy
-         jK3Qg3+LWilD93pF6Y9tvuMz+ZkDenhWeqNUU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=w186/CrRsXjyVd++lwP9ITOu90oPHx23wgrbC6MspKdxHBBPFIybS2Xjnl7NZvXSMl
-         Ac0XrB/BHQgM6i/XkUgH0RIACQ8gbFAo9+NQJ96UT5NaG8hvkhJZBkHl4MyFyUyBRiGq
-         WBygnZjpqNLfLfmZ9E6g0qBbwxDg2o+IGOJu8=
-Received: by 10.216.90.133 with SMTP id e5mr3337665wef.23.1262777324482; Wed, 
-	06 Jan 2010 03:28:44 -0800 (PST)
-In-Reply-To: <1262727434.22597.8.camel@denix>
+	id S1755514Ab0AFL37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jan 2010 06:29:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755478Ab0AFL37
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 06:29:59 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35151 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755403Ab0AFL37 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jan 2010 06:29:59 -0500
+Received: (qmail invoked by alias); 06 Jan 2010 11:29:57 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp023) with SMTP; 06 Jan 2010 12:29:57 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+ihbFYWD2iYXES6On9gG0berImywXtr3yo4RZ+0i
+	xlpmxECVm4xdJm
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20100106191825.6117@nanako3.lavabit.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.46
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136260>
 
-2010/1/5 Sam Vilain <sam@vilain.net>:
-> On Tue, 2010-01-05 at 12:33 +0000, Hakim Cassimally wrote:
->> I got into a bit of trouble with a git-cherry-pick last night, and
->> though mugwump
->> and others on #git helped me as far as a workaround,
-> Yes, that was me. =A0I'm very confused by the bug, too.
->
-> =A0[...]
->> WHAT HAPPENS
->> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->>
->> When I'm in (stable), and try to cherry-pick the change from (experi=
-mental),
->> git thinks that I'm making a massive number of changes in a director=
-y that
->> wasn't touched by the relevant commit.
-> =A0[...]
->> =A0 =A0 (stable) $ git --version
->> =A0 =A0 git version 1.6.6
->> =A0 =A0 # I tried previously on 1.6.0.4 but upgraded in case it help=
-ed
->>
->> =A0 =A0 (stable) $ git status
->> =A0 =A0 # On branch stable
->> =A0 =A0 # nothing to commit (working directory clean)
->>
->> =A0 =A0 (stable) $ git show --stat 301afce1
->> =A0 =A0 commit 301afce1c78380276d208077ef4ec76b469c1024
->> =A0 =A0 Author: osfameron <...>
->> =A0 =A0 Date: =A0 Wed Dec 23 23:45:20 2009 +0000
->>
->> =A0 =A0 =A0 =A0 Proof of concept for import module (parse Excel)
->>
->> =A0 =A0 =A0bin/upload_module.pl | =A0142
->> ++++++++++++++++++++++++++++++++++++++++++++++++++
->> =A0 =A0 =A01 files changed, 142 insertions(+), 0 deletions(-)
->>
->> =A0 =A0 (stable) $ git whatchanged -1 301afce1
->> =A0 =A0 commit 301afce1c78380276d208077ef4ec76b469c1024
->> =A0 =A0 Author: osfameron <...>
->> =A0 =A0 Date: =A0 Wed Dec 23 23:45:20 2009 +0000
->>
->> =A0 =A0 =A0 =A0 Proof of concept for import module (parse Excel)
->>
->> =A0 =A0 :000000 100644 0000000... c90e261... A =A0bin/upload_module.=
-pl
->
-> So by here, we know that the commit only affects that single file. =A0=
-No
-> funny stuff like mode changes of other files.
->
->> =A0 =A0 (stable) $ git cherry-pick 301afce1
->> =A0 =A0 Finished one cherry-pick.
->> =A0 =A0 www/client/css/admin.css: needs merge
->> =A0 =A0 =A0 =A0 <...snip>
->> =A0 =A0 www/client/css/admin.css: unmerged
->> (8e7cd850bf40d1a921b1f62ce0945abd374fa55d)
->> =A0 =A0 =A0 =A0 <...snip>
->> =A0 =A0 ...
->> =A0 =A0 error: Error building trees
->
-> Then, wham, these files want to be changed. =A0What is the diff-tree
-> inside revert/cherry-pick doing differently to the one in log?
+Hi,
 
-> Hakim, one more useful thing in this situation would be to show the
-> state of these files in the index;
->
-> =A0git ls-files -s -u
+On Wed, 6 Jan 2010, Nanako Shiraishi wrote:
 
- $ git ls-files -s -u www/client/css/admin.css # only staged/unmerged
-  100755 8e7cd850bf40d1a921b1f62ce0945abd374fa55d 2
-www/client/css/admin.css
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index 23ded48..d42cc4f 100755
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -482,6 +482,25 @@ get_saved_options () {
+>  	test -f "$DOTEST"/rebase-root && REBASE_ROOT=t
+>  }
+>  
+> +LF='
+> +'
+> +parse_onto () {
+> +	if	expr "$1" : '.*\.\.\.' >/dev/null &&
+> +		left=${1%...*} right=${1#*...} &&
+> +		: ${left:=HEAD} ${right:=HEAD} &&
+> +		onto=$(git merge-base "$left" "$right")
+> +	then
+> +		case "$onto" in
+> +		?*"$LF"?* | '')
+> +			exit 1 ;;
+> +		esac
+> +		echo "$onto"
+> +		exit 0
+> +	else
+> +		git rev-parse --verify "$1^0"
+> +	fi
+> +}
 
-(i.e. when run after the failed cherry-pick)
+It might be easier to understand like this:
 
-> Also take the 'git ls-tree -r HEAD', 'git ls-tree -r 301afce1' and 'g=
-it
-> ls-tree -r 301afce1^' output, and grep for the files in question. =A0=
-The
-> answer (or at least a bug triage) should be in the output of those
-> commands.
+	case "$1" in
+	*...*)
+		left=${1%...*} &&
+		right=${1#*...} &&
+		onto="$(git merge-base "${left:-HEAD}" "${right:-HEAD}")" &&
+		test ! -z "$onto" &&
+		echo "$onto"
+	;;
+	*)
+		git rev-parse --verify "$1^0"
+	;;
+	esac
 
-  $ git ls-tree HEAD | grep www/client/css/admin.css
-  100755 blob 8e7cd850bf40d1a921b1f62ce0945abd374fa55d
-www/client/css/admin.css
+Besides, why do you change the "$1" to "$1^0"?
+		
+> diff --git a/git-rebase.sh b/git-rebase.sh
+> index 6503113..43c62c0 100755
+> --- a/git-rebase.sh
+> +++ b/git-rebase.sh
 
-There's no entry in git ls-tree 301afce1 or 301afce1^1 though.  I'd
-guess that's significant, but I don't know what answer it suggests...
+I would separate the patches.  rebase.sh and rebase--interactive.sh are 
+fundamentally different.
 
-(However the file exists in both (stable) and (experimental)...
-and is identical in both).
-
-> You can reproduce exactly the merge by making a new branch at the
-> position where you were attempting to land the cherry pick before, an=
-d
-> checking that branch out.
-
-I actually did
-
-  $ cd ..
-  $ git clone repo/ repo_backup_4Jan
-
-beforehand, so this should also be an exact reproduction, I think?
-
-> One last test, would be to check that it happens on a clean clone of =
-the
-> repository. =A0I don't think that you're hitting any repository-local
-> behaviour (eg, the ability to mark certain files as "always ignore") =
-but
-> you never know. =A0These commands are all being run on the same worki=
-ng
-> copy, right?
-
-And see above, should be an entirely clean clone.
-
-Thanks for the suggestions!
-
-Hakim / osfameron
+Thanks,
+Dscho
