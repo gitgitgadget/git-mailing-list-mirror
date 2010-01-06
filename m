@@ -1,72 +1,61 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: What's cooking in git.git (Jan 2010, #01; Mon, 04)
-Date: Wed, 06 Jan 2010 10:08:34 +0100
-Message-ID: <4B445312.9090507@kdbg.org>
-References: <7vljgei7rs.fsf@alter.siamese.dyndns.org> <4B421766.4040506@kdbg.org> <7vhbr1bagk.fsf@alter.siamese.dyndns.org> <4B43A5CA.7090104@kdbg.org> <7vzl4r7jyu.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH v2 0/5] Makefile: fix generation of assembler listings
+Date: Wed, 6 Jan 2010 01:07:58 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.1001060100550.3630@localhost.localdomain>
+References: <20091128112546.GA10059@progeny.tock> <20091128113709.GD10059@progeny.tock> <20100106080216.GA7298@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 06 10:08:48 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 06 10:09:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSRsl-0004Di-Te
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 10:08:48 +0100
+	id 1NSRtE-0004Ve-MZ
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 10:09:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754713Ab0AFJIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jan 2010 04:08:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754204Ab0AFJIm
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 04:08:42 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:18437 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752987Ab0AFJIl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jan 2010 04:08:41 -0500
-Received: from [77.117.162.206] (77.117.162.206.wireless.dyn.drei.com [77.117.162.206])
-	by bsmtp.bon.at (Postfix) with ESMTP id 7742A2C4014;
-	Wed,  6 Jan 2010 10:08:37 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <7vzl4r7jyu.fsf@alter.siamese.dyndns.org>
+	id S1755478Ab0AFJJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jan 2010 04:09:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755010Ab0AFJJJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 04:09:09 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:54951 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753188Ab0AFJJH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Jan 2010 04:09:07 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0697w4Z018611
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 6 Jan 2010 01:07:59 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0697wWr018184;
+	Wed, 6 Jan 2010 01:07:58 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <20100106080216.GA7298@progeny.tock>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.947 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136254>
 
-Junio C Hamano schrieb:
-> Regarding your "[PATCH 8/6] t4030, t4031", I have two questions:
+
+
+On Wed, 6 Jan 2010, Jonathan Nieder wrote:
 > 
->     Recall that MSYS bash converts POSIX style absolute paths to Windows style
->     absolute paths. Unfortunately, it converts a program argument that begins
->     with a double-quote and otherwise looks like an absolute POSIX path, but
->     in doing so, it strips everything past the second double-quote[*]. This
->     case is triggered in the two test scripts. The work-around is to place the
->     Windows style path between the quotes to avoid the path conversion.
-> 
-> (1) Does "Windows style path" here mean what $(pwd) returns as opposed to
->     what is in $PWD?
+> Patch 1 fixes a problem I noticed when tweaking the Makefile to
+> automatically generate dependencies for the %.o targets.  The problem
+> is that the dependencies for the corresponding %.s (code listing)
+> targets are not included in the Makefile at all, automatically or not.
 
-Yes. $PWD is of the form /c/foo/bar; pwd is a function in test-lib.sh that 
-ensures it returns the form c:/foo/bar.
+Patches 1-3 (which were the ones I was cc'd on) look sane to me. Having 
+real dependencies might be prettier, but I agree that since a *.s file is 
+only generated on demand (and useful mainly to see code generation), just 
+forcing the build makes sense.
 
-> (2) The patch reads like this:
-> 
-> -	git config diff.foo.textconv "\"$PWD\""/hexdump &&
-> +	git config diff.foo.textconv "\"$(pwd)\""/hexdump &&
-> 
->     Does "strips everything past the second dq" mean "drops '/hexdump'"?
-
-Yes.
-
->     If so, would this also work (I am not suggesting to change it, just
->     asking for information)?
-> 
-> -	git config diff.foo.textconv "\"$PWD\""/hexdump &&
-> +	git config diff.foo.textconv "\"$PWD/hexdump\"" &&
-
-It would work, too, but it would depend on very bogus behavior of the MSYS 
-bash.
-
--- Hannes
+		Linus
