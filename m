@@ -1,70 +1,82 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: Re: git file sharing/versioning.
-Date: Wed, 6 Jan 2010 20:42:25 +0100
-Message-ID: <20100106194225.GA12942@vidovic>
-References: <1262579824.9041.15.camel@ams.xobas.net> <1262580346.9041.20.camel@ams.xobas.net> <1262580426.9041.21.camel@ams.xobas.net> <20100105201038.GA12942@vidovic> <1262732791.14714.7.camel@ams.xobas.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] commit: make the error message on unmerged entries user-friendly.
+Date: Wed, 06 Jan 2010 20:53:23 +0100
+Message-ID: <vpqocl76mdo.fsf@bauges.imag.fr>
+References: <1262783414-23101-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7veim3yx5o.fsf@alter.siamese.dyndns.org>
+	<vpqtyuz86ny.fsf@bauges.imag.fr>
+	<7v8wcbw14f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
-To: Bas Driessen <bas.driessen@xobas.com>
-X-From: git-owner@vger.kernel.org Wed Jan 06 20:42:47 2010
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 06 20:53:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSbmI-0002zj-0G
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 20:42:46 +0100
+	id 1NSbx7-0008Lj-Su
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 20:53:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932648Ab0AFTmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jan 2010 14:42:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932647Ab0AFTmc
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 14:42:32 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:62505 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932264Ab0AFTmb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jan 2010 14:42:31 -0500
-Received: by ewy19 with SMTP id 19so9979259ewy.21
-        for <git@vger.kernel.org>; Wed, 06 Jan 2010 11:42:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=C915YROOocpGg9vKllRUG9lpvK7HHcJ8MPw359oM+/k=;
-        b=a9HBS1WgnCXMRvWdl0j6v9KZVpg01wjPSz4an59h5PZDEiose8s8Cj8cJ+hyrWYd9I
-         YOPuIRNCN2uJH1wjSsUW1dMDQacxYX7THuCcjPsyRT8emqUG6YuVdtAfGlCU9BtD/vdG
-         c7aAg/j3MgoZxsLD0S6Md/g14Pb0tgtMrELQ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=nOoSI/YO5rlfyBwQc/zRbDhMhYYkMFPadds0aL5skx2KaMd3L23BV9T07zQeQExxC2
-         7b81/xADbts+TRVN2vlt9pypP/MGg8oJ8q1UM7neCaZ4RsNRyU/1MKpLGHDcvquRof/O
-         dmREuW2lvrwpuhzpBsDoL4Cq6o1oToJU/S2R8=
-Received: by 10.213.107.16 with SMTP id z16mr16901445ebo.47.1262806949772;
-        Wed, 06 Jan 2010 11:42:29 -0800 (PST)
-Received: from @ (88-121-127-185.rev.libertysurf.net [88.121.127.185])
-        by mx.google.com with ESMTPS id 23sm41921199eya.19.2010.01.06.11.42.27
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 06 Jan 2010 11:42:27 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1262732791.14714.7.camel@ams.xobas.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S932706Ab0AFTxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jan 2010 14:53:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932684Ab0AFTxn
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 14:53:43 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:47579 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932702Ab0AFTxl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jan 2010 14:53:41 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o06JrMR5002096
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 6 Jan 2010 20:53:22 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NSbwZ-0000vU-FV; Wed, 06 Jan 2010 20:53:23 +0100
+In-Reply-To: <7v8wcbw14f.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 06 Jan 2010 10\:15\:44 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 06 Jan 2010 20:53:22 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o06JrMR5002096
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1263412403.33414@D+9flfzgP78svNUOtLM0hw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136290>
 
-[ Please, don't top post and don't answer to me in private for public
-  questions. ]
+Junio C Hamano <gitster@pobox.com> writes:
 
-The 06/01/10, Bas Driessen wrote:
+>> # Unmerged paths:
+>> #   (use "git add/rm <file>..." as appropriate to mark resolution)
+[...]
+>  That one line we see above is concise and does mention "rm" as
+> well.  Why not use it?
 
->    Btw, this list does not appear to be a "user" list, more a "developer"
->    list. Is there a list specifically for users only?
+Fine, you convinced me. I was thinking of a longer sentence, but "/rm"
+doesn't harm.
 
-They are the manual pages... for end-users.
+>>> I think we should consolidate them all.
+>>
+>> Right, although "commit" is definitely the most important (dumb users
+>> don't need "git merge").
+>
+> Your "dumb users" don't get the unmerged error from commit, either, if
+> they don't need "git merge".
+
+They'd use "pull", not merge. Anyway, I did it for commit, merge,
+pull, revert, cherry-pick. I guess we covered the common cases.
+The patch seems to have a lot of redundancies, but I think trying to
+factor this into helper functions would be much more effort than the
+few cut-and-paste that I had to do, since each instance is a slight
+variant of each other ...
+
+Patch follows. Let me know in case you prefer to split it.
 
 -- 
-Nicolas Sebrecht
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
