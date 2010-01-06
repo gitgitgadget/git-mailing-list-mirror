@@ -1,157 +1,59 @@
-From: =?UTF-8?Q?Daniel?= <mjucde@o2.pl>
-Subject: =?UTF-8?Q?Re:_checkout_-m_dumping_core?=
-Date: Wed, 06 Jan 2010 09:11:42 +0100
-Message-ID: <2b9e2ea1.461a9565.4b4445be.38bda@o2.pl>
-References: <4B4381CA.1080504@dbservice.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 9/9] rerere forget path: forget recorded resolution
+Date: Wed, 06 Jan 2010 09:55:21 +0100
+Message-ID: <4B444FF9.1000004@kdbg.org>
+References: <1262122958-9378-1-git-send-email-gitster@pobox.com> <1262122958-9378-10-git-send-email-gitster@pobox.com> <4B43AE38.9070800@kdbg.org> <7v4on0oxcs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?Q?Git_List?= <git@vger.kernel.org>,
-	=?UTF-8?Q?Tomas_Carnecky?= <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Wed Jan 06 09:34:20 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 06 09:55:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSRLP-0001e7-At
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 09:34:19 +0100
+	id 1NSRfx-0008Te-Pr
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 09:55:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755417Ab0AFIeO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jan 2010 03:34:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755367Ab0AFIeO
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 03:34:14 -0500
-Received: from tur.go2.pl ([193.17.41.50]:42859 "EHLO tur.go2.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751034Ab0AFIeN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Jan 2010 03:34:13 -0500
-Received: from mailout1.go2.pl (mailout1.go2.pl [193.17.41.11])
-	by tur.go2.pl (o2.pl Mailer 2.0.1) with ESMTP id 994B3230C29
-	for <git@vger.kernel.org>; Wed,  6 Jan 2010 09:12:34 +0100 (CET)
-Received: from mailout1.go2.pl (unknown [10.0.0.104])
-	by mailout1.go2.pl (Postfix) with ESMTP id 8F80430007;
-	Wed,  6 Jan 2010 09:11:43 +0100 (CET)
-Received: from o2.pl (unknown [10.0.0.37])
-	by mailout1.go2.pl (Postfix) with SMTP;
-	Wed,  6 Jan 2010 09:11:43 +0100 (CET)
-In-Reply-To: <4B4381CA.1080504@dbservice.com>
-X-Originator: 153.19.128.10
+	id S1755322Ab0AFIz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jan 2010 03:55:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755010Ab0AFIz2
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 03:55:28 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:10124 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754824Ab0AFIz2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jan 2010 03:55:28 -0500
+Received: from [77.117.162.206] (77.117.162.206.wireless.dyn.drei.com [77.117.162.206])
+	by bsmtp.bon.at (Postfix) with ESMTP id 36C48CDF89;
+	Wed,  6 Jan 2010 09:55:24 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <7v4on0oxcs.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136252>
 
-Tomas Carnecky <tom@dbservice.com> wrote:
+Junio C Hamano schrieb:
+> Johannes Sixt <j6t@kdbg.org> writes:
+>> When you simply call ll_merge(), will it obey any merge drivers that
+>> are defined in .gitattributes? Do we care about them?
+>>
+>> I already had an implementation of "rerere forget" before you
+>> presented this solution, but it relies on that the user calls
+>> "checkout --conflict=merge" first. One reason (besides its simplicity)
+>> was that it does not have to care how the merge is computed.
+> 
+> Doesn't "checkout --conflict=merge" use the same ll_merge() machinery?
 
-> git version 1.6.6.78.gbd757c
->=20
-> HEAD points to a non-existent branch refs/heads/master. Normal checko=
-ut=20
-> origin fails with:
-> error: Entry '.cvsignore' would be overwritten by merge. Cannot merge=
-=2E
-> (the working tree does indeed contain this file). So I tried checkout=
- -m=20
-> and git crashed. Workaround for me was reset --hard origin; checkout=20
-> origin. I have the repository backed up in case someone wants to try=20
-> themselves.
->=20
-> $ gdb `which git`
-> GNU gdb 6.8
-> Copyright (C) 2008 Free Software Foundation, Inc.
-> License GPLv3+: GNU GPL version 3 or later=20
-> <http://gnu.org/licenses/gpl.html>
-> This is free software: you are free to change and redistribute it.
-> There is NO WARRANTY, to the extent permitted by law.  Type "show cop=
-ying"
-> and "show warranty" for details.
-> This GDB was configured as "i386-pc-solaris2.11"...
-> (gdb) run checkout -m origin
-> Starting program: /export/home/tomc/local/git/bin/git checkout -m ori=
-gin
-> warning: Lowest section in /lib/libpthread.so.1 is .dynamic at 000000=
-74
->=20
-> Program received signal SIGSEGV, Segmentation fault.
-> 0x080788fa in cmd_checkout (argc=3D0, argv=3D0x8047538, prefix=3D0x0)=
- at=20
-> builtin-checkout.c:450
-> 450                             merge_trees(&o, new->commit->tree, wo=
-rk,
-> (gdb) list
-> 445                             ret =3D reset_tree(new->commit->tree,=
-=20
-> opts, 1);
-> 446                             if (ret)
-> 447                                     return ret;
-> 448                             o.branch1 =3D new->name;
-> 449                             o.branch2 =3D "local";
-> 450                             merge_trees(&o, new->commit->tree, wo=
-rk,
-> 451                                     old->commit->tree, &result);
-> 452                             ret =3D reset_tree(new->commit->tree,=
-=20
-> opts, 0);
-> 453                             if (ret)
-> 454                                     return ret;
-> (gdb) p o
-> $1 =3D {branch1 =3D 0x8047650 "origin", branch2 =3D 0x0, subtree_merg=
-e =3D 0,=20
-> buffer_output =3D 1, verbosity =3D 0, diff_rename_limit =3D -1,=20
-> merge_rename_limit =3D -1, call_depth =3D 0, obuf =3D {alloc =3D 0, l=
-en =3D 0, buf=20
-> =3D 0x81643ac ""}, current_file_set =3D {
->      items =3D 0x0, nr =3D 0, alloc =3D 0, strdup_strings =3D 1},=20
-> current_directory_set =3D {items =3D 0x0, nr =3D 0, alloc =3D 0, strd=
-up_strings=20
-> =3D 1}}
-> (gdb) p new
-> $2 =3D {name =3D 0x8047650 "origin", path =3D 0x8166438 "refs/heads/o=
-rigin",=20
-> commit =3D 0x8168f48}
-> (gdb) p work
-> $3 =3D (struct tree *) 0x8174f90
-> (gdb) p old
-> No symbol "old" in current context.
-> (gdb) p result
-> $4 =3D (struct tree *) 0xfefc81be
-> (gdb)
->=20
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
+It does, without setting up .gitattributes, either (IIUC), which is a bug IMO.
 
-Does this patch help?
+That said, I consider your solution superior because it works without 
+depending on conflict markers in the file in the worktree. Nevertheless, 
+we should think about whether merge drivers of .gitattributes should be 
+obeyed. I think they should: For example, a specialized XML merge driver 
+could leave conflicts that are different from those that merge-recursive 
+generates.
 
----
-=46rom b2203bded22db1a496ee3c9f6f5f4a384a8ccefa Mon Sep 17 00:00:00 200=
-1
-=46rom: Daniel Baranski <mjucde@o2.pl>
-Date: Wed, 6 Jan 2010 08:58:21 +0100
-Subject: [PATCH] checkout -m: Fix SEGFAULT if HEAD is not valid.
-
-Signed-off-by: Daniel Bara=C5=84ski <mjucde@o2.pl>
----
- builtin-checkout.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-checkout.c b/builtin-checkout.c
-index 64f3a11..0ab59b2 100644
---- a/builtin-checkout.c
-+++ b/builtin-checkout.c
-@@ -422,7 +422,8 @@ static int merge_working_tree(struct checkout_opts =
-*opts,
-                        struct merge_options o;
-                        if (!opts->merge)
-                                return 1;
--                       parse_commit(old->commit);
-+                       if (!parse_commit(old->commit))
-+                               die("Couldn't parse commit '%s'", old->=
-path);
-
-                        /* Do more real merge */
-
---=20
-1.6.5.6
+-- Hannes
