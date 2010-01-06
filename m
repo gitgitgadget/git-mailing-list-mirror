@@ -1,96 +1,67 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/4] Makefile fixes
-Date: Tue, 5 Jan 2010 22:20:03 -0600
-Message-ID: <20100106042003.GA20532@progeny.tock>
-References: <20091128112546.GA10059@progeny.tock>
- <20100101090556.6117@nanako3.lavabit.com>
- <7vpr5onir5.fsf@alter.siamese.dyndns.org>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: cmake, was Re: submodules' shortcomings
+Date: Wed, 06 Jan 2010 13:25:18 +0900
+Message-ID: <buovdffoo5t.fsf@dhlpc061.dev.necel.com>
+References: <4B3F6742.6060402@web.de>
+	<alpine.DEB.1.00.1001041038520.4985@pacific.mpi-cbg.de>
+	<4B421F90.4090402@web.de>
+	<alpine.DEB.1.00.1001042217370.4985@pacific.mpi-cbg.de>
+	<3af572ac1001051238t63e07a25hf9dd77056b79be89@mail.gmail.com>
+	<alpine.DEB.1.00.1001060005010.4985@pacific.mpi-cbg.de>
+	<3af572ac1001051717u7757f0dep9392fbb7b02cbbca@mail.gmail.com>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 06 05:20:19 2010
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Pau Garcia i Quiles <pgquiles@elpauer.org>
+X-From: git-owner@vger.kernel.org Wed Jan 06 05:25:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSNNb-0007J3-7E
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 05:20:19 +0100
+	id 1NSNSe-00006L-3Q
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 05:25:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755043Ab0AFEUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jan 2010 23:20:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754844Ab0AFEUH
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 23:20:07 -0500
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:62564 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754774Ab0AFEUG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jan 2010 23:20:06 -0500
-Received: by ywh6 with SMTP id 6so17127808ywh.4
-        for <git@vger.kernel.org>; Tue, 05 Jan 2010 20:20:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=JhCSBuWn3aSZN5UOQ7Q5IKcubQ12sKkpYcU6A4bGr9w=;
-        b=rl0vD9TznJtJ1XY1GiUNJX5jntxIsXhPyWF4eXBdh6u67OTEtG9S0AWgXUlNgIkS0F
-         qVjnrG3HZs4yTuSnwKdxkQ+7TL2vY0Q0aFvtCb4I5jTt9tTpdX3LFk9E4oBmdcZ/wfm9
-         k9HYfT45kaWObx0KSptuyW+C3o8myfi7GIa8Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ULM+W7wTo5yUO97BOGpUx0xVejS1zMiojZdf/J5S+0p7NcMZxZLyHZpawJ2fC7aJCY
-         0pr7b6yInmjzeuCv88LmnkRQksW6Q+DViJzjtWJNQsQSMaJCblPaAkbYohXyaRWRPTqv
-         D5H8p9+f39g3MGELp3zfa8e4i35JcYoA3umMg=
-Received: by 10.101.179.23 with SMTP id g23mr4709386anp.171.1262751605380;
-        Tue, 05 Jan 2010 20:20:05 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm19239935iwn.5.2010.01.05.20.20.03
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 05 Jan 2010 20:20:04 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vpr5onir5.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755068Ab0AFEZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jan 2010 23:25:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754774Ab0AFEZ2
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jan 2010 23:25:28 -0500
+Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:47416 "EHLO
+	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754736Ab0AFEZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jan 2010 23:25:27 -0500
+Received: from relay11.aps.necel.com ([10.29.19.46])
+	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id o064PEBV009339;
+	Wed, 6 Jan 2010 13:25:18 +0900 (JST)
+Received: from relay11.aps.necel.com ([10.29.19.16] [10.29.19.16]) by relay11.aps.necel.com with ESMTP; Wed, 6 Jan 2010 13:25:18 +0900
+Received: from dhlpc061 ([10.114.114.32] [10.114.114.32]) by relay11.aps.necel.com with ESMTP; Wed, 6 Jan 2010 13:25:18 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id 7C57F52E1EF; Wed,  6 Jan 2010 13:25:18 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <3af572ac1001051717u7757f0dep9392fbb7b02cbbca@mail.gmail.com>
+	(Pau Garcia i. Quiles's message of "Wed, 6 Jan 2010 02:17:45 +0100")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136240>
 
-Junio C Hamano wrote:
-> Nanako Shiraishi <nanako3@lavabit.com> writes:
-> 
->> Junio, could you tell us what happened to this thread?
->>
->> Makefile improvements.  No discussion.
+Pau Garcia i Quiles <pgquiles@elpauer.org> writes:
+> At this moment, what stops me from beginning this project is a simple
+> question: is it worth my time? From the discussion a few months ago,
+> it looked like it would the a second-class citizen and never replace
+> the existing buildsystems, so I really wonder if I should spend me
+> time porting git to CMake, or I should focus on other projects which
+> would gladly receive my contributions. If you honestly think it's
+> worth it, just tell me and I'll start the port to CMake immediately.
 
-These had some issues and instead of following up, I simply forgot
-about them.
+It sounds like it's you who want it, so aren't you the best person to
+make that judgement...?  It seems very unlikely for cmake to replace
+anything.
 
-> I took 4/4, and after looking at them again, I think 2/4 looks sensible,
-> too.
+-Miles
 
-I also think the patch for 2/4 looks sensible, but the commit message
-does not make much sense.  Optimization flags do not affect
-compilation of assembler code as far as I can tell.  It would have
-made more sense to say something like "Since the only .S file in git
-does not have any #ifdefs, leaving the dependency out was mostly
-harmless."  (Will resend.)
-
-> I was puzzled by 3/4 and I still am; the dependency rules are the same for
-> %.o and %.s yet the patch changes only %.s.  Either it leaves the same
-> breakage for %.o (which is much more important in practice), or the
-> problem Jonathan has with %.s may have other causes, but it was unclear to
-> me.
-
-The Makefile lists dependencies for each .o target elsewhere.  While
-cleaning up those other dependency rules, I noticed there was nothing
-analogous for the .s targets.  You can reproduce this by running
-"make var.o var.s && touch cache.h && make var.o var.s".
-
-Of course, I should have mentioned this in the commit message.  Will
-resend as well.  Sorry to leave these standing for so long.
-
-Sincerely,
-Jonathan
+-- 
+Politeness, n. The most acceptable hypocrisy.
