@@ -1,50 +1,52 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2] Be more user-friendly when refusing to do something because of conflict.
-Date: Wed,  6 Jan 2010 21:17:54 +0100
-Message-ID: <1262809074-27137-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpqhbqz6lcr.fsf@bauges.imag.fr>
+Subject: [PATCH v3] Be more user-friendly when refusing to do something because of conflict.
+Date: Wed,  6 Jan 2010 21:36:25 +0100
+Message-ID: <1262810185-7046-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <1262809074-27137-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jan 06 21:21:21 2010
+X-From: git-owner@vger.kernel.org Wed Jan 06 21:36:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NScNb-0003cW-Fg
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 21:21:20 +0100
+	id 1NSccZ-0001bL-8I
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 21:36:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932737Ab0AFUVN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jan 2010 15:21:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932563Ab0AFUVN
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 15:21:13 -0500
-Received: from imag.imag.fr ([129.88.30.1]:44874 "EHLO imag.imag.fr"
+	id S932739Ab0AFUgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jan 2010 15:36:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932571Ab0AFUgg
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 15:36:36 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:56203 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932503Ab0AFUVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jan 2010 15:21:11 -0500
+	id S932502Ab0AFUgf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jan 2010 15:36:35 -0500
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o06KHvU4005375
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o06KaQQ7016815
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 6 Jan 2010 21:17:59 +0100 (CET)
+	Wed, 6 Jan 2010 21:36:26 +0100
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1NScKL-0001Bq-7I; Wed, 06 Jan 2010 21:17:57 +0100
+	id 1NSccF-0001Ke-1m; Wed, 06 Jan 2010 21:36:27 +0100
 Received: from moy by bauges.imag.fr with local (Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1NScKL-00074M-5R; Wed, 06 Jan 2010 21:17:57 +0100
-X-Mailer: git-send-email 1.6.6.81.g35ec3e.dirty
-In-Reply-To: <vpqhbqz6lcr.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 06 Jan 2010 21:18:01 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+	id 1NSccF-0001qK-0K; Wed, 06 Jan 2010 21:36:27 +0100
+X-Mailer: git-send-email 1.6.6.81.g2955.dirty
+In-Reply-To: <1262809074-27137-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 06 Jan 2010 21:36:26 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o06KaQQ7016815
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1263414987.134@+oBe8WBCszDMuAq25n9rbQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136297>
 
 Various commands refuse to run in the presence of conflicts (commit,
 merge, pull, cherry-pick/revert). They all used to provide rough, and
@@ -73,14 +75,16 @@ exists instead of waiting for merge to complain.
 
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
+Sorry, v2 missed a #include "git-compat-utils.h", it's not even compilable.
+
  Documentation/config.txt |    4 ++++
  advice.c                 |   12 ++++++++++++
- advice.h                 |    3 +++
+ advice.h                 |    5 +++++
  builtin-commit.c         |   15 +++++++++++++--
  builtin-merge.c          |   15 ++++++++++-----
  builtin-revert.c         |   15 ++++++++++++++-
  git-pull.sh              |   25 +++++++++++++++++++++++--
- 7 files changed, 79 insertions(+), 10 deletions(-)
+ 7 files changed, 81 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
 index 23a965e..5078d26 100644
@@ -132,10 +136,15 @@ index cb666ac..ec2bd82 100644
 +		die("'%s' is not possible because you have unmerged files.", me);
 +}
 diff --git a/advice.h b/advice.h
-index 3de5000..a6b4422 100644
+index 3de5000..acd5fdd 100644
 --- a/advice.h
 +++ b/advice.h
-@@ -4,7 +4,10 @@
+@@ -1,10 +1,15 @@
+ #ifndef ADVICE_H
+ #define ADVICE_H
+ 
++#include "git-compat-util.h"
++
  extern int advice_push_nonfastforward;
  extern int advice_status_hints;
  extern int advice_commit_before_merge;
@@ -282,4 +291,4 @@ index 9e69ada..54ce0af 100755
  strategy_args= diffstat= no_commit= squash= no_ff= ff_only=
  log_arg= verbosity=
 -- 
-1.6.6.81.g35ec3e.dirty
+1.6.6.81.g2955.dirty
