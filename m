@@ -1,84 +1,68 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: cmake, was Re: submodules' shortcomings
-Date: Wed, 6 Jan 2010 10:24:06 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001061021370.11013@intel-tinevez-2-302>
-References: <4B3F6742.6060402@web.de>  <alpine.DEB.1.00.1001041038520.4985@pacific.mpi-cbg.de>  <4B421F90.4090402@web.de>  <alpine.DEB.1.00.1001042217370.4985@pacific.mpi-cbg.de>  <3af572ac1001051238t63e07a25hf9dd77056b79be89@mail.gmail.com> 
- <alpine.DEB.1.00.1001060005010.4985@pacific.mpi-cbg.de> <3af572ac1001051717u7757f0dep9392fbb7b02cbbca@mail.gmail.com>
+Subject: Re: [PATCH/RFC 0/2] Lazily generate header dependencies
+Date: Wed, 6 Jan 2010 10:26:00 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1001061024400.11013@intel-tinevez-2-302>
+References: <4B0F8825.3040107@viscovery.net> <alpine.DEB.1.00.0911271033460.4521@intel-tinevez-2-302> <20091127174558.GA3461@progeny.tock> <20100101090550.6117@nanako3.lavabit.com> <7vwrzwnirz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Pau Garcia i Quiles <pgquiles@elpauer.org>
-X-From: git-owner@vger.kernel.org Wed Jan 06 10:24:29 2010
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 06 10:26:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSS7o-00037h-RC
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 10:24:21 +0100
+	id 1NSS9e-0003uF-DI
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 10:26:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755681Ab0AFJYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jan 2010 04:24:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755674Ab0AFJYM
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 04:24:12 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56678 "HELO mail.gmx.net"
+	id S1755655Ab0AFJ0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jan 2010 04:26:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755010Ab0AFJ0I
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 04:26:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36316 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755667Ab0AFJYJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jan 2010 04:24:09 -0500
-Received: (qmail invoked by alias); 06 Jan 2010 09:24:08 -0000
+	id S1755180Ab0AFJ0D (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jan 2010 04:26:03 -0500
+Received: (qmail invoked by alias); 06 Jan 2010 09:26:01 -0000
 Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp047) with SMTP; 06 Jan 2010 10:24:08 +0100
+  by mail.gmx.net (mp013) with SMTP; 06 Jan 2010 10:26:01 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/c+V0N95fcZdtg2vnqduc8odf9XQkh1Oi5qB6V9b
-	LKvkti50A8b/jk
+X-Provags-ID: V01U2FsdGVkX19cEdUV3ONcHQ7Cy/8kzlREmqaHvo+PfUkKBKSwmn
+	t1ToVxaVRu6zI1
 X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <3af572ac1001051717u7757f0dep9392fbb7b02cbbca@mail.gmail.com>
+In-Reply-To: <7vwrzwnirz.fsf@alter.siamese.dyndns.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136256>
 
 Hi,
 
-On Wed, 6 Jan 2010, Pau Garcia i Quiles wrote:
+On Tue, 5 Jan 2010, Junio C Hamano wrote:
 
-> On Wed, Jan 6, 2010 at 12:06 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+> Nanako Shiraishi <nanako3@lavabit.com> writes:
+> 
+> > Junio, could you tell us what happened to this thread?
 > >
-> > On Tue, 5 Jan 2010, Pau Garcia i Quiles wrote:
-> >
-> >> For instance, I'd like to have a 'cmake' repository where I store all 
-> >> the FindBlah.cmake modules, so that I can share them from every 
-> >> repository, and not worry about users changing and committing in the 
-> >> main project instead of the submodule.
-> >
-> > ... which reminds me... it was you who wanted to provide a working 
-> > recipe to compile and install CMake on msysGit, right?
+> > Makefile improvements.  No discussion.
 > 
-> Right
+> I was mildly interested in the series, but after this:
 > 
-> > What happened in the meantime?
+> http://thread.gmane.org/gmane.comp.version-control.git/133872/focus=133911
 > 
-> What happened is I was very busy until November. Now I've got some free 
-> time.
-> 
-> At this moment, what stops me from beginning this project is a simple 
-> question: is it worth my time?
+> the progress seems to have stopped.
 
-Well, I thought you wanted to show that CMake is superior to what we have 
-right now, and for me as msysGit maintainer, that implies that CMake 
-actually works within msysGit.
-
-Now, I do not think that it is hard to get CMake to compile in msysGit, 
-but then, I just lost access to the last Windows computer, so I cannot do 
-that myself.
-
-As Miles said, it is up to you to decide whether it is so complicated, or 
-whether CMake is likely not to convince, that the time balance turns out 
-positive or negative.
+Like I said yesterday, I do not want to spend time chasing old threads.  
+But if you spend just two more minutes to summarize what came out of that 
+thread (two well spent minutes in the global time balance, if you ask me), 
+I will gladly comment.
 
 Ciao,
 Dscho
