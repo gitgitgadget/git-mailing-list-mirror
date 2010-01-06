@@ -1,111 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jan 2010, #01; Mon, 04)
-Date: Tue, 05 Jan 2010 23:47:53 -0800
-Message-ID: <7vzl4r7jyu.fsf@alter.siamese.dyndns.org>
-References: <7vljgei7rs.fsf@alter.siamese.dyndns.org>
- <4B421766.4040506@kdbg.org> <7vhbr1bagk.fsf@alter.siamese.dyndns.org>
- <4B43A5CA.7090104@kdbg.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2 0/5] Makefile: fix generation of assembler listings
+Date: Wed, 6 Jan 2010 02:02:16 -0600
+Message-ID: <20100106080216.GA7298@progeny.tock>
+References: <20091128112546.GA10059@progeny.tock>
+ <20091128113709.GD10059@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Jan 06 08:48:14 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 06 09:02:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSQco-0004wd-Aq
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 08:48:14 +0100
+	id 1NSQqU-0001kW-Ln
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 09:02:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754477Ab0AFHsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jan 2010 02:48:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754246Ab0AFHsI
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 02:48:08 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41432 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750910Ab0AFHsG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jan 2010 02:48:06 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E92C7ADB25;
-	Wed,  6 Jan 2010 02:48:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DVLJa/ciQf1HBX7fcHom6ptW7+g=; b=vfoLP0
-	KalrtSnifyyyhNJz676rjKzgLz9rYFlDqGFgJ02o2GrhnCW+7Gr/Aoc6N2hKemcU
-	Sf2LVEuRTDcNW7DijwgTsxRcJl65LTLTd2+I4B0yvH0N6lFLhOd5+meNdepWjwZ9
-	JWhr3O1wQfXxrHoXMORVITp1L3UDkFrJOpc44=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iycYa+yHXsFJfs3pllZseKrjzmJJxO9J
-	SPIy1rpfqEqsgEaTjlbYRAQtGAEjOW55ZQTLKUts80uwpqYyhzGsfpgQeBvY4ric
-	5baKv5cDV6vLsD91QppX0l9K+Li9wpJenwHn/d07LRp3VfaPNGZfEC+4u6TE6/1r
-	X0K99UaJNZ4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C6163ADB24;
-	Wed,  6 Jan 2010 02:47:58 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AB53FADB23; Wed,  6 Jan 2010
- 02:47:55 -0500 (EST)
-In-Reply-To: <4B43A5CA.7090104@kdbg.org> (Johannes Sixt's message of "Tue\,
- 05 Jan 2010 21\:49\:14 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CF01A21A-FA97-11DE-B220-465EBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1755309Ab0AFICS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jan 2010 03:02:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755010Ab0AFICS
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 03:02:18 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:47130 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755005Ab0AFICR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jan 2010 03:02:17 -0500
+Received: by ywh6 with SMTP id 6so17235952ywh.4
+        for <git@vger.kernel.org>; Wed, 06 Jan 2010 00:02:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=JRUmRkNBQeKqLwat9CdgwZSSAkkGuq4DRRR5YnsDx94=;
+        b=QhYRUi7njuj2k6dp0bvuQYiRsFV5CQnicRj44aF3k13SmmtUx+4eUpGt9wHzN7IALr
+         03/UuQpAUwhtPXBEASNBB3gi0BzQqEeFyI+h0pE8Dh3CXoFsv4wE53sokBizFqyZfB2A
+         b22d6F/98bKVkCGFTQf9ZXQKiZJgWWkGtqMDs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=I/jW0IFkoRoIQwyOJokd02e0BgU5lpjxKaeM81eGK7ot1xaEcgar/398R/+4n2+e4u
+         rHifprNASKdPXnAa5SkBC1ggUPwMXLdP+5YFHUbAeENydyX0xiVLivL66m2EiBabkwVu
+         FjbKTni8+y5WWX/RCiT7GKQT6unuku2h7uTK8=
+Received: by 10.150.251.41 with SMTP id y41mr11425465ybh.247.1262764936803;
+        Wed, 06 Jan 2010 00:02:16 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 23sm19244960iwn.7.2010.01.06.00.02.15
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 06 Jan 2010 00:02:16 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20091128113709.GD10059@progeny.tock>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136244>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Jonathan Nieder wrote:
 
-> Junio C Hamano schrieb:
->> While you are technically correct that the change you made in t4030 is not
->> justified by the commit log message in the sense that the "hexdump" script
->> will go through run_command() interface and is not subject to the special
->> rules filter writers need to keep in mind, the patch text itself is a good
->> change, isn't it?
->
-> The patch text is good, but since it will not make a difference (and
-> there are a ton of other places that use /bin/sh successfully), the
-> change is not warrented at this time, IMO.
+> This adds yet another phony .FORCE-foo target.  Wouldn=E2=80=99t it b=
+e simpler
+> to use a single target called .FORCE, or is there something I am
+> missing that that would break?
 
-You are right (and Peff also corrected me).
+I didn=E2=80=99t hear any screams when I suggested this about a month a=
+go, so
+let=E2=80=99s try it out.
 
->> As "run-command: convert simple callsites to use_shell" is the one that
->> changes the filter_buffer(), do you want to have t0021 patch before that
->> one, to prepare the test for the coming change?
->
-> Well, the test will break on Windows only after "run-command: optimize
-> out useless shell calls", and I wrote the commit message
-> accordingly. If you move it before that one (and if you are picky) the
-> commit message should be changed as well.
+Patch 1 fixes a problem I noticed when tweaking the Makefile to
+automatically generate dependencies for the %.o targets.  The problem
+is that the dependencies for the corresponding %.s (code listing)
+targets are not included in the Makefile at all, automatically or not.
+Thus the command "make var.s var.o && touch cache.h && make var.s var.o=
+"
+produces the output
 
-Yeah, I've reworded that one with a phrase "futureproof".
+CC var.s
+CC var.o
+CC var.o
 
-Regarding your "[PATCH 8/6] t4030, t4031", I have two questions:
+not regenerating var.s to reflect potential changes in cache.h.
 
-    Recall that MSYS bash converts POSIX style absolute paths to Windows style
-    absolute paths. Unfortunately, it converts a program argument that begins
-    with a double-quote and otherwise looks like an absolute POSIX path, but
-    in doing so, it strips everything past the second double-quote[*]. This
-    case is triggered in the two test scripts. The work-around is to place the
-    Windows style path between the quotes to avoid the path conversion.
+"make git.s" previously did not work at all; patches 2-3 fix that.
 
-(1) Does "Windows style path" here mean what $(pwd) returns as opposed to
-    what is in $PWD?
+Jonathan Nieder (5):
+  Makefile: regenerate assembler listings when asked
+  Makefile: use target-specific variable to pass flags to cc
+  Makefile: learn to generate listings for targets requiring special
+    flags
+  Makefile: consolidate .FORCE-* targets
+  git-gui/Makefile: consolidate .FORCE-* targets
 
-(2) The patch reads like this:
-
--	git config diff.foo.textconv "\"$PWD\""/hexdump &&
-+	git config diff.foo.textconv "\"$(pwd)\""/hexdump &&
-
-    Does "strips everything past the second dq" mean "drops '/hexdump'"?
-    If so, would this also work (I am not suggesting to change it, just
-    asking for information)?
-
--	git config diff.foo.textconv "\"$PWD\""/hexdump &&
-+	git config diff.foo.textconv "\"$PWD/hexdump\"" &&
-
-
-Thanks.
+ Documentation/Makefile |    4 +-
+ Makefile               |   56 ++++++++++++++++++++--------------------=
+-------
+ git-gui/Makefile       |    7 ++---
+ 3 files changed, 29 insertions(+), 38 deletions(-)
