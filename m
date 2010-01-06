@@ -1,90 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [RFC/PATCH] lockfile: show absolute filename in unable_to_lock_message.
-Date: Wed,  6 Jan 2010 18:01:28 +0100
-Message-ID: <1262797288-23004-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 06 18:04:50 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jan 2010, #01; Mon, 04)
+Date: Wed, 06 Jan 2010 09:04:22 -0800
+Message-ID: <7vwrzvyxk9.fsf@alter.siamese.dyndns.org>
+References: <7vljgei7rs.fsf@alter.siamese.dyndns.org>
+ <4B421766.4040506@kdbg.org> <7vhbr1bagk.fsf@alter.siamese.dyndns.org>
+ <4B43A5CA.7090104@kdbg.org> <7vzl4r7jyu.fsf@alter.siamese.dyndns.org>
+ <4B445312.9090507@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Jan 06 18:04:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSZJK-0007wW-1r
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 18:04:42 +0100
+	id 1NSZJL-0007wW-5z
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jan 2010 18:04:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755967Ab0AFRE1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jan 2010 12:04:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755966Ab0AFRE1
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 12:04:27 -0500
-Received: from imag.imag.fr ([129.88.30.1]:59661 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755963Ab0AFRE0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jan 2010 12:04:26 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o06H1VSG012611
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 6 Jan 2010 18:01:31 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NSZGF-0007Go-L3; Wed, 06 Jan 2010 18:01:31 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NSZGF-0005zq-K3; Wed, 06 Jan 2010 18:01:31 +0100
-X-Mailer: git-send-email 1.6.6.76.gd6b23.dirty
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 06 Jan 2010 18:01:31 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S932363Ab0AFREd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jan 2010 12:04:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932268Ab0AFREc
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 12:04:32 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45155 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755966Ab0AFREa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jan 2010 12:04:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 047DF8E8AD;
+	Wed,  6 Jan 2010 12:04:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=OCfc0y1gJ1mIQ7HVkn/Bq6x9MPE=; b=w3XkIQpa/eE37rDjWDyqvWX
+	+7G5zwBC5wHr38gJc+ymcza3b8Nu/rBxFCYm5tUcSb3g7QGu9sJysgNaqx9pSyC6
+	sLOCn0CZVG3StXVi2p4eAxzZPquvX4VXFLWpznHaoeV6kA6pQEQwcCJjkHgeFxq8
+	3V/lwmJd6GXDwAB+8QCc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=x4zyvXsttQPvHz7eyZVMTFhv/XIWJvQLlyzXgLti35PJ3Jo6T
+	ylM93kA6t1q6EtfvgyyQkJEoRvg0DR7kuuQewXfO82DxUWXB+0YQg0K/h+lLzWFb
+	h03KwM/5vnYXhUrvqO4Cpvrxd8ITzJZ87BP9UV9mFGQ8R0rN5dbJv/5oUI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D30B18E8A9;
+	Wed,  6 Jan 2010 12:04:27 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 188018E8A5; Wed,  6 Jan
+ 2010 12:04:23 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8C6FD162-FAE5-11DE-8768-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136273>
 
-When calling a git command from a subdirectory and a file locking fails,
-the user will get a path relative to the root of the worktree, which is
-invalid from the place where the command is ran. Make it easy for the
-user to know which file it is.
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-I'm writting this because I just got the situation with students:
+> Junio C Hamano schrieb:
+>> (1) Does "Windows style path" here mean what $(pwd) returns as opposed to
+>>     what is in $PWD?
+>
+> Yes. $PWD is of the form /c/foo/bar; pwd is a function in test-lib.sh
+> that ensures it returns the form c:/foo/bar.
+>
+>> (2) The patch reads like this:
+>> ...
+>>     Does "strips everything past the second dq" mean "drops '/hexdump'"?
+> Yes.
+>
+>>     If so, would this also work (I am not suggesting to change it, just
+>> ...
+> It would work, too, but it would depend on very bogus behavior of the
+> MSYS bash.
 
-- Sir, we broke our repository (git commit interrupted violently).
-- See, the error message tells you what to do.
-- But sir, where is .git/index.lock, we can't find it.
-
-This patch would have solved their problem. OTOH, an absolute path can
-be rather long and painfull to read/cut-and-paste. I've tried to show
-a path relative to where the command was ran (like
-"../../.git/index.lock"), but that's really a painfull to implement
-(one has to provide a prefix argument to all the calls to
-unable_to_lock_*, and even with this, I didn't find the simple way to
-make the relative path (probably exists somewhere in Git since 'git
-status' does this). Then I gave up :-(.
-
- lockfile.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/lockfile.c b/lockfile.c
-index 6851fa5..e31cbc7 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -164,9 +164,10 @@ static char *unable_to_lock_message(const char *path, int err)
- 		    "If no other git process is currently running, this probably means a\n"
- 		    "git process crashed in this repository earlier. Make sure no other git\n"
- 		    "process is running and remove the file manually to continue.",
--		    path, strerror(err));
-+			    make_absolute_path(path), strerror(err));
- 	} else
--		strbuf_addf(&buf, "Unable to create '%s.lock': %s", path, strerror(err));
-+		strbuf_addf(&buf, "Unable to create '%s.lock': %s",
-+			    make_absolute_path(path), strerror(err));
- 	return strbuf_detach(&buf, NULL);
- }
- 
--- 
-1.6.6.76.gd6b23.dirty
+Thanks.
