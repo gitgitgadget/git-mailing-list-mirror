@@ -1,77 +1,67 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: Difference between pull --rebase and fetch+rebase
-Date: Thu, 7 Jan 2010 23:33:23 +0100
-Message-ID: <adf1fd3d1001071433j6cd36641sdd2dfd6a936d8483@mail.gmail.com>
-References: <27059158.post@talk.nabble.com>
-	 <adf1fd3d1001070800k6fa501fej39b84f849b7e5b50@mail.gmail.com>
-	 <1262889864880-4268064.post@n2.nabble.com>
+From: Bryan Richardson <btricha@gmail.com>
+Subject: Problem Using Git with Subversion Repository
+Date: Thu, 7 Jan 2010 15:53:26 -0700
+Message-ID: <3f81a4241001071453g24297atc1caab4a0a4ad176@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: martinvz <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 07 23:33:31 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 07 23:53:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NT0v4-0008I1-45
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 23:33:30 +0100
+	id 1NT1ER-0007Wr-9A
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 23:53:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751242Ab0AGWdZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2010 17:33:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207Ab0AGWdZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 17:33:25 -0500
-Received: from mail-fx0-f225.google.com ([209.85.220.225]:47741 "EHLO
-	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750983Ab0AGWdY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2010 17:33:24 -0500
-Received: by fxm25 with SMTP id 25so12178801fxm.21
-        for <git@vger.kernel.org>; Thu, 07 Jan 2010 14:33:23 -0800 (PST)
-Received: by 10.102.237.27 with SMTP id k27mr1655547muh.93.1262903603393; Thu, 
-	07 Jan 2010 14:33:23 -0800 (PST)
-In-Reply-To: <1262889864880-4268064.post@n2.nabble.com>
+	id S1753709Ab0AGWx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2010 17:53:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752844Ab0AGWx1
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 17:53:27 -0500
+Received: from mail-yx0-f188.google.com ([209.85.210.188]:56218 "EHLO
+	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752541Ab0AGWx0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2010 17:53:26 -0500
+Received: by yxe26 with SMTP id 26so18173558yxe.4
+        for <git@vger.kernel.org>; Thu, 07 Jan 2010 14:53:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=L4puAvZJLSNSlcpzvtfIz83PqDnkBYZW3j+Dy6qsm2A=;
+        b=fctrV094fsgaxIjXIlK6ytTFBzVn3AYNNNrPbikEW13xNmYQvcXVkZAK6Ff3FbHZ2o
+         TGoEtme8nDUGgtfAo7Ut5der7lU1JmqXQ3MursVrONnhkVP6qmfmLj0sd6MHzRRb0FLX
+         yjfhURv0QIYpmmPAZlX9ZPM5RYHAPE3WudIZE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=tR+sp+wMqvmimI/1FH3GfYxFpGeAlCitdzXgXRl3EWe1WsF/F0xfj/9R4L+DQQhMbY
+         g3PQg0wwYj7i8ijFbKnCdxPJ/9AF+bNvF5JkSilFm9XQ//2qMlrFDQBpVTdZ4A9aYy3q
+         rY/G6YLhDKy1R0Vr+vpgGoL4M2D9MQFgrTNsc=
+Received: by 10.90.37.19 with SMTP id k19mr8580813agk.45.1262904806189; Thu, 
+	07 Jan 2010 14:53:26 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136399>
 
-[Do not top post, as it breaks the conversation flow]
+Hello all,
 
-On Thu, Jan 7, 2010 at 7:44 PM, martinvz
-<martin.von.zweigbergk@gmail.com> wrote:
->
-> Thanks for your post, Santi. I can not share my repository since it i=
-s a
-> project at work. I was troubleshooting a bit myself and found the fol=
-lowing
-> section in git-pull.sh:
->
-> =A0 =A0 =A0 =A0oldremoteref=3D"$(git rev-parse -q --verify "$remotere=
-f")" &&
-> =A0 =A0 =A0 =A0for reflog in $(git rev-list -g $remoteref 2>/dev/null=
-)
-> =A0 =A0 =A0 =A0do
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if test "$reflog" =3D "$(git merge-bas=
-e $reflog $curr_branch)"
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0then
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0oldremoteref=3D"$reflo=
-g"
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0break
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0fi
-> =A0 =A0 =A0 =A0done
->
-> Why is it that reflog entries are allowed to override the remote refe=
-rence?
+Has anyone come across a similar problem as this?
 
-This is used when the upstream branch is rebased, as you only want to
-rebase the local commits and not commits in the old upstream branch.
+Item already exists in filesystem: File already exists: filesystem
+'/usr/local/svn/repos/my-apps/db', transaction '96-2v', path
+'/app/trunk/vendor/rails/actionpack/test/fixtures/layout_tests/layouts/symlinked'
+at /usr/lib/git-core/git-svn line 508
 
-Is your upstream branch rebased?
+I *think* what happened is in a previous git-svn dcommit I removed the
+vendor/rails directory (unfroze rails from my app) and now I'm trying
+to freeze it again, in which case git-svn thinks a file needs to be
+added (instead of modified) and the Subversion repository says the
+file already exists.
 
-Can you provide, at least, a graph of your history (ala git log
---graph --oneline for example)? And plot also the reflog entries and
-all the important commits.
+Anyone know a way around it?!
 
-Santi
+--
+Thanks!
+Bryan
