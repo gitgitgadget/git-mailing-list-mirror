@@ -1,199 +1,74 @@
 From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: [PATCH (v2) 1/2] rebase: fix --onto A...B parsing and add tests
-Date: Thu, 07 Jan 2010 20:05:02 +0900
-Message-ID: <20100107200502.6117@nanako3.lavabit.com>
-References: <7vljgei7rs.fsf@alter.siamese.dyndns.org> <7vskal5c11.fsf@alter.siamese.dyndns.org> <20100106191825.6117@nanako3.lavabit.com> <alpine.DEB.1.00.1001061219180.11013@intel-tinevez-2-302> <7vocl7yxef.fsf@alter.siamese.dyndns.org>
+Subject: Re: submodules' shortcomings, was Re: RFC: display dirty submodule working directory in git gui and gitk
+Date: Thu, 07 Jan 2010 20:04:17 +0900
+Message-ID: <20100107200417.6117@nanako3.lavabit.com>
+References: <4B3F6742.6060402@web.de> <alpine.DEB.1.00.1001041038520.4985@pacific.mpi-cbg.de> <4B421F90.4090402@web.de> <alpine.DEB.1.00.1001042217370.4985@pacific.mpi-cbg.de> <4B42F425.4010901@web.de> <alpine.DEB.1.00.1001051032440.4985@pacific.mpi-cbg.de> <20100105142727.GA83546@book.hvoigt.net> <20100106073718.6117@nanako3.lavabit.com> <alpine.DEB.1.00.1001060009530.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
+Content-Transfer-Encoding: 8bit
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Paul Mackerras <paulus@samba.org>,
+	Lars Hjemli <hjemli@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-From: git-owner@vger.kernel.org Thu Jan 07 12:05:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSqAy-0006QB-Re
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 12:05:13 +0100
+	id 1NSqAy-0006QB-A8
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 12:05:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752177Ab0AGLFK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2010 06:05:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752172Ab0AGLFJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 06:05:09 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:56265 "EHLO karen.lavabit.com"
+	id S1752127Ab0AGLFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2010 06:05:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752149Ab0AGLFE
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 06:05:04 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:56259 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752149Ab0AGLFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2010 06:05:07 -0500
+	id S1752127Ab0AGLFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2010 06:05:03 -0500
 Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
-	by karen.lavabit.com (Postfix) with ESMTP id 9B44411BA3D;
-	Thu,  7 Jan 2010 05:05:07 -0600 (CST)
+	by karen.lavabit.com (Postfix) with ESMTP id B2A7311BA0D;
+	Thu,  7 Jan 2010 05:05:01 -0600 (CST)
 Received: from 9668.lavabit.com (212.62.97.23)
-	by lavabit.com with ESMTP id IOF7O626JSO8; Thu, 07 Jan 2010 05:05:07 -0600
+	by lavabit.com with ESMTP id GN67F2CBF2H4; Thu, 07 Jan 2010 05:05:01 -0600
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=2bdS8fgzwXfcdZbGXKoNhLJ4WBCddYMk8FfvcOWOWoMM6/sEsl+Jm3a3uFEvX+O5PNnzCEXaPOCTKy1mI9Sb7dIj83pXwTkpsd8IOzJUCvc9YAIe8Ou6ruDh4KkwjoGOqKo54J4hhPX6eWYrbqeXfkbsyRO2Zxmu6Yltb0RxCl4=;
+  b=WIrdaCuWSp/yi8H5OPFmLoAyTUtooVq15/Q473wtkE+U2H5Pe3Y+2BwfAu3Ty2BaXPhcUUyzuCzKeqITK4ZdALn1XUeHYE8A4CjynNuDPB/I3teZo7CuOWHPLret5LmgwLnZUiiu4yelPU0G6A48hfShCVYWCvGfNrv0ZmdR5B8=;
   h=From:To:Cc:Subject:References:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Message-Id;
-In-Reply-To: <7vocl7yxef.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <alpine.DEB.1.00.1001060009530.4985@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136337>
 
-The previous patch didn't parse "rebase --onto A...B" correctly when A
-isn't an empty string. It also tried to be careful to notice a case in
-which there are more than one merge bases, but forgot to give --all opt=
-ion
-to merge-base, making the test pointless.
+Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-=46ix these problems and add a test script to verify. Improvements to t=
-he
-script to parse A...B syntax was taken from review comments by Johannes
-Schindelin.
+> On Wed, 6 Jan 2010, Nanako Shiraishi wrote:
+>
+>> I found this other discussion in the design area enlightening.
+>> 
+>> http://thread.gmane.org/gmane.comp.version-control.git/47466/focus=47621
+>
+> Could you be so kind and summarize the result of the thread in something 
+> like 2000 characters?
 
-Signed-off-by: =E3=81=97=E3=82=89=E3=81=84=E3=81=97 =E3=81=AA=E3=81=AA=E3=
-=81=93 <nanako3@lavabit.com>
----
- git-rebase.sh                    |   33 ++++++++++-------
- t/t3415-rebase-onto-threedots.sh |   75 ++++++++++++++++++++++++++++++=
-++++++++
- 2 files changed, 94 insertions(+), 14 deletions(-)
- create mode 100755 t/t3415-rebase-onto-threedots.sh
+Sorry, but I only said "enlightening". There wasn't a conclusion that lets you stop thinking and just go ahead implementing the design specified in the thread, if that is what you are looking for.
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 6503113..9bd8974 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -419,22 +419,27 @@ fi
-=20
- # Make sure the branch to rebase onto is valid.
- onto_name=3D${newbase-"$upstream_name"}
--if	left=3D$(expr "$onto_name" : '\(.*\)\.\.\.') &&
--	right=3D$(expr "$onto_name" : '\.\.\.\(.*\)$') &&
--	: ${left:=3DHEAD} ${right:=3DHEAD} &&
--	onto=3D$(git merge-base "$left" "$right")
--then
--	case "$onto" in
--	?*"$LF"?*)
--		die "$onto_name: there are more than one merge bases"
--		;;
--	'')
-+case "$onto_name" in
-+*...*)
-+	if	left=3D${onto_name%...*} right=3D${onto_name#*...} &&
-+		onto=3D$(git merge-base --all ${left:-HEAD} ${right:-HEAD})
-+	then
-+		case "$onto" in
-+		?*"$LF"?*)
-+			die "$onto_name: there are more than one merge bases"
-+			;;
-+		'')
-+			die "$onto_name: there is no merge base"
-+			;;
-+		esac
-+	else
- 		die "$onto_name: there is no merge base"
--		;;
--	esac
--else
-+	fi
-+	;;
-+*)
- 	onto=3D$(git rev-parse --verify "${onto_name}^0") || exit
--fi
-+	;;
-+esac
-=20
- # If a hook exists, give it a chance to interrupt
- run_pre_rebase_hook "$upstream_arg" "$@"
-diff --git a/t/t3415-rebase-onto-threedots.sh b/t/t3415-rebase-onto-thr=
-eedots.sh
-new file mode 100755
-index 0000000..da378c4
---- /dev/null
-+++ b/t/t3415-rebase-onto-threedots.sh
-@@ -0,0 +1,75 @@
-+#!/bin/sh
-+
-+test_description=3D'git rebase --onto A...B'
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY/lib-rebase.sh"
-+
-+# Rebase only the tip commit of "topic" on merge base between "master"
-+# and "topic".  Cannot do this for "side" with "master" because there
-+# is no single merge base.
-+#
-+#
-+#	    F---G topic                             G'
-+#	   /                                       /
-+# A---B---C---D---E master      -->       A---B---C---D---E
-+#      \   \ /
-+#	\   x
-+#	 \ / \=20
-+#	  H---I---J---K side
-+
-+test_expect_success setup '
-+	test_commit A &&
-+	test_commit B &&
-+	git branch side &&
-+	test_commit C &&
-+	git branch topic &&
-+	git checkout side &&
-+	test_commit H &&
-+	git checkout master &&
-+	test_tick &&
-+	git merge H &&
-+	git tag D &&
-+	test_commit E &&
-+	git checkout topic &&
-+	test_commit F &&
-+	test_commit G &&
-+	git checkout side &&
-+	test_tick &&
-+	git merge C &&
-+	git tag I &&
-+	test_commit J &&
-+	test_commit K
-+'
-+
-+test_expect_success 'rebase --onto master...topic' '
-+	git reset --hard &&
-+	git checkout topic &&
-+	git reset --hard G &&
-+
-+	git rebase --onto master...topic F &&
-+	git rev-parse HEAD^1 >actual &&
-+	git rev-parse C^0 >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'rebase --onto master...' '
-+	git reset --hard &&
-+	git checkout topic &&
-+	git reset --hard G &&
-+
-+	git rebase --onto master... F &&
-+	git rev-parse HEAD^1 >actual &&
-+	git rev-parse C^0 >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'rebase --onto master...side' '
-+	git reset --hard &&
-+	git checkout side &&
-+	git reset --hard K &&
-+
-+	test_must_fail git rebase --onto master...side J
-+'
-+
-+test_done
---=20
-1.6.6.53.g75f61
+Instead, let me tell you an example of what I found enlightening. It isn't a summary of the result. I don't think there was a *result*; otherwise somebody already would have implemented it.
 
+I often wonder why 'git-submodule init' copies data to .git/config file. If .gitmodules file gives the default and I can use .git/config file to override it, it seems stupid to copy entries between these files. I can just keep using data from .gitmodules file until I need to override something.
 
+Reading the thread made me realize how wrong I was. It became very clear why .gitmodules file shouldn't even be the default that is read when no entries is in .git/config file and why .git/config file should be the only thing that is used at runtime.
 
+Unfortunately I can't summarize the reason in '2000 characters', so you need read the thread yourself if you are interested. The key concept that I was missing was that remote repositories can move or change over time, and you may want to check out and interact with a very old version of your supermodule. The .gitmodules file checked out in such a case still records old information. Treating .gitmodules file as a hint and always looking into .git/config file is a part of the fundamental solution to that problem, but I didn't even realize that such an issue existed when I read the current discussion until I found the old thread.
 
---=20
+I think the 'git-submodule' script is mainly based on the 'three-level thing Steven Grimm suggested', but it doesn't seem to implement all the ideas in the thread yet. It gives no interactive prompt to suggest URL from 'git-submodule init' command. Neither it records which URLs have been seen with subproject.*.seen variable. But the issues that high level design must take into account looks very well thought out already.
+
+-- 
 Nanako Shiraishi
 http://ivory.ap.teacup.com/nanako3/
