@@ -1,130 +1,121 @@
-From: Greg Price <greg@quora.com>
-Subject: [PATCH 0/6] rebase: command "ref" and options --rewrite-{refs,heads,tags}
-Date: Sun, 26 Jun 2011 17:16:57 -0700
-Message-ID: <cover.1309133817.git.greg@quora.com>
+From: Greg Price <price@MIT.EDU>
+Subject: [PATCH 3/6] for-each-ref: --stdin to match specified refs against
+ pattern
+Date: Thu, 7 Jan 2010 18:08:28 -0500
+Message-ID: <47cee601ac5a3b8938b902b173cbaf4146e0d657.1309133817.git.greg@quora.com>
+References: <cover.1309133817.git.greg@quora.com>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 27 02:42:36 2011
+X-From: git-owner@vger.kernel.org Mon Jun 27 02:42:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QazuM-0006H7-UU
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Jun 2011 02:42:35 +0200
+	id 1QazuP-0006H7-A9
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Jun 2011 02:42:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756008Ab1F0AfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jun 2011 20:35:12 -0400
-Received: from DMZ-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.35]:55655 "EHLO
-	dmz-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755828Ab1F0Aed (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Jun 2011 20:34:33 -0400
-X-AuditID: 12074423-b7ce8ae000000a29-e5-4e07d0115ffd
+	id S1755728Ab1F0Ajz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jun 2011 20:39:55 -0400
+Received: from DMZ-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.37]:63336 "EHLO
+	dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756045Ab1F0Ajr (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Jun 2011 20:39:47 -0400
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Sun, 26 Jun 2011 20:39:47 EDT
+X-AuditID: 12074425-b7b82ae000000a2a-62-4e07d00156b4
 Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
-	by dmz-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 79.69.02601.110D70E4; Sun, 26 Jun 2011 20:34:25 -0400 (EDT)
+	by dmz-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 2A.01.02602.100D70E4; Sun, 26 Jun 2011 20:34:10 -0400 (EDT)
 Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id p5R0YUuC028979;
-	Sun, 26 Jun 2011 20:34:30 -0400
+	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id p5R0YjE0029005;
+	Sun, 26 Jun 2011 20:34:45 -0400
 Received: from localhost (DR-WILY.MIT.EDU [18.181.0.233])
 	(authenticated bits=0)
         (User authenticated as price@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p5R0YTNn018988;
-	Sun, 26 Jun 2011 20:34:30 -0400 (EDT)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrFIsWRmVeSWpSXmKPExsUixCmqrSt4gd3P4NwFYYuuK91MFg29V5gd
-	mDwuXlL2+LxJLoApissmJTUnsyy1SN8ugSvjxPO7bAWN4hUfp7g2MG4Q7GLk5JAQMJF41POE
-	FcIWk7hwbz1bFyMXh5DAPkaJH9cWs0A4GxglZnfuZYJwvjBKLPh3iBmkRUhAXeJm2yFGCFtH
-	4s/v+1C2lcSeHfuhbEOJJ0fvsIPYvED25ZVvwHrZBBQljm79CBYXEVCTmNh2iAXEZhYQl1g3
-	9zxYnEVAVeLJx29g9cICQRJXbu5jmcDIv4CRYRWjbEpulW5uYmZOcWqybnFyYl5eapGumV5u
-	ZoleakrpJkZQELG7KO9g/HNQ6RCjAAejEg9vZxy7nxBrYllxZe4hRkkOJiVRXtHzQCG+pPyU
-	yozE4oz4otKc1OJDjBIczEoivO/CgHK8KYmVValF+TApaQ4WJXHeXO//vkIC6YklqdmpqQWp
-	RTBZGQ4OJQneIJChgkWp6akVaZk5JQhpJg5OkOE8QMNDQWp4iwsSc4sz0yHypxgVpcR5V4Mk
-	BEASGaV5cL2wKH/FKA70ijBvG0gVDzBBwHW/AhrMBDS47zIbyOCSRISUVAOj9Yu0C6FSCR4p
-	HRKXOHc/nnzlkCynxLa1JudCls769TOhPc1ko6ZD//nXlRsvdV9IaDn0xv38R27Fr1WfFJiu
-	x+sePXoiN55ZdJOS0BO/pLvsOq4fZ3XrMyrOa1Vcnm7yf/2Rz0d5J3LXHapdyrsrbbqSZ6ze
-	p4+xwaftX0eqsCQK9u56dpZfiaU4I9FQi7moOBEA7P8mEc0CAAA=
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p5R0Yi5J019016;
+	Sun, 26 Jun 2011 20:34:45 -0400 (EDT)
+In-Reply-To: <cover.1309133817.git.greg@quora.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrDIsWRmVeSWpSXmKPExsUixCmqrct0gd3P4P8iJouuK91MFg29V5gd
+	mDwuXlL2+LxJLoApissmJTUnsyy1SN8ugSvj5bcWpoI+4YrJbYfZGhgP8XcxcnJICJhILP55
+	nA3CFpO4cG89kM3FISSwj1HiwZPfjBDOBkaJ1b8uM0M4Xxglfk09xwTSIiSgLnGz7RAjhK0j
+	sXv6bBYI20ri7pUVUHFDiSdH77B3MXJw8AqESEx5xQVicgoYSbxsVICpuH+hCewINgEFiR/z
+	1zGD2CICahIT2w6BTWQWEJdYN/c82BQWARWJZf0iIGFhoIGb395incAouICRYRWjbEpulW5u
+	YmZOcWqybnFyYl5eapGuhV5uZoleakrpJkZQwLG7qO5gnHBI6RCjAAejEg/vwwR2PyHWxLLi
+	ytxDjJIcTEqivKLngUJ8SfkplRmJxRnxRaU5qcWHGCU4mJVEeN+FAeV4UxIrq1KL8mFS0hws
+	SuK8Id7/fYUE0hNLUrNTUwtSi2CyMhwcShK8QSBDBYtS01Mr0jJzShDSTBycIMN5gIaHgtTw
+	Fhck5hZnpkPkTzHqcix6tewwoxBLXn5eqpQ4byZIkQBIUUZpHtwcWKJ4xSgO9JYwbxtIFQ8w
+	ycBNegW0hAloSd9lNpAlJYkIKakGRiZD7rcdS0+VHpi8qvRb1bKuxkV1cfVzBLbGzG3irjIq
+	rpxaYn0sec6juu+hb59xN5wJyYqX8jA5IG2is+ZgUHZhb9/0sN2v/7TtYmBPLc72+Fnr3vb4
+	fe76s51JYgJfptVyW98qf7tQ8tH0pwK/m7iF50k7rc+x4dHlqtIPbymaffxVLbO1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176340>
 
-This series adds a "ref" command to rebase -i, and options
---rewrite-{refs,heads,tags} to generate "ref" commands in the original
-TODO file.  This makes it easy to rebase a branch together with
-intermediate markers, or a series of branches.
+The pattern syntax of for-each-ref is handy for users, but a bit subtle:
+a pattern matches a ref if it matches as an fnmatch pattern, or literally,
+or literally against a prefix of the refname up to a slash.  Expose the
+for-each-ref pattern-matcher for scripts to use, so that they can provide
+a consistent user interface without duplicating the implementation.
 
-For example, in this situation:
-
-      part1 part2 topic
-        |     |     |
-        v     v     v
-  A--*--*--*--*--*--*
-   \
-    B <--master
-
-we may want to rebase 'topic' onto the new master, rewriting the
-intermediate branches 'part1', 'part2' to the corresponding new
-commits.  This can be done with a sequence of "git rebase --onto"
-commands, but it's tricky to get right.
-
-With this series, the command
-  $ git rebase --rewrite-heads master topic
-suffices to produce this result:
-
-        part1 part2 topic
-  A       |     |     |
-   \      v     v     v
-    B--*--*--*--*--*--*
-    ^
-    |
-    master
-
-
-I originally submitted a version of this series nearly a year and a
-half ago [1].  This version has been rebased to the new release 1.7.6
-(Martin von Zweigbergk's cleanups gave me quite some conflicts to
-resolve, but are nevertheless much appreciated!) and the interface has
-been adjusted for the comments of Junio and others [2].  The general
-command is --rewrite-refs=PATTERN; --rewrite-heads and --rewrite-tags
-are provided as shortcuts, the former being equivalent to the --refs
-of my original proposal.
-
- [1]  http://www.amailbox.net/mailarchive/git/2009/12/22/18967
- [2]  http://www.amailbox.net/mailarchive/git/2009/12/22/18972
-
-I have no excuse for the year and a half of delay in submitting the
-revised version, but I believe that late is better than never. =)
-
-
-The series contains two preparatory patches that are independently useful:
-  pretty: Add %D for script-friendly decoration
-  for-each-ref: --stdin to match specified refs against pattern
-Each one exposes a bit more knowledge of the repository in a
-machine-readable form convenient for scripting.  I hope other people
-may find them useful in writing other scripts.
-
-Greg
-
-
+Signed-off-by: Greg Price <price@mit.edu>
 ---
-Greg Price (6):
-  rebase -i: Add the "ref" command
-  pretty: Add %D for script-friendly decoration
-  for-each-ref: --stdin to match specified refs against pattern
-  rebase: --rewrite-{refs,heads,tags} to pull refs along with branch
-  t/lib-rebase.sh: pass through ref commands
-  rebase --rewrite-refs: tests
+ builtin/for-each-ref.c |   22 ++++++++++++++++++++--
+ 1 files changed, 20 insertions(+), 2 deletions(-)
 
- Documentation/git-rebase.txt     |   15 ++++++++
- Documentation/pretty-formats.txt |    1 +
- builtin/for-each-ref.c           |   22 ++++++++++-
- git-rebase--interactive.sh       |   37 ++++++++++++++++++-
- git-rebase.sh                    |   28 ++++++++++++++
- pretty.c                         |   33 +++++++++++++----
- t/lib-rebase.sh                  |    2 +-
- t/t3420-rebase-ref.sh            |   75 ++++++++++++++++++++++++++++++++++++++
- 8 files changed, 201 insertions(+), 12 deletions(-)
- create mode 100644 t/t3420-rebase-ref.sh
-
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 89e75c6..0413ec0 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -779,6 +779,20 @@ static int grab_single_ref(const char *refname, const unsigned char *sha1, int f
+ 	return 0;
+ }
+ 
++static void for_each_ref_stdin(each_ref_fn fn, void *cb_data)
++{
++	struct strbuf buf;
++	unsigned char sha1[20];
++
++	strbuf_init(&buf, 0);
++	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
++		if (read_ref(buf.buf, sha1))
++			continue;
++		fn(buf.buf, sha1, 0, cb_data);
++	}
++	strbuf_release(&buf);
++}
++
+ static int cmp_ref_sort(struct ref_sort *s, struct refinfo *a, struct refinfo *b)
+ {
+ 	struct atom_value *va, *vb;
+@@ -943,7 +957,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 	int i, num_refs;
+ 	const char *format = "%(objectname) %(objecttype)\t%(refname)";
+ 	struct ref_sort *sort = NULL, **sort_tail = &sort;
+-	int maxcount = 0, quote_style = 0;
++	int maxcount = 0, quote_style = 0, stdin_refs = 0;
+ 	struct refinfo **refs;
+ 	struct grab_ref_cbdata cbdata;
+ 
+@@ -962,6 +976,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING(  0 , "format", &format, "format", "format to use for the output"),
+ 		OPT_CALLBACK(0 , "sort", sort_tail, "key",
+ 		            "field name to sort on", &opt_parse_sort),
++		OPT_BOOLEAN( 0 , "stdin", &stdin_refs, "read candidate refs from stdin, rather than all refs"),
+ 		OPT_END(),
+ 	};
+ 
+@@ -986,7 +1001,10 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 
+ 	memset(&cbdata, 0, sizeof(cbdata));
+ 	cbdata.grab_pattern = argv;
+-	for_each_rawref(grab_single_ref, &cbdata);
++	if (stdin_refs)
++		for_each_ref_stdin(grab_single_ref, &cbdata);
++	else
++		for_each_rawref(grab_single_ref, &cbdata);
+ 	refs = cbdata.grab_array;
+ 	num_refs = cbdata.grab_cnt;
+ 
 -- 
 1.7.5.4
