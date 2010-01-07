@@ -1,78 +1,80 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: [PATCH] mingw: enable NO_PYTHON
-Date: Thu,  7 Jan 2010 22:52:39 +0100
-Message-ID: <1262901159-1436-1-git-send-email-kusmabite@gmail.com>
-Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>
-To: msysgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Thu Jan 07 22:53:18 2010
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 0/5] Miscellaneous improvements on Windows
+Date: Thu,  7 Jan 2010 22:54:56 +0100
+Message-ID: <cover.1262895936.git.j6t@kdbg.org>
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: msysgit <msysgit@googlegroups.com>
+X-From: git-owner@vger.kernel.org Thu Jan 07 22:56:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NT0I5-0000ci-Of
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 22:53:14 +0100
+	id 1NT0LK-0001zm-9p
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 22:56:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752794Ab0AGVxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2010 16:53:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752435Ab0AGVxF
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 16:53:05 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:35406 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752368Ab0AGVxB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2010 16:53:01 -0500
-Received: by ewy19 with SMTP id 19so11287636ewy.21
-        for <git@vger.kernel.org>; Thu, 07 Jan 2010 13:53:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=551UQFEhuGEj+rORzKAMCFs3MnfIx85pg/Pq383fDYc=;
-        b=mPJdCW9UkBihCg9mRWa70gwaFJy0oSUzRfou3IfcvfkV26ca/yDdcNXkqsIFdxU21r
-         aGJmRTOBGV9A/H4i3eE3B+1pKQG65gXM9X8OmbCrgGV460a+9F48VB01r0dKihw944xv
-         3Xnlg8fMgjfIt9zDMMkD/cdp0vPt45g+yr0mA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=qdgwP8VpQAZGfYcLJBd61wLVmW/00YC3ZK3c331dPhIkGpj4vq/PMZa1xLSTK3Fh7B
-         Mrtz1v2YQXQfHFVmiS753YghgmbfzUfZr8cJjfX7xzQloRhcnUv8lbM47IAKjgHOkEvR
-         0Dzvxx0wlMCaXUZXKxttbsonwcQSrZNkx8RK8=
-Received: by 10.213.100.168 with SMTP id y40mr3087016ebn.28.1262901180360;
-        Thu, 07 Jan 2010 13:53:00 -0800 (PST)
-Received: from localhost (cm-84.215.142.12.getinternet.no [84.215.142.12])
-        by mx.google.com with ESMTPS id 15sm15414106ewy.4.2010.01.07.13.52.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 07 Jan 2010 13:52:59 -0800 (PST)
-X-Mailer: git-send-email 1.6.5.1.1372.g025e4.dirty
+	id S1754191Ab0AGV4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2010 16:56:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754151Ab0AGV4X
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 16:56:23 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:50646 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754191Ab0AGV4X (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2010 16:56:23 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id E18F92C400B;
+	Thu,  7 Jan 2010 22:56:20 +0100 (CET)
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 6800219F610;
+	Thu,  7 Jan 2010 22:55:33 +0100 (CET)
+X-Mailer: git-send-email 1.6.6.115.gd1ab3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136389>
 
-Python is not commonly installed on Windows machines, so
-we should disable it there by default.
+This series is actually a set of independent changes that improve
+the Windows port. (Except that 2/5 depends on 1/5.)
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
+1/5 and 2/5 enable threaded code on Windows. This topic was discussed
+beginning of November. The change to builtin-pack-objects.c was
+positively commented (though not formally acked) by Nico:
 
-This patch is against Junio's current master, and enables
-msysgit to compile upstream git again after Sverre's addition
-of the python remote-helpers (2fe40b6).
+http://thread.gmane.org/gmane.comp.version-control.git/131998/focus=132239
 
- Makefile |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+3/5 removes a static dependency on shell32.dll so that startup time is
+reduced. It does reduce the runtime of the test suite ('make -j2 test')
+from 16:00min to 12:40min for me.
 
-diff --git a/Makefile b/Makefile
-index 1c7668a..a2780a2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1028,6 +1028,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	BLK_SHA1 = YesPlease
- 	NO_INET_PTON = YesPlease
- 	NO_INET_NTOP = YesPlease
-+	NO_PYTHON = YesPlease
- 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/fnmatch
- 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
- 	COMPAT_OBJS += compat/mingw.o compat/fnmatch/fnmatch.o compat/winansi.o
--- 
-1.6.6.95.g82b1b.dirty
+4/5 (the new pipe implementation) could be considered code churn.
+It reduces LOC, but the effect is not noticable during run-time.
+
+5/5 (avoid "dup dance") straightens our run-command implementation a
+bit. It is more of the future-proofing kind because it avoids that a
+writable pipe end remains accidentally open in a child process, leaving
+the reader waiting idenfinetly. This doesn't seem to be a problem
+currently, though.
+
+
+I'm using these patches since November.
+
+
+Andrzej K. Haczewski (1):
+  MSVC: Windows-native implementation for subset of Pthreads API
+
+Johannes Sixt (4):
+  MinGW: enable pthreads
+  Windows: boost startup by avoiding a static dependency on shell32.dll
+  Windows: simplify the pipe(2) implementation
+  Windows: avoid the "dup dance" when spawning a child process
+
+ Makefile               |   13 +++--
+ builtin-pack-objects.c |   31 +++++++++++--
+ compat/mingw.c         |   80 ++++++++++++++++----------------
+ compat/mingw.h         |    8 +++-
+ compat/win32/pthread.c |  120 ++++++++++++++++++++++++++++++++++++++++++++++++
+ compat/win32/pthread.h |   68 +++++++++++++++++++++++++++
+ run-command.c          |   71 ++++++++++++----------------
+ 7 files changed, 300 insertions(+), 91 deletions(-)
+ create mode 100644 compat/win32/pthread.c
+ create mode 100644 compat/win32/pthread.h
