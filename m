@@ -1,74 +1,146 @@
 From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: submodules' shortcomings, was Re: RFC: display dirty submodule working directory in git gui and gitk
-Date: Thu, 07 Jan 2010 20:04:17 +0900
-Message-ID: <20100107200417.6117@nanako3.lavabit.com>
-References: <4B3F6742.6060402@web.de> <alpine.DEB.1.00.1001041038520.4985@pacific.mpi-cbg.de> <4B421F90.4090402@web.de> <alpine.DEB.1.00.1001042217370.4985@pacific.mpi-cbg.de> <4B42F425.4010901@web.de> <alpine.DEB.1.00.1001051032440.4985@pacific.mpi-cbg.de> <20100105142727.GA83546@book.hvoigt.net> <20100106073718.6117@nanako3.lavabit.com> <alpine.DEB.1.00.1001060009530.4985@pacific.mpi-cbg.de>
+Subject: [PATCH (v2) 2/2] rebase -i: teach --onto A...B syntax
+Date: Thu, 07 Jan 2010 20:05:09 +0900
+Message-ID: <20100107200509.6117@nanako3.lavabit.com>
+References: <7vljgei7rs.fsf@alter.siamese.dyndns.org> <7vskal5c11.fsf@alter.siamese.dyndns.org> <20100106191825.6117@nanako3.lavabit.com> <alpine.DEB.1.00.1001061219180.11013@intel-tinevez-2-302> <7vocl7yxef.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Lars Hjemli <hjemli@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 07 12:05:13 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 07 12:05:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSqAy-0006QB-A8
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 12:05:12 +0100
+	id 1NSqBM-0006Wn-Sd
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 12:05:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752127Ab0AGLFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2010 06:05:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752149Ab0AGLFE
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 06:05:04 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:56259 "EHLO karen.lavabit.com"
+	id S1752181Ab0AGLFP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2010 06:05:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752178Ab0AGLFO
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 06:05:14 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:56272 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752127Ab0AGLFD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2010 06:05:03 -0500
+	id S1752172Ab0AGLFN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2010 06:05:13 -0500
 Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
-	by karen.lavabit.com (Postfix) with ESMTP id B2A7311BA0D;
-	Thu,  7 Jan 2010 05:05:01 -0600 (CST)
+	by karen.lavabit.com (Postfix) with ESMTP id 01DB911BA19;
+	Thu,  7 Jan 2010 05:05:13 -0600 (CST)
 Received: from 9668.lavabit.com (212.62.97.23)
-	by lavabit.com with ESMTP id GN67F2CBF2H4; Thu, 07 Jan 2010 05:05:01 -0600
+	by lavabit.com with ESMTP id UO9EJV5NTE5Z; Thu, 07 Jan 2010 05:05:12 -0600
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=WIrdaCuWSp/yi8H5OPFmLoAyTUtooVq15/Q473wtkE+U2H5Pe3Y+2BwfAu3Ty2BaXPhcUUyzuCzKeqITK4ZdALn1XUeHYE8A4CjynNuDPB/I3teZo7CuOWHPLret5LmgwLnZUiiu4yelPU0G6A48hfShCVYWCvGfNrv0ZmdR5B8=;
+  b=UkR/qa4mRFFhwhaN/hNmaKoABzk7APc4yF9uvx1rpeZtbuPjzP1S5m4q81sz/PDIv5RNFI4uDVvSJ7UViVJ2aDPHHSejugz/mkZYVxcdUgIgI3B/qhTRfr3YqPmM4hAO05n6eZxP2cdln/iT5jSrfAOJmLm1BsFYkp1SUk8BvYI=;
   h=From:To:Cc:Subject:References:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Message-Id;
-In-Reply-To: <alpine.DEB.1.00.1001060009530.4985@pacific.mpi-cbg.de>
+In-Reply-To: <7vocl7yxef.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136338>
 
-Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+When rewriting commits on a topic branch, sometimes it is easier to
+compare the version of commits before and after the rewrite if they are
+based on the same commit that forked from the upstream. An earlier comm=
+it
+by Junio (fixed up by the previous commit) gives "--onto A...B" syntax =
+to
+rebase command, and rebases on top of the merge base between A and B;
+teach the same to the interactive version, too.
 
-> On Wed, 6 Jan 2010, Nanako Shiraishi wrote:
->
->> I found this other discussion in the design area enlightening.
->> 
->> http://thread.gmane.org/gmane.comp.version-control.git/47466/focus=47621
->
-> Could you be so kind and summarize the result of the thread in something 
-> like 2000 characters?
+Signed-off-by: =E3=81=97=E3=82=89=E3=81=84=E3=81=97 =E3=81=AA=E3=81=AA=E3=
+=81=93 <nanako3@lavabit.com>
+---
+ git-rebase--interactive.sh       |   21 ++++++++++++++++++++-
+ t/t3415-rebase-onto-threedots.sh |   30 ++++++++++++++++++++++++++++++
+ 2 files changed, 50 insertions(+), 1 deletions(-)
 
-Sorry, but I only said "enlightening". There wasn't a conclusion that lets you stop thinking and just go ahead implementing the design specified in the thread, if that is what you are looking for.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 23ded48..f7ae02c 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -482,6 +482,25 @@ get_saved_options () {
+ 	test -f "$DOTEST"/rebase-root && REBASE_ROOT=3Dt
+ }
+=20
++LF=3D'
++'
++parse_onto () {
++	case "$1" in
++	*...*)
++		if	left=3D${1%...*} right=3D${1#*...} &&
++			onto=3D$(git merge-base --all ${left:-HEAD} ${right:-HEAD})
++		then
++			case "$onto" in
++			?*"$LF"?* | '')
++				exit 1 ;;
++			esac
++			echo "$onto"
++			exit 0
++		fi
++	esac
++	git rev-parse --verify "$1^0"
++}
++
+ while test $# !=3D 0
+ do
+ 	case "$1" in
+@@ -589,7 +608,7 @@ first and then run 'git rebase --continue' again."
+ 		;;
+ 	--onto)
+ 		shift
+-		ONTO=3D$(git rev-parse --verify "$1") ||
++		ONTO=3D$(parse_onto "$1") ||
+ 			die "Does not point to a valid commit: $1"
+ 		;;
+ 	--)
+diff --git a/t/t3415-rebase-onto-threedots.sh b/t/t3415-rebase-onto-thr=
+eedots.sh
+index da378c4..5e7eb88 100755
+--- a/t/t3415-rebase-onto-threedots.sh
++++ b/t/t3415-rebase-onto-threedots.sh
+@@ -72,4 +72,34 @@ test_expect_success 'rebase --onto master...side' '
+ 	test_must_fail git rebase --onto master...side J
+ '
+=20
++test_expect_success 'rebase -i --onto master...topic' '
++	git reset --hard &&
++	git checkout topic &&
++	git reset --hard G &&
++	set_fake_editor &&
++	EXPECT_COUNT=3D1 git rebase -i --onto master...topic F &&
++	git rev-parse HEAD^1 >actual &&
++	git rev-parse C^0 >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rebase -i --onto master...' '
++	git reset --hard &&
++	git checkout topic &&
++	git reset --hard G &&
++	set_fake_editor &&
++	EXPECT_COUNT=3D1 git rebase -i --onto master... F &&
++	git rev-parse HEAD^1 >actual &&
++	git rev-parse C^0 >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rebase -i --onto master...side' '
++	git reset --hard &&
++	git checkout side &&
++	git reset --hard K &&
++
++	test_must_fail git rebase -i --onto master...side J
++'
++
+ test_done
+--=20
+1.6.6.53.g75f61
 
-Instead, let me tell you an example of what I found enlightening. It isn't a summary of the result. I don't think there was a *result*; otherwise somebody already would have implemented it.
 
-I often wonder why 'git-submodule init' copies data to .git/config file. If .gitmodules file gives the default and I can use .git/config file to override it, it seems stupid to copy entries between these files. I can just keep using data from .gitmodules file until I need to override something.
 
-Reading the thread made me realize how wrong I was. It became very clear why .gitmodules file shouldn't even be the default that is read when no entries is in .git/config file and why .git/config file should be the only thing that is used at runtime.
 
-Unfortunately I can't summarize the reason in '2000 characters', so you need read the thread yourself if you are interested. The key concept that I was missing was that remote repositories can move or change over time, and you may want to check out and interact with a very old version of your supermodule. The .gitmodules file checked out in such a case still records old information. Treating .gitmodules file as a hint and always looking into .git/config file is a part of the fundamental solution to that problem, but I didn't even realize that such an issue existed when I read the current discussion until I found the old thread.
-
-I think the 'git-submodule' script is mainly based on the 'three-level thing Steven Grimm suggested', but it doesn't seem to implement all the ideas in the thread yet. It gives no interactive prompt to suggest URL from 'git-submodule init' command. Neither it records which URLs have been seen with subproject.*.seen variable. But the issues that high level design must take into account looks very well thought out already.
-
--- 
+--=20
 Nanako Shiraishi
 http://ivory.ap.teacup.com/nanako3/
