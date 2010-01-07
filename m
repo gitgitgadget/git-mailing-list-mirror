@@ -1,97 +1,111 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv3 0/4 (resent)] Miscelanous gitweb improvements from J.H.
-Date: Thu, 7 Jan 2010 00:22:29 +0100
-Message-ID: <201001070022.31531.jnareb@gmail.com>
-References: <1262534850-24572-1-git-send-email-jnareb@gmail.com> <4B450EA2.5020104@kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "J.H." <warthog9@kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 07 00:20:34 2010
+From: Andrew Myrick <amyrick@apple.com>
+Subject: [PATCH 1/2] git-svn: ignore changeless commits when checking for a
+ cherry-pick
+Date: Wed, 06 Jan 2010 16:25:21 -0800
+Message-ID: <1262823922-3415-1-git-send-email-amyrick@apple.com>
+References: <E10FB265-0C47-44C7-9347-687A9F447603@apple.com>
+Content-Transfer-Encoding: 7BIT
+Cc: sam@vilain.net, normalperson@yhbt.net,
+	Andrew Myrick <amyrick@apple.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 07 01:25:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSfB3-0003lx-9D
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 00:20:33 +0100
+	id 1NSgC6-0002lc-BE
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 01:25:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932637Ab0AFXUZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jan 2010 18:20:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932593Ab0AFXUZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 18:20:25 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:33950 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932489Ab0AFXUX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jan 2010 18:20:23 -0500
-Received: by bwz27 with SMTP id 27so11081235bwz.21
-        for <git@vger.kernel.org>; Wed, 06 Jan 2010 15:20:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=H/xIC8mIdOp+HlIdlLaCIrEwNHhiYIMlgYawP5ehpFQ=;
-        b=Tt7dUntCoLnP61P1dXOG4IxDf1M4QIs1K6HJrJ+XTiDMF+gN+p9/KpN8xYz8Cr20LV
-         CIiWyRjzYe3dWVsII1EZNss13Ao9RvOg/Xy/XQYbvIeeKpTi4kjIfanuRt8ul/68PY64
-         mTgS4D+mvbCaH27lND5x2qwe31F79mmQwsIhw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=pYFPd0EV5AVImgh7sGK2PCj2DUwUqHVZ3P7WIUAr6CtVug3xvb4Ve9NXHhmdBfMIZG
-         50dxFWCTGUf+4wks2Rp1CAiE7itXT1JUXrMNctYzKF5XBCOnnbivRPAmPW2kVFnc+LAg
-         yxSO2y7D/3MPABdFN9+sXg1VPzaJkjxEa8RKU=
-Received: by 10.204.33.130 with SMTP id h2mr668012bkd.103.1262820021776;
-        Wed, 06 Jan 2010 15:20:21 -0800 (PST)
-Received: from ?192.168.1.13? (abvd62.neoplus.adsl.tpnet.pl [83.8.201.62])
-        by mx.google.com with ESMTPS id 15sm6883959bwz.0.2010.01.06.15.20.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 06 Jan 2010 15:20:20 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4B450EA2.5020104@kernel.org>
-Content-Disposition: inline
+	id S932581Ab0AGAZh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jan 2010 19:25:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932554Ab0AGAZh
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 19:25:37 -0500
+Received: from mail-out4.apple.com ([17.254.13.23]:51742 "EHLO
+	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932543Ab0AGAZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jan 2010 19:25:36 -0500
+Received: from relay15.apple.com (relay15.apple.com [17.128.113.54])
+	by mail-out4.apple.com (Postfix) with ESMTP id A6CA88551C8E
+	for <git@vger.kernel.org>; Wed,  6 Jan 2010 16:25:36 -0800 (PST)
+X-AuditID: 11807136-b7bafae000000e8d-b9-4b452a005573
+Received: from et.apple.com (et.apple.com [17.151.62.12])
+	by relay15.apple.com (Apple SCV relay) with SMTP id 06.D8.03725.00A254B4; Wed,  6 Jan 2010 16:25:36 -0800 (PST)
+Received: from localhost.localdomain (agility.apple.com [17.201.24.116])
+ by et.apple.com
+ (Sun Java(tm) System Messaging Server 6.3-7.04 (built Sep 26 2008; 32bit))
+ with ESMTPSA id <0KVU00J2PP6LJ370@et.apple.com> for git@vger.kernel.org; Wed,
+ 06 Jan 2010 16:25:36 -0800 (PST)
+X-Mailer: git-send-email 1.6.6.2.g18c9a
+In-reply-to: <E10FB265-0C47-44C7-9347-687A9F447603@apple.com>
+X-Brightmail-Tracker: AAAAAQAAAZE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136310>
 
-On Wed, 6 Jan 2010, J.H. wrote:
+Update git-svn to ignore commits that do not change the tree when it is
+deciding if an svn merge ticket represents a real branch merge or just a
+cherry-pick.
 
-> Just a heads up I've been on vacation for two weeks and hadn't gotten
-> around to dealing with these e-mails. =C2=A0I'm going to get them imp=
-orted
-> into my tree here and take a look over them.
+Consider the following integration model in the svn repository:
 
-They are also available from 'gitweb/cache-kernel' branch of my=20
-git/jnareb-git.git repository at repo.or.cz... and are available from
-'pu' branch in main git repository, as fbd43a8^2 (Merge branch=20
-'jh/gitweb-cached' into pu, 2010-01-04).
+   F---G  branch1
+  /     \
+ D  tag1 \   E  tag2
+/         \ /
+A---B      C  trunk
 
-It might be easier to import (fetch) them from that repository, and jus=
-t=20
-drop top two commits / merge jnareb-git/gitweb/cache-kernel~2
+branch1 is merged to trunk in commit C.
 
+With this patch, git-svn will correctly identify branch1 as a proper merge
+parent, instead of incorrectly ignoring it as a cherry-pick.
 
-  git://repo.or.cz/git/jnareb-git.git gitweb/cache-kernel
+Signed-off-by: Andrew Myrick <amyrick@apple.com>
+---
+ git-svn.perl |   24 ++++++++++++++++++++++++
+ 1 files changed, 24 insertions(+), 0 deletions(-)
 
-John 'Warthog9' Hawley (4):
-      gitweb: Load checking
-      gitweb: Add option to force version match
-      gitweb: Optionally add "git" links in project list page
-      gitweb: Makefile improvements
-
-Jakub Narebski (2):
-      gitweb: Print to explicit filehandle (preparing for caching)
-      gitweb: href(..., -path_info =3D> 0|1)
-
-The two top commits on that branch are work in progress in preparation
-for response caching for gitweb from J.H. (the one used on=20
-git.kernel.org), and are not ready yet, I think; at least there would=20
-be one more commit in "preparing for gitweb caching" (sub)series.
-
---=20
-Jakub Narebski
-Poland
+diff --git a/git-svn.perl b/git-svn.perl
+index 650c9e5..947184a 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -3052,12 +3052,36 @@ sub check_cherry_pick {
+ 	for my $range ( @ranges ) {
+ 		delete @commits{_rev_list($range)};
+ 	}
++	for my $commit (keys %commits) {
++		if (has_no_changes($commit)) {
++			delete $commits{$commit};
++		}
++	}
+ 	return (keys %commits);
+ }
+ 
++sub has_no_changes {
++	my $commit = shift;
++
++	my @revs = split / /, command_oneline(
++		qw(rev-list --parents -1 -m), $commit);
++
++	# Commits with no parents, e.g. the start of a partial branch,
++	# have changes by definition.
++	return 1 if (@revs < 2);
++
++	# Commits with multiple parents, e.g a merge, have no changes
++	# by definition.
++	return 0 if (@revs > 2);
++
++	return (command_oneline("rev-parse", "$commit^{tree}") eq
++		command_oneline("rev-parse", "$commit~1^{tree}"));
++}
++
+ BEGIN {
+ 	memoize 'lookup_svn_merge';
+ 	memoize 'check_cherry_pick';
++	memoize 'has_no_changes';
+ }
+ 
+ sub parents_exclude {
+-- 
+1.6.6.2.g18c9a
