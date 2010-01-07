@@ -1,86 +1,78 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH v2 0/5] Lazily generate header dependencies
-Date: Thu, 7 Jan 2010 14:22:08 +0100
-Message-ID: <40aa078e1001070522k2be6c490se5d45faffca764f1@mail.gmail.com>
-References: <4B0F8825.3040107@viscovery.net>
-	 <alpine.DEB.1.00.0911271033460.4521@intel-tinevez-2-302>
-	 <20091127174558.GA3461@progeny.tock>
-	 <20100101090550.6117@nanako3.lavabit.com>
-	 <20100107071305.GA11777@progeny.tock>
-Reply-To: kusmabite@gmail.com
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 1/2] t7002: set test prerequisite "external-grep" if 
+	supported
+Date: Thu, 7 Jan 2010 20:27:39 +0700
+Message-ID: <fcaeb9bf1001070527ra1570a0m12182db9bb029055@mail.gmail.com>
+References: <7v7hs09tpi.fsf@alter.siamese.dyndns.org>
+	 <1262608455-4045-1-git-send-email-pclouds@gmail.com>
+	 <7v4omyhc7h.fsf@alter.siamese.dyndns.org>
+	 <7vy6ka8rmr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 07 14:22:18 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 07 14:29:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSsJd-0007F3-Ef
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 14:22:17 +0100
+	id 1NSsOx-0002Os-Pd
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 14:27:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751690Ab0AGNWM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2010 08:22:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460Ab0AGNWL
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 08:22:11 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:20573 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750939Ab0AGNWK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2010 08:22:10 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so7486128fgg.1
-        for <git@vger.kernel.org>; Thu, 07 Jan 2010 05:22:08 -0800 (PST)
+	id S1752206Ab0AGN1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2010 08:27:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752171Ab0AGN1k
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 08:27:40 -0500
+Received: from mail-pz0-f171.google.com ([209.85.222.171]:64795 "EHLO
+	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752141Ab0AGN1k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2010 08:27:40 -0500
+Received: by pzk1 with SMTP id 1so2925647pzk.33
+        for <git@vger.kernel.org>; Thu, 07 Jan 2010 05:27:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VskstX2zoAOD4t7xbKrTdVY2joCk4LG4HYLTBC5IMX4=;
-        b=GHSukkGXHSaz/jKVhtSVL8HHDgxAB/hRRZ3Lf46XLaM+gwugszRJO3S6yuQndpYeyU
-         SVmvrDotSR0KRNf90K0GL6W3kApK8tnI49dntQYmQrDbb3y0flfkfMxQ0yb4JtKpIt4z
-         5OdSEQM80Jc8Z2kzuNpmpu7l15Rxbcy958cRU=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=fv+5YpsEs8kIvCmnyFtYga83qIxDE6jbDdUOhZDbv88=;
+        b=VrjP+OJAkna5EtSPcV2yoxcR0/SwMhl4pn03W7fGRTSu69kK3EypVWChhEn6gE3nFH
+         Qku7mbf3dOV9Wm3+/JgGQNsM+szXctsKnemw03XVZriQD30lMOC8C3Qku7oTw5uW1YpO
+         2webhFXpWGJfrr+9g1/ncnSePakhza9zNzyYw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=a0ji8MFYfiEtvWPtjegnQTi5o1ZFj3p6Kns3MkmW6DUgwvjbaiO2sLB0lE/VNTk+Rk
-         BgKGKhID1GCVKrmSBAngSvxByhhJIKPUglD8Weq6nbxwzrJo3k+R2Y+sc3d8TrFrY8kl
-         helvYeL7ckXeDuy+AIkJj3SzkUcdGHdBgMVMg=
-Received: by 10.216.90.209 with SMTP id e59mr3817521wef.193.1262870528699; 
-	Thu, 07 Jan 2010 05:22:08 -0800 (PST)
-In-Reply-To: <20100107071305.GA11777@progeny.tock>
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=as/UzRvwpc3a/u1Bzn0eAK7rMeeiEd1kc4gVFUEs/niA+o6/mRIF2VTQK36mEJi2lw
+         x9MvUOvUeDQ/quXMGoD1Tm8ufrIbrJ8B60dn42WPLkCRDZ4xkAjhHpy4QEHuirdqdDsN
+         VEair453XO4QXwOpWijiCP5Z27AbbwY7FMIso=
+Received: by 10.114.248.33 with SMTP id v33mr808837wah.77.1262870859284; Thu, 
+	07 Jan 2010 05:27:39 -0800 (PST)
+In-Reply-To: <7vy6ka8rmr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136343>
 
-On Thu, Jan 7, 2010 at 8:13 AM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
-> Nanako Shiraishi wrote:
->> Junio, could you tell us what happened to this thread?
->>
->> Makefile improvements. =A0No discussion.
+On 1/7/10, Junio C Hamano <gitster@pobox.com> wrote:
+>  So by writing the test to check the desired outcome, instead of writing it
+>  for the particular implementation of using external grep optimization, you
+>  will catch both kinds of breakages.
 >
-> My bad. =A0The previous version was very rough because I was not sure
-> yet how this could help in making the header dependency rules more
-> maintainable. =A0If all compilers worth using support something like
-> gcc's -MD option (does MSVC?), we could switch over completely;
-> otherwise, we need some way to use the generated dependencies to
-> check the static ones, or the static ones will go stale.
+>  Perhaps something like this (untested, of course)?
+>
+>  test_expect_success 'strings in work tree files are not found for skip-wt paths' '
+>         no="no such string in the index" &&
+>         test_must_fail git grep -e "$no" --cached file &&
+>         git update-index --skip-worktree file &&
+>         echo "$no" >file &&
+>         test_must_fail git grep -e "$no" file &&
+>         git update-index --no-skip-worktree file &&
+>         git grep -e "$no" file
+>  '
+>
 
-Nope, there's no support for -MD in MSVC. It does have an "/MD"
-option, but it means something completely different (link with
-multithreaded DLL CRT). There IS the "/showIncludes" option [1], which
-should make it possible to do some build-magic to generate the correct
-dependency-files, though.
+Very well reasoned. I'd say go for it!
 
-[1] http://msdn.microsoft.com/en-us/library/hdkef6tk(VS.71).aspx
-
---=20
-Erik "kusma" Faye-Lund
+Tested-by: me
+-- 
+Duy
