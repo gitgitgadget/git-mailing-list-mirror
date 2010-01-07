@@ -1,73 +1,113 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: git-send-email, prompt for Message-ID: bug or feature?
-Date: Thu, 07 Jan 2010 17:59:32 +0100
-Message-ID: <vpqr5q1lukr.fsf@bauges.imag.fr>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [NON-PATCH 3/2] Documentation/git-merge: format full commands in typewriter font
+Date: Thu, 7 Jan 2010 18:03:28 +0100
+Message-ID: <ebbb4e2b0e98490a64b3cd52c33d3a995fa7e980.1262883414.git.trast@student.ethz.ch>
+References: <2e53c91e536e1ff585bc7464c1b8863e6cc45c45.1262883414.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 07 18:02:40 2010
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 07 18:03:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSvkg-0008RV-0A
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 18:02:26 +0100
+	id 1NSvm1-0000lo-5n
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 18:03:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753309Ab0AGRCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2010 12:02:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753247Ab0AGRCU
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 12:02:20 -0500
-Received: from imag.imag.fr ([129.88.30.1]:42327 "EHLO imag.imag.fr"
+	id S1750838Ab0AGRDr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2010 12:03:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751185Ab0AGRDq
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 12:03:46 -0500
+Received: from gwse.ethz.ch ([129.132.178.237]:5568 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752888Ab0AGRCT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2010 12:02:19 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o07GxWeT025414
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 7 Jan 2010 17:59:33 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NSvhs-0007DK-Hx; Thu, 07 Jan 2010 17:59:32 +0100
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 07 Jan 2010 17:59:35 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1750781Ab0AGRDp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2010 12:03:45 -0500
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.213.0; Thu, 7 Jan
+ 2010 18:03:42 +0100
+Received: from localhost.localdomain (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.213.0; Thu, 7 Jan
+ 2010 18:03:28 +0100
+X-Mailer: git-send-email 1.6.6.202.gdf32a
+In-Reply-To: <2e53c91e536e1ff585bc7464c1b8863e6cc45c45.1262883414.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136355>
 
-Hi,
+Use `code snippet` style instead of 'emphasis' for the full commands
+specified in the "how to resolve conflicts" section.
 
-When I send a mail with
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
-  git send-email -s --to git@vger.kernel.org --annotate -1
+Not intended for application, but for discussion.
 
-I normally get prompted for my from address, and then "Message-ID to
-be used as In-Reply-To for the first email?".
+I originally wanted to tack this on the series as an "obvious
+cleanup", but then I noticed two things:
 
-If I set sendemail.from to avoid the first question, then the same
-question doesn't ask for a Message-ID anymore.
+* While the general trend as per
 
-This behavior seems to have been introduced here:
+    git grep '`git '
+    git grep \''git '
 
-  commit 1f038a0c31e06e7a248be0990549ac717399c540
-  Author:	Ryan Anderson <ryan@michonline.com>  Mon Sep  5 07:13:07 2005
-  Committer:	Junio C Hamano <junkio@cox.net>  Mon Sep  5 08:33:17 2005
-  
-  [PATCH] Make git-send-email-script ignore some unnecessary options when operating in batch mode.
-  
-  Add a "--compose" option that uses $EDITOR to edit an "introductory" email to the patch series.
+  seems to go towards the `code` style where full commands are
+  concerned, and the 'emphasis' where only a git-command is named,
+  this is not consistent yet.  Especially the git-svn manpage seems to
+  have a few hybrids.
 
-I understand the need to be possibly non-interactive, but how does one
-get git send-email ask just one question for the Message-ID, and skip
-the others?
+* More importantly, while `code` style seems to be an improvement in
+  HTML output (because it gives typewriter font), my local 'man'
+  renders 'emphasis' as underlines -- which actually makes the code
+  snippets much more visible than `literal` quotes which are not
+  rendered specially at all.
 
-Thanks,
-  
+So which way should it be changed?
+
+
+ Documentation/git-merge.txt |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index b224daf..e04c800 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -193,7 +193,7 @@ After seeing a conflict, you can do two things:
+ 
+  * Decide not to merge.  The only clean-ups you need are to reset
+    the index file to the `HEAD` commit to reverse 2. and to clean
+-   up working tree changes made by 2. and 3.; 'git-reset --hard' can
++   up working tree changes made by 2. and 3.; `git-reset --hard` can
+    be used for this.
+ 
+  * Resolve the conflicts.  Git will mark the conflicts in
+@@ -202,19 +202,19 @@ After seeing a conflict, you can do two things:
+ 
+ You can work through the conflict with a number of tools:
+ 
+- * Use a mergetool.  'git mergetool' to launch a graphical
++ * Use a mergetool.  `git mergetool` to launch a graphical
+    mergetool which will work you through the merge.
+ 
+- * Look at the diffs.  'git diff' will show a three-way diff,
++ * Look at the diffs.  `git diff` will show a three-way diff,
+    highlighting changes from both the HEAD and 'theirs' versions.
+ 
+- * Look at the diffs on their own. 'git log --merge -p <path>'
++ * Look at the diffs on their own. `git log --merge -p <path>`
+    will show diffs first for the HEAD version and then the
+    'theirs' version.
+ 
+- * Look at the originals.  'git show :1:filename' shows the
+-   common ancestor, 'git show :2:filename' shows the HEAD
+-   version and 'git show :3:filename' shows 'their' version.
++ * Look at the originals.  `git show :1:filename` shows the
++   common ancestor, `git show :2:filename` shows the HEAD
++   version and `git show :3:filename` shows 'their' version.
+ 
+ 
+ EXAMPLES
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.6.6.202.gdf32a
