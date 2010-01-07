@@ -1,120 +1,114 @@
-From: Mike Mueller <mmueller@vigilantsw.com>
-Subject: [PATCH] Fix segfault in fast-export
-Date: Wed, 6 Jan 2010 22:58:39 -0500
-Message-ID: <20100107035839.GM8510@samus.subfocal.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] t7002: set test prerequisite "external-grep" if
+ supported
+Date: Wed, 06 Jan 2010 20:29:16 -0800
+Message-ID: <7vy6ka8rmr.fsf@alter.siamese.dyndns.org>
+References: <7v7hs09tpi.fsf@alter.siamese.dyndns.org>
+ <1262608455-4045-1-git-send-email-pclouds@gmail.com>
+ <7v4omyhc7h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="zYM0uCDKw75PZbzx"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 07 05:07:14 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 07 05:29:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSjeR-0003EO-Sb
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 05:07:12 +0100
+	id 1NSk02-0008K6-Ra
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 05:29:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756612Ab0AGEHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jan 2010 23:07:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756603Ab0AGEHB
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 23:07:01 -0500
-Received: from eastrmmtai108.cox.net ([68.230.240.27]:61928 "EHLO
-	eastrmmtai108.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756451Ab0AGEHB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jan 2010 23:07:01 -0500
-X-Greylist: delayed 500 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Jan 2010 23:07:01 EST
-Received: from eastrmimpo01.cox.net ([68.1.16.119])
-          by eastrmmtao102.cox.net
-          (InterMail vM.8.00.01.00 201-2244-105-20090324) with ESMTP
-          id <20100107035840.MCZA13474.eastrmmtao102.cox.net@eastrmimpo01.cox.net>
-          for <git@vger.kernel.org>; Wed, 6 Jan 2010 22:58:40 -0500
-Received: from samus ([24.250.30.14])
-	by eastrmimpo01.cox.net with bizsmtp
-	id STyf1d0050JGoeo02TyfDj; Wed, 06 Jan 2010 22:58:40 -0500
-X-VR-Score: -30.00
-X-Authority-Analysis: v=1.1 cv=Q0/QIhtFGXcPwKBXdiAKH6RPO1IrUZ7nWfC2VwHFyto=
- c=1 sm=1 a=PToGNBblRHN+nk2D3BzZVA==:17 a=o2MKldYCAAAA:8
- a=MVgZfn3ZttOjugmBJaoA:9 a=IzfDIUsEriM-X2ztfisZOUUgoRMA:4 a=3-SzZg5x5EcA:10
- a=o2kGL_zzVWo3YwyQuhIA:9 a=7eX9pHYSqGrGDdi8iLr8MQCrcrMA:4
- a=PToGNBblRHN+nk2D3BzZVA==:117
-X-CM-Score: 0.00
-Received: by samus (sSMTP sendmail emulation); Wed, 06 Jan 2010 22:58:39 -0500
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1756317Ab0AGE30 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jan 2010 23:29:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756279Ab0AGE30
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 23:29:26 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42247 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752292Ab0AGE3Z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Jan 2010 23:29:25 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F07B68E855;
+	Wed,  6 Jan 2010 23:29:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=oDFY2RCHiF2D
+	jnNZGaQHiTThXMw=; b=Uh33pE6z2O7rXfEl6Qv7wupAC6CC3tXMx3Xm7bV2Fo36
+	f7KRtFbDnVNWVHxLsIyYxst8Cf2qFr0oolb6gE0HxstBZ9cGEJ6NeClcCXfp4pnY
+	dXeyCnBaOgGrB12BIlMXU83+OlLp8FLkAmmpz/a6Uoo73uxGemVYg0CcXoBfaRk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=aKgGEL
+	3xCclhPZX0Zy1/cKweMThVVLjzDOvNTi0jssWGo5V7zvMKW26H1pNe6acsz1UPND
+	OMuj5tvtIf5Gutz/RxD4PMUC+v/347u6CPS8Q0wCmsltpddcIq9SLjs7fUlmUs6z
+	8KyplU641MnoTgKP5apK1ytLXch72a2sHgi/Y=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C58188E852;
+	Wed,  6 Jan 2010 23:29:20 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 044438E849; Wed,  6 Jan
+ 2010 23:29:17 -0500 (EST)
+In-Reply-To: <7v4omyhc7h.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed\, 06 Jan 2010 18\:37\:38 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 39BCBDA8-FB45-11DE-84B5-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136323>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---zYM0uCDKw75PZbzx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> Add another test to set prerequisite "external-grep" if the current
+>> build supports external grep. This can be used to skip external grep
+>> only tests on builds that do not support this optimization.
+>
+> Thanks.  We seem to spell our prerequistes in a single-word, all-caps=
+, so
+> I'll change this new one to EXTGREP in both [1/2] and [2/2].
 
-Hi all,
+Sorry, but I had this "Sheesh, why didn't I think of that earlier befor=
+e
+wasting Nguy=E1=BB=85n's time" moment.
 
-I'm working on a C++ static analyzer (Vigilant Sentry), and git
-is one of my test subjects.  In git-1.6.6, I found a crash in the
-fast-export command:
+Why don't we just test what we _want to_ test?  After all what a67e281
+(grep: do not do external grep on skip-worktree entries, 2009-12-30)
+wanted to make sure was this:
 
-The problem is in builtin-fast-export.c, function export_marks:
+    "git grep" (without --cached) should grep from the index for paths
+    that are marked as skip-worktree.
 
-    f = fopen(file, "w");
-    if (!f)
-        error("Unable to open marks file %s for writing.", file);
-   
-    for (i = 0; i < idnums.size; i++) {
-        if (deco->base && deco->base->type == 1) {
-            mark = ptr_to_mark(deco->decoration);
-            if (fprintf(f, ":%"PRIu32" %s\n", mark,
-                sha1_to_hex(deco->base->sha1)) < 0) {
-                e = 1;
-                break;
-            }
-        }
-        deco++;
-    }
-   
-    e |= ferror(f);
-    e |= fclose(f);
+So how about writing some string that does not appear in the version in
+the index in the work tree file, and run "git grep" to make sure it
+doesn't find it?
 
-If fopen() fails, the error message is printed, but the function
-doesn't exit.  The subsequent calls to fprintf and/or ferror will
-fail because f is NULL.  A simple way to reproduce is to export
-to a path you don't have write access to:
-   
-    $ git fast-export --export-marks=/foo
-    error: Unable to open marks file /foo for writing.
-    Segmentation fault (core dumped)
+Yes, some implementations/builds of "git grep" may not even try to chea=
+t
+and run external grep and for them the test _should_ succeed (but your
+logic to check with ce_skip_worktree() in grep_cache() may be broken by
+later patch while you are looking the other way), and some will try to
+cheat and the fix was about not letting them.
 
-I've attached a trivial patch that calls die_errno instead of
-error, so the program exits if f is NULL.
+So by writing the test to check the desired outcome, instead of writing=
+ it
+for the particular implementation of using external grep optimization, =
+you
+will catch both kinds of breakages.
 
-Regards,
-Mike
+Perhaps something like this (untested, of course)?
 
--- 
-Mike Mueller
-mmueller@vigilantsw.com
-
-http://www.vigilantsw.com/
-
---zYM0uCDKw75PZbzx
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="git-fast-export.patch"
-
-diff --git a/builtin-fast-export.c b/builtin-fast-export.c
-index b0a4029..963e89b 100644
---- a/builtin-fast-export.c
-+++ b/builtin-fast-export.c
-@@ -503,7 +503,7 @@ static void export_marks(char *file)
- 
- 	f = fopen(file, "w");
- 	if (!f)
--		error("Unable to open marks file %s for writing.", file);
-+		die_errno("Unable to open marks file %s for writing", file);
- 
- 	for (i = 0; i < idnums.size; i++) {
- 		if (deco->base && deco->base->type == 1) {
-
---zYM0uCDKw75PZbzx--
+test_expect_success 'strings in work tree files are not found for skip-=
+wt paths' '
+	no=3D"no such string in the index" &&
+	test_must_fail git grep -e "$no" --cached file &&
+	git update-index --skip-worktree file &&
+	echo "$no" >file &&
+	test_must_fail git grep -e "$no" file &&
+	git update-index --no-skip-worktree file &&
+	git grep -e "$no" file
+'
