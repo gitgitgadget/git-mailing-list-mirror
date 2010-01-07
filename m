@@ -1,107 +1,181 @@
-From: martinvz <martin.von.zweigbergk@gmail.com>
-Subject: Re: Difference between pull --rebase and fetch+rebase
-Date: Thu, 7 Jan 2010 10:44:24 -0800 (PST)
-Message-ID: <1262889864880-4268064.post@n2.nabble.com>
-References: <27059158.post@talk.nabble.com> <adf1fd3d1001070800k6fa501fej39b84f849b7e5b50@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] Add quiet option to git-ls-files
+Date: Fri, 8 Jan 2010 01:07:20 +0530
+Message-ID: <f3271551001071137u6158fa4fm1bf7a51a83354574@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/mixed; boundary=001636283aee3ddc27047c983477
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 07 19:44:32 2010
+X-From: git-owner@vger.kernel.org Thu Jan 07 20:37:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSxLT-0001LY-Rl
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 19:44:32 +0100
+	id 1NSyB2-0006BU-Ei
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 20:37:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753423Ab0AGSo0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2010 13:44:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752113Ab0AGSoZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 13:44:25 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:40176 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752023Ab0AGSoZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2010 13:44:25 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1NSxLM-0004C7-Sb
-	for git@vger.kernel.org; Thu, 07 Jan 2010 10:44:24 -0800
-In-Reply-To: <adf1fd3d1001070800k6fa501fej39b84f849b7e5b50@mail.gmail.com>
-X-Nabble-From: martinvz <martin.von.zweigbergk@gmail.com>
+	id S1753859Ab0AGThm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2010 14:37:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753854Ab0AGThl
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 14:37:41 -0500
+Received: from mail-yx0-f188.google.com ([209.85.210.188]:35654 "EHLO
+	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753834Ab0AGThl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2010 14:37:41 -0500
+Received: by yxe26 with SMTP id 26so17996950yxe.4
+        for <git@vger.kernel.org>; Thu, 07 Jan 2010 11:37:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=/Qat9T3/Z21Bfc4TgnGHbgRuHapB9Var9GsXnKmjL3U=;
+        b=hnI9vROPatO8Etav1O/6NgGYLzTkWgeAZrdH+Ulv+I469VHPKEHvBzOrUQy10wr1If
+         TTwnFQSQDkmSLz6XEa86EoMaSfkJ+3aKBC7RM+SCn9V1ihnn5KdH/Y5pEUPyrWj++Qmq
+         CdBDpHK8ZzKMYH2X5GlhENPXUJ+VBLTiLBdFc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=a5clHyVZzB12mUTh5Jeg7a9Qc8A1tv0uMoOBxS0A10aD3PX0vdS9jmqhlwHVogZmIw
+         GJlzAKAOHUuYRzb4lpnjdJQ0Hnw+bgseornKbenDCM+8WNfw6+AxG0FsjUDN9v2LDYrv
+         jrLAihbfrYhLGXH5TrUAVdHD49V48hdiyYhnw=
+Received: by 10.90.23.30 with SMTP id 30mr2265589agw.117.1262893060183; Thu, 
+	07 Jan 2010 11:37:40 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136381>
 
+--001636283aee3ddc27047c983477
+Content-Type: text/plain; charset=ISO-8859-1
 
-Thanks for your post, Santi. I can not share my repository since it is =
-a
-project at work. I was troubleshooting a bit myself and found the follo=
-wing
-section in git-pull.sh:
+Hi,
 
-	oldremoteref=3D"$(git rev-parse -q --verify "$remoteref")" &&
-	for reflog in $(git rev-list -g $remoteref 2>/dev/null)
-	do
-		if test "$reflog" =3D "$(git merge-base $reflog $curr_branch)"
-		then
-			oldremoteref=3D"$reflog"
-			break
-		fi
-	done
+I just wrote a couple of patches. I'm sorry for having to attach the
+files- I'm behind a HTTP proxy, and Gmail mangles patches.
 
-Why is it that reflog entries are allowed to override the remote refere=
-nce?
+Thanks and regards,
+Ramkumar
 
+--001636283aee3ddc27047c983477
+Content-Type: text/x-patch; charset=US-ASCII; 
+	name="0001-Add-quiet-option-to-git-ls-files.patch"
+Content-Disposition: attachment; 
+	filename="0001-Add-quiet-option-to-git-ls-files.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_g45xldrk0
 
-Thanks,
-Martin
+RnJvbSBmNWY3NjE5MGE4MzNiZjEwNTQ4M2E3ZGE5YjRiNjFhYjAzZTM3M2JhIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBSYW1rdW1hciBSYW1hY2hhbmRyYSA8YXJ0YWdub25AZ21haWwu
+Y29tPgpEYXRlOiBUaHUsIDcgSmFuIDIwMTAgMjM6NTg6MDggKzA1MzAKU3ViamVjdDogW1BBVENI
+IDEvMl0gQWRkIHF1aWV0IG9wdGlvbiB0byBnaXQtbHMtZmlsZXMKCi0tcXVpZXQgb3B0aW9uIHN1
+cHByZXNzZXMgZXJyb3Igb3V0cHV0IGluIC0tZXJyb3ItdW5tYXRjaCBtb2RlLiBNb2RpZnkKZG9j
+dW1lbnRhdGlvbiB0byByZWZsZWN0IGNoYW5nZXMuCgpTaWduZWQtb2ZmLWJ5OiBSYW1rdW1hciBS
+YW1hY2hhbmRyYSA8YXJ0YWdub25AZ21haWwuY29tPgotLS0KIERvY3VtZW50YXRpb24vZ2l0LWxz
+LWZpbGVzLnR4dCB8ICAgIDYgKysrKysrCiBidWlsdGluLWxzLWZpbGVzLmMgICAgICAgICAgICAg
+fCAgIDEyICsrKysrKystLS0tLQogMiBmaWxlcyBjaGFuZ2VkLCAxMyBpbnNlcnRpb25zKCspLCA1
+IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZ2l0LWxzLWZpbGVzLnR4
+dCBiL0RvY3VtZW50YXRpb24vZ2l0LWxzLWZpbGVzLnR4dAppbmRleCA2MjU3MjNlLi4wYTFmOTRl
+IDEwMDY0NAotLS0gYS9Eb2N1bWVudGF0aW9uL2dpdC1scy1maWxlcy50eHQKKysrIGIvRG9jdW1l
+bnRhdGlvbi9naXQtbHMtZmlsZXMudHh0CkBAIC04Miw2ICs4MiwxMiBAQCBPUFRJT05TCiAJU2tp
+cHMgZmlsZXMgbWF0Y2hpbmcgcGF0dGVybi4KIAlOb3RlIHRoYXQgcGF0dGVybiBpcyBhIHNoZWxs
+IHdpbGRjYXJkIHBhdHRlcm4uCiAKKy0tcTo6CistLXF1aWV0OjoKKwlPbmx5IG1lYW5pbmdmdWwg
+aW4gLS1lcnJvci11bm1hdGNoIG1vZGUuIERvIG5vdCBvdXRwdXQgYW4KKwllcnJvciBtZXNzYWdl
+IGlmIDxmaWxlPiBkb2VzIG5vdCBhcHBlYXIgaW4gdGhlIGluZGV4LiBJbnN0ZWFkCisJZXhpdCB3
+aXRoIG5vbi16ZXJvIHN0YXR1cyBzaWxlbnRseS4KKwogLVggPGZpbGU+OjoKIC0tZXhjbHVkZS1m
+cm9tPTxmaWxlPjo6CiAJZXhjbHVkZSBwYXR0ZXJucyBhcmUgcmVhZCBmcm9tIDxmaWxlPjsgMSBw
+ZXIgbGluZS4KZGlmZiAtLWdpdCBhL2J1aWx0aW4tbHMtZmlsZXMuYyBiL2J1aWx0aW4tbHMtZmls
+ZXMuYwppbmRleCBjOWEwM2U1Li40MDU2MGRhIDEwMDY0NAotLS0gYS9idWlsdGluLWxzLWZpbGVz
+LmMKKysrIGIvYnVpbHRpbi1scy1maWxlcy5jCkBAIC00MjEsMTIgKzQyMSwxMyBAQCBzdGF0aWMg
+aW50IG9wdGlvbl9wYXJzZV9leGNsdWRlX3N0YW5kYXJkKGNvbnN0IHN0cnVjdCBvcHRpb24gKm9w
+dCwKIAogaW50IGNtZF9sc19maWxlcyhpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0
+IGNoYXIgKnByZWZpeCkKIHsKLQlpbnQgcmVxdWlyZV93b3JrX3RyZWUgPSAwLCBzaG93X3RhZyA9
+IDA7CisJaW50IHJlcXVpcmVfd29ya190cmVlID0gMCwgc2hvd190YWcgPSAwLCBxdWlldCA9IDA7
+CiAJc3RydWN0IGRpcl9zdHJ1Y3QgZGlyOwogCXN0cnVjdCBvcHRpb24gYnVpbHRpbl9sc19maWxl
+c19vcHRpb25zW10gPSB7CiAJCXsgT1BUSU9OX0NBTExCQUNLLCAneicsIE5VTEwsIE5VTEwsIE5V
+TEwsCiAJCQkicGF0aHMgYXJlIHNlcGFyYXRlZCB3aXRoIE5VTCBjaGFyYWN0ZXIiLAogCQkJUEFS
+U0VfT1BUX05PQVJHLCBvcHRpb25fcGFyc2VfeiB9LAorCQlPUFRfX1FVSUVUKCZxdWlldCksCiAJ
+CU9QVF9CT09MRUFOKCd0JywgTlVMTCwgJnNob3dfdGFnLAogCQkJImlkZW50aWZ5IHRoZSBmaWxl
+IHN0YXR1cyB3aXRoIHRhZ3MiKSwKIAkJT1BUX0JPT0xFQU4oJ3YnLCBOVUxMLCAmc2hvd192YWxp
+ZF9iaXQsCkBAIC01NDcsMTAgKzU0OCwxMSBAQCBpbnQgY21kX2xzX2ZpbGVzKGludCBhcmdjLCBj
+b25zdCBjaGFyICoqYXJndiwgY29uc3QgY2hhciAqcHJlZml4KQogCiAJaWYgKHBzX21hdGNoZWQp
+IHsKIAkJaW50IGJhZDsKLQkJYmFkID0gcmVwb3J0X3BhdGhfZXJyb3IocHNfbWF0Y2hlZCwgcGF0
+aHNwZWMsIHByZWZpeF9vZmZzZXQpOwotCQlpZiAoYmFkKQotCQkJZnByaW50ZihzdGRlcnIsICJE
+aWQgeW91IGZvcmdldCB0byAnZ2l0IGFkZCc/XG4iKTsKLQorCQlpZiAoIXF1aWV0KSB7CisJCQli
+YWQgPSByZXBvcnRfcGF0aF9lcnJvcihwc19tYXRjaGVkLCBwYXRoc3BlYywgcHJlZml4X29mZnNl
+dCk7CisJCQlpZiAoYmFkKQorCQkJCWZwcmludGYoc3RkZXJyLCAiRGlkIHlvdSBmb3JnZXQgdG8g
+J2dpdCBhZGQnP1xuIik7CisJCX0KIAkJcmV0dXJuIGJhZCA/IDEgOiAwOwogCX0KIAotLSAKMS42
+LjUKCg==
+--001636283aee3ddc27047c983477
+Content-Type: text/x-patch; charset=US-ASCII; 
+	name="0002-Replace-redirect-to-dev-null-in-favor-of-quiet-optio.patch"
+Content-Disposition: attachment; 
+	filename="0002-Replace-redirect-to-dev-null-in-favor-of-quiet-optio.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_g45xlj6g1
 
-
-
-Santi B=C3=A9jar-2 wrote:
->=20
-> On Thu, Jan 7, 2010 at 1:23 PM, martinvz
-> <martin.von.zweigbergk@gmail.com> wrote:
->>
->> I have a branch configured to track a remote branch by rebasing. I
->> excepted
->> that "git pull" would therefore be equivalent to fetching from the r=
-emote
->> repository followed by rebasing the remote branch, but it isn't. Whe=
-n
->> doing
->> "git rebase <remote>/<branch>", it applies only the commits after th=
-e
->> merge
->> base. When doing "git pull", it tries to apply two more commits (the=
- two
->> commits preceding the merge base). Why is this?
->>
->> I get the same result even if I do "git pull --rebase <remote> <bran=
-ch>",
->> it
->> doesn't seem to have anything to do with incorrect configuration of =
-the
->> branch.
->=20
-> Yes, both should do the same (at least when upstream is not rebased).
-> Can you provide a test case or instructions to reproduce the behavior=
-?
->=20
-> Thanks,
-> Santi
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
->=20
-
---=20
-View this message in context: http://n2.nabble.com/Difference-between-p=
-ull-rebase-and-fetch-rebase-tp4266164p4268064.html
-Sent from the git mailing list archive at Nabble.com.
+RnJvbSBiNWM3YTBmYjhkMDkyYWFmY2VkY2JkNjUzZjAwZGVlNTY0YTBkOTUzIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBSYW1rdW1hciBSYW1hY2hhbmRyYSA8YXJ0YWdub25AZ21haWwu
+Y29tPgpEYXRlOiBGcmksIDggSmFuIDIwMTAgMDA6MDA6NTggKzA1MzAKU3ViamVjdDogW1BBVENI
+IDIvMl0gUmVwbGFjZSByZWRpcmVjdCB0byAvZGV2L251bGwgaW4gZmF2b3Igb2YgcXVpZXQgb3B0
+aW9uCgpTaWduZWQtb2ZmLWJ5OiBSYW1rdW1hciBSYW1hY2hhbmRyYSA8YXJ0YWdub25AZ21haWwu
+Y29tPgotLS0KIGdpdC1tZXJnZXRvb2wuc2ggfCAgICAyICstCiBnaXQtcHVsbC5zaCAgICAgIHwg
+ICAgMiArLQogZ2l0LXJlYmFzZS5zaCAgICB8ICAgIDIgKy0KIGdpdC1zdGFzaC5zaCAgICAgfCAg
+IDEyICsrKysrKy0tLS0tLQogZ2l0LXN1Ym1vZHVsZS5zaCB8ICAgIDIgKy0KIDUgZmlsZXMgY2hh
+bmdlZCwgMTAgaW5zZXJ0aW9ucygrKSwgMTAgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZ2l0
+LW1lcmdldG9vbC5zaCBiL2dpdC1tZXJnZXRvb2wuc2gKaW5kZXggYjUyYTc0MS4uMWM5MDJhYSAx
+MDA3NTUKLS0tIGEvZ2l0LW1lcmdldG9vbC5zaAorKysgYi9naXQtbWVyZ2V0b29sLnNoCkBAIC0x
+MDEsNyArMTAxLDcgQEAgcmVzb2x2ZV9kZWxldGVkX21lcmdlICgpIHsKIAkJcmV0dXJuIDAKIAkJ
+OzsKIAkgICAgW2REXSopCi0JCWdpdCBybSAtLSAiJE1FUkdFRCIgPiAvZGV2L251bGwKKwkJZ2l0
+IHJtIC0tcXVpZXQgLS0gIiRNRVJHRUQiCiAJCWNsZWFudXBfdGVtcF9maWxlcwogCQlyZXR1cm4g
+MAogCQk7OwpkaWZmIC0tZ2l0IGEvZ2l0LXB1bGwuc2ggYi9naXQtcHVsbC5zaAppbmRleCA5ZTY5
+YWRhLi4zMzZlOTFhIDEwMDc1NQotLS0gYS9naXQtcHVsbC5zaAorKysgYi9naXQtcHVsbC5zaApA
+QCAtMTcwLDcgKzE3MCw3IEBAIHRlc3QgdHJ1ZSA9ICIkcmViYXNlIiAmJiB7CiAJLiBnaXQtcGFy
+c2UtcmVtb3RlICYmCiAJcmVtb3RlcmVmPSIkKGdldF9yZW1vdGVfbWVyZ2VfYnJhbmNoICIkQCIg
+Mj4vZGV2L251bGwpIiAmJgogCW9sZHJlbW90ZXJlZj0iJChnaXQgcmV2LXBhcnNlIC1xIC0tdmVy
+aWZ5ICIkcmVtb3RlcmVmIikiICYmCi0JZm9yIHJlZmxvZyBpbiAkKGdpdCByZXYtbGlzdCAtZyAk
+cmVtb3RlcmVmIDI+L2Rldi9udWxsKQorCWZvciByZWZsb2cgaW4gJChnaXQgcmV2LWxpc3QgLS1x
+dWlldCAtLXdhbGstcmVmbG9ncyAkcmVtb3RlcmVmKQogCWRvCiAJCWlmIHRlc3QgIiRyZWZsb2ci
+ID0gIiQoZ2l0IG1lcmdlLWJhc2UgJHJlZmxvZyAkY3Vycl9icmFuY2gpIgogCQl0aGVuCmRpZmYg
+LS1naXQgYS9naXQtcmViYXNlLnNoIGIvZ2l0LXJlYmFzZS5zaAppbmRleCBiMTIxZjQ1Li5iZmUw
+NDc1IDEwMDc1NQotLS0gYS9naXQtcmViYXNlLnNoCisrKyBiL2dpdC1yZWJhc2Uuc2gKQEAgLTEw
+MCw3ICsxMDAsNyBAQCBjYWxsX21lcmdlICgpIHsKIAljbXQ9IiQoY2F0ICIkZG90ZXN0L2NtdC4k
+MSIpIgogCWVjaG8gIiRjbXQiID4gIiRkb3Rlc3QvY3VycmVudCIKIAloZD0kKGdpdCByZXYtcGFy
+c2UgLS12ZXJpZnkgSEVBRCkKLQljbXRfbmFtZT0kKGdpdCBzeW1ib2xpYy1yZWYgSEVBRCAyPiAv
+ZGV2L251bGwgfHwgZWNobyBIRUFEKQorCWNtdF9uYW1lPSQoZ2l0IHN5bWJvbGljLXJlZiAtLXF1
+aWV0IEhFQUQgfHwgZWNobyBIRUFEKQogCW1zZ251bT0kKGNhdCAiJGRvdGVzdC9tc2dudW0iKQog
+CWVuZD0kKGNhdCAiJGRvdGVzdC9lbmQiKQogCWV2YWwgR0lUSEVBRF8kY210PSciJHtjbXRfbmFt
+ZSMjcmVmcy9oZWFkcy99fiQoKCRlbmQgLSAkbXNnbnVtKSkiJwpkaWZmIC0tZ2l0IGEvZ2l0LXN0
+YXNoLnNoIGIvZ2l0LXN0YXNoLnNoCmluZGV4IDNhMDY4NWYuLjU2MDVkMTkgMTAwNzU1Ci0tLSBh
+L2dpdC1zdGFzaC5zaAorKysgYi9naXQtc3Rhc2guc2gKQEAgLTM5LDcgKzM5LDcgQEAgY2xlYXJf
+c3Rhc2ggKCkgewogCXRoZW4KIAkJZGllICJnaXQgc3Rhc2ggY2xlYXIgd2l0aCBwYXJhbWV0ZXJz
+IGlzIHVuaW1wbGVtZW50ZWQiCiAJZmkKLQlpZiBjdXJyZW50PSQoZ2l0IHJldi1wYXJzZSAtLXZl
+cmlmeSAkcmVmX3N0YXNoIDI+L2Rldi9udWxsKQorCWlmIGN1cnJlbnQ9JChnaXQgcmV2LXBhcnNl
+IC0tcXVpZXQgLS12ZXJpZnkgJHJlZl9zdGFzaCkKIAl0aGVuCiAJCWdpdCB1cGRhdGUtcmVmIC1k
+ICRyZWZfc3Rhc2ggJGN1cnJlbnQKIAlmaQpAQCAtMjAwLDcgKzIwMCw3IEBAIHNhdmVfc3Rhc2gg
+KCkgewogfQogCiBoYXZlX3N0YXNoICgpIHsKLQlnaXQgcmV2LXBhcnNlIC0tdmVyaWZ5ICRyZWZf
+c3Rhc2ggPi9kZXYvbnVsbCAyPiYxCisJZ2l0IHJldi1wYXJzZSAtLXF1aWV0IC0tdmVyaWZ5ICRy
+ZWZfc3Rhc2ggPi9kZXYvbnVsbAogfQogCiBsaXN0X3N0YXNoICgpIHsKQEAgLTMzNywxNiArMzM3
+LDE2IEBAIGRyb3Bfc3Rhc2ggKCkgewogCWZpCiAJIyBWZXJpZnkgc3VwcGxpZWQgYXJndW1lbnQg
+bG9va3MgbGlrZSBhIHN0YXNoIGVudHJ5CiAJcz0kKGdpdCByZXYtcGFyc2UgLS12ZXJpZnkgIiRA
+IikgJiYKLQlnaXQgcmV2LXBhcnNlIC0tdmVyaWZ5ICIkczoiICAgPiAvZGV2L251bGwgMj4mMSAm
+JgotCWdpdCByZXYtcGFyc2UgLS12ZXJpZnkgIiRzXjE6IiA+IC9kZXYvbnVsbCAyPiYxICYmCi0J
+Z2l0IHJldi1wYXJzZSAtLXZlcmlmeSAiJHNeMjoiID4gL2Rldi9udWxsIDI+JjEgfHwKKwlnaXQg
+cmV2LXBhcnNlIC0tcXVpZXQgLS12ZXJpZnkgIiRzOiIgICA+IC9kZXYvbnVsbCAmJgorCWdpdCBy
+ZXYtcGFyc2UgLS1xdWlldCAtLXZlcmlmeSAiJHNeMToiID4gL2Rldi9udWxsICYmCisJZ2l0IHJl
+di1wYXJzZSAtLXF1aWV0IC0tdmVyaWZ5ICIkc14yOiIgPiAvZGV2L251bGwgfHwKIAkJZGllICIk
+Kjogbm90IGEgdmFsaWQgc3Rhc2hlZCBzdGF0ZSIKIAogCWdpdCByZWZsb2cgZGVsZXRlIC0tdXBk
+YXRlcmVmIC0tcmV3cml0ZSAiJEAiICYmCiAJCXNheSAiRHJvcHBlZCAkKiAoJHMpIiB8fCBkaWUg
+IiQqOiBDb3VsZCBub3QgZHJvcCBzdGFzaCBlbnRyeSIKIAogCSMgY2xlYXJfc3Rhc2ggaWYgd2Ug
+anVzdCBkcm9wcGVkIHRoZSBsYXN0IHN0YXNoIGVudHJ5Ci0JZ2l0IHJldi1wYXJzZSAtLXZlcmlm
+eSAiJHJlZl9zdGFzaEB7MH0iID4gL2Rldi9udWxsIDI+JjEgfHwgY2xlYXJfc3Rhc2gKKwlnaXQg
+cmV2LXBhcnNlIC0tcXVpZXQgLS12ZXJpZnkgIiRyZWZfc3Rhc2hAezB9IiA+IC9kZXYvbnVsbCB8
+fCBjbGVhcl9zdGFzaAogfQogCiBhcHBseV90b19icmFuY2ggKCkgewpkaWZmIC0tZ2l0IGEvZ2l0
+LXN1Ym1vZHVsZS5zaCBiL2dpdC1zdWJtb2R1bGUuc2gKaW5kZXggNzdkMjIzMi4uMmI2NDQ4ZiAx
+MDA3NTUKLS0tIGEvZ2l0LXN1Ym1vZHVsZS5zaAorKysgYi9naXQtc3VibW9kdWxlLnNoCkBAIC0x
+OTYsNyArMTk2LDcgQEAgY21kX2FkZCgpCiAJCQl0c3RhcnQKIAkJCXN8LyokfHwKIAkJJykKLQln
+aXQgbHMtZmlsZXMgLS1lcnJvci11bm1hdGNoICIkcGF0aCIgPiAvZGV2L251bGwgMj4mMSAmJgor
+CWdpdCBscy1maWxlcyAtLXF1aWV0IC0tZXJyb3ItdW5tYXRjaCAiJHBhdGgiID4gL2Rldi9udWxs
+ICYmCiAJZGllICInJHBhdGgnIGFscmVhZHkgZXhpc3RzIGluIHRoZSBpbmRleCIKIAogCSMgcGVy
+aGFwcyB0aGUgcGF0aCBleGlzdHMgYW5kIGlzIGFscmVhZHkgYSBnaXQgcmVwbywgZWxzZSBjbG9u
+ZSBpdAotLSAKMS42LjUKCg==
+--001636283aee3ddc27047c983477--
