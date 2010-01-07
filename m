@@ -1,92 +1,71 @@
-From: David Kirk <davemkirk@gmail.com>
-Subject: Strange happening with 'git fetch'
-Date: Thu, 7 Jan 2010 11:59:39 -0600
-Message-ID: <de73f1891001070959h30e4ecebw7c852f0417647419@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] ls-files: support -o --max-depth (more of a hack as
+ fill_directory should support this)
+Date: Thu, 07 Jan 2010 10:01:28 -0800
+Message-ID: <7vljg94ww7.fsf@alter.siamese.dyndns.org>
+References: <1262884076-12293-1-git-send-email-pclouds@gmail.com>
+ <1262884076-12293-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 07 18:59:57 2010
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 07 19:02:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSweA-0003G7-Ij
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 18:59:46 +0100
+	id 1NSwg6-0004eh-O8
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 19:01:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752544Ab0AGR7n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2010 12:59:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752285Ab0AGR7m
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 12:59:42 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:30877 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751379Ab0AGR7m convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2010 12:59:42 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so7605079fgg.1
-        for <git@vger.kernel.org>; Thu, 07 Jan 2010 09:59:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=7IXBbuIHpMTjYsT2+2MZUJMnXoY26wz3vZBAfGQNAH8=;
-        b=Zqff0pW3AkFt4yy1gOnYqT8hxoUQMnkHzUx/Iy0LjnDe85hr09U9EVGQ8K/iFJHJLN
-         YccwJscD5kV9r1WZLLkI2e1VffJXNloR8HZi1UoGBp84rY/BRGIDCUoeamGINIefFjex
-         4jWTI2+OZ4VEzt3EHWchyxMpCbi68LfYQaeZg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=xxMxUgMEsnOLcGYSmZhoUVrCXauImyB5N9ihDuQhxcHuzIISGKWU+qqhHnTnMFuRvX
-         IURXsfz2tAiTgVYHitq2VZ4jU+FiTLCXUlfBf5Tyq5W3ux8nV1VYBSuXZggjVuMZ0hVj
-         mbyem3ChoDGhGaVaa0BRKXnaD1kHoYJmtpMo8=
-Received: by 10.216.167.196 with SMTP id i46mr1310400wel.130.1262887179945; 
-	Thu, 07 Jan 2010 09:59:39 -0800 (PST)
+	id S1752996Ab0AGSBp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2010 13:01:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753037Ab0AGSBn
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 13:01:43 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57006 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752745Ab0AGSBk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2010 13:01:40 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CAB858EE71;
+	Thu,  7 Jan 2010 13:01:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=W1+NZbF/xKDHVkumKf/a4lX+4
+	+M=; b=pDIclT+1AdaCPxqPV6s6ouIgx5mNm1vDc82YjOspi1F7KA2QGzuGqZKTH
+	ZjTY78IZhSYSegfeIuDAcrpGz7sosREDSLvnrPsKDgtEWdF0KWJ1B7JOLab4F9dA
+	+UZCOmt7lJdZG7OviLHO2Muf6Ju3O7o7bTT+r/WZviyfpfIApI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=hHLKQYMVjts9AGZlb0G
+	KqtUVaq4/rVocQZS46waxpP/zp9FE7NPKdGsV8cYOFY97ij+0VuTIXTy4QNBD957
+	QrCbSzXvUP3KRovDYRNYkxBUFGHbdvEk2yEv++TIhQCG+ThM6qPkuv9DwB2SJIan
+	BNngOo5MNNudQpXbQXxO54wI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B2798EE6F;
+	Thu,  7 Jan 2010 13:01:32 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B116D8EE6E; Thu,  7 Jan
+ 2010 13:01:29 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B022820E-FBB6-11DE-B061-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136370>
 
-This is very strange, and defies the understanding of everyone in the
-office familiar with git.=A0 Is it a bug, or some feature we don't
-understand?
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Basically, when I do a 'git fetch', it updates my local repository.
-Now nobody else is doing anything, so the remote repository does not
-change.=A0 Doing another 'git fetch' should report that nothing needs t=
-o
-be done and nothing should change.=A0 But instead, it reports something
-about the remote HEAD, and changes my local branch 'master' to some
-strange location!=A0 Running 'git fetch' again restores it to the
-correct state, reporting that it is updating 'master'.=A0 Repeated
-invocations will toggle between these two results.=A0 Below is a
-transcript from the bash shell.
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
 
-Can someone please explain this?
+Subject: Re: [PATCH 2/3] ls-files: support -o --max-depth (more of a ha=
+ck
+as fill_directory should support this)
 
----- bash console ----
-dkirk@RI-ENG-21 /c/Dev/TSWeb2 (master)
-$ git fetch
-=46rom //10.18.0.53/git/repos/WebTrading
-=A0+ 03c60a4...209b0bc HEAD=A0=A0=A0=A0=A0=A0 -> origin/HEAD=A0 (forced=
- update)
-
-dkirk@RI-ENG-21 /c/Dev/TSWeb2 (master)
-$ git fetch
-=46rom //10.18.0.53/git/repos/WebTrading
-=A0+ 209b0bc...03c60a4 master=A0=A0=A0=A0 -> origin/master=A0 (forced u=
-pdate)
-
-dkirk@RI-ENG-21 /c/Dev/TSWeb2 (master)
-$ git fetch
-=46rom //10.18.0.53/git/repos/WebTrading
-=A0+ 03c60a4...209b0bc HEAD=A0=A0=A0=A0=A0=A0 -> origin/HEAD=A0 (forced=
- update)
-
-dkirk@RI-ENG-21 /c/Dev/TSWeb2 (master)
-$ git fetch
-=46rom //10.18.0.53/git/repos/WebTrading
-=A0+ 209b0bc...03c60a4 master=A0=A0=A0=A0 -> origin/master=A0 (forced u=
-pdate)
-
-Thanks,
--David
+Perhaps you would want to look at how builtin_grep()'s walker and the
+walker in dir.c can be consolidated?  The former has support for
+max_depth.
