@@ -1,80 +1,81 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: [PATCH] mingw: disable Python
-Date: Thu,  7 Jan 2010 23:07:17 +0100
-Message-ID: <1262902037-4420-1-git-send-email-kusmabite@gmail.com>
-References: <40aa078e1001071400j21900ed1n415394491d469b8c@mail.gmail.com>
-Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>
-To: msysgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Thu Jan 07 23:07:43 2010
+From: Nelson Elhage <nelhage@MIT.EDU>
+Subject: [PATCH] Documentation: pack-objects: Clarify --local's semantics.
+Date: Thu,  7 Jan 2010 17:10:14 -0500
+Message-ID: <1262902214-24977-1-git-send-email-nelhage@mit.edu>
+Cc: Nelson Elhage <nelhage@mit.edu>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jan 07 23:15:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NT0W7-0006fC-0I
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 23:07:43 +0100
+	id 1NT0dj-0001T7-Fh
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 23:15:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754232Ab0AGWHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2010 17:07:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750787Ab0AGWHi
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 17:07:38 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:51455 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751196Ab0AGWHh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2010 17:07:37 -0500
-Received: by ey-out-2122.google.com with SMTP id 22so1065045eye.19
-        for <git@vger.kernel.org>; Thu, 07 Jan 2010 14:07:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=K5uLw7LVE+5I7I13/ASw+YgWkBVsvpiJH7cG96UQJkQ=;
-        b=CAH3aecQxHoL9h5noxZQIXDqOgw1FX0qVCiMzybSqFk688V9QWQZHNk8SEmJp7ONIV
-         MfyhFEDjNdX0NDdlCupMWXsZvKJOhrNZn+2ICewIXbEXIVgs8PseXDrXkwnH/b7vYyaQ
-         iQAM97bBtbaD/BJfNHimiCi/e/a3IM8QG1In8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=xi2uy8hpCx6qwe1A93bcRieNIX5FY5KfySfp96vvWKJ/mUnB20WnGhGPRBl/BzohXQ
-         x5feKUBZGbkmLmGlnD0u2aBTT222Ck95x/MCx2cITLnCay+5wLxqHCmMlIF4gjw0XDYj
-         lSBHdTiLLc3R8PAa+lyiSMtZ4colVo88CFJu4=
-Received: by 10.213.43.130 with SMTP id w2mr2204155ebe.89.1262902056530;
-        Thu, 07 Jan 2010 14:07:36 -0800 (PST)
-Received: from localhost (cm-84.215.142.12.getinternet.no [84.215.142.12])
-        by mx.google.com with ESMTPS id 13sm15411647ewy.5.2010.01.07.14.07.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 07 Jan 2010 14:07:36 -0800 (PST)
-X-Mailer: git-send-email 1.6.5.1.1372.g025e4.dirty
-In-Reply-To: <40aa078e1001071400j21900ed1n415394491d469b8c@mail.gmail.com>
+	id S1754370Ab0AGWPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2010 17:15:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754364Ab0AGWPa
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 17:15:30 -0500
+Received: from DMZ-MAILSEC-SCANNER-3.MIT.EDU ([18.9.25.14]:65213 "EHLO
+	dmz-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754254Ab0AGWP3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2010 17:15:29 -0500
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Jan 2010 17:15:29 EST
+X-AuditID: 1209190e-b7b45ae000000c32-c7-4b465bd3a2c4
+Received: from biscayne-one-station.mit.edu (BISCAYNE-ONE-STATION.MIT.EDU [18.7.7.80])
+	by dmz-mailsec-scanner-3.mit.edu (Symantec Brightmail Gateway) with SMTP id 44.B6.03122.3DB564B4; Thu,  7 Jan 2010 17:10:28 -0500 (EST)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id o07M9jGk002579;
+	Thu, 7 Jan 2010 17:09:45 -0500 (EST)
+Received: from PHANATIQUE.MIT.EDU (c-71-192-160-118.hsd1.nh.comcast.net [71.192.160.118])
+	(authenticated bits=0)
+        (User authenticated as nelhage@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o07MAdDE028177
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 7 Jan 2010 17:10:40 -0500 (EST)
+X-Mailer: git-send-email 1.6.5.40.g402af7
+X-Scanned-By: MIMEDefang 2.42
+X-Brightmail-Tracker: AAAAARJXwWM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136397>
 
-Python is not commonly installed on Windows machines, so
-we should disable it there by default.
+The current documentation suggests that --local also ignores any
+objects in local packs, which is incorrect. Change the language to be
+clearer and more parallel to the other options that ignore objects.
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+While we're at it, fix a trivial error in --incremental's
+documentation.
+
+Signed-off-by: Nelson Elhage <nelhage@mit.edu>
 ---
+ Documentation/git-pack-objects.txt |    9 ++++-----
+ 1 files changed, 4 insertions(+), 5 deletions(-)
 
-This patch is against Junio's current master, and enables
-msysgit to compile upstream git again after Sverre's addition
-of the python remote-helpers (2fe40b6).
-
- Makefile |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 015bfab..0004c52 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1027,6 +1027,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
- 	NO_REGEX = YesPlease
- 	BLK_SHA1 = YesPlease
-+	NO_PYTHON = YesPlease
- 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/fnmatch
- 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
- 	COMPAT_OBJS += compat/mingw.o compat/fnmatch/fnmatch.o compat/winansi.o
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index f54d433..d8e5686 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -117,14 +117,13 @@ base-name::
+ 	standard input.
+ 
+ --incremental::
+-	This flag causes an object already in a pack ignored
++	This flag causes an object already in a pack to be ignored
+ 	even if it appears in the standard input.
+ 
+ --local::
+-	This flag is similar to `--incremental`; instead of
+-	ignoring all packed objects, it only ignores objects
+-	that are packed and/or not in the local object store
+-	(i.e. borrowed from an alternate).
++	This flag causes an object that is borrowed from an alternate
++	object store to be ignored even if it appears in the standard
++	input.
+ 
+ --non-empty::
+         Only create a packed archive if it would contain at
 -- 
-1.6.6.90.g50bc9.dirty
+1.6.5.40.g402af7
