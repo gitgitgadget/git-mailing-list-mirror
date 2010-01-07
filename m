@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 1/3] ls-files: support --max-depth
-Date: Fri,  8 Jan 2010 00:07:54 +0700
-Message-ID: <1262884076-12293-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 2/3] ls-files: support -o --max-depth (more of a hack as fill_directory should support this)
+Date: Fri,  8 Jan 2010 00:07:55 +0700
+Message-ID: <1262884076-12293-3-git-send-email-pclouds@gmail.com>
 References: <1262884076-12293-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -15,120 +15,79 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSvrJ-0003TN-6L
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 18:09:17 +0100
+	id 1NSvrJ-0003TN-OO
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 18:09:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753376Ab0AGRJM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2010 12:09:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753359Ab0AGRJL
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 12:09:11 -0500
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:63795 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753152Ab0AGRJJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2010 12:09:09 -0500
-Received: by ywh6 with SMTP id 6so18630285ywh.4
-        for <git@vger.kernel.org>; Thu, 07 Jan 2010 09:09:08 -0800 (PST)
+	id S1753404Ab0AGRJP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2010 12:09:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753393Ab0AGRJP
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 12:09:15 -0500
+Received: from mail-yx0-f188.google.com ([209.85.210.188]:53624 "EHLO
+	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753359Ab0AGRJN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2010 12:09:13 -0500
+Received: by mail-yx0-f188.google.com with SMTP id 26so17848817yxe.4
+        for <git@vger.kernel.org>; Thu, 07 Jan 2010 09:09:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=29MAGDvAnqqb7hewSKEUkCqENmmV4jUg9HgJb+AZo6I=;
-        b=bQQuNXLzj6CKaPaSFwEn/CdcgGZC/SRL5j2g/HiC8Sjnf1P837beSeCH0UuhtnC8OE
-         TssBqvm5uUwbcVCi4BHXTsshw7YT2G1sqZWA8spUL+cLtoTUkFoq0K4rH0gm5a+9cQQX
-         Hu7E3OOFT9JBTe2/Hxuj1aEbv3nr41f+Z3I9A=
+        bh=m10z74jcZ/rad/Y9olURwIXAlMOi3AFAQRAKg9O/OMc=;
+        b=nEkG7ZMr3Wot2erjT3Eu8yUE6qr7KD6Mu8iBDStu37DlhVq5WWdnPC/rZCHMFtDlbz
+         MYl8YVKUs7+LAy+ii1O+sanZq3zWBDJ7ago3e23eqtIHLvbxmT6uofTULt6N2MNgAPIs
+         6um4l+y1CTL3NzhEZgBvrXQaZyP5cn7uZg4z8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=AqvBplSlbqqOyEsJRnYknO3lQ/znExJYXY0spY1otmBHhErOb/UDeQE6UMRO/ilqvn
-         ++1v21CJuNjYDz9EMIwDpeElKNd7lBy1wBXIBodk+qNGwwE3p4Kdw9129fqVemeQDk6p
-         3IIpXE1mHEtDWJQ8mbqSkGF91a/89tGU2JPtw=
-Received: by 10.90.23.38 with SMTP id 38mr728900agw.57.1262884141518;
-        Thu, 07 Jan 2010 09:09:01 -0800 (PST)
+        b=AEDg2XAvTsUKcsfC9qgWfPbNNueVV5v1i7OF26qAqlbbiKrU8BdJp7LwAM+pz6S1EF
+         eFC0GcclT064D0O+Fequtg2ShfyPPMe2PCYubJPlnZGW0M4uwBDXMQzqvoOKgm2cJlWB
+         SHnPgpbmlf/VL8QUziAMLHs7khDnALT0DSICM=
+Received: by 10.90.16.31 with SMTP id 31mr1119236agp.42.1262884153472;
+        Thu, 07 Jan 2010 09:09:13 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.227.183])
-        by mx.google.com with ESMTPS id 14sm10783095gxk.10.2010.01.07.09.08.57
+        by mx.google.com with ESMTPS id 14sm10773034gxk.14.2010.01.07.09.09.10
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 07 Jan 2010 09:08:59 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri,  8 Jan 2010 00:08:12 +0700
+        Thu, 07 Jan 2010 09:09:12 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri,  8 Jan 2010 00:08:25 +0700
 X-Mailer: git-send-email 1.6.6.315.g1a406
 In-Reply-To: <1262884076-12293-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136362>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin-ls-files.c |   30 ++++++++++++++++++++++++++++++
- 1 files changed, 30 insertions(+), 0 deletions(-)
+ builtin-ls-files.c |   11 +++++++++++
+ 1 files changed, 11 insertions(+), 0 deletions(-)
 
 diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index 7382157..2bb851a 100644
+index 2bb851a..e16638e 100644
 --- a/builtin-ls-files.c
 +++ b/builtin-ls-files.c
-@@ -30,6 +30,7 @@ static int error_unmatch;
- static char *ps_matched;
- static const char *with_tree;
- static int exc_given;
-+static int max_depth =3D 0;
+@@ -51,6 +51,17 @@ static void show_dir_entry(const char *tag, struct d=
+ir_entry *ent)
+ 	if (!match_pathspec(pathspec, ent->name, ent->len, len, ps_matched))
+ 		return;
 =20
- static const char *tag_cached =3D "";
- static const char *tag_unmerged =3D "";
-@@ -232,6 +233,30 @@ static void prune_cache(const char *prefix)
- 	active_nr =3D last;
- }
-=20
-+/*
-+ * It is assumed that prune_cache() as been called before this
-+ */
-+static void prune_cache_by_depth(const char *prefix, int max_depth)
-+{
-+	int i =3D active_nr-1;
-+
-+	while (i >=3D 0) {
++	if (max_depth) {
 +		int slashes =3D 0;
-+		const char *entry =3D active_cache[i]->name + prefix_len;
++		const char *entry =3D ent->name + prefix_offset;
 +		while ((entry =3D strchr(entry, '/')) !=3D NULL) {
 +			slashes++;
-+			if (slashes >=3D max_depth) {
-+				memmove(active_cache + i, active_cache + i + 1,
-+					(active_nr - i - 1) * sizeof(struct cache_entry *));
-+				active_nr--;
-+				break;
-+			}
++			if (slashes >=3D max_depth)
++				return;
 +			entry++;
 +		}
-+		i--;
 +	}
-+}
 +
- static const char *verify_pathspec(const char *prefix)
- {
- 	const char **p, *n, *prev;
-@@ -476,6 +501,7 @@ int cmd_ls_files(int argc, const char **argv, const=
- char *prefix)
- 			"if any <file> is not in the index, treat this as an error"),
- 		OPT_STRING(0, "with-tree", &with_tree, "tree-ish",
- 			"pretend that paths removed since <tree-ish> are still present"),
-+		OPT_INTEGER(0, "max-depth", &max_depth, "max recursive depth"),
- 		OPT__ABBREV(&abbrev),
- 		OPT_END()
- 	};
-@@ -541,6 +567,10 @@ int cmd_ls_files(int argc, const char **argv, cons=
-t char *prefix)
-=20
- 	if (prefix)
- 		prune_cache(prefix);
-+
-+	if (max_depth)
-+		prune_cache_by_depth(prefix, max_depth);
-+
- 	if (with_tree) {
- 		/*
- 		 * Basic sanity check; show-stages and show-unmerged
+ 	fputs(tag, stdout);
+ 	write_name_quoted(ent->name + offset, stdout, line_terminator);
+ }
 --=20
 1.6.6.315.g1a406
