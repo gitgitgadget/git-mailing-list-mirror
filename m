@@ -1,68 +1,93 @@
-From: Christian MICHON <christian.michon@gmail.com>
-Subject: Re: merging two equivalent branches
-Date: Thu, 7 Jan 2010 19:22:00 +0100
-Message-ID: <46d6db661001071022t79ca65foac249d948a20c328@mail.gmail.com>
-References: <B0543B3C-C139-4BD3-B028-58B4DA132422@gmail.com>
+From: Zing <zing@fastmail.fm>
+Subject: Re: [PATCH] Documentation: do not advertise --all in git-pull(1)
+Date: Thu, 7 Jan 2010 18:25:15 +0000 (UTC)
+Message-ID: <hi58ub$c0l$1@ger.gmane.org>
+References: <hi2mu8ob@ger.gmane.org>
+	<a6112d286c5deeb4cc2ccfb1a90ff384440c1341.1262880109.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: David Reitter <david.reitter@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 07 19:22:14 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 07 19:27:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSwzu-00075f-53
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 19:22:14 +0100
+	id 1NSx4H-0000xR-VY
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 19:26:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753119Ab0AGSWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2010 13:22:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753084Ab0AGSWI
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 13:22:08 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:36140 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752418Ab0AGSWH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2010 13:22:07 -0500
-Received: by bwz27 with SMTP id 27so11657913bwz.21
-        for <git@vger.kernel.org>; Thu, 07 Jan 2010 10:22:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=i+Gkah/7BJHDKfgF6R4liAobnC49OrorcsiqRJkMcR0=;
-        b=bzSmtcQaJacMTeY7QnZ0kWjl75YtHR/kWyEBCqXigaIoxiw25LPUrZzu8ErlvnZY6O
-         e8D/cxLybICwKWzb9OoHSC0fyyuW5bR9x5rMutcTziuqCJGeM93MjmK2QqCHFPwyfh0V
-         F/bcllbDwc+UZIWKsnJViSFm/mfbssY0vnhpw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=msMwjYYgPYL0TvpMSyiAXj1q8o/Eizi7czVkzJxEwkHVTfhhHfS7PTirspdn69Yl8t
-         3fE3fICBa060AhgdWchAOdJxcvtHKhKiP+EZ96Sc57t4tOeUsi9utT9zKoBNCVQQpa9B
-         X7q/ZqSg/aY06KqV8v1AfI/gtiIPwNN9bxNJE=
-Received: by 10.204.152.200 with SMTP id h8mr307630bkw.150.1262888521262; Thu, 
-	07 Jan 2010 10:22:01 -0800 (PST)
-In-Reply-To: <B0543B3C-C139-4BD3-B028-58B4DA132422@gmail.com>
+	id S1752452Ab0AGS0m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2010 13:26:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752006Ab0AGS0l
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 13:26:41 -0500
+Received: from lo.gmane.org ([80.91.229.12]:38812 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752289Ab0AGS0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2010 13:26:41 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NSx3E-0000FM-D0
+	for git@vger.kernel.org; Thu, 07 Jan 2010 19:25:40 +0100
+Received: from 204.97.104.30 ([204.97.104.30])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 07 Jan 2010 19:25:40 +0100
+Received: from zing by 204.97.104.30 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 07 Jan 2010 19:25:40 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 204.97.104.30
+User-Agent: Pan/0.133 (House of Butterflies)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136379>
 
-On Thu, Jan 7, 2010 at 7:17 PM, David Reitter <david.reitter@gmail.com> wrote:
-> Hello,
->
-> I have a problem with my git project, resulting from an upstream branch beyond my control being rewritten.
->
-> Can I specify parents for a revision whose history is hidden from git-log?
->
+On Thu, 07 Jan 2010 17:09:33 +0100, Thomas Rast wrote:
 
-I recall asking a similar question in 2008, and the answer was to look
-at "git graft" and use "git filter-branch" to recreate history.
+> This one fixes the documentation problem, but I think there's a deeper
+> misunderstanding.  What did you hope to do with 'git pull --all'?  I
+> suspect most people on this list would take it to mean "fetch all
+> branches from all remotes, and merge them into HEAD".  I cannot imagine
+> a use-case where that would make any sense.  (And it wouldn't work,
+> because the current implementation of 'git fetch --all' leaves only the
+> last remote's branches in FETCH_HEAD.)
+> 
+> From earlier discussions on the non-intuitiveness of git-pull, I kind of
+> suspect you wanted to fetch all remotes, and then "update" all local
+> branches that track some remote with their corresponding remote-tracking
+> branches.  In which case the question is: why do you use local branches
+> if you have them "blindly" track the upstream?
 
-My 2 cents
+Let me just state first that I'm a casual git user and I would have 
+missed those earlier discussions.... sorry if this old news:
 
--- 
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
+I do basically just use git to just "blindly" track upstream repos/
+projects using local branches.  I realize this is "dumb" in a sense,
+because it's basically just a copy of the remote branch that needs to be
+fast-forwarded all the time; but it's just a handy lazy way for me to
+remember which remote branches I want to "watch" with just a 'git branch' 
+command, plus it's easier and shorter to just type the local branch names 
+I specify than to type for example "origin/something" or "myotherremote/
+something".
+
+What I thought 'git pull --all' would do is just pass down the --all flag 
+to fetch and that's it:
+
+1. do a 'git fetch --all'
+2. then do a 'git merge <tracked remote branch of the current local 
+branch>', basically, in my case, just fast-forwarding my current local 
+branch if need be.
+
+I didn't think that 'git pull --all' would "update" all local branches 
+that needed to be fast-forwarded.  It would be too, how to say, "messy" 
+in the output, and not really what 'git pull' alone was doing before.  I 
+did think it could be a possibility, so, really, I was trying it out to 
+see what would happen.
+
+The other possibility you mentioned about fetching all branches and then 
+merging all of them to HEAD, didn't occur to me at all.  I can see now 
+how it could make more intuitive sense from the perspective of a more 
+"experienced" git person.  Personally, I don't think I'd ever need 
+something like that.  HTH.
