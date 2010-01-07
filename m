@@ -1,61 +1,86 @@
-From: martinvz <martin.von.zweigbergk@gmail.com>
-Subject: Re: Difference between pull --rebase and fetch+rebase
-Date: Thu, 7 Jan 2010 04:58:04 -0800 (PST)
-Message-ID: <27059574.post@talk.nabble.com>
-References: <27059158.post@talk.nabble.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH v2 0/5] Lazily generate header dependencies
+Date: Thu, 7 Jan 2010 14:22:08 +0100
+Message-ID: <40aa078e1001070522k2be6c490se5d45faffca764f1@mail.gmail.com>
+References: <4B0F8825.3040107@viscovery.net>
+	 <alpine.DEB.1.00.0911271033460.4521@intel-tinevez-2-302>
+	 <20091127174558.GA3461@progeny.tock>
+	 <20100101090550.6117@nanako3.lavabit.com>
+	 <20100107071305.GA11777@progeny.tock>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 07 13:58:16 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 07 14:22:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSrwN-0006ZQ-WA
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 13:58:16 +0100
+	id 1NSsJd-0007F3-Ef
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 14:22:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752547Ab0AGM6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2010 07:58:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752235Ab0AGM6J
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 07:58:09 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:35450 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751912Ab0AGM6G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2010 07:58:06 -0500
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1NSrwC-0006B7-Tq
-	for git@vger.kernel.org; Thu, 07 Jan 2010 04:58:04 -0800
-In-Reply-To: <27059158.post@talk.nabble.com>
-X-Nabble-From: martin.von.zweigbergk@gmail.com
+	id S1751690Ab0AGNWM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2010 08:22:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460Ab0AGNWL
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 08:22:11 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:20573 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750939Ab0AGNWK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2010 08:22:10 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so7486128fgg.1
+        for <git@vger.kernel.org>; Thu, 07 Jan 2010 05:22:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=VskstX2zoAOD4t7xbKrTdVY2joCk4LG4HYLTBC5IMX4=;
+        b=GHSukkGXHSaz/jKVhtSVL8HHDgxAB/hRRZ3Lf46XLaM+gwugszRJO3S6yuQndpYeyU
+         SVmvrDotSR0KRNf90K0GL6W3kApK8tnI49dntQYmQrDbb3y0flfkfMxQ0yb4JtKpIt4z
+         5OdSEQM80Jc8Z2kzuNpmpu7l15Rxbcy958cRU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=a0ji8MFYfiEtvWPtjegnQTi5o1ZFj3p6Kns3MkmW6DUgwvjbaiO2sLB0lE/VNTk+Rk
+         BgKGKhID1GCVKrmSBAngSvxByhhJIKPUglD8Weq6nbxwzrJo3k+R2Y+sc3d8TrFrY8kl
+         helvYeL7ckXeDuy+AIkJj3SzkUcdGHdBgMVMg=
+Received: by 10.216.90.209 with SMTP id e59mr3817521wef.193.1262870528699; 
+	Thu, 07 Jan 2010 05:22:08 -0800 (PST)
+In-Reply-To: <20100107071305.GA11777@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136342>
 
+On Thu, Jan 7, 2010 at 8:13 AM, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+> Nanako Shiraishi wrote:
+>> Junio, could you tell us what happened to this thread?
+>>
+>> Makefile improvements. =A0No discussion.
+>
+> My bad. =A0The previous version was very rough because I was not sure
+> yet how this could help in making the header dependency rules more
+> maintainable. =A0If all compilers worth using support something like
+> gcc's -MD option (does MSVC?), we could switch over completely;
+> otherwise, we need some way to use the generated dependencies to
+> check the static ones, or the static ones will go stale.
 
-Forgot to say that I am using version 1.6.5.1.1367.gcd48 (Cygwin). I should
-also say that I can see no particular reason why exactly two extra commits
-were picked.
+Nope, there's no support for -MD in MSVC. It does have an "/MD"
+option, but it means something completely different (link with
+multithreaded DLL CRT). There IS the "/showIncludes" option [1], which
+should make it possible to do some build-magic to generate the correct
+dependency-files, though.
 
+[1] http://msdn.microsoft.com/en-us/library/hdkef6tk(VS.71).aspx
 
-martinvz wrote:
-> 
-> I have a branch configured to track a remote branch by rebasing. I
-> excepted that "git pull" would therefore be equivalent to fetching from
-> the remote repository followed by rebasing the remote branch, but it
-> isn't. When doing "git rebase <remote>/<branch>", it applies only the
-> commits after the merge base. When doing "git pull", it tries to apply two
-> more commits (the two commits preceding the merge base). Why is this?
-> 
-> I get the same result even if I do "git pull --rebase <remote> <branch>",
-> it doesn't seem to have anything to do with incorrect configuration of the
-> branch.
-> 
-
--- 
-View this message in context: http://old.nabble.com/Difference-between-pull---rebase-and-fetch%2Brebase-tp27059158p27059574.html
-Sent from the git mailing list archive at Nabble.com.
+--=20
+Erik "kusma" Faye-Lund
