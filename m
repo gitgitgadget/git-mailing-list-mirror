@@ -1,93 +1,107 @@
-From: Zing <zing@fastmail.fm>
-Subject: Re: [PATCH] Documentation: do not advertise --all in git-pull(1)
-Date: Thu, 7 Jan 2010 18:25:15 +0000 (UTC)
-Message-ID: <hi58ub$c0l$1@ger.gmane.org>
-References: <hi2mu8ob@ger.gmane.org>
-	<a6112d286c5deeb4cc2ccfb1a90ff384440c1341.1262880109.git.trast@student.ethz.ch>
+From: martinvz <martin.von.zweigbergk@gmail.com>
+Subject: Re: Difference between pull --rebase and fetch+rebase
+Date: Thu, 7 Jan 2010 10:44:24 -0800 (PST)
+Message-ID: <1262889864880-4268064.post@n2.nabble.com>
+References: <27059158.post@talk.nabble.com> <adf1fd3d1001070800k6fa501fej39b84f849b7e5b50@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 07 19:27:59 2010
+X-From: git-owner@vger.kernel.org Thu Jan 07 19:44:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSx4H-0000xR-VY
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 19:26:46 +0100
+	id 1NSxLT-0001LY-Rl
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 19:44:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752452Ab0AGS0m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2010 13:26:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752006Ab0AGS0l
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 13:26:41 -0500
-Received: from lo.gmane.org ([80.91.229.12]:38812 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752289Ab0AGS0l (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2010 13:26:41 -0500
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1NSx3E-0000FM-D0
-	for git@vger.kernel.org; Thu, 07 Jan 2010 19:25:40 +0100
-Received: from 204.97.104.30 ([204.97.104.30])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 07 Jan 2010 19:25:40 +0100
-Received: from zing by 204.97.104.30 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 07 Jan 2010 19:25:40 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 204.97.104.30
-User-Agent: Pan/0.133 (House of Butterflies)
+	id S1753423Ab0AGSo0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2010 13:44:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752113Ab0AGSoZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 13:44:25 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:40176 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752023Ab0AGSoZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2010 13:44:25 -0500
+Received: from jim.nabble.com ([192.168.236.80])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
+	id 1NSxLM-0004C7-Sb
+	for git@vger.kernel.org; Thu, 07 Jan 2010 10:44:24 -0800
+In-Reply-To: <adf1fd3d1001070800k6fa501fej39b84f849b7e5b50@mail.gmail.com>
+X-Nabble-From: martinvz <martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136380>
 
-On Thu, 07 Jan 2010 17:09:33 +0100, Thomas Rast wrote:
 
-> This one fixes the documentation problem, but I think there's a deeper
-> misunderstanding.  What did you hope to do with 'git pull --all'?  I
-> suspect most people on this list would take it to mean "fetch all
-> branches from all remotes, and merge them into HEAD".  I cannot imagine
-> a use-case where that would make any sense.  (And it wouldn't work,
-> because the current implementation of 'git fetch --all' leaves only the
-> last remote's branches in FETCH_HEAD.)
-> 
-> From earlier discussions on the non-intuitiveness of git-pull, I kind of
-> suspect you wanted to fetch all remotes, and then "update" all local
-> branches that track some remote with their corresponding remote-tracking
-> branches.  In which case the question is: why do you use local branches
-> if you have them "blindly" track the upstream?
+Thanks for your post, Santi. I can not share my repository since it is =
+a
+project at work. I was troubleshooting a bit myself and found the follo=
+wing
+section in git-pull.sh:
 
-Let me just state first that I'm a casual git user and I would have 
-missed those earlier discussions.... sorry if this old news:
+	oldremoteref=3D"$(git rev-parse -q --verify "$remoteref")" &&
+	for reflog in $(git rev-list -g $remoteref 2>/dev/null)
+	do
+		if test "$reflog" =3D "$(git merge-base $reflog $curr_branch)"
+		then
+			oldremoteref=3D"$reflog"
+			break
+		fi
+	done
 
-I do basically just use git to just "blindly" track upstream repos/
-projects using local branches.  I realize this is "dumb" in a sense,
-because it's basically just a copy of the remote branch that needs to be
-fast-forwarded all the time; but it's just a handy lazy way for me to
-remember which remote branches I want to "watch" with just a 'git branch' 
-command, plus it's easier and shorter to just type the local branch names 
-I specify than to type for example "origin/something" or "myotherremote/
-something".
+Why is it that reflog entries are allowed to override the remote refere=
+nce?
 
-What I thought 'git pull --all' would do is just pass down the --all flag 
-to fetch and that's it:
 
-1. do a 'git fetch --all'
-2. then do a 'git merge <tracked remote branch of the current local 
-branch>', basically, in my case, just fast-forwarding my current local 
-branch if need be.
+Thanks,
+Martin
 
-I didn't think that 'git pull --all' would "update" all local branches 
-that needed to be fast-forwarded.  It would be too, how to say, "messy" 
-in the output, and not really what 'git pull' alone was doing before.  I 
-did think it could be a possibility, so, really, I was trying it out to 
-see what would happen.
 
-The other possibility you mentioned about fetching all branches and then 
-merging all of them to HEAD, didn't occur to me at all.  I can see now 
-how it could make more intuitive sense from the perspective of a more 
-"experienced" git person.  Personally, I don't think I'd ever need 
-something like that.  HTH.
+
+Santi B=C3=A9jar-2 wrote:
+>=20
+> On Thu, Jan 7, 2010 at 1:23 PM, martinvz
+> <martin.von.zweigbergk@gmail.com> wrote:
+>>
+>> I have a branch configured to track a remote branch by rebasing. I
+>> excepted
+>> that "git pull" would therefore be equivalent to fetching from the r=
+emote
+>> repository followed by rebasing the remote branch, but it isn't. Whe=
+n
+>> doing
+>> "git rebase <remote>/<branch>", it applies only the commits after th=
+e
+>> merge
+>> base. When doing "git pull", it tries to apply two more commits (the=
+ two
+>> commits preceding the merge base). Why is this?
+>>
+>> I get the same result even if I do "git pull --rebase <remote> <bran=
+ch>",
+>> it
+>> doesn't seem to have anything to do with incorrect configuration of =
+the
+>> branch.
+>=20
+> Yes, both should do the same (at least when upstream is not rebased).
+> Can you provide a test case or instructions to reproduce the behavior=
+?
+>=20
+> Thanks,
+> Santi
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>=20
+>=20
+
+--=20
+View this message in context: http://n2.nabble.com/Difference-between-p=
+ull-rebase-and-fetch-rebase-tp4266164p4268064.html
+Sent from the git mailing list archive at Nabble.com.
