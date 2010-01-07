@@ -1,134 +1,88 @@
-From: martinvz <martin.von.zweigbergk@gmail.com>
-Subject: Re: Difference between pull --rebase and fetch+rebase
-Date: Thu, 7 Jan 2010 15:38:05 -0800 (PST)
-Message-ID: <1262907485376-4269422.post@n2.nabble.com>
-References: <27059158.post@talk.nabble.com> <adf1fd3d1001070800k6fa501fej39b84f849b7e5b50@mail.gmail.com> <1262889864880-4268064.post@n2.nabble.com> <adf1fd3d1001071433j6cd36641sdd2dfd6a936d8483@mail.gmail.com>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: origin/branchname and tracking branch pointing to different 
+	commits?
+Date: Thu, 7 Jan 2010 18:50:10 -0500
+Message-ID: <76c5b8581001071550g31e9f5a3n15ebdb10a806ab2e@mail.gmail.com>
+References: <76c5b8581001070903i3810f63crd764d451f7454584@mail.gmail.com>
+	 <201001071813.01187.trast@student.ethz.ch>
+	 <76c5b8581001070925g21ac3136x2928f12dc43437e5@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 08 00:38:16 2010
+Cc: Eugene Sajine <euguess@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 08 00:50:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NT1vi-0006oy-6B
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 00:38:14 +0100
+	id 1NT27P-0002Hk-76
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 00:50:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752626Ab0AGXiI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2010 18:38:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752558Ab0AGXiH
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 18:38:07 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:33368 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752542Ab0AGXiG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2010 18:38:06 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1NT1vZ-00035I-CS
-	for git@vger.kernel.org; Thu, 07 Jan 2010 15:38:05 -0800
-In-Reply-To: <adf1fd3d1001071433j6cd36641sdd2dfd6a936d8483@mail.gmail.com>
-X-Nabble-From: martinvz <martin.von.zweigbergk@gmail.com>
+	id S1753322Ab0AGXuO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2010 18:50:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753235Ab0AGXuN
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 18:50:13 -0500
+Received: from mail-iw0-f194.google.com ([209.85.223.194]:53132 "EHLO
+	mail-iw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753211Ab0AGXuM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2010 18:50:12 -0500
+Received: by iwn32 with SMTP id 32so2731534iwn.33
+        for <git@vger.kernel.org>; Thu, 07 Jan 2010 15:50:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=kQAysl0mxDQaQuAPMJ6YjN5AZmek6qhQlbgqK5HRG7Y=;
+        b=tC0zSPBlbZ+FH4JsqB7Q7lNaA5JkHIHovrVMtz0tvfKtmENMAzDMlelNqMwNdEXorT
+         EkygVEP0fIDkNneTqh0IykcDEinkFDRbzvgUytJtUHCb7EY4xvdG8PnAYxjUmJZwdVMT
+         cMAM8tXsDq2GHrrAO2OrencWFh6fhjKwg4HYs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=xycbAOh3zJUQTMyTW/930qorr7wbmIVbKOfjlGeZE8+CRsFVheOCcNgeWdbX6tvWgR
+         cbVnLM1udieP8gD7hRPMrwLHZnuXxidisJ3iNLKQCFe36LDmY0wDiQCMumESpeYQJVC1
+         HXxLdPYYnxJ07ddVEYbO5ExbqrSqbnvuTOmBk=
+Received: by 10.231.157.131 with SMTP id b3mr367960ibx.19.1262908210458; Thu, 
+	07 Jan 2010 15:50:10 -0800 (PST)
+In-Reply-To: <76c5b8581001070925g21ac3136x2928f12dc43437e5@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136401>
 
+>
+> Yep. That's what i though it is. I.e. origin/branchname will point
+> always to the last pushed commit only. Isn't it a bit strange that git
+> fetch doesn't update origin/qa?
+>
+> Probably the problem is that whenever I'm pulling or pushing to remote
+> repo i expect the last updated state of particular remote branch to be
+> reflected in origin/branchname, but IMHO it is correct expectation...
+>
+> What do you think?
 
+let me correct my self a little bit:
 
-Santi B=C3=A9jar-2 wrote:
->=20
-> Is your upstream branch rebased?
->=20
+$ git pull origin branchname
 
-Sorry, but I'm not sure I understand what that means. Most of the commi=
-ts in
-the upstream branch (the remote main branch) were rebased onto that bra=
-nch
-at some point in time before being pushed to our shared repository. The
-remote branch itself was never rebased against any other branch (all
-destructive operations disallowed in Gitosis). I hope that (possibly al=
-ong
-with the information below) answers your question.
+and
 
+$git fetch origin branchname
 
-Santi B=C3=A9jar-2 wrote:
->=20
-> Can you provide, at least, a graph of your history (ala git log
-> --graph --oneline for example)? And plot also the reflog entries and
-> all the important commits.
->=20
+are both causing the output like this:
 
-$ git log --graph --format=3D%h --all
-* 2038a46 # topic-2
-* a7b93b2
-* f2501ae # origin/main
-* cd5aaa9
-* cb232f3
-=2E..
-* 5ed0d06
-* 3067862
-| * 6eba2fa # topic-1
-| * b09aaf4
-| * bc3b72a
-|/
-| * 03d0d84 # topic-3
-| * 5160773
-| * 3c25642
-|/
-| * 6e9b12b # topic-4
-| * 75f5ab2
-| * bdd08ce
-| * b5d5759
-|/
-* 486b580
-* a021696
-* 3ffe7df
-* d0f55c5
-=2E..
+>From git://....
+* branch      branchname    -> FETCH_HEAD
+...
 
-I have topic-1 checked out and run "git pull" and expect it to rebase (=
-only)
-commits bc3b72a, b09aaf4, 6eba2fa onto f2501ae, but it starts by applyi=
-ng
-a021696 and 486b580.
+but "git fetch" says:
 
-$ git reflog -g origin/main
-f2501ae refs/remotes/origin/mai=7F=7Fn@{0}: fetch origin: fast forward
-3ffe7df refs/remotes/origin/mai=7F=7Fn@{1}: fetch origin: fast forward
-=2E..
+>From git://....
+* branch      branchname    -> origin/branchname
 
-I hope that's all that's all you need. It seems that the problem is tha=
-t the
-oldremoteref gets overwritten with the entry from the reflog. Is the pr=
-oblem
-that 3ffe7df appears in the reflog or that 486b580 doesn't appear there=
-? I'm
-not clear on what ends up in the reflog.
-
-I just realized that I myself created a021696 and 486b580 (but not 3ffe=
-7df),
-probably by rebasing some now-dead branch against origin/main.
-
-Something else that may or may not have something to do with the proble=
-m is
-that there is also a branch called origin/main-stable (pointing to the =
-same
-commit as origin/main). I also have a local main branch (also same comm=
-it as
-origin/main). I don't know if any of this could confuse Git. (To be
-perfectly honest, it is actually the origin/main-stable branch I'm tryi=
-ng to
-pull from, just in case you think the branch name could have any impact=
-=2E)
-
+Is this inconsistent behavior necessary by design?
 
 Thanks,
-Martin
-
---=20
-View this message in context: http://n2.nabble.com/Difference-between-p=
-ull-rebase-and-fetch-rebase-tp4266164p4269422.html
-Sent from the git mailing list archive at Nabble.com.
+Eugene
