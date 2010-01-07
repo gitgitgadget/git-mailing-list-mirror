@@ -1,117 +1,84 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/2] t7002: set test prerequisite "external-grep" if 
-	supported
-Date: Thu, 7 Jan 2010 21:26:27 +0700
-Message-ID: <fcaeb9bf1001070626we21617dt1b76af19a3c4a88d@mail.gmail.com>
-References: <7v7hs09tpi.fsf@alter.siamese.dyndns.org>
-	 <1262608455-4045-1-git-send-email-pclouds@gmail.com>
-	 <7v4omyhc7h.fsf@alter.siamese.dyndns.org>
-	 <7vy6ka8rmr.fsf@alter.siamese.dyndns.org>
-	 <fcaeb9bf1001070527ra1570a0m12182db9bb029055@mail.gmail.com>
-	 <4B45E9E7.1040905@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jan 07 15:26:34 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] lockfile: show absolute filename in unable_to_lock_message.
+Date: Thu,  7 Jan 2010 15:54:10 +0100
+Message-ID: <1262876050-345-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <4B44DB6A.2050804@kdbg.org>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jan 07 15:54:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NStJp-0005Go-MR
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 15:26:34 +0100
+	id 1NStlH-0000Xe-9n
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 15:54:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752450Ab0AGO03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2010 09:26:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280Ab0AGO03
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 09:26:29 -0500
-Received: from mail-pz0-f171.google.com ([209.85.222.171]:38873 "EHLO
-	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751173Ab0AGO02 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2010 09:26:28 -0500
-Received: by pzk1 with SMTP id 1so2959556pzk.33
-        for <git@vger.kernel.org>; Thu, 07 Jan 2010 06:26:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=CCZTm9vDWx1eQfmQf0UgycTF/Dk8gbLEI9ji3KZMS/Q=;
-        b=hEKjaoXT2KGqeLms1+b2rKE9ouWx29YVJLgeBT88zjaYHGjVTqrAQdNg99yIT08DOB
-         m36OsoQZWvpPV1FSXXfS+epjgmhgqJjua8GO8zCZhReG5JHh8yE5MRhfCguVaIo+gUKP
-         n3dy599b3QcnPgIilwlO/nmUo6gEDUpUQwQL0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=m65kyoSlah+aYtseDEtotxinEJuxKEutaHhKrbbUeRCZ+c+u04zuhFkADmS8IS3h9m
-         CtBzHjfSGG18Tc82kdI6tp2A3iDlT2dhqSPnq8fB7s6JOGNw7tWs1X2Gp8Q/tkuHX4qP
-         Rm7PZwTdIK52PbXtcOPHeNIv5RpsL0Xi+VG6k=
-Received: by 10.115.103.29 with SMTP id f29mr1541647wam.222.1262874387855; 
-	Thu, 07 Jan 2010 06:26:27 -0800 (PST)
-In-Reply-To: <4B45E9E7.1040905@viscovery.net>
+	id S1752673Ab0AGOyn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2010 09:54:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752131Ab0AGOyn
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 09:54:43 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:43737 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752637Ab0AGOym (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2010 09:54:42 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o07EsDWH030919
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 7 Jan 2010 15:54:13 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1NStke-0004xw-GS; Thu, 07 Jan 2010 15:54:16 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1NStke-000068-DA; Thu, 07 Jan 2010 15:54:16 +0100
+X-Mailer: git-send-email 1.6.6.81.gda96d0
+In-Reply-To: <4B44DB6A.2050804@kdbg.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 07 Jan 2010 15:54:13 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o07EsDWH030919
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1263480854.93385@d7Xs+fB5a+RgfBNc0Ot6ww
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136346>
 
-On 1/7/10, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Nguyen Thai Ngoc Duy schrieb:
->
-> > On 1/7/10, Junio C Hamano <gitster@pobox.com> wrote:
->  >>  So by writing the test to check the desired outcome, instead of writing it
->  >>  for the particular implementation of using external grep optimization, you
->  >>  will catch both kinds of breakages.
->  >>
->  >>  Perhaps something like this (untested, of course)?
->  >>
->  >>  test_expect_success 'strings in work tree files are not found for skip-wt paths' '
->  >>         no="no such string in the index" &&
->  >>         test_must_fail git grep -e "$no" --cached file &&
->  >>         git update-index --skip-worktree file &&
->  >>         echo "$no" >file &&
->  >>         test_must_fail git grep -e "$no" file &&
->  >>         git update-index --no-skip-worktree file &&
->  >>         git grep -e "$no" file
->  >>  '
->  >>
->  >
->  > Very well reasoned. I'd say go for it!
->  >
->  > Tested-by: me
->
->
-> The test is not quite complete. Not only do you want to test that the
->  worktree file is not looked at, but that the index version is used:
->
->
->  test_expect_success 'for skip-wt paths, strings are found in index, not in
->  worktree' '
->         yes="this string is in the index" &&
->
->         no="no such string in the index" &&
->
->         echo "$yes" >file &&
->         git update-index file &&
->         echo "$no" >file &&
->         git grep -e "$yes" --cached file &&
->
->         test_must_fail git grep -e "$no" --cached file &&
->         git update-index --skip-worktree file &&
->
->         git grep -e "$yes" file &&
->
->         test_must_fail git grep -e "$no" file &&
->         git update-index --no-skip-worktree file &&
->
->         test_must_fail git grep -e "$yes" file &&
->
->         git grep -e "$no" file
->  '
+When calling a git command from a subdirectory and a file locking fails,
+the user will get a path relative to the root of the worktree, which is
+invalid from the place where the command is ran. Make it easy for the
+user to know which file it is.
 
-Can we get rid of preparing $yes and do "grep -e foo file" instead?
-There are lots of foo from setup test. It's not as strict as your test
-because foo is also in worktree. But we have $no for testing worktree
-already.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+> Since these are merely informative, wouldn't it be more suitable to
+> use make_nonrelative_path()?
+
+Sensible, yes.
+
+ lockfile.c |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/lockfile.c b/lockfile.c
+index 6851fa5..b0d74cd 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -164,9 +164,10 @@ static char *unable_to_lock_message(const char *path, int err)
+ 		    "If no other git process is currently running, this probably means a\n"
+ 		    "git process crashed in this repository earlier. Make sure no other git\n"
+ 		    "process is running and remove the file manually to continue.",
+-		    path, strerror(err));
++			    make_nonrelative_path(path), strerror(err));
+ 	} else
+-		strbuf_addf(&buf, "Unable to create '%s.lock': %s", path, strerror(err));
++		strbuf_addf(&buf, "Unable to create '%s.lock': %s",
++			    make_nonrelative_path(path), strerror(err));
+ 	return strbuf_detach(&buf, NULL);
+ }
+ 
 -- 
-Duy
+1.6.6.81.gda96d0
