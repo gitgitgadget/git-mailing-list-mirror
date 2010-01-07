@@ -1,103 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jan 2010, #02 draft; Wed, 06)
-Date: Wed, 06 Jan 2010 19:43:57 -0800
-Message-ID: <7vvdfeeg02.fsf@alter.siamese.dyndns.org>
-References: <7vvdfenaar.fsf@alter.siamese.dyndns.org>
- <20100107122334.6117@nanako3.lavabit.com>
+From: Mike Mueller <mmueller@vigilantsw.com>
+Subject: [PATCH] Fix segfault in fast-export
+Date: Wed, 6 Jan 2010 22:58:39 -0500
+Message-ID: <20100107035839.GM8510@samus.subfocal.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Jan 07 04:44:14 2010
+Content-Type: multipart/mixed; boundary="zYM0uCDKw75PZbzx"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 07 05:07:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NSjIC-0005dF-RU
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 04:44:13 +0100
+	id 1NSjeR-0003EO-Sb
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jan 2010 05:07:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756727Ab0AGDoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jan 2010 22:44:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756603Ab0AGDoH
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 22:44:07 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45003 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755227Ab0AGDoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jan 2010 22:44:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 578458E2C1;
-	Wed,  6 Jan 2010 22:44:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sVHDYQnpn1u+s2X47eurFKKrUuo=; b=AY9qX4
-	mboHTW/9eRXcnxvwX/z9NwSQGGECTwDrj1tonKVWjNYt70Ivcdi4sLHrDMYqbaeA
-	6Iu3Y4iVM76IVa4gIhn9KeAXDJ9XxZYnw+EyT0tlYE+9cg0NZQaXcoIe/TfLqJty
-	FOEs64uQ8yRiuf+PEP9Hl1JKE0fas2YH7G8AQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gVAV7f8+o8B+i1ptpechyKki83Nb+VLC
-	gfy/cCcDZdED1hHiG1+K/8Xtu+dLkBlvYyq36RlEvbeqY9lDWtNRgtInQz+0zXIs
-	mKjtCVWeBC9Ezp2SXKcLpIy0e0Jl0mNA4wvXjR7n6hbiVQ4RiiOOaTt8M+FbJ1Rc
-	RGiyvHe/XUc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 32E758E2BF;
-	Wed,  6 Jan 2010 22:44:01 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6B4C18E2B8; Wed,  6 Jan
- 2010 22:43:58 -0500 (EST)
-In-Reply-To: <20100107122334.6117@nanako3.lavabit.com> (Nanako Shiraishi's
- message of "Thu\, 07 Jan 2010 12\:23\:34 +0900")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E4BAF1CC-FB3E-11DE-8E2E-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756612Ab0AGEHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jan 2010 23:07:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756603Ab0AGEHB
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jan 2010 23:07:01 -0500
+Received: from eastrmmtai108.cox.net ([68.230.240.27]:61928 "EHLO
+	eastrmmtai108.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756451Ab0AGEHB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jan 2010 23:07:01 -0500
+X-Greylist: delayed 500 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Jan 2010 23:07:01 EST
+Received: from eastrmimpo01.cox.net ([68.1.16.119])
+          by eastrmmtao102.cox.net
+          (InterMail vM.8.00.01.00 201-2244-105-20090324) with ESMTP
+          id <20100107035840.MCZA13474.eastrmmtao102.cox.net@eastrmimpo01.cox.net>
+          for <git@vger.kernel.org>; Wed, 6 Jan 2010 22:58:40 -0500
+Received: from samus ([24.250.30.14])
+	by eastrmimpo01.cox.net with bizsmtp
+	id STyf1d0050JGoeo02TyfDj; Wed, 06 Jan 2010 22:58:40 -0500
+X-VR-Score: -30.00
+X-Authority-Analysis: v=1.1 cv=Q0/QIhtFGXcPwKBXdiAKH6RPO1IrUZ7nWfC2VwHFyto=
+ c=1 sm=1 a=PToGNBblRHN+nk2D3BzZVA==:17 a=o2MKldYCAAAA:8
+ a=MVgZfn3ZttOjugmBJaoA:9 a=IzfDIUsEriM-X2ztfisZOUUgoRMA:4 a=3-SzZg5x5EcA:10
+ a=o2kGL_zzVWo3YwyQuhIA:9 a=7eX9pHYSqGrGDdi8iLr8MQCrcrMA:4
+ a=PToGNBblRHN+nk2D3BzZVA==:117
+X-CM-Score: 0.00
+Received: by samus (sSMTP sendmail emulation); Wed, 06 Jan 2010 22:58:39 -0500
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136322>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-> Quoting Junio C Hamano <gitster@pobox.com>
->
->> I am experimenting with ideas to better manage the periodic "What's
->> cooking" messages, and here is one of such attempt based on the current
->> draft of the upcoming "2010 Jan, issue #02".
->> ...
->> Moved from [New Topics] to [Cooking]
->>
->>  * da/difftool (2009-12-22) 2 commits
->> - - git-difftool: Add '--gui' for selecting a GUI tool
->> - - t7800-difftool: Set a bogus tool for use by tests
->> +  (merged to 'next' on 2010-01-06 at e957395)
->> + + git-difftool: Add '--gui' for selecting a GUI tool
->> + + t7800-difftool: Set a bogus tool for use by tests
->>
->>  * jh/gitweb-cached (2010-01-03) 4 commits
->>   - gitweb: Makefile improvements
->>   - gitweb: Optionally add "git" links in project list page
->>   - gitweb: Add option to force version match
->>   - gitweb: Load checking
->> +
->> +Will merge to 'next', unless I hear objections within a few days.
->
-> For what it's worth, I think this new format very easy to spot the
-> differences and much nicer.
+--zYM0uCDKw75PZbzx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-This is _not_ a "new format" per-se, but is primarily a demonstration of
-the external diff feature (all in 'todo' branch).
+Hi all,
 
-While I think it is easier to view when I am interested in the differences
-since the previous issue (and that was why I wrote it) than the full list,
-its "incremental" nature cuts both ways.
+I'm working on a C++ static analyzer (Vigilant Sentry), and git
+is one of my test subjects.  In git-1.6.6, I found a crash in the
+fast-export command:
 
-The primary reason I send out "What's cooking" is to make sure people are
-aware of topics that are _not_ going forward, to encourage them to be
-involved by helping such topics.  When some topics are moved from Cooking
-to Stalled category, they will show up in the incremental report, but
-after that, until they start moving again, they won't be shown in the
-incremental report.  That defeats the whole point of sending the "What's
-cooking" messages.
+The problem is in builtin-fast-export.c, function export_marks:
 
-Topics that are in motion are watched actively by testers, developers and
-documenters.  They don't need as much exposure as stalled ones.
+    f = fopen(file, "w");
+    if (!f)
+        error("Unable to open marks file %s for writing.", file);
+   
+    for (i = 0; i < idnums.size; i++) {
+        if (deco->base && deco->base->type == 1) {
+            mark = ptr_to_mark(deco->decoration);
+            if (fprintf(f, ":%"PRIu32" %s\n", mark,
+                sha1_to_hex(deco->base->sha1)) < 0) {
+                e = 1;
+                break;
+            }
+        }
+        deco++;
+    }
+   
+    e |= ferror(f);
+    e |= fclose(f);
+
+If fopen() fails, the error message is printed, but the function
+doesn't exit.  The subsequent calls to fprintf and/or ferror will
+fail because f is NULL.  A simple way to reproduce is to export
+to a path you don't have write access to:
+   
+    $ git fast-export --export-marks=/foo
+    error: Unable to open marks file /foo for writing.
+    Segmentation fault (core dumped)
+
+I've attached a trivial patch that calls die_errno instead of
+error, so the program exits if f is NULL.
+
+Regards,
+Mike
+
+-- 
+Mike Mueller
+mmueller@vigilantsw.com
+
+http://www.vigilantsw.com/
+
+--zYM0uCDKw75PZbzx
+Content-Type: text/x-diff; charset=us-ascii
+Content-Disposition: attachment; filename="git-fast-export.patch"
+
+diff --git a/builtin-fast-export.c b/builtin-fast-export.c
+index b0a4029..963e89b 100644
+--- a/builtin-fast-export.c
++++ b/builtin-fast-export.c
+@@ -503,7 +503,7 @@ static void export_marks(char *file)
+ 
+ 	f = fopen(file, "w");
+ 	if (!f)
+-		error("Unable to open marks file %s for writing.", file);
++		die_errno("Unable to open marks file %s for writing", file);
+ 
+ 	for (i = 0; i < idnums.size; i++) {
+ 		if (deco->base && deco->base->type == 1) {
+
+--zYM0uCDKw75PZbzx--
