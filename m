@@ -1,85 +1,90 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: [PATCH 0/2] Support relative .git file in a submodule
-Date: Fri, 8 Jan 2010 18:24:13 -0500
-Message-ID: <32541b131001081524g43d54a44i582dd286c1dfe7a5@mail.gmail.com>
-References: <1262990208-15554-1-git-send-email-brad.king@kitware.com> 
-	<7vocl4urc6.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] ls-files: fix overeager pathspec optimization
+Date: Fri, 8 Jan 2010 15:24:13 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.1001081520240.7821@localhost.localdomain>
+References: <4B474C73.8080100@mtu.net> <4B4751EA.8060707@drmicha.warpmail.net> <20100108162404.GA5799@coredump.intra.peff.net> <7vr5q05z74.fsf@alter.siamese.dyndns.org> <20100108164132.GA6171@coredump.intra.peff.net> <7vskag1r5o.fsf@alter.siamese.dyndns.org>
+ <7v8wc8jw3k.fsf@alter.siamese.dyndns.org> <7vvdfcfjxo.fsf@alter.siamese.dyndns.org> <7veim0w68q.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Brad King <brad.king@kitware.com>, git@vger.kernel.org,
-	Lars Hjemli <hjemli@gmail.com>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jon Schewe <jpschewe@mtu.net>, spearce@spearce.org,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 09 00:24:43 2010
+X-From: git-owner@vger.kernel.org Sat Jan 09 00:25:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTOCA-00015h-KA
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 00:24:42 +0100
+	id 1NTOCa-0001Do-4O
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 00:25:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754216Ab0AHXYi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jan 2010 18:24:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754206Ab0AHXYi
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 18:24:38 -0500
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:48766 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752564Ab0AHXYh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jan 2010 18:24:37 -0500
-Received: by ywh6 with SMTP id 6so19963420ywh.4
-        for <git@vger.kernel.org>; Fri, 08 Jan 2010 15:24:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2VMi5vz4YgGgLa+yGFYURipfXpN2/s+1KEjV0WXbWNs=;
-        b=pGaC1pKL9g/UzC6i3KuCdYnTaPoAukfFt3UecCK3NzyfH6psb4XKpFnNH7EwKGyPBx
-         QuH2H5ZvRI7R0O74b03wQDV4u2Y0edYEMRpCNglHtLg/Zhh4GZjqMIcwJXy0ncKsepVj
-         OSRluDny6SEGP57Kalb2stRlXuG4iVKq7ppO4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=MTv8uYyMAITV/coo5Opp9PgBJKyQlc6o5+twwWsH+9uMq0iil7sTRF7oOk1CZqcMom
-         5XXT3DDdqQO8C8A1f/L18NY7AV4iqcMJmX4MH7PzHO+ERIa5KfDW4zpGkLD0joitB/G2
-         dwe/pbVx7/qjbS+ZCxX1yj51yS/ge8RiSK6bg=
-Received: by 10.150.174.8 with SMTP id w8mr1629261ybe.204.1262993075331; Fri, 
-	08 Jan 2010 15:24:35 -0800 (PST)
-In-Reply-To: <7vocl4urc6.fsf@alter.siamese.dyndns.org>
+	id S1754224Ab0AHXY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 18:24:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752888Ab0AHXY7
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 18:24:59 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:54979 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750781Ab0AHXY7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jan 2010 18:24:59 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o08NOE0O008806
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 8 Jan 2010 15:24:15 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o08NOD2p020546;
+	Fri, 8 Jan 2010 15:24:13 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <7veim0w68q.fsf_-_@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-5.446 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136496>
 
-On Fri, Jan 8, 2010 at 6:09 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Brad King <brad.king@kitware.com> writes:
+
+
+On Fri, 8 Jan 2010, Junio C Hamano wrote:
 >
->> ... if a submodule
->> has a .git file "symlink" with a relative path to the real submodule
->> repository then ...
->
-> ... then I've always thought that is simply a misconfiguration (t0002
-> seems to use full path for this exact reason). =A0Is there a reason w=
-hy
-> relative path should be used/usable here, other than "being able to i=
-s
-> better than not being able to"???
+> Given pathspecs that share a common prefix, ls-files optimized its call
+> into recursive directory reader by starting at the common prefix
+> directory.
+> 
+> If you have a directory "t" with an untracked file "t/junk" in it, but the
+> top-level .gitignore file told us to ignore "t/", this resulted in an
+> unexpected behaviour:
 
-If I have a bunch of git repos in ~/src, and I decide I'd rather
-rename it all to ~/source, it seems like it would be nice for all my
-links not to be broken.  This sort of thing can also happen if you
-have NFS-mounted home directories on a farm of machines, and some of
-them automount in /u/username and others use /home/username, for
-example.  I think this is the same reason that common sysadmin advice
-is to use relative symlinks instead of absolute links.
+Ok, I'm not sure how "unexpected" this is, since arguably you are 
+overriding the ignore file by _being_ in that directory (the same way 
+index contents override ignore files), but I could go either way on that.
 
-This problem seems especially true with submodules.  If the
-submodule's repo is something like supermodule/.git/submodule.git, a
-relative path would almost always be a appropriate, no?
+Your patch looks fine, although I think you did this in a very odd way.
 
-Have fun,
+> +	at = 0;
+> +	memcpy(path, path_, len);
+> +	while (1) {
+> +		char *cp;
+> +		path[at] = '\0';
+> +		/*
+> +		 * NOTE! NOTE! NOTE!: we might want to actually lstat(2)
+> +		 * path[] to make sure it is a directory.
+> +		 */
+> +		if (excluded(dir, path, &dtype))
+> +			return 1;
 
-Avery
+The above starts by testing the empty string, and then after that test it 
+goes on to the next directory component. That is just _odd_.
+
+Wouldn't it be more natural to write the loop the other way around, ie 
+_first_ look up the next directory component, and _then_ do the exclude 
+processing for thoose components? 
+
+Or is there some subtle reason I'm missing for actually checking the empty 
+name?
+
+				Linus
