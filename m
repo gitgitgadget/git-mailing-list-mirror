@@ -1,75 +1,98 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: [PATCH] string-list: rename the include guard to STRING_LIST_H
-Date: Fri,  8 Jan 2010 17:45:08 -0500
-Message-ID: <1262990708-1375-1-git-send-email-tfransosi@gmail.com>
+From: Brad King <brad.king@kitware.com>
+Subject: [PATCH 1/2] Test update-index for a gitlink to a .git file
+Date: Fri,  8 Jan 2010 17:36:47 -0500
+Message-ID: <1262990208-15554-2-git-send-email-brad.king@kitware.com>
+References: <1262990208-15554-1-git-send-email-brad.king@kitware.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 08 23:45:26 2010
+X-From: git-owner@vger.kernel.org Fri Jan 08 23:46:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTNa9-00044W-LU
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 23:45:26 +0100
+	id 1NTNap-0004Mp-C0
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 23:46:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754050Ab0AHWpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 17:45:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754014Ab0AHWpS
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 17:45:18 -0500
-Received: from mail-qy0-f192.google.com ([209.85.221.192]:33875 "EHLO
-	mail-qy0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753529Ab0AHWpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2010 17:45:17 -0500
-Received: by qyk30 with SMTP id 30so9213668qyk.33
-        for <git@vger.kernel.org>; Fri, 08 Jan 2010 14:45:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :message-id:x-mailer;
-        bh=2l8e7au1Z08RX1wFfzaQY3V4JjXpLKsceujEKqj28VE=;
-        b=rhBDMKnZL2TVyNCXdDKMKPVPyJMls756j5WNNlZF5L0m4cdumiY4kbBnrK/WTyp+NF
-         /Ygjj1wv/eKchhwTIJ94sMNh+Hz2aPHtBiU4bmB6sIb5g/xZDCnK2la0Dv5YEEORWieM
-         V0kxiUJ+whdcaDFJTNuXRc3z2PxDxDZAkRoGc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:message-id:x-mailer;
-        b=ccNZlF8GAdBRON6OSiCDv7NLIexcEB6YG7oOYxg2cYSJHZEtMZUouOzsfDXl8+a7D8
-         uHuQfr0sSJsBnSCriQtwfo0ca7Dom0W9YTUjQUoSzHPlYvbwaNhX+d4hYS4+s2kHMy9Q
-         hCTKJsPd6LYlpT7NYzqAeeeQhpK1hGvPWO56M=
-Received: by 10.224.1.28 with SMTP id 28mr14862400qad.313.1262990715834;
-        Fri, 08 Jan 2010 14:45:15 -0800 (PST)
-Received: from localhost ([201.53.2.165])
-        by mx.google.com with ESMTPS id 7sm25207069qwb.12.2010.01.08.14.45.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 08 Jan 2010 14:45:15 -0800 (PST)
-X-Mailer: git-send-email 1.6.6.75.g37bae
+	id S1754217Ab0AHWqF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 17:46:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754139Ab0AHWqB
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 17:46:01 -0500
+Received: from public.kitware.com ([66.194.253.19]:44063 "EHLO
+	public.kitware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754123Ab0AHWp7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2010 17:45:59 -0500
+Received: by public.kitware.com (Postfix, from userid 5001)
+	id 3384A17DC2; Fri,  8 Jan 2010 17:27:38 -0500 (EST)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on public.kitware.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,AWL,BAYES_00,
+	FH_DATE_PAST_20XX autolearn=no version=3.2.5
+Received: from hythloth (hythloth.kitwarein.com [192.168.30.5])
+	by public.kitware.com (Postfix) with ESMTP id 9EFA617DBB;
+	Fri,  8 Jan 2010 17:27:37 -0500 (EST)
+Received: by hythloth (Postfix, from userid 1000)
+	id 97377D002F; Fri,  8 Jan 2010 17:36:48 -0500 (EST)
+X-Mailer: git-send-email 1.6.5
+In-Reply-To: <1262990208-15554-1-git-send-email-brad.king@kitware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136486>
 
-Signed-off-by: Thiago Farina <tfransosi@gmail.com>
+Check that update-index recognizes a submodule that uses a .git file.
+Currently it works when the .git file specifies an absolute path, but
+not when it specifies a relative path.
+
+Signed-off-by: Brad King <brad.king@kitware.com>
 ---
- string-list.h |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ t/t2104-update-index-gitfile.sh |   38 ++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 38 insertions(+), 0 deletions(-)
+ create mode 100755 t/t2104-update-index-gitfile.sh
 
-diff --git a/string-list.h b/string-list.h
-index 14bbc47..6569cf6 100644
---- a/string-list.h
-+++ b/string-list.h
-@@ -1,5 +1,5 @@
--#ifndef PATH_LIST_H
--#define PATH_LIST_H
-+#ifndef STRING_LIST_H
-+#define STRING_LIST_H
- 
- struct string_list_item {
- 	char *string;
-@@ -39,4 +39,4 @@ struct string_list_item *string_list_append(const char *string, struct string_li
- void sort_string_list(struct string_list *list);
- int unsorted_string_list_has_string(struct string_list *list, const char *string);
- 
--#endif /* PATH_LIST_H */
-+#endif /* STRING_LIST_H */
+diff --git a/t/t2104-update-index-gitfile.sh b/t/t2104-update-index-gitfile.sh
+new file mode 100755
+index 0000000..ba71984
+--- /dev/null
++++ b/t/t2104-update-index-gitfile.sh
+@@ -0,0 +1,38 @@
++#!/bin/sh
++#
++# Copyright (c) 2010 Brad King
++#
++
++test_description='git update-index for gitlink to .git file.
++'
++
++. ./test-lib.sh
++
++test_expect_success 'submodule with absolute .git file' '
++	mkdir sub1 &&
++	(cd sub1 &&
++	 git init &&
++	 REAL="$(pwd)/.real" &&
++	 mv .git "$REAL"
++	 echo "gitdir: $REAL" >.git &&
++	 test_commit first)
++'
++
++test_expect_success 'add gitlink to absolute .git file' '
++	git update-index --add -- sub1
++'
++
++test_expect_success 'submodule with relative .git file' '
++	mkdir sub2 &&
++	(cd sub2 &&
++	 git init &&
++	 mv .git .real &&
++	 echo "gitdir: .real" >.git &&
++	 test_commit first)
++'
++
++test_expect_failure 'add gitlink to relative .git file' '
++	git update-index --add -- sub2
++'
++
++test_done
 -- 
-1.6.6.75.g37bae
+1.6.5
