@@ -1,56 +1,82 @@
-From: Andreas Gruenbacher <agruen@suse.de>
-Subject: [PATCH] base85: encode85() does not use the decode table
-Date: Fri,  8 Jan 2010 17:17:50 +0100
-Message-ID: <1262967470-31782-1-git-send-email-agruen@suse.de>
-References: <7v3a2giobm.fsf@alter.siamese.dyndns.org>
-Cc: Andreas Gruenbacher <agruen@suse.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 08 17:20:45 2010
+From: Jeff King <peff@peff.net>
+Subject: Re: Possible bug in git-completion.sh
+Date: Fri, 8 Jan 2010 11:24:04 -0500
+Message-ID: <20100108162404.GA5799@coredump.intra.peff.net>
+References: <4B474C73.8080100@mtu.net>
+ <4B4751EA.8060707@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Jon Schewe <jpschewe@mtu.net>, spearce@spearce.org,
+	git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Jan 08 17:24:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTHZp-00025m-1b
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 17:20:41 +0100
+	id 1NTHdM-0003sS-8v
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 17:24:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753869Ab0AHQUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 11:20:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753868Ab0AHQUh
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 11:20:37 -0500
-Received: from mail09.linbit.com ([212.69.161.110]:41785 "EHLO
-	mail09.linbit.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753750Ab0AHQUg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2010 11:20:36 -0500
-Received: from murkel-lan.suse.de (unknown [78.142.182.101])
-	by mail09.linbit.com (LINBIT Mail Daemon) with ESMTP id A7C57105DB6C;
-	Fri,  8 Jan 2010 17:20:35 +0100 (CET)
-Received: by murkel-lan.suse.de (Postfix, from userid 1000)
-	id B245C190F5; Fri,  8 Jan 2010 17:17:54 +0100 (CET)
-X-Mailer: git-send-email 1.6.6.75.g37bae
-In-Reply-To: <7v3a2giobm.fsf@alter.siamese.dyndns.org>
+	id S1753705Ab0AHQYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 11:24:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753615Ab0AHQYP
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 11:24:15 -0500
+Received: from peff.net ([208.65.91.99]:53666 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753467Ab0AHQYP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2010 11:24:15 -0500
+Received: (qmail 17437 invoked by uid 107); 8 Jan 2010 16:29:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 08 Jan 2010 11:29:02 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Jan 2010 11:24:04 -0500
+Content-Disposition: inline
+In-Reply-To: <4B4751EA.8060707@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136453>
 
-Signed-off-by: Andreas Gruenbacher <agruen@suse.de>
----
- base85.c |    2 --
- 1 files changed, 0 insertions(+), 2 deletions(-)
+On Fri, Jan 08, 2010 at 04:40:26PM +0100, Michael J Gruber wrote:
 
-diff --git a/base85.c b/base85.c
-index 1d165d9..7204ce2 100644
---- a/base85.c
-+++ b/base85.c
-@@ -84,8 +84,6 @@ int decode_85(char *dst, const char *buffer, int len)
- 
- void encode_85(char *buf, const unsigned char *data, int bytes)
- {
--	prep_base85();
--
- 	say("encode 85");
- 	while (bytes) {
- 		unsigned acc = 0;
--- 
-1.6.6.75.g37bae
+> Jon Schewe venit, vidit, dixit 08.01.2010 16:17:
+> > If I create a directory "build" at the top of my git repository and then
+> > add it to .gitignore, git behaves as expected and ignores the build
+> > directory when checking status. Now git-completion.sh has some issues. I
+> > have GIT_PS1_SHOWUNTRACKEDFILES to "1", so that I will be notified when
+> > there are untracked files in my working directory. When I'm in the
+> > top-level directory my prompt looks like expected, no '%'. However if I
+> > change to the build directory I get a '%', even though git status shows
+> > no untracked files. I see that git-completion.sh is using git ls-files
+> > to check this and that function does indeed show output when in my build
+> > directory. So the question here: Is git-completion.sh using ls-files
+> > improperly or is ls-files behaving improperly?
+> > 
+> 
+> Neither, but: output between status and ls-files is inconsistent. More
+> specifically, different commands behave differently with respect to the
+> treatment of subdirs. ls-files assumes "." implicitly, status does not.
+> "git status ." should give you the same behavior is "git ls-files" in
+> this regard.
+
+It doesn't, and I think there is a bug in ls-files.
+
+Try this:
+
+  git init
+  touch base-cruft
+  mkdir subdir
+  touch subdir/cruft
+  echo subdir >.gitignore
+  git status ;# shows gitignore and base-cruft
+  git ls-files -o --exclude-standard ;# ditto
+  cd subdir
+  git status . ;# shows nothing, since everything in subdir is ignored
+  git ls-files -o --exclude-standard ;# BUG: shows cruft
+
+Yes, ls-files operates in the subdirectory, which means it should not
+show cruft from the root (and it does not). But it should respect
+.gitignore directives going all the way back to the root, and it
+doesn't.
+
+-Peff
