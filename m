@@ -1,56 +1,81 @@
-From: Karl Wiberg <kha@treskal.com>
-Subject: Re: [StGit PATCH 2/2] Pass the --in-reply-to and --no-thread options 
-	to git send-email
-Date: Fri, 8 Jan 2010 07:43:44 +0100
-Message-ID: <b8197bcb1001072243h24e6248er79ac5a8afb6e3782@mail.gmail.com>
-References: <20100107160932.3226.95737.stgit@pc1117.cambridge.arm.com>
-	 <20100107160937.3226.14811.stgit@pc1117.cambridge.arm.com>
+From: Adam Megacz <adam@megacz.com>
+Subject: Re: edit Author/Date metadata as part of 'git commit' $EDITOR  invocation?
+Date: Fri, 08 Jan 2010 07:35:57 +0000
+Organization: Myself
+Message-ID: <xuu28wc9xd42.fsf@nowhere.com>
+References: <xuu2fx6m4vdi.fsf@nowhere.com> <fabb9a1e1001041232h4e5827d1pb5c648b33ecfb5ce@mail.gmail.com> <xuu2zl4tfuij.fsf@nowhere.com> <20100106073806.6117@nanako3.lavabit.com> <7v4omz17xz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 07:44:47 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 08 08:36:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NT8aU-0003R5-FP
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 07:44:46 +0100
+	id 1NT9OX-0008Pc-9l
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 08:36:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751635Ab0AHGnr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 01:43:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751456Ab0AHGnq
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 01:43:46 -0500
-Received: from mail1.space2u.com ([62.20.1.135]:35526 "EHLO mail1.space2u.com"
+	id S1752631Ab0AHHgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 02:36:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752323Ab0AHHgZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 02:36:25 -0500
+Received: from lo.gmane.org ([80.91.229.12]:52896 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751408Ab0AHGnq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2010 01:43:46 -0500
-Received: from mail-fx0-f225.google.com (mail-fx0-f225.google.com [209.85.220.225])
-	(authenticated bits=0)
-	by mail1.space2u.com (8.14.3/8.14.3) with ESMTP id o086hcQO032122
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NOT)
-	for <git@vger.kernel.org>; Fri, 8 Jan 2010 07:43:38 +0100
-Received: by fxm25 with SMTP id 25so12366800fxm.21
-        for <git@vger.kernel.org>; Thu, 07 Jan 2010 22:43:44 -0800 (PST)
-Received: by 10.102.214.22 with SMTP id m22mr7068560mug.33.1262933024434; Thu, 
-	07 Jan 2010 22:43:44 -0800 (PST)
-In-Reply-To: <20100107160937.3226.14811.stgit@pc1117.cambridge.arm.com>
+	id S1750799Ab0AHHgY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2010 02:36:24 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NT9OP-0008Os-0L
+	for git@vger.kernel.org; Fri, 08 Jan 2010 08:36:21 +0100
+Received: from gentzen.megacz.com ([65.23.129.159])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 08 Jan 2010 08:36:20 +0100
+Received: from adam by gentzen.megacz.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 08 Jan 2010 08:36:20 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: gentzen.megacz.com
+X-Home-Page: http://www.megacz.com/
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+Cancel-Lock: sha1:/kCkJlzIDAoneefoG3+o+SPeAKs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136419>
 
-On Thu, Jan 7, 2010 at 5:09 PM, Catalin Marinas <catalin.marinas@arm.com> wrote:
 
-> +    if options.in_reply_to:
-> +        cmd.append("--in-reply-to %s" % options.in_reply_to)
+Junio C Hamano <gitster@pobox.com> writes:
+> Nanako Shiraishi <nanako3@lavabit.com> writes:
+>> Quoting Adam Megacz <adam@megacz.com>
+>>> Perhaps a preference (off by default) demanding that they be set
+>>> explicitly when "git commit -m" is used?
 
-Have you tested this? I'm pretty sure you need "--in-reply-to=%s", or
-to add the two strings separately---since as far as I can see, this
-command is never shell-expanded.
+>> Sverre pointed out why this won't work.
 
--- 
-Karl Wiberg, kha@treskal.com
-   subrabbit.wordpress.com
-   www.treskal.com/kalle
+I agree; making it a preference will not help.
+
+I propose instead that "git commit -e" cause the metadata headers to be
+provided to $EDITOR.  People who care about the metadata can simply get
+in the habit of always passing that option when invoking "git commit".
+
+> The approach may have been Ok 10 years ago, back when `whoami`@`hostname`,
+> at least on systems that were competently maintained, gave a reasonable
+> mail address for most people, but I don't think it is adequate anymore to
+> majority of people,
+
+I agree.
+
+> So I don't think anybody minds if we refuse to work if we are going to end
+> up using a name that we didn't get from an explicit end user configuration
+> (i.e. GIT_*_EMAIL and GIT_*_NAME environment and user.* configuration
+> variables).
+
+I support that as well, although I'd still like to be shown the data.  I
+wear a few different hats (each with its own email address), and I don't
+think I want to pick one of them as the default.
+
+Thanks,
+
+  - a
