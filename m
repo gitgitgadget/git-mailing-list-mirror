@@ -1,78 +1,48 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: git-log - hide parent (was: merging two equivalent branches)
-Date: Fri, 8 Jan 2010 06:00:25 +0100
-Message-ID: <201001080600.26088.chriscool@tuxfamily.org>
-References: <B0543B3C-C139-4BD3-B028-58B4DA132422@gmail.com> <46d6db661001071022t79ca65foac249d948a20c328@mail.gmail.com> <DF05F91F-CBFD-458A-A99F-79E98ACA5146@gmail.com>
+From: Karl Wiberg <kha@treskal.com>
+Subject: Re: [StGit PATCH 1/2] Rename the mail --refid and --noreply options 
+	to match Git
+Date: Fri, 8 Jan 2010 07:35:06 +0100
+Message-ID: <b8197bcb1001072235ga32ffb7r4ede6eeec1944141@mail.gmail.com>
+References: <20100107160932.3226.95737.stgit@pc1117.cambridge.arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Christian MICHON <christian.michon@gmail.com>
-To: David Reitter <david.reitter@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 05:57:42 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 08 07:35:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NT6ur-0005dI-HP
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 05:57:41 +0100
+	id 1NT8RM-0001WE-2M
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 07:35:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752181Ab0AHE5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2010 23:57:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751618Ab0AHE5i
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 23:57:38 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:54487 "EHLO smtp3-g21.free.fr"
+	id S1751178Ab0AHGfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 01:35:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303Ab0AHGfL
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 01:35:11 -0500
+Received: from mail1.space2u.com ([62.20.1.135]:35941 "EHLO mail1.space2u.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750759Ab0AHE5h (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2010 23:57:37 -0500
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id D924981803B;
-	Fri,  8 Jan 2010 05:57:31 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id F2434818042;
-	Fri,  8 Jan 2010 05:57:28 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <DF05F91F-CBFD-458A-A99F-79E98ACA5146@gmail.com>
-Content-Disposition: inline
+	id S1750754Ab0AHGfK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2010 01:35:10 -0500
+Received: from fg-out-1718.google.com (fg-out-1718.google.com [72.14.220.158])
+	(authenticated bits=0)
+	by mail1.space2u.com (8.14.3/8.14.3) with ESMTP id o086Z13f020831
+	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NOT)
+	for <git@vger.kernel.org>; Fri, 8 Jan 2010 07:35:01 +0100
+Received: by fg-out-1718.google.com with SMTP id 19so7814733fgg.1
+        for <git@vger.kernel.org>; Thu, 07 Jan 2010 22:35:07 -0800 (PST)
+Received: by 10.102.209.1 with SMTP id h1mr8036878mug.8.1262932506936; Thu, 07 
+	Jan 2010 22:35:06 -0800 (PST)
+In-Reply-To: <20100107160932.3226.95737.stgit@pc1117.cambridge.arm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136417>
 
-On jeudi 07 janvier 2010, David Reitter wrote:
-> On Jan 7, 2010, at 1:22 PM, Christian MICHON wrote:
-> > I recall asking a similar question in 2008, and the answer was to look
-> > at "git graft" and use "git filter-branch" to recreate history.
->
-> Thanks, I've tried that and I recall that filter-branch wasn't willing to
-> rewrite just the recent history - at least in started going over all 100k
-> revisions at a very slow pace.
->
-> I'm still unsure how, after the filter-branch, I would have some ancestor
-> from the B series so that future pulls from the remote work, while having
-> an ancestor from A, to make sure I can continue merging into C.  If
-> history is rewritten, I'll get new revisions and lose ancestors. I'm
-> beginning to thing that the cutting and pasting I'd like is conceptually
-> impossible.
->
-> So what one would need is to specify a "silent parent" for a revision
-> that is relevant w.r.t. future three-way merges, but indicates that the
-> history behind the silent parent is irrelevant and shouldn't be shown in
-> a git-log.  The runaway parent would be guaranteed to _not_ contribute
-> any content to the tree of the child revision, as is the case with a
-> "merge ours".
+Looks good.
 
-What you could perhaps do with "git replace" or a graft is to change the 
-merge commit so that it has only one parent instead of 2.
-
-> This could be implemented as a way to mark a parent as silent (checked by
-> git-log at least), but one could also allow for an empty commit that,
-> while having a normal parent, clears out the tree.
->
-> Let me know if this idea is completely crazy. --
-
-This looks like the right thing to do using "git replace" or grafts.
-
-Best regards,
-Christian. 
+-- 
+Karl Wiberg, kha@treskal.com
+   subrabbit.wordpress.com
+   www.treskal.com/kalle
