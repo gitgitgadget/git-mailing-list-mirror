@@ -1,71 +1,70 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: [PATCH] sample pre-commit hook: don't trigger when recording a merge
-Date: Sat, 09 Jan 2010 08:16:52 +0900
-Message-ID: <20100109081652.6117@nanako3.lavabit.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 9/9] rerere forget path: forget recorded resolution
+Date: Fri, 08 Jan 2010 15:20:23 -0800
+Message-ID: <7vpr5krxoo.fsf@alter.siamese.dyndns.org>
+References: <1262122958-9378-1-git-send-email-gitster@pobox.com>
+ <1262122958-9378-10-git-send-email-gitster@pobox.com>
+ <201001082255.51499.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 09 00:17:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Jan 09 00:20:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTO57-0007Bf-KQ
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 00:17:25 +0100
+	id 1NTO8E-0008D2-23
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 00:20:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754062Ab0AHXRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 18:17:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754021Ab0AHXRV
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 18:17:21 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:40705 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753995Ab0AHXRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2010 18:17:20 -0500
-Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
-	by karen.lavabit.com (Postfix) with ESMTP id E399E11B87F
-	for <git@vger.kernel.org>; Fri,  8 Jan 2010 17:17:19 -0600 (CST)
-Received: from 4792.lavabit.com (212.62.97.23)
-	by lavabit.com with ESMTP id EWB985YJLKBI
-	for <git@vger.kernel.org>; Fri, 08 Jan 2010 17:17:19 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=wwy8S9zdMnjsJ3V75ohpsSzvsK4M3sekAlKgGE6riVe5yiDDeQbxZlzY77DI1pjSNr9NJSQZJiKpGzrGFNvEe31R5w1xNPffACM7UsaJldaiBoGwKfPQ8OOuDBafU4qU+I4bfjKVasCkf3l9qdvY/dJJSn/Qd9zVjxnsavkWJlE=;
-  h=From:To:Subject:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+	id S1754098Ab0AHXUb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 18:20:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754069Ab0AHXUb
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 18:20:31 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51009 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754035Ab0AHXUa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2010 18:20:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BB9858FE05;
+	Fri,  8 Jan 2010 18:20:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MPNyLaNG66/pcKRjR7lC9tPY2dU=; b=LCQxRL
+	yDIa8MAohTK+2F/pZG9RxYAft3bJcP7WJtXRv3+piMi7Ubj9oVg1KMjJbjYhrT1b
+	PMBvyS0XI1pci31USDHqto3ZCkynCeOfB7v79ecdgahRqsZRFlqW1hzw+dunyrzE
+	uUv8q9gmvzA+pUK4esZqPE3ny/I+qtYatF33M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=t7WUrFdg5n88eHVcv6aNdHqlaHISFz4A
+	kOJEuygzNw8aTisLwesXcCdA/XyrdCho/8E628VjZNXW6Rr37qwYWbC5iM9W4Mu1
+	8bAJLWvFXrx/nbAV2y7ioIpTYzLld4yPFDQZ3E9Hwj/JFsCsVYMUWVDG9hMRsBt+
+	iRA7WTtkYW0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 981278FE04;
+	Fri,  8 Jan 2010 18:20:27 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 052628FE03; Fri,  8 Jan
+ 2010 18:20:24 -0500 (EST)
+In-Reply-To: <201001082255.51499.j6t@kdbg.org> (Johannes Sixt's message of
+ "Fri\, 8 Jan 2010 22\:55\:51 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 67EE67FE-FCAC-11DE-B714-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136493>
 
-When recording a merge, even if there are problematic whitespace errors,
-let them pass, because the damage has already been done in the history. If
-this hook triggers, it will invite a novice to fix such errors in a merge
-commit but such a change is not related to the merge. Don't encourage it.
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
----
- templates/hooks--pre-commit.sample |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+> Your implementation forgets to re-insert the forgotten resolutions into
+> MERGE_RR, therefore, the next 'git rerere' does not record the new
+> resolution.
+>
+> In my implementation of 'rerere forget', I had the following tests.
 
-diff --git a/templates/hooks--pre-commit.sample b/templates/hooks--pre-commit.sample
-index 439eefd..66e56bb 100755
---- a/templates/hooks--pre-commit.sample
-+++ b/templates/hooks--pre-commit.sample
-@@ -7,6 +7,11 @@
- #
- # To enable this hook, rename this file to "pre-commit".
- 
-+if test -f "${GIT_DIR-.git}"/MERGE_HEAD
-+then
-+	exit 0
-+fi
-+
- if git-rev-parse --verify HEAD >/dev/null 2>&1
- then
- 	against=HEAD
--- 
-1.6.6
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Please filfre to roll a patch that adds the tests and code that inserts
+necessary MERGE_RR entries, if the feature is pressing; unfortunately I
+don't think I will have much git time during the coming weekend.
