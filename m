@@ -1,92 +1,115 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Linking multiple Git repositories for version tracking
-Date: Fri, 8 Jan 2010 13:34:11 -0500
-Message-ID: <32541b131001081034k67664652h6f6e9a007175c260@mail.gmail.com>
-References: <op.u573txvdn3qeew@klee> <op.u574cwxqn3qeew@klee>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] Document git-blame triple -C option
+Date: Sat, 9 Jan 2010 00:28:52 +0530
+Message-ID: <f3271551001081058l4fffa51t7ec52e9ce2f3166e@mail.gmail.com>
+References: <f3271551001080610p62ef6abfge1c96648d1ea948f@mail.gmail.com> 
+	<4B47510E.7040802@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: James Beck <james@jmbeck.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 19:34:41 2010
+Content-Type: multipart/mixed; boundary=001636284a3699501a047cabc821
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Jan 08 19:59:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTJfQ-00031w-Ne
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 19:34:37 +0100
+	id 1NTK3S-00057Q-C8
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 19:59:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753455Ab0AHSec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 13:34:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753102Ab0AHSec
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 13:34:32 -0500
-Received: from mail-yx0-f188.google.com ([209.85.210.188]:49436 "EHLO
-	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753126Ab0AHSeb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2010 13:34:31 -0500
-Received: by yxe26 with SMTP id 26so18936525yxe.4
-        for <git@vger.kernel.org>; Fri, 08 Jan 2010 10:34:31 -0800 (PST)
+	id S1753962Ab0AHS7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 13:59:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753845Ab0AHS7V
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 13:59:21 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:45877 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753786Ab0AHS7U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2010 13:59:20 -0500
+Received: by ywh6 with SMTP id 6so19748777ywh.4
+        for <git@vger.kernel.org>; Fri, 08 Jan 2010 10:59:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :from:date:message-id:subject:to:cc:content-type;
-        bh=4ktO2208SpSkP0Zt57F5gmDG3qVZdG6gsAZmEtWscC4=;
-        b=Cee+80YPLWUD0iwDt7Ivtklje5s11K0jeRPLfQ/dBheJUcOkfehzfiKTNuRf15eKos
-         oa/h1KNpOQ3PFNNAjSljTzOMLOZ8eDDjauZ3QDe1a5zL93ZMxc502ZEOT6aajuvLbDBI
-         R0Ufw/5474Ed/beV6ziFowu6T85hy1iDoyXfE=
+        bh=+tE+4LSzlPh8HisXBw9raUfLbKYz9pTsJ8/UDHW93q4=;
+        b=ut9uWJy9YIfihq8KqziZg1XDOWlDk1f2P6pkwAWMkjVTc/8Jxxs5KPWpZFaAW9TJLr
+         iLI6vYDYQ+MPG/3vlmd4scp5HmvaU4s8y7sgmijfW8Ap4r9z216Tku2BLLdnIc3SrVVe
+         5iqfUbCq2NWYg1APjxEZxwQQE4CO6r06Pf1hA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        b=NcKIDxECiiXgdCLn3Vg/0wEPK9Xe9oR1cpyVJanWOI14oJ9IUZ3a14eLghQEr/wM82
-         ZVBxScrucxAV13H5GIVkn97fomxLWFVnx+xacdyDaSWE0fVixP2z19LTp7QPw4qgu+8+
-         wMndO85dsykQSiGdTbdsy5CWBChwP89b5a1BY=
-Received: by 10.151.88.42 with SMTP id q42mr5902434ybl.75.1262975671060; Fri, 
-	08 Jan 2010 10:34:31 -0800 (PST)
-In-Reply-To: <op.u574cwxqn3qeew@klee>
+        b=Hc0Qamb4NJSUvChr7Ng3SWGqqRT96hOYkreNd0jssU0+Mve9HXqdrZu8zmSX8+usW0
+         EdgUwkwAnTmRgrEkA+3DwX/pBF1NxC42/sixZTgh6B4G3DrIJRjxndJDffAP34OSMYF7
+         2NluPgja8bqbSoj6QyACUnVGtrwJEPcfRULYA=
+Received: by 10.90.195.3 with SMTP id s3mr2587293agf.104.1262977153327; Fri, 
+	08 Jan 2010 10:59:13 -0800 (PST)
+In-Reply-To: <4B47510E.7040802@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136464>
 
-On Fri, Jan 8, 2010 at 12:03 PM, James Beck <james@jmbeck.com> wrote:
-> I'm developing firmware that is composed of multiple projects. Each
-> section of the firmware has it's own git repository (each section
-> correlates to a physical processor). But the firmware as a whole is
-> getting to the point where I have to remember which version of Firmware A
-> is compatible with Firmware B. If I add a feature to B that requires some
-> tweaks in A, I need to know that both A v3.04 and B v2.7 need to be used
-> together.
->
-> I'm starting to move into alpha with this code, so I really need to have a
-> system that keeps track of compatible firmware versions. The best I can
-> come up with is a plain text file (or Excel spreadsheet) that lists the
-> overall firmware version, and the Git hash for each individual project.
-> That way, if I want to load up a particular firmware version, I can
-> checkout each hash for that version. Seems foolproof, but not terribly
-> easy, and somewhat annoying.
->
-> I know submodules might be used, but it's not super obvious how to make
-> their paradigm work nicely here. (You check out a version you want, and
-> then list all the submodule git hashes for that version? What happens if
-> one hash needs updating? Do you branch it?) It seems more complicated than
-> I'd like.
+--001636284a3699501a047cabc821
+Content-Type: text/plain; charset=ISO-8859-1
 
-This seems like exactly what submodules were designed to do.
+> Above you see why it is difficult to comment on attached patches.
+> They're not included!
 
-1. create a "superproject" for each physical product
+I'm sorry, but I'm behind a HTTP proxy, and GMail mangles up patches.
+I'm left with no choice but to attach the patches.
 
-2. use submodules to link to the right firmware versions for that product
+> You re-wrapped the existing documentation. Please don't do that, because
+> it makes it difficult to spot what you really changed.
 
-3. when you make a new release of that physical product, update the
-firmware links.
+Okay. Corrected.
 
-4. when someone wants to check out a particular version of the
-product, they retrieve the product's repo and ask git submodule to
-checkout the submodules.
+> It seems you added one sentence. Please don't use "thrice" for "three
+> times", that is very old English and sounds funny.
 
-Which part is not working for you?
+Okay. I've also modified the second line (what happens when the option
+is given twice) for clarity.
 
-Have fun,
+--001636284a3699501a047cabc821
+Content-Type: text/x-patch; charset=US-ASCII; 
+	name="0001-Document-git-blame-triple-C-option.patch"
+Content-Disposition: attachment; 
+	filename="0001-Document-git-blame-triple-C-option.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_g47bpgrp0
 
-Avery
+RnJvbSAzNzE3MDVmNjQ1NzZmZjdiOGRjODJiZWExOWM3MTRjZTMyMDA5N2I5IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBSYW1rdW1hciBSYW1hY2hhbmRyYSA8YXJ0YWdub25AZ21haWwu
+Y29tPgpEYXRlOiBTYXQsIDkgSmFuIDIwMTAgMDA6MTg6MDcgKzA1MzAKU3ViamVjdDogW1BBVENI
+IHYyXSBEb2N1bWVudCBnaXQtYmxhbWUgdHJpcGxlIC1DIG9wdGlvbgoKZ2l0LWJsYW1lIC1DQ0Mg
+aXMgZXhwbGFpbmVkIGluIGJ1aWxpbi1ibGFtZS5jIGxpbmUgMjE3MSwgYnV0IGlzCnVuZXhwbGFp
+bmVkIGluIHRoZSBkb2N1bWVudGF0aW9uLiBUaGlzIHBhdGNoIGZpeGVzIHRoYXQuCgpTaWduZWQt
+b2ZmLWJ5OiBSYW1rdW1hciBSYW1hY2hhbmRyYSA8YXJ0YWdub25AZ21haWwuY29tPgotLS0KIERv
+Y3VtZW50YXRpb24vYmxhbWUtb3B0aW9ucy50eHQgfCAgICA2ICsrKystLQogRG9jdW1lbnRhdGlv
+bi9naXQtYmxhbWUudHh0ICAgICB8ICAgIDIgKy0KIDIgZmlsZXMgY2hhbmdlZCwgNSBpbnNlcnRp
+b25zKCspLCAzIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vYmxhbWUt
+b3B0aW9ucy50eHQgYi9Eb2N1bWVudGF0aW9uL2JsYW1lLW9wdGlvbnMudHh0CmluZGV4IDE2MjVm
+ZmMuLjQ4MzNjYWMgMTAwNjQ0Ci0tLSBhL0RvY3VtZW50YXRpb24vYmxhbWUtb3B0aW9ucy50eHQK
+KysrIGIvRG9jdW1lbnRhdGlvbi9ibGFtZS1vcHRpb25zLnR4dApAQCAtOTgsOCArOTgsMTAgQEAg
+Y29tbWl0LgogCWZpbGVzIHRoYXQgd2VyZSBtb2RpZmllZCBpbiB0aGUgc2FtZSBjb21taXQuICBU
+aGlzIGlzCiAJdXNlZnVsIHdoZW4geW91IHJlb3JnYW5pemUgeW91ciBwcm9ncmFtIGFuZCBtb3Zl
+IGNvZGUKIAlhcm91bmQgYWNyb3NzIGZpbGVzLiAgV2hlbiB0aGlzIG9wdGlvbiBpcyBnaXZlbiB0
+d2ljZSwKLQl0aGUgY29tbWFuZCBhZGRpdGlvbmFsbHkgbG9va3MgZm9yIGNvcGllcyBmcm9tIGFs
+bCBvdGhlcgotCWZpbGVzIGluIHRoZSBwYXJlbnQgZm9yIHRoZSBjb21taXQgdGhhdCBjcmVhdGVz
+IHRoZSBmaWxlLgorCXRoZSBjb21tYW5kIGFkZGl0aW9uYWxseSBsb29rcyBmb3IgY29waWVzIGZy
+b20gb3RoZXIKKwlmaWxlcyBpbiB0aGUgY29tbWl0IHRoYXQgY3JlYXRlcyB0aGUgZmlsZS4gV2hl
+biB0aGlzCisJb3B0aW9uIGlzIGdpdmVuIHRocmVlIHRpbWVzLCB0aGUgY29tbWFuZCBhZGRpdGlv
+bmFsbHkKKwlsb29rcyBmb3IgY29waWVzIGZyb20gb3RoZXIgZmlsZXMgaW4gYW55IGNvbW1pdC4K
+ICsKIDxudW0+IGlzIG9wdGlvbmFsIGJ1dCBpdCBpcyB0aGUgbG93ZXIgYm91bmQgb24gdGhlIG51
+bWJlciBvZgogYWxwaGFudW1lcmljIGNoYXJhY3RlcnMgdGhhdCBnaXQgbXVzdCBkZXRlY3QgYXMg
+bW92aW5nCmRpZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL2dpdC1ibGFtZS50eHQgYi9Eb2N1bWVu
+dGF0aW9uL2dpdC1ibGFtZS50eHQKaW5kZXggOGM3YjdiMC4uYjc4NjQ3MSAxMDA2NDQKLS0tIGEv
+RG9jdW1lbnRhdGlvbi9naXQtYmxhbWUudHh0CisrKyBiL0RvY3VtZW50YXRpb24vZ2l0LWJsYW1l
+LnR4dApAQCAtOSw3ICs5LDcgQEAgU1lOT1BTSVMKIC0tLS0tLS0tCiBbdmVyc2VdCiAnZ2l0IGJs
+YW1lJyBbLWNdIFstYl0gWy1sXSBbLS1yb290XSBbLXRdIFstZl0gWy1uXSBbLXNdIFstcF0gWy13
+XSBbLS1pbmNyZW1lbnRhbF0gWy1MIG4sbV0KLSAgICAgICAgICAgIFstUyA8cmV2cy1maWxlPl0g
+Wy1NXSBbLUNdIFstQ10gWy0tc2luY2U9PGRhdGU+XQorCSAgICBbLVMgPHJldnMtZmlsZT5dIFst
+TV0gWy1DXSBbLUNdIFstQ10gWy0tc2luY2U9PGRhdGU+XQogCSAgICBbPHJldj4gfCAtLWNvbnRl
+bnRzIDxmaWxlPiB8IC0tcmV2ZXJzZSA8cmV2Pl0gWy0tXSA8ZmlsZT4KIAogREVTQ1JJUFRJT04K
+LS0gCjEuNi41Cgo=
+--001636284a3699501a047cabc821--
