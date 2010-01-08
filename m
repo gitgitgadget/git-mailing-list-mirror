@@ -1,101 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: origin/branchname and tracking branch pointing to different 
- commits?
-Date: Thu, 07 Jan 2010 16:32:09 -0800
-Message-ID: <7v7hrtzbau.fsf@alter.siamese.dyndns.org>
-References: <76c5b8581001070903i3810f63crd764d451f7454584@mail.gmail.com>
- <201001071813.01187.trast@student.ethz.ch>
- <76c5b8581001070925g21ac3136x2928f12dc43437e5@mail.gmail.com>
- <76c5b8581001071550g31e9f5a3n15ebdb10a806ab2e@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH v3 5/6] transport-helper.c::push_refs(): ignore 
+	helper-reported status if ref is not to be pushed
+Date: Fri, 8 Jan 2010 09:04:45 +0800
+Message-ID: <be6fef0d1001071704s3d3fd0a3wb9b46172a8e891d@mail.gmail.com>
+References: <20091224154352.ecefd242.rctay89@gmail.com>
+	 <20091224154258.08b4fe44.rctay89@gmail.com>
+	 <20091224154158.15ba580f.rctay89@gmail.com>
+	 <20091224154057.33611ae7.rctay89@gmail.com>
+	 <20091224154005.a642c8ec.rctay89@gmail.com>
+	 <20091224154445.ad4b7a01.rctay89@gmail.com>
+	 <20100105063253.GA19368@coredump.intra.peff.net>
+	 <20100105180113.6e0572dc.rctay89@gmail.com>
+	 <20100106120456.GA7221@coredump.intra.peff.net>
+	 <20100107054120.84972788.rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 01:32:27 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 08 02:05:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NT2mA-0008Bv-5v
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 01:32:26 +0100
+	id 1NT3I8-0001aV-20
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 02:05:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753296Ab0AHAcW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2010 19:32:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752870Ab0AHAcW
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 19:32:22 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58135 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752625Ab0AHAcV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2010 19:32:21 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D9C878FFEB;
-	Thu,  7 Jan 2010 19:32:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kSRt4qzEBnPYnYdbumwoV6vS93g=; b=P19quc
-	3FEuvpnoGMBF2F6v6gQkdnz5exHIJO5coaz1KZqt9wlHGE573b1e+vhx/6we+7A1
-	Zyw3rg4Q/9ZAJPS7qwO+0GunXJa4//orm80n1he62qwgtIRQN7rsbtdS4J85Ij34
-	5i6uYiuVEidLjuz8LEpMnDl3cmK+RI8f1W+ss=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=So10H8gJsaxRCT2cXa8NzSdrtYYtBKAo
-	jI0loNCfb1aOH+g9f2kKQl06XqMGqk7ztrW3auvq6ovZTbPTqTJ2Ih/UMnGRC3Wk
-	e2wjyuK6txUCGrpj3aSf/+BTwPLqmMFkiUCxAaDFzh0IyyOFj0cl4uG+uX02pOAb
-	30QSXWdJ6Po=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FC518FFEA;
-	Thu,  7 Jan 2010 19:32:16 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C1BB88FFE8; Thu,  7 Jan
- 2010 19:32:12 -0500 (EST)
-In-Reply-To: <76c5b8581001071550g31e9f5a3n15ebdb10a806ab2e@mail.gmail.com>
- (Eugene Sajine's message of "Thu\, 7 Jan 2010 18\:50\:10 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 45E5C52C-FBED-11DE-A21A-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754587Ab0AHBEs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2010 20:04:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754578Ab0AHBEr
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 20:04:47 -0500
+Received: from mail-iw0-f194.google.com ([209.85.223.194]:34257 "EHLO
+	mail-iw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754576Ab0AHBEq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2010 20:04:46 -0500
+Received: by iwn32 with SMTP id 32so2770545iwn.33
+        for <git@vger.kernel.org>; Thu, 07 Jan 2010 17:04:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=XGpHeb3UTT10cz2kCcUm05twMwrY2u41IAFgyZk1QNE=;
+        b=YsGr3MMdnmBMUwZN+iLp0CV7lVdDG9/ImeFlYtXVmmBzc/wXJHZ00bArc0PjrKJTN4
+         hGwMmiLupwaeDTzeFdpst03bB88DsuBrRUztslgkbYnSg5GwndxQbxCmO2HNFw76EqMr
+         dZzhpRnVpVnKbvwsGj6v8+ND9lSHAtQxhRnaU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=k+B7cN2A+c6CRsysB23ausl6ixtF1u12DrSsSQYzTm488iGFloMefRTAEld7W0GPxE
+         1yyhMvAdRuBqGzvGlKI5e5zyDUyXzGE4eMaQmdDYjpHMlVLcrt1K35IDZS/hRZLRKDj+
+         IiJ2aNgQc2+BURX+fxL1noAJ/PX/gLp7ryscM=
+Received: by 10.231.170.201 with SMTP id e9mr2221464ibz.16.1262912685415; Thu, 
+	07 Jan 2010 17:04:45 -0800 (PST)
+In-Reply-To: <20100107054120.84972788.rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136403>
 
-Eugene Sajine <euguess@gmail.com> writes:
+Hi,
 
-> $ git fetch origin branchname
+On Thu, Jan 7, 2010 at 5:41 AM, Tay Ray Chuan <rctay89@gmail.com> wrote=
+:
+> Regarding this point, I now think that we should ignore the
+> helper-reported status only if that status is none, and continue
+> updating the ref status in the top-level transport if the helper did
+> push successfully/failed, even if we didn't tell it to push:
 >
-> are both causing the output like this:
+> @@ -429,7 +429,7 @@ static int push_refs(struct transport *transport,
 >
-> From git://....
-> * branch      branchname    -> FETCH_HEAD
-> ...
->
-> but "git fetch" says:
->
-> From git://....
-> * branch      branchname    -> origin/branchname
->
-> Is this inconsistent behavior necessary by design?
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0ref->status =3D status;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0ref->remote_status =3D msg;
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (ref->status =3D=3D REF_STATUS_NONE)=
+ {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (ref->status =3D=3D REF_STATUS_NONE =
+&& status =3D=3D REF_STATUS_NONE) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0ref->status =3D status=
+;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0ref->remote_status =3D=
+ msg;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0} else {
 
-It is by design; it is debatable if it still makes sense, though.
+sorry for this broken hunk. I'll be re-sending shortly to make things c=
+learer.
 
-Back when "git fetch" was invented, there weren't separate refs/remotes/
-hierarchy, the distinction between what's local and what's remote were
-only in user's head.  It made quite a lot of sense to have an explicit way
-to prevent "fetch" from overwriting all the branches that track branches
-from remote.  Suppose you have already spend considerable time inspecting
-'origin/branch' and decided that has a suitable commit to build your
-changes on, but you needed to work on something else first.  If "git fetch
-origin other", an explicit request about "other" branch, updated an
-unrelated "origin/branch" at the same time, you couldn't recover from it
-by using "origin/branch@{1}", because reflog is a fairly recent invention.
-
-An explicit "git fetch origin other" is a way to prevent such an update
-from happening.  It does not update anything in refs/ hierarchy, even when
-you have configured to make an implicit 'git fetch $there' make a copy of
-$this_ref somewhere in your refs/remotes/$there/ hierarchy in .git/config
-(back then the same information came from .git/remotes).
-
-Because we have reflogs on by default, and refs/remotes/ is a separate
-hierarchy that is read-only from the local user's point of view, I think
-the 'explicit fetch' syntax, as a way to stop tracking branches from
-getting updated, ceased to be useful these days.
+--=20
+Cheers,
+Ray Chuan
