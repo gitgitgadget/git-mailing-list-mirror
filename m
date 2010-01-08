@@ -1,188 +1,78 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] t7111: check that reset options work as described in the
-	tables
-Date: Fri, 08 Jan 2010 05:45:10 +0100
-Message-ID: <20100108044511.3530.90952.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Paolo Bonzini <bonzini@gnu.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 05:45:20 2010
+Subject: Re: git-log - hide parent (was: merging two equivalent branches)
+Date: Fri, 8 Jan 2010 06:00:25 +0100
+Message-ID: <201001080600.26088.chriscool@tuxfamily.org>
+References: <B0543B3C-C139-4BD3-B028-58B4DA132422@gmail.com> <46d6db661001071022t79ca65foac249d948a20c328@mail.gmail.com> <DF05F91F-CBFD-458A-A99F-79E98ACA5146@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Christian MICHON <christian.michon@gmail.com>
+To: David Reitter <david.reitter@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 08 05:57:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NT6ir-00034Q-Cd
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 05:45:17 +0100
+	id 1NT6ur-0005dI-HP
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 05:57:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751719Ab0AHEnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2010 23:43:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751456Ab0AHEnO
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 23:43:14 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:38147 "EHLO smtp3-g21.free.fr"
+	id S1752181Ab0AHE5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2010 23:57:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751618Ab0AHE5i
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jan 2010 23:57:38 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:54487 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751442Ab0AHEnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2010 23:43:13 -0500
+	id S1750759Ab0AHE5h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2010 23:57:37 -0500
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id CA5F4818019;
-	Fri,  8 Jan 2010 05:43:02 +0100 (CET)
+	by smtp3-g21.free.fr (Postfix) with ESMTP id D924981803B;
+	Fri,  8 Jan 2010 05:57:31 +0100 (CET)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 24281818002;
-	Fri,  8 Jan 2010 05:42:59 +0100 (CET)
-X-git-sha1: f4d4ceb95f9c86dde906f806f4eecc56b8035f47 
-X-Mailer: git-mail-commits v0.5.2
+	by smtp3-g21.free.fr (Postfix) with ESMTP id F2434818042;
+	Fri,  8 Jan 2010 05:57:28 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <DF05F91F-CBFD-458A-A99F-79E98ACA5146@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136416>
 
-Some previous patches added some tables to the "git reset"
-documentation. These tables describe the behavior of "git reset"
-depending on the option it is passed and the state of the files
-in the working tree, the index, HEAD and the target commit.
+On jeudi 07 janvier 2010, David Reitter wrote:
+> On Jan 7, 2010, at 1:22 PM, Christian MICHON wrote:
+> > I recall asking a similar question in 2008, and the answer was to look
+> > at "git graft" and use "git filter-branch" to recreate history.
+>
+> Thanks, I've tried that and I recall that filter-branch wasn't willing to
+> rewrite just the recent history - at least in started going over all 100k
+> revisions at a very slow pace.
+>
+> I'm still unsure how, after the filter-branch, I would have some ancestor
+> from the B series so that future pulls from the remote work, while having
+> an ancestor from A, to make sure I can continue merging into C.  If
+> history is rewritten, I'll get new revisions and lose ancestors. I'm
+> beginning to thing that the cutting and pasting I'd like is conceptually
+> impossible.
+>
+> So what one would need is to specify a "silent parent" for a revision
+> that is relevant w.r.t. future three-way merges, but indicates that the
+> history behind the silent parent is irrelevant and shouldn't be shown in
+> a git-log.  The runaway parent would be guaranteed to _not_ contribute
+> any content to the tree of the child revision, as is the case with a
+> "merge ours".
 
-This patch adds some tests to make sure that the tables describe
-the behavior of "git reset".
+What you could perhaps do with "git replace" or a graft is to change the 
+merge commit so that it has only one parent instead of 2.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/t7111-reset-table.sh |  121 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 121 insertions(+), 0 deletions(-)
- create mode 100755 t/t7111-reset-table.sh
+> This could be implemented as a way to mark a parent as silent (checked by
+> git-log at least), but one could also allow for an empty commit that,
+> while having a normal parent, clears out the tree.
+>
+> Let me know if this idea is completely crazy. --
 
-diff --git a/t/t7111-reset-table.sh b/t/t7111-reset-table.sh
-new file mode 100755
-index 0000000..16b33a5
---- /dev/null
-+++ b/t/t7111-reset-table.sh
-@@ -0,0 +1,121 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 Christian Couder
-+#
-+
-+test_description='Tests to check that "reset" options follow a known table'
-+
-+. ./test-lib.sh
-+
-+
-+test_expect_success 'creating initial commits' '
-+    test_commit E file1 &&
-+    test_commit D file1 &&
-+    test_commit C file1
-+'
-+
-+test_expect_success 'creating table file 1' '
-+    cat <<EOF >table1
-+A B C D soft   A B D
-+A B C D mixed  A D D
-+A B C D hard   D D D
-+A B C D merge  XXXXX
-+A B C C soft   A B C
-+A B C C mixed  A C C
-+A B C C hard   C C C
-+A B C C merge  XXXXX
-+B B C D soft   B B D
-+B B C D mixed  B D D
-+B B C D hard   D D D
-+B B C D merge  D D D
-+B B C C soft   B B C
-+B B C C mixed  B C C
-+B B C C hard   C C C
-+B B C C merge  C C C
-+B C C D soft   B C D
-+B C C D mixed  B D D
-+B C C D hard   D D D
-+B C C D merge  XXXXX
-+B C C C soft   B C C
-+B C C C mixed  B C C
-+B C C C hard   C C C
-+B C C C merge  B C C
-+EOF
-+'
-+
-+while read W1 I1 H1 T opt W2 I2 H2
-+do
-+    test_expect_success "check: $W1 $I1 $H1 $T --$opt $W2 $I2 $H2" '
-+        git reset --hard C &&
-+        if [ "$I1" != "$H1" ]
-+        then
-+            echo "$I1" > file1 &&
-+            git add file1
-+        fi &&
-+        if [ "$W1" != "$I1" ]
-+        then
-+            echo "$W1" > file1
-+        fi &&
-+        if [ "$W2" != "XXXXX" ]
-+        then
-+            git reset --$opt $T &&
-+            test "$(cat file1)" = "$W2" &&
-+            git checkout-index -f -- file1 &&
-+            test "$(cat file1)" = "$I2" &&
-+            git checkout -f HEAD -- file1 &&
-+            test "$(cat file1)" = "$H2"
-+        else
-+            test_must_fail git reset --$opt $T
-+        fi
-+    '
-+done < table1
-+
-+test_expect_success 'setting up branches to test with unmerged entries' '
-+    git reset --hard C &&
-+    git branch branch1 &&
-+    git branch branch2 &&
-+    git checkout branch1 &&
-+    test_commit B1 file1 &&
-+    git checkout branch2 &&
-+    test_commit B2 file1
-+'
-+
-+test_expect_success 'creating table file 2' '
-+    cat <<EOF >table2
-+X U C D soft   XXXXX
-+X U C D mixed  X D D
-+X U C D hard   D D D
-+X U C D merge  D D D
-+X U C C soft   XXXXX
-+X U C C mixed  X C C
-+X U C C hard   C C C
-+X U C C merge  C C C
-+EOF
-+'
-+
-+while read W1 I1 H1 T opt W2 I2 H2
-+do
-+    test_expect_success "check: $W1 $I1 $H1 $T --$opt $W2 $I2 $H2" '
-+        git reset --hard B2 &&
-+        test_must_fail git merge branch1 &&
-+        cat file1 >X_file1 &&
-+        if [ "$W2" != "XXXXX" ]
-+        then
-+            git reset --$opt $T &&
-+            if [ "$W2" = "X" ]
-+            then
-+                test_cmp file1 X_file1
-+            else
-+                test "$(cat file1)" = "$W2"
-+            fi &&
-+            git checkout-index -f -- file1 &&
-+            test "$(cat file1)" = "$I2" &&
-+            git checkout -f HEAD -- file1 &&
-+            test "$(cat file1)" = "$H2"
-+        else
-+            test_must_fail git reset --$opt $T
-+        fi
-+    '
-+done < table2
-+
-+test_done
--- 
-1.6.6.rc2.5.g49666
+This looks like the right thing to do using "git replace" or grafts.
+
+Best regards,
+Christian. 
