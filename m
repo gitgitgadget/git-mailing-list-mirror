@@ -1,92 +1,58 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 9/9] rerere forget path: forget recorded resolution
-Date: Fri, 8 Jan 2010 22:55:51 +0100
-Message-ID: <201001082255.51499.j6t@kdbg.org>
-References: <1262122958-9378-1-git-send-email-gitster@pobox.com> <1262122958-9378-10-git-send-email-gitster@pobox.com>
+From: Marinescu Paul dan <pauldan.marinescu@epfl.ch>
+Subject: unchecked mallocs
+Date: Fri, 8 Jan 2010 22:59:32 +0100
+Message-ID: <D6F784B72498304C93A8A4691967698E8EE2C45017@REX2.intranet.epfl.ch>
+References: <D6F784B72498304C93A8A4691967698E8EE2C45016@REX2.intranet.epfl.ch>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 22:56:50 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 08 23:00:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTMp7-0002Vh-OJ
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 22:56:50 +0100
+	id 1NTMsa-0003rD-Kc
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 23:00:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754040Ab0AHV4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 16:56:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754027Ab0AHV4p
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 16:56:45 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:22543 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753994Ab0AHV4o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2010 16:56:44 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 1DA56CDF89;
-	Fri,  8 Jan 2010 22:56:40 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 8CD9519F6C6;
-	Fri,  8 Jan 2010 22:55:51 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <1262122958-9378-10-git-send-email-gitster@pobox.com>
-Content-Disposition: inline
+	id S1752458Ab0AHWAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 17:00:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753898Ab0AHWAU
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 17:00:20 -0500
+Received: from smtp3.epfl.ch ([128.178.224.226]:38080 "HELO smtp3.epfl.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750904Ab0AHWAT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jan 2010 17:00:19 -0500
+Received: (qmail 27190 invoked by uid 107); 8 Jan 2010 22:00:16 -0000
+X-Virus-Scanned: ClamAV
+Received: from slb-nat-128-178-224-64.epfl.ch (192.26.45.64)
+  by smtp3.epfl.ch (AngelmatoPhylax SMTP proxy); Fri, 08 Jan 2010 23:00:16 +0100
+Received: from REX2.intranet.epfl.ch ([128.178.50.202]) by
+ ewa4.intranet.epfl.ch ([128.178.224.64]) with mapi; Fri, 8 Jan 2010 23:00:16
+ +0100
+Thread-Topic: unchecked mallocs
+Thread-Index: AQHKkKXUcsP1wOyqcUipnpDBVqlFe5GMOms+
+In-Reply-To: <D6F784B72498304C93A8A4691967698E8EE2C45016@REX2.intranet.epfl.ch>
+Accept-Language: en-US, fr-CH
+Content-Language: en-GB
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US, fr-CH
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136482>
 
-Your implementation forgets to re-insert the forgotten resolutions into
-MERGE_RR, therefore, the next 'git rerere' does not record the new
-resolution.
 
-In my implementation of 'rerere forget', I had the following tests.
-The latter two of the three new tests fail with your implementation.
+While checking out the git code in xdiff/xpatience.c and xdiff/xmerge.c I
+came across several (three) locations where the return values of xdl_malloc
+(#defined as malloc) is not checked. Shouldn't this be done here?
 
--- Hannes
+In git 1.6.6 the calls are at
 
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index a6bc028..a3f0c18 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -75,8 +75,9 @@ test_expect_success 'no postimage or thisimage yet' \
- test_expect_success 'preimage has right number of lines' '
- 
- 	cnt=$(sed -ne "/^<<<<<<</,/^>>>>>>>/p" $rr/preimage | wc -l) &&
--	test $cnt = 13
--
-+	test $cnt = 13 &&
-+	cnt=$(grep "To die! T" $rr/preimage | wc -l) &&
-+	test $cnt = 1
- '
- 
- git show first:a1 > a1
-@@ -142,7 +143,23 @@ test_expect_success 'rerere kicked in' "! grep ^=======$ a1"
- 
- test_expect_success 'rerere prefers first change' 'test_cmp a1 expect'
- 
--rm $rr/postimage
-+test_expect_success 'rerere forget drops postimage' '
-+	git rerere forget a1 &&
-+	! test -f $rr/postimage
-+'
-+
-+test_expect_success 'conflict hash is the same as before' '
-+	test $sha1 = "$(perl -pe "s/	.*//" .git/MERGE_RR)"
-+'
-+
-+test_expect_success 'preimage was updated' '
-+	cnt=$(sed -ne "/^<<<<<<</,/^>>>>>>>/p" $rr/preimage | wc -l) &&
-+	test $cnt = 13 &&
-+	cnt=$(grep "To die! T" $rr/preimage | wc -l) &&
-+	test $cnt = 2
-+'
-+
-+rm -f $rr/postimage
- echo "$sha1	a1" | perl -pe 'y/\012/\000/' > .git/MERGE_RR
- 
- test_expect_success 'rerere clear' 'git rerere clear'
+xmerge.c:567
+merge.c:571
+xpatience.c:191
+
+Paul
