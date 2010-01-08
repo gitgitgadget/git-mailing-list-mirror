@@ -1,70 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 9/9] rerere forget path: forget recorded resolution
-Date: Fri, 08 Jan 2010 15:20:23 -0800
-Message-ID: <7vpr5krxoo.fsf@alter.siamese.dyndns.org>
-References: <1262122958-9378-1-git-send-email-gitster@pobox.com>
- <1262122958-9378-10-git-send-email-gitster@pobox.com>
- <201001082255.51499.j6t@kdbg.org>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH (v2) 2/2] rebase -i: teach --onto A...B syntax
+Date: Fri, 08 Jan 2010 18:21:55 -0500
+Message-ID: <4B47BE13.7070509@gmail.com>
+References: <7vljgei7rs.fsf@alter.siamese.dyndns.org> <7vskal5c11.fsf@alter.siamese.dyndns.org> 	<20100106191825.6117@nanako3.lavabit.com> <alpine.DEB.1.00.1001061219180.11013@intel-tinevez-2-302> 	<7vocl7yxef.fsf@alter.siamese.dyndns.org> <20100107200509.6117@nanako3.lavabit.com> 	<7vtyux3bx1.fsf@alter.siamese.dyndns.org> <32541b131001081216p27d7e29bu269755db895128@mail.gmail.com> 	<fabb9a1e1001081222q7122872bu72cea4e393f272ac@mail.gmail.com> 	<32541b131001081231x1b6ac8c1k30084e4abf8cc896@mail.gmail.com> <fabb9a1e1001081237n11fa61b5m63fa46fac2ad8d4a@mail.gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Jan 09 00:20:39 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 09 00:22:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTO8E-0008D2-23
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 00:20:38 +0100
+	id 1NTO9j-0000Mc-TJ
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 00:22:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754098Ab0AHXUb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 18:20:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754069Ab0AHXUb
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 18:20:31 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51009 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754035Ab0AHXUa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2010 18:20:30 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BB9858FE05;
-	Fri,  8 Jan 2010 18:20:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MPNyLaNG66/pcKRjR7lC9tPY2dU=; b=LCQxRL
-	yDIa8MAohTK+2F/pZG9RxYAft3bJcP7WJtXRv3+piMi7Ubj9oVg1KMjJbjYhrT1b
-	PMBvyS0XI1pci31USDHqto3ZCkynCeOfB7v79ecdgahRqsZRFlqW1hzw+dunyrzE
-	uUv8q9gmvzA+pUK4esZqPE3ny/I+qtYatF33M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=t7WUrFdg5n88eHVcv6aNdHqlaHISFz4A
-	kOJEuygzNw8aTisLwesXcCdA/XyrdCho/8E628VjZNXW6Rr37qwYWbC5iM9W4Mu1
-	8bAJLWvFXrx/nbAV2y7ioIpTYzLld4yPFDQZ3E9Hwj/JFsCsVYMUWVDG9hMRsBt+
-	iRA7WTtkYW0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 981278FE04;
-	Fri,  8 Jan 2010 18:20:27 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 052628FE03; Fri,  8 Jan
- 2010 18:20:24 -0500 (EST)
-In-Reply-To: <201001082255.51499.j6t@kdbg.org> (Johannes Sixt's message of
- "Fri\, 8 Jan 2010 22\:55\:51 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 67EE67FE-FCAC-11DE-B714-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754213Ab0AHXWF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 18:22:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753376Ab0AHXWD
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 18:22:03 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:56261 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754109Ab0AHXWA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2010 18:22:00 -0500
+Received: by ywh6 with SMTP id 6so19961867ywh.4
+        for <git@vger.kernel.org>; Fri, 08 Jan 2010 15:21:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=ZhE500X9H9qGNuAkkAryT6jXt63FwY5W3LOzJh6Q/8U=;
+        b=sMHlyaS01IlPDw2NEhnQicbJsyL00dc8nWwLfFmpsPL8GYh/WrIXNSWTejjBe0WHe+
+         hOjQ9hHX+7f70GCzJPATgFOO5C1d2BSwCCRpwybhZzlo1KdZy4rMoH614wI0mKTa4WUd
+         1NJwgDZdyDk++4PXV2Bl5WOyYrerf83e2CPYk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=nYAIdFN7UK0enKHmv80e1d7s/fV36ygCnW7Aq0bzcA256SDGG0oANpsun+eCZdkWQs
+         7eiaIKm7UDlH72EP+qPFSfbfzM6xR/6FpbYRUsz+ZcLSy7qjxQU1iVtw0IhexavmbfmI
+         4+97pNZ3OUtjBsLr5u9FG32gH9mOgFDiwdcdk=
+Received: by 10.90.16.33 with SMTP id 33mr14392968agp.15.1262992918484;
+        Fri, 08 Jan 2010 15:21:58 -0800 (PST)
+Received: from ?10.0.0.6? (c-71-199-240-201.hsd1.fl.comcast.net [71.199.240.201])
+        by mx.google.com with ESMTPS id 14sm11477644gxk.10.2010.01.08.15.21.57
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 08 Jan 2010 15:21:57 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+In-Reply-To: <fabb9a1e1001081237n11fa61b5m63fa46fac2ad8d4a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136494>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Sverre Rabbelier wrote:
+> Heya,
+> 
+> On Fri, Jan 8, 2010 at 15:31, Avery Pennarun <apenwarr@gmail.com> wrote:
+>> Thanks, I didn't know about that one.  But my general point is still:
+>> we seem to have two implementations when the functionality of one is
+>> actually a superset of the other.  As far as I can see, anyway.  So
+>> the obvious way to reduce the duplicated code is to simply eliminate
+>> the less-featureful implementation.
+> 
+> *cough* git sequencer *cough*
+> 
 
-> Your implementation forgets to re-insert the forgotten resolutions into
-> MERGE_RR, therefore, the next 'git rerere' does not record the new
-> resolution.
->
-> In my implementation of 'rerere forget', I had the following tests.
-
-Please filfre to roll a patch that adds the tests and code that inserts
-necessary MERGE_RR entries, if the feature is pressing; unfortunately I
-don't think I will have much git time during the coming weekend.
+*cough* not in my ${PATH} *cough*
