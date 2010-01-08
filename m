@@ -1,71 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Support relative .git file in a submodule
-Date: Fri, 08 Jan 2010 15:09:13 -0800
-Message-ID: <7vocl4urc6.fsf@alter.siamese.dyndns.org>
-References: <1262990208-15554-1-git-send-email-brad.king@kitware.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH 3/3] base85: Make the code more obvious instead of explaining
+ the non-obvious
+Date: Fri, 08 Jan 2010 18:15:40 -0500
+Message-ID: <4B47BC9C.1020807@gmail.com>
+References: <alpine.LFD.2.00.1001071253400.21025@xanadu.home> <1262958000-27181-3-git-send-email-agruen@suse.de>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
-To: Brad King <brad.king@kitware.com>
-X-From: git-owner@vger.kernel.org Sat Jan 09 00:09:28 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Andreas Gruenbacher <agruen@suse.de>
+X-From: git-owner@vger.kernel.org Sat Jan 09 00:15:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTNxO-0004IA-SP
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 00:09:27 +0100
+	id 1NTO3f-0006f8-KL
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 00:15:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753223Ab0AHXJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 18:09:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753033Ab0AHXJW
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 18:09:22 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44594 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752957Ab0AHXJW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2010 18:09:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A5FA8FD03;
-	Fri,  8 Jan 2010 18:09:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SYxZhT/iw2/803QfKm1xCgQySsY=; b=ixxA3m
-	+VyNws7SAxyT/MFLE80HoX7sppF6+XoxwdBjhe8L9HPW8u7eVFfkkuPaMvaCOr4N
-	SL3D+WPQSQ4rOqAAnae7zKSM4X4l2SThUaR5RqaSpmIjlR6ZFZCvorBLjIlYxtPB
-	LI/JTzm+/3nHgFjLn34YCNFf5kNIDnyOhTayE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JzJDt2aKR8tlK8IbVy57S/Hu/ogojD/O
-	y5ppO5O2LGevITeVOjCIyUh7qbkqafwAKJW1GtNNVWWXkBMXODqATehP031r7RcB
-	pTiY59YnGWn9BL2ogmCGkwmlAkZ3EjzXG74rS9i9ozYzQG/oMrA3mfqGGJcpyf+o
-	AU/kQ73Ken4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 59C758FCFD;
-	Fri,  8 Jan 2010 18:09:18 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9228B8FCF9; Fri,  8 Jan
- 2010 18:09:14 -0500 (EST)
-In-Reply-To: <1262990208-15554-1-git-send-email-brad.king@kitware.com> (Brad
- King's message of "Fri\,  8 Jan 2010 17\:36\:46 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D9057C72-FCAA-11DE-B1D8-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753945Ab0AHXPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 18:15:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752161Ab0AHXPv
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 18:15:51 -0500
+Received: from mail-yx0-f188.google.com ([209.85.210.188]:40207 "EHLO
+	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751379Ab0AHXPu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2010 18:15:50 -0500
+Received: by yxe26 with SMTP id 26so19167881yxe.4
+        for <git@vger.kernel.org>; Fri, 08 Jan 2010 15:15:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=0ydL0bOXh6U73OBm1+qvQOMzY+bAwLMth38O/ocL1xI=;
+        b=rwsM6w8/oRbOi+0ihQl/K/BMUtieAPNLYgMXQgz0E6/BtsOzEI0Yxi0K6o4wzKg1US
+         Zx+cBkCdyOcW2nIrfq6jod+Chy4G68rybr0O1HO+zplkUSL9dp7tdRugBnkr+lw1i2lz
+         UCPv8rv2W8SQRRYwNpYOj0m0NRHz7oHmCIZGM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=LEDntiJiDJ6GEBIzMjv8ya+2TQLUSEVWjCtUrGWInEb5yk2hZFYv1++EtBITb31NWh
+         yQPCweARpA0Fybx60hsTl0rgmcKT4Ce2JlH7DqfmEvCLffcnC3Be789W0aXLl6igwTcJ
+         SO+Dat8XTTNoCAaNnpVZFbYaGvH4GBifkU4to=
+Received: by 10.150.29.30 with SMTP id c30mr8640345ybc.246.1262992547519;
+        Fri, 08 Jan 2010 15:15:47 -0800 (PST)
+Received: from ?10.0.0.6? (c-71-199-240-201.hsd1.fl.comcast.net [71.199.240.201])
+        by mx.google.com with ESMTPS id 36sm9448081yxh.67.2010.01.08.15.15.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 08 Jan 2010 15:15:46 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+In-Reply-To: <1262958000-27181-3-git-send-email-agruen@suse.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136491>
 
-Brad King <brad.king@kitware.com> writes:
+Andreas Gruenbacher wrote:
+> Here is another cleanup ...
+> 
 
-> ... if a submodule
-> has a .git file "symlink" with a relative path to the real submodule
-> repository then ...
-
-... then I've always thought that is simply a misconfiguration (t0002
-seems to use full path for this exact reason).  Is there a reason why
-relative path should be used/usable here, other than "being able to is
-better than not being able to"???
-
-I don't like my process randomly chdir'ing around assuming they can chdir
-back safely very much, and would prefer not to add such codepaths unless
-absolutely necessary.
+I LOVE the subject line of this commit!
