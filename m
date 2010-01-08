@@ -1,54 +1,66 @@
-From: Karl Wiberg <kha@treskal.com>
-Subject: Re: [StGit PATCH 1/3] Populate the cached config options with the 
-	defaults
-Date: Fri, 8 Jan 2010 15:34:25 +0100
-Message-ID: <b8197bcb1001080634g5480877dhd35e0bd1cbe63ca6@mail.gmail.com>
-References: <20100108123403.24161.3495.stgit@pc1117.cambridge.arm.com>
-	 <20100108123559.24161.14842.stgit@pc1117.cambridge.arm.com>
-	 <b8197bcb1001080630i6daad79anf8323f8001d38db3@mail.gmail.com>
+From: Jon Schewe <jpschewe@mtu.net>
+Subject: Possible bug in git-completion.sh
+Date: Fri, 08 Jan 2010 09:17:07 -0600
+Message-ID: <4B474C73.8080100@mtu.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 15:34:33 2010
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Fri Jan 08 16:28:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTFv6-0008R8-WA
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 15:34:33 +0100
+	id 1NTGl1-00081k-Cx
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 16:28:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753468Ab0AHOe3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 09:34:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753467Ab0AHOe3
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 09:34:29 -0500
-Received: from mail1.space2u.com ([62.20.1.135]:43944 "EHLO mail1.space2u.com"
+	id S1753170Ab0AHP17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 10:27:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752552Ab0AHP17
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 10:27:59 -0500
+Received: from mtu.net ([204.11.35.17]:37417 "EHLO mtu.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752918Ab0AHOe3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2010 09:34:29 -0500
-Received: from mail-fx0-f225.google.com (mail-fx0-f225.google.com [209.85.220.225])
-	(authenticated bits=0)
-	by mail1.space2u.com (8.14.3/8.14.3) with ESMTP id o08EYE8I010994
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NOT)
-	for <git@vger.kernel.org>; Fri, 8 Jan 2010 15:34:14 +0100
-Received: by fxm25 with SMTP id 25so12674141fxm.21
-        for <git@vger.kernel.org>; Fri, 08 Jan 2010 06:34:27 -0800 (PST)
-Received: by 10.103.76.22 with SMTP id d22mr4820407mul.79.1262961266933; Fri, 
-	08 Jan 2010 06:34:26 -0800 (PST)
-In-Reply-To: <b8197bcb1001080630i6daad79anf8323f8001d38db3@mail.gmail.com>
+	id S1752091Ab0AHP16 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2010 10:27:58 -0500
+X-Greylist: delayed 642 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 Jan 2010 10:27:58 EST
+Received: from localhost (localhost [127.0.0.1])
+	by mtu.net (Postfix) with ESMTP id D5A97F02B8;
+	Fri,  8 Jan 2010 10:17:13 -0500 (EST)
+X-Virus-Scanned: Debian amavisd-new at mtu.net
+Received: from mtu.net ([127.0.0.1])
+	by localhost (mtu.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id y8ar8Hu-ApXd; Fri,  8 Jan 2010 10:17:08 -0500 (EST)
+Received: from min-dhcp33-251-159.bbn.com (75-149-146-105-Minnesota.hfc.comcastbusiness.net [75.149.146.105])
+	by mtu.net (Postfix) with ESMTPSA id B0313F01C1;
+	Fri,  8 Jan 2010 10:17:08 -0500 (EST)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
+X-Enigmail-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136443>
 
-On Fri, Jan 8, 2010 at 3:30 PM, Karl Wiberg <kha@treskal.com> wrote:
-> Hmm. What's the point of this rewrite?
-
-Ah, never mind, patch 2/3 made it clear. Though it would have been
-nice to read about it in the commit message. ;-)
+If I create a directory "build" at the top of my git repository and then
+add it to .gitignore, git behaves as expected and ignores the build
+directory when checking status. Now git-completion.sh has some issues. I
+have GIT_PS1_SHOWUNTRACKEDFILES to "1", so that I will be notified when
+there are untracked files in my working directory. When I'm in the
+top-level directory my prompt looks like expected, no '%'. However if I
+change to the build directory I get a '%', even though git status shows
+no untracked files. I see that git-completion.sh is using git ls-files
+to check this and that function does indeed show output when in my build
+directory. So the question here: Is git-completion.sh using ls-files
+improperly or is ls-files behaving improperly?
 
 -- 
-Karl Wiberg, kha@treskal.com
-   subrabbit.wordpress.com
-   www.treskal.com/kalle
+Jon Schewe | http://mtu.net/~jpschewe
+If you see an attachment named signature.asc, this is my digital
+signature. See http://www.gnupg.org for more information.
+
+For I am convinced that neither death nor life, neither angels nor
+demons, neither the present nor the future, nor any powers,
+neither height nor depth, nor anything else in all creation, will
+be able to separate us from the love of God that is in Christ
+Jesus our Lord. - Romans 8:38-39
