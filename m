@@ -1,98 +1,108 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH 2/2] Pass the --in-reply-to and --no-thread options 
-	to git send-email
-Date: Fri, 8 Jan 2010 12:33:32 +0000
-Message-ID: <b0943d9e1001080433o553ffef7jd7d797c4f77da142@mail.gmail.com>
-References: <20100107160932.3226.95737.stgit@pc1117.cambridge.arm.com>
-	 <20100107160937.3226.14811.stgit@pc1117.cambridge.arm.com>
-	 <b8197bcb1001072243h24e6248er79ac5a8afb6e3782@mail.gmail.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
+Subject: [StGit PATCH 0/3] Support for command aliases
+Date: Fri, 08 Jan 2010 12:35:53 +0000
+Message-ID: <20100108123403.24161.3495.stgit@pc1117.cambridge.arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Karl Wiberg <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 13:33:45 2010
+To: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Fri Jan 08 13:36:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTE2B-0007FS-7l
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 13:33:43 +0100
+	id 1NTE4T-0007xi-RH
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 13:36:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752856Ab0AHMdf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jan 2010 07:33:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752323Ab0AHMde
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 07:33:34 -0500
-Received: from mail-fx0-f225.google.com ([209.85.220.225]:63285 "EHLO
-	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750890Ab0AHMde convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jan 2010 07:33:34 -0500
-Received: by fxm25 with SMTP id 25so12571075fxm.21
-        for <git@vger.kernel.org>; Fri, 08 Jan 2010 04:33:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=DSZ+Q8PgsDwgXeAwECLr7Me/Dxpdva5Q2AJWIEyXZcg=;
-        b=XUBE59x6DPTeQJT0SLn9PbvP80PyWCEl41KImlt6uIOMjsPYMJCEAv38j+l38lwE0W
-         CdN7i52BiUPR4fcWjY2TpmMIncF77Dv+y8V9DWBXanu/HTL6zjCgsQj6swyR8oN6Uqb/
-         Wjg0B4IOW38zIquZbJe0oJrGiPevkT2Cw+1ak=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=W5d0qW3/cWuDT3lYqRoVw7wAnsXBh0ISeyZ2cQbJK+2dxKzritZLPSQYePZITdtqz2
-         bXvluCVqNO3eTGXhxtF1DYAxoZJQn70T1ee+ZLzlvjSLqAUFFKLqjYjc6yhyyTAa/Jy8
-         DSiE8x5AjpQ9j86dqbj2oEaa7wvmO6/bSuXC8=
-Received: by 10.223.27.79 with SMTP id h15mr4091863fac.23.1262954012848; Fri, 
-	08 Jan 2010 04:33:32 -0800 (PST)
-In-Reply-To: <b8197bcb1001072243h24e6248er79ac5a8afb6e3782@mail.gmail.com>
+	id S1751144Ab0AHMf7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 07:35:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751112Ab0AHMf7
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 07:35:59 -0500
+Received: from cam-admin0.cambridge.arm.com ([217.140.96.50]:40752 "EHLO
+	cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750843Ab0AHMf6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jan 2010 07:35:58 -0500
+Received: from cam-owa1.Emea.Arm.com (cam-owa1.emea.arm.com [10.1.255.62])
+	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id o08CZseI002292;
+	Fri, 8 Jan 2010 12:35:54 GMT
+Received: from pc1117.cambridge.arm.com ([10.1.255.212]) by cam-owa1.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
+	 Fri, 8 Jan 2010 12:35:53 +0000
+User-Agent: StGit/0.15-36-g53e3
+X-OriginalArrivalTime: 08 Jan 2010 12:35:53.0927 (UTC) FILETIME=[1E5E4D70:01CA905F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136427>
 
-2010/1/8 Karl Wiberg <kha@treskal.com>:
-> On Thu, Jan 7, 2010 at 5:09 PM, Catalin Marinas <catalin.marinas@arm.=
-com> wrote:
->
->> + =A0 =A0if options.in_reply_to:
->> + =A0 =A0 =A0 =A0cmd.append("--in-reply-to %s" % options.in_reply_to=
-)
->
-> Have you tested this? I'm pretty sure you need "--in-reply-to=3D%s", =
-or
-> to add the two strings separately---since as far as I can see, this
-> command is never shell-expanded.
+Hi,
 
-I now tested it. I initially had an "=3D" before "%s" but dropped it
-because git help wasn't clear whether it's needed. See below for an
-updated patch:
+These patches add support for StGit command aliases via
+stgit.alias.<cmd> config options. They also re-add previously removed
+commands (add, rm, resolved) and a new one (mv).
+
+stg help lists the present aliases.
 
 
-Pass the --in-reply-to and --no-thread options to git send-email
+Catalin Marinas (3):
+      Populate the cached config options with the defaults
+      Add support for command aliases
+      Replace some git commands with stg aliases in test scripts
 
-=46rom: Catalin Marinas <catalin.marinas@gmail.com>
 
-Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
----
- stgit/commands/mail.py |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ stgit/commands/__init__.py     |    3 ++-
+ stgit/config.py                |   37 +++++++++++++++++++++++--------------
+ stgit/main.py                  |   35 ++++++++++++++++++++++++++++++++++-
+ t/t0001-subdir-branches.sh     |    2 +-
+ t/t0002-status.sh              |   12 ++++++------
+ t/t1000-branch-create.sh       |    4 ++--
+ t/t1002-branch-clone.sh        |    2 +-
+ t/t1200-push-modified.sh       |    2 +-
+ t/t1201-pull-trailing.sh       |    2 +-
+ t/t1202-push-undo.sh           |    6 +++---
+ t/t1203-push-conflict.sh       |    6 +++---
+ t/t1204-pop-keep.sh            |    2 +-
+ t/t1205-push-subdir.sh         |    6 +++---
+ t/t1206-push-hidden.sh         |    2 +-
+ t/t1207-push-tree.sh           |    2 +-
+ t/t1300-uncommit.sh            |    4 ++--
+ t/t1301-repair.sh              |    8 ++++----
+ t/t1302-repair-interop.sh      |    2 +-
+ t/t1500-float.sh               |   14 +++++++-------
+ t/t1501-sink.sh                |   12 ++++++------
+ t/t1600-delete-one.sh          |   12 ++++++------
+ t/t1601-delete-many.sh         |    2 +-
+ t/t1602-delete-spill.sh        |    2 +-
+ t/t1700-goto-top.sh            |    2 +-
+ t/t1701-goto-hidden.sh         |    2 +-
+ t/t1800-import.sh              |    4 ++--
+ t/t1900-mail.sh                |    2 +-
+ t/t2000-sync.sh                |   12 ++++++------
+ t/t2100-pull-policy-fetch.sh   |    4 ++--
+ t/t2101-pull-policy-pull.sh    |    6 +++---
+ t/t2102-pull-policy-rebase.sh  |    4 ++--
+ t/t2200-rebase.sh              |    4 ++--
+ t/t2300-refresh-subdir.sh      |    4 ++--
+ t/t2400-diff.sh                |    2 +-
+ t/t2500-clean.sh               |    2 +-
+ t/t2600-squash.sh              |    2 +-
+ t/t2700-refresh.sh             |    6 +++---
+ t/t2701-refresh-p.sh           |    4 ++--
+ t/t2702-refresh-rm.sh          |   10 +++++-----
+ t/t2800-goto-subdir.sh         |    2 +-
+ t/t3000-dirty-merge.sh         |    2 +-
+ t/t3100-reset.sh               |    2 +-
+ t/t3101-reset-hard.sh          |    2 +-
+ t/t3102-undo.sh                |    2 +-
+ t/t3103-undo-hard.sh           |    2 +-
+ t/t3104-redo.sh                |    2 +-
+ t/t3105-undo-external-mod.sh   |    6 +++---
+ t/t3200-non-ascii-filenames.sh |    4 ++--
+ t/t3300-edit.sh                |    2 +-
+ t/t3400-pick.sh                |    8 ++++----
+ t/t4100-publish.sh             |   12 ++++++------
+ 51 files changed, 169 insertions(+), 126 deletions(-)
 
-diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
-index a78c9d2..287b6a4 100644
---- a/stgit/commands/mail.py
-+++ b/stgit/commands/mail.py
-@@ -241,6 +241,10 @@ def __send_message_git(msg, options):
-     cmd.append("--suppress-cc=3Dself")
-     if not options.auto:
-         cmd.append("--suppress-cc=3Dbody")
-+    if options.in_reply_to:
-+        cmd.extend(["--in-reply-to", options.in_reply_to])
-+    if options.no_thread:
-+        cmd.append("--no-thread")
-
-     # We only support To/Cc/Bcc in git send-email for now.
-     for x in ['to', 'cc', 'bcc']:
+-- 
+Catalin
