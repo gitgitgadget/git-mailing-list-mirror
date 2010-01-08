@@ -1,65 +1,70 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Possible bug in git-completion.sh
-Date: Fri, 08 Jan 2010 16:40:26 +0100
-Message-ID: <4B4751EA.8060707@drmicha.warpmail.net>
-References: <4B474C73.8080100@mtu.net>
+Subject: Re: [PATCH 2/3] base85: No need to initialize the decode table in
+ encode_85
+Date: Fri, 08 Jan 2010 16:46:41 +0100
+Message-ID: <4B475361.60506@drmicha.warpmail.net>
+References: <alpine.LFD.2.00.1001071253400.21025@xanadu.home> <1262958000-27181-2-git-send-email-agruen@suse.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: spearce@spearce.org, git@vger.kernel.org
-To: Jon Schewe <jpschewe@mtu.net>
-X-From: git-owner@vger.kernel.org Fri Jan 08 16:42:23 2010
+Cc: git@vger.kernel.org
+To: Andreas Gruenbacher <agruen@suse.de>
+X-From: git-owner@vger.kernel.org Fri Jan 08 16:48:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTGyc-0006GA-OK
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 16:42:15 +0100
+	id 1NTH4b-0000tw-W7
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 16:48:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753713Ab0AHPmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 10:42:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753579Ab0AHPmI
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 10:42:08 -0500
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:54012 "EHLO
+	id S1753471Ab0AHPsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 10:48:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753315Ab0AHPsW
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 10:48:22 -0500
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:53850 "EHLO
 	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753569Ab0AHPmH (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jan 2010 10:42:07 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 1728DC93D6;
-	Fri,  8 Jan 2010 10:42:07 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 08 Jan 2010 10:42:07 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=bBsRTcOTUro8Yk4/9KHW0Oiysr4=; b=JFbtxm3bB07+97y82Ix9BM5dc9+hN0tU/HoCU5Cv27lH4Tyog/hy4Drc0aVQpkYj9QXjd87aGypBTIS6ZXhHd+aS/3H2JrN8gCwWuKNaTKfonKyWKw2ydyJmPrbjb/Vm0+kMUr2oJLLAOghoJ5+ARDBXcbS4odGgQXIxeCmOCto=
-X-Sasl-enc: ptt7fz0jH+ANSqSr1odlvh02RKp3d4zr3Yq0AeZ4cr81 1262965326
+	by vger.kernel.org with ESMTP id S1753184Ab0AHPsV (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jan 2010 10:48:21 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 09589C991B;
+	Fri,  8 Jan 2010 10:48:21 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Fri, 08 Jan 2010 10:48:21 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=pZnH5R8ELC15yc/h1wyb2VRuZ34=; b=PovnoKtjOSplWRHxows/vajnWwBTpR8DBiBQBv7hECJTQAXXRWnuhQKco4r1JR9KbhALpTnAkIr+IQvFP3mgrQ9lkZ8eaxkfJ/9qCZTQLNYRiFUn6vPrnR1p8ERCXMNIvtgJAaHeqQJsAXrFJy/6eKRJdDo4z0nsQOgCVvyu/nU=
+X-Sasl-enc: CJi/fCdq9IpKh2cNcvh0/Nzn/hopd8cc1yJi4Mboq+b8 1262965700
 Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 5F0524C012B;
-	Fri,  8 Jan 2010 10:42:06 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 708A2284D1;
+	Fri,  8 Jan 2010 10:48:20 -0500 (EST)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7pre) Gecko/20091209 Lightning/1.0b2pre Shredder/3.0.1pre
-In-Reply-To: <4B474C73.8080100@mtu.net>
+In-Reply-To: <1262958000-27181-2-git-send-email-agruen@suse.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136446>
 
-Jon Schewe venit, vidit, dixit 08.01.2010 16:17:
-> If I create a directory "build" at the top of my git repository and then
-> add it to .gitignore, git behaves as expected and ignores the build
-> directory when checking status. Now git-completion.sh has some issues. I
-> have GIT_PS1_SHOWUNTRACKEDFILES to "1", so that I will be notified when
-> there are untracked files in my working directory. When I'm in the
-> top-level directory my prompt looks like expected, no '%'. However if I
-> change to the build directory I get a '%', even though git status shows
-> no untracked files. I see that git-completion.sh is using git ls-files
-> to check this and that function does indeed show output when in my build
-> directory. So the question here: Is git-completion.sh using ls-files
-> improperly or is ls-files behaving improperly?
+Andreas Gruenbacher venit, vidit, dixit 08.01.2010 14:39:
+> Signed-off-by: Andreas Gruenbacher <agruen@suse.de>
+> ---
+
+For the less informed it may be worthwhile to have an explanation in the
+commit message why encode_85() does not need to initialize the table. (I
+strongly suspect it's a matter of de vs. en, i.e. "because it only
+encodes but does not decode."...)
+
+>  base85.c |    2 --
+>  1 files changed, 0 insertions(+), 2 deletions(-)
 > 
-
-Neither, but: output between status and ls-files is inconsistent. More
-specifically, different commands behave differently with respect to the
-treatment of subdirs. ls-files assumes "." implicitly, status does not.
-"git status ." should give you the same behavior is "git ls-files" in
-this regard.
-
-Michael
+> diff --git a/base85.c b/base85.c
+> index 1d165d9..7204ce2 100644
+> --- a/base85.c
+> +++ b/base85.c
+> @@ -84,8 +84,6 @@ int decode_85(char *dst, const char *buffer, int len)
+>  
+>  void encode_85(char *buf, const unsigned char *data, int bytes)
+>  {
+> -	prep_base85();
+> -
+>  	say("encode 85");
+>  	while (bytes) {
+>  		unsigned acc = 0;
