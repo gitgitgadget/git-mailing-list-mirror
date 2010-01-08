@@ -1,75 +1,63 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 3/3] Add "ls", which is basically ls-files with 
-	user-friendly settings
-Date: Fri, 8 Jan 2010 21:16:15 +0700
-Message-ID: <fcaeb9bf1001080616r5835f504t14e51231afb03709@mail.gmail.com>
-References: <1262884076-12293-1-git-send-email-pclouds@gmail.com>
-	 <1262884076-12293-4-git-send-email-pclouds@gmail.com>
-	 <7vfx6h4ww3.fsf@alter.siamese.dyndns.org>
-	 <fcaeb9bf1001071009m11a7adfehdad485a4baeeb958@mail.gmail.com>
+From: Karl Wiberg <kha@treskal.com>
+Subject: Re: [StGit PATCH 1/3] Populate the cached config options with the 
+	defaults
+Date: Fri, 8 Jan 2010 15:30:48 +0100
+Message-ID: <b8197bcb1001080630i6daad79anf8323f8001d38db3@mail.gmail.com>
+References: <20100108123403.24161.3495.stgit@pc1117.cambridge.arm.com>
+	 <20100108123559.24161.14842.stgit@pc1117.cambridge.arm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 15:16:28 2010
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 08 15:30:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTFdb-00018Y-Ff
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 15:16:28 +0100
+	id 1NTFrb-0006wm-LG
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jan 2010 15:30:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753490Ab0AHOQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 09:16:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815Ab0AHOQR
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 09:16:17 -0500
-Received: from mail-px0-f174.google.com ([209.85.216.174]:42071 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751064Ab0AHOQQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2010 09:16:16 -0500
-Received: by pxi4 with SMTP id 4so2076929pxi.33
-        for <git@vger.kernel.org>; Fri, 08 Jan 2010 06:16:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=tMM/Mmnq4wCB3WMloiIPD8ExXa4w8N3dOyJMF0eHbh0=;
-        b=Sp5errHpwrLOYjDzVebEyYi+bLvF46G8wwZT3zWGqbN7XvgDryMCO/R9jFfa7qZrY2
-         cPs5Aq5uR5KPrB+vhU86Qyr5k9X6JuUbvLx2Dnw5qmvF8NKrxZ6zP7aPm6Q21SebODKG
-         pEBWQFa+i1h/xGoUV4rWqCW9FJu4bl5O+jdhs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=QBllEZYhOT21o90Yy98OMELvhgHkprsBMhcwIqpSRjtBaINnhyKT7iKFfGDlnd3Uok
-         lkPny7AOioykyoU9Swqh8k9yNtBeiwWIxMXCovHkjpUl/zcTLhHXC4KRovTOTwIa0vuZ
-         jbePw0koVKG/OOnU2AqDoiBuUF+0b3ZbZ1dpg=
-Received: by 10.114.86.7 with SMTP id j7mr1077124wab.209.1262960175832; Fri, 
-	08 Jan 2010 06:16:15 -0800 (PST)
-In-Reply-To: <fcaeb9bf1001071009m11a7adfehdad485a4baeeb958@mail.gmail.com>
+	id S1752896Ab0AHOav convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jan 2010 09:30:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752712Ab0AHOav
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 09:30:51 -0500
+Received: from mail1.space2u.com ([62.20.1.135]:61931 "EHLO mail1.space2u.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752132Ab0AHOau convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jan 2010 09:30:50 -0500
+Received: from mail-fx0-f225.google.com (mail-fx0-f225.google.com [209.85.220.225])
+	(authenticated bits=0)
+	by mail1.space2u.com (8.14.3/8.14.3) with ESMTP id o08EUZJr003386
+	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NOT)
+	for <git@vger.kernel.org>; Fri, 8 Jan 2010 15:30:35 +0100
+Received: by fxm25 with SMTP id 25so12670500fxm.21
+        for <git@vger.kernel.org>; Fri, 08 Jan 2010 06:30:48 -0800 (PST)
+Received: by 10.103.84.15 with SMTP id m15mr3452446mul.43.1262961048217; Fri, 
+	08 Jan 2010 06:30:48 -0800 (PST)
+In-Reply-To: <20100108123559.24161.14842.stgit@pc1117.cambridge.arm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136441>
 
-On 1/8/10, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> On 1/8/10, Junio C Hamano <gitster@pobox.com> wrote:
->  > I think the code for columnar output used in producing "git help -a"
->  >  output should be reusable (if not, should be made reusable and reused
->  >  here).
->
->
-> I saw that and even exported term_columns() but was too lazy to make
->  pretty_print_string_list() something reusable. Will think of it again
->  when I see this command is worth pushing forward.
+Hmm. What's the point of this rewrite?
 
-I think again. There are a few places that may benefit from column
-display: git tag -l, git grep -l, git branch (if you have lots of
-branches) and probably untracked part of "git status". Moreover, I
-have to implement it anyway because Solaris does not have command
-"column". How about an external "git-column"? This way we don't have
-to modify lots of code for columnized output. We may want to name it
-"git-pager" if we want an internal pager someday ;)
--- 
-Duy
+On Fri, Jan 8, 2010 at 1:35 PM, Catalin Marinas <catalin.marinas@arm.co=
+m> wrote:
+
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0try:
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return self.__cache[name][=
+-1]
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0except KeyError:
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return None
+
+You could write this as
+
+  return self.__cache.get(name, [None])[-1]
+
+--=20
+Karl Wiberg, kha@treskal.com
+   subrabbit.wordpress.com
+   www.treskal.com/kalle
