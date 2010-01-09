@@ -1,128 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] ls-files: fix overeager pathspec optimization
-Date: Sat, 9 Jan 2010 00:42:40 -0500
-Message-ID: <20100109054240.GA13321@coredump.intra.peff.net>
-References: <20100108164132.GA6171@coredump.intra.peff.net>
- <7vskag1r5o.fsf@alter.siamese.dyndns.org>
- <7v8wc8jw3k.fsf@alter.siamese.dyndns.org>
- <7vvdfcfjxo.fsf@alter.siamese.dyndns.org>
- <7veim0w68q.fsf_-_@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1001081520240.7821@localhost.localdomain>
- <7v3a2gnnv2.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1001081619570.7821@localhost.localdomain>
- <7v8wc8kshh.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1001081701570.7821@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jon Schewe <jpschewe@mtu.net>, spearce@spearce.org,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jan 09 06:43:03 2010
+From: Simon Chu <simonchu.web@gmail.com>
+Subject: Re: How to push changes from clone back to master
+Date: Fri, 8 Jan 2010 21:53:49 -0800
+Message-ID: <2394EBAE-BA99-4817-93E3-D5441D6DA46B@gmail.com>
+References: <1262986087967-4275010.post@n2.nabble.com> <4B47D52A.1050608@dbservice.com>
+Mime-Version: 1.0 (iPod Mail 7D11)
+Content-Type: text/plain;
+	charset=us-ascii;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Tomas Carnecky <tom@dbservice.com>
+X-From: git-owner@vger.kernel.org Sat Jan 09 06:53:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTU6H-0005uC-MW
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 06:43:02 +0100
+	id 1NTUGr-0001z3-TP
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 06:53:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075Ab0AIFmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Jan 2010 00:42:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751069Ab0AIFmw
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jan 2010 00:42:52 -0500
-Received: from peff.net ([208.65.91.99]:40382 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751018Ab0AIFmw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jan 2010 00:42:52 -0500
-Received: (qmail 27109 invoked by uid 107); 9 Jan 2010 05:47:37 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 09 Jan 2010 00:47:36 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 09 Jan 2010 00:42:40 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1001081701570.7821@localhost.localdomain>
+	id S1751153Ab0AIFx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Jan 2010 00:53:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751098Ab0AIFx2
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jan 2010 00:53:28 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:58225 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750801Ab0AIFx1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jan 2010 00:53:27 -0500
+Received: by ywh6 with SMTP id 6so20139677ywh.4
+        for <git@vger.kernel.org>; Fri, 08 Jan 2010 21:53:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:references:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:x-mailer
+         :mime-version:subject:date:cc;
+        bh=w+71QHo8QkDBQLxk1Iw3/15ACgUis7Q0l/0EYBltPu4=;
+        b=cD/WnEcjUH4By1OSdnzj+kM4JUlGsBliAZQ9y2lgDWBc058KgOeY9lEGTXeJYEDLTS
+         iGZyW5rb1bSnIjwAigaY+7yP2HKn8286fHPCa+q1h9O+5rbpmXD8O+F870574uJ5DA+1
+         fK4TAOlF65pqmiYrR2qX9V+t8sB91OQP+Fcsg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=references:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:x-mailer:mime-version:subject:date:cc;
+        b=Au7zZKD4PtzBc8ZgCbeu35o5R8lCz+iRk8RHOAw2OU+eQyecZKnsWkrlrhALTIKU3L
+         qfXsHWq3tYGbNYQhBuZap/Do4xd8oUGkP0nfdUFxOtu6qu5AMt4gZJgt6e0uAkPR6fFk
+         Wtb500+bDaOn6GmausMmtnp5SAjVA19UYp+IM=
+Received: by 10.100.192.18 with SMTP id p18mr11708733anf.32.1263016406963;
+        Fri, 08 Jan 2010 21:53:26 -0800 (PST)
+Received: from ?192.168.7.100? (c-67-169-108-246.hsd1.ca.comcast.net [67.169.108.246])
+        by mx.google.com with ESMTPS id 21sm9603071yxe.55.2010.01.08.21.53.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 08 Jan 2010 21:53:25 -0800 (PST)
+In-Reply-To: <4B47D52A.1050608@dbservice.com>
+X-Mailer: iPod Mail (7D11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136517>
 
-On Fri, Jan 08, 2010 at 05:07:46PM -0800, Linus Torvalds wrote:
+Tomas,
 
-> > But I am starting to wonder if we might be better off restructuring
-> > read_directory_recursive().  Currently it assumes that the path it was
-> > given _must_ be of interest (i.e. not ignored) and runs excluded() on
-> > subdirectories it finds to make that same decision before recursing into
-> > them or skipping them.  It might make more sense if it first checked if
-> > the path given by the caller should be ignored and act accordingly.
-> 
-> Hmm. I can't make myself care one way or the other, I have to admit.  I 
-> assume you mean basically taking the path and using the first component of 
-> it _instead_ of doing a readdir() - and getting rid of the simplification 
-> up front?
-> 
-> I agree that that should work. Would it be simpler and cleaner? Perhaps. 
-> I'd have to see both patches to be able to tell. I do admit that while I 
-> acked your patch, it sure ain't _pretty_ to do that special odd 
-> "has_leading_ignored_dir()" thing.
+How do I push code to master then, do I do got reset - hard on the  
+master??
 
-It would look something like this:
+Simon
 
-diff --git a/dir.c b/dir.c
-index 3a8d3e6..306d354 100644
---- a/dir.c
-+++ b/dir.c
-@@ -811,12 +811,19 @@ static void free_simplify(struct path_simplify *simplify)
- int read_directory(struct dir_struct *dir, const char *path, int len, const char **pathspec)
- {
- 	struct path_simplify *simplify;
-+	int d_type = DT_DIR;
-+	int exclude;
- 
- 	if (has_symlink_leading_path(path, len))
- 		return dir->nr;
- 
- 	simplify = create_simplify(pathspec);
--	read_directory_recursive(dir, path, len, 0, simplify);
-+	exclude = excluded(dir, path, &d_type);
-+	if (exclude && (dir->flags & DIR_COLLECT_IGNORED) &&
-+	    in_pathspec(path, len, simplify))
-+		dir_add_ignored(dir, path, len);
-+	if (!exclude || (dir->flags & DIR_SHOW_IGNORED))
-+		read_directory_recursive(dir, path, len, 0, simplify);
- 	free_simplify(simplify);
- 	qsort(dir->entries, dir->nr, sizeof(struct dir_entry *), cmp_name);
- 	qsort(dir->ignored, dir->ignored_nr, sizeof(struct dir_entry *), cmp_name);
+On Jan 8, 2010, at 5:00 PM, Tomas Carnecky <tom@dbservice.com> wrote:
 
-But unfortunately excluded() is not happy with the trailing slash on the
-path given to read_directory, so we also need on top:
-
-diff --git a/dir.c b/dir.c
-index 306d354..6045a84 100644
---- a/dir.c
-+++ b/dir.c
-@@ -813,12 +813,17 @@ int read_directory(struct dir_struct *dir, const char *path, int len, const char
- 	struct path_simplify *simplify;
- 	int d_type = DT_DIR;
- 	int exclude;
-+	char *path_without_slash;
- 
- 	if (has_symlink_leading_path(path, len))
- 		return dir->nr;
- 
- 	simplify = create_simplify(pathspec);
--	exclude = excluded(dir, path, &d_type);
-+	path_without_slash = xstrdup(path);
-+	if (path_without_slash[strlen(path_without_slash)-1] == '/')
-+		path_without_slash[strlen(path_without_slash)-1] = '\0';
-+	exclude = excluded(dir, path_without_slash, &d_type);
-+	free(path_without_slash);
- 	if (exclude && (dir->flags & DIR_COLLECT_IGNORED) &&
- 	    in_pathspec(path, len, simplify))
- 		dir_add_ignored(dir, path, len);
-
-And that does fix the case that triggered this whole discussion, but I
-haven't tested thoroughly to make sure we are not adversely affecting
-other cases.
-
--Peff
+> On 1/8/10 10:28 PM, Simon C wrote:
+> >
+> >
+> > I created master branch in git:
+> >
+> > mkdir git_master;
+> > cd git_master
+> > git init
+> > git add .
+> > git commit
+> >
+> > create a clone
+> > git clone . ../git_clone1
+> > create newfile
+> > git add newfile
+> > git commit .
+> >
+> > then try to propagate changes to master
+> > git push
+> >
+> > it gave me some warning, and subsequent git push says everything  
+> is up to
+> > date.
+> > but I do not see the new file under git_master
+>
+> If you asked that question in the official IRC channel, the answer  
+> would be 'faq non-bare', which would cause the bot to send you a  
+> link to this entry in the Git FAQ:
+> http://git.or.cz/gitwiki/GitFaq#Whywon.27tIseechangesintheremoterepoafter.22gitpush.22.3F
+>
+> tom
+>
