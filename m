@@ -1,58 +1,111 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: For real now: bug tracking and secretary tasks in git
-Date: Fri, 08 Jan 2010 17:54:40 -0800
-Message-ID: <4B47E1E0.7040600@eaglescrag.net>
-References: <20100109013850.16f82412@perceptron>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn: git svn dcommit doesn't handle network failure
+Date: Fri, 8 Jan 2010 18:13:47 -0800
+Message-ID: <20100109021347.GA26520@dcvr.yhbt.net>
+References: <20091122112434.29914.59452.reportbug@localhost.localdomain> <20100109010058.GA11922@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git ML <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Sat Jan 09 02:57:15 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Brice Goglin <bgoglin@debian.org>,
+	557477-forwarded@bugs.debian.org, 557477@bugs.debian.org,
+	git@vger.kernel.org, Alex Vandiver <alex@chmrr.net>,
+	Pedro Melo <melo@simplicidade.org>, Sam Vilain <sam@vilain.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 09 03:13:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTQXh-0008HW-GN
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 02:55:05 +0100
+	id 1NTQpv-0006Ld-Ci
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 03:13:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753428Ab0AIBys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 20:54:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753369Ab0AIByr
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 20:54:47 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:52936 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753257Ab0AIByr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2010 20:54:47 -0500
-Received: from voot-cruiser.eaglescrag.net (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id o091seT8022279
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 8 Jan 2010 17:54:41 -0800
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091209 Fedora/3.0-4.fc12 Lightning/1.0pre Thunderbird/3.0
-In-Reply-To: <20100109013850.16f82412@perceptron>
-X-Enigmail-Version: 1.0
-X-Virus-Scanned: ClamAV 0.88.7/10275/Fri Jan  8 17:06:46 2010 on shards.monkeyblade.net
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.1.1 (shards.monkeyblade.net [198.137.202.13]); Fri, 08 Jan 2010 17:54:41 -0800 (PST)
+	id S1753541Ab0AICNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 21:13:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751274Ab0AICNt
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 21:13:49 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:48506 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751095Ab0AICNs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2010 21:13:48 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FB451F503;
+	Sat,  9 Jan 2010 02:13:48 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20100109010058.GA11922@progeny.tock>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136510>
 
-> The proposal goes like this:
+Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Hi Eric,
 > 
-> * Set up bug tracker (done; it's at http://gitbugs.jk.gs/).
-> * Optionally make it an official public bug tracker.
+> 'git svn dcommit' does not seem to have any error recovery built in,
+> so the user is put in a not-great situation if the network cable is
+> pulled in the middle, as in the report below.
+> 
+> See also <http://thread.gmane.org/gmane.comp.version-control.git/70458>
+> 
+> Ideally, it would be nice if users could pretend that each push of
+> a single commit is an atomic operation that rewrites the corresponding
+> local commit at the same time.  In other words, to clean up we might
+> unapply the unpushed patch, then run rebase_cmd().
+> 
+> What do you think?
 
-Is there a reason that the bug tracker should live outside of
-kernel.org?  I mean pretty much everything official, the official source
-tree for instance, already lives on kernel.org - wouldn't having the bug
-tracker under the same domain make more sense?
+Hi Jonathan,
 
-I also thought there was some discussion about a distributed bug tracker
-a while back for this, what ever came of that?  If I've been living
-under a rock about those issues please pardon my ignorance.
+I agree that error recovery for dcommit sucks right now.
 
-- John 'Warthog9' Hawley
+I think Brice's idea (creating a temporary branch to dcommit from)
+is easier to implement and less likely to break than automatically
+unapplying patches.
+
+Not sure when I'll have time to implement this, but I'll accept
+patches in the mean time.
+
+> Brice Goglin wrote:
+> 
+> > Package: git-svn
+> > Version: 1:1.6.5-1
+> > Severity: important
+> > 
+> > Hello,
+> > 
+> > If the network fails during dcommit, git svn gets totally screwed up.
+> > It will give you the prompt back with HEAD pointing to the last SVN-pushed
+> > commit, and the next one applied and not git-committed.
+> > 
+> > $ git svn dcommit
+> > Committing to svn+ssh://bgoglin@scm.gforge.inria.fr/svn/knem/branches/rma ...
+> > 	M	common/knem_io.h
+> > Committed r237
+> > 	M	common/knem_io.h
+> > r237 = f839e16b94052f8b71aa4b66124b37a8337182e0 (refs/remotes/rma)
+> > No changes between current HEAD and refs/remotes/rma
+> > Resetting to the latest refs/remotes/rma
+> > Unstaged changes after reset:
+> > M	common/knem_io.h
+> > M	driver/linux/knem_main.c
+> > ssh: connect to host scm.gforge.inria.fr port 22: Connection timed out
+> > Use of uninitialized value in concatenation (.) or string at /usr/lib/perl5/SVN/Core.pm line 584.
+> > Network connection closed unexpectedly:  at /usr/lib/git-core/git-svn line 557
+> > 
+> > 
+> > Now the only way I found to solve this mess is to git-reset --hard,
+> > git checkout the old HEAD again, and git svn dcommit the remaining stuff.
+> > 
+> > The big problem is that I don't see any easy way to find the old HEAD.
+> > I had to look back in my terminal history in case there's still the output
+> > of a git log showing the old HEAD commitid.
+> > 
+> > I don't know how dcommit works internally, but my feeling is that it
+> > should go to a new temporary branch during dcommit. This way, we would
+> > just have to checkout the non-temporary branch on failure. For now,
+> > I do it manually in case the SVN server fails again, but that's really
+> > annoying.
+> > 
+> > thanks,
+> > Brice
+> --
