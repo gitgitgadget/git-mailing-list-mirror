@@ -1,78 +1,138 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] ls-files: fix overeager pathspec optimization
-Date: Fri, 8 Jan 2010 16:24:21 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.1001081619570.7821@localhost.localdomain>
-References: <4B474C73.8080100@mtu.net> <4B4751EA.8060707@drmicha.warpmail.net> <20100108162404.GA5799@coredump.intra.peff.net> <7vr5q05z74.fsf@alter.siamese.dyndns.org> <20100108164132.GA6171@coredump.intra.peff.net> <7vskag1r5o.fsf@alter.siamese.dyndns.org>
- <7v8wc8jw3k.fsf@alter.siamese.dyndns.org> <7vvdfcfjxo.fsf@alter.siamese.dyndns.org> <7veim0w68q.fsf_-_@alter.siamese.dyndns.org> <alpine.LFD.2.00.1001081520240.7821@localhost.localdomain> <7v3a2gnnv2.fsf@alter.siamese.dyndns.org>
+From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
+Subject: For real now: bug tracking and secretary tasks in git
+Date: Sat, 9 Jan 2010 01:38:50 +0100
+Message-ID: <20100109013850.16f82412@perceptron>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jon Schewe <jpschewe@mtu.net>, spearce@spearce.org,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 09 01:26:27 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jan 09 01:39:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTP9s-0006EI-8O
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 01:26:24 +0100
+	id 1NTPMF-0001So-OW
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 01:39:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754602Ab0AIA0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 19:26:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754600Ab0AIA0Q
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 19:26:16 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:44570 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754504Ab0AIA0P (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jan 2010 19:26:15 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o090OMwO013465
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 8 Jan 2010 16:24:23 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o090OLXb023330;
-	Fri, 8 Jan 2010 16:24:22 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7v3a2gnnv2.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-5.446 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752079Ab0AIAi5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 19:38:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752191Ab0AIAi4
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 19:38:56 -0500
+Received: from zoidberg.org ([88.198.6.61]:57232 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752190Ab0AIAiy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2010 19:38:54 -0500
+Received: from perceptron (xdsl-78-35-164-239.netcologne.de [::ffff:78.35.164.239])
+  (AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by cthulhu.zoidberg.org with esmtp; Sat, 09 Jan 2010 01:38:52 +0100
+  id 004E0077.4B47D01D.000047A2
+X-Mailer: Claws Mail 3.7.3 (GTK+ 2.18.3; i486-pc-linux-gnu)
+X-Obscure-Spam: http://music-jk.net/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136500>
 
+I thought about Cc'ing everyone who was involved in previous
+discussions about this but that would have been a huge list so I
+didn't. No more introductory stuff needed; onwards to the wonderfully
+formatted proposal thingy!
 
+I) SUMMARY OF EVERYTHING THAT EVER HAPPENED
+-------------------------------------------
 
-On Fri, 8 Jan 2010, Junio C Hamano wrote:
-> 
-> Since "git add" uses the exact same codepath to find the untracked files
-> that match the pathspecs, I expected the "fix" will make it complain about
-> "t/gomi" being ignored.  Not so.
+Mass consensus in previous discussions[1][2] goes a bit like this:
 
-No. Since 't' is ignored, it won't even do a readdir() in there.
+1. It would be desirable to have people who do the work of interfacing
+   between bug reporters and developers. These same people could make
+   sure reports didn't get lost. These people are the *secretaries*.
+   They should be pretty reliable.
 
-And since it didn't do a readdir() in there, it won't find any files in 
-there to add to the ignored list.
+2. People who contribute to git shouldn't be forced to work with the
+   tracker. Having a tracker that isn't actively maintained by dedicated
+   secretaries is pretty much worthless anyway, so there's no need to
+   pretend that forcing developers to use a tracker interface is any
+   kind of improvement.
 
-And that's how the "git add" logic for "apparently ignored" files works: 
-it looks at whether the list of ignored files is empty or not.
+3. The "human element" is important. For example, automatic reminders
+   are a lot less valuable than reminders from an actual person.
 
-> Actually, it does start ignoring t/gomi (the index does not have t/gomi
-> after the above sequence with the patch), but lack of the error message
-> makes it a rather unfortunate regression---it works as specified in the
-> sense that ignored paths are not added to the index unless --forced, but
-> it does so without telling the user about it.
+II) PROPOSAL
+------------
 
-I have this memory that _used_ to have a per-filename flag in "git add" 
-that checked if that particular filename component was used or not. But 
-now it just looks at 'dir->ignored_nr' and 'dir->ignored[]'.
+Of course, since I am semi-formally proposing this, I'm also
+volunteering to make it happen, BUT I think that no single person can
+handle all the list traffic conscientiously enough to do a really good
+job. This proposal can only work if more volunteers are found. If you
+(and of course I'm speaking to YOU personally now) want to help out,
+speak up now!
 
-[ Digging back in history.. Yes: commit e96980ef ]
+The proposal goes like this:
 
-		Linus
+* Set up bug tracker (done; it's at http://gitbugs.jk.gs/).
+* Optionally make it an official public bug tracker.
+* To conform to (2) above, tasks are only ever assigned to secretaries.
+  Whoever assigns a task to himself is responsible for finding someone
+  to actually get the task done, and to keep that person on his toes.
+  The bug tracker has features that make this easier (there is no
+  actual field for "assigned to external entity 'dscho'" in the
+  interface because there is no bug tracker software that doesn't suck,
+  but a comment gets the job done, and you can send reminders to
+  yourself).
+* Tasks filed by the general public get pre-screened by secretaries;
+  worthwhile tasks are (semi-manually, to conform with (3)) forwarded to
+  this list. The task is updated with summaries of whatever gets
+  discussed on the list whenever appropriate.
+* Tasks get pruned mercilessly to remove anything that is irrelevant,
+  e.g. comments that do not contribute anything to getting the task
+  done.
+* Things reported to the list get posted to the bug tracker by
+  secretaries (unless, for example, patches have already been accepted
+  by a maintainer), in order to be able to keep track of them more
+  easily. The task contains links to list discussions related to it.
+  To make it easier for a group of secretaries to collaborate, and for
+  any interested party to see the progress of a discussion, whenever a
+  secretary adds a task to the tracker, he replies to the list post
+  that prompted him to do so, with a subject starting with
+  "[TASK]" (ideally containing the task's summary line, too) and the URL
+  of the task in the message body.
+
+Advantages:
+
+* Secretaries don't need to coordinate their activities much. As such,
+  there can be dozens of secretaries without scalability issues, which
+  would reduce the workload on each of them.
+* People who report things don't have to involve themselves in a
+  technical discussion that may be completely over their heads. For
+  example, when Joe Randomuser reports that a certain command does weird
+  things, he most likely won't want to hear anything about whether the
+  current strategy for confabulating stochastic index entries in a
+  distributed manner is error-free, nor does he benefit at all from
+  getting all that technical stuff delivered to his mailbox.
+* People who report things can have more confidence that their report
+  doesn't get lost in The Noise(tm).
+* Git developers don't have to deal with incomplete/nonsensical reports
+  all if they are submitted to the tracker.
+* Git developers can choose themselves how much they want to interact
+  with the bug tracker.
+
+Disadvantages:
+
+* There is a certain level of redundancy in this approach. It's not
+  clear to me whether that's a bad thing. I tend to think that it isn't.
+
+III) THIS SECTION IS USELESS
+----------------------------
+
+Having section headings for just two sections looked stupid, so here is
+another one.
+
+If there are no general objections to the proposal, I will start using
+the tracker for tracking less-than-all reports posted to this list.
+Whether the tracker really takes off depends on everyone who reads
+this... and I'm sure there are lots of great ideas that just didn't
+occur to me that you guys can share here.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/108109
+[2] http://thread.gmane.org/gmane.comp.version-control.git/110117
