@@ -1,7 +1,7 @@
 From: Brad King <brad.king@kitware.com>
-Subject: [PATCH v2 0/2] Support relative .git file in a submodule
-Date: Fri,  8 Jan 2010 22:36:39 -0500
-Message-ID: <1263008201-27429-1-git-send-email-brad.king@kitware.com>
+Subject: [PATCH v2 2/2] Handle relative paths in submodule .git files
+Date: Fri,  8 Jan 2010 22:36:41 -0500
+Message-ID: <1263008201-27429-3-git-send-email-brad.king@kitware.com>
 References: <32541b131001081524g43d54a44i582dd286c1dfe7a5@mail.gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Avery Pennarun <apenwarr@gmail.com>,
@@ -12,79 +12,104 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTS8C-0008Ik-49
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 04:36:52 +0100
+	id 1NTS8C-0008Ik-M1
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 04:36:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754506Ab0AIDgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 22:36:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753683Ab0AIDgt
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 22:36:49 -0500
-Received: from public.kitware.com ([66.194.253.19]:39435 "EHLO
+	id S1754522Ab0AIDgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 22:36:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754502Ab0AIDgu
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 22:36:50 -0500
+Received: from public.kitware.com ([66.194.253.19]:39433 "EHLO
 	public.kitware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753497Ab0AIDgq (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1753496Ab0AIDgq (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 8 Jan 2010 22:36:46 -0500
 Received: by public.kitware.com (Postfix, from userid 5001)
-	id 857A017EA6; Fri,  8 Jan 2010 22:27:33 -0500 (EST)
+	id 6375E17EAE; Fri,  8 Jan 2010 22:27:32 -0500 (EST)
 X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on public.kitware.com
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,AWL,BAYES_00,
 	FH_DATE_PAST_20XX autolearn=no version=3.2.5
 Received: from hythloth (hythloth.kitwarein.com [192.168.30.5])
-	by public.kitware.com (Postfix) with ESMTP id D69EA17EA5;
+	by public.kitware.com (Postfix) with ESMTP id DEB7117EA7;
 	Fri,  8 Jan 2010 22:27:31 -0500 (EST)
 Received: by hythloth (Postfix, from userid 1000)
-	id 289177D425; Fri,  8 Jan 2010 22:36:41 -0500 (EST)
+	id 33F16CFFE9; Fri,  8 Jan 2010 22:36:41 -0500 (EST)
 X-Mailer: git-send-email 1.6.5
 In-Reply-To: <32541b131001081524g43d54a44i582dd286c1dfe7a5@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136513>
 
-Junio C Hamano wrote:
-> then I've always thought that is simply a misconfiguration (t0002
-> seems to use full path for this exact reason).
+Commit 842abf06f36b5b31050db6406265972e3e1cc189 taught
+resolve_gitlink_ref() to call read_gitfile_gently() to resolve .git
+files.  In this commit teach read_gitfile_gently() to interpret a
+relative path in a .git file with respect to the file location.
 
-Everything in that test works with REAL=.real except the line
+This change allows update-index to recognize a submodule that uses a
+relative path in its .git file.  It previously failed because the
+relative path was wrongly interpreted with respect to the superproject
+directory.
 
-  test "$REAL" = "$(git rev-parse --git-dir)"
-
-because --git-dir returns an absolute path.
-
-> Is there a reason why relative path should be used/usable here, other
-> than "being able to is better than not being able to"???
-
-Similar configurations already work:
-
- - A .git file with a relative path works inside its work tree
- - A .git symlink with a relative path works inside its work tree
- - A submodule whose .git is a real symlink with a relative path works
-
-My patch just fixes an intuitive combination of these cases.
-
-> I don't like my process randomly chdir'ing around assuming they can
-> chdir back safely very much, and would prefer not to add such
-> codepaths unless absolutely necessary.
-
-Here is a new patch series.  Patch 1/2 is unchanged.  Patch 2/2 has been
-re-written to avoid chdir.
-
-Avery Pennarun wrote:
-> This problem seems especially true with submodules.  If the
-> submodule's repo is something like supermodule/.git/submodule.git, a
-> relative path would almost always be a appropriate, no?
-
-Exactly.  In fact the experiment I was doing involved creating submodule
-repos inside the main .git and linking to them from the work tree
-subdirectories.  I'm looking into combining the approach with that of
-git-new-workdir to keep submodules in the same object database.
-
-Brad King (2):
-  Test update-index for a gitlink to a .git file
-  Handle relative paths in submodule .git files
-
+Signed-off-by: Brad King <brad.king@kitware.com>
+---
  setup.c                         |   22 +++++++++++++++++++---
- t/t2104-update-index-gitfile.sh |   38 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 57 insertions(+), 3 deletions(-)
- create mode 100755 t/t2104-update-index-gitfile.sh
+ t/t2104-update-index-gitfile.sh |    2 +-
+ 2 files changed, 20 insertions(+), 4 deletions(-)
+
+diff --git a/setup.c b/setup.c
+index 2cf0f19..f10e2dd 100644
+--- a/setup.c
++++ b/setup.c
+@@ -252,6 +252,8 @@ static int check_repository_format_gently(int *nongit_ok)
+ const char *read_gitfile_gently(const char *path)
+ {
+ 	char *buf;
++	char* dir;
++	const char *slash;
+ 	struct stat st;
+ 	int fd;
+ 	size_t len;
+@@ -276,9 +278,23 @@ const char *read_gitfile_gently(const char *path)
+ 	if (len < 9)
+ 		die("No path in gitfile: %s", path);
+ 	buf[len] = '\0';
+-	if (!is_git_directory(buf + 8))
+-		die("Not a git repository: %s", buf + 8);
+-	path = make_absolute_path(buf + 8);
++	dir = buf + 8;
++
++	if (!is_absolute_path(dir) && (slash = strrchr(path, '/'))) {
++		size_t pathlen = slash+1 - path;
++		size_t dirlen = pathlen + len - 8;
++		dir = xmalloc(dirlen + 1);
++		strncpy(dir, path, pathlen);
++		strncpy(dir + pathlen, buf + 8, len - 8);
++		dir[dirlen] = '\0';
++		free(buf);
++		buf = dir;
++	}
++
++	if (!is_git_directory(dir))
++		die("Not a git repository: %s", dir);
++	path = make_absolute_path(dir);
++
+ 	free(buf);
+ 	return path;
+ }
+diff --git a/t/t2104-update-index-gitfile.sh b/t/t2104-update-index-gitfile.sh
+index ba71984..641607d 100755
+--- a/t/t2104-update-index-gitfile.sh
++++ b/t/t2104-update-index-gitfile.sh
+@@ -31,7 +31,7 @@ test_expect_success 'submodule with relative .git file' '
+ 	 test_commit first)
+ '
+ 
+-test_expect_failure 'add gitlink to relative .git file' '
++test_expect_success 'add gitlink to relative .git file' '
+ 	git update-index --add -- sub2
+ '
+ 
+-- 
+1.6.5
