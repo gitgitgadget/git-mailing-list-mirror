@@ -1,138 +1,104 @@
-From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
-Subject: For real now: bug tracking and secretary tasks in git
-Date: Sat, 9 Jan 2010 01:38:50 +0100
-Message-ID: <20100109013850.16f82412@perceptron>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [msysGit] [PATCH/RFC 06/11] run-command: add kill_async() and 
+	is_async_alive()
+Date: Sat, 9 Jan 2010 01:49:47 +0100
+Message-ID: <40aa078e1001081649h5cb767d5t880110d923418300@mail.gmail.com>
+References: <1259196260-3064-1-git-send-email-kusmabite@gmail.com>
+	 <200911272059.25934.j6t@kdbg.org>
+	 <40aa078e0912020757i3b63ef6eh71c3d4d99047f1f2@mail.gmail.com>
+	 <200912022027.23344.j6t@kdbg.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 09 01:39:13 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com, git@vger.kernel.org, dotzenlabs@gmail.com
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Jan 09 01:49:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTPMF-0001So-OW
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 01:39:12 +0100
+	id 1NTPWc-0004DX-Df
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Jan 2010 01:49:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752079Ab0AIAi5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2010 19:38:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752191Ab0AIAi4
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 19:38:56 -0500
-Received: from zoidberg.org ([88.198.6.61]:57232 "EHLO cthulhu.zoidberg.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752190Ab0AIAiy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2010 19:38:54 -0500
-Received: from perceptron (xdsl-78-35-164-239.netcologne.de [::ffff:78.35.164.239])
-  (AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-  by cthulhu.zoidberg.org with esmtp; Sat, 09 Jan 2010 01:38:52 +0100
-  id 004E0077.4B47D01D.000047A2
-X-Mailer: Claws Mail 3.7.3 (GTK+ 2.18.3; i486-pc-linux-gnu)
-X-Obscure-Spam: http://music-jk.net/
+	id S1753110Ab0AIAtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2010 19:49:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752904Ab0AIAtu
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jan 2010 19:49:50 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:43823 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751095Ab0AIAtt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2010 19:49:49 -0500
+Received: by ewy19 with SMTP id 19so12549895ewy.21
+        for <git@vger.kernel.org>; Fri, 08 Jan 2010 16:49:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=0EaCYdvkaAqNsvYBT+gJyGe4C8hCHSzcBQUJU3nprsY=;
+        b=OZU9YTeyWL8o03tvt8blE+VUKbOykn+g5zL+7u4l/anjjT9wJS9bHuVHpw6fDW4fM+
+         YjWi0yQFfkA8xK5P+GaGJ93lDU7y46juDYUjs/gY4zy4zsxGedul0xsI6K9B/a/bs33n
+         Gae0cGme8HdmeX50ykdHSJlu+nzh2Ev/veVWo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        b=NdyCbdy9bqPEmaw2x/BYf8Ymt0m19T3trzO78kcCaHKHpt1sawSvcI8qKR1C2IH/WS
+         i9l7yWwejXz+1mwYW/sgJA26zpa9IWuJ1NudnQukEIOIaXJb7IMXiyQGXsE664BHL6At
+         WpzAOxskcaQ1j+dmCJ7vbpNpV1VWSazgWjZHA=
+Received: by 10.216.89.14 with SMTP id b14mr1562196wef.76.1262998187758; Fri, 
+	08 Jan 2010 16:49:47 -0800 (PST)
+In-Reply-To: <200912022027.23344.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136502>
 
-I thought about Cc'ing everyone who was involved in previous
-discussions about this but that would have been a huge list so I
-didn't. No more introductory stuff needed; onwards to the wonderfully
-formatted proposal thingy!
+On Wed, Dec 2, 2009 at 8:27 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> On Mittwoch, 2. Dezember 2009, Erik Faye-Lund wrote:
+>> On Fri, Nov 27, 2009 at 8:59 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+>> > "relatively small chance of stuff blowing up"? The docs of
+>> > TerminateThread: "... the kernel32 state for the thread's process could
+>> > be inconsistent." That's scary if we are talking about a process that
+>> > should run for days or weeks without interruption.
+>>
+>> I think there's a misunderstanding here. I thought your suggestion was
+>> to simply call die(), which would take down the main process. After
+>> reading this explanation, I think you're talking about giving an error
+>> and rejecting the connection instead. Which makes more sense than to
+>> risk crashing the main-process, indeed.
+>
+> Just rejecting a connection is certainly the simplest do to keep the daemon
+> process alive. But the server can be DoS-ed from a single source IP.
+>
+> Currently git-daemon can only be DDoS-ed because there is a maximum number of
+> connections, which are not closed if all of them originate from different
+> IPs.
+>
 
-I) SUMMARY OF EVERYTHING THAT EVER HAPPENED
--------------------------------------------
+After some testing I've found that git-daemon can very much be DoS-ed
+from a single IP in it's current form. This is for two reasons:
+1) The clever xcalloc + memcmp trick has a fault; the port for each
+connection is different, so there will never be a match. I have a
+patch[1] for this that I plan to send out soon.
+2) Even with this patch the effect of the DoS-protection is kind of
+limited. This is because it's a child process of the fork()'d process
+again that does all the heavy lifting, and kill(pid, SIGHUP) doesn't
+kill child processes. So, the connection gets to continue the action
+until upload-pack (or whatever the current command is) finish. This
+might be quite lengthy.
 
-Mass consensus in previous discussions[1][2] goes a bit like this:
+As I said, I have a patch for 1), but I don't quite know how to fix
+2). Perhaps this is a good use for process groups? I'm a Windows-guy;
+my POSIX isn't exactly super-awesome...
 
-1. It would be desirable to have people who do the work of interfacing
-   between bug reporters and developers. These same people could make
-   sure reports didn't get lost. These people are the *secretaries*.
-   They should be pretty reliable.
+I found these issues during my latest effort to port git-daemon to
+Windows. I managed to get this to work fine on Windows, by
+implementing a kill(x, SIGTERM) that terminated child-processes
+(because I was under the impression that this was what happened... I
+guess daemon.c lead me to believe that).
 
-2. People who contribute to git shouldn't be forced to work with the
-   tracker. Having a tracker that isn't actively maintained by dedicated
-   secretaries is pretty much worthless anyway, so there's no need to
-   pretend that forcing developers to use a tracker interface is any
-   kind of improvement.
+[1]: http://repo.or.cz/w/git/kusma.git/commit/b1d286d32f42c57b90a1db9b7b8d6775a5d1ad7b
 
-3. The "human element" is important. For example, automatic reminders
-   are a lot less valuable than reminders from an actual person.
-
-II) PROPOSAL
-------------
-
-Of course, since I am semi-formally proposing this, I'm also
-volunteering to make it happen, BUT I think that no single person can
-handle all the list traffic conscientiously enough to do a really good
-job. This proposal can only work if more volunteers are found. If you
-(and of course I'm speaking to YOU personally now) want to help out,
-speak up now!
-
-The proposal goes like this:
-
-* Set up bug tracker (done; it's at http://gitbugs.jk.gs/).
-* Optionally make it an official public bug tracker.
-* To conform to (2) above, tasks are only ever assigned to secretaries.
-  Whoever assigns a task to himself is responsible for finding someone
-  to actually get the task done, and to keep that person on his toes.
-  The bug tracker has features that make this easier (there is no
-  actual field for "assigned to external entity 'dscho'" in the
-  interface because there is no bug tracker software that doesn't suck,
-  but a comment gets the job done, and you can send reminders to
-  yourself).
-* Tasks filed by the general public get pre-screened by secretaries;
-  worthwhile tasks are (semi-manually, to conform with (3)) forwarded to
-  this list. The task is updated with summaries of whatever gets
-  discussed on the list whenever appropriate.
-* Tasks get pruned mercilessly to remove anything that is irrelevant,
-  e.g. comments that do not contribute anything to getting the task
-  done.
-* Things reported to the list get posted to the bug tracker by
-  secretaries (unless, for example, patches have already been accepted
-  by a maintainer), in order to be able to keep track of them more
-  easily. The task contains links to list discussions related to it.
-  To make it easier for a group of secretaries to collaborate, and for
-  any interested party to see the progress of a discussion, whenever a
-  secretary adds a task to the tracker, he replies to the list post
-  that prompted him to do so, with a subject starting with
-  "[TASK]" (ideally containing the task's summary line, too) and the URL
-  of the task in the message body.
-
-Advantages:
-
-* Secretaries don't need to coordinate their activities much. As such,
-  there can be dozens of secretaries without scalability issues, which
-  would reduce the workload on each of them.
-* People who report things don't have to involve themselves in a
-  technical discussion that may be completely over their heads. For
-  example, when Joe Randomuser reports that a certain command does weird
-  things, he most likely won't want to hear anything about whether the
-  current strategy for confabulating stochastic index entries in a
-  distributed manner is error-free, nor does he benefit at all from
-  getting all that technical stuff delivered to his mailbox.
-* People who report things can have more confidence that their report
-  doesn't get lost in The Noise(tm).
-* Git developers don't have to deal with incomplete/nonsensical reports
-  all if they are submitted to the tracker.
-* Git developers can choose themselves how much they want to interact
-  with the bug tracker.
-
-Disadvantages:
-
-* There is a certain level of redundancy in this approach. It's not
-  clear to me whether that's a bad thing. I tend to think that it isn't.
-
-III) THIS SECTION IS USELESS
-----------------------------
-
-Having section headings for just two sections looked stupid, so here is
-another one.
-
-If there are no general objections to the proposal, I will start using
-the tracker for tracking less-than-all reports posted to this list.
-Whether the tracker really takes off depends on everyone who reads
-this... and I'm sure there are lots of great ideas that just didn't
-occur to me that you guys can share here.
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/108109
-[2] http://thread.gmane.org/gmane.comp.version-control.git/110117
+-- 
+Erik "kusma" Faye-Lund
