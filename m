@@ -1,70 +1,58 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: How to check new commit availability without full fetch?
-Date: Sun, 10 Jan 2010 16:05:41 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1001101556490.10143@xanadu.home>
-References: <ee2a733e1001100312j786108fct1b4c8abd0acc5afc@mail.gmail.com>
- <alpine.LFD.2.00.1001101501520.10143@xanadu.home>
- <7v8wc5itlc.fsf@alter.siamese.dyndns.org>
+From: Dave Dulson <dave@dulson.com>
+Subject: [PATCH] 0/2 Add tag message to gitk
+Date: Sun, 10 Jan 2010 22:45:12 +0000
+Message-ID: <2ee0b0aa1001101445xf2d19fatd79587b6d7e393f7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Leo Razoumov <slonik.az@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 10 22:08:28 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Paul Mackerras <paulus@samba.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 10 23:46:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NU4yo-0001xT-G2
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Jan 2010 22:05:46 +0100
+	id 1NU6Xu-0007VH-Ru
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Jan 2010 23:46:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752202Ab0AJVFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jan 2010 16:05:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752131Ab0AJVFm
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 16:05:42 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:58037 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750917Ab0AJVFm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jan 2010 16:05:42 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KW100E3VULH7C70@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 10 Jan 2010 16:05:41 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7v8wc5itlc.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1754388Ab0AJWpa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jan 2010 17:45:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754574Ab0AJWpQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 17:45:16 -0500
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:48224 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754263Ab0AJWpO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jan 2010 17:45:14 -0500
+Received: by ewy6 with SMTP id 6so21251053ewy.29
+        for <git@vger.kernel.org>; Sun, 10 Jan 2010 14:45:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=p02KdfOn+rKBTOfjglITT37OramxlZHFaA5adpmWG8E=;
+        b=lBAE5wjG12A701S8n1o8vGTBAtqWeimE0bY65As1qGHcdgBoorRu/8OlzrR8BvORdI
+         5UA53F4X6jGH6Bz6ztcI1LBCS9LxZTY/pt7FIXspF+mB42v5brikUO1rcNKByxeLokUy
+         4aGjXgL0NRTOs6gIAhLhLAcz7dJOhZ1soscfE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:cc:content-type;
+        b=uiM4lxTjs6qvXqQcVBeWFuBrc/zO5g0WKnum8e4lGjpQgojOUX77mgwOWkXEvYx9k1
+         DlVL2lrASN2rZRWt2rhzWHiJQ2T7Dg7opcbJGddfId5rq7tzSvcryXIw0JffZOlWTx3t
+         yzCrGJpgLdfXb6nX+ZwD/w3f5/cCBb0Jb7pTU=
+Received: by 10.216.90.65 with SMTP id d43mr1367107wef.41.1263163512756; Sun, 
+	10 Jan 2010 14:45:12 -0800 (PST)
+X-Google-Sender-Auth: 57a87881346d14a1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136590>
 
-On Sun, 10 Jan 2010, Junio C Hamano wrote:
+It would be nice to be able to create a full tag from gitk, so these
+patches add that ability. I'm not sure about 2/2, but can't see what
+using $tagobjid adds - hopefully Paul or similar will be able to weigh
+in.
 
-> Nicolas Pitre <nico@fluxnic.net> writes:
-> 
-> >> I am sure I am not the only one with such an itch.
-> >
-> > Maybe you are. There is very little point knowing that the remote repo 
-> > has new commits if you're not going to fetch them, so I don't understand 
-> > why you need this.
-> 
-> A feel good factor is in play?  IOW, "I am short of time, so I won't be
-> able to really afford to 'git pull' and test the result of re-integrating
-> my changes to what happened on the other end.  If I can learn that there
-> is nothing happening over there, then I won't have to do anything and know
-> that I am up to date."
+Cheers,
 
-Just do a fetch then.  If the fetch progress display looks like if it is 
-going to take a while then just interrupt it and go home.  If the fetch 
-looks trivial then just merge it.  In any case, the "feel good" factor 
-can't be that great by only knowing if the remote has changed or not.  
-
-Well maybe if it hasn't changed then you know right away how to feel 
-about it (equally with a fetch in that case), and if the remote is 
-indeed different then you can't tell whether the changes are trivial or 
-not without actually fetching them.
-
-
-Nicolas
+Dave
