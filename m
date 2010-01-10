@@ -1,67 +1,81 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: How to check new commit availability without full fetch?
-Date: Sun, 10 Jan 2010 15:13:49 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1001101501520.10143@xanadu.home>
-References: <ee2a733e1001100312j786108fct1b4c8abd0acc5afc@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: "What's cooking" incremental edition
+Date: Sun, 10 Jan 2010 15:21:20 -0500
+Message-ID: <fabb9a1e1001101221i389c05a8v7ff241859d5e8dae@mail.gmail.com>
+References: <7vmy0lpwes.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Leo Razoumov <slonik.az@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 10 21:14:02 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 10 21:21:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NU4Af-0008I7-OO
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Jan 2010 21:13:58 +0100
+	id 1NU4IC-0002oH-Tj
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Jan 2010 21:21:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752855Ab0AJUNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jan 2010 15:13:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752662Ab0AJUNv
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 15:13:51 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:58401 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752141Ab0AJUNv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jan 2010 15:13:51 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KW1007O0S716T50@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 10 Jan 2010 15:13:50 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <ee2a733e1001100312j786108fct1b4c8abd0acc5afc@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1752409Ab0AJUVl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Jan 2010 15:21:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751857Ab0AJUVl
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 15:21:41 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:42264 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751651Ab0AJUVk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Jan 2010 15:21:40 -0500
+Received: by pwj9 with SMTP id 9so986939pwj.21
+        for <git@vger.kernel.org>; Sun, 10 Jan 2010 12:21:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nm5GC2yDdOH1VsAPjpYTCQb0OStzrlmH0pUCxkskHdQ=;
+        b=huZEroKNegKSYQN8CWl3VTLs/WIcaLV/VVxR87NrEwLDB1HRMgcCPjwzholeeEibUs
+         J32QxAEilU5/kSCd5FdL2+7ow2l/cWMqyCqBC/A72Qr1GGs1MPXahv2uRwxMXKNDxURy
+         VYgl3dlvCpY7K/DJOFzif2KdYYXnfOyDuLypE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=T+6YyWUVSnulQbrYO7JoOyfbjU3aOQwQ1O/S7UzAIDZ1x6U0nJz+qtQqYi/OIHr0GN
+         Lu6bzpQN9ROLFQ0XXH0JdSaTL+kiQb6liz8eO0ngjPCFAwpb3cYGq9NdxfcXewyMmLa9
+         dnUCmhq1Mn9lOJV+D76FjRp95yd08EZnhoYxE=
+Received: by 10.142.120.2 with SMTP id s2mr4849652wfc.311.1263154900074; Sun, 
+	10 Jan 2010 12:21:40 -0800 (PST)
+In-Reply-To: <7vmy0lpwes.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136587>
 
-On Sun, 10 Jan 2010, Leo Razoumov wrote:
+Heya,
 
-> Hi List,
-> I am trying to find a way to check availability of new commits
-> *before* doing fetch or pull. Unfortunately, neither fetch nor pull
-> take "--dry-run" option (unlike push)
+On Sun, Jan 10, 2010 at 14:55, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> =A0* jn/makefile (2010-01-06) 4 commits
+> - - Makefile: consolidate .FORCE-* targets
+> - - Makefile: learn to generate listings for targets requiring specia=
+l flags
+> - - Makefile: use target-specific variable to pass flags to cc
+> - - Makefile: regenerate assembler listings when asked
+> + =A0(merged to 'next' on 2010-01-10 at f5a5d42)
+> + + Makefile: consolidate .FORCE-* targets
+> + + Makefile: learn to generate listings for targets requiring specia=
+l flags
+> + + Makefile: use target-specific variable to pass flags to cc
+> + + Makefile: regenerate assembler listings when asked
 
-But... _Why_ do you want/need to do that?
+=46wiw, I find it harder to read due to the now ambiguous meaning of th=
+e
++ and - (it could either mean something is in pu/next, or that the
+topic changed). Of course this is partly caused by the fact that I
+don't read emails in fixed font (by default), but perhaps it's worth
+considering using different symbols for pu/next-ness?
 
-You could use ls-remote to see what the remote branch is pointing to, 
-e.g.:
+--=20
+Cheers,
 
-	git ls-remote origin master
-
-and compare with the local view of that remote branch:
-
-	git show-ref origin/master
-
-And if both SHA1 strings match then there is nothing new to fetch.
-
-> I am sure I am not the only one with such an itch.
-
-Maybe you are. There is very little point knowing that the remote repo 
-has new commits if you're not going to fetch them, so I don't understand 
-why you need this.
-
-
-Nicolas
+Sverre Rabbelier
