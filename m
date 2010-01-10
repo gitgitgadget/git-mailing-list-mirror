@@ -1,82 +1,98 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] git-p4: Fix empty submit template when editor fires up
-Date: Sun, 10 Jan 2010 05:14:40 -0600
-Message-ID: <20100110111440.GB19612@progeny.tock>
-References: <1262235876-1239-1-git-send-email-kevinlsk@gmail.com>
- <20100110111153.GA19612@progeny.tock>
+From: =?UTF-8?B?0JLQmtC+0L3RgtCw0LrRgtC1LtGA0YM=?= <admin@vkontakte.ru>
+Subject: =?UTF-8?B?0KHQsNC90Y8gKioqIFRpLTMgKioqINCR0YPRgNC40Lwg0LTQvtCx0LDQstC4?=
+ =?UTF-8?B?0Lsg0JLQsNGBINCyINC00YDRg9C30YzRjyDQvdCwINGB0LDQudGC0LUg0JLQ?=
+ =?UTF-8?B?mtC+0L3RgtCw0LrRgtC1LtGA0YM=?=
+Date: Sun, 10 Jan 2010 14:42:44 +0300
+Message-ID: <287deae8f97e609e56c7bcbd73f0bcb8@localhost.localdomain>
+Reply-To: "Pavel Durov, inContact.ru Admin" <admin@vkontakte.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Simon Hausmann <simon@lst.de>,
-	gitster@pobox.com
-To: Kevin Leung <kevinlsk@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 10 12:14:38 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?B?0JfQtNGA0LDQstGB0YLQstGD0LnRgtC1?= <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 10 12:42:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTvkk-0006sH-Bm
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Jan 2010 12:14:38 +0100
+	id 1NTwC5-0006XP-ME
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Jan 2010 12:42:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753829Ab0AJLOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jan 2010 06:14:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753720Ab0AJLOe
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 06:14:34 -0500
-Received: from mail-iw0-f194.google.com ([209.85.223.194]:35803 "EHLO
-	mail-iw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753493Ab0AJLOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jan 2010 06:14:34 -0500
-Received: by iwn32 with SMTP id 32so4068033iwn.33
-        for <git@vger.kernel.org>; Sun, 10 Jan 2010 03:14:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=QXmFnIfTrbPKloskfLNVXENY7E+FAuVjY1tRQ/Q9dto=;
-        b=gJh8ouis7ipQxKiG5U9G5gRNfEnvUv8K4Rk9ExZYtW6Er8DXZa+BfrqkSaS4UcDiyW
-         JlrEmqISAkVvbBeJHIUviB6OfVmq0m48o43Ffm6Vs+VfFOZx8eQyKehkMPSfb+7tqZ0C
-         nZe/pU/GDCSUO0X5Mpuj8hLjlOTRzW+c5SmNs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=iZ61rQVQZxPGnteXCJV4Rf6DqjqOyxNFyh0R3kr8rR5dCiUrO1sLv1ztuFdU8GZ+4D
-         Bs6MbwCZvINYR0Z6t7Zz5JYjc6ZXM9v9bIJfYR4ygIh5F2DKy5TwNHpie18GVWqOVA6J
-         wBt7EsNlA9nOvkkGd9muUEvCuZb6HGS9lE/9I=
-Received: by 10.231.120.90 with SMTP id c26mr2968217ibr.1.1263122071063;
-        Sun, 10 Jan 2010 03:14:31 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm2682013iwn.14.2010.01.10.03.14.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 10 Jan 2010 03:14:30 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20100110111153.GA19612@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751633Ab0AJLmt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Jan 2010 06:42:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459Ab0AJLms
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 06:42:48 -0500
+Received: from cs06.vkontakte.ru ([93.186.224.6]:58143 "EHLO vkontakte.ru"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751190Ab0AJLms (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jan 2010 06:42:48 -0500
+Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
+	by vkontakte.ru with esmtp (Exim 4.63)
+	(envelope-from <admin@vkontakte.ru>)
+	id 1NTwBw-00012p-Hq
+	for git@vger.kernel.org; Sun, 10 Jan 2010 14:42:44 +0300
+X-Priority: 3
+X-Mailer: PHPMailer [version 1.73]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136567>
+X-Spam-Report: 8.1 points;
+ *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
+ *      [cf:  64]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+ *  0.1 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: vk.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136568>
 
-Jonathan Nieder wrote:
-> Kevin Leung wrote:
-> > read_pipe() returns "\n". We need to remove it before passing it
-> > to system().
-> > 
-> > Signed-off-by: Kevin Leung <kevinlsk@gmail.com>
-> 
-> If I understand correctly, this is a cosmetic change:
+=D0=97=D0=B4=D1=80=D0=B0=D0=B2=D1=81=D1=82=D0=B2=D1=83=D0=B9=D1=82=D0=B5=
+,
 
-... and of course I didn't the subject.  Sorry about that.  Thanks
-for cleaning up my mess.
+=D0=A1=D0=B0=D0=BD=D1=8F *** Ti-3 *** =D0=91=D1=83=D1=80=D0=B8=D0=BC =D0=
+=B4=D0=BE=D0=B1=D0=B0=D0=B2=D0=B8=D0=BB =D0=92=D0=B0=D1=81 =D0=B2 =D0=B4=
+=D1=80=D1=83=D0=B7=D1=8C=D1=8F =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82=D0=
+=B5 =D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=83
 
-Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+=D0=92=D1=8B =D0=BC=D0=BE=D0=B6=D0=B5=D1=82=D0=B5 =D0=B7=D0=B0=D0=B9=D1=
+=82=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82 =D0=B8 =D0=BF=D1=80=D0=BE=
+=D1=81=D0=BC=D0=BE=D1=82=D1=80=D0=B5=D1=82=D1=8C =D1=81=D1=82=D1=80=D0=B0=
+=D0=BD=D0=B8=D1=86=D1=8B =D0=92=D0=B0=D1=88=D0=B8=D1=85 =D0=B4=D1=80=D1=
+=83=D0=B7=D0=B5=D0=B9, =D0=B8=D1=81=D0=BF=D0=BE=D0=BB=D1=8C=D0=B7=D1=83=
+=D1=8F
+=D0=92=D0=B0=D1=88 e-mail =D0=B8 =D0=B0=D0=B2=D1=82=D0=BE=D0=BC=D0=B0=D1=
+=82=D0=B8=D1=87=D0=B5=D1=81=D0=BA=D0=B8 =D1=81=D0=BE=D0=B7=D0=B4=D0=B0=D0=
+=BD=D0=BD=D1=8B=D0=B9 =D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8C: 6eoRw9MC
 
-> What is the rationale for the rewritten system() line?  I would have
-> understood a change to
-> 
-> 	os.spawnlp("sh", "-c", editor + " \"$@\"", fileName)
+=D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=83 - =D1=
+=81=D0=B0=D0=B9=D1=82, =D0=BA=D0=BE=D1=82=D0=BE=D1=80=D1=8B=D0=B9 =D0=B5=
+=D0=B6=D0=B5=D0=B4=D0=BD=D0=B5=D0=B2=D0=BD=D0=BE =D0=BF=D0=BE=D0=B7=D0=B2=
+=D0=BE=D0=BB=D1=8F=D0=B5=D1=82 =D0=B4=D0=B5=D1=81=D1=8F=D1=82=D0=BA=D0=B0=
+=D0=BC =D0=BC=D0=B8=D0=BB=D0=BB=D0=B8=D0=BE=D0=BD=D0=BE=D0=B2 =D0=BB=D1=
+=8E=D0=B4=D0=B5=D0=B9 =D0=BD=D0=B0=D1=85=D0=BE=D0=B4=D0=B8=D1=82=D1=8C =
+=D1=81=D1=82=D0=B0=D1=80=D1=8B=D1=85 =D0=B4=D1=80=D1=83=D0=B7=D0=B5=D0=B9=
+ =D0=B8 =D0=BE=D1=81=D1=82=D0=B0=D0=B2=D0=B0=D1=82=D1=8C=D1=81=D1=8F =D1=
+=81 =D0=BD=D0=B8=D0=BC=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B2=D1=8F=D0=B7=D0=B8=
+, =D0=B4=D0=B5=D0=BB=D0=B8=D1=82=D1=8C=D1=81=D1=8F =D1=84=D0=BE=D1=82=D0=
+=BE=D0=B3=D1=80=D0=B0=D1=84=D0=B8=D1=8F=D0=BC=D0=B8
+=D0=B8 =D1=81=D0=BE=D0=B1=D1=8B=D1=82=D0=B8=D1=8F=D0=BC=D0=B8 =D0=B8=D0=
+=B7 =D0=B6=D0=B8=D0=B7=D0=BD=D0=B8.
 
-I am still curious about this, though it is not so important.
+=D0=A7=D1=82=D0=BE=D0=B1=D1=8B =D0=B2=D0=BE=D0=B9=D1=82=D0=B8 =D0=BD=D0=
+=B0 =D1=81=D0=B0=D0=B9=D1=82, =D0=BF=D1=80=D0=BE=D0=B9=D0=B4=D0=B8=D1=82=
+=D0=B5 =D0=BF=D0=BE =D1=81=D1=81=D1=8B=D0=BB=D0=BA=D0=B5:
+http://vk.com/login.php?regemail=3Dgit@vger.kernel.org#6eoRw9MC
 
-Jonathan
+=D0=92=D0=BD=D0=B8=D0=BC=D0=B0=D0=BD=D0=B8=D0=B5: =D0=92=D0=B0=D1=88=D0=
+=B0 =D1=80=D0=B5=D0=B3=D0=B8=D1=81=D1=82=D1=80=D0=B0=D1=86=D0=B8=D1=8F =
+=D0=BD=D0=B5 =D0=B1=D1=83=D0=B4=D0=B5=D1=82 =D0=B0=D0=BA=D1=82=D0=B8=D0=
+=B2=D0=B8=D1=80=D0=BE=D0=B2=D0=B0=D0=BD=D0=B0, =D0=B5=D1=81=D0=BB=D0=B8=
+ =D0=92=D1=8B =D0=BF=D1=80=D0=BE=D0=B8=D0=B3=D0=BD=D0=BE=D1=80=D0=B8=D1=
+=80=D1=83=D0=B5=D1=82=D0=B5
+=D1=8D=D1=82=D0=BE =D0=BF=D1=80=D0=B8=D0=B3=D0=BB=D0=B0=D1=88=D0=B5=D0=BD=
+=D0=B8=D0=B5.
+
+=D0=96=D0=B5=D0=BB=D0=B0=D0=B5=D0=BC =D1=83=D0=B4=D0=B0=D1=87=D0=B8!
+=D0=A1 =D1=83=D0=B2=D0=B0=D0=B6=D0=B5=D0=BD=D0=B8=D0=B5=D0=BC,
+=D0=90=D0=B4=D0=BC=D0=B8=D0=BD=D0=B8=D1=81=D1=82=D1=80=D0=B0=D1=86=D0=B8=
+=D1=8F =D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=
+=83
