@@ -1,98 +1,79 @@
-From: =?UTF-8?B?0JLQmtC+0L3RgtCw0LrRgtC1LtGA0YM=?= <admin@vkontakte.ru>
-Subject: =?UTF-8?B?0KHQsNC90Y8gKioqIFRpLTMgKioqINCR0YPRgNC40Lwg0LTQvtCx0LDQstC4?=
- =?UTF-8?B?0Lsg0JLQsNGBINCyINC00YDRg9C30YzRjyDQvdCwINGB0LDQudGC0LUg0JLQ?=
- =?UTF-8?B?mtC+0L3RgtCw0LrRgtC1LtGA0YM=?=
-Date: Sun, 10 Jan 2010 14:42:44 +0300
-Message-ID: <287deae8f97e609e56c7bcbd73f0bcb8@localhost.localdomain>
-Reply-To: "Pavel Durov, inContact.ru Admin" <admin@vkontakte.ru>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v2 0/4] Documentation style fixes
+Date: Sun, 10 Jan 2010 13:10:10 +0100
+Message-ID: <201001101310.21455.trast@student.ethz.ch>
+References: <7vaawp4wvz.fsf@alter.siamese.dyndns.org> <201001100107.29920.trast@student.ethz.ch> <7vfx6efox9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?B?0JfQtNGA0LDQstGB0YLQstGD0LnRgtC1?= <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 10 12:42:54 2010
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 10 13:10:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NTwC5-0006XP-ME
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Jan 2010 12:42:54 +0100
+	id 1NTwd7-0006rf-DO
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Jan 2010 13:10:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751633Ab0AJLmt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Jan 2010 06:42:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459Ab0AJLms
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 06:42:48 -0500
-Received: from cs06.vkontakte.ru ([93.186.224.6]:58143 "EHLO vkontakte.ru"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751190Ab0AJLms (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jan 2010 06:42:48 -0500
-Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
-	by vkontakte.ru with esmtp (Exim 4.63)
-	(envelope-from <admin@vkontakte.ru>)
-	id 1NTwBw-00012p-Hq
-	for git@vger.kernel.org; Sun, 10 Jan 2010 14:42:44 +0300
-X-Priority: 3
-X-Mailer: PHPMailer [version 1.73]
+	id S1752510Ab0AJMKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jan 2010 07:10:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752499Ab0AJMKp
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 07:10:45 -0500
+Received: from gwse.ethz.ch ([129.132.178.238]:30498 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752385Ab0AJMKo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jan 2010 07:10:44 -0500
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.213.0; Sun, 10 Jan
+ 2010 13:10:43 +0100
+Received: from thomas.localnet (217.162.250.31) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.213.0; Sun, 10 Jan
+ 2010 13:10:21 +0100
+User-Agent: KMail/1.13.0 (Linux/2.6.31.8-0.1-desktop; KDE/4.3.90; x86_64; ; )
+In-Reply-To: <7vfx6efox9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.1 points;
- *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
- *      [cf:  64]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
- *  0.1 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: vk.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136569>
 
-=D0=97=D0=B4=D1=80=D0=B0=D0=B2=D1=81=D1=82=D0=B2=D1=83=D0=B9=D1=82=D0=B5=
-,
+Junio C Hamano wrote:
+> 
+> I'd like to proceed with this series by (1) pulling from you and queuing
+> the result in 'next', (2) asking other people (including Jonathan) to
+> proofread and send necessary updates to the list, (3) asking you to check
+> and queue these updates from others yourself and tell me to pull again to
+> my 'next', and (4) merging the result to 'master' when done.
+> 
+> Does it sound workable?  Am I placing too much undue burden on you?
 
-=D0=A1=D0=B0=D0=BD=D1=8F *** Ti-3 *** =D0=91=D1=83=D1=80=D0=B8=D0=BC =D0=
-=B4=D0=BE=D0=B1=D0=B0=D0=B2=D0=B8=D0=BB =D0=92=D0=B0=D1=81 =D0=B2 =D0=B4=
-=D1=80=D1=83=D0=B7=D1=8C=D1=8F =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82=D0=
-=B5 =D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=83
+No, that's fine, and indeed I'm glad I'm not putting too much
+conflict-resolution burden on you.
 
-=D0=92=D1=8B =D0=BC=D0=BE=D0=B6=D0=B5=D1=82=D0=B5 =D0=B7=D0=B0=D0=B9=D1=
-=82=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82 =D0=B8 =D0=BF=D1=80=D0=BE=
-=D1=81=D0=BC=D0=BE=D1=82=D1=80=D0=B5=D1=82=D1=8C =D1=81=D1=82=D1=80=D0=B0=
-=D0=BD=D0=B8=D1=86=D1=8B =D0=92=D0=B0=D1=88=D0=B8=D1=85 =D0=B4=D1=80=D1=
-=83=D0=B7=D0=B5=D0=B9, =D0=B8=D1=81=D0=BF=D0=BE=D0=BB=D1=8C=D0=B7=D1=83=
-=D1=8F
-=D0=92=D0=B0=D1=88 e-mail =D0=B8 =D0=B0=D0=B2=D1=82=D0=BE=D0=BC=D0=B0=D1=
-=82=D0=B8=D1=87=D0=B5=D1=81=D0=BA=D0=B8 =D1=81=D0=BE=D0=B7=D0=B4=D0=B0=D0=
-=BD=D0=BD=D1=8B=D0=B9 =D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8C: 6eoRw9MC
+I took the not-yet-merged (I hope I understood the above right :-)
+liberty of squashing fixes from Jonathan's review.  I'll send the
+interdiffs as a reply to this mail.  They're now at
 
-=D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=83 - =D1=
-=81=D0=B0=D0=B9=D1=82, =D0=BA=D0=BE=D1=82=D0=BE=D1=80=D1=8B=D0=B9 =D0=B5=
-=D0=B6=D0=B5=D0=B4=D0=BD=D0=B5=D0=B2=D0=BD=D0=BE =D0=BF=D0=BE=D0=B7=D0=B2=
-=D0=BE=D0=BB=D1=8F=D0=B5=D1=82 =D0=B4=D0=B5=D1=81=D1=8F=D1=82=D0=BA=D0=B0=
-=D0=BC =D0=BC=D0=B8=D0=BB=D0=BB=D0=B8=D0=BE=D0=BD=D0=BE=D0=B2 =D0=BB=D1=
-=8E=D0=B4=D0=B5=D0=B9 =D0=BD=D0=B0=D1=85=D0=BE=D0=B4=D0=B8=D1=82=D1=8C =
-=D1=81=D1=82=D0=B0=D1=80=D1=8B=D1=85 =D0=B4=D1=80=D1=83=D0=B7=D0=B5=D0=B9=
- =D0=B8 =D0=BE=D1=81=D1=82=D0=B0=D0=B2=D0=B0=D1=82=D1=8C=D1=81=D1=8F =D1=
-=81 =D0=BD=D0=B8=D0=BC=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B2=D1=8F=D0=B7=D0=B8=
-, =D0=B4=D0=B5=D0=BB=D0=B8=D1=82=D1=8C=D1=81=D1=8F =D1=84=D0=BE=D1=82=D0=
-=BE=D0=B3=D1=80=D0=B0=D1=84=D0=B8=D1=8F=D0=BC=D0=B8
-=D0=B8 =D1=81=D0=BE=D0=B1=D1=8B=D1=82=D0=B8=D1=8F=D0=BC=D0=B8 =D0=B8=D0=
-=B7 =D0=B6=D0=B8=D0=B7=D0=BD=D0=B8.
+  git://repo.or.cz/git/trast.git doc-style/for-next
 
-=D0=A7=D1=82=D0=BE=D0=B1=D1=8B =D0=B2=D0=BE=D0=B9=D1=82=D0=B8 =D0=BD=D0=
-=B0 =D1=81=D0=B0=D0=B9=D1=82, =D0=BF=D1=80=D0=BE=D0=B9=D0=B4=D0=B8=D1=82=
-=D0=B5 =D0=BF=D0=BE =D1=81=D1=81=D1=8B=D0=BB=D0=BA=D0=B5:
-http://vk.com/login.php?regemail=3Dgit@vger.kernel.org#6eoRw9MC
+(I'm leaving the old head in place for comparison).  I'm gathering
+incremental updates in
 
-=D0=92=D0=BD=D0=B8=D0=BC=D0=B0=D0=BD=D0=B8=D0=B5: =D0=92=D0=B0=D1=88=D0=
-=B0 =D1=80=D0=B5=D0=B3=D0=B8=D1=81=D1=82=D1=80=D0=B0=D1=86=D0=B8=D1=8F =
-=D0=BD=D0=B5 =D0=B1=D1=83=D0=B4=D0=B5=D1=82 =D0=B0=D0=BA=D1=82=D0=B8=D0=
-=B2=D0=B8=D1=80=D0=BE=D0=B2=D0=B0=D0=BD=D0=B0, =D0=B5=D1=81=D0=BB=D0=B8=
- =D0=92=D1=8B =D0=BF=D1=80=D0=BE=D0=B8=D0=B3=D0=BD=D0=BE=D1=80=D0=B8=D1=
-=80=D1=83=D0=B5=D1=82=D0=B5
-=D1=8D=D1=82=D0=BE =D0=BF=D1=80=D0=B8=D0=B3=D0=BB=D0=B0=D1=88=D0=B5=D0=BD=
-=D0=B8=D0=B5.
+  git://repo.or.cz/git/trast.git doc-style/pu
 
-=D0=96=D0=B5=D0=BB=D0=B0=D0=B5=D0=BC =D1=83=D0=B4=D0=B0=D1=87=D0=B8!
-=D0=A1 =D1=83=D0=B2=D0=B0=D0=B6=D0=B5=D0=BD=D0=B8=D0=B5=D0=BC,
-=D0=90=D0=B4=D0=BC=D0=B8=D0=BD=D0=B8=D1=81=D1=82=D1=80=D0=B0=D1=86=D0=B8=
-=D1=8F =D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=
-=83
+For now we have
+
+Jonathan Nieder (2):
+      Documentation: git gc packs refs by default now
+      Documentation: tiny git config manual tweaks
+
+Thomas Rast (1):
+      Documentation: show-files is now called git-ls-files
+
+I'll also send the last one for review shortly, though it's rather
+trivial.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
