@@ -1,78 +1,85 @@
-From: Nicolas Pitre <nico@fluxnic.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: How to check new commit availability without full fetch?
-Date: Sun, 10 Jan 2010 21:01:14 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1001102055070.10143@xanadu.home>
+Date: Sun, 10 Jan 2010 18:08:01 -0800
+Message-ID: <7vk4vpcs1q.fsf@alter.siamese.dyndns.org>
 References: <ee2a733e1001100312j786108fct1b4c8abd0acc5afc@mail.gmail.com>
  <alpine.LFD.2.00.1001101501520.10143@xanadu.home>
  <7v8wc5itlc.fsf@alter.siamese.dyndns.org>
  <alpine.LFD.2.00.1001101556490.10143@xanadu.home>
  <ee2a733e1001101736p2f395de6ka05044fe7cca624d@mail.gmail.com>
+ <be6fef0d1001101757w7f54c9b2ye58c66179137efb1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: SLONIK.AZ@gmail.com, Nicolas Pitre <nico@fluxnic.net>,
+	Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Leo Razoumov <slonik.az@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 03:01:41 2010
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 11 03:08:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NU9bB-00087w-6s
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 03:01:41 +0100
+	id 1NU9hc-0001bV-Q3
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 03:08:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753300Ab0AKCBV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jan 2010 21:01:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753412Ab0AKCBS
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 21:01:18 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:23608 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753300Ab0AKCBP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jan 2010 21:01:15 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KW200F018A2U080@VL-MH-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 10 Jan 2010 21:01:14 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <ee2a733e1001101736p2f395de6ka05044fe7cca624d@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751142Ab0AKCIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jan 2010 21:08:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751259Ab0AKCIO
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 21:08:14 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42108 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751179Ab0AKCIN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jan 2010 21:08:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DAB0D8F93C;
+	Sun, 10 Jan 2010 21:08:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fIT/ny98y6Xn5nOW/DfkrwmSyVE=; b=W+7MbY
+	5BYNbx/CwH+/YCYnolPnFIaewKjDjPWx81iawkMq+ZTi1DEjhsEoMUkMWsFlJtHW
+	OP67iQmK7a54ah9+4CkclRoIWxsSCrVttTS7K3QrFEWrY+dzhsMhbDAUh17zOOcm
+	Ri9jyVBgOqUf70zwSbPdiDHWsuXxJWbB4UYHw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xrpO68jBJAA4sPIDnaolGEcXvM11pBKU
+	q73KpwpshgUQHa50aG/KxP8Bh+/5Jispiz6oauCUd9q1t4ruXSE1yAvgW4X3mVAd
+	fryw2UNsoZNxgqpWRWZ1NOUynRDRTsV5kWjTvy2/cY9qzt2BUENOEnjmUXAt84Tw
+	r1alaxqvjhU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 952B78F936;
+	Sun, 10 Jan 2010 21:08:08 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F6698F935; Sun, 10 Jan
+ 2010 21:08:02 -0500 (EST)
+In-Reply-To: <be6fef0d1001101757w7f54c9b2ye58c66179137efb1@mail.gmail.com>
+ (Tay Ray Chuan's message of "Mon\, 11 Jan 2010 09\:57\:51 +0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 29926CAC-FE56-11DE-9191-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136597>
 
-On Sun, 10 Jan 2010, Leo Razoumov wrote:
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
-> On 2010-01-10, Nicolas Pitre <nico@fluxnic.net> wrote:
-> > On Sun, 10 Jan 2010, Junio C Hamano wrote:
-> >  >
-> >  > A feel good factor is in play?  IOW, "I am short of time, so I won't be
-> >  > able to really afford to 'git pull' and test the result of re-integrating
-> >  > my changes to what happened on the other end.  If I can learn that there
-> >  > is nothing happening over there, then I won't have to do anything and know
-> >  > that I am up to date."
-> >
-> >
-> > Just do a fetch then.  If the fetch progress display looks like if it is
-> >  going to take a while then just interrupt it and go home.  If the fetch
-> >  looks trivial then just merge it.  In any case, the "feel good" factor
-> >  can't be that great by only knowing if the remote has changed or not.
-> >
-> 
-> Forced interruption is not such a good idea. I would favor a
-> non-destructive way to monitor availability of remote commits.
+> By default, when you add a remote (with git remote add), git sets up
+> the fetch refspec in your config that looks like
+>
+>   [remote "foo"]
+>     url = git://foo.com/git/foo.git
+>     fetch = refs/heads/*:refs/remotes/foo/*
+>
+> That is to say, branches on the remote repo will be fetched into a
+> "safe" area, refs/remotes/foo/, away from the branches that you
+> normally work with in refs/heads/.
+>
+> However, if you have a different config and you're fetching directly
+> into refs/heads/, then I can see why you would want to "peek" first
+> with --dry-run before fetching.
 
-You still don't answer my question though.  Again, _why_ do you need to 
-know about remote commit availability without fetching them?
-
-> BTW, pull and push are in a way symmetric operations. Is there any
-> deep reason why push supports --dry-run but pull/fetch does not??
-
-Pushing involves resource usage on your own machine while 
-pulling/fetching involves the remote machine.  Your choice to "waste" 
-CPU cycles on your own machine is not the same as having anybody do the 
-same on a central server.
-
-
-Nicolas
+I don't.  Until all the objects are safely transferred, none of the refs
+are updated, whether they are directly slurped into local branch namespace
+or remote tracking branch namespace.  So no matter what the configuration
+is, interrupted transfer, forced or otherwise, is safe.
