@@ -1,183 +1,63 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 6/6] Documentation: tweak How Merge Works
-Date: Mon, 11 Jan 2010 02:43:56 -0600
-Message-ID: <20100111084355.GF23806@progeny.tock>
-References: <cover.1263081032.git.trast@student.ethz.ch>
- <e330d8ca1a9ec38ce40b0f67123b1dd893f0b31c.1263081032.git.trast@student.ethz.ch>
- <20100110044949.GA8974@progeny.tock>
- <7vskaefp2v.fsf@alter.siamese.dyndns.org>
- <20100111021322.GA8480@progeny.tock>
- <7vzl4lbcfl.fsf@alter.siamese.dyndns.org>
- <20100111041318.GA9806@progeny.tock>
- <20100111082123.GA23742@progeny.tock>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Remove empty directories when checking out a commit with
+ fewer submodules
+Date: Mon, 11 Jan 2010 09:57:15 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1001110954410.4985@pacific.mpi-cbg.de>
+References: <1263178794-3140-1-git-send-email-peter@pcc.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 11 09:44:04 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Peter Collingbourne <peter@pcc.me.uk>
+X-From: git-owner@vger.kernel.org Mon Jan 11 09:51:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUFsW-0004oe-RU
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 09:44:01 +0100
+	id 1NUG07-0007BT-61
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 09:51:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752542Ab0AKIn4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2010 03:43:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752494Ab0AKIn4
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 03:43:56 -0500
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:55133 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752296Ab0AKIn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2010 03:43:56 -0500
-Received: by ywh6 with SMTP id 6so21254926ywh.4
-        for <git@vger.kernel.org>; Mon, 11 Jan 2010 00:43:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=0nlaUYlbbG1E98Uu8b4eKAvgJt4DjfehXbeF77IOaWs=;
-        b=wKnUjmOxdNrLPV6CJgFvY4SsCr97sYmRKozd88un/SG3nOhBhImbqPhYdzqwrnMj/d
-         cXPT72rRG2MygdpeK/R8Rk8aaDHpczDHorgCKdC6bXa0EFdDNRBUmnFxug33uHKuNAsM
-         ZPtqJlNk5Z0J/oGCqklyGy6Kg7EosJDMIDln8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=X5Gx/fINNVTqdKn674uXb7Oio/qrgLVjdMEs5yITX6zDnz7NslWQqB37sVa3P855Cr
-         t6+9xhcd8UCXqYvYSNJjrPtZZATP9/jVJUFox2ps2z9e6DhNbVWNIW+pZUe3kafRDIZQ
-         0glLnNxxZj0XGWd4A77NUy2ax+vTc8WB+vig0=
-Received: by 10.150.213.18 with SMTP id l18mr4848702ybg.183.1263199434867;
-        Mon, 11 Jan 2010 00:43:54 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm4303460iwn.15.2010.01.11.00.43.53
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 11 Jan 2010 00:43:53 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20100111082123.GA23742@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752866Ab0AKIvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2010 03:51:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752855Ab0AKIvq
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 03:51:46 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34018 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752854Ab0AKIvp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2010 03:51:45 -0500
+Received: (qmail invoked by alias); 11 Jan 2010 08:51:43 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp066) with SMTP; 11 Jan 2010 09:51:43 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/4uytySvr4/zTcc7FaQG9Ca84kmJz0XiRe7DrAF2
+	tGC7rfqYerHHcM
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1263178794-3140-1-git-send-email-peter@pcc.me.uk>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136623>
 
-Change heading to TRUE MERGE.  The whole manual page is about how
-merges work.
+Hi,
 
-Start to explain what it means to merge two commits into a single
-tree.
+On Mon, 11 Jan 2010, Peter Collingbourne wrote:
 
-Do not assume the commits named on the 'git merge' command line
-come from another repository.  For simplicity, still assume they
-are branch heads for now, though.
+> Change the unlink_entry function to use rmdir to remove submodule
+> directories.
 
-Do not give start any list items with `code`; a toolchain bug
-makes the resulting nroff look wrong.
+NAK.  We should not even try to _unlink_ submodule subdirectories; it 
+would be _way_ too easy to lose data that way.  Remember, submodules are a 
+totally different beast from regular files.  They can contain valuable, 
+yet uncommitted data, that is not even meant to be committed.
 
-Recommend reset --merged for safely cancelling a failed merge.
+So you say if the submodule directories are empty, it is safe?  Not so.  
+They will never be empty: there is always .git/, and _that_ can contain 
+valuable information that you do not want to throw away, too.  Think of 
+unpushed branches, for example.  That would be _fatal_ if you rmdir() that 
+for me.
 
-Cc: Petr Baudis <pasky@suse.cz>
-Cc: Junio C Hamano <gitster@pobox.com>
-Cc: Thomas Rast <trast@student.ethz.ch>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Documentation/git-merge.txt |   56 +++++++++++++++++++-----------------------
- 1 files changed, 25 insertions(+), 31 deletions(-)
-
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index ec9c6d3..7ae0f65 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -96,62 +96,56 @@ merge commit.
- 
- This behavior can be suppressed with the `--no-ff` option.
- 
--include::merge-strategies.txt[]
--
--
--If you tried a merge which resulted in complex conflicts and
--want to start over, you can recover with 'git-reset'.
--
--HOW MERGE WORKS
-----------------
--
--A merge is always between the current `HEAD` and one or more
--commits (usually, branch head or tag).
-+TRUE MERGE
-+----------
- 
- Except in a fast-forward merge (see above), the branches to be
- merged must be tied together by a merge commit that has both of them
- as its parents.
- The rest of this section describes this "True merge" case.
- 
--The chosen merge strategy merges the two commits into a single
--new source tree.
- When things merge cleanly, this is what happens:
- 
--1. The results are updated both in the index file and in your
--   working tree;
--2. Index file is written out as a tree;
-+1. A version reconciling the changes from all branches to be
-+   merged is written to the index file and your working tree;
-+2. The index file is written out as a tree;
- 3. The tree gets committed; and
- 4. The `HEAD` pointer gets advanced.
- 
- Because of 2., we require that the original state of the index
- file matches exactly the current `HEAD` commit; otherwise we
--will write out your local changes already registered in your
-+would write out your local changes already registered in your
- index file along with the merge result, which is not good.
- Because 1. involves only those paths differing between your
--branch and the remote branch you are pulling from during the
--merge (which is typically a fraction of the whole tree), you can
--have local modifications in your working tree as long as they do
--not overlap with what the merge updates.
--
--When there are conflicts, the following happens:
-+branch and the other branches (which is typically a fraction of
-+the whole tree), you can have local modifications in your
-+working tree as long as they do not overlap with what the merge
-+updates.
- 
--1. `HEAD` stays the same.
-+When it is not obvious how to reconcile the changes, the following
-+happens:
- 
--2. Cleanly merged paths are updated both in the index file and
-+1. The `HEAD` pointer stays the same.
-+2. The `MERGE_HEAD` ref is set to point to the other branch head.
-+3. Paths that merged cleanly are updated both in the index file and
-    in your working tree.
--
--3. For conflicting paths, the index file records up to three
-+4. For conflicting paths, the index file records up to three
-    versions; stage1 stores the version from the common ancestor,
--   stage2 from `HEAD`, and stage3 from the remote branch (you
-+   stage2 from `HEAD`, and stage3 from `MERGE_HEAD` (you
-    can inspect the stages with `git ls-files -u`).  The working
-    tree files contain the result of the "merge" program; i.e. 3-way
--   merge results with familiar conflict markers `<<< === >>>`.
--
--4. No other changes are done.  In particular, the local
-+   merge results with familiar conflict markers `<<<` `===` `>>>`.
-+5. No other changes are done.  In particular, the local
-    modifications you had before you started merge will stay the
-    same and the index entries for them stay as they were,
-    i.e. matching `HEAD`.
- 
-+If you tried a merge which resulted in complex conflicts and
-+want to start over, you can recover with `git reset --merged`.
-+
-+include::merge-strategies.txt[]
-+
-+
- HOW CONFLICTS ARE PRESENTED
- ---------------------------
- 
--- 
-1.6.6
+So please, no,
+Dscho
