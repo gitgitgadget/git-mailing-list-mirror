@@ -1,64 +1,68 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] grep: do not do external grep on skip-worktree entries
-Date: Mon, 11 Jan 2010 07:43:51 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.1001110739280.13040@localhost.localdomain>
-References: <7vtyv4cpna.fsf@alter.siamese.dyndns.org> <87ljgfgbl0.fsf@catnip.gol.com> <fc339e4a1001021847hf1e1a7fq894de7908839ff77@mail.gmail.com> <877hrzga16.fsf@catnip.gol.com> <alpine.LFD.2.00.1001031124420.3630@localhost.localdomain>
- <7v3a2mzzg4.fsf@alter.siamese.dyndns.org> <20100104053125.GA5083@coredump.intra.peff.net> <7vbphaquwl.fsf@alter.siamese.dyndns.org> <20100104064408.GA7785@coredump.intra.peff.net> <alpine.LFD.2.00.1001040659150.3630@localhost.localdomain>
- <fc339e4a1001040757n31298f3h724eacfafb68c63e@mail.gmail.com> <alpine.LFD.2.00.1001040801290.3630@localhost.localdomain> <7vvdf9402f.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Miles Bader <miles@gnu.org>, Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 16:44:13 2010
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH] rebase--interactive: Ignore comments and blank lines in peek_next_command
+Date: Mon, 11 Jan 2010 16:56:45 +0100
+Message-ID: <59228d1d1e3b846b7d85f3e9752c1f0da6b1ebfc.1263224986.git.mhagger@alum.mit.edu>
+Cc: gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 11 16:57:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUMRB-0005VL-4q
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 16:44:13 +0100
+	id 1NUMe6-0003hU-06
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 16:57:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753374Ab0AKPoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2010 10:44:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753250Ab0AKPoL
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 10:44:11 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:32906 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752382Ab0AKPoK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jan 2010 10:44:10 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0BFhpZ6023005
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 11 Jan 2010 07:43:53 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0BFhpIw012826;
-	Mon, 11 Jan 2010 07:43:51 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7vvdf9402f.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-5.449 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752367Ab0AKP5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2010 10:57:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752323Ab0AKP5I
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 10:57:08 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:36086 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752256Ab0AKP5H (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2010 10:57:07 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from localhost.localdomain (ssh.berlin.jpk.com [212.222.128.135])
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o0BFuxtY024308;
+	Mon, 11 Jan 2010 16:56:59 +0100
+X-Mailer: git-send-email 1.6.6.137.g5b1417
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136633>
 
+Previously, blank lines and/or comments within a series of
+squash/fixup commands would confuse "git rebase -i" into thinking that
+the series was finished.  It would therefore require the user to edit
+the commit message for the squash/fixup commits seen so far.  Then,
+after continuing, it would ask the user to edit the commit message
+again.
 
+Ignore comments and blank lines within a group of squash/fixup
+commands, allowing them to be processed in one go.
 
-On Sun, 10 Jan 2010, Junio C Hamano wrote:
-> 
-> Here is an experimental patch; first, some numbers (hot cache best of 5 runs).
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+This patch applies to master.  It does not conflict with either
+mh/rebase-fixup or ns/rebase-auto-squash.
 
-Without testing it, I can already ACK it. It looks like the 
-ObviouslyRightThing(tm) to do. But I'll run some numbers too.
+ git-rebase--interactive.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-One thing that worries me - but that is independent of this patch - is 
-that I don't think our 'grep' function works correctly (neither the 
-'fixmatch()' one or the 'regexec()' one) when there are NUL characters in 
-a file. Maybe I shouldn't care, but it worries me a bit.
-
-		Linus
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index d529328..6ed57e2 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -322,7 +322,7 @@ make_squash_message () {
+ }
+ 
+ peek_next_command () {
+-	sed -n "1s/ .*$//p" < "$TODO"
++	sed -n -e "/^#/d" -e "/^$/d" -e "s/ .*//p" -e "q" < "$TODO"
+ }
+ 
+ do_next () {
+-- 
+1.6.6.137.g5b1417
