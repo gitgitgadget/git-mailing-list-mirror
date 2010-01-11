@@ -1,71 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC] filter-branch: Fix to allow replacing submodules
- with another content
-Date: Mon, 11 Jan 2010 19:02:06 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001111901380.4985@pacific.mpi-cbg.de>
-References: <1263227634-11259-1-git-send-email-sojkam1@fel.cvut.cz>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: How to check new commit availability without full fetch?
+Date: Mon, 11 Jan 2010 12:59:24 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1001111257300.10143@xanadu.home>
+References: <ee2a733e1001100312j786108fct1b4c8abd0acc5afc@mail.gmail.com>
+ <201001110831.28278.robin.rosenberg@dewire.com>
+ <7vljg5ukol.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Michal Sojka <sojkam1@fel.cvut.cz>
-X-From: git-owner@vger.kernel.org Mon Jan 11 18:59:01 2010
+Content-Type: multipart/mixed; boundary="Boundary_(ID_da9wRvCXFfkhGmDmsl4IFQ)"
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, SLONIK.AZ@gmail.com,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 11 18:59:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUOXb-0000L5-5S
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 18:58:59 +0100
+	id 1NUOY7-0000an-2J
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 18:59:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753072Ab0AKR6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2010 12:58:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753271Ab0AKR6z
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 12:58:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39418 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753072Ab0AKR6y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2010 12:58:54 -0500
-Received: (qmail invoked by alias); 11 Jan 2010 17:56:38 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp071) with SMTP; 11 Jan 2010 18:56:38 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX194Es9Mrap4Oq3ZtgL/L3UGjsTIeRlLJOWl745T0l
-	8N59VKysvx1gzW
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1263227634-11259-1-git-send-email-sojkam1@fel.cvut.cz>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68
+	id S1753493Ab0AKR70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2010 12:59:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753412Ab0AKR70
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 12:59:26 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:25532 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753411Ab0AKR7Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2010 12:59:25 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0KW3004N0GN08X30@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 11 Jan 2010 12:59:25 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7vljg5ukol.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136648>
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 11 Jan 2010, Michal Sojka wrote:
+--Boundary_(ID_da9wRvCXFfkhGmDmsl4IFQ)
+Content-type: TEXT/PLAIN; charset=utf-8
+Content-transfer-encoding: 8BIT
 
-> When git filter-branch is used to replace a submodule with another
-> content, it always fails on the first commit. Consider a repository with
-> directory submodule containing a submodule. If I want to remove the
-> submodule and replace it with a file, the following command fails.
+On Mon, 11 Jan 2010, Junio C Hamano wrote:
+
+> Robin Rosenberg <robin.rosenberg@dewire.com> writes:
 > 
-> git filter-branch --tree-filter 'rm -rf submodule &&
-> 				 git rm -q submodule &&
-> 				 mkdir submodule &&
-> 				 touch submodule/file'
+> > söndagen den 10 januari 2010 12.12.09 skrev  Leo Razoumov:
+> >> Hi List,
+> >> I am trying to find a way to check availability of new commits
+> >> *before* doing fetch or pull. Unfortunately, neither fetch nor pull
+> >> take "--dry-run" option (unlike push)
+> >
+> > Fetch has --dry-run. It's a fairly new option. The drawback is that it
+> > still does the fetch, but it does not update the refs. If you re.run it
+> > again it'll be quicker.
 > 
-> The error message is:
-> error: submodule: is a directory - add files inside instead
+> Doesn't that worry us if it really is quicker?
 > 
-> The reason is that git diff-index, which generates a part of the list of
-> files to update-index, emits also the removed submodule even if it was
-> replaced by a real directory.
-> 
-> Adding --ignored-submodules solves the problem for me and
-> tests in t7003-filter-branch.sh passes correctly.
+> If --dry-run doesn't update the refs, why do the objects that were
+> transferred by them not get asked the next time?  There must be a bug
+> somewhere, but it is getting late already, so I'll leave it to experts in
+> the transfer area to figure it out...
 
-Have you tested replacing one revision of a submodule with another?
+What about builtin-fetch.c:quickfetch() ?
 
-Ciao,
-Dscho
+
+Nicolas
+
+--Boundary_(ID_da9wRvCXFfkhGmDmsl4IFQ)--
