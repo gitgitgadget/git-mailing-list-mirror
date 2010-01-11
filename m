@@ -1,67 +1,84 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] grep: do not do external grep on skip-worktree entries
-Date: Mon, 11 Jan 2010 08:33:09 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.1001110830070.13040@localhost.localdomain>
-References: <7vtyv4cpna.fsf@alter.siamese.dyndns.org> <87ljgfgbl0.fsf@catnip.gol.com> <fc339e4a1001021847hf1e1a7fq894de7908839ff77@mail.gmail.com> <877hrzga16.fsf@catnip.gol.com> <alpine.LFD.2.00.1001031124420.3630@localhost.localdomain>
- <7v3a2mzzg4.fsf@alter.siamese.dyndns.org> <20100104053125.GA5083@coredump.intra.peff.net> <7vbphaquwl.fsf@alter.siamese.dyndns.org> <20100104064408.GA7785@coredump.intra.peff.net> <alpine.LFD.2.00.1001040659150.3630@localhost.localdomain>
- <fc339e4a1001040757n31298f3h724eacfafb68c63e@mail.gmail.com> <alpine.LFD.2.00.1001040801290.3630@localhost.localdomain> <7vvdf9402f.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1001110739280.13040@localhost.localdomain> <alpine.LFD.2.00.1001110748560.13040@localhost.localdomain>
- <7vtyusr4r7.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Miles Bader <miles@gnu.org>, Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 17:33:23 2010
+From: Michal Sojka <sojkam1@fel.cvut.cz>
+Subject: [PATCH/RFC] filter-branch: Fix to allow replacing submodules with another content
+Date: Mon, 11 Jan 2010 17:33:54 +0100
+Message-ID: <1263227634-11259-1-git-send-email-sojkam1@fel.cvut.cz>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Michal Sojka <sojkam1@fel.cvut.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 11 17:44:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUNCk-0003E9-HI
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 17:33:22 +0100
+	id 1NUNNi-0000DH-Se
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 17:44:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751635Ab0AKQdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2010 11:33:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751476Ab0AKQdS
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 11:33:18 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:52219 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751050Ab0AKQdS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jan 2010 11:33:18 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0BGXAmc028513
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 11 Jan 2010 08:33:11 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0BGX9nJ015177;
-	Mon, 11 Jan 2010 08:33:09 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7vtyusr4r7.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-5.449 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752883Ab0AKQoj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2010 11:44:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752822Ab0AKQoj
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 11:44:39 -0500
+Received: from max.feld.cvut.cz ([147.32.192.36]:43475 "EHLO max.feld.cvut.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752834Ab0AKQoi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2010 11:44:38 -0500
+Received: from localhost (unknown [192.168.200.4])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 8D04A19F3381;
+	Mon, 11 Jan 2010 17:34:10 +0100 (CET)
+X-Virus-Scanned: IMAP AMAVIS
+Received: from max.feld.cvut.cz ([192.168.200.1])
+	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
+	with ESMTP id OQutCfZt9fCV; Mon, 11 Jan 2010 17:34:10 +0100 (CET)
+Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 6DE1219F336E;
+	Mon, 11 Jan 2010 17:34:10 +0100 (CET)
+Received: from localhost.localdomain (k335-30.felk.cvut.cz [147.32.86.30])
+	(Authenticated sender: sojkam1)
+	by imap.feld.cvut.cz (Postfix) with ESMTPSA id 3FA9C15C040;
+	Mon, 11 Jan 2010 17:34:10 +0100 (CET)
+X-Mailer: git-send-email 1.6.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136643>
 
+When git filter-branch is used to replace a submodule with another
+content, it always fails on the first commit. Consider a repository with
+directory submodule containing a submodule. If I want to remove the
+submodule and replace it with a file, the following command fails.
 
+git filter-branch --tree-filter 'rm -rf submodule &&
+				 git rm -q submodule &&
+				 mkdir submodule &&
+				 touch submodule/file'
 
-On Mon, 11 Jan 2010, Junio C Hamano wrote:
-> 
-> An ObviouslyRightThing fix is this two-liner.  We shouldn't lookahead if
-> we want to do something more than just skipping when we see an unmatch for
-> the line we are currently looking at.
+The error message is:
+error: submodule: is a directory - add files inside instead
 
-Ack. Works for me. And with that, I'd love for it to go in, and get rid of 
-the external grep. Performance is now a non-issue (it goes both ways), and 
-the internal grep doesn't have the bug with separators between multi-line 
-greps.
+The reason is that git diff-index, which generates a part of the list of
+files to update-index, emits also the removed submodule even if it was
+replaced by a real directory.
 
-And dropping the external one gets rid of all the issues with PATHs, crap 
-'grep' implementations, and removes actual code. Goodie.
+Adding --ignored-submodules solves the problem for me and
+tests in t7003-filter-branch.sh passes correctly.
 
-		Linus
+Signed-off-by: Michal Sojka <sojkam1@fel.cvut.cz>
+---
+ git-filter-branch.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 195b5ef..d4ac7fb 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -331,7 +331,7 @@ while read commit parents; do
+ 			die "tree filter failed: $filter_tree"
+ 
+ 		(
+-			git diff-index -r --name-only $commit &&
++			git diff-index -r --name-only --ignore-submodules $commit && 
+ 			git ls-files --others
+ 		) > "$tempdir"/tree-state || exit
+ 		git update-index --add --replace --remove --stdin \
+-- 
+1.6.6
