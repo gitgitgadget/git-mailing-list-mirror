@@ -1,82 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Unable to get "pretty" URL aliases working
-Date: Sun, 10 Jan 2010 23:59:25 -0800
-Message-ID: <7v7hrpvzqa.fsf@alter.siamese.dyndns.org>
-References: <4B4ABDB5.9000203@uq.edu.au>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: How to check new commit availability without full fetch?
+Date: Mon, 11 Jan 2010 08:31:28 +0100
+Message-ID: <201001110831.28278.robin.rosenberg@dewire.com>
+References: <ee2a733e1001100312j786108fct1b4c8abd0acc5afc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Adam Nielsen <adam.nielsen@uq.edu.au>
-X-From: git-owner@vger.kernel.org Mon Jan 11 09:00:01 2010
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: SLONIK.AZ@gmail.com
+X-From: git-owner@vger.kernel.org Mon Jan 11 09:00:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUFBr-0006rH-5r
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 08:59:55 +0100
+	id 1NUFCM-000732-Td
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 09:00:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752356Ab0AKH7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2010 02:59:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752354Ab0AKH7d
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 02:59:33 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61944 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752351Ab0AKH7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2010 02:59:32 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F4BF8FC5D;
-	Mon, 11 Jan 2010 02:59:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+XRwXn6FVRPQtb5ErVh71XM/Zuk=; b=M2XPRU
-	tJPmlF/QuXs9T/sznHEZhuO0hWKp8GgVy6hTRfgZ/bun4ske0wZT2ZSjXPXVhfce
-	6glN7nG34boyblNOK2j4xo95nmYMCLOqFySHWJkzuyZwh1Myc2gkgsIscIaeBNSi
-	GEoYXYyOL7qKz7qjEO2+mwxQA88ANVQ8NVbfo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WYYyWTmNaK+dy7L7YnqOgMeacjTUy2pN
-	Fgus6xjGnodlaTdyF1c8aI62Mcak5D7TJS71Bzp8ZCnO7wo7ATeza9/2SWyNDUIK
-	e7SaUo+ic4ug9OKWm4+3U2BS3CPOrb0j+1B7hXFOPXNHQDQeSaDW5YgG48/dk+IK
-	vFS3yCYkRlU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D4BC8FC5C;
-	Mon, 11 Jan 2010 02:59:29 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 94D858FC5B; Mon, 11 Jan
- 2010 02:59:26 -0500 (EST)
-In-Reply-To: <4B4ABDB5.9000203@uq.edu.au> (Adam Nielsen's message of "Mon\,
- 11 Jan 2010 15\:57\:09 +1000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3E9C064A-FE87-11DE-B4EB-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752289Ab0AKIAW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jan 2010 03:00:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752287Ab0AKIAV
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 03:00:21 -0500
+Received: from av7-1-sn3.vrr.skanova.net ([81.228.9.181]:56700 "EHLO
+	av7-1-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752273Ab0AKIAV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jan 2010 03:00:21 -0500
+X-Greylist: delayed 1726 seconds by postgrey-1.27 at vger.kernel.org; Mon, 11 Jan 2010 03:00:21 EST
+Received: by av7-1-sn3.vrr.skanova.net (Postfix, from userid 502)
+	id C290238175; Mon, 11 Jan 2010 08:31:32 +0100 (CET)
+Received: from smtp3-1-sn3.vrr.skanova.net (smtp3-1-sn3.vrr.skanova.net [81.228.9.101])
+	by av7-1-sn3.vrr.skanova.net (Postfix) with ESMTP
+	id 8C9D438155; Mon, 11 Jan 2010 08:31:32 +0100 (CET)
+Received: from sleipner.localnet (host-90-232-222-157.mobileonline.telia.com [90.232.222.157])
+	by smtp3-1-sn3.vrr.skanova.net (Postfix) with ESMTP id D914C37E42;
+	Mon, 11 Jan 2010 08:31:31 +0100 (CET)
+User-Agent: KMail/1.12.4 (Linux/2.6.31-17-generic; KDE/4.3.4; i686; ; )
+In-Reply-To: <ee2a733e1001100312j786108fct1b4c8abd0acc5afc@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136615>
 
-Adam Nielsen <adam.nielsen@uq.edu.au> writes:
+s=F6ndagen den 10 januari 2010 12.12.09 skrev  Leo Razoumov:
+> Hi List,
+> I am trying to find a way to check availability of new commits
+> *before* doing fetch or pull. Unfortunately, neither fetch nor pull
+> take "--dry-run" option (unlike push)
 
-> I'm attemping to learn Git but I've gotten stuck trying to configure a
-> server to host my repositories.
-> ...
-> [url "ssh://myserver/path/to/repos/"]
->   insteadOf myserver:
+=46etch has --dry-run. It's a fairly new option. The drawback is that i=
+t
+still does the fetch, but it does not update the refs. If you re.run it
+again it'll be quicker.
 
-url.*.insteadOf is a configuration done on the _client_, i.e. the one that
-you run "git clone", "git fetch", "git push", etc. on. 
+A faster option is to use ls-remote, but you'll have to parse the data
+yourself and compare with your remote refs to see what refs has changed=
+,
+and that will not tell you /what/ the changes are.
 
-	$ cat >>$HOME/.gitconfig <<\EOF
-        [url "ssh://myserver/path/to/repos/"]
-        	insteadOf = myserver://
-	EOF
-        $ git clone myserver://project.git
-
-In any case, "attempting to learn Git" doesn't mix well with use of
-"insteadOf" to me.  If you know /path/to/repos/project.git is what you
-want to access, any "attempting to learn Git" person would do more
-straight-forward "git clone ssh://myserver/path/to/repos/project.git", or
-"git clone myserver:/path/to/repos/project.git" which is even better (it
-is shorter to type and is a more natural form to spell ssh transport).
-
-;-)
+-- robin
