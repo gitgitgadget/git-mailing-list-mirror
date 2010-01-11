@@ -1,117 +1,177 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 2/4] Documentation: warn prominently against merging
- with dirty trees
-Date: Sun, 10 Jan 2010 22:13:18 -0600
-Message-ID: <20100111041318.GA9806@progeny.tock>
-References: <cover.1263081032.git.trast@student.ethz.ch>
- <e330d8ca1a9ec38ce40b0f67123b1dd893f0b31c.1263081032.git.trast@student.ethz.ch>
- <20100110044949.GA8974@progeny.tock>
- <7vskaefp2v.fsf@alter.siamese.dyndns.org>
- <20100111021322.GA8480@progeny.tock>
- <7vzl4lbcfl.fsf@alter.siamese.dyndns.org>
+From: Adam Megacz <adam@megacz.com>
+Subject: [PATCH] Display author and committer after "git commit"
+Date: Mon, 11 Jan 2010 04:37:44 +0000
+Organization: Myself
+Message-ID: <xuu2fx6d9rzb.fsf_-_@nowhere.com>
+References: <xuu2fx6m4vdi.fsf@nowhere.com> <fabb9a1e1001041232h4e5827d1pb5c648b33ecfb5ce@mail.gmail.com> <xuu2zl4tfuij.fsf@nowhere.com> <20100106073806.6117@nanako3.lavabit.com> <7v4omz17xz.fsf@alter.siamese.dyndns.org> <xuu28wc9xd42.fsf@nowhere.com> <7vskagh9fg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 05:16:35 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 11 05:38:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUBhj-0002T0-0B
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 05:16:35 +0100
+	id 1NUC2m-0007XX-6P
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 05:38:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751233Ab0AKEN0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Jan 2010 23:13:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169Ab0AKEN0
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 23:13:26 -0500
-Received: from mail-gx0-f211.google.com ([209.85.217.211]:43321 "EHLO
-	mail-gx0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751133Ab0AKENZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jan 2010 23:13:25 -0500
-Received: by gxk3 with SMTP id 3so10045883gxk.1
-        for <git@vger.kernel.org>; Sun, 10 Jan 2010 20:13:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=bllQi29/wQieco7A7Pqv0d1sxkjxrz1vhESpLLRiN5E=;
-        b=oVYOZ5S2oQkSEUFtbnTAn0KFZQMI47x9vxsqjq4IPyhbkP7bGEnL3NT3JKxpSLHxuN
-         k545pZ6wh8LrypxocYmdWv1lhtTUCXEMSf4/pg7k7z2RKI6JAp+Vk5lhQE0fTACjG2ev
-         i7mIeO9FcetiLM53hXDN+QeqnklsUcm6b7BiQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=RBX1LQWJhWmiUd6BmjIAUTLu8FNmfFsXdcBOQI+BB0Qh38kXOyJ/lk3DrcUaYA2aZZ
-         gD2988EO9Onam50RnytiULSv7H3kUZ5pM6rhz2pNpKNzWZVv+OrGdbtS3txCfzSDpRrL
-         l3ZU8nTzmgPIJ2D7s+jGdsUmjWADDmIWKnCfc=
-Received: by 10.150.169.14 with SMTP id r14mr10701575ybe.121.1263183204951;
-        Sun, 10 Jan 2010 20:13:24 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm4134672iwn.15.2010.01.10.20.13.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 10 Jan 2010 20:13:24 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vzl4lbcfl.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751451Ab0AKEiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jan 2010 23:38:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751409Ab0AKEiP
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 23:38:15 -0500
+Received: from lo.gmane.org ([80.91.229.12]:37173 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750928Ab0AKEiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jan 2010 23:38:14 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NUC2b-0007V9-S8
+	for git@vger.kernel.org; Mon, 11 Jan 2010 05:38:09 +0100
+Received: from gentzen.megacz.com ([65.23.129.159])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 11 Jan 2010 05:38:09 +0100
+Received: from adam by gentzen.megacz.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 11 Jan 2010 05:38:09 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: gentzen.megacz.com
+X-Home-Page: http://www.megacz.com/
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+Cancel-Lock: sha1:UlBkBwdViZZvK5rs1IAS3jhj88o=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136602>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> Here is a scenario I worry about:
->>
->> Suppose I have a change to main.c staged, to add a feature that othe=
-rs
->> have discussed as well.  After a short distraction, I return and run
->> =E2=80=98git pull=E2=80=99 to see what upstream has been working on.
->
-> If your index is dirty, any "mergy" operation will refuse to work *be=
-fore*
-> touching anything, so you won't use "git reset --merge" to begin with=
-=2E
+Display author (name, email, date) and committer (name, email, date)
+after creating a new commit to ensure that the user is alerted in the
+event that they are set in an undesirable manner.
 
-Yes, that is true.  And I was not worried about that.
+This patch seeks to accomplish the following goal: all data included
+in the commit which are sha1-protected (and therefore immutable) are
+either taken from the working tree or else displayed to the user for
+sanity checking purposes.  Since the author/committer information is
+immutable and not taken from the working tree, achieving the goal
+above requires printing out the author/committer.  The short window of
+time after committing a patch and before propagating it is the last
+opportunity to modify the data (by deleting and recreating the commit).
 
-As the git-merge manual explains:
+This patch is not necessarily meant for inclusion verbatim; it's more
+of a starting point for discussion.
+---
+ commit.h   |    2 ++
+ log-tree.c |   15 +++++++++++++++
+ pretty.c   |   23 ++++++++++++++++++-----
+ 3 files changed, 35 insertions(+), 5 deletions(-)
 
-| A merge is always between the current HEAD and one or more commits
-| (usually, branch head or tag), and the index file must match the tree=
- of
-| HEAD commit (i.e. the contents of the last commit) when it starts out=
-=2E In
-| other words, git diff --cached HEAD must report no changes. (One exce=
-ption
-| is when the changed index entries are already in the same state that =
-would
-| result from the merge anyway.)
-
-The potentially problematic scenario for "git reset --merge" is this
-last one, where a changed index entry is already in the same state
-that would result from the merge.  Would a "git reset --merge" reset
-the changed contents away?
-
-> You are allowed to have local modifications only in your work tree.
-> Furthermore, even git experts limit them to something they feel they =
-can
-> afford to lose and recreate easily if necessary.
-
-Sadly, even a small change disappearing can be unnerving for an expert
-and dangerous for a novice.
-
-> You need to be able to tell the two ways in which a "mergy" operation=
- can
-> "fail" apart [*1*].
-
-Thanks for bringing this up.  The manual does not emphasize that
-point at all, but it should.
-
-Jonathan
+diff --git a/commit.h b/commit.h
+index e5332ef..e4222b0 100644
+--- a/commit.h
++++ b/commit.h
+@@ -59,6 +59,8 @@ enum cmit_fmt {
+ 	CMIT_FMT_ONELINE,
+ 	CMIT_FMT_EMAIL,
+ 	CMIT_FMT_USERFORMAT,
++        CMIT_FMT_COMMITTER_AND_DATE,
++        CMIT_FMT_AUTHOR_AND_DATE,
+ 
+ 	CMIT_FMT_UNSPECIFIED,
+ };
+diff --git a/log-tree.c b/log-tree.c
+index 0fdf159..7b399b8 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -160,6 +160,20 @@ static void append_signoff(struct strbuf *sb, const char *signoff)
+ 	strbuf_addch(sb, '\n');
+ }
+ 
++static void append_metadata(struct strbuf *sb,
++                            struct commit *commit,
++                            const struct pretty_print_context *ctx)
++{
++
++	strbuf_addch(sb, '\n');
++	strbuf_addstr(sb, " Author:     ");
++        pretty_print_commit(CMIT_FMT_AUTHOR_AND_DATE, commit, sb, ctx);
++
++	strbuf_addch(sb, '\n');
++	strbuf_addstr(sb, " Committer:  ");
++        pretty_print_commit(CMIT_FMT_COMMITTER_AND_DATE, commit, sb, ctx);
++}
++
+ static unsigned int digits_in_number(unsigned int number)
+ {
+ 	unsigned int i = 10, result = 1;
+@@ -414,6 +428,7 @@ void show_log(struct rev_info *opt)
+ 	ctx.reflog_info = opt->reflog_info;
+ 	pretty_print_commit(opt->commit_format, commit, &msgbuf, &ctx);
+ 
++        append_metadata(&msgbuf, commit, &ctx);
+ 	if (opt->add_signoff)
+ 		append_signoff(&msgbuf, opt->add_signoff);
+ 	if (opt->show_log_size) {
+diff --git a/pretty.c b/pretty.c
+index 8f5bd1a..2458509 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1028,16 +1028,26 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
+ 	int need_8bit_cte = context->need_8bit_cte;
+ 
+ 	if (fmt == CMIT_FMT_USERFORMAT) {
+-		format_commit_message(commit, user_format, sb, context);
++                format_commit_message(commit, user_format, sb, context);
+ 		return;
+ 	}
++        if (fmt == CMIT_FMT_COMMITTER_AND_DATE) {
++                format_commit_message(commit, "%cn <%ce> %cd", sb, context);
++                return;
++        }
++        if (fmt == CMIT_FMT_AUTHOR_AND_DATE) {
++                format_commit_message(commit, "%an <%ae> %ad", sb, context);
++                return;
++        }
+ 
+ 	reencoded = reencode_commit_message(commit, &encoding);
+ 	if (reencoded) {
+ 		msg = reencoded;
+ 	}
+ 
+-	if (fmt == CMIT_FMT_ONELINE || fmt == CMIT_FMT_EMAIL)
++
++	if (fmt == CMIT_FMT_ONELINE || fmt == CMIT_FMT_EMAIL ||
++            fmt == CMIT_FMT_COMMITTER_AND_DATE || CMIT_FMT_AUTHOR_AND_DATE)
+ 		indent = 0;
+ 
+ 	/*
+@@ -1078,12 +1088,14 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
+ 			      context->after_subject, encoding, need_8bit_cte);
+ 
+ 	beginning_of_body = sb->len;
+-	if (fmt != CMIT_FMT_ONELINE)
++	if (fmt != CMIT_FMT_ONELINE &&
++            fmt != CMIT_FMT_COMMITTER_AND_DATE && fmt != CMIT_FMT_AUTHOR_AND_DATE)
+ 		pp_remainder(fmt, &msg, sb, indent);
+ 	strbuf_rtrim(sb);
+ 
+ 	/* Make sure there is an EOLN for the non-oneline case */
+-	if (fmt != CMIT_FMT_ONELINE)
++	if (fmt != CMIT_FMT_ONELINE &&
++            fmt != CMIT_FMT_COMMITTER_AND_DATE && fmt != CMIT_FMT_AUTHOR_AND_DATE)
+ 		strbuf_addch(sb, '\n');
+ 
+ 	/*
+@@ -1094,7 +1106,8 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
+ 	if (fmt == CMIT_FMT_EMAIL && sb->len <= beginning_of_body)
+ 		strbuf_addch(sb, '\n');
+ 
+-	if (fmt != CMIT_FMT_ONELINE)
++	if (fmt != CMIT_FMT_ONELINE &&
++            fmt != CMIT_FMT_COMMITTER_AND_DATE && fmt != CMIT_FMT_AUTHOR_AND_DATE)
+ 		get_commit_notes(commit, sb, encoding,
+ 				 NOTES_SHOW_HEADER | NOTES_INDENT);
+ 
+-- 
+1.6.4.4
