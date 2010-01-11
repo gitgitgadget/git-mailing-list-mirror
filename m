@@ -1,118 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] grep: do not do external grep on skip-worktree entries
-Date: Mon, 11 Jan 2010 08:22:04 -0800
-Message-ID: <7vtyusr4r7.fsf@alter.siamese.dyndns.org>
-References: <7vtyv4cpna.fsf@alter.siamese.dyndns.org>
- <87ljgfgbl0.fsf@catnip.gol.com>
- <fc339e4a1001021847hf1e1a7fq894de7908839ff77@mail.gmail.com>
- <877hrzga16.fsf@catnip.gol.com>
- <alpine.LFD.2.00.1001031124420.3630@localhost.localdomain>
- <7v3a2mzzg4.fsf@alter.siamese.dyndns.org>
- <20100104053125.GA5083@coredump.intra.peff.net>
- <7vbphaquwl.fsf@alter.siamese.dyndns.org>
- <20100104064408.GA7785@coredump.intra.peff.net>
- <alpine.LFD.2.00.1001040659150.3630@localhost.localdomain>
- <fc339e4a1001040757n31298f3h724eacfafb68c63e@mail.gmail.com>
- <alpine.LFD.2.00.1001040801290.3630@localhost.localdomain>
- <7vvdf9402f.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1001110739280.13040@localhost.localdomain>
- <alpine.LFD.2.00.1001110748560.13040@localhost.localdomain>
+From: Leo Razoumov <slonik.az@gmail.com>
+Subject: Re: How to check new commit availability without full fetch?
+Date: Mon, 11 Jan 2010 11:22:21 -0500
+Message-ID: <ee2a733e1001110822t1b04c1ccg9b6eb5489b69783d@mail.gmail.com>
+References: <ee2a733e1001100312j786108fct1b4c8abd0acc5afc@mail.gmail.com>
+	 <alpine.LFD.2.00.1001101501520.10143@xanadu.home>
+	 <7v8wc5itlc.fsf@alter.siamese.dyndns.org>
+	 <alpine.LFD.2.00.1001101556490.10143@xanadu.home>
+	 <ee2a733e1001101736p2f395de6ka05044fe7cca624d@mail.gmail.com>
+	 <alpine.LFD.2.00.1001102055070.10143@xanadu.home>
+Reply-To: SLONIK.AZ@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Miles Bader <miles@gnu.org>, Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Jan 11 17:22:29 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Mon Jan 11 17:22:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUN28-0006Y3-SV
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 17:22:25 +0100
+	id 1NUN2I-0006d3-5D
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 17:22:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751264Ab0AKQWU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jan 2010 11:22:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750786Ab0AKQWU
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 11:22:20 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49978 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750748Ab0AKQWU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jan 2010 11:22:20 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C6728F753;
-	Mon, 11 Jan 2010 11:22:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=6eM1+k3FEk3D
-	Sbogb71BHg8Tk0U=; b=C8nJumZNpK43jYyoORYF4fO5FMe/eHExHIYDCbmxFepk
-	JOCLt3HI6hKJszHUUqu0YE0gSYaSDnZXfuVzgO89Mg2qcKr0QQQHcJ237JfVXCMu
-	09nGqHZGmmeUdFB1pDuyfHi7AMpnWlQ1w4vV+lkSSOJIc2IThxb0k4n72LaXsU8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=FrOo7W
-	rIRlRLOIKa7FHe78xf4OrpYK5RivqQ+W6q46ais7eZl8127CiKHC7aPDrjpQmJuN
-	xSvkpLalAuXN4QojM8r9jH58E6qlZ5LyS3Oq842lUznqBQNSD/R/tL3e4ro8XAxd
-	qigiHlDDLpiEsEbQaZOhlzweWMHd3PfuOM3Lw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D40638F750;
-	Mon, 11 Jan 2010 11:22:11 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C704A8F74C; Mon, 11 Jan
- 2010 11:22:05 -0500 (EST)
-In-Reply-To: <alpine.LFD.2.00.1001110748560.13040@localhost.localdomain>
- (Linus Torvalds's message of "Mon\, 11 Jan 2010 07\:59\:18 -0800 \(PST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 78EF0F9A-FECD-11DE-8130-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751612Ab0AKQWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2010 11:22:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751500Ab0AKQWY
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 11:22:24 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:37187 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750786Ab0AKQWX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2010 11:22:23 -0500
+Received: by ewy19 with SMTP id 19so14443580ewy.1
+        for <git@vger.kernel.org>; Mon, 11 Jan 2010 08:22:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=Um45hOcjuviPJxAHNJZPezeTEQquA+YGENIlzwXh61c=;
+        b=cCz6viowh2bl3noSRICG+mTMIK9lQY3GMqOCv277Js9eaumLLVGa3zL6a6HrMQic79
+         PIET7jtk1TpDxoVgvjFULw691w/a8J3/zBnfFYJyXdF3bRINkXgRzHwUmWDBgRotXp1J
+         KNAscGW2ZQEUz8x3cyfjU7Q72FHY/VzFWMZEc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        b=Qbtj/uQ6Vddkxl73OACpus/TqTlmWcERInLRLnleMzXdtfbD19+8zt7+zyR9UDvecG
+         LIcv8SrpvtZCeMJaqJuE2hFavLrQwwdhQ4weMrDiB1w1Ml6/xHh0gSc7ymK5BrheV5Bk
+         TqUF3Or+rxlXFCYBNqyQzV/ekqxZuDXymDDuU=
+Received: by 10.216.89.210 with SMTP id c60mr2589731wef.149.1263226941273; 
+	Mon, 11 Jan 2010 08:22:21 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.1001102055070.10143@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136639>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
-
-> The bad news is that you broke multi-line greps:
+On 2010-01-10, Nicolas Pitre <nico@fluxnic.net> wrote:
 >
-> 	git grep --no-ext-grep -2 qwerty.*as
+> You still don't answer my question though.  Again, _why_ do you need to
+>  know about remote commit availability without fetching them?
 >
-> results in:
->
-> 	drivers/char/keyboard.c-unsigned char kbd_sysrq_xlate[KEY_MAX + 1] =3D
-> 	drivers/char/keyboard.c-        "\000\0331234567890-=3D\177\t"      =
-              /* 0x00 - 0x0f */
-> 	drivers/char/keyboard.c:        "qwertyuiop[]\r\000as"              =
-            /* 0x10 - 0x1f */
 
-Meh.  I checked pre-context codepath before sending the patch and was v=
-ery
-satisfied that Ren=C3=A9 did the right thing in 49de321 (grep: handle p=
-re
-context lines on demand, 2009-07-02), but somehow forgot about the post
-context codepath.
+I use git to track almost all my data (code and otherwise) and spread
+it between several computers. I end up with several local repos having
+the same local branches. It happens once in a while that I fetch into
+a given remote/foo from several local foo branches from different
+machines and the operation fails. It happens because the commits have
+not been yet consistently distributed among the repos. To do the
+forensics and figure out who should update whom first I need a quick
+and non-destructive way to fetch dry-run.
 
-An ObviouslyRightThing fix is this two-liner.  We shouldn't lookahead i=
-f
-we want to do something more than just skipping when we see an unmatch =
-for
-the line we are currently looking at.
-
- grep.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/grep.c b/grep.c
-index 940e200..ac0ce0b 100644
---- a/grep.c
-+++ b/grep.c
-@@ -719,6 +719,8 @@ static int grep_buffer_1(struct grep_opt *opt, cons=
-t char *name,
- 		int hit;
-=20
- 		if (try_lookahead
-+		    && !(last_hit
-+			 && lno <=3D last_hit + opt->post_context)
- 		    && look_ahead(opt, &left, &lno, &bol))
- 			break;
- 		eol =3D end_of_line(bol, &left);
+--Leo--
