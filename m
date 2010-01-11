@@ -1,115 +1,117 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2 2/4] Documentation: warn prominently against merging
  with dirty trees
-Date: Sun, 10 Jan 2010 20:13:22 -0600
-Message-ID: <20100111021322.GA8480@progeny.tock>
+Date: Sun, 10 Jan 2010 18:30:38 -0800
+Message-ID: <7vzl4lbcfl.fsf@alter.siamese.dyndns.org>
 References: <cover.1263081032.git.trast@student.ethz.ch>
- <e330d8ca1a9ec38ce40b0f67123b1dd893f0b31c.1263081032.git.trast@student.ethz.ch>
- <20100110044949.GA8974@progeny.tock>
- <7vskaefp2v.fsf@alter.siamese.dyndns.org>
+ <e330d8ca1a9ec38ce40b0f67123b1dd893f0b31c.1263081032.git.trast@student.ethz.ch> <20100110044949.GA8974@progeny.tock> <7vskaefp2v.fsf@alter.siamese.dyndns.org> <20100111021322.GA8480@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 03:14:09 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 11 03:30:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NU9nE-00039f-KK
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 03:14:08 +0100
+	id 1NUA3T-00089O-16
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 03:30:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751209Ab0AKCN2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Jan 2010 21:13:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169Ab0AKCN1
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 21:13:27 -0500
-Received: from mail-gx0-f211.google.com ([209.85.217.211]:57942 "EHLO
-	mail-gx0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751023Ab0AKCN1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jan 2010 21:13:27 -0500
-Received: by gxk3 with SMTP id 3so9990987gxk.1
-        for <git@vger.kernel.org>; Sun, 10 Jan 2010 18:13:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=rBCNjiNnwXEWNs5fjy8REFp2QWbBRaDkXVBwDWKOfSA=;
-        b=sdZhv0XKtMVJShmeRo6AFwuUVaorHFYuyysFojZ/3/t8KZgX6IRckIjpgBrdzOxp4Z
-         sxEs5RX+Ti7lWJTG6JhLzLngONNe+hxJL9lTKE2vxGpWHWC5Hzy2cOyRTdReWSX7N8g9
-         BSEtGjG3COWNdodxznu4C2qJamJeqBfV7/DRo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=Fc1CKOfTDIsjSy+Jxi6Vut1YLqlL3heD+/bbyK7DYSG4WEwNhoeMCFF77ih4uB/4oI
-         PbhApRNR6TNC1yZ1OFbyzHYgLKqT0rw6+kfEeWfPS3soVRJ4Q5lxjB+4wdHv9pCnkCRP
-         scSmq11Ai6ZIm/7qLdDUPL3HC0am4SWkZKEqA=
-Received: by 10.101.187.18 with SMTP id o18mr4086814anp.8.1263176006143;
-        Sun, 10 Jan 2010 18:13:26 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm1494259iwn.11.2010.01.10.18.13.24
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 10 Jan 2010 18:13:25 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vskaefp2v.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751629Ab0AKCav convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Jan 2010 21:30:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751136Ab0AKCav
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 21:30:51 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54353 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750948Ab0AKCau convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Jan 2010 21:30:50 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 44DC08FC65;
+	Sun, 10 Jan 2010 21:30:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=sToY6hFGFLTG
+	wpCqhyR66MaGtlA=; b=OWMX25v+0E6xUFRPk1THavaiKhnrXzO4dHHh1KS3DlGm
+	N25hPvqHsemx1aXh+aGY4eW3VmD35uMllsnAinWJ8pST07eL2pOVcfTKPAB44W4y
+	34nLOHp/h8zKccvkTpVdB9e19BeyosmC78D4cVJfGLNBAMH2yTg6KFMAtm63I38=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JMMNVi
+	jE8DyRv+ZWWXrkDgBSHODCQp5jhGpzyjBpy68lorImcV9Pbq2lvhSciiyqM4M2Gh
+	jwOISF+/+FsIkJ7XsCHpuxtA6UMv2lKvwlxcFyc0GGDAtPCqIt03PyhlqYd8TI6G
+	IjM+KfDm3sGuxZK/LsAJAug2+6jVph/4OESjE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 10BC68FC61;
+	Sun, 10 Jan 2010 21:30:45 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 268C58FC5E; Sun, 10 Jan
+ 2010 21:30:40 -0500 (EST)
+In-Reply-To: <20100111021322.GA8480@progeny.tock> (Jonathan Nieder's message
+ of "Sun\, 10 Jan 2010 20\:13\:22 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5215D5EE-FE59-11DE-A484-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136599>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> Oh, that is a problem.  Maybe 'git merge' should refuse to merge
->> unless told otherwise, if there is a dirty index and there might be
->> conflicts.
+> Here is a scenario I worry about:
 >
-> "git reset --merge" will keep your local changes after such a merge, =
-and
-> "mergy" operations (not just "merge" but also "revert", "am -3", etc)
-> won't get you into a situation where you cannot, by refusing to do
-> anything when e.g. your index is dirty.  Especially when Christian's
-> "reset --merge" update becomes solid, "... is hard to back out of" wi=
-ll
-> become a false statement.
+> Suppose I have a change to main.c staged, to add a feature that other=
+s
+> have discussed as well.  After a short distraction, I return and run
+> =E2=80=98git pull=E2=80=99 to see what upstream has been working on.
 
-Here is a scenario I worry about:
+If your index is dirty, any "mergy" operation will refuse to work *befo=
+re*
+touching anything, so you won't use "git reset --merge" to begin with.
 
-Suppose I have a change to main.c staged, to add a feature that others
-have discussed as well.  After a short distraction, I return and run
-=E2=80=98git pull=E2=80=99 to see what upstream has been working on.  A=
-s luck would
-have it, the remote version of main.c is exactly the same as my
-modified version, so the merge happily proceeds.  Some other files
-merge cleanly.  Eventually there is some conflict.
+You are allowed to have local modifications only in your work tree.
+=46urthermore, even git experts limit them to something they feel they =
+can
+afford to lose and recreate easily if necessary.  See for example:
 
-Now I regret the pull.  Will =E2=80=98reset --merge=E2=80=99 restore th=
-e index and
-work tree to its original state?
+  http://thread.gmane.org/gmane.comp.version-control.git/15148/focus=3D=
+15476
 
-If the change to main.c was _not_ staged, then the merge would have
-failed early, so that is not something to worry about.
+That is why I said:
 
-> Of course, the user needs to understand what he or she is doing (see
-> http://thread.gmane.org/gmane.comp.version-control.git/136166/focus=3D=
+  Of course, the user needs to understand what he or she is doing (see
+  http://thread.gmane.org/gmane.comp.version-control.git/136166/focus=3D=
 136171
-> for example).
+  for example).  And that is one reason we (at least I) try to teach ne=
+w
+  people to start working from a clean tree, until they get comfortable
+  working with mergy operations.
 
-Agreed.  And probably the user who understands what is going on will
-not make the mistake I described above.  Otherwise, they could succumb
-to a related problem:
+and that is why the archived article referenced above refers to
 
-Suppose all is as above, except that git detects no conflict.  Suppose
-further that some upstream commit was bogus.
+  http://gitster.livejournal.com/29060.html
 
-Now I regret the pull.  How can I restore the index and work tree to
-its original state?
+You need to be able to tell the two ways in which a "mergy" operation c=
+an
+"fail" apart [*1*].
 
-If I reset --hard (or --merge) to the previous HEAD commit, the
-modification to main.c is forgotten.  In practice, I would do
-'git reset --hard HEAD^ && git checkout HEAD@{1} -- main.c'.
+ - One that stops before touching anything (either your index was dirty
+   and nothing happened, or your index was clean but you had local
+   modifications in your work tree).  You do not run "git reset --merge=
+",
+   for this one; and
+
+ - Another that goes ahead and results in conflicts.  When you got thes=
+e
+   conflicts, you can "reset --merge" them away.
+
+[Footnote]
+
+*1* Strictly speaking, the latter is not even a "failure"; it allowed y=
+ou
+to make progress, merging all the auto-mergeable parts without your hel=
+p,
+and only asking you to handle the remainder.
