@@ -1,96 +1,132 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: default behaviour for `gitmerge` (no arguments)
-Date: Mon, 11 Jan 2010 11:43:40 -0800
-Message-ID: <7v7hrojukz.fsf@alter.siamese.dyndns.org>
-References: <loom.20100111T185144-655@post.gmane.org>
+Subject: Re: [PATCH 9/9] rerere forget path: forget recorded resolution
+Date: Mon, 11 Jan 2010 12:05:31 -0800
+Message-ID: <7v3a2cif04.fsf@alter.siamese.dyndns.org>
+References: <1262122958-9378-1-git-send-email-gitster@pobox.com>
+ <7vpr5krxoo.fsf@alter.siamese.dyndns.org>
+ <7v4omte72j.fsf@alter.siamese.dyndns.org> <201001112022.31257.j6t@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Gareth Adams <gareth.adams@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 20:44:57 2010
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Jan 11 21:05:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUQB9-0006dR-93
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 20:43:55 +0100
+	id 1NUQWO-0008Rj-9w
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 21:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753922Ab0AKTnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2010 14:43:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753906Ab0AKTnt
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 14:43:49 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62171 "EHLO
+	id S1754139Ab0AKUFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2010 15:05:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754003Ab0AKUFn
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 15:05:43 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60016 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753898Ab0AKTnr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2010 14:43:47 -0500
+	with ESMTP id S1754137Ab0AKUFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2010 15:05:40 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F0C8D8FF17;
-	Mon, 11 Jan 2010 14:43:46 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 29F049036F;
+	Mon, 11 Jan 2010 15:05:38 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LDhqhNRPw5urTgkG0FPEEiXAPx4=; b=IOu1c2
-	PhywpJdX7Hunq5hcQZN4MWqsS0NWXH3TD9d17XjleNKMlJ05J699iWmfh5iZ5zay
-	lfi2McV2yY4ArjSbnQrkuzDsVKf1aikWuTfYOfX94rydfSc8i/ci6SG6O+WbUd2d
-	h25tOG+wiuQhfczMjwN6IHbWbQwxVi9X4ox/0=
+	:content-type; s=sasl; bh=NheDCXXrSUeJE0IJ6ihPIA3psg0=; b=E7a+FS
+	Gk4uKn1uRxyfk0IqdCmKmPeBdPYTErRjgkwJ3bSh89x1lbA5q6zMgR3iEdL3KHc8
+	1+hX0lg2Thb9zv3voxzD8TPy0jMYwVOTBQBOZbabdwwvM7AtmMrC8WcMiz1Dp8fd
+	smdNoIGPAXlnr8WSdFPK82HYr1srVmqwFGnVU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iB5tKiz54M8VTdRHxoQfQz+yMn9df8l/
-	j4qbEf4nyaDxZLkorpHn1weKYZTX2OGMYMxQnptuFtlPCAw2xtWnAT0krdflfkK9
-	QRyog+8tNCeIC6rbsld+3JDBSQJZlL0JM517bzWd67b1gYcwi8MeTGzJpBiwdnpq
-	s+CBKOQW50U=
+	:content-type; q=dns; s=sasl; b=hsOSFhesrPqn963G5JFWCGbpB+Yk8hug
+	ka09PPRHWxsY79IqYdwbqQD/UcDADHSqObOBoY+57EwkZwhB7qzE6+2BvF+UTKoe
+	iw6QatsSzfwyrq4EopldfK+qlV2cLP9Ur2w9BXGxts1VO2VbX29ddFFmPkAqw4m/
+	fGGdg75RAUI=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C63E98FF16;
-	Mon, 11 Jan 2010 14:43:44 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 059619036D;
+	Mon, 11 Jan 2010 15:05:36 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1C1818FF14; Mon, 11 Jan
- 2010 14:43:41 -0500 (EST)
-In-Reply-To: <loom.20100111T185144-655@post.gmane.org> (Gareth Adams's
- message of "Mon\, 11 Jan 2010 18\:49\:38 +0000 \(UTC\)")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2BBC490369; Mon, 11 Jan
+ 2010 15:05:33 -0500 (EST)
+In-Reply-To: <201001112022.31257.j6t@kdbg.org> (Johannes Sixt's message of
+ "Mon\, 11 Jan 2010 20\:22\:31 +0100")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A0E37024-FEE9-11DE-8CF4-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: AE6DA0B8-FEEC-11DE-A212-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136660>
 
-Gareth Adams <gareth.adams@gmail.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> Unfortunately my other option is:
->
->     git pull; ...; git checkout otherbranch; git merge myremote/otherbranch
->
-> which is annoying extra typing.
+> I did encounter a case where the same resolution would apply to all
+> conflicts that have the same conflict hash, so it's not quite what you
+> talk about. But not all conflicts were automatically resolved. I haven't
+> yet analyzed what happened - it could just be that the xdl_merge call
+> fails due to the differences in the text immediately outside the
+> conflict markers.
 
-Replace 'pull' with 'fetch' and a bit more regular pattern would emerge.
+Actually it is _very_ easy to fool rerere to do something totally
+unexpected, and I have been thinking about using the similarity comparison
+algorithm on the region outside the conflicted area between preimage and
+thisimage and reject use of rerere.
 
-The code indeed knows (as you can see "git pull" can figure it out) what
-other ref the current branch is configured to merge with by default.
-There is even a plumbing to do this for script writers.
+Try this in an empty directory.
 
-    $ git for-each-ref --format='%(upstream)' $(git symbolic-ref HEAD)
+-- >8 --
 
-We can teach this short-hand to "git merge", perhaps:
+#!/bin/sh
 
-    $ git merge --default
+git init
 
-But "no argument" cannot be the short-hand, because...
+create_numbers () {
+	for n in 0 1 2 3 4 "$1" 5 6 7 8 9
+	do
+		echo $n
+	done >numbers.txt
+}
 
-> 1) At the moment, `git merge` does nothing. Except mock me for not giving it a
-> command in a format it recognises. This change wouldn't have any effect that
-> would cause anyone a problem
+create_letters () {
+	for l in a b c d e "$1" f g h i j
+	do
+		echo $l
+	done >letters.txt
+}
 
-... except for people who uses a script that does
+create_files () {
+	create_numbers "$1"
+	create_letters "$1"
+}
 
-    commits=
-    while some condition
-    do
-    	commit=$(find some other commit that should be merged)
-        commits="$commits$commit "
-    done
-    git merge $commits
+create_files ""
+git add numbers.txt letters.txt
+git commit -m initial
+git branch side
 
-and expect the last step will fail without doing any damage when the loop
-finds no new developments.  "no argument means --default" will break their
-scripts.
+create_files "+"
+git commit -a -m master
+
+git checkout side
+create_files "-"
+git commit -a -m side
+
+mkdir -p .git/rr-cache
+
+# On this history we changed an empty line to +; merge
+# with another history that changed it to -
+git checkout master^0
+git merge side
+
+# The above should have conflicted.  The resolution is to '='
+
+create_numbers "="
+git rerere
+
+git rerere status
+git rerere diff
+cat numbers.txt
+cat letters.txt
+
+-- 8< --
+
+Now, immediately after this sequence, rerere will give you an disaster.
