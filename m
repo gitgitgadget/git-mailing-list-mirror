@@ -1,8 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH/RFC 1/6] Documentation: clarify one-line description for
- merge
-Date: Mon, 11 Jan 2010 02:27:55 -0600
-Message-ID: <20100111082755.GA23806@progeny.tock>
+Subject: [PATCH 2/6] Documentation: merge: add an overview
+Date: Mon, 11 Jan 2010 02:30:28 -0600
+Message-ID: <20100111083028.GB23806@progeny.tock>
 References: <cover.1263081032.git.trast@student.ethz.ch>
  <e330d8ca1a9ec38ce40b0f67123b1dd893f0b31c.1263081032.git.trast@student.ethz.ch>
  <20100110044949.GA8974@progeny.tock>
@@ -17,46 +16,46 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Thomas Rast <trast@student.ethz.ch>,
 	Petr Baudis <pasky@suse.cz>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 11 09:28:01 2010
+X-From: git-owner@vger.kernel.org Mon Jan 11 09:31:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUFd2-00084y-I2
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 09:28:00 +0100
+	id 1NUFfv-0000d9-6Y
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 09:30:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752403Ab0AKI15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2010 03:27:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752364Ab0AKI14
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 03:27:56 -0500
-Received: from mail-iw0-f194.google.com ([209.85.223.194]:64536 "EHLO
-	mail-iw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752296Ab0AKI14 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2010 03:27:56 -0500
-Received: by iwn32 with SMTP id 32so4477218iwn.33
-        for <git@vger.kernel.org>; Mon, 11 Jan 2010 00:27:55 -0800 (PST)
+	id S1752692Ab0AKIab (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2010 03:30:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752691Ab0AKIa3
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 03:30:29 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:47540 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752593Ab0AKIa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2010 03:30:27 -0500
+Received: by ywh6 with SMTP id 6so21249392ywh.4
+        for <git@vger.kernel.org>; Mon, 11 Jan 2010 00:30:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=PujLqAzChqsewNVO/m1BJiVCu5GKOlMinHHGlevBlbQ=;
-        b=lWZvevM6gUs0QHdQ+XJMOIjFA5vMmc5cZT7fw1oUX+tQ/HB1S5egvq9C8rNtCZlPGX
-         ZTkx92pR39QuO8aZvhnrwoIQ1OfMaju7L130klk5d//s5MlIaPIp4KVsJJzcnOSklouB
-         ZjM76ItKZdpP+xi+FZxmcj4/jBivuPOM4OPUQ=
+        bh=a060GRgSpTuDab0GiHeRcvs0UzLFHce/4s3SeLdCOLc=;
+        b=q71SPtLnA61yv9r5PuJ22wtL8TDeXsQ9CijJgNDg3jIH5Mcdxc+J9Qb8qdskX3a3YJ
+         lDbjcoQO5HT7qxydttxHK7oIwWel20H+En4WzK6Vj+ysY/+3t+R2Lp8VG8YLjicunMyS
+         y84/rICZAFLeuxnZAy+ZatszmGkWDzJCmCRd8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=I6RRuFYr/dVuDZvhOn+aiAv/5DH5MnRq305qd2+bEtF0mzThR31700gmz/uLzYrlHM
-         QdRR8ZE0omaA21Gg2xoSr/Nb78S9B3RipRGqZAHzoWmU5TfdNR5inEbqU5822g7S7hPX
-         GBuOSHsVcPUqCfiWfdGesNYHKOEThMxyfa1zQ=
-Received: by 10.231.25.199 with SMTP id a7mr2455934ibc.51.1263198475500;
-        Mon, 11 Jan 2010 00:27:55 -0800 (PST)
+        b=dqD9AzRrqjtYcx/Qbk8xccUmdB73kwKwDkRxuzelXTNe8hD387DGW64PrKb0we3ww3
+         pFF3kRPNiyVuuYa5r33t1PwL8Tl7Twsu4Uzag0EanHiP+RPbKqNOHqIncZ2OrX5QimN6
+         snpdfS0geVwbW5IPEce5XdZDn2l7gfUByA1wE=
+Received: by 10.90.17.2 with SMTP id 2mr5524683agq.100.1263198626885;
+        Mon, 11 Jan 2010 00:30:26 -0800 (PST)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm4625221iwn.1.2010.01.11.00.27.54
+        by mx.google.com with ESMTPS id 20sm1363452iwn.5.2010.01.11.00.30.26
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 11 Jan 2010 00:27:55 -0800 (PST)
+        Mon, 11 Jan 2010 00:30:26 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20100111082123.GA23742@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -64,38 +63,60 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136619>
 
-The 'git merge' command is generally not used to tie completely
-independent projects together (though it can be used to do that)
-but to reconcile branches of development that may have diverged.
-Try to make this clearer in its one-line description.
+The reader unfamiliar with the concepts of branching and merging
+would have been completely lost.  Try to help him with a diagram.
+
+The diagram comes from the 'git rebase' manual page.
 
 Cc: Petr Baudis <pasky@suse.cz>
 Cc: Junio C Hamano <gitster@pobox.com>
-Cc: Thomas Rast <trast@student.ethz.ch>
+Cc: Thomas Rast <trast@student.ethz.ch>,
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-I am not sure this is an improvement at all.  Mostly I wanted to
-convey the idea of code forks being reconciled, but the resulting
-phrase is not nearly as nice.
+Does this tell enough of the story?
 
- Documentation/git-merge.txt |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+ Documentation/git-merge.txt |   27 +++++++++++++++++++++++++--
+ 1 files changed, 25 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index e886c2e..394ad0a 100644
+index 394ad0a..fe190e2 100644
 --- a/Documentation/git-merge.txt
 +++ b/Documentation/git-merge.txt
-@@ -3,8 +3,7 @@ git-merge(1)
+@@ -14,8 +14,31 @@ SYNOPSIS
  
- NAME
- ----
--git-merge - Join two or more development histories together
--
-+git-merge - Re-join diverging branches of development
+ DESCRIPTION
+ -----------
+-This is the top-level interface to the merge machinery
+-which drives multiple merge strategy scripts.
++Incorporates changes leading up to the named commits into the
++current branch.  This command is used by 'git pull' to incorporate
++remote changes from another repository and may be used by hand to
++merge changes from one branch into another.
++
++Assume the following history exists and the current branch is
++"`master`":
++
++------------
++          A---B---C topic
++         /
++    D---E---F---G master
++------------
++
++Then "`git merge topic`" will apply the changes from `A`, `B`,
++and `C` to the work tree, and if they do not conflict with any
++changes from `master`, will store the result in a new commit along
++with the names of the two parent commits and a log message from the
++user describing the changes.
++
++------------
++          A---B---C topic
++         /         \
++    D---E---F---G---H master
++------------
  
- SYNOPSIS
- --------
+ The second syntax (<msg> `HEAD` <remote>) is supported for
+ historical reasons.  Do not use it from the command line or in
 -- 
 1.6.6
