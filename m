@@ -1,75 +1,75 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: How to check new commit availability without full fetch?
-Date: Mon, 11 Jan 2010 12:59:24 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1001111257300.10143@xanadu.home>
-References: <ee2a733e1001100312j786108fct1b4c8abd0acc5afc@mail.gmail.com>
- <201001110831.28278.robin.rosenberg@dewire.com>
- <7vljg5ukol.fsf@alter.siamese.dyndns.org>
+From: Gavin Beatty <gavinbeatty@gmail.com>
+Subject: Problem creating commits/trees with commit-tree/mktree
+Date: Mon, 11 Jan 2010 19:14:46 +0100
+Message-ID: <f6d77fed1001111014g73a06923na05cd14d37968b04@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_da9wRvCXFfkhGmDmsl4IFQ)"
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, SLONIK.AZ@gmail.com,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 18:59:33 2010
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 11 19:15:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUOY7-0000an-2J
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 18:59:31 +0100
+	id 1NUOnR-0007mv-07
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 19:15:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753493Ab0AKR70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2010 12:59:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753412Ab0AKR70
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 12:59:26 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:25532 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753411Ab0AKR7Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2010 12:59:25 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KW3004N0GN08X30@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 11 Jan 2010 12:59:25 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vljg5ukol.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751545Ab0AKSPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2010 13:15:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751448Ab0AKSPJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 13:15:09 -0500
+Received: from ey-out-2122.google.com ([74.125.78.25]:35752 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751060Ab0AKSPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2010 13:15:08 -0500
+Received: by ey-out-2122.google.com with SMTP id 22so1906991eye.19
+        for <git@vger.kernel.org>; Mon, 11 Jan 2010 10:15:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=mH46+TUWQgVg67HwqnVA5qvbvOApapNFrN6iWcm+kzY=;
+        b=aGKoZQex6JA+TOqVNxgegN8RaWa5nLzoTsv2yo6uqoOCZgq6ToCGF5htFqLiNvjov4
+         ibMXWpz6gBFp/XaCd6+yeedPLuFnjHQOQdEuDc+53fF735u/a3kSWBLT+8Ri3HT1/GWB
+         7up4Dklqxl6zLYdGdNj1DLfAwkTGQM/49OdN4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=Sb2U2KaN98Pk+6mEeuIRmMURHWsDYeuo9wmxo8elv3INGbFsUrO49ymMxzskkI7yyN
+         x3ylr9VTIhiGGcu2m08JkWem8LiG6IvDVlg3uvFzibtr1Vj65DD/K/+5VgQJCqJYhChV
+         bNpQZgUiX8ti2aXuFNlmaGQlPnPbbZct9La1U=
+Received: by 10.213.103.83 with SMTP id j19mr3735702ebo.30.1263233706801; Mon, 
+	11 Jan 2010 10:15:06 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136649>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hello,
 
---Boundary_(ID_da9wRvCXFfkhGmDmsl4IFQ)
-Content-type: TEXT/PLAIN; charset=utf-8
-Content-transfer-encoding: 8BIT
+I want to write commits to a branch without touching the index or
+having a checkout (for a git subcommand I'm writing).
 
-On Mon, 11 Jan 2010, Junio C Hamano wrote:
+I can create new blobs and trees but can't figure out how to commit a
+new tree/blob _with_ the old tree.
 
-> Robin Rosenberg <robin.rosenberg@dewire.com> writes:
-> 
-> > söndagen den 10 januari 2010 12.12.09 skrev  Leo Razoumov:
-> >> Hi List,
-> >> I am trying to find a way to check availability of new commits
-> >> *before* doing fetch or pull. Unfortunately, neither fetch nor pull
-> >> take "--dry-run" option (unlike push)
-> >
-> > Fetch has --dry-run. It's a fairly new option. The drawback is that it
-> > still does the fetch, but it does not update the refs. If you re.run it
-> > again it'll be quicker.
-> 
-> Doesn't that worry us if it really is quicker?
-> 
-> If --dry-run doesn't update the refs, why do the objects that were
-> transferred by them not get asked the next time?  There must be a bug
-> somewhere, but it is getting late already, so I'll leave it to experts in
-> the transfer area to figure it out...
+Currently, I do something a lot like:
 
-What about builtin-fetch.c:quickfetch() ?
+objsha=$(echo 'contents' | git hash-object -w --stdin)
+objtreesha=$(printf "100644 blob $objsha\tfile.txt\000" | git mktree -z)
+newtreesha=$(printf "040000 tree $objtreesha\ttreefileisin\000" | git mktree -z)
+echo 'commit msg' | git commit-tree $newtreesha -p $(git rev-parse
+refs/heads/new)
 
+I get a commit with treefileisin/file.txt. I haven't included the
+other trees/files so they are gone in this commit. How do I include
+them? Is commit-tree the wrong tool?
 
-Nicolas
+Is there some way to use git ls-tree that I don't know about?
 
---Boundary_(ID_da9wRvCXFfkhGmDmsl4IFQ)--
+Gavin
+
+-- 
+Gavin Beatty
+
+SEMPER UBI SUB UBI
