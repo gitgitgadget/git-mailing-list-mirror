@@ -1,117 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/4] Documentation: warn prominently against merging
- with dirty trees
-Date: Sun, 10 Jan 2010 18:30:38 -0800
-Message-ID: <7vzl4lbcfl.fsf@alter.siamese.dyndns.org>
-References: <cover.1263081032.git.trast@student.ethz.ch>
- <e330d8ca1a9ec38ce40b0f67123b1dd893f0b31c.1263081032.git.trast@student.ethz.ch> <20100110044949.GA8974@progeny.tock> <7vskaefp2v.fsf@alter.siamese.dyndns.org> <20100111021322.GA8480@progeny.tock>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 03:30:55 2010
+From: Peter Collingbourne <peter@pcc.me.uk>
+Subject: [PATCH] Remove empty directories when checking out a commit with fewer submodules
+Date: Mon, 11 Jan 2010 02:59:54 +0000
+Message-ID: <1263178794-3140-1-git-send-email-peter@pcc.me.uk>
+Cc: Peter Collingbourne <peter@pcc.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 11 04:37:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUA3T-00089O-16
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 03:30:55 +0100
+	id 1NUB6B-0002BW-6D
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 04:37:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751629Ab0AKCav convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Jan 2010 21:30:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751136Ab0AKCav
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 21:30:51 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54353 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750948Ab0AKCau convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Jan 2010 21:30:50 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 44DC08FC65;
-	Sun, 10 Jan 2010 21:30:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=sToY6hFGFLTG
-	wpCqhyR66MaGtlA=; b=OWMX25v+0E6xUFRPk1THavaiKhnrXzO4dHHh1KS3DlGm
-	N25hPvqHsemx1aXh+aGY4eW3VmD35uMllsnAinWJ8pST07eL2pOVcfTKPAB44W4y
-	34nLOHp/h8zKccvkTpVdB9e19BeyosmC78D4cVJfGLNBAMH2yTg6KFMAtm63I38=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JMMNVi
-	jE8DyRv+ZWWXrkDgBSHODCQp5jhGpzyjBpy68lorImcV9Pbq2lvhSciiyqM4M2Gh
-	jwOISF+/+FsIkJ7XsCHpuxtA6UMv2lKvwlxcFyc0GGDAtPCqIt03PyhlqYd8TI6G
-	IjM+KfDm3sGuxZK/LsAJAug2+6jVph/4OESjE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 10BC68FC61;
-	Sun, 10 Jan 2010 21:30:45 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 268C58FC5E; Sun, 10 Jan
- 2010 21:30:40 -0500 (EST)
-In-Reply-To: <20100111021322.GA8480@progeny.tock> (Jonathan Nieder's message
- of "Sun\, 10 Jan 2010 20\:13\:22 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5215D5EE-FE59-11DE-A484-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751406Ab0AKDhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jan 2010 22:37:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750879Ab0AKDhf
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jan 2010 22:37:35 -0500
+Received: from master.pcc.me.uk ([207.192.74.179]:58363 "EHLO master.pcc.me.uk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751346Ab0AKDhe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jan 2010 22:37:34 -0500
+X-Greylist: delayed 2050 seconds by postgrey-1.27 at vger.kernel.org; Sun, 10 Jan 2010 22:37:34 EST
+Received: from lapas.pcc.me.uk ([10.179.130.3])
+	by master.pcc.me.uk with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <peter@pcc.me.uk>)
+	id 1NUAYt-0007jb-Nw; Mon, 11 Jan 2010 03:03:23 +0000
+Received: from peter by lapas.pcc.me.uk with local (Exim 4.69)
+	(envelope-from <peter@pcc.me.uk>)
+	id 1NUAVx-0000pE-QR; Mon, 11 Jan 2010 03:00:21 +0000
+X-Mailer: git-send-email 1.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136600>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Change the unlink_entry function to use rmdir to remove submodule
+directories.  Currently we try to use unlink, which will never succeed.
 
-> Here is a scenario I worry about:
->
-> Suppose I have a change to main.c staged, to add a feature that other=
-s
-> have discussed as well.  After a short distraction, I return and run
-> =E2=80=98git pull=E2=80=99 to see what upstream has been working on.
+Of course rmdir will only succeed for empty (i.e. not checked out)
+submodule directories.  Behaviour if a submodule is checked out stays
+essentially the same: print a warning message and keep the submodule
+directory.
 
-If your index is dirty, any "mergy" operation will refuse to work *befo=
-re*
-touching anything, so you won't use "git reset --merge" to begin with.
+Signed-off-by: Peter Collingbourne <peter@pcc.me.uk>
+---
+ t/t7400-submodule-basic.sh |    9 +++++++++
+ unpack-trees.c             |   12 ++++++++++--
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
-You are allowed to have local modifications only in your work tree.
-=46urthermore, even git experts limit them to something they feel they =
-can
-afford to lose and recreate easily if necessary.  See for example:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/15148/focus=3D=
-15476
-
-That is why I said:
-
-  Of course, the user needs to understand what he or she is doing (see
-  http://thread.gmane.org/gmane.comp.version-control.git/136166/focus=3D=
-136171
-  for example).  And that is one reason we (at least I) try to teach ne=
-w
-  people to start working from a clean tree, until they get comfortable
-  working with mergy operations.
-
-and that is why the archived article referenced above refers to
-
-  http://gitster.livejournal.com/29060.html
-
-You need to be able to tell the two ways in which a "mergy" operation c=
-an
-"fail" apart [*1*].
-
- - One that stops before touching anything (either your index was dirty
-   and nothing happened, or your index was clean but you had local
-   modifications in your work tree).  You do not run "git reset --merge=
-",
-   for this one; and
-
- - Another that goes ahead and results in conflicts.  When you got thes=
-e
-   conflicts, you can "reset --merge" them away.
-
-[Footnote]
-
-*1* Strictly speaking, the latter is not even a "failure"; it allowed y=
-ou
-to make progress, merging all the auto-mergeable parts without your hel=
-p,
-and only asking you to handle the remainder.
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index a0cc99a..1a4dc5f 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -299,6 +299,15 @@ test_expect_success 'ls-files gracefully handles trailing slash' '
+ 
+ '
+ 
++test_expect_success 'moving to a commit without submodule does not leave empty dir' '
++	rm -rf init &&
++	mkdir init &&
++	git reset --hard &&
++	git checkout initial &&
++	test ! -d init &&
++	git checkout second
++'
++
+ test_expect_success 'submodule <invalid-path> warns' '
+ 
+ 	git submodule no-such-submodule 2> output.err &&
+diff --git a/unpack-trees.c b/unpack-trees.c
+index dd5999c..b69847d 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -61,8 +61,16 @@ static void unlink_entry(struct cache_entry *ce)
+ {
+ 	if (has_symlink_or_noent_leading_path(ce->name, ce_namelen(ce)))
+ 		return;
+-	if (unlink_or_warn(ce->name))
+-		return;
++	if (S_ISGITLINK(ce->ce_mode)) {
++		if (rmdir(ce->name)) {
++			warning("unable to rmdir %s: %s",
++				ce->name, strerror(errno));
++			return;
++		}
++	}
++	else
++		if (unlink_or_warn(ce->name))
++			return;
+ 	schedule_dir_for_removal(ce->name, ce_namelen(ce));
+ }
+ 
+-- 
+1.6.5
