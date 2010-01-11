@@ -1,8 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 4/6] Documentation: emphasize when git merge terminates
- early
-Date: Mon, 11 Jan 2010 02:37:54 -0600
-Message-ID: <20100111083754.GD23806@progeny.tock>
+Subject: [PATCH 5/6] Documentation: merge: add a section about fast-forward
+Date: Mon, 11 Jan 2010 02:39:40 -0600
+Message-ID: <20100111083940.GE23806@progeny.tock>
 References: <cover.1263081032.git.trast@student.ethz.ch>
  <e330d8ca1a9ec38ce40b0f67123b1dd893f0b31c.1263081032.git.trast@student.ethz.ch>
  <20100110044949.GA8974@progeny.tock>
@@ -12,52 +11,51 @@ References: <cover.1263081032.git.trast@student.ethz.ch>
  <20100111041318.GA9806@progeny.tock>
  <20100111082123.GA23742@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 09:38:06 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Petr Baudis <pasky@suse.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 11 09:39:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUFmo-000311-9S
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 09:38:06 +0100
+	id 1NUFoO-0003XE-0T
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jan 2010 09:39:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752775Ab0AKIh4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jan 2010 03:37:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752744Ab0AKIhz
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 03:37:55 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:40202 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752669Ab0AKIhy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2010 03:37:54 -0500
-Received: by yxe17 with SMTP id 17so20099093yxe.33
-        for <git@vger.kernel.org>; Mon, 11 Jan 2010 00:37:54 -0800 (PST)
+	id S1752398Ab0AKIjk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2010 03:39:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752310Ab0AKIjk
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jan 2010 03:39:40 -0500
+Received: from mail-iw0-f194.google.com ([209.85.223.194]:45974 "EHLO
+	mail-iw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752150Ab0AKIjj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2010 03:39:39 -0500
+Received: by iwn32 with SMTP id 32so4481140iwn.33
+        for <git@vger.kernel.org>; Mon, 11 Jan 2010 00:39:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=ZRUTTubWpVT6mxm7x+W1j/eQ6FA1Fmk/XVYQXP9GHQk=;
-        b=Dm7yxp5m7paznb3lFASRcY1VHnA+d5mXPq2LrDPSzQ1+vP2C87y8KToMFAJjPYvrK6
-         Cy2CMJ2ampApzJgFXNgwp59kHHt4+LEXwC9PVH6G84rLRwLNgFlPcKjLB0D1CNSIIcL7
-         j//znT0Pa8ojBc9GKLGh3oJgo51sPD2LC+ozU=
+         :in-reply-to:user-agent;
+        bh=+9tzknZA9o5bMNq1UoLdNZB4QDDj99O99FSXIKZYqXQ=;
+        b=UclsN84Novtm0I212fIg+F1IplIhmQy54Os02OsBfvWp2DBa6Xm4PMGe9dYiXToJgl
+         12klu6OJH+WQM8zsBX50z65hAiGLli+eKclUns8UlXlIhyzWgjW6XJ5jsbOpC9CUvs+K
+         ZAXg3TsQVbhiKLnYJG4vZNjx+x9JjNZFbnLR8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=dMYUEYCc1xnjYxEyIMdV4119JNIZtVAxnXIUBTSGQ0fa68ytmIXSOMrGdGj75RcYky
-         ZAB/hf3WWfxgRKuWHhRgsVBf6tJtRpUvRn8Fl3HgleOWewV91Qqn9LgtciN5j2desC3k
-         7RgAFQLNrsZVl6kf1qd41Puvup6qC6BvNWLUA=
-Received: by 10.150.104.13 with SMTP id b13mr1479005ybc.147.1263199073330;
-        Mon, 11 Jan 2010 00:37:53 -0800 (PST)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=scBX3FdD7XW3woPIxxSrB7P451Yw64QiYu1VYxIfDBDmMuiSd/GVKudHCqbAIIYLCo
+         jlHob77Md0ok7VSz6ZZ7YkjrQkz7CRivVvYa6LIRQQ5FvSyAPQPCncZUQaLGECEWmIu2
+         EdWmFDmgNn76uqokporCLkArRgPI/Q+9omEUI=
+Received: by 10.231.122.103 with SMTP id k39mr2304107ibr.10.1263199178978;
+        Mon, 11 Jan 2010 00:39:38 -0800 (PST)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm4632010iwn.1.2010.01.11.00.37.52
+        by mx.google.com with ESMTPS id 20sm3530090iwn.13.2010.01.11.00.39.38
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 11 Jan 2010 00:37:52 -0800 (PST)
+        Mon, 11 Jan 2010 00:39:38 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20100111082123.GA23742@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -65,94 +63,68 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136621>
 
-A merge-based operation in git can fail in two ways:
-
- - One that stops before touching anything (either your index was
-   dirty and nothing happened, or your index was clean but you
-   had local modifications in your work tree).
-
- - Another that goes ahead and results in conflicts.
-
-The 'git merge' manual explains half of the first case as follows:
-
-| A merge is always between the current `HEAD` and one or more
-| commits (usually, branch head or tag), and the index file must
-| match the tree of `HEAD` commit (i.e. the contents of the last commit=
-)
-| when it starts out.
-
-The placement of this sentence makes it easy to skip over, and
-its formulation is perhaps too formal to be memorable.
-
-So give this point its own section and expand upon it.  Most of
-the added text is taken from <http://gitster.livejournal.com/25801.html=
->.
+Novices sometimes find the behavior of 'git merge' in the
+fast-forward case surprising.  Add a section to the manual to
+describe it more thoroughly.
 
 Cc: Petr Baudis <pasky@suse.cz>,
 Cc: Junio C Hamano <gitster@pobox.com>
 Cc: Thomas Rast <trast@student.ethz.ch>
-Not-signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-This is not signed off because most of the text is from Junio=E2=80=99s
-blog.  I hope that is okay.
-
- Documentation/git-merge.txt |   34 ++++++++++++++++++++++++----------
- 1 files changed, 24 insertions(+), 10 deletions(-)
+ Documentation/git-merge.txt |   31 ++++++++++++++++++-------------
+ 1 files changed, 18 insertions(+), 13 deletions(-)
 
 diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index e29bb97..8950aa4 100644
+index 8950aa4..ec9c6d3 100644
 --- a/Documentation/git-merge.txt
 +++ b/Documentation/git-merge.txt
-@@ -60,6 +60,28 @@ include::merge-options.txt[]
- 	least one <remote>.  Specifying more than one <remote>
- 	obviously means you are trying an Octopus.
-=20
-+PRE-MERGE CHECKS
-+----------------
+@@ -82,6 +82,20 @@ the same state that would result from the merge anyway.)
+ If all named commits are already ancestors of `HEAD`, 'git merge'
+ will exit early with the message "Already up-to-date."
+ 
++FAST-FORWARD MERGE
++------------------
 +
-+In some other version control systems, you merge/update and then
-+commit, with the risk of clobbering your changes with humongous
-+conflicts. You shouldn't be pulling or merging if you haven't got
-+your own work into good shape and committed it locally (see also
-+linkgit:git-stash[1]).
++Often the current branch head is an ancestor of the named commit.
++This is the most common case especially when invoked from 'git
++pull': you are tracking an upstream repository, you have committed
++no local changes, and now you want to update to a newer upstream
++revision.  In this case, a new commit is not needed to store the
++combined history; instead, the `HEAD` (along with the index) is
++updated to point at the named commit, without creating an extra
++merge commit.
 +
-+But novices can make this mistake, and 'git pull' and 'git merge'
-+will stop without doing anything when local uncommitted changes
-+overlap with files that 'git pull'/'git merge' may need to update.
-+
-+Also, to avoid unrelated changes in the recorded commit, 'git
-+pull' and 'git merge' abort if there are any changes registered
-+in the index relative to the contents of the `HEAD` commit.
-+(One exception is when the changed index entries are already in
-+the same state that would result from the merge anyway.)
-+
-+If all named commits are already ancestors of `HEAD`, 'git merge'
-+will exit early with the message "Already up-to-date."
++This behavior can be suppressed with the `--no-ff` option.
 +
  include::merge-strategies.txt[]
-=20
-=20
-@@ -70,17 +92,9 @@ HOW MERGE WORKS
- ---------------
-=20
+ 
+ 
+@@ -94,19 +108,10 @@ HOW MERGE WORKS
  A merge is always between the current `HEAD` and one or more
--commits (usually, branch head or tag), and the index file must
--match the tree of `HEAD` commit (i.e. the contents of the last commit)
--when it starts out.  In other words, `git diff --cached HEAD` must
--report no changes.  (One exception is when the changed index
--entries are already in the same state that would result from
--the merge anyway.)
+ commits (usually, branch head or tag).
+ 
+-Two kinds of merge can happen:
 -
--Three kinds of merge can happen:
-+commits (usually, branch head or tag).
-=20
--* The merged commit is already contained in `HEAD`. This is the
--  simplest case, called "Already up-to-date."
-+Two kinds of merge can happen:
-=20
- * `HEAD` is already contained in the merged commit. This is the
-   most common case especially when invoked from 'git pull':
---=20
+-* `HEAD` is already contained in the merged commit. This is the
+-  most common case especially when invoked from 'git pull':
+-  you are tracking an upstream repository, have committed no local
+-  changes and now you want to update to a newer upstream revision.
+-  Your `HEAD` (and the index) is updated to point at the merged
+-  commit, without creating an extra merge commit.  This is
+-  called "Fast-forward".
+-
+-* Both the merged commit and `HEAD` are independent and must be
+-  tied together by a merge commit that has both of them as its parents.
+-  The rest of this section describes this "True merge" case.
++Except in a fast-forward merge (see above), the branches to be
++merged must be tied together by a merge commit that has both of them
++as its parents.
++The rest of this section describes this "True merge" case.
+ 
+ The chosen merge strategy merges the two commits into a single
+ new source tree.
+-- 
 1.6.6
