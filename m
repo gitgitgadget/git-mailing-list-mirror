@@ -1,72 +1,68 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] grep: -L should show empty files
-Date: Tue, 12 Jan 2010 22:27:37 +0100
-Message-ID: <fabb9a1e1001121327s392f7311t2a7f11081ed70ff8@mail.gmail.com>
-References: <7vtyv4cpna.fsf@alter.siamese.dyndns.org> <fc339e4a1001040757n31298f3h724eacfafb68c63e@mail.gmail.com> 
-	<alpine.LFD.2.00.1001040801290.3630@localhost.localdomain> 
-	<7vvdf9402f.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1001110739280.13040@localhost.localdomain> 
-	<alpine.LFD.2.00.1001110748560.13040@localhost.localdomain> 
-	<7vtyusr4r7.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1001110830070.13040@localhost.localdomain> 
-	<7v63774tfd.fsf@alter.siamese.dyndns.org> <7vvdf73eql.fsf_-_@alter.siamese.dyndns.org>
+From: Michel Jouvin <jouvin@lal.in2p3.fr>
+Subject: git-svn dcommit ignores --username if there are cached credentials
+Date: Tue, 12 Jan 2010 22:47:57 +0000 (UTC)
+Message-ID: <loom.20100112T233835-324@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Miles Bader <miles@gnu.org>, Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 12 22:28:06 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 12 23:50:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUoHV-0001M7-Qb
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jan 2010 22:28:06 +0100
+	id 1NUpZ1-0005GG-71
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jan 2010 23:50:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751476Ab0ALV17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2010 16:27:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751296Ab0ALV17
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jan 2010 16:27:59 -0500
-Received: from mail-px0-f174.google.com ([209.85.216.174]:38960 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751249Ab0ALV16 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2010 16:27:58 -0500
-Received: by pxi4 with SMTP id 4so4933511pxi.33
-        for <git@vger.kernel.org>; Tue, 12 Jan 2010 13:27:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=inHBARdq9Lv6VorrgEi/RSibc8VqeVJdq+SguyDHA28=;
-        b=vz76yA0VWOvcWCpeEQRARK5B37j6WksQcY4/SddAwkXXnrD3Eer4Ksda+XgAyhUHHh
-         va0eQ8Sh7idHBvwYNZXWmz1AJYqn0MIcmjhHvNA7cGCbCWcvYoo+OOAVX5/eCIyQf/cz
-         8tERtv9ByHB89g6YyX4SjuOtEX45teFsERe5A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=CKMzSOH+IDLrMuJP5bCjnXwLyPpfoXFSD+MhGM2idIjhPoBwCA/4WCHGsyFQezZUnc
-         IbeAGQHTAvk6LRyI1nN0wtIqx473fLzt6ET0iBpOMKfF6Oe1P8mRPm1LKXQf7nU1P2z+
-         J3uSKk4HbCz0462/3pkZHEi7m4prVvHnuGRKA=
-Received: by 10.143.153.11 with SMTP id f11mr879108wfo.325.1263331677771; Tue, 
-	12 Jan 2010 13:27:57 -0800 (PST)
-In-Reply-To: <7vvdf73eql.fsf_-_@alter.siamese.dyndns.org>
+	id S1753683Ab0ALWuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2010 17:50:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753490Ab0ALWuJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jan 2010 17:50:09 -0500
+Received: from lo.gmane.org ([80.91.229.12]:51420 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750944Ab0ALWuI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2010 17:50:08 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NUpYr-0005CY-U1
+	for git@vger.kernel.org; Tue, 12 Jan 2010 23:50:06 +0100
+Received: from APuteaux-153-1-43-64.w82-124.abo.wanadoo.fr ([82.124.7.64])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 12 Jan 2010 23:50:05 +0100
+Received: from jouvin by APuteaux-153-1-43-64.w82-124.abo.wanadoo.fr with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 12 Jan 2010 23:50:05 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 82.124.7.64 (Opera/9.80 (Windows NT 6.0; U; fr) Presto/2.2.15 Version/10.10)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136760>
 
-Heya,
+Hi,
 
-On Tue, Jan 12, 2010 at 09:32, Junio C Hamano <gitster@pobox.com> wrote:
-> This optimization doesn't matter too much in practice (a tracked empty
-> file must be rare, or there is something wrong with your project);
+I am new to Git and using 1.6.6. I'm very interested by using it to mirror SVN 
+repositories. But I am running into troubles with the way git-svn handles SVN 
+credentials. 
 
-How about python projects, where there's an __init__.py file
-everywhere you turn your head? ;)
+For one SVN I use I have some cached credentials that have only very restricted 
+write access. With svn command, I am using --username for every commit and this 
+cached credential is just ignored: I'm asked for a password.
 
--- 
+With git-svn, I use --username at init/fetch but during dcommit --username is 
+ignored becaused of the cached credential. I can see in SVN logs that the 
+cached credential (which doesn't have the right to commit the mods I made) has 
+been used instead of the one specified during fetch. If I removed the cached 
+credential, the username specified with --username is taken into account (I'm 
+asked a password for it and it works) and if I ommit the --username, the one 
+specified at fetch time is used.
+
+IMO, looks like a bug... Thanks in advance for any comment.
+
 Cheers,
 
-Sverre Rabbelier
+Michel
