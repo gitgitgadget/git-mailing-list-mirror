@@ -1,79 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/18] date.c: mark file-local function static
-Date: Tue, 12 Jan 2010 01:05:23 -0800
-Message-ID: <7vr5pv3d7w.fsf@alter.siamese.dyndns.org>
-References: <1263282781-25596-1-git-send-email-gitster@pobox.com>
- <1263282781-25596-5-git-send-email-gitster@pobox.com>
- <4B4C34B3.3010508@viscovery.net>
+From: Howard Miller <howard@e-learndesign.co.uk>
+Subject: gitosis user on Windows
+Date: Tue, 12 Jan 2010 09:42:42 +0000
+Message-ID: <26ae428a1001120142j36619d62xcf3ffee3539a03b7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Jan 12 10:05:39 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 12 10:42:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUch1-0002ez-7Z
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jan 2010 10:05:39 +0100
+	id 1NUdH0-0007bs-Ej
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jan 2010 10:42:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753797Ab0ALJFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2010 04:05:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751978Ab0ALJFd
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jan 2010 04:05:33 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43747 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753790Ab0ALJFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2010 04:05:32 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C7ADC8EFE4;
-	Tue, 12 Jan 2010 04:05:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fQ7YYEF/ZWNf1fvTxiGDUl6M6jQ=; b=TwkWyi
-	siUugOF3OEEwwgN0D4TzTjE0x+iQ7iJSrH0GDOFOH+WM8kRYJYdBOIF1cKQo/pIp
-	ZDeqwvvM3pQ1XybDKCy7IlxHwFKVRXyA1sPoZnAKZAaF0L4IfR+7H6nwyEq9Nxy6
-	O1PNdZ8r4GYTUm0uJyMiCHW7V7UBOWQPjxAgg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KPeDAFNW7ijLlM5iTQEB2apupFwkFPTe
-	tVjVLi9u8h8Ris9+aFvM+ra+HWXBcgSVBVcjP9llFopkSCpsqCZ2LZdg9VunJ5Au
-	yE3MnLmPpDHAeUziEx/yRNFPubt8t63LVrlxODH3LO/HKyhtSZxKG1UWRAGLXKF7
-	q4xvKw67p4A=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 996A18EFE1;
-	Tue, 12 Jan 2010 04:05:27 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C10078EFDF; Tue, 12 Jan
- 2010 04:05:24 -0500 (EST)
-In-Reply-To: <4B4C34B3.3010508@viscovery.net> (Johannes Sixt's message of
- "Tue\, 12 Jan 2010 09\:37\:07 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A066B898-FF59-11DE-BBA7-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753840Ab0ALJmq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2010 04:42:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753641Ab0ALJmq
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jan 2010 04:42:46 -0500
+Received: from mail-ew0-f209.google.com ([209.85.219.209]:55784 "EHLO
+	mail-ew0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932065Ab0ALJmo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2010 04:42:44 -0500
+Received: by ewy1 with SMTP id 1so4358447ewy.28
+        for <git@vger.kernel.org>; Tue, 12 Jan 2010 01:42:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=tcYhp7lWPJ6fK1NwQPlFgTZqvKPkkGWBY67FntR7L7w=;
+        b=u0UUust7fwjbUGEyDfb93ekDsi1Zz3N0p1ktvi193ORlOeUJXNQYbpQIabT2GLDXMW
+         Oj1NPRm1YAx/scKp6LQeNTrhimW4z09mohTbypIAh8sHeLWe3zeYqpwN7MgFr4Azb5YS
+         GHXt/WzXzWPYljj04frEJMBNeBzMEMhQh3YdU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=ne3Cg8+aAM+OrB1XCO0dHDneDyGt1kADjM3L97rh97l4ldTz5e1JDjBveVdOJAkN/W
+         XcZ2uE/I780+LfQalRKkrnQERR3/0+ExSpoyxD5oUnBlsa4knKlv7s21VsCxB1A4zJjW
+         I5tLijDSGUHcN5O/9ljLbPw3jnHsgfoA3CCHw=
+Received: by 10.213.97.91 with SMTP id k27mr4727275ebn.51.1263289362545; Tue, 
+	12 Jan 2010 01:42:42 -0800 (PST)
+X-Google-Sender-Auth: da5650f398e7d005
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136708>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+I have been using gitosis for a while with much success. I now have a
+user on Windows (XP) wanting to access the repositories. I obviously
+need a key from him but asking just elicited a blank look. I don't
+have the slightest idea about Windows. Does anybody have this working
+and can provide any advice. I did do a search but it seems highly
+inconclusive.
 
->> diff --git a/git-compat-util.h b/git-compat-util.h
->> index 5c59687..85dea12 100644
->> --- a/git-compat-util.h
->> +++ b/git-compat-util.h
->> @@ -198,7 +198,6 @@ extern void warning(const char *err, ...) __attribute__((format (printf, 1, 2)))
->>  extern void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
->>  
->>  extern int prefixcmp(const char *str, const char *prefix);
->> -extern time_t tm_to_time_t(const struct tm *tm);
->>  
->>  static inline const char *skip_prefix(const char *str, const char *prefix)
->>  {
->
-> This one is used from compat/mingw.c for the gettimeofday emulation.
-> Please leave it extern.
-
-Ouch; I thought I ran "git grep <sym> pu" for all of them.
-Sorry and thanks.
+Thanks!!
