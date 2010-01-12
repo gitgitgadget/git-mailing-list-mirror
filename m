@@ -1,55 +1,50 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCHv2 0/3] rebase-i: Ignore comments and blank lines among
- squash/fixup commands
-Date: Tue, 12 Jan 2010 17:37:47 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001121737310.4985@pacific.mpi-cbg.de>
-References: <7vr5pw3pwp.fsf@alter.siamese.dyndns.org> <cover.1263310175.git.mhagger@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/4] ls-files: fix overeager pathspec optimization
+Date: Tue, 12 Jan 2010 11:33:11 -0500
+Message-ID: <20100112163311.GD25092@coredump.intra.peff.net>
+References: <1263022535-12822-1-git-send-email-gitster@pobox.com>
+ <1263022535-12822-4-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jan 12 17:32:28 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jon Schewe <jpschewe@mtu.net>, spearce@spearce.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 12 17:33:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUjfP-0008Jg-1A
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jan 2010 17:32:27 +0100
+	id 1NUjgM-0000hQ-V7
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jan 2010 17:33:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754379Ab0ALQcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2010 11:32:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752356Ab0ALQcT
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jan 2010 11:32:19 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42967 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751422Ab0ALQcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2010 11:32:18 -0500
-Received: (qmail invoked by alias); 12 Jan 2010 16:32:14 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp035) with SMTP; 12 Jan 2010 17:32:14 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+EXycnxW2ER3MGE2Mk4mNLRG/v6BTJNjwap4Lx8m
-	u6tRqKf5u5MlCh
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <cover.1263310175.git.mhagger@alum.mit.edu>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.72
+	id S1754453Ab0ALQdU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2010 11:33:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754432Ab0ALQdU
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jan 2010 11:33:20 -0500
+Received: from peff.net ([208.65.91.99]:42722 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754384Ab0ALQdU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2010 11:33:20 -0500
+Received: (qmail 8431 invoked by uid 107); 12 Jan 2010 16:38:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 12 Jan 2010 11:38:09 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jan 2010 11:33:11 -0500
+Content-Disposition: inline
+In-Reply-To: <1263022535-12822-4-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136739>
 
-Hi,
+On Fri, Jan 08, 2010 at 11:35:35PM -0800, Junio C Hamano wrote:
 
-On Tue, 12 Jan 2010, Michael Haggerty wrote:
+> This patch changes the optimization so that it notices when the common
+> prefix directory that it starts reading from is an ignored one.
 
-> Here is v2 of the patch (now patch series) for making "rebase -i" ignore 
-> comments and blank lines while it is processing blocks of squash/fixup 
-> commands.
+Having just produced the similar but more ugly and messy patch earlier
+in the thread, this series looks right to me.
 
-Me likee.
-
-Thanks,
-Dscho
+-Peff
