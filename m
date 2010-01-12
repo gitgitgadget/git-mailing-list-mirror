@@ -1,57 +1,97 @@
-From: Howard Miller <howard@e-learndesign.co.uk>
-Subject: gitosis user on Windows
-Date: Tue, 12 Jan 2010 09:42:42 +0000
-Message-ID: <26ae428a1001120142j36619d62xcf3ffee3539a03b7@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 04/18] date.c: mark file-local function static
+Date: Tue, 12 Jan 2010 10:43:36 +0100
+Message-ID: <4B4C4448.9060908@viscovery.net>
+References: <1263282781-25596-1-git-send-email-gitster@pobox.com> <1263282781-25596-5-git-send-email-gitster@pobox.com> <4B4C34B3.3010508@viscovery.net> <7vr5pv3d7w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 12 10:42:50 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 12 10:43:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUdH0-0007bs-Ej
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jan 2010 10:42:50 +0100
+	id 1NUdHt-0007uU-Ih
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jan 2010 10:43:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753840Ab0ALJmq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2010 04:42:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753641Ab0ALJmq
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jan 2010 04:42:46 -0500
-Received: from mail-ew0-f209.google.com ([209.85.219.209]:55784 "EHLO
-	mail-ew0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932065Ab0ALJmo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2010 04:42:44 -0500
-Received: by ewy1 with SMTP id 1so4358447ewy.28
-        for <git@vger.kernel.org>; Tue, 12 Jan 2010 01:42:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type;
-        bh=tcYhp7lWPJ6fK1NwQPlFgTZqvKPkkGWBY67FntR7L7w=;
-        b=u0UUust7fwjbUGEyDfb93ekDsi1Zz3N0p1ktvi193ORlOeUJXNQYbpQIabT2GLDXMW
-         Oj1NPRm1YAx/scKp6LQeNTrhimW4z09mohTbypIAh8sHeLWe3zeYqpwN7MgFr4Azb5YS
-         GHXt/WzXzWPYljj04frEJMBNeBzMEMhQh3YdU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        b=ne3Cg8+aAM+OrB1XCO0dHDneDyGt1kADjM3L97rh97l4ldTz5e1JDjBveVdOJAkN/W
-         XcZ2uE/I780+LfQalRKkrnQERR3/0+ExSpoyxD5oUnBlsa4knKlv7s21VsCxB1A4zJjW
-         I5tLijDSGUHcN5O/9ljLbPw3jnHsgfoA3CCHw=
-Received: by 10.213.97.91 with SMTP id k27mr4727275ebn.51.1263289362545; Tue, 
-	12 Jan 2010 01:42:42 -0800 (PST)
-X-Google-Sender-Auth: da5650f398e7d005
+	id S1753852Ab0ALJnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2010 04:43:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753791Ab0ALJnm
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jan 2010 04:43:42 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:58450 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751520Ab0ALJnl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2010 04:43:41 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NUdHl-0007ku-1h; Tue, 12 Jan 2010 10:43:37 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id BECA31660F;
+	Tue, 12 Jan 2010 10:43:36 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <7vr5pv3d7w.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.9 (+)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136709>
 
-I have been using gitosis for a while with much success. I now have a
-user on Windows (XP) wanting to access the repositories. I obviously
-need a key from him but asking just elicited a blank look. I don't
-have the slightest idea about Windows. Does anybody have this working
-and can provide any advice. I did do a search but it seems highly
-inconclusive.
+Junio C Hamano schrieb:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+>> This one is used from compat/mingw.c for the gettimeofday emulation.
+>> Please leave it extern.
 
-Thanks!!
+I'll add this patch to may windows-update series to avoids this hack.
+
+--- 8< ---
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH] compat/mingw.c: do not use tm_to_time_t from date.c
+
+To implement gettimeofday(), a broken-down UTC time was requested from the
+system using GetSystemTime() and converted using tm_to_time_t() because it
+does not look at the current timezone, which mktime() would do. But
+meanwhile we have grown infrastructure in mingw.c, so that we can use a
+different conversion path. This way we can avoid the ugly back-reference
+from the compatibility layer to the generic git code.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ compat/mingw.c |   18 +++++-------------
+ 1 files changed, 5 insertions(+), 13 deletions(-)
+
+diff --git a/compat/mingw.c b/compat/mingw.c
+index faaaade..3c78f39 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -281,19 +281,11 @@ int mkstemp(char *template)
+ 
+ int gettimeofday(struct timeval *tv, void *tz)
+ {
+-	SYSTEMTIME st;
+-	struct tm tm;
+-	GetSystemTime(&st);
+-	tm.tm_year = st.wYear-1900;
+-	tm.tm_mon = st.wMonth-1;
+-	tm.tm_mday = st.wDay;
+-	tm.tm_hour = st.wHour;
+-	tm.tm_min = st.wMinute;
+-	tm.tm_sec = st.wSecond;
+-	tv->tv_sec = tm_to_time_t(&tm);
+-	if (tv->tv_sec < 0)
+-		return -1;
+-	tv->tv_usec = st.wMilliseconds*1000;
++	FILETIME ft;
++	GetSystemTimeAsFileTime(&ft);
++	tv->tv_sec = filetime_to_time_t(&ft);
++	/* the unit is 100-nanoseconds, ie., a 10th of a microsecond */
++	tv->tv_usec = (ft.dwLowDateTime % 10000000) / 10;
+ 	return 0;
+ }
+ 
+-- 
+1.6.6.1207.g714a1.dirty
