@@ -1,55 +1,120 @@
-From: "Edward Z. Yang" <ezyang@MIT.EDU>
-Subject: Re: Interest in locking mechanism?
-Date: Tue, 12 Jan 2010 14:43:19 -0500
-Message-ID: <1263325308-sup-5516@ezyang>
-References: <1263319565-sup-1767@ezyang> <32541b131001121101i76ad8062p3a7f3571ad86b0ce@mail.gmail.com> <1263323292-sup-4182@ezyang> <32541b131001121124u541de280na9184183d8704dc8@mail.gmail.com> <46a038f91001121133r62b3d748n38ca27234f18e960@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Avery Pennarun <apenwarr@gmail.com>, git <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 12 20:43:37 2010
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [BUGFIX] Unbork remote helper execution
+Date: Tue, 12 Jan 2010 20:53:29 +0100
+Message-ID: <201001122053.29568.j6t@kdbg.org>
+References: <1263321344-21237-1-git-send-email-ilari.liusvaara@elisanet.fi>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Tue Jan 12 20:54:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUmeK-0003sA-7y
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jan 2010 20:43:32 +0100
+	id 1NUmoz-0000Qs-H0
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jan 2010 20:54:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754811Ab0ALTn1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2010 14:43:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754703Ab0ALTn0
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jan 2010 14:43:26 -0500
-Received: from DMZ-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.36]:47934 "EHLO
-	dmz-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754729Ab0ALTn0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jan 2010 14:43:26 -0500
-X-AuditID: 12074424-b7ce5ae000007d76-d2-4b4cd0dd659b
-Received: from central-city-carrier-station.mit.edu (CENTRAL-CITY-CARRIER-STATION.MIT.EDU [18.7.7.72])
-	by dmz-mailsec-scanner-7.mit.edu (Symantec Brightmail Gateway) with SMTP id F1.86.32118.DD0DC4B4; Tue, 12 Jan 2010 14:43:25 -0500 (EST)
-Received: from outgoing-legacy.mit.edu (OUTGOING-LEGACY.MIT.EDU [18.7.22.104])
-	by central-city-carrier-station.mit.edu (8.13.6/8.9.2) with ESMTP id o0CJiH3G004943;
-	Tue, 12 Jan 2010 14:44:17 -0500 (EST)
-Received: from localhost (EZYANG.MIT.EDU [18.243.1.50])
-	)
-	by outgoing-legacy.mit.edu (8.13.6/8.12.4) with ESMTP id o0CJhaa3004773;
-	Tue, 12 Jan 2010 14:43:36 -0500 (EST)
-In-reply-to: <46a038f91001121133r62b3d748n38ca27234f18e960@mail.gmail.com>
-User-Agent: Sup/git
-X-Scanned-By: MIMEDefang 2.42
-X-Brightmail-Tracker: AAAAAQCq+Kk=
+	id S1753866Ab0ALTy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2010 14:54:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753844Ab0ALTy3
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jan 2010 14:54:29 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:59163 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753832Ab0ALTy2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2010 14:54:28 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id A5D80CDF89;
+	Tue, 12 Jan 2010 20:54:22 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id CCAD719F596;
+	Tue, 12 Jan 2010 20:53:29 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <1263321344-21237-1-git-send-email-ilari.liusvaara@elisanet.fi>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136756>
 
-Excerpts from Martin Langhoff's message of Tue Jan 12 14:33:18 -0500 2010:
-> So write your own "git-lock" command that does "chmod g-w $@";
-> git-unlock reenables the group-writable bit. Done.
+[added git@vger]
 
-That was what I was thinking of doing (with modestly more cleverness for
-recursive operation), and maybe some convenience flags for git-commit
-for automatically unlocking or preserving the lock across a commit.
+On Dienstag, 12. Januar 2010, Ilari Liusvaara wrote:
+> Someone that obiviously didn't test the change did the following (the
+> code blames to me, but I didn't write this):
+>
+> code = start_command(helper);
+> if (code < 0 && errno == ENOENT)
+> 	die("Unable to find remote helper for '%s'", data->name);
+> else
+> 	exit(code);
+>
+> Which is obiviously wrong. The code shouldn't exit if code is 0.
 
-Cheers,
-Edward
+Duh! Sorry for that. Your original code indeed has 'else if (code != 0)'.
+
+Thanks for catching this. BTW, the test suite passes nevertheless.
+Aren't there any tests that exercise the code path, or do I have them
+disabled somehow? So, yes: I didn't test the change.
+
+Here is the amended commit that replaces the tip of js/exec-error-report,
+with some light testing this time.
+--- 8< ---
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: [PATCH] Improve error message when a transport helper was not found
+
+Perviously, the error message was:
+
+    git: 'remote-foo' is not a git-command. See 'git --help'.
+
+By not treating the transport helper as a git command, a more suitable
+error is reported:
+
+    fatal: Unable to find remote helper for 'foo'
+
+Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ transport-helper.c |   14 ++++++++++----
+ 1 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/transport-helper.c b/transport-helper.c
+index 6ece0d9..7dce4a4 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -102,6 +102,7 @@ static struct child_process *get_helper(struct transport *transport)
+ 	int refspec_nr = 0;
+ 	int refspec_alloc = 0;
+ 	int duped;
++	int code;
+ 
+ 	if (data->helper)
+ 		return data->helper;
+@@ -111,13 +112,18 @@ static struct child_process *get_helper(struct transport *transport)
+ 	helper->out = -1;
+ 	helper->err = 0;
+ 	helper->argv = xcalloc(4, sizeof(*helper->argv));
+-	strbuf_addf(&buf, "remote-%s", data->name);
++	strbuf_addf(&buf, "git-remote-%s", data->name);
+ 	helper->argv[0] = strbuf_detach(&buf, NULL);
+ 	helper->argv[1] = transport->remote->name;
+ 	helper->argv[2] = remove_ext_force(transport->url);
+-	helper->git_cmd = 1;
+-	if (start_command(helper))
+-		die("Unable to run helper: git %s", helper->argv[0]);
++	helper->git_cmd = 0;
++	helper->silent_exec_failure = 1;
++	code = start_command(helper);
++	if (code < 0 && errno == ENOENT)
++		die("Unable to find remote helper for '%s'", data->name);
++	else if (code != 0)
++		exit(code);
++
+ 	data->helper = helper;
+ 	data->no_disconnect_req = 0;
+ 
+-- 
+1.6.6.115.gd1ab3
