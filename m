@@ -1,72 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 11/18] submodule.c: mark file-local function static
-Date: Mon, 11 Jan 2010 23:52:54 -0800
-Message-ID: <1263282781-25596-12-git-send-email-gitster@pobox.com>
-References: <1263282781-25596-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 12 08:55:02 2010
+Subject: Re: [PATCH] grep: do not do external grep on skip-worktree entries
+Date: Tue, 12 Jan 2010 00:29:58 -0800
+Message-ID: <7v63774tfd.fsf@alter.siamese.dyndns.org>
+References: <7vtyv4cpna.fsf@alter.siamese.dyndns.org>
+ <87ljgfgbl0.fsf@catnip.gol.com>
+ <fc339e4a1001021847hf1e1a7fq894de7908839ff77@mail.gmail.com>
+ <877hrzga16.fsf@catnip.gol.com>
+ <alpine.LFD.2.00.1001031124420.3630@localhost.localdomain>
+ <7v3a2mzzg4.fsf@alter.siamese.dyndns.org>
+ <20100104053125.GA5083@coredump.intra.peff.net>
+ <7vbphaquwl.fsf@alter.siamese.dyndns.org>
+ <20100104064408.GA7785@coredump.intra.peff.net>
+ <alpine.LFD.2.00.1001040659150.3630@localhost.localdomain>
+ <fc339e4a1001040757n31298f3h724eacfafb68c63e@mail.gmail.com>
+ <alpine.LFD.2.00.1001040801290.3630@localhost.localdomain>
+ <7vvdf9402f.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1001110739280.13040@localhost.localdomain>
+ <alpine.LFD.2.00.1001110748560.13040@localhost.localdomain>
+ <7vtyusr4r7.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1001110830070.13040@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Miles Bader <miles@gnu.org>,
+	Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jan 12 09:30:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUbaY-00056x-0T
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jan 2010 08:54:54 +0100
+	id 1NUc8v-0007PL-MB
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jan 2010 09:30:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753457Ab0ALHxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2010 02:53:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753329Ab0ALHxc
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jan 2010 02:53:32 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41132 "EHLO
+	id S1753288Ab0ALIaS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2010 03:30:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753038Ab0ALIaS
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jan 2010 03:30:18 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58955 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753413Ab0ALHxa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2010 02:53:30 -0500
+	with ESMTP id S1752542Ab0ALIaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2010 03:30:16 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D4D1A8E89F
-	for <git@vger.kernel.org>; Tue, 12 Jan 2010 02:53:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=zAxo
-	fDW5Bo+HQOc5jceDVaM0fqk=; b=IcScwJB/TJ7t/tgo3HFNFAz3uJRJPF6N+/Xl
-	2SxijhCFyr0DdXanqlzbbZql1JgbR2fu56X8epBfn76TE6m7vUuRtf7N+NcfCLEu
-	ZGSm7pbdqqOT+/GVAhdT6B0Rs+mj+zQ/l3eSPIDPiYkQb9scwf1Uae1qCi+tuGQ8
-	6cRl62w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=J7S+2z
-	QfyvyUPW5PNc+q4hkwRSxAwFH2joBwRVa7DtGsplNmkH/0/mkacRg64QmjqIU7mW
-	sa7oey27y0LtE9ffieYc8XpCPXaRGWou6i6NWsorvLNnqAaafLRLv8Jq05PfcmrI
-	mZuMnWVs960RQCLmuIfbScskCYGAUY6vSUt+Y=
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 39B848EC76;
+	Tue, 12 Jan 2010 03:30:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pi+FDOgTzwMzKGt5Z+iI4ZVwecc=; b=o2k2dk
+	CKhRhpt4jofnzjmjSwYAqHlBokDaXJi4u4aXTbnLpmpu0KOKNbKkJkPv0+rKA0/1
+	CWPYFeftE0i7XEdzDWojDFXTX3jQGF/w45CDHA2V1t5AuMVIS2Tgj92Vg8gtHhXl
+	KqCsnrGYT2cmP18jItw4m2ksexSkYtuou41gU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=d2p48iP1Fs1LnqvvLj12uwEoEB3QJbwL
+	KRXcIEU9blGXVoFDJMx4k0v91jYlSOcmaWp1YyqCHbLS5LI+wlfVmuXqukVO4MSj
+	jFH7C4Dl14x3MLcTzmbwYRKf1Qy9abbFRyeuUCuFX5MrHV2Ilgmfu4HlO4Q4KySS
+	8Zal1hnPFNE=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D0B9E8E89E
-	for <git@vger.kernel.org>; Tue, 12 Jan 2010 02:53:29 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B4E5F8EC74;
+	Tue, 12 Jan 2010 03:30:07 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6693C8E89D for
- <git@vger.kernel.org>; Tue, 12 Jan 2010 02:53:29 -0500 (EST)
-X-Mailer: git-send-email 1.6.6.280.ge295b7.dirty
-In-Reply-To: <1263282781-25596-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 92CEFCAE-FF4F-11DE-8A02-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 763888EC6F; Tue, 12 Jan
+ 2010 03:30:00 -0500 (EST)
+In-Reply-To: <alpine.LFD.2.00.1001110830070.13040@localhost.localdomain>
+ (Linus Torvalds's message of "Mon\, 11 Jan 2010 08\:33\:09 -0800 \(PST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B0D985D4-FF54-11DE-943E-9D59EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136703>
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- submodule.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-diff --git a/submodule.c b/submodule.c
-index 86aad65..3007f7d 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -5,7 +5,7 @@
- #include "commit.h"
- #include "revision.h"
- 
--int add_submodule_odb(const char *path)
-+static int add_submodule_odb(const char *path)
- {
- 	struct strbuf objects_directory = STRBUF_INIT;
- 	struct alternate_object_database *alt_odb;
--- 
-1.6.6.280.ge295b7.dirty
+> Ack. Works for me. And with that, I'd love for it to go in, and get rid of 
+> the external grep. Performance is now a non-issue (it goes both ways), and 
+> the internal grep doesn't have the bug with separators between multi-line 
+> greps.
+>
+> And dropping the external one gets rid of all the issues with PATHs, crap 
+> 'grep' implementations, and removes actual code. Goodie.
+>
+> 		Linus
+
+Before going forward, I found two small nits that should go to maint.
