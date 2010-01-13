@@ -1,89 +1,170 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: [RFC 0/2] Git-over-TLS (gits://) client side support
-Date: Wed, 13 Jan 2010 15:13:40 -0500
-Message-ID: <32541b131001131213m75b4baefsc70a4cbf3c8431c8@mail.gmail.com>
-References: <1263388786-6880-1-git-send-email-ilari.liusvaara@elisanet.fi> 
-	<20100113135753.GA7095@Knoppix> <20100113141218.GA17687@inner.home.ulmdo.de> 
-	<20100113144745.GA7246@Knoppix> <20100113161711.GB17687@inner.home.ulmdo.de> 
-	<20100113173610.GA7609@Knoppix> <20100113183520.GA23674@inner.home.ulmdo.de> 
-	<20100113191802.GA8110@Knoppix> <32541b131001131130i6afae1a1xd3a70e5de5daa5cf@mail.gmail.com> 
-	<20100113200629.GA8383@Knoppix>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] commit: show interesting ident information in
+ summary
+Date: Wed, 13 Jan 2010 15:17:08 -0500
+Message-ID: <20100113201708.GA23018@coredump.intra.peff.net>
+References: <20100112153656.GA24840@coredump.intra.peff.net>
+ <20100112154631.GC24957@coredump.intra.peff.net>
+ <7v3a2asda8.fsf@alter.siamese.dyndns.org>
+ <20100113173050.GB21318@coredump.intra.peff.net>
+ <7vbpgxn5ui.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Krey <a.krey@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Wed Jan 13 21:14:09 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Adam Megacz <adam@megacz.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 13 21:17:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NV9bV-0006Y4-Ak
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 21:14:09 +0100
+	id 1NV9ef-0007xO-Ld
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 21:17:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755492Ab0AMUOB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jan 2010 15:14:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755208Ab0AMUOB
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 15:14:01 -0500
-Received: from mail-iw0-f197.google.com ([209.85.223.197]:55226 "EHLO
-	mail-iw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755198Ab0AMUOB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jan 2010 15:14:01 -0500
-Received: by iwn35 with SMTP id 35so16668063iwn.4
-        for <git@vger.kernel.org>; Wed, 13 Jan 2010 12:14:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=HzrHLV6KphBBNJeXXMne0ClgRjKN7ZFgl4n1j1cJ81M=;
-        b=cyehXUzhXcuCqu0EEewjKCzwwk3Jj+qIPdfZB1cgCIcXUPjngaL+nTqHH2B4tsXCho
-         +ooGzrQGS/D+ZASxyR9zfnBFOZRn0bFj++9tsiBnD0x2LyXg8pupSUrtcRpUvGGlvjEu
-         0DniRJ+VxZtnnARIx9jR3F0mtgo8W+JscWz2s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=TVPHCfM3EZ6Y//t7M3+N8/9Q1kO/PkD1bMpDXr7s2HQ682Rig1qulUyBAEYok8i+K1
-         pGzu2aGQbLl5UnJ9ScUu1FPTg9CIFm9MzBdNFkfvBsr2OuItT9UO9NMhOTUzVHNN6wrr
-         UQkLkf1MFPqKtJX0a3Dz+k/cqQHWgix6dj+w4=
-Received: by 10.231.145.70 with SMTP id c6mr282608ibv.36.1263413640104; Wed, 
-	13 Jan 2010 12:14:00 -0800 (PST)
-In-Reply-To: <20100113200629.GA8383@Knoppix>
+	id S1755770Ab0AMURT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 15:17:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755767Ab0AMURS
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 15:17:18 -0500
+Received: from peff.net ([208.65.91.99]:46380 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755731Ab0AMURS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 15:17:18 -0500
+Received: (qmail 26610 invoked by uid 107); 13 Jan 2010 20:22:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 13 Jan 2010 15:22:08 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jan 2010 15:17:08 -0500
+Content-Disposition: inline
+In-Reply-To: <7vbpgxn5ui.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136874>
 
-On Wed, Jan 13, 2010 at 3:06 PM, Ilari Liusvaara
-<ilari.liusvaara@elisanet.fi> wrote:
-> On Wed, Jan 13, 2010 at 02:30:20PM -0500, Avery Pennarun wrote:
->> That's why every major web browser supports them. [X.509 client-side=
- certificates]
->
-> Supports !=3D is actually usable.
+On Wed, Jan 13, 2010 at 11:48:53AM -0800, Junio C Hamano wrote:
 
-Lots of people use it.  That was my point.  If it weren't important,
-web browser makers wouldn't bother putting it in; God knows they leave
-out a lot of other stuff that I'd like.
+> In olden days, `whoami`@`hostname`, at least on systems that were
+> competently maintained, gave a reasonable mail address for most people,
+> but I think it stopped being adequate more than 10 years ago, and it is
+> not useful anymore to majority of people, especially the ones who work on
+> Open Source projects as individuals, whose desired public identities are
+> often tied to their email account at their ISPs or mailbox providers (like
+> gmail).  There is no way for us to guess, when `whoami`@`hostname -f` is
+> the only thing we can go by without explicit user configuration.
 
->> Furthermore, how many people who really want ssh-style keypairs (and
->> thus refuse to use X.509 and PKI) can't just use ssh as their git
->> transport? =A0I don't actually understand what the goal is here.
->
-> As said, I got fed up with failure modes of SSH.
+Even outside of competent maintenance or individuals being served by
+ISPs, I think it is really that it is no longer the case that the
+machines we get our mail on and the machines we do our work on are less
+and less the same. Even as an individual, I can afford a Linux
+workstation on my desk _and_ one to serve my mail. But I don't advertise
+peff@workstation.peff.net as my email.
 
-I think this is the answer that needs clarification.  What failure
-modes are these?  ssh doesn't seem to fail for me.  And github.com
-seems to be working rather well with a huge number of users and ssh
-authentication.
+Which isn't to say there aren't people in the separate situation, like:
 
-If you're upset at the failure modes of ssh, is it possible to fix ssh
-instead of introducing Yet Another Tunneling Protocol?
+> Inside corporate environments, `whoami`@`hostname -f` might still be a
+> reasonable and usable default, though.
+> 
+> So I think the safest thing to do would be to give a big advice but make
+> it squelch-able with advice.howToSetYourIdentity or something.
 
-Have fun,
+I think that is a good idea. Administrators of competent shared
+environments can turn off the advice via /etc/gitconfig if they want,
+and everyone else needs to opt into it consciously, which should help
+reduce errors. I'm sure there will still be somebody, somewhere, who
+complains about having to set the config, but that minority is hopefully
+small enough to justify the errors saved by new git users.
 
-Avery
+Can you apply the patch below to my series as 4/3?
+
+-- >8 --
+Subject: [PATCH] commit: allow suppression of implicit identity advice
+
+We now nag the user with a giant warning when their identity
+was pulled from the username, hostname, and gecos
+information, in case it is not correct. Most users will
+suppress this by simply setting up their information
+correctly.
+
+However, there may be some users who consciously want to use
+that information, because having the value change from host
+to host contains useful information. These users can now set
+advice.implicitidentity to false to suppress the message.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Pretty straightforward. The biggest question is whether to suppress the
+"Committer: XXX <YYY@ZZZ>" line, too. I kind of think it is useful if
+you are intentionally using this feature; by definition if you are using
+it intentionally then the information is of some interest to you.
+
+ Documentation/config.txt |    4 ++++
+ advice.c                 |    2 ++
+ advice.h                 |    1 +
+ builtin-commit.c         |    6 ++++--
+ 4 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 9f40955..905076f 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -130,6 +130,10 @@ advice.*::
+ 		Advice shown when linkgit:git-merge[1] refuses to
+ 		merge to avoid overwritting local changes.
+ 		Default: true.
++	implicitIdentity::
++		Advice on how to set your identity configuration when
++		your information is guessed from the system username and
++		domain name. Default: true.
+ --
+ 
+ core.fileMode::
+diff --git a/advice.c b/advice.c
+index cb666ac..8f7de0e 100644
+--- a/advice.c
++++ b/advice.c
+@@ -3,6 +3,7 @@
+ int advice_push_nonfastforward = 1;
+ int advice_status_hints = 1;
+ int advice_commit_before_merge = 1;
++int advice_implicit_identity = 1;
+ 
+ static struct {
+ 	const char *name;
+@@ -11,6 +12,7 @@ static struct {
+ 	{ "pushnonfastforward", &advice_push_nonfastforward },
+ 	{ "statushints", &advice_status_hints },
+ 	{ "commitbeforemerge", &advice_commit_before_merge },
++	{ "implicitidentity", &advice_implicit_identity },
+ };
+ 
+ int git_default_advice_config(const char *var, const char *value)
+diff --git a/advice.h b/advice.h
+index 3de5000..728ab90 100644
+--- a/advice.h
++++ b/advice.h
+@@ -4,6 +4,7 @@
+ extern int advice_push_nonfastforward;
+ extern int advice_status_hints;
+ extern int advice_commit_before_merge;
++extern int advice_implicit_identity;
+ 
+ int git_default_advice_config(const char *var, const char *value);
+ 
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 3fa9b39..d687cf1 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -1082,8 +1082,10 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+ 	if (!user_ident_explicitly_given) {
+ 		strbuf_addstr(&format, "\n Committer: ");
+ 		strbuf_addbuf_percentquote(&format, &committer_ident);
+-		strbuf_addch(&format, '\n');
+-		strbuf_addstr(&format, implicit_ident_advice);
++		if (advice_implicit_identity) {
++			strbuf_addch(&format, '\n');
++			strbuf_addstr(&format, implicit_ident_advice);
++		}
+ 	}
+ 	strbuf_release(&author_ident);
+ 	strbuf_release(&committer_ident);
+-- 
+1.6.6.146.gdaab9.dirty
