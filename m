@@ -1,115 +1,65 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 1/2] grep: rip out support for external grep
-Date: Wed, 13 Jan 2010 03:29:41 -0500
-Message-ID: <76718491001130029i24a4edeyf72ce692429dffa6@mail.gmail.com>
-References: <7vtyv4cpna.fsf@alter.siamese.dyndns.org>
-	 <fc339e4a1001040757n31298f3h724eacfafb68c63e@mail.gmail.com>
-	 <alpine.LFD.2.00.1001040801290.3630@localhost.localdomain>
-	 <7vvdf9402f.fsf@alter.siamese.dyndns.org>
-	 <alpine.LFD.2.00.1001110739280.13040@localhost.localdomain>
-	 <alpine.LFD.2.00.1001110748560.13040@localhost.localdomain>
-	 <7vtyusr4r7.fsf@alter.siamese.dyndns.org>
-	 <alpine.LFD.2.00.1001110830070.13040@localhost.localdomain>
-	 <7v63774tfd.fsf@alter.siamese.dyndns.org>
-	 <7v4omqv6tx.fsf_-_@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add `commit.signoff` configuration variable.
+Date: Wed, 13 Jan 2010 00:30:21 -0800
+Message-ID: <7v1vhuquea.fsf@alter.siamese.dyndns.org>
+References: <alpine.LNX.2.00.1001131635510.16395@vqena.qenxr.bet.am>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Miles Bader <miles@gnu.org>, Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 09:29:47 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Steven Drake <sdrake@xnet.co.nz>
+X-From: git-owner@vger.kernel.org Wed Jan 13 09:30:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUybq-0005tk-Ra
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 09:29:47 +0100
+	id 1NUyce-0006DH-Up
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 09:30:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755082Ab0AMI3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 03:29:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755056Ab0AMI3n
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 03:29:43 -0500
-Received: from mail-iw0-f197.google.com ([209.85.223.197]:43055 "EHLO
-	mail-iw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755068Ab0AMI3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 03:29:42 -0500
-Received: by iwn35 with SMTP id 35so16235028iwn.4
-        for <git@vger.kernel.org>; Wed, 13 Jan 2010 00:29:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=eTbvjxQm8gGV2tR4+K99KpiG+ZzALp1aqfhoUF15YDU=;
-        b=fazhVX59e9ff8mxJlQL9qa44yKqDFU4vCu8XMwVOQKCowpSrZdH4IwHAhJzcNpXK8X
-         LKuN2qD8X5AnMLcG5cpKnN+wqafRq9LdLMM0YAHtwwxRtJekCFeHaqc8F4AD7tH25FNu
-         QJWnZi2fHtx5RSfTH7bRzmC7/JTtui2XdYuSo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=swQVJ1vAaH+wGW8ngkNp6UdMIwaS/0VnExnglDJxieCQd/zjFpWmf32NpgURrCNc0x
-         Pi5vIyitJZ+wrPymlzkTj0FHqItKZSX7TFb4VV2kR5KqYg7NRPCOiTO5zXQVxnGDRY5l
-         LuHiervLdUYYO9sQqTQu3Q/ET7ee87rNhrqug=
-Received: by 10.231.122.139 with SMTP id l11mr871310ibr.53.1263371381516; Wed, 
-	13 Jan 2010 00:29:41 -0800 (PST)
-In-Reply-To: <7v4omqv6tx.fsf_-_@alter.siamese.dyndns.org>
+	id S1755126Ab0AMIac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 03:30:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755119Ab0AMIac
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 03:30:32 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51704 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755014Ab0AMIab (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 03:30:31 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 393CA90829;
+	Wed, 13 Jan 2010 03:30:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=n627nbVG7+mPCY1+hUwx/u9lx6k=; b=oBj5Vx
+	GSUm3+aEJVA7iny6fbNXaDNXk/9ovY1xb9XcyIur60NL6xksL8O0HfvQ1298yNPo
+	P1QSUj/w9a7nn025v5++gBUUQwq6Opfp2eal3pr7JClODPVbv/ni1bkMtGZiaRIi
+	E+tKRXn/yr4UnnoCAE1u0Lofzih9Uk8G1xyH0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KtmGQ4PtJamxdtnmX0z5tzrsPsUCBtRR
+	fbNBIUJIBZ9azZFIQMoZcGozYTsaknkQHRnM2odJ/41BxAO+D+bGl3ghOg1Qbwaa
+	eyZEtwMD387z/JmL62GbbK/TqwKB3Y5D9aITOdXX2qv5o+Z+rbYBB65oB7QNiNQ6
+	v1iqzoDBfKU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1500690825;
+	Wed, 13 Jan 2010 03:30:27 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F51390823; Wed, 13 Jan
+ 2010 03:30:22 -0500 (EST)
+In-Reply-To: <alpine.LNX.2.00.1001131635510.16395@vqena.qenxr.bet.am> (Steven
+ Drake's message of "Wed\, 13 Jan 2010 16\:36\:44 +1300 \(NZDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E6CAF26C-001D-11DF-9FEF-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136791>
 
-On Wed, Jan 13, 2010 at 1:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> We still allow people to pass --[no-]ext-grep on the command line,
-> but the option is ignored.
+You need to defend this one better, in fact a *lot* better, than other
+ones.  See
 
-Perhaps this squashed in on top? (If gmail's web-interface mangles
-this I can resend.)
+  http://thread.gmane.org/gmane.comp.version-control.git/32503/focus=32522
+  http://thread.gmane.org/gmane.comp.version-control.git/103939/focus=104207
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index a1e36d7..6a96d9d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -645,14 +645,6 @@ color.grep::
-        `never`), never.  When set to `true` or `auto`, use color only
-        when the output is written to the terminal.  Defaults to `false`.
-
--color.grep.external::
--       The string value of this variable is passed to an external 'grep'
--       command as a command line option if match highlighting is turned
--       on.  If set to an empty string, no option is passed at all,
--       turning off coloring for external 'grep' calls; this is the default.
--       For GNU grep, set it to `--color=always` to highlight matches even
--       when a pager is used.
--
- color.grep.match::
-        Use customized color for matches.  The value of this variable
-        may be specified as in color.branch.<slot>.  It is passed using
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 4adb971..3d6ebb5 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -34,8 +34,6 @@ static int grep_config(const char *var, const char
-*value, void *cb)
-                opt->color = git_config_colorbool(var, value, -1);
-                return 0;
-        }
--       if (!strcmp(var, "color.grep.external"))
--               return git_config_string(&(opt->color_external), var, value);
-        if (!strcmp(var, "color.grep.match")) {
-                if (!value)
-                        return config_error_nonbool(var);
-diff --git a/grep.h b/grep.h
-index 75370f6..0c61b00 100644
---- a/grep.h
-+++ b/grep.h
-@@ -85,7 +85,6 @@ struct grep_opt {
-        int max_depth;
-        int funcname;
-        char color_match[COLOR_MAXLEN];
--       const char *color_external;
-        int regflags;
-        unsigned pre_context;
-        unsigned post_context;
+for starters.  Your justifications should address all the points raised in
+previous threads.
