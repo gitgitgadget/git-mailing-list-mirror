@@ -1,59 +1,146 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Display author and committer after "git commit"
-Date: Wed, 13 Jan 2010 12:34:08 -0500
-Message-ID: <20100113173408.GA16652@coredump.intra.peff.net>
-References: <xuu2zl4tfuij.fsf@nowhere.com>
- <20100106073806.6117@nanako3.lavabit.com>
- <7v4omz17xz.fsf@alter.siamese.dyndns.org>
- <xuu28wc9xd42.fsf@nowhere.com>
- <7vskagh9fg.fsf@alter.siamese.dyndns.org>
- <xuu2fx6d9rzb.fsf_-_@nowhere.com>
- <7vzl4lw160.fsf@alter.siamese.dyndns.org>
- <xuu2zl4kks3s.fsf@nowhere.com>
- <20100112142405.GA13369@coredump.intra.peff.net>
- <20100112153656.GA24840@coredump.intra.peff.net>
+Subject: [PATCH v2 1/3] strbuf_expand: convert "%%" to "%"
+Date: Wed, 13 Jan 2010 12:35:31 -0500
+Message-ID: <20100113173531.GA16786@coredump.intra.peff.net>
+References: <20100113173408.GA16652@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Adam Megacz <adam@megacz.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 18:34:28 2010
+X-From: git-owner@vger.kernel.org Wed Jan 13 18:35:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NV76x-0003Ae-O5
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 18:34:28 +0100
+	id 1NV78D-0003qE-C0
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 18:35:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756201Ab0AMReT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 12:34:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756181Ab0AMReT
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 12:34:19 -0500
-Received: from peff.net ([208.65.91.99]:46146 "EHLO peff.net"
+	id S1756215Ab0AMRfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 12:35:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756159Ab0AMRfl
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 12:35:41 -0500
+Received: from peff.net ([208.65.91.99]:46152 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756109Ab0AMReS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 12:34:18 -0500
-Received: (qmail 25248 invoked by uid 107); 13 Jan 2010 17:39:07 -0000
+	id S1756087Ab0AMRfk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 12:35:40 -0500
+Received: (qmail 25298 invoked by uid 107); 13 Jan 2010 17:40:30 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 13 Jan 2010 12:39:07 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jan 2010 12:34:08 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 13 Jan 2010 12:40:30 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jan 2010 12:35:31 -0500
 Content-Disposition: inline
-In-Reply-To: <20100112153656.GA24840@coredump.intra.peff.net>
+In-Reply-To: <20100113173408.GA16652@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136848>
 
-On Tue, Jan 12, 2010 at 10:36:56AM -0500, Jeff King wrote:
+The only way to safely quote arbitrary text in a
+pretty-print user format is to replace instances of "%" with
+"%x25". This is slightly unreadable, and many users would
+expect "%%" to produce a single "%", as that is what printf
+format specifiers do.
 
->   [1/3]: strbuf_expand: convert "%%" to "%"
->   [2/3]: strbuf: add strbuf_percentquote_buf
->   [3/3]: commit: show interesting ident information in summary
+This patch converts "%%" to "%" for all users of
+strbuf_expand:
 
-And here's a re-roll based on Junio's comments.
+ 1. git-daemon interpolated paths
 
-  [1/3]: strbuf_expand: convert "%%" to "%"
-  [2/3]: strbuf: add strbuf_addbuf_percentquote
-  [3/3]: commit: show interesting ident information in summary
+ 2. pretty-print user formats
 
--Peff
+ 3. merge driver command lines
+
+Case (1) was already doing the conversion itself outside of
+strbuf_expand. Case (2) is the intended beneficiary of this
+patch. Case (3) users probably won't notice, but as this is
+user-facing behavior, consistently providing the quoting
+mechanism makes sense.
+
+Signed-off-by: Jeff King <peff@coredump.intra.peff.net>
+---
+Changes from v1:
+  - note change in strbuf api docs
+
+ Documentation/pretty-formats.txt       |    1 +
+ Documentation/technical/api-strbuf.txt |    4 ++++
+ daemon.c                               |    1 -
+ strbuf.c                               |    6 ++++++
+ t/t6006-rev-list-format.sh             |    7 +++++++
+ 5 files changed, 18 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 53a9168..1686a54 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -134,6 +134,7 @@ The placeholders are:
+ - '%C(...)': color specification, as described in color.branch.* config option
+ - '%m': left, right or boundary mark
+ - '%n': newline
++- '%%': a raw '%'
+ - '%x00': print a byte from a hex code
+ - '%w([<w>[,<i1>[,<i2>]]])': switch line wrapping, like the -w option of
+   linkgit:git-shortlog[1].
+diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
+index a0e0f85..3b1da10 100644
+--- a/Documentation/technical/api-strbuf.txt
++++ b/Documentation/technical/api-strbuf.txt
+@@ -199,6 +199,10 @@ character if the letter `n` appears after a `%`.  The function returns
+ the length of the placeholder recognized and `strbuf_expand()` skips
+ over it.
+ +
++The format `%%` is automatically expanded to a single `%` as a quoting
++mechanism; callers do not need to handle the `%` placeholder themselves,
++and the callback function will not be invoked for this placeholder.
+++
+ All other characters (non-percent and not skipped ones) are copied
+ verbatim to the strbuf.  If the callback returned zero, meaning that the
+ placeholder is unknown, then the percent sign is copied, too.
+diff --git a/daemon.c b/daemon.c
+index 918e560..360635e 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -147,7 +147,6 @@ static char *path_ok(char *directory)
+ 			{ "IP", ip_address },
+ 			{ "P", tcp_port },
+ 			{ "D", directory },
+-			{ "%", "%" },
+ 			{ NULL }
+ 		};
+ 
+diff --git a/strbuf.c b/strbuf.c
+index a6153dc..6cbc1fc 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -227,6 +227,12 @@ void strbuf_expand(struct strbuf *sb, const char *format, expand_fn_t fn,
+ 			break;
+ 		format = percent + 1;
+ 
++		if (*format == '%') {
++			strbuf_addch(sb, '%');
++			format++;
++			continue;
++		}
++
+ 		consumed = fn(sb, format, context);
+ 		if (consumed)
+ 			format += consumed;
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index 5719315..b0047d3 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -19,6 +19,13 @@ test_cmp expect.$1 output.$1
+ "
+ }
+ 
++test_format percent %%h <<'EOF'
++commit 131a310eb913d107dd3c09a65d1651175898735d
++%h
++commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++%h
++EOF
++
+ test_format hash %H%n%h <<'EOF'
+ commit 131a310eb913d107dd3c09a65d1651175898735d
+ 131a310eb913d107dd3c09a65d1651175898735d
+-- 
+1.6.6.140.g92e4d.dirty
