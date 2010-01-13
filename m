@@ -1,61 +1,81 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: default behaviour for `gitmerge` (no arguments)
-Date: Wed, 13 Jan 2010 10:26:05 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001131024420.3043@intel-tinevez-2-302>
-References: <loom.20100111T185144-655@post.gmane.org> <7v7hrojukz.fsf@alter.siamese.dyndns.org> <20100112162355.GB25092@coredump.intra.peff.net> <7vhbqr2nxt.fsf@alter.siamese.dyndns.org> <20100112182550.GA15696@coredump.intra.peff.net>
- <7vwrzmqypn.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Gareth Adams <gareth.adams@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 10:26:17 2010
+From: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
+Subject: [PATCH 0/7] Gitweb caching v4
+Date: Wed, 13 Jan 2010 01:34:35 -0800
+Message-ID: <1263375282-15508-1-git-send-email-warthog9@eaglescrag.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 13 10:34:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUzUV-0001KV-V5
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 10:26:16 +0100
+	id 1NUzcq-0004Oi-73
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 10:34:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755200Ab0AMJ0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 04:26:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754915Ab0AMJ0J
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 04:26:09 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41291 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754867Ab0AMJ0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 04:26:08 -0500
-Received: (qmail invoked by alias); 13 Jan 2010 09:26:06 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp044) with SMTP; 13 Jan 2010 10:26:06 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/NreFP5e/N/XDDPTlcZG896DmFGDd4Jd77b3UbKn
-	fvGwgpPSyj/5WO
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <7vwrzmqypn.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1755173Ab0AMJer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 04:34:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755268Ab0AMJeq
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 04:34:46 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:57264 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755150Ab0AMJep (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 04:34:45 -0500
+Received: from localhost.localdomain (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o0D9Yg1R018510
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 13 Jan 2010 01:34:44 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+X-Mailer: git-send-email 1.6.5.2
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Wed, 13 Jan 2010 01:34:45 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136796>
 
-Hi,
+Evening everyone,
+ 
+This is the latest incarnation of gitweb w/ caching.  This is
+finally at the point where it should probably start either being
+considered for inclusion or mainline, or I need to accept that this
+will never get in and more perminantely fork (as is the case with
+Fedora where this is going in as gitweb-caching as a parrallel rpm
+package).
 
-On Tue, 12 Jan 2010, Junio C Hamano wrote:
+That said this brings the base up to mainline (again), it updates a
+number of elements in the caching engine, and this is a much cleaner
+break-out of the tree vs. what I am currently developing against.
 
-> I wondered why it doesn't hook into interpret_branch_name(), and instead 
-> adds itself to the static substitute_branch_name(); it forbids the use 
-> of the syntax from by callers of strbuf_branchname().
+v4:
+	- major re-working of the caching layer to use file handle
+	  redirection instead of buffering output
+	- other minor improvements
+v3:
+	- various minor re-works based on mailing list feedback,
+	  this series was not sent to the mailing list.
+v2:
+	- Better breakout
+	- You can actually disable the cache now
 
-I _think_ it was to allow something like
+- John 'Warthog9' Hawley 
 
-	git log -g @{u}
 
-but frankly, this is so long ago, I do not remember, I reconstructed this 
-reasoning as being the most likely.
+John 'Warthog9' Hawley (7):
+  gitweb: Load checking
+  gitweb: Add option to force version match
+  gitweb: Makefile improvements
+  gitweb: Optionally add "git" links in project list page
+  gitweb: Convert output to using indirect file handle
+  gitweb: add a get function to compliment print_local_time
+  gitweb: File based caching layer (from git.kernel.org)
 
-Ciao,
-Dscho
+ Makefile           |   91 ++---
+ gitweb/Makefile    |  129 +++++++
+ gitweb/README      |   14 +-
+ gitweb/cache.pm    |  283 +++++++++++++++
+ gitweb/gitweb.css  |    6 +
+ gitweb/gitweb.perl | 1021 ++++++++++++++++++++++++++++++----------------------
+ 6 files changed, 1052 insertions(+), 492 deletions(-)
+ create mode 100644 gitweb/Makefile
+ create mode 100644 gitweb/cache.pm
