@@ -1,78 +1,86 @@
-From: david@lang.hm
-Subject: workflow and repository orginization for tracking router configs
-Date: Wed, 13 Jan 2010 10:26:01 -0800 (PST)
-Message-ID: <alpine.DEB.2.00.1001131013430.4866@asgard.lang.hm>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: Re: [RFC 0/2] Git-over-TLS (gits://) client side support
+Date: Wed, 13 Jan 2010 19:35:20 +0100
+Message-ID: <20100113183520.GA23674@inner.home.ulmdo.de>
+References: <1263388786-6880-1-git-send-email-ilari.liusvaara@elisanet.fi> <fcaeb9bf1001130539p2971caavd101d46de9269769@mail.gmail.com> <20100113135753.GA7095@Knoppix> <20100113141218.GA17687@inner.home.ulmdo.de> <20100113144745.GA7246@Knoppix> <20100113161711.GB17687@inner.home.ulmdo.de> <20100113173610.GA7609@Knoppix>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 13 19:26:14 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Wed Jan 13 19:35:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NV7v0-0007BZ-Hq
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 19:26:10 +0100
+	id 1NV84N-0003hV-IG
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 19:35:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756274Ab0AMS0F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 13:26:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756275Ab0AMS0E
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 13:26:04 -0500
-Received: from mail.lang.hm ([64.81.33.126]:56817 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750998Ab0AMS0D (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 13:26:03 -0500
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id o0DIQ1ZG020153
-	for <git@vger.kernel.org>; Wed, 13 Jan 2010 10:26:01 -0800
-X-X-Sender: dlang@asgard.lang.hm
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1755576Ab0AMSf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 13:35:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755344Ab0AMSf2
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 13:35:28 -0500
+Received: from continuum.iocl.org ([213.146.114.200]:62050 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754970Ab0AMSf2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 13:35:28 -0500
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id o0DIZKq02106;
+	Wed, 13 Jan 2010 19:35:20 +0100
+Content-Disposition: inline
+In-Reply-To: <20100113173610.GA7609@Knoppix>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136853>
 
-I need to track router/firewall configs for several hundred to a few 
-thousand devices.
+On Wed, 13 Jan 2010 19:36:10 +0000, Ilari Liusvaara wrote:
+...
+> That would violate layering badly. You need to decode the request
+> first before you can authorize. And the git daemon does that.
 
-For each device the config is a single file.
+Well, yes. The script hackery would just decide between 'is allowed
+to read (or write commits)' and 'is allowed to modify refs'. On the
+other hand, git-daemon does not do fine-grained (read: per-branch)
+access control, you'd only prevent pushing commits at all.
 
-Each device is updated independantly of the others.
+...
+> > (Is the unix auth via unix domain sockets part of GnuTLS?)
+> 
+> No, that server-only feature is part of the OS itself. In fact, it
+> needs no client-side support.
 
-The configs diff well not only against prior versions but against each 
-other.
+Ok, then I'll be really interested in the server-side support and
+the man pages on the whole stuff. Especially in how this is going
+to be different from what ssh:// does or can do.
 
-The different devices are accessable (in many cases via serial ports) from 
-different boxes (in different datacenters in many cases)
+...
+> GIT_PROXY abuse? There are even better ways: smart transport remote
+> helpers (in next I think). Git can actually dispatch those (and yes,
+> that's exactly what this uses).
 
-I need to data to be replicated across many locations
+Yeah, since the last mail I noticed that gitproxy is not quite what
+some google hits suggest, and should have read the patch in some
+more detail to find that gits is a remote helper.
 
-I want to be able to easily/quickly track changes to a particular device, 
-and compare different devices against each other.
+Please consider my objections revoked, other than the claim that
+it could be done with stunnel, however ugly that would be.
 
+...
+> Actually, that was little badly choosen term and not the true problem,
+> but the basic problem is that one peer has to trust the the other peer's
+> authentication for security of its own authentication.
 
-I am thinking that a DVCS like git may be a good fit for this situation. I 
-can do commits on the boxes that can directly access the devices, and then 
-do fetches/pulls between boxes to make sure that every box has the full 
-history of every device.
+I don't see how that would endanger the standard certificate auth in ssl
+(client or server).
 
-The question is, what is the best way to orginize this data.
+...
+> HTTP basic auth can be trivially sniffed if attacker can become other end
+> of the encrypted link
 
-One approach is to have a seperate branch for each device.
+Of course, you have another problem in that case...also I'd personally
+like to rely on ssl client certificates when using https.
 
-   This has the advantage that each branch can have a new config committed 
-independantly of the others, making pulls/fetches trivial
-
-Another approach is to have one branch with a different file for each 
-device.
-
-   This is easy for people to understand, but it seems to me that it would 
-make pulling from different boxes that updated different files an issue, 
-as well as adding confustion over which commit is related to which device.
-
-
-Any thoughts or suggestions on what people think would work well? (both 
-from a usability and from an efficiancy point of view)
-
-
-David Lang
+Andreas
