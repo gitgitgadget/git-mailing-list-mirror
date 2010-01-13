@@ -1,100 +1,66 @@
 From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [RFC 0/2] Git-over-TLS (gits://) client side support
-Date: Wed, 13 Jan 2010 15:19:44 +0200
-Message-ID: <1263388786-6880-1-git-send-email-ilari.liusvaara@elisanet.fi>
+Subject: [RFC 1/2] Git-over-TLS (gits://) client side support (part 1 of 2)
+Date: Wed, 13 Jan 2010 15:19:45 +0200
+Message-ID: <1263388786-6880-2-git-send-email-ilari.liusvaara@elisanet.fi>
+References: <1263388786-6880-1-git-send-email-ilari.liusvaara@elisanet.fi>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 13 14:19:54 2010
+X-From: git-owner@vger.kernel.org Wed Jan 13 14:20:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NV38c-00074H-40
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 14:19:54 +0100
+	id 1NV38q-0007Ab-9O
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 14:20:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754368Ab0AMNTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 08:19:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754309Ab0AMNTu
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 08:19:50 -0500
-Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:54065 "EHLO
-	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751386Ab0AMNTu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 08:19:50 -0500
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 987BA8C0C4
-	for <git@vger.kernel.org>; Wed, 13 Jan 2010 15:19:48 +0200 (EET)
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A002839678C; Wed, 13 Jan 2010 15:19:48 +0200
+	id S1754653Ab0AMNT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 08:19:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754461Ab0AMNT5
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 08:19:57 -0500
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109]:35173 "EHLO
+	emh03.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753891Ab0AMNT4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 08:19:56 -0500
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh03-2.mail.saunalahti.fi (Postfix) with SMTP id 3AB54EBBCF
+	for <git@vger.kernel.org>; Wed, 13 Jan 2010 15:19:51 +0200 (EET)
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A0031CF0FCF; Wed, 13 Jan 2010 15:19:50 +0200
 Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id 7566027D93
-	for <git@vger.kernel.org>; Wed, 13 Jan 2010 15:19:47 +0200 (EET)
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id AD3BB2BD50
+	for <git@vger.kernel.org>; Wed, 13 Jan 2010 15:19:48 +0200 (EET)
 X-Mailer: git-send-email 1.6.6.102.gd6f8f.dirty
+In-Reply-To: <1263388786-6880-1-git-send-email-ilari.liusvaara@elisanet.fi>
 X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136817>
 
-This is client-side support for Git-over-TLS (gits://). gits:// is
-version of git:// protocol layered on top of TLS (Transport Layer
-Security). If using TLS, it is autenticated transport supporing
-fetching, pushing and remote archive (plus special commands that
-have server-dependent meaning).
-
-Needs GnuTLS, and adds new make option NO_GNUTLS that disables builing
-this code.
-
-Supported underlying stream transports include TCP/IP, TCP/IPv6 and
-Unix domain sockets (including Linux abstract namespace).
-
-Supported authentication mechanisms include passwords, keypairs and on
-some platforms Unix authentication if using unix domain sockets. Server
-is authenticated using keypair (hostkey).
-
-The patch is split into two parts because it would be otherwise be
-too large for this list. Included are all the needed client side
-utilities (some of them run gpg internally).
-
-The main repo for gits:// implementation is 
-git://repo.or.cz/git-daemon2.git , which includes selfstanding client
-code and server code.
-
-Ilari Liusvaara (2):
-  Git-over-TLS (gits://) client side support (part 1 of 2)
-  Git-over-TLS (gits://) client side support (part 2 of 2)
-
- Makefile                               |   23 +-
+Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+---
+ Makefile                               |   23 ++-
  git-over-tls/.gitignore                |    5 +
- git-over-tls/Makefile                  |   46 ++
- git-over-tls/cbuffer.c                 |  504 ++++++++++++
- git-over-tls/cbuffer.h                 |  304 +++++++
- git-over-tls/certificate.c             |  306 +++++++
- git-over-tls/certificate.h             |   28 +
- git-over-tls/connect.c                 |  263 ++++++
+ git-over-tls/Makefile                  |   46 +++
+ git-over-tls/cbuffer.c                 |  504 ++++++++++++++++++++++++++++++++
+ git-over-tls/cbuffer.h                 |  304 +++++++++++++++++++
+ git-over-tls/certificate.c             |  306 +++++++++++++++++++
+ git-over-tls/certificate.h             |   28 ++
+ git-over-tls/connect.c                 |  263 +++++++++++++++++
  git-over-tls/connect.h                 |   14 +
- git-over-tls/genkeypair.c              |   38 +
- git-over-tls/gensrpverifier.c          |  372 +++++++++
- git-over-tls/getkeyid.c                |  118 +++
- git-over-tls/gits-send-special-command |   22 +
- git-over-tls/home.c                    |   47 ++
+ git-over-tls/genkeypair.c              |   38 +++
+ git-over-tls/gensrpverifier.c          |  372 +++++++++++++++++++++++
+ git-over-tls/getkeyid.c                |  118 ++++++++
+ git-over-tls/gits-send-special-command |   22 ++
+ git-over-tls/home.c                    |   47 +++
  git-over-tls/home.h                    |   13 +
- git-over-tls/hostkey.c                 |  116 +++
+ git-over-tls/hostkey.c                 |  116 ++++++++
  git-over-tls/hostkey.h                 |   15 +
- git-over-tls/hostkeymanager.c          |  305 +++++++
- git-over-tls/keypairs.c                |   60 ++
+ git-over-tls/hostkeymanager.c          |  305 +++++++++++++++++++
+ git-over-tls/keypairs.c                |   60 ++++
  git-over-tls/keypairs.h                |   16 +
- git-over-tls/main.c                    |  460 +++++++++++
- git-over-tls/misc.c                    |   15 +
- git-over-tls/misc.h                    |   27 +
- git-over-tls/mkcert.c                  |  507 ++++++++++++
- git-over-tls/prompt.c                  |  100 +++
- git-over-tls/prompt.h                  |   18 +
- git-over-tls/srp_askpass.c             |   90 ++
- git-over-tls/srp_askpass.h             |   14 +
- git-over-tls/user.c                    | 1384 ++++++++++++++++++++++++++++++++
- git-over-tls/user.h                    |  357 ++++++++
- 30 files changed, 5585 insertions(+), 2 deletions(-)
+ 20 files changed, 2613 insertions(+), 2 deletions(-)
  create mode 100644 git-over-tls/.gitignore
  create mode 100644 git-over-tls/Makefile
  create mode 100644 git-over-tls/cbuffer.c
@@ -114,13 +80,2795 @@ Ilari Liusvaara (2):
  create mode 100644 git-over-tls/hostkeymanager.c
  create mode 100644 git-over-tls/keypairs.c
  create mode 100644 git-over-tls/keypairs.h
- create mode 100644 git-over-tls/main.c
- create mode 100644 git-over-tls/misc.c
- create mode 100644 git-over-tls/misc.h
- create mode 100644 git-over-tls/mkcert.c
- create mode 100644 git-over-tls/prompt.c
- create mode 100644 git-over-tls/prompt.h
- create mode 100644 git-over-tls/srp_askpass.c
- create mode 100644 git-over-tls/srp_askpass.h
- create mode 100644 git-over-tls/user.c
- create mode 100644 git-over-tls/user.h
+
+diff --git a/Makefile b/Makefile
+index 4d2b99c..81cc848 100644
+--- a/Makefile
++++ b/Makefile
+@@ -163,6 +163,10 @@ all::
+ # apostrophes to be ASCII so that cut&pasting examples to the shell
+ # will work.
+ #
++# Define NO_GNUTLS if you don't want to use GnuTLS.
++#
++# Define NO_SRP if you don't want SRP support.
++#
+ # Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
+ # MakeMaker (e.g. using ActiveState under Cygwin).
+ #
+@@ -171,7 +175,6 @@ all::
+ # Define NO_PYTHON if you do not want Python scripts or libraries at all.
+ #
+ # Define NO_TCLTK if you do not want Tcl/Tk GUI.
+-#
+ # The TCL_PATH variable governs the location of the Tcl interpreter
+ # used to optimize git-gui for your system.  Only used if NO_TCLTK
+ # is not set.  Defaults to the bare 'tclsh'.
+@@ -291,7 +294,7 @@ TCL_PATH = tclsh
+ TCLTK_PATH = wish
+ PTHREAD_LIBS = -lpthread
+ 
+-export TCL_PATH TCLTK_PATH
++export TCL_PATH TCLTK_PATH CC
+ 
+ # sparse is architecture-neutral, which means that we need to tell it
+ # explicitly what architecture to check for. Fix this up for yours..
+@@ -1248,6 +1251,9 @@ endif
+ ifdef NO_IPV6
+ 	BASIC_CFLAGS += -DNO_IPV6
+ endif
++ifdef NO_SRP
++	BASIC_CFLAGS += -DDISABLE_SRP
++endif
+ ifdef NO_UINTMAX_T
+ 	BASIC_CFLAGS += -Duintmax_t=uint32_t
+ endif
+@@ -1399,6 +1405,10 @@ TCLTK_PATH_SQ = $(subst ','\'',$(TCLTK_PATH))
+ 
+ LIBS = $(GITLIBS) $(EXTLIBS)
+ 
++# In case some subdirectory wants to use git API libs.
++GIT_PROGRAM_LINKLIBS = $(LIBS)
++export GIT_PROGRAM_LINKLIBS
++
+ BASIC_CFLAGS += -DSHA1_HEADER='$(SHA1_HEADER_SQ)' \
+ 	$(COMPAT_CFLAGS)
+ LIB_OBJS += $(COMPAT_OBJS)
+@@ -1442,6 +1452,9 @@ endif
+ ifndef NO_PERL
+ 	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' all
+ endif
++ifndef NO_GNUTLS
++	$(QUIET_SUBDIR0)git-over-tls $(QUIET_SUBDIR1) prefix='$(prefix_SQ)' all
++endif
+ ifndef NO_PYTHON
+ 	$(QUIET_SUBDIR0)git_remote_helpers $(QUIET_SUBDIR1) PYTHON_PATH='$(PYTHON_PATH_SQ)' prefix='$(prefix_SQ)' all
+ endif
+@@ -1825,6 +1838,9 @@ install: all
+ 	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 	$(INSTALL) $(install_bindir_programs) '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
++ifndef NO_GNUTLS
++	$(MAKE) -C git-over-tls DESTDIR_BIN='$(DESTDIR_SQ)$(bindir_SQ)' DESTDIR_GITEXEC='$(DESTDIR_SQ)$(gitexec_instdir_SQ)' install
++endif
+ ifndef NO_PERL
+ 	$(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
+ endif
+@@ -1956,6 +1972,9 @@ ifndef NO_PERL
+ 	$(RM) gitweb/gitweb.cgi
+ 	$(MAKE) -C perl clean
+ endif
++ifndef NO_GNUTLS
++	$(MAKE) -C git-over-tls clean
++endif
+ ifndef NO_PYTHON
+ 	$(MAKE) -C git_remote_helpers clean
+ endif
+diff --git a/git-over-tls/.gitignore b/git-over-tls/.gitignore
+new file mode 100644
+index 0000000..546e49c
+--- /dev/null
++++ b/git-over-tls/.gitignore
+@@ -0,0 +1,5 @@
++/git-remote-gits
++/gits-get-key-id
++/gits-generate-keypair
++/gits-generate-srp-verifier
++/gits-hostkey
+diff --git a/git-over-tls/Makefile b/git-over-tls/Makefile
+new file mode 100644
+index 0000000..7804ec7
+--- /dev/null
++++ b/git-over-tls/Makefile
+@@ -0,0 +1,46 @@
++GITLIBS2 = $(patsubst %.a,../%.a, $(GIT_PROGRAM_LINKLIBS))
++helper = git-remote-gits
++programs = gits-get-key-id gits-hostkey gits-generate-keypair
++scripts = gits-send-special-command
++flags=
++
++# These can't be inherited from upper level or they won't work right...
++ifndef V
++	QUIET_CC       = @echo '   ' CC $@;
++	QUIET_LINK     = @echo '   ' LINK $@;
++endif
++
++ifdef NO_SRP
++flags += -DDISABLE_SRP
++else
++programs += gits-generate-srp-verifier
++endif
++
++all: $(programs) $(helper)
++
++git-remote-gits: main.o user.o cbuffer.o srp_askpass.o keypairs.o hostkey.o home.o certificate.o prompt.o misc.o prompt.o connect.o
++	$(QUIET_LINK)$(CC) $(LDFLAGS) -o $@ $^ $(GITLIBS2) -lgnutls
++
++gits-get-key-id: getkeyid.o certificate.o cbuffer.o home.o
++	$(QUIET_LINK)$(CC) $(LDFLAGS)  -o $@ $^ $(GITLIBS2) -lgnutls
++
++ifndef NO_SRP
++gits-generate-srp-verifier: gensrpverifier.o prompt.o
++	$(QUIET_LINK)$(CC) $(LDFLAGS)  -o $@ $^ $(GITLIBS2) -lgnutls
++endif
++
++gits-hostkey: hostkeymanager.o home.o
++	$(QUIET_LINK)$(CC) $(LDFLAGS)  -o $@ $^ $(GITLIBS2) -lgnutls
++
++gits-generate-keypair: genkeypair.o home.o mkcert.o cbuffer.o prompt.o
++	$(QUIET_LINK)$(CC) $(LDFLAGS)  -o $@ $^ $(GITLIBS2) -lgnutls
++
++%.o: %.c
++	$(QUIET_CC)$(CC) $(CLFAGS) -c -o $@ $< $(flags) -I..
++
++install: all
++	$(INSTALL) $(programs) $(scripts) '$(DESTDIR_BIN)'
++	$(INSTALL) $(helper) '$(DESTDIR_GITEXEC)'
++
++clean:
++	$(RM) -f *.o $(programs) $(helper)
+diff --git a/git-over-tls/cbuffer.c b/git-over-tls/cbuffer.c
+new file mode 100644
+index 0000000..e2adec7
+--- /dev/null
++++ b/git-over-tls/cbuffer.c
+@@ -0,0 +1,504 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#include "cbuffer.h"
++#include <stdlib.h>
++#include <assert.h>
++#include <unistd.h>
++#ifdef USE_UNIX_SCATTER_GATHER_IO
++#include <sys/uio.h>
++#endif
++#include <errno.h>
++#include <string.h>
++
++/*
++ * NOTE: This code may not crash, call exit or anything similar unless
++ * program state is corrupt or call parameters are completely invalid.
++ * It also may not call Git APIs.
++ */
++
++struct cbuffer
++{
++	/* Base address for data area. */
++	unsigned char *cb_base;
++	/* Amount of free space. */
++	size_t cb_free;
++	/* Amount of used space. */
++	size_t cb_used;
++	/* Get pointer (relative to base) */
++	size_t cb_get;
++	/* Put pointer (relative to base) */
++	size_t cb_put;
++	/* Total size */
++	size_t cb_size;
++};
++
++/* Assert that invariants of circular buffer hold. */
++static void assert_invariants(struct cbuffer *cbuf)
++{
++	assert(cbuf->cb_free >= 0 && cbuf->cb_free <= cbuf->cb_size);
++	assert(cbuf->cb_used >= 0 && cbuf->cb_used <= cbuf->cb_size);
++	assert(cbuf->cb_free + cbuf->cb_used == cbuf->cb_size);
++	assert(cbuf->cb_get >= 0 && cbuf->cb_get <= cbuf->cb_size);
++	assert(cbuf->cb_put >= 0 && cbuf->cb_put <= cbuf->cb_size);
++	if (cbuf->cb_get == cbuf->cb_put)
++		assert(cbuf->cb_free == 0 || cbuf->cb_used == 0);
++	else if (cbuf->cb_get < cbuf->cb_put)
++		assert(cbuf->cb_get + cbuf->cb_used == cbuf->cb_put);
++	else
++		assert(cbuf->cb_put + cbuf->cb_free == cbuf->cb_get);
++}
++
++/* Ack specified amount of data written. */
++static void ack_write(struct cbuffer *cbuf, size_t wsize)
++{
++	assert_invariants(cbuf);
++	assert(wsize <= cbuf->cb_free);
++	/*
++	 * Writing data decreses free space, increases used space,
++	 * increases put pointer, but it will wrap around if it
++	 * goes past end of buffer.
++	 */
++	cbuf->cb_free -= wsize;
++	cbuf->cb_used += wsize;
++	cbuf->cb_put += wsize;
++	if (cbuf->cb_put >= cbuf->cb_size)
++		cbuf->cb_put -= cbuf->cb_size;
++	assert_invariants(cbuf);
++}
++
++/* Ack specified amount of data read (removing it). */
++static void ack_read(struct cbuffer *cbuf, size_t rsize)
++{
++	assert_invariants(cbuf);
++	assert(rsize <= cbuf->cb_used);
++	/*
++	 * Reading data decreses used space, increases free space,
++	 * increases get pointer, but it will wrap around if it
++	 * goes past end of buffer.
++	 */
++	cbuf->cb_free += rsize;
++	cbuf->cb_used -= rsize;
++	cbuf->cb_get += rsize;
++	if (cbuf->cb_get >= cbuf->cb_size)
++		cbuf->cb_get -= cbuf->cb_size;
++	assert_invariants(cbuf);
++}
++
++struct cbuffer *cbuffer_create(unsigned char *data, size_t datasize)
++{
++	struct cbuffer *cbuf = (struct cbuffer*)malloc(sizeof(
++		struct cbuffer));
++	if (cbuf) {
++		cbuf->cb_base = data;
++		cbuf->cb_size = cbuf->cb_free = datasize;
++		cbuf->cb_used = cbuf->cb_get = cbuf->cb_put = 0;
++		assert_invariants(cbuf);
++	}
++	return cbuf;
++}
++
++void cbuffer_destroy(struct cbuffer *cbuf)
++{
++	if (cbuf) {
++		assert_invariants(cbuf);
++		free(cbuf);
++	}
++}
++
++size_t cbuffer_used(struct cbuffer *cbuf)
++{
++	assert_invariants(cbuf);
++	return cbuf->cb_used;
++}
++
++size_t cbuffer_free(struct cbuffer *cbuf)
++{
++	assert_invariants(cbuf);
++	return cbuf->cb_free;
++}
++
++int cbuffer_read(struct cbuffer *cbuf, unsigned char *dest, size_t toread)
++{
++	assert_invariants(cbuf);
++
++	/* Check that user doesn't try to read too much. */
++	if (toread > cbuf->cb_used)
++		return -1;
++
++	size_t tocopy = toread;
++
++	/*
++	 * Limit the amount of data read to amount fits inside single
++	 * segment. If get pointer is not greater or equal to put pointer,
++	 * then entiere used space is only single segment.
++	 */
++	if (cbuf->cb_get >= cbuf->cb_put)
++		if (tocopy > cbuf->cb_size - cbuf->cb_get)
++			tocopy = cbuf->cb_size - cbuf->cb_get;
++
++	if (tocopy > 0) {
++		/* Copy the segment and mark it read. */
++		memcpy(dest, cbuf->cb_base + cbuf->cb_get, tocopy);
++		ack_read(cbuf, tocopy);
++		/* Adjust the request for subsequent segments. */
++		toread -= tocopy;
++		dest += tocopy;
++	}
++
++	/*
++	 * If the read was incomplete, repeat the read request for the
++	 * non-read tail.
++	 */
++	if (toread > 0)
++		return cbuffer_read(cbuf, dest, toread);
++
++	assert_invariants(cbuf);
++
++	return 0;
++}
++
++int cbuffer_peek(struct cbuffer *cbuf, unsigned char *dest, size_t toread)
++{
++	assert_invariants(cbuf);
++
++	/* Check that user doesn't try to peek too much. */
++	if (toread > cbuf->cb_used)
++		return -1;
++
++	/* Is the used space as single segment or in two segments? */
++	if (cbuf->cb_get + toread > cbuf->cb_size) {
++		/* Two. We have to compute where segment boundary is and
++		   copy the data as two copies. */
++		size_t firstseg = cbuf->cb_size - cbuf->cb_get;
++		memcpy(dest, cbuf->cb_base + cbuf->cb_get, firstseg);
++		memcpy(dest + firstseg, cbuf->cb_base, toread - firstseg);
++	} else {
++		/* One, data can be read as single copy. */
++		memcpy(dest, cbuf->cb_base + cbuf->cb_get, toread);
++	}
++
++	assert_invariants(cbuf);
++
++	return 0;
++}
++
++int cbuffer_write(struct cbuffer *cbuf, const unsigned char *src,
++	size_t towrite)
++{
++	assert_invariants(cbuf);
++
++	/* Check that user doesn't try to write too much. */
++	if (towrite > cbuf->cb_free)
++		return -1;
++
++	size_t tocopy = towrite;
++
++	/*
++	 * Limit the amount of data written to amount fits inside single
++	 * segment. If put pointer is not greater or equal to get pointer,
++	 * then entiere free space is only single segment.
++	 */
++	if (cbuf->cb_put >= cbuf->cb_get)
++		if (tocopy > cbuf->cb_size - cbuf->cb_put)
++			tocopy = cbuf->cb_size - cbuf->cb_put;
++
++	if (tocopy > 0) {
++		/* Copy the segment and mark it written. */
++		memcpy(cbuf->cb_base + cbuf->cb_put, src, tocopy);
++		ack_write(cbuf, tocopy);
++		/* Adjust the request for subsequent segments. */
++		towrite -= tocopy;
++		src += tocopy;
++	}
++
++	/*
++	 * If the write was incomplete, repeat the write request for the
++	 * non-written tail.
++	 */
++	if (towrite > 0)
++		return cbuffer_write(cbuf, src, towrite);
++
++	assert_invariants(cbuf);
++
++	return 0;
++}
++
++int cbuffer_move(struct cbuffer *dest, struct cbuffer *src, size_t tomove)
++{
++	assert_invariants(dest);
++	assert_invariants(src);
++
++	/* Check that amount to move isn't too great. */
++	if (tomove > dest->cb_free)
++		return -1;
++	if (tomove > src->cb_used)
++		return -1;
++
++	size_t tocopy = tomove;
++	/*
++	 * Compute maximum number of bytes that is less than amount to
++	 * move and amount of used/free space in current segments in
++	 * both buffers.
++	 */
++	if (dest->cb_put >= dest->cb_get)
++		if (tocopy > dest->cb_size - dest->cb_put)
++			tocopy = dest->cb_size - dest->cb_put;
++	if (src->cb_get >= src->cb_put)
++		if (tocopy > src->cb_size - src->cb_get)
++			tocopy = src->cb_size - src->cb_get;
++
++	if (tocopy > 0) {
++		/* Move the segment. and mark it moved. */
++		memcpy(dest->cb_base + dest->cb_put,
++			src->cb_base +src->cb_get, tocopy);
++		ack_read(src, tocopy);
++		ack_write(dest, tocopy);
++		/* Adjust request for subsequent segments. */
++		tomove -= tocopy;
++	}
++
++	/* If request was incomplete, move the yet unmoved tail. */
++	if (tomove > 0)
++		return cbuffer_move(dest, src, tomove);
++
++	assert_invariants(dest);
++	assert_invariants(src);
++
++	return 0;
++}
++
++ssize_t cbuffer_read_fd(struct cbuffer *cbuf, int fd)
++{
++	ssize_t r;
++
++	assert_invariants(cbuf);
++
++	/* Generate EAGAIN if needed (on no free space). */
++	if (cbuf->cb_free == 0) {
++		errno = EAGAIN;
++		return -1;
++	}
++
++	/*
++	 * If scatter-gather I/O is available, entiere buffer may be read at
++	 * once. Otherwise only single segment can be read at time.
++	 */
++#ifdef USE_UNIX_SCATTER_GATHER_IO
++	struct iovec areas[2];
++	int touse;
++
++	/* One or two segments? */
++	if (cbuf->cb_put >= cbuf->cb_get) {
++		/* Two. */
++		areas[0].iov_base = cbuf->cb_base + cbuf->cb_put;
++		areas[0].iov_len = cbuf->cb_size - cbuf->cb_put;
++		areas[1].iov_base = cbuf->cb_base;
++		areas[1].iov_len = cbuf->cb_get;
++		touse = 2;
++	} else {
++		/* One. */
++		areas[0].iov_base = cbuf->cb_base + cbuf->cb_put;
++		areas[0].iov_len = cbuf->cb_get - cbuf->cb_put;
++		touse = 1;
++	}
++	r = readv(fd, areas, touse);
++#else
++	/* Read into current segment. */
++	if (cbuf->cb_put >= cbuf->cb_get)
++		r = read(fd, cbuf->cb_base + cbuf->cb_put,
++			cbuf->cb_size - cbuf->cb_put);
++	else
++		r = read(fd, cbuf->cb_base + cbuf->cb_put,
++			cbuf->cb_get - cbuf->cb_put);
++#endif
++	/* Ack any successfully read data as written. */
++	if (r > 0)
++		ack_write(cbuf, (size_t)r);
++
++	assert_invariants(cbuf);
++
++	return r;
++}
++
++ssize_t cbuffer_write_fd(struct cbuffer *cbuf, int fd)
++{
++	ssize_t r;
++
++	assert_invariants(cbuf);
++
++	/* Generate EAGAIN if needed (on no used space). */
++	if (cbuf->cb_used == 0) {
++		errno = EAGAIN;
++		return -1;
++	}
++
++	/*
++	 * If scatter-gather I/O is available, entiere buffer may be written
++	 * at once. Otherwise only single segment can be written at time.
++	 */
++#ifdef USE_UNIX_SCATTER_GATHER_IO
++	struct iovec areas[2];
++	int touse;
++
++	/* One or two segments? */
++	if (cbuf->cb_get >= cbuf->cb_put) {
++		/* Two. */
++		areas[0].iov_base = cbuf->cb_base + cbuf->cb_get;
++		areas[0].iov_len = cbuf->cb_size - cbuf->cb_get;
++		areas[1].iov_base = cbuf->cb_base;
++		areas[1].iov_len = cbuf->cb_put;
++		touse = 2;
++	} else {
++		/* One. */
++		areas[0].iov_base = cbuf->cb_base + cbuf->cb_get;
++		areas[0].iov_len = cbuf->cb_put - cbuf->cb_get;
++		touse = 1;
++	}
++	r = writev(fd, areas, touse);
++#else
++	/* Write current segment. */
++	if (cbuf->cb_get >= cbuf->cb_put)
++		r = write(fd, cbuf->cb_base + cbuf->cb_get,
++			cbuf->cb_size - cbuf->cb_get);
++	else
++		r = write(fd, cbuf->cb_base + cbuf->cb_get,
++			cbuf->cb_put - cbuf->cb_get);
++#endif
++	/* Ack any successfully written data as read. */
++	if (r > 0)
++		ack_read(cbuf, (size_t)r);
++
++	assert_invariants(cbuf);
++
++	return r;
++}
++
++void cbuffer_fill_r_segment(struct cbuffer *cbuf, unsigned char **base,
++	size_t *length)
++{
++	assert_invariants(cbuf);
++
++	/* Compute segment base. */
++	*base = cbuf->cb_base + cbuf->cb_get;
++
++	if (!cbuf->cb_used) {
++		/* No used space -> empty segment. */
++		*length = 0;
++	} else if (cbuf->cb_get >= cbuf->cb_put) {
++		/* High segment is current. */
++		*length = cbuf->cb_size - cbuf->cb_get;
++	} else {
++		/* Low segment is current. */
++		*length = cbuf->cb_put - cbuf->cb_get;
++	}
++
++	assert_invariants(cbuf);
++}
++
++void cbuffer_commit_r_segment(struct cbuffer *cbuf, size_t length)
++{
++	assert_invariants(cbuf);
++	/*
++	 * This doesn't handle read being longer than single segment right,
++	 * but that's undefined anyway.
++	 */
++	ack_read(cbuf, length);
++	assert_invariants(cbuf);
++}
++
++void cbuffer_fill_w_segment(struct cbuffer *cbuf, unsigned char **base,
++	size_t *length)
++{
++	assert_invariants(cbuf);
++
++	/* Compute segment base. */
++	*base = cbuf->cb_base + cbuf->cb_put;
++
++	if (!cbuf->cb_free) {
++		/* No free space -> empty segment. */
++		*length = 0;
++	} else if (cbuf->cb_put >= cbuf->cb_get) {
++		/* High segment is current. */
++		*length = cbuf->cb_size - cbuf->cb_put;
++	} else {
++		/* Low segment is current. */
++		*length = cbuf->cb_get - cbuf->cb_put;
++	}
++
++	assert_invariants(cbuf);
++}
++
++void cbuffer_commit_w_segment(struct cbuffer *cbuf, size_t length)
++{
++	assert_invariants(cbuf);
++	/*
++	 * This doesn't handle write being longer than single segment right,
++	 * but that's undefined anyway.
++	 */
++	ack_write(cbuf, length);
++	assert_invariants(cbuf);
++}
++
++
++void cbuffer_clear(struct cbuffer *cbuf)
++{
++	/*
++	 * Just resetting pointers and values to initial defaults clears
++	 * all data.
++	 */
++	cbuf->cb_used = cbuf->cb_put = cbuf->cb_get = 0;
++	cbuf->cb_free = cbuf->cb_size;
++	assert_invariants(cbuf);
++}
++
++size_t cbuffer_read_max(struct cbuffer *cbuf, unsigned char *dest,
++	size_t limit)
++{
++	/* Limit the request to maximum possible and do read request. */
++	if (limit > cbuffer_used(cbuf))
++		limit = cbuffer_used(cbuf);
++	cbuffer_read(cbuf, dest, limit);
++	return limit;
++}
++
++size_t cbuffer_write_max(struct cbuffer *cbuf, const unsigned char *src,
++	size_t limit)
++{
++	/* Limit the request to maximum possible and do write request. */
++	if (limit > cbuffer_free(cbuf))
++		limit = cbuffer_free(cbuf);
++	cbuffer_write(cbuf, src, limit);
++	return limit;
++}
++
++size_t cbuffer_move_max(struct cbuffer *dest, struct cbuffer *src,
++	size_t limit)
++{
++	/* Limit the request to maximum possible and do move request. */
++	if (limit > cbuffer_free(dest))
++		limit = cbuffer_free(dest);
++	if (limit > cbuffer_used(src))
++		limit = cbuffer_used(src);
++	cbuffer_move(dest, src, limit);
++	return limit;
++}
++
++size_t cbuffer_move_nolimit(struct cbuffer *dest, struct cbuffer *src)
++{
++	size_t limit;
++	/*
++	 * Limit the request to maximum possible and do move request.
++	 * The move lacks limit so use free space in destination as
++	 * first limit.
++	 */
++	limit = cbuffer_free(dest);
++	if (limit > cbuffer_used(src))
++		limit = cbuffer_used(src);
++	cbuffer_move(dest, src, limit);
++	return limit;
++}
+diff --git a/git-over-tls/cbuffer.h b/git-over-tls/cbuffer.h
+new file mode 100644
+index 0000000..4e07c5b
+--- /dev/null
++++ b/git-over-tls/cbuffer.h
+@@ -0,0 +1,304 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#ifndef _cbuffer__h__included__
++#define _cbuffer__h__included__
++
++#include <stdlib.h>
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++
++/*
++ * Terminology:
++ *	Segment:
++ *		Memory-contigious range extending from get pointer, put
++ *		pointer or start of circular buffer till used/free type
++ *		changes.
++ *	Current segment:
++ *		Segment starting from get pointer or put pointer.
++ *
++ */
++
++/* Primary circular buffer structure. Opaque type. */
++struct cbuffer;
++
++/*
++ * Create new circular buffer using specified data area. The data area
++ * is not copied and must remain until circular buffer is destroyed.
++ *
++ * Inputs:
++ *	data		The data area to back the circular buffer.
++ *	datasize	Size of backing data area.
++ *
++ * Outputs:
++ *	return value	The newly created circular buffer, or NULL
++ *			if out of memory.
++ */
++struct cbuffer *cbuffer_create(unsigned char *data, size_t datasize);
++
++
++/*
++ * Free circular buffer. Data area is not freed.
++ *
++ * Inputs:
++ *	cbuf		The circular buffer to free.
++ */
++void cbuffer_destroy(struct cbuffer *cbuf);
++
++/*
++ * Return number of bytes used in buffer (how many bytes can be read without
++ * writes).
++ *
++ * Inputs:
++ *	cbuf		The circular buffer to interrogate.
++ *
++ * Outputs:
++ *	return value	Number of bytes data in buffer.
++ */
++size_t cbuffer_used(struct cbuffer *cbuf);
++
++/*
++ * Return number of bytes free in buffer (how many bytes can be written
++ * without reads).
++ *
++ * Inputs:
++ *	cbuf		The circular buffer to interrogate.
++ *
++ * Outputs:
++ *	return value	Number of bytes free in buffer.
++ */
++size_t cbuffer_free(struct cbuffer *cbuf);
++
++/*
++ * Peek specified number of bytes from buffer. The bytes are not removed.
++ *
++ * Inputs:
++ *	cbuf		The circular buffer to peek.
++ *	dest		Destination buffer to store the peeked data to.
++ *	toread		Number of bytes to peek.
++ *
++ * Outputs:
++ *	Return value	0 on success, -1 if buffer has insufficient
++ *			amount of data.
++ *
++ */
++int cbuffer_peek(struct cbuffer *cbuf, unsigned char *dest, size_t toread);
++
++/*
++ * Read specified number of bytes from buffer. The bytes read are
++ * removed.
++ *
++ * Inputs:
++ *	cbuf		The circular buffer to read.
++ *	dest		Destination buffer to store the read data to.
++ *	toread		Number of bytes to read.
++ *
++ * Outputs:
++ *	Return value	0 on success, -1 if buffer has insufficient
++ *			amount of data.
++ */
++int cbuffer_read(struct cbuffer *cbuf, unsigned char *dest, size_t toread);
++
++/*
++ * Write specified number of bytes to buffer.
++ *
++ * Inputs:
++ *	cbuf		The circular buffer to write.
++ *	src		Buffer to read the written data from.
++ *	towrite		Number of bytes to write.
++ *
++ * Outputs:
++ *	Return value	0 on success, -1 if buffer has insufficient
++ *			free space.
++ */
++int cbuffer_write(struct cbuffer *cbuf, const unsigned char *src,
++	size_t towrite);
++
++/*
++ * Move specified number of bytes from buffer to another. The data is
++ * removed from source buffer.
++ *
++ * Inputs:
++ *	dest		Destination circular buffer.
++ *	src		Source cirrcular buffer.
++ *	tomove		Number of bytes to move.
++ *
++ * Outputs:
++ *	Return value	0 on success, -1 if insufficient source buffer
++ *			data or insufficient destination buffer space.
++ */
++int cbuffer_move(struct cbuffer *dest, struct cbuffer *src, size_t tomove);
++
++/*
++ * Call read on file descriptor. The call tries to read as much as
++ * possible in one go (up to entiere free space of destination
++ * buffer).
++ *
++ * Inputs:
++ *	cbuf		Circular buffer to store the data to.
++ *	fd		File descriptor to read.
++ *
++ * Outputs:
++ *	Return value	Number of bytes read (>0) on success, 0 if
++ *			EOF on file descriptor or -1 if read failed.
++ *	errno		Set by read() or readv() on failure.
++ *			EAGAIN if there is no free space in circular buffer.
++ */
++ssize_t cbuffer_read_fd(struct cbuffer *cbuf, int fd);
++
++/*
++ * Call write on file descriptor. The call tries to write as much as
++ * possible in one go (up to entiere used space of soruce
++ * buffer).
++ *
++ * Inputs:
++ *	cbuf		Circular buffer to read data from.
++ *	fd		File descriptor to write.
++ *
++ * Outputs:
++ *	Return value	Number of bytes written (>=0) on success,
++ *			-1 if write failed.
++ *	errno		Set by write() or writev() on failure.
++ *			EAGAIN if there is no used space in circular buffer.
++ */
++ssize_t cbuffer_write_fd(struct cbuffer *cbuf, int fd);
++
++/*
++ * Fill buffer read segment for direct from memory read operation on
++ * circular buffer. Any read operation on buffer invalidates segment.
++ *
++ * Inputs:
++ *	cbuf		Circular buffer to read from.
++ *
++ * Outputs:
++ *	base		Start address of segemnt is written here.
++ *	length		Length of segment is written here.
++ *
++ * Notes:
++ *	- Returned length of 0 is only possible if there is no used
++ *	  space in buffer.
++ *	- The entiere used space may not be returned in single segment.
++ */
++void cbuffer_fill_r_segment(struct cbuffer *cbuf, unsigned char **base,
++	size_t *length);
++
++/*
++ * Commit read segment after direct read operation, marking data as
++ * read. The read bytes are removed.
++ *
++ * Inputs:
++ *	cbuf		Circular buffer read from.
++ *	length		Length of segment to mark as read. Must
++ *			be at most the length gotten from
++ *			cbuffer_fill_r_segment.
++ */
++void cbuffer_commit_r_segment(struct cbuffer *cbuf, size_t length);
++
++/*
++ * Fill buffer write segment for direct to memory write operation on
++ * circular buffer. Any write operation on buffer invalidates segment.
++ *
++ * Inputs:
++ *	cbuf		Circular buffer to write to.
++ *
++ * Outputs:
++ *	base		Start address of segment is written here.
++ *	length		Length of segment is written here.
++ *
++ * Notes:
++ *	- Returned length of 0 is only possible if there is no free
++ *	  space in buffer.
++ *	- The entiere free space may not be returned in single segment.
++ */
++void cbuffer_fill_w_segment(struct cbuffer *cbuf, unsigned char **base,
++	size_t *length);
++
++/*
++ * Commit write segment after direct write operation, marking data as
++ * written
++ *
++ * Inputs:
++ *	cbuf		Circular buffer written to.
++ *	length		Length of segment to mark as written. Must
++ *			be at most the length gotten from
++ *			cbuffer_fill_w_segment.
++ */
++void cbuffer_commit_w_segment(struct cbuffer *cbuf, size_t length);
++
++/*
++ * Clear all data in cbuffer, freeing any used space.
++ *
++ * Inputs:
++ *	cbuf		Cirecular buffer to clear.
++ */
++void cbuffer_clear(struct cbuffer *cbuf);
++
++/*
++ * Read number of bytes from circular buffer smaller than limit.
++ * The read bytes are removed.
++ *
++ * Inputs:
++ *	cbuf		Circular buffer to read.
++ *	dest		Destination to store the read data.
++ *	limit		Maximum number of bytes to read.
++ *
++ * Outputs:
++ *	Return value	Number of bytes read.
++ */
++size_t cbuffer_read_max(struct cbuffer *cbuf, unsigned char *dest,
++	size_t limit);
++
++/*
++ * Write number of bytes to circular buffer smaller than limit.
++ *
++ * Inputs:
++ *	cbuf		Circular buffer to write.
++ *	dest		Source to read the wrritten data.
++ *	limit		Maximum number of bytes to write.
++ *
++ * Outputs:
++ *	Return value	Number of bytes written.
++ */
++size_t cbuffer_write_max(struct cbuffer *cbuf, const unsigned char *src,
++	size_t limit);
++
++/*
++ * Move number of bytes from circular buffer to another smaller than limit.
++ * The read bytes are removed from source circular buffer.
++ *
++ * Inputs:
++ *	dest		Destination circular buffer.
++ *	src		Source circular buffer.
++ *	limit		Maximum number of bytes to move.
++ *
++ * Outputs:
++ *	Return value	Number of bytes moved.
++ */
++size_t cbuffer_move_max(struct cbuffer *dest, struct cbuffer *src,
++	size_t limit);
++
++/*
++ * Move as much bytes from circular buffer to another as possible.
++ * The read bytes are removed from source circular buffer.
++ *
++ * Inputs:
++ *	dest		Destination circular buffer.
++ *	src		Source circular buffer.
++ *
++ * Outputs:
++ *	Return value	Number of bytes moved.
++ */
++size_t cbuffer_move_nolimit(struct cbuffer *dest, struct cbuffer *src);
++
++
++#ifdef __cplusplus
++}
++#endif
++
++#endif
+diff --git a/git-over-tls/certificate.c b/git-over-tls/certificate.c
+new file mode 100644
+index 0000000..adeb776
+--- /dev/null
++++ b/git-over-tls/certificate.c
+@@ -0,0 +1,306 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#include "certificate.h"
++#include "cbuffer.h"
++#include <unistd.h>
++#include <fcntl.h>
++#include <string.h>
++#include <errno.h>
++#include <signal.h>
++#ifdef USE_COMPAT_H
++#include "compat.h"
++#else
++#include "git-compat-util.h"
++#include "run-command.h"
++#endif
++
++#define CERT_MAX 65536
++
++static long read_short(struct cbuffer *buffer)
++{
++	unsigned char x[2];
++	if (cbuffer_read(buffer, x, 2) < 0)
++		return -1;
++
++	return ((long)x[0] << 8) | ((long)x[1]);
++}
++
++
++static int unseal_cert(struct cbuffer *sealed, struct cbuffer *unsealed,
++	const char *unsealer)
++{
++	struct child_process child;
++	char **argv;
++	char *unsealer_copy;
++	int splits = 0;
++	int escape = 0;
++	int ridx, widx, tidx;
++	const char *i;
++
++	signal(SIGPIPE, SIG_IGN);
++
++	for (i = unsealer; *i; i++) {
++		if (escape)
++			escape = 0;
++		else if (*i == '\\')
++			escape = 1;
++		else if (*i == ' ')
++			splits++;
++	}
++
++	argv = xmalloc((splits + 2) * sizeof(char*));
++	argv[splits + 1] = NULL;
++
++	unsealer_copy = xstrdup(unsealer);
++	argv[0] = unsealer_copy;
++
++	ridx = 0;
++	widx = 0;
++	tidx = 1;
++	escape = 0;
++	while (unsealer_copy[ridx]) {
++		if (escape) {
++			escape = 0;
++			unsealer_copy[widx++] = unsealer_copy[ridx++];
++		} else if (unsealer_copy[ridx] == '\\') {
++			ridx++;
++			escape = 1;
++		} else if (unsealer_copy[ridx] == ' ') {
++			unsealer_copy[widx++] = '\0';
++			argv[tidx++] = unsealer_copy + widx;
++			ridx++;
++		} else
++			unsealer_copy[widx++] = unsealer_copy[ridx++];
++	}
++	unsealer_copy[widx] = '\0';
++
++	memset(&child, 0, sizeof(child));
++	child.argv = (const char**)argv;
++	child.in = -1;
++	child.out = -1;
++	child.err = 0;
++	if (start_command(&child))
++		die("Running keypair unsealer command failed");
++
++	while (1) {
++		int bound;
++		fd_set rf;
++		fd_set wf;
++		int r;
++
++		FD_ZERO(&rf);
++		FD_ZERO(&wf);
++		FD_SET(child.out, &rf);
++		if (cbuffer_used(sealed))
++			FD_SET(child.in, &wf);
++		else
++			close(child.in);
++
++		if (cbuffer_used(sealed))
++			bound = ((child.out > child.in) ? child.out :
++				child.in) + 1;
++		else
++			bound = child.out + 1;
++
++		r = select(bound, &rf, &wf, NULL, NULL);
++		if (r < 0 && r != EINTR)
++			die_errno("Select failed");
++		if (r < 0) {
++			FD_ZERO(&rf);
++			FD_ZERO(&wf);
++			perror("select");
++		}
++
++		if (FD_ISSET(child.out, &rf)) {
++			r = cbuffer_read_fd(unsealed, child.out);
++			if (r < 0 && errno != EINTR && errno != EAGAIN)
++				die_errno("Read from unsealer failed");
++			if (r < 0 && errno == EAGAIN)
++				if (!cbuffer_free(unsealed))
++					die("Keypair too big");
++			if (r < 0)
++				perror("read");
++			if (r == 0)
++				break;
++		}
++
++		if (FD_ISSET(child.in, &wf)) {
++			r = cbuffer_write_fd(sealed, child.in);
++			if (r < 0 && errno == EPIPE)
++				die("Unsealer exited unexpectedly");
++			if (r < 0 && errno != EINTR && errno != EAGAIN)
++				die_errno("Write to unsealer failed");
++			if (r < 0)
++				perror("write");
++		}
++	}
++
++	if (finish_command(&child))
++		die("Keypair unsealer command failed");
++
++	return 0;
++}
++
++
++struct certificate parse_certificate(const char *name, int *errorcode)
++{
++	struct cbuffer *sealed = NULL;
++	struct cbuffer *unsealed = NULL;
++	unsigned char sealed_buf[CERT_MAX];
++	unsigned char unsealed_buf[CERT_MAX];
++	struct certificate cert;
++	int fd;
++	unsigned char head[10];
++	long tmp;
++
++	*errorcode = CERTERR_OK;
++	cert.public_key.data = NULL;
++	cert.public_key.size = 0;
++	cert.private_key.data = NULL;
++	cert.private_key.size = 0;
++
++	sealed = cbuffer_create(sealed_buf, CERT_MAX);
++	if (!sealed)
++		die("Ran out of memory");
++
++	unsealed = cbuffer_create(unsealed_buf, CERT_MAX);
++	if (!unsealed)
++		die("Ran out of memory");
++
++	fd = open(name, O_RDONLY);
++	if (fd < 0) {
++		if (errno == ENOENT)
++			*errorcode = CERTERR_NOCERT;
++		else
++			*errorcode = CERTERR_CANTREAD;
++		goto out_unsealed;
++	}
++
++	while (1) {
++		ssize_t r = cbuffer_read_fd(sealed, fd);
++		if (r == 0)
++			break;
++		if (r < 0 && errno == EAGAIN) {
++			if (!cbuffer_free(sealed)) {
++				*errorcode = CERTERR_TOOBIG;
++				goto out_close;
++			}
++		} else if (r < 0 && errno != EINTR) {
++			*errorcode = CERTERR_CANTREAD;
++			goto out_close;
++		}
++	}
++
++	head[9] = 0;
++	if (cbuffer_read(sealed, head, 9) < 0) {
++		*errorcode = CERTERR_INVALID;
++		goto out_close;
++	}
++	if (strcmp((char*)head, "GITSSCERT") &&
++		strcmp((char*)head, "GITSUCERT")) {
++		*errorcode = CERTERR_INVALID;
++		goto out_close;
++	}
++
++	if (!strcmp((char*)head, "GITSSCERT")) {
++		/* Sealed certificate. */
++		char *unsealer;
++		int s;
++		tmp = read_short(sealed);
++		if (tmp <= 0) {
++			*errorcode = CERTERR_INVALID;
++			goto out_close;
++		}
++		unsealer = xmalloc(tmp + 1);
++		unsealer[tmp] = '\0';
++		if (cbuffer_read(sealed, (unsigned char*)unsealer, tmp) < 0) {
++			free(unsealer);
++			*errorcode = CERTERR_INVALID;
++			goto out_close;
++		}
++		s = unseal_cert(sealed, unsealed, unsealer);
++		free(unsealer);
++		if (s < 0) {
++			*errorcode = s;
++			goto out_close;
++		}
++	} else {
++		/* Unsealed certificate. */
++		cbuffer_move_nolimit(unsealed, sealed);
++	}
++
++	cert.private_key.data = NULL;
++	cert.public_key.data = NULL;
++
++	tmp = read_short(unsealed);
++	if (tmp < 0) {
++		*errorcode = CERTERR_INVALID;
++		goto out_close;
++	}
++	cert.private_key.size = tmp;
++	cert.private_key.data = (unsigned char*)gnutls_malloc(tmp);
++	if (!cert.private_key.data)
++		die("Ran out of memory");
++
++	if (cbuffer_read(unsealed, cert.private_key.data,
++		cert.private_key.size) < 0) {
++		*errorcode = CERTERR_INVALID;
++		goto out_private;
++	}
++
++	tmp = read_short(unsealed);
++	if (tmp < 0) {
++		*errorcode = CERTERR_INVALID;
++		goto out_close;
++	}
++	cert.public_key.size = tmp;
++	cert.public_key.data = (unsigned char*)gnutls_malloc(tmp);
++	if (!cert.public_key.data)
++		die("Ran out of memory");
++
++	if (cbuffer_read(unsealed, cert.public_key.data,
++		cert.public_key.size) < 0) {
++		*errorcode = CERTERR_INVALID;
++		goto out_public;
++	}
++
++	if (cbuffer_used(unsealed)) {
++		*errorcode = CERTERR_INVALID;
++		goto out_public;
++	}
++
++	goto out_close;
++
++out_public:
++	gnutls_free(cert.private_key.data);
++out_private:
++	gnutls_free(cert.private_key.data);
++out_close:
++	close(fd);
++out_unsealed:
++	cbuffer_destroy(unsealed);
++	cbuffer_destroy(sealed);
++	return cert;
++}
++
++const char *cert_parse_strerr(int errcode)
++{
++	switch(errcode) {
++	case CERTERR_OK:
++		return "Success";
++	case CERTERR_NOCERT:
++		return "No such keypair";
++	case CERTERR_INVALID:
++		return "Keypair file corrupt";
++	case CERTERR_CANTREAD:
++		return "Can't read keypair file";
++	case CERTERR_TOOBIG:
++		return "Keypair too big";
++	}
++	return "<Unknown error>";
++}
+diff --git a/git-over-tls/certificate.h b/git-over-tls/certificate.h
+new file mode 100644
+index 0000000..5ee355a
+--- /dev/null
++++ b/git-over-tls/certificate.h
+@@ -0,0 +1,28 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#ifndef _certificate__h__included__
++#define _certificate__h__included__
++
++#include <gnutls/gnutls.h>
++
++#define CERTERR_OK		0
++#define CERTERR_NOCERT		-2
++#define CERTERR_INVALID		-3
++#define CERTERR_CANTREAD	-4
++#define CERTERR_TOOBIG		-5
++
++struct certificate
++{
++	gnutls_datum_t public_key;
++	gnutls_datum_t private_key;
++};
++
++struct certificate parse_certificate(const char *name, int *errorcode);
++const char *cert_parse_strerr(int errcode);
++
++#endif
+diff --git a/git-over-tls/connect.c b/git-over-tls/connect.c
+new file mode 100644
+index 0000000..8f19bc8
+--- /dev/null
++++ b/git-over-tls/connect.c
+@@ -0,0 +1,263 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009-2010
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#include "connect.h"
++#include <netdb.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <errno.h>
++#include <unistd.h>
++#include <fcntl.h>
++#include <sys/types.h>
++#include <sys/socket.h>
++#ifndef WIN32
++#include <sys/un.h>
++#endif
++#include <netinet/in.h>
++#include <netinet/ip.h>
++#ifdef USE_COMPAT_H
++#include "compat.h"
++#else
++#include "git-compat-util.h"
++#endif
++
++#ifndef UNIX_PATH_MAX
++#define UNIX_PATH_MAX 108
++#endif
++
++static int connect_unix(const char* path)
++{
++#ifndef WIN32
++	struct sockaddr_un saddru;
++	int fd, ret, plen;
++
++	if (strlen(path) > UNIX_PATH_MAX - 1)
++		die("Unix socket path too long");
++
++	saddru.sun_family = AF_UNIX;
++	strcpy(saddru.sun_path, path);
++	if (*saddru.sun_path == '@')
++		*saddru.sun_path = '\0';
++
++	fd = socket(AF_UNIX, SOCK_STREAM, 0);
++	if (fd < 0)
++		die_errno("Can't create socket");
++	if (*path == '@')
++		plen = (int)((char*)saddru.sun_path - (char*)&saddru) +
++			strlen(path);
++	else
++		plen = (int)sizeof(saddru);
++	ret = connect(fd, (struct sockaddr*)&saddru, plen);
++	if (ret < 0) {
++		die_errno("Can't connect to %s", path);
++	}
++	return fd;
++#else
++	die("Unix domain sockets not supported by this build");
++#endif
++}
++
++static int connect_address(const char* host, unsigned short port,
++	int protocol, struct sockaddr* addr, int size)
++{
++	char address[1024];
++	int fd, ret;
++	const unsigned char* _addr;
++
++	fd = socket(addr->sa_family, SOCK_STREAM, protocol);
++	if (fd < 0) {
++		error("Can't create socket: %s", strerror(errno));
++		return -1;
++	}
++	switch(addr->sa_family) {
++	case AF_INET:
++		_addr = (const unsigned char*)
++			&(((struct sockaddr_in*)addr)->sin_addr.s_addr);
++		sprintf(address, "%u.%u.%u.%u", _addr[0], _addr[1],
++			_addr[2], _addr[3]);
++		break;
++#ifndef NO_IPV6
++	case AF_INET6:
++		_addr = (const unsigned char*)
++			((struct sockaddr_in6*)addr)->sin6_addr.s6_addr;
++		sprintf(address, "%02X%02X:%02X%02X:%02X%02X:%02X%02X:"
++			"%02X%02X:%02X%02X:%02X%02X:%02X%02X",
++			_addr[0], _addr[1], _addr[2], _addr[3],
++			_addr[4], _addr[5], _addr[6], _addr[7],
++			_addr[8], _addr[9], _addr[10], _addr[11],
++			_addr[12], _addr[13], _addr[14], _addr[15]);
++		break;
++#endif
++	default:
++		sprintf(address, "<unknown address type>");
++		break;
++	}
++	ret = connect(fd, addr, size);
++	if (ret < 0) {
++		error("Can't connect to host %s[%s] port %u: %s",
++			host, address, port, strerror(errno));
++		return -1;
++	}
++	return fd;
++}
++
++int connect_gethostbyname(const char* _host,
++	unsigned short _port, uint32_t scope)
++{
++#ifndef NO_IPV6
++	struct addrinfo hints;
++	struct addrinfo* returned;
++	char port[10];
++	int fd, ret;
++
++	memset(&hints, 0, sizeof(hints));
++	hints.ai_socktype = SOCK_STREAM;
++
++	sprintf(port, "%u", _port);
++	ret = getaddrinfo(_host, port, &hints, &returned);
++	if (ret)
++		die("getaddrinfo(%s, %s, ...): %s", _host, port,
++			gai_strerror(ret));
++
++	while (returned) {
++		if (returned->ai_family == AF_INET6)
++			((struct sockaddr_in6*)returned->ai_addr)->
++				sin6_scope_id = scope;
++		else if (scope)
++			warning("Scope is ignored for non-IPv6 addresses");
++
++		fd = connect_address(_host, _port, returned->ai_protocol,
++			returned->ai_addr, returned->ai_addrlen);
++
++		if (fd >= 0)
++			goto out;
++		returned = returned->ai_next;
++	}
++
++	die("Can't connect to host %s", _host);
++
++out:
++	freeaddrinfo(returned);
++	return fd;
++#else
++	struct hostent *host;
++	int fd;
++	static struct sockaddr_in saddr4;
++
++	host = gethostbyname(_host);
++	if (!host || !host->h_addr)
++		die("Can't find host %s", _host);
++
++next_address:
++	if (host->h_addrtype == AF_INET) {
++		memset(&saddr4, 0, sizeof(saddr4));
++		saddr4.sin_family = AF_INET;
++		memcpy(&saddr4.sin_addr, host->h_addr_list[0], 4);
++		saddr4.sin_port = htons(_port);
++		fd = connect_address(_host, _port, 0,
++			(struct sockaddr*)&saddr4,
++			sizeof(struct sockaddr_in));
++		if (scope)
++			warning("Scope is ignored for non-IPv6 addresses");
++	} else
++		die("Host %s has unknown address type", _host);
++
++	if (fd >= 0)
++		goto out;
++
++	host->h_addr_list++;
++	if (host->h_addr_list)
++		goto next_address;
++
++	if (scope > 0)
++		die("Can't connect to host %s%%u", _host, scope);
++	else
++		die("Can't connect to host %s", _host);
++out:
++	return fd;
++#endif
++}
++
++/* Parse character as base-10 digit. */
++static int char_to_int(char ch)
++{
++	switch(ch) {
++	case '0':
++		return 0;
++	case '1':
++		return 1;
++	case '2':
++		return 2;
++	case '3':
++		return 3;
++	case '4':
++		return 4;
++	case '5':
++		return 5;
++	case '6':
++		return 6;
++	case '7':
++		return 7;
++	case '8':
++		return 8;
++	case '9':
++		return 9;
++	default:
++		return -1;
++	}
++}
++
++static uint32_t touint32_t(const char* num)
++{
++	uint32_t x = 0;
++	unsigned i;
++
++	/* Blank string is not valid number. */
++	if (!*num)
++		die("Invalid scope id '%s'", num);
++
++	/* 0 is special case, makes it easier to deal with zeros. */
++	if (!strcmp(num, "0"))
++		return 0;
++
++	/*
++	 * Valid uints numbers are 0-2^32-1, but because we handled 0 as
++	 * special case, the valid range can be 1-2^32-1 here.
++	 */
++	for (i = 0; num[i]; i++) {
++		char ch = char_to_int(num[i]);
++		if (ch < 0)
++			die("Invalid scope id '%s'", num);
++		if (ch == 0 && x == 0)
++			die("Invalid scope id '%s'", num);
++		if (x > 429496729 || (x > 429496728 && ch > 5))
++			die("Invalid scope id '%s'", num);
++		x = x * 10 + ch;
++	}
++	return x;
++}
++
++int connect_host(const char* _host, unsigned short _port)
++{
++	uint32_t scope = 0;
++	char* scopestart;
++	char* hostcopy;
++
++	if (_host[0] == '/' || (_host[0] == '@' && _host[1] == '/'))
++		return connect_unix(_host);
++
++	hostcopy = xmalloc(strlen(_host) + 1);
++	strcpy(hostcopy, _host);
++	scopestart = strchr(hostcopy, '%');
++	if (scopestart) {
++		*(scopestart++) = '\0';
++		scope = touint32_t(scopestart);
++	}
++
++	return connect_gethostbyname(hostcopy, _port, scope);
++}
+diff --git a/git-over-tls/connect.h b/git-over-tls/connect.h
+new file mode 100644
+index 0000000..90e36cd
+--- /dev/null
++++ b/git-over-tls/connect.h
+@@ -0,0 +1,14 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009-2010
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#ifndef _connect__h__included__
++#define _connect__h__included__
++
++//Returns connected fd or dies.
++int connect_host(const char* host, unsigned short port);
++
++#endif
+diff --git a/git-over-tls/genkeypair.c b/git-over-tls/genkeypair.c
+new file mode 100644
+index 0000000..4f2142c
+--- /dev/null
++++ b/git-over-tls/genkeypair.c
+@@ -0,0 +1,38 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009-2010
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++
++void write_cert(int server_mode);
++
++static void do_help()
++{
++	printf("gits-generate-keypair: User keypair generator.\n");
++	printf("Command line options:\n");
++	printf("--help\n");
++	printf("\tThis help\n");
++	printf("\n");
++	printf("Note: Keep generated keypair files private!\n");
++	printf("Use gits-get-key-name to get public short\n");
++	printf("representation of keypair for authorization.\n");
++	printf("\n");
++	printf("WARNING: Don't let keypairs to be tampered with!\n");
++	printf("WARNING: Tampered keypairs may do very nasty things\n");
++	printf("WARNING: if used.\n");
++	exit(0);
++}
++
++
++int main(int argc, char **argv)
++{
++	if (argc > 1 && !strcmp(argv[1], "--help"))
++		do_help();
++	write_cert(0);
++	return 0;
++}
+diff --git a/git-over-tls/gensrpverifier.c b/git-over-tls/gensrpverifier.c
+new file mode 100644
+index 0000000..751854a
+--- /dev/null
++++ b/git-over-tls/gensrpverifier.c
+@@ -0,0 +1,372 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009-2010
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#include "prompt.h"
++#include <stdio.h>
++#include <string.h>
++#include <gnutls/gnutls.h>
++#include <unistd.h>
++#include <fcntl.h>
++#include <errno.h>
++#ifdef USE_COMPAT_H
++#include "compat.h"
++#else
++#include "git-compat-util.h"
++#endif
++
++static void do_help()
++{
++	printf("gits-generate-srp-verifier: Generate SRP verifiers for\n");
++	printf("password authentication\n");
++	printf("Command line:\n");
++	printf("--help\n");
++	printf("\tThis help\n");
++	printf("\n");
++	printf("Note: Server needs SRP verifier in order to do password\n");
++	printf("authentication. Usernames are assigned by repostiory\n");
++	printf("hosting admin, just using arbitrary names doesn't work.\n");
++	exit(0);
++}
++
++
++struct field
++{
++	const char *f_name;
++	const char *f_generator;
++	const char *f_prime;
++};
++
++struct field fields[] = {
++	{
++	"standard 1024 bit field", "2",
++	"Ewl2hcjiutMd3Fu2lgFnUXWSc67TVyy2vwYCKoS9MLsrdJVT9RgWTCuEqWJrfB6uE"
++	"3LsE9GkOlaZabS7M29sj5TnzUqOLJMjiwEzArfiLr9WbMRANlF68N5AVLcPWvNx6Z"
++	"jl3m5Scp0BzJBz9TkgfhzKJZ.WtP3Mv/67I/0wmRZ"
++	},
++	{
++	"standard 1536 bit field", "2",
++	"dUyyhxav9tgnyIg65wHxkzkb7VIPh4o0lkwfOKiPp4rVJrzLRYVBtb76gKlaO7ef5"
++	"LYGEw3G.4E0jbMxcYBetDy2YdpiP/3GWJInoBbvYHIRO9uBuxgsFKTKWu7RnR7yTa"
++	"u/IrFTdQ4LY/q.AvoCzMxV0PKvD9Odso/LFIItn8PbTov3VMn/ZEH2SqhtpBUkWtm"
++	"cIkEflhX/YY/fkBKfBbe27/zUaKUUZEUYZ2H2nlCL60.JIPeZJSzsu/xHDVcx"
++	},
++	{
++	"standard 2048 bit field", "2",
++	"2iQzj1CagQc/5ctbuJYLWlhtAsPHc7xWVyCPAKFRLWKADpASkqe9djWPFWTNTdeJt"
++	"L8nAhImCn3Sr/IAdQ1FrGw0WvQUstPx3FO9KNcXOwisOQ1VlL.gheAHYfbYyBaxXL"
++	".NcJx9TUwgWDT0hRzFzqSrdGGTN3FgSTA1v4QnHtEygNj3eZ.u0MThqWUaDiP87nq"
++	"ha7XnT66bkTCkQ8.7T8L4KZjIImrNrUftedTTBi.WCi.zlrBxDuOM0da0JbUkQlXq"
++	"vp0yvJAPpC11nxmmZOAbQOywZGmu9nhZNuwTlxjfIro0FOdthaDTuZRL9VL7MRPUD"
++	"o/DQEyW.d4H.UIlzp"
++	},
++	{NULL, NULL, NULL}
++};
++
++
++unsigned char xfact[16] = {
++0x9D, 0x0F, 0x49, 0xD4,
++0x73, 0x88, 0xC7, 0xFF,
++0xFD, 0x24, 0x6A, 0x0F,
++0x94, 0x78, 0x0C, 0x14
++};
++
++unsigned char rnd[16] = {
++0x00, 0x00, 0x00, 0x00,
++0x00, 0x00, 0x00, 0x00,
++0x00, 0x00, 0x00, 0x00,
++0x00, 0x00, 0x00, 0x00
++};
++
++static void add(unsigned char *res, unsigned char *a, unsigned char *b)
++{
++	unsigned char carry = 0;
++	unsigned i;
++
++	for (i = 0; i < 16; i++) {
++		unsigned char newcarry = 0;
++
++		if ((unsigned char)(a[i] + b[i]) < a[i])
++			newcarry++;
++		res[i] = a[i] + b[i];
++		if (res[i] + carry < res[i])
++			newcarry++;
++		res[i] += carry;
++		carry = newcarry;
++	}
++	while (carry) {
++		carry = 159;
++
++		for (i = 0; i < 16; i++) {
++			int newcarry = 0;
++
++			if ((unsigned char)(res[i] + carry) < res[i])
++				newcarry++;
++			res[i] += carry;
++			carry = newcarry;
++		}
++	}
++	for (i = 1; i < 16; i++)
++		if (res[i] < 255)
++			goto skip;
++
++	if (res[0] > 0x60) {
++		for (i = 1; i < 16; i++)
++			res[i] = 0;
++		res[0] -= 0x61;
++	}
++skip:
++	;
++}
++
++void update_xfact()
++{
++	unsigned char xfact2[16];
++	unsigned char xfact4[16];
++	unsigned char xfact5[16];
++	add(xfact2, xfact, xfact);
++	add(xfact4, xfact2, xfact2);
++	add(xfact5, xfact4, xfact);
++	memcpy(xfact, xfact5, 16);
++}
++
++void update_rnd(unsigned char ch)
++{
++	unsigned char rndt[16];
++	unsigned i;
++	for (i = 0; i < 8; i++) {
++		if ((ch >> i) % 2) {
++			add(rndt, rnd, xfact);
++			memcpy(rnd, rndt, 16);
++		}
++		update_xfact();
++	}
++}
++
++void update_rnd_str(const char *ch)
++{
++	while (ch && *ch)
++		update_rnd((unsigned char)*(ch++));
++}
++
++
++void decode_element(gnutls_datum_t *decode, const char *encoded)
++{
++	int s;
++	gnutls_datum_t _base64;
++	size_t base64len, reslen, reslen2;
++
++	base64len = strlen(encoded);
++	reslen2 = reslen = (3 * base64len + 1) / 4;
++
++	_base64.data = (unsigned char*)encoded;
++	_base64.size = base64len;
++
++	decode->size = reslen;
++	decode->data = xmalloc(reslen);
++	s = gnutls_srp_base64_decode(&_base64, (char*)decode->data, &reslen2);
++	if (s < 0)
++		die("Unable to decode base64 data");
++	else if (reslen != reslen2)
++		die("Base64 dlength calculation incorrect. Calculated %lu, "
++			"got %lu", (unsigned long)reslen, (unsigned long)reslen2);
++}
++
++unsigned char *encode_element(gnutls_datum_t *data)
++{
++	int s;
++	size_t reslen2;
++	unsigned char *res;
++
++	reslen2 = (4 * data->size + 2) / 3;
++
++	res = xmalloc(reslen2 + 1);
++	s = gnutls_srp_base64_encode(data, (char*)res, &reslen2);
++	if (s < 0)
++		die("Unable to encode base64 data");
++	res[reslen2] = '\0';
++	return res;
++}
++
++char *generate_srp_line(const char *username,
++	const char *password, const char *junk, struct field *field)
++{
++	gnutls_datum_t salt;
++	gnutls_datum_t g;
++	gnutls_datum_t n;
++	gnutls_datum_t res;
++	int s;
++	char *retline = NULL;
++	unsigned char *encoded_salt;
++	unsigned char *encoded_verifier;
++	update_rnd_str(username);
++	update_rnd_str(":::::");
++	update_rnd_str(junk);
++
++	salt.data = rnd;
++	salt.size = 16;
++	decode_element(&g, field->f_generator);
++	decode_element(&n, field->f_prime);
++
++	s = gnutls_srp_verifier(username, password, &salt, &g, &n, &res);
++	if (s < 0)
++		die("Unable to generate SRP verifier: %s",
++			gnutls_strerror(s));
++
++	encoded_verifier = encode_element(&res);
++	encoded_salt = encode_element(&salt);
++
++	retline = xmalloc(5 + strlen(username) +
++		strlen((char*)encoded_salt) +
++		strlen((char*)encoded_verifier) +
++		strlen(field->f_generator) +
++		strlen(field->f_prime));
++	retline[0] = '\0';
++	strcat(retline, username);
++	strcat(retline, ":");
++	strcat(retline, (char*)encoded_salt);
++	strcat(retline, ":");
++	strcat(retline, (char*)encoded_verifier);
++	strcat(retline, ":");
++	strcat(retline, field->f_generator);
++	strcat(retline, ":");
++	strcat(retline, field->f_prime);
++
++	free(encoded_verifier);
++	free(encoded_salt);
++	free(res.data);
++	free(g.data);
++	free(n.data);
++
++	return retline;
++}
++
++#define LINELEN 69
++
++static void flush_to_file(FILE *out, const char *srpline)
++{
++	char linebuffer[LINELEN + 2];
++
++	linebuffer[LINELEN] = '\\';
++	linebuffer[LINELEN + 1] = '\0';
++
++	while (*srpline) {
++		size_t r;
++		strncpy(linebuffer, srpline, LINELEN);
++		r = strlen(srpline);
++		if (r == LINELEN)
++			linebuffer[LINELEN] = '\0';
++		if (r <= LINELEN)
++			srpline += r;
++		else
++			srpline += LINELEN;
++		fprintf(out, "%s\n", linebuffer);
++	}
++}
++
++int fill_rnd()
++{
++	int fd;
++	int fill = 0;
++
++	fd = open("/dev/urandom", O_RDONLY);
++	if (fd < 0)
++		return 0;
++
++	while (fill < 16) {
++		ssize_t r;
++		r = read(fd, rnd + fill, 16 - fill);
++		if (r < 0 && errno != EINTR && errno != EAGAIN) {
++			close(fd);
++			return 0;
++		} else if (r == 0) {
++			close(fd);
++			return 0;
++		} else {
++			fill += r;
++		}
++	}
++	close(fd);
++	return 1;
++}
++
++int main(int argc, char **argv)
++{
++	int idx, midx = 0;
++	char *username = NULL;
++	char *password = NULL;
++	char *password2 = NULL;
++	char *junk = NULL;
++	char *field = NULL;
++	char *file = NULL;
++	char *ans = NULL;
++	char *end = NULL;
++	FILE *filp = stdout;
++
++	if (argc > 1 && !strcmp(argv[1], "--help"))
++		do_help();
++
++username_again:
++	free(username);
++	username = prompt_string("Enter username", 0);
++	if (!*username) {
++		fprintf(stderr, "Error: Bad username\n");
++		goto username_again;
++	}
++
++	if (fill_rnd())
++		goto no_junk_prompt;
++junk_again:
++	free(junk);
++	junk = prompt_string("Enter some garbage from keyboard (min 32 "
++		"chars)", 1);
++	if (strlen(junk) < 32) {
++		fprintf(stderr, "Error: Garbage needs to be at least "
++			"32 characters\n");
++		goto junk_again;
++	}
++no_junk_prompt:
++
++passwords_again:
++	free(password);
++	free(password2);
++	password = prompt_string("Enter password", 1);
++	password2 = prompt_string("Enter password again", 1);
++	if (strcmp(password, password2)) {
++		fprintf(stderr, "Error: Passwords don't match\n");
++		goto passwords_again;
++	}
++
++field_again:
++	free(field);
++	for (midx = 0; fields[midx].f_name; midx++) {
++		printf("%i) %s\n", midx + 1, fields[midx].f_name);
++	}
++	field = prompt_string("Pick field", 0);
++	idx = (int)strtoul(field, &end, 10) - 1;
++	if (idx < 0 || idx >= midx || !*field || *end) {
++		printf("%i %i %i %i\n", idx, midx, *field, *end);
++		fprintf(stderr, "Error: Invalid choice\n");
++		goto field_again;
++	}
++
++file_again:
++	file = prompt_string("Filename to save as (enter for dump to "
++		"terminal)", 0);
++	if (*file) {
++		filp = fopen(file, "w");
++		if (!filp) {
++			fprintf(stderr, "Can't open \"%s\"\n", file);
++			goto file_again;
++		}
++	}
++
++	ans = generate_srp_line(username, password, junk, fields + idx);
++	flush_to_file(filp, ans);
++	if (filp != stdout)
++		fclose(filp);
++	return 0;
++}
+diff --git a/git-over-tls/getkeyid.c b/git-over-tls/getkeyid.c
+new file mode 100644
+index 0000000..091e60b
+--- /dev/null
++++ b/git-over-tls/getkeyid.c
+@@ -0,0 +1,118 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009-2010
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#include "certificate.h"
++#include "home.h"
++#include <stdio.h>
++#include <stdlib.h>
++#include <limits.h>
++#include <string.h>
++#include <gnutls/openpgp.h>
++#ifdef USE_COMPAT_H
++#include "compat.h"
++#else
++#include "git-compat-util.h"
++#endif
++
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++
++static void do_help()
++{
++	printf("gits-get-key-name: Get name for keypair or hostkey.\n");
++	printf("Command line options:\n");
++	printf("--help\n");
++	printf("\tThis help\n");
++	printf("<keyfile>\n");
++	printf("\tRead key file <keyfile>. Name must contain at least\n");
++	printf("\tone '/'\n");
++	printf("<keyname>\n");
++	printf("\tRead key named <keyname>. Name must not contain\n");
++	printf("\t'/'\n");
++	printf("\n");
++	printf("Note: These key names are used in hostkey database and\n");
++	printf("as user names seen by authorization program.\n");
++	exit(0);
++}
++
++
++/* Be ready in case some joker decides to use 1024 bit hash as fingerprint. */
++#define KEYBUF 128
++
++int main(int argc, char **argv)
++{
++	struct certificate certificate;
++	gnutls_openpgp_crt_t cert;
++	char filename[PATH_MAX + 1];
++	unsigned char key[KEYBUF];
++	int s;
++	unsigned vout;
++
++	if (argc != 2) {
++		fprintf(stderr, "syntax: %s <keyname>\n", argv[0]);
++		fprintf(stderr, "syntax: %s <keyfile>\n", argv[0]);
++		return 1;
++	}
++
++	if (!strcmp(argv[1], "--help"))
++		do_help();
++
++	if (strchr(argv[1], '/'))
++		s = snprintf(filename, PATH_MAX + 1, "%s", argv[1]);
++	else
++		s = snprintf(filename, PATH_MAX + 1, "%s/.gits/keys/%s",
++			get_home(), argv[1]);
++	if (s < 0 || s > PATH_MAX)
++		die("Insanely long homedir/keyname");
++
++	s = gnutls_global_init();
++	if (s < 0)
++		die("Can't initialize GnuTLS: %s",
++			gnutls_strerror(s));
++
++
++	certificate = parse_certificate(filename, &s);
++	if (s) {
++		if (s == CERTERR_NOCERT)
++			die("Can't find key %s", filename);
++		else if (s == CERTERR_CANTREAD)
++			die_errno("Can't read key");
++		else
++			die("Can't parse key: %s",
++				cert_parse_strerr(s));
++	}
++
++	s = gnutls_openpgp_crt_init(&cert);
++	if (s < 0)
++		die("Can't allocate space for key: %s",
++			gnutls_strerror(s));
++
++	s = gnutls_openpgp_crt_import(cert, &certificate.public_key,
++		GNUTLS_OPENPGP_FMT_RAW);
++	if (s < 0)
++		die("Bad key: %s", gnutls_strerror(s));
++
++	s = gnutls_openpgp_crt_verify_self(cert, 0, &vout);
++	if (s < 0)
++		die("Bad key: %s", gnutls_strerror(s));
++	if (vout)
++		die("Bad key: Validation failed");
++
++	vout = KEYBUF;
++	s = gnutls_openpgp_crt_get_fingerprint(cert, key, &vout);
++	if (s < 0)
++		die("Bad key: %s", gnutls_strerror(s));
++
++	gnutls_openpgp_crt_deinit(cert);
++
++	printf("openpgp-");
++	for (s = 0; s < (int)vout; s++)
++		printf("%02x", key[s]);
++	printf("\n");
++	return 0;
++}
+diff --git a/git-over-tls/gits-send-special-command b/git-over-tls/gits-send-special-command
+new file mode 100755
+index 0000000..ade530d
+--- /dev/null
++++ b/git-over-tls/gits-send-special-command
+@@ -0,0 +1,22 @@
++#!/bin/sh
++#
++# Copyright (C) Ilari Liusvaara 2009
++#
++# This code is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License version 2 as
++# published by the Free Software Foundation.
++#
++
++if test "x${1}" == "x--help"
++then
++	echo "gits-send-special-command: Send special command to "
++	echo "server"
++	echo "command line:"
++	echo "--help"
++	echo -e "\x09This help"
++	echo "<service> <URL>"
++	echo -e "\x09Send request for <service> to specified <URL>."
++	exit 0
++fi
++
++git-remote-gits --service=$1 $2
+diff --git a/git-over-tls/home.c b/git-over-tls/home.c
+new file mode 100644
+index 0000000..b41dbfa
+--- /dev/null
++++ b/git-over-tls/home.c
+@@ -0,0 +1,47 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#include "home.h"
++#include <string.h>
++#include <stdlib.h>
++#include <pwd.h>
++#include <unistd.h>
++#ifdef USE_COMPAT_H
++#include "compat.h"
++#else
++#include "git-compat-util.h"
++#endif
++
++const char *get_home()
++{
++	static char *home = NULL;
++	const char *tmpans;
++#ifndef WIN32
++	struct passwd *user;
++#endif
++
++	if (home)
++		return home;
++
++	if (getenv("HOME")) {
++		tmpans = getenv("HOME");
++		goto got_it;
++	}
++
++#ifndef WIN32
++	user = getpwuid(getuid());
++	if (user && user->pw_dir) {
++		tmpans = user->pw_dir;
++		goto got_it;
++	}
++#endif
++
++	die("Can't obtain home directory of current user");
++got_it:
++	home = xstrdup(tmpans);
++	return home;
++}
+diff --git a/git-over-tls/home.h b/git-over-tls/home.h
+new file mode 100644
+index 0000000..133ee78
+--- /dev/null
++++ b/git-over-tls/home.h
+@@ -0,0 +1,13 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#ifndef _home__h__included__
++#define _home__h__included__
++
++const char *get_home();
++
++#endif
+diff --git a/git-over-tls/hostkey.c b/git-over-tls/hostkey.c
+new file mode 100644
+index 0000000..28df0e5
+--- /dev/null
++++ b/git-over-tls/hostkey.c
+@@ -0,0 +1,116 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009-2010
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#include "hostkey.h"
++#include "home.h"
++#include <stdio.h>
++#include <limits.h>
++#include <string.h>
++#include <gnutls/openpgp.h>
++#ifdef USE_COMPAT_H
++#include "compat.h"
++#else
++#include "git-compat-util.h"
++#endif
++
++/* Be ready in case some joker decides to use 1024 bit hash as fingerprint. */
++#define KEYBUF 128
++#define MAXLINE 2048
++
++void check_hostkey(gnutls_session_t session, const char *hostname)
++{
++	const gnutls_datum_t *certificate = NULL;
++	unsigned int cert_size = 0;
++	gnutls_openpgp_crt_t cert;
++	int s;
++	unsigned int vout;
++	unsigned char key[KEYBUF];
++	FILE *hostfile;
++	char hostfilepath[PATH_MAX + 1];
++	char linebuffer[MAXLINE];
++
++	certificate = gnutls_certificate_get_peers(session, &cert_size);
++	if (!certificate)
++		die("Server didn't send a hostkey");
++
++	s = gnutls_openpgp_crt_init(&cert);
++	if (s < 0)
++		die("Can't allocate space for hostkey: %s",
++			gnutls_strerror(s));
++
++	s = gnutls_openpgp_crt_import(cert, certificate,
++		GNUTLS_OPENPGP_FMT_RAW);
++	if (s < 0)
++		die("Server sent bad hostkey: %s", gnutls_strerror(s));
++
++	/* Defend against subkey attack. */
++	s = gnutls_openpgp_crt_get_subkey_count(cert);
++	if (s != 0)
++		die("Server sent bad hostkey: Subkeys are not allowed");
++
++	s = gnutls_openpgp_crt_verify_self(cert, 0, &vout);
++	if (s < 0)
++		die("Server sent bad hostkey: %s", gnutls_strerror(s));
++	if (vout)
++		die("Server sent bad hostkey: Validation failed");
++
++	vout = KEYBUF;
++	s = gnutls_openpgp_crt_get_fingerprint(cert, key, &vout);
++	if (s < 0)
++		die("Server sent bad hostkey: %s", gnutls_strerror(s));
++
++	gnutls_openpgp_crt_deinit(cert);
++
++	s = snprintf(hostfilepath, PATH_MAX + 1, "%s/.gits/hostkeys",
++		get_home());
++	if (s < 0 || s > PATH_MAX)
++		die("Home directory path insanely long");
++
++	hostfile = fopen(hostfilepath, "r");
++	if (!hostfile)
++		die_errno("Can't open .gits/hostkeys");
++
++	while (fgets(linebuffer, MAXLINE - 2, hostfile)) {
++		char *split;
++		if (!*linebuffer || *linebuffer == '#')
++			continue;
++		if (linebuffer[strlen(linebuffer) - 1] == '\n')
++			linebuffer[strlen(linebuffer) - 1] = '\0';
++
++		split = strchr(linebuffer, ' ');
++		if (!split)
++			continue;
++		*split = '\0';
++		if (strcmp(linebuffer, hostname))
++			continue;
++
++		/*
++		 * Be nice to users and strip this in case it gets
++		 * retained from key id calculator.
++		 */
++		if (!strncmp(split + 1, "openpgp-", 8))
++			split += 8;
++
++		for (s = 0; s < vout; s++) {
++			char buffer[3];
++			sprintf(buffer, "%02x", (int)key[s]);
++			if (buffer[0] != split[2 * s + 1])
++				die("HOST KEY MISMATCH FOR HOST %s!",
++					hostname);
++			if (buffer[1] != split[2 * s + 2])
++				die("HOST KEY MISMATCH FOR HOST %s!",
++					hostname);
++		}
++		if (split[2 * vout + 1])
++			die("HOST KEY MISMATCH FOR HOST %s!",
++				hostname);
++		goto ok;
++	}
++	die("Hostkey for %s not found in hostkeys list", hostname);
++ok:
++	fclose(hostfile);
++}
+diff --git a/git-over-tls/hostkey.h b/git-over-tls/hostkey.h
+new file mode 100644
+index 0000000..c0e7dfe
+--- /dev/null
++++ b/git-over-tls/hostkey.h
+@@ -0,0 +1,15 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#ifndef _hostkey__h__included__
++#define _hostkey__h__included__
++
++#include <gnutls/gnutls.h>
++
++void check_hostkey(gnutls_session_t session, const char *hostname);
++
++#endif
+diff --git a/git-over-tls/hostkeymanager.c b/git-over-tls/hostkeymanager.c
+new file mode 100644
+index 0000000..2df09e0
+--- /dev/null
++++ b/git-over-tls/hostkeymanager.c
+@@ -0,0 +1,305 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#include "home.h"
++#include <stdio.h>
++#include <unistd.h>
++#include <errno.h>
++#include <string.h>
++#include <sys/stat.h>
++#ifdef USE_COMPAT_H
++#include "compat.h"
++#else
++#include "git-compat-util.h"
++#endif
++
++#define BUFSIZE 8192
++
++static void do_help()
++{
++	printf("gits-hostkey: Add, update or delete entries in hostkey.\n");
++	printf("database.\n");
++	printf("Command line:\n");
++	printf("--help\n");
++	printf("\tThis help\n");
++	printf("list\n");
++	printf("\tList hosts known and their keys\n");
++	printf("add <host> <key>\n");
++	printf("\tAdd <host> to database with key <key>\n");
++	printf("update <host> <key>\n");
++	printf("\tUpdate <host> to database to use key <key>\n");
++	printf("delete <host>\n");
++	printf("\tDelete key for <host>\n");
++	exit(0);
++}
++
++
++struct hostkey
++{
++	/* Hostname. NULL if not valid line. */
++	char *h_hostname;
++	/* Hostkey. NULL if not valid line. */
++	char *h_hostkey;
++	/* Line. Non-NULL if hostname/hoskey is NULL. */
++	char *h_line;
++	/* Next line. */
++	struct hostkey *h_next;
++};
++
++struct hostkey *first_hostkey = NULL;
++struct hostkey *last_hostkey = NULL;
++
++int ensure_leading_directories()
++{
++	struct stat s;
++	char fsobj[BUFSIZE];
++	int r;
++
++	sprintf(fsobj, "%s/.gits", get_home());
++	r = stat(fsobj, &s);
++	if (r < 0 && errno != ENOENT)
++		die_errno("Stat $HOME/.gits");
++	else if (r == 0 && !S_ISDIR(s.st_mode))
++		die("$HOME/.gits exists but is not a directory");
++	else if (r < 0) {
++		/* Need to create it. */
++		if (mkdir(fsobj, 0700) < 0)
++			die_errno("Create $HOME/.gits failed");
++	}
++	/* Otherwise, r == 0 && S_ISDIR(s), which is OK. */
++	sprintf(fsobj, "%s/.gits/hostkeys", get_home());
++	r = stat(fsobj, &s);
++	if (r < 0 && errno != ENOENT)
++		die_errno("Stat $HOME/.gits/hostkeys");
++	else if (r == 0 && !S_ISREG(s.st_mode))
++		die("$HOME/.gits/hostkeys exists but is not a file");
++	/* Doesn't exist or a regular file. OK. */
++	return (r == 0) ? 1 : 0;
++}
++
++void load_hostkeys()
++{
++	char fsobj[BUFSIZE];
++	char linebuf[BUFSIZE];
++	FILE *filp;
++
++	if (!ensure_leading_directories())
++		return;
++
++	sprintf(fsobj, "%s/.gits/hostkeys", get_home());
++	filp = fopen(fsobj, "r");
++	if (filp == NULL)
++		die("Can't open $HOME/.gits/hostkeys");
++
++	while (fgets(linebuf, BUFSIZE - 2, filp)) {
++		struct hostkey *h;
++		char *split;
++		h = xmalloc(sizeof(struct hostkey));
++		h->h_next = NULL;
++		h->h_line = xstrdup(linebuf);
++
++		if (*h->h_line && h->h_line[strlen(h->h_line) - 1] == '\n')
++			h->h_line[strlen(h->h_line) - 1] = '\0';
++
++		if (!*h->h_line || h->h_line[0] == '#')
++			goto not_valid;
++		split = strchr(h->h_line, ' ');
++		if (!split)
++			goto not_valid;
++
++		*split = '\0';
++		h->h_hostname = h->h_line;
++		h->h_hostkey = xstrdup(split + 1);
++		h->h_line = NULL;
++not_valid:
++		if (last_hostkey)
++			last_hostkey = last_hostkey->h_next = h;
++		else
++			first_hostkey = last_hostkey = h;
++	}
++	if (!feof(filp))
++		die("Error reading $HOME/.gits/hostkeys");
++	fclose(filp);
++}
++
++void save_hostkeys()
++{
++	char fsobj[BUFSIZE];
++	char fsobj2[BUFSIZE];
++	FILE *filp;
++	struct hostkey *host;
++
++	sprintf(fsobj, "%s/.gits/hostkeys.tmp", get_home());
++	sprintf(fsobj2, "%s/.gits/hostkeys", get_home());
++	filp = fopen(fsobj, "w");
++	if (filp == NULL)
++		die("Can't open $HOME/.gits/hostkeys.tmp");
++
++	for (host = first_hostkey; host; host = host->h_next) {
++		if (host->h_line) {
++			if (fprintf(filp, "%s\n", host->h_line) < 0)
++				die("hostkeys write error");
++		} else {
++			if (fprintf(filp, "%s %s\n", host->h_hostname,
++				host->h_hostkey) < 0)
++				die("hostkeys write error");
++		}
++	}
++
++	if (fclose(filp) < 0)
++		die("Hostkeys write error");
++
++	if (rename(fsobj, fsobj2) < 0)
++		die("Error renaming hostkeys");
++}
++
++void list_hostkeys()
++{
++	struct hostkey *host;
++	size_t longest_hostname = 0;
++
++	for (host = first_hostkey; host; host = host->h_next) {
++		size_t hostnamelen = 0;
++		hostnamelen = host->h_hostname ? strlen(host->h_hostname) : 0;
++		if (longest_hostname < hostnamelen)
++			longest_hostname = hostnamelen;
++	}
++
++	for (host = first_hostkey; host; host = host->h_next) {
++		size_t pad;
++		size_t i;
++		if (!host->h_hostname)
++			continue;
++		pad = longest_hostname + 1 - strlen(host->h_hostname);
++		printf("%s", host->h_hostname);
++		for (i = 0; i < pad; i++)
++			printf(" ");
++		printf("%s\n", host->h_hostkey);
++	}
++}
++
++void add_hostkey(const char *host, const char *key)
++{
++	struct hostkey *h;
++
++	for (h = first_hostkey; h; h = h->h_next) {
++		if (!h->h_hostname)
++			continue;
++		if (!strcmp(h->h_hostname, host))
++			die("Host %s already in hostkeys", host);
++	}
++
++	h = xmalloc(sizeof(struct hostkey));
++	h->h_next = NULL;
++	h->h_line = NULL;
++	h->h_hostname = xstrdup(host);
++	h->h_hostkey = xstrdup(key);
++
++	if (last_hostkey)
++		last_hostkey = last_hostkey->h_next = h;
++	else
++		first_hostkey = last_hostkey = h;
++}
++
++void update_hostkey(const char *host, const char *key)
++{
++	struct hostkey *h;
++
++	for (h = first_hostkey; h; h = h->h_next) {
++		if (!h->h_hostname)
++			continue;
++		if (!strcmp(h->h_hostname, host)) {
++			h->h_hostkey = xstrdup(key);
++			return;
++		}
++	}
++	die("Host %s not found in hostkeys", host);
++}
++
++void delete_hostkey(const char *host)
++{
++	struct hostkey *h;
++	struct hostkey *prev = NULL;
++
++	for (h = first_hostkey; h; h = h->h_next) {
++		if (!h->h_hostname)
++			continue;
++		if (!strcmp(h->h_hostname, host)) {
++			if (prev)
++				prev->h_next = h->h_next;
++			else
++				first_hostkey = h->h_next;
++			free(h);
++			return;
++		}
++		prev = h;
++	}
++	die("Host %s not found in hostkeys", host);
++}
++
++int main(int argc, char **argv)
++{
++	if (argc < 2) {
++		fprintf(stderr, "syntax: %s list\n", argv[0]);
++		fprintf(stderr, "syntax: %s add <host> <key>\n", argv[0]);
++		fprintf(stderr, "syntax: %s update <host> <key>\n", argv[0]);
++		fprintf(stderr, "syntax: %s delete <host>\n", argv[0]);
++		return 1;
++	}
++	if (!strcmp(argv[1], "--help"))
++		do_help();
++
++	if (!strcmp(argv[1], "list")) {
++		if (argc != 2) {
++			fprintf(stderr, "syntax: %s list\n", argv[0]);
++			return 1;
++		}
++
++		load_hostkeys();
++		list_hostkeys();
++		return 0;
++	} else if (!strcmp(argv[1], "add")) {
++		if (argc != 4) {
++			fprintf(stderr, "syntax: %s add <host> <key>\n",
++				argv[0]);
++			return 1;
++		}
++
++		load_hostkeys();
++		add_hostkey(argv[2], argv[3]);
++		save_hostkeys();
++		return 0;
++	} else if (!strcmp(argv[1], "update")) {
++		if (argc != 4) {
++			fprintf(stderr, "syntax: %s update <host> <key>\n",
++				argv[0]);
++			return 1;
++		}
++
++		load_hostkeys();
++		update_hostkey(argv[2], argv[3]);
++		save_hostkeys();
++		return 0;
++	} else if (!strcmp(argv[1], "delete")) {
++		if (argc != 3) {
++			fprintf(stderr, "syntax: %s delete <host>\n",
++				argv[0]);
++			return 1;
++		}
++
++		load_hostkeys();
++		delete_hostkey(argv[2]);
++		save_hostkeys();
++		return 0;
++	} else {
++		fprintf(stderr, "syntax: %s list\n", argv[0]);
++		fprintf(stderr, "syntax: %s add <host> <key>\n", argv[0]);
++		fprintf(stderr, "syntax: %s update <host> <key>\n", argv[0]);
++		fprintf(stderr, "syntax: %s delete <host>\n", argv[0]);
++		return 1;
++	}
++}
+diff --git a/git-over-tls/keypairs.c b/git-over-tls/keypairs.c
+new file mode 100644
+index 0000000..cc77217
+--- /dev/null
++++ b/git-over-tls/keypairs.c
+@@ -0,0 +1,60 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#include "keypairs.h"
++#include "home.h"
++#include "certificate.h"
++#include <stdio.h>
++#include <limits.h>
++#include <gnutls/openpgp.h>
++#include <errno.h>
++#ifdef USE_COMPAT_H
++#include "compat.h"
++#else
++#include "git-compat-util.h"
++#endif
++
++int select_keypair_int(gnutls_certificate_credentials_t creds,
++	const char *username)
++{
++	char keypath[PATH_MAX + 1];
++	const char *home;
++	struct certificate cert;
++	int r;
++
++	home = get_home();
++
++	r = snprintf(keypath, PATH_MAX + 1, "%s/.gits/keys/%s", home,
++		username);
++	if (r < 0 || r > PATH_MAX) {
++		die("Username too long");
++	}
++
++	cert = parse_certificate(keypath, &r);
++	if (r) {
++		if (r == CERTERR_NOCERT)
++			return -1;
++		if (r == CERTERR_CANTREAD)
++			die_errno("Can't read keypair");
++		else
++			die("Can't read keypair: %s",
++				cert_parse_strerr(r));
++	}
++
++	r = gnutls_certificate_set_openpgp_keyring_mem(creds,
++		cert.public_key.data, cert.public_key.size,
++		GNUTLS_OPENPGP_FMT_RAW);
++	if (r < 0)
++		die("Can't load public key: %s", gnutls_strerror(r));
++
++	r = gnutls_certificate_set_openpgp_key_mem(creds, &cert.public_key,
++		&cert.private_key, GNUTLS_OPENPGP_FMT_RAW);
++	if (r < 0)
++		die("Can't load keypair: %s", gnutls_strerror(r));
++
++	return 0;
++}
+diff --git a/git-over-tls/keypairs.h b/git-over-tls/keypairs.h
+new file mode 100644
+index 0000000..11f4ef7
+--- /dev/null
++++ b/git-over-tls/keypairs.h
+@@ -0,0 +1,16 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2009
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#ifndef _keypairs__h__included__
++#define _keypairs__h__included__
++
++#include <gnutls/openpgp.h>
++
++int select_keypair_int(gnutls_certificate_credentials_t creds,
++	const char *username);
++
++#endif
+-- 
+1.6.6.102.gd6f8f.dirty
