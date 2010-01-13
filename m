@@ -1,103 +1,84 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: [RFC 0/2] Git-over-TLS (gits://) client side support
-Date: Wed, 13 Jan 2010 23:04:14 +0200
-Message-ID: <20100113210414.GA8535@Knoppix>
-References: <20100113135753.GA7095@Knoppix>
- <20100113141218.GA17687@inner.home.ulmdo.de>
- <20100113144745.GA7246@Knoppix>
- <20100113161711.GB17687@inner.home.ulmdo.de>
- <20100113173610.GA7609@Knoppix>
- <20100113183520.GA23674@inner.home.ulmdo.de>
- <20100113191802.GA8110@Knoppix>
- <32541b131001131130i6afae1a1xd3a70e5de5daa5cf@mail.gmail.com>
- <20100113200629.GA8383@Knoppix>
- <32541b131001131213m75b4baefsc70a4cbf3c8431c8@mail.gmail.com>
+From: "Tilo Schwarz" <tilo@tilo-schwarz.de>
+Subject: Problem: fatal oops during git fetch
+Date: Wed, 13 Jan 2010 23:03:43 +0100
+Message-ID: <op.u6hrkho1a8ed4e@dellschleppa>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Krey <a.krey@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 22:04:27 2010
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 13 23:03:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVAO9-0000N8-Pu
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 22:04:26 +0100
+	id 1NVBJf-00055E-N3
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 23:03:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756297Ab0AMVEV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jan 2010 16:04:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756126Ab0AMVEV
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 16:04:21 -0500
-Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:57325 "EHLO
-	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756045Ab0AMVEU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jan 2010 16:04:20 -0500
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 48A4B8C731;
-	Wed, 13 Jan 2010 23:04:19 +0200 (EET)
-Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A0651635472; Wed, 13 Jan 2010 23:04:19 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id 12FF9158A72;
-	Wed, 13 Jan 2010 23:04:15 +0200 (EET)
-Content-Disposition: inline
-In-Reply-To: <32541b131001131213m75b4baefsc70a4cbf3c8431c8@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
+	id S1756531Ab0AMWDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 17:03:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756414Ab0AMWDq
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 17:03:46 -0500
+Received: from mo-p00-ob.rzone.de ([81.169.146.161]:35127 "EHLO
+	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755527Ab0AMWDp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 17:03:45 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1263420223; l=1319;
+	s=domk; d=tilo-schwarz.de;
+	h=From:Content-Transfer-Encoding:MIME-Version:Subject:Date:To:
+	Content-Type:X-RZG-CLASS-ID:X-RZG-AUTH;
+	bh=iJsr0+ceUEWxrgCSI8WWry5SGCM=;
+	b=dGUnxkwcxtQX5C2vUU/0rK33dhC+PEyZclfhaCyax0QNYT+aP4bDO3+7usVopJ0QCq8
+	jYk0tWfAOlxnJb1sctSMDrNGGJWcBPAFE2/5ptaTvguN45J2LPKLW2fsqYrOQAjR2jWrK
+	hCCXRo0ngJskYWHErl9SqTOBu7bU5+RkA2I=
+X-RZG-AUTH: :IW0NeWC8cvPlgn0IPTehqi9r6o/0DSXjJ1Me0yWdPTUrUVR0TMXac2ZAlsd51ctAgw==
+X-RZG-CLASS-ID: mo00
+Received: from dellschleppa (p549CDB44.dip.t-dialin.net [84.156.219.68])
+	by post.strato.de (mrclete mo60) (RZmta 22.6)
+	with ESMTP id x05d9am0DKOW4R for <git@vger.kernel.org>;
+	Wed, 13 Jan 2010 23:03:43 +0100 (MET)
+User-Agent: Opera Mail/10.10 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136887>
 
-On Wed, Jan 13, 2010 at 03:13:40PM -0500, Avery Pennarun wrote:
-> On Wed, Jan 13, 2010 at 3:06 PM, Ilari Liusvaara
->=20
-> Lots of people use it.  That was my point.  If it weren't important,
-> web browser makers wouldn't bother putting it in; God knows they leav=
-e
-> out a lot of other stuff that I'd like.
+Dear List,
 
-There are two kinds of "important". Actually important for users and
-important for managers.
-=20
-The latter tends to be implemented with much less real world need. And
-one can usually tell which of those it was from usability of feature.
+git really rocks!
 
-> >> Furthermore, how many people who really want ssh-style keypairs (a=
-nd
-> >> thus refuse to use X.509 and PKI) can't just use ssh as their git
-> >> transport? =C2=A0I don't actually understand what the goal is here=
-=2E
-> >
-> > As said, I got fed up with failure modes of SSH.
->=20
-> I think this is the answer that needs clarification.  What failure
-> modes are these?  ssh doesn't seem to fail for me.  And github.com
-> seems to be working rather well with a huge number of users and ssh
-> authentication.
+Nevertheless, yesterday I stumbled into a problem, I don't understand. I  
+use git for a software projekt, where up to five different computers are  
+involved. On each computer the same git repository is used, main  
+development happens on one machine, but bug fixes happens also on the  
+other machines. Transfer medium is a USB stick, which I use with 'git  
+fetch', 'git merge' and 'git push'. More than one year nothing strange  
+happened.
 
-Those failure modes tend to be show up at setup phase. But when they
-show up, at worst I have seen ones that took hours to debug because
-of multitude of possible causes and no good information on what's
-wrong.
+Yesterday I tried to fetch bug fixes from one remote machine to the main  
+development machine being on branch 'test' using
 
-And don't get me started about multi-key setups.
+git fetch remote/test
 
-SSH uses fixed sets of keys, which has inherent failure modes. And ssh
-server tends to be worse than the client (Github can avoid the server
-failure modes since they control the SSH server).
+I got something like
 
-But not even github can avoid all the failure modes.
+fatal: oops 'SHA1'
+Fetch failed
 
-> If you're upset at the failure modes of ssh, is it possible to fix ss=
-h
-> instead of introducing Yet Another Tunneling Protocol?
+Any ideas what happened here?
 
-No, those failure modes can't be solved in SSH.
+I tried various things to fix this without success. I ended up doing 'git  
+cherry-pick' manually on the 5 commits I needed from remote/test, then  
+discarded remote/test and pushed my local 'test' to remote. I remember,  
+that maybe a branch was involved, which was already merged on a remote  
+machine, but not on the main machine. But up to now git always resolved  
+these things automagically.
 
--Ilari
+As a side remark: I wished, the error message would have been a litte bit  
+more detailed. My attempts to make any google sense out of something like  
+'git fetch fatal oops' failed.
+
+Regards,
+
+     Tilo
