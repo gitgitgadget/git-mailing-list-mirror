@@ -1,74 +1,81 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] grep: -L should show empty files
-Date: Wed, 13 Jan 2010 17:04:18 +0100
-Message-ID: <fabb9a1e1001130804s4716587l57d56884b5d0d068@mail.gmail.com>
-References: <7vtyv4cpna.fsf@alter.siamese.dyndns.org> <7vvdf9402f.fsf@alter.siamese.dyndns.org> 
-	<alpine.LFD.2.00.1001110739280.13040@localhost.localdomain> 
-	<alpine.LFD.2.00.1001110748560.13040@localhost.localdomain> 
-	<7vtyusr4r7.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1001110830070.13040@localhost.localdomain> 
-	<7v63774tfd.fsf@alter.siamese.dyndns.org> <7vvdf73eql.fsf_-_@alter.siamese.dyndns.org> 
-	<fabb9a1e1001121327s392f7311t2a7f11081ed70ff8@mail.gmail.com> 
-	<7vpr5esdbp.fsf@alter.siamese.dyndns.org>
+From: Andreas Gruenbacher <agruen@suse.de>
+Subject: Filenames and prefixes in extended diffs
+Date: Wed, 13 Jan 2010 17:13:05 +0100
+Organization: SUSE Labs
+Message-ID: <201001131713.05505.agruen@suse.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Miles Bader <miles@gnu.org>, Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 17:04:44 2010
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 13 17:13:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NV5i7-0003UE-NM
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 17:04:44 +0100
+	id 1NV5qL-0007aJ-KG
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 17:13:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755330Ab0AMQEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 11:04:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755160Ab0AMQEj
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 11:04:39 -0500
-Received: from mail-px0-f174.google.com ([209.85.216.174]:57087 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753850Ab0AMQEi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 11:04:38 -0500
-Received: by pxi4 with SMTP id 4so5704744pxi.33
-        for <git@vger.kernel.org>; Wed, 13 Jan 2010 08:04:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=+XwjqagRU0wW6e0NJZze9SX+vWcNElZvMNO/dwhZF9I=;
-        b=Ek6zHUTDLx8NLFkIOPICXVRMLp5Cqcq9X2q/qHdmLjdDyUD01squ8TIoUz8OGNx+L7
-         frEoFezgQ+sOIYuoHmXBJf2PMrJ88bTXYR1nK0j9WYAemSr0mwiOgorLlH0RALBKFTcz
-         bo0ATFva4Osq2j8E5gb6vFK/rM4mPj0nJ0ZSA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=TfZUu/OG6S5K4L9AYTKPhX1DC0D6WaOqhxIN4R20SFlAByiS/KHPM2nRYsRMp0V6ig
-         TD42p0WHCPlta8W1VV0iOQ6PTX9/6rpBl4DDAUaK2a+7iJNVdKqsTpmNC575qtoNiv+o
-         c9dXUJL6X30WsKzdM0+KrlmzOm+26njX529ts=
-Received: by 10.142.9.11 with SMTP id 11mr2957123wfi.101.1263398678133; Wed, 
-	13 Jan 2010 08:04:38 -0800 (PST)
-In-Reply-To: <7vpr5esdbp.fsf@alter.siamese.dyndns.org>
+	id S1755623Ab0AMQNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 11:13:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755558Ab0AMQNJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 11:13:09 -0500
+Received: from cantor.suse.de ([195.135.220.2]:57427 "EHLO mx1.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755299Ab0AMQNI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 11:13:08 -0500
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.221.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id 4F3ED74609
+	for <git@vger.kernel.org>; Wed, 13 Jan 2010 17:13:06 +0100 (CET)
+User-Agent: KMail/1.12.2 (Linux/2.6.31.8-0.1-desktop; KDE/4.3.1; x86_64; ; )
+X-Length: 594
+X-UID: 579
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136836>
 
-Heya,
+I'm having a problem filename prefixes in git's extended diffs for patches 
+which rename or copy files: those patches include the old and new filenames in 
+"rename from", "rename to", "copy from", and "copy to" headers, e.g.,
 
-On Wed, Jan 13, 2010 at 07:56, Junio C Hamano <gitster@pobox.com> wrote:
-> It's Ok as the price we pay for producing correct result is to open those
-> empty files, read them, and look for matches which we will never find ;-)
+	$ git show -M
+	diff --git a/f b/g
+	similarity index 87%
+	rename from f
+	rename to g
+	index f00c965..3bb459b 100644
+	--- a/f
+	+++ b/g
+	@@ -8,3 +8,4 @@
+	 8
+	 9
+	 10
+	+11
 
-I'm not that familiar with the code, but wouldn't it be possible to
-keep the early abort, but make it dependent on not using the '-L'
-flag?
+Unlike the filenames in the "diff --git", "---", and "+++" headers, the 
+"rename from", "rename to", "copy from", and "copy to" filenames do not 
+include prefixes.
 
--- 
-Cheers,
+Now when applying a patch, GNU patch's -p option determines the number of 
+pathname components to strip off from filenames.  This obviously can't work 
+consistently for the prefixed and prefix-less headers.
 
-Sverre Rabbelier
+Can git be changed to include prefixes in all filenames?
+
+The only alternative I see is to ignore the filenames in the rename/copy 
+headers and rely only on the "diff --git" line.  (The "---" and "+++" headers 
+are not guaranteed to exist.)  What's worse, as already discussed here, the 
+"diff --git" line uses space as a separator between filenames yet it doesn't 
+quote spaces in filenames.  When being forced to ignore rename/copy headers, 
+this defect would make things much worse.
+
+
+Any ideas?
+
+
+Thanks,
+Andreas
