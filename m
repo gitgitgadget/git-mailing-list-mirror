@@ -1,72 +1,109 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [ANNOUNCE] Git wiki & repo.or.cz migration, donations and
- volunteers pledge
-Date: Thu, 14 Jan 2010 00:29:08 +0100
-Message-ID: <20100113232908.GA3299@machine.or.cz>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: git top links: 2010-1
+Date: Thu, 14 Jan 2010 01:47:54 +0200
+Message-ID: <94a0d4531001131547g7b49c00au5957451a910787a9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 14 00:29:16 2010
+X-From: git-owner@vger.kernel.org Thu Jan 14 00:48:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVCeK-0005A5-B6
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 00:29:16 +0100
+	id 1NVCwS-00040J-94
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 00:48:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753739Ab0AMX3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 18:29:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753729Ab0AMX3L
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 18:29:11 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:39772 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753602Ab0AMX3K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 18:29:10 -0500
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 43D97125A0EF; Thu, 14 Jan 2010 00:29:08 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756584Ab0AMXr4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jan 2010 18:47:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756194Ab0AMXr4
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 18:47:56 -0500
+Received: from mail-iw0-f194.google.com ([209.85.223.194]:43360 "EHLO
+	mail-iw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756185Ab0AMXrz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jan 2010 18:47:55 -0500
+Received: by iwn32 with SMTP id 32so48556iwn.33
+        for <git@vger.kernel.org>; Wed, 13 Jan 2010 15:47:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=/jVncJtlLMKOYUoj/tju/Uyjio/+EQ5q16jBUG/Pi/Q=;
+        b=YHintG3mvtBvSxs30z1Cp8t7rU3954S5X8lKujVzF+SZkv/qSt+q5M2GXxeXBz9E0Q
+         RpqC7c3DjaCYwOM3Lc6UuIK0++tx6zuDgLYpDDHEakPfCTz9z+M9q55VZwZvFhaqTu9N
+         bz6SQpYoT6816IquQfTuanSnf+EPxgo1fXyKQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=Jjn+ScjWZyAk2KYGEwxjpmqVjg82PhUb+mNi+hRhb9/1OeePVr6EVBtzxoAW8wBHTu
+         HRN/Nhht2cLpfu4tj5vRSixJ44+bqBrIRyQwsqXd62vWXkWSMjgBuMbzhcrNbUZVg3Df
+         wNu4mXwxTzlObGqMTi/pgiuX9bSxh9euRAdPE=
+Received: by 10.231.153.213 with SMTP id l21mr236665ibw.24.1263426474765; Wed, 
+	13 Jan 2010 15:47:54 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136897>
 
-Hello!
+Hi,
 
-I would like to notify you that unfortunately, Czech UPC terminated the
-sponsorship of the hardware and connectivity hosting the Git Wiki and
-repo.or.cz (after generously donating it for several years).
+git top links is my attempt to gather all the links people have been
+tagging as "git" in delicious.com[1] (these are not chosen by me).
 
-We have just secured at least provisional hosting at the Charles University,
-Prague and CESNET - the connectivity should be equally good as at UPC,
-even better on university backbones over the world. However, I will have
-to buy new rack server for the hosting service from my own pocket and this is
-where I have to ask for your help - I can't afford to sponsor the full price
-of the server, and reasonably powerful rack hardware ain't cheap (repo.or.cz
-_is_ quite a workload!).
+The fancier blog version is here:
+http://gitlog.wordpress.com/2010/01/13/git-top-links-2010-1/
 
-Thus, I would like to ask you for donations for the new hardware - the full
-cost is $1400 (CZK 24000); we would like to gather more in order to be able to
-buy a RAID0 pair disk and more RAM. Any extra money would all go to
-the server-related costs, most likely hardware upgrades in the future.
-I apologize for abusing the vger public forum for this, I hope the readers
-not using repo.or.cz and the wiki will not mind.
+I've revamped my scripts so now all the previous items are automaticall=
+y
+tracked and it's much easier to generate a list of completely new links=
+=2E Here
+are the latest ones:
 
-On a related note, unfortunately I can't spend nearly as much time on
-the wiki and repo.or.cz maintenance and enhancements as it would deserve.
-Thus, I'm seeking for volunteers to help with both day-to-day maintenance
-and development. You will be richly credited and ethernal glory in the Git
-community awaits you, plus it will surely make a great CV bullet-point! :)
-I'm sure really cool things could be done by developers with fresh ideas,
-especially after the hardware upgrade.
+1. 25 Tips for Intermediate Git Users (230)
+Comprehensive git tips
+http://andyjeffries.co.uk/articles/25-tips-for-intermediate-git-users
 
+2. Using Git to Maintain Your Website (42)
+http://danielmiessler.com/blog/using-git-to-maintain-your-website
 
-*** You can donate and view the current pledge status at: ***
+3. Setting up your Git repositories for open source projects at GitHub =
+(41)
+Mostly so pulling and pushing works correctly; and pull requests are ok
+http://blog.mhartl.com/2008/10/14/setting-up-your-git-repositories-for-=
+open-source-projects-at-github/
 
-	http://repo.or.cz/h/pledge.html
+4. SmartGit =E2=80=94 The Easy-to-Use Git-Client (39)
+http://www.syntevo.com/smartgit/index.html
 
+5. Persistent Trees in git, Clojure and CouchDB (36)
+http://eclipsesource.com/blogs/2009/12/13/persistent-trees-in-git-cloju=
+re-and-couchdb-data-structure-convergence/
 
-Thanks,
+6. Amp =E2=80=94 Version Control Revolution (24)
+Meta SCM; aims to support git, bzr, hg, etc. through the same ui
+http://amp.carboni.ca/
 
-				Petr "Pasky" Baudis
+7. Gerrit =E2=80=94 Gerrit Code Review (24)
+Code review and project management for git based projects
+http://code.google.com/p/gerrit/
+
+8. how's my code (20)
+Agile review tool for git based projects
+http://howsmycode.com/
+
+9. Why Git is so fast (20)
+Interesting thread in git mailing list about why git is so fast: C
+http://marc.info/?l=3Dgit&amp;m=3D124111702609723&amp;w=3D2
+
+10. On commit messages (16)
+Peter Hutterer reminds us what are good commit messages
+http://who-t.blogspot.com/2009/12/on-commit-messages.html
+
+Happy New Year!
+
+[1] http://delicious.com/tag/git
+
+--=20
+=46elipe Contreras
