@@ -1,106 +1,92 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH v2 3/3] commit: show interesting ident information in summary
-Date: Wed, 13 Jan 2010 19:50:36 +0100
-Message-ID: <5722BD3D-E7C9-47F7-B547-09B14D87DA39@wincent.com>
-References: <20100113173408.GA16652@coredump.intra.peff.net> <20100113173951.GC16786@coredump.intra.peff.net> <1DDB570B-350A-40A0-B6E4-ADBDF4BE6BD2@wincent.com> <20100113184510.GA22849@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v1076)
-Content-Type: text/plain; charset=iso-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Adam Megacz <adam@megacz.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 13 20:00:45 2010
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: [RFC 0/2] Git-over-TLS (gits://) client side support
+Date: Wed, 13 Jan 2010 14:11:14 -0500
+Message-ID: <32541b131001131111u6bb0de01qe6cc1ecde5119084@mail.gmail.com>
+References: <1263388786-6880-1-git-send-email-ilari.liusvaara@elisanet.fi> 
+	<fcaeb9bf1001130539p2971caavd101d46de9269769@mail.gmail.com> 
+	<20100113135753.GA7095@Knoppix>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Wed Jan 13 20:11:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NV8SQ-0006cT-HU
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 20:00:42 +0100
+	id 1NV8d2-0003Ct-Eo
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 20:11:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753844Ab0AMTAh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jan 2010 14:00:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753769Ab0AMTAh
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 14:00:37 -0500
-Received: from outmail136191.authsmtp.com ([62.13.136.191]:63564 "EHLO
-	outmail136191.authsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751068Ab0AMTAg convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 14:00:36 -0500
-X-Greylist: delayed 511 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Jan 2010 14:00:36 EST
-Received: from mail-c194.authsmtp.com (mail-c194.authsmtp.com [62.13.128.121])
-	by punt6.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id o0DIohE2076411;
-	Wed, 13 Jan 2010 18:50:43 GMT
-Received: from wincent1.inetu.net (wincent1.inetu.net [209.235.192.161])
-	(authenticated bits=128)
-	by mail.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id o0DIof7d033566
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 13 Jan 2010 18:50:42 GMT
-Received: from [192.168.1.2] (133.Red-88-5-247.dynamicIP.rima-tde.net [88.5.247.133])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id o0DIoaou000742
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 13 Jan 2010 13:50:39 -0500
-In-Reply-To: <20100113184510.GA22849@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.1076)
-X-Server-Quench: 8d244d0f-0074-11df-80b9-0022640b883e
-X-Report-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
-X-AuthRoute: OCd3ZggRAFZKTQIy FSICByJGVUMuIRha BAIHMQpCJFdJCUVH ax0dDFNVdwdEHAkR Am4BXlReVF8/W2N8 dQhSaBtca0hQXgNr T0pMXVMcSwUceENX AUoeURp3cQMIeXpy Y0YsViRZWEAudRBg Qk5TEXAHZDM2dWgf AklFdwNWcgVOfk1N YlMqGhFYa3VsBgsE NC97IWp5ZnIEHWxe RQQILE5ACV0LGSF0 RhYeEC8iBlEEQSp7 LhArLEJUHUAfNV83 OEcgXlRQMhlaERBb GkhXEUcA
-X-Authentic-SMTP: 61633436303433.1015:706/Kp
-X-AuthFastPath: 255
-X-Virus-Status: No virus detected - but ensure you scan with your own anti-virus system.
+	id S1754874Ab0AMTLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 14:11:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754867Ab0AMTLf
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 14:11:35 -0500
+Received: from mail-iw0-f197.google.com ([209.85.223.197]:56246 "EHLO
+	mail-iw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751885Ab0AMTLf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 14:11:35 -0500
+Received: by iwn35 with SMTP id 35so16618723iwn.4
+        for <git@vger.kernel.org>; Wed, 13 Jan 2010 11:11:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=PTZfmNxQv9x68fyzq5rxILSD7xW2K7lhxLA6PPnxU/Q=;
+        b=rq0tQV1PFYoiM/9UvTeKnjKQR2vepWST4NZqBcW/tcZc8CbXttytjOcnYfYShwwtTf
+         JtrFCJwozI2kM5ykpBoWOYaR68+8vq59MxnwK+yHe1gzoiVvuvYYztACE9ORHMqNfAB9
+         1FyP516YssF681m7vGJCBJflXzXzSARfFX3EY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=OFhR7QrhGgig4KC0x0l2RbDr6uXq53Gw//Ye6pd2FDGJhwiZpQNQbFCU8dHnTyxgOo
+         s0vteO0VRafaf/9T3Np0C4G01U/mL/Mn1NE3OH4/F0+SHQP7zKLCWxcRa7+amOam9Ad3
+         XCJyf5r/NiBnG2dbODb1/mzcUGZqQpaJZ2cgk=
+Received: by 10.231.147.210 with SMTP id m18mr1468894ibv.48.1263409894189; 
+	Wed, 13 Jan 2010 11:11:34 -0800 (PST)
+In-Reply-To: <20100113135753.GA7095@Knoppix>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136859>
 
-El 13/01/2010, a las 19:45, Jeff King escribi=F3:
-
-> On Wed, Jan 13, 2010 at 07:39:47PM +0100, Wincent Colaiuta wrote:
->
->>> Your name and email address were configured automatically based
->>> on your username and hostname. Please check that they are accurate.
->>> You can suppress this message by setting them explicitly:
->>>
->>>    git config --global user.name Your Name
->>>    git config --global user.email you@example.com
->>>
->>> If the identity used for this commit is wrong, you can fix it with:
->>>
->>>    git commit --amend --author=3D'Your Name <you@example.com>'
->>>
->>> 1 files changed, 1 insertions(+), 0 deletions(-)
+On Wed, Jan 13, 2010 at 8:57 AM, Ilari Liusvaara
+<ilari.liusvaara@elisanet.fi> wrote:
+> On Wed, Jan 13, 2010 at 08:39:12PM +0700, Nguyen Thai Ngoc Duy wrote:
 >>
->> I'll never see this message myself, but I think you could (and
->> perhaps should) replace almost all of that with:
->>
->>  Your name and email address were configured automatically.
->>  See "git config help" for information on setting them explicitly
->>  or "git commit help" if you wish to amend this commit.
+>> Can we rely on an external program, like stunnel, to do the job instead?
 >
-> I don't have a huge problem with your wording, except that it needs
-> s/(\w+) help/help \1/.
+> No. The way authentication is done is very unusual. I don't think stunnel (or
+> anything else) can deal with such modes. And the reason authentications are
+> done like they are done in order to minimize points of failure (getting
+> really annoyed at failure modes sshd introduced was one big reason for
+> writing this).
+>
+> I _definitely_ do not want to mess with X.509. And its not just about me
+> messing with it, it is also about pushing it to users.
+>
+> And one would need custom daemon anyway even if one used stunnel.
+> git-daemon just can't deal with authentication data.
 
-Whoops.
+It sounds to me like you're doing two different things with this patch series:
 
-> Mainly I was trying to hand-hold because not having this information =
-=20
-> set
-> up means it may be your first commit, and you are probably a bit
-> clueless (the exceptions are people who have been using git, but are
-> seeing this new behavior in their new version, and people who have gi=
-t
-> configured on another machine but are using _this_ machine for the =20
-> first
-> time).
+1) Adding additional authorization features (assuming the user is
+already authenticated) to git-daemon
 
-=46air enough, but I'm sighing here at the thought of people jumping in=
- =20
-and using git commands without even having looked at _any_ of the =20
-zillions of "your first 10 minutes with Git" tutorials out there, =20
-which pretty much _all_ start with how to set up your user.name and =20
-user.email...
+2) Creating a TLS encryption layer with authentication support.
 
-Cheers,
-Wincent
+#1 sounds like it could be its own patch series even if you don't have
+#2, and could be reviewed separately.
+
+#2 sounds like it is not even git-specific.  You've decided that ssh
+and stunnel don't fit your needs; what makes your solution not a
+general TLS-based authentication layer, like stunnel but with
+different certificate management?  If it's really a general layer,
+maybe it should be distributed separately and git could be taught how
+to use it *or* stunnel (or ssh, as it does now) for its transport
+encryption/authentication.
+
+Have fun,
+
+Avery
