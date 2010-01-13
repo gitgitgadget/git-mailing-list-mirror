@@ -1,84 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFH] Git and filesystem ACLs: problem with 'git gc'
-Date: Wed, 13 Jan 2010 15:56:58 +0100
-Message-ID: <vpqeiludpdx.fsf@bauges.imag.fr>
-References: <vpqy6k38lzd.fsf@bauges.imag.fr>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: git-svn doesn't fetch an empty directory with svn:externals
+Date: Wed, 13 Jan 2010 16:11:02 +0100
+Message-ID: <40aa078e1001130711gf602ed4pa68cbeb8ba590600@mail.gmail.com>
+References: <loom.20100113T124446-187@post.gmane.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 13 16:01:37 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Michel Jouvin <jouvin@lal.in2p3.fr>
+X-From: git-owner@vger.kernel.org Wed Jan 13 16:11:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NV4ix-0001R5-Oa
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 16:01:32 +0100
+	id 1NV4sM-00068k-AG
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 16:11:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932139Ab0AMPB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 10:01:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932137Ab0AMPB0
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 10:01:26 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:38604 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932091Ab0AMPBT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 10:01:19 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o0DEubah012754
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 13 Jan 2010 15:56:38 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NV4eY-0004jH-KP; Wed, 13 Jan 2010 15:56:58 +0100
-In-Reply-To: <vpqy6k38lzd.fsf@bauges.imag.fr> (Matthieu Moy's message of "Tue\, 12 Jan 2010 14\:57\:10 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 13 Jan 2010 15:56:38 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o0DEubah012754
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1263999606.71924@OiE68xbt03kTIOCL/N/5cw
+	id S1755831Ab0AMPLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 10:11:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755696Ab0AMPLK
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 10:11:10 -0500
+Received: from mail-fx0-f225.google.com ([209.85.220.225]:45036 "EHLO
+	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755823Ab0AMPLJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 10:11:09 -0500
+Received: by fxm25 with SMTP id 25so262962fxm.21
+        for <git@vger.kernel.org>; Wed, 13 Jan 2010 07:11:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=4aTpID+rO5PygA87274rJzW0mjh76jL77Svdn0gQXzQ=;
+        b=eKz8Zhf5gVR67OvISbwdusDF+XGU0KTfEEOs+Si0hsyT+wlyjgNNPWIrWP04j/bhe2
+         o15MPosJyATBvaJP+y1/XSz+COFwlU5Kpz2A9Z16XFxIy1fCGUKDzmrDzDOUrb9v++JE
+         W/U9t5prgvHd3VBouyE2hN8cdR6RikGduI2OA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        b=xTyKKNC+mLE2zC4eswYUvPcOMB6tkbAMRB1E2AS+uXxpj8bGSCBobrs2sp4RIXWGS2
+         cAYWFPS0+EagjrVp91yGPQGxM6UaG9kg/BdlxEtobsXlbq8st/vlGa6YEc4NRunj6uKJ
+         eyKJc3xGsz2bypB1TkwMGgwHU1fppc4r4EgAM=
+Received: by 10.216.85.14 with SMTP id t14mr4206900wee.222.1263395462810; Wed, 
+	13 Jan 2010 07:11:02 -0800 (PST)
+In-Reply-To: <loom.20100113T124446-187@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136829>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
-> I investigated a bit, and the problem seems to come from mkstemp,
-> which is used by write_pack_file to create the temporary file: files
-> created by mkstemp get an ACL umask of ---.
+On Wed, Jan 13, 2010 at 12:49 PM, Michel Jouvin <jouvin@lal.in2p3.fr> wrote:
+> Hi,
 >
-> Is it really a good idea to use mkstemp? We're inside
-> .git/object/pack, for which the user is supposed to have already set
-> correct permissions, so shouldn't we just create a random file name
-> and then use a plain open(...) to create the file, leaving the umask
-> do its job to control the permissions?
+> I'm running in a problem when trying to fetch a SVN repository branch that
+> contains an empty directory with a SVN property svn:externals attached. This
+> directory is missing in the Git repository/checkout. I was unable to find an
+> option to have it added. I'd like to get it added to readd the externals using
+> the trick described in http://kerneltrap.org/mailarchive/git/2007/5/1/245002.
+> Without it, I have to recreate it in git, add it to .gitignore... which is
+> painful.
+>
+> BTW, I didn't find any documentation on empty dirs handling by git-svn. They
+> seems to be often removed which is not always desirable. Are they options
+> related to this?
+>
 
-Digging a bit further, I noticed that _object_ creation was doing a
-
-  set_shared_perm(filename, (S_IFREG|0444))
-
-thus ignoring the umask, and setting r--r--r-- for all objects, while
-_pack_ creation does roughly (in write_pack_file()) :
-
-  mode_t mode = umask(0);
-  mode = 0444 & ~mode;
-  adjust_perm(pack_tmp_name, mode)
-
-Thus setting the permissions to r--X--X-- where X is defined by the
-umask. Is there any reason for this difference? I'd say we can rely on
-the containing directory's permissions, and do for pack what Git
-already does for objects.
-
-[ On a side note, I don't understand what the S_IFREG is doing in the
-call to set_shared_perm. It's passed to chmod, while S_IFREG is only
-documented in the manpage for stat() ... ]
-
-Thanks,
+I don't think this is git-svn's fault, but simply that git doesn't
+track directories (just files). I guess git-svn could create some sort
+of place-holder files in empty folders, but currently it doesn't
+AFAIK.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Erik "kusma" Faye-Lund
