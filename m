@@ -1,99 +1,208 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Add `init-db.templatedir` configuration variable.
-Date: Wed, 13 Jan 2010 00:50:15 -0800
-Message-ID: <7vljg2pewo.fsf@alter.siamese.dyndns.org>
-References: <alpine.LNX.2.00.1001131719050.22639@vqena.qenxr.bet.am>
+Subject: [PATCH] t7502: test commit.status, --status and --no-status
+Date: Wed, 13 Jan 2010 00:58:07 -0800
+Message-ID: <7veilupejk.fsf@alter.siamese.dyndns.org>
+References: <7vocl1pwf5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steven Drake <sdrake@xnet.co.nz>
-X-From: git-owner@vger.kernel.org Wed Jan 13 09:50:34 2010
+Cc: "James P. Howard\, II" <jh@jameshoward.us>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 13 09:58:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NUyvx-0005AB-ML
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 09:50:34 +0100
+	id 1NUz3S-000899-NH
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 09:58:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754904Ab0AMIuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 03:50:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754827Ab0AMIuX
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 03:50:23 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62002 "EHLO
+	id S1754917Ab0AMI6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 03:58:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753343Ab0AMI6O
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 03:58:14 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33149 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754509Ab0AMIuX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 03:50:23 -0500
+	with ESMTP id S1751838Ab0AMI6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 03:58:14 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 627F3909CB;
-	Wed, 13 Jan 2010 03:50:22 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8895790A56;
+	Wed, 13 Jan 2010 03:58:13 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cTBWIt7PePaALu+rThklcAUGRCw=; b=Unkut/
-	5L9iTWTV68ZGfRL7RWZCt7Ax9xy/VnQSZAzszKljsRcNAKp1t19CyAQmnfFm89f3
-	t+k78RcwVZr7VQR54UeKIJKSOO7QtU5rKOn9c0XwCDMcxE+zGq67LTk/xegyDZKG
-	/epq6czT72+inb/Tj4ubUVllYv18iOhSroK9c=
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=u4MvFBZxq0m71AULYIkUuGX7Dbs=; b=Ep58j91bbVZsD0F7CI5YK85
+	eGYptT39FwUKPw3WPkfMfrTY9hVluBiNwuLhw3hqlYIU0ZxQqqhwfNUgXgsWtaq7
+	ZNRUxkhC4VzbjRm406PyuzFLzlep5kkg1bxLtJUutO5WffoZH3FuahX5adUMRD8+
+	uXtwn+2PZZIKICeCPbow=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cy1gTJoxFLr8C43upbF/v+a+ks6C3cLR
-	9SicQ4RJy2V3X+yxbg6FqnvBKCV0Rdv37CG3n2zYw/hOdEpF10Qwsd5qH0dCVKBP
-	UOjirUeMdJDLahvKOvw6LHkVAkSK+jZB/Lc9Vnf2j83Y7K+pzqAK1GuizCv93GKO
-	OFQi41waMMU=
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=UWS3GGSN8yfYqyLmoim9wz2SVj2LXj69yVdZ/Bs2gZ4t/b6Uw
+	Z5D93JvHv/qQCZl7ALozjewGXWxFMdX52Hbz6bBXnVtBbF0CBhVWNHxyVh/mJlNl
+	mmyG/UaP1zIDTSP25p3WzhnPS2KWDefB45fRFjnLZqrlE6W7jswlT4h/oc=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DACE909CA;
-	Wed, 13 Jan 2010 03:50:20 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6314290A55;
+	Wed, 13 Jan 2010 03:58:11 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 880EF909C7; Wed, 13 Jan
- 2010 03:50:17 -0500 (EST)
-In-Reply-To: <alpine.LNX.2.00.1001131719050.22639@vqena.qenxr.bet.am> (Steven
- Drake's message of "Wed\, 13 Jan 2010 17\:19\:36 +1300 \(NZDT\)")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 771FB90A53; Wed, 13 Jan
+ 2010 03:58:08 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: ADF9A6D8-0020-11DF-B130-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C6CE9514-0021-11DF-B5CF-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136793>
 
-Steven Drake <sdrake@xnet.co.nz> writes:
+Make sure that the status information:
 
-> Include `init.templatedir` as an alias for `init-db.templatedir`.
+ - is shown as before without configuration nor command line option;
 
-This describes what the patch adds, which we can read in the diff *if* we
-wanted to.  The primary job of the first paragraph of the proposed commit
-log message is to convince reviewers why it might be worthwhile to read
-the diff, and to explain whoever reads "git log" output in the future what
-motivated this change to be made.
+ - is shown if commit.status set to true without command line option,
+   or --status is given;
 
-Your log message doesn't say anything about why it is a good idea to add
-this feature, which is much more important to talk about [*1*].
+ - is not shown if commit.status set to false without command line option,
+   or --no-status is given.
 
-The target _may_ be probably to have this in $HOME/.gitconfig so that your
-personal templates in $HOME/.gittemplate/ are used in all repositories you
-will create.  But you shouldn't make me, anybody who reviews, or readers
-of the documentation for that matter, *guess* what problem the new feature
-is meant to solve.
+Also make sure that the above does not affect the way lines taken from
+the custom --template appear in the log message editor.
 
-IOW, code talks what it itself does, but it often cannot say why it does
-what it does, nor why a particular way it does what it does was chosen.
-You help your code justify itself by describing the motivation in your
-commit log message.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Junio C Hamano <gitster@pobox.com> writes:
 
-I don't think init-db.templatedir is needed nor wanted.
+ > What's cooking in git.git (Jan 2010, #03; Sun, 10)
+ > --------------------------------------------------
+ > ...
+ > [Stalled]
+ > * jh/commit-status (2009-12-07) 1 commit
+ >  - [test?] Add commit.status, --status, and --no-status
+ >
+ > Needs tests.
 
- - People who learn about this configuration will never heard of init-db
-  (i.e. lack of necessity);
+ I think I have already given ample time for people to react, but ended up
+ getting tired of waiting for tests to materialize and doing it myself, as
+ I want to close merge window for 1.7.0-rc0 by the end of next week to
+ have the final release early next month.
 
- - We have already deprecated init-db and do not advertise in "git help
-   git"---the longer term direction is to remove it once everybody forgets
-   about it (i.e. actively undesirable).
+ t/t7502-commit.sh |  109 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 109 insertions(+), 0 deletions(-)
 
-By the way, this is probably less useful in /etc/gitconfig, as somebody
-who can configure it can customize the system-wide templates with the same
-ease.  That might also be something you would want to mention in the log.
-
-[Footnote]
-
-*1* I am not saying the commit log message shouldn't talk about what it
-does or how it does it.  It also is a good thing to do, especially when
-the linkage between the motivation and the implementation is not obvious.
+diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+index fe94552..844fb43 100755
+--- a/t/t7502-commit.sh
++++ b/t/t7502-commit.sh
+@@ -267,4 +267,113 @@ test_expect_success 'A single-liner subject with a token plus colon is not a foo
+ 
+ '
+ 
++cat >.git/FAKE_EDITOR <<EOF
++#!$SHELL_PATH
++mv "\$1" "\$1.orig"
++(
++	echo message
++	cat "\$1.orig"
++) >"\$1"
++EOF
++
++echo '## Custom template' >template
++
++clear_config () {
++	(
++		git config --unset-all "$1"
++		case $? in
++		0|5)	exit 0 ;;
++		*)	exit 1 ;;
++		esac
++	)
++}
++
++try_commit () {
++	git reset --hard &&
++	echo >>negative &&
++	GIT_EDITOR=.git/FAKE_EDITOR git commit -a $* $use_template &&
++	case "$use_template" in
++	'')
++		! grep "^## Custom template" .git/COMMIT_EDITMSG ;;
++	*)
++		grep "^## Custom template" .git/COMMIT_EDITMSG ;;
++	esac
++}
++
++try_commit_status_combo () {
++
++	test_expect_success 'commit' '
++		clear_config commit.status &&
++		try_commit "" &&
++		grep "^# Changes to be committed:" .git/COMMIT_EDITMSG
++	'
++
++	test_expect_success 'commit' '
++		clear_config commit.status &&
++		try_commit "" &&
++		grep "^# Changes to be committed:" .git/COMMIT_EDITMSG
++	'
++
++	test_expect_success 'commit --status' '
++		clear_config commit.status &&
++		try_commit --status &&
++		grep "^# Changes to be committed:" .git/COMMIT_EDITMSG
++	'
++
++	test_expect_success 'commit --no-status' '
++		clear_config commit.status &&
++		try_commit --no-status
++		! grep "^# Changes to be committed:" .git/COMMIT_EDITMSG
++	'
++
++	test_expect_success 'commit with commit.status = yes' '
++		clear_config commit.status &&
++		git config commit.status yes &&
++		try_commit "" &&
++		grep "^# Changes to be committed:" .git/COMMIT_EDITMSG
++	'
++
++	test_expect_success 'commit with commit.status = no' '
++		clear_config commit.status &&
++		git config commit.status no &&
++		try_commit "" &&
++		! grep "^# Changes to be committed:" .git/COMMIT_EDITMSG
++	'
++
++	test_expect_success 'commit --status with commit.status = yes' '
++		clear_config commit.status &&
++		git config commit.status yes &&
++		try_commit --status &&
++		grep "^# Changes to be committed:" .git/COMMIT_EDITMSG
++	'
++
++	test_expect_success 'commit --no-status with commit.status = yes' '
++		clear_config commit.status &&
++		git config commit.status yes &&
++		try_commit --no-status &&
++		! grep "^# Changes to be committed:" .git/COMMIT_EDITMSG
++	'
++
++	test_expect_success 'commit --status with commit.status = no' '
++		clear_config commit.status &&
++		git config commit.status no &&
++		try_commit --status &&
++		grep "^# Changes to be committed:" .git/COMMIT_EDITMSG
++	'
++
++	test_expect_success 'commit --no-status with commit.status = no' '
++		clear_config commit.status &&
++		git config commit.status no &&
++		try_commit --no-status &&
++		! grep "^# Changes to be committed:" .git/COMMIT_EDITMSG
++	'
++
++}
++
++try_commit_status_combo
++
++use_template="-t template"
++
++try_commit_status_combo
++
+ test_done
+-- 
+1.6.6.292.ge84ea.dirty
