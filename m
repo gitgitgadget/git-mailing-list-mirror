@@ -1,71 +1,172 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] commit: show interesting ident information in
- summary
-Date: Wed, 13 Jan 2010 12:30:50 -0500
-Message-ID: <20100113173050.GB21318@coredump.intra.peff.net>
-References: <20100112153656.GA24840@coredump.intra.peff.net>
- <20100112154631.GC24957@coredump.intra.peff.net>
- <7v3a2asda8.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/7] gitweb: Add option to force version match
+Date: Wed, 13 Jan 2010 18:33:55 +0100
+Message-ID: <201001131833.55603.jnareb@gmail.com>
+References: <1263374828-15342-1-git-send-email-warthog9@eaglescrag.net> <1263374828-15342-2-git-send-email-warthog9@eaglescrag.net> <1263374828-15342-3-git-send-email-warthog9@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Adam Megacz <adam@megacz.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 18:31:22 2010
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: warthog9@kernel.org
+To: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 13 18:34:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NV73h-0001LA-LE
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 18:31:06 +0100
+	id 1NV76l-00034o-63
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 18:34:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932170Ab0AMRbC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 12:31:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932175Ab0AMRbA
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 12:31:00 -0500
-Received: from peff.net ([208.65.91.99]:58500 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756198Ab0AMRbA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 12:31:00 -0500
-Received: (qmail 25220 invoked by uid 107); 13 Jan 2010 17:35:49 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 13 Jan 2010 12:35:49 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jan 2010 12:30:50 -0500
+	id S1756152Ab0AMReK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 12:34:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756109Ab0AMReJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 12:34:09 -0500
+Received: from mail-fx0-f225.google.com ([209.85.220.225]:35867 "EHLO
+	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756059Ab0AMReG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 12:34:06 -0500
+Received: by fxm25 with SMTP id 25so418039fxm.21
+        for <git@vger.kernel.org>; Wed, 13 Jan 2010 09:34:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=keTGR558hySgl90Kf6IhDQ35jXMnmXvs/2oWQRFSBwU=;
+        b=xZIszCQF2H6aAX194Gz/+06jvDJ6cxPDXoPZpj9o6EwgSTiih/TlTb1gTQATqncdhC
+         L77EOS1eEVZ6XaYUsNfKZByH4LEzYRwo8RpHyiXwzqCsolQ7Ozts/xa+HKTnIL8cYt5L
+         BSquJS5Ucz7yaSCmepH74CE1oACOXBJiSE5WE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=P8ikJfvbxsprAU4INndM57jxE4uGuKQofzJNeRodGDe1gcKuO9XGT0cgkKC21EgC+E
+         x4XWw1PKLs0LdNVb+ITS/S0YtlLaIuaRNQG/9hXZFoyOh7uH/6YwIPtlEHkJne70aqHD
+         +jwsesKzWd5oK965g6jfSoarkwnv7JqwlY3lQ=
+Received: by 10.223.18.137 with SMTP id w9mr11626856faa.61.1263404044569;
+        Wed, 13 Jan 2010 09:34:04 -0800 (PST)
+Received: from ?192.168.1.13? (abwq222.neoplus.adsl.tpnet.pl [83.8.240.222])
+        by mx.google.com with ESMTPS id 14sm10936673fxm.11.2010.01.13.09.34.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 13 Jan 2010 09:34:01 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1263374828-15342-3-git-send-email-warthog9@eaglescrag.net>
 Content-Disposition: inline
-In-Reply-To: <7v3a2asda8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136846>
 
-On Tue, Jan 12, 2010 at 10:57:03PM -0800, Junio C Hamano wrote:
-
-> > +	if (!user_ident_explicitly_given) {
-> > +		strbuf_addstr(&format, "\n Committer: ");
-> > +		strbuf_percentquote_buf(&format, &committer_ident);
-> > +	}
+On Wed, 13 Jan 2010, John 'Warthog9' Hawley wrote:
+> From: John 'Warthog9' Hawley <warthog9@kernel.org>
 > 
-> This is much better.
+> This adds $git_versions_must_match variable, which is set to true
+
+s/is set to true value/if set to true,/
+
+> value checks that we are running on the same version of git that we
+> shipped with, and if not throw '500 Internal Server Error' error.
+> What is checked is the version of gitweb (embedded in building
+> gitweb.cgi), against version of runtime git binary used.
 > 
-> We might want an advice message inside the latter case, helping the user
-> learn how to spell his name correctly.  This is designed to trigger for
-> people/repositories that are not configured, and by definition the
-> majority of that target audience are new people.
+> Gitweb can usually run with a mismatched git install.  This is more
+> here to give an obvious warning as to whats going on vs. silently
+> failing.
 > 
-> The extra message will disappear once committer information is explicitly
-> given, there is no need to protect the advice message with the usual
-> "advice.*" configuration.
+> By default this feature is turned off.
 
-Just adding the "Committer:" reminder is slightly annoying (though
-perhaps some people will even like it). Adding a big advice message on
-every commit is going to be annoying to everyone who sees it, and is
-really crossing the line of "we don't really support implicit identities
-anymore", since anyone seeing it is going to want to fix it.
+[moved version info below, after "---" separator]
 
-I know there has been some discussion of that area in the last few
-months, but I admit I didn't pay any attention. Is that the direction we
-want to move in? I don't have a particular problem with it, but I want
-to point out that if there _are_ people who really like the implicit
-ident feature, we are effectively killing it off for them.
+> Signed-off-by: John 'Warthog9' Hawley <warthog9@kernel.org>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> ---
 
--Peff
+Moved to the correct place: information about patch versioning should
+be put in comment section[1], not in commit message.
+ 
+[1] Which means between "---" separator and diffstat.
+
+> v3 - warthog9: adjust to use die_error instead of recreating it
+> v2 - Jakub: Changes to make non-default, and change naming
+> v1 - warthog9: Initial
+
+>  gitweb/README      |    3 +++
+>  gitweb/gitweb.perl |   28 ++++++++++++++++++++++++++++
+>  2 files changed, 31 insertions(+), 0 deletions(-)
+
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+
+> @@ -587,6 +590,31 @@ if (defined $maxload && get_loadavg() > $maxload) {
+>  our $git_version = qx("$GIT" --version) =~ m/git version (.*)$/ ? $1 : "unknown";
+>  $number_of_git_cmds++;
+>  
+> +# Throw an error if git versions does not match, if $git_versions_must_match is true.
+> +if ($git_versions_must_match &&
+> +    $git_version ne $version) {
+> +	my $admin_contact =
+> +		defined $ENV{'SERVER_ADMIN'} ? ", $ENV{'SERVER_ADMIN'}," : '';
+> +	my $err_msg = <<EOT;
+> +Internal Server Error
+> +<br />
+> +</div>
+> +<hr />
+> +<div class="readme">
+> +<h1 align="center">*** Warning ***</h1>
+> +<p>
+> +This version of gitweb was compiled for <b>@{[esc_html($version)]}</b>,
+> +however git version <b>@{[esc_html($git_version)]}</b> was found on server,
+> +and administrator requested strict version checking.
+> +</p>
+> +<p>
+> +Please contact the server administrator${admin_contact} to either configure
+> +gitweb to allow mismatched versions, or update git or gitweb installation.
+> +</p>
+> +EOT
+> +	die_error(500, $err_msg);
+> +}
+
+I'm sorry to be this picky, but don't you think that caller should not need
+to know "intimate" details on how die_error works.  In particular please
+notice that you must have known that die_error wraps its output in <div>...
+which is not even mentioned in comments.
+
+The second argument of die_error() subroutine is meant to be alternative
+description of error condition: short and one line.  For situations such
+like this one, where we want to describe error in more details, it would
+be better, I think, to change signature of die_error() to take (optionally)
+three arguments, and use 'die_error(500, undef, $err_msg);', with $err_msg
+starting from '<h1>...</h1>'.
+
+@@ -3460,6 +3460,7 @@
+ sub die_error {
+ 	my $status = shift || 500;
+ 	my $error = shift || "Internal server error";
++	my $extra = shift;
+ 
+ 	my %http_responses = (
+ 		400 => '400 Bad Request',
+@@ -3475,8 +3476,13 @@ sub die_error {
+ <br /><br />
+ $status - $error
+ <br />
+-</div>
+ EOF
++	if (defined $extra) {
++		print "<hr />\n" .
++		      "$extra\n";
++	}
++	print "</div>\n";
++
+ 	git_footer_html();
+ 	exit;
+ }
+
+
+Other that this minor issue it looks good.
+
+-- 
+Jakub Narebski
+Poland
