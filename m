@@ -1,59 +1,79 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 0/6] Re: Documentation: warn prominently against
- merging  with dirty trees
-Date: Wed, 13 Jan 2010 11:44:33 +0100
-Message-ID: <20100113104433.GC25382@machine.or.cz>
-References: <cover.1263081032.git.trast@student.ethz.ch>
- <e330d8ca1a9ec38ce40b0f67123b1dd893f0b31c.1263081032.git.trast@student.ethz.ch>
- <20100110044949.GA8974@progeny.tock>
- <7vskaefp2v.fsf@alter.siamese.dyndns.org>
- <20100111021322.GA8480@progeny.tock>
- <7vzl4lbcfl.fsf@alter.siamese.dyndns.org>
- <20100111041318.GA9806@progeny.tock>
- <20100111082123.GA23742@progeny.tock>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: default behaviour for `gitmerge` (no arguments)
+Date: Wed, 13 Jan 2010 12:04:19 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1001131202510.3043@intel-tinevez-2-302>
+References: <loom.20100111T185144-655@post.gmane.org> <7v7hrojukz.fsf@alter.siamese.dyndns.org> <20100112162355.GB25092@coredump.intra.peff.net> <7vhbqr2nxt.fsf@alter.siamese.dyndns.org> <20100112182550.GA15696@coredump.intra.peff.net>
+ <7vwrzmqypn.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1001131024420.3043@intel-tinevez-2-302> <7v6376pc9w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 11:54:17 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Gareth Adams <gareth.adams@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 13 12:04:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NV0rg-00069V-SJ
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 11:54:17 +0100
+	id 1NV11Y-0001nI-3l
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 12:04:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755454Ab0AMKyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 05:54:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755317Ab0AMKyK
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 05:54:10 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:42360 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755259Ab0AMKyK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 05:54:10 -0500
-X-Greylist: delayed 573 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Jan 2010 05:54:09 EST
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 1EDF6125A0E8; Wed, 13 Jan 2010 11:44:34 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20100111082123.GA23742@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755465Ab0AMLEX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 06:04:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755487Ab0AMLEX
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 06:04:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60668 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754959Ab0AMLEX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 06:04:23 -0500
+Received: (qmail invoked by alias); 13 Jan 2010 11:04:20 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp061) with SMTP; 13 Jan 2010 12:04:20 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+0aPAKI5+0TKyXtsxU8WduUNOKfAuJmpS1t13bPs
+	FkC/+8VVwBnMwE
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <7v6376pc9w.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136809>
 
-On Mon, Jan 11, 2010 at 02:21:23AM -0600, Jonathan Nieder wrote:
-> Jonathan Nieder (6):
->   Documentation: clarify one-line description for merge
+Hi,
 
-I don't think this is an improvement and prefer the original phrasing.
+On Wed, 13 Jan 2010, Junio C Hamano wrote:
 
->   Documentation: merge: move configuration section to the end
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> I wondered why it doesn't hook into interpret_branch_name(), and 
+> >> instead adds itself to the static substitute_branch_name(); it 
+> >> forbids the use of the syntax from by callers of strbuf_branchname().
+> >
+> > I _think_ it was to allow something like
+> >
+> > 	git log -g @{u}
+> >
+> > but frankly, this is so long ago, I do not remember, I reconstructed this 
+> > reasoning as being the most likely.
+> 
+> That is not the question I was asking.
+> 
+> If you compare substitute_branch_name() and interpret_branch_name() before
+> your patch, you will notice that they are _meant_ to do the same thing,
+> with different external API, only because many callers in sha1_name.c do
+> not use strbuf to hold their names.  The primary API is the latter (which
+> is extern), and the former (which is static) is merely a helping wrapper
+> that is internal to sha1_name.c
 
-Ack.
+So you meant to say that substitute_branch_name() calls 
+interpret_branch_name(), so the change should be in the latter.  (This is 
+supposed to be the summary of your 4 paragraphs.)
 
-I will reply to the other patches in separate mails.
+I have no problems with that, except that I do not have the time to do it 
+myself.
 
-				Petr "Pasky" Baudis
+Ciao,
+Dscho
