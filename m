@@ -1,95 +1,149 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: remote to push to local branch: hung up unexpectedly
-Date: Wed, 13 Jan 2010 22:49:44 +0800
-Message-ID: <be6fef0d1001130649i6a5f4f29j10800f2532d97796@mail.gmail.com>
-References: <20100113130843.GA13545@redhat.com>
-	 <be6fef0d1001130615k17855680s57952498260ad09d@mail.gmail.com>
-	 <20100113142800.GA13901@redhat.com>
+From: Michal Sojka <sojkam1@fel.cvut.cz>
+Subject: Re: [PATCH/RFC] filter-branch: Fix to allow replacing submodules with another content
+Date: Wed, 13 Jan 2010 15:56:39 +0100
+Message-ID: <201001131556.40167.sojkam1@fel.cvut.cz>
+References: <1263227634-11259-1-git-send-email-sojkam1@fel.cvut.cz> <alpine.DEB.1.00.1001111901380.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 15:50:02 2010
+Content-Type: Text/Plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 13 15:56:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NV4Xn-0004Ti-Bc
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 15:49:59 +0100
+	id 1NV4eQ-0007cA-PY
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 15:56:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755559Ab0AMOtq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jan 2010 09:49:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755442Ab0AMOtp
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 09:49:45 -0500
-Received: from mail-iw0-f197.google.com ([209.85.223.197]:61220 "EHLO
-	mail-iw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755338Ab0AMOtp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jan 2010 09:49:45 -0500
-Received: by iwn35 with SMTP id 35so16410468iwn.4
-        for <git@vger.kernel.org>; Wed, 13 Jan 2010 06:49:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AX2RozO82kVZVQ3LsIkHGXnk6fYPA4QR4PHTP9V3ZPE=;
-        b=bkO4ugHulfRGbaRRTHfEK7uCe0jRfcY555jDKf7aqA7n1MvnGaAT1y6JylffV9+7BN
-         pez0Di1VAcAKDruVphAR004w0HrVFuui0/8BWQEub8JpDmMPshQihCedJnTdxEWXTo6L
-         3jvEUzhaOq2TgtRC/9q5PlnHvRhaw0/yz4QVc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=b8zZIUvbKxiJJG1wq3NpSYAMBT2+pEVP8MasOb/Q9faRD8vcRVLJsHZuG97xSoAi29
-         Qj6HqcbJ3bylUPbQjCQ9omCPVYnRwaPYDwGU/6GqxceFfMjFEgL7o7GqYb3VA5o+dY1j
-         0I0kQ1wEbbLZt36nWJz3btSNxQ4lmfRc5C7Qs=
-Received: by 10.231.123.216 with SMTP id q24mr1378540ibr.43.1263394184561; 
-	Wed, 13 Jan 2010 06:49:44 -0800 (PST)
-In-Reply-To: <20100113142800.GA13901@redhat.com>
+	id S1755534Ab0AMO4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 09:56:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755469Ab0AMO4r
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 09:56:47 -0500
+Received: from max.feld.cvut.cz ([147.32.192.36]:55959 "EHLO max.feld.cvut.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932091Ab0AMO4q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jan 2010 09:56:46 -0500
+Received: from localhost (unknown [192.168.200.4])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 04FA919F3392;
+	Wed, 13 Jan 2010 15:56:45 +0100 (CET)
+X-Virus-Scanned: IMAP AMAVIS
+Received: from max.feld.cvut.cz ([192.168.200.1])
+	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
+	with ESMTP id j3zvTezX59xt; Wed, 13 Jan 2010 15:56:40 +0100 (CET)
+Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
+	by max.feld.cvut.cz (Postfix) with ESMTP id BCD0F19F3337;
+	Wed, 13 Jan 2010 15:56:40 +0100 (CET)
+Received: from steelpick.localnet (k335-30.felk.cvut.cz [147.32.86.30])
+	(Authenticated sender: sojkam1)
+	by imap.feld.cvut.cz (Postfix) with ESMTPSA id 93B41FA003;
+	Wed, 13 Jan 2010 15:56:40 +0100 (CET)
+User-Agent: KMail/1.12.4 (Linux/2.6.31.9-amd64; KDE/4.3.4; x86_64; ; )
+In-Reply-To: <alpine.DEB.1.00.1001111901380.4985@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136827>
+
+On Monday 11 of January 2010 19:02:06 Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 11 Jan 2010, Michal Sojka wrote:
+> > When git filter-branch is used to replace a submodule with another
+> > content, it always fails on the first commit. Consider a repository with
+> > directory submodule containing a submodule. If I want to remove the
+> > submodule and replace it with a file, the following command fails.
+> >
+> > git filter-branch --tree-filter 'rm -rf submodule &&
+> > 				 git rm -q submodule &&
+> > 				 mkdir submodule &&
+> > 				 touch submodule/file'
+> >
+> > The error message is:
+> > error: submodule: is a directory - add files inside instead
+> >
+> > The reason is that git diff-index, which generates a part of the list of
+> > files to update-index, emits also the removed submodule even if it was
+> > replaced by a real directory.
+> >
+> > Adding --ignored-submodules solves the problem for me and
+> > tests in t7003-filter-branch.sh passes correctly.
+> 
+> Have you tested replacing one revision of a submodule with another?
 
 Hi,
 
-On Wed, Jan 13, 2010 at 10:28 PM, Michael S. Tsirkin <mst@redhat.com> w=
-rote:
-> On Wed, Jan 13, 2010 at 10:15:38PM +0800, Tay Ray Chuan wrote:
->> Hi,
->>
->> On Wed, Jan 13, 2010 at 9:08 PM, Michael S. Tsirkin <mst@redhat.com>=
- wrote:
->> > with url =3D /scm/qemu =A0 (this is repo path)
->>
->> Are you working in a "normal" git setup with a .git folder and the
->> files checked out? Or are you working with a --bare repo?
->
-> It's a normal setup.
+no, I didn't try it. I wanted to test it now but it seems to me that
+it cannot work even without my patch. I may be trying wrong
+--tree-filter. If anybody has a better idea, let me know.
 
-I used this script with v1.6.2.5, push was ok.
+I suppose that in order to change the revision of the submodule within
+the tree filter, I need to checkout the original revision first. Then
+I could use e.g. git reset HEAD^ to change it. Unfortunately even
+checkout of the submodule fails:
 
-  #!/bin/bash
-  GITZ=3D"/home/rctay/ext01/dev/git/git-1.6.2.5/git \
-  --exec-path=3D/home/rctay/ext01/dev/git/git-1.6.2.5/"
-  $GITZ --version
+$ git filter-branch --tree-filter "git submodule update --init" HEAD
+Clone of '/tmp/submod' into submodule path 'submod' failed
+tree filter failed: git submodule update --init
 
-  mkdir foo
-  cd foo
-  $GITZ init
+This is because filter-branch sets GIT_WORKING_TREE to "." which
+causes clone to fail.
 
-  echo hello > file1
-  $GITZ add file1
-  $GITZ commit -m "new file"
-  $GITZ checkout -b pci
+Replacing a revision of a submodule can be done only by manipulating
+index, but for this case you would use index-filter rather than
+tree-filter. Right?
 
-  $GITZ config remote.anthony.url .
-  $GITZ config remote.anthony.push +refs/heads/pci:refs/heads/anthony
+I have created a few tests for testing filter-branch with submodules.
+See the patch bellow.
 
-  $GITZ push anthony
+Michal
 
---=20
-Cheers,
-Ray Chuan
+>From 9aa38185d795061a2f00204d181244f906280b5a Mon Sep 17 00:00:00 2001
+From: Michal Sojka <sojkam1@fel.cvut.cz>
+Date: Wed, 13 Jan 2010 15:15:28 +0100
+Subject: [PATCH] filter-branch: Add tests for submodules
+
+
+Signed-off-by: Michal Sojka <sojkam1@fel.cvut.cz>
+---
+ t/t7003-filter-branch.sh |   26 ++++++++++++++++++++++++++
+ 1 files changed, 26 insertions(+), 0 deletions(-)
+
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 9503875..daebd17 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -306,4 +306,30 @@ test_expect_success '--remap-to-ancestor with filename filters' '
+ 	test $orig_invariant = $(git rev-parse invariant)
+ '
+ 
++test_expect_success 'setup submodule' '
++	rm -rf * .*
++	git init &&
++	test_commit file &&
++	mkdir submod &&
++	submodurl="$PWD/submod"
++	( cd submod &&
++	  git init &&
++	  test_commit file-in-submod ) &&
++	git submodule add "$submodurl"
++	git commit -m "added submodule" &&
++	test_commit add-file &&
++	( cd submod && test_commit add-in-submodule ) &&
++	git add submod &&
++	git commit -m "changed submodule"
++'
++
++test_expect_failure 'rewrite submodule with another content' '
++	git filter-branch --tree-filter "test -d submod && {
++					 rm -rf submod &&
++					 git rm -rf --quiet submod &&
++					 mkdir submod &&
++					 : > submod/file
++					 } || :"
++'
++
+ test_done
+-- 
+1.6.6
