@@ -1,146 +1,121 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 1/3] strbuf_expand: convert "%%" to "%"
-Date: Wed, 13 Jan 2010 12:35:31 -0500
-Message-ID: <20100113173531.GA16786@coredump.intra.peff.net>
-References: <20100113173408.GA16652@coredump.intra.peff.net>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [RFC 0/2] Git-over-TLS (gits://) client side support
+Date: Wed, 13 Jan 2010 19:36:10 +0200
+Message-ID: <20100113173610.GA7609@Knoppix>
+References: <1263388786-6880-1-git-send-email-ilari.liusvaara@elisanet.fi>
+ <fcaeb9bf1001130539p2971caavd101d46de9269769@mail.gmail.com>
+ <20100113135753.GA7095@Knoppix>
+ <20100113141218.GA17687@inner.home.ulmdo.de>
+ <20100113144745.GA7246@Knoppix>
+ <20100113161711.GB17687@inner.home.ulmdo.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Adam Megacz <adam@megacz.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 18:35:47 2010
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 13 18:36:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NV78D-0003qE-C0
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 18:35:45 +0100
+	id 1NV78n-000471-NA
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 18:36:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756215Ab0AMRfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 12:35:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756159Ab0AMRfl
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 12:35:41 -0500
-Received: from peff.net ([208.65.91.99]:46152 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756087Ab0AMRfk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 12:35:40 -0500
-Received: (qmail 25298 invoked by uid 107); 13 Jan 2010 17:40:30 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 13 Jan 2010 12:40:30 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jan 2010 12:35:31 -0500
+	id S1756220Ab0AMRgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 12:36:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756218Ab0AMRgR
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 12:36:17 -0500
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:39860 "EHLO
+	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756217Ab0AMRgQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 12:36:16 -0500
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id 2120DEF6A9;
+	Wed, 13 Jan 2010 19:36:15 +0200 (EET)
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A01C300D85E; Wed, 13 Jan 2010 19:36:15 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id E668D27D86;
+	Wed, 13 Jan 2010 19:36:11 +0200 (EET)
 Content-Disposition: inline
-In-Reply-To: <20100113173408.GA16652@coredump.intra.peff.net>
+In-Reply-To: <20100113161711.GB17687@inner.home.ulmdo.de>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136849>
 
-The only way to safely quote arbitrary text in a
-pretty-print user format is to replace instances of "%" with
-"%x25". This is slightly unreadable, and many users would
-expect "%%" to produce a single "%", as that is what printf
-format specifiers do.
+On Wed, Jan 13, 2010 at 05:17:11PM +0100, Andreas Krey wrote:
+> On Wed, 13 Jan 2010 16:47:47 +0000, Ilari Liusvaara wrote:
+> 
+> If you don't want public read access then you need to wedge a script
+> between stunnel and git itself that checks whether authentication is
+> present, yes.
 
-This patch converts "%%" to "%" for all users of
-strbuf_expand:
-
- 1. git-daemon interpolated paths
-
- 2. pretty-print user formats
-
- 3. merge driver command lines
-
-Case (1) was already doing the conversion itself outside of
-strbuf_expand. Case (2) is the intended beneficiary of this
-patch. Case (3) users probably won't notice, but as this is
-user-facing behavior, consistently providing the quoting
-mechanism makes sense.
-
-Signed-off-by: Jeff King <peff@coredump.intra.peff.net>
----
-Changes from v1:
-  - note change in strbuf api docs
-
- Documentation/pretty-formats.txt       |    1 +
- Documentation/technical/api-strbuf.txt |    4 ++++
- daemon.c                               |    1 -
- strbuf.c                               |    6 ++++++
- t/t6006-rev-list-format.sh             |    7 +++++++
- 5 files changed, 18 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 53a9168..1686a54 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -134,6 +134,7 @@ The placeholders are:
- - '%C(...)': color specification, as described in color.branch.* config option
- - '%m': left, right or boundary mark
- - '%n': newline
-+- '%%': a raw '%'
- - '%x00': print a byte from a hex code
- - '%w([<w>[,<i1>[,<i2>]]])': switch line wrapping, like the -w option of
-   linkgit:git-shortlog[1].
-diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
-index a0e0f85..3b1da10 100644
---- a/Documentation/technical/api-strbuf.txt
-+++ b/Documentation/technical/api-strbuf.txt
-@@ -199,6 +199,10 @@ character if the letter `n` appears after a `%`.  The function returns
- the length of the placeholder recognized and `strbuf_expand()` skips
- over it.
- +
-+The format `%%` is automatically expanded to a single `%` as a quoting
-+mechanism; callers do not need to handle the `%` placeholder themselves,
-+and the callback function will not be invoked for this placeholder.
-++
- All other characters (non-percent and not skipped ones) are copied
- verbatim to the strbuf.  If the callback returned zero, meaning that the
- placeholder is unknown, then the percent sign is copied, too.
-diff --git a/daemon.c b/daemon.c
-index 918e560..360635e 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -147,7 +147,6 @@ static char *path_ok(char *directory)
- 			{ "IP", ip_address },
- 			{ "P", tcp_port },
- 			{ "D", directory },
--			{ "%", "%" },
- 			{ NULL }
- 		};
+That would violate layering badly. You need to decode the request
+first before you can authorize. And the git daemon does that.
  
-diff --git a/strbuf.c b/strbuf.c
-index a6153dc..6cbc1fc 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -227,6 +227,12 @@ void strbuf_expand(struct strbuf *sb, const char *format, expand_fn_t fn,
- 			break;
- 		format = percent + 1;
- 
-+		if (*format == '%') {
-+			strbuf_addch(sb, '%');
-+			format++;
-+			continue;
-+		}
-+
- 		consumed = fn(sb, format, context);
- 		if (consumed)
- 			format += consumed;
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index 5719315..b0047d3 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -19,6 +19,13 @@ test_cmp expect.$1 output.$1
- "
- }
- 
-+test_format percent %%h <<'EOF'
-+commit 131a310eb913d107dd3c09a65d1651175898735d
-+%h
-+commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
-+%h
-+EOF
-+
- test_format hash %H%n%h <<'EOF'
- commit 131a310eb913d107dd3c09a65d1651175898735d
- 131a310eb913d107dd3c09a65d1651175898735d
--- 
-1.6.6.140.g92e4d.dirty
+> > And besides: Gits:// uses certificates as keypairs,
+> 
+> My gripe with this is that I would expect gits: to be the same
+> as git: except that there is SSL underneath. git: does not have
+> authentication, so there should be none in gits: except what
+> SSL provides.
+
+All authentication in gits:// is at TLS (SSL) level or even lower.
+
+> (And the auth via unix domain sockets would be
+> usable for plain git: as well; there is no reason to encrypt
+> local traffic?)
+
+In fact, git-remote-gits has unencrypted mode (should be compatible
+with git-daemon). The reason its there is mainly for Unix domain
+sockets support and more advanced IPv6 support (interface indexes and
+numeric addresses actually work).
+
+> (Is the unix auth via unix domain sockets part of GnuTLS?)
+
+No, that server-only feature is part of the OS itself. In fact, it
+needs no client-side support.
+
+> That's another story. I think that it would be possible nowadays
+> to implement gits:// (in both ways) via core.gitproxy and a server-side
+> wrapper program (stunnel or else), but that has the disadvantage of
+> being unable to just provide a clone url without installing special
+> software besides git.
+
+GIT_PROXY abuse? There are even better ways: smart transport remote
+helpers (in next I think). Git can actually dispatch those (and yes,
+that's exactly what this uses).
+
+And gits:// client is also buildable selfstanding. That would require
+new client software, but its still nicer than GIT_PROXY abuse.
+
+Another problem with GIT_PROXY abuse: How to deal with potentially
+multiple custom protocols. Remote helpers can deal with that nicely.
+
+> ...
+> > The authentication support for smart-http seems pretty bad (making the
+> > old mistake of not binding authentications).
+> 
+> Mind to explain 'binding authentications'?
+
+Actually, that was little badly choosen term and not the true problem,
+but the basic problem is that one peer has to trust the the other peer's
+authentication for security of its own authentication.
+
+In how authentications used by gits:// are designed, even if client doesn't
+detect trying to authenticate with attacker, the attacker doesn't get any
+replayable credentials without breaking crypto keys (as opposed to just
+passwords). This holds true even for password authentication (PAKE-type
+scheme is used).
+
+HTTP basic auth can be trivially sniffed if attacker can become other end
+of the encrypted link (crypto is by far the strongest link...). Digest auth
+is harder, but its essentially brute force against password (as opposed to
+trying to break a key).
+
+
+-Ilari
