@@ -1,75 +1,87 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: git-svn doesn't fetch an empty directory with svn:externals
-Date: Wed, 13 Jan 2010 16:11:02 +0100
-Message-ID: <40aa078e1001130711gf602ed4pa68cbeb8ba590600@mail.gmail.com>
-References: <loom.20100113T124446-187@post.gmane.org>
-Reply-To: kusmabite@gmail.com
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: remote to push to local branch: hung up unexpectedly
+Date: Wed, 13 Jan 2010 17:12:47 +0200
+Message-ID: <20100113151247.GB14248@redhat.com>
+References: <20100113130843.GA13545@redhat.com> <be6fef0d1001130615k17855680s57952498260ad09d@mail.gmail.com> <20100113142800.GA13901@redhat.com> <be6fef0d1001130649i6a5f4f29j10800f2532d97796@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Michel Jouvin <jouvin@lal.in2p3.fr>
-X-From: git-owner@vger.kernel.org Wed Jan 13 16:11:14 2010
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 13 16:15:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NV4sM-00068k-AG
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 16:11:14 +0100
+	id 1NV4wm-0000Ly-GP
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 16:15:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755831Ab0AMPLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 10:11:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755696Ab0AMPLK
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 10:11:10 -0500
-Received: from mail-fx0-f225.google.com ([209.85.220.225]:45036 "EHLO
-	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755823Ab0AMPLJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 10:11:09 -0500
-Received: by fxm25 with SMTP id 25so262962fxm.21
-        for <git@vger.kernel.org>; Wed, 13 Jan 2010 07:11:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=4aTpID+rO5PygA87274rJzW0mjh76jL77Svdn0gQXzQ=;
-        b=eKz8Zhf5gVR67OvISbwdusDF+XGU0KTfEEOs+Si0hsyT+wlyjgNNPWIrWP04j/bhe2
-         o15MPosJyATBvaJP+y1/XSz+COFwlU5Kpz2A9Z16XFxIy1fCGUKDzmrDzDOUrb9v++JE
-         W/U9t5prgvHd3VBouyE2hN8cdR6RikGduI2OA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        b=xTyKKNC+mLE2zC4eswYUvPcOMB6tkbAMRB1E2AS+uXxpj8bGSCBobrs2sp4RIXWGS2
-         cAYWFPS0+EagjrVp91yGPQGxM6UaG9kg/BdlxEtobsXlbq8st/vlGa6YEc4NRunj6uKJ
-         eyKJc3xGsz2bypB1TkwMGgwHU1fppc4r4EgAM=
-Received: by 10.216.85.14 with SMTP id t14mr4206900wee.222.1263395462810; Wed, 
-	13 Jan 2010 07:11:02 -0800 (PST)
-In-Reply-To: <loom.20100113T124446-187@post.gmane.org>
+	id S1755835Ab0AMPPq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jan 2010 10:15:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755836Ab0AMPPp
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 10:15:45 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:8781 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755785Ab0AMPPo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 10:15:44 -0500
+Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id o0DFFgCR001690
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Wed, 13 Jan 2010 10:15:42 -0500
+Received: from redhat.com (vpn2-11-140.ams2.redhat.com [10.36.11.140])
+	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id o0DFFehT001988;
+	Wed, 13 Jan 2010 10:15:41 -0500
+Content-Disposition: inline
+In-Reply-To: <be6fef0d1001130649i6a5f4f29j10800f2532d97796@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136830>
 
-On Wed, Jan 13, 2010 at 12:49 PM, Michel Jouvin <jouvin@lal.in2p3.fr> wrote:
+On Wed, Jan 13, 2010 at 10:49:44PM +0800, Tay Ray Chuan wrote:
 > Hi,
->
-> I'm running in a problem when trying to fetch a SVN repository branch that
-> contains an empty directory with a SVN property svn:externals attached. This
-> directory is missing in the Git repository/checkout. I was unable to find an
-> option to have it added. I'd like to get it added to readd the externals using
-> the trick described in http://kerneltrap.org/mailarchive/git/2007/5/1/245002.
-> Without it, I have to recreate it in git, add it to .gitignore... which is
-> painful.
->
-> BTW, I didn't find any documentation on empty dirs handling by git-svn. They
-> seems to be often removed which is not always desirable. Are they options
-> related to this?
->
+>=20
+> On Wed, Jan 13, 2010 at 10:28 PM, Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
+> > On Wed, Jan 13, 2010 at 10:15:38PM +0800, Tay Ray Chuan wrote:
+> >> Hi,
+> >>
+> >> On Wed, Jan 13, 2010 at 9:08 PM, Michael S. Tsirkin <mst@redhat.co=
+m> wrote:
+> >> > with url =3D /scm/qemu =A0 (this is repo path)
+> >>
+> >> Are you working in a "normal" git setup with a .git folder and the
+> >> files checked out? Or are you working with a --bare repo?
+> >
+> > It's a normal setup.
+>=20
+> I used this script with v1.6.2.5, push was ok.
 
-I don't think this is git-svn's fault, but simply that git doesn't
-track directories (just files). I guess git-svn could create some sort
-of place-holder files in empty folders, but currently it doesn't
-AFAIK.
+And so it was for me. Also if I clone the tree everything
+is OK.  So it's specific to this tree.
 
--- 
-Erik "kusma" Faye-Lund
+>   #!/bin/bash
+>   GITZ=3D"/home/rctay/ext01/dev/git/git-1.6.2.5/git \
+>   --exec-path=3D/home/rctay/ext01/dev/git/git-1.6.2.5/"
+>   $GITZ --version
+>=20
+>   mkdir foo
+>   cd foo
+>   $GITZ init
+>=20
+>   echo hello > file1
+>   $GITZ add file1
+>   $GITZ commit -m "new file"
+>   $GITZ checkout -b pci
+>=20
+>   $GITZ config remote.anthony.url .
+>   $GITZ config remote.anthony.push +refs/heads/pci:refs/heads/anthony
+>=20
+>   $GITZ push anthony
+>=20
+> --=20
+> Cheers,
+> Ray Chuan
