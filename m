@@ -1,72 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH master] expand "<branch>" in format.subjectprefix
-Date: Wed, 13 Jan 2010 15:29:31 -0500
-Message-ID: <20100113202930.GC23018@coredump.intra.peff.net>
-References: <1263402988-925-1-git-send-email-rep.dot.nop@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Bernhard Reutner-Fischer <rep.dot.nop@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 21:29:48 2010
+From: Peter Collingbourne <peter@pcc.me.uk>
+Subject: [PATCH] Removed the .git/config check from "git submodule status"
+Date: Wed, 13 Jan 2010 20:31:39 +0000
+Message-ID: <1263414699-1613-1-git-send-email-peter@pcc.me.uk>
+Cc: Lars Hjemli <hjemli@gmail.com>,
+	Peter Collingbourne <peter@pcc.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 13 21:36:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NV9qa-0005WG-Qu
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 21:29:45 +0100
+	id 1NV9wZ-0008Oi-KQ
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jan 2010 21:35:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755472Ab0AMU3l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 15:29:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754945Ab0AMU3l
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 15:29:41 -0500
-Received: from peff.net ([208.65.91.99]:49291 "EHLO peff.net"
+	id S1755338Ab0AMUfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 15:35:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754906Ab0AMUfv
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 15:35:51 -0500
+Received: from master.pcc.me.uk ([207.192.74.179]:50544 "EHLO master.pcc.me.uk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753681Ab0AMU3l (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 15:29:41 -0500
-Received: (qmail 27707 invoked by uid 107); 13 Jan 2010 20:34:30 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 13 Jan 2010 15:34:30 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jan 2010 15:29:31 -0500
-Content-Disposition: inline
-In-Reply-To: <1263402988-925-1-git-send-email-rep.dot.nop@gmail.com>
+	id S1754227Ab0AMUfv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 15:35:51 -0500
+Received: from lapas.pcc.me.uk ([10.179.130.3])
+	by master.pcc.me.uk with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <peter@pcc.me.uk>)
+	id 1NV9wT-00050P-IG; Wed, 13 Jan 2010 20:35:49 +0000
+Received: from peter by lapas.pcc.me.uk with local (Exim 4.69)
+	(envelope-from <peter@pcc.me.uk>)
+	id 1NV9tS-0000QY-Fe; Wed, 13 Jan 2010 20:32:42 +0000
+X-Mailer: git-send-email 1.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136877>
 
-On Wed, Jan 13, 2010 at 06:16:28PM +0100, Bernhard Reutner-Fischer wrote:
+"git submodule status" requires that the following conditions be met
+for a submodule to be considered initialised:
 
-> Replace "<branch>" with the current branch name for
-> [format]
->         subjectprefix = PATCH <branch>
-> 
-> A subject-prefix given on the command-line overrides the one given in
-> the config.
+1) The existence of an entry in .git/config for that module
+2) The existence of a .git subdirectory under the submodule directory
 
-I don't have a big opinion on whether this feature is useful (it
-wouldn't be to me, but I can see workflows where it could be).
+Plumbing only requires condition 2 to be met, and does not care about
+condition 1 (these entries being part of the git-submodule porcelain).
+Therefore removing condition 1 from "git submodule status" will make
+git-submodule's view of the world consistent with plumbing's thus
+eliminating unexpected behaviour.
 
-I'm not sure that "current branch" makes sense, though.  format-patch is
-about showing commits, and the current branch is not a property of that
-commit.  It is about where you happen to be currently. So doing:
+Furthermore if the user is using the git-submodule porcelain and
+not cloning submodules himself, condition 1 should always follow
+from condition 2 because "git submodule update" requires that the
+submodule entry in .git/config be present.
 
-  git checkout X
-  git format-patch Y..Z --subject-prefix "PATCH <branch>"
+By removing condition 1 we can also remove the call to module_name from
+cmd_status.  "git submodule status" will now work if the user is using
+a submodule porcelain other than git-submodule, because module_name
+requires that the .gitmodules file be maintained by git-submodule.
 
-shows "X" which is not really useful information. Something like git
-log's "--source" would be more useful; it shows the command-line ref
-that was used to reach a given commit.
+Signed-off-by: Peter Collingbourne <peter@pcc.me.uk>
+---
+ git-submodule.sh           |    4 +---
+ t/t7400-submodule-basic.sh |    8 ++------
+ 2 files changed, 3 insertions(+), 9 deletions(-)
 
-Also, please don't introduce a new substitution syntax. We already have
-code to do %-expansion. In fact, if you are going to do something like
-this, maybe it would be best as two patches:
-
-  1. Support '%B' as a user-format expansion for the --source branch.
-
-  2. Support user-format expansions in the subject prefix.
-
-But I don't know if people would find any of the other substitutions
-useful in the subject line.
-
--Peff
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 77d2232..811f001 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -738,10 +738,8 @@ cmd_status()
+ 	module_list "$@" |
+ 	while read mode sha1 stage path
+ 	do
+-		name=$(module_name "$path") || exit
+-		url=$(git config submodule."$name".url)
+ 		displaypath="$prefix$path"
+-		if test -z "$url" || ! test -d "$path"/.git -o -f "$path"/.git
++		if ! test -d "$path"/.git -o -f "$path"/.git
+ 		then
+ 			say "-$sha1 $displaypath"
+ 			continue;
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 1a4dc5f..c16fb14 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -106,12 +106,8 @@ test_expect_success 'submodule add with ./, /.. and // in path' '
+ 	)
+ '
+ 
+-test_expect_success 'status should fail for unmapped paths' '
+-	if git submodule status
+-	then
+-		echo "[OOPS] submodule status succeeded"
+-		false
+-	elif ! GIT_CONFIG=.gitmodules git config submodule.example.path init
++test_expect_success 'mapping a path using git config' '
++	if ! GIT_CONFIG=.gitmodules git config submodule.example.path init
+ 	then
+ 		echo "[OOPS] git config failed to update .gitmodules"
+ 		false
+-- 
+1.6.5
