@@ -1,110 +1,62 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: [RFC 0/2] Git-over-TLS (gits://) client side support
-Date: Thu, 14 Jan 2010 01:00:24 +0200
-Message-ID: <20100113230023.GA9171@Knoppix>
-References: <20100113144745.GA7246@Knoppix>
- <20100113161711.GB17687@inner.home.ulmdo.de>
- <20100113173610.GA7609@Knoppix>
- <20100113183520.GA23674@inner.home.ulmdo.de>
- <20100113191802.GA8110@Knoppix>
- <32541b131001131130i6afae1a1xd3a70e5de5daa5cf@mail.gmail.com>
- <20100113200629.GA8383@Knoppix>
- <32541b131001131213m75b4baefsc70a4cbf3c8431c8@mail.gmail.com>
- <20100113210414.GA8535@Knoppix>
- <32541b131001131403u162bc6ebpd551ed19aadde7fb@mail.gmail.com>
+From: Leo Razoumov <slonik.az@gmail.com>
+Subject: tag namespace?
+Date: Wed, 13 Jan 2010 18:03:59 -0500
+Message-ID: <ee2a733e1001131503x5a1da0a9g562bbfb5c0f19fd2@mail.gmail.com>
+Reply-To: SLONIK.AZ@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Andreas Krey <a.krey@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 00:00:36 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 14 00:04:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVCCZ-0002mp-GV
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 00:00:35 +0100
+	id 1NVCG6-0004D0-Rh
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 00:04:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756065Ab0AMXAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 18:00:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756034Ab0AMXAb
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 18:00:31 -0500
-Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:58577 "EHLO
-	emh04.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755947Ab0AMXAb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 18:00:31 -0500
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh04-2.mail.saunalahti.fi (Postfix) with SMTP id A46FC13BAB5;
-	Thu, 14 Jan 2010 01:00:29 +0200 (EET)
-Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A05E989A01A; Thu, 14 Jan 2010 01:00:29 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id 68FC44065;
-	Thu, 14 Jan 2010 01:00:25 +0200 (EET)
-Content-Disposition: inline
-In-Reply-To: <32541b131001131403u162bc6ebpd551ed19aadde7fb@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
+	id S1756084Ab0AMXEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 18:04:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754985Ab0AMXEL
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 18:04:11 -0500
+Received: from mail-ew0-f209.google.com ([209.85.219.209]:51251 "EHLO
+	mail-ew0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753849Ab0AMXEK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 18:04:10 -0500
+Received: by ewy1 with SMTP id 1so188220ewy.28
+        for <git@vger.kernel.org>; Wed, 13 Jan 2010 15:04:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:date:message-id
+         :subject:from:to:content-type;
+        bh=/lB1fZgs+wRNC5ClbSJJ8auNGSNeBw+estqr5Kk5o64=;
+        b=hN0wgqAth5sB43DaYjOAny+WLe2k91RTrH9KQOH+8WVCEmyEdL2xTT7KgdaUW5au9p
+         Dz9DAI9QVx4SglPXSsaHaWixqc+crFAzJRrQ9+TOdjRdzhbN5zvsp6Ikz4xigVPdB/YL
+         4A6jvJJTi4mPBBHj+oJuCsvNVRLvFGibcoegI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:date:message-id:subject:from:to:content-type;
+        b=IYI8G7QbDoYy0lTu305zdiue0XIeKg+h4dGKKXZiWNPcAudufSdpAv29+ODVlWzn0B
+         s5Vtj45PG6QtC/fvIZz85NZYLhYmyIe6qFf8L8Jr0Jvt583v9156B0nl1Qzk54e2DdC9
+         b66TFeIU4BBrmMaLohgUBe9REkpwPJ796JIuc=
+Received: by 10.216.91.67 with SMTP id g45mr831965wef.190.1263423839103; Wed, 
+	13 Jan 2010 15:03:59 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136893>
 
-On Wed, Jan 13, 2010 at 05:03:45PM -0500, Avery Pennarun wrote:
-> On Wed, Jan 13, 2010 at 4:04 PM, Ilari Liusvaara
-> 
-> This is still not very illuminating.  How do you know your replacement
-> will not have these same failure modes? 
+Hi List,
+local and remote git branches live in different namespaces
+refs/heads/* and refs/remotes/* respectively. thus, fetching from
+remote repo never collides with local branches. Unfortunately, tags do
+not enjoy such a separation. When I use
+       git read-tree -prefix=libfoo/ -u remotes/foo/master
+remote tags suddenly populate my local tag space.  v1.0 comes from my
+project while v1.1 comes from foo.
 
-No client-side fallbacks, key auth works pseudonymously. That takes
-care of them pretty well.
+When using subtree merges is it possible to create a "remotes"
+namespace for tags?
+Something like --tagprefix option for git-read-tree or any better solution?
 
-> If you solve your main
-> annoyances with ssh, how do you know you won't introduce any new
-> annoying failure modes? 
-
-Ensuring that at least some information make back to client (presuably
-enough to figure out the problem).
-
-And then there are few failure modes that can't be helped no matter what
-I do (like mistaking protocol for P2P, git:// suffers from that as well).
-
-> *Why* can't ssh be fixed to solve the  problem?
-
-Client side fallbacks (may be desired or not!), service not being
-able to intervene on wheither to allow client or not in case of
-keypair auth.
-
->  Will I have to generate and manage yet another new set of
-> keys to use the new system?
-
-Yes. 
-
-> You seem to be positioning your implementation as a competitor to
-> *all* of ssh, https, and straight TLS (including stunnel),
-
-Only to smart http://, smart https:// and ssh://. 
-
-> and
-> moreover, presenting it as superior to all three.  This is surely
-> possible (they all suck differently), but it's going to be hard to
-> convince people.  And if your new security protocol *only* works with
-> git, it loses points automatically against other solutions. 
-
-The general design would be applicable to applications besides git, but
-this implementation is git-specific.
-
-And making it work like stunnel? On server-side that could work, but
-not on client side (and it would take quite extensive changes to 
-git-daemon).
-
-> (Even if
-> ssh is hard to set up, I've *already set it up*, so any new
-> alternative starts with an immediate negative score.)
-
-Well, if you like SSH more, then use ssh://...
-
--Ilari
+--Leo--
