@@ -1,101 +1,114 @@
-From: Marko Poutiainen <regs@sofistes.net>
-Subject: Re: Gitignore matching "git add" wildcard prevents operation
-Date: Thu, 14 Jan 2010 23:07:44 +0200
-Message-ID: <4B4F87A0.2090301@sofistes.net>
-References: <4B4F6000.4070005@sofistes.net> <20100114195234.GA26684@coredump.intra.peff.net>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: Removal of post-upload-hook
+Date: Thu, 14 Jan 2010 21:06:45 +0000
+Message-ID: <20100114210645.GE16921@orbis-terrarum.net>
+References: <6f8b45101001141001q40d8b746v8385bc6ae37a6af4@mail.gmail.com>
+ <20100114193607.GB25863@coredump.intra.peff.net>
+ <20100114194107.GA20033@spearce.org>
+ <20100114204305.GC26883@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 14 22:08:06 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ZmZU9S7l/XJx5q9b"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 14 22:13:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVWvF-0001Mp-7r
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 22:08:05 +0100
+	id 1NVX0b-0003e3-0u
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 22:13:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932263Ab0ANVHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 16:07:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932151Ab0ANVHw
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 16:07:52 -0500
-Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:41902 "EHLO
-	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932242Ab0ANVHu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 16:07:50 -0500
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id 8CF25EF484;
-	Thu, 14 Jan 2010 23:07:48 +0200 (EET)
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A00C656E5B4; Thu, 14 Jan 2010 23:07:48 +0200
-Received: from [192.168.0.24] (a91-155-40-90.elisa-laajakaista.fi [91.155.40.90])
-	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id 63F8227D9C;
-	Thu, 14 Jan 2010 23:07:46 +0200 (EET)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <20100114195234.GA26684@coredump.intra.peff.net>
-X-Enigmail-Version: 0.96.0
-X-Antivirus: VAMS
+	id S1754501Ab0ANVNd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 16:13:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753997Ab0ANVNc
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 16:13:32 -0500
+Received: from b01.ext.isohunt.com ([208.71.112.51]:53378 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753917Ab0ANVNc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 16:13:32 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Jan 2010 16:13:32 EST
+Received: (qmail 26083 invoked from network); 14 Jan 2010 21:06:47 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO grubbs.orbis-terrarum.net) (76.10.188.108)
+    by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (CAMELLIA256-SHA encrypted) ESMTPS; Thu, 14 Jan 2010 21:06:47 +0000
+Received: (qmail 13857 invoked by uid 10000); 14 Jan 2010 21:06:45 -0000
+Content-Disposition: inline
+In-Reply-To: <20100114204305.GC26883@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137026>
 
-Jeff King wrote:
-> On Thu, Jan 14, 2010 at 08:18:40PM +0200, Marko Poutiainen wrote:
-> 
->> It seems that that there is a bug related to how Git handles the add
->> command with wildcards if the wildcard also matches a file that is ignored.
->>
->> E.g (I activate the *.[ao] rule when editing .git/info/exclude):
->>
->> mep@Blackbird:~$ cd /tmp
->> mep@Blackbird:/tmp$ mkdir git
->> mep@Blackbird:/tmp$ cd git
->> mep@Blackbird:/tmp/git$ git init
->> Initialized empty Git repository in /tmp/git/.git/
->> mep@Blackbird:/tmp/git$ nano -w .git/info/exclude
->> mep@Blackbird:/tmp/git$ touch a.o a.c a.h
->> mep@Blackbird:/tmp/git$ git add a.*
->> The following paths are ignored by one of your .gitignore files:
->> a.o
->> Use -f if you really want to add them.
->> fatal: no files added
-> 
-> It's not a bug. That is working as designed. If "git add" encounters a
-> problem with any of the files you gave it on the command line (and
-> remember, the shell expands the wildcard, so git literally sees the
-> three files on the command line) then it aborts the entire operation.
-> 
-> Now whether that is useful behavior in this case, I don't know. If you
-> were truly manually specifying the files, then it would probably not be
-> a big deal to simply remove the offending file. But there is no way to
-> use the shell wildcard and get the behavior you want (not even a "git
-> add --really-ignore-my-ignores a.*").
-> 
-> I don't think it would be right to silently ignore them, because it may
-> be the sign of an error. It could be downgraded to a warning, like:
-> 
->   $ git add *.a
->   warning: a.o is ignored, not adding
-> 
-> The downside would be that somebody who really _did_ want to add such a
-> file but forgot to use "-f" is going to be less likely to notice it, as
-> the command does not barf. So maybe such behavior should be triggered
-> with a command-line option. I dunno.
 
-Well, it then the interface just isn't consistent, because if that's the
-reason, then why does
+--ZmZU9S7l/XJx5q9b
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-$git add .
+On Thu, Jan 14, 2010 at 03:43:05PM -0500, Jeff King wrote:
+> On Thu, Jan 14, 2010 at 11:41:07AM -0800, Shawn O. Pearce wrote:
+>=20
+> > > Because receive-pack runs as the user who is pushing, not as the
+> > > repository owner. So by convincing you to push to my repository in a
+> > > multi-user environment, I convince you to run some arbitrary code of
+> > > mine.
+> >=20
+> > Uhhh, this was in fetch/upload-pack Peff, not push/receive-pack.
+> >=20
+> > Same issue though.
+> Errr...yeah. Sorry for the confusion. But yes, it's the same mechanism,
+> except that it is even easier to get people to pull from you (to get
+> them to push, you first have to get them to write a worthwhile code
+> contribution. ;) ).
+post-update, post-receive, update, pre-receive would all be subject to
+this problem as well if:
+- the repo was group/world-writable
+- the hook is untrusted
 
-then work in this case? . is still just a type of wildcard, so it fail
-in a similar way, shouldn't it?
+post-upload-pack just required group/world-readable and untrusted hook
+code.
 
-Your idea of giving a warning is good as is the command-line option. In
-any case, in my opinion this feature can make some operations more
-complex than they should be. For instance, in my example I would have to
-separately do git add to both files. What if there are more than two
-files to add and I get this error every time I try to add the files?
+I'd like to lodge a complaint about the removal of the functionality. I
+would have commented on the patch prior to this, but even searching I
+didn't see it cross the list.
+
+As a reasonable middle ground between the functionality and complete
+removal, can we find a way just to only execute the potentially
+dangerous hooks under known safe conditions or when explicitly requested
+by the user.
+
+Places where the hooks are safe:
+- the hooks are known trusted AND not writable by the user/group.
+  (e.g. "chown -R root:root hooks/").
+- Systems where the users/groups do not have full shell access, just
+  access to run Git itself. Eg gitosis, regular git+ssh:// w/ a
+  restricted shell.
+
+Upcoming use case:
+For Gentoo's work on migrating to Git, we've been working on a
+pre-upload-pack hook and script that can explicitly block the generation
+of some packs.
+Basically, unless you send a sufficiently recent 'have' line, you are
+told to fetch a bundle via HTTP or rsync instead.
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux: Developer, Trustee & Infrastructure Lead
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--ZmZU9S7l/XJx5q9b
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iEYEARECAAYFAktPh2UACgkQPpIsIjIzwixijACg2KLBeUKrVa0FsUJnc8leQ53V
+of4AoLUipRSyfS/MUSfx5F9+75/Sv4j/
+=/p/g
+-----END PGP SIGNATURE-----
+
+--ZmZU9S7l/XJx5q9b--
