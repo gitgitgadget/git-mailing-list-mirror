@@ -1,73 +1,78 @@
-From: Chris Johnsen <chris_johnsen@pobox.com>
-Subject: Re: [PATCH v2 1/3] strbuf_expand: convert "%%" to "%"
-Date: Thu, 14 Jan 2010 05:47:09 -0600
-Message-ID: <CABC23EF-410F-461C-936F-7BE72E9822BC@pobox.com>
-References: <20100113173408.GA16652@coredump.intra.peff.net>
- <20100113173531.GA16786@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v753.1)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Adam Megacz <adam@megacz.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 14 12:48:03 2010
+From: Geoffrey Lee <geoffreyj.lee@gmail.com>
+Subject: Re: Syncing a git working tree with Dropbox?
+Date: Thu, 14 Jan 2010 05:19:08 -0800
+Message-ID: <83d7aaa41001140519g2f84199j38bd0e9a5c73953@mail.gmail.com>
+References: <20100113235718.GA7033@dulip>
+	 <be6fef0d1001132139p56944cdax22674ca773af0199@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: chombee <chombee@lavabit.com>, git@vger.kernel.org
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 14:24:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVOBG-0007Fp-Tn
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 12:48:03 +0100
+	id 1NVPgT-00043d-HL
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 14:24:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752698Ab0ANLr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 06:47:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752463Ab0ANLr6
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 06:47:58 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44343 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752137Ab0ANLr5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 06:47:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A63490D3D;
-	Thu, 14 Jan 2010 06:47:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=in-reply-to
-	:references:mime-version:content-type:message-id:cc
-	:content-transfer-encoding:from:subject:date:to; s=sasl; bh=/P0w
-	1mOskFDetqH4jHiLIz7zOjQ=; b=AXLKCnOoEtsssoWl6Ua8mtbG5/hjyns4BVt3
-	0YmaU4tv35Snnu9PhgbXTPdeE+CSrTqqUTLlirh42pOQXPgc8vei/TtBlE1t2FC9
-	p0mUU0T4x8oiu4zKM4hn84mqc16hFx8i9GzgECtrEHTMchY73iCUqtBKts/ad/DV
-	CD15Xvc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=in-reply-to
-	:references:mime-version:content-type:message-id:cc
-	:content-transfer-encoding:from:subject:date:to; q=dns; s=sasl; b=
-	OJW+n4srhKyzzjKizSqxEuF+nm7JlTyUf9PYVLZJvMcDCLUUeTgwW0wzulG/2a9T
-	3Y+gZlzeZbh56hjYxh9T/+Xw0WZhqlEwChGiKtPCK7npFurwrQL4S+mPc4RmuWpE
-	m/ee6YjSvlUF42YIHaYqQr9QUP1vcIkNYHU0qijRIJA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2267A90D3C;
-	Thu, 14 Jan 2010 06:47:50 -0500 (EST)
-Received: from [192.168.1.241] (unknown [75.53.33.9]) (using TLSv1 with
- cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A56CF90D3B; Thu, 14 Jan
- 2010 06:47:44 -0500 (EST)
-In-Reply-To: <20100113173531.GA16786@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.753.1)
-X-Pobox-Relay-ID: A438146C-0102-11DF-9649-6AF7ED7EF46B-07245699!a-pb-sasl-quonix.pobox.com
+	id S1756686Ab0ANNYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 08:24:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756439Ab0ANNYQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 08:24:16 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:51551 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755877Ab0ANNYP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 08:24:15 -0500
+Received: by pwj9 with SMTP id 9so20616pwj.21
+        for <git@vger.kernel.org>; Thu, 14 Jan 2010 05:24:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=Tlz2mxyGpDUR8rLyzruGFbbz/hu4VyMasVFg9w28cWY=;
+        b=BQbWF0LeF4sq6L2CfHzLmSwrlSQ+4MGJogLK/LoMUNYX2ZxFUu9RZzikOEZWVChuP4
+         HtwqvrMp4nx5osmBLftTvBU2u+F6IzBxSVCQ2KvVhT32sU6cgZy2DIaWvP6vo9gN6bXz
+         9cDaEZNfEgDPhkRMJxEuCWAqBm8aV3CfzY4Jw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=IOVLRUxPZLAC8TlbyP+k5Ew8vvtbB76rfQJGypb6Dczmdt4MhpiQX+oTatEBVGkySC
+         jpBYcac3PZy1fyGOwnwZ7rorn2X3pKhv0LbMU+BASg1Y49f6EGCUtKxq/U/JKEknFblq
+         Kn2h52lbf9+fHTmSm7j2eqSTCAmsfFc6L/Y1Y=
+Received: by 10.143.153.41 with SMTP id f41mr524707wfo.331.1263475148441; Thu, 
+	14 Jan 2010 05:19:08 -0800 (PST)
+In-Reply-To: <be6fef0d1001132139p56944cdax22674ca773af0199@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136989>
 
-On 2010 Jan 13, at 11:35, Jeff King wrote:
-> Signed-off-by: Jeff King <peff@coredump.intra.peff.net>
+On Wed, Jan 13, 2010 at 9:39 PM, Tay Ray Chuan <rctay89@gmail.com> wrote:
+> On Thu, Jan 14, 2010 at 7:57 AM, chombee <chombee@lavabit.com> wrote:
+>> My idea is that I keep my .git folder safely outside of my Dropbox
+>> folder, but my git repository has a detached working tree that is
+>> located in the Dropbox folder. On machine B it would be the same setup.
+>> So the two machines each have their own clone of the git repo and these
+>> are synchronised by git push and git pull with a 'central' remote repo.
+>> But the two clones share the same working tree, or more accurately their
+>> working trees are synced by Dropbox.
+>>
+>> The working tree is just files, I don't see how it's different from
+>> Dropbox syncing any other files. Dropbox and git ought not to collide in
+>> any way. So this should work fine shouldn't it?
+>
+> Your changes in git (like new commits) won't be synced.
 
-The patches of the v2 of this series (well, except "4/3") all use  
-this surprising, "extended" hostname in their Signed-off-by lines. I  
-suppose you unset user.email while testing the series and sent these  
-out before restoring your normal configuration.
+You have to sync your .git directory. For example, using your setup,
+if you switch branches on Machine A, your working directory will
+change on Machine B, but Machine B will still think it's on the
+previous branch. This scenario would cause a lot of problems for Git.
 
-Sorry for the noise if this was intentional (a small joke about the  
-auto-configured ident info?).
+There shouldn't be any problems with placing your entire repository
+(working tree and .git directory) inside Dropbox as long as you only
+use one computer at a time.
 
--- 
-Chris
+-Geoffrey Lee
