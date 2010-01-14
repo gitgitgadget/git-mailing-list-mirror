@@ -1,77 +1,55 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] git push --track
-Date: Thu, 14 Jan 2010 15:35:11 +0100
-Message-ID: <46a038f91001140635t38328ddbq3fc0bbced013e25b@mail.gmail.com>
-References: <op.u6g8jnixg402ra@nb-04> <871vht7cs2.fsf@catnip.gol.com>
-	 <46a038f91001140544u64dd7eefn94625cdc40881cd6@mail.gmail.com>
-	 <alpine.DEB.1.00.1001141509230.3029@intel-tinevez-2-302>
-	 <vpqiqb4lq4q.fsf@bauges.imag.fr>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v2 3/3] commit: show interesting ident information in summary
+Date: Thu, 14 Jan 2010 16:02:21 +0100
+Message-ID: <201001141602.22244.trast@student.ethz.ch>
+References: <20100113173408.GA16652@coredump.intra.peff.net> <20100113184510.GA22849@coredump.intra.peff.net> <5722BD3D-E7C9-47F7-B547-09B14D87DA39@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Miles Bader <miles@gnu.org>,
-	Rudolf Polzer <divVerent@alientrap.org>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jan 14 15:35:33 2010
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Adam Megacz <adam@megacz.com>, <git@vger.kernel.org>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 16:02:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVQnM-0003GO-CS
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 15:35:32 +0100
+	id 1NVRDd-0007A0-GI
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 16:02:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754274Ab0ANOfW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jan 2010 09:35:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754230Ab0ANOfV
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 09:35:21 -0500
-Received: from mail-ew0-f209.google.com ([209.85.219.209]:63075 "EHLO
-	mail-ew0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754242Ab0ANOfQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jan 2010 09:35:16 -0500
-Received: by ewy1 with SMTP id 1so49676ewy.28
-        for <git@vger.kernel.org>; Thu, 14 Jan 2010 06:35:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Sg6Qf99AXbMANKKgg1YsbmiNrWH/YmpB17cefR5V7dk=;
-        b=o7hc8MmHBnwBe++VBkLJCeLVOqT7lCRbXN1wbE8zPs/UxuzowKs88O3tuijwjIlA5d
-         OrhvlZe+X772lHoONFK2xNzl1mfy1MqKfAAPGsuHIcNbxzfHHsYVAj8faUOEHEjPbkDc
-         ZMB7gkb7NShJDa0aHaOs+6byJ+bPV7gejzO+U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=XIK8GdwELNJaOR3RB/OyGPnUKVN/scaM9hVUft8EyWqq6ymADL1kv4GXPx21XZzfaN
-         Psl+/U6gY+P0mbNXIqx31gB3CzrziCqlRvWN/JyunHnX391ZOc4eqHgIS+VzUWxSTwnn
-         rocEux3zWFBC1HglaiNl6ksHd3KPozeUfeGCQ=
-Received: by 10.213.99.210 with SMTP id v18mr556141ebn.48.1263479711990; Thu, 
-	14 Jan 2010 06:35:11 -0800 (PST)
-In-Reply-To: <vpqiqb4lq4q.fsf@bauges.imag.fr>
+	id S1756872Ab0ANPCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 10:02:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756856Ab0ANPC3
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 10:02:29 -0500
+Received: from gwse.ethz.ch ([129.132.178.237]:7051 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756460Ab0ANPCZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 10:02:25 -0500
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.213.0; Thu, 14 Jan
+ 2010 16:02:22 +0100
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.213.0; Thu, 14 Jan
+ 2010 16:02:22 +0100
+User-Agent: KMail/1.13.0 (Linux/2.6.31.8-0.1-desktop; KDE/4.3.90; x86_64; ; )
+In-Reply-To: <5722BD3D-E7C9-47F7-B547-09B14D87DA39@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136997>
 
-On Thu, Jan 14, 2010 at 3:25 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> I think he meant
->
-> =A0git --git-dir=3Dgit+ssh://foo.bar/var/git/mynewthing.git init
+Wincent Colaiuta wrote:
+> 
+> Fair enough, but I'm sighing here at the thought of people jumping in  
+> and using git commands without even having looked at _any_ of the  
+> zillions of "your first 10 minutes with Git" tutorials out there,  
+> which pretty much _all_ start with how to set up your user.name and  
+> user.email...
 
-exacto. And push --track, all in one cmd.
+If you really are shocked by that thought, try hanging out on #git for
+six hours on any given day...
 
-Zooper easy for users.
-
-
-
-m
---=20
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
