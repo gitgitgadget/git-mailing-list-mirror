@@ -1,74 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git push --track
-Date: Thu, 14 Jan 2010 15:50:42 -0800
-Message-ID: <7vmy0g5jql.fsf@alter.siamese.dyndns.org>
-References: <op.u6g8jnixg402ra@nb-04>
- <20100114154154.6117@nanako3.lavabit.com>
- <alpine.DEB.1.00.1001141130210.4985@pacific.mpi-cbg.de>
- <20100115072741.6117@nanako3.lavabit.com>
+From: Sebastian Pipping <webmaster@hartwork.org>
+Subject: git clone against firewall
+Date: Fri, 15 Jan 2010 00:45:53 +0100
+Message-ID: <4B4FACB1.2080902@hartwork.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Rudolf Polzer <divVerent@alientrap.org>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Fri Jan 15 00:50:58 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 15 00:57:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVZSr-0007PQ-Uc
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 00:50:58 +0100
+	id 1NVZYq-00016M-EF
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 00:57:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757735Ab0ANXuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 18:50:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756961Ab0ANXuy
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 18:50:54 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51667 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756787Ab0ANXux (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 18:50:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 49B599119C;
-	Thu, 14 Jan 2010 18:50:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7rTN973jI6orYyVyZu1lm7WWBlY=; b=vW4Ny9
-	oypyyIkCUvI8fTQ0OIBxJBI/VaLA1iqUbuxsmU01uiy1lJQaiOCeKpX9efsxyT36
-	o3FFIcn5Erm2oYmuurhjCvkGI+Bo14x6++R/cd4hLYiDjXfebUWuC7zMDUjvuUU4
-	YUpmmvpu7mnjPcMAGdG7IYcE2h3vXvoLJbHJg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QoTTBAhCEdSvg4Yj6MWr9HbMh/fp+HsR
-	+ERoQKUgUWKicKij6ZTvOX49rEd8i5Cl51CEQ5wPoGnKOgRFDF/Uf0pFIVl2UKo5
-	NE4cjmDnAX3aznZzRCZesiXxjvCPENmmvNhLZMUGfPnxBgzX9ctj8jVzZOTAduae
-	qYOo4uKQ1xQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 04E839119B;
-	Thu, 14 Jan 2010 18:50:49 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1E62791192; Thu, 14 Jan
- 2010 18:50:43 -0500 (EST)
-In-Reply-To: <20100115072741.6117@nanako3.lavabit.com> (Nanako Shiraishi's
- message of "Fri\, 15 Jan 2010 07\:27\:41 +0900")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A40B8428-0167-11DF-B7EA-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757042Ab0ANX5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 18:57:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756802Ab0ANX5E
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 18:57:04 -0500
+Received: from smtprelay01.ispgateway.de ([80.67.31.39]:58706 "EHLO
+	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756570Ab0ANX5D (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 18:57:03 -0500
+X-Greylist: delayed 663 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Jan 2010 18:57:03 EST
+Received: from [78.52.96.143] (helo=[192.168.0.3])
+	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <webmaster@hartwork.org>)
+	id 1NVZNy-0000Sq-6u
+	for git@vger.kernel.org; Fri, 15 Jan 2010 00:45:54 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20100103 Thunderbird/3.0
+X-Df-Sender: 874396
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137042>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+hello!
 
-> I summarized it when I reminded Junio on this topic last time and it is in the same discussion thread: http://thread.gmane.org/gmane.comp.version-control.git/135325/focus=136216
 
-Please wrap your lines for readability.
+with a firewall blocking outgoing connections to port 9418 a
 
-> 'git pull --remember' that remembers...
+  git clone git://...
 
-Although I admit I was the one who suggested it, and I think that it is
-the most natural way to do this from the end user's point of view, from
-the implementation point of view, it is the most difficult one in its
-current form.  "git pull" does not interpret refspecs and delegates all
-the hard work to "git fetch".
+of git 1.6.6 seems to never return, i.e. loop forever.  in my rather
+automated environment (gentoo's tool layman calling git) this behavior
+is rather troublesome - i need some kind of abort-and-error instead:
+what i'm trying to do is loop over a number of clone URL alternatives of
+the same repository like ..
+
+  git://git.overlays.gentoo.org/dev/dberkholz.git
+  http://git.overlays.gentoo.org/gitroot/dev/dberkholz.git
+  git+ssh://git@git.overlays.gentoo.org/dev/dberkholz.git
+
+.. and stop at the first clone that returns without error.
+
+are there means to make git fail in such a case or to apply a timout?
+if not please consider adding a related commandline option to git-clone.
+
+thank you.
+
+
+
+sebastian
