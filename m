@@ -1,82 +1,65 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [PATCH 0/2] Improve Git performance on big trees
-Date: Thu, 14 Jan 2010 16:21:39 +0100
-Message-ID: <46a038f91001140721j5acb766cxfd777570d6edfca4@mail.gmail.com>
-References: <1263481341-28401-1-git-send-email-pclouds@gmail.com>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: Re: [PATCH] git push --track
+Date: Thu, 14 Jan 2010 16:27:27 +0100
+Message-ID: <20100114152727.GA26059@inner.home.ulmdo.de>
+References: <op.u6g8jnixg402ra@nb-04> <871vht7cs2.fsf@catnip.gol.com> <46a038f91001140544u64dd7eefn94625cdc40881cd6@mail.gmail.com> <alpine.DEB.1.00.1001141509230.3029@intel-tinevez-2-302> <vpqiqb4lq4q.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 16:22:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Miles Bader <miles@gnu.org>,
+	Rudolf Polzer <divVerent@alientrap.org>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jan 14 16:27:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVRWj-0008SA-6I
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 16:22:25 +0100
+	id 1NVRc0-0002fN-CP
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 16:27:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755077Ab0ANPWL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jan 2010 10:22:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754815Ab0ANPWK
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 10:22:10 -0500
-Received: from mail-ew0-f209.google.com ([209.85.219.209]:52157 "EHLO
-	mail-ew0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754808Ab0ANPWJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jan 2010 10:22:09 -0500
-Received: by ewy1 with SMTP id 1so4096ewy.28
-        for <git@vger.kernel.org>; Thu, 14 Jan 2010 07:22:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=raBswQCSozAex/QFNzsjduSubIL2uzm4YEGWKE5tkcI=;
-        b=tiVW71CxAvQjfIcmhJwez3oDStuz6xF0nxmqLARNZWNS6D8p8DrxW4idSwOrLxEAi7
-         OUCC+6HTi020AAarKUSYo5hkMYwqfzrpXS+0W0YO9FoMxTxWjWBZfv90gkrJ08HoMreq
-         4QyiDqc59AtqXIdA7XpSEk9ayX5rf8XEab2Fs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bKj5gX4xSOy6QlGfjqyDbqnG64F1wKxfeEdv/NK1IGnzHg3lwPoypOPSnDzGT7p6uU
-         5oRGV9iWP6O1XHiScf9BRBBBjsU1xseToSm41kwQrQz3SfB6a6xpkvB4ax93Ou9xQfHl
-         PswhZccpW5FhAI+fDBCOpFCsTgjUBLauvGQqA=
-Received: by 10.213.2.82 with SMTP id 18mr931036ebi.58.1263482499906; Thu, 14 
-	Jan 2010 07:21:39 -0800 (PST)
-In-Reply-To: <1263481341-28401-1-git-send-email-pclouds@gmail.com>
+	id S1757084Ab0ANP1s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 10:27:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757056Ab0ANP1s
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 10:27:48 -0500
+Received: from continuum.iocl.org ([213.146.114.200]:62784 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753509Ab0ANP1r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 10:27:47 -0500
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id o0EFRRf31497;
+	Thu, 14 Jan 2010 16:27:27 +0100
+Content-Disposition: inline
+In-Reply-To: <vpqiqb4lq4q.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137002>
 
-2010/1/14 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
-:
-> Almost 1 sec for "git rm foo" still seems too long though,
-> probably due to writing a 9MB index.
+On Thu, 14 Jan 2010 15:25:57 +0000, Matthieu Moy wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> Of course it'd only work if you have full ssh access, unless the git 
+> >> server learns a new command to mkdir (in sane and approved locations).
+> >
+> > You mean a new "init" command a la "git --git-dir=bla.git init", which 
+> > _does_ mkdir the directory.
+> 
+> I think he meant
+> 
+>   git --git-dir=git+ssh://foo.bar/var/git/mynewthing.git init
+> 
+> which doesn't.
 
-One of the main issues there is that the Gentoo dir tree seems to be
-very flat. The kernel tree is huge, but much deeper, and does not have
-a huge top-level directory -- and git handles it fairly well.
+But 'ssh foo.bar git --git-dir=/var/git/mynewthing.git init' likely would.
 
-Perhaps the Gentoo tree can be rearranged to be more nested? If your
-devs strongly prefer a flat view of it, that could be arranged with
-symlinks.
+Probably missing a --bare somewhere; and I think that repo creation
+potentially needs too many things (like custom hook or access rights
+setup) to be done via git push. Especially since you really only need
+to create an empty repo, and only if you didn't clone from the push
+target in the first place.
 
-Alternatively, each port can be in its own repo, and you can make a
-"top level repo" using git submodules -- this is what Fedora/RH is
-exploring at the moment.
-
-cheers,
-
-
-
-m
---=20
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+Andreas
