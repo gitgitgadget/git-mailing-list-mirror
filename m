@@ -1,61 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Miles Bader <miles@gnu.org>
 Subject: Re: [PATCH] git push --track
-Date: Thu, 14 Jan 2010 01:33:43 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001140132110.4985@pacific.mpi-cbg.de>
-References: <op.u6g8jnixg402ra@nb-04> <871vht7cs2.fsf@catnip.gol.com>
+Date: Thu, 14 Jan 2010 09:28:13 +0900
+Message-ID: <87vdf55y3m.fsf@catnip.gol.com>
+References: <op.u6g8jnixg402ra@nb-04> <20100113154310.GA7348@Knoppix>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Rudolf Polzer <divVerent@alientrap.org>, git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Jan 14 01:28:15 2010
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Thu Jan 14 01:28:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVDZO-0001Ho-HZ
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 01:28:14 +0100
+	id 1NVDZb-0001LY-Gs
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 01:28:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756719Ab0ANA2K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 19:28:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756164Ab0ANA2J
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 19:28:09 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47894 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756676Ab0ANA2I (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 19:28:08 -0500
-Received: (qmail invoked by alias); 14 Jan 2010 00:28:06 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp043) with SMTP; 14 Jan 2010 01:28:06 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19r+x4Dbchr0zOpO4JTlPUypb0zWSXKXMOoJmm4yM
-	08jDj/hizJiMR5
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <871vht7cs2.fsf@catnip.gol.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1756721Ab0ANA2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 19:28:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756711Ab0ANA2V
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 19:28:21 -0500
+Received: from smtp12.dentaku.gol.com ([203.216.5.74]:38748 "EHLO
+	smtp12.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756164Ab0ANA2U (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 19:28:20 -0500
+Received: from 218.231.177.74.eo.eaccess.ne.jp ([218.231.177.74] helo=catnip.gol.com)
+	by smtp12.dentaku.gol.com with esmtpa (Dentaku)
+	id 1NVDZN-0006PZ-Jt; Thu, 14 Jan 2010 09:28:13 +0900
+Received: by catnip.gol.com (Postfix, from userid 1000)
+	id 778B7DF73; Thu, 14 Jan 2010 09:28:13 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+In-Reply-To: <20100113154310.GA7348@Knoppix> (Ilari Liusvaara's message of
+	"Wed, 13 Jan 2010 17:43:10 +0200")
+X-Virus-Scanned: ClamAV GOL (outbound)
+X-Abuse-Complaints: abuse@gol.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136904>
 
-Hi,
+Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
+> - Is --track the best name for this?
 
-On Thu, 14 Jan 2010, Miles Bader wrote:
+I think "--track" is absolutely the right name for this option -- it's
+the option name used for "set up tracking" option in other commands, and
+it's just very natural (when I've thought about implementing a similar
+functionality myself, I also chose the name "--track").
 
-> "Rudolf Polzer" <divVerent@alientrap.org> writes:
-> > I'd like a feature to automatically "transform" a non-tracking local 
-> > branch into a tracking branch on push. A patch to do that is attached.
-> 
-> Yay!!
-> 
-> I've wanted this for a long time, but discussions about it always seem 
-> to end up petering out...
+-Miles
 
-That is not fair.  I came up with a patch already years ago.  You could 
-always have applied it to your own source, maybe after tweaking.  And then 
-maybe lobbying for it.
-
-Ciao,
-Dscho
+-- 
+Youth, n. The Period of Possibility, when Archimedes finds a fulcrum,
+Cassandra has a following and seven cities compete for the honor of endowing a
+living Homer.
