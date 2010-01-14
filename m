@@ -1,63 +1,97 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] Test t5560: Fix test when run with dash
-Date: Thu, 14 Jan 2010 09:23:24 +0100
-Message-ID: <4B4ED47C.1050300@alum.mit.edu>
-References: <4B4EAB58.6040901@alum.mit.edu> <1263452477-15250-1-git-send-email-tarmigan+git@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] Show submodules as modified when they contain a dirty
+ work tree
+Date: Thu, 14 Jan 2010 09:32:13 +0100
+Message-ID: <4B4ED68D.1060402@web.de>
+References: <4B4BA096.5000909@web.de> <7vtyusb6rv.fsf@alter.siamese.dyndns.org> <4B4CA13F.6020505@web.de> <7vbpgyqy4a.fsf@alter.siamese.dyndns.org> <4B4E1817.1070202@web.de> <7v6375lkpj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Tarmigan Casebolt <tarmigan+git@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 09:25:33 2010
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Lars Hjemli <hjemli@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 09:32:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVL1F-00011D-9X
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 09:25:29 +0100
+	id 1NVL7v-0003lx-6c
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 09:32:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754863Ab0ANIZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 03:25:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754772Ab0ANIZX
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 03:25:23 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:59871 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753634Ab0ANIZX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 03:25:23 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o0E8NOtk013268
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 14 Jan 2010 09:23:25 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.23) Gecko/20090817 Thunderbird/2.0.0.23 Mnenhy/0.7.6.666
-In-Reply-To: <1263452477-15250-1-git-send-email-tarmigan+git@gmail.com>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1756423Ab0ANIcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 03:32:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755750Ab0ANIcS
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 03:32:18 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:36631 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754367Ab0ANIcS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 03:32:18 -0500
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 9E3F613C0D98F;
+	Thu, 14 Jan 2010 09:32:16 +0100 (CET)
+Received: from [80.128.84.195] (helo=[192.168.178.26])
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NVL7o-0002mX-00; Thu, 14 Jan 2010 09:32:16 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
+In-Reply-To: <7v6375lkpj.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18BNiNf5E3WalODzGwo7lpAEtu3ctHdqX8X73vt
+	w+ms8TjdPMHKrIIIcrGP1jHMnJAbX1+l4H6kkqfM7b2GmqxcW4
+	KTba01qMxU99eza7eZAQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136965>
 
-Tarmigan Casebolt wrote:
-> dash is more finicky than some shells and this change seems to make it
-> happier.
-> 
-> Reported-by: Michael Haggerty <mhagger@alum.mit.edu>
-> Signed-off-by: Tarmigan Casebolt <tarmigan+git@gmail.com>
-> 
-> ---
-> Michael, thanks for the report.
-> 
-> Ubuntu's /bin/sh is dash, which I had not tested with.  Installing
-> dash on my machine, I was able to reproduce and this patch fixes the
-> problem for me.
-> 
-> Could you please see if this works for you?
-> [...]
+Am 13.01.2010 23:10, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> I had to squash in '#include "submodule.h"' in diff-lib.c just after it
+> includes "refs.h", though.
 
-Yes, that fixes it.  Thanks!
+Sorry, i seem to repeatedly have missed the compiler warning :-(
 
-Michael
+
+> And a patch to add:
+> 
+>>> * It doesn't give detailed output when doing a "git diff* -p" with or
+>>>   without the --submodule option. It should show something like
+>>>
+>>>     diff --git a/sub b/sub
+>>>     index 5431f52..3f35670 160000
+>>>     --- a/sub
+>>>     +++ b/sub
+>>>     @@ -1 +1 @@
+>>>     -Subproject commit 5431f529197f3831cdfbba1354a819a79f948f6f
+>>>     +Subproject commit 3f356705649b5d566d97ff843cf193359229a453-dirty
+>>>
+> 
+> would look like the attached.
+
+Thanks!
+
+
+> I think a reasonable next step would be
+> 
+>  - Move the check for your condition (c) that we dropped from this round
+>    to wt-status.c;
+> 
+>  - Add wt_status_print_dangling_submodules() to wt-status.c, and use the
+>    above logic to produce a section "Submodules with Dangling HEAD" or
+>    something.
+> 
+>  - Call it in wt_status_print(), immediately before we check s->verbose
+>    and show the patch text under -v option.  "git status" now will warn
+>    about the condition (c).
+> 
+>  - Add a similar wt_shortstatus_print_dangling_submodules() and call it at
+>    the end of wt_shortstatus_print().
+> 
+>  - Update is_submodule_modified() in your patch thats reads the output
+>    from "status --porcelain", to *ignore* information about dangling
+>    submodules.  As we discussed, dangling submodules may be something the
+>    user cares about, but that is not something "diff" should.
+
+Great, i will send patches when i have something to show.
