@@ -1,70 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] start_command: detect execvp failures early
-Date: Thu, 14 Jan 2010 13:31:16 -0800
-Message-ID: <7viqb49xwb.fsf@alter.siamese.dyndns.org>
-References: <1263044757-12560-1-git-send-email-ilari.liusvaara@elisanet.fi>
- <1263044757-12560-2-git-send-email-ilari.liusvaara@elisanet.fi>
- <201001101404.22258.j6t@kdbg.org> <201001101411.22418.j6t@kdbg.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] Show submodules as modified when they contain a dirty
+ work tree
+Date: Thu, 14 Jan 2010 22:38:57 +0100
+Message-ID: <4B4F8EF1.3080709@web.de>
+References: <4B4BA096.5000909@web.de> <7vtyusb6rv.fsf@alter.siamese.dyndns.org> <4B4CA13F.6020505@web.de> <7vbpgyqy4a.fsf@alter.siamese.dyndns.org> <4B4E1817.1070202@web.de> <7v6375lkpj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Jan 14 22:31:32 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Lars Hjemli <hjemli@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 22:39:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVXHw-0002Yc-2L
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 22:31:32 +0100
+	id 1NVXPG-0005gN-SR
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 22:39:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754906Ab0ANVb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 16:31:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753270Ab0ANVb1
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 16:31:27 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55624 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751956Ab0ANVb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 16:31:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D1A799199D;
-	Thu, 14 Jan 2010 16:31:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6HL9uOSYTCcmPojq8pqntNkzkwI=; b=tMXB0E
-	e2dbk5NkuaRledG/nVfgC/RDTXitsAG4eWQ+md3O4gI9aV4l6ZeeEMkZR2yHONu1
-	cFL0Pf3mqn+J8mBihGk/QvXXGqIwFCSyHErNuwOc7ZetQwpi8pm4qEU+uU2uQX0d
-	GrtGUStzwQ1FlH6cd4xdbgnj6tnTTp4SQ0TFU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QbX8E1/QZnolV/psDVxw/f678KjFSG0+
-	EvXivT/FDdX8amyU20sh1BYKwJiehYCJJV2UwJLVGfy9iEcwLPwWdlsZVnkniTFk
-	gDFESCQCTlo9Ii56GgDupgxrSgSvqgtXLMTUPXfmbfxrrhKVBaoJs+CGDJw3CCzU
-	XmLo/eqgzHE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 93CCB9199C;
-	Thu, 14 Jan 2010 16:31:21 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9391C9199B; Thu, 14 Jan
- 2010 16:31:17 -0500 (EST)
-In-Reply-To: <201001101411.22418.j6t@kdbg.org> (Johannes Sixt's message of
- "Sun\, 10 Jan 2010 14\:11\:22 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 28A5A434-0154-11DF-BDF7-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755400Ab0ANVjB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 16:39:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754896Ab0ANVjB
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 16:39:01 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:54497 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754206Ab0ANVjA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 16:39:00 -0500
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 9FFFB13C176F7;
+	Thu, 14 Jan 2010 22:38:58 +0100 (CET)
+Received: from [80.128.55.33] (helo=[192.168.178.26])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NVXP8-00016d-00; Thu, 14 Jan 2010 22:38:58 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
+In-Reply-To: <7v6375lkpj.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX197yrxnDD8y1N5ZumKwP6FOzkzpN63qXaqNFZEN
+	afUgNNNfCtFGzI6l00yBR63CEZI7jqgwOaJOQn4snKnB8uhyP3
+	5+umz0IJqOnM/4VkfSMw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137028>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Am 13.01.2010 23:10, schrieb Junio C Hamano:
+> And a patch to add:
+> 
+>>> * It doesn't give detailed output when doing a "git diff* -p" with or
+>>>   without the --submodule option. It should show something like
+>>>
+>>>     diff --git a/sub b/sub
+>>>     index 5431f52..3f35670 160000
+>>>     --- a/sub
+>>>     +++ b/sub
+>>>     @@ -1 +1 @@
+>>>     -Subproject commit 5431f529197f3831cdfbba1354a819a79f948f6f
+>>>     +Subproject commit 3f356705649b5d566d97ff843cf193359229a453-dirty
+>>>
+> 
+> would look like the attached.
 
-> Previously, failures during execvp could be detected only by
-> finish_command. However, in some situations it is beneficial for the
-> parent process to know earlier that the child process will not run.
->
-> The idea to use a pipe to signal failures to the parent process and
-> the test case were lifted from patches by Ilari Liusvaara.
+Your patch did not show submodules as dirty when the refs were identical.
+The following patch fixes that and extends the test to catch that too.
 
-I wonder if we can do this without pipe, perhaps using "vfork, exec, then
-update a variable"....
+-- >8 --
+Subject: Show a modified submodule directory as dirty even if the refs match
+
+When the submodules HEAD and the ref committed in the HEAD of the
+superproject were the same, "git diff[-index] HEAD" did not show the
+submodule as dirty when it should.
+
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
+ diff-lib.c                |    3 ++-
+ t/t4027-diff-submodule.sh |   35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+), 1 deletions(-)
+
+diff --git a/diff-lib.c b/diff-lib.c
+index 5ce226b..9cdf6da 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -233,7 +233,8 @@ static int get_stat_data(struct cache_entry *ce,
+ 			return -1;
+ 		}
+ 		changed = ce_match_stat(ce, &st, 0);
+-		if (changed) {
++		if (changed
++		    || (S_ISGITLINK(ce->ce_mode) && is_submodule_modified(ce->name))) {
+ 			mode = ce_mode_from_stat(ce, st.st_mode);
+ 			sha1 = null_sha1;
+ 		}
+diff --git a/t/t4027-diff-submodule.sh b/t/t4027-diff-submodule.sh
+index bf8c980..83c1914 100755
+--- a/t/t4027-diff-submodule.sh
++++ b/t/t4027-diff-submodule.sh
+@@ -97,6 +97,41 @@ test_expect_success 'git diff HEAD with dirty submodule (untracked)' '
+ 	test_cmp expect.body actual.body
+ '
+
++test_expect_success 'git diff HEAD with dirty submodule (work tree, refs match)' '
++	git commit -m "x" sub &&
++	echo >>sub/world &&
++	git diff HEAD >actual &&
++	sed -e "1,/^@@/d" actual >actual.body &&
++	expect_from_to >expect.body $subprev $subprev-dirty &&
++	test_cmp expect.body actual.body
++'
++
++test_expect_success 'git diff HEAD with dirty submodule (index, refs match)' '
++	(
++		cd sub &&
++		git reset --hard &&
++		echo >>world &&
++		git add world
++	) &&
++	git diff HEAD >actual &&
++	sed -e "1,/^@@/d" actual >actual.body &&
++	expect_from_to >expect.body $subprev $subprev-dirty &&
++	test_cmp expect.body actual.body
++'
++
++test_expect_success 'git diff HEAD with dirty submodule (untracked, refs match)' '
++	(
++		cd sub &&
++		git reset --hard &&
++		git clean -qfdx &&
++		>cruft
++	) &&
++	git diff HEAD >actual &&
++	sed -e "1,/^@@/d" actual >actual.body &&
++	expect_from_to >expect.body $subprev $subprev-dirty &&
++	test_cmp expect.body actual.body
++'
++
+ test_expect_success 'git diff (empty submodule dir)' '
+ 	: >empty &&
+ 	rm -rf sub/* sub/.git &&
+-- 
+1.6.6.294.g1f7f2.dirty
