@@ -1,63 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git push --track
-Date: Thu, 14 Jan 2010 11:31:43 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001141130210.4985@pacific.mpi-cbg.de>
-References: <op.u6g8jnixg402ra@nb-04> <20100114154154.6117@nanako3.lavabit.com>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: [RFC] Git Wiki Move
+Date: Thu, 14 Jan 2010 02:28:48 -0800
+Message-ID: <4B4EF1E0.3040808@eaglescrag.net>
+References: <20100113232908.GA3299@machine.or.cz> <20100114012449.GB3299@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Rudolf Polzer <divVerent@alientrap.org>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 11:26:15 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Jan 14 11:28:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVMu6-0002Sn-BL
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 11:26:14 +0100
+	id 1NVMwk-0003YE-47
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 11:28:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755583Ab0ANK0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 05:26:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755528Ab0ANK0J
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 05:26:09 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60205 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755158Ab0ANK0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 05:26:08 -0500
-Received: (qmail invoked by alias); 14 Jan 2010 10:26:06 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp046) with SMTP; 14 Jan 2010 11:26:06 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19EYhYhtUBEqhjC3ar4lOUESSPzEdDFOBYWAgQNNS
-	DxdEG638qYqmGe
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20100114154154.6117@nanako3.lavabit.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1756020Ab0ANK2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 05:28:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755995Ab0ANK2x
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 05:28:53 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:36300 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755445Ab0ANK2w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 05:28:52 -0500
+Received: from voot-cruiser.eaglescrag.net (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o0EASmfq027535
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Thu, 14 Jan 2010 02:28:48 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091209 Fedora/3.0-4.fc12 Lightning/1.0pre Thunderbird/3.0
+In-Reply-To: <20100114012449.GB3299@machine.or.cz>
+X-Enigmail-Version: 1.0
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Thu, 14 Jan 2010 02:28:49 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136981>
 
-Hi,
-
-On Thu, 14 Jan 2010, Nanako Shiraishi wrote:
-
-> Quoting Rudolf Polzer <divVerent@alientrap.org>
+On 01/13/2010 05:24 PM, Petr Baudis wrote:
+>   Hi!
 > 
-> > I'd like a feature to automatically "transform" a non-tracking local
-> > branch into a tracking branch on push. A patch to do that is attached.
+> On Thu, Jan 14, 2010 at 12:29:08AM +0100, Petr Baudis wrote:
+>> I would like to notify you that unfortunately, Czech UPC terminated the
+>> sponsorship of the hardware and connectivity hosting the Git Wiki and
+>> repo.or.cz (after generously donating it for several years).
 > 
-> How well does this take earlier discussions on the same topic into account? For example, did you study the design discussion in
->   http://thread.gmane.org/gmane.comp.version-control.git/135325/focus=135390
+>   ...please scratch the Git Wiki part, you would be supporting just
+> repo.or.cz - we are considering to move the Git wiki to wiki.kernel.org
+> MediaWiki installation and I would like to ask if anyone disagrees with
+> this. The motivation is that:
+> 
+> 	(i) wiki.kernel.org is actually maintained! Thus, there should
+> 	be less spam or upgrade issues and better support in case of
+> 	problems.
+> 
+> 	(ii) Also, I personally think MediaWiki is so much nicer than
+> 	ikiwiki...
+> 
+> 	(iii) ...and OBTW, no CamelCase!
+> 
+>   Of course, there will be compatibility redirects.
+> 
+> 
+>   P.S.: Sorry for such hasty mail, I just want to avoid extracting money
+> from someone on false pretenses. ;-) Let me know if you already sent
+> some money and wished to support just the wiki.
 
-Thank you for looking up that reference.
+Just a heads up I've got an initial import of the current wiki up at
+http://git.wiki.kernel.org - some of it was quite a clean conversion,
+some of it not so much.  Please note that user accounts were not carried
+over but edit histories were.  I'll work on cleaning up the rest of if
+tomorrow, assuming that there isn't any objections to Petr's e-mail
+above.  If there is I'm more than happy to drop the wiki if need be, but
+I figured plowing ahead was reasonably easy and it at least gets the
+ball rolling.
 
-Do you remember what the outcome was?  (Peff mentioned that there was some 
-talk about putting this code into transport.c and some needed 
-restructurings, but I do not remember the details, and I did not have time 
-to follow the development of that file in the recent months.)
-
-Ciao,
-Dscho
+- John 'Warthog9' Hawley
