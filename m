@@ -1,85 +1,61 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Using GIT with FrameMaker
-Date: Thu, 14 Jan 2010 10:33:34 +0100
-Message-ID: <vpq1vhtuj2p.fsf@bauges.imag.fr>
-References: <loom.20100114T094846-797@post.gmane.org>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: Migrating from Serena PVCS to GIT
+Date: Thu, 14 Jan 2010 10:51:16 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1001141047350.15144@ds9.cixit.se>
+References: <loom.20100114T095059-276@post.gmane.org> <alpine.DEB.2.00.1001141007260.15144@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Rivka Pollack <Rivka_P1@verifone.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 10:36:12 2010
+X-From: git-owner@vger.kernel.org Thu Jan 14 10:51:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVM7f-0001Uj-Bc
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 10:36:11 +0100
+	id 1NVMMX-0006vV-VX
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 10:51:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751655Ab0ANJgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 04:36:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751071Ab0ANJgF
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 04:36:05 -0500
-Received: from imag.imag.fr ([129.88.30.1]:50532 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751056Ab0ANJgD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 04:36:03 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o0E9XZm1021523
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 14 Jan 2010 10:33:36 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NVM58-0001zV-PZ; Thu, 14 Jan 2010 10:33:34 +0100
-In-Reply-To: <loom.20100114T094846-797@post.gmane.org> (Rivka Pollack's message of "Thu\, 14 Jan 2010 08\:50\:49 +0000 \(UTC\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 14 Jan 2010 10:33:36 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1754915Ab0ANJv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 04:51:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754844Ab0ANJv3
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 04:51:29 -0500
+Received: from upper-gw.cixit.se ([92.43.32.133]:60264 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750753Ab0ANJv2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 04:51:28 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id o0E9pG3j020137
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 14 Jan 2010 10:51:17 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o0E9pGCM020133;
+	Thu, 14 Jan 2010 10:51:16 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <alpine.DEB.2.00.1001141007260.15144@ds9.cixit.se>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Thu, 14 Jan 2010 10:51:17 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136979>
 
-Rivka Pollack <Rivka_P1@verifone.com> writes:
+Following up my own reply:
 
-> Hi,
-> My Technical Documentation team has recently been informed that we are to be
-> moving to GIT for our version control.
-> We will be working in GIT GUI or GIT extensions.
-> I see, however, that you cannot properly use the "diff" view properly with the
-> FrameMaker files, but only, from what I can tell, .txt, and .html.
+> There is a script for PVCS-to-RCS export in the CVS source archives (I 
+> needed to hack the scripts a bit to get them to run properly, 
+> unfortunately I do not have access to those changes).
 
-Not just .txt and .html. Anything that looks like text (i.e. anything
-that can be opened in a text editor and looks good in it).
-
-> Is there a good way to work with GIT from FrameMaker?
-
-FrameMaker, I have no idea. But Git has two things that can help you:
-
-* External diff engine: read about GIT_EXTERNAL_DIFF in
-  http://www.kernel.org/pub/software/scm/git/docs/v1.0.13/git-diff-files.html
-  and look for "Defining an external diff driver" in
-  http://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
-
-  Roughly, if FrameMaker has a way to compare two documents, then Git
-  can call it automatically.
-
-* Text Converters: Read the section "Performing text diffs of binary
-  files" in
-  http://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
-
-  Roughly: if you have a way to display the content of your framemaker
-  files as text, then Git can call this, and then show a textual diff
-  of your document.
-
-In this page http://www-verimag.imag.fr/~moy/opendocument/ I explain
-how to do that with OpenDocument files (OpenOffice & friends). If
-FrameMaker provides the relevant tools, it shouldn't be hard to adapt.
+IIRC, the changes I needed to make was to ensure that the files did not get 
+their keyword expanded again by RCS (adding -ko mode; this also survives 
+into Git), since the revision numbers are off-by-one in RCS compared to PVCS 
+(RCS starts at 1.1, PVCS at 1.0). I also had to extend the list of binary 
+file types in the PVCS-to-RCS script to cover all the binary files that were 
+checked in.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+\\// Peter - http://www.softwolves.pp.se/
