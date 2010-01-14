@@ -1,81 +1,71 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Problem: fatal oops during git fetch
-Date: Thu, 14 Jan 2010 08:28:39 +0300
-Message-ID: <20100114052839.GG10586@dpotapov.dyndns.org>
-References: <op.u6hrkho1a8ed4e@dellschleppa>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Syncing a git working tree with Dropbox?
+Date: Thu, 14 Jan 2010 13:39:10 +0800
+Message-ID: <be6fef0d1001132139p56944cdax22674ca773af0199@mail.gmail.com>
+References: <20100113235718.GA7033@dulip>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Tilo Schwarz <tilo@tilo-schwarz.de>
-X-From: git-owner@vger.kernel.org Thu Jan 14 06:30:35 2010
+To: chombee <chombee@lavabit.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 06:39:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVIHy-0004xL-56
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 06:30:34 +0100
+	id 1NVIQO-00073L-CQ
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 06:39:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752191Ab0ANFab (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 00:30:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481Ab0ANFab
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 00:30:31 -0500
-Received: from mail-fx0-f225.google.com ([209.85.220.225]:37654 "EHLO
-	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751114Ab0ANFaa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 00:30:30 -0500
-Received: by fxm25 with SMTP id 25so152600fxm.21
-        for <git@vger.kernel.org>; Wed, 13 Jan 2010 21:30:29 -0800 (PST)
+	id S1752299Ab0ANFjM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 00:39:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751956Ab0ANFjM
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 00:39:12 -0500
+Received: from mail-iw0-f194.google.com ([209.85.223.194]:59429 "EHLO
+	mail-iw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751056Ab0ANFjL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 00:39:11 -0500
+Received: by iwn32 with SMTP id 32so236856iwn.33
+        for <git@vger.kernel.org>; Wed, 13 Jan 2010 21:39:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=XNTl5Smm15GWO9jcdj4jLEGLL57QkeFUNCZabbcuVVM=;
-        b=qa3yVr0AST1zYe8TaTCBnSND4pG9eYQGfdO9FVgf/rrzx5ptOgLcEagFYIpROcfXxI
-         IrT/lq4f6wCXh4R5Y1Q+3pI59SuObsj3E7e6KbolKsu9PEUWnP2TSgxodT4HacbnsJYE
-         oXzNYczUF9GVxWHTpsKkgXh6GmnNY16ZMWNxE=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=b3CfDujr7zCGDLu90wdPjZYSrFUaMb6pUL5qB9RthKg=;
+        b=KNO2MaH710RPxmkHzsIEDOg19PTZFztLdWs5x+jg/bPKoLiRZNw4yiqBxtnPmDWKYZ
+         IpWZb+XjUuSdGTbhO1rgnxU+lXw3gNNa/IRwFeo7/Qz6jzqGij4h13tEheIvu2W3HF21
+         qtxDWiv+yBAG8zaiSRT06xrcse48A56hkkT5o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=odrRyRM7QJ0+CVIogrMctPUgpRwMqftmyxSvO3rvcrdiZcKU1msfxeFX8Qu9KQSaJf
-         G6dNPGITxvCeT+hvsN0fI6IwFJ7OBOwnwYcfWuLyrQ1h5wkQbN4rfgyLqFjkECVYNURB
-         KDkuXYjLzczO/cON2jPPbRRwSbq+ysAb5lNt0=
-Received: by 10.223.2.80 with SMTP id 16mr276218fai.90.1263447028906;
-        Wed, 13 Jan 2010 21:30:28 -0800 (PST)
-Received: from localhost (ppp91-77-224-149.pppoe.mtu-net.ru [91.77.224.149])
-        by mx.google.com with ESMTPS id 15sm137334fxm.14.2010.01.13.21.30.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 13 Jan 2010 21:30:28 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <op.u6hrkho1a8ed4e@dellschleppa>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=pFkfH7+xRyqh7qIn+meRPDa5axS7SfEIoTjxztufGcJnLmyps+7PXAQEPSjc/osvUw
+         xBANVqanaNlRsPKmb5romxpa0vJecsKKM1avOF2nHkGalawvfcwzqZLMkJDoD+ilyrZ8
+         6FBVxTvN687ksqWtisVZM2IjLbqY1Lit/kbXg=
+Received: by 10.231.120.136 with SMTP id d8mr396667ibr.14.1263447550728; Wed, 
+	13 Jan 2010 21:39:10 -0800 (PST)
+In-Reply-To: <20100113235718.GA7033@dulip>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136932>
 
-On Wed, Jan 13, 2010 at 11:03:43PM +0100, Tilo Schwarz wrote:
-> 
-> Yesterday I tried to fetch bug fixes from one remote machine to the main  
-> development machine being on branch 'test' using
-> 
-> git fetch remote/test
-> 
-> I got something like
-> 
-> fatal: oops 'SHA1'
-> Fetch failed
-> 
-> Any ideas what happened here?
+Hi,
 
-My guess is that the remote repository is corrupted, and the specified SHA1
-object was not found or it was corrupted. Try to run:
+On Thu, Jan 14, 2010 at 7:57 AM, chombee <chombee@lavabit.com> wrote:
+> My idea is that I keep my .git folder safely outside of my Dropbox
+> folder, but my git repository has a detached working tree that is
+> located in the Dropbox folder. On machine B it would be the same setup.
+> So the two machines each have their own clone of the git repo and these
+> are synchronised by git push and git pull with a 'central' remote repo.
+> But the two clones share the same working tree, or more accurately their
+> working trees are synced by Dropbox.
+>
+> The working tree is just files, I don't see how it's different from
+> Dropbox syncing any other files. Dropbox and git ought not to collide in
+> any way. So this should work fine shouldn't it?
 
-  git fsck --full
+Your changes in git (like new commits) won't be synced.
 
-in the remote repository.
-
-
-Dmitry
+-- 
+Cheers,
+Ray Chuan
