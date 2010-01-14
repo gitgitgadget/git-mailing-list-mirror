@@ -1,81 +1,82 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 0/2] Improve Git performance on big trees
-Date: Thu, 14 Jan 2010 22:02:19 +0700
-Message-ID: <1263481341-28401-1-git-send-email-pclouds@gmail.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH 0/2] Improve Git performance on big trees
+Date: Thu, 14 Jan 2010 16:21:39 +0100
+Message-ID: <46a038f91001140721j5acb766cxfd777570d6edfca4@mail.gmail.com>
+References: <1263481341-28401-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
 	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 14 16:10:42 2010
+X-From: git-owner@vger.kernel.org Thu Jan 14 16:22:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVRLN-0002a7-H0
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 16:10:41 +0100
+	id 1NVRWj-0008SA-6I
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 16:22:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757160Ab0ANPJn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jan 2010 10:09:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757156Ab0ANPJl
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 10:09:41 -0500
-Received: from mail-px0-f182.google.com ([209.85.216.182]:51577 "EHLO
-	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757151Ab0ANPJi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 10:09:38 -0500
-X-Greylist: delayed 387 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Jan 2010 10:09:38 EST
-Received: by pxi12 with SMTP id 12so124357pxi.33
-        for <git@vger.kernel.org>; Thu, 14 Jan 2010 07:09:38 -0800 (PST)
+	id S1755077Ab0ANPWL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jan 2010 10:22:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754815Ab0ANPWK
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 10:22:10 -0500
+Received: from mail-ew0-f209.google.com ([209.85.219.209]:52157 "EHLO
+	mail-ew0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754808Ab0ANPWJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jan 2010 10:22:09 -0500
+Received: by ewy1 with SMTP id 1so4096ewy.28
+        for <git@vger.kernel.org>; Thu, 14 Jan 2010 07:22:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=/3V928S82+uZgI/ry1aXEZ0D6R4XWw00UzNBD92gQ4I=;
-        b=RTQltNZvYqIALKygU4Wst4sh+ANeNI+wZquoxRA6jjV4p5WV01BBiV4eKsQJIGGI1w
-         N11lzMfDN0Mb7m5h36nZ95qlGTBuIhyQTHaTh5chyzveHnN89bAbTsK+or/jC+fXpdRy
-         CP+0OwfnNDStXpkX3p+4vYKbctQjWkiHpTWNU=
+        bh=raBswQCSozAex/QFNzsjduSubIL2uzm4YEGWKE5tkcI=;
+        b=tiVW71CxAvQjfIcmhJwez3oDStuz6xF0nxmqLARNZWNS6D8p8DrxW4idSwOrLxEAi7
+         OUCC+6HTi020AAarKUSYo5hkMYwqfzrpXS+0W0YO9FoMxTxWjWBZfv90gkrJ08HoMreq
+         4QyiDqc59AtqXIdA7XpSEk9ayX5rf8XEab2Fs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=w3ZbModKgYNc2klfQxXmboSaPyWHQBZwCNi6HoF46M/BAFM8qofZwTUBWx25pg17uQ
-         HhXJ10C1j4TJF9fGbHe1FFkDqyh4BiAFTEvxfQTs+OQfS3PfvdQ562qm2naEkTaBzyHo
-         Rfql/XV0XsADA6NxJhrzBD8qOR3CABSoxzlRI=
-Received: by 10.114.30.1 with SMTP id d1mr632722wad.75.1263481390856;
-        Thu, 14 Jan 2010 07:03:10 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.223.107])
-        by mx.google.com with ESMTPS id 21sm635749pzk.11.2010.01.14.07.03.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 14 Jan 2010 07:03:10 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 14 Jan 2010 22:02:23 +0700
-X-Mailer: git-send-email 1.6.6.181.g5ee6
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=bKj5gX4xSOy6QlGfjqyDbqnG64F1wKxfeEdv/NK1IGnzHg3lwPoypOPSnDzGT7p6uU
+         5oRGV9iWP6O1XHiScf9BRBBBjsU1xseToSm41kwQrQz3SfB6a6xpkvB4ax93Ou9xQfHl
+         PswhZccpW5FhAI+fDBCOpFCsTgjUBLauvGQqA=
+Received: by 10.213.2.82 with SMTP id 18mr931036ebi.58.1263482499906; Thu, 14 
+	Jan 2010 07:21:39 -0800 (PST)
+In-Reply-To: <1263481341-28401-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137001>
 
-The discussion about using Git on Gentoo comes up again [1] and it
-looks like we can improve Git a bit if user only works on some
-subdirectories. In such cases, Git still does whole-tree check, which
-takes quite some time. "git status" takes 3 seconds on my machine, but
-I suspect lstat() is not the only culprit, "git diff --exit-code" is
-about 1 sec.
+2010/1/14 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
+:
+> Almost 1 sec for "git rm foo" still seems too long though,
+> probably due to writing a 9MB index.
 
-These patches makes "git rm <path>" and "git status <path>" a bit
-faster. Almost 1 sec for "git rm foo" still seems too long though,
-probably due to writing a 9MB index.
+One of the main issues there is that the Gentoo dir tree seems to be
+very flat. The kernel tree is huge, but much deeper, and does not have
+a huge top-level directory -- and git handles it fairly well.
 
-[1] http://article.gmane.org/gmane.linux.gentoo.devel/64522
+Perhaps the Gentoo tree can be rearranged to be more nested? If your
+devs strongly prefer a flat view of it, that could be arranged with
+symlinks.
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
-  rm: only refresh entries that we may touch
-  status: only touch path we may need to check
+Alternatively, each port can be in its own repo, and you can make a
+"top level repo" using git submodules -- this is what Fedora/RH is
+exploring at the moment.
 
- builtin-commit.c |    2 +-
- builtin-rm.c     |    2 +-
- wt-status.c      |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+cheers,
+
+
+
+m
+--=20
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
