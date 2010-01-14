@@ -1,99 +1,110 @@
-From: Marko Poutiainen <regs@sofistes.net>
-Subject: Gitignore matching "git add" wildcard prevents operation
-Date: Thu, 14 Jan 2010 20:18:40 +0200
-Message-ID: <4B4F6000.4070005@sofistes.net>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: [RFC] Git Wiki Move
+Date: Thu, 14 Jan 2010 10:52:35 -0800
+Message-ID: <4B4F67F3.8000202@eaglescrag.net>
+References: <20100113232908.GA3299@machine.or.cz> <20100114012449.GB3299@machine.or.cz> <4B4EF1E0.3040808@eaglescrag.net> <alpine.DEB.1.00.1001141136450.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 14 19:28:34 2010
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 14 19:52:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVUQa-0005mx-CV
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 19:28:16 +0100
+	id 1NVUoM-0003YM-S1
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 19:52:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754421Ab0ANS2K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 13:28:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754267Ab0ANS2J
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 13:28:09 -0500
-Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:55697 "EHLO
-	emh04.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754129Ab0ANS2I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 13:28:08 -0500
-X-Greylist: delayed 563 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Jan 2010 13:28:08 EST
-Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
-	by emh04-2.mail.saunalahti.fi (Postfix) with SMTP id 32CF413B634
-	for <git@vger.kernel.org>; Thu, 14 Jan 2010 20:18:42 +0200 (EET)
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
-	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
-	with SMTP (gateway) id A05A2E341E2; Thu, 14 Jan 2010 20:18:42 +0200
-Received: from [192.168.0.24] (a91-155-40-90.elisa-laajakaista.fi [91.155.40.90])
-	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id 1E9FD1C6391
-	for <git@vger.kernel.org>; Thu, 14 Jan 2010 20:18:40 +0200 (EET)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-X-Enigmail-Version: 0.96.0
-X-Antivirus: VAMS
+	id S1757022Ab0ANSwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 13:52:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755143Ab0ANSwo
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 13:52:44 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:51752 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753879Ab0ANSwn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 13:52:43 -0500
+Received: from voot-cruiser.eaglescrag.net (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o0EIqZZ3007432
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Thu, 14 Jan 2010 10:52:35 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091209 Fedora/3.0-4.fc12 Lightning/1.0pre Thunderbird/3.0
+In-Reply-To: <alpine.DEB.1.00.1001141136450.4985@pacific.mpi-cbg.de>
+X-Enigmail-Version: 1.0
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Thu, 14 Jan 2010 10:52:35 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137009>
 
-It seems that that there is a bug related to how Git handles the add
-command with wildcards if the wildcard also matches a file that is ignored.
+On 01/14/2010 02:43 AM, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Thu, 14 Jan 2010, J.H. wrote:
+> 
+>> On 01/13/2010 05:24 PM, Petr Baudis wrote:
+>>
+>>> On Thu, Jan 14, 2010 at 12:29:08AM +0100, Petr Baudis wrote:
+>>>> I would like to notify you that unfortunately, Czech UPC terminated 
+>>>> the sponsorship of the hardware and connectivity hosting the Git Wiki 
+>>>> and repo.or.cz (after generously donating it for several years).
+>>>
+>>>   ...please scratch the Git Wiki part, you would be supporting just 
+>>> repo.or.cz - we are considering to move the Git wiki to 
+>>> wiki.kernel.org MediaWiki installation and I would like to ask if 
+>>> anyone disagrees with this. The motivation is that:
+>>>
+>>> 	(i) wiki.kernel.org is actually maintained! Thus, there should be 
+>>> 	less spam or upgrade issues and better support in case of problems.
+>>>
+>>> 	(ii) Also, I personally think MediaWiki is so much nicer than 
+>>> 	ikiwiki...
+> 
+> ... not to mention than MoinMoin...
+> 
+>>> 	(iii) ...and OBTW, no CamelCase!
+>>>
+>>>   Of course, there will be compatibility redirects.
+>>
+>> Just a heads up I've got an initial import of the current wiki up at
+>> http://git.wiki.kernel.org - some of it was quite a clean conversion,
+>> some of it not so much.
+> 
+> Did you use a script?  And did you leech the sources, or did you get a 
+> dump?
 
-E.g (I activate the *.[ao] rule when editing .git/info/exclude):
+Used a conversion script form a dump from Petr, needless to say it wa
+sthe one generally recommended by mediawiki and even their commentary on
+it was "It's the least bad" basically
 
-mep@Blackbird:~$ cd /tmp
-mep@Blackbird:/tmp$ mkdir git
-mep@Blackbird:/tmp$ cd git
-mep@Blackbird:/tmp/git$ git init
-Initialized empty Git repository in /tmp/git/.git/
-mep@Blackbird:/tmp/git$ nano -w .git/info/exclude
-mep@Blackbird:/tmp/git$ touch a.o a.c a.h
-mep@Blackbird:/tmp/git$ git add a.*
-The following paths are ignored by one of your .gitignore files:
-a.o
-Use -f if you really want to add them.
-fatal: no files added
-mep@Blackbird:/tmp/git$ git status
-# On branch master
-#
-# Initial commit
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       a.c
-#       a.h
-#       a.o
-nothing added to commit but untracked files present (use "git add" to track)
+> I note that "<<<!-- ! TOC here -->(2)>>" could be converted to "__TOC__", 
+> I believe.
 
-Furthermore:
+I'll have to go in behind and track those down, should be easy enough to
+find / fix.
 
-mep@Blackbird:/tmp/git$ git add .
-mep@Blackbird:/tmp/git$ git commit -m "foo"
-[master (root-commit) 43da825] foo
- 0 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 a.c
- create mode 100644 a.h
-mep@Blackbird:/tmp/git$ nano a.c
-mep@Blackbird:/tmp/git$ nano a.h
-mep@Blackbird:/tmp/git$ git add a.*
-The following paths are ignored by one of your .gitignore files:
-a.o
-Use -f if you really want to add them.
-fatal: no files added
-mep@Blackbird:/tmp/git$ git status
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working
-directory)
-#
-#       modified:   a.c
-#       modified:   a.h
-#
-no changes added to commit (use "git add" and/or "git commit -a")
+>> Please note that user accounts were not carried over but edit histories 
+>> were.
+> 
+> IIUC there are no email addresses stored in the Git Wiki, so I think that 
+> we'll have to live with that.  You might get the occasional complaint of a 
+> stolen account.
+
+I'm fine with dealing with those on an individual basis, and it would be
+good for people to re-create their accounts as soon as possible.
+
+>> I'll work on cleaning up the rest of if tomorrow, assuming that there 
+>> isn't any objections to Petr's e-mail above.
+> 
+> I like it.  Especially since there is a fun project waiting for me to 
+> get some time to do it, to convert the full history of a MediaWiki 
+> instance into a Git repository.  Maybe via the git-remote* mechanism, once 
+> Sverre and Ilari manage to flush out the last remnants of clumsy design.
+
+Now you've got a solid wiki to work with that's pertinent ;-)
+
+- John 'Warthog9' Hawley
