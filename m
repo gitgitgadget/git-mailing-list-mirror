@@ -1,65 +1,56 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: Re: [PATCH] git push --track
-Date: Thu, 14 Jan 2010 16:27:27 +0100
-Message-ID: <20100114152727.GA26059@inner.home.ulmdo.de>
-References: <op.u6g8jnixg402ra@nb-04> <871vht7cs2.fsf@catnip.gol.com> <46a038f91001140544u64dd7eefn94625cdc40881cd6@mail.gmail.com> <alpine.DEB.1.00.1001141509230.3029@intel-tinevez-2-302> <vpqiqb4lq4q.fsf@bauges.imag.fr>
+From: Eric Blake <ebb9@byu.net>
+Subject: Re: [PATCH 01/18] rebase -i: Make the condition for an &quot;if&quot; more transparent
+Date: Thu, 14 Jan 2010 15:42:22 +0000 (UTC)
+Message-ID: <loom.20100114T164214-897@post.gmane.org>
+References: <cover.1263447037.git.mhagger@alum.mit.edu> <aa37ee8a68d460df172b23b4999fbe4ce7d77c1e.1263447037.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Miles Bader <miles@gnu.org>,
-	Rudolf Polzer <divVerent@alientrap.org>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jan 14 16:27:53 2010
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 14 16:43:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVRc0-0002fN-CP
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 16:27:52 +0100
+	id 1NVRqj-0004s0-Hz
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 16:43:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757084Ab0ANP1s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 10:27:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757056Ab0ANP1s
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 10:27:48 -0500
-Received: from continuum.iocl.org ([213.146.114.200]:62784 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753509Ab0ANP1r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 10:27:47 -0500
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id o0EFRRf31497;
-	Thu, 14 Jan 2010 16:27:27 +0100
-Content-Disposition: inline
-In-Reply-To: <vpqiqb4lq4q.fsf@bauges.imag.fr>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+	id S1754672Ab0ANPm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 10:42:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754501Ab0ANPm6
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 10:42:58 -0500
+Received: from lo.gmane.org ([80.91.229.12]:37763 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752957Ab0ANPm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 10:42:57 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NVRqY-0004mp-Hp
+	for git@vger.kernel.org; Thu, 14 Jan 2010 16:42:54 +0100
+Received: from l3-128-170-36-102.l-3com.com ([128.170.36.102])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 14 Jan 2010 16:42:54 +0100
+Received: from ebb9 by l3-128-170-36-102.l-3com.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 14 Jan 2010 16:42:54 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 128.170.36.102 (Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; InfoPath.2; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; OfficeLiveConnector.1.4; OfficeLivePatch.1.3))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137003>
 
-On Thu, 14 Jan 2010 15:25:57 +0000, Matthieu Moy wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> Of course it'd only work if you have full ssh access, unless the git 
-> >> server learns a new command to mkdir (in sane and approved locations).
-> >
-> > You mean a new "init" command a la "git --git-dir=bla.git init", which 
-> > _does_ mkdir the directory.
-> 
-> I think he meant
-> 
->   git --git-dir=git+ssh://foo.bar/var/git/mynewthing.git init
-> 
-> which doesn't.
+Michael Haggerty <mhagger <at> alum.mit.edu> writes:
 
-But 'ssh foo.bar git --git-dir=/var/git/mynewthing.git init' likely would.
+>  	current_sha1=$(git rev-parse --verify HEAD)
+> -	if test "$no_ff$current_sha1" = "$parent_sha1"; then
+> +	if test -z "$no_ff" -a "$current_sha1" = "$parent_sha1"
 
-Probably missing a --bare somewhere; and I think that repo creation
-potentially needs too many things (like custom hook or access rights
-setup) to be done via git push. Especially since you really only need
-to create an empty repo, and only if you didn't clone from the push
-target in the first place.
+'test cond1 -a cond2' is not portable.  Use 'test cond1 && test cond2'.
 
-Andreas
+-- 
+Eric Blake
