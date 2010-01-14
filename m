@@ -1,50 +1,69 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH] git push --track
-Date: Thu, 14 Jan 2010 09:46:07 +0900
-Message-ID: <87k4vl5x9s.fsf@catnip.gol.com>
-References: <op.u6g8jnixg402ra@nb-04> <871vht7cs2.fsf@catnip.gol.com>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Adam Nielsen <adam.nielsen@uq.edu.au>
+Subject: Re: Unable to get "pretty" URL aliases working
+Date: Thu, 14 Jan 2010 10:45:59 +1000
+Organization: The University of Queensland
+Message-ID: <4B4E6947.2020009@uq.edu.au>
+References: <4B4ABDB5.9000203@uq.edu.au> <7v7hrpvzqa.fsf@alter.siamese.dyndns.org> <4B4BB2DC.4090203@uq.edu.au> <7vockytrwy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Rudolf Polzer" <divVerent@alientrap.org>
-X-From: git-owner@vger.kernel.org Thu Jan 14 01:46:18 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 01:47:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVDqq-0006vl-FX
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 01:46:16 +0100
+	id 1NVDrZ-0007Bk-2d
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 01:47:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751118Ab0ANAqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 19:46:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750976Ab0ANAqM
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 19:46:12 -0500
-Received: from smtp12.dentaku.gol.com ([203.216.5.74]:41699 "EHLO
-	smtp12.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750717Ab0ANAqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 19:46:11 -0500
-Received: from 218.231.177.74.eo.eaccess.ne.jp ([218.231.177.74] helo=catnip.gol.com)
-	by smtp12.dentaku.gol.com with esmtpa (Dentaku)
-	id 1NVDqh-0007VK-Ka; Thu, 14 Jan 2010 09:46:07 +0900
-Received: by catnip.gol.com (Postfix, from userid 1000)
-	id 78ECCDF73; Thu, 14 Jan 2010 09:46:07 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-In-Reply-To: <871vht7cs2.fsf@catnip.gol.com> (Miles Bader's message of "Thu,
-	14 Jan 2010 09:25:49 +0900")
-X-Virus-Scanned: ClamAV GOL (outbound)
-X-Abuse-Complaints: abuse@gol.com
+	id S1751482Ab0ANAq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 19:46:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751319Ab0ANAq5
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 19:46:57 -0500
+Received: from mailhub3.uq.edu.au ([130.102.148.131]:38944 "EHLO
+	mailhub3.uq.edu.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751286Ab0ANAq4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 19:46:56 -0500
+Received: from smtp3.uq.edu.au (smtp3.uq.edu.au [130.102.128.18])
+	by mailhub3.uq.edu.au (8.13.8/8.13.8) with ESMTP id o0E0jx0K008600;
+	Thu, 14 Jan 2010 10:46:00 +1000
+Received: from [192.168.173.208] (rrtd-it1.research.uq.edu.au [192.168.173.208])
+	by smtp3.uq.edu.au (8.13.8/8.13.8) with ESMTP id o0E0jxSt024454
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 14 Jan 2010 10:45:59 +1000
+User-Agent: Thunderbird 2.0.0.23 (X11/20091130)
+In-Reply-To: <7vockytrwy.fsf@alter.siamese.dyndns.org>
+X-UQ-FilterTime: 1263429960
+X-Scanned-By: MIMEDefang 2.58 on UQ Mailhub on 130.102.148.131
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136907>
 
-BTW, I was _just_ going to post a message saying "whatever happened to
-push --track", but then decided to check the list once more, and saw
-your message...!
+>> What actually happens when you use the ssh:// style connection?
+> 
+> Be it ssh://host/full/path or host:/full/path or host:path/in/home, you
+> log in as whatver ssh identifies you as to the server, and start a
+> server-side git process over there.
 
--Miles
+Ah ok, that makes more sense.  Strange then if it's a server-side git 
+process that it ignores the server's /etc/gitconfig where aliases can be 
+set up.
 
--- 
-Dawn, n. When men of reason go to bed.
+> With ssh://host/path notation, there is no way to specify any relative
+> path (i.e. "/path" part begins at root) so it will mean the same thing for
+> everybody (unless you are getting chrooted or something), while host:path
+> notation allows relative path which will be taken relative as where you
+> are, i.e. home directory of the user on the server.
+
+In that case I symlinked my repository folder to /git so that SSH users 
+can "cd /git/project.git" and this seems to work well.  I can now use 
+git URLs like ssh://server/git/project.git even though the repos are 
+buried much deeper down in the tree.
+
+Thanks for the explanations!
+
+Cheers,
+Adam.
