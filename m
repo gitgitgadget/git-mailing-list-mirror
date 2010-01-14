@@ -1,114 +1,70 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: Removal of post-upload-hook
-Date: Thu, 14 Jan 2010 21:06:45 +0000
-Message-ID: <20100114210645.GE16921@orbis-terrarum.net>
-References: <6f8b45101001141001q40d8b746v8385bc6ae37a6af4@mail.gmail.com>
- <20100114193607.GB25863@coredump.intra.peff.net>
- <20100114194107.GA20033@spearce.org>
- <20100114204305.GC26883@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] start_command: detect execvp failures early
+Date: Thu, 14 Jan 2010 13:31:16 -0800
+Message-ID: <7viqb49xwb.fsf@alter.siamese.dyndns.org>
+References: <1263044757-12560-1-git-send-email-ilari.liusvaara@elisanet.fi>
+ <1263044757-12560-2-git-send-email-ilari.liusvaara@elisanet.fi>
+ <201001101404.22258.j6t@kdbg.org> <201001101411.22418.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ZmZU9S7l/XJx5q9b"
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 14 22:13:39 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Jan 14 22:31:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVX0b-0003e3-0u
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 22:13:37 +0100
+	id 1NVXHw-0002Yc-2L
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 22:31:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754501Ab0ANVNd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 16:13:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753997Ab0ANVNc
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 16:13:32 -0500
-Received: from b01.ext.isohunt.com ([208.71.112.51]:53378 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753917Ab0ANVNc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 16:13:32 -0500
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Jan 2010 16:13:32 EST
-Received: (qmail 26083 invoked from network); 14 Jan 2010 21:06:47 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO grubbs.orbis-terrarum.net) (76.10.188.108)
-    by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (CAMELLIA256-SHA encrypted) ESMTPS; Thu, 14 Jan 2010 21:06:47 +0000
-Received: (qmail 13857 invoked by uid 10000); 14 Jan 2010 21:06:45 -0000
-Content-Disposition: inline
-In-Reply-To: <20100114204305.GC26883@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754906Ab0ANVb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 16:31:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753270Ab0ANVb1
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 16:31:27 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55624 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751956Ab0ANVb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 16:31:27 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D1A799199D;
+	Thu, 14 Jan 2010 16:31:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6HL9uOSYTCcmPojq8pqntNkzkwI=; b=tMXB0E
+	e2dbk5NkuaRledG/nVfgC/RDTXitsAG4eWQ+md3O4gI9aV4l6ZeeEMkZR2yHONu1
+	cFL0Pf3mqn+J8mBihGk/QvXXGqIwFCSyHErNuwOc7ZetQwpi8pm4qEU+uU2uQX0d
+	GrtGUStzwQ1FlH6cd4xdbgnj6tnTTp4SQ0TFU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QbX8E1/QZnolV/psDVxw/f678KjFSG0+
+	EvXivT/FDdX8amyU20sh1BYKwJiehYCJJV2UwJLVGfy9iEcwLPwWdlsZVnkniTFk
+	gDFESCQCTlo9Ii56GgDupgxrSgSvqgtXLMTUPXfmbfxrrhKVBaoJs+CGDJw3CCzU
+	XmLo/eqgzHE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 93CCB9199C;
+	Thu, 14 Jan 2010 16:31:21 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9391C9199B; Thu, 14 Jan
+ 2010 16:31:17 -0500 (EST)
+In-Reply-To: <201001101411.22418.j6t@kdbg.org> (Johannes Sixt's message of
+ "Sun\, 10 Jan 2010 14\:11\:22 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 28A5A434-0154-11DF-BDF7-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137027>
 
+Johannes Sixt <j6t@kdbg.org> writes:
 
---ZmZU9S7l/XJx5q9b
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Previously, failures during execvp could be detected only by
+> finish_command. However, in some situations it is beneficial for the
+> parent process to know earlier that the child process will not run.
+>
+> The idea to use a pipe to signal failures to the parent process and
+> the test case were lifted from patches by Ilari Liusvaara.
 
-On Thu, Jan 14, 2010 at 03:43:05PM -0500, Jeff King wrote:
-> On Thu, Jan 14, 2010 at 11:41:07AM -0800, Shawn O. Pearce wrote:
->=20
-> > > Because receive-pack runs as the user who is pushing, not as the
-> > > repository owner. So by convincing you to push to my repository in a
-> > > multi-user environment, I convince you to run some arbitrary code of
-> > > mine.
-> >=20
-> > Uhhh, this was in fetch/upload-pack Peff, not push/receive-pack.
-> >=20
-> > Same issue though.
-> Errr...yeah. Sorry for the confusion. But yes, it's the same mechanism,
-> except that it is even easier to get people to pull from you (to get
-> them to push, you first have to get them to write a worthwhile code
-> contribution. ;) ).
-post-update, post-receive, update, pre-receive would all be subject to
-this problem as well if:
-- the repo was group/world-writable
-- the hook is untrusted
-
-post-upload-pack just required group/world-readable and untrusted hook
-code.
-
-I'd like to lodge a complaint about the removal of the functionality. I
-would have commented on the patch prior to this, but even searching I
-didn't see it cross the list.
-
-As a reasonable middle ground between the functionality and complete
-removal, can we find a way just to only execute the potentially
-dangerous hooks under known safe conditions or when explicitly requested
-by the user.
-
-Places where the hooks are safe:
-- the hooks are known trusted AND not writable by the user/group.
-  (e.g. "chown -R root:root hooks/").
-- Systems where the users/groups do not have full shell access, just
-  access to run Git itself. Eg gitosis, regular git+ssh:// w/ a
-  restricted shell.
-
-Upcoming use case:
-For Gentoo's work on migrating to Git, we've been working on a
-pre-upload-pack hook and script that can explicitly block the generation
-of some packs.
-Basically, unless you send a sufficiently recent 'have' line, you are
-told to fetch a bundle via HTTP or rsync instead.
-
---=20
-Robin Hugh Johnson
-Gentoo Linux: Developer, Trustee & Infrastructure Lead
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
-
---ZmZU9S7l/XJx5q9b
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iEYEARECAAYFAktPh2UACgkQPpIsIjIzwixijACg2KLBeUKrVa0FsUJnc8leQ53V
-of4AoLUipRSyfS/MUSfx5F9+75/Sv4j/
-=/p/g
------END PGP SIGNATURE-----
-
---ZmZU9S7l/XJx5q9b--
+I wonder if we can do this without pipe, perhaps using "vfork, exec, then
+update a variable"....
