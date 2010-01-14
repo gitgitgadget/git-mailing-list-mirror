@@ -1,71 +1,98 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: Syncing a git working tree with Dropbox?
-Date: Thu, 14 Jan 2010 13:39:10 +0800
-Message-ID: <be6fef0d1001132139p56944cdax22674ca773af0199@mail.gmail.com>
-References: <20100113235718.GA7033@dulip>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: chombee <chombee@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 06:39:16 2010
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 00/18] rebase -i: For pure fixups, do not start log message editor
+Date: Thu, 14 Jan 2010 06:54:39 +0100
+Message-ID: <cover.1263447037.git.mhagger@alum.mit.edu>
+Cc: gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 14 06:55:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVIQO-00073L-CQ
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 06:39:16 +0100
+	id 1NVIfy-0002MQ-Mm
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 06:55:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752299Ab0ANFjM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 00:39:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751956Ab0ANFjM
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 00:39:12 -0500
-Received: from mail-iw0-f194.google.com ([209.85.223.194]:59429 "EHLO
-	mail-iw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751056Ab0ANFjL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 00:39:11 -0500
-Received: by iwn32 with SMTP id 32so236856iwn.33
-        for <git@vger.kernel.org>; Wed, 13 Jan 2010 21:39:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=b3CfDujr7zCGDLu90wdPjZYSrFUaMb6pUL5qB9RthKg=;
-        b=KNO2MaH710RPxmkHzsIEDOg19PTZFztLdWs5x+jg/bPKoLiRZNw4yiqBxtnPmDWKYZ
-         IpWZb+XjUuSdGTbhO1rgnxU+lXw3gNNa/IRwFeo7/Qz6jzqGij4h13tEheIvu2W3HF21
-         qtxDWiv+yBAG8zaiSRT06xrcse48A56hkkT5o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=pFkfH7+xRyqh7qIn+meRPDa5axS7SfEIoTjxztufGcJnLmyps+7PXAQEPSjc/osvUw
-         xBANVqanaNlRsPKmb5romxpa0vJecsKKM1avOF2nHkGalawvfcwzqZLMkJDoD+ilyrZ8
-         6FBVxTvN687ksqWtisVZM2IjLbqY1Lit/kbXg=
-Received: by 10.231.120.136 with SMTP id d8mr396667ibr.14.1263447550728; Wed, 
-	13 Jan 2010 21:39:10 -0800 (PST)
-In-Reply-To: <20100113235718.GA7033@dulip>
+	id S1752696Ab0ANFzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 00:55:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755445Ab0ANFzM
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 00:55:12 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:58573 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750978Ab0ANFzK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 00:55:10 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from localhost.localdomain (p4FC1EBF4.dip.t-dialin.net [79.193.235.244])
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o0E5t4bF001912;
+	Thu, 14 Jan 2010 06:55:05 +0100
+X-Mailer: git-send-email 1.6.6
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136933>
 
-Hi,
+This patch series is a successor to mh/rebase-fixup, which causes
+"rebase -i" to skip opening the log message editor when processing a
+block of "fixup" commands that does not include any "squash"es.  The
+idea was discussed on the mailing list [1] to general approval.
 
-On Thu, Jan 14, 2010 at 7:57 AM, chombee <chombee@lavabit.com> wrote:
-> My idea is that I keep my .git folder safely outside of my Dropbox
-> folder, but my git repository has a detached working tree that is
-> located in the Dropbox folder. On machine B it would be the same setup.
-> So the two machines each have their own clone of the git repo and these
-> are synchronised by git push and git pull with a 'central' remote repo.
-> But the two clones share the same working tree, or more accurately their
-> working trees are synced by Dropbox.
->
-> The working tree is just files, I don't see how it's different from
-> Dropbox syncing any other files. Dropbox and git ought not to collide in
-> any way. So this should work fine shouldn't it?
+This patch series applies to "next", as it depends on earlier commits
+in mh/rebase-fixup.  With this patch series, I believe that this topic
+is finished.
 
-Your changes in git (like new commits) won't be synced.
+The first several commits are trivial fixups.
 
--- 
-Cheers,
-Ray Chuan
+The three commits starting with "Document how temporary files are
+used" attempt to document how the existing git-rebase--interactive.sh
+script uses temporary files, as that information was not obvious.  I
+would appreciate feedback about whether I have inferred the uses
+correctly.
+
+Following are several refactorings leading to the main point of this
+patch series, "For fixup commands without squashes, do not start
+editor".
+
+I also noticed a related (pre-existing) bug, namely that when there is
+a conflict during the processing of a "squash" series, the user is
+sometimes asked to edit an intermediate commit message.  But after
+later squashes are processed, the user's edited message is discarded.
+The last two patches fix this problem--whenever the user has edited a
+commit message, the resulting combined commit is treated (internally)
+as a new starting point for further squash/fixups.  As such, the
+user-edited commit message is the first part of the suggested commit
+message for the final squashed/fixedup commit.
+
+Michael
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/134510
+
+Michael Haggerty (18):
+  rebase -i: Make the condition for an "if" more transparent
+  rebase -i: Remove dead code
+  rebase -i: Inline expression
+  rebase -i: Use "test -n" instead of "test ! -z"
+  rebase -i: Use symbolic constant $MSG consistently
+  rebase -i: Document how temporary files are used
+  rebase -i: Introduce a constant AUTHOR_SCRIPT
+  rebase -i: Introduce a constant AMEND
+  t3404: Test the commit count in commit messages generated by "rebase
+    -i"
+  rebase -i: Improve consistency of commit count in generated commit
+    messages
+  rebase -i: Simplify commit counting for generated commit messages
+  rebase -i: Extract a function "commit_message"
+  rebase -i: Handle the author script all in one place in do_next
+  rebase -i: Extract function do_with_author
+  rebase -i: Change function make_squash_message into
+    update_squash_message
+  rebase -i: For fixup commands without squashes, do not start editor
+  t3404: Set up more of the test repo in the "setup" step
+  rebase -i: Retain user-edited commit messages after squash/fixup
+    conflicts
+
+ git-rebase--interactive.sh    |  224 ++++++++++++++++++++++++++---------------
+ t/lib-rebase.sh               |    6 +-
+ t/t3404-rebase-interactive.sh |  101 +++++++++++++------
+ 3 files changed, 219 insertions(+), 112 deletions(-)
