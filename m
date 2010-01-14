@@ -1,98 +1,62 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 00/18] rebase -i: For pure fixups, do not start log message editor
-Date: Thu, 14 Jan 2010 06:54:39 +0100
-Message-ID: <cover.1263447037.git.mhagger@alum.mit.edu>
+Subject: [PATCH 02/18] rebase -i: Remove dead code
+Date: Thu, 14 Jan 2010 06:54:41 +0100
+Message-ID: <affe8160c091f8f329b4bbc16d7c9641b1483296.1263447037.git.mhagger@alum.mit.edu>
+References: <cover.1263447037.git.mhagger@alum.mit.edu>
 Cc: gitster@pobox.com, Johannes.Schindelin@gmx.de,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 14 06:55:23 2010
+X-From: git-owner@vger.kernel.org Thu Jan 14 06:56:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVIfy-0002MQ-Mm
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 06:55:23 +0100
+	id 1NVIgb-0002Vo-2T
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 06:56:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752696Ab0ANFzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 00:55:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755445Ab0ANFzM
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 00:55:12 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:58573 "EHLO
+	id S1755585Ab0ANFz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 00:55:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755489Ab0ANFzU
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 00:55:20 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:58584 "EHLO
 	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750978Ab0ANFzK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 00:55:10 -0500
+	with ESMTP id S1755467Ab0ANFzR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 00:55:17 -0500
 X-Envelope-From: mhagger@alum.mit.edu
 Received: from localhost.localdomain (p4FC1EBF4.dip.t-dialin.net [79.193.235.244])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o0E5t4bF001912;
-	Thu, 14 Jan 2010 06:55:05 +0100
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o0E5t4bH001912;
+	Thu, 14 Jan 2010 06:55:13 +0100
 X-Mailer: git-send-email 1.6.6
+In-Reply-To: <cover.1263447037.git.mhagger@alum.mit.edu>
+In-Reply-To: <cover.1263447037.git.mhagger@alum.mit.edu>
+References: <cover.1263447037.git.mhagger@alum.mit.edu>
 X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136934>
 
-This patch series is a successor to mh/rebase-fixup, which causes
-"rebase -i" to skip opening the log message editor when processing a
-block of "fixup" commands that does not include any "squash"es.  The
-idea was discussed on the mailing list [1] to general approval.
+This branch of the "if" is only executed if $no_ff is empty, which
+only happens if $1 was not '-n'.  (This code has been dead since
+1d25c8cf82eead72e11287d574ef72d3ebec0db1.)
 
-This patch series applies to "next", as it depends on earlier commits
-in mh/rebase-fixup.  With this patch series, I believe that this topic
-is finished.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ git-rebase--interactive.sh |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
 
-The first several commits are trivial fixups.
-
-The three commits starting with "Document how temporary files are
-used" attempt to document how the existing git-rebase--interactive.sh
-script uses temporary files, as that information was not obvious.  I
-would appreciate feedback about whether I have inferred the uses
-correctly.
-
-Following are several refactorings leading to the main point of this
-patch series, "For fixup commands without squashes, do not start
-editor".
-
-I also noticed a related (pre-existing) bug, namely that when there is
-a conflict during the processing of a "squash" series, the user is
-sometimes asked to edit an intermediate commit message.  But after
-later squashes are processed, the user's edited message is discarded.
-The last two patches fix this problem--whenever the user has edited a
-commit message, the resulting combined commit is treated (internally)
-as a new starting point for further squash/fixups.  As such, the
-user-edited commit message is the first part of the suggested commit
-message for the final squashed/fixedup commit.
-
-Michael
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/134510
-
-Michael Haggerty (18):
-  rebase -i: Make the condition for an "if" more transparent
-  rebase -i: Remove dead code
-  rebase -i: Inline expression
-  rebase -i: Use "test -n" instead of "test ! -z"
-  rebase -i: Use symbolic constant $MSG consistently
-  rebase -i: Document how temporary files are used
-  rebase -i: Introduce a constant AUTHOR_SCRIPT
-  rebase -i: Introduce a constant AMEND
-  t3404: Test the commit count in commit messages generated by "rebase
-    -i"
-  rebase -i: Improve consistency of commit count in generated commit
-    messages
-  rebase -i: Simplify commit counting for generated commit messages
-  rebase -i: Extract a function "commit_message"
-  rebase -i: Handle the author script all in one place in do_next
-  rebase -i: Extract function do_with_author
-  rebase -i: Change function make_squash_message into
-    update_squash_message
-  rebase -i: For fixup commands without squashes, do not start editor
-  t3404: Set up more of the test repo in the "setup" step
-  rebase -i: Retain user-edited commit messages after squash/fixup
-    conflicts
-
- git-rebase--interactive.sh    |  224 ++++++++++++++++++++++++++---------------
- t/lib-rebase.sh               |    6 +-
- t/t3404-rebase-interactive.sh |  101 +++++++++++++------
- 3 files changed, 219 insertions(+), 112 deletions(-)
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index fba8fb6..c6174bb 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -169,7 +169,6 @@ pick_one () {
+ 	if test -z "$no_ff" -a "$current_sha1" = "$parent_sha1"
+ 	then
+ 		output git reset --hard $sha1
+-		test "a$1" = a-n && output git reset --soft $current_sha1
+ 		sha1=$(git rev-parse --short $sha1)
+ 		output warn Fast-forward to $sha1
+ 	else
+-- 
+1.6.6
