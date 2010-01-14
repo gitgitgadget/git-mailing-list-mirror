@@ -1,75 +1,74 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: [RFC] Git Wiki Move
-Date: Thu, 14 Jan 2010 10:56:40 -0800
-Message-ID: <4B4F68E8.5050809@eaglescrag.net>
-References: <20100113232908.GA3299@machine.or.cz>	<20100114012449.GB3299@machine.or.cz>	<4B4EF1E0.3040808@eaglescrag.net> <vpqbpgxrn32.fsf@bauges.imag.fr>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 3/3] commit: show interesting ident information in 
+	summary
+Date: Thu, 14 Jan 2010 21:04:16 +0200
+Message-ID: <94a0d4531001141104w74dbaf35jb5fded9e266bc04b@mail.gmail.com>
+References: <20100113173408.GA16652@coredump.intra.peff.net>
+	 <20100113184510.GA22849@coredump.intra.peff.net>
+	 <5722BD3D-E7C9-47F7-B547-09B14D87DA39@wincent.com>
+	 <201001141602.22244.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jan 14 19:58:10 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Wincent Colaiuta <win@wincent.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Adam Megacz <adam@megacz.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Jan 14 20:04:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVUsH-0006CU-6E
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 19:56:53 +0100
+	id 1NVUzX-0001mP-IW
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 20:04:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755307Ab0ANS4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 13:56:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756801Ab0ANS4s
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 13:56:48 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:51788 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755087Ab0ANS4s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 13:56:48 -0500
-Received: from voot-cruiser.eaglescrag.net (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o0EIueME007835
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Thu, 14 Jan 2010 10:56:40 -0800
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091209 Fedora/3.0-4.fc12 Lightning/1.0pre Thunderbird/3.0
-In-Reply-To: <vpqbpgxrn32.fsf@bauges.imag.fr>
-X-Enigmail-Version: 1.0
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Thu, 14 Jan 2010 10:56:41 -0800 (PST)
+	id S932294Ab0ANTET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 14:04:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932283Ab0ANTES
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 14:04:18 -0500
+Received: from mail-iw0-f194.google.com ([209.85.223.194]:57277 "EHLO
+	mail-iw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932223Ab0ANTES (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 14:04:18 -0500
+Received: by iwn32 with SMTP id 32so685101iwn.33
+        for <git@vger.kernel.org>; Thu, 14 Jan 2010 11:04:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=hvnjrIU2ystzOn7ThodzwDx7RPCro3ec7ud0Pj71T/8=;
+        b=VuH3QYU0e9y16GiZVVUvmj2h27UsZxEgr5qU/6fT5wXIOv3H4yphx+Kdf8LGSVp4l4
+         Vpq0HcLUAkvEBDT4QfH91IOW5Zir6+AH0EIsqUBlf0GPCxxJhLduZa2l6ekSkeEBCh8n
+         fD9nAmMPAuBlR79MFsHQkORMCDfGq2AQwX51c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=UIagin9AErYFX/nELZzwY8mBT7JjwEX33iERJFqXeILhIbvXqU9ObtNN1OpXHVw2Qn
+         Ip+efpadisDFlyx2aFflcYHAIGz0FyvrHsBL9obWltQ8o5mwln4xP+CcTLW59jWShVNB
+         oLp0wG9MqSpWGmanqIhm01aSQfsH/fdiHFywM=
+Received: by 10.231.146.79 with SMTP id g15mr1209644ibv.49.1263495856975; Thu, 
+	14 Jan 2010 11:04:16 -0800 (PST)
+In-Reply-To: <201001141602.22244.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137011>
 
-On 01/14/2010 02:35 AM, Matthieu Moy wrote:
-> "J.H." <warthog19@eaglescrag.net> writes:
-> 
->> Just a heads up I've got an initial import of the current wiki up at
->> http://git.wiki.kernel.org - some of it was quite a clean conversion,
->> some of it not so much.  Please note that user accounts were not carried
->> over but edit histories were.  I'll work on cleaning up the rest of if
->> tomorrow, assuming that there isn't any objections to Petr's e-mail
->> above.
-> 
-> My only objection would be "Oh, migrating to another wiki engine will
-> be much conversion work", but if you're willing to do it ;-).
+On Thu, Jan 14, 2010 at 5:02 PM, Thomas Rast <trast@student.ethz.ch> wrote:
+> Wincent Colaiuta wrote:
+>>
+>> Fair enough, but I'm sighing here at the thought of people jumping in
+>> and using git commands without even having looked at _any_ of the
+>> zillions of "your first 10 minutes with Git" tutorials out there,
+>> which pretty much _all_ start with how to set up your user.name and
+>> user.email...
+>
+> If you really are shocked by that thought, try hanging out on #git for
+> six hours on any given day...
 
-It unfortunately goes with the territory, though I'll admit the Moinmoin
--> Mediawiki was the first conversion I've seen where even Mediawiki said:
+Which is precisely why I was pushing for this:
+http://thread.gmane.org/gmane.comp.version-control.git/131150
 
-	There are a number of hacky scripts for this. They are all
-	defective in various ways - anyone who does this job does it
-	precisely once, so there's no-one who really maintains a good
-	converter script.
-
-> This page seems to be an interesting test-case:
-> http://git.wiki.kernel.org/index.php/GitFaq
-> full of miss-imported formatting, links, ...
-
-That's not actually the worst,
-
-http://git.wiki.kernel.org/index.php/GitRelatedLogos
-
-even after I've cleaned up a chunk of it is still pretty bad.
-
-- John 'Warthog9' Hawley
+-- 
+Felipe Contreras
