@@ -1,165 +1,82 @@
 From: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
-Subject: [PATCH 1/9] gitweb: Load checking
-Date: Wed, 13 Jan 2010 17:22:57 -0800
-Message-ID: <1263432185-21334-2-git-send-email-warthog9@eaglescrag.net>
+Subject: [PATCH 6/9] gitweb: add a get function to compliment print_sort_th
+Date: Wed, 13 Jan 2010 17:23:02 -0800
+Message-ID: <1263432185-21334-7-git-send-email-warthog9@eaglescrag.net>
 References: <1263432185-21334-1-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-2-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-3-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-4-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-5-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-6-git-send-email-warthog9@eaglescrag.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 14 02:23:20 2010
+X-From: git-owner@vger.kernel.org Thu Jan 14 02:23:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVEQh-0002dw-Qe
+	id 1NVEQi-0002dw-I6
 	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 02:23:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753020Ab0ANBXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2010 20:23:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751724Ab0ANBXM
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 20:23:12 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:56015 "EHLO
+	id S1753804Ab0ANBXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2010 20:23:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189Ab0ANBXP
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jan 2010 20:23:15 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:56020 "EHLO
 	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750895Ab0ANBXL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2010 20:23:11 -0500
+	with ESMTP id S1751724Ab0ANBXN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2010 20:23:13 -0500
 Received: from localhost.localdomain (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
 	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o0E1N5Ln009231
+	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o0E1N5Ls009231
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 13 Jan 2010 17:23:10 -0800
+	for <git@vger.kernel.org>; Wed, 13 Jan 2010 17:23:12 -0800
 X-Virus-Status: Clean
 X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
 X-Mailer: git-send-email 1.6.5.2
-In-Reply-To: <1263432185-21334-1-git-send-email-warthog9@eaglescrag.net>
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Wed, 13 Jan 2010 17:23:10 -0800 (PST)
+In-Reply-To: <1263432185-21334-6-git-send-email-warthog9@eaglescrag.net>
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Wed, 13 Jan 2010 17:23:12 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136909>
 
-From: John 'Warthog9' Hawley <warthog9@kernel.org>
-
-This changes slightly the behavior of gitweb, so that it verifies
-that the box isn't inundated with before attempting to serve gitweb.
-If the box is overloaded, it basically returns a 503 Server Unavailable
-until the load falls below the defined threshold.  This helps dramatically
-if you have a box that's I/O bound, reaches a certain load and you
-don't want gitweb, the I/O hog that it is, increasing the pain the
-server is already undergoing.
-
-This behavior is controlled by $maxload configuration variable.
-Default is a load of 300, which for most cases should never be hit.
-Unset it (set it to undefined value, i.e. undef) to turn off checking.
-
-Currently it requires that '/proc/loadavg' file exists, otherwise the
-load check is bypassed (load is taken to be 0).  So platforms that do
-not implement '/proc/loadavg' currently cannot use this feature.
-(provisions are included for additional checks to be added by others)
-
-Signed-off-by: John 'Warthog9' Hawley <warthog9@kernel.org>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+This adds a get function for print_sort_th so that the basic
+function can be used outside of their straight printing operation.
 ---
- gitweb/README      |    7 ++++++-
- gitweb/gitweb.perl |   45 +++++++++++++++++++++++++++++++++++++++++----
- 2 files changed, 47 insertions(+), 5 deletions(-)
+ gitweb/gitweb.perl |   11 +++++++++--
+ 1 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/gitweb/README b/gitweb/README
-index e34ee79..6c2c8e1 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -174,7 +174,7 @@ not include variables usually directly set during build):
-    Base URL for relative URLs in pages generated by gitweb,
-    (e.g. $logo, $favicon, @stylesheets if they are relative URLs),
-    needed and used only for URLs with nonempty PATH_INFO via
--   <base href="$base_url>.  Usually gitweb sets its value correctly,
-+   <base href="$base_url">.  Usually gitweb sets its value correctly,
-    and there is no need to set this variable, e.g. to $my_uri or "/".
-  * $home_link
-    Target of the home link on top of all pages (the first part of view
-@@ -228,6 +228,11 @@ not include variables usually directly set during build):
-    repositories from launching cross-site scripting (XSS) attacks.  Set this
-    to true if you don't trust the content of your repositories. The default
-    is false.
-+ * $maxload
-+   Used to set the maximum load that we will still respond to gitweb queries.
-+   If server load exceed this value then return "503 Service Unavaliable" error.
-+   Server load is taken to be 0 if gitweb cannot determine its value.  Set it to
-+   undefined value to turn it off.  The default is 300.
- 
- 
- Projects list file format
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7e477af..0a07d3a 100755
+index d38aad6..07fdeb5 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -221,6 +221,12 @@ our %avatar_size = (
- 	'double'  => 32
- );
- 
-+# Used to set the maximum load that we will still respond to gitweb queries.
-+# If server load exceed this value then return "503 server busy" error.
-+# If gitweb cannot determined server load, it is taken to be 0.
-+# Leave it undefined (or set to 'undef') to turn off load checking.
-+our $maxload = 300;
+@@ -4375,17 +4375,24 @@ sub fill_project_list_info {
+ # print 'sort by' <th> element, generating 'sort by $name' replay link
+ # if that order is not selected
+ sub print_sort_th {
++	print get_sort_th(@_);
++}
 +
- # You define site-wide feature defaults here; override them with
- # $GITWEB_CONFIG as necessary.
- our %feature = (
-@@ -551,6 +557,32 @@ if (-e $GITWEB_CONFIG) {
- 	do $GITWEB_CONFIG_SYSTEM if -e $GITWEB_CONFIG_SYSTEM;
++sub get_sort_th {
+ 	my ($name, $order, $header) = @_;
++	my $sortth = "";
+ 	$header ||= ucfirst($name);
+ 
+ 	if ($order eq $name) {
+-		print "<th>$header</th>\n";
++		$sortth .= "<th>$header</th>\n";
+ 	} else {
+-		print "<th>" .
++		$sortth .= "<th>" .
+ 		      $cgi->a({-href => href(-replay=>1, order=>$name),
+ 		               -class => "header"}, $header) .
+ 		      "</th>\n";
+ 	}
++
++	return $sortth;
  }
  
-+# Get loadavg of system, to compare against $maxload.
-+# Currently it requires '/proc/loadavg' present to get loadavg;
-+# if it is not present it returns 0, which means no load checking.
-+sub get_loadavg {
-+	if( -e '/proc/loadavg' ){
-+		open my $fd, '<', '/proc/loadavg'
-+			or return 0;
-+		my @load = split(/\s+/, scalar <$fd>);
-+		close $fd;
-+
-+		# The first three columns measure CPU and IO utilization of the last one,
-+		# five, and 10 minute periods.  The fourth column shows the number of
-+		# currently running processes and the total number of processes in the m/n
-+		# format.  The last column displays the last process ID used.
-+		return $load[0] || 0;
-+	}
-+	# additional checks for load average should go here for things that don't export
-+	# /proc/loadavg
-+
-+	return 0;
-+}
-+
-+if (defined $maxload && get_loadavg() > $maxload) {
-+	die_error(503, "The load average on the server is too high");
-+}
-+
- # version of the core git binary
- our $git_version = qx("$GIT" --version) =~ m/git version (.*)$/ ? $1 : "unknown";
- $number_of_git_cmds++;
-@@ -3354,14 +3386,19 @@ sub git_footer_html {
- # 500: The server isn't configured properly, or
- #      an internal error occurred (e.g. failed assertions caused by bugs), or
- #      an unknown error occurred (e.g. the git binary died unexpectedly).
-+# 503: The server is currently unavailable (because it is overloaded,
-+#      or down for maintenance).  Generally, this is a temporary state.
- sub die_error {
- 	my $status = shift || 500;
- 	my $error = shift || "Internal server error";
- 
--	my %http_responses = (400 => '400 Bad Request',
--			      403 => '403 Forbidden',
--			      404 => '404 Not Found',
--			      500 => '500 Internal Server Error');
-+	my %http_responses = (
-+		400 => '400 Bad Request',
-+		403 => '403 Forbidden',
-+		404 => '404 Not Found',
-+		500 => '500 Internal Server Error',
-+		503 => '503 Service Unavailable',
-+	);
- 	git_header_html($http_responses{$status});
- 	print <<EOF;
- <div class="page_body">
+ sub git_project_list_body {
 -- 
 1.6.5.2
