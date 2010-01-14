@@ -1,63 +1,131 @@
-From: "J.H." <warthog9@eaglescrag.net>
-Subject: Re: [PATCH 0/7] Gitweb caching v4
-Date: Thu, 14 Jan 2010 00:47:53 -0800
-Message-ID: <4B4EDA39.1020400@eaglescrag.net>
-References: <1263375282-15508-1-git-send-email-warthog9@eaglescrag.net> <7vmy0hhyer.fsf@alter.siamese.dyndns.org>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [RFC 0/2] Git-over-TLS (gits://) client side support
+Date: Thu, 14 Jan 2010 10:51:25 +0200
+Message-ID: <20100114085124.GA10298@Knoppix>
+References: <20100113173610.GA7609@Knoppix>
+ <20100113183520.GA23674@inner.home.ulmdo.de>
+ <20100113191802.GA8110@Knoppix>
+ <32541b131001131130i6afae1a1xd3a70e5de5daa5cf@mail.gmail.com>
+ <20100113200629.GA8383@Knoppix>
+ <32541b131001131213m75b4baefsc70a4cbf3c8431c8@mail.gmail.com>
+ <20100113210414.GA8535@Knoppix>
+ <32541b131001131403u162bc6ebpd551ed19aadde7fb@mail.gmail.com>
+ <20100113230023.GA9171@Knoppix>
+ <32541b131001131551m38ff02acpdd08d9f0562ac84d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 09:49:10 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andreas Krey <a.krey@gmx.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 09:51:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVLO9-0001Ln-Ms
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 09:49:10 +0100
+	id 1NVLQW-0002Az-0g
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 09:51:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932128Ab0ANItE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 03:49:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756536Ab0ANItE
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 03:49:04 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:32984 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756530Ab0ANItC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 03:49:02 -0500
-Received: from voot-cruiser.eaglescrag.net (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o0E8lshr018095
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Thu, 14 Jan 2010 00:47:58 -0800
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091209 Fedora/3.0-4.fc12 Lightning/1.0pre Thunderbird/3.0
-In-Reply-To: <7vmy0hhyer.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.0
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Thu, 14 Jan 2010 00:47:59 -0800 (PST)
+	id S1756542Ab0ANIvc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jan 2010 03:51:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756540Ab0ANIvc
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 03:51:32 -0500
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:51707 "EHLO
+	emh04.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753528Ab0ANIvb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jan 2010 03:51:31 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh04-2.mail.saunalahti.fi (Postfix) with SMTP id 2E3EB13B771;
+	Thu, 14 Jan 2010 10:51:30 +0200 (EET)
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A02CBA2EB9D; Thu, 14 Jan 2010 10:51:30 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id EEE6C27DA1;
+	Thu, 14 Jan 2010 10:51:25 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <32541b131001131551m38ff02acpdd08d9f0562ac84d@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136969>
 
-Junio,
+On Wed, Jan 13, 2010 at 06:51:03PM -0500, Avery Pennarun wrote:
+> On Wed, Jan 13, 2010 at 6:00 PM, Ilari Liusvaara
+> <ilari.liusvaara@elisanet.fi> wrote:
+> > On Wed, Jan 13, 2010 at 05:03:45PM -0500, Avery Pennarun wrote:
+> >
+> > No client-side fallbacks, key auth works pseudonymously. That takes
+> > care of them pretty well.
+>=20
+> Perhaps I'm being dense, but I don't understand what you mean by
+> either of those.
 
-I'd suggest using v5 vs. v4 as there was a couple of issues I discovered
-with v4 today.
+The client tries only one auth method instead of potentially trying
+multiple. Witness the 'use verbose mode and check if it uses the key'
+type stuff.
 
-- John 'Warthog9' Hawley
+With keypair auth, the server can accept arbitrary (valid) keypair,
+but only limited set have special priviledges -> Cuts down significantl=
+y
+on "why this doesn't accept the key" problems (the keyid is usually
+printed on denied access).
 
-On 01/14/2010 12:40 AM, Junio C Hamano wrote:
-> Will replace what was queued on 'pu'.
-> 
-> For [3/7], I had to resolve conflicts in Makefile as it seemt to have been
-> based on a bit older one.  When I push the result out, please verify.
-> 
-> The result merged to 'pu' seems to break t9500 but I didn't look very
-> carefully.
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> >> If you solve your main
+> >> annoyances with ssh, how do you know you won't introduce any new
+> >> annoying failure modes?
+> >
+> > Ensuring that at least some information make back to client (presua=
+bly
+> > enough to figure out the problem).
+>=20
+> Unfortunately revealing information like that is a compromise; it
+> helps attackers as well as legitimate users.  It's the same reason
+> login prints "invalid username or password" instead of choosing
+> between "invalid username" and "invalid password."
+
+Yeah. Sometimes one must chose balance between being helpful to users
+and being helpful for attackers.
+
+> >> *Why* can't ssh be fixed to solve the =C2=A0problem?
+> >
+> > Client side fallbacks (may be desired or not!), service not being
+> > able to intervene on wheither to allow client or not in case of
+> > keypair auth.
+>=20
+> I don't understand that answer.  Couldn't ssh be patched to do
+> whatever you want?  Particularly if it's just better (optional)
+> diagnostics, you'd think someone would accept the patch for that.
+
+OpenSSH? With the level of paranoia in it, I'd say good luck. And
+it's not just client, its the server also (and especially the
+server).
+
+> >> =C2=A0Will I have to generate and manage yet another new set of
+> >> keys to use the new system?
+> >
+> > Yes.
+>=20
+> Ouch.
+
+Well, usually that means one keypair to generate and exchanging
+keyids.
+
+And if you host the repo system too, you would get second key anyway
+(and SSH is not too good at handling multiple keys).
+
+> > Well, if you like SSH more, then use ssh://...
+>=20
+> I'm just looking for a justification for why I *shouldn't* like ssh
+> more.  Is the only reason the fact that it might be easier to
+> initially configure the key exchange?
+
+And besides, gits:// is for host multiple repos type stuff, not for
+private repos on your account (use the ssh:// for those, and there the
+failure modes of SSH matter much less).
+
+-Ilari
