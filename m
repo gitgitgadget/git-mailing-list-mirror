@@ -1,130 +1,81 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH RESEND2] git gui: Use git diff --submodule when available
-Date: Thu, 14 Jan 2010 23:41:51 +0100
-Message-ID: <4B4F9DAF.30909@web.de>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [RFC 0/2] Git-over-TLS (gits://) client side support
+Date: Fri, 15 Jan 2010 01:08:09 +0200
+Message-ID: <20100114230809.GA15928@Knoppix>
+References: <20100113191802.GA8110@Knoppix>
+ <32541b131001131130i6afae1a1xd3a70e5de5daa5cf@mail.gmail.com>
+ <20100113200629.GA8383@Knoppix>
+ <32541b131001131213m75b4baefsc70a4cbf3c8431c8@mail.gmail.com>
+ <20100113210414.GA8535@Knoppix>
+ <32541b131001131403u162bc6ebpd551ed19aadde7fb@mail.gmail.com>
+ <20100113230023.GA9171@Knoppix>
+ <32541b131001131551m38ff02acpdd08d9f0562ac84d@mail.gmail.com>
+ <20100114085124.GA10298@Knoppix>
+ <32541b131001141246o1f5ce816gc4a26b81343aaa2d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jan 14 23:42:05 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Andreas Krey <a.krey@gmx.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 15 00:08:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVYOC-00043E-CQ
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 23:42:04 +0100
+	id 1NVYnu-0007pM-1w
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 00:08:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751920Ab0ANWlz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 17:41:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754141Ab0ANWlz
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 17:41:55 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:46907 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751920Ab0ANWly (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 17:41:54 -0500
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 3CEF2144FADD4;
-	Thu, 14 Jan 2010 23:41:52 +0100 (CET)
-Received: from [80.128.55.33] (helo=[192.168.178.26])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1NVYNz-0006sz-00; Thu, 14 Jan 2010 23:41:51 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18HP93CRYlZJ2RjvRp2arvcRh3pUZN82lEobPwp
-	U4vH4YQh+jO5U4MyiQZ56QwiuITYfpS9C15HGhrjIUPi7ZPq/X
-	BxV5maQJmYcxg+EJdgUA==
+	id S1754255Ab0ANXIV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 18:08:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753503Ab0ANXIU
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 18:08:20 -0500
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:34815 "EHLO
+	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751060Ab0ANXIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 18:08:16 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 61F918BD52;
+	Fri, 15 Jan 2010 01:08:14 +0200 (EET)
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A049935E276; Fri, 15 Jan 2010 01:08:14 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id 482C5E51A5;
+	Fri, 15 Jan 2010 01:08:10 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <32541b131001141246o1f5ce816gc4a26b81343aaa2d@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137034>
 
-Changed the use of submodule summary to diff --submodule because the
-implementation in C is much faster than the submodule script. Also a test
-has been added to make sure that the underlying git supports the diff
-option --submodule (which was introduced in 1.6.6).
+On Thu, Jan 14, 2010 at 03:46:56PM -0500, Avery Pennarun wrote:
+> On Thu, Jan 14, 2010 at 3:51 AM, Ilari Liusvaara
+> <ilari.liusvaara@elisanet.fi> wrote:
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+> > The client tries only one auth method instead of potentially trying
+> > multiple. Witness the 'use verbose mode and check if it uses the key'
+> > type stuff.
+> 
+> I believe this is a limitation of the client, not of the protocol.  So
+> a patch to the ssh client could fix this.
 
-Did not hear anything about my last resend on December 28th, so i try
-again.
+This is also about interfaces to user. It effectively can't be patched.
 
-To explain what i mean by "much faster", here are the numbers (best of
-three) for a small repo with a changed submodule (git checkout HEAD^)
-under Linux:
+<forking OpenSSH>
 
+Get real.
 
-time git submodule summary
-<snip>
+> > And if you host the repo system too, you would get second key anyway
+> > (and SSH is not too good at handling multiple keys).
+> 
+> I'm not really sure about this.  ssh-add seems pretty easy.
+ 
+Anyway, two SSH keys in interactive use means which to use has to be selected,
+one doesn't.
 
-real	0m0.219s
-user	0m0.050s
-sys	0m0.111s
-
-
-time git diff --submodule
-<snip>
-
-real	0m0.012s
-user	0m0.003s
-sys	0m0.009s
-
-
-In my experience this patch changes the user experience from
-"a noticeable delay" to "instantaneous".
-
-
- git-gui/lib/diff.tcl |   21 +++++++++------------
- 1 files changed, 9 insertions(+), 12 deletions(-)
-
-diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index bd5d189..0623e3e 100644
---- a/git-gui/lib/diff.tcl
-+++ b/git-gui/lib/diff.tcl
-@@ -281,6 +281,14 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 		}
- 	}
-
-+	if {[git-version >= "1.6.6"]} {
-+		if {[string match {160000 *} [lindex $s 2]]
-+		    || [string match {160000 *} [lindex $s 3]]} {
-+			set is_submodule_diff 1
-+			lappend cmd --submodule
-+		}
-+	}
-+
- 	lappend cmd -p
- 	lappend cmd --no-color
- 	if {$repo_config(gui.diffcontext) >= 1} {
-@@ -296,16 +304,6 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 		lappend cmd $path
- 	}
-
--	if {[string match {160000 *} [lindex $s 2]]
--        || [string match {160000 *} [lindex $s 3]]} {
--		set is_submodule_diff 1
--		if {$w eq $ui_index} {
--			set cmd [list submodule summary --cached -- $path]
--		} else {
--			set cmd [list submodule summary --files -- $path]
--		}
--	}
--
- 	if {[catch {set fd [eval git_read --nice $cmd]} err]} {
- 		set diff_active 0
- 		unlock_index
-@@ -387,8 +385,7 @@ proc read_diff {fd cont_info} {
- 			}
- 		} elseif {$is_submodule_diff} {
- 			if {$line == ""} continue
--			if {[regexp {^\* } $line]} {
--				set line [string replace $line 0 1 {Submodule }]
-+			if {[regexp {^Submodule } $line]} {
- 				set tags d_@
- 			} else {
- 				set op [string range $line 0 2]
--- 
-1.6.6.rc2.274.g2cee7
+-Ilari
