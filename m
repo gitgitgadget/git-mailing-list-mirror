@@ -1,69 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Gitignore matching "git add" wildcard prevents operation
-Date: Thu, 14 Jan 2010 12:21:34 -0800
-Message-ID: <7vljg0bfox.fsf@alter.siamese.dyndns.org>
+Date: Thu, 14 Jan 2010 15:39:28 -0500
+Message-ID: <20100114203928.GA26883@coredump.intra.peff.net>
 References: <4B4F6000.4070005@sofistes.net>
  <20100114195234.GA26684@coredump.intra.peff.net>
+ <7vljg0bfox.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: Marko Poutiainen <regs@sofistes.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 14 21:23:43 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 21:39:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVWCu-00052v-Mt
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 21:22:17 +0100
+	id 1NVWTf-00062n-Da
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 21:39:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757630Ab0ANUV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 15:21:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757626Ab0ANUVz
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 15:21:55 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41269 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756693Ab0ANUVr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 15:21:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 842959102E;
-	Thu, 14 Jan 2010 15:21:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EEUFbHOzISzE3cJ0KEkdzfGWc1Y=; b=bYY0qs
-	batZk6/MTlOrqP00Jj0kqLse8Fx7Q7yfuQvQVmPbNOHhzBLiz2lQ9zwPcPYTiaOq
-	024s2uzx2ShvXQdLfKHA0dGom/DCV8XQ9TNfTJe4JZXeA6APqkavn8qnh6KN4v2s
-	cTmYZYyBdhXLrWdQb/ZX/7VAzImIX654SvYds=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h119iJ9IcN5AAKyBp1SD9SKH4gNLCMKT
-	KSn/gTkRlpaaDeSgLVGoSnF12ua6q+iLsyR0VRkjRawfeKOiHXzBEeHk4tddK2IG
-	ejjb6rob/2ZMmdXUThBYmoffW7JDwLR+2fZK45d8FZ9HhRyppBVs4TzY/3gb0woh
-	ioaNrg8qkyk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F5609102D;
-	Thu, 14 Jan 2010 15:21:40 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9759391026; Thu, 14 Jan
- 2010 15:21:36 -0500 (EST)
-In-Reply-To: <20100114195234.GA26684@coredump.intra.peff.net> (Jeff King's
- message of "Thu\, 14 Jan 2010 14\:52\:34 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6C7128DC-014A-11DF-A40C-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756159Ab0ANUjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 15:39:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755739Ab0ANUjb
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 15:39:31 -0500
+Received: from peff.net ([208.65.91.99]:57887 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754938Ab0ANUja (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 15:39:30 -0500
+Received: (qmail 14824 invoked by uid 107); 14 Jan 2010 20:44:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 14 Jan 2010 15:44:21 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jan 2010 15:39:28 -0500
+Content-Disposition: inline
+In-Reply-To: <7vljg0bfox.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137021>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Jan 14, 2010 at 12:21:34PM -0800, Junio C Hamano wrote:
 
-> ... But there is no way to
-> use the shell wildcard and get the behavior you want (not even a "git
-> add --really-ignore-my-ignores a.*").
+> Jeff King <peff@peff.net> writes:
+> 
+> > ... But there is no way to
+> > use the shell wildcard and get the behavior you want (not even a "git
+> > add --really-ignore-my-ignores a.*").
+> 
+> Perhaps you want to run
+> 
+> 	$ git add 'a.*'
+> 
+> Notice that the wildcard is protected from the shell.
 
-Perhaps you want to run
+Ugh. You're right that it does work, but I don't expect users to make
+the intuitive jump from the OP's problem to this solution (I certainly
+didn't). In particular:
 
-	$ git add 'a.*'
+  1. Most programs don't take their own globs. Without knowing that git
+     can do so, there is no reason to discover it in this instance. I
+     can see searching the manpage for options, but not for a discussion
+     of globbing behavior.
 
-Notice that the wildcard is protected from the shell.
+  2. They would have to know that using a git-glob will magically change
+     the error-checking behavior.
+
+-Peff
