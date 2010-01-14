@@ -1,63 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Wincent Colaiuta <win@wincent.com>
 Subject: Re: [RFC] Git Wiki Move
-Date: Thu, 14 Jan 2010 12:03:29 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001141202410.4985@pacific.mpi-cbg.de>
-References: <20100113232908.GA3299@machine.or.cz> <20100114012449.GB3299@machine.or.cz> <4B4EF1E0.3040808@eaglescrag.net> <20100114104843.GC3299@machine.or.cz>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org
+Date: Thu, 14 Jan 2010 11:48:28 +0100
+Message-ID: <2BF3DC3D-62CC-4B52-972C-1AD1F6467D8D@wincent.com>
+References: <20100113232908.GA3299@machine.or.cz> <20100114012449.GB3299@machine.or.cz>
+Mime-Version: 1.0 (Apple Message framework v1076)
+Content-Type: text/plain; charset=iso-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Jan 14 11:58:00 2010
+X-From: git-owner@vger.kernel.org Thu Jan 14 12:03:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVNOp-0005n1-6F
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 11:57:59 +0100
+	id 1NVNU8-0007tZ-Dy
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jan 2010 12:03:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755970Ab0ANK5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 05:57:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755467Ab0ANK5z
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 05:57:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57203 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751092Ab0ANK5y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 05:57:54 -0500
-Received: (qmail invoked by alias); 14 Jan 2010 10:57:52 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp027) with SMTP; 14 Jan 2010 11:57:52 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19r5lAITzxrUkLtTBhbG3UW6+FzegFAfjQUg/btSu
-	F9Ygd6Ljfe8OhR
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20100114104843.GC3299@machine.or.cz>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1756101Ab0ANLDZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jan 2010 06:03:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756082Ab0ANLDY
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 06:03:24 -0500
+Received: from outmail137079.authsmtp.co.uk ([62.13.137.79]:54483 "EHLO
+	outmail137079.authsmtp.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756076Ab0ANLDY convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 06:03:24 -0500
+X-Greylist: delayed 884 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Jan 2010 06:03:24 EST
+Received: from mail-c194.authsmtp.com (mail-c194.authsmtp.com [62.13.128.121])
+	by punt4.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id o0EAmasR004747;
+	Thu, 14 Jan 2010 10:48:36 GMT
+Received: from wincent1.inetu.net (wincent1.inetu.net [209.235.192.161])
+	(authenticated bits=128)
+	by mail.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id o0EAmWwx020578
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 14 Jan 2010 10:48:33 GMT
+Received: from [192.168.1.2] (133.Red-88-5-247.dynamicIP.rima-tde.net [88.5.247.133])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id o0EAmSnd005852
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 14 Jan 2010 05:48:31 -0500
+In-Reply-To: <20100114012449.GB3299@machine.or.cz>
+X-Mailer: Apple Mail (2.1076)
+X-Server-Quench: 5cb03eaf-00fa-11df-80b9-0022640b883e
+X-Report-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
+X-AuthRoute: OCd3ZggRAFZKTQIy FSICByJGVUMuIRha BAIHMQpCJFdJD0VH axodDFNVdwdEHAkR AmYBX1xeU1k/W2N8 dQhSaBtca0hQXgNr T0pMXVMcSwUdcEFm QVYeUBl3cA0Ie3py bAhnDSJbXxErI1t9 QhgFCGwHMTF9YGBN WV1YdwFWdgdKLBdN aQUxNiYHcQ5lEAkN VyAyI3gOPDZeYAFS XAxl
+X-Authentic-SMTP: 61633436303433.1015:706/Kp
+X-AuthFastPath: 255
+X-Virus-Status: No virus detected - but ensure you scan with your own anti-virus system.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/136987>
 
-Hi,
+El 14/01/2010, a las 02:24, Petr Baudis escribi=F3:
 
-On Thu, 14 Jan 2010, Petr Baudis wrote:
+> 	(i) wiki.kernel.org is actually maintained! Thus, there should
+> 	be less spam or upgrade issues and better support in case of
+> 	problems.
+>
+> 	(ii) Also, I personally think MediaWiki is so much nicer than
+> 	ikiwiki...
 
-> On Thu, Jan 14, 2010 at 02:28:48AM -0800, J.H. wrote:
-> > Just a heads up I've got an initial import of the current wiki up at 
-> > http://git.wiki.kernel.org - some of it was quite a clean conversion, 
-> > some of it not so much.  Please note that user accounts were not 
-> > carried over but edit histories were.  I'll work on cleaning up the 
-> > rest of if tomorrow, assuming that there isn't any objections to 
-> > Petr's e-mail above.
-> 
-> Are you going to do a lot of manual work there? Since I haven't disabled 
-> editing the current wiki yet, so maybe I should already do that... (If I 
-> can figure out how. ;-)
++1 for MediaWiki.
 
-It would be good: I just verified that warthog imported everything up to 
-and including the latest 4 changes on January 12.
-
-Ciao,
-Dscho
+Cheers,
+Wincent
