@@ -1,88 +1,260 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] git push --track
-Date: Fri, 15 Jan 2010 14:26:50 +0100
-Message-ID: <vpq3a277b39.fsf@bauges.imag.fr>
-References: <op.u6g8jnixg402ra@nb-04>
-	<be6fef0d1001131727r128c7727td2b948018d308719@mail.gmail.com>
-	<20100114070316.GC1528@rm.endoftheinternet.org>
-	<7vr5ps5jx1.fsf@alter.siamese.dyndns.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH] Show submodules as modified when they contain a dirty work tree
+Date: Fri, 15 Jan 2010 22:32:21 +0900
+Message-ID: <20100115223221.6117@nanako3.lavabit.com>
+References: <4B4BA096.5000909@web.de> <7vtyusb6rv.fsf@alter.siamese.dyndns.org> <4B4CA13F.6020505@web.de> <7vbpgyqy4a.fsf@alter.siamese.dyndns.org> <4B4E1817.1070202@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Rudolf Polzer <divVerent@alientrap.org>,
-	Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 15 14:27:36 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Lars Hjemli <hjemli@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Fri Jan 15 14:33:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVmD6-0001uI-9F
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 14:27:32 +0100
+	id 1NVmIX-00043l-F8
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 14:33:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750920Ab0AON11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 08:27:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752396Ab0AON11
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 08:27:27 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:51307 "EHLO shiva.imag.fr"
+	id S1751618Ab0AONc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 08:32:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755046Ab0AONc7
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 08:32:59 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:54154 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752283Ab0AON11 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 08:27:27 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o0FDQOBt010481
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 15 Jan 2010 14:26:24 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NVmCQ-0007wu-Ur; Fri, 15 Jan 2010 14:26:50 +0100
-In-Reply-To: <7vr5ps5jx1.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 14 Jan 2010 15\:46\:50 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 15 Jan 2010 14:26:25 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o0FDQOBt010481
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1264166786.02003@FB1n4JaMzsJUuw7NjwyX0Q
+	id S1755005Ab0AONc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 08:32:58 -0500
+Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
+	by karen.lavabit.com (Postfix) with ESMTP id 2749516F486;
+	Fri, 15 Jan 2010 07:32:58 -0600 (CST)
+Received: from 5526.lavabit.com (212.62.97.23)
+	by lavabit.com with ESMTP id 2GPZMPXSWBSI; Fri, 15 Jan 2010 07:32:58 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=Ii6pZ7z/YpjM/6rAa7LDfndez0mYtuWlRrNVmwp/f0LeyG5kcpWgBtKp8/KEhvyb3p4jdor+583/e/UG61jIUYY3OfX2wsATTlPegLrxmKV3Wpt0ZtBcrCQedpxRp1Skq9ZQG29FAV3Gq/KpIPId02vmNHfUXH6H1eRjRvlI2U0=;
+  h=From:To:Cc:Subject:References:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Message-Id;
+In-Reply-To: <7vbpgyqy4a.fsf@alter.siamese.dyndns.org> <4B4E1817.1070202@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137067>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Quoting Jens Lehmann <Jens.Lehmann@web.de>
 
-> The small nit is that "branch -f --track me origin/me" will happily
-> overwrite "me", even when your "me" is not up to date with "origin/me",
-> losing commits.
+> diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
+> index 3ca17ab..47e205b 100755
+> --- a/t/t7506-status-submodule.sh
+> +++ b/t/t7506-status-submodule.sh
+> @@ -10,8 +10,12 @@ test_expect_success 'setup' '
+>  	: >bar &&
+>  	git add bar &&
+>  	git commit -m " Add bar" &&
+> +	: >foo &&
+> +	git add foo &&
+> +	git commit -m " Add foo" &&
+>  	cd .. &&
+> -	git add sub &&
+> +	echo output > .gitignore
+> +	git add sub .gitignore &&
+>  	git commit -m "Add submodule sub"
+>  '
 
-And another issue is:
+This is not a new problem you introduced, but if some commands
+before 'cd ..' fails, the next test will run in 'sub'. Other
+tests run operations inside () to avoid this problem.
 
-$ git branch -f --track my-branch origin/my-branch
-fatal: Cannot force update the current branch.
-$ git branch --track my-branch origin/my-branch
-fatal: A branch named 'my-branch' already exists.
+> @@ -23,6 +27,31 @@ test_expect_success 'commit --dry-run -a clean' '
+>  	git commit --dry-run -a |
+>  	grep "nothing to commit"
+>  '
+> +
+> +echo "changed" > sub/foo
 
-Actually, I just can't find a natural set of commands doing:
+Have it inside the next test_expect_success.
 
-1. create a branch (git checkout -b)
-2. work on it
-3. send it upstream (git push)
-4. set the upstream as tracking (???)
+> +test_expect_success 'status with modified file in submodule' '
+> +	git status | grep "modified:   sub"
+> +'
 
-with the current version of Git. I just do 4. with $EDITOR
-.git/config ...
+To catch failure from 'git status' this is better written like this.
+    git status >output &&
+    grep "modified:   sub" output
 
-> Perhaps we could teach "branch --track me origin/me" (i.e. no "-f") not to
-> barf even when "me" exists, as long as "me" is a subset of "origin/me",
-> and treat it as a request to re-configure the upstream information for the
-> existing branch "me" and at the same time fast-forward it to
-> "origin/me"?
+> +test_expect_success 'status with modified file in submodule (porcelain)' '
+> +	git status --porcelain >output &&
+> +	diff output - <<-EOF
+> + M sub
+> +EOF
+> +'
 
-+1, and in addition, allow doing this on the checkout branch if it
-doesn't actually change the reference (i.e. touch .git/config, not
-.git/refs/...).
+If you use -EOF you may want to align it with tab to make it
+easier to read. The one in t7005-editor.sh is a good example
+(t7401 is a bad example to imitate).
+
+> +(cd sub && git checkout foo)
+> +
+> +echo "content" > sub/new-file
+
+Move this part to the next test_expect_success to catch broken
+checkout.
+
+> +test_expect_success 'status with untracked file in submodule' '
+> +	git status | grep "modified:   sub"
+> +'
+
+Same comment as before.
+
+> +test_expect_success 'status with untracked file in submodule (porcelain)' '
+> +	git status --porcelain >output &&
+> +	diff output - <<-EOF
+> + M sub
+> +EOF
+> +'
+
+Same comment as before.
+
+> +rm sub/new-file
+> +
+
+Do you need this? If so, move it inside the next
+test_expect_success.
+
+>  test_expect_success 'rm submodule contents' '
+>  	rm -rf sub/* sub/.git
+>  '
+> -- 
+> 1.6.6.203.g28a8ba.dirty
+
+The following can be squashed to 4519d9cf092a173ac7b0a5570b0d5d602086ecf2
+
+diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
+index 47e205b..253c334 100755
+--- a/t/t7506-status-submodule.sh
++++ b/t/t7506-status-submodule.sh
+@@ -5,63 +5,87 @@ test_description='git status for submodule'
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+-	test_create_repo sub
+-	cd sub &&
+-	: >bar &&
+-	git add bar &&
+-	git commit -m " Add bar" &&
+-	: >foo &&
+-	git add foo &&
+-	git commit -m " Add foo" &&
+-	cd .. &&
+-	echo output > .gitignore
++	test_create_repo sub &&
++	(
++		cd sub &&
++		: >bar &&
++		git add bar &&
++		git commit -m " Add bar" &&
++		: >foo &&
++		git add foo &&
++		git commit -m " Add foo"
++	) &&
++	echo output > .gitignore &&
+ 	git add sub .gitignore &&
+ 	git commit -m "Add submodule sub"
+ '
+ 
+ test_expect_success 'status clean' '
+-	git status |
+-	grep "nothing to commit"
++	git status >output &&
++	grep "nothing to commit" output
+ '
++
+ test_expect_success 'commit --dry-run -a clean' '
+-	git commit --dry-run -a |
+-	grep "nothing to commit"
++	test_must_fail git commit --dry-run -a >output &&
++	grep "nothing to commit" output
+ '
+ 
+-echo "changed" > sub/foo
+ test_expect_success 'status with modified file in submodule' '
+-	git status | grep "modified:   sub"
++	(cd sub && git reset --hard) &&
++	echo "changed" >sub/foo &&
++	git status >output &&
++	grep "modified:   sub" output
+ '
++
+ test_expect_success 'status with modified file in submodule (porcelain)' '
++	(cd sub && git reset --hard) &&
++	echo "changed" >sub/foo &&
++	git status --porcelain >output &&
++	diff output - <<-\EOF
++	 M sub
++	EOF
++'
++
++test_expect_success 'status with added file in submodule' '
++	(cd sub && git reset --hard && echo >foo && git add foo) &&
++	git status >output &&
++	grep "modified:   sub" output
++'
++
++test_expect_success 'status with added file in submodule (porcelain)' '
++	(cd sub && git reset --hard && echo >foo && git add foo) &&
+ 	git status --porcelain >output &&
+-	diff output - <<-EOF
+- M sub
+-EOF
++	diff output - <<-\EOF
++	 M sub
++	EOF
+ '
+-(cd sub && git checkout foo)
+ 
+-echo "content" > sub/new-file
+ test_expect_success 'status with untracked file in submodule' '
+-	git status | grep "modified:   sub"
++	(cd sub && git reset --hard) &&
++	echo "content" >sub/new-file &&
++	git status >output &&
++	grep "modified:   sub" output
+ '
++
+ test_expect_success 'status with untracked file in submodule (porcelain)' '
+ 	git status --porcelain >output &&
+-	diff output - <<-EOF
+- M sub
+-EOF
++	diff output - <<-\EOF
++	 M sub
++	EOF
+ '
+-rm sub/new-file
+ 
+ test_expect_success 'rm submodule contents' '
+ 	rm -rf sub/* sub/.git
+ '
++
+ test_expect_success 'status clean (empty submodule dir)' '
+-	git status |
+-	grep "nothing to commit"
++	git status >output &&
++	grep "nothing to commit" output
+ '
++
+ test_expect_success 'status -a clean (empty submodule dir)' '
+-	git commit --dry-run -a |
+-	grep "nothing to commit"
++	test_must_fail git commit --dry-run -a >output &&
++	grep "nothing to commit" output
+ '
+ 
+ test_done
+
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
