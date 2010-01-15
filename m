@@ -1,54 +1,56 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add push --set-upstream
-Date: Fri, 15 Jan 2010 17:08:00 -0500
-Message-ID: <20100115220800.GA25262@coredump.intra.peff.net>
-References: <1263573407-13642-1-git-send-email-ilari.liusvaara@elisanet.fi>
- <20100115171745.GB2115@coredump.intra.peff.net>
- <20100115220658.GA14755@Knoppix>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 00/14] daemon-win32
+Date: Fri, 15 Jan 2010 23:27:23 +0100
+Message-ID: <201001152327.23189.j6t@kdbg.org>
+References: <1263591033-4992-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Fri Jan 15 23:08:13 2010
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: msysgit@googlegroups.com, git@vger.kernel.org,
+	"Erik Faye-Lund" <kusmabite@gmail.com>
+To: "Erik Faye-Lund" <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 15 23:28:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVuKy-0004Je-Jq
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 23:08:12 +0100
+	id 1NVuem-00042y-TT
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 23:28:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758152Ab0AOWIH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 17:08:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758117Ab0AOWIG
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 17:08:06 -0500
-Received: from peff.net ([208.65.91.99]:46243 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758080Ab0AOWIG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 17:08:06 -0500
-Received: (qmail 31650 invoked by uid 107); 15 Jan 2010 22:12:55 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 15 Jan 2010 17:12:55 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jan 2010 17:08:00 -0500
+	id S1758285Ab0AOW2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 17:28:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758280Ab0AOW2Y
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 17:28:24 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:47486 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1758273Ab0AOW2X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 17:28:23 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 21EC010011;
+	Fri, 15 Jan 2010 23:28:20 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 415A219F5EB;
+	Fri, 15 Jan 2010 23:27:23 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <1263591033-4992-1-git-send-email-kusmabite@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20100115220658.GA14755@Knoppix>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137140>
 
-On Sat, Jan 16, 2010 at 12:06:58AM +0200, Ilari Liusvaara wrote:
+A very nicely done series. Thank you very much!
 
-> On Fri, Jan 15, 2010 at 12:17:45PM -0500, Jeff King wrote:
-> > On Fri, Jan 15, 2010 at 06:36:47PM +0200, Ilari Liusvaara wrote:
-> > 
-> > No tests. But since in writing this you have crossed an item off of my
-> > long-term todo, I feel obliged to help out by providing some. :)
->  
-> Signoff for those tests? Or do they need it anyway?
+On Freitag, 15. Januar 2010, Erik Faye-Lund wrote:
+> Here's the long overdue v2 of my daemon-win32 attempt. A lot
+> has happened since v1. Most importantly, I abandoned using
+> the async API to replace fork(), and went for explicitly
+> spawning child process that handle the connection.
 
-Sorry, yes:
+IOW, you run git-daemon recursively in inetd mode (almost). Let's see what 
+people say about this approach.
 
-Signed-off-by: Jeff King <peff@peff.net>
-
--Peff
+-- Hannes
