@@ -1,262 +1,65 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [PATCH v2] Add push --set-upstream
-Date: Sat, 16 Jan 2010 00:47:10 +0200
-Message-ID: <1263595630-18962-1-git-send-email-ilari.liusvaara@elisanet.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 15 23:47:20 2010
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 13/14] daemon: use select() instead of poll()
+Date: Fri, 15 Jan 2010 23:49:06 +0100
+Message-ID: <201001152349.06418.j6t@kdbg.org>
+References: <1263591033-4992-1-git-send-email-kusmabite@gmail.com> <1263591033-4992-14-git-send-email-kusmabite@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: msysgit@googlegroups.com, git@vger.kernel.org,
+	"Erik Faye-Lund" <kusmabite@gmail.com>
+To: "Erik Faye-Lund" <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 15 23:50:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVuwo-00035n-Fy
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 23:47:19 +0100
+	id 1NVuza-00047R-Dd
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 23:50:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758545Ab0AOWrO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 17:47:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758340Ab0AOWrO
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 17:47:14 -0500
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:40933 "EHLO
-	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758191Ab0AOWrN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 17:47:13 -0500
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 9AF468C1E9
-	for <git@vger.kernel.org>; Sat, 16 Jan 2010 00:47:12 +0200 (EET)
-Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A05CD970F38; Sat, 16 Jan 2010 00:47:12 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id 76A82158A64
-	for <git@vger.kernel.org>; Sat, 16 Jan 2010 00:47:11 +0200 (EET)
-X-Mailer: git-send-email 1.6.6.102.gd6f8f.dirty
-X-Antivirus: VAMS
+	id S1758548Ab0AOWuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 17:50:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758533Ab0AOWuE
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 17:50:04 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:53969 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1758513Ab0AOWuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 17:50:04 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 3E1D61000B;
+	Fri, 15 Jan 2010 23:50:03 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 82A2319F5A6;
+	Fri, 15 Jan 2010 23:49:06 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <1263591033-4992-14-git-send-email-kusmabite@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137150>
 
-Frequent complaint is lack of easy way to set up upstream (tracking)
-references for git pull to work as part of push command. So add switch
---set-upstream (-u) to do just that.
+On Freitag, 15. Januar 2010, Erik Faye-Lund wrote:
+> +#undef FD_SET
+> +#define FD_SET(fd, set) do { \
+> +	((fd_set*)(set))->fd_array[((fd_set *)(set))->fd_count++] =
+> _get_osfhandle(fd); \ +	} while(0)
+> +#undef FD_ISSET
+> +#define FD_ISSET(fd, set) __WSAFDIsSet(_get_osfhandle(fd), (fd_set
+> *)(set)) +
 
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
----
-Changes from v1:
-- Handle 'git push -u <remote> HEAD' correctly.
-- Add testsuite (thanks Peff), with some additional tests to test delete.
-- Modify documentation for push -u (thanks Matthieu Moy).
+I'm worried about the internals that you have to use here. Isn't it possible 
+save the original macro text and use it in the new definition, like (this is 
+for exposition only):
 
- Documentation/git-push.txt |    9 +++++-
- builtin-push.c             |    1 +
- t/t5523-push-upstream.sh   |   64 ++++++++++++++++++++++++++++++++++++++++++++
- transport.c                |   49 +++++++++++++++++++++++++++++++++
- transport.h                |    1 +
- 5 files changed, 123 insertions(+), 1 deletions(-)
- create mode 100755 t/t5523-push-upstream.sh
+#define ORIG_FD_SET(fd, set) FD_SET(fd, set)
+#undef FD_SET
+#define FD_SET(fd, set) ORIG_FD_SET(_get_osfhandle(fd), set)
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index e3eb1e8..2a5394b 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git push' [--all | --mirror | --tags] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
--	   [--repo=<repository>] [-f | --force] [-v | --verbose]
-+	   [--repo=<repository>] [-f | --force] [-v | --verbose] [-u | --set-upstream]
- 	   [<repository> <refspec>...]
- 
- DESCRIPTION
-@@ -122,6 +122,13 @@ nor in any Push line of the corresponding remotes file---see below).
- 	the name "origin" is used. For this latter case, this option
- 	can be used to override the name "origin". In other words,
- 	the difference between these two commands
-+
-+-u::
-+--set-upstream::
-+	For every branch that is up to date or successfully pushed, add
-+	upstream (tracking) reference, used by argument-less
-+	linkgit:git-pull[1] and other commands. For more information,
-+	see 'branch.<name>.merge' in linkgit:git-config[1].
- +
- --------------------------
- git push public         #1
-diff --git a/builtin-push.c b/builtin-push.c
-index 28a26e7..75ddaf4 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -218,6 +218,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_BOOLEAN( 0 , "thin", &thin, "use thin pack"),
- 		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", "receive pack program"),
- 		OPT_STRING( 0 , "exec", &receivepack, "receive-pack", "receive pack program"),
-+		OPT_BIT('u', "set-upstream", &flags, "Set upstream for git pull", TRANSPORT_PUSH_SET_UPSTREAM),
- 		OPT_END()
- 	};
- 
-diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
-new file mode 100755
-index 0000000..e098d37
---- /dev/null
-+++ b/t/t5523-push-upstream.sh
-@@ -0,0 +1,64 @@
-+#!/bin/sh
-+
-+test_description='push with --set-upstream'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup bare parent' '
-+	git init --bare parent &&
-+	git remote add upstream parent
-+'
-+
-+test_expect_success 'setup local commit' '
-+	echo content >file &&
-+	git add file &&
-+	git commit -m one
-+'
-+
-+check_config() {
-+	(echo $2; echo $3) >expect.$1
-+	(git config branch.$1.remote
-+	 git config branch.$1.merge) >actual.$1
-+	test_cmp expect.$1 actual.$1
-+}
-+
-+test_expect_success 'push -u master:master' '
-+	git push -u upstream master:master &&
-+	check_config master upstream refs/heads/master
-+'
-+
-+test_expect_success 'push -u master:other' '
-+	git push -u upstream master:other &&
-+	check_config master upstream refs/heads/other
-+'
-+
-+test_expect_success 'push -u master2:master2' '
-+	git branch master2 &&
-+	git push -u upstream master2:master2 &&
-+	check_config master2 upstream refs/heads/master2
-+'
-+
-+test_expect_success 'push -u master2:other2' '
-+	git push -u upstream master2:other2 &&
-+	check_config master2 upstream refs/heads/other2
-+'
-+
-+test_expect_success 'push -u :master2' '
-+	git push -u upstream :master2 &&
-+	check_config master2 upstream refs/heads/other2
-+'
-+
-+test_expect_success 'push -u --all' '
-+	git branch all1 &&
-+	git branch all2 &&
-+	git push -u --all &&
-+	check_config all1 upstream refs/heads/all1 &&
-+	check_config all2 upstream refs/heads/all2
-+'
-+
-+test_expect_success 'push -u HEAD' '
-+	git checkout -b headbranch &&
-+	git push -u upstream HEAD &&
-+	check_config headbranch upstream refs/heads/headbranch
-+'
-+
-+test_done
-diff --git a/transport.c b/transport.c
-index b5332c0..e5b462b 100644
---- a/transport.c
-+++ b/transport.c
-@@ -8,6 +8,7 @@
- #include "bundle.h"
- #include "dir.h"
- #include "refs.h"
-+#include "branch.h"
- 
- /* rsync support */
- 
-@@ -135,6 +136,47 @@ static void insert_packed_refs(const char *packed_refs, struct ref **list)
- 	}
- }
- 
-+static void set_upstreams(struct transport *trans, struct ref *refs)
-+{
-+	struct ref *i;
-+	for (i = refs; i; i = i->next) {
-+		const char *localname;
-+		const char *tmp;
-+		const char *remotename;
-+		unsigned char sha[20];
-+		int flag = 0;
-+		/*
-+		 * Check suitability for tracking. Must be successful /
-+		 * alreay up-to-date ref create/modify (not delete).
-+		 */
-+		if (i->status != REF_STATUS_OK &&
-+			i->status != REF_STATUS_UPTODATE)
-+			continue;
-+		if (!i->peer_ref)
-+			continue;
-+		if (!i->new_sha1 || is_null_sha1(i->new_sha1))
-+			continue;
-+
-+		/* Chase symbolic refs (mainly for HEAD). */
-+		localname = i->peer_ref->name;
-+		remotename = i->name;
-+		tmp = resolve_ref(localname, sha, 1, &flag);
-+		if (tmp && flag & REF_ISSYMREF &&
-+			!prefixcmp(tmp, "refs/heads/"))
-+			localname = tmp;
-+
-+		/* Both source and destination must be local branches. */
-+		if (!localname || prefixcmp(localname, "refs/heads/"))
-+			continue;
-+		if (!remotename || prefixcmp(remotename, "refs/heads/"))
-+			continue;
-+
-+		install_branch_config(BRANCH_CONFIG_VERBOSE,
-+			localname + 11, trans->remote->name,
-+			remotename);
-+	}
-+}
-+
- static const char *rsync_url(const char *url)
- {
- 	return prefixcmp(url, "rsync://") ? skip_prefix(url, "rsync:") : url;
-@@ -974,6 +1016,10 @@ int transport_push(struct transport *transport,
- 	verify_remote_names(refspec_nr, refspec);
- 
- 	if (transport->push) {
-+		/* Maybe FIXME. But no important transport uses this case. */
-+		if (flags & TRANSPORT_PUSH_SET_UPSTREAM)
-+			die("This transport does not support using --set-upstream");
-+
- 		return transport->push(transport, refspec_nr, refspec, flags);
- 	} else if (transport->push_refs) {
- 		struct ref *remote_refs =
-@@ -1002,6 +1048,9 @@ int transport_push(struct transport *transport,
- 					verbose | porcelain, porcelain,
- 					nonfastforward);
- 
-+		if (flags & TRANSPORT_PUSH_SET_UPSTREAM)
-+			set_upstreams(transport, remote_refs);
-+
- 		if (!(flags & TRANSPORT_PUSH_DRY_RUN)) {
- 			struct ref *ref;
- 			for (ref = remote_refs; ref; ref = ref->next)
-diff --git a/transport.h b/transport.h
-index 97ba251..c4314dd 100644
---- a/transport.h
-+++ b/transport.h
-@@ -91,6 +91,7 @@ struct transport {
- #define TRANSPORT_PUSH_VERBOSE 16
- #define TRANSPORT_PUSH_PORCELAIN 32
- #define TRANSPORT_PUSH_QUIET 64
-+#define TRANSPORT_PUSH_SET_UPSTREAM 128
- 
- /* Returns a transport suitable for the url */
- struct transport *transport_get(struct remote *, const char *);
--- 
-1.6.6.102.gd6f8f.dirty
+Another approach would be to extend the poll emulation such that it uses 
+select if all FDs to wait for are sockets, and I think this would be the case 
+in this application.
+
+-- Hannes
