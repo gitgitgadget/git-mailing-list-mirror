@@ -1,154 +1,162 @@
 From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: [PATCH v2 03/14] compat: add inet_pton and inet_ntop prototypes
-Date: Fri, 15 Jan 2010 22:30:22 +0100
-Message-ID: <1263591033-4992-4-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH v2 06/14] mingw: use real pid
+Date: Fri, 15 Jan 2010 22:30:25 +0100
+Message-ID: <1263591033-4992-7-git-send-email-kusmabite@gmail.com>
 References: <1263591033-4992-1-git-send-email-kusmabite@gmail.com>
-Cc: git@vger.kernel.org, j6t@kdbg.org,
-	Mike Pape <dotzenlabs@gmail.com>,
+Mime-Version: 1.0
+Cc: git@vger.kernel.org,
+	j6t@kdbg.org,
 	Erik Faye-Lund <kusmabite@gmail.com>
 To: msysgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Fri Jan 15 22:31:31 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+X-From: 3sd5QSwkOBywScaUIJQbMOWWOTMUIQT.KWUUagaOQbOWWOTMOZWcXa.KWU@listserv.bounces.google.com Fri Jan 15 22:31:46 2010
+Return-path: <3sd5QSwkOBywScaUIJQbMOWWOTMUIQT.KWUUagaOQbOWWOTMOZWcXa.KWU@listserv.bounces.google.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-gx0-f190.google.com ([209.85.217.190])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVtlL-0005cC-6W
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 22:31:23 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758368Ab0AOVbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 16:31:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758365Ab0AOVbN
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 16:31:13 -0500
-Received: from mail-ew0-f209.google.com ([209.85.219.209]:42825 "EHLO
-	mail-ew0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758362Ab0AOVbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 16:31:12 -0500
-Received: by mail-ew0-f209.google.com with SMTP id 1so568991ewy.28
-        for <git@vger.kernel.org>; Fri, 15 Jan 2010 13:31:11 -0800 (PST)
+	id 1NVtlh-0005Wh-TQ
+	for gcvm-msysgit@m.gmane.org; Fri, 15 Jan 2010 22:31:46 +0100
+Received: by mail-gx0-f190.google.com with SMTP id 6sf2155544gxk.13
+        for <gcvm-msysgit@m.gmane.org>; Fri, 15 Jan 2010 13:31:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=d2kSqDnhESzSLpD4CnpROfS1JRZZW2n37tZX3+5CInU=;
-        b=ssO11ODwK4IM2vSkvM+0520S4fqn+/OkxGkhq0cGItrLbVMnraeldjFDlI0fMNCS+l
-         3dD+pz0PL/IhL4CYEEX7rcSHMLRV1fVqHTvpa1TG11IQWaadBm7rCUjhFDJnsmI2FJ7H
-         EYlFI7lNKI2Ik8KOLIp9sgbIdmW09zHskEwXQ=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:mime-version:x-beenthere:received
+         :received:received:received:received-spf:received:received:received
+         :from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :x-original-authentication-results:x-original-sender:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
+         :x-message-url:sender:list-unsubscribe:list-subscribe;
+        bh=vPeVqamV+10WmyG6+U8Sqdi2nIKYbenvIvuFR20ZRR4=;
+        b=TN10C8+6iHLoh8UBwIBRBPCQdJB717sBxRKZHgp1/mtEQU9Ci7o7d/qzedjoitaiia
+         8z+ki84ttwqBgn0AykyrJ42v2Swx6XE47ffRYyvBnJgq2s1DCqqNR53HcUwcd5QW+/xb
+         HeNBdbkjNGfqEOcGYnHH0czXPL9xWRCwKie9M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=BKH8mgu3WRDEZNNKN0JPFwAN78CjOF4hji54B4gf0lF/abjqMM0EVyd9BPQDpvRm+W
-         2raZptM/cs4AOZvxbZdZ+ituNy6YqaXLNRRMAQdRiATIOhDRivVTpAx72PrFrXX04pak
-         JV6V9yJLaR/FWZypbENoRj74Xo1p3++EW/Lz4=
-Received: by 10.213.38.147 with SMTP id b19mr1095870ebe.86.1263591067986;
-        Fri, 15 Jan 2010 13:31:07 -0800 (PST)
+        d=googlegroups.com; s=beta;
+        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references
+         :x-original-authentication-results:x-original-sender:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
+         :x-message-url:sender:list-unsubscribe:list-subscribe;
+        b=5c3E3SfY6G9HVJMlQ4GwOTVe7b7UU8DQbExXhnlGro/tytzEEADdycXcjzg1jOx7cF
+         22Sbz3T61iJPvfbkcLBUR9OMIiGuoMwgJnIxJglX1XeZ0vLPKId2Ox7dj3qJ+mO9CEpK
+         uuW4LVKA1EdrI1h2f+HP8NoUdqVZFdGMaMuOg=
+Received: by 10.101.5.7 with SMTP id h7mr225632ani.14.1263591089186;
+        Fri, 15 Jan 2010 13:31:29 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.213.39.202 with SMTP id h10ls608414ebe.2.p; Fri, 15 Jan 2010 
+	13:31:27 -0800 (PST)
+Received: by 10.213.1.20 with SMTP id 20mr431949ebd.15.1263591087125;
+        Fri, 15 Jan 2010 13:31:27 -0800 (PST)
+Received: by 10.213.1.20 with SMTP id 20mr431948ebd.15.1263591087102;
+        Fri, 15 Jan 2010 13:31:27 -0800 (PST)
+Received: from mail-ew0-f215.google.com (mail-ew0-f215.google.com [209.85.219.215])
+        by gmr-mx.google.com with ESMTP id 11si173538ewy.13.2010.01.15.13.31.26;
+        Fri, 15 Jan 2010 13:31:26 -0800 (PST)
+Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 209.85.219.215 as permitted sender) client-ip=209.85.219.215;
+Received: by ewy7 with SMTP id 7so1359243ewy.10
+        for <msysgit@googlegroups.com>; Fri, 15 Jan 2010 13:31:26 -0800 (PST)
+Received: by 10.213.110.9 with SMTP id l9mr2945712ebp.14.1263591084560;
+        Fri, 15 Jan 2010 13:31:24 -0800 (PST)
 Received: from localhost (cm-84.215.142.12.getinternet.no [84.215.142.12])
-        by mx.google.com with ESMTPS id 13sm1809205ewy.9.2010.01.15.13.31.06
+        by mx.google.com with ESMTPS id 13sm1809428ewy.9.2010.01.15.13.31.23
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 15 Jan 2010 13:31:07 -0800 (PST)
+        Fri, 15 Jan 2010 13:31:24 -0800 (PST)
 X-Mailer: git-send-email 1.6.6.95.g5f22c
 In-Reply-To: <1263591033-4992-1-git-send-email-kusmabite@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137124>
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: 
+	domain of kusmabite@googlemail.com designates 209.85.219.215 as permitted 
+	sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) 
+	header.i=@googlemail.com
+X-Original-Sender: kusmabite@googlemail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+List-Post: <http://groups.google.com/group/msysgit/post?hl=>, 
+	<mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=>
+X-Thread-Url: http://groups.google.com/group/msysgit/t/43ea563cecdc45de
+X-Message-Url: http://groups.google.com/group/msysgit/msg/3afb780b53a24d2a
+Sender: msysgit@googlegroups.com
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=>, 
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=>, 
+	<mailto:msysgit+subscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137125>
 
-From: Mike Pape <dotzenlabs@gmail.com>
+The Windows port so far used process handles as PID. However,
+this does not work consistently with getpid.
 
-Windows doesn't have inet_pton and inet_ntop, so
-add prototypes in git-compat-util.h for them.
+Change the code to use the real PID, and use OpenProcess to
+get a process-handle.
 
-At the same time include git-compat-util.h in
-the sources for these functions, so they use the
-network-wrappers from there on Windows.
-
-Signed-off-by: Mike Pape <dotzenlabs@gmail.com>
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- Makefile           |    2 ++
- compat/inet_ntop.c |    6 +++---
- compat/inet_pton.c |    8 +++++---
- git-compat-util.h  |    8 ++++++++
- 4 files changed, 18 insertions(+), 6 deletions(-)
+ compat/mingw.c |    2 +-
+ compat/mingw.h |   35 +++++++++++++++++++++++++++++++----
+ 2 files changed, 32 insertions(+), 5 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index ebaa75c..d81b392 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1289,9 +1289,11 @@ endif
- endif
- ifdef NO_INET_NTOP
- 	LIB_OBJS += compat/inet_ntop.o
-+	BASIC_CFLAGS += -DNO_INET_NTOP
- endif
- ifdef NO_INET_PTON
- 	LIB_OBJS += compat/inet_pton.o
-+	BASIC_CFLAGS += -DNO_INET_PTON
- endif
- 
- ifdef NO_ICONV
-diff --git a/compat/inet_ntop.c b/compat/inet_ntop.c
-index f444982..e5b46a0 100644
---- a/compat/inet_ntop.c
-+++ b/compat/inet_ntop.c
-@@ -17,9 +17,9 @@
- 
- #include <errno.h>
- #include <sys/types.h>
--#include <sys/socket.h>
--#include <netinet/in.h>
--#include <arpa/inet.h>
-+
-+#include "../git-compat-util.h"
-+
- #include <stdio.h>
- #include <string.h>
- 
-diff --git a/compat/inet_pton.c b/compat/inet_pton.c
-index 4078fc0..2ec995e 100644
---- a/compat/inet_pton.c
-+++ b/compat/inet_pton.c
-@@ -17,9 +17,9 @@
- 
- #include <errno.h>
- #include <sys/types.h>
--#include <sys/socket.h>
--#include <netinet/in.h>
--#include <arpa/inet.h>
-+
-+#include "../git-compat-util.h"
-+
- #include <stdio.h>
- #include <string.h>
- 
-@@ -41,7 +41,9 @@
-  */
- 
- static int inet_pton4(const char *src, unsigned char *dst);
-+#ifndef NO_IPV6
- static int inet_pton6(const char *src, unsigned char *dst);
-+#endif
- 
- /* int
-  * inet_pton4(src, dst)
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 30e6240..937fb1b 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -341,6 +341,14 @@ static inline char *gitstrchrnul(const char *s, int c)
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 54be905..ce4f829 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -729,7 +729,7 @@ static pid_t mingw_spawnve(const char *cmd, const char **argv, char **env,
+ 		return -1;
+ 	}
+ 	CloseHandle(pi.hThread);
+-	return (pid_t)pi.hProcess;
++	return (pid_t)pi.dwProcessId;
  }
- #endif
  
-+#ifdef NO_INET_PTON
-+int inet_pton(int af, const char *src, void *dst);
-+#endif
+ pid_t mingw_spawnvpe(const char *cmd, const char **argv, char **env)
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 3005472..ff4a76b 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -137,14 +137,41 @@ static inline int mingw_unlink(const char *pathname)
+ #define WNOHANG 1
+ static inline int waitpid(pid_t pid, int *status, unsigned options)
+ {
+-	if (pid > 0 && options & WNOHANG) {
+-		if (WAIT_OBJECT_0 != WaitForSingleObject((HANDLE)pid, 0))
++	HANDLE h;
 +
-+#ifdef NO_INET_NTOP
-+const char *inet_ntop(int af, const void *src, char *dst, size_t size);
-+#endif
++	if (pid <= 0) {
++		errno = EINVAL;
++		return -1;
++	}
 +
- extern void release_pack_memory(size_t, int);
++	h = OpenProcess(SYNCHRONIZE | PROCESS_QUERY_INFORMATION, FALSE, pid);
++	if (!h) {
++		errno = ECHILD;
++		return -1;
++	}
++
++	if (options & WNOHANG) {
++		if (WaitForSingleObject(h, 0) != WAIT_OBJECT_0) {
++			CloseHandle(h);
+ 			return 0;
++		}
+ 		options &= ~WNOHANG;
+ 	}
  
- extern char *xstrdup(const char *str);
+-	if (options == 0)
+-		return _cwait(status, pid, 0);
++	if (options == 0) {
++		if (WaitForSingleObject(h, INFINITE) != WAIT_OBJECT_0) {
++			CloseHandle(h);
++			return 0;
++		}
++
++		if (status)
++			GetExitCodeProcess(h, (LPDWORD)status);
++
++		CloseHandle(h);
++		return pid;
++	}
++	CloseHandle(h);
++
+ 	errno = EINVAL;
+ 	return -1;
+ }
 -- 
 1.6.6.211.g26720
