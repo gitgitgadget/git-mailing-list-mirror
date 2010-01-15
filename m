@@ -1,72 +1,90 @@
-From: Rudolf Polzer <divVerent@alientrap.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] git push --track
-Date: Fri, 15 Jan 2010 15:00:48 +0100
-Message-ID: <20100115140048.GB30986@rm.endoftheinternet.org>
-References: <op.u6g8jnixg402ra@nb-04> <20100113154310.GA7348@Knoppix> <op.u6haiiiog402ra@nb-04> <7vvdf33onp.fsf@alter.siamese.dyndns.org>
+Date: Fri, 15 Jan 2010 15:09:39 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1001151508550.3106@intel-tinevez-2-302>
+References: <op.u6g8jnixg402ra@nb-04> <20100114154154.6117@nanako3.lavabit.com> <alpine.DEB.1.00.1001141130210.4985@pacific.mpi-cbg.de> <20100115072741.6117@nanako3.lavabit.com> <20100115134425.GA30986@rm.endoftheinternet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 15 15:01:08 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Rudolf Polzer <divVerent@alientrap.org>
+X-From: git-owner@vger.kernel.org Fri Jan 15 15:09:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVmjV-0006nF-K7
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 15:01:01 +0100
+	id 1NVmry-0002Do-Cx
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 15:09:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756490Ab0AOOAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 09:00:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756455Ab0AOOAw
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 09:00:52 -0500
-Received: from rm.endoftheinternet.org ([94.23.21.40]:55952 "EHLO
-	r23604.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755570Ab0AOOAw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 09:00:52 -0500
-Received: from rpolzer by r23604.ovh.net with local (Exim 4.69)
-	(envelope-from <divVerent@alientrap.org>)
-	id 1NVmjI-0002Q4-IX; Fri, 15 Jan 2010 15:00:48 +0100
-Content-Disposition: inline
-In-Reply-To: <7vvdf33onp.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1757627Ab0AOOJm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 09:09:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755612Ab0AOOJm
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 09:09:42 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42555 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932169Ab0AOOJl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 09:09:41 -0500
+Received: (qmail invoked by alias); 15 Jan 2010 14:09:39 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp070) with SMTP; 15 Jan 2010 15:09:39 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX199uhZanhd9qpN7mBSOT+iePIazDWiNnqHRTurry0
+	q0WqiFd+AcKFXY
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20100115134425.GA30986@rm.endoftheinternet.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57999999999999996
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137072>
 
-On Thu, Jan 14, 2010 at 09:47:22PM -0800, Junio C Hamano wrote:
-> I have a feeling that it is more appropriate to have the additional code
-> in transport_push(), which gets ls-remote information, runs match_refs()
-> and finally calls transport->push_refs().  I think the extra branch
-> configuration would fit better inside the if block immediately after all
-> that happens, i.e.
+Hi,
+
+On Fri, 15 Jan 2010, Rudolf Polzer wrote:
+
+> On Fri, Jan 15, 2010 at 07:27:41AM +0900, Nanako Shiraishi wrote:
+> > 'git push --track' was suggested as a way to let users delay that decision.
+> > 
+> > 'git branch --configure' to update the same information for an existing
+> > branch was suggested as an alternative UI. An added benefit is that this
+> > approach will allow the same option to be used when creating a branch.
+> > 
+> > 'git pull --remember' that remembers the options used from the command line
+> > was suggested as a solution in addition to 'git branch --reconfigure'. Users
+> > can postpone the decision even more than 'git push --track', and it naturally
+> > supports setting branch.topic.rebase with 'git pull --rebase --remember'.  It
+> > also has two additional benefits. 'push --track' configures what happens when
+> > you 'pull' (counter-intuitive), but 'pull --remember' makes 'pull' to change
+> > the setting used by 'pull' (much more natural). Also it does not add the
+> > confusing word 'track' to the interface (for a more detailed discussion on
+> > 'track', see http://article.gmane.org/gmane.comp.version-control.git/136785).
+
+Thanks for the very nice summary!
+
+> Still requires you to specify the remote and the branch name twice.
 > 
-> 	if (!(flags & TRANSPORT_PUSH_DRY_RUN)) {
-> 		struct ref *ref;
-> 		for (ref = remote_refs; ref; ref = ref->next)
-> 			update_tracking_ref(transport->remote, ref, verbose);
-> +		if (flags & TRANSPORT_PUSH_RECONFIGURE_FORK)
-> +			configure_forked_branch(...);
-> 	}
+> So the workflow would be:
 > 
-> in transport.c
-
-I thought about this place when making my patch, but didn't put it there
-because this function is not called in the rsync protocol (which defines
-transport->push). So I instead did the logical step and went into the caller of
-that function. Functionality-wise, it also isn't really a "transport" function
-but part of pushing.
-
-> > +		if(!(flags & TRANSPORT_PUSH_DRY_RUN))
-> > +		if(!match_refs(local_refs, &remote_refs, refspec_nr, refspec, match_flags))
+> git push origin localbranch:remotebranch
+> ...
+> git pull --remember origin remotebranch:localbranch
 > 
-> Yuck; hiding the fact that you have an over-nested logic is not a way to
-> fix it.
+> instead of
+> 
+> git push --track origin localbranch:remotebranch
+> ...
+> git pull
+> 
+> The one thing I want to avoid, is specifying the "origin
+> localbranch:remotebranch" stuff twice.
+> 
+> Doesn't make git pull --remember a bad idea, it's good in many other 
+> cases. But in my specific use case, git push --track is the most useful 
+> one.
 
-This was accidental.
+The thing is: done right, the three can share the major part of the code.
 
-But well. Why bother with this, if this feature was rejected before already
-anyway.
-
-Rudolf
+Ciao,
+Dscho
