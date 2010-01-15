@@ -1,190 +1,179 @@
-From: "J.H." <warthog9@eaglescrag.net>
-Subject: Re: [PATCH 0/9] Gitweb caching v5
-Date: Thu, 14 Jan 2010 20:29:39 -0800
-Message-ID: <4B4FEF33.2040605@eaglescrag.net>
-References: <1263432185-21334-1-git-send-email-warthog9@eaglescrag.net> <m37hrkdu4k.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git push --track
+Date: Thu, 14 Jan 2010 21:47:22 -0800
+Message-ID: <7vvdf33onp.fsf@alter.siamese.dyndns.org>
+References: <op.u6g8jnixg402ra@nb-04> <20100113154310.GA7348@Knoppix>
+ <op.u6haiiiog402ra@nb-04>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "John 'Warthog9' Hawley" <warthog9@kernel.org>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 15 05:31:40 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+To: "Rudolf Polzer" <divVerent@alientrap.org>
+X-From: git-owner@vger.kernel.org Fri Jan 15 06:49:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVdqV-00074n-On
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 05:31:40 +0100
+	id 1NVf3y-0002pL-EB
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 06:49:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754728Ab0AOEaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 23:30:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752957Ab0AOEaX
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 23:30:23 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:57039 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752282Ab0AOEaW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 23:30:22 -0500
-Received: from voot-cruiser.eaglescrag.net (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o0F4Tdww024268
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Thu, 14 Jan 2010 20:29:39 -0800
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091209 Fedora/3.0-4.fc12 Lightning/1.0pre Thunderbird/3.0
-In-Reply-To: <m37hrkdu4k.fsf@localhost.localdomain>
-X-Enigmail-Version: 1.0
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Thu, 14 Jan 2010 20:29:40 -0800 (PST)
+	id S1751088Ab0AOFre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 00:47:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751073Ab0AOFre
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 00:47:34 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40426 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750997Ab0AOFrd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 00:47:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E9913900C1;
+	Fri, 15 Jan 2010 00:47:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9t5vhzWynKnUgAEA7/RZCeIpVYQ=; b=qaohmV
+	2OZnigiK2kfkkaxDKi7QocUblo7iCuyHue+44nxM8r4LBOlKIbblDNF8lyOTJVwD
+	m4uzfDFUlgJQBlx4ot7VujmuV0WBbLc3D/2+uALuj+pqsG7S/6lnBJkFzScALpzO
+	gHZM8FEoWEB0H+vXZCqFGPiByfLB06eRa3ezc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ii9bqkXgI2gPoOvDuXmQcYGnqQ7nBqy1
+	RHmG6PnTQcwpIUBvbgUQc5oAbq2/ZzD5yNE29ISF3HbP6FyKpGs85WnrlVouHi17
+	uEJDKWeAnBC4m40oozQGIKtozwWa2mYyw6/5agfMQYWcaDshRJhHlOLHxE/2jRoY
+	QXDgrA7KMlg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 70AD6900BC;
+	Fri, 15 Jan 2010 00:47:28 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D6ED900B3; Fri, 15 Jan
+ 2010 00:47:24 -0500 (EST)
+In-Reply-To: <op.u6haiiiog402ra@nb-04> (Rudolf Polzer's message of "Wed\, 13
+ Jan 2010 16\:55\:20 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 771BA588-0199-11DF-B066-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137050>
 
-On 01/14/2010 05:40 PM, Jakub Narebski wrote:
-> "John 'Warthog9' Hawley" <warthog9@eaglescrag.net> writes:
-> 
->> Afternoon everyone,
->>  
->> This is the latest incarnation of gitweb w/ caching.  This is
->> finally at the point where it should probably start either being
->> considered for inclusion or mainline, or I need to accept that this
->> will never get in and more perminantely fork (as is the case with
->> Fedora where this is going in as gitweb-caching as a parrallel rpm
->> package).
->>
->> That said this brings the base up to mainline (again),
-> 
-> Could you tell us which commit is the base of this series (like in
-> git-request-pull output), i.e. which commit this series is rebased
-> against?
+"Rudolf Polzer" <divVerent@alientrap.org> writes:
 
-This series was based on
-git://git.kernel.org/pub/scm/git/git.git
-054d2fa05cf0bc55fe1556c9e87d58d67a144f44
+> On Wed, 13 Jan 2010 16:43:10 +0100, Ilari Liusvaara
+> <ilari.liusvaara@elisanet.fi> wrote:
+>
+>> - Some lines look way too long (~160 chars, should be max 80 unles
+>> it would linebreak error message).
+>
+> Yes, also I got told that I used the wrong braces style... well, fixed
+> that.
 
-http://git.kernel.org/?p=git/warthog9/gitweb.git;a=shortlog;h=refs/heads/gitweb-ml-v5
+You didn't, although you tried to "hide" one level, which is even worse.
 
-> 
->> it updates a
->> number of elements in the caching engine, and this is a much cleaner
->> break-out of the tree vs. what I am currently developing against.
-> 
-> Is caching engine part changed since v2?
+If you see overlong lines in patch text, it often is that the added
+codepath is too deeply nested, and it often becomes much easier to
+understand if you split it into a separate smaller helper function.
 
-Slightly, not dramatically.  Only changes were to modify the caching
-engine to deal with the change in output mechanism (I.E. my $output ->
-print {$fh})
+For example, if you have
 
-<snip>
->> John 'Warthog9' Hawley (9):
->>   gitweb: Load checking
-> Looks good.
-> 
->>   gitweb: change die_error to take "extra" argument for extended die
->>     information
-> Commit message could be better (summary should really be shorter), and
-> I think there is some indent typo, but otherwise looks good.
-> 
->>   gitweb: Add option to force version match
-> For me it needs to be disabled in gitweb test suite (t/gitweb-lib.sh),
-> if it is enabled by default.  I really like that I can test current
-> gitweb without need to recompile git.
-> 
-> Also it should have tests that it works as intended (both for matching
-> and non-matching versions) in t/t9501-gitweb-standalone-http-status.sh
+	if (A) {
+        	if (B) {
+                	do something #1
+                        if (C) {
+                        	do something #2
+                                while (D) {
+                                	if (E) {
+                                        	do something #3
+					}
+				}
+			}
+		}
+	}
 
-I'll get t9501 cleaned up and make sure that the tests default to
-turning it off, and I'll add a test to confirm that this works.
+it often is much easier to read if you did:
 
->>   gitweb: Makefile improvements
-> Does it differ from my proposal (i.e. gitweb/Makefile doing the work),
-> based on your idea ("make gitweb" for Makefile and gitweb/Makefile)?
+	if (A)
+		helper(...)
 
-I think this is taken straight from the version you had, I don't think
-I've modified it.
+and wrote a helper that is
 
-> 
->>   gitweb: add a get function to compliment print_local_time
->>   gitweb: add a get function to compliment print_sort_th
-> Those two looks O.K. from what I seen.
-> 
->>   gitweb: cleanup error message produced by undefined $site_header
-> Shouldn't there be such protection for other such variables, like
-> $site_footer and $home_text (and a bit diferent protection against
-> undefined $projects_list)?  By the way, how did you arrived at
-> undefined $site_header: deafult build configuration leaves it empty,
-> but defined.
+	helper()
+        {
+        	if (!B)
+                	return
+		do something #1
+                if (!C)
+                	return
+		do something #2
+		while (D) {
+                	if (!E)
+                        	continue
+			do something #3
+		}
+	}
 
-I would have to go back and figure it out, but it's something I hit
-years ago and added that check to keep it from spewing all over my logs.
- Could easily add it to the others mentioned.
+>> - Should the tracking be set up even if only part of ref update suceeded
+>> (for those that succeeded), not requiring all to succeed?
 
->>   gitweb: Convert output to using indirect file handle
-> I have alternate solution, using shorter filehandle name (just $out)
-> in
-> 
->   git://repo.or.cz/git/jnareb-git.git gitweb/cache-kernel
->   http://repo.or.cz/w/git/jnareb-git.git/shortlog/refs/heads/gitweb/cache-kernel
-> 
-> I would have to think a bit about separate handle for binary files;
-> I am not sure if it is really required.
+I think giving configuration to the ones that succeeded, while not doing
+so for the ones that failed, would be the best.
 
-For caching you have to have it.  When your outputing the data back from
-the cache you need to switch the output mode for the browser to receive
-the data properly.  Otherwise the resulting output from the caching
-engine is going to be garbage.  The caching engine explicitly stores the
-binary files separate from the rest of the response.
+>> - Is --track the best name for this?
 
->>   gitweb: File based caching layer (from git.kernel.org)
-> I am working (time permitting) in spliting this large code drop into
-> smaller commits, namely:
+Most probably not.  "git branch --track" was already a mistake, whose
+damage can be seen in the first message in this thread.  I originally read
+"this converts a local branch to a tracking branch", and went "Huh??? ---
+Is this patch running 'mv refs/heads/frotz refs/remotes/origin/frotz'?
+What's fun about it???"
 
-first up, is there a reason not to take the caching layer as it stands
-while you work on these?  I'm fine with adding test cases for what's
-there now if you want, but I guess I'm confused about explicitly wanting
-to break these into smaller commits.
+> @@ -115,6 +116,36 @@ static int push_with_options(struct transport
+> *transport, int flags)
+>  		fprintf(stderr, "Pushing to %s\n", transport->url);
+>  	err = transport_push(transport, refspec_nr, refspec, flags,
+>  			     &nonfastforward);
+> +	if (err == 0 && flags & TRANSPORT_PUSH_TRACK) {
 
->  - href(..., -path_info => 0)          (for cache key)
+Style:
 
-You actually *really* want to have the full url vs. just the path_info.
- While I accept that this means that you will end up with multiple
-copies of data being stored it helps dramatically if you have multiple
-sites pointing into the same caching space.  If you happen to have two
-distinct trees
+ - Have SP between syntactic keyword and open parenthesis.
 
-http://git.public.com/?p=test.git;a=summary
-http://git.private.com/?p=test.git;a=summary
+ - Never place an opening brace, except the one that begins a function
+   body, on its own line;
 
-That respectively point to:
+Also the overlong line is merely a symptom that you are putting too much
+stuff in this function.  The whole addition should probably be a helper
+function.
 
-/group/public/git/test.git
-/group/private/git/test.git
+> @@ -115,6 +116,33 @@ static int push_with_options(struct transport *transport, int flags)
+>  		fprintf(stderr, "Pushing to %s\n", transport->url);
+>  	err = transport_push(transport, refspec_nr, refspec, flags,
+>  			     &nonfastforward);
+> +	if (err == 0 && flags & TRANSPORT_PUSH_TRACK)
+> +	{
+> +		struct ref *remote_refs =
+> +			transport->get_refs_list(transport, 1);
 
-you'll end up squashing the cache files needlessly and erroneously as
-what's in the cache file will depend on what last site was hit that
-generated the file.
+You have already pushed by calling transport_push() before you got "err"
+back.  Do you need to make a second, separate call to ls-remote here and
+if so why?
 
->  - simple file based caching + tests
->  - global expire time + tests
->  - output caching in gitweb            (WIP)
->  - adaptive expiration time            (planned)
->  - tee output / cache write            (planned)
+I have a feeling that it is more appropriate to have the additional code
+in transport_push(), which gets ls-remote information, runs match_refs()
+and finally calls transport->push_refs().  I think the extra branch
+configuration would fit better inside the if block immediately after all
+that happens, i.e.
 
-You sadly can't 'tee' the output as this would re-introduce the
-stampeding heard problem which is one of the reasons the caching layer
-came about in the first place.  Suppose you could give one person the
-output but make everyone else wait for the cache to finish writing out,
-or have the waiting client processes tail the file while it's generated
-but those both seem a little excessive vs. just waiting.
+	if (!(flags & TRANSPORT_PUSH_DRY_RUN)) {
+		struct ref *ref;
+		for (ref = remote_refs; ref; ref = ref->next)
+			update_tracking_ref(transport->remote, ref, verbose);
++		if (flags & TRANSPORT_PUSH_RECONFIGURE_FORK)
++			configure_forked_branch(...);
+	}
 
->  - expire time variation from CHI      (planned)
->  - locking for single writer           (planned)
->  - server-side generating info         (planned)
->  - AJAX-y generating info              (wishlist)
+in transport.c
 
-If it's helpful I can genuinely devote several more days to this to get
-these cleaned up.  Which would save you a fair amount of time in
-breaking this up.
+> +		if(!(flags & TRANSPORT_PUSH_DRY_RUN))
+> +		if(!match_refs(local_refs, &remote_refs, refspec_nr, refspec, match_flags))
 
-- John 'Warthog9' Hawley
+Yuck; hiding the fact that you have an over-nested logic is not a way to
+fix it.
