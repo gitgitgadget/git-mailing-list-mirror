@@ -1,58 +1,61 @@
-From: Richard Weinberger <richard@nod.at>
-Subject: Re: [PATCH 2/2] Fix variable initialization in insert_packed_refs().
-Date: Fri, 15 Jan 2010 12:02:38 +0100
-Message-ID: <201001151202.38762.richard@nod.at>
-References: <201001150029.01486.richard@nod.at> <4B501A9D.6060703@viscovery.net>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: Removal of post-upload-hook
+Date: Fri, 15 Jan 2010 13:52:12 +0200
+Message-ID: <20100115115212.GA9221@Knoppix>
+References: <6f8b45101001141001q40d8b746v8385bc6ae37a6af4@mail.gmail.com>
+ <20100114193607.GB25863@coredump.intra.peff.net>
+ <20100114194107.GA20033@spearce.org>
+ <20100114204305.GC26883@coredump.intra.peff.net>
+ <6f8b45101001142212i4151c625k54b450cd5978f158@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Jan 15 12:02:58 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
+	git@vger.kernel.org
+To: Arun Raghavan <ford_prefect@gentoo.org>
+X-From: git-owner@vger.kernel.org Fri Jan 15 12:52:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVjxB-000418-8l
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 12:02:57 +0100
+	id 1NVkj3-0004uF-Kw
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 12:52:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756036Ab0AOLCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 06:02:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756932Ab0AOLCv
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 06:02:51 -0500
-Received: from a.ns.miles-group.at ([217.188.240.210]:47664 "EHLO
-	radon.swed.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756881Ab0AOLCo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 06:02:44 -0500
-Received: (qmail 11525 invoked by uid 89); 15 Jan 2010 11:02:42 -0000
-Received: by simscan 1.3.1 ppid: 11517, pid: 11521, t: 0.0839s
-         scanners: attach: 1.3.1 clamav: 0.92.1
-/m: 
-Received: from unknown (HELO raccoon.localnet) (richard@nod.at@91.114.243.75)
-  by radon.swed.at with ESMTPA; 15 Jan 2010 11:02:42 -0000
-User-Agent: KMail/1.12.4 (Linux/2.6.25.20-0.5-pae; KDE/4.3.4; i686; ; )
-In-Reply-To: <4B501A9D.6060703@viscovery.net>
+	id S1756932Ab0AOLwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 06:52:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756884Ab0AOLwU
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 06:52:20 -0500
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:44525 "EHLO
+	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752368Ab0AOLwU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 06:52:20 -0500
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id C84A1EF24C;
+	Fri, 15 Jan 2010 13:52:18 +0200 (EET)
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A0674A915F5; Fri, 15 Jan 2010 13:52:18 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 0456B2BD54;
+	Fri, 15 Jan 2010 13:52:13 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <6f8b45101001142212i4151c625k54b450cd5978f158@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137064>
 
-Am Freitag 15 Januar 2010 08:34:53 schrieb Johannes Sixt:
-> If you look around in the code, you'll find more *cough* initializations
-> *cough* like this. They are written this way for a reason: they avoid
-> unwarranted compiler warnings "'foo' may be used uninitialized". Are you
-> saying that this warning is not triggered anymore after your change?
+On Fri, Jan 15, 2010 at 11:42:19AM +0530, Arun Raghavan wrote:
 > 
+> Another thought - would it be acceptable to have a config option to
+> enable/disable these types of hooks, so that people who are not
+> affected by the problem or explicitly don't care can use them? Perhaps
+> a core.allowInsecureHooks ?
 
-I don't get a warning after my change. 
-But I'm using on this system a quite old gcc (4.3.1).
-I'll recompile git with a more recent gcc and see what happens.
+That enable/disable would have to ignore per-repo configuration, which
+would make it behave differently from other options. Otherwise attacker
+could just flip the setting...
 
-Just for clarification:
-"int cmp = cmp;"
-*suppresses* only the warning but "cmp" is still uninitialized?
-(I did'nt know this trick before.)
-
-//richard
+-Ilari
