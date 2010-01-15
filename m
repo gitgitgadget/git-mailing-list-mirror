@@ -1,74 +1,69 @@
 From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: [PATCH v2 12/14] Improve the mingw getaddrinfo stub to 
-	handle more use cases
-Date: Fri, 15 Jan 2010 22:30:31 +0100
-Message-ID: <1263591033-4992-13-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH v2 13/14] daemon: use select() instead of poll()
+Date: Fri, 15 Jan 2010 22:30:32 +0100
+Message-ID: <1263591033-4992-14-git-send-email-kusmabite@gmail.com>
 References: <1263591033-4992-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org,
 	j6t@kdbg.org,
-	=?UTF-8?q?Martin=20Storsj=C3=B6?= <martin@martin.st>
+	Erik Faye-Lund <kusmabite@gmail.com>
 To: msysgit@googlegroups.com
-X-From: 31d5QSwkOB1A2CA4st0Bwy66y3w4s03.u644AGAy0By66y3wy96C7A.u64@listserv.bounces.google.com Fri Jan 15 22:32:28 2010
-Return-path: <31d5QSwkOB1A2CA4st0Bwy66y3w4s03.u644AGAy0By66y3wy96C7A.u64@listserv.bounces.google.com>
+X-From: 32t5QSwkOB1U7HF9xy5G13BB3819x58.zB99FLF35G3BB3813EBHCF.zB9@listserv.bounces.google.com Fri Jan 15 22:32:32 2010
+Return-path: <32t5QSwkOB1U7HF9xy5G13BB3819x58.zB99FLF35G3BB3813EBHCF.zB9@listserv.bounces.google.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
 Received: from mail-yx0-f137.google.com ([209.85.210.137])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVtmI-00061S-EO
-	for gcvm-msysgit@m.gmane.org; Fri, 15 Jan 2010 22:32:22 +0100
+	id 1NVtmN-00061S-Lj
+	for gcvm-msysgit@m.gmane.org; Fri, 15 Jan 2010 22:32:27 +0100
 Received: by mail-yx0-f137.google.com with SMTP id 1sf1972493yxe.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 15 Jan 2010 13:32:23 -0800 (PST)
+        for <gcvm-msysgit@m.gmane.org>; Fri, 15 Jan 2010 13:32:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:x-beenthere:received:received:received
-         :received:received-spf:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
+        h=domainkey-signature:received:mime-version:x-beenthere:received
+         :received:received:received:received-spf:received:received:received
+         :from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :x-original-authentication-results:x-original-sender:precedence
          :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
-         :x-message-url:sender:list-unsubscribe:list-subscribe:content-type
-         :content-transfer-encoding;
-        bh=xGWp4878M+mOHMuA4lLBlsFlbJ+UAdI3DKy8o6RVqnI=;
-        b=tW69nhdf7TEnKCcmfxMU/z0s7TfQhOUwmMQK99gwjlXsgaz/kz5YB1jFqpoVmgjRR8
-         XOALyeIrxpQEWYY9oC2mSZXu45lNvWhgDKqaTEljPfytb4A+kc+pTO0MmZ6KlcKPdiUb
-         W/OUnUQrftpcfjLEx+a/8XhDWE3+bTZjVNvuE=
+         :x-message-url:sender:list-unsubscribe:list-subscribe;
+        bh=UQnrmYX9DlLHM2LzJ9/px5PLgrWpkpoplfK6wrCQ8K8=;
+        b=64lJeTwCEUt9YbeRsRhpl1P3Io9TA4jLMiDP4ozKxeVc2gwpzTjauluPL1hs2vudBh
+         ru801sFf6cuEIjkjGzL+XecxCtlVC392EyUxGtI9J5mjIH6AZbevzIXag7IfaVoBHVl4
+         9enKAzqa99AjZ3YUPbTmFWXeFcuADKQ9fk16E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:from:to:cc:subject:date:message-id
-         :x-mailer:in-reply-to:references:mime-version
+        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references
          :x-original-authentication-results:x-original-sender:precedence
          :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
-         :x-message-url:sender:list-unsubscribe:list-subscribe:content-type
-         :content-transfer-encoding;
-        b=UGFMwX9eXjEy5r0GGK0aDGoxEwIquMzb5BMlKyP0NHoJGB4UIZN8/t+j0tA+kw+CY8
-         AmQ2eZ7kU6DOzeLVSYnjv/U0bDcYh50QOnUVMy8F1zPO2TUCicqp2GpDG94BYTXBmk++
-         qNJKQyeZVFVxhc6t1UITTCg4/N7tb0/ctthLg=
-Received: by 10.101.131.28 with SMTP id i28mr225326ann.17.1263591125713;
-        Fri, 15 Jan 2010 13:32:05 -0800 (PST)
+         :x-message-url:sender:list-unsubscribe:list-subscribe;
+        b=eDQ9Wn+sb5LGbIRhtvG25sdQb4Dh6rJwobd9Se/iXjPtaaORbO96nhVp0Jc5kgz7ON
+         16rBc9yIkw+sXCTN/K/XeEifGFMUDHbcTXG1/jY9ESs+rnPmA28amT2wIPDpWOnuBiDX
+         +9yX5UdNh5f5HInzgn3znCGAnFsXgUuhF6hw4=
+Received: by 10.101.88.7 with SMTP id q7mr49598anl.36.1263591130929;
+        Fri, 15 Jan 2010 13:32:10 -0800 (PST)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.213.60.1 with SMTP id n1ls305114ebh.3.p; Fri, 15 Jan 2010 
-	13:32:03 -0800 (PST)
-Received: by 10.213.106.210 with SMTP id y18mr160519ebo.5.1263591123364;
-        Fri, 15 Jan 2010 13:32:03 -0800 (PST)
-Received: by 10.213.106.210 with SMTP id y18mr160518ebo.5.1263591123225;
-        Fri, 15 Jan 2010 13:32:03 -0800 (PST)
-Received: from ey-out-1920.google.com (ey-out-1920.google.com [74.125.78.147])
-        by gmr-mx.google.com with ESMTP id 18si275397ewy.8.2010.01.15.13.32.02;
-        Fri, 15 Jan 2010 13:32:02 -0800 (PST)
-Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 74.125.78.147 as permitted sender) client-ip=74.125.78.147;
-Received: by ey-out-1920.google.com with SMTP id 26so22733eyw.16
-        for <msysgit@googlegroups.com>; Fri, 15 Jan 2010 13:32:02 -0800 (PST)
-Received: by 10.213.39.203 with SMTP id h11mr238809ebe.0.1263591122083;
-        Fri, 15 Jan 2010 13:32:02 -0800 (PST)
+Received: by 10.213.62.209 with SMTP id y17ls59231ebh.1.p; Fri, 15 Jan 2010 
+	13:32:09 -0800 (PST)
+Received: by 10.213.44.1 with SMTP id y1mr362993ebe.18.1263591128966;
+        Fri, 15 Jan 2010 13:32:08 -0800 (PST)
+Received: by 10.213.44.1 with SMTP id y1mr362992ebe.18.1263591128937;
+        Fri, 15 Jan 2010 13:32:08 -0800 (PST)
+Received: from mail-ew0-f215.google.com (mail-ew0-f215.google.com [209.85.219.215])
+        by gmr-mx.google.com with ESMTP id 11si173538ewy.13.2010.01.15.13.32.07;
+        Fri, 15 Jan 2010 13:32:07 -0800 (PST)
+Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 209.85.219.215 as permitted sender) client-ip=209.85.219.215;
+Received: by mail-ew0-f215.google.com with SMTP id 7so1359243ewy.10
+        for <msysgit@googlegroups.com>; Fri, 15 Jan 2010 13:32:07 -0800 (PST)
+Received: by 10.213.107.131 with SMTP id b3mr180386ebp.91.1263591127648;
+        Fri, 15 Jan 2010 13:32:07 -0800 (PST)
 Received: from localhost (cm-84.215.142.12.getinternet.no [84.215.142.12])
-        by mx.google.com with ESMTPS id 14sm693609ewy.7.2010.01.15.13.32.00
+        by mx.google.com with ESMTPS id 14sm695141ewy.15.2010.01.15.13.32.06
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 15 Jan 2010 13:32:00 -0800 (PST)
+        Fri, 15 Jan 2010 13:32:06 -0800 (PST)
 X-Mailer: git-send-email 1.6.6.95.g5f22c
 In-Reply-To: <1263591033-4992-1-git-send-email-kusmabite@gmail.com>
 X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: 
-	domain of kusmabite@googlemail.com designates 74.125.78.147 as permitted 
+	domain of kusmabite@googlemail.com designates 209.85.219.215 as permitted 
 	sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) 
 	header.i=@googlemail.com
 X-Original-Sender: kusmabite@googlemail.com
@@ -80,86 +75,94 @@ List-Post: <http://groups.google.com/group/msysgit/post?hl=>,
 List-Help: <http://groups.google.com/support/?hl=>, <mailto:msysgit+help@googlegroups.com>
 List-Archive: <http://groups.google.com/group/msysgit?hl=>
 X-Thread-Url: http://groups.google.com/group/msysgit/t/43ea563cecdc45de
-X-Message-Url: http://groups.google.com/group/msysgit/msg/7aada3f545623530
+X-Message-Url: http://groups.google.com/group/msysgit/msg/6e34a76085e5697e
 Sender: msysgit@googlegroups.com
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=>, 
 	<mailto:msysgit+unsubscribe@googlegroups.com>
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=>, 
 	<mailto:msysgit+subscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137132>
 
-From: Martin Storsjö <martin@martin.st>
+Windows doesn't have poll(), and the poll-emulation in
+compat/mingw.c doesn't support checking multiple sockets.
 
-Allow the node parameter to be null, which is used for getting
-the default bind address.
-
-Also allow the hints parameter to be null, to improve standard
-conformance of the stub implementation a little.
-
-Signed-off-by: Martin Storsjo <martin@martin.st>
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- compat/mingw.c |   28 +++++++++++++++++++++-------
- 1 files changed, 21 insertions(+), 7 deletions(-)
+ compat/mingw.h |    7 +++++++
+ daemon.c       |   27 ++++++++++++---------------
+ 2 files changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 89b9b89..02d411a 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -932,19 +932,22 @@ static int WSAAPI getaddrinfo_stub(const char *node, const char *service,
- 				   const struct addrinfo *hints,
- 				   struct addrinfo **res)
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 173bec5..e515726 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -269,6 +269,13 @@ int mingw_accept(int sockfd, struct sockaddr *sa, socklen_t *sz);
+ int mingw_rename(const char*, const char*);
+ #define rename mingw_rename
+ 
++#undef FD_SET
++#define FD_SET(fd, set) do { \
++	((fd_set*)(set))->fd_array[((fd_set *)(set))->fd_count++] = _get_osfhandle(fd); \
++	} while(0)
++#undef FD_ISSET
++#define FD_ISSET(fd, set) __WSAFDIsSet(_get_osfhandle(fd), (fd_set *)(set))
++
+ #if defined(USE_WIN32_MMAP) || defined(_MSC_VER)
+ int mingw_getpagesize(void);
+ #define getpagesize mingw_getpagesize
+diff --git a/daemon.c b/daemon.c
+index cdf5c72..95cf299 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -818,26 +818,23 @@ static int socksetup(char *listen_addr, int listen_port, int **socklist_p)
+ 
+ static int service_loop(int socknum, int *socklist)
  {
--	struct hostent *h = gethostbyname(node);
-+	struct hostent *h = NULL;
- 	struct addrinfo *ai;
- 	struct sockaddr_in *sin;
+-	struct pollfd *pfd;
+-	int i;
+-
+-	pfd = xcalloc(socknum, sizeof(struct pollfd));
+-
+-	for (i = 0; i < socknum; i++) {
+-		pfd[i].fd = socklist[i];
+-		pfd[i].events = POLLIN;
+-	}
+-
+ 	signal(SIGCHLD, child_handler);
  
--	if (!h)
--		return WSAGetLastError();
-+	if (node) {
-+		h = gethostbyname(node);
-+		if (!h)
-+			return WSAGetLastError();
-+	}
+ 	for (;;) {
+-		int i;
++		int i, maxfd = 0;
++		fd_set fds;
  
- 	ai = xmalloc(sizeof(struct addrinfo));
- 	*res = ai;
- 	ai->ai_flags = 0;
- 	ai->ai_family = AF_INET;
--	ai->ai_socktype = hints->ai_socktype;
--	switch (hints->ai_socktype) {
-+	ai->ai_socktype = hints ? hints->ai_socktype : 0;
-+	switch (ai->ai_socktype) {
- 	case SOCK_STREAM:
- 		ai->ai_protocol = IPPROTO_TCP;
- 		break;
-@@ -956,14 +959,25 @@ static int WSAAPI getaddrinfo_stub(const char *node, const char *service,
- 		break;
- 	}
- 	ai->ai_addrlen = sizeof(struct sockaddr_in);
--	ai->ai_canonname = strdup(h->h_name);
-+	if (hints && (hints->ai_flags & AI_CANONNAME))
-+		ai->ai_canonname = h ? strdup(h->h_name) : NULL;
-+	else
-+		ai->ai_canonname = NULL;
+ 		check_dead_children();
  
- 	sin = xmalloc(ai->ai_addrlen);
- 	memset(sin, 0, ai->ai_addrlen);
- 	sin->sin_family = AF_INET;
-+	/* Note: getaddrinfo is supposed to allow service to be a string,
-+	 * which should be looked up using getservbyname. This is
-+	 * currently not implemented */
- 	if (service)
- 		sin->sin_port = htons(atoi(service));
--	sin->sin_addr = *(struct in_addr *)h->h_addr;
-+	if (h)
-+		sin->sin_addr = *(struct in_addr *)h->h_addr;
-+	else if (hints && (hints->ai_flags & AI_PASSIVE))
-+		sin->sin_addr.s_addr = INADDR_ANY;
-+	else
-+		sin->sin_addr.s_addr = INADDR_LOOPBACK;
- 	ai->ai_addr = (struct sockaddr *)sin;
- 	ai->ai_next = 0;
- 	return 0;
+-		if (poll(pfd, socknum, -1) < 0) {
++		FD_ZERO(&fds);
++		for (i = 0; i < socknum; i++) {
++			FD_SET(socklist[i], &fds);
++			maxfd = socklist[i] > maxfd ? socklist[i] : maxfd;
++		}
++
++		if (select(maxfd + 1, &fds, NULL, NULL, NULL) < 0) {
+ 			if (errno != EINTR) {
+-				logerror("Poll failed, resuming: %s",
++				logerror("select() failed, resuming: %s",
+ 				      strerror(errno));
+ 				sleep(1);
+ 			}
+@@ -845,10 +842,10 @@ static int service_loop(int socknum, int *socklist)
+ 		}
+ 
+ 		for (i = 0; i < socknum; i++) {
+-			if (pfd[i].revents & POLLIN) {
++			if (FD_ISSET(socklist[i], &fds)) {
+ 				struct sockaddr_storage ss;
+ 				socklen_t sslen = sizeof(ss);
+-				int incoming = accept(pfd[i].fd, (struct sockaddr *)&ss, &sslen);
++				int incoming = accept(socklist[i], (struct sockaddr *)&ss, &sslen);
+ 				if (incoming < 0) {
+ 					switch (errno) {
+ 					case EAGAIN:
 -- 
 1.6.6.211.g26720
