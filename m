@@ -1,222 +1,243 @@
 From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: [PATCH v2 08/14] daemon: use explicit file descriptor
-Date: Fri, 15 Jan 2010 22:30:27 +0100
-Message-ID: <1263591033-4992-9-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH v2 09/14] daemon: use run-command api for async serving
+Date: Fri, 15 Jan 2010 22:30:28 +0100
+Message-ID: <1263591033-4992-10-git-send-email-kusmabite@gmail.com>
 References: <1263591033-4992-1-git-send-email-kusmabite@gmail.com>
 Cc: git@vger.kernel.org, j6t@kdbg.org,
 	Erik Faye-Lund <kusmabite@gmail.com>
 To: msysgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Fri Jan 15 22:31:48 2010
+X-From: git-owner@vger.kernel.org Fri Jan 15 22:32:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVtlk-0005nP-61
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 22:31:48 +0100
+	id 1NVtly-0005uF-Ab
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 22:32:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758396Ab0AOVbi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 16:31:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757752Ab0AOVbi
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 16:31:38 -0500
-Received: from ey-out-2122.google.com ([74.125.78.27]:26410 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751737Ab0AOVbh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 16:31:37 -0500
-Received: by ey-out-2122.google.com with SMTP id d26so192529eyd.19
-        for <git@vger.kernel.org>; Fri, 15 Jan 2010 13:31:36 -0800 (PST)
+	id S1758401Ab0AOVbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 16:31:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758399Ab0AOVbw
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 16:31:52 -0500
+Received: from mail-ew0-f209.google.com ([209.85.219.209]:42825 "EHLO
+	mail-ew0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758397Ab0AOVbv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 16:31:51 -0500
+Received: by mail-ew0-f209.google.com with SMTP id 1so568991ewy.28
+        for <git@vger.kernel.org>; Fri, 15 Jan 2010 13:31:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=gKkDqv3bXAgqO5K+fWCPHzqpzxjX6X8gbvCdZ2Rvusk=;
-        b=QKBb8PjnOdzy0s/kEGdgIm+GnaEvFqqleHEVSvD9jg0CpAUgXh2cZ4LAIr770aSyGh
-         KExKpO440farj5pUvl7VCkLFYKjAKrZ4zdoykIXyPv85v2Zl+h4cj5RZh3TMhszz5SOe
-         xLijKKbm4mKMaz2gKwybJUSUOw8vmErxDW0hY=
+        bh=Nhyzndz3bHbSrVmARPUbr+dtOHIYlj/EkLCewfSUkW0=;
+        b=O28dj62dOUfCalkLdMdrKpiid+rZIS4nqTg4DdS7hRhhcym27tYL95L6cYeNZYW+0w
+         pocCwJgX4/Sdo9rviuAKrIxwfXKRfbGKhPCKyMeuFqn79Zx+p6fyRlWDi/xvksJ9zUb1
+         zUtbmtzlF0M6iIlLhkK1pgs0mWAr6UbEpyvHI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=BsiCwDTPb2phhzPEGj14sfFjjeqjRdG1E5OswYB/uS+AKvpk4GiXttfXioowtOFDMk
-         nha5fIi94pozhPxJW1ixmpoF86wsOvdvFRQRpzF332HEG9R2B0UxHGX6T+2MNlrbc5nr
-         vU77ZZkjeQ323mu+u60E/A0tH0D79r7gtmoqk=
-Received: by 10.213.25.83 with SMTP id y19mr405514ebb.78.1263591096149;
-        Fri, 15 Jan 2010 13:31:36 -0800 (PST)
+        b=i4jQQ0r+q/iMcyADPRKr57TFn3ppjge9Ss+Fb2Y7YXdZezuXz5JWPgjdUNzTQr5hdR
+         UHA7bpG5i/kMTukvOo3iaxs48fGUBwkqWPvHs55i0wa8xfy71yvF56UNsAMoN8bZmjFh
+         v8WDmwfzT/Fky6FTzAmdqZcYVrIVIL7yVxQu4=
+Received: by 10.213.37.199 with SMTP id y7mr2954397ebd.18.1263591102598;
+        Fri, 15 Jan 2010 13:31:42 -0800 (PST)
 Received: from localhost (cm-84.215.142.12.getinternet.no [84.215.142.12])
-        by mx.google.com with ESMTPS id 16sm1810980ewy.2.2010.01.15.13.31.35
+        by mx.google.com with ESMTPS id 14sm693163ewy.3.2010.01.15.13.31.41
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 15 Jan 2010 13:31:35 -0800 (PST)
+        Fri, 15 Jan 2010 13:31:42 -0800 (PST)
 X-Mailer: git-send-email 1.6.6.95.g5f22c
 In-Reply-To: <1263591033-4992-1-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137128>
 
-This patch adds support to specify an explicit file
-descriotor for communication with the client, instead
-of using stdin/stdout.
-
-This will be useful for the Windows port, because it
-will use threads instead of fork() to serve multiple
-clients, making it impossible to reuse stdin/stdout.
+fork() is only available on POSIX, so to support git-daemon
+on Windows we have to use something else. Conveniently
+enough, we have an API for async operation already.
 
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- daemon.c |   43 +++++++++++++++++++++----------------------
- 1 files changed, 21 insertions(+), 22 deletions(-)
+ daemon.c |   87 +++++++++++++++++++++++++++++++------------------------------
+ 1 files changed, 44 insertions(+), 43 deletions(-)
 
 diff --git a/daemon.c b/daemon.c
-index 79ba1aa..b42792f 100644
+index b42792f..2d63cbc 100644
 --- a/daemon.c
 +++ b/daemon.c
-@@ -218,7 +218,7 @@ static char *path_ok(char *directory)
- 	return NULL;		/* Fallthrough. Deny by default */
- }
+@@ -583,17 +583,17 @@ static unsigned int live_children;
  
--typedef int (*daemon_service_fn)(void);
-+typedef int (*daemon_service_fn)(int [2]);
- struct daemon_service {
- 	const char *name;
- 	const char *config_name;
-@@ -242,7 +242,7 @@ static int git_daemon_config(const char *var, const char *value, void *cb)
- 	return 0;
- }
+ static struct child {
+ 	struct child *next;
+-	pid_t pid;
++	struct child_process cld;
+ 	struct sockaddr_storage address;
+ } *firstborn;
  
--static int run_service(char *dir, struct daemon_service *service)
-+static int run_service(int fd[2], char *dir, struct daemon_service *service)
+-static void add_child(pid_t pid, struct sockaddr *addr, int addrlen)
++static void add_child(struct child_process *cld, struct sockaddr *addr, int addrlen)
  {
- 	const char *path;
- 	int enabled = service->enabled;
-@@ -295,7 +295,7 @@ static int run_service(char *dir, struct daemon_service *service)
- 	 */
- 	signal(SIGTERM, SIG_IGN);
+ 	struct child *newborn, **cradle;
  
--	return service->fn();
-+	return service->fn(fd);
+ 	newborn = xcalloc(1, sizeof(*newborn));
+ 	live_children++;
+-	newborn->pid = pid;
++	memcpy(&newborn->cld, cld, sizeof(*cld));
+ 	memcpy(&newborn->address, addr, addrlen);
+ 	for (cradle = &firstborn; *cradle; cradle = &(*cradle)->next)
+ 		if (!addrcmp(&(*cradle)->address, &newborn->address))
+@@ -602,19 +602,6 @@ static void add_child(pid_t pid, struct sockaddr *addr, int addrlen)
+ 	*cradle = newborn;
  }
  
- static void copy_to_log(int fd)
-@@ -319,7 +319,7 @@ static void copy_to_log(int fd)
- 	fclose(fp);
- }
- 
--static int run_service_command(const char **argv)
-+static int run_service_command(int fd[2], const char **argv)
- {
- 	struct child_process cld;
- 
-@@ -327,37 +327,36 @@ static int run_service_command(const char **argv)
- 	cld.argv = argv;
- 	cld.git_cmd = 1;
- 	cld.err = -1;
-+	cld.in = fd[0];
-+	cld.out = fd[1];
- 	if (start_command(&cld))
- 		return -1;
- 
--	close(0);
--	close(1);
+-static void remove_child(pid_t pid)
+-{
+-	struct child **cradle, *blanket;
 -
- 	copy_to_log(cld.err);
- 
- 	return finish_command(&cld);
- }
- 
--static int upload_pack(void)
-+static int upload_pack(int fd[2])
+-	for (cradle = &firstborn; (blanket = *cradle); cradle = &blanket->next)
+-		if (blanket->pid == pid) {
+-			*cradle = blanket->next;
+-			live_children--;
+-			free(blanket);
+-			break;
+-		}
+-}
+-
+ /*
+  * This gets called if the number of connections grows
+  * past "max_connections".
+@@ -623,14 +610,14 @@ static void remove_child(pid_t pid)
+  */
+ static void kill_some_child(void)
  {
- 	/* Timeout as string */
- 	char timeout_buf[64];
- 	const char *argv[] = { "upload-pack", "--strict", timeout_buf, ".", NULL };
+-	const struct child *blanket, *next;
++	struct child *blanket, *next;
  
- 	snprintf(timeout_buf, sizeof timeout_buf, "--timeout=%u", timeout);
--	return run_service_command(argv);
-+	return run_service_command(fd, argv);
+ 	if (!(blanket = firstborn))
+ 		return;
+ 
+ 	for (; (next = blanket->next); blanket = next)
+ 		if (!addrcmp(&blanket->address, &next->address)) {
+-			kill(blanket->pid, SIGTERM);
++			kill(blanket->cld.pid, SIGTERM);
+ 			break;
+ 		}
+ }
+@@ -640,19 +627,26 @@ static void check_dead_children(void)
+ 	int status;
+ 	pid_t pid;
+ 
+-	while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+-		const char *dead = "";
+-		remove_child(pid);
+-		if (!WIFEXITED(status) || (WEXITSTATUS(status) > 0))
+-			dead = " (with error)";
+-		loginfo("[%"PRIuMAX"] Disconnected%s", (uintmax_t)pid, dead);
+-	}
++	struct child **cradle, *blanket;
++	for (cradle = &firstborn; (blanket = *cradle);)
++		if ((pid = waitpid(blanket->cld.pid, &status, WNOHANG)) > 1) {
++			const char *dead = "";
++			if (status)
++				dead = " (with error)";
++			loginfo("[%"PRIuMAX"] Disconnected%s", (uintmax_t)pid, dead);
++
++			/* remove the child */
++			*cradle = blanket->next;
++			live_children--;
++			free(blanket);
++		} else
++			cradle = &blanket->next;
  }
  
--static int upload_archive(void)
-+static int upload_archive(int fd[2])
++char **cld_argv;
+ static void handle(int incoming, struct sockaddr *addr, int addrlen)
  {
- 	static const char *argv[] = { "upload-archive", ".", NULL };
--	return run_service_command(argv);
-+	return run_service_command(fd, argv);
- }
+-	int fd[2];
+-	pid_t pid;
++	struct child_process cld = { 0 };
  
--static int receive_pack(void)
-+static int receive_pack(int fd[2])
- {
- 	static const char *argv[] = { "receive-pack", ".", NULL };
--	return run_service_command(argv);
-+	return run_service_command(fd, argv);
- }
- 
- static struct daemon_service daemon_service[] = {
-@@ -487,7 +486,7 @@ static void parse_host_arg(char *extra_args, int buflen)
- }
- 
- 
--static int execute(struct sockaddr *addr)
-+static int execute(int fd[2], struct sockaddr *addr)
- {
- 	static char line[1000];
- 	int pktlen, len, i;
-@@ -520,7 +519,7 @@ static int execute(struct sockaddr *addr)
- 	}
- 
- 	alarm(init_timeout ? init_timeout : timeout);
--	pktlen = packet_read_line(0, line, sizeof(line));
-+	pktlen = packet_read_line(fd[0], line, sizeof(line));
- 	alarm(0);
- 
- 	len = strlen(line);
-@@ -552,7 +551,7 @@ static int execute(struct sockaddr *addr)
- 			 * Note: The directory here is probably context sensitive,
- 			 * and might depend on the actual service being performed.
- 			 */
--			return run_service(line + namelen + 5, s);
-+			return run_service(fd, line + namelen + 5, s);
+ 	if (max_connections && live_children >= max_connections) {
+ 		kill_some_child();
+@@ -665,20 +659,15 @@ static void handle(int incoming, struct sockaddr *addr, int addrlen)
  		}
  	}
  
-@@ -652,6 +651,7 @@ static void check_dead_children(void)
- 
- static void handle(int incoming, struct sockaddr *addr, int addrlen)
- {
-+	int fd[2];
- 	pid_t pid;
- 
- 	if (max_connections && live_children >= max_connections) {
-@@ -676,11 +676,9 @@ static void handle(int incoming, struct sockaddr *addr, int addrlen)
- 		return;
- 	}
- 
--	dup2(incoming, 0);
--	dup2(incoming, 1);
--	close(incoming);
+-	if ((pid = fork())) {
+-		close(incoming);
+-		if (pid < 0) {
+-			logerror("Couldn't fork %s", strerror(errno));
+-			return;
+-		}
 -
--	exit(execute(addr));
-+	fd[0] = incoming;
-+	fd[1] = dup(incoming);
-+	exit(execute(fd, addr));
+-		add_child(pid, addr, addrlen);
+-		return;
+-	}
++	cld.argv = (const char **)cld_argv;
++	cld.in = incoming;
++	cld.out = dup(incoming);
+ 
+-	fd[0] = incoming;
+-	fd[1] = dup(incoming);
+-	exit(execute(fd, addr));
++	if (start_command(&cld))
++		logerror("unable to fork");
++	else
++		add_child(&cld, addr, addrlen);
++	close(incoming);
  }
  
  static void child_handler(int signo)
-@@ -1107,6 +1105,7 @@ int main(int argc, char **argv)
+@@ -934,7 +923,7 @@ int main(int argc, char **argv)
+ {
+ 	int listen_port = 0;
+ 	char *listen_addr = NULL;
+-	int inetd_mode = 0;
++	int serve_mode = 0, inetd_mode = 0;
+ 	const char *pid_file = NULL, *user_name = NULL, *group_name = NULL;
+ 	int detach = 0;
+ 	struct passwd *pass = NULL;
+@@ -960,7 +949,12 @@ int main(int argc, char **argv)
+ 				continue;
+ 			}
+ 		}
++		if (!strcmp(arg, "--serve")) {
++			serve_mode = 1;
++			continue;
++		}
+ 		if (!strcmp(arg, "--inetd")) {
++			serve_mode = 1;
+ 			inetd_mode = 1;
+ 			log_syslog = 1;
+ 			continue;
+@@ -1104,13 +1098,13 @@ int main(int argc, char **argv)
+ 		die("base-path '%s' does not exist or is not a directory",
  		    base_path);
  
- 	if (inetd_mode) {
-+		int fd[2] = { 0, 1 };
+-	if (inetd_mode) {
++	if (serve_mode) {
+ 		int fd[2] = { 0, 1 };
  		struct sockaddr_storage ss;
  		struct sockaddr *peer = (struct sockaddr *)&ss;
  		socklen_t slen = sizeof(ss);
-@@ -1117,7 +1116,7 @@ int main(int argc, char **argv)
+ 
+-		if (!freopen("/dev/null", "w", stderr))
++		if (inetd_mode && !freopen("/dev/null", "w", stderr))
+ 			die_errno("failed to redirect stderr to /dev/null");
+ 
  		if (getpeername(0, peer, &slen))
- 			peer = NULL;
+@@ -1129,5 +1123,12 @@ int main(int argc, char **argv)
+ 	if (pid_file)
+ 		store_pid(pid_file);
  
--		return execute(peer);
-+		return execute(fd, peer);
- 	}
- 
- 	if (detach) {
++	/* prepare argv for serving-processes */
++	cld_argv = xmalloc(sizeof (char *) * (argc + 2));
++	for (i = 0; i < argc; ++i)
++		cld_argv[i] = argv[i];
++	cld_argv[argc] = "--serve";
++	cld_argv[argc+1] = NULL;
++
+ 	return serve(listen_addr, listen_port, pass, gid);
+ }
 -- 
 1.6.6.211.g26720
