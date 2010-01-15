@@ -1,133 +1,159 @@
-From: Tarmigan Casebolt <tarmigan+git@gmail.com>
-Subject: [PATCH v2] Test t5560: Fix test when run with dash
-Date: Thu, 14 Jan 2010 22:44:02 -0800
-Message-ID: <1263537842-5792-1-git-send-email-tarmigan+git@gmail.com>
-References: <7vfx69hyd5.fsf@alter.siamese.dyndns.org>
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Tarmigan Casebolt <tarmigan+git@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 15 07:35:21 2010
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH 2/3] difftool: Add '-x' and as an alias for '--extcmd'
+Date: Thu, 14 Jan 2010 23:16:01 -0800
+Message-ID: <1263539762-8269-2-git-send-email-davvid@gmail.com>
+References: <1263539762-8269-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jan 15 08:20:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVfmA-0007KS-Ii
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 07:35:18 +0100
+	id 1NVgTw-0002ja-1a
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 08:20:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750858Ab0AOGfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 01:35:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750823Ab0AOGfG
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 01:35:06 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:36449 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750818Ab0AOGfF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 01:35:05 -0500
-Received: by yxe17 with SMTP id 17so285261yxe.33
-        for <git@vger.kernel.org>; Thu, 14 Jan 2010 22:35:04 -0800 (PST)
+	id S1751410Ab0AOHQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 02:16:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751378Ab0AOHQO
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 02:16:14 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:50258 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751354Ab0AOHQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 02:16:13 -0500
+Received: by ywh6 with SMTP id 6so280712ywh.4
+        for <git@vger.kernel.org>; Thu, 14 Jan 2010 23:16:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=MqX4NI5WGGtaZM0r9YVqYNnkkA/99uGeY04aYsp3iEo=;
-        b=l8EdFJ9A5M2dq0xxYX60J3GntqGYqWFrlLhiaWApmqmvOl3uPfjeop2SrhJZKmK7gc
-         BjevB6UI/yN23JoYcm0uXcg6iqkXWhDGurVMxgylED+3Ovt9bXRBHvkaclYQOhNbit2e
-         HLSWBYpO6qKgKhU9sxI+JOAX6kcioc9MNMaC0=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=cKfadVp5t8XnClT/HvP3fWdcr/t2V0kqGeYkXMMFT+s=;
+        b=VyEJJwmzdoUg/8Y4/XC12fTvFxMEUa5teK4WtKDBhic74y8naSG0bhmKQlEC+4vVJw
+         s59sxreRHAerdIKdFkWQJz7oHKh8Me9Zh0K1vmZvjtuXl7MG1U2ZC9pvHQJIaVLlPW84
+         vAK+8n0EtN83pgjQk3eYSaGZ/zN59x8otyi+c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        b=hoATA7GQk16/dnU1q43SnNnums8bDSueu2lYR/mE6CRgnU25H09yqftR1vTbYwSTyg
-         QPoyfdoPj9K912/jZBLHmszoNwl6LM6QW9gqUvBWKna9+O7l4MCxebEyRlkatoLtk0JD
-         r4xyel7Yz8chfDCa4+FM7QWsjjcsAe5hkzDso=
-Received: by 10.151.16.22 with SMTP id t22mr105360ybi.138.1263536960410;
-        Thu, 14 Jan 2010 22:29:20 -0800 (PST)
-Received: from localhost (c-69-181-44-199.hsd1.ca.comcast.net [69.181.44.199])
-        by mx.google.com with ESMTPS id 7sm453997yxg.68.2010.01.14.22.29.18
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=eyme8Qr6/CeMeD59lw05FHWz0804LyNQkqAvIznuLoRX5TyTbhB/ZEV8YuTN/u/EUs
+         XTgfoCInxnaHYavb9XRoG0q4IckSArDBwZPLnim8MsKpjJKZEXA7KUp7mE6HG5T/4vuZ
+         WyA52zaETvzXLhMvYyir663M6wIs8hT74ULDU=
+Received: by 10.150.165.17 with SMTP id n17mr164974ybe.321.1263539772780;
+        Thu, 14 Jan 2010 23:16:12 -0800 (PST)
+Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id 7sm613204ywc.51.2010.01.14.23.16.11
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 14 Jan 2010 22:29:19 -0800 (PST)
-X-Mailer: git-send-email 1.6.6
-In-Reply-To: <7vfx69hyd5.fsf@alter.siamese.dyndns.org>
+        Thu, 14 Jan 2010 23:16:12 -0800 (PST)
+X-Mailer: git-send-email 1.6.6.196.g1f735
+In-Reply-To: <1263539762-8269-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137053>
 
-The dash shell is more finicky than some others.
+This adds '-x' as a shorthand for the '--extcmd' option.
+Arguments to '--extcmd' can be specified separately, which
+was not originally possible.
 
-In particular, it does not seem to like the pattern of setting an
-environment variable on the same line as you call a shell function
-like this:
+This also fixes the brief help text so that it mentions
+both '-x' and '--extcmd'.
 
-        REQUEST_METHOD="GET" some_shell_function
-
-as you might use to set a variable only for one command if that
-command were an executable or a shell builtin.
-
-Reported-by: Michael Haggerty <mhagger@alum.mit.edu>
-Signed-off-by: Tarmigan Casebolt <tarmigan+git@gmail.com>
+Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
-Junio, that description matches my understanding of the problem.
-I can't tell from my reading of the POSIX spec whether my usage was
-wrong or if dash is wrong, which is why I shied away from an
-explanation.  As a practical matter though, this patch does fix the
-issue.
+ Documentation/git-difftool.txt |    3 ++-
+ git-difftool.perl              |   21 ++++++++++++++-------
+ t/t7800-difftool.sh            |    8 ++++++++
+ 3 files changed, 24 insertions(+), 8 deletions(-)
 
-This version takes a slighty different approach that I think leaves
-things clearer and doesn't pass in tons of arguements to the shell
-function.  If you prefer the old approach, I can send a patch that way
-instead.
----
- t/t5560-http-backend-noserver.sh |   15 ++++++++++-----
- 1 files changed, 10 insertions(+), 5 deletions(-)
-
-diff --git a/t/t5560-http-backend-noserver.sh b/t/t5560-http-backend-noserver.sh
-index 5f8c88e..44885b8 100755
---- a/t/t5560-http-backend-noserver.sh
-+++ b/t/t5560-http-backend-noserver.sh
-@@ -14,8 +14,9 @@ run_backend() {
+diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+index f67d2db..5c68cff 100644
+--- a/Documentation/git-difftool.txt
++++ b/Documentation/git-difftool.txt
+@@ -7,7 +7,7 @@ git-difftool - Show changes using common diff tools
+ 
+ SYNOPSIS
+ --------
+-'git difftool' [--tool=<tool>] [-y|--no-prompt|--prompt] [<'git diff' options>]
++'git difftool' [<options>] <commit>{0,2} [--] [<path>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -58,6 +58,7 @@ is set to the name of the temporary file containing the contents
+ of the diff post-image.  `$BASE` is provided for compatibility
+ with custom merge tool commands and has the same value as `$LOCAL`.
+ 
++-x <command>::
+ --extcmd=<command>::
+ 	Specify a custom command for viewing diffs.
+ 	'git-difftool' ignores the configured defaults and runs
+diff --git a/git-difftool.perl b/git-difftool.perl
+index f8ff245..d639de3 100755
+--- a/git-difftool.perl
++++ b/git-difftool.perl
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env perl
+-# Copyright (c) 2009 David Aguilar
++# Copyright (c) 2009-2010 David Aguilar
+ #
+ # This is a wrapper around the GIT_EXTERNAL_DIFF-compatible
+ # git-difftool--helper script.
+@@ -23,8 +23,9 @@ my $DIR = abs_path(dirname($0));
+ sub usage
+ {
+ 	print << 'USAGE';
+-usage: git difftool [-g|--gui] [-t|--tool=<tool>] [-y|--no-prompt]
+-                    ["git diff" options]
++usage: git difftool [-t|--tool=<tool>] [-x|--extcmd=<cmd>]
++                    [-y|--no-prompt]   [-g|--gui]
++                    ['git diff' options]
+ USAGE
+ 	exit 1;
  }
+@@ -62,14 +63,20 @@ sub generate_command
+ 			$skip_next = 1;
+ 			next;
+ 		}
+-		if ($arg =~ /^--extcmd=/) {
+-			$ENV{GIT_DIFFTOOL_EXTCMD} = substr($arg, 9);
+-			next;
+-		}
+ 		if ($arg =~ /^--tool=/) {
+ 			$ENV{GIT_DIFF_TOOL} = substr($arg, 7);
+ 			next;
+ 		}
++		if ($arg eq '-x' || $arg eq '--extcmd') {
++			usage() if $#ARGV <= $idx;
++			$ENV{GIT_DIFFTOOL_EXTCMD} = $ARGV[$idx + 1];
++			$skip_next = 1;
++			next;
++		}
++		if ($arg =~ /^--extcmd=/) {
++			$ENV{GIT_DIFFTOOL_EXTCMD} = substr($arg, 9);
++			next;
++		}
+ 		if ($arg eq '-g' || $arg eq '--gui') {
+ 			my $tool = Git::command_oneline('config',
+ 			                                'diff.guitool');
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 1d9e07b..69e1c34 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -225,8 +225,16 @@ test_expect_success 'difftool.<tool>.path' '
+ test_expect_success 'difftool --extcmd=cat' '
+ 	diff=$(git difftool --no-prompt --extcmd=cat branch) &&
+ 	test "$diff" = branch"$LF"master
++'
  
- GET() {
--	REQUEST_METHOD="GET" \
-+	export REQUEST_METHOD="GET" &&
- 	run_backend "/repo.git/$1" &&
-+	unset REQUEST_METHOD &&
- 	if ! grep "Status" act.out >act
- 	then
- 		printf "Status: 200 OK\r\n" >act
-@@ -25,9 +26,11 @@ GET() {
- }
++test_expect_success 'difftool --extcmd cat' '
++	diff=$(git difftool --no-prompt --extcmd cat branch) &&
++	test "$diff" = branch"$LF"master
++'
  
- POST() {
--	REQUEST_METHOD="POST" \
--	CONTENT_TYPE="application/x-$1-request" \
-+	export REQUEST_METHOD="POST" &&
-+	export CONTENT_TYPE="application/x-$1-request" &&
- 	run_backend "/repo.git/$1" "$2" &&
-+	unset REQUEST_METHOD &&
-+	unset CONTENT_TYPE &&
- 	if ! grep "Status" act.out >act
- 	then
- 		printf "Status: 200 OK\r\n" >act
-@@ -43,13 +46,15 @@ log_div() {
- . "$TEST_DIRECTORY"/t556x_common
++test_expect_success 'difftool -x cat' '
++	diff=$(git difftool --no-prompt -x cat branch) &&
++	test "$diff" = branch"$LF"master
  
- expect_aliased() {
-+	export REQUEST_METHOD="GET" &&
- 	if test $1 = 0; then
--		REQUEST_METHOD=GET run_backend "$2"
-+		run_backend "$2"
- 	else
--		REQUEST_METHOD=GET run_backend "$2" &&
-+		run_backend "$2" &&
- 		echo "fatal: '$2': aliased" >exp.err &&
- 		test_cmp exp.err act.err
- 	fi
-+	unset REQUEST_METHOD
- }
  
- test_expect_success 'http-backend blocks bad PATH_INFO' '
+ '
 -- 
-1.6.6
+1.6.6.6.g627fb.dirty
