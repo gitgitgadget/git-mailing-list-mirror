@@ -1,105 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add push --set-upstream
-Date: Fri, 15 Jan 2010 12:42:20 -0500
-Message-ID: <20100115174220.GA15821@coredump.intra.peff.net>
-References: <1263573407-13642-1-git-send-email-ilari.liusvaara@elisanet.fi>
- <20100115171745.GB2115@coredump.intra.peff.net>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 3/3] difftool: Use eval to expand '--extcmd' expressions
+Date: Fri, 15 Jan 2010 09:59:15 -0800
+Message-ID: <20100115175913.GA21106@gmail.com>
+References: <1263539762-8269-1-git-send-email-davvid@gmail.com> <1263539762-8269-3-git-send-email-davvid@gmail.com> <4B502A0C.50108@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Fri Jan 15 18:42:37 2010
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Jan 15 18:59:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVqBq-0005pk-4t
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 18:42:30 +0100
+	id 1NVqSI-00058f-Bh
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 18:59:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757818Ab0AORm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 12:42:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757620Ab0AORm0
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 12:42:26 -0500
-Received: from peff.net ([208.65.91.99]:39835 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751297Ab0AORmZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 12:42:25 -0500
-Received: (qmail 28800 invoked by uid 107); 15 Jan 2010 17:47:15 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 15 Jan 2010 12:47:15 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jan 2010 12:42:20 -0500
+	id S1755152Ab0AOR70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 12:59:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755173Ab0AOR70
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 12:59:26 -0500
+Received: from fg-out-1718.google.com ([72.14.220.155]:44220 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753404Ab0AOR7Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 12:59:25 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so164175fga.1
+        for <git@vger.kernel.org>; Fri, 15 Jan 2010 09:59:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=ILngiYmYfoKF7JvkJzExBa7h/kjnZbfjyZW68eoxrb0=;
+        b=ROp+Iv0fqyBNqF6xj35Si8dCI+zWI/F15BNKYKUIURKPKnXe9OJOjM3ZSO+JNlCQZT
+         fKBDMEYEcq7MyzqoGUP5/EXa56Hyk66kq7IOvTjPmuDvfVaWNp1ZIP6N+RjDudy53DUm
+         CJnNgtgKR6WB9hqObWh6LfsycCX9FFICOOZig=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=AvwO09UzevuidF7kQQered0rDyj10DZgxEU5JBEZw3CDSbi8bCL+538aP5n6eAeI/U
+         vVesrA+IpZb3LA+yBEp+xRH6PfHOu+0Ny90EJSy3bTVNnmQfhWT/ZrBnPis7t0iRff/M
+         R99n055AnWQHf+ynqLbdrOUdGzOlJBHBjH9gM=
+Received: by 10.223.4.25 with SMTP id 25mr801787fap.38.1263578364015;
+        Fri, 15 Jan 2010 09:59:24 -0800 (PST)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id 22sm2803694fkr.57.2010.01.15.09.59.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 15 Jan 2010 09:59:22 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20100115171745.GB2115@coredump.intra.peff.net>
+In-Reply-To: <4B502A0C.50108@viscovery.net>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137088>
 
-On Fri, Jan 15, 2010 at 12:17:45PM -0500, Jeff King wrote:
+On Fri, Jan 15, 2010 at 09:40:44AM +0100, Johannes Sixt wrote:
+> David Aguilar schrieb:
+> > -		$GIT_DIFFTOOL_EXTCMD "$LOCAL" "$REMOTE"
+> > +		(eval $GIT_DIFFTOOL_EXTCMD "\"$LOCAL\"" "\"$REMOTE\"")
+> 
+> The new code is broken if $LOCAL or $REMOTE can contain double-quotes. How
+> about this alternative:
+> 
+> 		eval $GIT_DIFFTOOL_EXTCMD '"$LOCAL"' '"$REMOTE"'
+> 
+> which I find more readable as well.
 
-> The patch below is squash-able, but note that the final test, "git push
-> -u HEAD" is marked as broken. We should probably support that. I suspect
-> is is an issue of dereferencing symrefs before doing the
-> prefixcmp("refs/heads/", ...) but I haven't checked yet.
+I'll resend a patch later today (can't quite right now, but will
+have time later).
 
-The patch below fixes it, but I am not 100% happy with it. Calling
-resolve_ref means we actually bother to look up the ref again, which is
-wasted effort. The ref struct has a "symref" field which should contain
-this information, but for some reason it is not recorded. So we can
-probably do better by simply recording the information properly when we
-resolve the ref in the first place.
+> What's the reason for the sub-shell? Do you want to protect from shell
+> code in $GIT_DIFFTOOL_EXTCMD that modifies difftool's variables?
+> 
+> -- Hannes
 
-Unfortunately, I don't have time to look at it anymore right now, so it
-will have to wait.
+None, really, so we can do without that as well.
 
-diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
-index e977553..d43473f 100755
---- a/t/t5523-push-upstream.sh
-+++ b/t/t5523-push-upstream.sh
-@@ -39,7 +39,7 @@ test_expect_success 'push -u --all' '
- 	check_config all2 upstream refs/heads/all2
- '
- 
--test_expect_failure 'push -u HEAD' '
-+test_expect_success 'push -u HEAD' '
- 	git checkout -b headbranch &&
- 	git push -u upstream HEAD &&
- 	check_config headbranch upstream refs/heads/headbranch
-diff --git a/transport.c b/transport.c
-index 956d2ed..01ff364 100644
---- a/transport.c
-+++ b/transport.c
-@@ -140,6 +140,7 @@ static void set_upstreams(struct transport *trans, struct ref *refs)
- {
- 	struct ref *i;
- 	for (i = refs; i; i = i->next) {
-+		const char *branch;
- 		/*
- 		 * Check suitability for tracking. Must be successful /
- 		 * alreay up-to-date ref create/modify (not delete) and
-@@ -152,14 +153,20 @@ static void set_upstreams(struct transport *trans, struct ref *refs)
- 			continue;
- 		if (!i->new_sha1 || is_null_sha1(i->new_sha1))
- 			continue;
--		if (prefixcmp(i->peer_ref->name, "refs/heads/"))
--			continue;
- 		if (prefixcmp(i->name, "refs/heads/"))
- 			continue;
- 
-+		if (!prefixcmp(i->peer_ref->name, "refs/heads/"))
-+			branch = i->peer_ref->name;
-+		else {
-+			unsigned char sha1[20];
-+			branch = resolve_ref(i->peer_ref->name, sha1, 1, NULL);
-+			if (!branch || prefixcmp(branch, "refs/heads/"))
-+				continue;
-+		}
-+
- 		install_branch_config(BRANCH_CONFIG_VERBOSE,
--			i->peer_ref->name + 11, trans->remote->name,
--			i->name);
-+			branch + 11, trans->remote->name, i->name);
- 	}
- }
- 
+Thanks for your notes,
+
+-- 
+		David
