@@ -1,73 +1,107 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [spf:guess] Re: Bug? git-svn clone dies with "fatal: ambiguous
- argument '...': unknown revision or path not in the working tree."
-Date: Fri, 15 Jan 2010 12:57:30 +1300
-Message-ID: <4B4FAF6A.2070407@vilain.net>
-References: <36366a981001121558v5324f2fbucf096e4c82402912@mail.gmail.com> <20100113052958.GA23182@dcvr.yhbt.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] Show submodules as modified when they contain a dirty
+ work tree
+Date: Fri, 15 Jan 2010 01:24:05 +0100
+Message-ID: <4B4FB5A5.7080401@web.de>
+References: <4B4BA096.5000909@web.de> <7vtyusb6rv.fsf@alter.siamese.dyndns.org> <4B4CA13F.6020505@web.de> <7vbpgyqy4a.fsf@alter.siamese.dyndns.org> <4B4E1817.1070202@web.de> <7v6375lkpj.fsf@alter.siamese.dyndns.org> <4B4F8EF1.3080709@web.de> <7v3a288em2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Eric Hanchrow <eric.hanchrow@gmail.com>, git@vger.kernel.org,
-	Andrew Myrick <amyrick@apple.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Jan 15 00:57:38 2010
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Lars Hjemli <hjemli@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 15 01:24:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVZZJ-0001Iy-S0
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 00:57:38 +0100
+	id 1NVZzY-0002Sy-TG
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 01:24:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757792Ab0ANX5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2010 18:57:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757109Ab0ANX5e
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 18:57:34 -0500
-Received: from bertrand.catalyst.net.nz ([202.78.240.40]:58108 "EHLO
-	mail.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751456Ab0ANX5d (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2010 18:57:33 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail.catalyst.net.nz (Postfix) with ESMTP id 52D6732E98;
-	Fri, 15 Jan 2010 12:57:31 +1300 (NZDT)
-X-Virus-Scanned: Debian amavisd-new at catalyst.net.nz
-Received: from mail.catalyst.net.nz ([127.0.0.1])
-	by localhost (bertrand.catalyst.net.nz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bSYi7xNFzxgJ; Fri, 15 Jan 2010 12:57:30 +1300 (NZDT)
-Received: from [IPv6:2404:130:0:1000:21d:7dff:fe90:5fe0] (unknown [IPv6:2404:130:0:1000:21d:7dff:fe90:5fe0])
-	(Authenticated sender: samv)
-	by mail.catalyst.net.nz (Postfix) with ESMTPSA id D20BA32E94;
-	Fri, 15 Jan 2010 12:57:30 +1300 (NZDT)
-User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
-In-Reply-To: <20100113052958.GA23182@dcvr.yhbt.net>
-X-Enigmail-Version: 0.95.0
+	id S1757470Ab0AOAYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 19:24:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757351Ab0AOAYl
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 19:24:41 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:43522 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757346Ab0AOAYk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 19:24:40 -0500
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate03.web.de (Postfix) with ESMTP id E596A13C187EA;
+	Fri, 15 Jan 2010 01:24:05 +0100 (CET)
+Received: from [80.128.55.33] (helo=[192.168.178.26])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NVZyv-00063A-00; Fri, 15 Jan 2010 01:24:05 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
+In-Reply-To: <7v3a288em2.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/YrRcXl2wM3cUSEQoTwFG0gdN78OfHuN+6D80F
+	dA4tUxAB0Ptzx0uF5/0t05rFLl2CDo/mMFJTiWDoX3NlVP1Qaw
+	anTvx7d2y9DBOidr6ZdA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137044>
 
-Eric Wong wrote:
->> It chugged along happily for a while, but then died like this:
+Am 15.01.2010 00:13, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> 
+>> Subject: Show a modified submodule directory as dirty even if the refs match
 >>
->> fatal: ambiguous argument
->> '2d2df13977551168a54ffa9b706484242a58736a^..d038748d49a0de5802fe3c13f46d0e080d064290':
->>     
-> [...]
-> As we see below, d038748d49a0de5802fe3c13f46d0e080d064290 is a merge
-> commit.  So I'll Cc Sam and Andrew on this since they know their way
-> around the mergeinfo stuff far better than I do and will hopefully have
-> some insight into things.
->
-> Since it's probably related to the new mergeinfo handling, reverting to
-> a version without it (1.6.5.7) might be the best way to go for now.
->   
+>> When the submodules HEAD and the ref committed in the HEAD of the
+>> superproject were the same, "git diff[-index] HEAD" did not show the
+>> submodule as dirty when it should.
+>>
+>> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+>> ---
+>>  diff-lib.c                |    3 ++-
+>>  t/t4027-diff-submodule.sh |   35 +++++++++++++++++++++++++++++++++++
+>>  2 files changed, 37 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/diff-lib.c b/diff-lib.c
+>> index 5ce226b..9cdf6da 100644
+>> --- a/diff-lib.c
+>> +++ b/diff-lib.c
+>> @@ -233,7 +233,8 @@ static int get_stat_data(struct cache_entry *ce,
+>>  			return -1;
+>>  		}
+>>  		changed = ce_match_stat(ce, &st, 0);
+>> -		if (changed) {
+>> +		if (changed
+>> +		    || (S_ISGITLINK(ce->ce_mode) && is_submodule_modified(ce->name))) {
+> 
+> You had a check in your previous patch that decides to call or skip
+> diff_change() based on is_submodule_modified() for diff-files, but forgot
+> to have the same for diff-index, which this patch does.  Perhaps we want
+> to squash this into 4519d9c (Show submodules as modified when they contain
+> a dirty work tree, 2010-01-13).
 
-I'm at a loss. I can't get my rev-list to say "ambiguous argument" when
-I pass it a similar range (eg d4e1b47a9225^..a24a32dd on git.git). Why
-does it matter that the d038748 commit is a merge commit?
+Of course you are right, the change you quoted should have been in my
+patch in the first place. So squashing it seems to be the right thing to
+do (but AFAICS the tests i added might be a problem, as they use
+expect_from_to() which your intermediate patch added. Maybe squash these
+tests into your patch and the diff you quoted above into mine?).
 
-Eric H, is this repository available publicly for me to test? I guess
-it's possible that argument is not being passed to rev-list but to some
-other command ... would be nice to be able to reproduce it.
 
-Sam
+> The existing code is a bit unfortunate; by the time we come to the output
+> routine, the information we found from is_submodule_modified() is lost;
+> that is why my "would look like this" patch calls is_submodule_modified().
+> 
+> We may want to add one parameter to diff_change() and diff_addremove(), to
+> tell them if the work-tree side (if we are comparing something with the
+> work tree) is a modified submodule, and add one bit to the diff_filespec
+> structure to record that in diff_change() and diff_addremove() (obviously
+> only when adding).  That way, my "would looks like this" patch needs to
+> check the result of is_submodule_modified() the front-ends left in the
+> filespec, instead of running it again.
+
+Good idea, i've been already exploring this line of thought too and came
+to the same conclusion (i noticed that when calling plain "git diff" in a
+repo with submodules, is_submodule_modified() gets called *three* times
+for each submodule, which is not /that/ good for performance ;-). But i
+intended to do this optimization in a subsequent patch (and in preparation
+for "git diff --submodule" being able to print /how/ the submodule is
+dirty without having to scan it again).
