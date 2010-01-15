@@ -1,89 +1,174 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 3/3] commit: show interesting ident information in 
-	summary
-Date: Fri, 15 Jan 2010 03:21:42 +0200
-Message-ID: <94a0d4531001141721j261facedlf5d1bd9e611c224c@mail.gmail.com>
-References: <20100113173408.GA16652@coredump.intra.peff.net>
-	 <20100113184510.GA22849@coredump.intra.peff.net>
-	 <5722BD3D-E7C9-47F7-B547-09B14D87DA39@wincent.com>
-	 <201001141602.22244.trast@student.ethz.ch>
-	 <94a0d4531001141104w74dbaf35jb5fded9e266bc04b@mail.gmail.com>
-	 <7vy6k0cxbz.fsf@alter.siamese.dyndns.org>
-	 <94a0d4531001141136m3eb51d11rafdf7f0672e68dff@mail.gmail.com>
-	 <7vy6k0bheg.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/9] Gitweb caching v5
+Date: Thu, 14 Jan 2010 17:40:08 -0800 (PST)
+Message-ID: <m37hrkdu4k.fsf@localhost.localdomain>
+References: <1263432185-21334-1-git-send-email-warthog9@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
-	Adam Megacz <adam@megacz.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 15 02:21:48 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 15 02:40:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVasm-0006Ax-DP
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 02:21:48 +0100
+	id 1NVbAo-0002z1-HY
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 02:40:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751166Ab0AOBVo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jan 2010 20:21:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751092Ab0AOBVo
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 20:21:44 -0500
-Received: from mail-iw0-f194.google.com ([209.85.223.194]:61546 "EHLO
-	mail-iw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750695Ab0AOBVn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jan 2010 20:21:43 -0500
-Received: by iwn32 with SMTP id 32so228561iwn.33
-        for <git@vger.kernel.org>; Thu, 14 Jan 2010 17:21:42 -0800 (PST)
+	id S1753448Ab0AOBkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2010 20:40:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751937Ab0AOBkO
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jan 2010 20:40:14 -0500
+Received: from mail-fx0-f225.google.com ([209.85.220.225]:58566 "EHLO
+	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752032Ab0AOBkM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2010 20:40:12 -0500
+Received: by fxm25 with SMTP id 25so151182fxm.21
+        for <git@vger.kernel.org>; Thu, 14 Jan 2010 17:40:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lsjZjyCcJqE4lg508fFWTyodGaMCcf9+Fdx6Y8UktlU=;
-        b=RlD7GSw2d+VFuat5WRSPLUnAUy//nufhuQgwSqCO0vhfqPmxvsxLMF47QFOgMOyqpC
-         A/oi9O9ahg/kD50U3GECa4fe09jEN6rT2tAPdBa1buc6kI7SSVquxs28fuxTY5LMRkyY
-         nJlwVZzHRamIzY9cMF7fg/XKer4XpBnzXzxzk=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=zg3zID1fs232BYx9ybHnWNr2+QuhUi6M62QnbDK8E1U=;
+        b=pKmtJ3Cidbo1Xr5pcV8m83P5vm5Qi6PR68tEx6Ld8TzPFby1lKgsgfyIu3Zpc/PIxq
+         kinz+k2cVQNbvetIF+EBxPQ5iejD1lG22GBhtwdRbIO4iFbIGKA8j45Hsl2ekZay0igl
+         yWwt72bRY/sb2YsxD2w/HRXTNK/n2Nz9nLDqw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=is0VYjkplUF4Xb1SRj1y2JgTP9kqh80HVgxJikJJrnY5d2INw7BNH/pPzHOFvlwLe1
-         TznifB93/c6ZSDiA92z/e4Uf2VGqEhMwJsU5XKFw37nAebc73Q4NmYCFxQe72o17uMND
-         gblPQp6TbpNIXo+a0rwsOIKWSPxlzdkzOke1w=
-Received: by 10.231.59.5 with SMTP id j5mr923930ibh.6.1263518502094; Thu, 14 
-	Jan 2010 17:21:42 -0800 (PST)
-In-Reply-To: <7vy6k0bheg.fsf@alter.siamese.dyndns.org>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=TK/tzSBZ8QpMIZWepao0syWxUygfkiICVSQGklk/RDI48kV1+trx+pF4JknaD73qYy
+         FB/j90/eQJWINnldQfs/Dk4COSQiwk2yexBDx4g+vFPWAx8/oIVMsJ9HWWL5+asVg+ZC
+         A17dIrknVBnJDACnnanbMcjC53JNdTVD9lIto=
+Received: by 10.102.16.13 with SMTP id 13mr732958mup.62.1263519610073;
+        Thu, 14 Jan 2010 17:40:10 -0800 (PST)
+Received: from localhost.localdomain (abvp131.neoplus.adsl.tpnet.pl [83.8.213.131])
+        by mx.google.com with ESMTPS id 12sm4223011muq.48.2010.01.14.17.40.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 14 Jan 2010 17:40:08 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o0F1dU6a011648;
+	Fri, 15 Jan 2010 02:39:40 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o0F1d8uO011632;
+	Fri, 15 Jan 2010 02:39:08 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1263432185-21334-1-git-send-email-warthog9@eaglescrag.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137047>
 
-On Thu, Jan 14, 2010 at 9:44 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->> Users are lazy.
->
-> And the ones that suffer from the issue discussed in this thread will=
- not
-> read the manual your patch touches. =C2=A0When you make changes to th=
-e manual,
-> you should not be targetting them, as they won't read it anyway. =C2=A0=
-Instead,
-> the description of the manual should aim to help people who _read_ it=
-=2E
+"John 'Warthog9' Hawley" <warthog9@eaglescrag.net> writes:
 
-The world is not clear-cut between users who read, and users don't.
-Most probably user laziness follows a Pareto distribution:
-http://en.wikipedia.org/wiki/File:Pareto_distributionPDF.png
+> Afternoon everyone,
+>  
+> This is the latest incarnation of gitweb w/ caching.  This is
+> finally at the point where it should probably start either being
+> considered for inclusion or mainline, or I need to accept that this
+> will never get in and more perminantely fork (as is the case with
+> Fedora where this is going in as gitweb-caching as a parrallel rpm
+> package).
+> 
+> That said this brings the base up to mainline (again),
 
-The long tail of users who don't read much is so big that you will
-find *a lot* that don't read anything at all, therefore you would also
-find many that read a bit, and as a consequence a tiny amount that
-actually would read the whole user manual.
+Could you tell us which commit is the base of this series (like in
+git-request-pull output), i.e. which commit this series is rebased
+against?
 
-Clearly, Thomas' comment implies that some people might need to adjust
-their mental model to reflect reality.
+> it updates a
+> number of elements in the caching engine, and this is a much cleaner
+> break-out of the tree vs. what I am currently developing against.
 
---=20
-=46elipe Contreras
+Is caching engine part changed since v2?
+
+> v5:
+> 	- Missed a couple of things that were in my local tree, and
+> 	  added them back in.
+
+That doesn't tell us much.
+
+> 	- Split up the die_error and the version matching patch
+> 	- Set version matching to be on by default - otherwise this
+> 	  really is code that will never get checked, or at best
+> 	  enabled by default by distributions
+> 	- Added a minor code cleanup with respect to $site_header
+> 	  that was already in my tree
+> 	- Applied against a more recent git tree vs. 1.6.6-rc2
+> 	- Removed breakout patch for now (did that in v4 actually)
+> 	  and will deal with that separately 
+> 
+> 	http://git.kernel.org/?p=git/warthog9/gitweb.git;a=shortlog;h=refs/heads/gitweb-ml-v5
+ 
+----
+Short comments about patches in this series; I will be sending
+detailed comments for each patch individually.
+
+> John 'Warthog9' Hawley (9):
+>   gitweb: Load checking
+Looks good.
+
+>   gitweb: change die_error to take "extra" argument for extended die
+>     information
+Commit message could be better (summary should really be shorter), and
+I think there is some indent typo, but otherwise looks good.
+
+>   gitweb: Add option to force version match
+For me it needs to be disabled in gitweb test suite (t/gitweb-lib.sh),
+if it is enabled by default.  I really like that I can test current
+gitweb without need to recompile git.
+
+Also it should have tests that it works as intended (both for matching
+and non-matching versions) in t/t9501-gitweb-standalone-http-status.sh
+
+>   gitweb: Makefile improvements
+Does it differ from my proposal (i.e. gitweb/Makefile doing the work),
+based on your idea ("make gitweb" for Makefile and gitweb/Makefile)?
+
+>   gitweb: add a get function to compliment print_local_time
+>   gitweb: add a get function to compliment print_sort_th
+Those two looks O.K. from what I seen.
+
+>   gitweb: cleanup error message produced by undefined $site_header
+Shouldn't there be such protection for other such variables, like
+$site_footer and $home_text (and a bit diferent protection against
+undefined $projects_list)?  By the way, how did you arrived at
+undefined $site_header: deafult build configuration leaves it empty,
+but defined. 
+
+>   gitweb: Convert output to using indirect file handle
+I have alternate solution, using shorter filehandle name (just $out)
+in
+
+  git://repo.or.cz/git/jnareb-git.git gitweb/cache-kernel
+  http://repo.or.cz/w/git/jnareb-git.git/shortlog/refs/heads/gitweb/cache-kernel
+
+I would have to think a bit about separate handle for binary files;
+I am not sure if it is really required.
+
+>   gitweb: File based caching layer (from git.kernel.org)
+I am working (time permitting) in spliting this large code drop into
+smaller commits, namely:
+
+ - href(..., -path_info => 0)          (for cache key)
+ - simple file based caching + tests
+ - global expire time + tests
+ - output caching in gitweb            (WIP)
+ - adaptive expiration time            (planned)
+ - tee output / cache write            (planned)
+ - expire time variation from CHI      (planned)
+ - locking for single writer           (planned)
+ - server-side generating info         (planned)
+ - AJAX-y generating info              (wishlist)
+
+while ensuring that it pass all existing gitweb tests, and adding new
+tests for new features.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
