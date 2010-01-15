@@ -1,75 +1,88 @@
-From: Arun Raghavan <ford_prefect@gentoo.org>
-Subject: Re: Removal of post-upload-hook
-Date: Fri, 15 Jan 2010 17:44:58 +0530
-Message-ID: <6f8b45101001150414r2661001ep10819b601953c05b@mail.gmail.com>
-References: <6f8b45101001141001q40d8b746v8385bc6ae37a6af4@mail.gmail.com> 
-	<20100114193607.GB25863@coredump.intra.peff.net> <20100114194107.GA20033@spearce.org> 
-	<20100114204305.GC26883@coredump.intra.peff.net> <6f8b45101001142212i4151c625k54b450cd5978f158@mail.gmail.com> 
-	<20100115115212.GA9221@Knoppix>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] git push --track
+Date: Fri, 15 Jan 2010 14:26:50 +0100
+Message-ID: <vpq3a277b39.fsf@bauges.imag.fr>
+References: <op.u6g8jnixg402ra@nb-04>
+	<be6fef0d1001131727r128c7727td2b948018d308719@mail.gmail.com>
+	<20100114070316.GC1528@rm.endoftheinternet.org>
+	<7vr5ps5jx1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
-	git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Fri Jan 15 13:15:27 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Rudolf Polzer <divVerent@alientrap.org>,
+	Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 15 14:27:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVl5L-00057S-EN
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 13:15:27 +0100
+	id 1NVmD6-0001uI-9F
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 14:27:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757433Ab0AOMPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 07:15:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757429Ab0AOMPV
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 07:15:21 -0500
-Received: from qw-out-2122.google.com ([74.125.92.24]:44347 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757306Ab0AOMPT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 07:15:19 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so131037qwe.37
-        for <git@vger.kernel.org>; Fri, 15 Jan 2010 04:15:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
-         :content-type;
-        bh=ZNmdh1Vdoht+3UIyfgS2oGpLFlRL+//nuEt63C1P+OQ=;
-        b=AM8G3tZHIoZqRIL+j3TnyEP4+VSSvTv1enm4OmpS2OcvieXVeWm4yTekmatqvuXJdg
-         P4G+kc7DfAf1IKtR6BrCk48Q6FR2OgQmrdw7hw/o5/9hxjdKPyGk5qignzawTahfpGAD
-         NUMwVudCoT27lcqmTWCg6G9O66/UmnG/oIKaQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        b=XwIvPp3JPEsh1LbbMggCpZ+4isGYdJrLsiqOdFDlpM4A1nv0Vvt5UG0a34Lj14hq+Y
-         vC3vHplfMeBjxjl+LMVPArCUR55Lw5RxCpd7dvHqWUmkWbCjjlSzeHpNLFUEnN+G4gM6
-         I2X7f4FFPoTag+RkWdz0w1ezwR0u/8Mz4k0nQ=
-Received: by 10.229.40.200 with SMTP id l8mr1908727qce.104.1263557718090; Fri, 
-	15 Jan 2010 04:15:18 -0800 (PST)
-In-Reply-To: <20100115115212.GA9221@Knoppix>
-X-Google-Sender-Auth: 74699128d3a16b55
+	id S1750920Ab0AON11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 08:27:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752396Ab0AON11
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 08:27:27 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:51307 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752283Ab0AON11 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 08:27:27 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o0FDQOBt010481
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 15 Jan 2010 14:26:24 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NVmCQ-0007wu-Ur; Fri, 15 Jan 2010 14:26:50 +0100
+In-Reply-To: <7vr5ps5jx1.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 14 Jan 2010 15\:46\:50 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 15 Jan 2010 14:26:25 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o0FDQOBt010481
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1264166786.02003@FB1n4JaMzsJUuw7NjwyX0Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137066>
 
-2010/1/15 Ilari Liusvaara <ilari.liusvaara@elisanet.fi>:
-> On Fri, Jan 15, 2010 at 11:42:19AM +0530, Arun Raghavan wrote:
->>
->> Another thought - would it be acceptable to have a config option to
->> enable/disable these types of hooks, so that people who are not
->> affected by the problem or explicitly don't care can use them? Perhaps
->> a core.allowInsecureHooks ?
->
-> That enable/disable would have to ignore per-repo configuration, which
-> would make it behave differently from other options. Otherwise attacker
-> could just flip the setting...
+Junio C Hamano <gitster@pobox.com> writes:
 
-Alternatively, this could just be a build-time switch.
+> The small nit is that "branch -f --track me origin/me" will happily
+> overwrite "me", even when your "me" is not up to date with "origin/me",
+> losing commits.
+
+And another issue is:
+
+$ git branch -f --track my-branch origin/my-branch
+fatal: Cannot force update the current branch.
+$ git branch --track my-branch origin/my-branch
+fatal: A branch named 'my-branch' already exists.
+
+Actually, I just can't find a natural set of commands doing:
+
+1. create a branch (git checkout -b)
+2. work on it
+3. send it upstream (git push)
+4. set the upstream as tracking (???)
+
+with the current version of Git. I just do 4. with $EDITOR
+.git/config ...
+
+> Perhaps we could teach "branch --track me origin/me" (i.e. no "-f") not to
+> barf even when "me" exists, as long as "me" is a subset of "origin/me",
+> and treat it as a request to re-configure the upstream information for the
+> existing branch "me" and at the same time fast-forward it to
+> "origin/me"?
+
++1, and in addition, allow doing this on the checkout branch if it
+doesn't actually change the reference (i.e. touch .git/config, not
+.git/refs/...).
 
 -- 
-Arun Raghavan
-http://arunraghavan.net/
-(Ford_Prefect | Gentoo) & (arunsr | GNOME)
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
