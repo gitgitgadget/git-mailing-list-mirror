@@ -1,78 +1,83 @@
-From: Patrick Boettcher <pboettcher@kernellabs.com>
-Subject: git mv oddities (minor bugs)
-Date: Fri, 15 Jan 2010 17:49:18 +0100 (CET)
-Message-ID: <alpine.LRH.2.00.1001151728070.9232@pub3.ifh.de>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] Add push --set-upstream
+Date: Fri, 15 Jan 2010 18:03:24 +0100
+Message-ID: <vpqy6jzuwpv.fsf@bauges.imag.fr>
+References: <1263573407-13642-1-git-send-email-ilari.liusvaara@elisanet.fi>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 15 17:49:27 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Fri Jan 15 18:03:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVpMV-0001CN-2Y
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 17:49:27 +0100
+	id 1NVpaE-0001R6-PL
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 18:03:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757526Ab0AOQtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 11:49:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755173Ab0AOQtW
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 11:49:22 -0500
-Received: from znsun1.ifh.de ([141.34.1.16]:57017 "EHLO znsun1.ifh.de"
+	id S1756207Ab0AORDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 12:03:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754993Ab0AORDe
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 12:03:34 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:48762 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752730Ab0AOQtW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 11:49:22 -0500
-Received: from pub3.ifh.de (pub3.ifh.de [141.34.15.119])
-	by znsun1.ifh.de (8.12.11.20060614/8.12.11) with ESMTP id o0FGnIX0005224
-	for <git@vger.kernel.org>; Fri, 15 Jan 2010 17:49:19 +0100 (MET)
-Received: by pub3.ifh.de (Postfix, from userid 11503)
-	id 8DCDF1581BE; Fri, 15 Jan 2010 17:49:18 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by pub3.ifh.de (Postfix) with ESMTP id 78DA615819A
-	for <git@vger.kernel.org>; Fri, 15 Jan 2010 17:49:18 +0100 (CET)
-X-X-Sender: pboettch@pub3.ifh.de
-User-Agent: Alpine 2.00 (LRH 1167 2008-08-23)
-X-Spam-Report: ALL_TRUSTED,BAYES_00
+	id S1753481Ab0AORDd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 12:03:33 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o0FH2vc8002781
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 15 Jan 2010 18:02:57 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NVpa0-0003YP-BF; Fri, 15 Jan 2010 18:03:24 +0100
+In-Reply-To: <1263573407-13642-1-git-send-email-ilari.liusvaara@elisanet.fi> (Ilari Liusvaara's message of "Fri\, 15 Jan 2010 18\:36\:47 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 15 Jan 2010 18:02:57 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o0FH2vc8002781
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1264179778.91393@wtZdfxC5I8yD3UMh0i5CTg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137083>
 
-Hi all,
+Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
 
-I'm currently using a lot of git mv to clean up some code. This includes 
-renaming of files and moving them to new pathes inside the clone.
+> +
+> +-u::
+> +--set-upstream::
+> +	For every branch that is up to date or successfully pushed, add
+> +	upstream (tracking) reference for argument-less git pull.
 
-Everything's working very fine except two very small things I've 
-encountered:
+Not just argument-less git pull. git status is also impacted for
+example. Actually, we already have documentation for it in git-branch
+(--track option), and git-config (branch.<name>.merge configuration
+variable), so you should add a pointer to one of them.
 
-1) git mv from/file to/subdir/ - subdir does not exists
+How about
 
-Instead of git telling me that 'subdir' does not exist it is executing the 
-mv and 'file' is now called 'to/subdir' .
+--set-upstream::
+	For every branch that is up to date or successfully pushed, add
+	upstream (tracking) reference, used by argument-less
+	linkgit:git-pull[1] and other commands. For more information,
+	see 'branch.<name>.merge' in linkgit:git-config[1].
 
-I'm almost sure this is a bug: the trailing / seems to be ignored.
+?
 
-2) git mv from/file to/subdir/new_name - subdir does not exists
+> +		OPT_BIT('u', "set-upstream", &flags, "Set upstream for git pull", TRANSPORT_PUSH_SET_UPSTREAM),
 
-Git is telling me the following:
-fatal: renaming 'from/file' failed: No such file or directory
+I'd be in favor of --track for the option name. Not that it's the best
+name ever, but this is really doing the same job as branch --track and
+checkout --track, so it should have the same name.
 
-This is a little bit misleading as it is 'to/subdir' which is "No such 
-file or directory" .
+Or the --track option of branch and checkout should be renamed as
+--set-upstream, but that seems a lot of trouble for little benefit.
 
-I'm not sure what to do with this one - changing the error message a 
-little bit might a good idea.
-
-I'm using:
-
-$ git --version
-git version 1.6.4.4
-
-I was looking for a bug tracker at git-scm.org - didn't find any. So I'm 
-not sure where to log my findings. How should I continue?
-
---
-
-Patrick Boettcher - Kernel Labs
-http://www.kernellabs.com/
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
