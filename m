@@ -1,62 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Git Wiki Move
-Date: Fri, 15 Jan 2010 20:16:19 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001152013440.3106@intel-tinevez-2-302>
-References: <20100113232908.GA3299@machine.or.cz> <20100114012449.GB3299@machine.or.cz> <20100115171752.GA8182@gnu.kitenet.net>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] Test t5560: Fix test when run with dash
+Date: Fri, 15 Jan 2010 20:16:59 +0100
+Message-ID: <201001152017.00121.j6t@kdbg.org>
+References: <7vfx69hyd5.fsf@alter.siamese.dyndns.org> <4B5027B8.2090507@viscovery.net> <7vljfzz0yd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Fri Jan 15 20:16:35 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Tarmigan Casebolt <tarmigan+git@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 15 20:18:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVrek-000614-IY
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 20:16:26 +0100
+	id 1NVrgM-0006sh-Hf
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jan 2010 20:18:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758054Ab0AOTQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 14:16:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758036Ab0AOTQW
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 14:16:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42013 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754849Ab0AOTQW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 14:16:22 -0500
-Received: (qmail invoked by alias); 15 Jan 2010 19:16:20 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp048) with SMTP; 15 Jan 2010 20:16:20 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19WqM1KsyVWeIlbUkQBFlYoFl4CHbkgkg33Idfsmy
-	P5niD6izyF852D
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20100115171752.GA8182@gnu.kitenet.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68999999999999995
+	id S1758036Ab0AOTSB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 14:18:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751737Ab0AOTSA
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 14:18:00 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:40790 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751297Ab0AOTSA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 14:18:00 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 0F965A7EB3;
+	Fri, 15 Jan 2010 20:17:56 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 5F8DC19F60C;
+	Fri, 15 Jan 2010 20:17:00 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <7vljfzz0yd.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137100>
 
-Hi,
+On Freitag, 15. Januar 2010, Junio C Hamano wrote:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+> > Tarmigan Casebolt schrieb:
+> >>         REQUEST_METHOD="GET" some_shell_function
+> >>
+> >> I can't tell from my reading of the POSIX spec whether my usage was
+> >> wrong or if dash is wrong,
+> >
+> > According to POSIX, variables set as shown above for shell functions are
+> > not exported and retain their value after the function returns.
+>
+> I actually looked for this yesterday, but didn't find a relevant
+> definition.  But "2.9.5 Function Definition Command" [*1*] seems to
+> address the issue: "When a function is executed, it shall have the
+> syntax-error and variable-assignment properties described for special
+> built-in utilities...".
+>
+> And "2.14 Special Built-in Utilities" section [*2*] says "2. Variable
+> assignments specified with special built-in utilities remain in effect
+> after the built-in completes...".  Taking both together, it seems that
+> the assignment should be in effect after the function returns.
+>
+> Does my reading match yours,
 
-On Fri, 15 Jan 2010, Joey Hess wrote:
+These are exactly the definitions that I meant. The statement that variables 
+are not exported is in "2.9.1 Simple Commands" 
+http://www.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01
 
-> Petr Baudis wrote:
-> > 	(ii) Also, I personally think MediaWiki is so much nicer than
-> > 	ikiwiki...
-> 
-> This seems like a non-sequitor, since the git wiki is not using, and
-> afaik, has never used ikiwiki.
+"[If there is a command name], the variable assignments shall be exported for 
+the execution environment of the command and shall not affect the current 
+execution environment (except for special built-ins)."
 
-It was using MoinMoin, but of course there were thoughts of migrating to 
-something that uses Git as a backend.
+> Yesterday, I saw rebase--interactive has a few codepaths where "output"
+> shell function was used with the single-shot export; perhaps they need to
+> also be fixed.
 
-This comment is most likely Pasky's attempt to explain why this is not 
-going to happen, and I agree with the decision (not that I have much say 
-there).
+I knew these spots, and they were discussed when that code was introduced. 
+Before I sent out the mail you were responding to, I tried various ways to 
+show the failure in rebase--interactive, but it didn't fail...
 
-Ciao,
-Dscho
+-- Hannes
