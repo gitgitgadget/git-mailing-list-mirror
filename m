@@ -1,73 +1,98 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH v2 13/14] daemon: use select() instead of poll()
-Date: Sat, 16 Jan 2010 10:14:23 +0100
-Message-ID: <40aa078e1001160114k5ce0414et7cd645724973609b@mail.gmail.com>
-References: <1263591033-4992-1-git-send-email-kusmabite@gmail.com>
-	 <201001152349.06418.j6t@kdbg.org>
-	 <40aa078e1001151508j208fa50boc5565a3be6bef893@mail.gmail.com>
-	 <201001160908.33996.j6t@kdbg.org>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Jan 16 10:14:34 2010
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] t7111: fix bad HEAD in tests with unmerged entries
+Date: Sat, 16 Jan 2010 10:20:26 +0100
+Message-ID: <20100116092027.4292.89080.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Stephen Boyd <bebarino@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 16 10:18:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NW4jp-0001tj-EC
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 10:14:33 +0100
+	id 1NW4nO-0002vN-Fc
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 10:18:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077Ab0APJO0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jan 2010 04:14:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752237Ab0APJO0
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 04:14:26 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:59312 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751587Ab0APJOZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jan 2010 04:14:25 -0500
-Received: by ewy19 with SMTP id 19so1606256ewy.21
-        for <git@vger.kernel.org>; Sat, 16 Jan 2010 01:14:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=zPdxDNpaYB28i7Ybz+DpXeMFDK/i1gXEP9U2iypQ3mY=;
-        b=pPVsymSQ6rHo6a2JYsb6S9CFlxtb4ViuVEHXrA6NVaWNyIpQBP0/7FDci3C1DC8HZF
-         moa/bpXtxiFukIiRxC7jeG/nalaOZGnE57H7SpIsuiZzV9HaoAkbRfJKrRiIMqNGrNvK
-         TM4QD+oh91fUUVTdSJDseoGObZ55cXHe0cGbo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        b=BmxtQxzp+EttzSN4fFRUoC7bYu79UY92NEIBD+xUkjBDa0fGvACSVQclU+kjA617iO
-         1y+aMPXW35Me6DHId9z9uLtllPMYcYSTSBi2+6esjuqJcOdzFlxbrBM8NpF4yW7l/zs0
-         8nJ8WxAgrxKXXHFOzcdcJUN+iOdOhS9KS333Q=
-Received: by 10.216.90.135 with SMTP id e7mr1287494wef.34.1263633264055; Sat, 
-	16 Jan 2010 01:14:24 -0800 (PST)
-In-Reply-To: <201001160908.33996.j6t@kdbg.org>
+	id S1752367Ab0APJSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Jan 2010 04:18:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752358Ab0APJSJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 04:18:09 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:40927 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752314Ab0APJSI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jan 2010 04:18:08 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 5D90281819C;
+	Sat, 16 Jan 2010 10:17:54 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 3033D818115;
+	Sat, 16 Jan 2010 10:17:50 +0100 (CET)
+X-git-sha1: 617de3fbc0ed9096788dba1edcfd053aa844468a 
+X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137211>
 
-On Sat, Jan 16, 2010 at 9:08 AM, Johannes Sixt <j6t@kdbg.org> wrote:
-> On Samstag, 16. Januar 2010, Erik Faye-Lund wrote:
->> The problem with that is differentiating between pipes and sockets.
->> GetFileType() returns FILE_TYPE_PIPE for sockets (ugh). I did find
->> some code in gnulib that used WSAEnumNetworkEvents() to differentiate
->> between them, but I find this quite hacky.
->
-> Wouldn't it be possible to call getsockopt(), and if it returns ENOTSOCK
-> (WSAENOTSOCK), then it is a pipe?
->
-> -- Hannes
->
+When testing what happens on unmerged entries, the HEAD is the
+commit we are starting from before the merge that fails and create
+the unmerged entries. It is not the commit before.
 
-I read reports that this didn't work in Wine. Not that I care that
-much about Wine.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ t/t7111-reset-table.sh |   20 ++++++++++----------
+ 1 files changed, 10 insertions(+), 10 deletions(-)
 
+diff --git a/t/t7111-reset-table.sh b/t/t7111-reset-table.sh
+index 0a362a1..de896c9 100755
+--- a/t/t7111-reset-table.sh
++++ b/t/t7111-reset-table.sh
+@@ -73,13 +73,13 @@ test_expect_success 'setting up branches to test with unmerged entries' '
+     git checkout branch1 &&
+     test_commit B1 file1 &&
+     git checkout branch2 &&
+-    test_commit B2 file1
++    test_commit B file1
+ '
+ 
+ while read W1 I1 H1 T opt W2 I2 H2
+ do
+     test_expect_success "check: $W1 $I1 $H1 $T --$opt $W2 $I2 $H2" '
+-	git reset --hard B2 &&
++	git reset --hard B &&
+ 	test_must_fail git merge branch1 &&
+ 	cat file1 >X_file1 &&
+ 	if test "$W2" != "XXXXX"
+@@ -100,14 +100,14 @@ do
+ 	fi
+     '
+ done <<\EOF
+-X U C D soft   XXXXX
+-X U C D mixed  X D D
+-X U C D hard   D D D
+-X U C D merge  D D D
+-X U C C soft   XXXXX
+-X U C C mixed  X C C
+-X U C C hard   C C C
+-X U C C merge  C C C
++X U B C soft   XXXXX
++X U B C mixed  X C C
++X U B C hard   C C C
++X U B C merge  C C C
++X U B B soft   XXXXX
++X U B B mixed  X B B
++X U B B hard   B B B
++X U B B merge  B B B
+ EOF
+ 
+ test_done
 -- 
-Erik "kusma" Faye-Lund
+1.6.6.271.gc8799
