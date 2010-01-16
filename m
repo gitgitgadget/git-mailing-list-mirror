@@ -1,188 +1,155 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Remove some junk characters from COPYING
-Date: Fri, 15 Jan 2010 21:38:34 -0800
-Message-ID: <7vpr5ahan9.fsf@alter.siamese.dyndns.org>
-References: <f3271551001150022p342dccd3r5e93b5f5354d208c@mail.gmail.com>
- <201001160209.22589.robin.rosenberg@dewire.com>
- <f3271551001152000r6facd476we7f0a1d3ed5cdf87@mail.gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] grep --no-index: allow use of "git grep" outside a git
+	repository
+Date: Fri, 15 Jan 2010 22:51:36 -0800
+Message-ID: <20100116065135.GA15104@gmail.com>
+References: <201001131713.05505.agruen@suse.de> <7vfx69k0bu.fsf@alter.siamese.dyndns.org> <20100115223259.6117@nanako3.lavabit.com> <7vska71br0.fsf@alter.siamese.dyndns.org> <7vzl4fum3r.fsf_-_@alter.siamese.dyndns.org> <20100115210854.GA21540@coredump.intra.peff.net> <7vwrzin9jt.fsf@alter.siamese.dyndns.org> <20100116011512.GA27082@coredump.intra.peff.net> <7vpr5ait1m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 16 06:39:50 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 16 07:51:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NW1Nv-0001DB-7M
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 06:39:43 +0100
+	id 1NW2Vl-0007jt-3t
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 07:51:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750955Ab0APFiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jan 2010 00:38:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750877Ab0APFiu
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 00:38:50 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63402 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750836Ab0APFit (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jan 2010 00:38:49 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 88EE691D2D;
-	Sat, 16 Jan 2010 00:38:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vUX1ZoGQmPJWPn18h1K4B6c48OA=; b=yiOuW5
-	JGs+Bagb4NNNSgzLnT3XyEaURE/ju3ax1/zlVnelEUT7TvjIv6+WAvAX5uRz+MA3
-	ZpKPa4hl7PnPaCuwVnlQixTOd9ush7fSeCKdNiSK9dKK6BAW0TCaqqkQrk9NJUbn
-	aF26vMfnH9lJHmqX9bH9dnLsSOrTyrIIkPzMk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JnsbHHvNvwLzvSmrlNTY1Ri0kg7/3Lkk
-	JcSzqB9atD9Z0NBf10HiPQLtsItF3yynKxJKwBupwwQCYMoiT4R0JQSLluQPZZpZ
-	gp15pho3NPXLizZMLQ99rJF4o5cMudZlCTwkvV50/x2PYZIdN0oB8b4qvp5gezhO
-	63tvoUUc1sc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4535091D2C;
-	Sat, 16 Jan 2010 00:38:41 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0570291D2B; Sat, 16 Jan
- 2010 00:38:35 -0500 (EST)
-In-Reply-To: <f3271551001152000r6facd476we7f0a1d3ed5cdf87@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Sat\, 16 Jan 2010 09\:30\:42 +0530")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 674B5B30-0261-11DF-A522-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751518Ab0APGvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Jan 2010 01:51:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751393Ab0APGvs
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 01:51:48 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:45120 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751288Ab0APGvr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jan 2010 01:51:47 -0500
+Received: by ywh6 with SMTP id 6so1177948ywh.4
+        for <git@vger.kernel.org>; Fri, 15 Jan 2010 22:51:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=7dYxc8Ty9Md/TiqwPCz36PLCL/gRmTDEK2PMHKsB1rQ=;
+        b=ZAKh5hjzvZ6hELM9x/761tDrZE501WrQ2zEWaq6B5DcBGFb5vXk5bZ0qEcGHkDg/jF
+         75p2Mypn1IUpkBexvdHgfgTmpyZqZWm7ohvGnDuCUzd9bvJvXEv7FawGIwhqtKj6hhlf
+         FCFJyILfz/CFDmP03BqVv96hH6gL8SfyTBd8k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=jV6nVJ67OVYzhtXE2A2YQ+/KJmWwgs+RtFUhbINSMvkNDV5CGlRIKB65T2DFSiSeCC
+         JIsET6Uushw1lgoBKrYaP9ebMOg+aAV7MAy2va/PFlkWSOkPuow3pHTIWJVnqH/gycg+
+         nBh19b2IUTMk4xRGs3FAaxNiZSA+W3dviP1/c=
+Received: by 10.101.87.11 with SMTP id p11mr2147296anl.73.1263624706386;
+        Fri, 15 Jan 2010 22:51:46 -0800 (PST)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id 8sm1140564ywg.34.2010.01.15.22.51.43
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 15 Jan 2010 22:51:45 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vpr5ait1m.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137203>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Fri, Jan 15, 2010 at 08:15:49PM -0800, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> >>     git grep --all-match -e Junio -e Dscho
+> >
+> > That one is a little harder (though it is not something I do very often,
+> > and I had to actually read the docs to find what --all-match does):
+> >
+> >   grep Junio `grep -l Dscho *`
+> >
+> > which of course has problems with exotic filenames.
+> 
+> Also it doesn't find lines that match Dscho in the result ;-)
+> 
+> Realistically, this most often is used when grepping in the log, e.g.
+> 
+>     git log --all-match --author=peff --grep=test
+> 
+> I actually wish "log" to somehow default to --all-match mode at least when
+> using the --author option.  "Change by Jeff, or about test by anybody" is
+> rarely what I would want to look for.
 
->> It is a form-feed (force new page when printing) so it should probably be
->> called by that name, if it were to be removed.
->
-> Oh, thanks for that- I just looked it up. I don't know if they should
-> be removed at all.
+Kinda like this?
 
-Most likely the copy we have is what Linus copied from the kernel tree and
-adjusted his preamble without touching these form feeds.
+I originally had it set grep_filter.all_match in --author only,
+but then I thought "why author and not commiter too", so changing
+the default seemed like the natural thing to do.  Or it could be
+a cat brained idea, I dunno ;)
 
-While I don't think these form-feeds alone would be a good enough reason
-to touch the file, FSF's address has changed some time ago, and the copy
-we have does not reflect it, while the copy in the kernel tree was updated
-in Sep 2005.  Curiously enough, the copy in the kernel tree doesn't have
-the more recent update to rename "GNU Library General Public License" to
-"GNU Lesser General Public License" (I am CC'ing Linus in case he cares).
+-- -- -- 8< -- -- -- 8< -- -- --
+From 2277a6e512c2f597c6240f06c9e7d5ff83e2fe3f Mon Sep 17 00:00:00 2001
+From: David Aguilar <davvid@gmail.com>
+Date: Fri, 15 Jan 2010 21:18:36 -0800
+Subject: [PATCH] Make --all-match the default in "log" family
 
-I'll update our copy with http://www.gnu.org/licenses/gpl-2.0.txt.  This
-will automatically lose the form-feeds.
+'git log --author=peff --grep=test' means "search for commits by Jeff,
+or about test by anybody," which is rarely what what we want to do.
+The original behavior can by achieved by specifying --no-all-match.
 
-Thanks.
-
--- >8 --
-Subject: Update COPYING with GPLv2 with new FSF address
-
-The mailing address of FSF changed quite a while ago.  Also the expansion
-of the acronym LGPL (which we don't use) is "Lesser GPL" not "Library GPL"
-these days in recent copies of GPLv2.  Update the copy we have with a
-fresh download of <http://www.gnu.org/licenses/gpl-2.0.txt>.
-
-This incidentally removes form-feeds in the text we retained for all these
-years.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
+Reference: http://article.gmane.org/gmane.comp.version-control.git/137197
+Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
-diff --git a/COPYING b/COPYING
-index 6ff87c4..536e555 100644
---- a/COPYING
-+++ b/COPYING
-@@ -22,8 +22,8 @@
- 		    GNU GENERAL PUBLIC LICENSE
- 		       Version 2, June 1991
+ Documentation/rev-list-options.txt |    1 +
+ revision.c                         |    3 +++
+ t/t7002-grep.sh                    |    2 +-
+ 3 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 1f57aed..0ce1008 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -179,6 +179,7 @@ endif::git-rev-list[]
+ --all-match::
+ 	Limit the commits output to ones that match all given --grep,
+ 	--author and --committer instead of ones that match at least one.
++	--all-match is the defaullt and can be disabled with --no-all-match.
  
-- Copyright (C) 1989, 1991 Free Software Foundation, Inc.
--                       59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-+ Copyright (C) 1989, 1991 Free Software Foundation, Inc.,
-+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
-  Everyone is permitted to copy and distribute verbatim copies
-  of this license document, but changing it is not allowed.
+ -i::
+ --regexp-ignore-case::
+diff --git a/revision.c b/revision.c
+index 25fa14d..64ebdc5 100644
+--- a/revision.c
++++ b/revision.c
+@@ -804,6 +804,7 @@ void init_revisions(struct rev_info *revs, const char *prefix)
  
-@@ -36,7 +36,7 @@ software--to make sure the software is free for all its users.  This
- General Public License applies to most of the Free Software
- Foundation's software and to any other program whose authors commit to
- using it.  (Some other Free Software Foundation software is covered by
--the GNU Library General Public License instead.)  You can apply it to
-+the GNU Lesser General Public License instead.)  You can apply it to
- your programs, too.
+ 	revs->commit_format = CMIT_FMT_DEFAULT;
  
-   When we speak of free software, we are referring to freedom, not
-@@ -76,7 +76,7 @@ patent must be licensed for everyone's free use or not licensed at all.
++	revs->grep_filter.all_match = 1;
+ 	revs->grep_filter.status_only = 1;
+ 	revs->grep_filter.pattern_tail = &(revs->grep_filter.pattern_list);
+ 	revs->grep_filter.regflags = REG_NEWLINE;
+@@ -1222,6 +1223,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->grep_filter.fixed = 1;
+ 	} else if (!strcmp(arg, "--all-match")) {
+ 		revs->grep_filter.all_match = 1;
++	} else if (!strcmp(arg, "--no-all-match")) {
++		revs->grep_filter.all_match = 0;
+ 	} else if (!prefixcmp(arg, "--encoding=")) {
+ 		arg += 11;
+ 		if (strcmp(arg, "none"))
+diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
+index 76c5e09..92ef534 100755
+--- a/t/t7002-grep.sh
++++ b/t/t7002-grep.sh
+@@ -358,7 +358,7 @@ test_expect_success 'log grep (4)' '
  
-   The precise terms and conditions for copying, distribution and
- modification follow.
--
-+
- 		    GNU GENERAL PUBLIC LICENSE
-    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ test_expect_success 'log grep (5)' '
+ 	git log --author=Thor -F --grep=Thu --pretty=tformat:%s >actual &&
+-	( echo third ; echo initial ) >expect &&
++	: >expect &&
+ 	test_cmp expect actual
+ '
  
-@@ -131,7 +131,7 @@ above, provided that you also meet all of these conditions:
-     License.  (Exception: if the Program itself is interactive but
-     does not normally print such an announcement, your work based on
-     the Program is not required to print an announcement.)
--
-+
- These requirements apply to the modified work as a whole.  If
- identifiable sections of that work are not derived from the Program,
- and can be reasonably considered independent and separate works in
-@@ -189,7 +189,7 @@ access to copy from a designated place, then offering equivalent
- access to copy the source code from the same place counts as
- distribution of the source code, even though third parties are not
- compelled to copy the source along with the object code.
--
-+
-   4. You may not copy, modify, sublicense, or distribute the Program
- except as expressly provided under this License.  Any attempt
- otherwise to copy, modify, sublicense or distribute the Program is
-@@ -246,7 +246,7 @@ impose that choice.
- 
- This section is intended to make thoroughly clear what is believed to
- be a consequence of the rest of this License.
--
-+
-   8. If the distribution and/or use of the Program is restricted in
- certain countries either by patents or by copyrighted interfaces, the
- original copyright holder who places the Program under this License
-@@ -299,7 +299,7 @@ PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE
- POSSIBILITY OF SUCH DAMAGES.
- 
- 		     END OF TERMS AND CONDITIONS
--
-+
- 	    How to Apply These Terms to Your New Programs
- 
-   If you develop a new program, and you want it to be of the greatest
-@@ -324,10 +324,9 @@ the "copyright" line and a pointer to where the full notice is found.
-     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     GNU General Public License for more details.
- 
--    You should have received a copy of the GNU General Public License
--    along with this program; if not, write to the Free Software
--    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
--
-+    You should have received a copy of the GNU General Public License along
-+    with this program; if not, write to the Free Software Foundation, Inc.,
-+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- 
- Also add information on how to contact you by electronic and paper mail.
- 
-@@ -357,5 +356,5 @@ necessary.  Here is a sample; alter the names:
- This General Public License does not permit incorporating your program into
- proprietary programs.  If your program is a subroutine library, you may
- consider it more useful to permit linking proprietary applications with the
--library.  If this is what you want to do, use the GNU Library General
-+library.  If this is what you want to do, use the GNU Lesser General
- Public License instead of this License.
+-- 
+1.6.6.197.g2277
