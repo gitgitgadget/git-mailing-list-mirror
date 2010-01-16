@@ -1,77 +1,78 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH v2] Add push --set-upstream
-Date: Sat, 16 Jan 2010 08:58:06 +0800
-Message-ID: <be6fef0d1001151658g78af211duc33c9b3ec71bdb57@mail.gmail.com>
-References: <1263595630-18962-1-git-send-email-ilari.liusvaara@elisanet.fi>
-	 <7vzl4frl7i.fsf@alter.siamese.dyndns.org>
-	 <7vfx66sz5p.fsf@alter.siamese.dyndns.org>
-	 <20100116090321.6117@nanako3.lavabit.com>
-	 <7vk4virjzh.fsf@alter.siamese.dyndns.org>
-	 <be6fef0d1001151653o7ba2cf7et8875eaf4333fc15a@mail.gmail.com>
-	 <fabb9a1e1001151655r515374f3ybe2a7d4fb20ea532@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 8/9] gitweb: Convert output to using indirect file handle
+Date: Fri, 15 Jan 2010 16:58:06 -0800
+Message-ID: <7vmy0eoogx.fsf@alter.siamese.dyndns.org>
+References: <1263432185-21334-1-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-2-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-3-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-4-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-5-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-6-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-7-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-8-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-9-git-send-email-warthog9@eaglescrag.net>
+ <m3ljfydgmt.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+Content-Type: text/plain; charset=us-ascii
+Cc: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>,
 	git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 16 01:59:39 2010
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 16 02:00:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVwzW-0004oA-69
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 01:58:14 +0100
+	id 1NVwzz-00058J-Nr
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 01:58:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758398Ab0APA6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 19:58:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758392Ab0APA6J
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 19:58:09 -0500
-Received: from mail-iw0-f197.google.com ([209.85.223.197]:34144 "EHLO
-	mail-iw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754019Ab0APA6I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 19:58:08 -0500
-Received: by iwn35 with SMTP id 35so942380iwn.4
-        for <git@vger.kernel.org>; Fri, 15 Jan 2010 16:58:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=VHjZorAHQ5AgyIrQHCjfHINay/J6BTAdXMcqzHSEPOw=;
-        b=KAdsF+gvVCKpdOrCkPErO2TNy/r6b0+PVjwTWuckNLgfMyyaVI25uKgySvog3WZLzw
-         VzMXRNyLtmghtr2dIgIyUTANAPjCq3CWToLMFXPew+f3Qund8g6v2TB/kcPv60xLkXIq
-         ndTeXN3PxEfh2Rrt93Y59p9OXtODHMy6c6KPE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=LqKJjfVpUtxuaE/PsnLY69YtcrM281Uw9ddk4w+ejuoUbZvqkozWm+w5EuWZNIGsPP
-         rDnfgT+2+nWDoFYTWcmIRgCPXOD05WwyEglncd/UK4OVOs4HLJHZy/6dCsvffV/di6CU
-         CLzLdi1NRxxmd6x2frmJf3VJcY6t6OAM3yhYA=
-Received: by 10.231.158.205 with SMTP id g13mr153558ibx.30.1263603487014; Fri, 
-	15 Jan 2010 16:58:07 -0800 (PST)
-In-Reply-To: <fabb9a1e1001151655r515374f3ybe2a7d4fb20ea532@mail.gmail.com>
+	id S1758463Ab0APA6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 19:58:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758434Ab0APA6S
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 19:58:18 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64517 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758404Ab0APA6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 19:58:17 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BB61B91169;
+	Fri, 15 Jan 2010 19:58:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BnJgZt32QiiLGjvkxYmbMkkTqtg=; b=HWC/i0
+	ijhi19ohx+UPKuZ5FmyCz+yPiuiTN42tqQNVIpum1L2RktbpcESAvDeduumABZB7
+	QyhashLlcPu3f9DWSsc4LFhSBNV09kY0srwbgQqD/BlOrmVNlELP8UfO77kBRlKi
+	3ouMgh5rtamAqeQBW5aLRNZCV9qw2ug3PbBsA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UAkcWpnYLcWMLjbB0CnqJtpQOT8a/kjC
+	YKIw9grUaeAKdYk894nijZU4Se+mEWKdBvaJpp9H/qmtSt0LhkRQ8yeuZ6JdCXKT
+	atIaPBpR/IJwTKQLFfiajNcrhSyZUWEMpcrXqZ9nNrNoBVarF5ZB/R5Hml6wnfRW
+	jRwQFrj01K8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C3C391168;
+	Fri, 15 Jan 2010 19:58:11 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B825091166; Fri, 15 Jan
+ 2010 19:58:07 -0500 (EST)
+In-Reply-To: <m3ljfydgmt.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Fri\, 15 Jan 2010 16\:43\:32 -0800 \(PST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 37FCF536-023A-11DF-82AE-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137179>
 
-Hi,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-On Sat, Jan 16, 2010 at 8:55 AM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> Heya,
+> This means replacing
 >
-> On Sat, Jan 16, 2010 at 01:53, Tay Ray Chuan <rctay89@gmail.com> wrote:
->> how about --setup-merge and --setup-rebase?
->
-> I like it, it also suggests this should be called '--setup-upstream', no?
+>   print <something>;
+> by
+>   print {$out} <something>;
 
-if I'm not wrong, --set-upstream (which you want renamed to
---setup-upstream, right?) means the same thing as what I want to call
---setup-merge.
+Just out of curiosity, how is this different from
 
--- 
-Cheers,
-Ray Chuan
+    print $out <something>;
