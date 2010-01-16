@@ -1,94 +1,128 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Stamp Git commit id into file during build process
-Date: Sat, 16 Jan 2010 11:35:34 -0800 (PST)
-Message-ID: <m3d419desd.fsf@localhost.localdomain>
-References: <a1138db31001161050i73eade1bif968ca1256dcef2c@mail.gmail.com>
+From: =?iso-8859-1?q?Adri=E1n_Ribao_Mart=EDnez?= <aribao@gmail.com>
+Subject: Re: Integration-Manager Workflow
+Date: Sat, 16 Jan 2010 20:47:37 +0100
+Message-ID: <201001162047.38010.aribao@gmail.com>
+References: <201001161849.32211.aribao@gmail.com> <87r5ppx42f.fsf@troilus.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed;
+  boundary="nextPart7310305.GIKsW3HLS6";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Paul Richards <paul.richards@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 16 20:35:45 2010
+To: Michael Poole <mdpoole@troilus.org>
+X-From: git-owner@vger.kernel.org Sat Jan 16 20:47:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWEQy-00028h-Ib
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 20:35:45 +0100
+	id 1NWEcf-0006Ju-0i
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 20:47:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753712Ab0APTfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jan 2010 14:35:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753277Ab0APTfk
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 14:35:40 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:51563 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751589Ab0APTfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jan 2010 14:35:39 -0500
-Received: by fg-out-1718.google.com with SMTP id 22so71651fge.1
-        for <git@vger.kernel.org>; Sat, 16 Jan 2010 11:35:38 -0800 (PST)
+	id S1753913Ab0APTro (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Jan 2010 14:47:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753800Ab0APTro
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 14:47:44 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:50249 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752198Ab0APTrn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jan 2010 14:47:43 -0500
+Received: by ewy19 with SMTP id 19so1974266ewy.21
+        for <git@vger.kernel.org>; Sat, 16 Jan 2010 11:47:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=QgrAaHUBv6/9RiyM0QWi9GVdy5AaqJdOxgHcS2l0p+M=;
-        b=w6nBsm6fGCqzIgu1dyL+YHOPb9MRhX//81uD9Hc+LcebNCtBR/CwB5pHlJoXhgsIJ0
-         8hSsoE2fMvqL/bnpdLiRQv9E6AvmytuZ/F8kQKqIYvx7/ps9uiS+AdDiCatCpAVc2OSj
-         BwMCT486aWWntp3cLGM7DgW7OUSiDRb/n1hS0=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:message-id;
+        bh=MQlyOgAN3B51td2zhFAWJD6AVrs05twDxXNHqmjK/NA=;
+        b=bCihPSaybQeByU8UOUGOmTzZRTSPJzTCGLsr1QoJem3mpNjTxcHaAjJRSDnWaJHZ9E
+         cwwz9V3kPc3aYC5zASAGZyLa00SQLh53thnG3iT6/JPTHW+52sBEIf3IQprRDrpoaWvO
+         KMMEKw2ZFz9k5qNk8RQDSqcjMfZU6HxvjU8Cg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=LTjs9MQKkT5mFSnBxLPy3tCHSxIbZ55jKxfdATq8kn76hL/mB9YLp73buEqndq4NKC
-         S2WLhkc/hdd3msc1I2W7ONQGg4Ocu8fo1cU9IP2tnWuyUUmrik6HyPzS5WWuZsn5S7Dt
-         j6gYlJcwTAxtncVbJshyy4Fme1LLNpUp5ROTw=
-Received: by 10.87.66.11 with SMTP id t11mr4831548fgk.18.1263670535469;
-        Sat, 16 Jan 2010 11:35:35 -0800 (PST)
-Received: from localhost.localdomain (aehn53.neoplus.adsl.tpnet.pl [79.186.195.53])
-        by mx.google.com with ESMTPS id l19sm5386051fgb.3.2010.01.16.11.35.33
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding:message-id;
+        b=USF3k7znuJjKXNxcIbUzyJWxz23inpM+XBSALaLie2luzYqjhWJIBQReG30ZQVxUbe
+         6RezwDGJHrBi9PzzVnk5erYNjNXTriv7CYyODSivQMYcE720DAK6XXpkszhPaxY5SYU/
+         5CTSpbOaMu5VtmXVyAfs3Y69RSMWP/BbMqWiE=
+Received: by 10.216.85.70 with SMTP id t48mr1374122wee.84.1263671261158;
+        Sat, 16 Jan 2010 11:47:41 -0800 (PST)
+Received: from debian.localnet (93.160.222.87.dynamic.jazztel.es [87.222.160.93])
+        by mx.google.com with ESMTPS id p37sm2393265gvf.8.2010.01.16.11.47.39
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 16 Jan 2010 11:35:34 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o0GJZ8Hi014293;
-	Sat, 16 Jan 2010 20:35:19 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o0GJYwWh014287;
-	Sat, 16 Jan 2010 20:34:58 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <a1138db31001161050i73eade1bif968ca1256dcef2c@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Sat, 16 Jan 2010 11:47:40 -0800 (PST)
+User-Agent: KMail/1.12.4 (Linux/2.6.32-trunk-amd64; KDE/4.3.4; x86_64; ; )
+In-Reply-To: <87r5ppx42f.fsf@troilus.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137257>
 
-Paul Richards <paul.richards@gmail.com> writes:
+--nextPart7310305.GIKsW3HLS6
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-> Hi,
-> I am in the process of migrating from Subversion to Git.  One thing I
-> am unsure of is how to stamp the 'version' or 'commit id' into a file
-> as part of a build process.
-> 
-> With subversion I used the SubWCRev tool from TortoiseSVN
-> (http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-subwcrev.html).
-> 
-> With Git I imagine that I'd like to put a copy of the current commit
-> id (either the full hash or a truncated version of that) into a file
-> which then gets included into the program source code in some way.
-> 
-> Is there a recommended way of doing this with git?  Perhaps with
-> something similar to SubWCRev?
-> 
-> Currently I am thinking about using "git log", and grepping the output
-> in some way so that I just get the hash.
+> Adri=E1n Ribao Mart=EDnez writes:
+>=20
+> > What happens if they accidentally work in the develop branch instead of=
+ creating a new one? What should we do?
+> > I think I should never fetch from teamx.myserver.net to avoid this prob=
+lem and instead track the branch like in step 2. Is this correct?
+>=20
+> It is simpler than that.
+>=20
+> If you just use "git remote add teamx teamx.myserver.net:/...." (rather
+> than cloning your integration repository from one of those
+> repositories), it will leave all your local branches alone -- any
+> changes to teamx.myserver.net's "develop" branch will only show up in
+> the teamx/develop tracking branch.
 
-Not "git log".
+I think this is a stupid question but, how do I bring the feature1 branch f=
+rom teamx to my local repository?
 
-Take a look how for example git project and Linux kernel use "git describe"
-in GIT-VERSION-GEN script, and how they use GIT-VERSION-GEN script in the
-Makefile.
+>=20
+> The reason is that a fetch or pull only merges into your develop branch
+> if your branch.develop.merge git-config entry specifies an upstream
+> branch -- more detail can be found in the git-config man page under
+> branch.<name>.remote and branch.<name>.merge.
+>=20
+> Those entries are set up when you clone from a repository, and through
+> some other commands, but if teamx clones from the integration server,
+> they can only mess up their own develop branch.  If/when you push into
+> teamx's repository from yours, you can forcibly overwrite any of those
+> accidental changes.  (Normally, though, the push would only do a
+> fast-forward merge -- so if teamx made such a mistake, the merge will
+> fail until you address the mismatch.)
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+I'm not sure if I understand.
+
+1. I bring the feature1 to my local repository.
+2. Check if everything is ok
+3. Merge or rebase the branch into develop
+4. Push the develop changes into the in central repository
+5. Push and force the develop changes into the teamx server
+6. The developers pull their local repositories from teamx server
+
+Is this correct? What are the commands for all those actions?
+
+>=20
+> Michael Poole
+>=20
+
+Thank you.
+
+--nextPart7310305.GIKsW3HLS6
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEABECAAYFAktSF9oACgkQalnHcq94LhmLEQCfdd4/7ML+YhcFQtXVJvD2yCXl
+4EoAn1zZidT4v4UV2xwD0IQzuO72ukzk
+=0hox
+-----END PGP SIGNATURE-----
+
+--nextPart7310305.GIKsW3HLS6--
