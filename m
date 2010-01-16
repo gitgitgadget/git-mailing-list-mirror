@@ -1,89 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] difftool: Add '-x' and as an alias for '--extcmd'
-Date: Fri, 15 Jan 2010 17:05:17 -0800
-Message-ID: <7vbpguoo4y.fsf@alter.siamese.dyndns.org>
-References: <1263539762-8269-1-git-send-email-davvid@gmail.com>
- <1263539762-8269-2-git-send-email-davvid@gmail.com>
- <7vvdf3xiav.fsf@alter.siamese.dyndns.org>
- <19280.51182.981853.561841@blake.zopyra.com>
+Subject: Re: [PATCH v2] Test t5560: Fix test when run with dash
+Date: Fri, 15 Jan 2010 17:05:26 -0800
+Message-ID: <7v4ommoo4p.fsf@alter.siamese.dyndns.org>
+References: <7vfx69hyd5.fsf@alter.siamese.dyndns.org>
+ <4B5027B8.2090507@viscovery.net> <7vljfzz0yd.fsf@alter.siamese.dyndns.org>
+ <201001152017.00121.j6t@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Sat Jan 16 02:05:42 2010
+Cc: Tarmigan Casebolt <tarmigan+git@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Jan 16 02:06:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVx6j-0008S9-9p
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 02:05:41 +0100
+	id 1NVx7K-0000C7-0r
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 02:06:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758543Ab0APBFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 20:05:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758527Ab0APBF3
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 20:05:29 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35989 "EHLO
+	id S1758549Ab0APBFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 20:05:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758386Ab0APBFk
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 20:05:40 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36120 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758525Ab0APBFZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 20:05:25 -0500
+	with ESMTP id S1758511Ab0APBFj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 20:05:39 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 630C891264;
-	Fri, 15 Jan 2010 20:05:25 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BFC939126A;
+	Fri, 15 Jan 2010 20:05:38 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=mh9xdC79Wt+ihY6pZsfJ7UIEdpc=; b=s6uuqft7RGIMj/W1dsgiQKb
-	Swua887771kQBXzga0A7T4bPxAZJsuQQ/Tk/2+HuXcLc9FmTKOk9eCTkyzUsdJMj
-	qO5JDs0wYXUTsK6cPThf05zJhlip5FaPKDOls5Nvy4EuiXK+YkEb4vVtj8XolNPb
-	ck8xMbdQmJ79n8m35VdA=
+	sasl; bh=eLO0qfntGNK72iJrv1/7kyUZK5A=; b=TLipaRe+Nslb3L1w2AdsegD
+	IeBAMqegJ4KZbdJXzj/6o93/v8IEk7L1EH4UdB4cPEI3ncaRoORf4xR5h0dX9AUR
+	/KA8MWvJN9N5tFd+aBUCiGAgmtZY+wZxdBYLnoTJccHTUuAfX4uG7ktpDqYEz+3Q
+	gEKabhdJb4TzoJzE5hGI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=ihnmzraGttGJGP9cqkfy+jdPKrsBlELhFjVTF0IvziJaG52NW
-	m+M9+4t6/YyJZQ+1ryWyhDsc0G1Ek3CplSs8DsRYA9crEV5gG6eXJ4e8GXey5bp8
-	sO74sezxW2sZFkAk29Uc6Uhj0INQRZiIc95yf5P19SEO/+p9vy4cUQTMYI=
+	dns; s=sasl; b=f2kNXdPrhYTpDoL/h6wElkwRa3m25yg4uwZIrHhxqZg6kpY92
+	ZJ3KUxBm1lQYLBfVhuOPU8ye/2rPCW+RF3k0dNtcz8yQd+1S3t+pv8N2beaax3kt
+	PLZ9jDlZQlSSzhlF8YVd92FRDlRLepRbwVVtvKNCKWck73yhmP97CRgXkQ=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AC0691262;
-	Fri, 15 Jan 2010 20:05:22 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 651AB91266;
+	Fri, 15 Jan 2010 20:05:33 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5630E91261; Fri, 15 Jan
- 2010 20:05:18 -0500 (EST)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6936591265; Fri, 15 Jan
+ 2010 20:05:27 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 38AB09E0-023B-11DF-BADD-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3F5CF6A4-023B-11DF-85A4-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137183>
 
-Bill Lear <rael@zopyra.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> On Friday, January 15, 2010 at 11:46:32 (-0800) Junio C Hamano writes:
->>David Aguilar <davvid@gmail.com> writes:
->>
->>> -# Copyright (c) 2009 David Aguilar
->>> +# Copyright (c) 2009-2010 David Aguilar
->>
->>Just a very minor issue.  I'd prefer to see:
->>
->>	Copyright (c) 2008, 2009, 2010
->>
->>over
->>
->>	Copyright (c) 2008-2010
+>> Yesterday, I saw rebase--interactive has a few codepaths where "output"
+>> shell function was used with the single-shot export; perhaps they need to
+>> also be fixed.
 >
-> Why?
+> I knew these spots, and they were discussed when that code was introduced. 
+> Before I sent out the mail you were responding to, I tried various ways to 
+> show the failure in rebase--interactive, but it didn't fail...
 
-I learned this from <http://www.gnu.org/licenses/gpl-howto.html>.  The
-advice doesn't say _why_, but my understanding of the rationale behind it
-is that the international convention that governs this copyright
-notice specifically mentions "the year of publication", not "range of
-years" (UCC Geneva text, Sept. 06, 1952, Article III 1.).
+It may be the case that the single-shot-ness of these GIT_AUTHOR_NAME
+exports do not matter at all in that program, even though the original
+versions may have been written carefully not to leak the value suitable
+for the current commit to later rounds.
 
-Berne convention does not require such a copyright notice, and many
-countries are signatories of both treaties, so the whole copyright notice
-may be a moot point in many countries, but it matters in some.  As long as
-the file (and the GNU advice cited above) is being cautious by having the
-notice, it would be better to be equally cautious and spell the years of
-publication out.
-
-But I am not a lawyer.
+I think the recent updates from Michael actually depends on the
+distinction not to matter.  For example, do_with_author() in 7756ecf
+(rebase -i: Extract function do_with_author, 2010-01-14) invokes "$@"
+that could be a shell function.
