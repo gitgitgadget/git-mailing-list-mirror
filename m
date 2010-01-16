@@ -1,96 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Stamp Git commit id into file during build process
-Date: Sat, 16 Jan 2010 22:27:22 +0100
-Message-ID: <201001162227.23236.jnareb@gmail.com>
-References: <a1138db31001161050i73eade1bif968ca1256dcef2c@mail.gmail.com> <m3d419desd.fsf@localhost.localdomain> <a1138db31001161312i2c032c38tcc0fb162c61fbb35@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH v2 13/14] daemon: use select() instead of poll()
+Date: Sat, 16 Jan 2010 22:31:49 +0100
+Message-ID: <40aa078e1001161331o115065dax98642ed2054f9b9d@mail.gmail.com>
+References: <1263591033-4992-1-git-send-email-kusmabite@gmail.com>
+	 <201001161138.36535.j6t@kdbg.org>
+	 <40aa078e1001160305y17b46a6dtc4959e5255c7acae@mail.gmail.com>
+	 <201001161336.20703.j6t@kdbg.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Paul Richards <paul.richards@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 16 22:27:45 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Jan 16 22:31:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWGBN-0002cm-1t
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 22:27:45 +0100
+	id 1NWGFP-0004AD-Vp
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 22:31:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752386Ab0APV1c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Jan 2010 16:27:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752296Ab0APV1b
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 16:27:31 -0500
-Received: from mail-fx0-f225.google.com ([209.85.220.225]:65353 "EHLO
-	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751426Ab0APV1b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jan 2010 16:27:31 -0500
-Received: by fxm25 with SMTP id 25so35656fxm.21
-        for <git@vger.kernel.org>; Sat, 16 Jan 2010 13:27:29 -0800 (PST)
+	id S1752426Ab0APVbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Jan 2010 16:31:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752289Ab0APVbv
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 16:31:51 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:39314 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751798Ab0APVbv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jan 2010 16:31:51 -0500
+Received: by ewy19 with SMTP id 19so2030783ewy.21
+        for <git@vger.kernel.org>; Sat, 16 Jan 2010 13:31:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=ey6qKICwWAbl9+RmN+sRpSoQwmDRmmYJHZEm73NYpnE=;
-        b=jej/TH3C4ic8jf14IiriYtzNluAJKSgJ80M8P1k3zEsAI9v0Czrj+p9QVCeOuD4c7m
-         uAXRBWXqhgyMgYJYQnIwxhsFGWlcM+JnaRT9nI7L4/5i5jRiUKQtQ2FHuKHAfuAPIexu
-         +AL7SDU8FQXX6ePle6LOCrio/fBCxnWxED+Xs=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=DUrD1B6UUDVoGxkLEaiCy1XDpzPaNvfi7rgKLz5VUEE=;
+        b=Ncq0fU7W7R/5x0z/ATDQ0R7mI0sVRf4OxTtfWQYuafUVBFtoikBunSGU5nbEZPsr8j
+         3twreC7wjiOzIu7lQyhlDo0JGdklP7RsZ2DXp+hbqmMdVelA2h8AmVSpfbj4I7G5sPT9
+         f7DJ1NUzhEMLoEJMy2/NDFLcZOCr6fcE/8G7A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=RgxBvnYDbM/O00j/xq3RMPvnvKdUVlIrUeHMzseMAArx0qbQJNjtTxZrWkueIM60Er
-         klYedlequNQRhPBTqEzAS/I7FQEEzwfzXh4JcSJddql6VAM2eQuTRPpjE6ZwzJr4ZVtb
-         SKDMOspqGy/6JtVRsQwzN1atxfB9p+KnDKvM0=
-Received: by 10.223.58.71 with SMTP id f7mr4405579fah.45.1263677249096;
-        Sat, 16 Jan 2010 13:27:29 -0800 (PST)
-Received: from ?192.168.1.13? ([72.14.240.162])
-        by mx.google.com with ESMTPS id h2sm3681164fkh.2.2010.01.16.13.27.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 16 Jan 2010 13:27:27 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <a1138db31001161312i2c032c38tcc0fb162c61fbb35@mail.gmail.com>
-Content-Disposition: inline
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        b=Hw+qxhZ5yz/xCSvYXPmTFxtOIry3oRoeLycOju5JYV02EJmAPFAbikKIVZ49eGHXwP
+         2ayplF7J/pPZyO5B/+iJui8sk9RdgB4Z12VmdqqmYX/8CYE6/I3iO25PtL7wlh6wOV/g
+         9dyzVDIROnF9gfHdD3qjppuA7q4y4yVcfzgp4=
+Received: by 10.216.89.138 with SMTP id c10mr1367831wef.47.1263677509649; Sat, 
+	16 Jan 2010 13:31:49 -0800 (PST)
+In-Reply-To: <201001161336.20703.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137261>
 
-Dnia sobota 16. stycznia 2010 22:12, Paul Richards napisa=C5=82:
-> 2010/1/16 Jakub Narebski <jnareb@gmail.com>:
->> Paul Richards <paul.richards@gmail.com> writes:
+On Sat, Jan 16, 2010 at 1:36 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> On Samstag, 16. Januar 2010, Erik Faye-Lund wrote:
+>> ...but __WSAFDIsSet() seems to be every bit as official on Windows as
+>> FD_ISSET() (documented in msdn, without any notes not to use it), so I
+>> still don't really see the point.
+>
+> I didn't know nor check whether it is documented, but assumed from the '__'
+> that it must be internal. Being documented makes a big difference. I'm fine
+> with either solution.
+>
 
->>> I am in the process of migrating from Subversion to Git. =C2=A0One =
-thing I
->>> am unsure of is how to stamp the 'version' or 'commit id' into a fi=
-le
->>> as part of a build process.
+OK, in that case, I'll leave it as it is. The current code is slightly
+more tested (I've been using it for some weeks), and I'm slightly lazy
+;)
 
->> Take a look how for example git project and Linux kernel use "git de=
-scribe"
->> in GIT-VERSION-GEN script, and how they use GIT-VERSION-GEN script i=
-n the
->> Makefile.=20
->=20
-> Thanks, it appears though that "git describe" does not work in Cygwin=
- git. :(
+But I'll update FD_SET...
 
-If you got something like
-
-  $ git describe
-  fatal: cannot describe 'a27cb622b30f18cb8510b7b3856d4029e617d95b'
-
-it means that you don't have any tags in your history.  You should tag =
-your
-releases (released versions) using annotated tags.
-
-Anyway you have
-
-  $ git describe --always
-  a27cb62
-
---=20
-Jakub Narebski
-Poland
+-- 
+Erik "kusma" Faye-Lund
