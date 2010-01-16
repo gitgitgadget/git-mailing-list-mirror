@@ -1,183 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 8/9] gitweb: Convert output to using indirect file handle
-Date: Fri, 15 Jan 2010 16:43:32 -0800 (PST)
-Message-ID: <m3ljfydgmt.fsf@localhost.localdomain>
-References: <1263432185-21334-1-git-send-email-warthog9@eaglescrag.net>
-	<1263432185-21334-2-git-send-email-warthog9@eaglescrag.net>
-	<1263432185-21334-3-git-send-email-warthog9@eaglescrag.net>
-	<1263432185-21334-4-git-send-email-warthog9@eaglescrag.net>
-	<1263432185-21334-5-git-send-email-warthog9@eaglescrag.net>
-	<1263432185-21334-6-git-send-email-warthog9@eaglescrag.net>
-	<1263432185-21334-7-git-send-email-warthog9@eaglescrag.net>
-	<1263432185-21334-8-git-send-email-warthog9@eaglescrag.net>
-	<1263432185-21334-9-git-send-email-warthog9@eaglescrag.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC] Git Wiki Move
+Date: Sat, 16 Jan 2010 01:44:44 +0100
+Message-ID: <fabb9a1e1001151644n65577c99qe41327b66de28114@mail.gmail.com>
+References: <20100113232908.GA3299@machine.or.cz> <20100114012449.GB3299@machine.or.cz> 
+	<4B4EF1E0.3040808@eaglescrag.net> <vpqbpgxrn32.fsf@bauges.imag.fr> 
+	<4B4F68E8.5050809@eaglescrag.net> <4B50F7DB.7020204@eaglescrag.net> 
+	<fabb9a1e1001151521s1837b3d5o2a35cb5bb35c8038@mail.gmail.com> 
+	<4B510217.8060200@eaglescrag.net> <fabb9a1e1001151608k6911bcf8p854d97c2f2d46264@mail.gmail.com> 
+	<4B51082B.5030508@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Sat Jan 16 01:43:52 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: "J.H." <warthog19@eaglescrag.net>, Pieter de Bie <pieter@frim.nl>
+X-From: git-owner@vger.kernel.org Sat Jan 16 01:51:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVwlc-0000Iu-8A
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 01:43:52 +0100
+	id 1NVwt3-0002mF-Oy
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 01:51:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758337Ab0APAnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 19:43:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758299Ab0APAnf
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 19:43:35 -0500
-Received: from mail-fx0-f225.google.com ([209.85.220.225]:39285 "EHLO
-	mail-fx0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758226Ab0APAne (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 19:43:34 -0500
-Received: by fxm25 with SMTP id 25so719793fxm.21
-        for <git@vger.kernel.org>; Fri, 15 Jan 2010 16:43:32 -0800 (PST)
+	id S1758269Ab0APAv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 19:51:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758262Ab0APAv3
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 19:51:29 -0500
+Received: from mail-px0-f182.google.com ([209.85.216.182]:45663 "EHLO
+	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758174Ab0APAv3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 19:51:29 -0500
+X-Greylist: delayed 384 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Jan 2010 19:51:29 EST
+Received: by pxi12 with SMTP id 12so1297348pxi.33
+        for <git@vger.kernel.org>; Fri, 15 Jan 2010 16:51:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=pzfqFg8GuIf2NEAhvotss2Zd/v8ldfmMTCwi+irsKBk=;
-        b=QlC3swhMh/AxtOVGrykCrPrVWn0z+9NkuNlUInBzCaHtu7GTeisNeBjBfMt+02qM9A
-         kQXF+/pDKbEswTKbFKTwOjFVqzauexX5qu+l/8X4/rDkMSxOFSGhQ+7errm/Q1fJSr0K
-         6S4bmVDdi0V+Xg7klcoHRPOX1AHW3yP5K/HLE=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=ngTsgdq6ne9KP9NpFo5bsFhb/fVkpTxa+mL4TXnCiws=;
+        b=R4zUvWMz0y/GVVkyEdhfC56Mapk4bTxC2kg6cl3db+IcKYBtPWXYqKv3kGMmJPj2Tq
+         8dmtsUwN5WO15hAcHl3yW3HioFte1DmPXXt95g9M3WikUFP2trBhRSTF2hLGCr6PNv/p
+         ktVduviNg1ZCje2QS2Du5ueFhg2WZTWup8mHM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=LtQDMqWPk3aK4FXyq0+yQVMPj8bbR0GRTSIpgbVsKvf5IiScky2PMVEVtOkPaLDkye
-         W6bZhES2Hbov6m0gM/9fNV29fwCk2r6mlvTeoVFvFBtpKiONUfTgAlUAvKlnAV8rGMn9
-         EP0q+VkC1bntqCLxImr0FmmRB3Cbtrb80Yi28=
-Received: by 10.103.126.21 with SMTP id d21mr1523013mun.24.1263602612725;
-        Fri, 15 Jan 2010 16:43:32 -0800 (PST)
-Received: from localhost.localdomain (abwi123.neoplus.adsl.tpnet.pl [83.8.232.123])
-        by mx.google.com with ESMTPS id e8sm8470779muf.47.2010.01.15.16.43.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 15 Jan 2010 16:43:32 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o0G0h7Nd032699;
-	Sat, 16 Jan 2010 01:43:17 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o0G0gp3h032691;
-	Sat, 16 Jan 2010 01:42:51 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1263432185-21334-9-git-send-email-warthog9@eaglescrag.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=dxtmSPxhQrCrfQd7gCj0eII1SaKjcDrlGxKd33a8i6Iy9sYQoSuAXJTTDhryyZKqkc
+         Dmh8NkSNTxqUH2flWb33cBDTzvknGl9dCM2DDgpgj4w4OeudnXkKj+knfpfxAPDCJnQt
+         0ldEabWfo4QlpRf3aWvCGW+Jm2GhQ5w/tTrD8=
+Received: by 10.142.75.16 with SMTP id x16mr2124539wfa.155.1263602704062; Fri, 
+	15 Jan 2010 16:45:04 -0800 (PST)
+In-Reply-To: <4B51082B.5030508@eaglescrag.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137175>
 
-"John 'Warthog9' Hawley" <warthog9@eaglescrag.net> writes:
+Heya,
 
-> This converts the output handling of gitweb to using an indirect
-> file handle.  This is in preparation to add the caching layer.  This
-> is a slight modification to the way I was originally doing it by
-> passing the output around.  This should be a nop and this shouldn't
-> change the behavior of gitweb.  This does leave error reporting
-> functions (die_error specifically) continuing to output directly
-> as I want to garauntee those will report their errors regardless of
-> what may be going on with respect to the rest of the output.
+On Sat, Jan 16, 2010 at 01:28, J.H. <warthog19@eaglescrag.net> wrote:
+>> <!-- GitLink[git-name] Because Linus is an egotistical git -->
+>
+> Probably, should be fixed now, found it on GitBot too.
 
-Signoff?
-
-Compare with my version of this patch:
-  http://repo.or.cz/w/git/jnareb-git.git/commitdiff/0dd15cb3f18e2a26fc834fd3b071e6d3ecc00557
-in the gitweb/cache-kernel branch:
-  http://repo.or.cz/w/git/jnareb-git.git/shortlog/refs/heads/gitweb/cache-kernel
-
-
-My commit message looks like the following:
-
-....
-gitweb: Print to explicit filehandle (preparing for caching)
-
-This means replacing
-
-  print <something>;
-by
-  print {$out} <something>;
-
-and
-
-  binmode STDOUT, <layer>;
-by
-  binmode $out, <layer>;
-
-where $out is global variable set to \*STDOUT at the beginning of
-gitweb, but after reading gitweb config.  This way it would be simple
-to e.g. tie output filehandle or use PerlIO layers to simultaneously
-write to standard output and to some specified file (like "tee"
-utility does), or redirect output to a scalar, or a file.
-
-die_error (re)sets $out to \*STDOUT; we would (probably) want to treat
-errors in a special way, and do not cache them.
-
-The only other differences are reindent of continued lines (if needed),
-and sometimes word-wrapping lines which this change made too long.
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-....
-
-> ---
->  gitweb/gitweb.perl |  880 ++++++++++++++++++++++++++--------------------------
->  1 files changed, 448 insertions(+), 432 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index c4a177d..8bb323c 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -450,6 +450,13 @@ our %feature = (
->  		'default' => [0]},
->  );
->  
-> +# Basic file handler for all of gitweb, there are two of them.  The first
-> +# is the basic text/html file handler which is used for everything other
-> +# then the binary files, that uses a separate file handler though
-> +# these are both set to STDOUT for the time being.
-> +our $output_handler = *STDOUT;
-> +our $output_handler_bin = *STDOUT;
-> +
-
-First it is not file handleR, but filehandle.
-
-Second, there is no need for separate filehandle for binary files, if
-you do it correctly (i.e. call binmode on filehandle, and not on
-STDOUT).  When caching is enabled, and 'print {$output_handle} <sth>'
-prints to in-memory file (or even directly to cache file) it would do
-conversion, so when reading from cache file we can dump it raw, in
-binary mode.
-
-Third, wouldn't it be better to use shorter variable name, e.g. $out
-or $oh, instead of $output_handle?  We would be able to align print(f)
-statements without making lines much longer.
-
-Fourth, there is slight difference between
-  our $out = *STDOUT;
-and
-  out $out = \*STDOUT;
-In the former we have global variable, in latter we have indirect
-filehandle.  CGI::Cache uses the latter form, IIRC.
-
-> @@ -3313,7 +3320,7 @@ EOF
->  		if ($use_pathinfo) {
->  			$action .= "/".esc_url($project);
->  		}
-> -		print $cgi->startform(-method => "get", -action => $action) .
-> +		print {$output_handler} $cgi->startform(-method => "get", -action => $action) .
->  		      "<div class=\"search\">\n" .
->  		      (!$use_pathinfo &&
->  		      $cgi->input({-name=>"p", -value=>$project, -type=>"hidden"}) . "\n") .
-
-Here for example after change gitweb source stops being nicely aligned.
-OTOH it makes for bigger patch.  In my version I did realign.
-
-You can always check for true differences with "diff -w".
-
+I guess you removed them rather than turning them in to comments
+(probably due to MediaWiki's lake of comments)? Works for me, we can
+figure out something else for gitbot. A regular text file that it can
+slurp or something. We being Pieter perhaps (as he is the original author)?
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Cheers,
+
+Sverre Rabbelier
