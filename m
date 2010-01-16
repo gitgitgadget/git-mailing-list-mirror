@@ -1,73 +1,70 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+From: Tay Ray Chuan <rctay89@gmail.com>
 Subject: Re: [PATCH v3] Add push --set-upstream
-Date: Sat, 16 Jan 2010 17:56:12 +0200
-Message-ID: <20100116155612.GA8383@Knoppix>
+Date: Sun, 17 Jan 2010 00:13:20 +0800
+Message-ID: <be6fef0d1001160813o674ed93dn33843813be6f45be@mail.gmail.com>
 References: <1263633827-23720-1-git-send-email-ilari.liusvaara@elisanet.fi>
- <20100116203557.95340c00.rctay89@gmail.com>
- <20100116134656.GA4504@Knoppix>
- <20100116233043.26a5636d.rctay89@gmail.com>
+	 <20100116203557.95340c00.rctay89@gmail.com>
+	 <20100116134656.GA4504@Knoppix>
+	 <20100116233043.26a5636d.rctay89@gmail.com>
+	 <20100116155612.GA8383@Knoppix>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 16 16:56:22 2010
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Sat Jan 16 17:13:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWB0e-0007nE-HC
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 16:56:20 +0100
+	id 1NWBHG-00063p-V3
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 17:13:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753447Ab0APP4R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jan 2010 10:56:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753403Ab0APP4Q
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 10:56:16 -0500
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:41206 "EHLO
-	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751890Ab0APP4Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jan 2010 10:56:16 -0500
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 1C7CC8BDD6;
-	Sat, 16 Jan 2010 17:56:15 +0200 (EET)
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A0110511D1B; Sat, 16 Jan 2010 17:56:15 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id 0866AE51AC;
-	Sat, 16 Jan 2010 17:56:12 +0200 (EET)
-Content-Disposition: inline
-In-Reply-To: <20100116233043.26a5636d.rctay89@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
+	id S1752859Ab0APQNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Jan 2010 11:13:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752832Ab0APQNW
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 11:13:22 -0500
+Received: from mail-iw0-f194.google.com ([209.85.223.194]:56746 "EHLO
+	mail-iw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751655Ab0APQNV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jan 2010 11:13:21 -0500
+Received: by iwn32 with SMTP id 32so1244075iwn.33
+        for <git@vger.kernel.org>; Sat, 16 Jan 2010 08:13:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=SSThG+1Z8aaykCUUP7RgyHrsjfGOVuW/0T//HDk8DUY=;
+        b=iHrBjolo6+0vuh1nBIS+IZF4NEu5v1kDd+w41wboT3Ylt2iBv6LZB0NqxEpNQ3g85A
+         6RjYsvnC9zlgVrGW4vPYMengSB+tLA+jQYaMlnwj5ndjKi5AkaTlTO7ETqAHaCbFhAHx
+         bL9J6IbqHdeumjYVSNlvin1j4O569yI6dVvLM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=r5bEGAe+rclABdnYwE8pRId5XwH02YjJUIu5v/n3jAt6q7mG1M8zWEs4Q8gaoqirBY
+         TvYzutU4AMdY1YFJXQByR+9sGLT+rmCDZs1Ng1FfHl97GAmjvlYaGQRiWNkBg0cSh+Sj
+         wfbuQbwDrci93rKLg91cvgM4JNshgvMqGC9os=
+Received: by 10.231.168.136 with SMTP id u8mr610376iby.56.1263658400460; Sat, 
+	16 Jan 2010 08:13:20 -0800 (PST)
+In-Reply-To: <20100116155612.GA8383@Knoppix>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137233>
 
-On Sat, Jan 16, 2010 at 11:30:43PM +0800, Tay Ray Chuan wrote:
-> Hi,
-> 
-> On Sat, 16 Jan 2010 15:46:57 +0200
-> Ilari Liusvaara <ilari.liusvaara@elisanet.fi> wrote:
-> 
-> > > Regarding the checking of ref->status here:
-> > > 
-> > > Is it possible to delegate this to push_had_errors(remote_refs)
-> > > instead? We skip setting up upstream tracking when there are errors
-> > > from pushing, so we don't have to check ref->status anymore.
-> > 
-> > No. As documetnation says, the update or no update is done on per-branch
-> > basis.
-> > 
-> > <snip patch>
-> 
-> I see. If that's the case, could you also allow setting up upstream
-> tracking when ref->status is 'none' and not consider it errorneous?
-> 
-> After all, push_had_errors() does not consider 'none' errorneous.
+Hi,
 
-Hmm... In what conditions ref->status is 'none' after push operation
-has completed?
+On Sat, Jan 16, 2010 at 11:56 PM, Ilari Liusvaara
+<ilari.liusvaara@elisanet.fi> wrote:
+> Hmm... In what conditions ref->status is 'none' after push operation
+> has completed?
 
--Ilari
+when a match between a local and remote ref is not found.
+
+For example, the local ref 'master' will match the remote ref
+'master', but not 'retsam' ('master' spelled in reverse).
+
+-- 
+Cheers,
+Ray Chuan
