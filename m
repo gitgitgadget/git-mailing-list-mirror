@@ -1,60 +1,124 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] Fix bad quoting in documentation
-Date: Sat, 16 Jan 2010 16:30:00 +0530
-Message-ID: <f3271551001160300m24932ad4wfd72abc826f2bb65@mail.gmail.com>
-References: <f3271551001160002r25cb0ac7hc96891f4af22bd03@mail.gmail.com> 
-	<201001161120.14846.trast@student.ethz.ch>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH v2 13/14] daemon: use select() instead of poll()
+Date: Sat, 16 Jan 2010 12:05:09 +0100
+Message-ID: <40aa078e1001160305y17b46a6dtc4959e5255c7acae@mail.gmail.com>
+References: <1263591033-4992-1-git-send-email-kusmabite@gmail.com>
+	 <201001160906.26270.j6t@kdbg.org>
+	 <40aa078e1001160126q34bc066as3adb9b61eac690d@mail.gmail.com>
+	 <201001161138.36535.j6t@kdbg.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Jan 16 12:00:28 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Transfer-Encoding: quoted-printable
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: 3aJ1RSwkOB6IMWUOCDKVGIQQINGOCKN.EQOOUaUIKVIQQINGITQWRU.EQO@listserv.bounces.google.com Sat Jan 16 12:05:30 2010
+Return-path: <3aJ1RSwkOB6IMWUOCDKVGIQQINGOCKN.EQOOUaUIKVIQQINGITQWRU.EQO@listserv.bounces.google.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yw0-f161.google.com ([209.85.211.161])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NW6OJ-0007pF-Ej
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 12:00:27 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752700Ab0APLAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jan 2010 06:00:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752362Ab0APLAX
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 06:00:23 -0500
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:50734 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751116Ab0APLAW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jan 2010 06:00:22 -0500
-Received: by ywh6 with SMTP id 6so1243107ywh.4
-        for <git@vger.kernel.org>; Sat, 16 Jan 2010 03:00:20 -0800 (PST)
+	id 1NW6TB-0000xJ-LC
+	for gcvm-msysgit@m.gmane.org; Sat, 16 Jan 2010 12:05:29 +0100
+Received: by ywh33 with SMTP id 33sf3190091ywh.24
+        for <gcvm-msysgit@m.gmane.org>; Sat, 16 Jan 2010 03:05:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=LGZHk6SZ9fPR/MggbLSuEf6nVHGJUuLsK1/OF4GPWEI=;
-        b=FCSI+g8BDzR6q3PpbVJY/df3JcUHFjEjr/f8ZwlVW42V6hMaoPIeFde5LhFR/F/TXi
-         DyUKV/dFl1m/DYi7y1pZ7fxHenNp5hHWw4Z0KB7vJXwBETUoJnRzxUUlAwNAqN0IVeRo
-         LRjBmIzTuy9tc6CTlwSIHakxlCorKO2NAvXsA=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:x-beenthere:received:received:received
+         :received:received-spf:received:mime-version:received:reply-to
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :x-original-authentication-results:x-original-sender:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
+         :x-message-url:sender:list-unsubscribe:list-subscribe:content-type
+         :content-transfer-encoding;
+        bh=8odfWy4ydxiqZCSOA/OjHgg/o9AEB15kL3ZeYqORlZs=;
+        b=p5Bl7f8o2mlwxAOafdwgPq6KEo3GFA9GNbJETmgcRJDbDLY29zbEHJDGdL0sjNTW0W
+         qcKPuMj4QmAiKVchn6mNyolAZCk3SXIuYsF+o5DYgX/tqe6FObSUkayUVzkTZfHHTvG8
+         e5zGJwylXIPu5ItC3N7nlTPvvdZUf8dmape4Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=BRdcLJW8LgFWZmRQyo6dshLr1Sq5IZfGriBaihC3Y0tTATXXzzFRTOPpjTsf3nJ3Su
-         +KbmleDFjdw90A7WmUBLugcQcadJ6wbfqhXVb48hrdtLFLm+1C9oC0iZhTh8CxKf4d9G
-         uRhHAYAc6vCyWvrMsONns3nQ1Y2uHEjuhwWf4=
-Received: by 10.91.215.7 with SMTP id s7mr3383782agq.81.1263639620113; Sat, 16 
-	Jan 2010 03:00:20 -0800 (PST)
-In-Reply-To: <201001161120.14846.trast@student.ethz.ch>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137221>
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc
+         :x-original-authentication-results:x-original-sender:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
+         :x-message-url:sender:list-unsubscribe:list-subscribe:content-type
+         :content-transfer-encoding;
+        b=Q2fznByNmG7w9z9WfxvSgbUMEjQQN7NZ3OtMPHCT9IMHMpNH6o64Abg18kG7z6TI99
+         1zk9/j8JRA94mIn3oHLt9B7UXf3x4Saz83AILebiMD5KdLOtrlbAzs3RiXgrTCQkqBAA
+         pHxYIj/+P+NBMyJgkMJv7/64DcEdmd4+mTLeU=
+Received: by 10.101.141.11 with SMTP id t11mr270446ann.12.1263639912377;
+        Sat, 16 Jan 2010 03:05:12 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.213.39.202 with SMTP id h10ls798418ebe.2.p; Sat, 16 Jan 2010 
+	03:05:11 -0800 (PST)
+Received: by 10.213.50.137 with SMTP id z9mr24099ebf.3.1263639911025;
+        Sat, 16 Jan 2010 03:05:11 -0800 (PST)
+Received: by 10.213.50.137 with SMTP id z9mr24098ebf.3.1263639910998;
+        Sat, 16 Jan 2010 03:05:10 -0800 (PST)
+Received: from mail-ew0-f214.google.com (mail-ew0-f214.google.com [209.85.219.214])
+        by gmr-mx.google.com with ESMTP id 17si92069ewy.15.2010.01.16.03.05.09;
+        Sat, 16 Jan 2010 03:05:09 -0800 (PST)
+Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 209.85.219.214 as permitted sender) client-ip=209.85.219.214;
+Received: by ewy6 with SMTP id 6so1755186ewy.29
+        for <msysgit@googlegroups.com>; Sat, 16 Jan 2010 03:05:09 -0800 (PST)
+Received: by 10.216.86.80 with SMTP id v58mr1176029wee.40.1263639909578; Sat, 
+	16 Jan 2010 03:05:09 -0800 (PST)
+In-Reply-To: <201001161138.36535.j6t@kdbg.org>
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: 
+	domain of kusmabite@googlemail.com designates 209.85.219.214 as permitted 
+	sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) 
+	header.i=@googlemail.com
+X-Original-Sender: kusmabite@googlemail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+List-Post: <http://groups.google.com/group/msysgit/post?hl=>, 
+	<mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=>
+X-Thread-Url: http://groups.google.com/group/msysgit/t/43ea563cecdc45de
+X-Message-Url: http://groups.google.com/group/msysgit/msg/cea5bde711022641
+Sender: msysgit@googlegroups.com
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=>, 
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=>, 
+	<mailto:msysgit+subscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137222>
 
-Hi,
+On Sat, Jan 16, 2010 at 11:38 AM, Johannes Sixt <j6t@kdbg.org> wrote:
+> On Samstag, 16. Januar 2010, Erik Faye-Lund wrote:
+>> On Sat, Jan 16, 2010 at 9:06 AM, Johannes Sixt <j6t@kdbg.org> wrote:
+>> > On Samstag, 16. Januar 2010, Erik Faye-Lund wrote:
+>> >> +static inline void mingw_fd_set(int fd, fd_set *set)
+>> >> +{
+>> >> + =A0 =A0 FD_SET(_get_osfhandle(fd), set);
+>> >> +}
+>> >> =A0#undef FD_SET
+>> >> +#define FD_SET(a,b) mingw_fd_set(a,b)
+>> >> +
+>> >> =A0#undef FD_ISSET
+>> >> =A0#define FD_ISSET(fd, set) __WSAFDIsSet(_get_osfhandle(fd), (fd_set
+>> >> *)(set))
+>> >
+>> > Ah, yes, how obvious ;) You are going to do the same with FD_ISSET as
+>> > well, aren't you?
+>>
+>> Do I really need to? There's already a single function for that, with
+>> no "ugly hidden internals" there; __WSAFDIsSet() is documented in
+>> MSDN. I mean, Sure... I could... I just don't see the point.
+>
+> __WSAFDIsSet is "ugly hidden internals" and we should not rely on it when=
+ we
+> can use the official FD_ISSET for our own FD_ISSET.
+>
+> -- Hannes
+>
 
-> If not, please tell the debian guys to set ASCIIDOC8=YesPlease when
-> building the docs.
+...but __WSAFDIsSet() seems to be every bit as official on Windows as
+FD_ISSET() (documented in msdn, without any notes not to use it), so I
+still don't really see the point.
 
-Thanks! The Makefile clearly points this out. I'll let the Debian people know.
+However, I don't personally care one way or the other, so just doing
+it is probably less work than convincing you that I don't have to ;)
 
--- Ram
+--=20
+Erik "kusma" Faye-Lund
