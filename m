@@ -1,79 +1,98 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH v3] Add push --set-upstream
-Date: Sun, 17 Jan 2010 02:12:36 +0800
-Message-ID: <be6fef0d1001161012w7ad12730p7cda2d74db732db1@mail.gmail.com>
-References: <1263633827-23720-1-git-send-email-ilari.liusvaara@elisanet.fi>
-	 <20100116203557.95340c00.rctay89@gmail.com>
-	 <20100116134656.GA4504@Knoppix>
-	 <20100116233043.26a5636d.rctay89@gmail.com>
-	 <20100116155612.GA8383@Knoppix>
-	 <be6fef0d1001160813o674ed93dn33843813be6f45be@mail.gmail.com>
+From: Rudolf Polzer <divVerent@alientrap.org>
+Subject: Re: [PATCH v2] Add push --set-upstream
+Date: Sat, 16 Jan 2010 19:13:51 +0100
+Message-ID: <20100116181350.GA28938@rm.endoftheinternet.org>
+References: <1263595630-18962-1-git-send-email-ilari.liusvaara@elisanet.fi> <be6fef0d1001151700se963950i6932d30bae3ca940@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Sat Jan 16 19:12:50 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Miles Bader <miles@gnu.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	git@vger.kernel.org
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 16 19:14:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWD8k-0004FB-B4
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 19:12:50 +0100
+	id 1NWDA7-0004r8-HA
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 19:14:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755958Ab0APSMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jan 2010 13:12:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755957Ab0APSMi
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 13:12:38 -0500
-Received: from mail-iw0-f194.google.com ([209.85.223.194]:40205 "EHLO
-	mail-iw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755252Ab0APSMh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jan 2010 13:12:37 -0500
-Received: by iwn32 with SMTP id 32so1288827iwn.33
-        for <git@vger.kernel.org>; Sat, 16 Jan 2010 10:12:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=xtUmXjK8N04L3WiE1OLJJguZh93pTufggQb930WYXqo=;
-        b=KxV/q3AaXzRRJl2MxY0Oc24MkK7g0ORKCmKNbvnDEI6h36vNOHP5axOBBx5bXFnH+h
-         n31jGH04+vkfIAha8VUEQSiKAabxpjrneeK+mc2yaGY5MVyKyyiGm1SsArn6kDefj1HK
-         NTm0ei3AoGz2tn+RdwrfyKCSEjZsvGtL3p1yw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=sGqyoBRI3111BvtYcy6a5erB6pmsPUNvd4MAb+s1NUUvFXv0gL6MMljbRMNT+Oxw+5
-         iUgDrODbSzvabynEDS9v8LrBO5haWhL9v8hQB3P4Tfap59T6sIl28pRsxYIVVFC45vtI
-         01gGBT95xN+1X1pYsU3qaaOJMvfX02gMUVi7E=
-Received: by 10.231.147.78 with SMTP id k14mr502373ibv.11.1263665556752; Sat, 
-	16 Jan 2010 10:12:36 -0800 (PST)
-In-Reply-To: <be6fef0d1001160813o674ed93dn33843813be6f45be@mail.gmail.com>
+	id S1755657Ab0APSOM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Jan 2010 13:14:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752198Ab0APSOM
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 13:14:12 -0500
+Received: from rm.endoftheinternet.org ([94.23.21.40]:37258 "EHLO
+	r23604.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752573Ab0APSOL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jan 2010 13:14:11 -0500
+Received: from rpolzer by r23604.ovh.net with local (Exim 4.69)
+	(envelope-from <divVerent@alientrap.org>)
+	id 1NWD9j-0007cE-Kv; Sat, 16 Jan 2010 19:13:52 +0100
+Content-Disposition: inline
+In-Reply-To: <be6fef0d1001151700se963950i6932d30bae3ca940@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137245>
 
-Hi,
-
-On Sun, Jan 17, 2010 at 12:13 AM, Tay Ray Chuan <rctay89@gmail.com> wrote:
+On Sat, Jan 16, 2010 at 09:00:30AM +0800, Tay Ray Chuan wrote:
 > Hi,
->
-> On Sat, Jan 16, 2010 at 11:56 PM, Ilari Liusvaara
-> <ilari.liusvaara@elisanet.fi> wrote:
->> Hmm... In what conditions ref->status is 'none' after push operation
->> has completed?
->
-> when a match between a local and remote ref is not found.
->
-> For example, the local ref 'master' will match the remote ref
-> 'master', but not 'retsam' ('master' spelled in reverse).
+>=20
+> I'm adding people from the "git push --track" thread here, since this
+> feature is related to what they want.
+>=20
+> (sorry for any line-wrap mangling in the patch.)
 
-I'd like to add that in this case ('none'), no data is pushed to the
-remote repo.
+Looks perfect to me, and if people want it, one could add the same opti=
+on as an
+alias to the current --track option to the checkout and branch commands=
+=2E
 
-This is true for 'uptodate' too, and shouldn't be taken as an error.
+> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* Chase symbolic refs (mainly for HE=
+AD). */
+> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 localname =3D i->peer_ref->name;
+> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 remotename =3D i->name;
+> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 tmp =3D resolve_ref(localname, sha, 1=
+, &flag);
+> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (tmp && flag & REF_ISSYMREF &&
+> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 !prefixcmp(tmp, "refs=
+/heads/"))
+> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 localname =3D tmp;
 
--- 
-Cheers,
-Ray Chuan
+I would never have thought of that case - good catch.
+
+> > @@ -974,6 +1016,10 @@ int transport_push(struct transport *transpor=
+t,
+> > =A0 =A0 =A0 =A0verify_remote_names(refspec_nr, refspec);
+> >
+> > =A0 =A0 =A0 =A0if (transport->push) {
+> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* Maybe FIXME. But no important tran=
+sport uses this case. */
+> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (flags & TRANSPORT_PUSH_SET_UPSTRE=
+AM)
+> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("This transport d=
+oes not support using --set-upstream");
+> > +
+
+That's ONE way to do it - and seriously, I don't know if anyone uses th=
+at
+transport :P
+
+However, one possible improvement for this case would be setting ALL pu=
+shed
+refs as tracking if the push succeeded, and none otherwise.
+
+Are new transports going to be added that use transport->push, or is th=
+at
+interface deprecated anyway?
+
+Best regards,
+
+Rudolf Polzer
