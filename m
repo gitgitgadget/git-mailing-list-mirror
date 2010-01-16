@@ -1,155 +1,158 @@
-From: David Aguilar <davvid@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] grep --no-index: allow use of "git grep" outside a git
-	repository
-Date: Fri, 15 Jan 2010 22:51:36 -0800
-Message-ID: <20100116065135.GA15104@gmail.com>
-References: <201001131713.05505.agruen@suse.de> <7vfx69k0bu.fsf@alter.siamese.dyndns.org> <20100115223259.6117@nanako3.lavabit.com> <7vska71br0.fsf@alter.siamese.dyndns.org> <7vzl4fum3r.fsf_-_@alter.siamese.dyndns.org> <20100115210854.GA21540@coredump.intra.peff.net> <7vwrzin9jt.fsf@alter.siamese.dyndns.org> <20100116011512.GA27082@coredump.intra.peff.net> <7vpr5ait1m.fsf@alter.siamese.dyndns.org>
+ repository
+Date: Fri, 15 Jan 2010 23:21:57 -0800
+Message-ID: <7v1vhqfrai.fsf@alter.siamese.dyndns.org>
+References: <201001131713.05505.agruen@suse.de>
+ <7vfx69k0bu.fsf@alter.siamese.dyndns.org>
+ <20100115223259.6117@nanako3.lavabit.com>
+ <7vska71br0.fsf@alter.siamese.dyndns.org>
+ <7vzl4fum3r.fsf_-_@alter.siamese.dyndns.org>
+ <20100115210854.GA21540@coredump.intra.peff.net>
+ <7vwrzin9jt.fsf@alter.siamese.dyndns.org>
+ <20100116011512.GA27082@coredump.intra.peff.net>
+ <7vpr5ait1m.fsf@alter.siamese.dyndns.org> <20100116065135.GA15104@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
 	Nanako Shiraishi <nanako3@lavabit.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 16 07:51:53 2010
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 16 08:23:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NW2Vl-0007jt-3t
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 07:51:53 +0100
+	id 1NW304-0005Uy-DP
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 08:23:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751518Ab0APGvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jan 2010 01:51:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751393Ab0APGvs
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 01:51:48 -0500
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:45120 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751288Ab0APGvr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jan 2010 01:51:47 -0500
-Received: by ywh6 with SMTP id 6so1177948ywh.4
-        for <git@vger.kernel.org>; Fri, 15 Jan 2010 22:51:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=7dYxc8Ty9Md/TiqwPCz36PLCL/gRmTDEK2PMHKsB1rQ=;
-        b=ZAKh5hjzvZ6hELM9x/761tDrZE501WrQ2zEWaq6B5DcBGFb5vXk5bZ0qEcGHkDg/jF
-         75p2Mypn1IUpkBexvdHgfgTmpyZqZWm7ohvGnDuCUzd9bvJvXEv7FawGIwhqtKj6hhlf
-         FCFJyILfz/CFDmP03BqVv96hH6gL8SfyTBd8k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=jV6nVJ67OVYzhtXE2A2YQ+/KJmWwgs+RtFUhbINSMvkNDV5CGlRIKB65T2DFSiSeCC
-         JIsET6Uushw1lgoBKrYaP9ebMOg+aAV7MAy2va/PFlkWSOkPuow3pHTIWJVnqH/gycg+
-         nBh19b2IUTMk4xRGs3FAaxNiZSA+W3dviP1/c=
-Received: by 10.101.87.11 with SMTP id p11mr2147296anl.73.1263624706386;
-        Fri, 15 Jan 2010 22:51:46 -0800 (PST)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 8sm1140564ywg.34.2010.01.15.22.51.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 15 Jan 2010 22:51:45 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vpr5ait1m.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1751771Ab0APHWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Jan 2010 02:22:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751638Ab0APHWM
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jan 2010 02:22:12 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64475 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751288Ab0APHWL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jan 2010 02:22:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D0F2914B8;
+	Sat, 16 Jan 2010 02:22:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gNZBhG8znb62tUhsgunKa9qy6d0=; b=B7/ADb
+	sPHl2mf2lhz5ARrbYlmStPb8rmdKfovdKB44TekZsipW6hezkRKPogt0T4v3rul+
+	K8N7pV7svEYhqS2ipYks81bPRoKQMKDK6NlgCOmfdWoe4ysegZG0OaPb7BHr3ePU
+	CsfC9deFMtW0UVXBpLdzxg+FkGM+Nb9za/YuU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sj7TNOTGYA8eIxBgYVj7yuW9uU7dQsdb
+	2/ga/og+7mcaPKarscTt7XCFjcd6uD6B3j4tcKUihlDH/dFyLhIWZQ8KBkiq7m6i
+	AOuJ/PK44OwMgPv7AX7KTH+SFiVOm1HNlBU/BnjoBSe6hkSxpFS6SKOhOVusfIEj
+	uA6I2ITH/X8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BEDF0914B6;
+	Sat, 16 Jan 2010 02:22:03 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B7605914B4; Sat, 16 Jan
+ 2010 02:21:58 -0500 (EST)
+In-Reply-To: <20100116065135.GA15104@gmail.com> (David Aguilar's message of
+ "Fri\, 15 Jan 2010 22\:51\:36 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D8469B84-026F-11DF-BF86-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137204>
 
-On Fri, Jan 15, 2010 at 08:15:49PM -0800, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> >>     git grep --all-match -e Junio -e Dscho
-> >
-> > That one is a little harder (though it is not something I do very often,
-> > and I had to actually read the docs to find what --all-match does):
-> >
-> >   grep Junio `grep -l Dscho *`
-> >
-> > which of course has problems with exotic filenames.
-> 
-> Also it doesn't find lines that match Dscho in the result ;-)
-> 
-> Realistically, this most often is used when grepping in the log, e.g.
-> 
->     git log --all-match --author=peff --grep=test
-> 
-> I actually wish "log" to somehow default to --all-match mode at least when
-> using the --author option.  "Change by Jeff, or about test by anybody" is
-> rarely what I would want to look for.
+David Aguilar <davvid@gmail.com> writes:
 
-Kinda like this?
+> On Fri, Jan 15, 2010 at 08:15:49PM -0800, Junio C Hamano wrote:
+>
+>> Realistically, this most often is used when grepping in the log, e.g.
+>> 
+>>     git log --all-match --author=peff --grep=test
+>> 
+>> I actually wish "log" to somehow default to --all-match mode at least when
+>> using the --author option.  "Change by Jeff, or about test by anybody" is
+>> rarely what I would want to look for.
+>
+> Kinda like this?
 
-I originally had it set grep_filter.all_match in --author only,
-but then I thought "why author and not commiter too", so changing
-the default seemed like the natural thing to do.  Or it could be
-a cat brained idea, I dunno ;)
+Not quite.  What I really want is
 
--- -- -- 8< -- -- -- 8< -- -- --
-From 2277a6e512c2f597c6240f06c9e7d5ff83e2fe3f Mon Sep 17 00:00:00 2001
-From: David Aguilar <davvid@gmail.com>
-Date: Fri, 15 Jan 2010 21:18:36 -0800
-Subject: [PATCH] Make --all-match the default in "log" family
+    git log --author=davvid --grep=difftool --grep=mergetool
 
-'git log --author=peff --grep=test' means "search for commits by Jeff,
-or about test by anybody," which is rarely what what we want to do.
-The original behavior can by achieved by specifying --no-all-match.
+to find all commits by you that is about (either diff or mergetool).  I
+think your patch will limit the search only to your patch that talks about
+both of these two tools (not necessarily on the same line, but in the same
+commit).
 
-Reference: http://article.gmane.org/gmane.comp.version-control.git/137197
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- Documentation/rev-list-options.txt |    1 +
- revision.c                         |    3 +++
- t/t7002-grep.sh                    |    2 +-
- 3 files changed, 5 insertions(+), 1 deletions(-)
+The extended "grep" expression parser by default creates a list of OR'ed
+terms.  What --all-match does is to make this top-level chain to mean "all
+of these must trigger somewhere in the whole _document_ (not an individual
+line), for the document to be considered a hit" for the purpose of "grep -l",
+and when used with "log" family, --author/--committer/--grep are used to
+limit the output to commits "grep -l" would say "yes, this document has
+matched".
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 1f57aed..0ce1008 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -179,6 +179,7 @@ endif::git-rev-list[]
- --all-match::
- 	Limit the commits output to ones that match all given --grep,
- 	--author and --committer instead of ones that match at least one.
-+	--all-match is the defaullt and can be disabled with --no-all-match.
- 
- -i::
- --regexp-ignore-case::
-diff --git a/revision.c b/revision.c
-index 25fa14d..64ebdc5 100644
---- a/revision.c
-+++ b/revision.c
-@@ -804,6 +804,7 @@ void init_revisions(struct rev_info *revs, const char *prefix)
- 
- 	revs->commit_format = CMIT_FMT_DEFAULT;
- 
-+	revs->grep_filter.all_match = 1;
- 	revs->grep_filter.status_only = 1;
- 	revs->grep_filter.pattern_tail = &(revs->grep_filter.pattern_list);
- 	revs->grep_filter.regflags = REG_NEWLINE;
-@@ -1222,6 +1223,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->grep_filter.fixed = 1;
- 	} else if (!strcmp(arg, "--all-match")) {
- 		revs->grep_filter.all_match = 1;
-+	} else if (!strcmp(arg, "--no-all-match")) {
-+		revs->grep_filter.all_match = 0;
- 	} else if (!prefixcmp(arg, "--encoding=")) {
- 		arg += 11;
- 		if (strcmp(arg, "none"))
-diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
-index 76c5e09..92ef534 100755
---- a/t/t7002-grep.sh
-+++ b/t/t7002-grep.sh
-@@ -358,7 +358,7 @@ test_expect_success 'log grep (4)' '
- 
- test_expect_success 'log grep (5)' '
- 	git log --author=Thor -F --grep=Thu --pretty=tformat:%s >actual &&
--	( echo third ; echo initial ) >expect &&
-+	: >expect &&
- 	test_cmp expect actual
- '
- 
--- 
-1.6.6.197.g2277
+Currently,
+
+    git log --author=davvid --grep=difftool --grep=mergetool
+
+will parse to a list of three terms:
+
+    GREP_PATTERN_HEAD("^author .*davvid")
+    GREP_PATTERN_BODY("difftool")
+    GREP_PATTERN_BODY("mergetool")
+
+And giving --all-match will require all of these OR'ed terms to appear in
+the commit object.
+
+My dream one will probably has to make a list of two terms as its parse
+tree instead, like this:
+
+    GREP_PATTERN_HEAD("^author .*davvid")
+    GREP_NODE_OR(
+        GREP_PATTERN_BODY("difftool")
+        GREP_PATTERN_BODY("mergetool")
+    )           
+
+and then run it with --all-match semantics.  The top-level consists of two
+terms, and they both must hit, but the second term is an OR'ed one.
+
+It is unclear how we would want to throw the committer in the mix.  If we
+make this parse tree:
+
+    GREP_PATTERN_HEAD("^author .*davvid")
+    GREP_PATTERN_HEAD("^committer .*gitster")
+    GREP_NODE_OR(
+        GREP_PATTERN_BODY("difftool")
+        GREP_PATTERN_BODY("mergetool")
+    )           
+
+we would be looking for your patch about either diff or mergetool _and_
+it has to be committed by me.  On the other hand, if we do this:
+
+    GREP_NODE_OR(
+        GREP_PATTERN_HEAD("^author .*davvid")
+        GREP_PATTERN_HEAD("^committer .*gitster")
+    )
+    GREP_NODE_OR(
+        GREP_PATTERN_BODY("difftool")
+        GREP_PATTERN_BODY("mergetool")
+    )           
+
+we would be looking for a patch about (either diff or mergetool) _and_
+(either committed by me or written by you).
+
+I think the former makes more sense in _our_ project (because there are
+very few committers), but in the context of other projects, e.g. the Linux
+kernel, you may want to give "Linus" to both --author and --committer to
+track what he did (either as an author to some other subsystem, or as the
+top-level integrator for the entire system), and for such a use case, the
+latter would make more sense.
+
+Unfortunately, the parsing of --grep/--author/--committer options to the
+log family is quite limited (you cannot give --and, --or and --not, for
+example), and it would be hard to express these distinction.
