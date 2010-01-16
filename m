@@ -1,64 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Add push --set-upstream
-Date: Fri, 15 Jan 2010 15:53:38 -0800
-Message-ID: <7vfx66sz5p.fsf@alter.siamese.dyndns.org>
-References: <1263595630-18962-1-git-send-email-ilari.liusvaara@elisanet.fi>
- <7vzl4frl7i.fsf@alter.siamese.dyndns.org>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: [RFC] Git Wiki Move
+Date: Fri, 15 Jan 2010 16:02:31 -0800
+Message-ID: <4B510217.8060200@eaglescrag.net>
+References: <20100113232908.GA3299@machine.or.cz> <20100114012449.GB3299@machine.or.cz> 	<4B4EF1E0.3040808@eaglescrag.net> <vpqbpgxrn32.fsf@bauges.imag.fr> 	<4B4F68E8.5050809@eaglescrag.net> <4B50F7DB.7020204@eaglescrag.net> <fabb9a1e1001151521s1837b3d5o2a35cb5bb35c8038@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 16 00:53:52 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 16 01:02:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NVvzD-00015L-QR
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 00:53:52 +0100
+	id 1NVw7m-0003vI-A7
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jan 2010 01:02:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758632Ab0AOXxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2010 18:53:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758428Ab0AOXxs
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 18:53:48 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53537 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755901Ab0AOXxs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2010 18:53:48 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EABB991A58;
-	Fri, 15 Jan 2010 18:53:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uOrViXUFT6U3ZwGthW1ILnzOIjw=; b=CacDR4
-	zuHrntfKbgzT6WHouCcT3UBukgKU95o1eldKIoS6ediNVEC476edcP0FgJ1yI16H
-	in9mMcvvF3J9/Jl8WnkOP7yPtioKfz+R31dCfECsW3uaBLEqW+ibDvWAPPYUbCZ7
-	SnROUE755j+OdtNSlyZJYA7OccaKp2wGi9upM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Qav08Xbu9ISHIXwg255MeEP5SJjeIMNe
-	x0jTjzzva2OUFnlnHAoEyA/Chwgn68MO5AHOPD4wDt67yrBBPXMMdHfC/P1jJpPb
-	dl7tk4ms9sZTANxOcBv6YW/Kf+CduqnkEtUwkYYGm15jH+LBTR7xbjDUXy/8m6Xc
-	N/WKMAIBojA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C2C1D91A55;
-	Fri, 15 Jan 2010 18:53:43 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 02D5D91A51; Fri, 15 Jan
- 2010 18:53:39 -0500 (EST)
-In-Reply-To: <7vzl4frl7i.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri\, 15 Jan 2010 15\:40\:17 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 36A19FCE-0231-11DF-AA18-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758694Ab0APACi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2010 19:02:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758665Ab0APACi
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jan 2010 19:02:38 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:58593 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758661Ab0APACh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2010 19:02:37 -0500
+Received: from voot-cruiser.eaglescrag.net (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o0G02VG7001929
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Fri, 15 Jan 2010 16:02:31 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091209 Fedora/3.0-4.fc12 Lightning/1.0pre Thunderbird/3.0
+In-Reply-To: <fabb9a1e1001151521s1837b3d5o2a35cb5bb35c8038@mail.gmail.com>
+X-Enigmail-Version: 1.0
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Fri, 15 Jan 2010 16:02:32 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137166>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 01/15/2010 03:21 PM, Sverre Rabbelier wrote:
+> Heya,
+> 
+> On Sat, Jan 16, 2010 at 00:18, J.H. <warthog19@eaglescrag.net> wrote:
+>> Quick update - I think I've got the vast majority of the obvious and
+>> simple to correct problems fixed at http://git.wiki.kernel.org anyone
+>> want to run through and see if there's anything else that would be
+>> considered a show stopper?
+> 
+> I'd say it's pretty embarassing if our FAQ [0] is broken. Don't have
+> the time to fix it manually atm though :(.
+> 
+> [0] http://git.wiki.kernel.org/index.php/GitFaq
 
->         # Ok let's do it for real.
->         git push    --track there this
+If you can be more specific I can go through and fix it...  There's some
+extraneous bits on the page that I haven't figured out what they were
+for originally but most everything on the page seems to work fine for me...
 
-Ugh; s/--track/--set-upstream/, of course.
+Like I said I'm not claiming it's completely 100% accurate in the
+transition, but for a page that's 144K in size it looks like it's
+predominantly correct.
+
+- John 'Warthog9' Hawley
