@@ -1,71 +1,59 @@
-From: Sven Joachim <svenjoac@gmx.de>
-Subject: ambiguous argument '...': unknown revision or path not in the working tree
-Date: Sun, 17 Jan 2010 10:46:15 +0100
-Message-ID: <87ska5vzbs.fsf@turtle.gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/8] Rescuing repeated merge of
+ Documentation/git-merge.txt
+Date: Sun, 17 Jan 2010 02:07:04 -0800
+Message-ID: <7vaawd82pj.fsf@alter.siamese.dyndns.org>
+References: <1263721144-18605-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 17 10:47:03 2010
+X-From: git-owner@vger.kernel.org Sun Jan 17 11:19:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWRio-0005gA-N1
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 10:47:03 +0100
+	id 1NWSDm-00050o-FE
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 11:19:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753783Ab0AQJqS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2010 04:46:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753781Ab0AQJqS
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 04:46:18 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33737 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753778Ab0AQJqQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2010 04:46:16 -0500
-Received: (qmail invoked by alias); 17 Jan 2010 09:46:14 -0000
-Received: from p548652F3.dip.t-dialin.net (EHLO turtle.gmx.de) [84.134.82.243]
-  by mail.gmx.net (mp006) with SMTP; 17 Jan 2010 10:46:14 +0100
-X-Authenticated: #28250155
-X-Provags-ID: V01U2FsdGVkX19C5Ddl/eNCYBAunwxNLPcTUoBaJXIyzvzEjGrT9v
-	PZ1eE+7XgihSl8
-Received: by turtle.gmx.de (Postfix, from userid 1000)
-	id 26A3F35545; Sun, 17 Jan 2010 10:46:15 +0100 (CET)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57999999999999996
+	id S1753624Ab0AQKHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jan 2010 05:07:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753626Ab0AQKHR
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 05:07:17 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45551 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753606Ab0AQKHK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2010 05:07:10 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E6A6E915FB;
+	Sun, 17 Jan 2010 05:07:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7UaREsIbQcCRSJbdoMfep/dWrD8=; b=cH4eSV
+	lDMBoyZo0Aci9G7+bJ5H4lL7Y9bfbu6RK2brfIDG7Rb3XG7qIQ0rG0CYdoZ2IiYx
+	ylhnGV+QHQGDGXRLHODXrcuV9H+DTXZ7ZpI6OH+x88MRe3qsm32E+m0bkgv83Srk
+	cmjpuiqbH2woE9ReuQzIv8Dw4NKTJz3GL5DQY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MgxbYNy2qPEk4FA5tyFzMJsts7cNGsPG
+	EZBc87u2Vqfl335isVosWh58EGU73k5JHvQBkWQn153IGyCzPxmSmjwgcujBU5dS
+	z79y1OHv5jzJQ2cKSd1mR0aX4xX6u9BSgEhyeViqodj8YE5U2Do/Q9CWPDTsdMGG
+	CPLmkOmzock=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C64A6915FA;
+	Sun, 17 Jan 2010 05:07:07 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 19106915F9; Sun, 17 Jan
+ 2010 05:07:05 -0500 (EST)
+In-Reply-To: <1263721144-18605-1-git-send-email-gitster@pobox.com> (Junio C.
+ Hamano's message of "Sun\, 17 Jan 2010 01\:38\:56 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 11F26580-0350-11DF-906B-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137291>
 
-I've got a strange error message in 'git push':
-
-,----
-| % git push
-| Counting objects: 47, done.
-| Delta compression using up to 2 threads.
-| Compressing objects: 100% (24/24), done.
-| Writing objects: 100% (24/24), 4.37 KiB, done.
-| Total 24 (delta 22), reused 0 (delta 0)
-| fatal: ambiguous argument '3bbc6def8a06e4411bee130b811ff9507e90503d:debian/changelog': unknown revision or path not in the working tree.
-| Use '--' to separate paths from revisions
-| To git+ssh://git.debian.org/git/collab-maint/ncurses.git
-|    2fec7db..3bbc6de  HEAD -> upstream
-`----
-
-Indeed debian/changelog is not in the working tree, it is not in the
-current branch (upstream) at all, although it exists in the master
-branch.  Default is to push the current branch:
-
-,----
-| % git config --get push.default 
-| current
-| % git --version
-| git version 1.6.6
-`----
-
-Despite the error message, the push was apparently successful; the
-repository I push to can be found at
-http://git.debian.org/?p=collab-maint/ncurses.git.
-
-Sven
+7th one of the series has a minor nit; I fixed it up before pushing it out
+to 'pu'.
