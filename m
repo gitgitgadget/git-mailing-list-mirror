@@ -1,115 +1,134 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] rm: only refresh entries that we may touch
-Date: Sun, 17 Jan 2010 15:43:13 +0700
-Message-ID: <1263717793-24009-1-git-send-email-pclouds@gmail.com>
-References: <1263481341-28401-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/3] commit: show interesting ident information in
+ summary
+Date: Sun, 17 Jan 2010 00:59:53 -0800
+Message-ID: <7vhbql85ti.fsf@alter.siamese.dyndns.org>
+References: <20100113173408.GA16652@coredump.intra.peff.net>
+ <20100113173951.GC16786@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 17 09:44:13 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Adam Megacz <adam@megacz.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jan 17 10:01:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWQjz-0005Rd-Sd
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 09:44:12 +0100
+	id 1NWR0G-0003Fk-Ao
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 10:01:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753216Ab0AQIoG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Jan 2010 03:44:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753090Ab0AQIoG
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 03:44:06 -0500
-Received: from mail-px0-f182.google.com ([209.85.216.182]:35531 "EHLO
-	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751655Ab0AQIoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2010 03:44:04 -0500
-Received: by pxi12 with SMTP id 12so2348381pxi.33
-        for <git@vger.kernel.org>; Sun, 17 Jan 2010 00:44:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=9euJUzqJ1WNbHX3o4kW9ydpJvSGUK+4tvywt8jeSW/Q=;
-        b=v4PdefM5zt4ifUC+rrvVa23bcikMKg1v9DwcyZkR9sb83wOPEoiajWSGBWARPrqffQ
-         XxTndFGdT7R3Xo6zfuw+lxLei9C81oxs/kiXI2TDsgfKw0kvP706K51c7gllpGWyvpj4
-         Vbline20uROOpmJLc3nPYRkUhuluFUEn8PDwM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=p4RbsWounme218emmyAjJVKY6qfc/OtZ5S7K1tJ3HDULD17EGrclUlorYr7Yl7tKi5
-         PJGNE98c1tNhcWu6j17mFKHkqKNn15iZHeUfgXTfU3KgZ6qcRYBRNfyMCu6Zi3q0N+XO
-         o46mMtrYludt8yih1HtoC0WbrlpfU3/czU5RA=
-Received: by 10.142.6.19 with SMTP id 19mr413106wff.131.1263717842429;
-        Sun, 17 Jan 2010 00:44:02 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.223.107])
-        by mx.google.com with ESMTPS id 22sm3114938pzk.14.2010.01.17.00.44.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 17 Jan 2010 00:44:01 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 17 Jan 2010 15:43:15 +0700
-X-Mailer: git-send-email 1.6.6.181.g5ee6
-In-Reply-To: <1263481341-28401-1-git-send-email-pclouds@gmail.com>
+	id S1753296Ab0AQJAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jan 2010 04:00:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753311Ab0AQJAJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 04:00:09 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45853 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752363Ab0AQJAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2010 04:00:08 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 708619115E;
+	Sun, 17 Jan 2010 04:00:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ecIZefh7ehY5ikyo8TSLgZT4IYs=; b=RkgLCh
+	PQT/rfFqSgcprfLkhRVpeRVKJsGqHHtjCi4YjuyqtY0A7LW1eE4oP2Fk9T7uIaex
+	2Sz6w1wAhG6wY9HVldiqOw4Jwi5KOXzQSGmCtINia+swU9rSzus361Qp4Foed2/Z
+	e2loke85jDo6ZQ2qzVXgPASNuTk6dlRvyANcc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xOV61y7xW1MOvmQLex8c6S/mCOqEdDKg
+	jZHMVyo15IqpjI6ipXNwalUT18DxqHDfYshf7qZBiI52KotQ3Z0rPdKkmBrzA78W
+	AuMHGKSt5Yy2xwOnqiqDjygSLl/r2CMlBhwn53Xgs3CIi0gtOjo3eaaAIE4tZ8fy
+	4Os3v88knK0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 31B4C91156;
+	Sun, 17 Jan 2010 04:00:00 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B112691155; Sun, 17 Jan
+ 2010 03:59:54 -0500 (EST)
+In-Reply-To: <20100113173951.GC16786@coredump.intra.peff.net> (Jeff King's
+ message of "Wed\, 13 Jan 2010 12\:39\:51 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B14E88D4-0346-11DF-AB56-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137280>
 
-This gets rid of the whole tree cache refresh. Instead only path that
-we touch will get refreshed. We may still lstat() more than needed,
-but it'd be better playing safe.
+Jeff King <peff@peff.net> writes:
 
-This potentially reduces a large number of lstat() on big trees. Take
-gentoo-x86 tree for example, which has roughly 80k files:
+> @@ -1046,9 +1058,12 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+>  {
+>  	struct rev_info rev;
+>  	struct commit *commit;
+> -	static const char *format = "format:%h] %s";
+> +	struct strbuf format = STRBUF_INIT;
+>  	unsigned char junk_sha1[20];
+>  	const char *head = resolve_ref("HEAD", junk_sha1, 0, NULL);
+> +	struct pretty_print_context pctx = {0};
+> +	struct strbuf author_ident = STRBUF_INIT;
+> +	struct strbuf committer_ident = STRBUF_INIT;
+>  
+>  	commit = lookup_commit(sha1);
+>  	if (!commit)
+> @@ -1056,6 +1071,23 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+>  	if (!commit || parse_commit(commit))
+>  		die("could not parse newly created commit");
+>  
+> +	strbuf_addstr(&format, "format:%h] %s");
+> + ...
+> +	if (strbuf_cmp(&author_ident, &committer_ident)) {
+> +		strbuf_addstr(&format, "\n Author: ");
+> +		strbuf_addbuf_percentquote(&format, &author_ident);
+> +	}
+> +	if (!user_ident_explicitly_given) {
+> +		strbuf_addstr(&format, "\n Committer: ");
+> +		strbuf_addbuf_percentquote(&format, &committer_ident);
+> +		strbuf_addch(&format, '\n');
+> +		strbuf_addstr(&format, implicit_ident_advice);
+> +	}
+> + ...
+> -	get_commit_format(format, &rev);
+> +	get_commit_format(format.buf, &rev);
+> +	strbuf_release(&format);
+>  	rev.always_show_header = 0;
+>  	rev.diffopt.detect_rename = 1;
+>  	rev.diffopt.rename_limit = 100;
 
-Unmodified Git:
+This prepares the user format for log_tree_commit(); get_commit_format()
+copies it away in its userformat, so it appears we are done with format
+strbuf we built, and we release...
 
-$ time git rm --cached skel.ebuild
-rm 'skel.ebuild'
+> @@ -1085,7 +1118,7 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+>  		struct pretty_print_context ctx = {0};
+>  		struct strbuf buf = STRBUF_INIT;
+>  		ctx.date_mode = DATE_NORMAL;
+> -		format_commit_message(commit, format + 7, &buf, &ctx);
+> +		format_commit_message(commit, format.buf + 7, &buf, &ctx);
+>  		printf("%s\n", buf.buf);
 
-real    0m1.441s
-user    0m0.821s
-sys     0m0.531s
+But sometimes log_tree_commit() doesn't show the header.  Most notably for
+merges.  What string are we using for format_commit_message()?  Oops.
 
-Modified Git:
-
-$ time ~/w/git/git rm --cached skel.ebuild
-rm 'skel.ebuild'
-
-real    0m0.941s
-user    0m0.828s
-sys     0m0.091s
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- In the previous attempt, refresh_cache_entry() returns a new cache_ent=
-ry.
- It does not modify the_index, so tests failed.
-
- builtin-rm.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-rm.c b/builtin-rm.c
-index 57975db..f3772c8 100644
---- a/builtin-rm.c
-+++ b/builtin-rm.c
-@@ -169,9 +169,10 @@ int cmd_rm(int argc, const char **argv, const char=
- *prefix)
-=20
- 	if (read_cache() < 0)
- 		die("index file corrupt");
--	refresh_cache(REFRESH_QUIET);
-=20
- 	pathspec =3D get_pathspec(prefix, argv);
-+	refresh_index(&the_index, REFRESH_QUIET, pathspec, NULL, NULL);
-+
- 	seen =3D NULL;
- 	for (i =3D 0; pathspec[i] ; i++)
- 		/* nothing */;
---=20
-1.6.6.181.g5ee6
+diff --git a/builtin-commit.c b/builtin-commit.c
+index a73a532..7f61e87 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -1013,7 +1013,6 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+ 	rev.verbose_header = 1;
+ 	rev.show_root_diff = 1;
+ 	get_commit_format(format.buf, &rev);
+-	strbuf_release(&format);
+ 	rev.always_show_header = 0;
+ 	rev.diffopt.detect_rename = 1;
+ 	rev.diffopt.rename_limit = 100;
+@@ -1036,6 +1035,7 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+ 		printf("%s\n", buf.buf);
+ 		strbuf_release(&buf);
+ 	}
++	strbuf_release(&format);
+ }
+ 
+ static int git_commit_config(const char *k, const char *v, void *cb)
