@@ -1,82 +1,85 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 5/8] rerere: use ll_merge() instead of using xdl_merge()
-Date: Sun, 17 Jan 2010 12:52:38 +0100
-Message-ID: <201001171252.38826.j6t@kdbg.org>
-References: <1263721144-18605-1-git-send-email-gitster@pobox.com> <1263721144-18605-6-git-send-email-gitster@pobox.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC] Git Wiki Move
+Date: Sun, 17 Jan 2010 13:00:57 +0100
+Message-ID: <vpqwrzhszye.fsf@bauges.imag.fr>
+References: <20100113232908.GA3299@machine.or.cz>
+	<20100114012449.GB3299@machine.or.cz>
+	<4B4EF1E0.3040808@eaglescrag.net> <vpqbpgxrn32.fsf@bauges.imag.fr>
+	<4B4F68E8.5050809@eaglescrag.net> <4B50F7DB.7020204@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 17 12:57:02 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: "J.H." <warthog19@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Sun Jan 17 13:03:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWTkb-0006os-3R
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 12:57:01 +0100
+	id 1NWTqr-0000TF-2f
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 13:03:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751863Ab0AQLxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2010 06:53:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751504Ab0AQLxn
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 06:53:43 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:46381 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750783Ab0AQLxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2010 06:53:42 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id AA2F6A7EBA;
-	Sun, 17 Jan 2010 12:53:37 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 2D19319F5BF;
-	Sun, 17 Jan 2010 12:52:39 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <1263721144-18605-6-git-send-email-gitster@pobox.com>
-Content-Disposition: inline
+	id S1751896Ab0AQMCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jan 2010 07:02:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751852Ab0AQMCM
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 07:02:12 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:42148 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751301Ab0AQMCL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2010 07:02:11 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o0HC0Pcp011517
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 17 Jan 2010 13:00:25 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NWToP-0004xT-Lh; Sun, 17 Jan 2010 13:00:57 +0100
+In-Reply-To: <4B50F7DB.7020204@eaglescrag.net> (J. H.'s message of "Fri\, 15 Jan 2010 15\:18\:51 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 17 Jan 2010 13:00:26 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o0HC0Pcp011517
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1264334426.59566@RsYSDDIgjYqySXj8VPsQlg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137295>
 
-On Sonntag, 17. Januar 2010, Junio C Hamano wrote:
-> This allows us to pay attention to the attribute settings and custom
-> merge driver the user sets up.
+"J.H." <warthog19@eaglescrag.net> writes:
 
-I do not think that this change is necessary; I even think that it is wrong, 
-in particular, custom merge drivers should *not* be used anymore.
+> Quick update - I think I've got the vast majority of the obvious and
+> simple to correct problems fixed at http://git.wiki.kernel.org anyone
+> want to run through and see if there's anything else that would be
+> considered a show stopper?
 
-The code path is about merging the changes between preimage and postimage into 
-a file that has conflict markers (thisimage). At the time when this happens, 
-all three images have already been processed by the custom merge driver.
+The main page is locked, and there are some broken links formatting in
+the News section: http://git.wiki.kernel.org/index.php/Main_Page#News
+I'm user "Moy" there if you want to let me fix them.
 
-Consider this preimage:
+You should set $wgLogo to some Git logo, among
+http://git.or.cz/gitwiki/GitRelatedLogos
 
-<foo><bar>
-<<<<<<<
-</bar>
-=======
-<baz>
-text
-</baz></bar>
->>>>>>>
-<more text="here" />
-</foo>
+You can also add a few links to the sidebar, by editting:
+http://git.wiki.kernel.org/index.php/MediaWiki:Sidebar
 
-and a custom XML merge driver. With your change, you expect that the merge 
-driver knows how to treat syntactically incorrect XML (the "<<<<<<<" 
-and ">>>>>>>").
+(it seems I don't have permission to do it myself). I suggest taking
+the ones of the front-page:
 
-Of course, without this change, we do expect that the postimage has 
-practically everything outside the conflict markers unchanged[*], otherwise 
-the ll_merge() will fail.
+* Starting points
+** Installation|Installation
+** InterfacesFrontendsAndTools|Git Tools
+** GitDocumentation|Git Documentation
+** GitCommunity|Git Community Support
+** GitProjects|Projects using Git
+** GitFaq|FAQ
+** GitHosting|Git Hosting
+** GitLinks|Git Links
+** GitComparison|Git Compared
 
-But so would a custom XML driver that does not know how to read conflict 
-markers.
-
-[*] Which is perhaps an assumption that is easily violated. For example, the 
-XML editor used to resolve the conflict could have inserted line-breaks at 
-completely different spots than in the conflicted preimage.
-
--- Hannes
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
