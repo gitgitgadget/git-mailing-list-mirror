@@ -1,91 +1,98 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCHv11 05/20] Notes API: add_note(): Add note objects to the
- internal notes tree structure
-Date: Sun, 17 Jan 2010 22:04:22 +0100
-Message-ID: <1263762277-31419-6-git-send-email-johan@herland.net>
-References: <1263762277-31419-1-git-send-email-johan@herland.net>
+From: =?UTF-8?B?0JLQmtC+0L3RgtCw0LrRgtC1LtGA0YM=?= <admin@vkontakte.ru>
+Subject: =?UTF-8?B?0KHQsNC90Y8gKioqIFRpLTMgKioqINCR0YPRgNC40Lwg0LTQvtCx0LDQstC4?=
+ =?UTF-8?B?0Lsg0JLQsNGBINCyINC00YDRg9C30YzRjyDQvdCwINGB0LDQudGC0LUg0JLQ?=
+ =?UTF-8?B?mtC+0L3RgtCw0LrRgtC1LtGA0YM=?=
+Date: Mon, 18 Jan 2010 00:17:34 +0300
+Message-ID: <6f9068365ae0a6911bfc33b36e17175f@localhost.localdomain>
+Reply-To: "Pavel Durov, inContact.ru Admin" <admin@vkontakte.ru>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, johan@herland.net
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Jan 17 22:06:44 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?B?0JfQtNGA0LDQstGB0YLQstGD0LnRgtC1?= <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 17 22:17:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWcKR-0007dl-0q
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 22:06:35 +0100
+	id 1NWcVF-0002z4-4q
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 22:17:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754841Ab0AQVGZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2010 16:06:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754765Ab0AQVFL
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 16:05:11 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:56203 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754739Ab0AQVFF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Jan 2010 16:05:05 -0500
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KWE002JHT8DY850@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Sun, 17 Jan 2010 22:05:01 +0100 (MET)
-Received: from localhost.localdomain ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KWE00CILT85S310@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Sun, 17 Jan 2010 22:05:01 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2010.1.17.205416
-X-Mailer: git-send-email 1.6.6.rc1.321.g0496e
-In-reply-to: <1263762277-31419-1-git-send-email-johan@herland.net>
+	id S1754870Ab0AQVRi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Jan 2010 16:17:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754325Ab0AQVRh
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 16:17:37 -0500
+Received: from cs23.vkontakte.ru ([93.186.224.23]:34681 "EHLO vkontakte.ru"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752857Ab0AQVRg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2010 16:17:36 -0500
+Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
+	by vkontakte.ru with esmtp (Exim 4.63)
+	(envelope-from <admin@vkontakte.ru>)
+	id 1NWcV4-00058J-LV
+	for git@vger.kernel.org; Mon, 18 Jan 2010 00:17:34 +0300
+X-Priority: 3
+X-Mailer: PHPMailer [version 1.73]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137342>
+X-Spam-Report: 8.1 points;
+ *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
+ *      [cf:  64]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+ *  0.1 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: vk.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137343>
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
- notes.c |   11 +++++++++++
- notes.h |    4 ++++
- 2 files changed, 15 insertions(+), 0 deletions(-)
+=D0=97=D0=B4=D1=80=D0=B0=D0=B2=D1=81=D1=82=D0=B2=D1=83=D0=B9=D1=82=D0=B5=
+,
 
-diff --git a/notes.c b/notes.c
-index 3f4ae35..2c0d14e 100644
---- a/notes.c
-+++ b/notes.c
-@@ -368,6 +368,17 @@ void init_notes(const char *notes_ref, int flags)
- 	load_subtree(&root_tree, &root_node, 0);
- }
- 
-+void add_note(const unsigned char *object_sha1, const unsigned char *note_sha1)
-+{
-+	struct leaf_node *l;
-+
-+	assert(initialized);
-+	l = (struct leaf_node *) xmalloc(sizeof(struct leaf_node));
-+	hashcpy(l->key_sha1, object_sha1);
-+	hashcpy(l->val_sha1, note_sha1);
-+	note_tree_insert(&root_node, 0, l, PTR_TYPE_NOTE);
-+}
-+
- static unsigned char *lookup_notes(const unsigned char *object_sha1)
- {
- 	struct leaf_node *found = note_tree_find(&root_node, 0, object_sha1);
-diff --git a/notes.h b/notes.h
-index 6b52799..5f22852 100644
---- a/notes.h
-+++ b/notes.h
-@@ -21,6 +21,10 @@
-  */
- void init_notes(const char *notes_ref, int flags);
- 
-+/* Add the given note object to the internal notes tree structure */
-+void add_note(const unsigned char *object_sha1,
-+		const unsigned char *note_sha1);
-+
- /* Free (and de-initialize) the internal notes tree structure */
- void free_notes(void);
- 
--- 
-1.6.6.rc1.321.g0496e
+=D0=A1=D0=B0=D0=BD=D1=8F *** Ti-3 *** =D0=91=D1=83=D1=80=D0=B8=D0=BC =D0=
+=B4=D0=BE=D0=B1=D0=B0=D0=B2=D0=B8=D0=BB =D0=92=D0=B0=D1=81 =D0=B2 =D0=B4=
+=D1=80=D1=83=D0=B7=D1=8C=D1=8F =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82=D0=
+=B5 =D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=83
+
+=D0=92=D1=8B =D0=BC=D0=BE=D0=B6=D0=B5=D1=82=D0=B5 =D0=B7=D0=B0=D0=B9=D1=
+=82=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82 =D0=B8 =D0=BF=D1=80=D0=BE=
+=D1=81=D0=BC=D0=BE=D1=82=D1=80=D0=B5=D1=82=D1=8C =D1=81=D1=82=D1=80=D0=B0=
+=D0=BD=D0=B8=D1=86=D1=8B =D0=92=D0=B0=D1=88=D0=B8=D1=85 =D0=B4=D1=80=D1=
+=83=D0=B7=D0=B5=D0=B9, =D0=B8=D1=81=D0=BF=D0=BE=D0=BB=D1=8C=D0=B7=D1=83=
+=D1=8F
+=D0=92=D0=B0=D1=88 e-mail =D0=B8 =D0=B0=D0=B2=D1=82=D0=BE=D0=BC=D0=B0=D1=
+=82=D0=B8=D1=87=D0=B5=D1=81=D0=BA=D0=B8 =D1=81=D0=BE=D0=B7=D0=B4=D0=B0=D0=
+=BD=D0=BD=D1=8B=D0=B9 =D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8C: OO8EmDtI
+
+=D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=83 - =D1=
+=81=D0=B0=D0=B9=D1=82, =D0=BA=D0=BE=D1=82=D0=BE=D1=80=D1=8B=D0=B9 =D0=B5=
+=D0=B6=D0=B5=D0=B4=D0=BD=D0=B5=D0=B2=D0=BD=D0=BE =D0=BF=D0=BE=D0=B7=D0=B2=
+=D0=BE=D0=BB=D1=8F=D0=B5=D1=82 =D0=B4=D0=B5=D1=81=D1=8F=D1=82=D0=BA=D0=B0=
+=D0=BC =D0=BC=D0=B8=D0=BB=D0=BB=D0=B8=D0=BE=D0=BD=D0=BE=D0=B2 =D0=BB=D1=
+=8E=D0=B4=D0=B5=D0=B9 =D0=BD=D0=B0=D1=85=D0=BE=D0=B4=D0=B8=D1=82=D1=8C =
+=D1=81=D1=82=D0=B0=D1=80=D1=8B=D1=85 =D0=B4=D1=80=D1=83=D0=B7=D0=B5=D0=B9=
+ =D0=B8 =D0=BE=D1=81=D1=82=D0=B0=D0=B2=D0=B0=D1=82=D1=8C=D1=81=D1=8F =D1=
+=81 =D0=BD=D0=B8=D0=BC=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B2=D1=8F=D0=B7=D0=B8=
+, =D0=B4=D0=B5=D0=BB=D0=B8=D1=82=D1=8C=D1=81=D1=8F =D1=84=D0=BE=D1=82=D0=
+=BE=D0=B3=D1=80=D0=B0=D1=84=D0=B8=D1=8F=D0=BC=D0=B8
+=D0=B8 =D1=81=D0=BE=D0=B1=D1=8B=D1=82=D0=B8=D1=8F=D0=BC=D0=B8 =D0=B8=D0=
+=B7 =D0=B6=D0=B8=D0=B7=D0=BD=D0=B8.
+
+=D0=A7=D1=82=D0=BE=D0=B1=D1=8B =D0=B2=D0=BE=D0=B9=D1=82=D0=B8 =D0=BD=D0=
+=B0 =D1=81=D0=B0=D0=B9=D1=82, =D0=BF=D1=80=D0=BE=D0=B9=D0=B4=D0=B8=D1=82=
+=D0=B5 =D0=BF=D0=BE =D1=81=D1=81=D1=8B=D0=BB=D0=BA=D0=B5:
+http://vk.com/login.php?regemail=3Dgit@vger.kernel.org#OO8EmDtI
+
+=D0=92=D0=BD=D0=B8=D0=BC=D0=B0=D0=BD=D0=B8=D0=B5: =D0=92=D0=B0=D1=88=D0=
+=B0 =D1=80=D0=B5=D0=B3=D0=B8=D1=81=D1=82=D1=80=D0=B0=D1=86=D0=B8=D1=8F =
+=D0=BD=D0=B5 =D0=B1=D1=83=D0=B4=D0=B5=D1=82 =D0=B0=D0=BA=D1=82=D0=B8=D0=
+=B2=D0=B8=D1=80=D0=BE=D0=B2=D0=B0=D0=BD=D0=B0, =D0=B5=D1=81=D0=BB=D0=B8=
+ =D0=92=D1=8B =D0=BF=D1=80=D0=BE=D0=B8=D0=B3=D0=BD=D0=BE=D1=80=D0=B8=D1=
+=80=D1=83=D0=B5=D1=82=D0=B5
+=D1=8D=D1=82=D0=BE =D0=BF=D1=80=D0=B8=D0=B3=D0=BB=D0=B0=D1=88=D0=B5=D0=BD=
+=D0=B8=D0=B5.
+
+=D0=96=D0=B5=D0=BB=D0=B0=D0=B5=D0=BC =D1=83=D0=B4=D0=B0=D1=87=D0=B8!
+=D0=A1 =D1=83=D0=B2=D0=B0=D0=B6=D0=B5=D0=BD=D0=B8=D0=B5=D0=BC,
+=D0=90=D0=B4=D0=BC=D0=B8=D0=BD=D0=B8=D1=81=D1=82=D1=80=D0=B0=D1=86=D0=B8=
+=D1=8F =D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=
+=83
