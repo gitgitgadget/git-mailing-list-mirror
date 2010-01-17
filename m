@@ -1,75 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Get rid of refreshing cache after "git commit"?
-Date: Sun, 17 Jan 2010 00:27:28 -0800
-Message-ID: <7vljfx87bj.fsf@alter.siamese.dyndns.org>
-References: <fcaeb9bf1001170016q5e285201r36f6030579cfa605@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] rm: only refresh entries that we may touch
+Date: Sun, 17 Jan 2010 15:43:13 +0700
+Message-ID: <1263717793-24009-1-git-send-email-pclouds@gmail.com>
+References: <1263481341-28401-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 17 09:27:54 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 17 09:44:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWQUC-0001PK-32
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 09:27:52 +0100
+	id 1NWQjz-0005Rd-Sd
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 09:44:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753281Ab0AQI1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2010 03:27:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216Ab0AQI1h
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 03:27:37 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63921 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752162Ab0AQI1h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2010 03:27:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C537491EC2;
-	Sun, 17 Jan 2010 03:27:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ojmHPAynOv0y7DE4gcpNgrJecXY=; b=Bb3L5z
-	xpCP0a6Qfijw7CW36zBPFN1XmFsS5jqErYdKRSEUO2G575hZd5edtkPiQChEewqG
-	HZeSC7/1VBvIenC9STXx+UuOnv1ZC5VZRS6gNoIy9oIwfBImh5MvrPq/Ccfchnz5
-	fUIG57Ney3ko/Jy3yBFPkgcLxUeNLbGP7bqiU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Njqp4ICY2A5EDh951F3iwzQGXpR7ArfT
-	o21jQSiZDY5ot2hMn2aXVWAgJTiNhPxgJbsrZhkA1vKwzIwEPmz4Y+pc8NRpUZ20
-	BO3JgxqVVwBLZdfFHMjEhgx6UwprSfoHUDYfCEGvOU1NqS69yg/W6Gp5XlWxrUOr
-	npVtJ6n+s5g=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E11F91EC1;
-	Sun, 17 Jan 2010 03:27:32 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EDFCC91EC0; Sun, 17 Jan
- 2010 03:27:29 -0500 (EST)
-In-Reply-To: <fcaeb9bf1001170016q5e285201r36f6030579cfa605@mail.gmail.com>
- (Nguyen Thai Ngoc Duy's message of "Sun\, 17 Jan 2010 15\:16\:46 +0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 286FE9BC-0342-11DF-AC0E-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753216Ab0AQIoG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Jan 2010 03:44:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753090Ab0AQIoG
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 03:44:06 -0500
+Received: from mail-px0-f182.google.com ([209.85.216.182]:35531 "EHLO
+	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751655Ab0AQIoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2010 03:44:04 -0500
+Received: by pxi12 with SMTP id 12so2348381pxi.33
+        for <git@vger.kernel.org>; Sun, 17 Jan 2010 00:44:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=9euJUzqJ1WNbHX3o4kW9ydpJvSGUK+4tvywt8jeSW/Q=;
+        b=v4PdefM5zt4ifUC+rrvVa23bcikMKg1v9DwcyZkR9sb83wOPEoiajWSGBWARPrqffQ
+         XxTndFGdT7R3Xo6zfuw+lxLei9C81oxs/kiXI2TDsgfKw0kvP706K51c7gllpGWyvpj4
+         Vbline20uROOpmJLc3nPYRkUhuluFUEn8PDwM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=p4RbsWounme218emmyAjJVKY6qfc/OtZ5S7K1tJ3HDULD17EGrclUlorYr7Yl7tKi5
+         PJGNE98c1tNhcWu6j17mFKHkqKNn15iZHeUfgXTfU3KgZ6qcRYBRNfyMCu6Zi3q0N+XO
+         o46mMtrYludt8yih1HtoC0WbrlpfU3/czU5RA=
+Received: by 10.142.6.19 with SMTP id 19mr413106wff.131.1263717842429;
+        Sun, 17 Jan 2010 00:44:02 -0800 (PST)
+Received: from pclouds@gmail.com ([115.73.223.107])
+        by mx.google.com with ESMTPS id 22sm3114938pzk.14.2010.01.17.00.44.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 17 Jan 2010 00:44:01 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 17 Jan 2010 15:43:15 +0700
+X-Mailer: git-send-email 1.6.6.181.g5ee6
+In-Reply-To: <1263481341-28401-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137279>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+This gets rid of the whole tree cache refresh. Instead only path that
+we touch will get refreshed. We may still lstat() more than needed,
+but it'd be better playing safe.
 
-> Nowadays almost (all?) porcelain commands silently refresh index
-> before doing anything relating to worktree, I wonder if this tradition
-> is still necessary.
+This potentially reduces a large number of lstat() on big trees. Take
+gentoo-x86 tree for example, which has roughly 80k files:
 
-Inside "commit", various checks to see if/how worktree files are changed
-are attempted by the libified diff-files/diff-index and they must be used
-after you refresh the cache entries.
+Unmodified Git:
 
-"git commit" (without paths) does not necessarily have to when you can
-prove that the user never looks at .git/COMMIT_EDITMSG (e.g. "-F file" is
-given without "-e"), but otherwise you need to refresh the index to show
-the correct status in the message buffer.
+$ time git rm --cached skel.ebuild
+rm 'skel.ebuild'
 
-"git commit paths..."  must refresh the named paths (not necessarily the
-whole index), but again you would need the whole index to show the status
-correctly.
+real    0m1.441s
+user    0m0.821s
+sys     0m0.531s
+
+Modified Git:
+
+$ time ~/w/git/git rm --cached skel.ebuild
+rm 'skel.ebuild'
+
+real    0m0.941s
+user    0m0.828s
+sys     0m0.091s
+
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ In the previous attempt, refresh_cache_entry() returns a new cache_ent=
+ry.
+ It does not modify the_index, so tests failed.
+
+ builtin-rm.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-rm.c b/builtin-rm.c
+index 57975db..f3772c8 100644
+--- a/builtin-rm.c
++++ b/builtin-rm.c
+@@ -169,9 +169,10 @@ int cmd_rm(int argc, const char **argv, const char=
+ *prefix)
+=20
+ 	if (read_cache() < 0)
+ 		die("index file corrupt");
+-	refresh_cache(REFRESH_QUIET);
+=20
+ 	pathspec =3D get_pathspec(prefix, argv);
++	refresh_index(&the_index, REFRESH_QUIET, pathspec, NULL, NULL);
++
+ 	seen =3D NULL;
+ 	for (i =3D 0; pathspec[i] ; i++)
+ 		/* nothing */;
+--=20
+1.6.6.181.g5ee6
