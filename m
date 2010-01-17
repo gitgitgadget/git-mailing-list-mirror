@@ -1,60 +1,57 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: [PATCH 0/2] Make it easy to use branch --track on existing
- branch
-Date: Sun, 17 Jan 2010 17:29:12 +0200
-Message-ID: <20100117152912.GA20465@Knoppix>
-References: <1263737212-8101-1-git-send-email-Matthieu.Moy@imag.fr>
- <20100117144031.GA20335@Knoppix>
- <vpqska4n5pr.fsf@bauges.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 3/3] commit: show interesting ident information in
+ summary
+Date: Sun, 17 Jan 2010 11:18:30 -0500
+Message-ID: <20100117161830.GA7153@sigill.intra.peff.net>
+References: <20100113173408.GA16652@coredump.intra.peff.net>
+ <20100113173951.GC16786@coredump.intra.peff.net>
+ <7vhbql85ti.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Jan 17 16:29:42 2010
+Cc: Adam Megacz <adam@megacz.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 17 17:18:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWX4N-00064m-Ha
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 16:29:39 +0100
+	id 1NWXpv-0003lO-8W
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 17:18:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752952Ab0AQP3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2010 10:29:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750743Ab0AQP3d
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 10:29:33 -0500
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:37447 "EHLO
-	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752174Ab0AQP3c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2010 10:29:32 -0500
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 435C718D09E;
-	Sun, 17 Jan 2010 17:29:31 +0200 (EET)
-Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A03C8140A22; Sun, 17 Jan 2010 17:29:31 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id C6CC0158A69;
-	Sun, 17 Jan 2010 17:29:26 +0200 (EET)
+	id S1753636Ab0AQQSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jan 2010 11:18:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753240Ab0AQQSd
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 11:18:33 -0500
+Received: from peff.net ([208.65.91.99]:38157 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753265Ab0AQQSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2010 11:18:33 -0500
+Received: (qmail 25725 invoked by uid 107); 17 Jan 2010 16:23:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 17 Jan 2010 11:23:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Jan 2010 11:18:30 -0500
 Content-Disposition: inline
-In-Reply-To: <vpqska4n5pr.fsf@bauges.imag.fr>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
+In-Reply-To: <7vhbql85ti.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137303>
 
-On Sun, Jan 17, 2010 at 03:53:04PM +0100, Matthieu Moy wrote:
-> Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
+On Sun, Jan 17, 2010 at 12:59:53AM -0800, Junio C Hamano wrote:
+
+> > @@ -1085,7 +1118,7 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+> >  		struct pretty_print_context ctx = {0};
+> >  		struct strbuf buf = STRBUF_INIT;
+> >  		ctx.date_mode = DATE_NORMAL;
+> > -		format_commit_message(commit, format + 7, &buf, &ctx);
+> > +		format_commit_message(commit, format.buf + 7, &buf, &ctx);
+> >  		printf("%s\n", buf.buf);
 > 
-> > [*] Yes, I know you can edit .git/config, but I would want "official sounding"
-> > (read: git remote subcommand) command to edit it (and no, delete & recreate
-> > doesn't do the right thing).
-> 
-> Having a "git remote subcommand" to do the same thing could help too,
-> but it could just come in addition to my patch.
+> But sometimes log_tree_commit() doesn't show the header.  Most notably for
+> merges.  What string are we using for format_commit_message()?  Oops.
 
-Err... That was about changing URL, not about changing tracking branch.
+Ugh. Thank you and good catch.
 
--Ilari
+-Peff
