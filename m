@@ -1,86 +1,110 @@
-From: list@phuk.ath.cx
-Subject: Re: git rm --cached and pull semantics
-Date: Sun, 17 Jan 2010 23:50:02 +0100
-Message-ID: <4B53941A.6020500@phuk.ath.cx>
-References: <4B51EE39.3010401@phuk.ath.cx> <vpq1vhpufec.fsf@bauges.imag.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC] Git Wiki Move
+Date: Mon, 18 Jan 2010 00:06:44 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1001172357420.4985@pacific.mpi-cbg.de>
+References: <20100113232908.GA3299@machine.or.cz> <20100114012449.GB3299@machine.or.cz> <4B4EF1E0.3040808@eaglescrag.net> <vpqbpgxrn32.fsf@bauges.imag.fr> <4B4F68E8.5050809@eaglescrag.net> <4B50F7DB.7020204@eaglescrag.net> <vpqwrzhszye.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Jan 17 23:59:08 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: "J.H." <warthog19@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Mon Jan 18 00:01:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWe5M-0003IR-35
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 23:59:08 +0100
+	id 1NWe7M-0003zO-Gh
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 00:01:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754155Ab0AQW4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2010 17:56:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754139Ab0AQW4r
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 17:56:47 -0500
-Received: from xdsl-78-35-144-86.netcologne.de ([78.35.144.86]:59563 "EHLO
-	horst.phuk.ath.cx" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753994Ab0AQW4q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2010 17:56:46 -0500
-X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Jan 2010 17:56:46 EST
-Received: from [192.168.10.144] (wald.phuk.ath.cx [192.168.10.144])
-	by horst.phuk.ath.cx (Postfix) with ESMTP id 502DC24992D;
-	Sun, 17 Jan 2010 23:49:52 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091230 Thunderbird/3.0
-In-Reply-To: <vpq1vhpufec.fsf@bauges.imag.fr>
+	id S1754641Ab0AQXBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jan 2010 18:01:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754398Ab0AQXBH
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 18:01:07 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42686 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753000Ab0AQXBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2010 18:01:04 -0500
+Received: (qmail invoked by alias); 17 Jan 2010 23:01:01 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp008) with SMTP; 18 Jan 2010 00:01:01 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX189CuUUMLw9Xs15wlWCDABUGSVaCxQfIDpR6sSbys
+	in2DeZzY1pOFIu
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <vpqwrzhszye.fsf@bauges.imag.fr>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.46999999999999997
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137349>
 
-On 01/17/2010 12:42 PM, Matthieu Moy wrote:
-> list@phuk.ath.cx writes:
->
->> Hello everyone,
->>
->> I'm trying to manage and distribute a subset of /etc with git.
->> Therefore, I have * in .gitignore and use git add -f to add files. Now
->> sometimes I want to un-track a file that has been in previous commits,
->> but naturally I don't want the file deleted. I just want git to ignore
->> it again. As I read it, the way to do that is "git rm --cached $file".
->> On the local working tree, that works as expected, but when some remote
->> machine pulls a subsequent commit, it deletes the file from its working
->> tree. But I just want git to ignore the file again, just as it does in
->> the origin repo. How can I do that?
->
-> I'd say there's no way, and there will hardly ever be any :-(.
->
-> Git is purely snapshot-oriented, which means that when you do a "git
-> rm --cached", the next commit doesn't say "this file has been
-> removed", but instead, it says "the file is not here", which can be
-> interpreted as "the file is not here _anymore_" when comparing the
-> commit and its ancestor.
->
-> But as a result, there's no place to store information about _how_ the
-> file was removed. So, for the remote machine doing a "git pull", the
-> merge algorithm just sees that it's not there, and deletes it.
->
-> OTOH, after "git pull", it's rather simple to do something like
->
-> git show HEAD@{1}:your-file.txt > your-file.txt
->
-> to restore it as an untracked file. Maybe it's possible to automate
-> this in a script, but I have no idea how.
->
-Thanks for the clarification. I already suspected that this would
-require extra information to be transmitted. However, wouldn't it make
-sense for the data model to implement this? As far as I can see, the
-non-existence of a special placeholder for files being un-added via rm
---cached effectively breaks the semantics of that statement. That is,
-the behaviour on the local tree is inconsistent with the behaviour on
-trees being pulled. Right now I can't think of a situation where it
-would be desirable that a local "git rm --cached" is equivalent to a
-plain "git rm" in the trees being pulled. We do have that
-differentiation in the UI, so why not implement it consistently?
-I'd be willing to dig into the code and come up with patches, but only
-if somebody tells me the overall concept could be acceptable.
+Hi,
 
-But thanks anyway for your attention so far ;-)
+On Sun, 17 Jan 2010, Matthieu Moy wrote:
+
+> "J.H." <warthog19@eaglescrag.net> writes:
+> 
+> > Quick update - I think I've got the vast majority of the obvious and
+> > simple to correct problems fixed at http://git.wiki.kernel.org anyone
+> > want to run through and see if there's anything else that would be
+> > considered a show stopper?
+> 
+> The main page is locked, and there are some broken links formatting in
+> the News section: http://git.wiki.kernel.org/index.php/Main_Page#News
+> I'm user "Moy" there if you want to let me fix them.
+
+I think I managed to edit them.
+
+> You should set $wgLogo to some Git logo, among
+> http://git.or.cz/gitwiki/GitRelatedLogos
+
+Best would be the standard one: http://git.or.cz/git-logo.png but I would 
+actually also like http://henrik.nyh.se/uploads/git-logo.png.
+
+> You can also add a few links to the sidebar, by editting:
+> http://git.wiki.kernel.org/index.php/MediaWiki:Sidebar
+> 
+> (it seems I don't have permission to do it myself).
+
+You need to be in the Sysop list to do so.  Warthog, if you trust me :-) 
+would you mind adding me to that group?  You can do that by visiting
+
+http://git.wiki.kernel.org/index.php/Special:Userrights
+
+when you are a sysop.
+
+> I suggest taking the ones of the front-page:
+> 
+> * Starting points
+> ** Installation|Installation
+> ** InterfacesFrontendsAndTools|Git Tools
+> ** GitDocumentation|Git Documentation
+> ** GitCommunity|Git Community Support
+> ** GitProjects|Projects using Git
+> ** GitFaq|FAQ
+> ** GitHosting|Git Hosting
+> ** GitLinks|Git Links
+> ** GitComparison|Git Compared
+
+Let's not forget
+
+* navigation
+** mainpage|mainpage-description
+** recentchanges-url|recentchanges
+** randompage-url|randompage
+** helppage|help
+* SEARCH
+* TOOLBOX
+
+BTW there is a file KHTMLFixes.css in the directory skins/monobook/ which 
+makes the layout break with Chromium.  Apparently, it is no longer needed 
+by KHTML anyway.  So could you please replace that file with an empty one, 
+or comment out the offending part, like so:
+
+	/* #column-content { margin-left: 0; } */
+
+Thank you,
+Dscho
