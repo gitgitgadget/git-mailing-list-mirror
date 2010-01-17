@@ -1,168 +1,107 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] git status: Show uncommitted submodule changes too when enabled
-Date: Sun, 17 Jan 2010 20:42:31 +0100
-Message-ID: <4B536827.4070202@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Performance optimization for detection of modified
+ submodules
+Date: Sun, 17 Jan 2010 12:01:24 -0800
+Message-ID: <7vska4xzzf.fsf@alter.siamese.dyndns.org>
+References: <4B4BA096.5000909@web.de>
+ <7vtyusb6rv.fsf@alter.siamese.dyndns.org> <4B4CA13F.6020505@web.de>
+ <7vbpgyqy4a.fsf@alter.siamese.dyndns.org> <4B4E1817.1070202@web.de>
+ <7v6375lkpj.fsf@alter.siamese.dyndns.org> <4B4F8EF1.3080709@web.de>
+ <7v3a288em2.fsf@alter.siamese.dyndns.org> <4B535E97.1020809@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: pkufranky@gmail.com, Git Mailing List <git@vger.kernel.org>,
-	Lars Hjemli <hjemli@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 17 20:42:43 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Lars Hjemli <hjemli@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun Jan 17 21:01:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWb1F-0003dQ-28
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 20:42:41 +0100
+	id 1NWbJi-0001oi-E2
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 21:01:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754588Ab0AQTmh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2010 14:42:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754417Ab0AQTmh
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 14:42:37 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:34817 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752020Ab0AQTmg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2010 14:42:36 -0500
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 447A714524742;
-	Sun, 17 Jan 2010 20:42:35 +0100 (CET)
-Received: from [80.128.115.167] (helo=[192.168.178.26])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1NWb15-000071-00; Sun, 17 Jan 2010 20:42:31 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/nm61bRmzNKzrFE5fpzP/S/tv/k0mPd0pb5vry
-	bT7glNJJaVo1SivIlRu9sqIeVdSayQG5ZSXTYbw+j3QcqRPVtY
-	3PdEAlOQ+aNiQgkhhURg==
+	id S1754393Ab0AQUBm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jan 2010 15:01:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754404Ab0AQUBm
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 15:01:42 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50406 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754329Ab0AQUBl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2010 15:01:41 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BF77591EF6;
+	Sun, 17 Jan 2010 15:01:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OFHdCa1OU/4KIu0Bid3pE0qC/gg=; b=vKOcsc
+	06aVLrq+nI/Xt6U+6vbLIe4HHk2VZw3dTK2M6qtDbrrZOH3qavRzX989zuTmYtSy
+	ZZV/56G0ZkjXHPYS7vLTL9xA5eZdmhBiWjrEy8mLaGXy2R4d2h7H5gDgvvZPNqua
+	W5wTB6uPLXYtg2f5vRV7Qfp14TG+xQ+AVdJvM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hD8ZfPNDbf5ckBf6jr2fiC3kGcpwvR19
+	Pq6+U+9Tveyki3B5q/M1BlE1FiVG3qVP47voIZTsLwrW0wS/swmNKHBj1QrPl+jZ
+	+eqhcgVUw9f/4L/6TgwEyorr2gG0HAirl/Ku3JZ3/iETVf5A4MbLoGSsdG2kKcef
+	LlFdQ8zZ9Tw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 59B9291EEC;
+	Sun, 17 Jan 2010 15:01:33 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3BE4B91EE5; Sun, 17 Jan
+ 2010 15:01:26 -0500 (EST)
+In-Reply-To: <4B535E97.1020809@web.de> (Jens Lehmann's message of "Sun\, 17
+ Jan 2010 20\:01\:43 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1C46AD2C-03A3-11DF-8E0F-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137316>
 
-When the configuration variable status.submodulesummary is not 0 or
-false, "git status" shows the submodule summary of the staged submodule
-commits. But it did not show the summary of those commits not yet
-staged in the supermodule, making it hard to see what will not be
-committed.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-The output of "submodule summary --for-status" has been changed from
-"# Modified submodules:" to "# Submodule changes to be committed:" for
-the already staged changes. "# Submodules changed but not updated:" has
-been added for changes that will not be committed. This is much clearer
-and consistent with the output for regular files.
+> So here is my first attempt of implementing your proposal. The test suite
+> runs fine, but a few more eyeballs would really be appreciated as i am not
+> very familiar with the code and its corner cases (See diff_change(), is it
+> sufficient to only set "two->dirty_submodule", even if the REVERSE_DIFF
+> option is set? Apart from that i am not so sure about the four changes to
+> tree-diff.c).
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+The effect of REVERSE_DIFF bit is contained in the output layer.  The
+order frontends (e.g. diff-files and diff-lib.c::run_diff_files()) feed
+the entries from two hierarchies is not affected.
 
+The current callers of addremove() may always give the work tree side as
+the second one, but the API is meant to be usable by any other new callers
+and for some of them feeding the work tree side as the first one _might_
+be more sensible (we are talking about futureproofing, so by definition we
+won't know).  It might even be the case where an unanticipated new caller
+might be comparing two trees both living in the work tree (hence you might
+require two independent dirty_submodule bits to the call to show which
+side is dirty, and such a caller may say "both sides are dirty").
 
-While looking for ways to teach "git status" how to show dirty
-submodules i came across this functionality. I think the output of
-only the staged submodule changes is not enough, submodule commits
-not staged in the superproject should be shown too (At the time this
-functionality was introduced the "--files" option to "git submodule
-summary" was missing, so there was no way to show the unstaged
-submodule changes back then).
+So it would be most future-proof if you add two independent "dirty" bits
+to the API if you are changing it: "is the left side of the comparision a
+dirty submodule?" and "is the right side ...?".  Especially I don't think
+assuming "setting two->dirty is enough for the current implementation" is
+the right way going forward.
 
+> I think we could skip the call to is_submodule_modified() in
+> run_diff_files() and get_stat_data() when the changed flag is already
+> set and only short output (without calling diff_populate_gitlink(), e.g.
+> "git status -s" or "git diff-files") is requested.
 
- git-submodule.sh             |    6 +++++-
- t/t7401-submodule-summary.sh |    2 +-
- t/t7508-status.sh            |    4 ++--
- wt-status.c                  |   12 +++++++-----
- 4 files changed, 15 insertions(+), 9 deletions(-)
+I am puzzled by your "we could skip"; isn't it what you already have done
+in this patch?  More importantly, I think that is the whole point of the
+change to diff API this patch brings in.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 77d2232..664f217 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -688,7 +688,11 @@ cmd_summary() {
- 		echo
- 	done |
- 	if test -n "$for_status"; then
--		echo "# Modified submodules:"
-+		if [ -n "$files" ]; then
-+			echo "# Submodules changed but not updated:"
-+		else
-+			echo "# Submodule changes to be committed:"
-+		fi
- 		echo "#"
- 		sed -e 's|^|# |' -e 's|^# $|#|'
- 	else
-diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.sh
-index 6cc16c3..d3c039f 100755
---- a/t/t7401-submodule-summary.sh
-+++ b/t/t7401-submodule-summary.sh
-@@ -213,7 +213,7 @@ EOF
- test_expect_success '--for-status' "
-     git submodule summary --for-status HEAD^ >actual &&
-     test_cmp actual - <<EOF
--# Modified submodules:
-+# Submodule changes to be committed:
- #
- # * sm1 $head6...0000000:
- #
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index cf67fe3..556d0fa 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -579,7 +579,7 @@ cat >expect <<EOF
- #
- #	modified:   dir1/modified
- #
--# Modified submodules:
-+# Submodule changes to be committed:
- #
- # * sm 0000000...$head (1):
- #   > Add foo
-@@ -672,7 +672,7 @@ cat >expect <<EOF
- #
- #	modified:   dir1/modified
- #
--# Modified submodules:
-+# Submodule changes to be committed:
- #
- # * sm 0000000...$head (1):
- #   > Add foo
-diff --git a/wt-status.c b/wt-status.c
-index 65feb29..5807fc3 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -459,7 +459,7 @@ static void wt_status_print_changed(struct wt_status *s)
- 	wt_status_print_trailer(s);
- }
+> What do you think
+> about doing that in a seperate patch?
 
--static void wt_status_print_submodule_summary(struct wt_status *s)
-+static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitted)
- {
- 	struct child_process sm_summary;
- 	char summary_limit[64];
-@@ -468,11 +468,11 @@ static void wt_status_print_submodule_summary(struct wt_status *s)
- 	const char *argv[] = {
- 		"submodule",
- 		"summary",
--		"--cached",
-+		uncommitted ? "--files" : "--cached",
- 		"--for-status",
- 		"--summary-limit",
- 		summary_limit,
--		s->amend ? "HEAD^" : "HEAD",
-+		uncommitted ? NULL : (s->amend ? "HEAD^" : "HEAD"),
- 		NULL
- 	};
-
-@@ -580,8 +580,10 @@ void wt_status_print(struct wt_status *s)
- 	wt_status_print_updated(s);
- 	wt_status_print_unmerged(s);
- 	wt_status_print_changed(s);
--	if (s->submodule_summary)
--		wt_status_print_submodule_summary(s);
-+	if (s->submodule_summary) {
-+		wt_status_print_submodule_summary(s, 0);  /* staged */
-+		wt_status_print_submodule_summary(s, 1);  /* unstaged */
-+	}
- 	if (s->show_untracked_files)
- 		wt_status_print_untracked(s);
- 	else if (s->commitable)
--- 
-1.6.6.327.g4c0c1.dirty
+Doing these in this same patch like you did is better, as it demonstrates
+how the callers benefit by the addition of these new bits to the API.
