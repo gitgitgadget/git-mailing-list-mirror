@@ -1,88 +1,197 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/8] rerere: use ll_merge() instead of using xdl_merge()
-Date: Sun, 17 Jan 2010 11:01:23 -0800
-Message-ID: <7v4omk8sjg.fsf@alter.siamese.dyndns.org>
-References: <1263721144-18605-1-git-send-email-gitster@pobox.com>
- <1263721144-18605-6-git-send-email-gitster@pobox.com>
- <201001171252.38826.j6t@kdbg.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] rev-parse --namespace
+Date: Sun, 17 Jan 2010 14:08:27 -0500
+Message-ID: <20100117190827.GA31536@coredump.intra.peff.net>
+References: <1263735931-20227-1-git-send-email-ilari.liusvaara@elisanet.fi>
+ <20100117162712.GB7153@sigill.intra.peff.net>
+ <20100117164057.GA20554@Knoppix>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Jan 17 20:01:43 2010
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Sun Jan 17 20:08:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWaNa-0005VA-IP
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 20:01:42 +0100
+	id 1NWaUQ-00084I-T1
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Jan 2010 20:08:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754169Ab0AQTBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2010 14:01:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752911Ab0AQTBd
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 14:01:33 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47198 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752552Ab0AQTBc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2010 14:01:32 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F1EE9186E;
-	Sun, 17 Jan 2010 14:01:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Uo19rfpWNbcMrqS6RQFQMjj9OCs=; b=XQbdXd
-	GeRN0pyC4OnFzTmKMnmSgUQ4Nu1dnHkSRlvZtsjbkUPjBihyEljngADn3VJdVesQ
-	kI5Eird9zuNUarcu9Ah823BvMdpNgMXTdTV7RvNqIlK6aqDzHFz1FsWVuh0VkbL4
-	ASm1HYzbHsruT+hLaKzz6MyZK7LNEdtJ338Uo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Bc9TQmYzotfecz+mO0cEIYtilTlct6Qi
-	dajiaeexT8KGgRBhEnKOx7BLxJ65j0SWezKBQp4DAXJGdClnp4HJnkmSuk6Hf1ON
-	tfRt+lWU6ST8+KcInrEX87aQThGJeW8vTPOoU+YMN2MOmjt/XgHnQHS46fCcpaAY
-	zJEisaxWqzc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5ED0B91863;
-	Sun, 17 Jan 2010 14:01:28 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B332091862; Sun, 17 Jan
- 2010 14:01:25 -0500 (EST)
-In-Reply-To: <201001171252.38826.j6t@kdbg.org> (Johannes Sixt's message of
- "Sun\, 17 Jan 2010 12\:52\:38 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B78AF5DA-039A-11DF-AAF9-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754420Ab0AQTIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jan 2010 14:08:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754403Ab0AQTIb
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 14:08:31 -0500
+Received: from peff.net ([208.65.91.99]:60840 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754351Ab0AQTIb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2010 14:08:31 -0500
+Received: (qmail 27621 invoked by uid 107); 17 Jan 2010 19:13:22 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 17 Jan 2010 14:13:22 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Jan 2010 14:08:27 -0500
+Content-Disposition: inline
+In-Reply-To: <20100117164057.GA20554@Knoppix>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137308>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Sun, Jan 17, 2010 at 06:40:57PM +0200, Ilari Liusvaara wrote:
 
-> On Sonntag, 17. Januar 2010, Junio C Hamano wrote:
->> This allows us to pay attention to the attribute settings and custom
->> merge driver the user sets up.
->
-> I do not think that this change is necessary; I even think that it is wrong, 
-> in particular, custom merge drivers should *not* be used anymore.
+> On Sun, Jan 17, 2010 at 11:27:12AM -0500, Jeff King wrote:
+> > On Sun, Jan 17, 2010 at 03:45:31PM +0200, Ilari Liusvaara wrote:
+> > 
+> > > Add --namespace=<namespace> option to rev-parse and everything that
+> > > accepts its options. This option matches all refs in some subnamespace
+> > > of refs hierarchy, and is useful for selecting everything reachable from
+> > > one or few, but not all remotes (--namespace=remotes/foo).
+> > 
+> > If I understand it correctly, isn't the same as
+> > 
+> >   git for-each-ref refs/remotes/foo
+> 
+> Nope. Compare:
+> 
+> 'git log --branches --not --namespace=remotes/origin' 
+> 
+> with whatever you would have to currently type...
 
-You are right in that nothing is strictly necessary as long as there are
-other ways to do so.  This does not have to be how the issue is solved,
-but I found this to be one and the most natural way to allow rerere to pay
-attention to per-path conflict marker length attribute.
+OK, that makes sense and is actually useful. That is the sort of
+motivation that should go in the commit message. Mentioning "rev-parse"
+is a bit of a red herring.
 
-Contents that you would want to use custom merge drivers would not benefit
-from the current rerere that uses the default textual merge. In your
-customized XML merge editor example, the merged contents have irrelevant
-line breaks on either side of the merge that break textual merge (and that
-is the reason you are using a custom XML aware merge script to begin with).
+As for the patch text itself, it looks correct, though I have a few
+nits:
 
-So I didn't think using ll_merge() makes things worse, and that was the
-reason why I did it this way.
+> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+> index 82045a2..af4605a 100644
+> --- a/Documentation/git-rev-parse.txt
+> +++ b/Documentation/git-rev-parse.txt
+> @@ -112,6 +112,10 @@ OPTIONS
+>  --remotes::
+>  	Show tag refs found in `$GIT_DIR/refs/remotes`.
+>  
+> +--namespace=namespace-prefix::
+> +	Show refs found in `$GIT_DIR/namespace-prefix`. If namespace
+> +	specified lacks leading 'refs/', it is automatically prepended.
+> +
 
-But I admit I didn't think things through (and that is why your name was
-on the Cc: line).  If you really want to forbid custom merge drivers, I
-think we can add an option to ll_merge() to specify which attribute to
-ignore, and force the default textual merge in the codepath, or we can go
-back to the xdl_merge() but pass a custom conflict marker length in
-xmparam_t, as a follow-up fix.
+This is not a new problem you are introducing, as you are just following
+the template of of --remotes and others above, but is "show" really the
+right word? In the rev-list page these entries talk about "pretend as if
+these refs were given on the command line". Isn't that also the case
+here? If I say "git rev-parse --not --remotes" (or --namespace=), I will
+get "^"-lines.
+
+Also, I notice in the context that the remotes entry says "Show tag
+refs" which is obviously wrong. Again, not your problem, but something
+to clean up while in the area.
+
+> +			if (!prefixcmp(arg, "--namespace=")) {
+> +				set_for_each_namespace(arg + 12);
+> +				for_each_namespace_ref(show_reference, NULL);
+> +				continue;
+> +			}
+
+I was going to complain about the use of a global variable here when we
+could simply pass the namespace into the function, but I see that in the
+other call here:
+
+> diff --git a/revision.c b/revision.c
+> index 25fa14d..9e1d960 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1352,6 +1352,11 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+>  				handle_refs(revs, flags, for_each_remote_ref);
+>  				continue;
+>  			}
+> +			if (!prefixcmp(arg, "--namespace=")) {
+> +				set_for_each_namespace(arg + 12);
+> +				handle_refs(revs, flags, for_each_namespace_ref);
+> +				continue;
+> +			}
+
+...that giving the for_each_namespace_ref function a different signature
+than the other for_each_* functions would complicate things. OTOH,
+handle_refs is only a 4 line helper to set up the callback struct, so
+perhaps it is better to simply duplicate it rather than introduce a new
+global.
+
+Too bad we can't do currying in C. :)
+
+> +void set_for_each_namespace(const char *ref_namespace)
+> +{
+> +	size_t alloclen, origlen;
+> +	if (prefix_namespace)
+> +		free(prefix_namespace);
+> +
+> +	/* Compute the length of true prefix. */
+> +	origlen = alloclen = strlen(ref_namespace);
+> +	if (*ref_namespace && ref_namespace[origlen - 1] != '/')
+> +		alloclen++;
+> +	if (prefixcmp(ref_namespace, "refs/"))
+> +		alloclen += 5;		/* 'refs/' */
+> +
+> +	/* Allocate and build it (assume alloclen is "small") */
+> +	prefix_namespace = xmalloc(alloclen + 1);
+> +	*prefix_namespace = 0;
+> +	if (prefixcmp(ref_namespace, "refs/"))
+> +		strcat(prefix_namespace, "refs/");
+> +	strcat(prefix_namespace, ref_namespace);
+> +	if (*ref_namespace && ref_namespace[origlen - 1] != '/')
+> +		strcat(prefix_namespace, "/");
+> +}
+
+Wouldn't this be much simpler and more readable using a strbuf? As in:
+
+  strbuf_reset(&prefix_namespace);
+  if (prefixcmp(ref_namespace, "refs/"))
+    strbuf_addstr(&prefix_namespace, "refs/");
+  strbuf_addstr(&prefix_namespace, ref_namespace);
+  if (prefix_namespace.buf[prefix_namespace.len-1] != '/')
+    strbuf_addch(&prefix_namespace, '/');
+
+?
+
+> +test_expect_success 'setup' '
+> +
+> +	commit master &&
+> +	git checkout -b subspace/one master
+> +	commit one &&
+> +	git checkout -b subspace/two master
+> +	commit two &&
+> +	git checkout -b other/three master
+> +	commit three &&
+> +	git checkout -b someref master
+> +	commit some &&
+> +	git checkout master
+> +	commit master2
+> +'
+
+Missing '&&' on the checkout lines?
+
+> +test_expect_success 'rev-parse --namespace=refs/heads/subspace/' '
+> +
+> +	test 2 = $(git rev-parse --namespace=refs/heads/subspace/ | wc -l)
+> +
+> +'
+
+This is perhaps a minor nit, but I really prefer to write this by
+putting the expected output in a file and using test_cmp, because:
+
+  1. You actually test that rev-parse exits correctly.
+
+  2. You test that it actually produced the correct output, and not
+     simply two lines which are presumably correct.
+
+  3. If it _does_ fail, the output from test_cmp is a nicely readable
+     diff between expected and actual output. Your test produces no
+     output.
+
+We also had some problems with different implementations of "wc"
+producing different amounts of whitespace, but I don't think that is a
+problem here since the shell should eat any whitespace outside of
+quotation marks.
+
+-Peff
