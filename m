@@ -1,99 +1,110 @@
-From: =?UTF-8?B?0JLQmtC+0L3RgtCw0LrRgtC1LtGA0YM=?= <admin@vkontakte.ru>
-Subject: =?UTF-8?B?0JfQsNCx0LDRgNCwIOKZpUFybWluX1Zhbl9CdXVyZW7imaUg0KLQuNC80YPR?=
- =?UTF-8?B?gCDQtNC+0LHQsNCy0LjQuyDQktCw0YEg0LIg0LTRgNGD0LfRjNGPINC90LAg?=
- =?UTF-8?B?0YHQsNC50YLQtSDQktCa0L7QvdGC0LDQutGC0LUu0YDRgw==?=
-Date: Tue, 19 Jan 2010 00:06:26 +0300
-Message-ID: <67c392414bcb6657c8d39f617030a99d@localhost.localdomain>
-Reply-To: "Pavel Durov, inContact.ru Admin" <admin@vkontakte.ru>
+From: Andreas Gruenbacher <agruen@suse.de>
+Subject: builtin-apply.c: fix the --- and +++ header filename consistency check
+Date: Mon, 18 Jan 2010 22:37:38 +0100
+Organization: SUSE Labs
+Message-ID: <201001182237.38562.agruen@suse.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?B?0JfQtNGA0LDQstGB0YLQstGD0LnRgtC1?= <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 18 22:07:07 2010
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 18 22:37:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWyoT-0001Ux-4d
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 22:07:05 +0100
+	id 1NWzIB-0005Tq-So
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 22:37:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754728Ab0ARVGj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jan 2010 16:06:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754654Ab0ARVGj
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 16:06:39 -0500
-Received: from cs69.vkontakte.ru ([93.186.224.69]:33858 "EHLO vkontakte.ru"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754642Ab0ARVGh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2010 16:06:37 -0500
-Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
-	by vkontakte.ru with esmtp (Exim 4.63)
-	(envelope-from <admin@vkontakte.ru>)
-	id 1NWynq-0005nR-UP
-	for git@vger.kernel.org; Tue, 19 Jan 2010 00:06:27 +0300
-X-Priority: 3
-X-Mailer: PHPMailer [version 1.73]
+	id S1756114Ab0ARVhn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2010 16:37:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756113Ab0ARVhn
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 16:37:43 -0500
+Received: from cantor.suse.de ([195.135.220.2]:47702 "EHLO mx1.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751636Ab0ARVhm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2010 16:37:42 -0500
+Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.221.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id 96DD094109
+	for <git@vger.kernel.org>; Mon, 18 Jan 2010 22:37:41 +0100 (CET)
+User-Agent: KMail/1.12.2 (Linux/2.6.31.8-0.1-desktop; KDE/4.3.1; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.1 points;
- *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
- *      [cf:  64]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
- *  0.1 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: vk.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137406>
 
-=D0=97=D0=B4=D1=80=D0=B0=D0=B2=D1=81=D1=82=D0=B2=D1=83=D0=B9=D1=82=D0=B5=
-,
+gitdiff_verify_name() only did a filename prefix check because of an
+off-by-one error.
 
-=D0=97=D0=B0=D0=B1=D0=B0=D1=80=D0=B0 =E2=99=A5Armin_Van_Buuren=E2=99=A5=
- =D0=A2=D0=B8=D0=BC=D1=83=D1=80 =D0=B4=D0=BE=D0=B1=D0=B0=D0=B2=D0=B8=D0=
-=BB =D0=92=D0=B0=D1=81 =D0=B2 =D0=B4=D1=80=D1=83=D0=B7=D1=8C=D1=8F =D0=BD=
-=D0=B0 =D1=81=D0=B0=D0=B9=D1=82=D0=B5 =D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=
-=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=83
+Signed-off-by: Andreas Gruenbacher <agruen@suse.de>
+---
+ builtin-apply.c            |    2 +-
+ t/t4133-apply-filenames.sh |   38 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+), 1 deletions(-)
+ create mode 100755 t/t4133-apply-filenames.sh
 
-=D0=92=D1=8B =D0=BC=D0=BE=D0=B6=D0=B5=D1=82=D0=B5 =D0=B7=D0=B0=D0=B9=D1=
-=82=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82 =D0=B8 =D0=BF=D1=80=D0=BE=
-=D1=81=D0=BC=D0=BE=D1=82=D1=80=D0=B5=D1=82=D1=8C =D1=81=D1=82=D1=80=D0=B0=
-=D0=BD=D0=B8=D1=86=D1=8B =D0=92=D0=B0=D1=88=D0=B8=D1=85 =D0=B4=D1=80=D1=
-=83=D0=B7=D0=B5=D0=B9, =D0=B8=D1=81=D0=BF=D0=BE=D0=BB=D1=8C=D0=B7=D1=83=
-=D1=8F
-=D0=92=D0=B0=D1=88 e-mail =D0=B8 =D0=B0=D0=B2=D1=82=D0=BE=D0=BC=D0=B0=D1=
-=82=D0=B8=D1=87=D0=B5=D1=81=D0=BA=D0=B8 =D1=81=D0=BE=D0=B7=D0=B4=D0=B0=D0=
-=BD=D0=BD=D1=8B=D0=B9 =D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8C: TxvUlJH7
-
-=D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=83 - =D1=
-=81=D0=B0=D0=B9=D1=82, =D0=BA=D0=BE=D1=82=D0=BE=D1=80=D1=8B=D0=B9 =D0=B5=
-=D0=B6=D0=B5=D0=B4=D0=BD=D0=B5=D0=B2=D0=BD=D0=BE =D0=BF=D0=BE=D0=B7=D0=B2=
-=D0=BE=D0=BB=D1=8F=D0=B5=D1=82 =D0=B4=D0=B5=D1=81=D1=8F=D1=82=D0=BA=D0=B0=
-=D0=BC =D0=BC=D0=B8=D0=BB=D0=BB=D0=B8=D0=BE=D0=BD=D0=BE=D0=B2 =D0=BB=D1=
-=8E=D0=B4=D0=B5=D0=B9 =D0=BD=D0=B0=D1=85=D0=BE=D0=B4=D0=B8=D1=82=D1=8C =
-=D1=81=D1=82=D0=B0=D1=80=D1=8B=D1=85 =D0=B4=D1=80=D1=83=D0=B7=D0=B5=D0=B9=
- =D0=B8 =D0=BE=D1=81=D1=82=D0=B0=D0=B2=D0=B0=D1=82=D1=8C=D1=81=D1=8F =D1=
-=81 =D0=BD=D0=B8=D0=BC=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B2=D1=8F=D0=B7=D0=B8=
-, =D0=B4=D0=B5=D0=BB=D0=B8=D1=82=D1=8C=D1=81=D1=8F =D1=84=D0=BE=D1=82=D0=
-=BE=D0=B3=D1=80=D0=B0=D1=84=D0=B8=D1=8F=D0=BC=D0=B8
-=D0=B8 =D1=81=D0=BE=D0=B1=D1=8B=D1=82=D0=B8=D1=8F=D0=BC=D0=B8 =D0=B8=D0=
-=B7 =D0=B6=D0=B8=D0=B7=D0=BD=D0=B8.
-
-=D0=A7=D1=82=D0=BE=D0=B1=D1=8B =D0=B2=D0=BE=D0=B9=D1=82=D0=B8 =D0=BD=D0=
-=B0 =D1=81=D0=B0=D0=B9=D1=82, =D0=BF=D1=80=D0=BE=D0=B9=D0=B4=D0=B8=D1=82=
-=D0=B5 =D0=BF=D0=BE =D1=81=D1=81=D1=8B=D0=BB=D0=BA=D0=B5:
-http://vk.com/login.php?regemail=3Dgit@vger.kernel.org#TxvUlJH7
-
-=D0=92=D0=BD=D0=B8=D0=BC=D0=B0=D0=BD=D0=B8=D0=B5: =D0=92=D0=B0=D1=88=D0=
-=B0 =D1=80=D0=B5=D0=B3=D0=B8=D1=81=D1=82=D1=80=D0=B0=D1=86=D0=B8=D1=8F =
-=D0=BD=D0=B5 =D0=B1=D1=83=D0=B4=D0=B5=D1=82 =D0=B0=D0=BA=D1=82=D0=B8=D0=
-=B2=D0=B8=D1=80=D0=BE=D0=B2=D0=B0=D0=BD=D0=B0, =D0=B5=D1=81=D0=BB=D0=B8=
- =D0=92=D1=8B =D0=BF=D1=80=D0=BE=D0=B8=D0=B3=D0=BD=D0=BE=D1=80=D0=B8=D1=
-=80=D1=83=D0=B5=D1=82=D0=B5
-=D1=8D=D1=82=D0=BE =D0=BF=D1=80=D0=B8=D0=B3=D0=BB=D0=B0=D1=88=D0=B5=D0=BD=
-=D0=B8=D0=B5.
-
-=D0=96=D0=B5=D0=BB=D0=B0=D0=B5=D0=BC =D1=83=D0=B4=D0=B0=D1=87=D0=B8!
-=D0=A1 =D1=83=D0=B2=D0=B0=D0=B6=D0=B5=D0=BD=D0=B8=D0=B5=D0=BC,
-=D0=90=D0=B4=D0=BC=D0=B8=D0=BD=D0=B8=D1=81=D1=82=D1=80=D0=B0=D1=86=D0=B8=
-=D1=8F =D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=
-=83
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 541493e..c8be66e 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -686,7 +686,7 @@ static char *gitdiff_verify_name(const char *line, int 
+isnull, char *orig_name,
+ 		if (isnull)
+ 			die("git apply: bad git-diff - expected /dev/null, got %s on line %d", 
+name, linenr);
+ 		another = find_name(line, NULL, p_value, TERM_TAB);
+-		if (!another || memcmp(another, name, len))
++		if (!another || memcmp(another, name, len + 1))
+ 			die("git apply: bad git-diff - inconsistent %s filename on line %d", 
+oldnew, linenr);
+ 		free(another);
+ 		return orig_name;
+diff --git a/t/t4133-apply-filenames.sh b/t/t4133-apply-filenames.sh
+new file mode 100755
+index 0000000..3421807
+--- /dev/null
++++ b/t/t4133-apply-filenames.sh
+@@ -0,0 +1,38 @@
++#!/bin/sh
++#
++# Copyright (c) 2010 Andreas Gruenbacher
++#
++
++test_description='git apply filename consistency check'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	cat > bad1.patch <<EOF
++diff --git a/f b/f
++new file mode 100644
++index 0000000..d00491f
++--- /dev/null
+++++ b/f-blah
++@@ -0,0 +1 @@
+++1
++EOF
++	cat > bad2.patch <<EOF
++diff --git a/f b/f
++deleted file mode 100644
++index d00491f..0000000
++--- b/f-blah
+++++ /dev/null
++@@ -1 +0,0 @@
++-1
++EOF
++'
++
++test_expect_success 'apply diff with inconsistent filenames in headers' '
++	test_must_fail git apply bad1.patch 2>err
++	grep "inconsistent new filename" err
++	test_must_fail git apply bad2.patch 2>err
++	grep "inconsistent old filename" err
++'
++
++test_done
+-- 
+1.6.6.243.gff6d2
