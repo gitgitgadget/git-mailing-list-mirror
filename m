@@ -1,110 +1,111 @@
-From: Andreas Gruenbacher <agruen@suse.de>
-Subject: builtin-apply.c: fix the --- and +++ header filename consistency check
-Date: Mon, 18 Jan 2010 22:37:38 +0100
-Organization: SUSE Labs
-Message-ID: <201001182237.38562.agruen@suse.de>
+From: Jim Meyering <jim@meyering.net>
+Subject: [PATCH] grep: don't segfault
+Date: Mon, 18 Jan 2010 22:55:07 +0100
+Message-ID: <871vhnhydg.fsf@meyering.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 18 22:37:48 2010
+Content-Type: text/plain; charset=us-ascii
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 18 22:55:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWzIB-0005Tq-So
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 22:37:48 +0100
+	id 1NWzZD-0004VF-6W
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 22:55:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756114Ab0ARVhn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2010 16:37:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756113Ab0ARVhn
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 16:37:43 -0500
-Received: from cantor.suse.de ([195.135.220.2]:47702 "EHLO mx1.suse.de"
+	id S1756078Ab0ARVzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2010 16:55:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756069Ab0ARVzQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 16:55:16 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:41482 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751636Ab0ARVhm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2010 16:37:42 -0500
-Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.221.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx1.suse.de (Postfix) with ESMTP id 96DD094109
-	for <git@vger.kernel.org>; Mon, 18 Jan 2010 22:37:41 +0100 (CET)
-User-Agent: KMail/1.12.2 (Linux/2.6.31.8-0.1-desktop; KDE/4.3.1; x86_64; ; )
+	id S1755057Ab0ARVzP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2010 16:55:15 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id C997B8180DC
+	for <git@vger.kernel.org>; Mon, 18 Jan 2010 22:55:10 +0100 (CET)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id E2CD5818139
+	for <git@vger.kernel.org>; Mon, 18 Jan 2010 22:55:07 +0100 (CET)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 83B7A2133B; Mon, 18 Jan 2010 22:55:07 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137407>
 
-gitdiff_verify_name() only did a filename prefix check because of an
-off-by-one error.
 
-Signed-off-by: Andreas Gruenbacher <agruen@suse.de>
+Today, git grep -l '^	' failed with a segfault.
+I tracked it down to a26345b6085340ebd61e156aa8154a80196bee0f.
+Debugging it, I found that look_ahead calls regexec with a "bol"
+argument pointing to a buffer that is not NUL-terminated.
+Yet regexec requires the NUL-termination.  Without that, its
+initial strlen will read beyond the end of the buffer.
+
+    $ valgrind ./git grep -l '^  '
+    Memcheck, a memory error detector
+    Copyright (C) 2002-2009, and GNU GPL'd, by Julian Seward et al.
+    Using Valgrind-3.5.0 and LibVEX; rerun with -h for copyright info
+    Command: ./git grep -l ^
+
+    Conditional jump or move depends on uninitialised value(s)
+       at 0x4A06318: __GI_strlen (mc_replace_strmem.c:284)
+       by 0x3AF00C04C4: regexec@@GLIBC_2.3.4 (regexec.c:243)
+       by 0x496A0A: look_ahead (grep.c:644)
+       by 0x496D24: grep_buffer_1 (grep.c:726)
+       by 0x497161: grep_buffer (grep.c:852)
+       by 0x432720: grep_file (builtin-grep.c:201)
+       by 0x432854: grep_cache (builtin-grep.c:230)
+       by 0x433F2F: cmd_grep (builtin-grep.c:621)
+       by 0x40488D: run_builtin (git.c:257)
+       by 0x404A28: handle_internal_command (git.c:401)
+       by 0x404B1D: run_argv (git.c:443)
+       by 0x404C9A: main (git.c:514)
+    ...
+
+That buffer is read by builtin-grep.c(grep_file) and here's the code.
+You can see from the allocation of "sz + 1" and read of one less
+that there is already room for the required trailing NUL byte:
+
+	sz = xsize_t(st.st_size);
+	i = open(filename, O_RDONLY);
+	if (i < 0)
+		goto err_ret;
+	data = xmalloc(sz + 1);
+	if (st.st_size != read_in_full(i, data, sz)) {
+		error("'%s': short read %s", filename, strerror(errno));
+		close(i);
+		free(data);
+		return 0;
+	}
+	close(i);
+>>>     data[sz] = 0;    <======  added line
+	if (opt->relative && opt->prefix_length)
+		filename = quote_path_relative(filename, -1, &buf, opt->prefix);
+	i = grep_buffer(opt, filename, data, sz);
+
+Signed-off-by: Jim Meyering <meyering@redhat.com>
 ---
- builtin-apply.c            |    2 +-
- t/t4133-apply-filenames.sh |   38 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 39 insertions(+), 1 deletions(-)
- create mode 100755 t/t4133-apply-filenames.sh
+This is relative to the head of git's next branch,
+d7346b15ca5bda881f5abc37b0844e9b35c8cffc
+I noticed the segfault by running the same command in
+libvirt's git repository, but it's not consistently reproducible.
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 541493e..c8be66e 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -686,7 +686,7 @@ static char *gitdiff_verify_name(const char *line, int 
-isnull, char *orig_name,
- 		if (isnull)
- 			die("git apply: bad git-diff - expected /dev/null, got %s on line %d", 
-name, linenr);
- 		another = find_name(line, NULL, p_value, TERM_TAB);
--		if (!another || memcmp(another, name, len))
-+		if (!another || memcmp(another, name, len + 1))
- 			die("git apply: bad git-diff - inconsistent %s filename on line %d", 
-oldnew, linenr);
- 		free(another);
- 		return orig_name;
-diff --git a/t/t4133-apply-filenames.sh b/t/t4133-apply-filenames.sh
-new file mode 100755
-index 0000000..3421807
---- /dev/null
-+++ b/t/t4133-apply-filenames.sh
-@@ -0,0 +1,38 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 Andreas Gruenbacher
-+#
-+
-+test_description='git apply filename consistency check'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	cat > bad1.patch <<EOF
-+diff --git a/f b/f
-+new file mode 100644
-+index 0000000..d00491f
-+--- /dev/null
-++++ b/f-blah
-+@@ -0,0 +1 @@
-++1
-+EOF
-+	cat > bad2.patch <<EOF
-+diff --git a/f b/f
-+deleted file mode 100644
-+index d00491f..0000000
-+--- b/f-blah
-++++ /dev/null
-+@@ -1 +0,0 @@
-+-1
-+EOF
-+'
-+
-+test_expect_success 'apply diff with inconsistent filenames in headers' '
-+	test_must_fail git apply bad1.patch 2>err
-+	grep "inconsistent new filename" err
-+	test_must_fail git apply bad2.patch 2>err
-+	grep "inconsistent old filename" err
-+'
-+
-+test_done
--- 
-1.6.6.243.gff6d2
+ builtin-grep.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 4dd5aaf..da854fa 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -196,6 +196,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
+ 		return 0;
+ 	}
+ 	close(i);
++	data[sz] = 0;
+ 	if (opt->relative && opt->prefix_length)
+ 		filename = quote_path_relative(filename, -1, &buf, opt->prefix);
+ 	i = grep_buffer(opt, filename, data, sz);
+--
+1.6.4.4.1.ga2634
