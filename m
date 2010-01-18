@@ -1,132 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Git Wiki Move
-Date: Mon, 18 Jan 2010 10:53:15 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001181044410.4985@pacific.mpi-cbg.de>
-References: <20100113232908.GA3299@machine.or.cz> <20100114012449.GB3299@machine.or.cz> <4B4EF1E0.3040808@eaglescrag.net> <vpqbpgxrn32.fsf@bauges.imag.fr> <4B4F68E8.5050809@eaglescrag.net> <4B50F7DB.7020204@eaglescrag.net> <vpqwrzhszye.fsf@bauges.imag.fr>
- <alpine.DEB.1.00.1001172357420.4985@pacific.mpi-cbg.de> <4B53AEAC.6060100@eaglescrag.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: idea: git "came from" tags
+Date: Mon, 18 Jan 2010 10:49:38 +0100
+Message-ID: <4B542EB2.5030407@drmicha.warpmail.net>
+References: <hj0nl9$uds$2@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: "J.H." <warthog19@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Mon Jan 18 10:47:40 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: D Herring <dherring@tentpost.com>
+X-From: git-owner@vger.kernel.org Mon Jan 18 10:51:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWoCx-0004x4-C5
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 10:47:39 +0100
+	id 1NWoGi-0006NL-Vq
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 10:51:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753250Ab0ARJrf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2010 04:47:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753229Ab0ARJre
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 04:47:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39453 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753193Ab0ARJrd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2010 04:47:33 -0500
-Received: (qmail invoked by alias); 18 Jan 2010 09:47:31 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp069) with SMTP; 18 Jan 2010 10:47:31 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19dzt117kVdyoYRZcT83uJSbnyEwEb4zBpAG9IPWK
-	kkekORXsarmD9T
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <4B53AEAC.6060100@eaglescrag.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.48999999999999999
+	id S1751377Ab0ARJv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2010 04:51:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283Ab0ARJv3
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 04:51:29 -0500
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:34651 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751161Ab0ARJv2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Jan 2010 04:51:28 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id AF1EDCDD76;
+	Mon, 18 Jan 2010 04:51:27 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Mon, 18 Jan 2010 04:51:27 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=qzd26OtH8F+Ziy8tY3nQR/kQRYU=; b=ILQklGoNuU8Jq5+7T9UtJ3/YH67ICM22sU3P6cdN8uM1uSbsdpVRTxKKWy/hpOikBHWhpTa5aGZfCPi3gVpBEj6futM27wKAUUxKTnXaiV2vyvWR8WluwhWay2SzlWI0j7eWWQV6deaaAZ7mupChxf5LSQeb/KOKv318BtNs+A8=
+X-Sasl-enc: u+JnFQLKP5MWPFYPWQvbXvjmntRXSl8/bJ3DPaLZH2pj 1263808287
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 29BDC7028;
+	Mon, 18 Jan 2010 04:51:27 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7pre) Gecko/20091209 Lightning/1.0b2pre Shredder/3.0.1pre
+In-Reply-To: <hj0nl9$uds$2@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137378>
 
-Hi,
-
-On Sun, 17 Jan 2010, J.H. wrote:
-
-> On 01/17/2010 03:06 PM, Johannes Schindelin wrote:
+D Herring venit, vidit, dixit 18.01.2010 05:22:
+> Actors:
+> - public "upstream" repository
+> - public "local" repository
+> - end users tracking both
 > 
-> > On Sun, 17 Jan 2010, Matthieu Moy wrote:
-> > 
-> >> You should set $wgLogo to some Git logo, among 
-> >> http://git.or.cz/gitwiki/GitRelatedLogos
-> > 
-> > Best would be the standard one: http://git.or.cz/git-logo.png but I 
-> > would actually also like http://henrik.nyh.se/uploads/git-logo.png.
+> Situation:
+> - local starts by tracking upstream
+> - local makes changes, commits, and sends upstream
+> - users now tracking local ahead of upstream
+
+Here I have to ask why. If users choose to track a volatile branch then
+they have to live with rebasing or hard resets. If they want something
+stable then they should track upstream.
+
+> - upstream makes modified commits
+> - local satisfied, wants to reset master to upstream/master
 > 
-> I'd leave that up to the greater community.  The second one there would 
-> fit better on the page honestly, but I don't want to go making a logo 
-> decision for the entirety of the project.
+> Problem:
+> - A merge will perpetually leave two parallel branches.  Even though
+> there are no longer any diffs, local/master cannot use the same
+> objects as upstream/master.
 
-Why not set the logo to the second one, and at the same time start one of 
-our famous bikeshedding fests?  (Anyone answering to that question, please 
-change the subject to "Wiki logo".)
+If there are no diffs then, in fact, it can share most objects since
+most trees will be the same, only a few commit objects will differ.
 
-> >> You can also add a few links to the sidebar, by editting: 
-> >> http://git.wiki.kernel.org/index.php/MediaWiki:Sidebar
-> >>
-> >> (it seems I don't have permission to do it myself).
-> > 
-> > You need to be in the Sysop list to do so.  Warthog, if you trust me :-) 
-> > would you mind adding me to that group?  You can do that by visiting
-> > 
-> > http://git.wiki.kernel.org/index.php/Special:Userrights
-> > 
-> > when you are a sysop.
+> - A hard reset lets local/master return to sharing objects with
+> upstream/master; but this may break pulls or cause other problems for
+> users.
 > 
-> Done.
-
-Thank you very much!
-
-> >> I suggest taking the ones of the front-page:
-> >>
-> >> * Starting points
-> >> ** Installation|Installation
-> >> ** InterfacesFrontendsAndTools|Git Tools
-> >> ** GitDocumentation|Git Documentation
-> >> ** GitCommunity|Git Community Support
-> >> ** GitProjects|Projects using Git
-> >> ** GitFaq|FAQ
-> >> ** GitHosting|Git Hosting
-> >> ** GitLinks|Git Links
-> >> ** GitComparison|Git Compared
-> > 
-> > Let's not forget
-> > 
-> > * navigation
-> > ** mainpage|mainpage-description
-> > ** recentchanges-url|recentchanges
-> > ** randompage-url|randompage
-> > ** helppage|help
-> > * SEARCH
-> > * TOOLBOX
-
-Changed as suggested.
-
-> > BTW there is a file KHTMLFixes.css in the directory skins/monobook/ 
-> > which makes the layout break with Chromium.  Apparently, it is no 
-> > longer needed by KHTML anyway.  So could you please replace that file 
-> > with an empty one, or comment out the offending part, like so:
-> > 
-> > 	/* #column-content { margin-left: 0; } */
+> Proposed solution:
+> - Local adds a "came from" tag to upstream/master, leaves a tag on the
+> head of local/master, and does a hard reset from local/master to
+> upstream/master.  When a user tracking local/master does a pull, their
+> client detects a non-fast-forward, finds the came-from tag, and treats
+> it as a fast-forward.
 > 
-> I'm not keen on making changes since that file is still coming from the
-> shipping version of mediawiki and I'm trying, quite a lot, to not run a
-> modified version of it.  I've got enough troubles with the fact that
-> that one change would affect 22 wikis in a single go.
-> 
-> As bad as it is to say this, I'd rather wait for 1.16 to come out vs. 
-> modify it in place.  Mediawiki is claiming they are in continuous 
-> integration development with quarterly releases but their last release 
-> was June of 2009, so take that as you will.
+> Basically, this is a protocol to glue a "strategy ours" merge onto an
+> existing tree.  This way local can cleanly track upstream, with no
+> added complexity in the nominal (no local changes) case.
 
-Fair enough.  As long as Chromium has a fairly small share of the market, 
-I think it is safe to tell everybody to wait a little until the side bar 
-is no longer displayed at the left _below_ the main body text.  AFAICT the 
-problem was solved with Wikipedia, so the next release should magically 
-fix the issue.
+But doesn't that mean that users completely trust you about what they
+should consider a fast forward, i.e. when they should do a hard reset?
+So, this is completely equivalent to following one of your branches with
++f, i.e. having a public a branch which they pull from no matter what,
+and having a private branch which pushes to the public one in case of
+fast-forwards as well as in the case when you would use your special tag.
 
-Thanks,
-Dscho
+Michael
