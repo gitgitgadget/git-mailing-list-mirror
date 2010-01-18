@@ -1,83 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] grep --no-index: allow use of "git grep" outside a git
- repository
-Date: Mon, 18 Jan 2010 01:50:18 -0500
-Message-ID: <20100118065018.GA18074@coredump.intra.peff.net>
-References: <7vzl4fum3r.fsf_-_@alter.siamese.dyndns.org>
- <20100115210854.GA21540@coredump.intra.peff.net>
- <7vwrzin9jt.fsf@alter.siamese.dyndns.org>
- <20100116011512.GA27082@coredump.intra.peff.net>
- <7vpr5ait1m.fsf@alter.siamese.dyndns.org>
- <20100118015140.GB6831@coredump.intra.peff.net>
- <7v8wbwultw.fsf@alter.siamese.dyndns.org>
- <7v3a24ukku.fsf@alter.siamese.dyndns.org>
- <20100118055703.GA17879@coredump.intra.peff.net>
- <7vk4vgsz5w.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: ambiguous argument '...': unknown revision or path not in the
+ working tree
+Date: Sun, 17 Jan 2010 22:59:33 -0800
+Message-ID: <7v3a23ucdm.fsf@alter.siamese.dyndns.org>
+References: <87ska5vzbs.fsf@turtle.gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 18 07:50:30 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sven Joachim <svenjoac@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 18 07:59:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWlRV-0001rz-RX
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 07:50:30 +0100
+	id 1NWlaY-00040z-D1
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 07:59:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751995Ab0ARGuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2010 01:50:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751666Ab0ARGuX
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 01:50:23 -0500
-Received: from peff.net ([208.65.91.99]:33610 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751218Ab0ARGuX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2010 01:50:23 -0500
-Received: (qmail 2963 invoked by uid 107); 18 Jan 2010 06:55:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 18 Jan 2010 01:55:14 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Jan 2010 01:50:18 -0500
-Content-Disposition: inline
-In-Reply-To: <7vk4vgsz5w.fsf@alter.siamese.dyndns.org>
+	id S1752850Ab0ARG7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2010 01:59:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752834Ab0ARG7n
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 01:59:43 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40274 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752633Ab0ARG7m (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2010 01:59:42 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4381A92635;
+	Mon, 18 Jan 2010 01:59:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2QPI3jmnMLXbgMULypvkR+8uq4g=; b=aDbfJV
+	ExVnBAnKjwBBVW8r+0+AyXkIszLcWn7y2g4lo0NmFWYZMsVLW1BEaZVmCZXyhOTm
+	hey0DBAeC9b8dPVYsEoVk2t3uzVKhs92enrQGbSFuNfTB4hbn1/Vu4nYQa/4wTG4
+	tm07KbBYpJr3wevg/zAWnAGPNNpnZWx9bGlmk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AIJxBfA7aaMjGbGyPOiKclwgDV+ZAPmC
+	OZFqZlAcZojsIAG34XR8TjvDLuqPMs4jFPjRAqNgleGjfjVb9+NNChegSGqFfRLa
+	Fj2XbwZl7Ay5xqXsXviZ1K5CH8cxi7mqmrG7FunzGS78IZ0aNW4ek5MR/Qb7ACHC
+	1IgpXfE7tTQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E30892634;
+	Mon, 18 Jan 2010 01:59:38 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 74EA792631; Mon, 18 Jan
+ 2010 01:59:35 -0500 (EST)
+In-Reply-To: <87ska5vzbs.fsf@turtle.gmx.de> (Sven Joachim's message of "Sun\,
+ 17 Jan 2010 10\:46\:15 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0B070690-03FF-11DF-8220-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137373>
 
-On Sun, Jan 17, 2010 at 10:30:19PM -0800, Junio C Hamano wrote:
+Sven Joachim <svenjoac@gmx.de> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Hmm. I like the new behavior. The implementation feels a little
-> > hack-ish, like we should really be supporting full-on:
-> >
-> >   git log --author=me --and --grep=foo
-> >
-> > That gets a little weird, though. We already have "--not" for ref
-> > limiting, so clearly there is some conflict ...
-> 
-> That is fundamentally wrong.
-> 
-> Remember, "grep" works on two levels: a line matches or does not match the
-> given set of patterns (rather, the expression given), and matched lines
-> are shown.  A file as a whole is considered to have matched if one or more
-> lines produced a match, or under the --all-match option, only when all of
-> the top-level ORed terms in the expression have fired for some lines in
-> it.
+> I've got a strange error message in 'git push':
+>
+> ,----
+> | % git push
+> | Counting objects: 47, done.
+> | Delta compression using up to 2 threads.
+> | Compressing objects: 100% (24/24), done.
+> | Writing objects: 100% (24/24), 4.37 KiB, done.
+> | Total 24 (delta 22), reused 0 (delta 0)
+> | fatal: ambiguous argument '3bbc6def8a06e4411bee130b811ff9507e90503d:debian/changelog': unknown revision or path not in the working tree.
+> | Use '--' to separate paths from revisions
 
-Fundamentally wrong for the way "log --grep" is currently implemented
-perhaps, but I don't see anything wrong with considering each commit as
-a single "record", just as regular grep considers each line to be a
-record. That is a much more useful distinction for log traversal than
-lines, which are useless from the user's perspective. If searching for
-two terms, I care about whether they are in the same commit message, but
-I don't care at all about line breaks.
-
-Yes, I know that internally --author is really about line-matching the
-commit headers, but that is an implementation detail. The mental model
-we should present to the user is record-matching based on specific
-fields like author, committer, or body text.
-
--Peff
+I think there is nothing "fatal" in your git setup, other than that the
+repository at the remote end you are pushing into has a broken hook script
+(perhaps update, post-receive, or post-update) that is issuing the error
+message.  I would raise the issue with the owner of the repository if I
+were you.
