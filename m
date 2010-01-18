@@ -1,115 +1,87 @@
-From: D Herring <dherring@tentpost.com>
-Subject: idea: git "came from" tags
-Date: Sun, 17 Jan 2010 23:22:02 -0500
-Message-ID: <hj0nl9$uds$2@ger.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] grep --no-index: allow use of "git grep" outside a git
+ repository
+Date: Mon, 18 Jan 2010 00:57:03 -0500
+Message-ID: <20100118055703.GA17879@coredump.intra.peff.net>
+References: <20100115223259.6117@nanako3.lavabit.com>
+ <7vska71br0.fsf@alter.siamese.dyndns.org>
+ <7vzl4fum3r.fsf_-_@alter.siamese.dyndns.org>
+ <20100115210854.GA21540@coredump.intra.peff.net>
+ <7vwrzin9jt.fsf@alter.siamese.dyndns.org>
+ <20100116011512.GA27082@coredump.intra.peff.net>
+ <7vpr5ait1m.fsf@alter.siamese.dyndns.org>
+ <20100118015140.GB6831@coredump.intra.peff.net>
+ <7v8wbwultw.fsf@alter.siamese.dyndns.org>
+ <7v3a24ukku.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 18 05:35:17 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 18 06:57:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWjKe-0002o8-BC
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 05:35:17 +0100
+	id 1NWkcC-0006uB-36
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 06:57:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755673Ab0AREfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2010 23:35:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755660Ab0AREfJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 23:35:09 -0500
-Received: from lo.gmane.org ([80.91.229.12]:40827 "EHLO lo.gmane.org"
+	id S1751190Ab0ARF5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2010 00:57:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751129Ab0ARF5L
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 00:57:11 -0500
+Received: from peff.net ([208.65.91.99]:47094 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752207Ab0AREfI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2010 23:35:08 -0500
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1NWjKT-0002kO-Iq
-	for git@vger.kernel.org; Mon, 18 Jan 2010 05:35:05 +0100
-Received: from c-71-232-15-233.hsd1.ma.comcast.net ([71.232.15.233])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 18 Jan 2010 05:35:05 +0100
-Received: from dherring by c-71-232-15-233.hsd1.ma.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 18 Jan 2010 05:35:05 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: c-71-232-15-233.hsd1.ma.comcast.net
-User-Agent: Thunderbird 2.0.0.21 (X11/20090329)
+	id S1750780Ab0ARF5K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2010 00:57:10 -0500
+Received: (qmail 2766 invoked by uid 107); 18 Jan 2010 06:01:59 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 18 Jan 2010 01:01:59 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Jan 2010 00:57:03 -0500
+Content-Disposition: inline
+In-Reply-To: <7v3a24ukku.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137369>
 
-Actors:
-- public "upstream" repository
-- public "local" repository
-- end users tracking both
+On Sun, Jan 17, 2010 at 08:02:25PM -0800, Junio C Hamano wrote:
 
-Situation:
-- local starts by tracking upstream
-- local makes changes, commits, and sends upstream
-- users now tracking local ahead of upstream
-- upstream makes modified commits
-- local satisfied, wants to reset master to upstream/master
+> Subject: "log --author=me --grep=it" should find intersection, not union
+> 
+> Historically, any grep filter in "git log" family of commands were taken
+> as restricting to commits with any of the words in the commit log message.
+> However, the user almost always want to find commits "done by this person
+> on that topic".  With "--all-match" option, a series of grep patterns can
+> be turned into a requirement that all of them must produce a match, but
+> that makes it impossible to ask for "done by me, on either this or that"
+> with:
+> 
+> 	log --author=me --grep=this --grep=that
+> 
+> because it will require both "this" and "that" to appear.
+> 
+> Change the "header" parser of grep library to treat the headers specially.
+> When parsing the above, behave as if it was specified like this on the
+> command line:
+> 
+> 	--all-match --author=me '(' --grep=this --grep=that ')'
+> 
+> Even though the "log" command line parser doesn't give direct access to
+> the extended grep syntax to group terms with parentheses, this change will
+> cover the majority of the case the users would want.
 
-Problem:
-- A merge will perpetually leave two parallel branches.  Even though
-there are no longer any diffs, local/master cannot use the same
-objects as upstream/master.
-- A hard reset lets local/master return to sharing objects with
-upstream/master; but this may break pulls or cause other problems for
-users.
+Hmm. I like the new behavior. The implementation feels a little
+hack-ish, like we should really be supporting full-on:
 
-Proposed solution:
-- Local adds a "came from" tag to upstream/master, leaves a tag on the
-head of local/master, and does a hard reset from local/master to
-upstream/master.  When a user tracking local/master does a pull, their
-client detects a non-fast-forward, finds the came-from tag, and treats
-it as a fast-forward.
+  git log --author=me --and --grep=foo
 
-Basically, this is a protocol to glue a "strategy ours" merge onto an
-existing tree.  This way local can cleanly track upstream, with no
-added complexity in the nominal (no local changes) case.
+That gets a little weird, though. We already have "--not" for ref
+limiting, so clearly there is some conflict over exactly what logical
+operators would be operating on. I guess we could use context to see
+that the adjacent arguments were grep-related.
 
+So perhaps, as you say, this is enough as it covers the usual case.
 
-Example:
-Without this addition, local/master looks something like
-u1 - u2 - u3 - u4 - u5 - u6 ...
-   \- l1 - l2\+ m1 -   \+ m2\+ m3 ...
-
-With this addition, local/master looks like
-u1 - u2 - u3(tcf) - u4 - u5 - u6 ...
-   \- l1 - l2 - t0
-where
-* u# = upstream changes
-* l# = local changes
-* m# = local merges (m1=u3, m2=u5, m3=u6, ...)
-* the tcf tag points to t0, and t0 tags the end of the local mods
-
-
-Pseudo-shell-code addition to git-pull:
-fetch local/master
-fast_forward=usual test whether local/master contains user/master
-if test $fast_forward = no
-then
-   for tag in $fetched_tags # something like this or git-describe
-   do
-     if is_came_from($tag) && (came_from($tag) contains user/master)
-     then
-       fast_forward=yes
-       break
-     fi
-   done
-fi
-
-Comments?  I think this is completely implementable (though I'm not
-well-versed in git internals).  Since it only triggers during
-non-fast-forward operations, it should have negligible performance impact.
-
-Of course, it would be even better if somebody shows me how to do this
-with the current tools.  Maybe I'm just doing it all wrong.
-
-Thanks,
-Daniel
+-Peff
