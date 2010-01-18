@@ -1,135 +1,95 @@
-From: Jacob Helwig <jacob.helwig@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Unmodified submodules shows up as dirty with 1.6.6.443.gd7346
-Date: Mon, 18 Jan 2010 09:14:55 -0800
-Message-ID: <8c9a061001180914v42074056o3a5d077ac4cea70f@mail.gmail.com>
-References: <4B547EA6.5070203@isy.liu.se> <8c9a061001180802t5ec0d389j2cae9f1771130c36@mail.gmail.com> 
-	<4B549254.5090206@isy.liu.se>
+Date: Mon, 18 Jan 2010 09:22:25 -0800
+Message-ID: <7vr5pnqqem.fsf@alter.siamese.dyndns.org>
+References: <4B547EA6.5070203@isy.liu.se>
+ <8c9a061001180802t5ec0d389j2cae9f1771130c36@mail.gmail.com>
+ <4B549254.5090206@isy.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de
+Content-Type: text/plain; charset=us-ascii
+Cc: Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org,
+	Jens.Lehmann@web.de
 To: Gustaf Hendeby <hendeby@isy.liu.se>
-X-From: git-owner@vger.kernel.org Mon Jan 18 18:23:40 2010
+X-From: git-owner@vger.kernel.org Mon Jan 18 18:27:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWvK9-0001EB-6n
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 18:23:33 +0100
+	id 1NWvNv-0002xS-K6
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 18:27:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755385Ab0ARRV7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jan 2010 12:21:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755311Ab0ARRV5
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 12:21:57 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:47864 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755360Ab0ARRVy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Jan 2010 12:21:54 -0500
-Received: by pwj9 with SMTP id 9so1829997pwj.21
-        for <git@vger.kernel.org>; Mon, 18 Jan 2010 09:21:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Ua40IA52/tjsRenSLmy6bYRlQlM6C8VEMWXROjCOF2A=;
-        b=Vs6jt415xwH99e6t+fB5ExmXa2tywoos+wwRbEppnT2TkONoJheSGeE+neTfnLjvSf
-         ngovMrAgBiefh+wCKp7h59xjxFByuZlklKmcmJUo4LDY4n+86sH76SWYRnqwBvSqog01
-         K4YbJZMYlCexS6fQvNp0zNQIPHZ5ACvRFXDqQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=T4BSefApKsBd1jaLs3LPyBQTeeXG8wSzHhIwk+Bzh4DRs/eD+Ba7ZB/uwLSiugQbad
-         tYxWfBJR5+69PD372QqSHyBN2LGqU+YwiUriRX4myDZY5AAtVNj4p3DOOarAMYM2wrr3
-         /eH9XZbugs19oeFvJEgzhZCPGZYJo2wXb+tbM=
-Received: by 10.141.88.20 with SMTP id q20mr4452620rvl.198.1263834915174; Mon, 
-	18 Jan 2010 09:15:15 -0800 (PST)
-In-Reply-To: <4B549254.5090206@isy.liu.se>
+	id S1755544Ab0ARRZ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2010 12:25:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755610Ab0ARRZ5
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 12:25:57 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49734 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755422Ab0ARRWj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2010 12:22:39 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B197491399;
+	Mon, 18 Jan 2010 12:22:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XnpBj6Rrr5s90Zdkf1oMbjlkAVU=; b=NSWHWV
+	9eBsXp32rBBrH9EIHyV65mlNrOSB957OtLId5F3GU6BNxlsQ861PCeQipFB3F2a4
+	NP6vfr1BnTfVHJySZuSVYAaI6gDX+bkygudhcG7lGNgOBkNQg8rqKTSc9lGCv77U
+	RqJguFBd1E1GWCZ5/yZQjN+3xnBOEBdentFnI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=f59pHrD2VJGRakalfMqsUZng7twSX0Y2
+	K3I+ZqbcSja38zYBPj/j94ZARbPq8gs1X/uJY+Oj93v3nw1Wgq2wnL3JXkOU106V
+	7RIy64V9wNk4xy/6UmLkfT4j+MgXmSXeTg3qGFKvn+1j0L/ODSAS+5BoKGesGyvA
+	QGyfrubgHG8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6850391394;
+	Mon, 18 Jan 2010 12:22:32 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6CD7291393; Mon, 18 Jan
+ 2010 12:22:27 -0500 (EST)
+In-Reply-To: <4B549254.5090206@isy.liu.se> (Gustaf Hendeby's message of
+ "Mon\, 18 Jan 2010 17\:54\:44 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0FD90F54-0456-11DF-B89C-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137392>
 
-On Mon, Jan 18, 2010 at 08:54, Gustaf Hendeby <hendeby@isy.liu.se> wrot=
-e:
-> Jacob Helwig wrote:
->> On Mon, Jan 18, 2010 at 07:30, Gustaf Hendeby <hendeby@isy.liu.se> w=
-rote:
->>> Hi!
->>>
->>> I have been using submodules for a while, and been quite happy with
->>> them. =C2=A0Just updating to the latest next (1.6.6.443.gd7346), a =
-strange
->>> problem has occurred. =C2=A0All my submodules (which are in fact un=
-modified)
->>> show as modified and dirty
->>>
->>> diff --git a/extern/utils b/extern/utils
->>> --- a/extern/utils
->>> +++ b/extern/utils
->>> @@ -1 +1 @@
->>> -Subproject commit 6bad20e1419f1ca61bd5a6eef9b5937122e006f1
->>> +Subproject commit 6bad20e1419f1ca61bd5a6eef9b5937122e006f1-dirty
->>>
->>>
->> Do you have any untracked files in the submodule? =C2=A0git status i=
-s
->> working as I would expect with the same version (1.6.6.443.gd7346).
->
-> Yes, I do.
->
->>
->> If there is no output from git status in the submodule, then git
->> status in the superproject shows the submodule as being clean.
->> However, if there is _any_ output from git status (untracked files,
->> modified files, deleted files, new files), then the superproject sho=
-ws
->> the submodule as being dirty.
->>
->
-> Then the behavior of this feature differs from the one provided by
-> GIT-VERSION-GEN that is used as part of the git build process. =C2=A0=
-This is
-> not an argument itself, but personally, I don't like this behavior, a=
-nd
-> think it should be reconsidered before inclusion into master.
->
-> I have the following use case, which is affected. =C2=A0I have with i=
-n a
-> submodule some code that needs to be compiled, and hence generate som=
-e
-> object files and other files in the process. =C2=A0I don't want to in=
-clude
-> these files in a .gitignore as they are named differently on differen=
-t
-> systems. =C2=A0Hence, I include them in my .git/info/exclude file, wh=
-ere I am
-> developing the module. =C2=A0So now, unless I do the same thing for a=
-ll
-> places I checkout the repo as submodule, I end up with the module
-> indicated as dirty after I compile it. =C2=A0This is a bit inconvenie=
-nt.
->
-> Am I the only one who uses submodules this way? =C2=A0Is there a bett=
-er way
-> to solve my problem that would provide a better work pattern in this =
-case?
->
-> /Gustaf
->
+Gustaf Hendeby <hendeby@isy.liu.se> writes:
 
-I don't really deal with compiled code, when I use submodules, so any
-time there's a new file in one of my submodules, it's almost certainly
-a new library file that should make the submodule be considered
-"dirty".  Even though the current behavior is what I'd expect, and
-want for my uses, that doesn't mean it's not wrong for some other use
-cases.
+> ....  I don't want to include
+> these files in a .gitignore as they are named differently on different
+> systems.  Hence, I include them in my .git/info/exclude file,...
 
-That being said:
-The .gitignore file supports shell globs.  Are the generated files
-created with names that are so different that some simple shell globs
-used in one or more .gitignore files couldn't cover them?
+I don't have a strong opinion on the submodules part of your issue, but
+the above part applies to projects with or without submodules, which I
+have an opinion, and because it is different from what I used to teach
+people, I think it is worth mentioning..
 
--Jacob
+I used to say "Never place *~ (or *.swp) in .gitignore because they are
+only useful to you who use Emacs (or vim); and do have *.o in .gitignore,
+because everybody who compile your checkout would see it".
+
+But I don't think the former is a right attitude.  My thinking these days
+is that keeping these in .gitignore should not just be tolerated but
+should be actively encouraged, unless the project may need to track paths
+that match *~ or *.swp in the future,
+
+If it is very unlikely that the project will ever track them, there is no
+harm done [*1*], and it will help other people because they don't have to
+add the same and common entries in their own .git/info/excludes file.
+
+I am suspecting that your "these files ... are named differently on
+different systems" may fall into the same category.  Your build may not
+produce "frotz.linux" when compiled on a FreeBSD box (and "frotz.fbsd" on
+a Linux box), but would it hurt more than it helps to list them in the
+same .gitignore to cover both?
+
+
+[Footnote]
+
+*1* Once it starts doing so, un-ignoring a special case can be done
+at that point in the history
