@@ -1,93 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Git Wiki Move
-Date: Mon, 18 Jan 2010 21:46:09 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001182141270.4985@pacific.mpi-cbg.de>
-References: <20100113232908.GA3299@machine.or.cz> <20100114012449.GB3299@machine.or.cz> <4B4EF1E0.3040808@eaglescrag.net> <vpqbpgxrn32.fsf@bauges.imag.fr> <4B4F68E8.5050809@eaglescrag.net> <4B50F7DB.7020204@eaglescrag.net> <vpqwrzhszye.fsf@bauges.imag.fr>
- <alpine.DEB.1.00.1001172357420.4985@pacific.mpi-cbg.de> <4B53AEAC.6060100@eaglescrag.net> <alpine.DEB.1.00.1001181044410.4985@pacific.mpi-cbg.de> <alpine.DEB.1.00.1001181258540.3044@intel-tinevez-2-302> <4B54ACBD.6000000@eaglescrag.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: "J.H." <warthog19@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Mon Jan 18 21:41:37 2010
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: [PATCH 0/2] Branch --set-upstream
+Date: Mon, 18 Jan 2010 22:44:10 +0200
+Message-ID: <1263847452-29634-1-git-send-email-ilari.liusvaara@elisanet.fi>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 18 21:44:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWyPm-0004S6-Of
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 21:41:35 +0100
+	id 1NWySV-0005en-F1
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 21:44:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753213Ab0ARUku (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2010 15:40:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752646Ab0ARUku
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 15:40:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46904 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752102Ab0ARUkt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2010 15:40:49 -0500
-Received: (qmail invoked by alias); 18 Jan 2010 20:40:35 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp048) with SMTP; 18 Jan 2010 21:40:35 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18BmB8KPj4B+LvFs2+HcPtvPKlK02mh7L6CLtOgJJ
-	cVuawB4C+fAc4n
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <4B54ACBD.6000000@eaglescrag.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.60999999999999999
+	id S1753957Ab0ARUoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2010 15:44:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753548Ab0ARUoT
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 15:44:19 -0500
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:53291 "EHLO
+	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751753Ab0ARUoS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2010 15:44:18 -0500
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id A5D1818CFEA;
+	Mon, 18 Jan 2010 22:44:17 +0200 (EET)
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A02DDA84BFE; Mon, 18 Jan 2010 22:44:17 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id 6EB81158A74;
+	Mon, 18 Jan 2010 22:44:13 +0200 (EET)
+X-Mailer: git-send-email 1.6.6.199.gff4b0
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137401>
 
-Hi,
+This adds new switch --set-upstream that can set upstream information
+on existing branch branch without changing where the branch points
+to.
 
-On Mon, 18 Jan 2010, J.H. wrote:
+push --set-upstream doesn't help if user doesn't have push priviledges
+or if user is not up to date with upstream. Forcing branch recreate
+is not possible if user has own patches appiled to the branch.
 
-> On 01/18/2010 04:03 AM, Johannes Schindelin wrote:
-> 
-> > These are the things left that I would like to see soon:
-> > 
-> > - add a link from the old Wiki (with rewrite rules)
-> 
-> I think the rewrites should be simple enough (the pages seem to line up 
-> 1:1 easily enough) so all I would need to do is discuss this with Petr.
+This series is edited version of Matthieu Moy's branch --track patch
+series. The first patch is edited, the second is resent as-is.
 
-Wonderful.
+Ilari Liusvaara (1):
+  Add branch --set-upstream
 
-> > - use whatever logo (anything is better than the sunflower)
-> 
-> It's easy enough to change just need to know which one to use.
+Matthieu Moy (1):
+  branch: warn and refuse to set a branch as a tracking branch of
+    itself.
 
-See below.
-
-> > - enable anonymous edits
-> 
-> Anonymous edits will *NEVER* be enabled.  You are going to need to have
-> an account and your going to have to verify it's e-mail to be able to do
-> eits.  Completely anonymous edits are too much of a risk considering
-> bots and spam and the abuse they can do.
-> 
-> Even then there is at least one case of a spammer actually going through
-> and using a verified account.
-
-That's good news.  Every couple of days I would look through the recent 
-changes, and sadly enough, there were many spammings on the GitWiki.  No 
-more!
-
-> > - a major cleanup of the broken autolinks and faulty formatting.
-> > 
-> > The latter point is probably the most tedious one, so I suggest that 
-> > only those get a vote on the logo who fix at least 3 pages.
-> 
-> sound fair to me.
-
-I think I qualify.  My vote goes for 
-http://henrik.nyh.se/uploads/git-logo.png, as it is really pretty.  If you 
-agree, and put in your vote, too, you can already set it until the 
-bikeshedding has settled down ;-)
-
-Ciao,
-Dscho
+ Documentation/git-branch.txt |    8 ++++++-
+ branch.c                     |   45 ++++++++++++++++++++++++++++++-----------
+ builtin-branch.c             |    2 +
+ cache.h                      |    1 +
+ t/t6040-tracking-info.sh     |   21 +++++++++++++++++++
+ 5 files changed, 64 insertions(+), 13 deletions(-)
