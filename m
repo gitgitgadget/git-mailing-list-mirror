@@ -1,60 +1,64 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v3] Threaded grep
-Date: Mon, 18 Jan 2010 14:45:44 +0100
-Message-ID: <4B546608.4010503@viscovery.net>
-References: <20100118103334.GA17361@fredrik-laptop>	 <4B5441D7.40503@viscovery.net> <4c8ef71001180528h6182ef4l8a617fd038bd7318@mail.gmail.com>
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: Unmodified submodules shows up as dirty with 1.6.6.443.gd7346
+Date: Mon, 18 Jan 2010 16:30:46 +0100
+Message-ID: <4B547EA6.5070203@isy.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Andrzej K. Haczewski" <ahaczewski@gmail.com>
-To: Fredrik Kuivinen <frekui@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 18 14:45:59 2010
+Cc: Jens.Lehmann@web.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 18 16:42:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWrvX-0008KD-Fq
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 14:45:55 +0100
+	id 1NWtkX-0005sw-Ve
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 16:42:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752083Ab0ARNpv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2010 08:45:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751812Ab0ARNpv
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 08:45:51 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:37053 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751413Ab0ARNpu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2010 08:45:50 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NWrvN-0002jv-0j; Mon, 18 Jan 2010 14:45:45 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id B30001660F;
-	Mon, 18 Jan 2010 14:45:44 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <4c8ef71001180528h6182ef4l8a617fd038bd7318@mail.gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.9 (+)
+	id S1753932Ab0ARPme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2010 10:42:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753873Ab0ARPme
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 10:42:34 -0500
+Received: from mailgw1.uni-kl.de ([131.246.120.220]:49204 "EHLO
+	mailgw1.uni-kl.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752895Ab0ARPmd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2010 10:42:33 -0500
+X-Greylist: delayed 725 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 Jan 2010 10:42:33 EST
+Received: from dfki.uni-kl.de (dfki-1002.dfki.uni-kl.de [131.246.195.2])
+	by mailgw1.uni-kl.de (8.13.8/8.13.8/Debian-3) with ESMTP id o0IFUQem003069;
+	Mon, 18 Jan 2010 16:30:26 +0100
+Received: from serv-2100.kl.dfki.de (serv-2100.kl.dfki.de [192.168.21.180])
+	by dfki.uni-kl.de (8.13.8+Sun/8.11.4) with ESMTP id o0IFUQEh001293;
+	Mon, 18 Jan 2010 16:30:26 +0100 (CET)
+Received: from [192.168.21.153] (pc-2163.kl.dfki.de [192.168.21.153])
+	by serv-2100.kl.dfki.de (8.13.8+Sun/8.13.8) with ESMTP id o0IFUP58006076;
+	Mon, 18 Jan 2010 16:30:26 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137387>
 
-Fredrik Kuivinen schrieb:
-> On Mon, Jan 18, 2010 at 12:11, Johannes Sixt <j.sixt@viscovery.net> wrote:
->> Fredrik Kuivinen schrieb:
->>> +     pthread_mutex_unlock(&grep_lock);
->>> +     pthread_cond_signal(&cond_add);
->> Please swap these two lines, so that pthread_cond_signal() is called while
->> the lock is held.
-> 
-> May I ask why? (just curious)
+Hi!
 
-Because our pthreads_cond_* functions on Windows are not POSIXly correct
-and work reliably only when pthread_cond_signal() is called while the
-mutex is held.
+I have been using submodules for a while, and been quite happy with
+them.  Just updating to the latest next (1.6.6.443.gd7346), a strange
+problem has occurred.  All my submodules (which are in fact unmodified)
+show as modified and dirty
 
--- Hannes
+diff --git a/extern/utils b/extern/utils
+--- a/extern/utils
++++ b/extern/utils
+@@ -1 +1 @@
+-Subproject commit 6bad20e1419f1ca61bd5a6eef9b5937122e006f1
++Subproject commit 6bad20e1419f1ca61bd5a6eef9b5937122e006f1-dirty
+
+
+Anyone have an idea what is going on here?  (Related to the recent topic
+by Jens Lehmann? cc:ed)  Unfortunately, I don't have the time to dig
+into this right now, but I'll try to do it later tonight if the problem
+remains.
+
+/Gustaf
