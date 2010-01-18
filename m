@@ -1,53 +1,133 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: git rm --cached and pull semantics
-Date: Sun, 17 Jan 2010 16:06:39 -0800
-Message-ID: <86my0c5l9s.fsf@blue.stonehenge.com>
-References: <4B51EE39.3010401@phuk.ath.cx> <vpq1vhpufec.fsf@bauges.imag.fr>
-	<4B53941A.6020500@phuk.ath.cx>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: [RFC] Git Wiki Move
+Date: Sun, 17 Jan 2010 16:43:24 -0800
+Message-ID: <4B53AEAC.6060100@eaglescrag.net>
+References: <20100113232908.GA3299@machine.or.cz> <20100114012449.GB3299@machine.or.cz> <4B4EF1E0.3040808@eaglescrag.net> <vpqbpgxrn32.fsf@bauges.imag.fr> <4B4F68E8.5050809@eaglescrag.net> <4B50F7DB.7020204@eaglescrag.net> <vpqwrzhszye.fsf@bauges.imag.fr> <alpine.DEB.1.00.1001172357420.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: list@phuk.ath.cx
-X-From: git-owner@vger.kernel.org Mon Jan 18 01:28:51 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 18 01:43:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWfUA-0006Tl-HQ
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 01:28:50 +0100
+	id 1NWfib-0002N8-8W
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 01:43:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754884Ab0ARA2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2010 19:28:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754211Ab0ARA2p
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 19:28:45 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:21444 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754185Ab0ARA2p (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2010 19:28:45 -0500
-X-Greylist: delayed 1326 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Jan 2010 19:28:45 EST
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 1B02A1DE4CD; Sun, 17 Jan 2010 16:06:39 -0800 (PST)
-x-mayan-date: Long count = 12.19.17.0.11; tzolkin = 1 Chuen; haab = 9 Muan
-In-Reply-To: <4B53941A.6020500@phuk.ath.cx> (list@phuk.ath.cx's message of "Sun, 17 Jan 2010 23:50:02 +0100")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
+	id S1755154Ab0ARAni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jan 2010 19:43:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754304Ab0ARAni
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 19:43:38 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:43195 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754198Ab0ARAnh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2010 19:43:37 -0500
+Received: from voot-cruiser.eaglescrag.net (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o0I0hPpf023697
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Sun, 17 Jan 2010 16:43:25 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091209 Fedora/3.0-4.fc12 Lightning/1.0pre Thunderbird/3.0
+In-Reply-To: <alpine.DEB.1.00.1001172357420.4985@pacific.mpi-cbg.de>
+X-Enigmail-Version: 1.0
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Sun, 17 Jan 2010 16:43:25 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137351>
 
+On 01/17/2010 03:06 PM, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Sun, 17 Jan 2010, Matthieu Moy wrote:
+> 
+>> "J.H." <warthog19@eaglescrag.net> writes:
+>>
+>>> Quick update - I think I've got the vast majority of the obvious and
+>>> simple to correct problems fixed at http://git.wiki.kernel.org anyone
+>>> want to run through and see if there's anything else that would be
+>>> considered a show stopper?
+>>
+>> The main page is locked, and there are some broken links formatting in
+>> the News section: http://git.wiki.kernel.org/index.php/Main_Page#News
+>> I'm user "Moy" there if you want to let me fix them.
+> 
+> I think I managed to edit them.
 
-The real WTF here is that you are using a workdir as your live dir.
+You have to have a confirmed e-mail account to be able to edit anything,
+the errors on why you can't edit are fairly straight forward.
 
-If you treat git as a *source* manager like it is, you'd also have an
-installer that would copy the resulting files into their live locations,
-and could be edited to either leave that newly untracked file alone,
-or deliberately remove it.
+> 
+>> You should set $wgLogo to some Git logo, among
+>> http://git.or.cz/gitwiki/GitRelatedLogos
+> 
+> Best would be the standard one: http://git.or.cz/git-logo.png but I would 
+> actually also like http://henrik.nyh.se/uploads/git-logo.png.
 
-Use git as intended, and you get no problems.
+I'd leave that up to the greater community.  The second one there would
+fit better on the page honestly, but I don't want to go making a logo
+decision for the entirety of the project.
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
-See http://methodsandmessages.vox.com/ for Smalltalk and Seaside discussion
+> 
+>> You can also add a few links to the sidebar, by editting:
+>> http://git.wiki.kernel.org/index.php/MediaWiki:Sidebar
+>>
+>> (it seems I don't have permission to do it myself).
+> 
+> You need to be in the Sysop list to do so.  Warthog, if you trust me :-) 
+> would you mind adding me to that group?  You can do that by visiting
+> 
+> http://git.wiki.kernel.org/index.php/Special:Userrights
+> 
+> when you are a sysop.
+
+Done.
+
+> 
+>> I suggest taking the ones of the front-page:
+>>
+>> * Starting points
+>> ** Installation|Installation
+>> ** InterfacesFrontendsAndTools|Git Tools
+>> ** GitDocumentation|Git Documentation
+>> ** GitCommunity|Git Community Support
+>> ** GitProjects|Projects using Git
+>> ** GitFaq|FAQ
+>> ** GitHosting|Git Hosting
+>> ** GitLinks|Git Links
+>> ** GitComparison|Git Compared
+> 
+> Let's not forget
+> 
+> * navigation
+> ** mainpage|mainpage-description
+> ** recentchanges-url|recentchanges
+> ** randompage-url|randompage
+> ** helppage|help
+> * SEARCH
+> * TOOLBOX
+> 
+> BTW there is a file KHTMLFixes.css in the directory skins/monobook/ which 
+> makes the layout break with Chromium.  Apparently, it is no longer needed 
+> by KHTML anyway.  So could you please replace that file with an empty one, 
+> or comment out the offending part, like so:
+> 
+> 	/* #column-content { margin-left: 0; } */
+
+I'm not keen on making changes since that file is still coming from the
+shipping version of mediawiki and I'm trying, quite a lot, to not run a
+modified version of it.  I've got enough troubles with the fact that
+that one change would affect 22 wikis in a single go.
+
+As bad as it is to say this, I'd rather wait for 1.16 to come out vs.
+modify it in place.  Mediawiki is claiming they are in continuous
+integration development with quarterly releases but their last release
+was June of 2009, so take that as you will.
+
+- John 'Warthog9' Hawley
