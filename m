@@ -1,450 +1,135 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [PATCH] Add git remote set-url
-Date: Mon, 18 Jan 2010 19:18:02 +0200
-Message-ID: <1263835082-21506-1-git-send-email-ilari.liusvaara@elisanet.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 18 18:20:03 2010
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Re: Unmodified submodules shows up as dirty with 1.6.6.443.gd7346
+Date: Mon, 18 Jan 2010 09:14:55 -0800
+Message-ID: <8c9a061001180914v42074056o3a5d077ac4cea70f@mail.gmail.com>
+References: <4B547EA6.5070203@isy.liu.se> <8c9a061001180802t5ec0d389j2cae9f1771130c36@mail.gmail.com> 
+	<4B549254.5090206@isy.liu.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de
+To: Gustaf Hendeby <hendeby@isy.liu.se>
+X-From: git-owner@vger.kernel.org Mon Jan 18 18:23:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWvGa-0007tr-AX
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 18:19:52 +0100
+	id 1NWvK9-0001EB-6n
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 18:23:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754804Ab0ARRSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2010 12:18:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754871Ab0ARRSK
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 12:18:10 -0500
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:36075 "EHLO
-	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754453Ab0ARRSH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2010 12:18:07 -0500
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id E43CBC7C6C
-	for <git@vger.kernel.org>; Mon, 18 Jan 2010 19:18:03 +0200 (EET)
-Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A0234EB0C57; Mon, 18 Jan 2010 19:18:03 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id A0D2F406C
-	for <git@vger.kernel.org>; Mon, 18 Jan 2010 19:18:02 +0200 (EET)
-X-Mailer: git-send-email 1.6.6.199.gff4b0
-X-Antivirus: VAMS
+	id S1755385Ab0ARRV7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jan 2010 12:21:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755311Ab0ARRV5
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 12:21:57 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:47864 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755360Ab0ARRVy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Jan 2010 12:21:54 -0500
+Received: by pwj9 with SMTP id 9so1829997pwj.21
+        for <git@vger.kernel.org>; Mon, 18 Jan 2010 09:21:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Ua40IA52/tjsRenSLmy6bYRlQlM6C8VEMWXROjCOF2A=;
+        b=Vs6jt415xwH99e6t+fB5ExmXa2tywoos+wwRbEppnT2TkONoJheSGeE+neTfnLjvSf
+         ngovMrAgBiefh+wCKp7h59xjxFByuZlklKmcmJUo4LDY4n+86sH76SWYRnqwBvSqog01
+         K4YbJZMYlCexS6fQvNp0zNQIPHZ5ACvRFXDqQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=T4BSefApKsBd1jaLs3LPyBQTeeXG8wSzHhIwk+Bzh4DRs/eD+Ba7ZB/uwLSiugQbad
+         tYxWfBJR5+69PD372QqSHyBN2LGqU+YwiUriRX4myDZY5AAtVNj4p3DOOarAMYM2wrr3
+         /eH9XZbugs19oeFvJEgzhZCPGZYJo2wXb+tbM=
+Received: by 10.141.88.20 with SMTP id q20mr4452620rvl.198.1263834915174; Mon, 
+	18 Jan 2010 09:15:15 -0800 (PST)
+In-Reply-To: <4B549254.5090206@isy.liu.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137391>
 
-Add 'git remote set-url' for changing URL of remote repository with
-one "porcelain-level" command.
+On Mon, Jan 18, 2010 at 08:54, Gustaf Hendeby <hendeby@isy.liu.se> wrot=
+e:
+> Jacob Helwig wrote:
+>> On Mon, Jan 18, 2010 at 07:30, Gustaf Hendeby <hendeby@isy.liu.se> w=
+rote:
+>>> Hi!
+>>>
+>>> I have been using submodules for a while, and been quite happy with
+>>> them. =C2=A0Just updating to the latest next (1.6.6.443.gd7346), a =
+strange
+>>> problem has occurred. =C2=A0All my submodules (which are in fact un=
+modified)
+>>> show as modified and dirty
+>>>
+>>> diff --git a/extern/utils b/extern/utils
+>>> --- a/extern/utils
+>>> +++ b/extern/utils
+>>> @@ -1 +1 @@
+>>> -Subproject commit 6bad20e1419f1ca61bd5a6eef9b5937122e006f1
+>>> +Subproject commit 6bad20e1419f1ca61bd5a6eef9b5937122e006f1-dirty
+>>>
+>>>
+>> Do you have any untracked files in the submodule? =C2=A0git status i=
+s
+>> working as I would expect with the same version (1.6.6.443.gd7346).
+>
+> Yes, I do.
+>
+>>
+>> If there is no output from git status in the submodule, then git
+>> status in the superproject shows the submodule as being clean.
+>> However, if there is _any_ output from git status (untracked files,
+>> modified files, deleted files, new files), then the superproject sho=
+ws
+>> the submodule as being dirty.
+>>
+>
+> Then the behavior of this feature differs from the one provided by
+> GIT-VERSION-GEN that is used as part of the git build process. =C2=A0=
+This is
+> not an argument itself, but personally, I don't like this behavior, a=
+nd
+> think it should be reconsidered before inclusion into master.
+>
+> I have the following use case, which is affected. =C2=A0I have with i=
+n a
+> submodule some code that needs to be compiled, and hence generate som=
+e
+> object files and other files in the process. =C2=A0I don't want to in=
+clude
+> these files in a .gitignore as they are named differently on differen=
+t
+> systems. =C2=A0Hence, I include them in my .git/info/exclude file, wh=
+ere I am
+> developing the module. =C2=A0So now, unless I do the same thing for a=
+ll
+> places I checkout the repo as submodule, I end up with the module
+> indicated as dirty after I compile it. =C2=A0This is a bit inconvenie=
+nt.
+>
+> Am I the only one who uses submodules this way? =C2=A0Is there a bett=
+er way
+> to solve my problem that would provide a better work pattern in this =
+case?
+>
+> /Gustaf
+>
 
-Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
----
-Built atop master. Another one from my TODO list.
+I don't really deal with compiled code, when I use submodules, so any
+time there's a new file in one of my submodules, it's almost certainly
+a new library file that should make the submodule be considered
+"dirty".  Even though the current behavior is what I'd expect, and
+want for my uses, that doesn't mean it's not wrong for some other use
+cases.
 
- Documentation/git-remote.txt |   17 ++++
- builtin-remote.c             |  100 +++++++++++++++++++
- t/t5505-remote.sh            |  216 +++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 332 insertions(+), 1 deletions(-)
+That being said:
+The .gitignore file supports shell globs.  Are the generated files
+created with names that are so different that some simple shell globs
+used in one or more .gitignore files couldn't cover them?
 
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index c272c92..35d32f7 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -14,6 +14,9 @@ SYNOPSIS
- 'git remote rename' <old> <new>
- 'git remote rm' <name>
- 'git remote set-head' <name> (-a | -d | <branch>)
-+'git remote set-url' [--push] <name> <newurl> [<oldurl>]
-+'git remote set-url --add' [--push] <name> <newurl>
-+'git remote set-url --delete' [--push] <name> <url>
- 'git remote' [-v | --verbose] 'show' [-n] <name>
- 'git remote prune' [-n | --dry-run] <name>
- 'git remote' [-v | --verbose] 'update' [-p | --prune] [group | remote]...
-@@ -101,6 +104,20 @@ remote set-head origin master" will set `$GIT_DIR/refs/remotes/origin/HEAD` to
- `refs/remotes/origin/master` already exists; if not it must be fetched first.
- +
- 
-+'set-url'::
-+
-+Changes URL remote points to. Sets first URL remote points to matching
-+regex <oldurl> (first URL if no <oldurl> is given) to <newurl>. If
-+<oldurl> doesn't match any URL, error occurs and nothing is changed.
-++
-+With '--push', push URLs are manipulated instead of fetch URLs.
-++
-+With '--add', instead of changing some URL, new URL is added.
-++
-+With '--delete', instead of changing some URL, all URLs matching
-+regex <url> are deleted. Trying to delete all non-push URLs is an
-+error.
-+
- 'show'::
- 
- Gives some information about the remote <name>.
-diff --git a/builtin-remote.c b/builtin-remote.c
-index c4945b8..03ac7ee 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -16,6 +16,9 @@ static const char * const builtin_remote_usage[] = {
- 	"git remote [-v | --verbose] show [-n] <name>",
- 	"git remote prune [-n | --dry-run] <name>",
- 	"git remote [-v | --verbose] update [-p | --prune] [group | remote]",
-+	"git remote set-url <name> <newurl> [<oldurl>]",
-+	"git remote set-url --add <name> <newurl>",
-+	"git remote set-url --delete <name> <url>",
- 	NULL
- };
- 
-@@ -54,12 +57,21 @@ static const char * const builtin_remote_update_usage[] = {
- 	NULL
- };
- 
-+static const char * const builtin_remote_seturl_usage[] = {
-+	"git remote set-url [--push] <name> <newurl> [<oldurl>]",
-+	"git remote set-url --add <name> <newurl>",
-+	"git remote set-url --delete <name> <url>",
-+	NULL
-+};
-+
- #define GET_REF_STATES (1<<0)
- #define GET_HEAD_NAMES (1<<1)
- #define GET_PUSH_REF_STATES (1<<2)
- 
- static int verbose;
- 
-+
-+
- static int show_all(void);
- static int prune_remote(const char *remote, int dry_run);
- 
-@@ -1255,6 +1267,92 @@ static int update(int argc, const char **argv)
- 	return run_command_v_opt(fetch_argv, RUN_GIT_CMD);
- }
- 
-+static int set_url(int argc, const char **argv)
-+{
-+	int i, push_mode = 0, add_mode = 0, delete_mode = 0;
-+	int matches = 0, negative_matches = 0;
-+	const char *remotename = NULL;
-+	const char *newurl = NULL;
-+	const char *oldurl = NULL;
-+	struct remote *remote;
-+	regex_t old_regex;
-+	const char **urlset;
-+	int urlset_nr;
-+	struct strbuf name_buf = STRBUF_INIT;
-+	struct option options[] = {
-+		OPT_BOOLEAN('\0', "push", &push_mode,
-+			    "manipulate push URLs"),
-+		OPT_BOOLEAN('\0', "add", &add_mode,
-+			    "add URL"),
-+		OPT_BOOLEAN('\0', "delete", &delete_mode,
-+			    "delete URLs"),
-+		OPT_END()
-+	};
-+	argc = parse_options(argc, argv, NULL, options, builtin_remote_update_usage,
-+			     PARSE_OPT_KEEP_ARGV0);
-+
-+	if (add_mode && delete_mode)
-+		die("--add --delete doesn't make sense");
-+
-+	if (argc < 3 || argc > 4 || ((add_mode || delete_mode) && argc != 3))
-+		usage_with_options(builtin_remote_seturl_usage, options);
-+
-+	remotename = argv[1];
-+	newurl = argv[2];
-+	if (argc > 3)
-+		oldurl = argv[3];
-+
-+	if (delete_mode)
-+		oldurl = newurl;
-+
-+	if (!remote_is_configured(remotename))
-+		die("No such remote '%s'", remotename);
-+	remote = remote_get(remotename);
-+
-+	if (push_mode) {
-+		strbuf_addf(&name_buf, "remote.%s.pushurl", remotename);
-+		urlset = remote->pushurl;
-+		urlset_nr = remote->pushurl_nr;
-+	} else {
-+		strbuf_addf(&name_buf, "remote.%s.url", remotename);
-+		urlset = remote->url;
-+		urlset_nr = remote->url_nr;
-+	}
-+
-+	/* Special cases that add new entry. */
-+	if ((!oldurl && !delete_mode) || add_mode) {
-+		if (add_mode)
-+			git_config_set_multivar(name_buf.buf, newurl,
-+				"^$", 0);
-+		else
-+			git_config_set(name_buf.buf, newurl);
-+		strbuf_release(&name_buf);
-+		return 0;
-+	}
-+
-+	/* Old URL specified. Demand that one matches. */
-+	if (regcomp(&old_regex, oldurl, REG_EXTENDED))
-+		die("Invalid old URL pattern: %s", oldurl);
-+
-+	for (i = 0; i < urlset_nr; i++)
-+		if (!regexec(&old_regex, urlset[i], 0, NULL, 0))
-+			matches++;
-+		else
-+			negative_matches++;
-+	if (!delete_mode && !matches)
-+		die("No such URL found: %s", oldurl);
-+	if (delete_mode && !negative_matches && !push_mode)
-+		die("Will not delete all non-push URLs");
-+
-+	regfree(&old_regex);
-+
-+	if (!delete_mode)
-+		git_config_set_multivar(name_buf.buf, newurl, oldurl, 0);
-+	else
-+		git_config_set_multivar(name_buf.buf, NULL, oldurl, 1);
-+	return 0;
-+}
-+
- static int get_one_entry(struct remote *remote, void *priv)
- {
- 	struct string_list *list = priv;
-@@ -1334,6 +1432,8 @@ int cmd_remote(int argc, const char **argv, const char *prefix)
- 		result = rm(argc, argv);
- 	else if (!strcmp(argv[0], "set-head"))
- 		result = set_head(argc, argv);
-+	else if (!strcmp(argv[0], "set-url"))
-+		result = set_url(argc, argv);
- 	else if (!strcmp(argv[0], "show"))
- 		result = show(argc, argv);
- 	else if (!strcmp(argv[0], "prune"))
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 936fe0a..a82c5ff 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -533,5 +533,219 @@ test_expect_success 'show empty remote' '
- 	)
- '
- 
--test_done
-+test_expect_success 'new remote' '
-+(
-+	git remote add someremote foo &&
-+	echo foo >expect &&
-+	git config --get-all remote.someremote.url >actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url bar' '
-+(
-+	git remote set-url someremote bar &&
-+	echo bar >expect &&
-+	git config --get-all remote.someremote.url >actual &&
-+	cmp expect actual
-+)
-+'
- 
-+test_expect_success 'remote set-url baz bar' '
-+(
-+	git remote set-url someremote baz bar &&
-+	echo baz >expect &&
-+	git config --get-all remote.someremote.url >actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url zot bar' '
-+(
-+	test_must_fail git remote set-url someremote zot bar &&
-+	echo baz >expect &&
-+	git config --get-all remote.someremote.url >actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url --push zot baz' '
-+(
-+	test_must_fail git remote set-url --push someremote zot baz &&
-+	echo "YYY" >expect &&
-+	echo baz >>expect &&
-+	test_must_fail git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url --push zot' '
-+(
-+	git remote set-url --push someremote zot &&
-+	echo zot >expect &&
-+	echo "YYY" >>expect &&
-+	echo baz >>expect &&
-+	git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url --push qux zot' '
-+(
-+	git remote set-url --push someremote qux zot &&
-+	echo qux >expect &&
-+	echo "YYY" >>expect &&
-+	echo baz >>expect &&
-+	git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url --push foo qu+x' '
-+(
-+	git remote set-url --push someremote foo qu+x &&
-+	echo foo >expect &&
-+	echo "YYY" >>expect &&
-+	echo baz >>expect &&
-+	git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url --push --add aaa' '
-+(
-+	git remote set-url --push --add someremote aaa &&
-+	echo foo >expect &&
-+	echo aaa >>expect &&
-+	echo "YYY" >>expect &&
-+	echo baz >>expect &&
-+	git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url --push bar aaa' '
-+(
-+	git remote set-url --push someremote bar aaa &&
-+	echo foo >expect &&
-+	echo bar >>expect &&
-+	echo "YYY" >>expect &&
-+	echo baz >>expect &&
-+	git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url --push --delete bar' '
-+(
-+	git remote set-url --push --delete someremote bar &&
-+	echo foo >expect &&
-+	echo "YYY" >>expect &&
-+	echo baz >>expect &&
-+	git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url --push --delete foo' '
-+(
-+	git remote set-url --push --delete someremote foo &&
-+	echo "YYY" >expect &&
-+	echo baz >>expect &&
-+	test_must_fail git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url --add bbb' '
-+(
-+	git remote set-url --add someremote bbb &&
-+	echo "YYY" >expect &&
-+	echo baz >>expect &&
-+	echo bbb >>expect &&
-+	test_must_fail git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url --delete .*' '
-+(
-+	test_must_fail git remote set-url --delete someremote .* &&
-+	echo "YYY" >expect &&
-+	echo baz >>expect &&
-+	echo bbb >>expect &&
-+	test_must_fail git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url --delete bbb' '
-+(
-+	git remote set-url --delete someremote bbb &&
-+	echo "YYY" >expect &&
-+	echo baz >>expect &&
-+	test_must_fail git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url --delete baz' '
-+(
-+	test_must_fail git remote set-url --delete someremote baz &&
-+	echo "YYY" >expect &&
-+	echo baz >>expect &&
-+	test_must_fail git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url --add ccc' '
-+(
-+	git remote set-url --add someremote ccc &&
-+	echo "YYY" >expect &&
-+	echo baz >>expect &&
-+	echo ccc >>expect &&
-+	test_must_fail git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_expect_success 'remote set-url --delete baz' '
-+(
-+	git remote set-url --delete someremote baz &&
-+	echo "YYY" >expect &&
-+	echo ccc >>expect &&
-+	test_must_fail git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+)
-+'
-+
-+test_done
--- 
-1.6.6.199.gff4b0
+-Jacob
