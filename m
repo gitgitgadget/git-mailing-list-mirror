@@ -1,67 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] grep --no-index: allow use of "git grep" outside a git
- repository
-Date: Sun, 17 Jan 2010 20:51:40 -0500
-Message-ID: <20100118015140.GB6831@coredump.intra.peff.net>
-References: <201001131713.05505.agruen@suse.de>
- <7vfx69k0bu.fsf@alter.siamese.dyndns.org>
- <20100115223259.6117@nanako3.lavabit.com>
- <7vska71br0.fsf@alter.siamese.dyndns.org>
- <7vzl4fum3r.fsf_-_@alter.siamese.dyndns.org>
- <20100115210854.GA21540@coredump.intra.peff.net>
- <7vwrzin9jt.fsf@alter.siamese.dyndns.org>
- <20100116011512.GA27082@coredump.intra.peff.net>
- <7vpr5ait1m.fsf@alter.siamese.dyndns.org>
+From: Sebastian Pipping <webmaster@hartwork.org>
+Subject: Re: git clone against firewall
+Date: Mon, 18 Jan 2010 03:04:11 +0100
+Message-ID: <4B53C19B.1040809@hartwork.org>
+References: <4B4FACB1.2080902@hartwork.org> <7vzl4fz0zb.fsf@alter.siamese.dyndns.org> <4B50BE10.5010603@hartwork.org> <m2aawf1804.fsf@igel.home> <4B50C311.2040305@hartwork.org> <20100115230357.GA10163@inner.home.ulmdo.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Nanako Shiraishi <nanako3@lavabit.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 18 02:51:57 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 18 03:04:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWgma-0002lR-2j
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 02:51:56 +0100
+	id 1NWgyf-0005jg-EI
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 03:04:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751526Ab0ARBvp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2010 20:51:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751463Ab0ARBvp
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 20:51:45 -0500
-Received: from peff.net ([208.65.91.99]:58721 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751072Ab0ARBvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2010 20:51:44 -0500
-Received: (qmail 31835 invoked by uid 107); 18 Jan 2010 01:56:36 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 17 Jan 2010 20:56:36 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Jan 2010 20:51:40 -0500
-Content-Disposition: inline
-In-Reply-To: <7vpr5ait1m.fsf@alter.siamese.dyndns.org>
+	id S1753132Ab0ARCES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jan 2010 21:04:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752751Ab0ARCES
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 21:04:18 -0500
+Received: from smtprelay01.ispgateway.de ([80.67.31.24]:47408 "EHLO
+	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753132Ab0ARCEQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2010 21:04:16 -0500
+Received: from [78.52.102.92] (helo=[192.168.0.3])
+	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <webmaster@hartwork.org>)
+	id 1NWgyS-0005He-2C; Mon, 18 Jan 2010 03:04:12 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20100103 Thunderbird/3.0
+In-Reply-To: <20100115230357.GA10163@inner.home.ulmdo.de>
+X-Df-Sender: 874396
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137357>
 
-On Fri, Jan 15, 2010 at 08:15:49PM -0800, Junio C Hamano wrote:
+On 01/16/10 00:03, Andreas Krey wrote:
+> It does. After the usual network timeout, which unfortunately is
+> a few minutes, and thus not really useful for trying several
+> machines:
 
-> Realistically, this most often is used when grepping in the log, e.g.
-> 
->     git log --all-match --author=peff --grep=test
-> 
-> I actually wish "log" to somehow default to --all-match mode at least when
-> using the --author option.  "Change by Jeff, or about test by anybody" is
-> rarely what I would want to look for.
+I would like to a ask for a timeout-after-n-seconds option then.
 
-Agreed. That is the most common log grep pattern for me (author + grep),
-and I always want all-match. I see from later in the thread, though,
-that implementing it is not as straightforward as we might hope.
+Thanks in advance!
 
-I would personally be fine with "--all-match" being the default, but
-that may be too big a change in behavior for some people to swallow (I
-would also be fine with log.allmatch in the config, but every time I
-suggest something like that people's heads explode and I get told to
-make an alias).
 
--Peff
+
+Sebastian
