@@ -1,371 +1,259 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [PATCH v2] rev-parse --namespace
-Date: Mon, 18 Jan 2010 09:15:52 +0200
-Message-ID: <1263798952-27624-1-git-send-email-ilari.liusvaara@elisanet.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 18 08:16:08 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] rev-parse --namespace
+Date: Sun, 17 Jan 2010 23:56:35 -0800
+Message-ID: <7vk4vfsv64.fsf@alter.siamese.dyndns.org>
+References: <1263798952-27624-1-git-send-email-ilari.liusvaara@elisanet.fi>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Mon Jan 18 08:56:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWlqI-0008Nf-F5
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 08:16:07 +0100
+	id 1NWmTp-0001Xt-9Y
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 08:56:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752875Ab0ARHP5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2010 02:15:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752633Ab0ARHP5
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 02:15:57 -0500
-Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:52107 "EHLO
-	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751715Ab0ARHP4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2010 02:15:56 -0500
-Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
-	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id CF00BEF61D
-	for <git@vger.kernel.org>; Mon, 18 Jan 2010 09:15:54 +0200 (EET)
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
-	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
-	with SMTP (gateway) id A01052C0F8E; Mon, 18 Jan 2010 09:15:54 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id 8A301E51B2
-	for <git@vger.kernel.org>; Mon, 18 Jan 2010 09:15:53 +0200 (EET)
-X-Mailer: git-send-email 1.6.6.199.gff4b0
-X-Antivirus: VAMS
+	id S1754654Ab0ARH4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2010 02:56:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754435Ab0ARH4t
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 02:56:49 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35344 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753118Ab0ARH4s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2010 02:56:48 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B96FB92A3D;
+	Mon, 18 Jan 2010 02:56:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=o3k9EcnRNdw4N1tWnVkZDCf36Dw=; b=P5V+cL
+	sb7XHh9aXSmHGmemViBhoVBuaKt39Pk873DHwbIROUcnqknsOEPoM1A25GtHRmQ9
+	jtBzLT5BkIs/PmFoLtLzqMtMbOGCz2C+FIGrPKXc/LHadBMNyu5nuOkWp7bDodvL
+	PtD4DorOHRAbFgGzNr9/vTS/68cnQjYUHLJSc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bkyTY/BWd59zpYI+AUViwXIOxel4F4Eh
+	o3Fw4loC4yoPdf1sVqKKwVBqQh6YWfnnmpd7q+ynO+ictq2eRBvisHIaqyMn2vdd
+	0Zc5k/Wzi1N1HozFDmeee+zbdSgTpjOx5PMQNKkIIlyyDGf4uvExeXBqfFWIr/Kx
+	cteJ8oaMhmA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 968B492A3C;
+	Mon, 18 Jan 2010 02:56:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E73092A3B; Mon, 18 Jan
+ 2010 02:56:37 -0500 (EST)
+In-Reply-To: <1263798952-27624-1-git-send-email-ilari.liusvaara@elisanet.fi>
+ (Ilari Liusvaara's message of "Mon\, 18 Jan 2010 09\:15\:52 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 02FD4088-0407-11DF-B62A-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137375>
 
-Add --namespace=<namespace> option to rev-parse and everything that
-accepts its options. This option matches all refs in some subnamespace
-of refs hierarchy.
+Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
 
-Example:
+> Add --namespace=<namespace> option to rev-parse and everything that
+> accepts its options. This option matches all refs in some subnamespace
+> of refs hierarchy.
+>
+> Example:
+>
+> 'git log --branches --not --namespace=remotes/origin'
+>
+> To show what you have that origin doesn't.
+>
+> Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 
-'git log --branches --not --namespace=remotes/origin'
+Thanks.
 
-To show what you have that origin doesn't.
+> @@ -577,6 +578,13 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+>  				for_each_tag_ref(show_reference, NULL);
+>  				continue;
+>  			}
+> +			if (!prefixcmp(arg, "--namespace=")) {
+> +				struct for_each_namespace_request req;
+> +				req.req_namespace = arg + 12;
+> +				req.req_opaque = NULL;
 
-Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
----
-Changes from v1:
-- Get rid of global variable for namespace.
-- Use strbuf API to build the namespace
-- Test rev-list/rev-parse outputs up to permutation, not just line
-  count.
-- Add example to commit message and to git log manual page.
+If the structure variable is often named after "request", there is not
+much point naming its fields (which are most likely all related to
+request) with "req_" prefix.  IOW, wouldn't this be much easier to read?
 
-I left renaming the option (more opinions on that?) and changing the
-description in manpage (the other similar entries should be fixed too
-then) for later iteration (if these are to be done).
+	struct for_each_namespace_request req;
+	memset(&req, 0, sizeof(req));
+        req.namespace = arg + 12;
 
- Documentation/git-rev-list.txt     |    1 +
- Documentation/git-rev-parse.txt    |    4 +
- Documentation/rev-list-options.txt |    6 ++
- builtin-rev-parse.c                |    8 +++
- refs.c                             |   18 ++++++
- refs.h                             |   13 ++++
- revision.c                         |   20 ++++++-
- t/t6018-rev-list-namespace.sh      |  112 ++++++++++++++++++++++++++++++++++++
- 8 files changed, 180 insertions(+), 2 deletions(-)
- create mode 100755 t/t6018-rev-list-namespace.sh
+But please don't worry about this part too much, as I'll suggest getting
+rid of the struct altogether shortly (read on).
 
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 3341d1b..a8f8f22 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -24,6 +24,7 @@ SYNOPSIS
- 	     [ \--branches ]
- 	     [ \--tags ]
- 	     [ \--remotes ]
-+	     [ \--namespace=namespace-prefix ]
- 	     [ \--stdin ]
- 	     [ \--quiet ]
- 	     [ \--topo-order ]
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 82045a2..af4605a 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -112,6 +112,10 @@ OPTIONS
- --remotes::
- 	Show tag refs found in `$GIT_DIR/refs/remotes`.
- 
-+--namespace=namespace-prefix::
-+	Show refs found in `$GIT_DIR/namespace-prefix`. If namespace
-+	specified lacks leading 'refs/', it is automatically prepended.
-+
- --show-prefix::
- 	When the command is invoked from a subdirectory, show the
- 	path of the current directory relative to the top-level
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 1f57aed..c824a7b 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -243,6 +243,12 @@ endif::git-rev-list[]
- 	Pretend as if all the refs in `$GIT_DIR/refs/remotes` are listed
- 	on the command line as '<commit>'.
- 
-+--namespace=namespace-prefix::
-+	Pretend as if all the refs in `$GIT_DIR/namespace-prefix` are
-+	listed on the command line as '<commit>'. Leading 'refs/', it
-+	is automatically prepended if missing.
-+
-+
- ifndef::git-rev-list[]
- --bisect::
- 
+> diff --git a/refs.c b/refs.c
+> index 3e73a0a..c7162d1 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -7,6 +7,7 @@
+>  /* ISSYMREF=01 and ISPACKED=02 are public interfaces */
+>  #define REF_KNOWS_PEELED 04
+>  
+> +/* Current prefix namespace in use. NULL means none. */
+>  struct ref_list {
+>  	struct ref_list *next;
+>  	unsigned char flag; /* ISSYMREF? ISPACKED? */
+
+Is the above new comment really about what this structure type is?
+
+> diff --git a/refs.h b/refs.h
+> index e141991..4bb63b0 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -25,6 +37,7 @@ extern int for_each_tag_ref(each_ref_fn, void *);
+>  extern int for_each_branch_ref(each_ref_fn, void *);
+>  extern int for_each_remote_ref(each_ref_fn, void *);
+>  extern int for_each_replace_ref(each_ref_fn, void *);
+> +extern int for_each_namespace_ref(each_ref_fn, void *);
+
+I know somebody in the review discussion thought that the second parameter
+for this should be void * for whatever reason, but I don't see the point.
+
+Why cannot this be
+
+	for_each_namespace_ref(each_ref_fn, const char *, void *)
+
+where the second one specifies the "namespace prefix"?
+
+The caller of for_each_namespace_ref() with v2 interface needs to be aware
+of that for_each_namespace_request structure anyway, so there is nothing
+"void *" about it.  You can have a function pointer that can point at
+for_each_{branch,remote,replace}_ref and indirectly call one of the
+functions via that pointer to grab different set of refs, but this new
+function for_each_namespace_ref cannot play together with them, as its
+cb_data must be of different shape for the request to make sense; having
+the same function signature as others wouldn't help.
+
+If the callback "each_ref_fn" function learns what ns-prefix was given for
+it to be called (iow, it gets the whole for_each_namespace_request,
+instead of just its req_opaque member), then I might be talked into
+believing that it _could_ be useful in some situations, but the way the
+callback is called is just the usual "this ref points at this object name,
+by the way here is the message my caller told me to give it to you".  And
+if the caller really wanted to tell the namespace prefix to the callback
+function, it can be made part of the application specific cbdata.
+
+So in short, I simply don't see the point of using this new "request"
+structure.  Here is a suggested update that can be squashed on top of v2.
+
+Am I missing some subtle issues?
+
+ builtin-rev-parse.c |    5 +----
+ refs.c              |   10 ++++------
+ refs.h              |   14 +-------------
+ revision.c          |    5 +----
+ 4 files changed, 7 insertions(+), 27 deletions(-)
+
 diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
-index 37d0233..255191d 100644
+index 255191d..34af347 100644
 --- a/builtin-rev-parse.c
 +++ b/builtin-rev-parse.c
-@@ -52,6 +52,7 @@ static int is_rev_argument(const char *arg)
- 		"--parents",
- 		"--pretty",
- 		"--remotes",
-+		"--namespace=",
- 		"--sparse",
- 		"--tags",
- 		"--topo-order",
-@@ -577,6 +578,13 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				for_each_tag_ref(show_reference, NULL);
+@@ -579,10 +579,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
  				continue;
  			}
-+			if (!prefixcmp(arg, "--namespace=")) {
-+				struct for_each_namespace_request req;
-+				req.req_namespace = arg + 12;
-+				req.req_opaque = NULL;
-+				for_each_namespace_ref(show_reference, &req);
-+				continue;
-+			}
- 			if (!strcmp(arg, "--remotes")) {
- 				for_each_remote_ref(show_reference, NULL);
+ 			if (!prefixcmp(arg, "--namespace=")) {
+-				struct for_each_namespace_request req;
+-				req.req_namespace = arg + 12;
+-				req.req_opaque = NULL;
+-				for_each_namespace_ref(show_reference, &req);
++				for_each_namespace_ref(show_reference, arg + 12, NULL);
  				continue;
+ 			}
+ 			if (!strcmp(arg, "--remotes")) {
 diff --git a/refs.c b/refs.c
-index 3e73a0a..c7162d1 100644
+index c7162d1..2bf8755 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -7,6 +7,7 @@
+@@ -7,7 +7,6 @@
  /* ISSYMREF=01 and ISPACKED=02 are public interfaces */
  #define REF_KNOWS_PEELED 04
  
-+/* Current prefix namespace in use. NULL means none. */
+-/* Current prefix namespace in use. NULL means none. */
  struct ref_list {
  	struct ref_list *next;
  	unsigned char flag; /* ISSYMREF? ISPACKED? */
-@@ -674,6 +675,23 @@ int for_each_replace_ref(each_ref_fn fn, void *cb_data)
+@@ -675,19 +674,18 @@ int for_each_replace_ref(each_ref_fn fn, void *cb_data)
  	return do_for_each_ref("refs/replace/", fn, 13, 0, cb_data);
  }
  
-+int for_each_namespace_ref(each_ref_fn fn, void *cb_data)
-+{
-+	struct for_each_namespace_request *req = cb_data;
-+	struct strbuf real_prefix = STRBUF_INIT;
-+	int ret;
-+
-+	if (prefixcmp(req->req_namespace, "refs/"))
-+		strbuf_addstr(&real_prefix, "refs/");
-+	strbuf_addstr(&real_prefix, req->req_namespace);
-+	if (real_prefix.buf[real_prefix.len - 1] != '/')
-+		strbuf_addch(&real_prefix, '/');
-+
-+	ret = for_each_ref_in(real_prefix.buf, fn, req->req_opaque);
-+	strbuf_release(&real_prefix);
-+	return ret;
-+}
-+
- int for_each_rawref(each_ref_fn fn, void *cb_data)
+-int for_each_namespace_ref(each_ref_fn fn, void *cb_data)
++int for_each_namespace_ref(each_ref_fn fn, const char *ns_prefix, void *cb_data)
  {
- 	return do_for_each_ref("refs/", fn, 0,
+-	struct for_each_namespace_request *req = cb_data;
+ 	struct strbuf real_prefix = STRBUF_INIT;
+ 	int ret;
+ 
+-	if (prefixcmp(req->req_namespace, "refs/"))
++	if (prefixcmp(ns_prefix, "refs/"))
+ 		strbuf_addstr(&real_prefix, "refs/");
+-	strbuf_addstr(&real_prefix, req->req_namespace);
++	strbuf_addstr(&real_prefix, ns_prefix);
+ 	if (real_prefix.buf[real_prefix.len - 1] != '/')
+ 		strbuf_addch(&real_prefix, '/');
+ 
+-	ret = for_each_ref_in(real_prefix.buf, fn, req->req_opaque);
++	ret = for_each_ref_in(real_prefix.buf, fn, cb_data);
+ 	strbuf_release(&real_prefix);
+ 	return ret;
+ }
 diff --git a/refs.h b/refs.h
-index e141991..4bb63b0 100644
+index 4bb63b0..a1d7378 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -13,6 +13,18 @@ struct ref_lock {
+@@ -13,18 +13,6 @@ struct ref_lock {
  #define REF_ISSYMREF 01
  #define REF_ISPACKED 02
  
-+/* Opaque request for for_each_namespace_ref */
-+struct for_each_namespace_request
-+{
-+	/*
-+	 * The limiting namespace. 'refs/' and '/' are autoprepended /
-+	 * autoappended if missing.
-+	 */
-+	const char *req_namespace;
-+	/* The real opaque data for callback function. */
-+	void *req_opaque;
-+};
-+
+-/* Opaque request for for_each_namespace_ref */
+-struct for_each_namespace_request
+-{
+-	/*
+-	 * The limiting namespace. 'refs/' and '/' are autoprepended /
+-	 * autoappended if missing.
+-	 */
+-	const char *req_namespace;
+-	/* The real opaque data for callback function. */
+-	void *req_opaque;
+-};
+-
  /*
   * Calls the specified function for each ref file until it returns nonzero,
   * and returns the value
-@@ -25,6 +37,7 @@ extern int for_each_tag_ref(each_ref_fn, void *);
+@@ -37,7 +25,7 @@ extern int for_each_tag_ref(each_ref_fn, void *);
  extern int for_each_branch_ref(each_ref_fn, void *);
  extern int for_each_remote_ref(each_ref_fn, void *);
  extern int for_each_replace_ref(each_ref_fn, void *);
-+extern int for_each_namespace_ref(each_ref_fn, void *);
+-extern int for_each_namespace_ref(each_ref_fn, void *);
++extern int for_each_namespace_ref(each_ref_fn, const char *, void *);
  
  /* can be used to learn about broken ref and symref */
  extern int for_each_rawref(each_ref_fn, void *);
 diff --git a/revision.c b/revision.c
-index 25fa14d..ff9484f 100644
+index ff9484f..ec63fa0 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -699,12 +699,18 @@ static int handle_one_ref(const char *path, const unsigned char *sha1, int flag,
- 	return 0;
- }
- 
-+static void init_all_refs_cb(struct all_refs_cb *cb, struct rev_info *revs,
-+	unsigned flags)
-+{
-+	cb->all_revs = revs;
-+	cb->all_flags = flags;
-+}
-+
- static void handle_refs(struct rev_info *revs, unsigned flags,
- 		int (*for_each)(each_ref_fn, void *))
- {
- 	struct all_refs_cb cb;
--	cb.all_revs = revs;
--	cb.all_flags = flags;
-+	init_all_refs_cb(&cb, revs, flags);
- 	for_each(handle_one_ref, &cb);
- }
- 
-@@ -1352,6 +1358,16 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 				handle_refs(revs, flags, for_each_remote_ref);
+@@ -1359,13 +1359,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
  				continue;
  			}
-+			if (!prefixcmp(arg, "--namespace=")) {
-+				struct for_each_namespace_request req;
-+				struct all_refs_cb cb;
-+
-+				init_all_refs_cb(&cb, revs, flags);
-+				req.req_namespace = arg + 12;
-+				req.req_opaque = &cb;
-+				for_each_namespace_ref(handle_one_ref, &req);
-+				continue;
-+			}
- 			if (!strcmp(arg, "--reflog")) {
- 				handle_reflog(revs, flags);
+ 			if (!prefixcmp(arg, "--namespace=")) {
+-				struct for_each_namespace_request req;
+ 				struct all_refs_cb cb;
+ 
+ 				init_all_refs_cb(&cb, revs, flags);
+-				req.req_namespace = arg + 12;
+-				req.req_opaque = &cb;
+-				for_each_namespace_ref(handle_one_ref, &req);
++				for_each_namespace_ref(handle_one_ref, arg + 12, &cb);
  				continue;
-diff --git a/t/t6018-rev-list-namespace.sh b/t/t6018-rev-list-namespace.sh
-new file mode 100755
-index 0000000..6bb562a
---- /dev/null
-+++ b/t/t6018-rev-list-namespace.sh
-@@ -0,0 +1,112 @@
-+#!/bin/sh
-+
-+test_description='rev-list/rev-parse --namespace'
-+
-+. ./test-lib.sh
-+
-+
-+commit () {
-+	test_tick &&
-+	echo $1 > foo &&
-+	git add foo &&
-+	git commit -m "$1"
-+}
-+
-+compare () {
-+	# Split arguments on whitespace.
-+	git $1 $2 | sort >expected &&
-+	git $1 $3 | sort >actual &&
-+	cmp expected actual
-+}
-+
-+test_expect_success 'setup' '
-+
-+	commit master &&
-+	git checkout -b subspace/one master
-+	commit one &&
-+	git checkout -b subspace/two master
-+	commit two &&
-+	git checkout -b subspace-x master
-+	commit subspace-x &&
-+	git checkout -b other/three master
-+	commit three &&
-+	git checkout -b someref master
-+	commit some &&
-+	git checkout master &&
-+	commit master2
-+'
-+
-+test_expect_success 'rev-parse --namespace=refs/heads/subspace/' '
-+
-+	compare rev-parse "subspace/one subspace/two" "--namespace=refs/heads/subspace/"
-+
-+'
-+
-+test_expect_success 'rev-parse --namespace=refs/heads/subspace' '
-+
-+	compare rev-parse "subspace/one subspace/two" "--namespace=refs/heads/subspace"
-+
-+'
-+
-+test_expect_success 'rev-parse --namespace=heads/subspace' '
-+
-+	compare rev-parse "subspace/one subspace/two" "--namespace=heads/subspace"
-+
-+'
-+
-+test_expect_success 'rev-parse --namespace=heads/subspace --namespace=heads/other' '
-+
-+	compare rev-parse "subspace/one subspace/two other/three" "--namespace=heads/subspace --namespace=heads/other"
-+
-+'
-+
-+test_expect_success 'rev-parse --namespace=heads/someref master' '
-+
-+	compare rev-parse "master" "--namespace=heads/someref master"
-+
-+'
-+
-+test_expect_success 'rev-parse --namespace=heads' '
-+
-+	compare rev-parse "subspace/one subspace/two other/three subspace-x master someref" "--namespace=heads"
-+
-+'
-+
-+test_expect_success 'rev-list --namespace=refs/heads/subspace/' '
-+
-+	compare rev-list "subspace/one subspace/two" "--namespace=refs/heads/subspace/"
-+
-+'
-+
-+test_expect_success 'rev-list --namespace=refs/heads/subspace' '
-+
-+	compare rev-list "subspace/one subspace/two" "--namespace=refs/heads/subspace"
-+
-+'
-+
-+test_expect_success 'rev-list --namespace=heads/subspace' '
-+
-+	compare rev-list "subspace/one subspace/two" "--namespace=heads/subspace"
-+
-+'
-+
-+test_expect_success 'rev-list --namespace=heads/someref master' '
-+
-+	compare rev-parse "master" "--namespace=heads/someref master"
-+
-+'
-+
-+test_expect_success 'rev-list --namespace=heads/subspace --namespace=heads/other' '
-+
-+	compare rev-parse "subspace/one subspace/two other/three" "--namespace=heads/subspace --namespace=heads/other"
-+
-+'
-+
-+test_expect_success 'rev-list --namespace=heads' '
-+
-+	compare rev-parse "subspace/one subspace/two other/three subspace-x master someref" "--namespace=heads"
-+
-+'
-+
-+
-+test_done
--- 
-1.6.6.199.gff4b0
+ 			}
+ 			if (!strcmp(arg, "--reflog")) {
