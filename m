@@ -1,192 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] grep --no-index: allow use of "git grep" outside a git
- repository
-Date: Sun, 17 Jan 2010 20:02:25 -0800
-Message-ID: <7v3a24ukku.fsf@alter.siamese.dyndns.org>
-References: <201001131713.05505.agruen@suse.de>
- <7vfx69k0bu.fsf@alter.siamese.dyndns.org>
- <20100115223259.6117@nanako3.lavabit.com>
- <7vska71br0.fsf@alter.siamese.dyndns.org>
- <7vzl4fum3r.fsf_-_@alter.siamese.dyndns.org>
- <20100115210854.GA21540@coredump.intra.peff.net>
- <7vwrzin9jt.fsf@alter.siamese.dyndns.org>
- <20100116011512.GA27082@coredump.intra.peff.net>
- <7vpr5ait1m.fsf@alter.siamese.dyndns.org>
- <20100118015140.GB6831@coredump.intra.peff.net>
- <7v8wbwultw.fsf@alter.siamese.dyndns.org>
+From: D Herring <dherring@tentpost.com>
+Subject: idea: git "came from" tags
+Date: Sun, 17 Jan 2010 23:22:02 -0500
+Message-ID: <hj0nl9$uds$2@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 18 05:02:43 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 18 05:35:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWip8-0000DG-Ur
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 05:02:43 +0100
+	id 1NWjKe-0002o8-BC
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 05:35:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755266Ab0ARECj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2010 23:02:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752961Ab0ARECj
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 23:02:39 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51788 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752855Ab0ARECi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2010 23:02:38 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F4FF91560;
-	Sun, 17 Jan 2010 23:02:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pbEm1D+OOQUtPYeaNxN9SvXx+tk=; b=CYMImI
-	ojIq1RpVPt3HSzzqfgPG2/UvdG5O+OgJ+VkTXvrt64Zmwr4nwdylSSXLTym7N+Z3
-	HnazZyPiWI48sqcO63P1XmCfp0OaBhgd4CdE9SHejp/pP66A7+T9FZhQF5fLLIcf
-	thsQdrdbreI4hf7GWlKeNfwRiND+OlE2ye0sI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x0/c23+Dt11Q1paJVF0s6OnWDsletPNa
-	v9SlFmwC8ThtDYU8tQR+bemO4zcwLJnARyAqmNIqqXs+H/r/Na5xdw1a6HZW5rTv
-	ASesaFCWsjdZhTGtILSK2IZzyMVr46KU9QosEfDL1xdFTYPSVNqi4MNaas9clra+
-	291Q+W/DDqk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 18C9D9155F;
-	Sun, 17 Jan 2010 23:02:32 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B95B9155E; Sun, 17 Jan
- 2010 23:02:26 -0500 (EST)
-In-Reply-To: <7v8wbwultw.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun\, 17 Jan 2010 19\:35\:23 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4D6CB840-03E6-11DF-A886-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755673Ab0AREfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jan 2010 23:35:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755660Ab0AREfJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jan 2010 23:35:09 -0500
+Received: from lo.gmane.org ([80.91.229.12]:40827 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752207Ab0AREfI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2010 23:35:08 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NWjKT-0002kO-Iq
+	for git@vger.kernel.org; Mon, 18 Jan 2010 05:35:05 +0100
+Received: from c-71-232-15-233.hsd1.ma.comcast.net ([71.232.15.233])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 18 Jan 2010 05:35:05 +0100
+Received: from dherring by c-71-232-15-233.hsd1.ma.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 18 Jan 2010 05:35:05 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: c-71-232-15-233.hsd1.ma.comcast.net
+User-Agent: Thunderbird 2.0.0.21 (X11/20090329)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137368>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Actors:
+- public "upstream" repository
+- public "local" repository
+- end users tracking both
 
-> Jeff King <peff@peff.net> writes:
->
->> Agreed. That is the most common log grep pattern for me (author + grep),
->> and I always want all-match. I see from later in the thread, though,
->> that implementing it is not as straightforward as we might hope.
->
-> I haven't looked at the codepath for quite some time but I have a feeling
-> that it probably won't be too bad.
->
-> It just won't be as simple as flipping the all_match bit with a one-liner.
+Situation:
+- local starts by tracking upstream
+- local makes changes, commits, and sends upstream
+- users now tracking local ahead of upstream
+- upstream makes modified commits
+- local satisfied, wants to reset master to upstream/master
 
-Perhaps something like this.
+Problem:
+- A merge will perpetually leave two parallel branches.  Even though
+there are no longer any diffs, local/master cannot use the same
+objects as upstream/master.
+- A hard reset lets local/master return to sharing objects with
+upstream/master; but this may break pulls or cause other problems for
+users.
 
--- >8 --
-Subject: "log --author=me --grep=it" should find intersection, not union
+Proposed solution:
+- Local adds a "came from" tag to upstream/master, leaves a tag on the
+head of local/master, and does a hard reset from local/master to
+upstream/master.  When a user tracking local/master does a pull, their
+client detects a non-fast-forward, finds the came-from tag, and treats
+it as a fast-forward.
 
-Historically, any grep filter in "git log" family of commands were taken
-as restricting to commits with any of the words in the commit log message.
-However, the user almost always want to find commits "done by this person
-on that topic".  With "--all-match" option, a series of grep patterns can
-be turned into a requirement that all of them must produce a match, but
-that makes it impossible to ask for "done by me, on either this or that"
-with:
+Basically, this is a protocol to glue a "strategy ours" merge onto an
+existing tree.  This way local can cleanly track upstream, with no
+added complexity in the nominal (no local changes) case.
 
-	log --author=me --grep=this --grep=that
 
-because it will require both "this" and "that" to appear.
+Example:
+Without this addition, local/master looks something like
+u1 - u2 - u3 - u4 - u5 - u6 ...
+   \- l1 - l2\+ m1 -   \+ m2\+ m3 ...
 
-Change the "header" parser of grep library to treat the headers specially.
-When parsing the above, behave as if it was specified like this on the
-command line:
+With this addition, local/master looks like
+u1 - u2 - u3(tcf) - u4 - u5 - u6 ...
+   \- l1 - l2 - t0
+where
+* u# = upstream changes
+* l# = local changes
+* m# = local merges (m1=u3, m2=u5, m3=u6, ...)
+* the tcf tag points to t0, and t0 tags the end of the local mods
 
-	--all-match --author=me '(' --grep=this --grep=that ')'
 
-Even though the "log" command line parser doesn't give direct access to
-the extended grep syntax to group terms with parentheses, this change will
-cover the majority of the case the users would want.
+Pseudo-shell-code addition to git-pull:
+fetch local/master
+fast_forward=usual test whether local/master contains user/master
+if test $fast_forward = no
+then
+   for tag in $fetched_tags # something like this or git-describe
+   do
+     if is_came_from($tag) && (came_from($tag) contains user/master)
+     then
+       fast_forward=yes
+       break
+     fi
+   done
+fi
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin-grep.c |    1 +
- grep.c         |   20 ++++++++++++++++++--
- grep.h         |    2 ++
- revision.c     |    1 +
- 4 files changed, 22 insertions(+), 2 deletions(-)
+Comments?  I think this is completely implementable (though I'm not
+well-versed in git internals).  Since it only triggers during
+non-fast-forward operations, it should have negligible performance impact.
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 529461f..d57c4d9 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -820,6 +820,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	opt.relative = 1;
- 	opt.pathname = 1;
- 	opt.pattern_tail = &opt.pattern_list;
-+	opt.header_tail = &opt.header_list;
- 	opt.regflags = REG_NEWLINE;
- 	opt.max_depth = -1;
- 
-diff --git a/grep.c b/grep.c
-index bdadf2c..f51fa4a 100644
---- a/grep.c
-+++ b/grep.c
-@@ -11,8 +11,8 @@ void append_header_grep_pattern(struct grep_opt *opt, enum grep_header_field fie
- 	p->no = 0;
- 	p->token = GREP_PATTERN_HEAD;
- 	p->field = field;
--	*opt->pattern_tail = p;
--	opt->pattern_tail = &p->next;
-+	*opt->header_tail = p;
-+	opt->header_tail = &p->next;
- 	p->next = NULL;
- }
- 
-@@ -173,6 +173,22 @@ void compile_grep_patterns(struct grep_opt *opt)
- {
- 	struct grep_pat *p;
- 
-+	if (opt->header_list && !opt->all_match) {
-+		struct grep_pat *p = opt->pattern_list;
-+		opt->pattern_list = opt->header_list;
-+		opt->pattern_tail = opt->header_tail;
-+		opt->header_list = NULL;
-+		opt->header_tail = NULL;
-+
-+		append_grep_pattern(opt, "(", "internal", 0, GREP_OPEN_PAREN);
-+		while (p) {
-+			*opt->pattern_tail = p;
-+			opt->pattern_tail = &p->next;
-+			p = p->next;
-+		}
-+		append_grep_pattern(opt, ")", "internal", 0, GREP_CLOSE_PAREN);
-+		opt->all_match = 1;
-+	}
- 	if (opt->all_match)
- 		opt->extended = 1;
- 
-diff --git a/grep.h b/grep.h
-index 75370f6..e39e514 100644
---- a/grep.h
-+++ b/grep.h
-@@ -59,6 +59,8 @@ struct grep_expr {
- struct grep_opt {
- 	struct grep_pat *pattern_list;
- 	struct grep_pat **pattern_tail;
-+	struct grep_pat *header_list;
-+	struct grep_pat **header_tail;
- 	struct grep_expr *pattern_expression;
- 	const char *prefix;
- 	int prefix_length;
-diff --git a/revision.c b/revision.c
-index 25fa14d..18a3658 100644
---- a/revision.c
-+++ b/revision.c
-@@ -806,6 +806,7 @@ void init_revisions(struct rev_info *revs, const char *prefix)
- 
- 	revs->grep_filter.status_only = 1;
- 	revs->grep_filter.pattern_tail = &(revs->grep_filter.pattern_list);
-+	revs->grep_filter.header_tail = &(revs->grep_filter.header_list);
- 	revs->grep_filter.regflags = REG_NEWLINE;
- 
- 	diff_setup(&revs->diffopt);
+Of course, it would be even better if somebody shows me how to do this
+with the current tools.  Maybe I'm just doing it all wrong.
+
+Thanks,
+Daniel
