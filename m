@@ -1,87 +1,115 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] grep --no-index: allow use of "git grep" outside a git
- repository
-Date: Mon, 18 Jan 2010 00:57:03 -0500
-Message-ID: <20100118055703.GA17879@coredump.intra.peff.net>
-References: <20100115223259.6117@nanako3.lavabit.com>
- <7vska71br0.fsf@alter.siamese.dyndns.org>
- <7vzl4fum3r.fsf_-_@alter.siamese.dyndns.org>
- <20100115210854.GA21540@coredump.intra.peff.net>
- <7vwrzin9jt.fsf@alter.siamese.dyndns.org>
- <20100116011512.GA27082@coredump.intra.peff.net>
- <7vpr5ait1m.fsf@alter.siamese.dyndns.org>
- <20100118015140.GB6831@coredump.intra.peff.net>
- <7v8wbwultw.fsf@alter.siamese.dyndns.org>
- <7v3a24ukku.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jan 2010, #05; Sat, 16)
+Date: Sun, 17 Jan 2010 22:30:49 -0800
+Message-ID: <7vd417udpi.fsf@alter.siamese.dyndns.org>
+References: <7vljfxa1o6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 18 06:57:29 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Avery Pennarun <apenwarr@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 18 07:31:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWkcC-0006uB-36
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 06:57:28 +0100
+	id 1NWl8m-00066e-V7
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 07:31:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751190Ab0ARF5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2010 00:57:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751129Ab0ARF5L
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 00:57:11 -0500
-Received: from peff.net ([208.65.91.99]:47094 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750780Ab0ARF5K (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2010 00:57:10 -0500
-Received: (qmail 2766 invoked by uid 107); 18 Jan 2010 06:01:59 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 18 Jan 2010 01:01:59 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Jan 2010 00:57:03 -0500
-Content-Disposition: inline
-In-Reply-To: <7v3a24ukku.fsf@alter.siamese.dyndns.org>
+	id S1752248Ab0ARGa7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2010 01:30:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750943Ab0ARGa7
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 01:30:59 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45247 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750780Ab0ARGa4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2010 01:30:56 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EF21E92443;
+	Mon, 18 Jan 2010 01:30:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=6sjKh3Y7xq6uDDLRPwQ9SzpCa4U=; b=p6BQNpheOLDICTPTO6QO1/Y
+	GGn8vTZ1y8zONTSQaaf5CS2i7G+4UeBEwnxmiwrL3stsSe5qaS0Ujk8w5TY3CgX3
+	WKdxB7cWQqeUWw85AfD9WiNzJVmA/L+kQbVYp49LUiuzutYN3xPOQmkaoDJ0Mk7b
+	Lfmh+RBmOWE2ZdzjA1QQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=auobJb/C5DH3eKoLkwSN3QSAF6c4LCnGKvLbgexjGeh/vGiIc
+	6ZaZvvdn6TBdXgS4Fy5NzXNSsk0aPe8Gco6zKehqMCRlh/RYJHZfcrk8VHhX1dw3
+	c1S0c9k3k/FOvwS3rdLfT0kmu8RC1boI8yJ/N5pggFehdLkLHyA87M5PSI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C4CA29243F;
+	Mon, 18 Jan 2010 01:30:53 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 08F0592438; Mon, 18 Jan
+ 2010 01:30:50 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 07405826-03FB-11DF-92EB-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137370>
 
-On Sun, Jan 17, 2010 at 08:02:25PM -0800, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Subject: "log --author=me --grep=it" should find intersection, not union
-> 
-> Historically, any grep filter in "git log" family of commands were taken
-> as restricting to commits with any of the words in the commit log message.
-> However, the user almost always want to find commits "done by this person
-> on that topic".  With "--all-match" option, a series of grep patterns can
-> be turned into a requirement that all of them must produce a match, but
-> that makes it impossible to ask for "done by me, on either this or that"
-> with:
-> 
-> 	log --author=me --grep=this --grep=that
-> 
-> because it will require both "this" and "that" to appear.
-> 
-> Change the "header" parser of grep library to treat the headers specially.
-> When parsing the above, behave as if it was specified like this on the
-> command line:
-> 
-> 	--all-match --author=me '(' --grep=this --grep=that ')'
-> 
-> Even though the "log" command line parser doesn't give direct access to
-> the extended grep syntax to group terms with parentheses, this change will
-> cover the majority of the case the users would want.
+> [Stalled]
+>
+> * ap/merge-backend-opts (2008-07-18) 6 commits
+>  - Document that merge strategies can now take their own options
+>  - Extend merge-subtree tests to test -Xsubtree=dir.
+>  - Make "subtree" part more orthogonal to the rest of merge-recursive.
+>  - Teach git-pull to pass -X<option> to git-merge
+>  - git merge -X<option>
+>  - git-merge-file --ours, --theirs
+>
+> "git pull" patch needs sq-then-eval fix to protect it from $IFS
+> but otherwise seemed good.
 
-Hmm. I like the new behavior. The implementation feels a little
-hack-ish, like we should really be supporting full-on:
+Generally I hate to step in to fix up other's series, especially when I
+know that the party responsible for issues is capable enough.  As the
+pre-release feature freeze gets closer, however, I sometimes find myself
+doing so, and (I repeat) I hate it.
 
-  git log --author=me --and --grep=foo
+In any case, a squashable update to the "Teach git-pull to pass -X" would
+look like this.  Please give it extra set of eyeballs.
 
-That gets a little weird, though. We already have "--not" for ref
-limiting, so clearly there is some conflict over exactly what logical
-operators would be operating on. I guess we could use context to see
-that the adjacent arguments were grep-related.
-
-So perhaps, as you say, this is enough as it covers the usual case.
-
--Peff
+diff --git a/git-pull.sh b/git-pull.sh
+index 6d961b6..fc3536b 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -68,10 +68,10 @@ do
+ 		1,-X)
+ 			usage ;;
+ 		*,-X)
+-			xx="-X $2"
++			xx="-X $(git rev-parse --sq-quote "$2")"
+ 			shift ;;
+ 		*,*)
+-			xx="$1" ;;
++			xx=$(git rev-parse --sq-quote "$1") ;;
+ 		esac
+ 		merge_args="$merge_args$xx "
+ 		;;
+@@ -228,8 +228,15 @@ then
+ fi
+ 
+ merge_name=$(git fmt-merge-msg $log_arg <"$GIT_DIR/FETCH_HEAD") || exit
+-test true = "$rebase" &&
+-	exec git-rebase $diffstat $strategy_args $merge_args --onto $merge_head \
+-	${oldremoteref:-$merge_head}
+-exec git-merge $diffstat $no_commit $squash $no_ff $ff_only $log_arg $strategy_args $merge_args \
+-	"$merge_name" HEAD $merge_head $verbosity
++case "$rebase" in
++true)
++	eval="git-rebase $diffstat $strategy_args $merge_args"
++	eval="$eval --onto $merge_head ${oldremoteref:-$merge_head}"
++	;;
++*)
++	eval="git-merge $diffstat $no_commit $squash $no_ff $ff_only"
++	eval="$eval  $log_arg $strategy_args $merge_args"
++	eval="$eval \"$merge_name\" HEAD $merge_head $verbosity"
++	;;
++esac
++eval "exec $eval"
