@@ -1,91 +1,64 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [PATCH 2/2] branch: warn and refuse to set a branch as a tracking branch of itself.
-Date: Mon, 18 Jan 2010 22:44:12 +0200
-Message-ID: <1263847452-29634-3-git-send-email-ilari.liusvaara@elisanet.fi>
-References: <1263847452-29634-1-git-send-email-ilari.liusvaara@elisanet.fi>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Unmodified submodules shows up as dirty with 1.6.6.443.gd7346
+Date: Mon, 18 Jan 2010 21:50:03 +0100
+Message-ID: <4B54C97B.1050008@web.de>
+References: <4B547EA6.5070203@isy.liu.se> <8c9a061001180802t5ec0d389j2cae9f1771130c36@mail.gmail.com> <4B549254.5090206@isy.liu.se> <7vr5pnqqem.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 18 21:44:46 2010
+	Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org
+To: Gustaf Hendeby <hendeby@isy.liu.se>
+X-From: git-owner@vger.kernel.org Mon Jan 18 21:56:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NWySm-0005pO-6q
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 21:44:40 +0100
+	id 1NWydt-0004f3-0V
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jan 2010 21:56:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754159Ab0ARUo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2010 15:44:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754121Ab0ARUo0
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 15:44:26 -0500
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:53360 "EHLO
-	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754094Ab0ARUoZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2010 15:44:25 -0500
-Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
-	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 8504E18D5A6;
-	Mon, 18 Jan 2010 22:44:24 +0200 (EET)
-Received: from emh04.mail.saunalahti.fi ([62.142.5.110])
-	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
-	with SMTP (gateway) id A00AD5831C7; Mon, 18 Jan 2010 22:44:24 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id 6774C41BE2;
-	Mon, 18 Jan 2010 22:44:21 +0200 (EET)
-X-Mailer: git-send-email 1.6.6.199.gff4b0
-In-Reply-To: <1263847452-29634-1-git-send-email-ilari.liusvaara@elisanet.fi>
-X-Antivirus: VAMS
+	id S1754474Ab0ARUz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2010 15:55:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754272Ab0ARUz5
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jan 2010 15:55:57 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:34561 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751693Ab0ARUz4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2010 15:55:56 -0500
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 34B5D13C4B21D;
+	Mon, 18 Jan 2010 21:55:55 +0100 (CET)
+Received: from [80.128.74.224] (helo=[192.168.178.26])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NWyY1-00032C-00; Mon, 18 Jan 2010 21:50:05 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
+In-Reply-To: <7vr5pnqqem.fsf@alter.siamese.dyndns.org>
+X-Provags-ID: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137404>
 
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Am 18.01.2010 18:22, schrieb Junio C Hamano:
+> I am suspecting that your "these files ... are named differently on
+> different systems" may fall into the same category.  Your build may not
+> produce "frotz.linux" when compiled on a FreeBSD box (and "frotz.fbsd" on
+> a Linux box), but would it hurt more than it helps to list them in the
+> same .gitignore to cover both?
 
-Previous patch allows commands like "git branch foo foo --track", which
-doesn't make much sense. Warn the user and don't change the configuration
-in this case. Don't die to let the caller finish its job in such case.
+If you keep source directories separate from directories for compiler
+output you can easily simplify your .gitignore by negating it. So
+instead of putting a line into the .gitignore for every file type you
+do /not/ want, exclude everything in the build directory and add
+exceptions for the files you /do/ want to track.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
----
- branch.c |   14 ++++++++++++--
- 1 files changed, 12 insertions(+), 2 deletions(-)
+Then a .gitignore could look like this for building with VC6, VC8 and
+Makefile based build systems:
 
-diff --git a/branch.c b/branch.c
-index 40d3c45..9e1f63e 100644
---- a/branch.c
-+++ b/branch.c
-@@ -49,9 +49,19 @@ static int should_setup_rebase(const char *origin)
- 
- void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
- {
-+	const char *shortname = remote + 11;
-+	int remote_is_branch = !prefixcmp(remote, "refs/heads/");
- 	struct strbuf key = STRBUF_INIT;
- 	int rebasing = should_setup_rebase(origin);
- 
-+	if (remote_is_branch
-+	    && !strcmp(local, shortname)
-+	    && !origin) {
-+		warning("Not setting branch %s as its own upstream.",
-+			local);
-+		return;
-+	}
-+
- 	strbuf_addf(&key, "branch.%s.remote", local);
- 	git_config_set(key.buf, origin ? origin : ".");
- 
-@@ -71,8 +81,8 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
- 		strbuf_addstr(&key, origin ? "remote" : "local");
- 
- 		/* Are we tracking a proper "branch"? */
--		if (!prefixcmp(remote, "refs/heads/")) {
--			strbuf_addf(&key, " branch %s", remote + 11);
-+		if (remote_is_branch) {
-+			strbuf_addf(&key, " branch %s", shortname);
- 			if (origin)
- 				strbuf_addf(&key, " from %s", origin);
- 		}
--- 
-1.6.6.199.gff4b0
+path/to/build/directory/*
+!*.dsw
+!*.dsp
+!*.sln
+!*.vcproj
+!Makefile
