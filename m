@@ -1,53 +1,55 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Branch merge bug
-Date: Tue, 19 Jan 2010 18:52:16 +0530
-Message-ID: <f3271551001190522h37dd639k1352d54c1c07496f@mail.gmail.com>
-References: <f3271551001182322p86a02d8p8b9ceb49e930d333@mail.gmail.com> 
-	<4B55A080.7010705@drmicha.warpmail.net> <20100119123915.GB28667@inner.home.ulmdo.de>
+Subject: Feature idea: Ignore content
+Date: Tue, 19 Jan 2010 18:59:27 +0530
+Message-ID: <f3271551001190529h389ce321k52dcca6b03e4e8f0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Andreas Krey <a.krey@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 19 14:22:45 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 19 14:29:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXE2b-0005XG-Uk
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 14:22:42 +0100
+	id 1NXE9a-00024q-40
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 14:29:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752203Ab0ASNWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2010 08:22:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751590Ab0ASNWh
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 08:22:37 -0500
-Received: from mail-yw0-f182.google.com ([209.85.211.182]:40331 "EHLO
-	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751489Ab0ASNWh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 08:22:37 -0500
-Received: by ywh12 with SMTP id 12so2411496ywh.21
-        for <git@vger.kernel.org>; Tue, 19 Jan 2010 05:22:36 -0800 (PST)
+	id S1752447Ab0ASN3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 08:29:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750943Ab0ASN3t
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 08:29:49 -0500
+Received: from mail-yx0-f188.google.com ([209.85.210.188]:38440 "EHLO
+	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751240Ab0ASN3s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2010 08:29:48 -0500
+Received: by yxe26 with SMTP id 26so3243119yxe.4
+        for <git@vger.kernel.org>; Tue, 19 Jan 2010 05:29:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=hTj+3KptLronTcLvaXwR8WxqKPTjB8t9SZy7F8iA8vA=;
-        b=g7/sxuKlKXRUEfXEl80FUcm6gulBqaL97BhqJsChnXlQINV3SxvwsDsHHoksMH3NIl
-         1jJAVXJFLtJv3185KV+ycq82iI+k7K1W4BQ062oDA1VJeNUI5MJtqWTm1lNW4ALEnWC9
-         +0IQnZaMB89wnnrTgjEsjcHHrNu7yEhjWwpLE=
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=siyWIFBdjUtdkfKETEn+GLGppituXXKsR+tXIrlUL+o=;
+        b=MfdwNfNDrfBCiYUSkuBz/jGh5MlV4vaoDChDteCUEAaKbkHanQQ5sb3cDd0zQEClnJ
+         uyxzL9EKAXxC7uYkuLEQqL1LW6xZo6CLHJCmozV1hNGn53ko1wGxCERV9M7shzQBW01l
+         zEcWxOXYt0IaDsCfNcFjWRrKsqkF4uE2lXQ9g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=MzTJ6hjAPqVEtyykVaUbiiRG3DnzPVOlEZGTeC4k54oyMwMUD72FYnHVgxW3sdiSh9
-         aj4JJ6+LQuGoXMXKWBi+Z5U1482kp/ifITSirJ2+A98oBOMe6QIiWEMkczgIIdE7msxM
-         0SMSSv2ib2BDFQu9kK8GiLlmOZkduOlLWU2b0=
-Received: by 10.91.215.7 with SMTP id s7mr6667546agq.81.1263907356298; Tue, 19 
-	Jan 2010 05:22:36 -0800 (PST)
-In-Reply-To: <20100119123915.GB28667@inner.home.ulmdo.de>
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=Hg8SYkx3ux0Gq3o1vveDBsLNmq9jdEU3myFdhvGibyFoVVL6kyim0adlRZOCa0Atj2
+         XdykBN8Ec6gjoOr6ftX3AMAeJ+ykCjdYVWWKAohcY8RbifTSzgrdjX5/vf8j6sGMQpN3
+         OiXhpvHxy5VWlr9xvwQqQGq6XKMlqZPx22vyY=
+Received: by 10.90.208.20 with SMTP id f20mr6854762agg.49.1263907787225; Tue, 
+	19 Jan 2010 05:29:47 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137457>
 
-Right. Thanks for clearing that up for me.
+Hi,
+
+Often, I find that I need to track a file which contains a small
+portion I don't want to track (read: line with a password). Instead of
+moving that out to a separate file and ignoring that file, is it a
+good idea to add a feature to Git to allow ignoring content instead of
+whole files? Since Git by nature tracks content, this shouldn't be too
+hard to implement, right?
