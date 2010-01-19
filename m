@@ -1,82 +1,84 @@
-From: Johannes Schneider <mailings@cedarsoft.com>
-Subject: How to resolve conflict: Moved away vs. created new file with same
- name
-Date: Tue, 19 Jan 2010 12:10:32 +0100
-Message-ID: <4B559328.2010206@cedarsoft.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: How to resolve conflict: Moved away vs. created new file with
+ same   name
+Date: Tue, 19 Jan 2010 12:55:23 +0100
+Message-ID: <4B559DAB.9030605@viscovery.net>
+References: <4B559328.2010206@cedarsoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 19 12:32:40 2010
+Cc: git <git@vger.kernel.org>
+To: Johannes Schneider <mailings@cedarsoft.com>
+X-From: git-owner@vger.kernel.org Tue Jan 19 12:55:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXCK6-0004ED-Lz
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 12:32:39 +0100
+	id 1NXCgG-0004RE-6D
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 12:55:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756109Ab0ASLc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2010 06:32:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754123Ab0ASLc3
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 06:32:29 -0500
-Received: from hosting.cedarsoft.com ([188.40.238.168]:48566 "EHLO
-	cedarsoft.eu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756006Ab0ASLc2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 06:32:28 -0500
-X-Greylist: delayed 1313 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Jan 2010 06:32:28 EST
-Received: from [192.168.0.36] (HSI-KBW-095-208-171-090.hsi5.kabel-badenwuerttemberg.de [95.208.171.90])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by cedarsoft.eu (Postfix) with ESMTP id 284D310CBE4A
-	for <git@vger.kernel.org>; Tue, 19 Jan 2010 12:11:08 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091215 Lightning/1.0b2pre Shredder/3.0
+	id S1754462Ab0ASLz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 06:55:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753747Ab0ASLz1
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 06:55:27 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:45176 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752130Ab0ASLz0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2010 06:55:26 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NXCg8-0006DQ-6i; Tue, 19 Jan 2010 12:55:24 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id E8FB81660F;
+	Tue, 19 Jan 2010 12:55:23 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <4B559328.2010206@cedarsoft.com>
+X-Spam-Score: 1.9 (+)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137449>
 
-Hi,
+Johannes Schneider schrieb:
+> TopicA:
+> 
+> created a directory "client" containing a pom.xml and several source files.
+> 
+> 
+> TopicB:
+> 
+> created a directory "client" containing a pom.xml (different file than
+> the one in TopicA).
+> Created several subdirectories (client1, client2).
+> 
+> ...
+> So I am trying to mimic the change in TopicA:
+> 
+> cd client
+> mkdir client3
+> mv pom.xml client3
+> mv src client3
+> ...commit...
 
-I had the following merge problem that I could not solve.
+Did you do this during the merge? If not, go back to TopicA and redo it;
+then you avoid the conflict during the merge.
 
+> Okay, so far so good. Now I try to merge TopicA and TopicB which fails.
+> Of course Git doesn't understand that "client/pom.xml" in TopicA and
+> TopicB are not related.
+> I want to end with to the file from TopicA ending in
+> "client/client3/pom.xml" and the file from TopicB in "client/pom.xml".
 
-TopicA:
+During the merge without the fixup suggested above:
 
-created a directory "client" containing a pom.xml and several source files.
+git rm -f client/client3/pom.xml
+git checkout TopicA -- client/pom.xml
+git mv client/pom.xml client/client3/pom.xml
+git checkout TopicB -- client/pom.xml
 
+but it leaves you with an ugly history, and it would be far better to fix
+up TopicA before the merge.
 
-TopicB:
-
-created a directory "client" containing a pom.xml (different file than 
-the one in TopicA).
-Created several subdirectories (client1, client2).
-
-
-You get the idea? I introduce several different clients and want them to 
-be stored within one directory. But I did not have this idea when I have 
-started TopicA.
-
-
-So I am trying to mimic the change in TopicA:
-
-cd client
-mkdir client3
-mv pom.xml client3
-mv src client3
-...commit...
-
-
-Okay, so far so good. Now I try to merge TopicA and TopicB which fails. 
-Of course Git doesn't understand that "client/pom.xml" in TopicA and 
-TopicB are not related.
-I want to end with to the file from TopicA ending in 
-"client/client3/pom.xml" and the file from TopicB in "client/pom.xml".
-
-I don't blame Git for not knowing what I want. I just wanna ask how I 
-should tell Git what I want? Any hints?
-
-
-Thanks,
-
-Johannes
+-- Hannes
