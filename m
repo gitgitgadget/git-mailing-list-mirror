@@ -1,104 +1,97 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: tzachi perelstein <tzachi_perelstein@yahoo.com>
 Subject: Re: git-describe recognize modified files
-Date: Tue, 19 Jan 2010 04:49:40 -0800 (PST)
-Message-ID: <m34omiclap.fsf@localhost.localdomain>
-References: <829260.92036.qm@web45202.mail.sp1.yahoo.com>
-	<alpine.DEB.1.00.1001191134130.3164@intel-tinevez-2-302>
-	<20100119122122.GA28667@inner.home.ulmdo.de>
+Date: Tue, 19 Jan 2010 04:59:17 -0800 (PST)
+Message-ID: <780857.77695.qm@web45209.mail.sp1.yahoo.com>
+References: <829260.92036.qm@web45202.mail.sp1.yahoo.com> <alpine.DEB.1.00.1001191134130.3164@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	tzachi perelstein <tzachi_perelstein@yahoo.com>,
-	git@vger.kernel.org
-To: Andreas Krey <a.krey@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 19 13:49:52 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 19 13:59:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXDWp-0000eh-Pd
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 13:49:52 +0100
+	id 1NXDg3-0004GK-7W
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 13:59:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752578Ab0ASMtp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2010 07:49:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751590Ab0ASMtp
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 07:49:45 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:41706 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751782Ab0ASMto (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 07:49:44 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so391162fgg.1
-        for <git@vger.kernel.org>; Tue, 19 Jan 2010 04:49:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=yu3CwzwzVcYcElDNyurZYcL+iZ4KvXegZoDh8lEe4Qo=;
-        b=L3yFwFOhzoGSxqpJuVr/kYvuc2IgUx6ZkNeRBVXImtV8J06F7M/CKs6lis+67E08OE
-         G0fcxSinScHuKjymOvsF90wzXJVoZZ87lGi9EZW/Nm7QmFUgIhgkSW5KSWMIrhmQAo2U
-         QG6bG2zEYExvJTbSOO80u/QJn0oJ2RPbpHDSA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=t2l0r/IOXmF5K5jEiRUT0JSPPJ1DyWpQypj1gW3356EZx6DC/vae7atqRiQbA3WDPH
-         qeA2osr4InGteQsL/vaSzwCee5biPwgeJDvDtBBk2j/d9NforqKP3cWpMn7RfpQXSqN2
-         KUt2vzksLGD9ShQ3ZM4Y40Ezh80YxfC9+376k=
-Received: by 10.87.15.22 with SMTP id s22mr6977142fgi.56.1263905382469;
-        Tue, 19 Jan 2010 04:49:42 -0800 (PST)
-Received: from localhost.localdomain (abvz142.neoplus.adsl.tpnet.pl [83.8.223.142])
-        by mx.google.com with ESMTPS id d6sm13042996fga.4.2010.01.19.04.49.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 19 Jan 2010 04:49:40 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o0JCn8OY010788;
-	Tue, 19 Jan 2010 13:49:18 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o0JCmkXs010783;
-	Tue, 19 Jan 2010 13:48:46 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20100119122122.GA28667@inner.home.ulmdo.de>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751506Ab0ASM7T convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Jan 2010 07:59:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458Ab0ASM7T
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 07:59:19 -0500
+Received: from web45209.mail.sp1.yahoo.com ([68.180.197.122]:48589 "HELO
+	web45209.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751033Ab0ASM7S convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2010 07:59:18 -0500
+Received: (qmail 79178 invoked by uid 60001); 19 Jan 2010 12:59:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1263905957; bh=ysv34jDNOxEGGlioM7g1HROi2QpPfEKET8hRdQ+9Fi0=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:References:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=OuccX88bAeg7RPCabWbSSV2hCq4c7LOluB8/MlhQdSvIsGzfG4ax8o8BTzOUptd6LjN2bmw35JiKz2zuax+yHc9btupY/u8kmJF/bdFARjirJQOsJR8CZHZ8zd8czqFNS539a9u3g5+4NR9FtORAI40cv8Uwi3gI1dwj5QXAZ7c=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:References:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=1rXBu2dmlFgUra5BjA/9IZNCS3lPF4nd3jWKFkVxt0uvWQ/mFFpjJpyg5L4rIKnbrHdHa5nn9FhtGZI+2bg6PyxIHC6kyzz0w6zmhOJEr7xvOltZZGxvcRWqTHGFi31yJV5Qusif4GqLkLVkHr7t009+acdFEsWVTYR7ZcR7kOo=;
+X-YMail-OSG: h4h9OogVM1nG6_DnuIYcsQCaoe0uY2H9npu_2pV8lQfVe3xlLOk1joJy3_znZV0zCYUvq_rw1a3t2W.eKAjP1dH7G43gy.m1YsnpiSEQfB3dXhsDIqX5UIe6amNOisYAzYC4WqpQvWCC7t6k9hxx847H3Bmf0O4MaeEroNhH20qPMGl6YgdhMBzVmzoE7QOpwWixH6kGnhPVen75g5au5kGEAr2Qj_Cz7X1cIrOxRfR6dC5lB6hSgo2veq.8QUBk76A.roByjfDzZ5xxQ5hmqjjzz_NUTIu0SH8sWCJC4WDw8z9NNMIBiA--
+Received: from [80.179.89.178] by web45209.mail.sp1.yahoo.com via HTTP; Tue, 19 Jan 2010 04:59:17 PST
+X-Mailer: YahooMailRC/272.7 YahooMailWebService/0.8.100.260964
+In-Reply-To: <alpine.DEB.1.00.1001191134130.3164@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137454>
 
-Andreas Krey <a.krey@gmx.de> writes:
+> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> To: tzachi perelstein <tzachi_perelstein@yahoo.com>
+> Cc: git@vger.kernel.org
+> Sent: Tue, January 19, 2010 12:35:41 PM
+> Subject: Re: git-describe recognize modified files
+>=20
+> Hi,
+>=20
+> On Tue, 19 Jan 2010, tzachi perelstein wrote:
+>=20
+> > I use git-describe to form a build version automatically. This allo=
+ws me
+> > to deliver temporary builds for testing without having to make manu=
+al
+> > tags for them. The only thing that bothers me about this is that fr=
+om
+> > the output of git-describe I cannot tell if there are some modified
+> > files in tree or not. In both cases I will get the same version.=20
+> >=20
+> > To solve this issue, in addition to git-describe, my do_version scr=
+ipt
+> > also run git-status, and if there are "modified:" files then it
+> > concatenates the string "+dirty" to output of git-describe.
+>=20
+> The problem is that this does not describe the exact version you used=
+ very=20
+> well.=A0 If you are really serious about describing the exact state y=
+ou=20
+> described, make a tag (committing the changes to a detached HEAD firs=
+t, if=20
+> you do not want the changes in a real branch).
+>=20
 
-> On Tue, 19 Jan 2010 11:35:41 +0000, Johannes Schindelin wrote:
-> ...
-> > > To solve this issue, in addition to git-describe, my do_version script
-> > > also run git-status, and if there are "modified:" files then it
-> > > concatenates the string "+dirty" to output of git-describe.
-> > 
-> > The problem is that this does not describe the exact version you used very 
-> > well.
-> 
-> I (and probably the original poster) don't care that much; for me the
-> important information is that the binary (or whatever) was not built
-> from the exact committed state. Thus the question is whether the
-> second two lines of
-> 
->  BUILDINFO=git-`git describe --abbrev=16 --always HEAD 2>/dev/null`
->  git update-index -q --refresh
->  test -z "`git diff-index --name-only HEAD --`" || BUILDINFO="$BUILDINFO.dirty"
-> 
-> (after GIT-VERSION-GEN) are worth to be integrated into git-describe?
-> 
-> (And whether it should also say '.dirty'
->  when there are untracked files present.
->  Or either for submodules.)
 
-FYI it is integrated in git-describe since
+Well yes, this is valid, but you will end up with a tag for every build=
+=2E.. this goes way too far.
 
-  9f67d2e (Teach "git describe" --dirty option, 2009-10-21)
+Consider the case where you have no modified files in your tree. The ou=
+tput of git-describe at some given point is 'v1.0.0-2-g123457' and duri=
+ng the build it becomes the build version. Now you make some changes, b=
+ut before committing them you build, install, and run a test. During th=
+e second build, the output of git-describe remains the same 'v1.0.0-2-g=
+123457' although it represent two different trees. This behavior looks =
+like somewhat incomplete to me. It sounds reasonable to me to let git-d=
+escribe have the option of indicating about modified files in tree, say=
+=A0'v1.0.0-2-g123457-modified' or something similar. While 'v1.0.0-2-g1=
+23457' is something you and git can refer to (i.e. checkout), 'v1.0.0-2=
+-g123457-modified' is not. By adding the "-modified" string, git tells =
+you explicitly that it cannot fully describe the exact tree you're usin=
+g.
 
-by Jean Privat (it should be present in 1.6.6, IIRC).
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+
+     =20
