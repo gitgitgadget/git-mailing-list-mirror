@@ -1,96 +1,79 @@
-From: Johannes Schneider <mailings@cedarsoft.com>
-Subject: Push to origin failed
-Date: Tue, 19 Jan 2010 15:41:19 +0100
-Message-ID: <4B55C48F.2090005@cedarsoft.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: How to resolve conflict: Moved away vs. created new file with
+ same   name
+Date: Tue, 19 Jan 2010 15:55:28 +0100
+Message-ID: <4B55C7E0.7030604@viscovery.net>
+References: <4B559328.2010206@cedarsoft.com> <4B559DAB.9030605@viscovery.net> <4B55C481.90406@cedarsoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 19 15:41:31 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schneider <mailings@cedarsoft.com>
+X-From: git-owner@vger.kernel.org Tue Jan 19 15:55:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXFGt-0007Ew-7e
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 15:41:31 +0100
+	id 1NXFUY-0005Nz-Ql
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 15:55:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753477Ab0ASOlW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2010 09:41:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753366Ab0ASOlV
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 09:41:21 -0500
-Received: from hosting.cedarsoft.com ([188.40.238.168]:53481 "EHLO
-	cedarsoft.eu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752289Ab0ASOlV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 09:41:21 -0500
-Received: from [192.168.0.36] (HSI-KBW-095-208-171-090.hsi5.kabel-badenwuerttemberg.de [95.208.171.90])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by cedarsoft.eu (Postfix) with ESMTP id B30DE10CBE54
-	for <git@vger.kernel.org>; Tue, 19 Jan 2010 15:41:55 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091215 Lightning/1.0b2pre Shredder/3.0
+	id S1754090Ab0ASOzg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 09:55:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751986Ab0ASOzg
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 09:55:36 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:24705 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753216Ab0ASOze (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2010 09:55:34 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NXFUO-0001Nw-VS; Tue, 19 Jan 2010 15:55:29 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id A9B0E1660F;
+	Tue, 19 Jan 2010 15:55:28 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <4B55C481.90406@cedarsoft.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.9 (+)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137462>
 
-Hi,
+Please keep the discussion on the list. I'm not your personal support dude.
 
-my Hudson isn't able to push master back to origin under some special 
-circumstances:
+Johannes Schneider schrieb:
+> On 01/19/2010 12:55 PM, Johannes Sixt wrote:
+>>> So I am trying to mimic the change in TopicA:
+>>>
+>>> cd client
+>>> mkdir client3
+>>> mv pom.xml client3
+>>> mv src client3
+>>> ...commit...
+>>
+>> Did you do this during the merge? If not, go back to TopicA and redo it;
+>> then you avoid the conflict during the merge.
+> 
+> Yes, I have done this in TopicA *before* the merge. I knew that there
+> will be conflicting directories and tried to clean that up before.
+> 
+>> During the merge without the fixup suggested above:
+>>
+>> git rm -f client/client3/pom.xml
+>> git checkout TopicA -- client/pom.xml
+>> git mv client/pom.xml client/client3/pom.xml
+>> git checkout TopicB -- client/pom.xml
+>>
+>> but it leaves you with an ugly history, and it would be far better to fix
+>> up TopicA before the merge.
+> 
+> Yep. I prefer a clean history ;-). So do you know how to solve that
+> issue with a cleaned up TopicA branch?
 
-The git-push command failed.
-Command output:
-To ssh://git.cedarsoft.com/git/com.cedarsoft.open
-  ! [rejected]        master -> master (non-fast forward)
-error: failed to push some refs to 
-'ssh://git.cedarsoft.com/git/com.cedarsoft.open'
+I don't see an issue if you have cleaned up TopicA. Where is it? Did you
+really do what you said you did?
 
-
-When I delete the .git directory and let Hudson do the same thing again, 
-everything works well.
-Of course I have verified the obvious first:
-
-
-git push
-To ssh://git.cedarsoft.com/git/com.cedarsoft.open
-  ! [rejected]        master -> master (non-fast forward)
-error: failed to push some refs to 
-'ssh://git.cedarsoft.com/git/com.cedarsoft.open'
-
-git log
-commit 1e3d3d2c1a38cae75d60bbcd8bc739ed00597ad3
-Author: Hudson <hudson@cedarsoft.com>
-Date:   Tue Jan 19 15:25:10 2010 +0100
-
-     [maven-release-plugin] prepare release open-2.0.6
-
-commit 9b8b395a4f9f725aa82be61474835fd1f7d009a7
-Author: Johannes Schneider <js@cedarsoft.com>
-Date:   Tue Jan 19 12:00:14 2010 +0100
-
-     license-plugin: added excludes
-
-
-
-On my local computer, I have called "git pull" on master and then tried 
-git log with that result:
-
-
-git log
-commit 9b8b395a4f9f725aa82be61474835fd1f7d009a7
-Author: Johannes Schneider <js@cedarsoft.com>
-Date:   Tue Jan 19 12:00:14 2010 +0100
-
-     license-plugin: added excludes
-
-
-
-So I don't see any reason why the push failed. Any ideas? How can I 
-investigate this issue further?
-Obviously I don't know enough about Git, so any hints are welcome...
-
-
-Thanks,
-
-Johannes
+-- Hannes
