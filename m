@@ -1,169 +1,252 @@
-From: Jonathan del Strother <maillist@steelskies.com>
-Subject: git-status segmentation fault in master / OS X
-Date: Tue, 19 Jan 2010 17:59:51 +0000
-Message-ID: <57518fd11001190959n355a0f22p7caa7251b705efaf@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 19 20:02:56 2010
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: [PATCH 1/3] cvsimport: modernize callouts to git subcommands
+Date: Tue, 19 Jan 2010 14:03:08 -0500
+Message-ID: <1263927790-1872-1-git-send-email-bwalton@artsci.utoronto.ca>
+References: <7v8wbwzgnw.fsf@alter.siamese.dyndns.org>
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 19 20:03:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXJLn-0001HY-CV
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 20:02:51 +0100
+	id 1NXJMr-0001jR-1f
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 20:03:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755293Ab0ASTCu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2010 14:02:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755284Ab0ASTCt
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 14:02:49 -0500
-Received: from juliet.asmallorange.com ([207.210.105.70]:53076 "EHLO
-	juliet.asmallorange.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932099Ab0ASTCq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 14:02:46 -0500
-X-Greylist: delayed 3750 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Jan 2010 14:02:46 EST
-Received: from ey-out-2122.google.com ([74.125.78.26]:26769)
-	by juliet.asmallorange.com with esmtpsa (TLSv1:RC4-MD5:128)
-	(Exim 4.69)
-	(envelope-from <maillist@steelskies.com>)
-	id 1NXINE-0004Bo-3Q
-	for git@vger.kernel.org; Tue, 19 Jan 2010 13:00:16 -0500
-Received: by ey-out-2122.google.com with SMTP id d26so1038447eyd.19
-        for <git@vger.kernel.org>; Tue, 19 Jan 2010 10:00:11 -0800 (PST)
-Received: by 10.216.85.137 with SMTP id u9mr2776556wee.214.1263924011130; Tue, 
-	19 Jan 2010 10:00:11 -0800 (PST)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - juliet.asmallorange.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - steelskies.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1755297Ab0ASTDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 14:03:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755284Ab0ASTDR
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 14:03:17 -0500
+Received: from www.cquest.utoronto.ca ([192.82.128.5]:34870 "EHLO
+	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754993Ab0ASTDP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2010 14:03:15 -0500
+Received: from ntdws12.chass.utoronto.ca ([128.100.160.253]:38910 ident=93)
+	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
+	id 1NXJM9-00045o-5p; Tue, 19 Jan 2010 14:03:13 -0500
+Received: from localhost
+	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
+	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1NXJM9-0000Ul-3Q; Tue, 19 Jan 2010 14:03:13 -0500
+Received: (from bwalton@localhost)
+	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id o0JJ3DvF001903;
+	Tue, 19 Jan 2010 14:03:13 -0500
+X-Mailer: git-send-email 1.6.6
+In-Reply-To: <7v8wbwzgnw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137486>
 
-Heya,
-I've been running into a segmentation fault on running git status in
-my repository while there are staged changes.  Bisecting suggests it
-was introduced in:
+This patch updates all calling conventions for external git tools.  to
+use the modern calling convention (eg: git foo instead of git-foo).
+This is almost entierly a s/git-/git / operation, with deviations only
+as required to keep tests passing.
 
-commit 73d66323ac78c750ba42fef23b1cb8fd2110e023
-Merge: 054d2fa 8740773
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Wed Jan 13 11:58:34 2010 -0800
+Reported-by: Alexander Maier <amaier@opencsw.org>
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+ git-cvsimport.perl |   64 ++++++++++++++++++++++++++--------------------------
+ 1 files changed, 32 insertions(+), 32 deletions(-)
 
-    Merge branch 'nd/sparse'
-
-
-The last commit from nd/sparse (8740773) is fine, so I guess it's a
-bad merge...?
-
-
-Here's the crash I get on 73d6632 :
-
-Process:         git [93736]
-Path:            /Users/jon/bin/git
-Identifier:      git
-Version:         ??? (???)
-Code Type:       X86-64 (Native)
-Parent Process:  zsh [26194]
-
-Date/Time:       2010-01-19 17:58:01.306 +0000
-OS Version:      Mac OS X 10.6.2 (10C540)
-Report Version:  6
-
-Interval Since Last Report:          349902 sec
-Crashes Since Last Report:           15
-Per-App Crashes Since Last Report:   11
-Anonymous UUID:                      2563166D-332E-42BE-9D2D-0E741A6DB38A
-
-Exception Type:  EXC_BAD_ACCESS (SIGSEGV)
-Exception Codes: KERN_INVALID_ADDRESS at 0x0000000000000000
-Crashed Thread:  0  Dispatch queue: com.apple.main-thread
-
-Thread 0 Crashed:  Dispatch queue: com.apple.main-thread
-0   libSystem.B.dylib             	0x00007fff81260a56 fnmatch1 + 442
-1   libSystem.B.dylib             	0x00007fff8126088a fnmatch + 124
-2   git                           	0x0000000100076cde excluded_from_list + 526
-3   git                           	0x0000000100077877 excluded + 519
-4   git                           	0x0000000100077ab5
-read_directory_recursive + 453
-5   git                           	0x0000000100077ff9 read_directory + 249
-6   git                           	0x000000010007812b fill_directory + 219
-7   git                           	0x00000001000b91a7 wt_status_collect + 599
-8   git                           	0x0000000100017380 cmd_status + 288
-(builtin-commit.c:1032)
-9   git                           	0x0000000100001d1c
-handle_internal_command + 188 (git.c:257)
-10  git                           	0x0000000100001f5c main + 236 (git.c:446)
-11  git                           	0x0000000100001814 start + 52
-
-Thread 0 crashed with X86 Thread State (64-bit):
-  rax: 0x0000000000000003  rbx: 0x0000000000000000  rcx:
-0x00007fff5fbfe260  rdx: 0x0000000000000006
-  rdi: 0x000000000000002a  rsi: 0x00007fff5fbfe480  rbp:
-0x00007fff5fbfe1d0  rsp: 0x00007fff5fbfe010
-   r8: 0x00007fff70276980   r9: 0x0000000100528720  r10:
-0x0000000100528ae0  r11: 0x00007fff8120b860
-  r12: 0x00007fff5fbfe480  r13: 0x0000000000000001  r14:
-0x00007fff70276980  r15: 0x00007fff5fbfe260
-  rip: 0x00007fff81260a56  rfl: 0x0000000000010246  cr2: 0x0000000000000000
-
-Binary Images:
-       0x100000000 -        0x1000f9fef +git ??? (???)
-<FFFFCD11-3352-4216-B27D-2700D1A69326> /Users/jon/bin/git
-       0x100179000 -        0x10018bfe7 +libz.1.dylib ??? (???)
-<F450102F-273C-872E-0729-BD338777CA02> /opt/local/lib/libz.1.dylib
-       0x10018f000 -        0x10028bff7 +libiconv.2.dylib ??? (???)
-<A27D1D71-44A7-76A7-41EB-CC4BAC91E740> /opt/local/lib/libiconv.2.dylib
-       0x100298000 -        0x1003acfe7 +libcrypto.0.9.8.dylib ???
-(???) <D4E1B9E7-BE64-5054-F80A-B63296AFEAD4>
-/opt/local/lib/libcrypto.0.9.8.dylib
-       0x100410000 -        0x10044ffff +libssl.0.9.8.dylib ??? (???)
-<4E8F5D81-1DFF-5CBD-361A-C37609B799A8>
-/opt/local/lib/libssl.0.9.8.dylib
-    0x7fff5fc00000 -     0x7fff5fc3bdef  dyld 132.1 (???)
-<B633F790-4DDB-53CD-7ACF-2A3682BCEA9F> /usr/lib/dyld
-    0x7fff811d2000 -     0x7fff81390ff7  libSystem.B.dylib ??? (???)
-<526DD3E5-2A8B-4512-ED97-01B832369959> /usr/lib/libSystem.B.dylib
-    0x7fff871c3000 -     0x7fff871c7ff7  libmathCommon.A.dylib ???
-(???) <95718673-FEEE-B6ED-B127-BCDBDB60D4E5>
-/usr/lib/system/libmathCommon.A.dylib
-    0x7fffffe00000 -     0x7fffffe01fff  libSystem.B.dylib ??? (???)
-<526DD3E5-2A8B-4512-ED97-01B832369959> /usr/lib/libSystem.B.dylib
-
-Model: MacPro1,1, BootROM MP11.005C.B08, 4 processors, Dual-Core Intel
-Xeon, 2 GHz, 3 GB, SMC 1.7f10
-Graphics: ATI Radeon X1900 XT, ATY,RadeonX1900, PCIe, 512 MB
-Memory Module: global_name
-AirPort: spairport_wireless_card_type_airport_extreme (0x14E4, 0x87),
-Broadcom BCM43xx 1.0 (5.10.91.26)
-Bluetooth: Version 2.2.4f3, 2 service, 1 devices, 1 incoming serial ports
-Network Service: Ethernet 1, Ethernet, en0
-PCI Card: ATY,RadeonX1900, Display, Slot-1
-Serial ATA Device: WDC WD2500KS-00MJB0, 232.89 GB
-Serial ATA Device: WDC WD2500JS-41SGB0, 232.89 GB
-Parallel ATA Device: SONY    DVD RW DW-D150A
-USB Device: Hub, 0x05ac  (Apple Inc.), 0x9130, 0xfd400000
-USB Device: Keyboard Hub, 0x05ac  (Apple Inc.), 0x1006, 0xfd410000
-USB Device: USB-PS/2 Optical Mouse, 0x046d  (Logitech Inc.), 0xc01e, 0xfd411000
-USB Device: Apple Keyboard, 0x05ac  (Apple Inc.), 0x0221, 0xfd412000
-USB Device: C-Media USB Headphone Set, 0x0d8c  (C-MEDIA ELECTRONICS
-INC.), 0x000c, 0xfd430000
-USB Device: Apple Cinema Display, 0x05ac  (Apple Inc.), 0x9222, 0xfd420000
-USB Device: Hub, 0x05ac  (Apple Inc.), 0x9131, 0xfd300000
-USB Device: Apple Cinema HD Display, 0x05ac  (Apple Inc.), 0x9223, 0xfd320000
-USB Device: Bluetooth USB Host Controller, 0x05ac  (Apple Inc.),
-0x8206, 0x5d200000
-FireWire Device: built-in_hub, Up to 800 Mb/sec
-FireWire Device: unknown_device, Unknown
-
-
-
-Want me to do any more digging?
-
--Jonathan
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index a7d215c..adffa0c 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -609,16 +609,16 @@ $orig_git_index = $ENV{GIT_INDEX_FILE} if exists $ENV{GIT_INDEX_FILE};
+ my %index; # holds filenames of one index per branch
+ 
+ unless (-d $git_dir) {
+-	system("git-init");
++	system("git init");
+ 	die "Cannot init the GIT db at $git_tree: $?\n" if $?;
+-	system("git-read-tree");
++	system("git read-tree");
+ 	die "Cannot init an empty tree: $?\n" if $?;
+ 
+ 	$last_branch = $opt_o;
+ 	$orig_branch = "";
+ } else {
+-	open(F, "git-symbolic-ref HEAD |") or
+-		die "Cannot run git-symbolic-ref: $!\n";
++	open(F, "git symbolic-ref HEAD |") or
++		die "Cannot run git symbolic-ref: $!\n";
+ 	chomp ($last_branch = <F>);
+ 	$last_branch = basename($last_branch);
+ 	close(F);
+@@ -627,12 +627,12 @@ unless (-d $git_dir) {
+ 		$last_branch = "master";
+ 	}
+ 	$orig_branch = $last_branch;
+-	$tip_at_start = `git-rev-parse --verify HEAD`;
++	$tip_at_start = `git rev-parse --verify HEAD`;
+ 
+ 	# Get the last import timestamps
+ 	my $fmt = '($ref, $author) = (%(refname), %(author));';
+-	open(H, "git-for-each-ref --perl --format='$fmt' $remote |") or
+-		die "Cannot run git-for-each-ref: $!\n";
++	open(H, "git for-each-ref --perl --format='$fmt' $remote |") or
++		die "Cannot run git for-each-ref: $!\n";
+ 	while (defined(my $entry = <H>)) {
+ 		my ($ref, $author);
+ 		eval($entry) || die "cannot eval refs list: $@";
+@@ -687,7 +687,7 @@ unless ($opt_P) {
+ 	    print $cvspsfh $_;
+ 	}
+ 	close CVSPS;
+-	$? == 0 or die "git-cvsimport: fatal: cvsps reported error\n";
++	$? == 0 or die "git cvsimport: fatal: cvsps reported error\n";
+ 	close $cvspsfh;
+ } else {
+ 	$cvspsfile = munge_user_filename($opt_P);
+@@ -716,27 +716,27 @@ my $state = 0;
+ sub update_index (\@\@) {
+ 	my $old = shift;
+ 	my $new = shift;
+-	open(my $fh, '|-', qw(git-update-index -z --index-info))
+-		or die "unable to open git-update-index: $!";
++	open(my $fh, '|-', qw(git update-index -z --index-info))
++		or die "unable to open git update-index: $!";
+ 	print $fh
+ 		(map { "0 0000000000000000000000000000000000000000\t$_\0" }
+ 			@$old),
+ 		(map { '100' . sprintf('%o', $_->[0]) . " $_->[1]\t$_->[2]\0" }
+ 			@$new)
+-		or die "unable to write to git-update-index: $!";
++		or die "unable to write to git update-index: $!";
+ 	close $fh
+-		or die "unable to write to git-update-index: $!";
+-	$? and die "git-update-index reported error: $?";
++		or die "unable to write to git update-index: $!";
++	$? and die "git update-index reported error: $?";
+ }
+ 
+ sub write_tree () {
+-	open(my $fh, '-|', qw(git-write-tree))
+-		or die "unable to open git-write-tree: $!";
++	open(my $fh, '-|', "git write-tree")
++		or die "unable to open git write-tree: $!";
+ 	chomp(my $tree = <$fh>);
+ 	is_sha1($tree)
+ 		or die "Cannot get tree id ($tree): $!";
+ 	close($fh)
+-		or die "Error running git-write-tree: $?\n";
++		or die "Error running git write-tree: $?\n";
+ 	print "Tree ID $tree\n" if $opt_v;
+ 	return $tree;
+ }
+@@ -751,7 +751,7 @@ sub commit {
+ 	if ($branch eq $opt_o && !$index{branch} &&
+ 		!get_headref("$remote/$branch")) {
+ 	    # looks like an initial commit
+-	    # use the index primed by git-init
++	    # use the index primed by git init
+ 	    $ENV{GIT_INDEX_FILE} = "$git_dir/index";
+ 	    $index{$branch} = "$git_dir/index";
+ 	} else {
+@@ -761,9 +761,9 @@ sub commit {
+ 		$index{$branch} = tmpnam();
+ 		$ENV{GIT_INDEX_FILE} = $index{$branch};
+ 		if ($ancestor) {
+-		    system("git-read-tree", "$remote/$ancestor");
++		    system("git", "read-tree", "$remote/$ancestor");
+ 		} else {
+-		    system("git-read-tree", "$remote/$branch");
++		    system("git", "read-tree", "$remote/$branch");
+ 		}
+ 		die "read-tree failed: $?\n" if $?;
+ 	    }
+@@ -798,7 +798,7 @@ sub commit {
+ 	$ENV{GIT_COMMITTER_EMAIL} = $author_email;
+ 	$ENV{GIT_COMMITTER_DATE} = $commit_date;
+ 	my $pid = open2(my $commit_read, my $commit_write,
+-		'git-commit-tree', $tree, @commit_args);
++		'git', 'commit-tree', $tree, @commit_args);
+ 
+ 	# compatibility with git2cvs
+ 	substr($logmsg,32767) = "" if length($logmsg) > 32767;
+@@ -811,7 +811,7 @@ sub commit {
+ 	}
+ 
+ 	print($commit_write "$logmsg\n") && close($commit_write)
+-		or die "Error writing to git-commit-tree: $!\n";
++		or die "Error writing to git commit-tree: $!\n";
+ 
+ 	print "Committed patch $patchset ($branch $commit_date)\n" if $opt_v;
+ 	chomp(my $cid = <$commit_read>);
+@@ -820,9 +820,9 @@ sub commit {
+ 	close($commit_read);
+ 
+ 	waitpid($pid,0);
+-	die "Error running git-commit-tree: $?\n" if $?;
++	die "Error running git commit-tree: $?\n" if $?;
+ 
+-	system('git-update-ref', "$remote/$branch", $cid) == 0
++	system('git' , 'update-ref', "$remote/$branch", $cid) == 0
+ 		or die "Cannot write branch $branch for update: $!\n";
+ 
+ 	if ($tag) {
+@@ -832,7 +832,7 @@ sub commit {
+ 		$xtag =~ s/[\/]/$opt_s/g;
+ 		$xtag =~ s/\[//g;
+ 
+-		system('git-tag', '-f', $xtag, $cid) == 0
++		system('git' , 'tag', '-f', $xtag, $cid) == 0
+ 			or die "Cannot create tag $xtag: $!\n";
+ 
+ 		print "Created tag '$xtag' on '$branch'\n" if $opt_v;
+@@ -969,7 +969,7 @@ while (<CVS>) {
+ 			my $pid = open(my $F, '-|');
+ 			die $! unless defined $pid;
+ 			if (!$pid) {
+-			    exec("git-hash-object", "-w", $tmpname)
++			    exec("git", "hash-object", "-w", $tmpname)
+ 				or die "Cannot create object: $!\n";
+ 			}
+ 			my $sha = <$F>;
+@@ -1013,7 +1013,7 @@ unless ($opt_P) {
+ # The heuristic of repacking every 1024 commits can leave a
+ # lot of unpacked data.  If there is more than 1MB worth of
+ # not-packed objects, repack once more.
+-my $line = `git-count-objects`;
++my $line = `git count-objects`;
+ if ($line =~ /^(\d+) objects, (\d+) kilobytes$/) {
+   my ($n_objects, $kb) = ($1, $2);
+   1024 < $kb
+@@ -1038,26 +1038,26 @@ if ($orig_branch) {
+ 	if ($opt_i) {
+ 		exit 0;
+ 	}
+-	my $tip_at_end = `git-rev-parse --verify HEAD`;
++	my $tip_at_end = `git rev-parse --verify HEAD`;
+ 	if ($tip_at_start ne $tip_at_end) {
+ 		for ($tip_at_start, $tip_at_end) { chomp; }
+ 		print "Fetched into the current branch.\n" if $opt_v;
+-		system(qw(git-read-tree -u -m),
++		system(qw(git read-tree -u -m),
+ 		       $tip_at_start, $tip_at_end);
+ 		die "Fast-forward update failed: $?\n" if $?;
+ 	}
+ 	else {
+-		system(qw(git-merge cvsimport HEAD), "$remote/$opt_o");
++		system(qw(git merge cvsimport HEAD), "$remote/$opt_o");
+ 		die "Could not merge $opt_o into the current branch.\n" if $?;
+ 	}
+ } else {
+ 	$orig_branch = "master";
+ 	print "DONE; creating $orig_branch branch\n" if $opt_v;
+-	system("git-update-ref", "refs/heads/master", "$remote/$opt_o")
++	system("git", "update-ref", "refs/heads/master", "$remote/$opt_o")
+ 		unless defined get_headref('refs/heads/master');
+-	system("git-symbolic-ref", "$remote/HEAD", "$remote/$opt_o")
++	system("git", "symbolic-ref", "$remote/HEAD", "$remote/$opt_o")
+ 		if ($opt_r && $opt_o ne 'HEAD');
+-	system('git-update-ref', 'HEAD', "$orig_branch");
++	system('git', 'update-ref', 'HEAD', "$orig_branch");
+ 	unless ($opt_i) {
+ 		system('git checkout -f');
+ 		die "checkout failed: $?\n" if $?;
+-- 
+1.6.5.3
