@@ -1,97 +1,128 @@
-From: =?UTF-8?B?0JLQmtC+0L3RgtCw0LrRgtC1LtGA0YM=?= <admin@vkontakte.ru>
-Subject: =?UTF-8?B?0JDQvdC00YDQtdC5INCh0LDQv9C40Log0LTQvtCx0LDQstC40Lsg0JLQsNGB?=
- =?UTF-8?B?INCyINC00YDRg9C30YzRjyDQvdCwINGB0LDQudGC0LUg0JLQmtC+0L3RgtCw?=
- =?UTF-8?B?0LrRgtC1LtGA0YM=?=
-Date: Tue, 19 Jan 2010 11:45:41 +0300
-Message-ID: <3b1474c0ee2a9ec94f4493890fcec8e9@localhost.localdomain>
-Reply-To: "Pavel Durov, inContact.ru Admin" <admin@vkontakte.ru>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 19 09:45:56 2010
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: [PATCH] Fix errors in t6018
+Date: Tue, 19 Jan 2010 11:35:48 +0200
+Message-ID: <1263893748-23327-1-git-send-email-ilari.liusvaara@elisanet.fi>
+References: <20100119065609.GB3946@coredump.intra.peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 19 10:36:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NX9il-0006tD-DU
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 09:45:55 +0100
+	id 1NXAVG-0000ZL-Sl
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 10:36:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755512Ab0ASIpv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Jan 2010 03:45:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755475Ab0ASIpu
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 03:45:50 -0500
-Received: from cs25.vkontakte.ru ([93.186.224.25]:57790 "EHLO vkontakte.ru"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755446Ab0ASIpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 03:45:49 -0500
-Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
-	by vkontakte.ru with esmtp (Exim 4.63)
-	(envelope-from <admin@vkontakte.ru>)
-	id 1NX9iX-0001lx-BZ
-	for git@vger.kernel.org; Tue, 19 Jan 2010 11:45:41 +0300
-X-Priority: 3
-X-Mailer: PHPMailer [version 1.73]
+	id S1755589Ab0ASJf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 04:35:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755449Ab0ASJf4
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 04:35:56 -0500
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:48810 "EHLO
+	emh04.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755140Ab0ASJfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2010 04:35:55 -0500
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh04-2.mail.saunalahti.fi (Postfix) with SMTP id B052513C147;
+	Tue, 19 Jan 2010 11:35:52 +0200 (EET)
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A00565A7EDD; Tue, 19 Jan 2010 11:35:52 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id 51BDB1C6386;
+	Tue, 19 Jan 2010 11:35:48 +0200 (EET)
+X-Mailer: git-send-email 1.6.6.199.gff4b0
+In-Reply-To: <20100119065609.GB3946@coredump.intra.peff.net>
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.1 points;
- *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
- *      [cf:  64]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
- *  0.1 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: vkontakte.ru]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137445>
 
-git,
+Fix errors and shortcomings in t6018 (the rev-parse --namespace test):
+1) Some tests were missing &&'s, leading too possibly missing failures
+2) Some tests used incorrect commands (didn't test what they were
+suppoed to)
+3) Some test used 'cmp' instead of 'test_cmp'
+4) Tests only tested output up to permutation
 
-=D0=90=D0=BD=D0=B4=D1=80=D0=B5=D0=B9 =D0=A1=D0=B0=D0=BF=D0=B8=D0=BA =D0=
-=B4=D0=BE=D0=B1=D0=B0=D0=B2=D0=B8=D0=BB =D0=92=D0=B0=D1=81 =D0=B2 =D0=B4=
-=D1=80=D1=83=D0=B7=D1=8C=D1=8F =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82=D0=
-=B5 =D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=83
+Fix these errors in t6018.
 
-=D0=92=D1=8B =D0=BC=D0=BE=D0=B6=D0=B5=D1=82=D0=B5 =D0=B7=D0=B0=D0=B9=D1=
-=82=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82 =D0=B8 =D0=BF=D1=80=D0=BE=
-=D1=81=D0=BC=D0=BE=D1=82=D1=80=D0=B5=D1=82=D1=8C =D1=81=D1=82=D1=80=D0=B0=
-=D0=BD=D0=B8=D1=86=D1=8B =D0=92=D0=B0=D1=88=D0=B8=D1=85 =D0=B4=D1=80=D1=
-=83=D0=B7=D0=B5=D0=B9, =D0=B8=D1=81=D0=BF=D0=BE=D0=BB=D1=8C=D0=B7=D1=83=
-=D1=8F
-=D0=92=D0=B0=D1=88 e-mail =D0=B8 =D0=B0=D0=B2=D1=82=D0=BE=D0=BC=D0=B0=D1=
-=82=D0=B8=D1=87=D0=B5=D1=81=D0=BA=D0=B8 =D1=81=D0=BE=D0=B7=D0=B4=D0=B0=D0=
-=BD=D0=BD=D1=8B=D0=B9 =D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8C: mc4xaMNz
+Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+---
+This can be appiled on top of rev-parse --namespace patch v3 or this
+can be squashed to that patch.
 
-=D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=83 - =D1=
-=81=D0=B0=D0=B9=D1=82, =D0=BA=D0=BE=D1=82=D0=BE=D1=80=D1=8B=D0=B9 =D0=B5=
-=D0=B6=D0=B5=D0=B4=D0=BD=D0=B5=D0=B2=D0=BD=D0=BE =D0=BF=D0=BE=D0=B7=D0=B2=
-=D0=BE=D0=BB=D1=8F=D0=B5=D1=82 =D0=B4=D0=B5=D1=81=D1=8F=D1=82=D0=BA=D0=B0=
-=D0=BC =D0=BC=D0=B8=D0=BB=D0=BB=D0=B8=D0=BE=D0=BD=D0=BE=D0=B2 =D0=BB=D1=
-=8E=D0=B4=D0=B5=D0=B9 =D0=BD=D0=B0=D1=85=D0=BE=D0=B4=D0=B8=D1=82=D1=8C =
-=D1=81=D1=82=D0=B0=D1=80=D1=8B=D1=85 =D0=B4=D1=80=D1=83=D0=B7=D0=B5=D0=B9=
- =D0=B8 =D0=BE=D1=81=D1=82=D0=B0=D0=B2=D0=B0=D1=82=D1=8C=D1=81=D1=8F =D1=
-=81 =D0=BD=D0=B8=D0=BC=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B2=D1=8F=D0=B7=D0=B8=
-, =D0=B4=D0=B5=D0=BB=D0=B8=D1=82=D1=8C=D1=81=D1=8F =D1=84=D0=BE=D1=82=D0=
-=BE=D0=B3=D1=80=D0=B0=D1=84=D0=B8=D1=8F=D0=BC=D0=B8
-=D0=B8 =D1=81=D0=BE=D0=B1=D1=8B=D1=82=D0=B8=D1=8F=D0=BC=D0=B8 =D0=B8=D0=
-=B7 =D0=B6=D0=B8=D0=B7=D0=BD=D0=B8.
+ t/t6018-rev-list-namespace.sh |   24 ++++++++++++------------
+ 1 files changed, 12 insertions(+), 12 deletions(-)
 
-=D0=A7=D1=82=D0=BE=D0=B1=D1=8B =D0=B2=D0=BE=D0=B9=D1=82=D0=B8 =D0=BD=D0=
-=B0 =D1=81=D0=B0=D0=B9=D1=82, =D0=BF=D1=80=D0=BE=D0=B9=D0=B4=D0=B8=D1=82=
-=D0=B5 =D0=BF=D0=BE =D1=81=D1=81=D1=8B=D0=BB=D0=BA=D0=B5:
-http://vkontakte.ru/login.php?regemail=3Dgit@vger.kernel.org#mc4xaMNz
-
-=D0=92=D0=BD=D0=B8=D0=BC=D0=B0=D0=BD=D0=B8=D0=B5: =D0=92=D0=B0=D1=88=D0=
-=B0 =D1=80=D0=B5=D0=B3=D0=B8=D1=81=D1=82=D1=80=D0=B0=D1=86=D0=B8=D1=8F =
-=D0=BD=D0=B5 =D0=B1=D1=83=D0=B4=D0=B5=D1=82 =D0=B0=D0=BA=D1=82=D0=B8=D0=
-=B2=D0=B8=D1=80=D0=BE=D0=B2=D0=B0=D0=BD=D0=B0, =D0=B5=D1=81=D0=BB=D0=B8=
- =D0=92=D1=8B =D0=BF=D1=80=D0=BE=D0=B8=D0=B3=D0=BD=D0=BE=D1=80=D0=B8=D1=
-=80=D1=83=D0=B5=D1=82=D0=B5
-=D1=8D=D1=82=D0=BE =D0=BF=D1=80=D0=B8=D0=B3=D0=BB=D0=B0=D1=88=D0=B5=D0=BD=
-=D0=B8=D0=B5.
-
-=D0=96=D0=B5=D0=BB=D0=B0=D0=B5=D0=BC =D1=83=D0=B4=D0=B0=D1=87=D0=B8!
-=D0=A1 =D1=83=D0=B2=D0=B0=D0=B6=D0=B5=D0=BD=D0=B8=D0=B5=D0=BC,
-=D0=90=D0=B4=D0=BC=D0=B8=D0=BD=D0=B8=D1=81=D1=82=D1=80=D0=B0=D1=86=D0=B8=
-=D1=8F =D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=
-=83
+diff --git a/t/t6018-rev-list-namespace.sh b/t/t6018-rev-list-namespace.sh
+index 6bb562a..70c8a83 100755
+--- a/t/t6018-rev-list-namespace.sh
++++ b/t/t6018-rev-list-namespace.sh
+@@ -14,23 +14,23 @@ commit () {
+ 
+ compare () {
+ 	# Split arguments on whitespace.
+-	git $1 $2 | sort >expected &&
+-	git $1 $3 | sort >actual &&
+-	cmp expected actual
++	git $1 $2 >expected &&
++	git $1 $3 >actual &&
++	test_cmp expected actual
+ }
+ 
+ test_expect_success 'setup' '
+ 
+ 	commit master &&
+-	git checkout -b subspace/one master
++	git checkout -b subspace/one master &&
+ 	commit one &&
+-	git checkout -b subspace/two master
++	git checkout -b subspace/two master &&
+ 	commit two &&
+-	git checkout -b subspace-x master
++	git checkout -b subspace-x master &&
+ 	commit subspace-x &&
+-	git checkout -b other/three master
++	git checkout -b other/three master &&
+ 	commit three &&
+-	git checkout -b someref master
++	git checkout -b someref master &&
+ 	commit some &&
+ 	git checkout master &&
+ 	commit master2
+@@ -68,7 +68,7 @@ test_expect_success 'rev-parse --namespace=heads/someref master' '
+ 
+ test_expect_success 'rev-parse --namespace=heads' '
+ 
+-	compare rev-parse "subspace/one subspace/two other/three subspace-x master someref" "--namespace=heads"
++	compare rev-parse "master other/three someref subspace-x subspace/one subspace/two" "--namespace=heads"
+ 
+ '
+ 
+@@ -92,19 +92,19 @@ test_expect_success 'rev-list --namespace=heads/subspace' '
+ 
+ test_expect_success 'rev-list --namespace=heads/someref master' '
+ 
+-	compare rev-parse "master" "--namespace=heads/someref master"
++	compare rev-list "master" "--namespace=heads/someref master"
+ 
+ '
+ 
+ test_expect_success 'rev-list --namespace=heads/subspace --namespace=heads/other' '
+ 
+-	compare rev-parse "subspace/one subspace/two other/three" "--namespace=heads/subspace --namespace=heads/other"
++	compare rev-list "subspace/one subspace/two other/three" "--namespace=heads/subspace --namespace=heads/other"
+ 
+ '
+ 
+ test_expect_success 'rev-list --namespace=heads' '
+ 
+-	compare rev-parse "subspace/one subspace/two other/three subspace-x master someref" "--namespace=heads"
++	compare rev-list "master other/three someref subspace-x subspace/one subspace/two" "--namespace=heads"
+ 
+ '
+ 
+-- 
+1.6.6.199.gff4b0
