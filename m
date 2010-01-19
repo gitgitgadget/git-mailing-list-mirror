@@ -1,57 +1,53 @@
-From: tzachi perelstein <tzachi_perelstein@yahoo.com>
-Subject: Re: git-describe recognize modified files
-Date: Tue, 19 Jan 2010 05:07:29 -0800 (PST)
-Message-ID: <228075.79497.qm@web45206.mail.sp1.yahoo.com>
-References: <829260.92036.qm@web45202.mail.sp1.yahoo.com> <alpine.DEB.1.00.1001191134130.3164@intel-tinevez-2-302> <20100119122122.GA28667@inner.home.ulmdo.de> <m34omiclap.fsf@localhost.localdomain>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Branch merge bug
+Date: Tue, 19 Jan 2010 18:52:16 +0530
+Message-ID: <f3271551001190522h37dd639k1352d54c1c07496f@mail.gmail.com>
+References: <f3271551001182322p86a02d8p8b9ceb49e930d333@mail.gmail.com> 
+	<4B55A080.7010705@drmicha.warpmail.net> <20100119123915.GB28667@inner.home.ulmdo.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>, Andreas Krey <a.krey@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 19 14:07:34 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 19 14:22:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXDny-0007Rm-1J
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 14:07:34 +0100
+	id 1NXE2b-0005XG-Uk
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 14:22:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751454Ab0ASNHa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Jan 2010 08:07:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450Ab0ASNHa
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 08:07:30 -0500
-Received: from web45206.mail.sp1.yahoo.com ([68.180.197.95]:42296 "HELO
-	web45206.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1750898Ab0ASNH3 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 08:07:29 -0500
-Received: (qmail 83532 invoked by uid 60001); 19 Jan 2010 13:07:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1263906449; bh=cKZA0sP4T2iJehQkNsR6Li7tVRexCvDwjwGsRASeUm0=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:References:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=XUGZB9x732r0DOz555HN+Pdj897KdxyHIvpyEpHk72WFh7we7nv+dixMakLblwTLn95babUfVobvF/A3hcZ4RlIgFQQbuzbXeMQhMT0liZTGlm5eSCimElL+kLnCJFHwUfJynuiv9ttIhuia+Q5VIa+LJVJO2FuxAeW2Fo/F0d4=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:References:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=IheHmNqwls41NNhb+/AFgkWHOR+u6TQ3rB7/Nts2bvNcd5LJNy0gBAYDqofOuO4qitFeSAhHnbJsQegRchfd5N7DcmDYzEeMllOyS2QYr/xQv5+pXXbAomqm3VcdZfznxcpJfhE3CMmoPObpDEa7FZl74JbJ3SnH7+LIjZ9YLtE=;
-X-YMail-OSG: 9VIYdMcVM1lhWfGbDA4sqjfklBomIvdNtHSW48Tg3ghHW4r0DyA.axhuUMzohPBd1svHyH.u4Q9STdYCXskMDj3d65zqbaXda2i7h7q1nb18aMe.rY9H5F2mrP.DeTWjW8yQoeFZwbeyyKlR0h5aAwaOUFlDsZujgBfcMkpY8H2SDw06_vxwH_h1scBpcbsIPkcwBm6r8s6vZ4AOfdhOy1hND8.QUtv0E0MJr2BNypmEnmNkqE7VcTMzsrMAxXQesnA7AuEpl_av0cXJd6DXric-
-Received: from [80.179.89.178] by web45206.mail.sp1.yahoo.com via HTTP; Tue, 19 Jan 2010 05:07:29 PST
-X-Mailer: YahooMailRC/272.7 YahooMailWebService/0.8.100.260964
-In-Reply-To: <m34omiclap.fsf@localhost.localdomain>
+	id S1752203Ab0ASNWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 08:22:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751590Ab0ASNWh
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 08:22:37 -0500
+Received: from mail-yw0-f182.google.com ([209.85.211.182]:40331 "EHLO
+	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751489Ab0ASNWh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2010 08:22:37 -0500
+Received: by ywh12 with SMTP id 12so2411496ywh.21
+        for <git@vger.kernel.org>; Tue, 19 Jan 2010 05:22:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=hTj+3KptLronTcLvaXwR8WxqKPTjB8t9SZy7F8iA8vA=;
+        b=g7/sxuKlKXRUEfXEl80FUcm6gulBqaL97BhqJsChnXlQINV3SxvwsDsHHoksMH3NIl
+         1jJAVXJFLtJv3185KV+ycq82iI+k7K1W4BQ062oDA1VJeNUI5MJtqWTm1lNW4ALEnWC9
+         +0IQnZaMB89wnnrTgjEsjcHHrNu7yEhjWwpLE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=MzTJ6hjAPqVEtyykVaUbiiRG3DnzPVOlEZGTeC4k54oyMwMUD72FYnHVgxW3sdiSh9
+         aj4JJ6+LQuGoXMXKWBi+Z5U1482kp/ifITSirJ2+A98oBOMe6QIiWEMkczgIIdE7msxM
+         0SMSSv2ib2BDFQu9kK8GiLlmOZkduOlLWU2b0=
+Received: by 10.91.215.7 with SMTP id s7mr6667546agq.81.1263907356298; Tue, 19 
+	Jan 2010 05:22:36 -0800 (PST)
+In-Reply-To: <20100119123915.GB28667@inner.home.ulmdo.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137456>
 
-> FYI it is integrated in git-describe since
->=20
-> =A0 9f67d2e (Teach "git describe" --dirty option, 2009-10-21)
->=20
-> by Jean Privat (it should be present in 1.6.6, IIRC).
->=20
-
-Good=A0news :)
-Thanks
-
-
-
-     =20
+Right. Thanks for clearing that up for me.
