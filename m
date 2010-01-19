@@ -1,78 +1,94 @@
-From: David Ripton <dripton@ripton.net>
-Subject: [PATCH] bisect: fix singular/plural grammar nit
-Date: Tue, 19 Jan 2010 07:13:33 -0800
-Message-ID: <20100119151333.GA9660@vidar.dreamhost.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH v3] Threaded grep
+Date: Tue, 19 Jan 2010 07:41:43 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.1001190728300.13231@localhost.localdomain>
+References: <20100118103334.GA17361@fredrik-laptop> <alpine.LFD.2.00.1001180947140.13231@localhost.localdomain> <20100119073454.GA15575@fredrik-laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jan 19 16:41:16 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Fredrik Kuivinen <frekui@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 19 16:44:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXGCh-0002Gy-5o
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 16:41:15 +0100
+	id 1NXGFL-0003Sr-TV
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 16:44:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753890Ab0ASPlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2010 10:41:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751948Ab0ASPlJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 10:41:09 -0500
-Received: from judo.dreamhost.com ([66.33.216.100]:44301 "EHLO
-	judo.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753819Ab0ASPlI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 10:41:08 -0500
-X-Greylist: delayed 1614 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Jan 2010 10:41:08 EST
-Received: from crusty.g.dreamhost.com (crusty.g.dreamhost.com [67.205.8.12])
-	by judo.dreamhost.com (Postfix) with ESMTP id 60792452F99
-	for <git@vger.kernel.org>; Tue, 19 Jan 2010 07:14:13 -0800 (PST)
-Received: from vidar.dreamhost.com (vidar.dreamhost.com [208.113.223.211])
-	by crusty.g.dreamhost.com (Postfix) with ESMTP id 8972911DD60;
-	Tue, 19 Jan 2010 07:13:33 -0800 (PST)
-Received: by vidar.dreamhost.com (Postfix, from userid 59956)
-	id 8E17998517; Tue, 19 Jan 2010 07:13:33 -0800 (PST)
-Mail-Followup-To: git@vger.kernel.org, gitster@pobox.com
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S1753800Ab0ASPn4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 10:43:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753659Ab0ASPn4
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 10:43:56 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:54503 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752153Ab0ASPnz (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Jan 2010 10:43:55 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0JFfhEr001298
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 19 Jan 2010 07:41:44 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0JFfhDN019700;
+	Tue, 19 Jan 2010 07:41:43 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <20100119073454.GA15575@fredrik-laptop>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.949 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137467>
 
-Remove the trailing 's' from "revisions" and "steps" when there is
-only one.
 
-Signed-off-by: David Ripton <dripton@ripton.net>
----
- bisect.c |    8 +++++---
- 1 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index f1a1f84..af280b4 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -956,7 +956,7 @@ int bisect_next_all(const char *prefix)
- {
- 	struct rev_info revs;
- 	struct commit_list *tried;
--	int reaches = 0, all = 0, nr;
-+	int reaches = 0, all = 0, nr, steps;
- 	const unsigned char *bisect_rev;
- 	char bisect_rev_hex[41];
- 
-@@ -998,8 +998,10 @@ int bisect_next_all(const char *prefix)
- 	}
- 
- 	nr = all - reaches - 1;
--	printf("Bisecting: %d revisions left to test after this "
--	       "(roughly %d steps)\n", nr, estimate_bisect_steps(all));
-+	steps = estimate_bisect_steps(all);
-+	printf("Bisecting: %d revision%s left to test after this "
-+	       "(roughly %d step%s)\n", nr, (nr == 1 ? "" : "s"),
-+               steps, (steps == 1 ? "" : "s"));
- 
- 	return bisect_checkout(bisect_rev_hex);
- }
+On Tue, 19 Jan 2010, Fredrik Kuivinen wrote:
+> > 
+> >  - git grep --no-ext-grep function
+> > 
+> > 	real	0m0.241s
+> > 	user	0m1.436s
+> > 	sys	0m0.216s
+> 
+> I haven't seen this overhead during my tests. But I'm _guessing_ that
+> the problem is that the mutex grep_lock is held while the result is
+> written to stdout. So when we are writing, no significant amount of
+> work can be done by any thread. Here is a patch to fix this (applies
+> on to of v3).
 
--- 
-David Ripton    dripton@ripton.net
+No, I get basically the same timings with this patch:
+
+	real	0m0.239s
+	user	0m1.372s
+	sys	0m0.280s
+
+(that _may_ be a slight real improvement, but it's more likely that the 
+changing in user/sys time is just noise).
+
+But I do think that you're right that there's a difference in my timings, 
+and I am comparing to the one that uses strstr(). Your patches didn't have 
+a "disable threads" option that I could see, so I just compared against my 
+old numbers. 
+
+So I guess a better example is to use a "complex" grep pattern like 
+'function.*a' which also gets a lot of hits, and the threaded case does 
+look much better in comparison. Pre-threaded:
+
+	real	0m0.921s
+	user	0m0.728s
+	sys	0m0.184s
+
+so it's less than 2x the CPU time, and a 3.85x real-time improvement. And 
+that "less than 2x the CPU time" is the factor I'd expect from HT.
+
+It's also worth noting that at least _some_ versions of glibc would 
+actually use different versions of subroutines for the threaded vs 
+non-threaded case, ie they'd avoid locking overhead when they know they 
+aren't running with threads. So things like stdio actually got slower when 
+you did any pthreads things, because suddenly glibc knew that it needed to 
+do locking around the functions.
+
+			Linus
