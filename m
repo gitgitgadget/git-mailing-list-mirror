@@ -1,59 +1,63 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix errors in t6018
-Date: Tue, 19 Jan 2010 12:25:22 -0800
-Message-ID: <7vtyuh970t.fsf@alter.siamese.dyndns.org>
-References: <20100119065609.GB3946@coredump.intra.peff.net>
- <1263893748-23327-1-git-send-email-ilari.liusvaara@elisanet.fi>
+Subject: Re: [PATCH] bisect: fix singular/plural grammar nit
+Date: Tue, 19 Jan 2010 12:53:39 -0800
+Message-ID: <7vpr5595po.fsf@alter.siamese.dyndns.org>
+References: <20100119151333.GA9660@vidar.dreamhost.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Tue Jan 19 21:25:40 2010
+Cc: git@vger.kernel.org
+To: David Ripton <dripton@ripton.net>
+X-From: git-owner@vger.kernel.org Tue Jan 19 21:53:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXKdu-00063C-ML
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 21:25:39 +0100
+	id 1NXL5E-0002NH-Qa
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 21:53:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755407Ab0ASUZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2010 15:25:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755360Ab0ASUZe
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 15:25:34 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35970 "EHLO
+	id S1754311Ab0ASUxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 15:53:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754112Ab0ASUxs
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 15:53:48 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46498 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751458Ab0ASUZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 15:25:33 -0500
+	with ESMTP id S1752297Ab0ASUxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2010 15:53:47 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A938925E8;
-	Tue, 19 Jan 2010 15:25:31 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EA1392B5D;
+	Tue, 19 Jan 2010 15:53:45 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MnFIbgOzHGW4pI5g5Kaz47PjZwQ=; b=SHqd9Z
-	T0yUvQyJ+5JNjA8aEsTSxFrSWCTHbirZkSVh1c3PcxPmsjNYwLyOZThvrWIQBG4v
-	W0x/1zMhhWlEno1ngVl7UL9C84n6yUX01KeXYwJwlEAITzqG1RpWQZHbCrVerIdf
-	A99YwTlUTfWntg69GC+Mt5GxuNITsY9Wsx6hM=
+	:content-type; s=sasl; bh=Jv/9HuqsOEWu5nYmabNSUbZXvdE=; b=IjdojR
+	QdrQKZP5sYiIqEiYwyZnZdX+qFsT2vfzMBkIo8Yd3vftM7wVABuGoR0Otz6P6ve0
+	hH3N1zSYt+pxGOyrMJuXklLl2zUhGbqfhYU2jdncxeMlOW4sUs61DAAaB9SAHKj1
+	5iYAaVIhQziDvht8g0p4lIZYllrrkRal4iNjo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GBpR+y6ZzbHtLEXAT7TI4d8go6ZxzsoS
-	LUOnF7BnfLGXKBcZcb15qOCFTniM2BqBerfpM0IX5ZuyTqsK+dTNzDsb5QKbxlSV
-	gp8nm5xff0QtoRJvIC58rTNPQzAipZUEjPQ6cCPpNJYFTcetGcIONewetO1k3VXX
-	SZo+FeRUSBg=
+	:content-type; q=dns; s=sasl; b=LaMOgnziV1rLK6U/Xz9yrM1mGI8XKF9Q
+	seShEJYI4At16lP0LWVVkDoGusCRUPv6MvhtCicQwnjzqAjMLvwEKdldeLCDaW30
+	9Z1uA0VWsSrG+A/PRsPINunmFD5a+Zr60fTb2d04EJoHsTIrftia9tGuqrdMQIGK
+	XVqSovSa70w=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3209B925DE;
-	Tue, 19 Jan 2010 15:25:28 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 27DFA92B59;
+	Tue, 19 Jan 2010 15:53:43 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 71695925DD; Tue, 19 Jan
- 2010 15:25:24 -0500 (EST)
-In-Reply-To: <1263893748-23327-1-git-send-email-ilari.liusvaara@elisanet.fi>
- (Ilari Liusvaara's message of "Tue\, 19 Jan 2010 11\:35\:48 +0200")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 84E5992B57; Tue, 19 Jan
+ 2010 15:53:40 -0500 (EST)
+In-Reply-To: <20100119151333.GA9660@vidar.dreamhost.com> (David Ripton's
+ message of "Tue\, 19 Jan 2010 07\:13\:33 -0800")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C8551590-0538-11DF-9A57-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: BA9B628E-053C-11DF-B96A-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137494>
 
-Thanks, both of you, for being careful.
+David Ripton <dripton@ripton.net> writes:
+
+> Remove the trailing 's' from "revisions" and "steps" when there is
+> only one.
+
+Thanks; will apply to 'maint'.
