@@ -1,66 +1,83 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: why is tagger header optional?
-Date: Tue, 19 Jan 2010 01:44:54 -0500
-Message-ID: <20100119064453.GA3946@coredump.intra.peff.net>
-References: <20100119060946.GA23212@spearce.org>
+Subject: Re: [PATCH v3] rev-parse --namespace
+Date: Tue, 19 Jan 2010 01:56:09 -0500
+Message-ID: <20100119065609.GB3946@coredump.intra.peff.net>
+References: <7vk4vfsv64.fsf@alter.siamese.dyndns.org>
+ <1263808296-30756-1-git-send-email-ilari.liusvaara@elisanet.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jan 19 07:48:05 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Tue Jan 19 07:56:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NX7sh-0006Ac-OD
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 07:48:04 +0100
+	id 1NX80v-0008Vv-RO
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 07:56:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752148Ab0ASGo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2010 01:44:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751271Ab0ASGo7
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 01:44:59 -0500
-Received: from peff.net ([208.65.91.99]:54618 "EHLO peff.net"
+	id S1753445Ab0ASG4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 01:56:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753218Ab0ASG4M
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 01:56:12 -0500
+Received: from peff.net ([208.65.91.99]:39691 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932148Ab0ASGo6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 01:44:58 -0500
-Received: (qmail 17069 invoked by uid 107); 19 Jan 2010 06:49:48 -0000
+	id S1752305Ab0ASG4L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2010 01:56:11 -0500
+Received: (qmail 17111 invoked by uid 107); 19 Jan 2010 07:01:03 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 19 Jan 2010 01:49:48 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Jan 2010 01:44:54 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 19 Jan 2010 02:01:03 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Jan 2010 01:56:09 -0500
 Content-Disposition: inline
-In-Reply-To: <20100119060946.GA23212@spearce.org>
+In-Reply-To: <1263808296-30756-1-git-send-email-ilari.liusvaara@elisanet.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137435>
 
-On Mon, Jan 18, 2010 at 10:09:46PM -0800, Shawn O. Pearce wrote:
+On Mon, Jan 18, 2010 at 11:51:36AM +0200, Ilari Liusvaara wrote:
 
-> So why is it legal to omit the tagger header from a tag?
-> 
-> E.g. the Linux kernel tag v2.6.12 has no tagger header:
+> Add --namespace=<namespace> option to rev-parse and everything that
+> accepts its options. This option matches all refs in some subnamespace
+> of refs hierarchy.
 
-I think you just answered your own question. We must support tagger-less
-tags because they exist in important projects like the kernel. :)
+Thanks, I think the code in this version looks good, but:
 
+> --- /dev/null
+> +++ b/t/t6018-rev-list-namespace.sh
 > [...]
-> Is there a version of Git floating around that doesn't create a
-> tagger header when creating a signed tag?  WTF?
+> +compare () {
+> +	# Split arguments on whitespace.
+> +	git $1 $2 | sort >expected &&
+> +	git $1 $3 | sort >actual &&
+> +	cmp expected actual
+> +}
 
-Everything prior to c818566 ([PATCH] Update tags to record who made
-them, 2005-07-14). So probably nothing that anybody is using now, but
-v2.6.12 was one of the first tags made.
+Please use test_cmp instead of regular cmp.
 
-> Looking at tag.c's parse_tag_buffer(), the variable sig_line seems
-> to be expected to point at the "tagger " header (given its name),
-> but its not actually validated as such.
+Also, do you really need to sort? The internal ref code keeps the ref
+lists sorted by name, and we merge-sort the packed and loose lists in
+do_for_each_ref. So your --namespace should always operate on the refs
+in sorted order, producing predictable results.
 
-Actually, that variable name predates the patch above, so I suspect
-"sig" meant "GPG signature". At any rate, as you can see, git doesn't
-verify it, and the code for "git show v2.6.12" in
-builtin-log.c:show_object handles the taggerless case as well. I don't
-think anything else actually looks at the tagger. verify-tag treats the
-signed data as opaque, and just shows the identity of the actual signer.
+> +test_expect_success 'setup' '
+> +
+> +	commit master &&
+> +	git checkout -b subspace/one master
+> +	commit one &&
+> +	git checkout -b subspace/two master
+> +	commit two &&
+> +	git checkout -b subspace-x master
+> +	commit subspace-x &&
+> +	git checkout -b other/three master
+> +	commit three &&
+> +	git checkout -b someref master
+> +	commit some &&
+> +	git checkout master &&
+> +	commit master2
+> +'
+
+You are still missing some '&&' here to detect setup failures.
 
 -Peff
