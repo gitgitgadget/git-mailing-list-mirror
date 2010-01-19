@@ -1,69 +1,64 @@
-From: Jacob Helwig <jacob.helwig@gmail.com>
-Subject: Re: Feature idea: Ignore content
-Date: Tue, 19 Jan 2010 08:57:00 -0800
-Message-ID: <8c9a061001190857i12a8deeex74809ffd302bc54d@mail.gmail.com>
-References: <f3271551001190529h389ce321k52dcca6b03e4e8f0@mail.gmail.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [PATCH] Makefile: honor NO_CURL when setting REMOTE_CURL_*
+ variables
+Date: Tue, 19 Jan 2010 18:58:58 +0200
+Message-ID: <20100119165858.GA24065@Knoppix>
+References: <1263915552-32537-1-git-send-email-j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 19 17:57:35 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Jan 19 17:59:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXHOR-0004PE-KJ
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 17:57:27 +0100
+	id 1NXHQC-0005CB-Ce
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 17:59:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754627Ab0ASQ5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2010 11:57:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754274Ab0ASQ5W
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 11:57:22 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:45870 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932067Ab0ASQ5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 11:57:20 -0500
-Received: by pwj9 with SMTP id 9so2511789pwj.21
-        for <git@vger.kernel.org>; Tue, 19 Jan 2010 08:57:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=DJAv4Pc4i9pRTUf0AA+daFlztG7mHekILynroXOcwS4=;
-        b=MMoe6Qxs01d+uz0+BZmNtsC6TnLYZgUuFQY6w4B+MyuhHS99PErnXVoNDTkvs/kg9V
-         ZLxVVkrs8SRlcO62nzbbLMkkKpgfxWXkhOagq8pxOOSI+wjquOsNSna4K8TRjCxmYG3w
-         1wn3pR+dDETPJUhhapoqj8WgR6JtEMA8P31XY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=Z49uxiZcdF6VkhNVYzL1wrmHkuuscrZqHEW7BeQ7GPj/WBTpXpPZkUApr3vfL7TjUB
-         Ue6U3zeehAClHBhNpmZGv8i7oyy+kTCm2O+zxwMyZ+oxksTv0GmGElNmVbjD2WFQPdMN
-         G65b3rtkwb47WIqNOxn3KpeInwt4pRl67I7HM=
-Received: by 10.141.12.20 with SMTP id p20mr580399rvi.215.1263920240119; Tue, 
-	19 Jan 2010 08:57:20 -0800 (PST)
-In-Reply-To: <f3271551001190529h389ce321k52dcca6b03e4e8f0@mail.gmail.com>
+	id S1754654Ab0ASQ7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 11:59:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754572Ab0ASQ7M
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 11:59:12 -0500
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:40998 "EHLO
+	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752492Ab0ASQ7K (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2010 11:59:10 -0500
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id EE719C7B0A;
+	Tue, 19 Jan 2010 18:59:02 +0200 (EET)
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A0325AE89FB; Tue, 19 Jan 2010 18:59:02 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id 974011C6395;
+	Tue, 19 Jan 2010 18:58:58 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <1263915552-32537-1-git-send-email-j6t@kdbg.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137474>
 
-On Tue, Jan 19, 2010 at 05:29, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
-> Hi,
->
-> Often, I find that I need to track a file which contains a small
-> portion I don't want to track (read: line with a password). Instead of
-> moving that out to a separate file and ignoring that file, is it a
-> good idea to add a feature to Git to allow ignoring content instead of
-> whole files? Since Git by nature tracks content, this shouldn't be too
-> hard to implement, right?
->
+On Tue, Jan 19, 2010 at 04:39:12PM +0100, Johannes Sixt wrote:
+> Previously, these variables were set before there was a chance to set
+> NO_CURL.
+> 
+> This made a difference only during 'make install', because by installing
+> $(REMOTE_CURL_ALIASES), the rule  tries to access $(REMOTE_CURL_PRIMARY),
+> which was never installed. On Windows, this fails; on Unix, stale symbolic
+> links are created.
+ 
+<snip patch>
 
-Generally, the way I've seen this handled is by tracking an example
-file, and ignoring the "real" file with the password.
+I didn't even compile-test it, but based on quick look I don't see any
+obivous mistakes. There are no references to REMOTE_CURL_* in section
+moved over, and the variable values should not differ unless section skipped
+sets NO_CURL. So:
 
-Something like:
-  config/database.example.yml <-- Tracked file, with a dummy password
-& connection info.
-  config/database.yml    <-- Ignored file, actually used by application.
+Acked-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+
+-Ilari
