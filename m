@@ -1,128 +1,58 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [PATCH] Fix errors in t6018
-Date: Tue, 19 Jan 2010 11:35:48 +0200
-Message-ID: <1263893748-23327-1-git-send-email-ilari.liusvaara@elisanet.fi>
-References: <20100119065609.GB3946@coredump.intra.peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+From: tzachi perelstein <tzachi_perelstein@yahoo.com>
+Subject: git-describe recognize modified files
+Date: Tue, 19 Jan 2010 01:53:03 -0800 (PST)
+Message-ID: <829260.92036.qm@web45202.mail.sp1.yahoo.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 19 10:36:04 2010
+X-From: git-owner@vger.kernel.org Tue Jan 19 10:59:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXAVG-0000ZL-Sl
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 10:36:03 +0100
+	id 1NXAsK-0000uO-2C
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 10:59:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755589Ab0ASJf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2010 04:35:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755449Ab0ASJf4
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 04:35:56 -0500
-Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:48810 "EHLO
-	emh04.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755140Ab0ASJfz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 04:35:55 -0500
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh04-2.mail.saunalahti.fi (Postfix) with SMTP id B052513C147;
-	Tue, 19 Jan 2010 11:35:52 +0200 (EET)
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A00565A7EDD; Tue, 19 Jan 2010 11:35:52 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id 51BDB1C6386;
-	Tue, 19 Jan 2010 11:35:48 +0200 (EET)
-X-Mailer: git-send-email 1.6.6.199.gff4b0
-In-Reply-To: <20100119065609.GB3946@coredump.intra.peff.net>
-X-Antivirus: VAMS
+	id S1755571Ab0ASJ7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 04:59:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755489Ab0ASJ7q
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 04:59:46 -0500
+Received: from web45202.mail.sp1.yahoo.com ([68.180.197.59]:45248 "HELO
+	web45202.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1754906Ab0ASJ7p (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Jan 2010 04:59:45 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Jan 2010 04:59:45 EST
+Received: (qmail 92286 invoked by uid 60001); 19 Jan 2010 09:53:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1263894783; bh=1O50kit4jgjl4JM0+mI65CUhPowjnb130IIcWPUNp4Y=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type; b=YjofLSqFLMpQYFsi7iIm/KyBc2IvxOtzReA4Ge78/JwAJx/0FwCLjGnb+8cl/7U3fLEBEqaS64ECtPUbM1rwbsyls9vB++kA7qM7ZOgro59dMnFx5rKloACjJs+5yWElejWM+/uxcbo0A71edREQXDLOADz3i+aQIn+rG8G6xZI=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type;
+  b=Mq75CTgJylWA18vRVWibbiXPeviwvWDazgFxAZtALARxqMPuwCkQJ5LlgqR9wuz+Si/vrcKEKKeYb75nrdmUQ8D88RXTdExTm1dS/JzgJKmTyosqt/+mvjoudzvWMzkRM/TUEFeoeJ7EzfrtRlv9RvhZI3qLuqCW/QFpydvONWs=;
+X-YMail-OSG: 3eL3fxwVM1m_fqQ2RUu_MXDue0zTCvO2KjcJlE0dDO3p5CPBU96vMD1YnKH2171MrvQskvAItGH1KfzNtYFrN4v4_Tr5LgjWmb.s0LAKjVWnXbYII5orog9AyCwnq46w.BMG1Yyx6ba7Zt0EwqOpdpcv3oS72UIs9f4nywkpzYUkZWYB9Ab_.bzdGItSEYFlO2Fhq7k_dtp8GJQIuzW43XjEoZX8aRN80GQ_9uca.ZRMgBOPQtth6I0FxG_jZA3CSck-
+Received: from [80.179.89.178] by web45202.mail.sp1.yahoo.com via HTTP; Tue, 19 Jan 2010 01:53:03 PST
+X-Mailer: YahooMailClassic/9.0.20 YahooMailWebService/0.8.100.260964
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137446>
 
-Fix errors and shortcomings in t6018 (the rev-parse --namespace test):
-1) Some tests were missing &&'s, leading too possibly missing failures
-2) Some tests used incorrect commands (didn't test what they were
-suppoed to)
-3) Some test used 'cmp' instead of 'test_cmp'
-4) Tests only tested output up to permutation
+I use git-describe to form a build version automatically. This allows me
+to deliver temporary builds for testing without having to make manual
+tags for them. The only thing that bothers me about this is that from
+the output of git-describe I cannot tell if there are some modified
+files in tree or not. In both cases I will get the same version. 
 
-Fix these errors in t6018.
+To solve this issue, in addition to git-describe, my do_version script
+also run git-status, and if there are "modified:" files then it
+concatenates the string "+dirty" to output of git-describe. This way by
+looking at the version I'm able to know whether a specific version is
+valid (checkout-able) or not.
 
-Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
----
-This can be appiled on top of rev-parse --namespace patch v3 or this
-can be squashed to that patch.
+It would be nice to have this option supported in git-describe IMO. I'm willing to implement that and submit a patch for review, but I'd like to hear your opinion first. 
 
- t/t6018-rev-list-namespace.sh |   24 ++++++++++++------------
- 1 files changed, 12 insertions(+), 12 deletions(-)
+Tzachi
 
-diff --git a/t/t6018-rev-list-namespace.sh b/t/t6018-rev-list-namespace.sh
-index 6bb562a..70c8a83 100755
---- a/t/t6018-rev-list-namespace.sh
-+++ b/t/t6018-rev-list-namespace.sh
-@@ -14,23 +14,23 @@ commit () {
- 
- compare () {
- 	# Split arguments on whitespace.
--	git $1 $2 | sort >expected &&
--	git $1 $3 | sort >actual &&
--	cmp expected actual
-+	git $1 $2 >expected &&
-+	git $1 $3 >actual &&
-+	test_cmp expected actual
- }
- 
- test_expect_success 'setup' '
- 
- 	commit master &&
--	git checkout -b subspace/one master
-+	git checkout -b subspace/one master &&
- 	commit one &&
--	git checkout -b subspace/two master
-+	git checkout -b subspace/two master &&
- 	commit two &&
--	git checkout -b subspace-x master
-+	git checkout -b subspace-x master &&
- 	commit subspace-x &&
--	git checkout -b other/three master
-+	git checkout -b other/three master &&
- 	commit three &&
--	git checkout -b someref master
-+	git checkout -b someref master &&
- 	commit some &&
- 	git checkout master &&
- 	commit master2
-@@ -68,7 +68,7 @@ test_expect_success 'rev-parse --namespace=heads/someref master' '
- 
- test_expect_success 'rev-parse --namespace=heads' '
- 
--	compare rev-parse "subspace/one subspace/two other/three subspace-x master someref" "--namespace=heads"
-+	compare rev-parse "master other/three someref subspace-x subspace/one subspace/two" "--namespace=heads"
- 
- '
- 
-@@ -92,19 +92,19 @@ test_expect_success 'rev-list --namespace=heads/subspace' '
- 
- test_expect_success 'rev-list --namespace=heads/someref master' '
- 
--	compare rev-parse "master" "--namespace=heads/someref master"
-+	compare rev-list "master" "--namespace=heads/someref master"
- 
- '
- 
- test_expect_success 'rev-list --namespace=heads/subspace --namespace=heads/other' '
- 
--	compare rev-parse "subspace/one subspace/two other/three" "--namespace=heads/subspace --namespace=heads/other"
-+	compare rev-list "subspace/one subspace/two other/three" "--namespace=heads/subspace --namespace=heads/other"
- 
- '
- 
- test_expect_success 'rev-list --namespace=heads' '
- 
--	compare rev-parse "subspace/one subspace/two other/three subspace-x master someref" "--namespace=heads"
-+	compare rev-list "master other/three someref subspace-x subspace/one subspace/two" "--namespace=heads"
- 
- '
- 
--- 
-1.6.6.199.gff4b0
+
+
+      
