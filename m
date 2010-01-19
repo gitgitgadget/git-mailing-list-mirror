@@ -1,57 +1,97 @@
-From: Andrew Myrick <amyrick@apple.com>
-Subject: git-svn: persistent memoization
-Date: Tue, 19 Jan 2010 15:37:01 -0800
-Message-ID: <26542E21-CAF5-4ACD-B9DC-1981AE41F50C@apple.com>
-Mime-Version: 1.0 (Apple Message framework v1133)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Sam Vilain <sam@vilain.net>, Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 20 00:37:22 2010
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: bug: git-bundle create foo --stdin -> segfault
+Date: Wed, 20 Jan 2010 00:52:51 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1001192307090.3164@intel-tinevez-2-302>
+References: <20100119002641.GA31434@gnu.kitenet.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, 554682@bugs.debian.org
+To: Joey Hess <joey@kitenet.net>
+X-From: git-owner@vger.kernel.org Wed Jan 20 00:52:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXNdQ-0001CV-Mg
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 00:37:21 +0100
+	id 1NXNsZ-0006qI-Gv
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 00:52:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753434Ab0ASXhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2010 18:37:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752321Ab0ASXhF
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 18:37:05 -0500
-Received: from mail-out3.apple.com ([17.254.13.22]:57373 "EHLO
-	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752234Ab0ASXhE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Jan 2010 18:37:04 -0500
-Received: from relay16.apple.com (relay16.apple.com [17.128.113.55])
-	by mail-out3.apple.com (Postfix) with ESMTP id 7571880CA811;
-	Tue, 19 Jan 2010 15:37:02 -0800 (PST)
-X-AuditID: 11807137-b7bd4ae000000f0d-7b-4b56421eb54a
-Received: from agility.apple.com (agility.apple.com [17.201.24.116])
-	(using TLS with cipher AES128-SHA (AES128-SHA/128 bits))
-	(Client did not present a certificate)
-	by relay16.apple.com (Apple SCV relay) with SMTP id 6B.E7.03853.E12465B4; Tue, 19 Jan 2010 15:37:02 -0800 (PST)
-X-Mailer: Apple Mail (2.1133)
-X-Brightmail-Tracker: AAAAAQAAAZE=
+	id S1756017Ab0ASXwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 18:52:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756008Ab0ASXwz
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 18:52:55 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47909 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755378Ab0ASXwy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2010 18:52:54 -0500
+Received: (qmail invoked by alias); 19 Jan 2010 23:52:52 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp066) with SMTP; 20 Jan 2010 00:52:52 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/PoqEvwzbPXs4FxeN9OnJNkx2NnGB+1mA/4OPa+c
+	CU1QLrmTvFrlRn
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20100119002641.GA31434@gnu.kitenet.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.60999999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137503>
 
-git-svn uses the Memoize perl module to cache the return values of a few functions.  This speeds up svn:mergeinfo processing considerably, but as currently implemented, this memoization table must be reconstructed on every run of git-svn.  This isn't a problem on small projects, but it introduces a delay of several minutes when fetching from large repositories with a lot of merge info.
+Hi,
 
-The Memoize module has support for storing its cache persistently (more below, and see http://perldoc.perl.org/Memoize.html for details), and I would love to take advantage of this support in git-svn.  Unfortunately, it's not entirely obvious to me how to get this working.  Here are the questions I have so far, moving from high level design questions to implementation details:
+On Mon, 18 Jan 2010, Joey Hess wrote:
 
-1) Is there any reason not to store these caches on disk?
+> joey@gnu:~/tmp/new>echo master | git bundle create ../my.bundle --stdin
+> zsh: segmentation fault  git bundle create ../my.bundle --stdin
 
-2) Are there situations where the caches would need to be invalidated?  Perhaps when git-svn rebuilds its metadata?
+Current 'next' fails, too.
 
-3) Where should I put these caches?  I was thinking something like ".git/svn/caches/<cachefile>.db" would be appropriate.
+Some previous Git versions failed with a message like this:
 
-4) What's the correct way to reference the path to those caches?  I tried using "$ENV{GIT_DIR}/svn/caches/has_no_changes.db", but the memoize calls are in a BEGIN block, and it seems that $ENV{GIT_DIR} hadn't been initialized at that point.  This has taken me way past my limited knowledge of Perl.
+error: unrecognized argument: --stdin'
 
-5) What backend should I pick to store the cache?  Memoize supports storing to any tied hash that supports TIEHASH, FETCH, STORE, and EXISTS, like DB_File.  It also supports storing to SDBM_File and NDBM_File through glue modules (they lack EXISTS support), and Storable, which isn't a tied hash at all, but just a serializer for hashes.  I'm leaning towards using Storable since it seems simple and would fit the workload well, but I would appreciate any insight from someone with more domain knowledge here.
+Other previous Git versions failed at least with a message such as this:
 
-Regards,
-Andrew
+fatal: exec rev-list failed.
+error: rev-list died
+
+Something similar happens to me when I run the initial official revision 
+of git-bundle. The reason is that "git rev-list --boundary 
+--pretty=oneline --stdin" refuses to run.
+
+The bad versions either segfault, or "refuse to create empty bundles".
+
+And while 8b3dce5 purports to clean things up (even acknowledging that 
+support code for --stdin was removed from bundle.c!), at that 
+time git-bundle was obviously not tested/fixed.
+
+Now, I invested a lot of time into the new Git wiki, and into trying to 
+bisect this (it took many, many more steps than the suggested 13, and 
+somewhere in between, the number of commits to be tested even increased!).
+
+If you want to fix it, I suggest requiring --stdin to be the only 
+parameter after the bundle file name, and adding a function using 
+strbuf_getline() to parse the stdin into a string_list.  Once that is 
+done, you can substitute the argv for the rev-list call with that list 
+(for that, you need to prepopulate with "rev-list", "--boundary" and 
+"--pretty=oneline").  You can reuse that list for the call to 
+setup_revisions().
+
+Alternatively, you can try to implement the rev-list --boundary by hand 
+(the --pretty=oneline is only needed to get a boundary marker IIRC), 
+taking care to reset the commit flags that were set in the process.  (We 
+need to know the boundary commits before actually starting to write the 
+pack, because the bundle file format dictates that the boundary commits 
+are listed as prerequsites in the bundle header.)
+
+If you want to go that route (which is arguably more elegant anyway), I 
+suggest having a look at the merge_bases() and get_merge_bases() functions 
+in commit.c, which do something similar (i.e. a revwalk without using 
+revision.c's functions -- because you cannot tell what flags they will use 
+in the future, and they have to be reset after the walk).
+
+Ciao,
+Dscho
