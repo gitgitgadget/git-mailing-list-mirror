@@ -1,59 +1,77 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v2] rev-parse --namespace
-Date: Tue, 19 Jan 2010 18:39:25 +0100
-Message-ID: <201001191839.27090.trast@student.ethz.ch>
-References: <1263798952-27624-1-git-send-email-ilari.liusvaara@elisanet.fi>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Performance optimization for detection of modified
+ submodules
+Date: Tue, 19 Jan 2010 10:09:57 -0800
+Message-ID: <7vpr569dai.fsf@alter.siamese.dyndns.org>
+References: <4B54C3EA.9090200@web.de>
+ <7v1vhmg975.fsf@alter.siamese.dyndns.org> <4B556ED2.7020904@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Tue Jan 19 18:39:43 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Jan 19 19:10:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXI3K-0005qS-NG
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 18:39:43 +0100
+	id 1NXIXB-0003GZ-Ev
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jan 2010 19:10:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754782Ab0ASRji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2010 12:39:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754570Ab0ASRjh
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 12:39:37 -0500
-Received: from gwse.ethz.ch ([129.132.178.237]:40831 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752890Ab0ASRjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 12:39:36 -0500
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.213.0; Tue, 19 Jan
- 2010 18:39:34 +0100
-Received: from thomas.localnet (217.162.250.31) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.213.0; Tue, 19 Jan
- 2010 18:39:28 +0100
-User-Agent: KMail/1.13.0 (Linux/2.6.31.8-0.1-desktop; KDE/4.3.90; x86_64; ; )
-In-Reply-To: <1263798952-27624-1-git-send-email-ilari.liusvaara@elisanet.fi>
+	id S1755060Ab0ASSKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 13:10:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754581Ab0ASSKJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 13:10:09 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48886 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752492Ab0ASSKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2010 13:10:06 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 87E0792DAD;
+	Tue, 19 Jan 2010 13:10:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=5vQ0uDqXDXwOBS1SSNe4XfjAMOs=; b=o+llz5Tu3QtEaqtTmxJ3F3l
+	QJkrAabtSfKBIledVSXYzU8bevab1RxeDIlX384k19FK5AYC6AQQMCo8xFheEFzh
+	O0r1lqt5PXn2Sm6xUG7kyAyilulm4O0ycIhEiT9Euueq0bh/dpwFEAXDedlh5pFD
+	1dW95rLvAbkq8YZfcMag=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=sy1COvcP3EOiRcqn94/yOWOMebRu03VkDSOfZDN/kFd/xT6Nf
+	zLtT6M8DCZtfC4QwLnnhjrrHwLJmbHgbAE34OgcxTsd/A032kZYvEAamqxLV12yD
+	6pZrRavTvIo3aO4ETYWMpBhEtpbMxP8rA1TbLf+wMeuPa6nQM69O3VG1Fs=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 624B692DA6;
+	Tue, 19 Jan 2010 13:10:02 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B576192DA5; Tue, 19 Jan
+ 2010 13:09:59 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DCF9C9EA-0525-11DF-AA97-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137479>
 
-Ilari Liusvaara wrote:
-> Add --namespace=<namespace> option to rev-parse and everything that
-> accepts its options. This option matches all refs in some subnamespace
-> of refs hierarchy.
-> 
-> Example:
-> 
-> 'git log --branches --not --namespace=remotes/origin'
-> 
-> To show what you have that origin doesn't.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Sorry for being so late to this discussion, but... wouldn't it be
-nicer to give it some globbing powers and the same semantics as
-'fetch' lines?  That way spelling "all master branches of my remotes"
-and other such things would be easy.
+> I am working on a subsequent patch where dirty_submodule is used as a
+> bitfield to store more detailed information about the dirtiness. That is
+> then used by "git diff --submodule" to tell the user if the submodule
+> contains untracked and/or modified files.
+>
+> But i can revert that part if you want.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+"Will be used as bitfield in later patches" is a justification that was
+missing; with that I think the patch is Ok as-is.
+
+>> Mental note to myself.  prefix[0] is either '-' (removed from the work
+>> tree) or '+' (added to the work tree).  Added submodule could be
+>> immediately dirty.
+>
+> Should i add a comment there?
+
+Meh, that was just me thinking aloud.
+
+Thanks.
