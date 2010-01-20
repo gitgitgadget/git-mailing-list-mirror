@@ -1,106 +1,68 @@
-From: Crane Cai <crane.cai@amd.com>
-Subject: Re: [question] retrieve some patches from another repository
-Date: Wed, 20 Jan 2010 16:09:15 +0800
-Message-ID: <20100120080915.GB1965@crane-desktop>
-References: <20100120054614.GA1965@crane-desktop>
- <7vljft5m7h.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [RFC/PATCHv8 00/10] git notes
+Date: Wed, 20 Jan 2010 09:17:38 +0100
+Message-ID: <4B56BC22.1040702@viscovery.net>
+References: <1258681154-2167-1-git-send-email-johan@herland.net> <7vk4xl5y3z.fsf@alter.siamese.dyndns.org> <20091120192800.6117@nanako3.lavabit.com> <7vk4xl1nkl.fsf@alter.siamese.dyndns.org> <81b0412b1001190754m37ed01b0nd93b318d77d88a75@mail.gmail.com> <7vk4ve9dad.fsf@alter.siamese.dyndns.org> <7vska15u92.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Alex Riesen <raa.lkml@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	spearce@spearce.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 20 09:13:29 2010
+X-From: git-owner@vger.kernel.org Wed Jan 20 09:17:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXVgv-0007Os-0C
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 09:13:29 +0100
+	id 1NXVlD-0000V6-I3
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 09:17:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752017Ab0ATINY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2010 03:13:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969Ab0ATINY
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 03:13:24 -0500
-Received: from tx2ehsobe005.messaging.microsoft.com ([65.55.88.15]:56050 "EHLO
-	TX2EHSOBE010.bigfish.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751316Ab0ATINX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jan 2010 03:13:23 -0500
-Received: from mail103-tx2-R.bigfish.com (10.9.14.236) by
- TX2EHSOBE010.bigfish.com (10.9.40.30) with Microsoft SMTP Server id
- 8.1.240.5; Wed, 20 Jan 2010 08:13:21 +0000
-Received: from mail103-tx2 (localhost.localdomain [127.0.0.1])	by
- mail103-tx2-R.bigfish.com (Postfix) with ESMTP id ACB907C84FE;	Wed, 20 Jan
- 2010 08:13:21 +0000 (UTC)
-X-SpamScore: -13
-X-BigFish: VPS-13(zz1432R98dNzz1202hzzz32i6bh43j61h)
-X-Spam-TCS-SCL: 0:0
-Received: from mail103-tx2 (localhost.localdomain [127.0.0.1]) by mail103-tx2
- (MessageSwitch) id 1263975198682850_24641; Wed, 20 Jan 2010 08:13:18 +0000
- (UTC)
-Received: from TX2EHSMHS026.bigfish.com (unknown [10.9.14.235])	by
- mail103-tx2.bigfish.com (Postfix) with ESMTP id 643981110063;	Wed, 20 Jan
- 2010 08:13:18 +0000 (UTC)
-Received: from svlb1extmailp01.amd.com (139.95.251.8) by
- TX2EHSMHS026.bigfish.com (10.9.99.126) with Microsoft SMTP Server (TLS) id
- 14.0.482.32; Wed, 20 Jan 2010 08:13:17 +0000
-Received: from svlb1twp02.amd.com ([139.95.250.35])	by svlb1extmailp01.amd.com
- (Switch-3.2.7/Switch-3.2.7) with ESMTP id o0K8E9fI019798;	Wed, 20 Jan 2010
- 00:14:12 -0800
-X-WSS-ID: 0KWJDHW-04-9BX-02
-X-M-MSG: 
-Received: from SSVLEXBH2.amd.com (ssvlexbh2.amd.com [139.95.53.183])	by
- svlb1twp02.amd.com (Tumbleweed MailGate 3.7.2) with ESMTP id 2CD471B11991;
-	Wed, 20 Jan 2010 00:13:08 -0800 (PST)
-Received: from ssvlexmb2.amd.com ([139.95.53.7]) by SSVLEXBH2.amd.com with
- Microsoft SMTPSVC(6.0.3790.3959);	 Wed, 20 Jan 2010 00:13:12 -0800
-Received: from storexbh1.amd.com ([10.1.1.17]) by ssvlexmb2.amd.com with
- Microsoft SMTPSVC(6.0.3790.3959);	 Wed, 20 Jan 2010 00:13:11 -0800
-Received: from sshaexmb1.amd.com ([10.237.2.11]) by storexbh1.amd.com with
- Microsoft SMTPSVC(6.0.3790.3959);	 Wed, 20 Jan 2010 03:13:09 -0500
-Received: from crane-desktop.amd.com ([10.237.82.14]) by sshaexmb1.amd.com
- with Microsoft SMTPSVC(6.0.3790.3959);	 Wed, 20 Jan 2010 16:13:03 +0800
-Received: by crane-desktop.amd.com (sSMTP sendmail emulation); Wed, 20 Jan
- 2010 16:09:15 +0800
-Mail-Followup-To: Crane Cai <crane.cai@amd.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vljft5m7h.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-OriginalArrivalTime: 20 Jan 2010 08:13:03.0382 (UTC) FILETIME=[63591B60:01CA99A8]
-X-Reverse-DNS: unknown
+	id S1751948Ab0ATIRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2010 03:17:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751645Ab0ATIRq
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 03:17:46 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:57106 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751056Ab0ATIRp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2010 03:17:45 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NXVkx-00074a-DI; Wed, 20 Jan 2010 09:17:39 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 1C5E51660F;
+	Wed, 20 Jan 2010 09:17:39 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <7vska15u92.fsf@alter.siamese.dyndns.org>
+X-Spam-Score: 1.9 (+)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137524>
 
-Hi Junio,
-
-Thank you. It's my pleasure to get git maintainer's response.
-
-On Tue, Jan 19, 2010 at 10:23:14PM -0800, Junio C Hamano wrote:
-> > * merge point will cause duplicated patch generated, for example repo B has x,
-> >   y, z, then accepted by repo A in merge point, and then merge back to repo B
-> >   (they are different with commit id), they will generate 2 twice.
+Junio C Hamano schrieb:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> This is inevitable, if 'x' and (say) 'b' corresponds to each other but has
-> textual changes due to different context.
-So you mean git can not avoid generate 2 twice because they are different
-commits. If I need this I will manually do it or add a new feature to let
-format-patch can identify the relationship of the 2 repository, and then move
-the 'since' point to avoid some point before merge.
-Maybe it has value to do it. Many subsystem maintainers will easy to provide
-patchset from any repository derived from linus to another repository which also
-derived from linus. The patchset will let integration a little easy, you can use
-'git bisect' to trace, git comments to understand the code. And all change list
-is replayed, there almost no issue for integration.
+>> Alex Riesen <raa.lkml@gmail.com> writes:
+>>> This breaks "checkout to merge base" on Windows and t2012 in particular.
 > 
+> I think the attached patch would help.  If this fix is Ok with Windows
+> people (J6t CC'ed), I'd like to apply this to 'master' so that we can ship
+> 1.7.0-rc0 without breakage.
 > 
-> You are probably running "format-patch a.. -- path/to/file.c".  Try giving
-> it the --full-diff option as well.  We've recently discussed to make it
-> the default for format-patch but the discussion thread petered out and
-> didn't reach conclusion.
-Yes, you are right.
+> -- >8 --
+> Subject: Fix "checkout A..." synonym for "checkout A...HEAD" on Windows
+> ...
+> Work this issue around by first calling check_ref_format(new.path) to see
+> if the string can possibly be a valid ref under "refs/heads/", before
+> asking resolve_ref().
 
--- 
-Best Regards,
-- Crane
+Your patch fixes the failure very nicely, thank you very much.
+
+BTW, calling 'git pack-refs --all' before 'git checkout master...'
+helps as well :-P
+
+-- Hannes
