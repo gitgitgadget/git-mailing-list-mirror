@@ -1,66 +1,60 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: git-status segmentation fault in master / OS X
-Date: Wed, 20 Jan 2010 19:58:54 +0700
-Message-ID: <fcaeb9bf1001200458v436a8adeq5cfc6753900e6c0c@mail.gmail.com>
-References: <57518fd11001190959n355a0f22p7caa7251b705efaf@mail.gmail.com>
-	 <20100120004146.GB16824@coredump.intra.peff.net>
-	 <7vd4157fwt.fsf@alter.siamese.dyndns.org>
-	 <57518fd11001200243v416aa5f9o37a3b5b92bef3b57@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/2] @{u} updates
+Date: Wed, 20 Jan 2010 14:08:24 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1001201408100.31129@intel-tinevez-2-302>
+References: <1263980322-4142-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan del Strother <maillist@steelskies.com>
-X-From: git-owner@vger.kernel.org Wed Jan 20 13:59:09 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 20 14:08:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXa9M-0003mM-K1
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 13:59:08 +0100
+	id 1NXaIU-0007vk-Aq
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 14:08:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751806Ab0ATM64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2010 07:58:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750925Ab0ATM64
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 07:58:56 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:52721 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751458Ab0ATM6z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jan 2010 07:58:55 -0500
-Received: by pwj9 with SMTP id 9so3130918pwj.21
-        for <git@vger.kernel.org>; Wed, 20 Jan 2010 04:58:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=kpn7zkghA5LDvEhcXqMwiT2r5/TLcL4KDPadzKExR0w=;
-        b=Fbw/lToxsRHWbZnqSq25LVvJZ0JqT7IgGGYi5tcus+Lh9+JWYtbdVy3pgUKPLx6UbF
-         P5YGLa8LGHMfegvL9hZpW0LTXKIourx8u9j+vwiKRIKbhZalFy/IaNYYy+iPMguBSman
-         NXulxvVQlSrQN7r2tJXaOu2ZMPlScpxMTjoUQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=JzwVvQNbcw2ouM0CKxLwtQjdREPCilPaDhm+bT4pghMFUTNcPN+hd3GukjDrJaNrTj
-         mWzE3++pf/IzF2Xu0XSUMmDdfV3J5y8gXQkeARSxEGvQP/Y+rs35zttBINqpr5tA9glF
-         ZehB/k/3Fa3Lq92H0aqYB0zcAv2MCp8I6K+q4=
-Received: by 10.114.45.13 with SMTP id s13mr6168559was.167.1263992334897; Wed, 
-	20 Jan 2010 04:58:54 -0800 (PST)
-In-Reply-To: <57518fd11001200243v416aa5f9o37a3b5b92bef3b57@mail.gmail.com>
+	id S1751660Ab0ATNIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2010 08:08:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751166Ab0ATNIa
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 08:08:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40314 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751524Ab0ATNIa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2010 08:08:30 -0500
+Received: (qmail invoked by alias); 20 Jan 2010 13:08:26 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp007) with SMTP; 20 Jan 2010 14:08:26 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/fL94VMbTf8yPDZ8SsDotzFlpiMHodxGtlZ6lbZK
+	UsD1u3u/5p3sgU
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <1263980322-4142-1-git-send-email-gitster@pobox.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68999999999999995
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137549>
 
-On 1/20/10, Jonathan del Strother <maillist@steelskies.com> wrote:
->  One thing I wondered about from that commit - shouldn't the "buf =
->  xmalloc(size);" on dir.c:252 be "buf = xmalloc(size+1);" ?  I haven't
->  really looked at the program flow there, so may be wrong...
+Hi,
 
-You would also need to revert 66c3fa0 (Avoid writing to buffer in
-add_excludes_from_file_1() - 2009-08-20) and see if it fixes the
-problem. I think there is a potential memory corruption at "buf[i - (i
-&& buf[i-1] == '\r')] = 0;". Don't know if it is the cause though.
--- 
-Duy
+On Wed, 20 Jan 2010, Junio C Hamano wrote:
+
+> Earlier I wondered if the approach Dscho's patch takes to teach the new
+> @{upstream} syntax to substitute_branch_name() (hence dwim_ref()) without
+> teaching it to interpret_branch_name() (hence strbuf_branchname()) was a
+> bad idea.  I thought about this a bit more; there are some downsides for
+> not doing so.
+> 
+> The first patch adds a handful of tests that show why strbuf_branchname()
+> callers may also want to learn about the new syntax.  The second patch
+> moves the logic to interpret_branch_name() to make them happier.
+
+Looks good to me.
+
+Ciao,
+Dscho
