@@ -1,263 +1,192 @@
-From: Tim Olsen <tim@brooklynpenguin.com>
-Subject: Re: git-merge segfault in 1.6.6 and master
-Date: Wed, 20 Jan 2010 16:57:19 -0500
-Message-ID: <4B577C3F.7040608@brooklynpenguin.com>
-References: <hj7abm$5vc$1@ger.gmane.org> <7vocko3802.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git notes: notes
+Date: Wed, 20 Jan 2010 13:59:36 -0800
+Message-ID: <7v3a201lpz.fsf@alter.siamese.dyndns.org>
+References: <20100120050343.GA12860@gnu.kitenet.net>
+ <201001201148.11701.johan@herland.net>
+ <20100120182438.GB31507@gnu.kitenet.net>
+ <7vhbqg376b.fsf@alter.siamese.dyndns.org>
+ <20100120195626.GA6641@gnu.kitenet.net>
+ <7vska01qrt.fsf@alter.siamese.dyndns.org>
+ <4B576F5C.2050102@drmicha.warpmail.net>
+ <7veilk1o3s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Miklos Vajna <vmiklos@frugalware.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 20 22:58:09 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Joey Hess <joey@kitenet.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Jan 20 22:59:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXiYy-0001qT-Pp
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 22:58:09 +0100
+	id 1NXiaj-0002g8-63
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 22:59:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752360Ab0ATV6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2010 16:58:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751900Ab0ATV6D
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 16:58:03 -0500
-Received: from lo.gmane.org ([80.91.229.12]:44832 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751663Ab0ATV6B (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jan 2010 16:58:01 -0500
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1NXiYe-0001hN-5q
-	for git@vger.kernel.org; Wed, 20 Jan 2010 22:57:48 +0100
-Received: from nyc01.limewire.com ([38.108.107.34])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Jan 2010 22:57:48 +0100
-Received: from tim by nyc01.limewire.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Jan 2010 22:57:48 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: nyc01.limewire.com
-User-Agent: Mozilla-Thunderbird 2.0.0.22 (X11/20090707)
-In-Reply-To: <7vocko3802.fsf@alter.siamese.dyndns.org>
+	id S1752296Ab0ATV7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2010 16:59:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751954Ab0ATV7x
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 16:59:53 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39057 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750807Ab0ATV7w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2010 16:59:52 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 11E4992A6C;
+	Wed, 20 Jan 2010 16:59:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SDa2RyaSpkEtgFr+HL7xsiH0KMc=; b=Xc4iSZ
+	v+BVSewHJ9wmWyFJR7QPctF62qtnFJvycxfnv8MIFNr9j44cErw9/dJLIlj7cOv1
+	T0ziMP2FgFuuUZkgca0dR8UYTRx577BOOms2qzKAdlns7g6mRXVTvXLnvTWosf7p
+	KhrFaxPyOmzMJFwy6Ve8FzdXpC8LrJKvZFXek=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tRcEV8O4VqGOI1AQ+3EIqya3p/7g5Lyx
+	F2chldjvqqz9sWpQXFGTWPuMw7NBlzUg+ukfYudBJvZ6c1wP6oHVRaPPaoFqhc8e
+	TRxCEUHBXFYF4NVbqWEiaRDaOnG9AT7EHHbQCWwxjeiY4RRK9/+dkXBU0oFb9H3g
+	aFH7o8oJsI0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A39C092A6A;
+	Wed, 20 Jan 2010 16:59:44 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5390992A67; Wed, 20 Jan
+ 2010 16:59:38 -0500 (EST)
+In-Reply-To: <7veilk1o3s.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed\, 20 Jan 2010 13\:08\:07 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1E42310A-060F-11DF-964C-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137590>
 
-Junio C Hamano wrote:
-> Thanks.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks for taking the time to look into this!
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>
+>> No, but outputting the note as part of the log is the standard. So for
+>> example, when you do a format-patch | apply cycle, format-patch will
+>> insert the note as part of the commit message, and apply will *store*
+>> the note text (including Note:\n) as part of the commit message of the
+>> new commit.
+>
+> Thanks; that was the kind of breakage report I was looking for (and wished
+> to have heard a lot earlier).  Personally I find it is unexcusable that
+> format-patch defaults to giving notes.
+>
+>> So, I would say the notes feature is not that well integrated right now,
+>
+> No question about it.
 
-> 
-> Since you can build and run git yourself, can I ask you to run another
-> experiment with this one-liner patch applied?
+How about solving it this way?
 
-It appears that a segfault still happens with your patch applied, but
-this time it is caught:
+It _could_ break some tests, if the set of tests were carefully written to
+cover not only the positive ("I am showing off my shiny new toy") cases
+but also the negative ("These commands share the same codepath touched by
+the series, but I don't intend to change their behaviour, and here is to
+make sure the new toy does not affect them") cases and the latter set
+assumed it is ok to sprinkle notes in commit log messages without being
+asked, but I haven't tried running the test suite yet.
 
-tolsen@neurofunk:~/git/site-build-dav-sync-05 [git:build-dav-sync-05]$
-git merge origin/deployed
-error: merge-recursive died of signal 11
-Merge with strategy recursive failed.
-tolsen@neurofunk:~/git/site-build-dav-sync-05 [git:build-dav-sync-05]$
+---
+Subject: Fix "log" family not to be too agressive about showing notes
 
+Giving "Notes" information in the default output format of "log" and
+"show" is a sensible progress (the user has asked for it by having the
+notes), but for some commands (e.g. "format-patch") spewing notes into the
+formatted commit log message without being asked is too aggressive.
 
-> "common = NULL" means merged_common_ancestors->tree is NULL in the caller.
-> Somebody is passing a bogus commit in "ca" (aka common ancestors) list
-> when calling merge_recursive(), or forgetting to parse them before calling
-> it.  In your debugger could you find out where it comes from and what it
-> has before this call into merge_trees() is made?  Specifically, what the
-> "ca" list at 0x7b3c00 contains, and how "merged_common_ancestors" at
-> 0x121e360 looks like. in this trace we see below:
+Enable notes output only for "log", "show", "whatchanged" by default;
+other users can ask for it by setting show_notes field to true.
 
-Here is the replay of the flow of execution from the first time we enter
-merge_recursive().  The repository has been modified slightly so the
-pointers are different this time but the segfault is still happening
-(I'll stop modifying the repository now ;-) .
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin-log.c |    2 ++
+ commit.h      |    1 +
+ log-tree.c    |    1 +
+ pretty.c      |    2 +-
+ revision.c    |    4 ++++
+ revision.h    |    1 +
+ 6 files changed, 10 insertions(+), 1 deletions(-)
 
-Upon entering merge_recursive() for the first time, ca is a two-item
-list and both items have non-null trees:
-
-Breakpoint 1, merge_recursive (o=0x7fffffffd560, h1=0x793350,
-h2=0x7932c0, ca=0x7b4a40, result=0x7fffffffd5d8) at merge-recursive.c:1286
-(gdb) p *ca
-$1 = {item = 0x793db8, next = 0x7b4a20}
-(gdb) p *(ca->next)
-$2 = {item = 0x793aa0, next = 0x0}
-(gdb) p ca->item->tree
-$3 = (struct tree *) 0x77be10
-(gdb) p ca->next->item->tree
-$4 = (struct tree *) 0x77b488
-(gdb)
-
-Then on line 1303, the head of ca is popped off into
-merged_common_ancestors:
-
-Breakpoint 2, merge_recursive (o=0x7fffffffd560, h1=0x793350,
-h2=0x7932c0, ca=0x7b4a20, result=0x7fffffffd5d8) at merge-recursive.c:1304
-(gdb) list
-1299			for (iter = ca; iter; iter = iter->next)
-1300				output_commit_title(o, iter->item);
-1301		}
-1302	
-1303		merged_common_ancestors = pop_commit(&ca);
-1304		if (merged_common_ancestors == NULL) {
-1305			/* if there is no common ancestor, make an empty tree */
-1306			struct tree *tree = xcalloc(1, sizeof(struct tree));
-1307	
-1308			tree->object.parsed = 1;
-(gdb) p merged_common_ancestors
-$5 = (struct commit *) 0x793db8
-(gdb) p ca
-$8 = (struct commit_list *) 0x7b4a20
-
-merge_recursive() is then called recursively at line 1329 with a pointer
-to merged_common_ancestors passed as the "result" argument:
-
-Breakpoint 3, merge_recursive (o=0x7fffffffd560, h1=0x793350,
-h2=0x7932c0, ca=0x7b4a20, result=0x7fffffffd5d8) at merge-recursive.c:1329
-(gdb) list
-1324			discard_cache();
-1325			saved_b1 = o->branch1;
-1326			saved_b2 = o->branch2;
-1327			o->branch1 = "Temporary merge branch 1";
-1328			o->branch2 = "Temporary merge branch 2";
-1329			merge_recursive(o, merged_common_ancestors, iter->item,
-1330					NULL, &merged_common_ancestors);
-1331			o->branch1 = saved_b1;
-1332			o->branch2 = saved_b2;
-1333			o->call_depth--;
-(gdb)
-
-In the second call to merged_common_ancestors(), result's pointee is
-replaced by a commit with a null tree at line 1347:
-
-Breakpoint 4, merge_recursive (o=0x7fffffffd560, h1=0x793db8,
-h2=0x793aa0, ca=0x0, result=0x7fffffffd500) at merge-recursive.c:1347
-(gdb) n
-(gdb) p (*result)->tree
-$10 = (struct tree *) 0x0
-(gdb) list
-1343		clean = merge_trees(o, h1->tree, h2->tree,
-merged_common_ancestors->tree,
-1344				    &mrtree);
-1345	
-1346		if (o->call_depth) {
-1347			*result = make_virtual_commit(mrtree, "merged tree");
-1348			commit_list_insert(h1, &(*result)->parents);
-1349			commit_list_insert(h2, &(*result)->parents->next);
-1350		}
-1351		flush_output(o);
-1352		return clean;
-(gdb)
-
-make_virtual_commit() is just setting its tree to mrtree:
-
-Breakpoint 5, make_virtual_commit (tree=0x0, comment=0x5016fc "merged
-tree") at merge-recursive.c:44
-(gdb) list
-39	 * A virtual commit has (const char *)commit->util set to the name.
-40	 */
-41	
-42	static struct commit *make_virtual_commit(struct tree *tree, const
-char *comment)
-43	{
-44		struct commit *commit = xcalloc(1, sizeof(struct commit));
-45		commit->tree = tree;
-46		commit->util = (void*)comment;
-47		/* avoid warnings */
-48		commit->object.parsed = 1;
-(gdb)
-49		return commit;
-50	}
-
-At the beginning of merge_recursive(), the local mrtree appears to be
-set to some globally defined mrtree which is not null:
-
-Breakpoint 1, merge_recursive (o=0x7fffffffd560, h1=0x793db8,
-h2=0x793aa0, ca=0x0, result=0x7fffffffd500) at merge-recursive.c:1286
-(gdb) p mrtree
-$13 = (struct tree *) 0x7ffff732d0ac
-(gdb) list
-1281		struct commit_list *iter;
-1282		struct commit *merged_common_ancestors;
-1283		struct tree *mrtree = mrtree;
-1284		int clean;
-1285	
-1286		if (show(o, 4)) {
-1287			output(o, 4, "Merging:");
-1288			output_commit_title(o, h1);
-1289			output_commit_title(o, h2);
-1290		}
-(gdb)
-
-Which leads me to believe the problem is in the call to merge_trees() at
-line 1343:
-
-Breakpoint 6, merge_recursive (o=0x7fffffffd560, h1=0x793db8,
-h2=0x793aa0, ca=0x0, result=0x7fffffffd500) at merge-recursive.c:1343
-(gdb) list
-1338	
-1339		discard_cache();
-1340		if (!o->call_depth)
-1341			read_cache();
-1342	
-1343		clean = merge_trees(o, h1->tree, h2->tree,
-merged_common_ancestors->tree,
-1344				    &mrtree);
-1345	
-1346		if (o->call_depth) {
-1347			*result = make_virtual_commit(mrtree, "merged tree");
-(gdb)
-
-In merge_trees(), mrtree is the argument **result.  It is at line 1255
-that write_tree_from_memory nulls out the pointee of result:
-
-Breakpoint 7, merge_trees (o=0x7fffffffd560, head=0x77be10,
-merge=0x77b488, common=0x77c0b8, result=0x7fffffffd478) at
-merge-recursive.c:1255
-(gdb) p *result
-$16 = (struct tree *) 0x7ffff732d0ac
-(gdb) n
-(gdb) p *result
-$17 = (struct tree *) 0x0
-(gdb) list
-1252			clean = 1;
-1253	
-1254		if (o->call_depth)
-1255			*result = write_tree_from_memory(o);
-1256	
-1257		return clean;
-1258	}
-1259	
-1260	static struct commit_list *reverse_commit_list(struct commit_list
-*list)
-1261	{
-(gdb)
-
-Then in write_tree_from_memory() we find the offending return NULL at
-line 210:
-
-Breakpoint 8, write_tree_from_memory (o=0x7fffffffd560) at
-merge-recursive.c:210
-(gdb) list
-205				struct cache_entry *ce = active_cache[i];
-206				if (ce_stage(ce))
-207					output(o, 0, "%d %.*s", ce_stage(ce),
-208					       (int)ce_namelen(ce), ce->name);
-209			}
-210			return NULL;
-211		}
-212	
-213		if (!active_cache_tree)
-214			active_cache_tree = cache_tree();
-(gdb)
-
-
-Let me know if you need any more information.
-
-Thanks,
-Tim
+diff --git a/builtin-log.c b/builtin-log.c
+index 41b6df4..da0ba1d 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -41,6 +41,8 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 	rev->commit_format = CMIT_FMT_DEFAULT;
+ 	if (fmt_pretty)
+ 		get_commit_format(fmt_pretty, rev);
++	else
++		rev->show_notes = 1;
+ 	rev->verbose_header = 1;
+ 	DIFF_OPT_SET(&rev->diffopt, RECURSIVE);
+ 	rev->show_root_diff = default_show_root;
+diff --git a/commit.h b/commit.h
+index e5332ef..2c0742b 100644
+--- a/commit.h
++++ b/commit.h
+@@ -70,6 +70,7 @@ struct pretty_print_context
+ 	const char *after_subject;
+ 	enum date_mode date_mode;
+ 	int need_8bit_cte;
++	int show_notes;
+ 	struct reflog_walk_info *reflog_info;
+ };
+ 
+diff --git a/log-tree.c b/log-tree.c
+index 0fdf159..27afcf6 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -284,6 +284,7 @@ void show_log(struct rev_info *opt)
+ 	struct pretty_print_context ctx = {0};
+ 
+ 	opt->loginfo = NULL;
++	ctx.show_notes = opt->show_notes;
+ 	if (!opt->verbose_header) {
+ 		graph_show_commit(opt->graph);
+ 
+diff --git a/pretty.c b/pretty.c
+index 8f5bd1a..b2ee7fe 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1094,7 +1094,7 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
+ 	if (fmt == CMIT_FMT_EMAIL && sb->len <= beginning_of_body)
+ 		strbuf_addch(sb, '\n');
+ 
+-	if (fmt != CMIT_FMT_ONELINE)
++	if (context->show_notes)
+ 		get_commit_notes(commit, sb, encoding,
+ 				 NOTES_SHOW_HEADER | NOTES_INDENT);
+ 
+diff --git a/revision.c b/revision.c
+index 25fa14d..03c280f 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1165,6 +1165,10 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if (!prefixcmp(arg, "--pretty=") || !prefixcmp(arg, "--format=")) {
+ 		revs->verbose_header = 1;
+ 		get_commit_format(arg+9, revs);
++	} else if (!strcmp(arg, "--show-notes")) {
++		revs->show_notes = 1;
++	} else if (!strcmp(arg, "--no-notes")) {
++		revs->show_notes = 0;
+ 	} else if (!strcmp(arg, "--oneline")) {
+ 		revs->verbose_header = 1;
+ 		get_commit_format("oneline", revs);
+diff --git a/revision.h b/revision.h
+index d368003..4167c1e 100644
+--- a/revision.h
++++ b/revision.h
+@@ -80,6 +80,7 @@ struct rev_info {
+ 	/* Format info */
+ 	unsigned int	shown_one:1,
+ 			show_merge:1,
++			show_notes:1,
+ 			abbrev_commit:1,
+ 			use_terminator:1,
+ 			missing_newline:1,
