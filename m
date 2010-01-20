@@ -1,59 +1,82 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: git locate
-Date: Wed, 20 Jan 2010 01:17:17 +0000
-Message-ID: <43d8ce651001191717l58d10919j691f4e5b056fe9b5@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git status: do not require write permission
+Date: Wed, 20 Jan 2010 02:23:44 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1001200220570.4985@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.1001200105230.3164@intel-tinevez-2-302> <20100120002836.GA16824@coredump.intra.peff.net> <7vhbqh7gpa.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 20 02:17:24 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 20 02:18:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXPCF-0001YX-Bx
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 02:17:23 +0100
+	id 1NXPCs-0001fB-J4
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 02:18:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755589Ab0ATBRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2010 20:17:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755524Ab0ATBRS
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 20:17:18 -0500
-Received: from mail-px0-f182.google.com ([209.85.216.182]:46791 "EHLO
-	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751059Ab0ATBRR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 20:17:17 -0500
-Received: by pxi12 with SMTP id 12so5113578pxi.33
-        for <git@vger.kernel.org>; Tue, 19 Jan 2010 17:17:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=aE6jR8D3l7yUlqPb6Omz+26HBg/eU/4S8BJ1nbHnMBs=;
-        b=fqtPcPPaQW+bVz1oIm+UEsi1goD2oTwCum49HrE8uRKELmM3ACs3A+rP6SWCy9sSCL
-         kiQWm5zsUqS2oflVtRy8ARefW+6eXbDndXDQl0KvAd1YT79N7WWkyB+bUUik7wY5sXq4
-         1P00nvrPvKZa1s4Vuelqn9kaFIeECD/80sr9s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=JIYvLzqOsX3nZkYhyvppXRF/7ci7yRXMSrYIRuXiSGYwC/NrpPn2yQM9e3wrav5bJ9
-         mWzAypH0JKtPGIRCenln/FolJKBft1w/k5QSMGtA3hyn1BhkrudAcf9WFVCOnH+ykwBb
-         h/DmyOvPFm7mnZn1gl1bqHwfNC64yyEe60dRQ=
-Received: by 10.114.9.13 with SMTP id 13mr3857522wai.208.1263950237503; Tue, 
-	19 Jan 2010 17:17:17 -0800 (PST)
+	id S1755630Ab0ATBR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 20:17:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755613Ab0ATBR6
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 20:17:58 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56611 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755469Ab0ATBR5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2010 20:17:57 -0500
+Received: (qmail invoked by alias); 20 Jan 2010 01:17:56 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp018) with SMTP; 20 Jan 2010 02:17:56 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+xOWlLc4+xKTherQBsyiFMNm/+2qdIz6k+rld5sZ
+	UzkdLQEIeUtKIq
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vhbqh7gpa.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137513>
 
-Hey all,
+Hi,
 
-  Could we add a:  git locate <filename>       or git find <filename>
- that is just an alias to "git ls-files | grep filename" ?
+On Tue, 19 Jan 2010, Junio C Hamano wrote:
 
-Reasons:
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Wed, Jan 20, 2010 at 01:06:17AM +0100, Johannes Schindelin wrote:
+> >
+> >> Today, git status played violin on my nerves for the very last time.
+> >> There is no good reason, really none, for git status to require
+> >> write permissions.  If the index is not up-to-date, so be it, I
+> >> cannot commit anyway.
+> >
+> > I agree it is annoying, but this patch does not apply (and is no longer
+> > needed) on master since the status-is-no-longer-commit-dry-run series
+> > has been merged.
+> >
+> > I don't know if it is worth putting your fix onto maint.
+> 
+> I think the patch itself makes sense, even though the log message seems to
+> be with more noise and frustrationthan with useful information.
 
-1) git ls-files   does not autocomplete, since it's an low-level
-plumbing command
-2) It's nice having shell equivalents - e.g.  git grep etc
+If you think so.
 
-John
+> And "for the very last time" is probably a good characterization, as
+> status will no longer be "commit --dry-run" in the coming release ;-)
+
+This comment was because I was fully prepared to do the same as with so 
+many patches: keep them in my personal repository until time finally tells 
+that that patch should go into 'next'.
+
+And as you realized, I managed to forget a commit --amend, which would 
+have replaced 1 with !is_status.
+
+BTW you can tell me directly that you do not want any patches from me 
+anymore, rather than dancing around the issue.  I kind of figured that 
+already anyway.
+
+Ciao,
+Dscho
