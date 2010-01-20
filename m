@@ -1,76 +1,93 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git-status segmentation fault in master / OS X
-Date: Tue, 19 Jan 2010 19:41:46 -0500
-Message-ID: <20100120004146.GB16824@coredump.intra.peff.net>
+Date: Tue, 19 Jan 2010 16:56:18 -0800
+Message-ID: <7vd4157fwt.fsf@alter.siamese.dyndns.org>
 References: <57518fd11001190959n355a0f22p7caa7251b705efaf@mail.gmail.com>
+ <20100120004146.GB16824@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jonathan del Strother <maillist@steelskies.com>
-X-From: git-owner@vger.kernel.org Wed Jan 20 01:41:55 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan del Strother <maillist@steelskies.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 20 01:56:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXOdu-0007EC-MW
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 01:41:55 +0100
+	id 1NXOs5-0003Wy-8p
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 01:56:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754824Ab0ATAlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2010 19:41:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754736Ab0ATAlt
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 19:41:49 -0500
-Received: from peff.net ([208.65.91.99]:56440 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754343Ab0ATAls (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2010 19:41:48 -0500
-Received: (qmail 28262 invoked by uid 107); 20 Jan 2010 00:46:41 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 19 Jan 2010 19:46:41 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Jan 2010 19:41:46 -0500
-Content-Disposition: inline
-In-Reply-To: <57518fd11001190959n355a0f22p7caa7251b705efaf@mail.gmail.com>
+	id S1754232Ab0ATA42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2010 19:56:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754196Ab0ATA42
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jan 2010 19:56:28 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33348 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754144Ab0ATA41 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2010 19:56:27 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E8E892499;
+	Tue, 19 Jan 2010 19:56:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jmGk8tqtr0X8Kywso15Q5Nw5i9I=; b=b+zofd
+	BPTvfbHnR0/+vYdmcpU3U/0CIhh6pYvMUvK2zC1tvNAaV8BDYJZaprttPF4LFPxB
+	tyNO1VG81M6zY1SPtYcNEqtAuksfhylgZ85jDDVXEgd4ubbhiRBq1yUJLKFJGCdT
+	eqLli+dhOLFEyh2jqYaO3kkGJOJt9AhsemUmE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NzSLGSyNdyb+tZj6Cnmv21MWYMhj+MJH
+	nhh+E9L8oimbVgFSWnJEid1md63uFCMfQ1c9Q2dR46k056GlQK9xJyJEMYxRDpG2
+	Os2P7EUXeFKI7uEARow+KXY6tsQZoRqc69hLk1BV6lZaoEDPQ0NTSFn/Qovrj7QZ
+	Bi3JNe/VEMw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CBE9B92494;
+	Tue, 19 Jan 2010 19:56:23 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F228892493; Tue, 19 Jan
+ 2010 19:56:19 -0500 (EST)
+In-Reply-To: <20100120004146.GB16824@coredump.intra.peff.net> (Jeff King's
+ message of "Tue\, 19 Jan 2010 19\:41\:46 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A171BFCA-055E-11DF-ADAF-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137510>
 
-On Tue, Jan 19, 2010 at 05:59:51PM +0000, Jonathan del Strother wrote:
+Jeff King <peff@peff.net> writes:
 
-> I've been running into a segmentation fault on running git status in
-> my repository while there are staged changes.
+> Could be a bad interaction between commits on nd/sparse and whatever was
+> done since it had branched. You can try rebasing nd/sparse and bisecting
+> a linearised version, like this:
+>
+>   bad_merge=73d66323
+>   # pretend we are on nd/sparse
+>   git checkout -b test $bad_merge^2
+>   # rebase onto what we merged onto
+>   git rebase $bad_merge^1
 
-I can't reproduce it here. Is there anything else interesting about the
-repo you can tell us besides that it has staged changes?
+That is a very good suggestion.
 
-> Bisecting suggests it was introduced in:
-> 
-> commit 73d66323ac78c750ba42fef23b1cb8fd2110e023
-> Merge: 054d2fa 8740773
-> Author: Junio C Hamano <gitster@pobox.com>
-> Date:   Wed Jan 13 11:58:34 2010 -0800
-> 
->     Merge branch 'nd/sparse'
-> 
-> 
-> The last commit from nd/sparse (8740773) is fine, so I guess it's a
-> bad merge...?
+You will get hit by a few conflicts during the rebase, but I managed to
+arrive at the same tree as $bad_merge after running the rebase procedure
+above.  Just for Jonathan's convenience, the result is at:
 
-Could be a bad interaction between commits on nd/sparse and whatever was
-done since it had branched. You can try rebasing nd/sparse and bisecting
-a linearised version, like this:
+  git://repo.or.cz/alt-git.git junk-linearized-nd-sparse-for-bisection
 
-  bad_merge=73d66323
-  # pretend we are on nd/sparse
-  git checkout -b test $bad_merge^2
-  # rebase onto what we merged onto
-  git rebase $bad_merge^1
-  # now bisect. what we have now is presumably
-  # bad (though you should probably double check)
-  # and from the previous bisect we know that
-  # everything pre-merge is good
-  git bisect start
-  git bisect good $bad_merge^1
-  git bisect bad
+I'll remove this after a few days.
 
--Peff
+>   # now bisect. what we have now is presumably
+>   # bad (though you should probably double check)
+>   # and from the previous bisect we know that
+>   # everything pre-merge is good
+>   git bisect start
+>   git bisect good $bad_merge^1
+>   git bisect bad
+
+It would be interesting to hear the result of the test in the particular
+repository Jonathan is seeing the problem with.  The issue didn't
+reproduce for me, either but I only tried "having a staged change" case
+without any more detailed set-up.
