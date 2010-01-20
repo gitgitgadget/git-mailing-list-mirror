@@ -1,98 +1,70 @@
-From: Joey Hess <joey@kitenet.net>
+From: Jeff King <peff@peff.net>
 Subject: Re: git notes: notes
-Date: Wed, 20 Jan 2010 15:36:36 -0500
-Message-ID: <20100120203636.GA9221@gnu.kitenet.net>
+Date: Wed, 20 Jan 2010 15:54:52 -0500
+Message-ID: <20100120205452.GA8843@coredump.intra.peff.net>
 References: <20100120050343.GA12860@gnu.kitenet.net>
  <201001201148.11701.johan@herland.net>
  <20100120182438.GB31507@gnu.kitenet.net>
  <7vhbqg376b.fsf@alter.siamese.dyndns.org>
  <20100120195626.GA6641@gnu.kitenet.net>
  <7vska01qrt.fsf@alter.siamese.dyndns.org>
+ <20100120203636.GA9221@gnu.kitenet.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="W/nzBZO5zC0uMSeA"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 20 21:37:08 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Joey Hess <joey@kitenet.net>
+X-From: git-owner@vger.kernel.org Wed Jan 20 21:55:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXhIa-0002jk-5A
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 21:37:08 +0100
+	id 1NXha1-0003HF-PV
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 21:55:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754600Ab0ATUgl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2010 15:36:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752998Ab0ATUgl
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 15:36:41 -0500
-Received: from wren.kitenet.net ([80.68.85.49]:44695 "EHLO kitenet.net"
+	id S1752062Ab0ATUy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2010 15:54:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751729Ab0ATUy7
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 15:54:59 -0500
+Received: from peff.net ([208.65.91.99]:60693 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754567Ab0ATUgk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jan 2010 15:36:40 -0500
-Received: from gnu.kitenet.net (fttu-216-41-255-233.btes.tv [216.41.255.233])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id A7C251182A1
-	for <git@vger.kernel.org>; Wed, 20 Jan 2010 15:36:38 -0500 (EST)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id 65845A8365; Wed, 20 Jan 2010 15:36:37 -0500 (EST)
+	id S1751240Ab0ATUy6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2010 15:54:58 -0500
+Received: (qmail 9781 invoked by uid 107); 20 Jan 2010 20:59:51 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 20 Jan 2010 15:59:51 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Jan 2010 15:54:52 -0500
 Content-Disposition: inline
-In-Reply-To: <7vska01qrt.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20100120203636.GA9221@gnu.kitenet.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137576>
 
+On Wed, Jan 20, 2010 at 03:36:36PM -0500, Joey Hess wrote:
 
---W/nzBZO5zC0uMSeA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I was asking hypothetically, trying to point out that parts of git log
+> seem to make sense to be used as plumbing, with the hope I can continue
+> to use it that way.
+> 
+> (Note that git instaweb parses output of git log --pretty=format:%H --raw
+> like it's plumbing.)
 
-Junio C Hamano wrote:
-> Joey Hess <joey@kitenet.net> writes:
->=20
-> > Do you think it makes sense for even git log --format=3Dformat:%s to be
-> > porcelain and potentially change when new features are used?
->=20
-> If the series changed the meaning of "%s" format to mean "the subject of
-> the commit and notes information", with or without documenting it, then it
-> is just a bug we would like to fix.
->=20
-> But I cannot reproduce such a bug.  In my tree locally:
+I think this is a valid point. Note that "gitk" uses "git log
+--pretty=raw". However, I believe it splits the entries on "^commit". So
+I think there is some precedent for scripting "git log"; it has features
+that are simply not available through other interfaces. And scripting
+around "--pretty=raw" seems pretty reasonable to me, too. Why else would
+you want the raw format?
 
-I was asking hypothetically, trying to point out that parts of git log
-seem to make sense to be used as plumbing, with the hope I can continue
-to use it that way.
+Is splitting on blank lines an error? I don't think so. The original
+format was never strictly defined, but given the --pretty=raw format, it
+seems like a fairly obvious thing to do.
 
-(Note that git instaweb parses output of git log --pretty=3Dformat:%H --raw
-like it's plumbing.)
+I am inclined to cut the notes output from --pretty=raw, and let callers
+ask for them explicitly with --show-notes or something similar. We can
+leave them on by default in the "normal" output. This will still break
+scripts doing "git log | ./script", but I don't think we have ever
+condoned that practice.
 
---=20
-see shy jo
-
---W/nzBZO5zC0uMSeA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQIVAwUBS1dpVMkQ2SIlEuPHAQjGJg/8DRo3ZHd1yAWghYmvMCyVXADByFyEqjbX
-XTlZ9YC77Dxrl+QU9B8a/nSCNw4iiW+vA/AFfOdkf6X+Pi+Xv/9n80LwhiOuiWEG
-EO2W96dkSZdux7y0Dw6LRQGzqDJVXbjojYu2ABzQUPIF2c4CTKtxEpr7KJ0GgkIQ
-Jk/4WS3cWb1ezKi/qWu9ArUZMXe4WWfRaxnnPeEdURtWwmBpbm6ZuQkvUUfnhsi7
-D8PmbJOlNU49Ue2oeNTglsJliduru6nHVd9na5n+n0+8dLglrEJvG/DE2a+ROe7a
-RejX3Lih8FdYDmH2diaBfG/tTy2SlGGzB1vkcZYOJqekwLgALF8f4U5MmwlUTupt
-neNlMEqZmPvYmIPr6gGtLZAZQEHYJPE1UFi8o8qrk466dlVxMDbdYxE2zGNjSmMH
-FztZhgkbx7mrSYGmm0c4tPEL8MkwMslu3Gldw4yUk5yVvSj6O47WnCazGUK2NP7F
-iM9yYvRedubvvStLJLxWnRWyjlBYBuOtY5B4yD9QNwl1u8CfTcSsxaDBDfV7XzHK
-X2j/lMvsbPpgxHHDCGhW+zF0HQUGEmREfILwkJi8Asxr8TxDxaWl5FoHRIF4WYrv
-r3DTf/mOtxIAcY8Wny0d3m6MNOUpNvC7QIhRynkSZP08qwmqbdsqz6Vlqmrci43j
-DLctT47o+n8=
-=PSvi
------END PGP SIGNATURE-----
-
---W/nzBZO5zC0uMSeA--
+-Peff
