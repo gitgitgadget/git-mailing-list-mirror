@@ -1,112 +1,132 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: git notes: notes
-Date: Wed, 20 Jan 2010 11:48:11 +0100
-Message-ID: <201001201148.11701.johan@herland.net>
-References: <20100120050343.GA12860@gnu.kitenet.net>
+From: Andre Loker <loker@gmx.de>
+Subject: Error when cloning gc'ed repository
+Date: Wed, 20 Jan 2010 11:45:21 +0100
+Message-ID: <hj6ms0$vcg$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Wed Jan 20 11:48:20 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 20 11:50:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXY6l-0005oe-Qt
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 11:48:20 +0100
+	id 1NXY8j-0006Y0-MS
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 11:50:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753122Ab0ATKsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2010 05:48:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752904Ab0ATKsP
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 05:48:15 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:57817 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752503Ab0ATKsP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2010 05:48:15 -0500
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KWJ00AQPKOC94B0@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Wed, 20 Jan 2010 11:48:13 +0100 (MET)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KWJ00MK3KOBJ830@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Wed, 20 Jan 2010 11:48:12 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2010.1.20.103618
-User-Agent: KMail/1.12.4 (Linux/2.6.32-ARCH; KDE/4.3.4; x86_64; ; )
-In-reply-to: <20100120050343.GA12860@gnu.kitenet.net>
+	id S1753154Ab0ATKuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2010 05:50:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752856Ab0ATKuL
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 05:50:11 -0500
+Received: from lo.gmane.org ([80.91.229.12]:42087 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752723Ab0ATKuK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2010 05:50:10 -0500
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1NXY8S-0006Q5-Q3
+	for git@vger.kernel.org; Wed, 20 Jan 2010 11:50:04 +0100
+Received: from p5dca2397.dip0.t-ipconnect.de ([93.202.35.151])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 20 Jan 2010 11:50:04 +0100
+Received: from loker by p5dca2397.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 20 Jan 2010 11:50:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: p5dca2397.dip0.t-ipconnect.de
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137542>
 
-On Wednesday 20 January 2010, Joey Hess wrote:
-> Just a quick note that the new notes feature can break things that parse
-> git log. For example a parser that assumes it can split the log on blank
-> lines to separate the header and commit message, can easily become
-> confused by the new blank line before "Notes:".
+Hi,
 
-As Thomas already stated, git log is porcelain, and its output format is not 
-set in stone. If you need a stable, script-friendly format, you should 
-probably use the --format option, or use plumbing instead (such as e.g. git 
-rev-list, which also has a --format option).
+First of all, my setup:
 
-> Might be worth documenting in release notes, maybe too late now though.
-> But really, it's all good, notes are a great feature.
-> 
-> PS, Has anyone thought about using notes to warn bisect away from
-> commits that are known to be unbuildable or otherwise cause bisection
-> trouble?
+Server:
+Win 2008
+cygwin git 1.6.6, built from source
+gitosis
 
-No, I haven't thought of that specific use case. Great idea! :)
+Client:
+Win 7
+cygwin git 1.6.6, built from source
 
-BTW, since I started talking about git notes, people on this list have found 
-more and more interesting use cases for them:
+The server is hosting several repositories, they all work fine, except 
+for one (at least I've experienced the following error with only one of 
+the repos). For this repository, cloning fails if the repository has 
+been repacked (or gc'ed) on the client side:
 
-- Free-form text extension to the commit message
+$ git clone git@theserver:the/repository.git
+Initialized empty Git repository in /e/Temp/dr/.git/
+remote: Counting objects: 1396, done.
+remote: Compressing objects: 100% (654/654), done.
+fatal: The remote end hung up unexpectedly
+fatal: early EOFs:  47% (657/1396)
+fatal: index-pack failed
 
-- Help in bug tracking with header-like lines such as:
-    - Causes-Bug: #12345
-    - Fixes-Bug: #54321
+However, if I unpack the objects completely and delete the pack file, I 
+can clone the repository without any problem:
 
-- Store after-the-fact "Acked-By", "Reviewed-By", etc. annotations
+$ git clone git@theserver:the/repository.git
+Initialized empty Git repository in /e/Temp/dr/.git/
+remote: Counting objects: 1396, done.
+remote: Compressing objects: 100% (1293/1293), done.
+remote: Total 1396 (delta 639), reused 0 (delta 0)
+Receiving objects: 100% (1396/1396), 4.99 MiB | 1.70 MiB/s, done.
+Resolving deltas: 100% (639/639), done.
 
-- In a repo converted from a merge-unfriendly VCS (such as CVS), use notes
-  to identify merges without having to rewrite Git history (note that you
-  can also use grafts, or "git replace" to accomplish this).
+fsck shows no error
 
-- Refer to related commits elsewhere in the repo (i.e. relationships that
-  are not already apparent from the commit graph)
+Does this problem sound familiar to anyone? May it's a network issue, 
+but other repositories (also larger ones) work flawlessly even when in a 
+packed state. Any help is appreciated!
 
-- When cherry-picking, add a reverse link from the source commit to the
-  cherry-picked commit (since it may be of interest to people reviewing the
-  source commit
+Kind regards,
+Andre Loker
 
-- Rebasing public branches is forbidden, but if you wanted to change that,
-  you could potentially help solve it by using notes to add reverse links
-  from source commits to rebased commits, so that downstream people could
-  more easily traverse your history when rebasing/merging their own
-  branches.
+P.S.:
 
-- Initially, there were some discussion whether it could also be used to
-  guide git blame to make better decisions, although I don't currently see
-  how that would be done in practice.
+Here's a trace:
+$ GIT_TRACE=1 git clone git@theserver:the/repository.git
+trace: built-in: git 'clone' 'git@theserver:the/repository.git'
+Initialized empty Git repository in /e/Temp/dr/.git/
+trace: run_command: 'ssh' 'git@theserver' 'git-upload-pack 
+'\''the/repository.git'\'''
+trace: run_command: 'index-pack' '--stdin' '-v' '--fix-thin' 
+'--keep=fetch-pack 5208 on Phobos'
+trace: exec: 'git' 'index-pack' '--stdin' '-v' '--fix-thin' 
+'--keep=fetch-pack 5208 on Phobos'
+remote: Counting objects: 1396, done.
+remote: Compressing objects:  19% (125/654)   race: exec: 
+'git-index-pack' '--stdin' '-v' '--fix-thin' '--keep=fetch-pack 5208 on 
+Phobos'
+remote: Compressing objects:  21% (138/654)
+remote: Compressing objects: 100% (654/654), done.
+fatal: The remote end hung up unexpectedly
+fatal: early EOFs:  88% (1229/1396), 4.76 MiB | 9.23 MiB/s
+fatal: index-pack failed
 
-In any case, it seems the notes idea may have the potential to become one of 
-the more useful features in Git.
+And here's a trace of a successful run:
 
-
-Have fun! :)
-
-...Johan
-
-
-[1]: ...almost 3 years ago (wow, time flies...):
-     http://article.gmane.org/gmane.comp.version-control.git/46883
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+$ GIT_TRACE=1 git clone git@theserver:the/repository.git
+trace: built-in: git 'clone' 'git@theserver:the/repository.git'
+Initialized empty Git repository in /e/Temp/dr/.git/
+trace: run_command: 'ssh' 'git@theserver' 'git-upload-pack 
+'\''the/repository.git'\'''
+trace: run_command: 'index-pack' '--stdin' '-v' '--fix-thin' 
+'--keep=fetch-pack 4624 on Phobos'
+trace: exec: 'git' 'index-pack' '--stdin' '-v' '--fix-thin' 
+'--keep=fetch-pack 4624 on Phobos'
+trace: exec: 'git-index-pack' '--stdin' '-v' '--fix-thin' 
+'--keep=fetch-pack 4624 on Phobos'
+trace: run_command: 'git-index-pack' '--stdin' '-v' '--fix-thin' 
+'--keep=fetch-pack 4624 on Phobos'
+remote: Counting objects: 1396, done.
+remote: Compressing objects: 100% (1293/1293), done.
+remote: Total 1396 (delta 639), reused 0 (delta 0)
+Receiving objects: 100% (1396/1396), 4.99 MiB | 1.68 MiB/s, done.
+Resolving deltas: 100% (639/639), done.
