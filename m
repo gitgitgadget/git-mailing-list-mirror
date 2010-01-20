@@ -1,95 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git notes: notes
-Date: Wed, 20 Jan 2010 13:08:07 -0800
-Message-ID: <7veilk1o3s.fsf@alter.siamese.dyndns.org>
-References: <20100120050343.GA12860@gnu.kitenet.net>
- <201001201148.11701.johan@herland.net>
- <20100120182438.GB31507@gnu.kitenet.net>
- <7vhbqg376b.fsf@alter.siamese.dyndns.org>
- <20100120195626.GA6641@gnu.kitenet.net>
- <7vska01qrt.fsf@alter.siamese.dyndns.org>
- <4B576F5C.2050102@drmicha.warpmail.net>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: git equivalent to clearcase wink-in
+Date: Wed, 20 Jan 2010 22:12:51 +0100
+Message-ID: <20100120211251.GA26274@glandium.org>
+References: <810256.84037.qm@web45111.mail.sp1.yahoo.com>
+ <7938b46a1001201305j499e05bg2654d634d7b26d76@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Joey Hess <joey@kitenet.net>,
-	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Jan 20 22:08:43 2010
+Cc: Richard Assal <richard_assal@yahoo.com>, git@vger.kernel.org
+To: Jamie Wellnitz <jwellnitz@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 20 22:13:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXhn9-0001Oo-1s
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 22:08:43 +0100
+	id 1NXhrS-00044u-L3
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 22:13:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754664Ab0ATVIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2010 16:08:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754659Ab0ATVIV
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 16:08:21 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41563 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754499Ab0ATVIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jan 2010 16:08:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C4FD092069;
-	Wed, 20 Jan 2010 16:08:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kk6lntlgjqJgLoByff44p1d1HPg=; b=ex9VoD
-	FZorN+42+O4xZLyTp1Qz/v4NGSSc5/XJLgLOoNQF5JHBegAmvsgU5/iuGf8fHKUv
-	3kMAwj1sfgrAgGb89DDJEzcywbFP34pAZIiPHRuy+39fHOIj3YSwbjchKpj7Ld8v
-	+lAdgDf3nUYCHwWvi2VynlD0kRJC7anc1xjGE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ppKL64wrmzkHJJ9n5eR1pgBbz3hMf0LO
-	J62UVZBKAm29nrNBzFC4CIECivvNlQ+7WLmTQLd+b5HZbUBUVJvd6hCC9LxtSuTw
-	yiIvKrVr28LBTQ2IlCosZK30hp1bUzgs7ACuLR4+HmnZnBiTWiE7Tns9nv5m/bbx
-	WIsxqM8wKU0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C98592068;
-	Wed, 20 Jan 2010 16:08:13 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8715792065; Wed, 20 Jan
- 2010 16:08:08 -0500 (EST)
-In-Reply-To: <4B576F5C.2050102@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Wed\, 20 Jan 2010 22\:02\:20 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EBCF2090-0607-11DF-A288-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932116Ab0ATVNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2010 16:13:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754474Ab0ATVNF
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 16:13:05 -0500
+Received: from vuizook.err.no ([85.19.221.46]:52603 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754419Ab0ATVM6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2010 16:12:58 -0500
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1NXhrA-000378-49; Wed, 20 Jan 2010 22:12:54 +0100
+Received: from mh by jigen with local (Exim 4.71)
+	(envelope-from <mh@jigen>)
+	id 1NXhr9-0006q1-3s; Wed, 20 Jan 2010 22:12:51 +0100
+Content-Disposition: inline
+In-Reply-To: <7938b46a1001201305j499e05bg2654d634d7b26d76@mail.gmail.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137583>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Wed, Jan 20, 2010 at 04:05:46PM -0500, Jamie Wellnitz wrote:
+> Would something like ccache (compiler cache) help you out?  It's not
+> the same as wink-in (which, as I understand it, copies an already
+> built object file from someone else who has built it).  Instead each
+> user has their own cache, so everyone has to pay the expensive build
+> price at least once.
 
-> Junio C Hamano venit, vidit, dixit 20.01.2010 21:10:
->> Joey Hess <joey@kitenet.net> writes:
->> 
->>> Do you think it makes sense for even git log --format=format:%s to be
->>> porcelain and potentially change when new features are used?
->> 
->> If the series changed the meaning of "%s" format to mean "the subject of
->> the commit and notes information", with or without documenting it, then it
->> is just a bug we would like to fix.
->
-> No, but outputting the note as part of the log is the standard. So for
-> example, when you do a format-patch | apply cycle, format-patch will
-> insert the note as part of the commit message, and apply will *store*
-> the note text (including Note:\n) as part of the commit message of the
-> new commit.
+Surely the ccache directory could be shared on nfs or some other network
+filesystem. Or object file could be checked in, which is imho ugly, but
+should work (better to do that on a separate branch)
 
-Thanks; that was the kind of breakage report I was looking for (and wished
-to have heard a lot earlier).  Personally I find it is unexcusable that
-format-patch defaults to giving notes.
-
-> So, I would say the notes feature is not that well integrated right now,
-
-No question about it.
-
-> I'm not complaining, I actually have this on a maybe-to-do list, but the
-> way the series went kept me from investing time.
-
-Hmm, that hints there is a failure in the review and merge process.  Care
-to explain how we could have done better please?
+Mike
