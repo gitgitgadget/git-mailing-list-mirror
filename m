@@ -1,89 +1,116 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: git locate
-Date: Wed, 20 Jan 2010 11:07:05 +0000
-Message-ID: <43d8ce651001200307r651a6a54ib298c4b708016b11@mail.gmail.com>
-References: <43d8ce651001191717l58d10919j691f4e5b056fe9b5@mail.gmail.com>
-	 <m3zl49bk0o.fsf@localhost.localdomain>
-	 <alpine.DEB.1.00.1001201021060.31129@intel-tinevez-2-302>
-	 <201001201106.20739.jnareb@gmail.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [PATCH 1/2] rev-parse --glob
+Date: Wed, 20 Jan 2010 13:08:44 +0200
+Message-ID: <20100120110843.GA11343@Knoppix>
+References: <1263980906-11058-1-git-send-email-ilari.liusvaara@elisanet.fi>
+ <7vska13wt0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 20 12:07:14 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 20 12:08:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXYP3-000439-JO
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 12:07:13 +0100
+	id 1NXYQf-0004ef-NO
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 12:08:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753167Ab0ATLHH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jan 2010 06:07:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752352Ab0ATLHH
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 06:07:07 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:52647 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752972Ab0ATLHF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2010 06:07:05 -0500
-Received: by pwj9 with SMTP id 9so3081104pwj.21
-        for <git@vger.kernel.org>; Wed, 20 Jan 2010 03:07:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=cWtOV1kkwQknitmcEzFtzUsQLYPgyFb1FyXPKxHWjzU=;
-        b=X0XwaXAJqS4rDtUbi08PR7b9oSnJT5/YGnB47BctmoYFe1D+sm2QuYc1jWS/WkEkv9
-         gxjNFuMoT8CCWiAb6wM7towbmbUxBMfIZJUALPs0J+rU/7EI9Dp+H0fP4uQh8j7bofLl
-         7Uh0zC1WQytsYB2ConjidD+JLOCBQUfiX2kk0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=h/v7KVzPAz5U4+yQCgeZL4LqsfJeFCBGJtm9A0xsWb7Ycn828B7V9WCtBPmN3w7sOv
-         /6OEY2nFDdG6+c6VpyB/7GF67lnq+wPj7fOmXloIC7aqmABLewQBMpJYNu/nRn11OmTP
-         qe+KRaKATGJ8/f3Egb2+L21aw8795dxvvcAXM=
-Received: by 10.114.30.7 with SMTP id d7mr6152675wad.30.1263985625086; Wed, 20 
-	Jan 2010 03:07:05 -0800 (PST)
-In-Reply-To: <201001201106.20739.jnareb@gmail.com>
+	id S1751954Ab0ATLIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2010 06:08:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751874Ab0ATLIt
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 06:08:49 -0500
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:58978 "EHLO
+	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751081Ab0ATLIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2010 06:08:48 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id 4BD0EEF57C;
+	Wed, 20 Jan 2010 13:08:47 +0200 (EET)
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A05A35407E3; Wed, 20 Jan 2010 13:08:47 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id 24181E51AD;
+	Wed, 20 Jan 2010 13:08:45 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <7vska13wt0.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137544>
 
-2010/1/20 Jakub Narebski <jnareb@gmail.com>:
-> On Wed, 20 Jan 2010, Johannes Schindelin wrote:
->> On Tue, 19 Jan 2010, Jakub Narebski wrote:
->>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>>> On Wed, 20 Jan 2010, John Tapsell wrote:
->>>>
->>>>> =C2=A0 Could we add a: =C2=A0git locate <filename> =C2=A0 =C2=A0 =
-=C2=A0 or git find <filename>
->>>>
->>>> How about "git ls-files \*<filename>"?
->>>
->>> Or "git ls-files '*filename'...
->>>
->>> ... but how to make an (git) alias for this?
->>
->> Add something like this to your $HOME/.gitconfig:
->>
->> [alias]
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 locate =3D !sh -c 'git ls-files "\\*$1"'=
- -
->
+On Wed, Jan 20, 2010 at 02:17:15AM -0800, Junio C Hamano wrote:
+> Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
+> 
+> Looks fairly competently done.  Does this mean you've abandoned the --namespace
+> series?  I don't mind reverting them from 'next'.
 
-I think having this alias by default would be very nice though - it's
-pretty common to locate/find files, and it's nice to have unixy
-equivalents in git.
+Pretty much.
+ 
+> > +static int filter_refs(const char* ref, const unsigned char *sha, int flags,
+> > +	void* data)
+> > +{
+> > +	struct ref_filter *filter = (struct ref_filter*)data;
+> > +	if (fnmatch(filter->pattern, ref, 0))
+> > +		return 0;
+> 
+> In many places (not just refs) we use "If leading path component matches,
+> or fnmatch() says Ok" (e.g. builtin-for-each-ref.c, builtin_grep.c), and
+> in some other places we only use fnmatch().  I think it is better to pick
+> one convention, and adjust the other one to match, and my gut feeling is
+> that "leading path or fnmatch()", while theologically might be messier,
+> would be more useful in practice.  And that was why I did my "like this"
+> patch http://article.gmane.org/gmane.comp.version-control.git/137492 that way.
 
-If this really isn't wanted, then perhaps the ls-files command should
-be bash auto-completed?
+That pattern of course has been edited before (and the namespace behavoiour
+is implemented that way).
 
-Thanks!
+> My longer term desire is to consolidate these fnmatch() users to call a
+> single helper function, and then perhaps replace fnmatch() in that helper
+> function with something more powerful.  Although I do not personally care
+> too much, people often wanted to have "path/**/leaf-that-is-deep" matcher.
 
-John
+Extended globs? Except that:
+
+'git check-ref-format refs/heads/X+\(a\|b\) ; echo $?' => 0
+
+And '+(a|b)' is wildcard in extended glob (not expressible with standard
+glob operators). 
+
+Extended globbing in gitignore would be useful as some have asked if there
+is way to use regular expressions there (nope). At least extended globs
+are equivalent to regular expressions in power.
+
+ 
+> > @@ -674,6 +691,35 @@ int for_each_replace_ref(each_ref_fn fn, void *cb_data)
+> >  	return do_for_each_ref("refs/replace/", fn, 13, 0, cb_data);
+> >  }
+> >  
+> > +int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data)
+> > +{
+> > +	struct strbuf real_pattern = STRBUF_INIT;
+> > +	struct ref_filter filter;
+> > +	const char *has_glob_specials;
+> > +	int ret;
+> > +
+> > +	if (prefixcmp(pattern, "refs/"))
+> > +		strbuf_addstr(&real_pattern, "refs/");
+> > +	strbuf_addstr(&real_pattern, pattern);
+> > +
+> > +	has_glob_specials = strpbrk(pattern, "?*[");
+> 
+> Would the need for this code hopefully disappear if we take the "leading
+> path or fnmatch()" check?  If we still need this, we probably would want
+> to add a has_glob_special() helper function not as a hardcoded srpbrk(),
+> but in terms of is_glob_special() in git-compat-util.h.
+
+'--glob=remotes/origin' and '--glob=remotes/origin*' are not the same. The
+first gets DWIMed to '--glob=refs/remotes/origin/*'. The usual case for
+globbing is globbing entiere namespace (name of one remote can be prefix
+of another).
+
+-Ilari
