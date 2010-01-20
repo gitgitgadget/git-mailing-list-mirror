@@ -1,60 +1,90 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: git commit --cleanup and templates
-Date: Wed, 20 Jan 2010 17:37:47 +0100
-Message-ID: <hj7bh9$adp$1@ger.gmane.org>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: git notes: notes
+Date: Wed, 20 Jan 2010 13:14:57 -0500
+Message-ID: <20100120181456.GA31507@gnu.kitenet.net>
+References: <20100120050343.GA12860@gnu.kitenet.net>
+ <201001201049.01108.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="k+w/mQv8wyuph6w0"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 20 17:38:48 2010
+X-From: git-owner@vger.kernel.org Wed Jan 20 19:15:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXdZu-0005UA-3k
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 17:38:46 +0100
+	id 1NXf5G-0003kc-Ry
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jan 2010 19:15:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752673Ab0ATQib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2010 11:38:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752670Ab0ATQib
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 11:38:31 -0500
-Received: from lo.gmane.org ([80.91.229.12]:53083 "EHLO lo.gmane.org"
+	id S1753938Ab0ATSPE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2010 13:15:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751711Ab0ATSPE
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 13:15:04 -0500
+Received: from wren.kitenet.net ([80.68.85.49]:54778 "EHLO kitenet.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752642Ab0ATQia (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jan 2010 11:38:30 -0500
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1NXdZW-0005LB-Qn
-	for git@vger.kernel.org; Wed, 20 Jan 2010 17:38:22 +0100
-Received: from 91-67-62-42-dynip.superkabel.de ([91.67.62.42])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Jan 2010 17:38:22 +0100
-Received: from sschuberth by 91-67-62-42-dynip.superkabel.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Jan 2010 17:38:22 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 91-67-62-42-dynip.superkabel.de
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+	id S1751192Ab0ATSPB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2010 13:15:01 -0500
+Received: from gnu.kitenet.net (fttu-216-41-255-233.btes.tv [216.41.255.233])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 1E997118FF6
+	for <git@vger.kernel.org>; Wed, 20 Jan 2010 13:15:00 -0500 (EST)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 20593298023; Wed, 20 Jan 2010 13:14:57 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <201001201049.01108.trast@student.ethz.ch>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137559>
 
-Hi,
 
-when I recently for the first time used commit templates, I was 
-surprised to see that git by default strips leading empty lines that I 
-deliberately added to the template file when opening the template in the 
-editor. I understand that I could use a different cleanup mode, but in 
-fact I *want* git to clean everything, but only *after* I finished 
-editing the commit message, not already when opening the editor.
+--k+w/mQv8wyuph6w0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Before submitting a patch, I'd like to hear what other people think 
-about this, or whether I'm overseeing something.
+Thomas Rast wrote:
+> Umm.  git-log is porcelain and we're allowed to change it.  Worse,
+> even the user can change it in very significant ways, just try:
+>=20
+>   git config format.pretty email
+>   git log
 
-Thanks.
+Is git log --pretty=3Draw --raw really intended to be porcelain?
+Above does not affect it.
 
--- 
-Sebastian Schuberth
+> For a better alternative, I'm afraid you'll either have to look to
+> git-rev-list (which also takes --pretty) or 'git cat-file --batch'.
+
+I don't see a way to get the per-commit diff-tree info using rev-list.
+
+--=20
+see shy jo
+
+--k+w/mQv8wyuph6w0
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQIVAwUBS1dIHckQ2SIlEuPHAQhn5A//Rjn6cYBD95I4NlF90Ip+tEPLa3TdZCss
+yw+Aqj6XUnoH+tOR21NTKaUbtBEV1WU6SJUc/AxVm4u2iV3yqweg1kNclY4p+Inf
+3XbI5TMqzGsO+GLpp3cNl6nVZKFxIURfpGoWhX3TiLvtY8fs7bpBOpkL/WhsDn8Y
+l7/cU6x01noUDIBYs3VQhs/okV+GXUh05mQsE61DQWxMEcUz8MknyQms2F3ecu0s
+IvkhnpZO19e3IfPzQ16ziXtK03CVLlZLAe4pgM0NvS09HiZ6NyaFAWoN09tkzQNS
+iWNu5DbsRsKiKuL6+RTyxJJUap43nA+833gKn4TSdYfQSyKq4rBYfctj/miXlqMn
+qMesc5CLhbOHLOQryocpZfOB0orsWoxLum0lQgQSNke6NJabMOrqNrGnAK4Fs6Dv
+yR+WGUvJrvyEsjNXN7Xws2rnLsGvEV10R+sM5pLR66olOYQvJ57KLWG3UeTwWVkH
+azpu6BfQn9hzD4x+Hh1ij7k175TXLM2CYbXKVUtIqMhs7GBcOxFr8vfWkMRNk6V2
+u3otsvr1ezrCuyAnxnrKanhnWCk2vwe7lolGTLvpwUPWLbYbK/LcS+9LeSILae6c
+nsCGSjl9L67/X23RapMTDQq42fTO6bX7iNnalow1azWoNIFAQv0RZSHfqjhwpJfo
+ADbw6g6djjA=
+=IeH/
+-----END PGP SIGNATURE-----
+
+--k+w/mQv8wyuph6w0--
