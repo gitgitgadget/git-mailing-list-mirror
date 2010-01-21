@@ -1,97 +1,75 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2] Test t5560: Fix test when run with dash
-Date: Thu, 21 Jan 2010 17:15:42 +0100
-Message-ID: <4B587DAE.9030208@alum.mit.edu>
-References: <7vfx69hyd5.fsf@alter.siamese.dyndns.org> <4B5027B8.2090507@viscovery.net> <7vljfzz0yd.fsf@alter.siamese.dyndns.org> <201001152017.00121.j6t@kdbg.org> <7v4ommoo4p.fsf@alter.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git fetch -v not at all verbose?
+Date: Thu, 21 Jan 2010 08:18:58 -0800
+Message-ID: <20100121161858.GC19078@spearce.org>
+References: <20100121004756.GA18213@onerussian.com> <20100121050850.GA18896@Knoppix> <be6fef0d1001202247l7467a14ap8181eb3ed830167a@mail.gmail.com> <20100121155136.17b59e8f.rctay89@gmail.com> <20100121140054.GH18213@onerussian.com> <20100121224100.624c9c9d.rctay89@gmail.com> <20100121155637.GA19078@spearce.org> <20100121160707.GA31276@glandium.org> <20100121161016.GA16300@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Tarmigan Casebolt <tarmigan+git@gmail.com>,
-	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 21 17:16:55 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 17:19:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXziI-00020E-Nv
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 17:16:55 +0100
+	id 1NXzkX-00030t-JO
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 17:19:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753597Ab0AUQQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 11:16:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753591Ab0AUQQj
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 11:16:39 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:48648 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753557Ab0AUQQi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2010 11:16:38 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.128] (p4FC1C873.dip.t-dialin.net [79.193.200.115])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o0LGFq6A007764
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 21 Jan 2010 17:15:54 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.23) Gecko/20090817 Thunderbird/2.0.0.23 Mnenhy/0.7.6.666
-In-Reply-To: <7v4ommoo4p.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1753124Ab0AUQTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 11:19:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752900Ab0AUQTI
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 11:19:08 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:56933 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752860Ab0AUQTC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 11:19:02 -0500
+Received: by yxe17 with SMTP id 17so130705yxe.33
+        for <git@vger.kernel.org>; Thu, 21 Jan 2010 08:19:02 -0800 (PST)
+Received: by 10.150.94.16 with SMTP id r16mr2307129ybb.201.1264090742203;
+        Thu, 21 Jan 2010 08:19:02 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 7sm446950ywf.10.2010.01.21.08.19.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 21 Jan 2010 08:19:00 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20100121161016.GA16300@redhat.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137664>
 
-Junio C Hamano wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
->>> Yesterday, I saw rebase--interactive has a few codepaths where "output"
->>> shell function was used with the single-shot export; perhaps they need to
->>> also be fixed.
->> I knew these spots, and they were discussed when that code was introduced. 
->> Before I sent out the mail you were responding to, I tried various ways to 
->> show the failure in rebase--interactive, but it didn't fail...
-> 
-> It may be the case that the single-shot-ness of these GIT_AUTHOR_NAME
-> exports do not matter at all in that program, even though the original
-> versions may have been written carefully not to leak the value suitable
-> for the current commit to later rounds.
-> 
-> I think the recent updates from Michael actually depends on the
-> distinction not to matter.  For example, do_with_author() in 7756ecf
-> (rebase -i: Extract function do_with_author, 2010-01-14) invokes "$@"
-> that could be a shell function.
+"Michael S. Tsirkin" <mst@redhat.com> wrote:
+> On many of my trees (with linux kernel), git fetch is slower than git clone.
+> Even more annoyingly, it would hang sometimes for tens of minutes without any
+> output, even if -v is supplied.
 
-I have to say that I am a little bit over my head here.  I didn't try to
-follow the complete data path of the GIT_AUTHOR_* shell variables, nor
-do I know exactly what git commands they affect.  I just tried to
-locally refactor the code based on my mistaken assumption that shell
-functions are treated much like external commands WRT export of shell
-variables.
+Ouch.  I think -v -v boosts the output to be ever more verbose,
+and might actually show you something.
+ 
+> stracing it shows a ton of lines like the following:
+> 16324 read(10, "ACK 4bbdfe65d23014f539fec4227260"..., 51) = 51
+> 16324 read(10, "0037", 4)               = 4
+> 16324 read(10, "ACK 322c06560fa314b04a6302ea03c0"..., 51) = 51
+> 16324 read(10, "0037", 4)               = 4
+> 16324 read(10, "ACK 848ea2043b128b5947851866a114"..., 51) = 51
+> 16324 read(10, "0037", 4)               = 4
 
-The use of the GIT_AUTHOR_* variables in git-rebase--interactive.sh were
-and are a bit peculiar anyway, since the variables are already set
-before do_with_author() is invoked, and the values are left to hang
-around afterwards.  The do_with_author() function only tries to export
-these already-set variables.
+That's the peers trying to determine a common base.
+ 
+> Is there some way to make got fetch show progress at this stage,
+> or even better, can it be made faster somehow?
 
-So I suppose that the simplest solution is to export these variables
-explicitly in do_with_author(), something like this (similar to the
-third code block that was replaced by the do_with_author() function):
+We shouldn't need to show progress here, we should just be faster.
 
-do_with_author() {
-	export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
-	"$@"
-}
+Given the symptom, it sounds to me like your local repository
+is some 1,000s of commits ahead of the remote repository you are
+fetching from.  Is that true?
 
-But to ensure that this is a correct solution would require verification
-that these now-exported variables don't cause unwanted side-effects
-during any other external command invocations.  Alternatively, I suppose
-that the variables could be exported within a subshell that also invokes
-the "$@" command; this subshell could even source the $AUTHOR_SCRIPT
-file if it were thought advantageous not to set the GIT_AUTHOR_*
-variables in the git-rebase--interactive.sh script at all.
+Are you fetching from a configured remote that has tracking branches,
+or are you fetching through a one-shot URL pasted onto the command
+line?
 
-Help would be most appreciated; I probably won't have time to work on
-this myself for a week or two.
-
-Michael
+-- 
+Shawn.
