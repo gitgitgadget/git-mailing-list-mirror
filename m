@@ -1,94 +1,109 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: how to clone from github behindd a proxy?
-Date: Thu, 21 Jan 2010 08:54:27 +0800
-Message-ID: <be6fef0d1001201654s78ba4e95r59754dd2645f587@mail.gmail.com>
-References: <loom.20100120T102323-689@post.gmane.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2010, #06; Wed, 20)
+Date: Thu, 21 Jan 2010 02:06:23 +0100
+Message-ID: <fabb9a1e1001201706i4c7ffaecs55153c9220bc5992@mail.gmail.com>
+References: <7vljfsxos5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Tim Michelsen <timmichelsen@gmx-topmail.de>
-X-From: git-owner@vger.kernel.org Thu Jan 21 02:01:50 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 02:06:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXlQi-00012n-VT
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 02:01:49 +0100
+	id 1NXlVY-0002an-NB
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 02:06:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752813Ab0AUBBp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jan 2010 20:01:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752582Ab0AUBBp
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 20:01:45 -0500
-Received: from mail-iw0-f196.google.com ([209.85.223.196]:36331 "EHLO
-	mail-iw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751771Ab0AUBBo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2010 20:01:44 -0500
-X-Greylist: delayed 436 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Jan 2010 20:01:44 EST
-Received: by iwn34 with SMTP id 34so4204686iwn.21
-        for <git@vger.kernel.org>; Wed, 20 Jan 2010 17:01:44 -0800 (PST)
+	id S1753061Ab0AUBGp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jan 2010 20:06:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752596Ab0AUBGo
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 20:06:44 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:52982 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752436Ab0AUBGo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2010 20:06:44 -0500
+Received: by pwj9 with SMTP id 9so3572479pwj.21
+        for <git@vger.kernel.org>; Wed, 20 Jan 2010 17:06:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+         :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=vw9lA3sWma9hAkmGBFeTSN878xaBMZqZGlNOwZY7jXY=;
-        b=nC7Ra5ZkEUszHAVyrKcFejcDtXpYXWDMGslWMEc1kgXsZCwVrw1xt1BDPbEux3ab5q
-         Scj92FLEW+jLkGxhskbddoapcIhAmL53+ZEwAu70KhgPVurbq7+Bb4IzYl6MtmIdAiuu
-         moEoLWhpPbOnzaLXh83EAoBiEmT0lQ8/83oNY=
+        bh=axBjCZulWADNBQl0vz5EABKwARz0CO2gkPWAYVjKLKM=;
+        b=fh1HJazvqFde/FiBiWb6X1Vke/WYywyoAyX3fqC8IXM8p8M/an0si2PiHXcHdGbg1Q
+         bhUh0ExiiNZfM3nzHY0a0q2OTcdwwDll/65aYRCdSD3WShrAsbAitVWE3z/ocDqtOl52
+         TNF9im1DSp+59SL1+WDY+WaWMU+F3ZnmOtU0k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=Vmmp+1U+y2OSRBfTY4lAa1RCnvqfgmsozS/sxCrW7jXAupKRhA8DJ07SltCQRapRUC
-         XixNQkQg2ZExttn+rhn2kg0H0t53WUNkJiLi3CX4do/3/W0wDiUjIB/6aR1LU4V4JDJr
-         rlBUwwIG51eZw2OpPFWYRkjBMuJu08YYxk+D4=
-Received: by 10.231.153.69 with SMTP id j5mr1241196ibw.33.1264035267231; Wed, 
-	20 Jan 2010 16:54:27 -0800 (PST)
-In-Reply-To: <loom.20100120T102323-689@post.gmane.org>
+        b=VqDGh+uW32AsMgRIcmEqwZeQtBFa3JuwUXjN2vMY7m01dCq5HYo9wf0+Ogo8217jm1
+         x9cDioI/R/U1c3W1BLOetkklbxTBx0UwopYP+jTw/464tI3WHEH/6Z5y1116oZvMejsV
+         hhd2FIkqftUPabcIWq5cnF6+b6KZmsWks+jdw=
+Received: by 10.143.24.15 with SMTP id b15mr521681wfj.41.1264036003176; Wed, 
+	20 Jan 2010 17:06:43 -0800 (PST)
+In-Reply-To: <7vljfsxos5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137608>
 
-Hi,
+Heya,
 
-On Wed, Jan 20, 2010 at 5:29 PM, Tim Michelsen
-<timmichelsen@gmx-topmail.de> wrote:
-> git clone http://github.com/rwl/traitsbackendpyjamas
-> Initialized empty Git repository in D:\sourcecode/traitsbackendpyjama=
-s/.git/
-> * Couldn't find host github.com in the _netrc file; using defaults
-> * About to connect() to proxy proxy.example.com on port 8000 (#0)
-> * =A0 Trying 149.233.100.7... * Connected to proxy.example.com (149.2=
-33.100.7)
-> port 8000 (#0)
-> =A0GET http://github.com/rwl/traitsbackendpyjamas/info/refs HTTP/1.1
-> User-Agent: git/1.6.5.1.1366.g8ed9
-> Host: github.com
-> Accept: */*
-> Proxy-Connection: Keep-Alive
-> Pragma: no-cache
+On Thu, Jan 21, 2010 at 01:52, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> * jh/notes (2010-01-17) 23 commits
+> =A0- builtin-gc: Teach the new --notes option to garbage-collect note=
+s
+> =A0- Notes API: gc_notes(): Prune notes that belong to non-existing o=
+bjects
+> =A0- t3305: Verify that removing notes triggers automatic fanout cons=
+olidation
+> =A0- builtin-notes: Teach -d option for deleting existing notes
+> =A0- Teach builtin-notes to remove empty notes
+> =A0- Teach notes code to properly preserve non-notes in the notes tre=
+e
+> =A0- t3305: Verify that adding many notes with git-notes triggers inc=
+reased fanout
+> =A0- t3301: Verify successful annotation of non-commits
+> =A0- Builtin-ify git-notes
+> =A0- Refactor notes concatenation into a flexible interface for combi=
+ning notes
+> =A0- Notes API: Allow multiple concurrent notes trees with new struct=
+ notes_tree
+> =A0- Notes API: write_notes_tree(): Store the notes tree in the datab=
+ase
+> =A0- Notes API: for_each_note(): Traverse the entire notes tree with =
+a callback
+> =A0- Notes API: get_note(): Return the note annotating the given obje=
+ct
+> =A0- Notes API: remove_note(): Remove note objects from the notes tre=
+e structure
+> =A0- Notes API: add_note(): Add note objects to the internal notes tr=
+ee structure
+> =A0- Notes API: init_notes(): Initialize the notes tree from the give=
+n notes ref
+> =A0- Add tests for checking correct handling of $GIT_NOTES_REF and co=
+re.notesRef
+> =A0- Notes API: get_commit_notes() -> format_note() + remove the comm=
+it restriction
+> =A0- Minor non-functional fixes to notes.c
+> =A0(merged to 'next' on 2010-01-02 at ae42130)
+> =A0+ Add more testcases to test fast-import of notes
+> =A0+ Rename t9301 to t9350, to make room for more fast-import tests
+> =A0+ fast-import: Proper notes tree manipulation
 >
-> * The requested URL returned error: 404
-> * Closing connection #0
-> fatal: http://github.com/rwl/traitsbackendpyjamas/info/refs not found=
-: did you
-> run git update-server-info on the server?
+> Updated with a re-roll.
 
-this isn't a problem with your proxy - git connects to your proxy fine.
-
-The problem is that the info/refs file isn't found at the repo URL you
-specified.
-
-I think for github repos, you need to put a ".git" behind the url, so
-you should try cloning from
-
-  http://github.com/rwl/traitsbackendpyjamas.git
-
-instead.
+Just checking, you reverted all from next (with exception of the first
+three), and now re-queued it to pu, with the first three still in
+next? Or did I mis-remember and did only the first three make it to
+next in the first place?
 
 --=20
 Cheers,
-Ray Chuan
+
+Sverre Rabbelier
