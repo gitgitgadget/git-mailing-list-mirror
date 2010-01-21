@@ -1,58 +1,85 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 2/2] rev-parse --branches/--tags/--remotes=pattern
-Date: Thu, 21 Jan 2010 14:51:41 +0100
-Message-ID: <4B585BED.700@drmicha.warpmail.net>
-References: <1263980906-11058-1-git-send-email-ilari.liusvaara@elisanet.fi> <1263980906-11058-2-git-send-email-ilari.liusvaara@elisanet.fi> <4B584DDD.7060701@viscovery.net>
+From: Yaroslav Halchenko <debian@onerussian.com>
+Subject: Re: problem cloning via http since v1.6.6-rc0
+Date: Thu, 21 Jan 2010 09:00:55 -0500
+Message-ID: <20100121140054.GH18213@onerussian.com>
+References: <20100121004756.GA18213@onerussian.com>
+ <20100121050850.GA18896@Knoppix>
+ <be6fef0d1001202247l7467a14ap8181eb3ed830167a@mail.gmail.com>
+ <20100121155136.17b59e8f.rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jan 21 14:55:11 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 15:01:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXxV9-00087D-2M
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 14:55:11 +0100
+	id 1NXxat-0002LM-Gw
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 15:01:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754388Ab0AUNx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 08:53:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754367Ab0AUNxx
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 08:53:53 -0500
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:54669 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754276Ab0AUNxk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Jan 2010 08:53:40 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 7A1B1CDF87;
-	Thu, 21 Jan 2010 08:53:37 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 21 Jan 2010 08:53:37 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=s4R733DFoCR+Xmf8c+Rx2rElens=; b=jZVx79aP4g+kOmJElBYnYx3D0lYeh9PeThDO5E3xM9KyJc4PLT+/IJvhgGHsHwAizQO9P6vTmsUtWCpsemVI3vw+0lLidTk9zLpKU2eUElBN13wD9QLZOxOc3XwexJd4zvT0NqgHEXY9S8uC4E7TNXAnVi3t4jcBijrESkhCZaw=
-X-Sasl-enc: YG/pTszTK+22Wxo3KKg6XqhmIboP3y7eTYMsoRDP+CXM 1264082017
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 979934B92F9;
-	Thu, 21 Jan 2010 08:53:36 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7pre) Gecko/20091209 Lightning/1.0b2pre Shredder/3.0.1pre
-In-Reply-To: <4B584DDD.7060701@viscovery.net>
+	id S1753173Ab0AUOBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 09:01:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752999Ab0AUOBA
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 09:01:00 -0500
+Received: from washoe.dartmouth.edu ([129.170.30.229]:52085 "EHLO
+	smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752357Ab0AUOA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 09:00:59 -0500
+Received: from smtp.onerussian.com ([192.168.100.6] helo=washoe.onerussian.com)
+	by smtp.onerussian.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <yoh@onerussian.com>)
+	id 1NXxah-0005lU-5m; Thu, 21 Jan 2010 09:00:55 -0500
+Received: from yoh by washoe.onerussian.com with local (Exim 4.69)
+	(envelope-from <yoh@onerussian.com>)
+	id 1NXxah-0005lR-1T; Thu, 21 Jan 2010 09:00:55 -0500
+Content-Disposition: inline
+In-Reply-To: <20100121155136.17b59e8f.rctay89@gmail.com>
+X-URL: http://www.onerussian.com
+X-Image-Url: http://www.onerussian.com/img/yoh.png
+X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
+X-fingerprint: 3BB6 E124 0643 A615 6F00  6854 8D11 4563 75C0 24C8
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: 192.168.100.6
+X-SA-Exim-Rcpt-To: rctay89@gmail.com, ilari.liusvaara@elisanet.fi, spearce@spearce.org, git@vger.kernel.org
+X-SA-Exim-Mail-From: yoh@onerussian.com
+X-SA-Exim-Scanned: No (on smtp.onerussian.com); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137656>
 
-Johannes Sixt venit, vidit, dixit 21.01.2010 13:51:
-> Works for me, thank you very much!
-> 
-> Junio, kindly squash in these speeling fixes in both patches:
-> 
-> sed -i 's/impiled/implied/g' `git diff HEAD^ --name-only Documentation/`
-> 
+Hi Tay Ray,
 
-Also, the option descriptions are kind of staccato English right now,
-lacking a few "the" here and there. Should we fix this or simply leave
-it at that?
+That patch works fine for me ;) I only hope it would get accepted into
+bugfix and next dev release  (I guess it might annoy some of apache
+admins a bit due to increase of their errors.log now even for well
+maintained repositories, but well -- that is life ;-) )
 
-Michael
+Thanks!
+Yarik
+
+On Thu, 21 Jan 2010, Tay Ray Chuan wrote:
+> > afaik, putting a "?var1=val1&var2=...." still makes it a normal GET
+> > request, even if the url requested is just a plain file and not some
+> > cgi handler that uses those variables/values.
+
+> Yaroslav, sorry for making you run in circles - it really is git's
+> fault (sorta).
+
+> In recent versions of git, we were sending out the GET request for
+> info/refs with a query string (?serivce=<service name>). I'm not sure
+> why, but your server is not playing nice when the query string is
+> appended.
+
+> Could you try this patch and see if it solves the issue? I manage to
+> clone your repo successfully with it.
+-- 
+                                  .-.
+=------------------------------   /v\  ----------------------------=
+Keep in touch                    // \\     (yoh@|www.)onerussian.com
+Yaroslav Halchenko              /(   )\               ICQ#: 60653192
+                   Linux User    ^^-^^    [175555]
