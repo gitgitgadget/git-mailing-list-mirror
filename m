@@ -1,77 +1,77 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: problem cloning via http since v1.6.6-rc0
-Date: Thu, 21 Jan 2010 14:47:37 +0800
-Message-ID: <be6fef0d1001202247l7467a14ap8181eb3ed830167a@mail.gmail.com>
-References: <20100121004756.GA18213@onerussian.com>
-	 <20100121050850.GA18896@Knoppix>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix memory corruption when .gitignore does not end by \n
+Date: Wed, 20 Jan 2010 22:48:31 -0800
+Message-ID: <7vockovtq8.fsf@alter.siamese.dyndns.org>
+References: <fcaeb9bf1001200458v436a8adeq5cfc6753900e6c0c@mail.gmail.com>
+ <1263996556-9712-1-git-send-email-pclouds@gmail.com>
+ <7v3a20367d.fsf@alter.siamese.dyndns.org>
+ <fcaeb9bf1001201738x5cd374c2o280ec42d6d65c0f7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Yaroslav Halchenko <debian@onerussian.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Thu Jan 21 07:48:16 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Jonathan del Strother <maillist@steelskies.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 07:49:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXqpz-0007zv-MK
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 07:48:16 +0100
+	id 1NXqqp-0008Ct-45
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 07:49:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752679Ab0AUGri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 01:47:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752529Ab0AUGri
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 01:47:38 -0500
-Received: from mail-iw0-f196.google.com ([209.85.223.196]:60911 "EHLO
-	mail-iw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752164Ab0AUGri (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2010 01:47:38 -0500
-Received: by iwn34 with SMTP id 34so4394121iwn.21
-        for <git@vger.kernel.org>; Wed, 20 Jan 2010 22:47:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=5NlBInV6NvanogrcwV6Jc6QIRIop8WLPHCgBXaL6G5k=;
-        b=r4ckWc3idfOJGxiUDUfo3ZNDuLCH5TMlMFlBq1Vp3UB5CcKQvcBUXilrGVrYY3O9b6
-         e/9jNhdJHxFSWgi7G8LuaJ4tAwvqvTk1YtgxIdtHfQ0fwVf24oWrYhqZ64OFkUsb87dj
-         RMPdImlBBG6p2YKJKnnDlMP754BbD54A2b8qM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=mbWua8nyg2txFSAk7wRu0UdLBvu+mScOEVH+OqJfQiF1wBQodFQt9iGs2B0VA/A/Wp
-         h1iO+dpLt4UqnOyrd0X1Cl9+nLXPfHqxumwOLeMeAFz62lMXusa7MkUTp0FMcauOgkPJ
-         a3XVDBUcP65Lwj5s0AsSx4AHhecGPEq5OGMB4=
-Received: by 10.231.147.21 with SMTP id j21mr1625722ibv.80.1264056457211; Wed, 
-	20 Jan 2010 22:47:37 -0800 (PST)
-In-Reply-To: <20100121050850.GA18896@Knoppix>
+	id S1752734Ab0AUGsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 01:48:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752713Ab0AUGsp
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 01:48:45 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40672 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752528Ab0AUGso (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 01:48:44 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C03392F68;
+	Thu, 21 Jan 2010 01:48:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jVcQh/ik/YFvQ+zqG1CdMyVc1ZU=; b=VbgBu8
+	0sha6PHEc34EUF/WOdsyM48uIxghDbYDkRA7oB0kMx+mt5msk2MobCYenTJ3MuLJ
+	Dv8zx6u0He8oWsjbRgUxwvJ7bhTh+aBViBKElwcYIlheKNeO2y0GQC+2tSyifJuu
+	FH3eAbVNo3BdTrfhuUvOIq2BL9QJPgXqpdVQk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=a8A1YFVkP9KyHV1pRHvptpWfrUPSpXGr
+	ZhS72IowzjJhnPFTK+6QBQCVz32M+VaflfWL80/pT1h/ZA4kiNMV49kbu8MFIML5
+	J2svVnE3XX3WCCWjzdxxTfN9XSiZF/RgZnI+xZU+c28GuzDFktLYrnIS7EnczaQz
+	a8cOn+dFN/c=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DE8BF92F64;
+	Thu, 21 Jan 2010 01:48:38 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E9EB692F63; Thu, 21 Jan
+ 2010 01:48:32 -0500 (EST)
+In-Reply-To: <fcaeb9bf1001201738x5cd374c2o280ec42d6d65c0f7@mail.gmail.com>
+ (Nguyen Thai Ngoc Duy's message of "Thu\, 21 Jan 2010 08\:38\:48 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 01585C8C-0659-11DF-99F5-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137633>
 
-Hi,
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-On Thu, Jan 21, 2010 at 1:08 PM, Ilari Liusvaara
-<ilari.liusvaara@elisanet.fi> wrote:
-> Looks like remote-curl (which handles http) issues request for:
+> I mean the t3001 patch in comment part, which removes \n at the end of
+> .gitignore and crashes the unmodified git.
 >
-> '.../info/refs?service=git-upload-pack'
->
-> And expects that if there is no smart HTTP server there for the request to be
-> interpretted as:
->
-> '.../info/refs'
->
-> (i.e. webserver would ignore the query). This isn't true for git.debian.org.
-> Requesting the latter works (and the data formatting looks sane), but the
-> former is 404. This causes the fetch to fail.
+> IOW I found a problem and this patch (not the t3001 one) should fix
+> it. Not sure if this causes Jonathan problem though.
 
-afaik, putting a "?var1=val1&var2=...." still makes it a normal GET
-request, even if the url requested is just a plain file and not some
-cgi handler that uses those variables/values.
+Ah, I see.  And a bug that leaves a string unterminated will exhibit
+different symptoms depending on what garbage happens to follow it, so it
+may not be universally reproducible.
 
---
-Cheers,
-Ray Chuan
+Thanks; applied (and I saw Jonathan's Ack, as well).
+
+Thanks, both.
