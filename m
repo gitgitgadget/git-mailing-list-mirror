@@ -1,109 +1,83 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: What's cooking in git.git (Jan 2010, #06; Wed, 20)
-Date: Thu, 21 Jan 2010 02:06:23 +0100
-Message-ID: <fabb9a1e1001201706i4c7ffaecs55153c9220bc5992@mail.gmail.com>
-References: <7vljfsxos5.fsf@alter.siamese.dyndns.org>
+From: Yaroslav Halchenko <debian@onerussian.com>
+Subject: problem cloning via http since v1.6.6-rc0
+Date: Wed, 20 Jan 2010 19:47:56 -0500
+Message-ID: <20100121004756.GA18213@onerussian.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 21 02:06:49 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 21 02:22:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXlVY-0002an-NB
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 02:06:49 +0100
+	id 1NXlkz-0007CD-0K
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 02:22:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753061Ab0AUBGp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jan 2010 20:06:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752596Ab0AUBGo
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 20:06:44 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:52982 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752436Ab0AUBGo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2010 20:06:44 -0500
-Received: by pwj9 with SMTP id 9so3572479pwj.21
-        for <git@vger.kernel.org>; Wed, 20 Jan 2010 17:06:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=axBjCZulWADNBQl0vz5EABKwARz0CO2gkPWAYVjKLKM=;
-        b=fh1HJazvqFde/FiBiWb6X1Vke/WYywyoAyX3fqC8IXM8p8M/an0si2PiHXcHdGbg1Q
-         bhUh0ExiiNZfM3nzHY0a0q2OTcdwwDll/65aYRCdSD3WShrAsbAitVWE3z/ocDqtOl52
-         TNF9im1DSp+59SL1+WDY+WaWMU+F3ZnmOtU0k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=VqDGh+uW32AsMgRIcmEqwZeQtBFa3JuwUXjN2vMY7m01dCq5HYo9wf0+Ogo8217jm1
-         x9cDioI/R/U1c3W1BLOetkklbxTBx0UwopYP+jTw/464tI3WHEH/6Z5y1116oZvMejsV
-         hhd2FIkqftUPabcIWq5cnF6+b6KZmsWks+jdw=
-Received: by 10.143.24.15 with SMTP id b15mr521681wfj.41.1264036003176; Wed, 
-	20 Jan 2010 17:06:43 -0800 (PST)
-In-Reply-To: <7vljfsxos5.fsf@alter.siamese.dyndns.org>
+	id S1753725Ab0AUBWa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2010 20:22:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753657Ab0AUBWa
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 20:22:30 -0500
+Received: from washoe.dartmouth.edu ([129.170.30.229]:55189 "EHLO
+	smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752839Ab0AUBW2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2010 20:22:28 -0500
+X-Greylist: delayed 2071 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Jan 2010 20:22:28 EST
+Received: from smtp.onerussian.com ([192.168.100.6] helo=washoe.onerussian.com)
+	by smtp.onerussian.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <yoh@onerussian.com>)
+	id 1NXlDI-00019J-Gu
+	for git@vger.kernel.org; Wed, 20 Jan 2010 19:47:56 -0500
+Received: from yoh by washoe.onerussian.com with local (Exim 4.69)
+	(envelope-from <yoh@onerussian.com>)
+	id 1NXlDI-00019G-AI
+	for git@vger.kernel.org; Wed, 20 Jan 2010 19:47:56 -0500
+Content-Disposition: inline
+X-URL: http://www.onerussian.com
+X-Image-Url: http://www.onerussian.com/img/yoh.png
+X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
+X-fingerprint: 3BB6 E124 0643 A615 6F00  6854 8D11 4563 75C0 24C8
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: 192.168.100.6
+X-SA-Exim-Rcpt-To: git@vger.kernel.org
+X-SA-Exim-Mail-From: yoh@onerussian.com
+X-SA-Exim-Scanned: No (on smtp.onerussian.com); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137609>
 
-Heya,
+Dear Git Developers,
 
-On Thu, Jan 21, 2010 at 01:52, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> * jh/notes (2010-01-17) 23 commits
-> =A0- builtin-gc: Teach the new --notes option to garbage-collect note=
-s
-> =A0- Notes API: gc_notes(): Prune notes that belong to non-existing o=
-bjects
-> =A0- t3305: Verify that removing notes triggers automatic fanout cons=
-olidation
-> =A0- builtin-notes: Teach -d option for deleting existing notes
-> =A0- Teach builtin-notes to remove empty notes
-> =A0- Teach notes code to properly preserve non-notes in the notes tre=
-e
-> =A0- t3305: Verify that adding many notes with git-notes triggers inc=
-reased fanout
-> =A0- t3301: Verify successful annotation of non-commits
-> =A0- Builtin-ify git-notes
-> =A0- Refactor notes concatenation into a flexible interface for combi=
-ning notes
-> =A0- Notes API: Allow multiple concurrent notes trees with new struct=
- notes_tree
-> =A0- Notes API: write_notes_tree(): Store the notes tree in the datab=
-ase
-> =A0- Notes API: for_each_note(): Traverse the entire notes tree with =
-a callback
-> =A0- Notes API: get_note(): Return the note annotating the given obje=
-ct
-> =A0- Notes API: remove_note(): Remove note objects from the notes tre=
-e structure
-> =A0- Notes API: add_note(): Add note objects to the internal notes tr=
-ee structure
-> =A0- Notes API: init_notes(): Initialize the notes tree from the give=
-n notes ref
-> =A0- Add tests for checking correct handling of $GIT_NOTES_REF and co=
-re.notesRef
-> =A0- Notes API: get_commit_notes() -> format_note() + remove the comm=
-it restriction
-> =A0- Minor non-functional fixes to notes.c
-> =A0(merged to 'next' on 2010-01-02 at ae42130)
-> =A0+ Add more testcases to test fast-import of notes
-> =A0+ Rename t9301 to t9350, to make room for more fast-import tests
-> =A0+ fast-import: Proper notes tree manipulation
->
-> Updated with a re-roll.
+Some users of our project started recently to complain that they could not
+clone the repository via http (git:// wasn't a choice due to heavy firewalling)
+and because http:// was used as a protocol to get sources in some distributions
+(e.g. macports).
 
-Just checking, you reverted all from next (with exception of the first
-three), and now re-queued it to pu, with the first three still in
-next? Or did I mis-remember and did only the first three make it to
-next in the first place?
+Cloning of the repository works fine with v1.6.5.7 but fails with v1.6.6-rc0.
+I haven't done full bisection since that repository is relatively bulky and
+poor server is quite loaded anyways, so I thought you just would get a clue
+without going brute-force.  But here are the details:  in case of failing
+operation, I immediately get failure:
 
---=20
-Cheers,
+$> GIT_TRACE=2 ./git clone http://git.debian.org/git/pkg-exppsy/pymvpa.git
+trace: built-in: git 'clone' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git'
+warning: templates not found /home/yoh/share/git-core/templates
+Initialized empty Git repository in /home/yoh/proj/misc/git/pymvpa/.git/
+trace: run_command: 'remote-curl' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git'
+trace: exec: 'git' 'remote-curl' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git'
+trace: exec: 'git-remote-curl' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git'
+trace: run_command: 'git-remote-curl' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git'
+fatal: http://git.debian.org/git/pkg-exppsy/pymvpa.git/info/refs?service=git-upload-pack not found: did you run git update-server-info on the server?
 
-Sverre Rabbelier
+on the server, 1.6.3.3 version of git was used to run git
+update-server-info.
+
+Thanks in advance
+-- 
+Yaroslav O. Halchenko
+Postdoctoral Fellow,   Department of Psychological and Brain Sciences
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
+WWW:   http://www.linkedin.com/in/yarik        
