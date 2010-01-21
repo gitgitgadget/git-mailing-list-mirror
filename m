@@ -1,287 +1,100 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Remove diff machinery dependency from read-cache
-Date: Thu, 21 Jan 2010 11:37:38 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.1001211119130.13231@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv11 20/20] builtin-gc: Teach the new --notes option to 
+ garbage-collect notes
+Date: Thu, 21 Jan 2010 12:01:14 -0800
+Message-ID: <7vtyufp6r9.fsf@alter.siamese.dyndns.org>
+References: <1263762277-31419-1-git-send-email-johan@herland.net>
+ <1263762277-31419-21-git-send-email-johan@herland.net>
+ <780e0a6b1001211127u6304546ej4e5bffbceca12e0b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 21 20:45:20 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Jan 21 21:01:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NY2xz-00087e-Hu
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 20:45:20 +0100
+	id 1NY3Df-0006pT-OC
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 21:01:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754581Ab0AUTpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 14:45:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754570Ab0AUTpL
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 14:45:11 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:37198 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754502Ab0AUTpJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Jan 2010 14:45:09 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0LJbcpJ021088
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 21 Jan 2010 11:37:39 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0LJbcdW025220;
-	Thu, 21 Jan 2010 11:37:38 -0800
-X-X-Sender: torvalds@localhost.localdomain
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.449 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753949Ab0AUUB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 15:01:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753256Ab0AUUB0
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 15:01:26 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37858 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752103Ab0AUUBZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 15:01:25 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 79D84926C2;
+	Thu, 21 Jan 2010 15:01:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=y874TEDjta0ghxxiz6yP/i3QsqI=; b=gDmd5C
+	Hcd+UKaT/+Or4Tx4kqLn/jPerFQu1pvc9dFqtGhUT0oA/LEp1wiqy1rlXHtF5Xu9
+	91qdK9ibggoeq+hw3vmdyaEcnGO6Xd5zZFAmTYlLSDzsPlBbQWMi7fwbJ2A6Hd1Q
+	TgpVR7zqdI2SoTTcJTcw4mZJ0pzj/hC6RY5Us=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aEPAw/thn6g+sQ2F2j1qS06kj5YjnntJ
+	gQLVASWj6vLqpRtQWaWM32oxnSdTvLpNCKh/+5K3eON4OAd/Tp6cKmsN8u8ay8wt
+	EKlpA+74zCSDiD+ri7ZVn81UvYEzMAJCd77N/6drYLf63om4jVgtCl/H3cMpYXUS
+	/d6k21EP6KM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A687926BF;
+	Thu, 21 Jan 2010 15:01:20 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 75858926B8; Thu, 21 Jan
+ 2010 15:01:16 -0500 (EST)
+In-Reply-To: <780e0a6b1001211127u6304546ej4e5bffbceca12e0b@mail.gmail.com>
+ (Stephen Boyd's message of "Thu\, 21 Jan 2010 11\:27\:27 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: BE24DF52-06C7-11DF-8633-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137687>
 
+Stephen Boyd <bebarino@gmail.com> writes:
 
-Exal Sibeaz pointed out that some git files are way too big, and that 
-add_files_to_cache() brings in all the diff machinery to any git binary 
-that needs the basic git SHA1 object operations from read-cache.c. Which 
-is pretty much all of them.
+> On Sun, Jan 17, 2010 at 1:04 PM, Johan Herland <johan@herland.net> wrote:
+>> The new --notes option triggers a call to gc_notes(), which removes note
+>> objects that reference non-existing objects.
+>>
+>
+> Shouldn't notes be unconditionally garbage collected? Or maybe there's
+> a reason why notes should be treated differently that isn't written
+> here.
 
-It's doubly silly, since add_files_to_cache() is only used by builtin 
-programs (add, checkout and commit), so it's fairly easily fixed by just 
-moving the thing to builtin-add.c, and avoiding the dependency entirely.
+A few thoughts, inspired by this patch, but on other things around
+"notes":
 
-I initially argued to Exal that it would probably be best to try to depend 
-on smart compilers and linkers, but after spending some time trying to 
-make -ffunction-sections work and giving up, I think Exal was right, and 
-the fix is to just do some trivial cleanups like this.
+ - This is more about pruning notes regarding objects that are no longer
+   availabe from _the tip_ of the notes tree.  It doesn't run (and I am
+   not suggesting to make it it to run) filter-branch to eradicate all
+   such stale notes from the notes commit ancestry, so in that sense this
+   is not really a garbage collection.
 
-This trivial cleanup results in pretty stunning file size differences. 
-The diff machinery really is mostly used by just the builtin programs, and 
-you have things like these trivial before-and-after numbers:
+ - We would want to have "notes prune" subcommand that lets us do the
+   pruning without all the other "gc" operation.  "git gc" would of course
+   call the same underlying code "notes prune" would use if we want to
+   be able to trigger "notes prune" from it.
 
-  -rwxr-xr-x 1 torvalds torvalds 1727420 2010-01-21 10:53 git-hash-object
-  -rwxrwxr-x 1 torvalds torvalds  940265 2010-01-21 11:16 git-hash-object
+ - Because there is no public interface to list objects that are annotated
+   with the most recent notes tree, the only thing this pruning affects is
+   the look-up overhead of "log --show-notes".  As such, it might be
+   better to later add tree rebalancing in "notes prune" and at that
+   point, it will become even less about garbage collection and more about
+   performance ("notes optimize?").
 
-Now, I'm not saying that 940kB is good either, but that's mostly all the 
-debug information - you can see the real code with 'size':
+ - Do we want to have a public interface to list objects that are
+   annotated with notes?  "git notes" probably deserves a bit more
+   subcommands other than "(edit|show)" to help users, e.g. "list" and
+   "remove".
 
-   text	   data	    bss	    dec	    hex	filename
- 418675	   3920	 127408	 550003	  86473	git-hash-object (before)
- 230650	   2288	 111728	 344666	  5425a	git-hash-object (after)
-
-ie we have a nice 24% size reduction from this trivial cleanup.
-
-It's not just that one file either. I get:
-
-	[torvalds@nehalem git]$ du -s /home/torvalds/libexec/git-core
-	45640	/home/torvalds/libexec/git-core (before)
-	33508	/home/torvalds/libexec/git-core (after)
-
-so we're talking 12MB of diskspace here. 
-
-(Of course, stripping all the binaries brings the 33MB down to 9MB, so the 
-whole debug information thing is still the bulk of it all, but that's a 
-separate issue entirely)
-
-Now, I'm sure there are other things we should do, and changing our 
-compiler flags from -O2 to -Os would bring the text size down by an 
-additional almost 20%, but this thing Exal pointed out seems to be some 
-good low-hanging fruit.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
- builtin-add.c |   76 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- read-cache.c  |   78 ---------------------------------------------------------
- 2 files changed, 76 insertions(+), 78 deletions(-)
-
-diff --git a/builtin-add.c b/builtin-add.c
-index cb6e590..2705f8d 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -11,6 +11,7 @@
- #include "run-command.h"
- #include "parse-options.h"
- #include "diff.h"
-+#include "diffcore.h"
- #include "revision.h"
- 
- static const char * const builtin_add_usage[] = {
-@@ -20,6 +21,81 @@ static const char * const builtin_add_usage[] = {
- static int patch_interactive, add_interactive, edit_interactive;
- static int take_worktree_changes;
- 
-+struct update_callback_data
-+{
-+	int flags;
-+	int add_errors;
-+};
-+
-+static void update_callback(struct diff_queue_struct *q,
-+			    struct diff_options *opt, void *cbdata)
-+{
-+	int i;
-+	struct update_callback_data *data = cbdata;
-+
-+	for (i = 0; i < q->nr; i++) {
-+		struct diff_filepair *p = q->queue[i];
-+		const char *path = p->one->path;
-+		switch (p->status) {
-+		default:
-+			die("unexpected diff status %c", p->status);
-+		case DIFF_STATUS_UNMERGED:
-+			/*
-+			 * ADD_CACHE_IGNORE_REMOVAL is unset if "git
-+			 * add -u" is calling us, In such a case, a
-+			 * missing work tree file needs to be removed
-+			 * if there is an unmerged entry at stage #2,
-+			 * but such a diff record is followed by
-+			 * another with DIFF_STATUS_DELETED (and if
-+			 * there is no stage #2, we won't see DELETED
-+			 * nor MODIFIED).  We can simply continue
-+			 * either way.
-+			 */
-+			if (!(data->flags & ADD_CACHE_IGNORE_REMOVAL))
-+				continue;
-+			/*
-+			 * Otherwise, it is "git add path" is asking
-+			 * to explicitly add it; we fall through.  A
-+			 * missing work tree file is an error and is
-+			 * caught by add_file_to_index() in such a
-+			 * case.
-+			 */
-+		case DIFF_STATUS_MODIFIED:
-+		case DIFF_STATUS_TYPE_CHANGED:
-+			if (add_file_to_index(&the_index, path, data->flags)) {
-+				if (!(data->flags & ADD_CACHE_IGNORE_ERRORS))
-+					die("updating files failed");
-+				data->add_errors++;
-+			}
-+			break;
-+		case DIFF_STATUS_DELETED:
-+			if (data->flags & ADD_CACHE_IGNORE_REMOVAL)
-+				break;
-+			if (!(data->flags & ADD_CACHE_PRETEND))
-+				remove_file_from_index(&the_index, path);
-+			if (data->flags & (ADD_CACHE_PRETEND|ADD_CACHE_VERBOSE))
-+				printf("remove '%s'\n", path);
-+			break;
-+		}
-+	}
-+}
-+
-+int add_files_to_cache(const char *prefix, const char **pathspec, int flags)
-+{
-+	struct update_callback_data data;
-+	struct rev_info rev;
-+	init_revisions(&rev, prefix);
-+	setup_revisions(0, NULL, &rev, NULL);
-+	rev.prune_data = pathspec;
-+	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
-+	rev.diffopt.format_callback = update_callback;
-+	data.flags = flags;
-+	data.add_errors = 0;
-+	rev.diffopt.format_callback_data = &data;
-+	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
-+	return !!data.add_errors;
-+}
-+
- static void fill_pathspec_matches(const char **pathspec, char *seen, int specs)
- {
- 	int num_unmatched = 0, i;
-diff --git a/read-cache.c b/read-cache.c
-index edd9959..79938bf 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -10,9 +10,6 @@
- #include "dir.h"
- #include "tree.h"
- #include "commit.h"
--#include "diff.h"
--#include "diffcore.h"
--#include "revision.h"
- #include "blob.h"
- #include "resolve-undo.h"
- 
-@@ -1648,81 +1645,6 @@ int read_index_unmerged(struct index_state *istate)
- 	return unmerged;
- }
- 
--struct update_callback_data
--{
--	int flags;
--	int add_errors;
--};
--
--static void update_callback(struct diff_queue_struct *q,
--			    struct diff_options *opt, void *cbdata)
--{
--	int i;
--	struct update_callback_data *data = cbdata;
--
--	for (i = 0; i < q->nr; i++) {
--		struct diff_filepair *p = q->queue[i];
--		const char *path = p->one->path;
--		switch (p->status) {
--		default:
--			die("unexpected diff status %c", p->status);
--		case DIFF_STATUS_UNMERGED:
--			/*
--			 * ADD_CACHE_IGNORE_REMOVAL is unset if "git
--			 * add -u" is calling us, In such a case, a
--			 * missing work tree file needs to be removed
--			 * if there is an unmerged entry at stage #2,
--			 * but such a diff record is followed by
--			 * another with DIFF_STATUS_DELETED (and if
--			 * there is no stage #2, we won't see DELETED
--			 * nor MODIFIED).  We can simply continue
--			 * either way.
--			 */
--			if (!(data->flags & ADD_CACHE_IGNORE_REMOVAL))
--				continue;
--			/*
--			 * Otherwise, it is "git add path" is asking
--			 * to explicitly add it; we fall through.  A
--			 * missing work tree file is an error and is
--			 * caught by add_file_to_index() in such a
--			 * case.
--			 */
--		case DIFF_STATUS_MODIFIED:
--		case DIFF_STATUS_TYPE_CHANGED:
--			if (add_file_to_index(&the_index, path, data->flags)) {
--				if (!(data->flags & ADD_CACHE_IGNORE_ERRORS))
--					die("updating files failed");
--				data->add_errors++;
--			}
--			break;
--		case DIFF_STATUS_DELETED:
--			if (data->flags & ADD_CACHE_IGNORE_REMOVAL)
--				break;
--			if (!(data->flags & ADD_CACHE_PRETEND))
--				remove_file_from_index(&the_index, path);
--			if (data->flags & (ADD_CACHE_PRETEND|ADD_CACHE_VERBOSE))
--				printf("remove '%s'\n", path);
--			break;
--		}
--	}
--}
--
--int add_files_to_cache(const char *prefix, const char **pathspec, int flags)
--{
--	struct update_callback_data data;
--	struct rev_info rev;
--	init_revisions(&rev, prefix);
--	setup_revisions(0, NULL, &rev, NULL);
--	rev.prune_data = pathspec;
--	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
--	rev.diffopt.format_callback = update_callback;
--	data.flags = flags;
--	data.add_errors = 0;
--	rev.diffopt.format_callback_data = &data;
--	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
--	return !!data.add_errors;
--}
--
- /*
-  * Returns 1 if the path is an "other" path with respect to
-  * the index; that is, the path is not mentioned in the index at all,
+ - If this were "notes optimize" (this is just me thinking aloud), perhaps
+   we would want to do this at some key places (e.g. when you
+   automatically rebalance the tree).
