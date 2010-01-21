@@ -1,97 +1,96 @@
-From: =?UTF-8?B?0JLQmtC+0L3RgtCw0LrRgtC1LtGA0YM=?= <admin@vkontakte.ru>
-Subject: =?UTF-8?B?QW5kcmV5INCf0L7Qs9GA0LXQsdC90L7QuSDQtNC+0LHQsNCy0LjQuyDQktCw?=
- =?UTF-8?B?0YEg0LIg0LTRgNGD0LfRjNGPINC90LAg0YHQsNC50YLQtSDQktCa0L7QvdGC?=
- =?UTF-8?B?0LDQutGC0LUu0YDRgw==?=
-Date: Thu, 21 Jan 2010 05:35:18 +0300
-Message-ID: <de04af9567747d5d380e56335cc21400@localhost.localdomain>
-Reply-To: "Pavel Durov, inContact.ru Admin" <admin@vkontakte.ru>
+From: Johan Herland <johan@herland.net>
+Subject: Re: git notes: notes
+Date: Thu, 21 Jan 2010 03:54:22 +0100
+Message-ID: <201001210354.22756.johan@herland.net>
+References: <20100120050343.GA12860@gnu.kitenet.net>
+ <alpine.DEB.1.00.1001202354070.4985@pacific.mpi-cbg.de>
+ <7vljfsz7vx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 21 03:35:29 2010
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Joey Hess <joey@kitenet.net>, johan@herland.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 21 03:55:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXmtK-0001t8-HH
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 03:35:26 +0100
+	id 1NXnCF-0006zz-92
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 03:54:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752057Ab0AUCfW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jan 2010 21:35:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751952Ab0AUCfV
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 21:35:21 -0500
-Received: from cs33.vkontakte.ru ([93.186.224.33]:33533 "EHLO vkontakte.ru"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751663Ab0AUCfV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jan 2010 21:35:21 -0500
-Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
-	by vkontakte.ru with esmtp (Exim 4.63)
-	(envelope-from <admin@vkontakte.ru>)
-	id 1NXmtC-0004na-Ht
-	for git@vger.kernel.org; Thu, 21 Jan 2010 05:35:18 +0300
-X-Priority: 3
-X-Mailer: PHPMailer [version 1.73]
+	id S1752903Ab0AUCy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2010 21:54:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752214Ab0AUCyZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 21:54:25 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:45859 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751433Ab0AUCyZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2010 21:54:25 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KWK00G90TEOMY90@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 21 Jan 2010 03:54:24 +0100 (MET)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KWK00JSPTENCQ10@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 21 Jan 2010 03:54:24 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2010.1.21.24530
+User-Agent: KMail/1.12.4 (Linux/2.6.32-ARCH; KDE/4.3.4; x86_64; ; )
+In-reply-to: <7vljfsz7vx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.1 points;
- *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
- *      [cf:  64]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
- *  0.1 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: vkontakte.ru]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137621>
 
-git,
+On Thursday 21 January 2010, Junio C Hamano wrote:
+> [...]
 
-Andrey =D0=9F=D0=BE=D0=B3=D1=80=D0=B5=D0=B1=D0=BD=D0=BE=D0=B9 =D0=B4=D0=
-=BE=D0=B1=D0=B0=D0=B2=D0=B8=D0=BB =D0=92=D0=B0=D1=81 =D0=B2 =D0=B4=D1=80=
-=D1=83=D0=B7=D1=8C=D1=8F =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82=D0=B5 =D0=
-=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=83
+I just want to note that I've read the whole thread (up to here), and I 
+agree with pretty much everything that's been said so far:
 
-=D0=92=D1=8B =D0=BC=D0=BE=D0=B6=D0=B5=D1=82=D0=B5 =D0=B7=D0=B0=D0=B9=D1=
-=82=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82 =D0=B8 =D0=BF=D1=80=D0=BE=
-=D1=81=D0=BC=D0=BE=D1=82=D1=80=D0=B5=D1=82=D1=8C =D1=81=D1=82=D1=80=D0=B0=
-=D0=BD=D0=B8=D1=86=D1=8B =D0=92=D0=B0=D1=88=D0=B8=D1=85 =D0=B4=D1=80=D1=
-=83=D0=B7=D0=B5=D0=B9, =D0=B8=D1=81=D0=BF=D0=BE=D0=BB=D1=8C=D0=B7=D1=83=
-=D1=8F
-=D0=92=D0=B0=D1=88 e-mail =D0=B8 =D0=B0=D0=B2=D1=82=D0=BE=D0=BC=D0=B0=D1=
-=82=D0=B8=D1=87=D0=B5=D1=81=D0=BA=D0=B8 =D1=81=D0=BE=D0=B7=D0=B4=D0=B0=D0=
-=BD=D0=BD=D1=8B=D0=B9 =D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8C: 77JAUVRc
+- We should be more conservative about showing notes, especially in contexts 
+that may be used by scripts. Disabling notes by default when --pretty/--
+format is in use, sounds like a good idea. So does adding a --show-notes 
+option for overriding the default.
 
-=D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=83 - =D1=
-=81=D0=B0=D0=B9=D1=82, =D0=BA=D0=BE=D1=82=D0=BE=D1=80=D1=8B=D0=B9 =D0=B5=
-=D0=B6=D0=B5=D0=B4=D0=BD=D0=B5=D0=B2=D0=BD=D0=BE =D0=BF=D0=BE=D0=B7=D0=B2=
-=D0=BE=D0=BB=D1=8F=D0=B5=D1=82 =D0=B4=D0=B5=D1=81=D1=8F=D1=82=D0=BA=D0=B0=
-=D0=BC =D0=BC=D0=B8=D0=BB=D0=BB=D0=B8=D0=BE=D0=BD=D0=BE=D0=B2 =D0=BB=D1=
-=8E=D0=B4=D0=B5=D0=B9 =D0=BD=D0=B0=D1=85=D0=BE=D0=B4=D0=B8=D1=82=D1=8C =
-=D1=81=D1=82=D0=B0=D1=80=D1=8B=D1=85 =D0=B4=D1=80=D1=83=D0=B7=D0=B5=D0=B9=
- =D0=B8 =D0=BE=D1=81=D1=82=D0=B0=D0=B2=D0=B0=D1=82=D1=8C=D1=81=D1=8F =D1=
-=81 =D0=BD=D0=B8=D0=BC=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B2=D1=8F=D0=B7=D0=B8=
-, =D0=B4=D0=B5=D0=BB=D0=B8=D1=82=D1=8C=D1=81=D1=8F =D1=84=D0=BE=D1=82=D0=
-=BE=D0=B3=D1=80=D0=B0=D1=84=D0=B8=D1=8F=D0=BC=D0=B8
-=D0=B8 =D1=81=D0=BE=D0=B1=D1=8B=D1=82=D0=B8=D1=8F=D0=BC=D0=B8 =D0=B8=D0=
-=B7 =D0=B6=D0=B8=D0=B7=D0=BD=D0=B8.
+- The format-patch bug is grave and unexcusable and must be fixed. Michael: 
+Thanks for discovering.
 
-=D0=A7=D1=82=D0=BE=D0=B1=D1=8B =D0=B2=D0=BE=D0=B9=D1=82=D0=B8 =D0=BD=D0=
-=B0 =D1=81=D0=B0=D0=B9=D1=82, =D0=BF=D1=80=D0=BE=D0=B9=D0=B4=D0=B8=D1=82=
-=D0=B5 =D0=BF=D0=BE =D1=81=D1=81=D1=8B=D0=BB=D0=BA=D0=B5:
-http://vkontakte.ru/login.php?regemail=3Dgit@vger.kernel.org#77JAUVRc
+- I'd still like to keep notes as part of the default output from git log 
+and friends (when NOT using --pretty/--format). Only notes from a single 
+notes ref (typically the default "refs/notes/commits") should be shown.
 
-=D0=92=D0=BD=D0=B8=D0=BC=D0=B0=D0=BD=D0=B8=D0=B5: =D0=92=D0=B0=D1=88=D0=
-=B0 =D1=80=D0=B5=D0=B3=D0=B8=D1=81=D1=82=D1=80=D0=B0=D1=86=D0=B8=D1=8F =
-=D0=BD=D0=B5 =D0=B1=D1=83=D0=B4=D0=B5=D1=82 =D0=B0=D0=BA=D1=82=D0=B8=D0=
-=B2=D0=B8=D1=80=D0=BE=D0=B2=D0=B0=D0=BD=D0=B0, =D0=B5=D1=81=D0=BB=D0=B8=
- =D0=92=D1=8B =D0=BF=D1=80=D0=BE=D0=B8=D0=B3=D0=BD=D0=BE=D1=80=D0=B8=D1=
-=80=D1=83=D0=B5=D1=82=D0=B5
-=D1=8D=D1=82=D0=BE =D0=BF=D1=80=D0=B8=D0=B3=D0=BB=D0=B0=D1=88=D0=B5=D0=BD=
-=D0=B8=D0=B5.
+- Re. Peff's worry that "git log" will fill up with random bisection cruft: 
+Any notes that are related to bisection (or any other special use case for 
+notes) should live on its own notes ref (typically "refs/notes/bisect" for 
+bisection cruft) that is not used by "git log" (unless you explicitly say so 
+through $GIT_NOTES_REF or core.notesRef).
 
-=D0=96=D0=B5=D0=BB=D0=B0=D0=B5=D0=BC =D1=83=D0=B4=D0=B0=D1=87=D0=B8!
-=D0=A1 =D1=83=D0=B2=D0=B0=D0=B6=D0=B5=D0=BD=D0=B8=D0=B5=D0=BC,
-=D0=90=D0=B4=D0=BC=D0=B8=D0=BD=D0=B8=D1=81=D1=82=D1=80=D0=B0=D1=86=D0=B8=
-=D1=8F =D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=
-=83
+- Re. Junio's worry that he will become the janitor for these patches. 
+Please don't. As long as the patch series is in 'pu', it is MY 
+responsibility to address issues and organize any additional patches on top 
+of the series. Feel free to ignore all additional patches, and wait for an 
+updated series from my end.
+
+- Yes, there should be more tests verifying that there is no negative impact 
+on git log and friends. Docs must be updated as well, where needed.
+
+
+Unfortunately I don't have the time to work on this right now, but I'll do 
+my best to get around to it as soon as possible (at least by the end of the 
+coming weekend).
+
+
+Again, thanks for your involvement. It is really appreciated.
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
