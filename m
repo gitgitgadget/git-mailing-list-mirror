@@ -1,81 +1,97 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: git notes: notes
-Date: Thu, 21 Jan 2010 03:05:05 +0100
-Message-ID: <201001210305.05309.johan@herland.net>
-References: <20100120050343.GA12860@gnu.kitenet.net>
- <201001201148.11701.johan@herland.net> <20100120182438.GB31507@gnu.kitenet.net>
+From: =?UTF-8?B?0JLQmtC+0L3RgtCw0LrRgtC1LtGA0YM=?= <admin@vkontakte.ru>
+Subject: =?UTF-8?B?QW5kcmV5INCf0L7Qs9GA0LXQsdC90L7QuSDQtNC+0LHQsNCy0LjQuyDQktCw?=
+ =?UTF-8?B?0YEg0LIg0LTRgNGD0LfRjNGPINC90LAg0YHQsNC50YLQtSDQktCa0L7QvdGC?=
+ =?UTF-8?B?0LDQutGC0LUu0YDRgw==?=
+Date: Thu, 21 Jan 2010 05:10:33 +0300
+Message-ID: <2e0c7864abca5c1b73578b3ed9c2a00b@localhost.localdomain>
+Reply-To: "Pavel Durov, inContact.ru Admin" <admin@vkontakte.ru>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Thu Jan 21 03:05:17 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 21 03:10:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXmQ8-0002Xi-IQ
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 03:05:16 +0100
+	id 1NXmVK-00045r-QT
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 03:10:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753712Ab0AUCFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2010 21:05:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753399Ab0AUCFJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 21:05:09 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:35932 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752398Ab0AUCFI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2010 21:05:08 -0500
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KWK00GTRR4IMY80@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 21 Jan 2010 03:05:06 +0100 (MET)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KWK00JFCR4HCA10@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 21 Jan 2010 03:05:06 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2010.1.21.15722
-User-Agent: KMail/1.12.4 (Linux/2.6.32-ARCH; KDE/4.3.4; x86_64; ; )
-In-reply-to: <20100120182438.GB31507@gnu.kitenet.net>
+	id S1752248Ab0AUCKf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jan 2010 21:10:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751974Ab0AUCKf
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 21:10:35 -0500
+Received: from cs41.vkontakte.ru ([93.186.224.41]:56731 "EHLO vkontakte.ru"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751682Ab0AUCKe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2010 21:10:34 -0500
+Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
+	by vkontakte.ru with esmtp (Exim 4.63)
+	(envelope-from <admin@vkontakte.ru>)
+	id 1NXmVF-0000F8-8f
+	for git@vger.kernel.org; Thu, 21 Jan 2010 05:10:33 +0300
+X-Priority: 3
+X-Mailer: PHPMailer [version 1.73]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137617>
+X-Spam-Report: 8.1 points;
+ *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
+ *      [cf:  64]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+ *  0.1 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: vkontakte.ru]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137618>
 
-On Wednesday 20 January 2010, Joey Hess wrote:
-> Johan Herland wrote:
-> > > PS, Has anyone thought about using notes to warn bisect away from
-> > > commits that are known to be unbuildable or otherwise cause bisection
-> > > trouble?
-> >
-> > No, I haven't thought of that specific use case. Great idea! :)
-> 
-> Only problem I see with doing it is it might be too easy to overwrite
-> such a note with git notes edit -m
+git,
 
-Well, you would have to run "git notes edit -m" with core.notesRef or 
-$GIT_NOTES_REF set to the notes ref where bisect information is stored (e.g. 
-"refs/notes/bisect").
+Andrey =D0=9F=D0=BE=D0=B3=D1=80=D0=B5=D0=B1=D0=BD=D0=BE=D0=B9 =D0=B4=D0=
+=BE=D0=B1=D0=B0=D0=B2=D0=B8=D0=BB =D0=92=D0=B0=D1=81 =D0=B2 =D0=B4=D1=80=
+=D1=83=D0=B7=D1=8C=D1=8F =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82=D0=B5 =D0=
+=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=83
 
-In any case, I would not use "git notes" to maintain the bisect hints. 
-Rather, I'd add subcommands to "git bisect" that would take care of 
-maintaining the notes tree @ "refs/notes/bisect". Much more user-friendly 
-than telling the user to write their own bisect-notes by hand.
+=D0=92=D1=8B =D0=BC=D0=BE=D0=B6=D0=B5=D1=82=D0=B5 =D0=B7=D0=B0=D0=B9=D1=
+=82=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82 =D0=B8 =D0=BF=D1=80=D0=BE=
+=D1=81=D0=BC=D0=BE=D1=82=D1=80=D0=B5=D1=82=D1=8C =D1=81=D1=82=D1=80=D0=B0=
+=D0=BD=D0=B8=D1=86=D1=8B =D0=92=D0=B0=D1=88=D0=B8=D1=85 =D0=B4=D1=80=D1=
+=83=D0=B7=D0=B5=D0=B9, =D0=B8=D1=81=D0=BF=D0=BE=D0=BB=D1=8C=D0=B7=D1=83=
+=D1=8F
+=D0=92=D0=B0=D1=88 e-mail =D0=B8 =D0=B0=D0=B2=D1=82=D0=BE=D0=BC=D0=B0=D1=
+=82=D0=B8=D1=87=D0=B5=D1=81=D0=BA=D0=B8 =D1=81=D0=BE=D0=B7=D0=B4=D0=B0=D0=
+=BD=D0=BD=D1=8B=D0=B9 =D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8C: Q6ES31pV
 
-> Did you consider having -m append a line to an existing note?
+=D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=83 - =D1=
+=81=D0=B0=D0=B9=D1=82, =D0=BA=D0=BE=D1=82=D0=BE=D1=80=D1=8B=D0=B9 =D0=B5=
+=D0=B6=D0=B5=D0=B4=D0=BD=D0=B5=D0=B2=D0=BD=D0=BE =D0=BF=D0=BE=D0=B7=D0=B2=
+=D0=BE=D0=BB=D1=8F=D0=B5=D1=82 =D0=B4=D0=B5=D1=81=D1=8F=D1=82=D0=BA=D0=B0=
+=D0=BC =D0=BC=D0=B8=D0=BB=D0=BB=D0=B8=D0=BE=D0=BD=D0=BE=D0=B2 =D0=BB=D1=
+=8E=D0=B4=D0=B5=D0=B9 =D0=BD=D0=B0=D1=85=D0=BE=D0=B4=D0=B8=D1=82=D1=8C =
+=D1=81=D1=82=D0=B0=D1=80=D1=8B=D1=85 =D0=B4=D1=80=D1=83=D0=B7=D0=B5=D0=B9=
+ =D0=B8 =D0=BE=D1=81=D1=82=D0=B0=D0=B2=D0=B0=D1=82=D1=8C=D1=81=D1=8F =D1=
+=81 =D0=BD=D0=B8=D0=BC=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B2=D1=8F=D0=B7=D0=B8=
+, =D0=B4=D0=B5=D0=BB=D0=B8=D1=82=D1=8C=D1=81=D1=8F =D1=84=D0=BE=D1=82=D0=
+=BE=D0=B3=D1=80=D0=B0=D1=84=D0=B8=D1=8F=D0=BC=D0=B8
+=D0=B8 =D1=81=D0=BE=D0=B1=D1=8B=D1=82=D0=B8=D1=8F=D0=BC=D0=B8 =D0=B8=D0=
+=B7 =D0=B6=D0=B8=D0=B7=D0=BD=D0=B8.
 
-Hmm. Not really. The "git notes" porcelain was originally written by Dscho, 
-and my builtin-ification of it (currently in 'pu') preserves the original 
-semantics of "git notes edit -m". It might make sense to change the 
-defaults; what do you think, Dscho?
+=D0=A7=D1=82=D0=BE=D0=B1=D1=8B =D0=B2=D0=BE=D0=B9=D1=82=D0=B8 =D0=BD=D0=
+=B0 =D1=81=D0=B0=D0=B9=D1=82, =D0=BF=D1=80=D0=BE=D0=B9=D0=B4=D0=B8=D1=82=
+=D0=B5 =D0=BF=D0=BE =D1=81=D1=81=D1=8B=D0=BB=D0=BA=D0=B5:
+http://vkontakte.ru/login.php?regemail=3Dgit@vger.kernel.org#Q6ES31pV
 
+=D0=92=D0=BD=D0=B8=D0=BC=D0=B0=D0=BD=D0=B8=D0=B5: =D0=92=D0=B0=D1=88=D0=
+=B0 =D1=80=D0=B5=D0=B3=D0=B8=D1=81=D1=82=D1=80=D0=B0=D1=86=D0=B8=D1=8F =
+=D0=BD=D0=B5 =D0=B1=D1=83=D0=B4=D0=B5=D1=82 =D0=B0=D0=BA=D1=82=D0=B8=D0=
+=B2=D0=B8=D1=80=D0=BE=D0=B2=D0=B0=D0=BD=D0=B0, =D0=B5=D1=81=D0=BB=D0=B8=
+ =D0=92=D1=8B =D0=BF=D1=80=D0=BE=D0=B8=D0=B3=D0=BD=D0=BE=D1=80=D0=B8=D1=
+=80=D1=83=D0=B5=D1=82=D0=B5
+=D1=8D=D1=82=D0=BE =D0=BF=D1=80=D0=B8=D0=B3=D0=BB=D0=B0=D1=88=D0=B5=D0=BD=
+=D0=B8=D0=B5.
 
-Have fun! :)
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+=D0=96=D0=B5=D0=BB=D0=B0=D0=B5=D0=BC =D1=83=D0=B4=D0=B0=D1=87=D0=B8!
+=D0=A1 =D1=83=D0=B2=D0=B0=D0=B6=D0=B5=D0=BD=D0=B8=D0=B5=D0=BC,
+=D0=90=D0=B4=D0=BC=D0=B8=D0=BD=D0=B8=D1=81=D1=82=D1=80=D0=B0=D1=86=D0=B8=
+=D1=8F =D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=B5.=D1=80=D1=
+=83
