@@ -1,75 +1,85 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git fetch -v not at all verbose?
-Date: Thu, 21 Jan 2010 08:18:58 -0800
-Message-ID: <20100121161858.GC19078@spearce.org>
-References: <20100121004756.GA18213@onerussian.com> <20100121050850.GA18896@Knoppix> <be6fef0d1001202247l7467a14ap8181eb3ed830167a@mail.gmail.com> <20100121155136.17b59e8f.rctay89@gmail.com> <20100121140054.GH18213@onerussian.com> <20100121224100.624c9c9d.rctay89@gmail.com> <20100121155637.GA19078@spearce.org> <20100121160707.GA31276@glandium.org> <20100121161016.GA16300@redhat.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH] http/remote-curl: coddle picky servers
+Date: Fri, 22 Jan 2010 00:20:26 +0800
+Message-ID: <be6fef0d1001210820u638f5262jaa062a20fdfbc18b@mail.gmail.com>
+References: <20100121004756.GA18213@onerussian.com>
+	 <20100121050850.GA18896@Knoppix>
+	 <be6fef0d1001202247l7467a14ap8181eb3ed830167a@mail.gmail.com>
+	 <20100121155136.17b59e8f.rctay89@gmail.com>
+	 <20100121140054.GH18213@onerussian.com>
+	 <20100121224100.624c9c9d.rctay89@gmail.com>
+	 <20100121155637.GA19078@spearce.org>
+	 <20100121160707.GA31276@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Jan 21 17:19:14 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Yaroslav Halchenko <debian@onerussian.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Jan 21 17:20:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXzkX-00030t-JO
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 17:19:13 +0100
+	id 1NXzlt-0003iu-0f
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 17:20:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753124Ab0AUQTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 11:19:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752900Ab0AUQTI
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 11:19:08 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:56933 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752860Ab0AUQTC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2010 11:19:02 -0500
-Received: by yxe17 with SMTP id 17so130705yxe.33
-        for <git@vger.kernel.org>; Thu, 21 Jan 2010 08:19:02 -0800 (PST)
-Received: by 10.150.94.16 with SMTP id r16mr2307129ybb.201.1264090742203;
-        Thu, 21 Jan 2010 08:19:02 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 7sm446950ywf.10.2010.01.21.08.19.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 21 Jan 2010 08:19:00 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20100121161016.GA16300@redhat.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753289Ab0AUQU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 11:20:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752926Ab0AUQU2
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 11:20:28 -0500
+Received: from mail-iw0-f196.google.com ([209.85.223.196]:40586 "EHLO
+	mail-iw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752621Ab0AUQU1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 11:20:27 -0500
+Received: by iwn34 with SMTP id 34so123627iwn.21
+        for <git@vger.kernel.org>; Thu, 21 Jan 2010 08:20:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=llQKWHhh12S2EbMnwH+ENd6xIFJgaWO6T7W5oft0AlE=;
+        b=dg3II5dV16gzb3YlFj8ocieP3gNWI5ytSVupCfod5RVsHtdfRlJRdRaufh9oxfoQlc
+         1VdT4o7PcjWtzAbk0YcpHh3Kw0ZLPHbnvVcoKCf598IUz0fn01dXaYJSvHxVohBInz+C
+         CAFcxKQULJxAAUmjbUUgnH+4ioI49Vozi3wME=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=g2Lyh4zztx8GZnNxh7p3bVh+wQOYsT/jxEGL2sqaG4usrIrNoUoL1Ey2aalucAN1cL
+         //zi72WpoKloTTl3oEN0PXauO1uG9s4jXt1LKoUPfWvhQayQmPb7Zck9YtSJJvbVsW7G
+         HZ5zQaeZZFi93/gHyg+6etpMZnJExSmBipl7E=
+Received: by 10.231.148.16 with SMTP id n16mr355067ibv.37.1264090826043; Thu, 
+	21 Jan 2010 08:20:26 -0800 (PST)
+In-Reply-To: <20100121160707.GA31276@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137665>
 
-"Michael S. Tsirkin" <mst@redhat.com> wrote:
-> On many of my trees (with linux kernel), git fetch is slower than git clone.
-> Even more annoyingly, it would hang sometimes for tens of minutes without any
-> output, even if -v is supplied.
+Hi,
 
-Ouch.  I think -v -v boosts the output to be ever more verbose,
-and might actually show you something.
- 
-> stracing it shows a ton of lines like the following:
-> 16324 read(10, "ACK 4bbdfe65d23014f539fec4227260"..., 51) = 51
-> 16324 read(10, "0037", 4)               = 4
-> 16324 read(10, "ACK 322c06560fa314b04a6302ea03c0"..., 51) = 51
-> 16324 read(10, "0037", 4)               = 4
-> 16324 read(10, "ACK 848ea2043b128b5947851866a114"..., 51) = 51
-> 16324 read(10, "0037", 4)               = 4
+On Fri, Jan 22, 2010 at 12:07 AM, Mike Hommey <mh@glandium.org> wrote:
+> Look closely at the start of the requested URL: /gitweb.cgi...
+> It comes from this rule:
+>
+> RewriteCond %{QUERY_STRING} ^(.+)$
+> RewriteRule ^/(.*)$ /gitweb.cgi$1 [L,PT]
+>
+> which is global to the virtual host.
+>
+> Anyways, while git.debian.org can certainly be fixed for that, other
+> servers may want to do some different things with urls with parameters.
 
-That's the peers trying to determine a common base.
- 
-> Is there some way to make got fetch show progress at this stage,
-> or even better, can it be made faster somehow?
+heh, I was suspecting some URL rewriting was going on.
 
-We shouldn't need to show progress here, we should just be faster.
+Is this an issue that should be fixed in gitweb?
 
-Given the symptom, it sounds to me like your local repository
-is some 1,000s of commits ahead of the remote repository you are
-fetching from.  Is that true?
-
-Are you fetching from a configured remote that has tracking branches,
-or are you fetching through a one-shot URL pasted onto the command
-line?
+(added John 'Warthog9' Hawley to the Cc list, perhaps he might know.)
 
 -- 
-Shawn.
+Cheers,
+Ray Chuan
