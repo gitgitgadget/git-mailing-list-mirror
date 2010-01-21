@@ -1,88 +1,61 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] http/remote-curl: coddle picky servers
-Date: Thu, 21 Jan 2010 17:07:07 +0100
-Message-ID: <20100121160707.GA31276@glandium.org>
-References: <20100121004756.GA18213@onerussian.com>
- <20100121050850.GA18896@Knoppix>
- <be6fef0d1001202247l7467a14ap8181eb3ed830167a@mail.gmail.com>
- <20100121155136.17b59e8f.rctay89@gmail.com>
- <20100121140054.GH18213@onerussian.com>
- <20100121224100.624c9c9d.rctay89@gmail.com>
- <20100121155637.GA19078@spearce.org>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: git fetch -v not at all verbose?
+Date: Thu, 21 Jan 2010 18:10:17 +0200
+Message-ID: <20100121161016.GA16300@redhat.com>
+References: <20100121004756.GA18213@onerussian.com> <20100121050850.GA18896@Knoppix> <be6fef0d1001202247l7467a14ap8181eb3ed830167a@mail.gmail.com> <20100121155136.17b59e8f.rctay89@gmail.com> <20100121140054.GH18213@onerussian.com> <20100121224100.624c9c9d.rctay89@gmail.com> <20100121155637.GA19078@spearce.org> <20100121160707.GA31276@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Yaroslav Halchenko <debian@onerussian.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jan 21 17:09:06 2010
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 17:14:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXzZ6-0004gi-LZ
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 17:07:25 +0100
+	id 1NXzfy-0000ho-NP
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 17:14:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752794Ab0AUQHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 11:07:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752241Ab0AUQHT
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 11:07:19 -0500
-Received: from vuizook.err.no ([85.19.221.46]:45151 "EHLO vuizook.err.no"
+	id S1752515Ab0AUQOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 11:14:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752470Ab0AUQOW
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 11:14:22 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:5486 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752153Ab0AUQHS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2010 11:07:18 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1NXzYq-00022y-9b; Thu, 21 Jan 2010 17:07:10 +0100
-Received: from mh by jigen with local (Exim 4.71)
-	(envelope-from <mh@jigen>)
-	id 1NXzYp-0008B2-CR; Thu, 21 Jan 2010 17:07:07 +0100
+	id S1752241Ab0AUQOV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 11:14:21 -0500
+Received: from int-mx04.intmail.prod.int.phx2.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.17])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id o0LGDMcF020989
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Thu, 21 Jan 2010 11:13:22 -0500
+Received: from redhat.com (vpn2-8-112.ams2.redhat.com [10.36.8.112])
+	by int-mx04.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id o0LGDJvq001628;
+	Thu, 21 Jan 2010 11:13:20 -0500
 Content-Disposition: inline
-In-Reply-To: <20100121155637.GA19078@spearce.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
+In-Reply-To: <20100121160707.GA31276@glandium.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.17
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137662>
 
-On Thu, Jan 21, 2010 at 07:56:37AM -0800, Shawn O. Pearce wrote:
-> Tay Ray Chuan <rctay89@gmail.com> wrote:
-> > When "info/refs" is a static file and not behind a CGI handler, some
-> > servers may not handle a GET request for it with a query string
-> > appended (eg. "?foo=bar") properly.
-> > 
-> > If such a request fails, retry it sans the query string. In addition,
-> > ensure that the "smart" http protocol is not used (a service has to be
-> > specified with "?service=<service name>" to be conformant).
-> > 
-> > Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
-> > Reported-and-tested-by: Yaroslav Halchenko <debian@onerussian.com>
-> 
-> *grumble* stupid Apache *grumble*
+Hi!
+On many of my trees (with linux kernel), git fetch is slower than git clone.
+Even more annoyingly, it would hang sometimes for tens of minutes without any
+output, even if -v is supplied.
 
-stupid Apache... configuration.
+stracing it shows a ton of lines like the following:
+16324 read(10, "ACK 4bbdfe65d23014f539fec4227260"..., 51) = 51
+16324 read(10, "0037", 4)               = 4
+16324 read(10, "ACK 322c06560fa314b04a6302ea03c0"..., 51) = 51
+16324 read(10, "0037", 4)               = 4
+16324 read(10, "ACK 848ea2043b128b5947851866a114"..., 51) = 51
+16324 read(10, "0037", 4)               = 4
 
-Check the error message you get on
-http://git.debian.org/git/pkg-exppsy/pymvpa.git/info/refs?service=git-upload-pack:
+Is there some way to make got fetch show progress at this stage,
+or even better, can it be made faster somehow?
 
-The requested URL /gitweb.cgigit/pkg-exppsy/pymvpa.git/info/refs was not
-found on this server.
+Thanks!
 
-Look closely at the start of the requested URL: /gitweb.cgi...
-It comes from this rule:
-
-RewriteCond %{QUERY_STRING} ^(.+)$
-RewriteRule ^/(.*)$ /gitweb.cgi$1 [L,PT]
-
-which is global to the virtual host.
-
-Anyways, while git.debian.org can certainly be fixed for that, other
-servers may want to do some different things with urls with parameters.
-
-Mike
+-- 
+MST
