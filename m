@@ -1,76 +1,58 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: [GIT-GUI PATCH] Correctly launch gitk for branch whose name matches a
- local file
-Date: Thu, 21 Jan 2010 13:15:17 +0100
-Message-ID: <20100121121848.BE37D2FC47@perkele>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 2/2] rev-parse --branches/--tags/--remotes=pattern
+Date: Thu, 21 Jan 2010 14:51:41 +0100
+Message-ID: <4B585BED.700@drmicha.warpmail.net>
+References: <1263980906-11058-1-git-send-email-ilari.liusvaara@elisanet.fi> <1263980906-11058-2-git-send-email-ilari.liusvaara@elisanet.fi> <4B584DDD.7060701@viscovery.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 21 14:18:57 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Jan 21 14:55:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXww5-0001Jq-1m
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 14:18:57 +0100
+	id 1NXxV9-00087D-2M
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 14:55:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751575Ab0AUNSy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 08:18:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751800Ab0AUNSx
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 08:18:53 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:56566 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751514Ab0AUNSx (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Jan 2010 08:18:53 -0500
-X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jan 2010 08:18:52 EST
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KWL002H5JJD8JD0@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 21 Jan 2010 13:18:49 +0100 (MET)
-Received: from perkele ([84.215.142.63]) by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KWL001TIJJDP240@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 21 Jan 2010 13:18:49 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2010.1.21.120919
-Received: by perkele (Postfix, from userid 501)	id BE37D2FC47; Thu,
- 21 Jan 2010 13:18:48 +0100 (CET)
+	id S1754388Ab0AUNx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 08:53:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754367Ab0AUNxx
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 08:53:53 -0500
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:54669 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754276Ab0AUNxk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Jan 2010 08:53:40 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 7A1B1CDF87;
+	Thu, 21 Jan 2010 08:53:37 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 21 Jan 2010 08:53:37 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=s4R733DFoCR+Xmf8c+Rx2rElens=; b=jZVx79aP4g+kOmJElBYnYx3D0lYeh9PeThDO5E3xM9KyJc4PLT+/IJvhgGHsHwAizQO9P6vTmsUtWCpsemVI3vw+0lLidTk9zLpKU2eUElBN13wD9QLZOxOc3XwexJd4zvT0NqgHEXY9S8uC4E7TNXAnVi3t4jcBijrESkhCZaw=
+X-Sasl-enc: YG/pTszTK+22Wxo3KKg6XqhmIboP3y7eTYMsoRDP+CXM 1264082017
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 979934B92F9;
+	Thu, 21 Jan 2010 08:53:36 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7pre) Gecko/20091209 Lightning/1.0b2pre Shredder/3.0.1pre
+In-Reply-To: <4B584DDD.7060701@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137655>
 
-When trying to run gitk on a branch name whose name matches a local file,
-it will toss an error saying that the name is ambiguous. Adding a pair
-of dashes will make gitk parse the options to the left of it as branch
-names. Since wish eats the first pair of dashes we throw at it, we need
-to add a second one to ensure they get through.
+Johannes Sixt venit, vidit, dixit 21.01.2010 13:51:
+> Works for me, thank you very much!
+> 
+> Junio, kindly squash in these speeling fixes in both patches:
+> 
+> sed -i 's/impiled/implied/g' `git diff HEAD^ --name-only Documentation/`
+> 
 
-Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
----
- git-gui.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Also, the option descriptions are kind of staccato English right now,
+lacking a few "the" here and there. Should we fix this or simply leave
+it at that?
 
-Reproducible test case:
-
-1. git clone git://git.debian.org/users/peterk/lyskom-server.git
-2. cd lyskom-server
-3. git gui + "Visualize debian's history"
-
-diff --git a/git-gui.sh b/git-gui.sh
-index 822d598..2114945 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -1941,7 +1941,7 @@ proc do_gitk {revs} {
- 		cd [file dirname [gitdir]]
- 		set env(GIT_DIR) [file tail [gitdir]]
- 
--		eval exec $cmd $revs &
-+		eval exec $cmd $revs "--" "--" &
- 
- 		if {$old_GIT_DIR eq {}} {
- 			unset env(GIT_DIR)
--- 
-1.6.6
+Michael
