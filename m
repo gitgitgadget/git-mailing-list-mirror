@@ -1,207 +1,114 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH] post-receive-email: allow customizing of subject/intro/footer
-Date: Thu, 21 Jan 2010 12:02:58 -0500
-Message-ID: <4B5888C2.60508@xiplink.com>
-References: <1263877931-26047-1-git-send-email-vapier@gentoo.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 2/2] rev-parse --branches/--tags/--remotes=pattern
+Date: Thu, 21 Jan 2010 18:27:05 +0100
+Message-ID: <201001211827.05847.trast@student.ethz.ch>
+References: <1263980906-11058-1-git-send-email-ilari.liusvaara@elisanet.fi> <4B584DDD.7060701@viscovery.net> <4B585BED.700@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Mike Frysinger <vapier@gentoo.org>
-X-From: git-owner@vger.kernel.org Thu Jan 21 18:09:10 2010
+Cc: Johannes Sixt <j.sixt@viscovery.net>, <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Thu Jan 21 18:30:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NY0Ws-00028P-0X
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 18:09:10 +0100
+	id 1NY0on-0002MX-94
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 18:27:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753793Ab0AURJF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 12:09:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753752Ab0AURJE
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 12:09:04 -0500
-Received: from smtp152.dfw.emailsrvr.com ([67.192.241.152]:54448 "EHLO
-	smtp152.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753557Ab0AURJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2010 12:09:04 -0500
-X-Greylist: delayed 396 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jan 2010 12:09:04 EST
-Received: from relay5.relay.dfw.mlsrvr.com (localhost [127.0.0.1])
-	by relay5.relay.dfw.mlsrvr.com (SMTP Server) with ESMTP id E0C4E3F1739;
-	Thu, 21 Jan 2010 12:02:26 -0500 (EST)
-Received: by relay5.relay.dfw.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 8ED133F175B;
-	Thu, 21 Jan 2010 12:02:26 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <1263877931-26047-1-git-send-email-vapier@gentoo.org>
+	id S1753969Ab0AUR11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 12:27:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751673Ab0AUR1N
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 12:27:13 -0500
+Received: from gwse.ethz.ch ([129.132.178.238]:51548 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752103Ab0AUR1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 12:27:08 -0500
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.213.0; Thu, 21 Jan
+ 2010 18:27:08 +0100
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.213.0; Thu, 21 Jan
+ 2010 18:27:06 +0100
+User-Agent: KMail/1.13.0 (Linux/2.6.31.8-0.1-desktop; KDE/4.4.59; x86_64; ; )
+In-Reply-To: <4B585BED.700@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137674>
 
-Thanks for this!  I've been meaning to do something similar myself.  :)
+Thanks Ilari for implementing my wishes :-)
 
-A couple of thoughts struck me while looking through your patch...
-
-Mike Frysinger wrote:
-> The format of the subject/intro/footer are noise imo, but rather than
-> debate the issue, let the user customize the output using the existing
-> git config hooks section.  The default output is retained for each part.
+On Thursday 21 January 2010 14:51:41 Michael J Gruber wrote:
+> Johannes Sixt venit, vidit, dixit 21.01.2010 13:51:
+> > Works for me, thank you very much!
+> > 
+> > Junio, kindly squash in these speeling fixes in both patches:
+> > 
+> > sed -i 's/impiled/implied/g' `git diff HEAD^ --name-only Documentation/`
+> > 
 > 
-> Signed-off-by: Mike Frysinger <vapier@gentoo.org>
-> ---
->  contrib/hooks/post-receive-email |   76 +++++++++++++++++++++++++++++---------
->  1 files changed, 58 insertions(+), 18 deletions(-)
-> 
-> diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-> index 58a35c8..79ab6b1 100755
-> --- a/contrib/hooks/post-receive-email
-> +++ b/contrib/hooks/post-receive-email
-> @@ -38,6 +38,15 @@
->  # hooks.emailprefix
->  #   All emails have their subjects prefixed with this prefix, or "[SCM]"
->  #   if emailprefix is unset, to aid filtering
-> +# hooks.emailsubject
-> +#   Allow customizing of the subject.  Default is a description of what
-> +#   ref changed and how/why.
-> +# hooks.emailbodyintro
-> +#   Allow customizing of the body intro.  Default is friendly paragraph that
-> +#   explains why the user is receiving this e-mail and what has changed.
-> +# hooks.emailfooter
-> +#   Allow customizing of the footer.  Default is name of the script and the
-> +#   repo description.
->  # hooks.showrev
->  #   The shell command used to format each revision in the email, with
->  #   "%s" replaced with the commit id.  Defaults to "git rev-list -1
-> @@ -55,6 +64,10 @@
->  # "X-Git-Newrev", and "X-Git-Reftype" to enable fine tuned filtering and
->  # give information for debugging.
->  #
-> +# All variables that start with 'email' have substitution performed on them.
-> +# Patterns like @foo@ are replaced with the contents of the variable foo.
-> +# See subst_vars() for the specific keywords available for substitution.
-> +#
->  
->  # ---------------------------- Functions
->  
-> @@ -190,36 +203,47 @@ generate_email()
->  	generate_email_footer
->  }
->  
-> +subst_vars()
-> +{
-> +	sep=$(printf '\001')
-> +	# let this be used in a pipeline or by itself
-> +	( [ "$#" -ne 0 ] && echo "$@" || cat ) | sed \
-> +		-e "s${sep}@change_type@${sep}${change_type}${sep}g" \
-> +		-e "s${sep}@describe@${sep}${describe}${sep}g" \
-> +		-e "s${sep}@newrev@${sep}${newrev}${sep}g" \
-> +		-e "s${sep}@oldrev@${sep}${oldrev}${sep}g" \
-> +		-e "s${sep}@projectdesc@${sep}${projectdesc}${sep}g" \
-> +		-e "s${sep}@refname@${sep}${refname}${sep}g" \
-> +		-e "s${sep}@refname_type@${sep}${refname_type}${sep}g" \
-> +		-e "s${sep}@oldrev@${sep}${oldrev}${sep}g" \
-> +		-e "s${sep}@short_refname@${sep}${short_refname}${sep}g"
-> +}
-> +
->  generate_email_header()
->  {
->  	# --- Email (all stdout will be the email)
->  	# Generate header
-> +	(
->  	cat <<-EOF
->  	To: $recipients
-> -	Subject: ${emailprefix}$projectdesc $refname_type, $short_refname, ${change_type}d. $describe
-> -	X-Git-Refname: $refname
-> -	X-Git-Reftype: $refname_type
-> -	X-Git-Oldrev: $oldrev
-> -	X-Git-Newrev: $newrev
-> +	Subject: ${emailprefix}${emailsubject}
-> +	X-Git-Refname: @refname@
-> +	X-Git-Reftype: @refname_type@
-> +	X-Git-Oldrev: @oldrev@
-> +	X-Git-Newrev: @newrev@
-> +	EOF
->  
-> -	This is an automated email from the git hooks/post-receive script. It was
-> -	generated because a ref change was pushed to the repository containing
-> -	the project "$projectdesc".
-> +	if [ -n "${emailbodyintro}" ] ; then
+> Also, the option descriptions are kind of staccato English right now,
+> lacking a few "the" here and there. Should we fix this or simply leave
+> it at that?
 
-Since the script ensures there's always a value set for emailbodyintro, why
-check for it here?  None of the other uses of the new config items
-(emailsubject and emailfooter) have this kind of check.
+Maybe the --branches, --tags and --remotes could be consolidated a
+bit, as in the draft patch below.  If --all took a pattern, it could
+be included there too, but that would probably look too weird.
 
-> +		printf '\n%s\n' "${emailbodyintro}"
-> +	fi
->  
-> -	The $refname_type, $short_refname has been ${change_type}d
-> -	EOF
-> +	printf '\n%s\n' "The @refname_type@, @short_refname@ has been @change_type@d"
-> +	) | subst_vars
+diff --git i/Documentation/git-rev-parse.txt w/Documentation/git-rev-parse.txt
+index 2bbb566..6fce919 100644
+--- i/Documentation/git-rev-parse.txt
++++ w/Documentation/git-rev-parse.txt
+@@ -104,29 +104,26 @@ OPTIONS
+ 	Show all refs found in `$GIT_DIR/refs`.
+ 
+ --branches[=pattern]::
+-	Show branch refs found in `$GIT_DIR/refs/heads`. If `pattern`
+-	is given, only branches matching given shell glob are shown.
+-	If pattern lacks '?', '*', or '[', '/*' at the end is impiled.
+-
+ --tags[=pattern]::
+-	Show tag refs found in `$GIT_DIR/refs/tags`. If `pattern`
+-	is given, only tags matching given shell glob are shown.
+-	If pattern lacks '?', '*', or '[', '/*' at the end is impiled.
+-
+ --remotes[=pattern]::
+-	Show tag refs found in `$GIT_DIR/refs/remotes`. If `pattern`
+-	is given, only remote tracking branches matching given shell glob
+-	are shown. If pattern lacks '?', '*', or '[', '/*' at the end is
+-	impiled.
++	Show all branches, tags, or remote-tracking branches,
++	respectively (i.e., refs found in `$GIT_DIR/refs/heads`,
++	`$GIT_DIR/refs/tags`, or `$GIT_DIR/refs/remotes`,
++	respectively).
+++
++If a `pattern` is given, only refs matching the given shell glob are
++shown.  If the pattern does not contain a globbing character (`?`,
++`\*`, or `[`), it is anchored by appending `/\*`.
++
++--glob=pattern::
++	Show all refs matching the shell glob pattern `pattern`. If
++	the pattern does not start with `refs/`, this is automatically
++	prepended.  If the pattern does not contain a globbing
++	character (`?`, `\*`, or `[`), it is anchored by appending `/\*`.
+ 
+ --show-toplevel::
+ 	Show the absolute path of the top-level directory.
+ 
+---glob=glob-pattern::
+-	Show refs matching shell glob pattern `glob-pattern`. If pattern
+-	specified lacks leading 'refs/', it is automatically prepended.
+-	If pattern lacks '?', '*', or '[', '/*' at the end is impiled.
+-
+ --show-prefix::
+ 	When the command is invoked from a subdirectory, show the
+ 	path of the current directory relative to the top-level
 
-Any reason why that last printf'd line shouldn't be made part of the
-emailbodyintro?
 
-So, overall, why not make generate_email_header() be simply:
-
-generate_email_header()
-{
-	# --- Email (all stdout will be the email)
-	# Generate header
-	subst_vars <<-EOF
-	To: $recipients
-	Subject: ${emailprefix}${emailsubject}
-	X-Git-Refname: @refname@
-	X-Git-Reftype: @refname_type@
-	X-Git-Oldrev: @oldrev@
-	X-Git-Newrev: @newrev@
-
-	${emailbodyintro}
-
-	EOF
-}
-
-This would also let you simply subst_vars() so that it needn't support piped
-invocations, no?  (Not a very drastic simplification, but still...)
-
-		M.
-
->  }
->  
->  generate_email_footer()
->  {
-> -	SPACE=" "
-> -	cat <<-EOF
-> -
-> -
-> -	hooks/post-receive
-> -	--${SPACE}
-> -	$projectdesc
-> -	EOF
-> +	subst_vars "${emailfooter}"
->  }
->  
->  # --------------- Branches
-> @@ -671,6 +695,22 @@ recipients=$(git config hooks.mailinglist)
->  announcerecipients=$(git config hooks.announcelist)
->  envelopesender=$(git config hooks.envelopesender)
->  emailprefix=$(git config hooks.emailprefix || echo '[SCM] ')
-> +emailsubject=$(git config hooks.emailsubject || \
-> +	echo '@projectdesc@ @refname_type@, @short_refname@, @change_type@d. @describe@')
-> +emailbodyintro=$(git config hooks.emailbodyintro || cat <<-EOF
-> +	This is an automated email from the git hooks/post-receive script. It was
-> +	generated because a ref change was pushed to the repository containing
-> +	the project "@projectdesc@".
-> +	EOF
-> +)
-> +emailfooter=$(git config hooks.emailfooter || SPACE=" " cat <<-EOF
-> +
-> +
-> +	hooks/post-receive
-> +	--${SPACE}
-> +	@projectdesc@
-> +	EOF
-> +)
->  custom_showrev=$(git config hooks.showrev)
->  
->  # --- Main loop
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
