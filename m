@@ -1,91 +1,58 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: What's cooking in git.git (Jan 2010, #06; Wed, 20)
-Date: Thu, 21 Jan 2010 10:18:10 +0100
-Message-ID: <201001211018.10085.johan@herland.net>
-References: <7vljfsxos5.fsf@alter.siamese.dyndns.org>
- <201001210240.10522.johan@herland.net>
- <7vvdeww187.fsf@alter.siamese.dyndns.org>
+From: Howard Miller <howard@e-learndesign.co.uk>
+Subject: How do I get a list of tracking branches
+Date: Thu, 21 Jan 2010 09:25:37 +0000
+Message-ID: <26ae428a1001210125j156b61afs64bb915a934530c6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 21 10:18:21 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 21 10:25:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXtBF-0004Uo-8D
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 10:18:21 +0100
+	id 1NXtIQ-0007Rb-1C
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 10:25:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754469Ab0AUJSP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 04:18:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754133Ab0AUJSO
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 04:18:14 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:35536 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754122Ab0AUJSN (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Jan 2010 04:18:13 -0500
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KWL00FO4B6BA1B0@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 21 Jan 2010 10:18:11 +0100 (MET)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KWL0071EB6ADK20@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 21 Jan 2010 10:18:11 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2010.1.21.90318
-User-Agent: KMail/1.12.4 (Linux/2.6.32-ARCH; KDE/4.3.4; x86_64; ; )
-In-reply-to: <7vvdeww187.fsf@alter.siamese.dyndns.org>
+	id S1754818Ab0AUJZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 04:25:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754777Ab0AUJZk
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 04:25:40 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:51773 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754769Ab0AUJZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 04:25:39 -0500
+Received: by ewy19 with SMTP id 19so2141524ewy.1
+        for <git@vger.kernel.org>; Thu, 21 Jan 2010 01:25:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=19tQ4eUQo7eDM67MjsPu47LvWQYjrgSKBsS5o1ral5k=;
+        b=PoBK1nhCbHwYN79Wjy2KP/8gv2f+jmsz0koEmH2C6ysfXXKCxyJj6sYcBVCZ5pyS5c
+         YvLeU5ugZ7pVNVB5lmoWhTxt8og68zFkhXu+MPREIo/ao+nedRI6I20u9b1vaQkI7qVZ
+         zH26iYrYuqH7rtwe1gLTTUKnglonGm1v9TZZM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=KPcEI04fB4H8g4Yu5GAxS3l9jqrCkT2mRZ0mnLWI8KgWYTwhU/ly5XiOpU9WRYas+1
+         JyCPwzdwNW8SU44n6+s3EtzmD/TCSoPk+/CgWv//qanCjedDK41BRsSuFM2DbIQQr6Hm
+         FJmMMmuxbgrf/XDdxuuzbIe1NHn0L5e9rIKM8=
+Received: by 10.213.110.2 with SMTP id l2mr849813ebp.94.1264065937894; Thu, 21 
+	Jan 2010 01:25:37 -0800 (PST)
+X-Google-Sender-Auth: 1cc6905ab9cb6b4b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137644>
 
-On Thursday 21 January 2010, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> > On Thursday 21 January 2010, Sverre Rabbelier wrote:
-> >> On Thu, Jan 21, 2010 at 01:52, Junio C Hamano <gitster@pobox.com> 
-wrote:
-> >> > * jh/notes (2010-01-17) 23 commits
-> >> > [...]
-> >> > Updated with a re-roll.
-> >>
-> >> Just checking, you reverted all from next (with exception of the first
-> >> three), and now re-queued it to pu, with the first three still in
-> >> next? Or did I mis-remember and did only the first three make it to
-> >> next in the first place?
-> >
-> > You misremembered. Only the three first were merged to 'next'. Junio
-> > was about to merge the rest, but I asked him to hold until I had
-> > produced the current iteration.
-> 
-> I've been meaning to merge the first three to 'master', as many people
-> have been running 'next' and new features tend to be exercised less by
-> those on 'master' than on 'next', and it would be beneficial to make
-> 'master' at 1.7.0-rc0 as close to what we have had in 'next' for a long
-> time.
-> 
-> Worries?
+Hi,
 
-Maybe. I've got a maybe-todo entry about (yet again) rewriting the fast-
-import handling of notes to use the updated notes API (which now can handle 
-non-notes, and therefore should be better suited for fast-import's use 
-case). However, the result is only worth submitting if it _both_ decreases 
-code duplication between fast-import.c and notes.c, _and_ decreases the 
-overall impact on fast-import.c. I don't know when I'll get around to doing 
-this experiment, so feel free to ignore it for now.
+I know I can go and look at the config file and get this info but is
+there a simple command that shows which local branches are tracking
+remote branches? It seems like a very obvious thing to want to know
+but I can't find it. 'branch -av' even shows 'n behind' and/or 'n
+ahead' but not *what* it is behind or ahead.
 
-In any case, I totally understand if you'd rather want to hold the entire 
-notes series in 'pu', and instead focus on fixing the bugs in what's already 
-been released.
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Thanks!
