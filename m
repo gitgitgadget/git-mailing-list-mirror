@@ -1,83 +1,130 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH 3/3] git-p4: improve submit performance on new P4 servers
-Date: Thu, 21 Jan 2010 22:59:24 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1001212242550.1726@xanadu.home>
-References: <4B590808.6010206@naughtydog.com>
- <alpine.LFD.2.00.1001212147480.1726@xanadu.home>
- <4B591455.7050409@naughtydog.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Simon Hausmann <simon@lst.de>, Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Pal-Kristian Engstad <pal_engstad@naughtydog.com>
-X-From: git-owner@vger.kernel.org Fri Jan 22 04:59:30 2010
+From: "David Rydh" <dary@math.berkeley.edu>
+Subject: [PATCH] git-mv: Fix error with multiple sources.
+Date: Thu, 21 Jan 2010 12:39:41 -0800
+Message-ID: <718290.769818367-sendEmail@darysmbp>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "David Rydh" <dary@math.berkeley.edu>,
+	"Johannes Sixt" <j6t@kdbg.org>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 22 05:15:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYAgE-0002RL-04
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 04:59:30 +0100
+	id 1NYAvQ-0006WF-R7
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 05:15:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752097Ab0AVD71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 22:59:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752069Ab0AVD70
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 22:59:26 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:58907 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751449Ab0AVD7Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2010 22:59:25 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KWM00DY9R30R2F0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 21 Jan 2010 22:59:25 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <4B591455.7050409@naughtydog.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751523Ab0AVEPH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 23:15:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750961Ab0AVEPG
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 23:15:06 -0500
+Received: from cm03fe.IST.Berkeley.EDU ([169.229.218.144]:48011 "EHLO
+	cm03fe.IST.Berkeley.EDU" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932161Ab0AVEPF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 23:15:05 -0500
+X-Greylist: delayed 1111 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jan 2010 23:15:05 EST
+Received: from [10.136.1.155] (helo=darysmbp.local)
+	by cm03fe.ist.berkeley.edu with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(auth login:dary@math.berkeley.edu)
+	(envelope-from <dary@math.berkeley.edu>)
+	id 1NYAdJ-0006FK-CR; Thu, 21 Jan 2010 19:56:31 -0800
+X-Mailer: sendEmail-1.56
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137736>
 
-On Thu, 21 Jan 2010, Pal-Kristian Engstad wrote:
+Commit b8f26269 (fix directory separator treatment on Windows,
+30-06-2009) introduced a bug on Mac OS X. The problem is that
+basename() may return a pointer to internal static storage space that
+will be overwritten by subsequent calls:
 
-> Nicolas Pitre wrote:
-> > On Thu, 21 Jan 2010, Pal-Kristian Engstad wrote:
-> > 
-> >> Improve git-p4 submit performance on newer (from 2009.2) Perforce
-> >> servers by changing "p4 diff -du" to "p4 diff -dub". This change is
-> >> harmless since the output is only used for display purposes.
-> >>
-> >> Signed-off-by: Pal-Kristian Engstad <pal_engstad@naughtydog.com>
-> > 
-> > Why is the b flag impacting performance?
-> 
-> That's a very good question. The release notes say that they've been 
-> changing how 'p4 diff -du' works, but the net effect of it all is that
-> it stats all files in the whole working set. 
+> git mv dir/a.txt dir/b.txt other/
 
-And so does git.
+  Checking rename of 'dir/a.txt' to 'other/b.txt'
+  Checking rename of 'dir/b.txt' to 'other/b.txt'
+  fatal: multiple sources for the same target,
+  source=dir/b.txt, destination=other/b.txt
 
-> For large projects, this
-> takes forever. We say pauses of 3 minutes per submit...
+This commit also fixed two potentially dangerous uses of
+prefix_filename() -- which returns static storage space -- in
+builtin-config.c and hash-object.c.
 
-This is abominable.
+get_pathspec(): If called with an empty pathspec, allocate a new
+pathspec with a copy of prefix. This is consistent with the behavior
+when called with a non-empty pathspec and prevents potential errors.
 
-> > And even if for display purposes, why might you wish not to see 
-> > differences in whitespace changes?
-> 
-> That's a good point, but what alternative is there?
+Signed-off-by: David Rydh <dary@math.berkeley.edu>
+---
+This is my first patch submission to git. Perhaps this patch should
+be split into two? The one-line change to builtin-mv.c suffices to
+fix the bug.
 
-Have the option of not seeing the diff in the submit template maybe?
+ builtin-config.c |    4 ++--
+ builtin-mv.c     |    2 +-
+ hash-object.c    |    2 +-
+ setup.c          |    4 ++--
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-I agree that P4 is slow. Painfully slow.  I even needed to make git-p4 
-even slower by adding a time.sleep(1) in p4_build_cmd() otherwise the 
-server would randomly drop the connection with the client when being 
-contacted back to back.
-
-I'm so glad Simon wrote this git-p4 nevertheless.  Makes working with P4 
-almost enjoyable.
-
-
-Nicolas
+diff --git a/builtin-config.c b/builtin-config.c
+index 2e3ef91..bf60f93 100644
+--- a/builtin-config.c
++++ b/builtin-config.c
+@@ -356,9 +356,9 @@ int cmd_config(int argc, const char **argv, const char *unused_prefix)
+ 		config_exclusive_filename = git_etc_gitconfig();
+ 	else if (given_config_file) {
+ 		if (!is_absolute_path(given_config_file) && prefix)
+-			config_exclusive_filename = prefix_filename(prefix,
++			config_exclusive_filename = xstrdup(prefix_filename(prefix,
+ 								    strlen(prefix),
+-								    argv[2]);
++									argv[2]));
+ 		else
+ 			config_exclusive_filename = given_config_file;
+ 	}
+diff --git a/builtin-mv.c b/builtin-mv.c
+index 8247186..1c1f8be 100644
+--- a/builtin-mv.c
++++ b/builtin-mv.c
+@@ -27,7 +27,7 @@ static const char **copy_pathspec(const char *prefix, const char **pathspec,
+ 		if (length > 0 && is_dir_sep(result[i][length - 1]))
+ 			result[i] = xmemdupz(result[i], length - 1);
+ 		if (base_name)
+-			result[i] = basename((char *)result[i]);
++			result[i] = xstrdup(basename((char *)result[i]));
+ 	}
+ 	return get_pathspec(prefix, result);
+ }
+diff --git a/hash-object.c b/hash-object.c
+index 9455dd0..3c509aa 100644
+--- a/hash-object.c
++++ b/hash-object.c
+@@ -91,7 +91,7 @@ int main(int argc, const char **argv)
+ 		prefix = setup_git_directory();
+ 		prefix_length = prefix ? strlen(prefix) : 0;
+ 		if (vpath && prefix)
+-			vpath = prefix_filename(prefix, prefix_length, vpath);
++			vpath = xstrdup(prefix_filename(prefix, prefix_length, vpath));
+ 	}
+ 
+ 	git_config(git_default_config, NULL);
+diff --git a/setup.c b/setup.c
+index 710e2f3..80cf535 100644
+--- a/setup.c
++++ b/setup.c
+@@ -132,8 +132,8 @@ const char **get_pathspec(const char *prefix, const char **pathspec)
+ 		return NULL;
+ 
+ 	if (!entry) {
+-		static const char *spec[2];
+-		spec[0] = prefix;
++		const char **spec = xmalloc(sizeof(char *) * 2);
++		spec[0] = xstrdup(prefix);
+ 		spec[1] = NULL;
+ 		return spec;
+ 	}
+-- 
+1.6.6.1
