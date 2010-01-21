@@ -1,86 +1,67 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] Fix memory corruption when .gitignore does not end by \n
-Date: Thu, 21 Jan 2010 08:38:48 +0700
-Message-ID: <fcaeb9bf1001201738x5cd374c2o280ec42d6d65c0f7@mail.gmail.com>
-References: <fcaeb9bf1001200458v436a8adeq5cfc6753900e6c0c@mail.gmail.com>
-	 <1263996556-9712-1-git-send-email-pclouds@gmail.com>
-	 <7v3a20367d.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: What's cooking in git.git (Jan 2010, #06; Wed, 20)
+Date: Thu, 21 Jan 2010 02:40:10 +0100
+Message-ID: <201001210240.10522.johan@herland.net>
+References: <7vljfsxos5.fsf@alter.siamese.dyndns.org>
+ <fabb9a1e1001201706i4c7ffaecs55153c9220bc5992@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jonathan del Strother <maillist@steelskies.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 21 02:38:54 2010
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 02:40:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXm0b-0003IW-O0
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 02:38:54 +0100
+	id 1NXm20-0003fY-MN
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 02:40:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753704Ab0AUBiu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jan 2010 20:38:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752447Ab0AUBit
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 20:38:49 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:47708 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751774Ab0AUBit convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2010 20:38:49 -0500
-Received: by pwj9 with SMTP id 9so3588606pwj.21
-        for <git@vger.kernel.org>; Wed, 20 Jan 2010 17:38:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=omOu1Y0TnKhH8IgPYXPDVT5Y/wjEMSQB4/gGmq5gAWk=;
-        b=MMj/lxmkF5rWscgAF8vr9GvVga63WGJTH2BrMB7t7dMea1V5gSkBQTyfIeT75CJmR6
-         aMgJj4R3XyubGHk553HbTcqEjFA+iCHIanwwdVkO6JF5qW5Q1AzDXbTHOohWzkwziEsg
-         ZRYd/uP6OQHUCpbfMDF13XLPCRbrZ+okoGgLY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=TPTiva5TlOH2Z6MSthtttPubH4bR1IFwbqzY4W+bNbNeLEShe6uphPRsLbJQtQj4yN
-         WyydQYnsHZQZTtAGh8Cv6dluR6DYPDzX1rPUhrIp0Tl/Y/TLLuzKz3J4bWPZhIF9ihS5
-         gZLv9Q3v8vC4Iw5xG3WBOogXcfcWTImfrtHRo=
-Received: by 10.114.48.10 with SMTP id v10mr555018wav.11.1264037928222; Wed, 
-	20 Jan 2010 17:38:48 -0800 (PST)
-In-Reply-To: <7v3a20367d.fsf@alter.siamese.dyndns.org>
+	id S1753862Ab0AUBkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2010 20:40:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753399Ab0AUBkO
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 20:40:14 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:63860 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753004Ab0AUBkN (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2010 20:40:13 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KWK00GL3PYZMY80@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 21 Jan 2010 02:40:11 +0100 (MET)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KWK00J5XPYYCM10@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 21 Jan 2010 02:40:11 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2010.1.21.13032
+User-Agent: KMail/1.12.4 (Linux/2.6.32-ARCH; KDE/4.3.4; x86_64; ; )
+In-reply-to: <fabb9a1e1001201706i4c7ffaecs55153c9220bc5992@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137614>
 
-On 1/21/10, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->  >  This patch causes a crash for me. Not sure if it does for anybody=
- else.
->
->
-> I am puzzled.  What do you mean by this?  If this patch makes the cod=
-e
->  crash, then it is not a fix.  Is this meant as "Jonathan, can you tr=
-y this
->  patch and tell me what happens, so that I can diagnose the issue bet=
-ter?"
->  patch?
+On Thursday 21 January 2010, Sverre Rabbelier wrote:
+> On Thu, Jan 21, 2010 at 01:52, Junio C Hamano <gitster@pobox.com> wrote:
+> > * jh/notes (2010-01-17) 23 commits
+> > [...]
+> > Updated with a re-roll.
+> 
+> Just checking, you reverted all from next (with exception of the first
+> three), and now re-queued it to pu, with the first three still in
+> next? Or did I mis-remember and did only the first three make it to
+> next in the first place?
 
-I mean the t3001 patch in comment part, which removes \n at the end of
-=2Egitignore and crashes the unmodified git.
+You misremembered. Only the three first were merged to 'next'. Junio was 
+about to merge the rest, but I asked him to hold until I had produced the 
+current iteration.
 
-IOW I found a problem and this patch (not the t3001 one) should fix
-it. Not sure if this causes Jonathan problem though.
 
->  Is it better/safer to revert the entire nd/sparse topic from the mas=
-ter in
->  the meantime before we know what is going on?
+...Johan
 
-I would wait for Jonathan response. If this is not the cause, probably
-safer to revert it.
---=20
-Duy
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
