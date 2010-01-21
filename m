@@ -1,49 +1,76 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2/2] rev-parse --branches/--tags/--remotes=pattern
-Date: Thu, 21 Jan 2010 13:51:41 +0100
-Message-ID: <4B584DDD.7060701@viscovery.net>
-References: <1263980906-11058-1-git-send-email-ilari.liusvaara@elisanet.fi> <1263980906-11058-2-git-send-email-ilari.liusvaara@elisanet.fi>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: [GIT-GUI PATCH] Correctly launch gitk for branch whose name matches a
+ local file
+Date: Thu, 21 Jan 2010 13:15:17 +0100
+Message-ID: <20100121121848.BE37D2FC47@perkele>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Thu Jan 21 13:51:51 2010
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 21 14:18:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXwVr-0007mJ-3V
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 13:51:51 +0100
+	id 1NXww5-0001Jq-1m
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 14:18:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751518Ab0AUMvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 07:51:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751466Ab0AUMvq
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 07:51:46 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:30731 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751460Ab0AUMvq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2010 07:51:46 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NXwVi-00073E-0j; Thu, 21 Jan 2010 13:51:42 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id A4E601660F;
-	Thu, 21 Jan 2010 13:51:41 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <1263980906-11058-2-git-send-email-ilari.liusvaara@elisanet.fi>
-X-Spam-Score: 1.9 (+)
+	id S1751575Ab0AUNSy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 08:18:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751800Ab0AUNSx
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 08:18:53 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:56566 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751514Ab0AUNSx (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Jan 2010 08:18:53 -0500
+X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jan 2010 08:18:52 EST
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KWL002H5JJD8JD0@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 21 Jan 2010 13:18:49 +0100 (MET)
+Received: from perkele ([84.215.142.63]) by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KWL001TIJJDP240@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 21 Jan 2010 13:18:49 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2010.1.21.120919
+Received: by perkele (Postfix, from userid 501)	id BE37D2FC47; Thu,
+ 21 Jan 2010 13:18:48 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137654>
 
-Works for me, thank you very much!
+When trying to run gitk on a branch name whose name matches a local file,
+it will toss an error saying that the name is ambiguous. Adding a pair
+of dashes will make gitk parse the options to the left of it as branch
+names. Since wish eats the first pair of dashes we throw at it, we need
+to add a second one to ensure they get through.
 
-Junio, kindly squash in these speeling fixes in both patches:
+Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
+---
+ git-gui.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-sed -i 's/impiled/implied/g' `git diff HEAD^ --name-only Documentation/`
+Reproducible test case:
 
--- Hannes
+1. git clone git://git.debian.org/users/peterk/lyskom-server.git
+2. cd lyskom-server
+3. git gui + "Visualize debian's history"
+
+diff --git a/git-gui.sh b/git-gui.sh
+index 822d598..2114945 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -1941,7 +1941,7 @@ proc do_gitk {revs} {
+ 		cd [file dirname [gitdir]]
+ 		set env(GIT_DIR) [file tail [gitdir]]
+ 
+-		eval exec $cmd $revs &
++		eval exec $cmd $revs "--" "--" &
+ 
+ 		if {$old_GIT_DIR eq {}} {
+ 			unset env(GIT_DIR)
+-- 
+1.6.6
