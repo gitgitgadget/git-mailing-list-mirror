@@ -1,69 +1,77 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] http/remote-curl: coddle picky servers
-Date: Thu, 21 Jan 2010 08:24:02 -0800
-Message-ID: <20100121162402.GD19078@spearce.org>
-References: <20100121004756.GA18213@onerussian.com> <20100121050850.GA18896@Knoppix> <be6fef0d1001202247l7467a14ap8181eb3ed830167a@mail.gmail.com> <20100121155136.17b59e8f.rctay89@gmail.com> <20100121140054.GH18213@onerussian.com> <20100121224100.624c9c9d.rctay89@gmail.com> <20100121155637.GA19078@spearce.org> <20100121160707.GA31276@glandium.org> <be6fef0d1001210820u638f5262jaa062a20fdfbc18b@mail.gmail.com>
+From: Felipe Balbi <me@felipebalbi.com>
+Subject: cherry picking several patches at once
+Date: Thu, 21 Jan 2010 18:11:57 +0200
+Message-ID: <20100121161157.GA3628@gandalf>
+Reply-To: me@felipebalbi.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Mike Hommey <mh@glandium.org>,
-	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Yaroslav Halchenko <debian@onerussian.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 21 17:24:18 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 21 17:32:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXzpQ-0005YB-TG
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 17:24:17 +0100
+	id 1NXzxb-0000kK-8n
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 17:32:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753818Ab0AUQYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 11:24:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753652Ab0AUQYN
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 11:24:13 -0500
-Received: from mail-iw0-f196.google.com ([209.85.223.196]:50625 "EHLO
-	mail-iw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753240Ab0AUQYI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2010 11:24:08 -0500
-Received: by iwn34 with SMTP id 34so127083iwn.21
-        for <git@vger.kernel.org>; Thu, 21 Jan 2010 08:24:06 -0800 (PST)
-Received: by 10.231.59.136 with SMTP id l8mr2629296ibh.51.1264091045782;
-        Thu, 21 Jan 2010 08:24:05 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 23sm958893iwn.3.2010.01.21.08.24.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 21 Jan 2010 08:24:04 -0800 (PST)
+	id S1754167Ab0AUQc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 11:32:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754133Ab0AUQc1
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 11:32:27 -0500
+Received: from ns1.siteground211.com ([209.62.36.12]:34285 "EHLO
+	serv01.siteground211.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753123Ab0AUQcY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 11:32:24 -0500
+X-Greylist: delayed 1218 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jan 2010 11:32:24 EST
+Received: from [91.154.126.168] (port=26511 helo=gandalf)
+	by serv01.siteground211.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.69)
+	(envelope-from <me@felipebalbi.com>)
+	id 1NXzdb-0003Zv-Kc
+	for git@vger.kernel.org; Thu, 21 Jan 2010 10:12:04 -0600
 Content-Disposition: inline
-In-Reply-To: <be6fef0d1001210820u638f5262jaa062a20fdfbc18b@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - serv01.siteground211.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - felipebalbi.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137667>
 
-Tay Ray Chuan <rctay89@gmail.com> wrote:
-> On Fri, Jan 22, 2010 at 12:07 AM, Mike Hommey <mh@glandium.org> wrote:
-> > Look closely at the start of the requested URL: /gitweb.cgi...
-> > It comes from this rule:
-> >
-> > RewriteCond %{QUERY_STRING} ^(.+)$
-> > RewriteRule ^/(.*)$ /gitweb.cgi$1 [L,PT]
-> >
-> > which is global to the virtual host.
-> >
-> > Anyways, while git.debian.org can certainly be fixed for that, other
-> > servers may want to do some different things with urls with parameters.
-> 
-> heh, I was suspecting some URL rewriting was going on.
-> 
-> Is this an issue that should be fixed in gitweb?
+Hi,
 
-I don't see why it should be.  gitweb isn't a service CGI.  I find
-it odd that someone would configure their website to route anything
-with a query string into gitweb.  WTF?
+I wonder if it's possible to cherry several patches at once ?
+Can't find anything on any docs, but something like:
+
+$ git cherry-pick <commit_id_start>..<commit_id_end> -- \
+	/path/to/directory
+
+I want to do that because I keep patches to the musb driver (on linux
+kernel) based on top of linus' mainline tree and on top of internal
+tree.
+
+The internal tree is outdated (not following mainline), but the musb
+driver is basically in sync, so cherry picking works, but it's a bit
+painful when I have to pick patches from community and manually
+cherry-pick to the other branch based on my internal tree.
+
+If there's a way (besides git rebase --onto) to do that I would very
+much like to know.
+
+Another thing that would be nice to have, is to pass the HEAD to which
+we want to cherry-pick, so we can cherry-pick to not-checked-out
+branches. Something like:
+
+$ git cherry-pick <commit_id> <my_branch_name>
+
+and combining both, of course:
+
+$ git cherry-pick <commit_id_start>..<commit_id_end> \
+	<my_branch_name> -- /path/to/directory
 
 -- 
-Shawn.
+balbi
