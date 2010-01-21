@@ -1,68 +1,65 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: [PATCH 1/1] git-rebase.txt: Fix spelling
-Date: Thu, 21 Jan 2010 17:34:25 -0300
-Message-ID: <1264106065-24682-1-git-send-email-vonbrand@inf.utfsm.cl>
-Cc: gitster@pobox.com, "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 21 22:34:33 2010
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [RFC] Git Wiki Move
+Date: Thu, 21 Jan 2010 22:35:14 +0100
+Message-ID: <20100121213514.GD3299@machine.or.cz>
+References: <4B4EF1E0.3040808@eaglescrag.net>
+ <vpqbpgxrn32.fsf@bauges.imag.fr>
+ <4B4F68E8.5050809@eaglescrag.net>
+ <4B50F7DB.7020204@eaglescrag.net>
+ <vpqwrzhszye.fsf@bauges.imag.fr>
+ <alpine.DEB.1.00.1001172357420.4985@pacific.mpi-cbg.de>
+ <4B53AEAC.6060100@eaglescrag.net>
+ <alpine.DEB.1.00.1001181044410.4985@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.1001181258540.3044@intel-tinevez-2-302>
+ <4B54ACBD.6000000@eaglescrag.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org
+To: "J.H." <warthog19@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Thu Jan 21 22:35:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NY4fh-0001kG-9N
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 22:34:33 +0100
+	id 1NY4gW-00025p-Ui
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 22:35:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754944Ab0AUVeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 16:34:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754657Ab0AUVeZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 16:34:25 -0500
-Received: from inti.inf.utfsm.cl ([200.1.19.1]:39102 "EHLO inti.inf.utfsm.cl"
+	id S1755163Ab0AUVfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 16:35:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754984Ab0AUVfU
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 16:35:20 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:58487 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753090Ab0AUVeY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2010 16:34:24 -0500
-X-Greylist: delayed 3108 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jan 2010 16:34:24 EST
-Received: from quelen.inf.utfsm.cl (quelen.inf.utfsm.cl [200.1.19.54])
-	by inti.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id o0LKYQov002235
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 21 Jan 2010 17:34:26 -0300
-Received: from laptop14.inf.utfsm.cl (cautin.dcsc.utfsm.cl [200.1.21.41])
-	by quelen.inf.utfsm.cl (8.14.3/8.14.3) with ESMTP id j0702dUF026998;
-	Thu, 6 Jan 2005 21:02:39 -0300
-Received: from laptop14.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop14.inf.utfsm.cl (8.14.3/8.14.3) with ESMTP id o0LKYchU024718
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 21 Jan 2010 17:34:38 -0300
-Received: (from vonbrand@localhost)
-	by laptop14.inf.utfsm.cl (8.14.3/8.14.3/Submit) id o0LKYbsp024716;
-	Thu, 21 Jan 2010 17:34:37 -0300
-X-Mailer: git-send-email 1.6.6.1.383.g5a9f
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (inti.inf.utfsm.cl [0.0.0.0]); Thu, 21 Jan 2010 17:34:26 -0300 (CLST)
-X-Spam-Status: No, score=-99.9 required=5.0 tests=AWL,UNPARSEABLE_RELAY,
-	USER_IN_WHITELIST autolearn=failed version=3.2.5
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on inti.inf.utfsm.cl
+	id S1754891Ab0AUVfT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 16:35:19 -0500
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 08C8986201E; Thu, 21 Jan 2010 22:35:15 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <4B54ACBD.6000000@eaglescrag.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137693>
 
-Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
----
- Documentation/git-rebase.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Mon, Jan 18, 2010 at 10:47:25AM -0800, J.H. wrote:
+> On 01/18/2010 04:03 AM, Johannes Schindelin wrote:
+> > - add a link from the old Wiki (with rewrite rules)
+> 
+> I think the rewrites should be simple enough (the pages seem to line up
+> 1:1 easily enough) so all I would need to do is discuss this with Petr.
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 89a957e..823f2a4 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -312,7 +312,7 @@ which makes little sense.
- 	When the commit log message begins with "squash! ..." (or
- 	"fixup! ..."), and there is a commit whose title begins with
- 	the same ..., automatically modify the todo list of rebase -i
--	so that the commit marked for quashing come right after the
-+	so that the commit marked for squashing comes right after the
- 	commit to be modified, and change the action of the moved
- 	commit from `pick` to `squash` (or `fixup`).
- +
+repo.or.cz migration to new server is now finished and on the new
+system, I chose to not even install moinwiki at all. Instead, I've
+installed a rewrite rule so all http://git.or.cz/gitwiki/ accesses are
+sent to the appropriate place of http://git.wiki.kernel.org/ - thus,
+that's the master copy of git wiki now. :-) Thanks a lot for stepping up
+to do this, J.H.!
+
 -- 
-1.6.6.1.383.g5a9f
+				Petr "Pasky" Baudis
+A lot of people have my books on their bookshelves.
+That's the problem, they need to read them. -- Don Knuth
