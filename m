@@ -1,53 +1,70 @@
-From: tytso@mit.edu
-Subject: Re: [ANNOUNCE] Git 1.6.6.1
-Date: Wed, 20 Jan 2010 20:33:45 -0500
-Message-ID: <20100121013345.GC7657@thunk.org>
-References: <7vpr54xote.fsf@alter.siamese.dyndns.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: problem cloning via http since v1.6.6-rc0
+Date: Thu, 21 Jan 2010 09:34:55 +0800
+Message-ID: <be6fef0d1001201734s45ef83fcy32e07f8c213cbe2@mail.gmail.com>
+References: <20100121004756.GA18213@onerussian.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 21 02:34:04 2010
+To: Yaroslav Halchenko <debian@onerussian.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 02:35:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXlvv-0001wy-Nb
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 02:34:04 +0100
+	id 1NXlwv-0002Fa-BB
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 02:35:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752392Ab0AUBd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2010 20:33:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752248Ab0AUBd5
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 20:33:57 -0500
-Received: from thunk.org ([69.25.196.29]:38539 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752203Ab0AUBd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jan 2010 20:33:57 -0500
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1NXlvj-00084f-1N; Wed, 20 Jan 2010 20:33:51 -0500
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@thunk.org>)
-	id 1NXlvd-0003l6-6B; Wed, 20 Jan 2010 20:33:45 -0500
-Content-Disposition: inline
-In-Reply-To: <7vpr54xote.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1753438Ab0AUBe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2010 20:34:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752203Ab0AUBe4
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jan 2010 20:34:56 -0500
+Received: from mail-iw0-f196.google.com ([209.85.223.196]:40628 "EHLO
+	mail-iw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751336Ab0AUBez (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2010 20:34:55 -0500
+Received: by iwn34 with SMTP id 34so4225349iwn.21
+        for <git@vger.kernel.org>; Wed, 20 Jan 2010 17:34:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=yg3X7NfHvEjuuQBDPSP1QJfFooa2dl6N1wNByJ7h384=;
+        b=GE+7kTvuMduZYKuoTrV6+3/RnBkd9Rq/69/D5/FH+a+XyEfNe4vpL9JIiD4SMRS7jf
+         D4Fywg4ufYAWQBso8Q3sexO1MJEgTaByzkkfyBk1yH62bvzzLh89IT7hzBON096QgXMT
+         42MqDeC+4EIkKS19buUVqi6ZTr1knm/5ocqmw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=C/lRnJImZZlCAtTvc3ycr0b6g1bv78il8YRVuogu/2KTw9lky1Q+Zu1a9qOK/8iynJ
+         awxAOiJqNGaQvUvXyiMpE0emqu/ArZDjUezYL/40R7ToRLYbrzDTufkMCBg4UpfiAxdY
+         zZx9wo0ohNDjUdszbVi64RN//GWhu27VZSqSM=
+Received: by 10.231.170.14 with SMTP id b14mr1306274ibz.26.1264037695110; Wed, 
+	20 Jan 2010 17:34:55 -0800 (PST)
+In-Reply-To: <20100121004756.GA18213@onerussian.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137611>
 
-On Wed, Jan 20, 2010 at 04:51:41PM -0800, Junio C Hamano wrote:
-> The latest maintenance release Git 1.6.6.1 is available at the
-> usual places:
+Hi,
 
-Did you perhaps forget to push out the tags corresponding to 1.6.6.1
-and 1.6.5.8?
+On Thu, Jan 21, 2010 at 8:47 AM, Yaroslav Halchenko
+<debian@onerussian.com> wrote:
+> Cloning of the repository works fine with v1.6.5.7 but fails with v1.6.6-rc0.
 
-Thanks,
+this sounds like around the time the smart http protocol was introduced.
 
-						- Ted
+> fatal: http://git.debian.org/git/pkg-exppsy/pymvpa.git/info/refs?service=git-upload-pack not found: did you run git update-server-info on the server?
+>
+> on the server, 1.6.3.3 version of git was used to run git
+> update-server-info.
+
+hmm, are you using the WebDAV-flavour or the smart http protocol to
+host the repository?
+
+-- 
+Cheers,
+Ray Chuan
