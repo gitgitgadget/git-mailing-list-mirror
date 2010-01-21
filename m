@@ -1,85 +1,92 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: problem cloning via http since v1.6.6-rc0
-Date: Thu, 21 Jan 2010 07:08:51 +0200
-Message-ID: <20100121050850.GA18896@Knoppix>
-References: <20100121004756.GA18213@onerussian.com>
+From: Jonathan del Strother <maillist@steelskies.com>
+Subject: Re: [PATCH] Fix memory corruption when .gitignore does not end by \n
+Date: Thu, 21 Jan 2010 06:08:37 +0000
+Message-ID: <57518fd11001202208x3dfd68f6p793f77cb85534923@mail.gmail.com>
+References: <fcaeb9bf1001200458v436a8adeq5cfc6753900e6c0c@mail.gmail.com> 
+	<1263996556-9712-1-git-send-email-pclouds@gmail.com> <7v3a20367d.fsf@alter.siamese.dyndns.org> 
+	<fcaeb9bf1001201738x5cd374c2o280ec42d6d65c0f7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Yaroslav Halchenko <debian@onerussian.com>
-X-From: git-owner@vger.kernel.org Thu Jan 21 06:09:02 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 07:09:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NXpHy-0007y2-3Q
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 06:09:02 +0100
+	id 1NXqEA-0004xH-KI
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 07:09:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751474Ab0AUFI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 00:08:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438Ab0AUFI6
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 00:08:58 -0500
-Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:57600 "EHLO
-	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751359Ab0AUFI5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2010 00:08:57 -0500
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 23C328C57A;
-	Thu, 21 Jan 2010 07:08:56 +0200 (EET)
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A00CF905164; Thu, 21 Jan 2010 07:08:56 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id A90EA27D8C;
-	Thu, 21 Jan 2010 07:08:52 +0200 (EET)
-Content-Disposition: inline
-In-Reply-To: <20100121004756.GA18213@onerussian.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
+	id S1751898Ab0AUGJE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Jan 2010 01:09:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751499Ab0AUGJE
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 01:09:04 -0500
+Received: from juliet.asmallorange.com ([207.210.105.70]:53656 "EHLO
+	juliet.asmallorange.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750866Ab0AUGJD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Jan 2010 01:09:03 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:44553)
+	by juliet.asmallorange.com with esmtpsa (TLSv1:RC4-MD5:128)
+	(Exim 4.69)
+	(envelope-from <maillist@steelskies.com>)
+	id 1NXqE5-0003Ta-2f
+	for git@vger.kernel.org; Thu, 21 Jan 2010 01:09:05 -0500
+Received: by ewy19 with SMTP id 19so1989575ewy.1
+        for <git@vger.kernel.org>; Wed, 20 Jan 2010 22:08:57 -0800 (PST)
+Received: by 10.216.89.200 with SMTP id c50mr371131wef.137.1264054137190; Wed, 
+	20 Jan 2010 22:08:57 -0800 (PST)
+In-Reply-To: <fcaeb9bf1001201738x5cd374c2o280ec42d6d65c0f7@mail.gmail.com>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - juliet.asmallorange.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - steelskies.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137631>
 
-On Wed, Jan 20, 2010 at 07:47:56PM -0500, Yaroslav Halchenko wrote:
+2010/1/21 Nguyen Thai Ngoc Duy <pclouds@gmail.com>:
+> On 1/21/10, Junio C Hamano <gitster@pobox.com> wrote:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> =
+writes:
+>>
+>> =C2=A0> =C2=A0This patch causes a crash for me. Not sure if it does =
+for anybody else.
+>>
+>>
+>> I am puzzled. =C2=A0What do you mean by this? =C2=A0If this patch ma=
+kes the code
+>> =C2=A0crash, then it is not a fix. =C2=A0Is this meant as "Jonathan,=
+ can you try this
+>> =C2=A0patch and tell me what happens, so that I can diagnose the iss=
+ue better?"
+>> =C2=A0patch?
+>
+> I mean the t3001 patch in comment part, which removes \n at the end o=
+f
+> .gitignore and crashes the unmodified git.
+>
+> IOW I found a problem and this patch (not the t3001 one) should fix
+> it. Not sure if this causes Jonathan problem though.
+>
+>> =C2=A0Is it better/safer to revert the entire nd/sparse topic from t=
+he master in
+>> =C2=A0the meantime before we know what is going on?
+>
+> I would wait for Jonathan response. If this is not the cause, probabl=
+y
+> safer to revert it.
+> --
+> Duy
+>
 
-Added spearce to cc.
-
-> Dear Git Developers,
-> 
-> Some users of our project started recently to complain that they could not
-> clone the repository via http (git:// wasn't a choice due to heavy firewalling)
-> and because http:// was used as a protocol to get sources in some distributions
-> (e.g. macports).
-> 
-> Cloning of the repository works fine with v1.6.5.7 but fails with v1.6.6-rc0.
-> I haven't done full bisection since that repository is relatively bulky and
-> poor server is quite loaded anyways, so I thought you just would get a clue
-> without going brute-force.  But here are the details:  in case of failing
-> operation, I immediately get failure:
-> 
-> $> GIT_TRACE=2 ./git clone http://git.debian.org/git/pkg-exppsy/pymvpa.git
-> trace: built-in: git 'clone' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git'
-> warning: templates not found /home/yoh/share/git-core/templates
-> Initialized empty Git repository in /home/yoh/proj/misc/git/pymvpa/.git/
-> trace: run_command: 'remote-curl' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git'
-> trace: exec: 'git' 'remote-curl' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git'
-> trace: exec: 'git-remote-curl' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git'
-> trace: run_command: 'git-remote-curl' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git' 'http://git.debian.org/git/pkg-exppsy/pymvpa.git'
-> fatal: http://git.debian.org/git/pkg-exppsy/pymvpa.git/info/refs?service=git-upload-pack not found: did you run git update-server-info on the server?
-
-Looks like remote-curl (which handles http) issues request for:
-
-'.../info/refs?service=git-upload-pack'
-
-And expects that if there is no smart HTTP server there for the request to be
-interpretted as:
-
-'.../info/refs'
-
-(i.e. webserver would ignore the query). This isn't true for git.debian.org.
-Requesting the latter works (and the data formatting looks sane), but the
-former is 404. This causes the fetch to fail.
-
--Ilari
+Think it's all fixed after applying this patch - at least, I can no
+longer reproduce the crash, whereas I was able to make it fail ~90% of
+the time before.
