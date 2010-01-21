@@ -1,79 +1,61 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH] post-receive-email: allow customizing of subject/intro/footer
-Date: Thu, 21 Jan 2010 13:18:47 -0500
-Message-ID: <4B589A87.2090808@xiplink.com>
-References: <1263877931-26047-1-git-send-email-vapier@gentoo.org> <4B5888C2.60508@xiplink.com> <201001211259.30704.vapier@gentoo.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCHv11 12/20] Builtin-ify git-notes
+Date: Thu, 21 Jan 2010 10:28:33 -0800
+Message-ID: <780e0a6b1001211028t35a19e2la6bb92f8ba94a689@mail.gmail.com>
+References: <1263762277-31419-1-git-send-email-johan@herland.net> 
+	<1263762277-31419-13-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Mike Frysinger <vapier@gentoo.org>
-X-From: git-owner@vger.kernel.org Thu Jan 21 19:18:20 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Jan 21 19:29:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NY1bo-00020T-BR
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 19:18:20 +0100
+	id 1NY1me-0006mt-DU
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jan 2010 19:29:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754749Ab0AUSSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 13:18:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753075Ab0AUSSQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 13:18:16 -0500
-Received: from smtp202.dfw.emailsrvr.com ([67.192.241.202]:38671 "EHLO
-	smtp202.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752538Ab0AUSSQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2010 13:18:16 -0500
-Received: from relay20.relay.dfw.mlsrvr.com (localhost [127.0.0.1])
-	by relay20.relay.dfw.mlsrvr.com (SMTP Server) with ESMTP id 7F0C221282CF;
-	Thu, 21 Jan 2010 13:18:15 -0500 (EST)
-Received: by relay20.relay.dfw.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 40EA42128210;
-	Thu, 21 Jan 2010 13:18:15 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <201001211259.30704.vapier@gentoo.org>
+	id S1753361Ab0AUS2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 13:28:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752986Ab0AUS2y
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 13:28:54 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:50197 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752819Ab0AUS2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 13:28:54 -0500
+Received: by pwi21 with SMTP id 21so162143pwi.21
+        for <git@vger.kernel.org>; Thu, 21 Jan 2010 10:28:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=4JPQH7lplBDyNdmosKTWZE71tyMYpnIpAOVEcCHoimk=;
+        b=W/b3B0wfZsFaj0yMrUFSKMztF8Eg1Q3Bjj4Ni6uGrUfN4oXr4S6I+fPbA5HvhplKQ5
+         VJLBX38jtX4jf1KkFaOZfjT3tazpGIF1P8YbQ39HvUMn4TcA9nm/5fIGNaL5D058GkZk
+         yslhbV7QANeBW9uzxF+znFfTHrV3PCht6qL4c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=bI+sBJoD2sUrQxcCyitmqqkCQstGnEb/WC4+Q+qGqn6Atkz04i8QH4Fmys89450MTz
+         w1POB78okXYDzHX7o7jX2IWBszGfY9XqkDdvZJqJvPR73ezKcBn/oZHc3y9b1/9oVZvn
+         DOD4YtfJZR8ASGqZkjfLfjPbGR23yP4wF7VAs=
+Received: by 10.142.4.11 with SMTP id 11mr1226990wfd.128.1264098533115; Thu, 
+	21 Jan 2010 10:28:53 -0800 (PST)
+In-Reply-To: <1263762277-31419-13-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137683>
 
-Mike Frysinger wrote:
-> On Thursday 21 January 2010 12:02:58 Marc Branchaud wrote:
->> 
->> So, overall, why not make generate_email_header() be simply:
->>
->> generate_email_header()
->> {
->> 	# --- Email (all stdout will be the email)
->> 	# Generate header
->> 	subst_vars <<-EOF
->> 	To: $recipients
->> 	Subject: ${emailprefix}${emailsubject}
->> 	X-Git-Refname: @refname@
->> 	X-Git-Reftype: @refname_type@
->> 	X-Git-Oldrev: @oldrev@
->> 	X-Git-Newrev: @newrev@
->>
->> 	${emailbodyintro}
->>
->> 	EOF
->> }
->>
->> This would also let you simply subst_vars() so that it needn't support
->>  piped invocations, no?  (Not a very drastic simplification, but still...)
-> 
-> if emailbodyintro is empty, this adds two useless newlines.  otherwise, this 
-> would be fine i think.
-
-Personally, I can live with that limitation.  I think it's unlikely that
-anyone will want to get rid of the intro entirely, though maybe that's just me.
-
-One alternative is to remove the newline after ${emailbodyintro}, but I think
-most users will want the newline after the intro and that it's too easy to
-forget to put it there when editing the setting.
-
-Anyway, I don't have a strong opinion on the newline question.  The main
-change I'd like to see is including that last intro line in emailbodyintro
-instead of hardwiring it into the code.
-
-		M.
+T24gU3VuLCBKYW4gMTcsIDIwMTAgYXQgMTowNCBQTSwgSm9oYW4gSGVybGFuZCA8am9oYW5AaGVy
+bGFuZC5uZXQ+IHdyb3RlOgo+ICsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmIChsYXVuY2hf
+ZWRpdG9yKHBhdGgsIGJ1ZiwgTlVMTCkpIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIGZwcmludGYoc3RkZXJyLCAiUGxlYXNlIHN1cHBseSB0aGUgbm90ZSBjb250ZW50cyB1
+c2luZyIKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgICIg
+ZWl0aGVyIC1tIG9yIC1GIG9wdGlvbi5cbiIpOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgZXhpdCgxKTsKCmRpZSgpPwo=
