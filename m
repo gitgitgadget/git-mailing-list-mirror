@@ -1,88 +1,65 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: git-svn question: adding a branch to a local clone of an upstream 
-	git-svn clone
-Date: Fri, 22 Jan 2010 15:03:10 -0500
-Message-ID: <76718491001221203y54c3ec5br8fa7a40b5dd7da6a@mail.gmail.com>
-References: <76718491001221115r56c1f6e4qbf6cecc30ce4af58@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH 1/4] engine.pl: Fix a recent breakage of the buildsystem
+ generator
+Date: Fri, 22 Jan 2010 18:58:17 +0000
+Message-ID: <4B59F549.8070308@ramsay1.demon.co.uk>
+References: <4B575838.2010504@ramsay1.demon.co.uk> <4B576E38.5080604@pcharlan.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 22 21:03:24 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, sschuberth@gmail.com,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Pete Harlan <pgit@pcharlan.com>
+X-From: git-owner@vger.kernel.org Fri Jan 22 21:05:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYPiy-000350-WB
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 21:03:21 +0100
+	id 1NYPlK-00042P-Hr
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 21:05:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753386Ab0AVUDO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Jan 2010 15:03:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753282Ab0AVUDN
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 15:03:13 -0500
-Received: from mail-iw0-f186.google.com ([209.85.223.186]:50974 "EHLO
-	mail-iw0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750831Ab0AVUDN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Jan 2010 15:03:13 -0500
-Received: by iwn16 with SMTP id 16so433433iwn.33
-        for <git@vger.kernel.org>; Fri, 22 Jan 2010 12:03:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=zIciJx53PNoumcRgFhPrgVpyIeNWpoqpQGXDvXnkb24=;
-        b=tUnqdDSFK3OszyOsN1oS/349N85iSR0dSPCuXHdcEs146KUnwpyLp2PgL7JV2EC2ev
-         J3sDUHKhIVNFnB6lMyhiuQGnaG1q3e4ituoPsSlT0HWDpL10zAVBfSdup5r4qpd+g8mP
-         4WAXVf43isoFcg4vPwKDaAnaQ34hMDvbTbhf4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=JjuaTuaHHEfoKP6F1QewquJGyhyVws2ubrPY/PH2ZCAMd55Zf7zcc7W6llUmovOae6
-         rcje2cHp5kfQ4E+4JGz0eb2LlTxRG158h3sKpBAiknnnUlda8qin4sofmfZTeyHv2UfH
-         kIV32JD+OS/gwZtoggly8Axg9eAzzYiJZFLzc=
-Received: by 10.231.148.66 with SMTP id o2mr434684ibv.81.1264190590584; Fri, 
-	22 Jan 2010 12:03:10 -0800 (PST)
-In-Reply-To: <76718491001221115r56c1f6e4qbf6cecc30ce4af58@mail.gmail.com>
+	id S1753274Ab0AVUFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2010 15:05:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752710Ab0AVUFm
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 15:05:42 -0500
+Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:58784 "EHLO
+	lon1-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752578Ab0AVUFl (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Jan 2010 15:05:41 -0500
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-3.mail.demon.net with esmtp (Exim 4.69)
+	id 1NYPlE-0003Vb-eY; Fri, 22 Jan 2010 20:05:41 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <4B576E38.5080604@pcharlan.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137777>
 
-On Fri, Jan 22, 2010 at 2:15 PM, Jay Soffian <jaysoffian@gmail.com> wro=
-te:
+Pete Harlan wrote:
+> On 01/20/2010 11:23 AM, Ramsay Jones wrote:
+>> diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
+>> index d506717..245af73 100644
+>> --- a/contrib/buildsystems/engine.pl
+>> +++ b/contrib/buildsystems/engine.pl
+>> @@ -135,6 +135,11 @@ sub parseMakeOutput
+>>              }
+>>          } while($ate_next);
+>>  
+>> +        if ($text =~ /^test / && $text =~ /|| rm -f /) {
+> 
+> That test on the right needs to escape its pipes or it will always match.
 
-> $ git checkout -b 249 bf6f4ed
-> ...
-> [svn-remote "svn"]
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0url =3D http://src.chromium.org/svn
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0fetch =3D branches/249/src:refs/remotes/br=
-anches/249
+Heh, well spotted!
+As you may have already noticed, I copy/pasted the code from the comment
+further down in this function, but didn't take enough care in doing so...
+Oops! ;-)
 
-Also tried this:
+The obvious solution, also suggested later by Sebastion, is to simply
+remove the second regex from the test since it does not alter the
+outcome (and still fixes the problem)...
 
-$ git update-ref refs/remotes/branches/249 bf6f4ed
-$ git svn fetch
-Done rebuilding
-=2Egit/svn/refs/remotes/branches/249/.rev_map.4ff67af0-8c30-449e-8e8b-a=
-d334ec8d88c
-Done rebuilding
-=2Egit/svn/refs/remotes/branches/249/.rev_map.4ff67af0-8c30-449e-8e8b-a=
-d334ec8d88c
-Done rebuilding
-=2Egit/svn/refs/remotes/branches/249/.rev_map.4ff67af0-8c30-449e-8e8b-a=
-d334ec8d88c
-[... lots of these as it works its way through 30k revisions...]
-=46ound possible branch point: http://src.chromium.org/svn/trunk/src =3D=
->
-http://src.chromium.org/svn/branches/249/src, 32041
-Initializing parent: refs/remotes/branches/249@32041
-r3 =3D c14d891d44f0afff64e56ed7c9702df1d807b1ee (refs/remotes/branches/=
-249@32041)
-=2E..
-
-So, no help either. :-(
-
-j.
+ATB,
+Ramsay Jones
