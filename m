@@ -1,90 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: 1.7.0 release plans
-Date: Fri, 22 Jan 2010 00:08:54 -0800
-Message-ID: <7vvdeuzhm1.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Handle double slashes in make_relative_path()
+Date: Fri, 22 Jan 2010 09:36:13 +0100
+Message-ID: <4B59637D.4090503@viscovery.net>
+References: <379d55c6a4110736aadb8ace3b050de879a9deab.1264118830.git.trast@student.ethz.ch> <7vpr52gbmu.fsf@alter.siamese.dyndns.org> <7vmy06et5c.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 22 09:09:15 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 22 09:36:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYEZu-0005GZ-Pp
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 09:09:15 +0100
+	id 1NYF0L-0005P3-KR
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 09:36:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751934Ab0AVIJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2010 03:09:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077Ab0AVIJB
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 03:09:01 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35135 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750822Ab0AVIJA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2010 03:09:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C7A593373;
-	Fri, 22 Jan 2010 03:08:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=O2MI
-	O41LHr9AriVHGzX3c7xigHg=; b=IvLBiTxMKja1ovIx4jmUXjqLo7ga6zpu2HoW
-	pSy5u9fAzzKJ7fRmtVB8gk3QRtyY+uqjNGPCh1+fugmogKsLfoSLHHhiBTEkPAD2
-	ujpG1h6pjCm+xrsYBLOlVwyTll2sTL6G6gZT/6s99Z8Xc2OYwSrnqqATmM7jWZVB
-	2EZNuHc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=pYJ
-	u/nTSNa28wlzJQXYhghJO2OCZsCmNYVIbm+tVMuicD2v/2QyQ1UY9rspsTN+XWVd
-	3f3vJt8zuLBUErHy4ewQ2wNrXBT+qhnjLMajPBfGGma9y8EDhPkCm3ub7jUTL0du
-	o4dnjRHxy+IFxkl6zIPIwAZW5b3BE5MFB72w6q0Y=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5620693372;
-	Fri, 22 Jan 2010 03:08:57 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A313393370; Fri, 22 Jan
- 2010 03:08:55 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 63BF324A-072D-11DF-BA1A-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751865Ab0AVIgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2010 03:36:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969Ab0AVIgU
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 03:36:20 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:39591 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751559Ab0AVIgT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2010 03:36:19 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NYF02-0007Ge-Eg; Fri, 22 Jan 2010 09:36:14 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 2F09F1660F;
+	Fri, 22 Jan 2010 09:36:14 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <7vmy06et5c.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.9 (+)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137746>
 
-As I've been repeating lately, I'd like to tag 1.7.0-rc0 this weekend.
+Junio C Hamano schrieb:
+> Credit for test script, motivation and initial patch goes to Thomas Rast,
+> but the bugs in the implementation of this patch are mine..
 
-We don't have any written, official-looking rules for patch acceptance
-during the -rc period, and have been playing by ear.  The rule of thumb is
-that if a patch is not in 'master' by the time 1.7.0-rc0 is tagged, it
-won't be in 'master' until 1.7.0 final is released, unless it is:
+And with this squashed in it has fewer of them ;-) and is more portable.
+The bug was that /foo was incorrectly stripped from /foobar.
 
- (1) a fix to a regression caused by changes since 1.6.6;
- (2) an obvious fix to a new feature we added since 1.6.6; or
- (3) an obvious fix to a problem we had even before 1.6.6.
+-- Hannes
 
-When you have a patch that adds yet another new feature that you think
-complements what we already added since 1.6.6, you could argue that the
-patch falls into the second category, by saying something like: "the new
-option to do X is not complete without configuration variable that tells
-git to do X by default, and another option to override the configuration".
-We need to discuss and judge if the the argument has merit, which would
-largely depend on what that X is.  So the above list is not completely
-black-and-white.
+diff --git a/path.c b/path.c
+index 78ab54a..3cb19c7 100644
+--- a/path.c
++++ b/path.c
+@@ -396,15 +396,15 @@ const char *make_relative_path(const char *abs, const char *base)
+ 	static char buf[PATH_MAX + 1];
+ 	int i = 0, j = 0;
 
-We'll cook 1.7.0-rc0 for a week or so, accumulating fixes and then tag rc1
-by the end of this month.  After that, only fixes in category (1) and
-perhaps really obvious ones in category (2) will be applied for rc2, which
-should happen around Feb 10th.  I am hoping that we can cut the final
-release around mid February.
-
-I don't know if I have enough bandwidth to review and queue patches that
-fall outside of the above "meant for 1.7.0" criteria to 'next/pu' branches
-during the feature freeze, but that doesn't mean I'd discourage people
-from working on their own topics meant for post-1.7.0 cycle. Hopefully we
-have enough qualified people to help reviewing them.
-
-In any case, I'll be moving my focus to the 'master' branch from now on,
-and I ask contributors to help hunting and fixing problems in 'master', so
-that we can have a solid 1.7.0 release (on top of which you can build your
-favorite shiny new toys ;-).
-
-Thanks.
+-	if (!base)
++	if (!base || !base[0])
+ 		return abs;
+ 	while (base[i]) {
+-		if (base[i] == '/') {
+-			if (abs[j] != '/')
++		if (is_dir_sep(base[i])) {
++			if (!is_dir_sep(abs[j]))
+ 				return abs;
+-			while (base[i] == '/')
++			while (is_dir_sep(base[i]))
+ 				i++;
+-			while (abs[j] == '/')
++			while (is_dir_sep(abs[j]))
+ 				j++;
+ 			continue;
+ 		} else if (abs[j] != base[i]) {
+@@ -413,7 +413,14 @@ const char *make_relative_path(const char *abs, const char *base)
+ 		i++;
+ 		j++;
+ 	}
+-	while (abs[j] == '/')
++	if (
++	    /* "/foo" is a prefix of "/foo" */
++	    abs[j] &&
++	    /* "/foo" is not a prefix of "/foobar" */
++	    !is_dir_sep(base[i-1]) && !is_dir_sep(abs[j])
++	   )
++		return abs;
++	while (is_dir_sep(abs[j]))
+ 		j++;
+ 	if (!abs[j])
+ 		strcpy(buf, ".");
