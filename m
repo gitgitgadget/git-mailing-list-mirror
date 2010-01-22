@@ -1,69 +1,97 @@
-From: Pal-Kristian Engstad <pal_engstad@naughtydog.com>
-Subject: [PATCH] git-p4: Fix sync errors due to new server version
-Date: Thu, 21 Jan 2010 18:33:00 -0800
-Message-ID: <4B590E5C.9@naughtydog.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: Remove diff machinery dependency from read-cache
+Date: Thu, 21 Jan 2010 21:35:08 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1001212131230.1726@xanadu.home>
+References: <alpine.LFD.2.00.1001211119130.13231@localhost.localdomain>
+ <7vljfrp6g2.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1001211215080.13231@localhost.localdomain>
+ <alpine.LFD.2.00.1001211355500.13231@localhost.localdomain>
+ <alpine.LFD.2.00.1001211515470.13231@localhost.localdomain>
+ <7v636vj7c2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Simon Hausmann <simon@lst.de>
-X-From: git-owner@vger.kernel.org Fri Jan 22 03:32:37 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 22 03:35:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NY9K8-0004qD-SP
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 03:32:37 +0100
+	id 1NY9Mj-0005Sv-BT
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 03:35:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755770Ab0AVCcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 21:32:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755720Ab0AVCcd
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 21:32:33 -0500
-Received: from ironport01a.scea.com ([160.33.44.41]:20098 "EHLO
-	ironport01a.scea.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752640Ab0AVCcc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2010 21:32:32 -0500
-X-IronPort-AV: E=Sophos;i="4.49,322,1262592000"; 
-   d="scan'208";a="10635612"
-Received: from inbetweener01.scea.com ([160.33.45.195])
-  by ironport01a.scea.com with ESMTP; 21 Jan 2010 18:32:32 -0800
-Received: from postal1-dog.naughtydog.com (intmail.naughtydog.com [10.15.0.14])
-	by inbetweener01.scea.com (Postfix) with ESMTP id 782D9F017A;
-	Thu, 21 Jan 2010 18:32:32 -0800 (PST)
-Received: from [127.0.0.1] ([150.0.6.116]) by postal1-dog.naughtydog.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 21 Jan 2010 18:33:00 -0800
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-X-OriginalArrivalTime: 22 Jan 2010 02:33:00.0972 (UTC) FILETIME=[3763E6C0:01CA9B0B]
+	id S1755850Ab0AVCfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 21:35:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755838Ab0AVCfK
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 21:35:10 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:54856 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755832Ab0AVCfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 21:35:09 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KWM00HZAN6KQZE0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 21 Jan 2010 21:35:08 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7v636vj7c2.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137724>
 
-Fix sync errors due to new Perforce servers.
+On Thu, 21 Jan 2010, Junio C Hamano wrote:
 
-The P4D/NTX64/2009.2/228098 (2009/12/16) server reports
-'move/delete' instead of 'delete'. This causes the Perforce
-depot and the git repo to get out of sync. Fixed by adding
-the new status string.
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> 
+> > On Thu, 21 Jan 2010, Linus Torvalds wrote:
+> >> 
+> >> We could fix it a few ways
+> >> 
+> >>  - ignore it. Most git programs will get the pack handling functions 
+> >>    anyway, since they want to get object reading.
+> >
+> > In fact, we should probably remove git-show-index. It may have some 
+> > historical significance as a pack-file index debugger, but it has no 
+> > actual redeeming features now, considering that the binary is a megabyte 
+> > of useless crud with debugging info.
+> >
+> > However, we do actually use it in t/t5302-pack-index.sh. So in the 
+> > meantime, how about this hacky patch to simply just avoid xmalloc, and 
+> > separating out the trivial hex functions into "hex.o".
+> >
+> > This results in
+> >
+> >   [torvalds@nehalem git]$ size git-show-index 
+> >        text    data     bss     dec     hex filename
+> >      222818    2276  112688  337782   52776 git-show-index (before)
+> >        5696     624    1264    7584    1da0 git-show-index (after)
+> >
+> > which is a whole lot better, no?
+> >
+> > (Or make it a built-in, if we actually think we want to carry it along in 
+> > the long run)
+> 
+> We tend to not remove things unless we are absolutely certain nobody uses
+> it, so probably making it built-in would be preferrable.  I don't think
+> show-index is used very often if ever, but scripts that use hash-object
+> would use it really often and would do so via its --stdin interface if it
+> knows that it is creating more than a dozen objects, so start-up time
+> required to map the whole git is probably not an issue.
 
-Signed-off-by: Pal-Kristian Engstad <pal_engstad@naughtydog.com>
----
- contrib/fast-import/git-p4 |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I do use it, but for developing/debugging pack stuff.
+I don't suggest removing it, but I don't think making it a built-in has 
+value either.
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 48059d0..1c73e5f 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -1037,7 +1037,7 @@ class P4Sync(Command):
- 
-             if includeFile:
-                 filesForCommit.append(f)
--                if f['action'] not in ('delete', 'purge'):
-+                if f['action'] not in ('delete', 'move/delete', 'purge'):
-                     filesToRead.append(f)
-                 else:
-                     filesToDelete.append(f)
--- 
-1.6.5.2.6.gc3c1e.dirty
+So I really think that Linus' patch (which is missing hex.c btw) is a 
+good thing to do, even if only for the cleanup value.
+
+Then, git-show-index could probably become test-show-index and no longer 
+leave the build directory.
+
+
+Nicolas
