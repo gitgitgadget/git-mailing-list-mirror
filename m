@@ -1,81 +1,118 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Git Wiki Move
-Date: Fri, 22 Jan 2010 01:39:29 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001220136370.4985@pacific.mpi-cbg.de>
-References: <4B4EF1E0.3040808@eaglescrag.net> <vpqbpgxrn32.fsf@bauges.imag.fr> <4B4F68E8.5050809@eaglescrag.net> <4B50F7DB.7020204@eaglescrag.net> <vpqwrzhszye.fsf@bauges.imag.fr> <alpine.DEB.1.00.1001172357420.4985@pacific.mpi-cbg.de> <4B53AEAC.6060100@eaglescrag.net>
- <alpine.DEB.1.00.1001181044410.4985@pacific.mpi-cbg.de> <alpine.DEB.1.00.1001181258540.3044@intel-tinevez-2-302> <4B54ACBD.6000000@eaglescrag.net> <20100121213514.GD3299@machine.or.cz> <m3vdevat3m.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-merge segfault in 1.6.6 and master
+Date: Thu, 21 Jan 2010 16:38:56 -0800
+Message-ID: <7vaaw7j7mn.fsf@alter.siamese.dyndns.org>
+References: <hj7abm$5vc$1@ger.gmane.org>
+ <7vocko3802.fsf@alter.siamese.dyndns.org>
+ <4B577C3F.7040608@brooklynpenguin.com>
+ <7vtyugzabq.fsf@alter.siamese.dyndns.org>
+ <4B5882BD.3090908@brooklynpenguin.com>
+ <7viqavs4xc.fsf@alter.siamese.dyndns.org>
+ <7vhbqfj8fy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@suse.cz>, "J.H." <warthog19@eaglescrag.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 22 01:33:47 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Tim Olsen <tim@brooklynpenguin.com>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 22 01:39:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NY7T9-0006bE-Fh
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 01:33:47 +0100
+	id 1NY7YS-0008C7-5C
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 01:39:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752958Ab0AVAdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 19:33:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751877Ab0AVAdm
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 19:33:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38566 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752952Ab0AVAdk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2010 19:33:40 -0500
-Received: (qmail invoked by alias); 22 Jan 2010 00:33:38 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp036) with SMTP; 22 Jan 2010 01:33:38 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/BqFwIKX/BmD1ioPsxynpFVajaZrmvyezeQI1SYX
-	XJ1eY6TGwrnEFL
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <m3vdevat3m.fsf@localhost.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.56999999999999995
+	id S1753403Ab0AVAjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 19:39:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752903Ab0AVAjM
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 19:39:12 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43734 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753113Ab0AVAjJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 19:39:09 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F9DB93507;
+	Thu, 21 Jan 2010 19:39:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ha6kB4WU/t/4crdQT+vGOA1WSWE=; b=BvXjNh
+	plJXIXszpjPKTn/wRgajWa2nR65kHVyWU3M0v3OUtkzHzvYbGR5DF87x2o4UdLi+
+	weesucDw+HEs5mNCrNbmzy0f4jzaLmYdlG9fmejTxgCEtrii4pbqx+P5zP+nCRRl
+	E3cyeI0GqKsBes2DZyc2uTOvUDNUKq8ovAi+k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nHe+pwK65EhJdQnxAfE2YHtLZ1JihuZI
+	oJCY5tJ/jFRzpEXhYBmTvED6NdBfip79tzAfk4HcdVp1Rzu+2R4KEPeTjiUCPdvK
+	vOkReMcD0mYV6hcRPDiMO77Y+sKKM26f+puq/1kvvfhKXRa4v+blZKuQLs2m2NR5
+	tb+yCF+I4MI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9ED4593503;
+	Thu, 21 Jan 2010 19:39:03 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7DEF0934FE; Thu, 21 Jan
+ 2010 19:38:58 -0500 (EST)
+In-Reply-To: <7vhbqfj8fy.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu\, 21 Jan 2010 16\:21\:21 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8A45B180-06EE-11DF-950F-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137706>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Thu, 21 Jan 2010, Jakub Narebski wrote:
+> After I stared at the code for more than two hours, I gave up trying to
+> diagnose this by myself.  People more familiar with the merge-recursive
+> implementation might be able to help figuring this out and may prove my
+> suspicion wrong, but I have a feeling that without a fairly big rewrite
+> the code is unsalvageable.
 
-> Petr Baudis <pasky@suse.cz> writes:
-> > On Mon, Jan 18, 2010 at 10:47:25AM -0800, J.H. wrote:
-> > > On 01/18/2010 04:03 AM, Johannes Schindelin wrote:
-> 
-> > > > - add a link from the old Wiki (with rewrite rules)
-> > > 
-> > > I think the rewrites should be simple enough (the pages seem to line up
-> > > 1:1 easily enough) so all I would need to do is discuss this with Petr.
-> > 
-> > repo.or.cz migration to new server is now finished and on the new
-> > system, I chose to not even install moinwiki at all. Instead, I've
-> > installed a rewrite rule so all http://git.or.cz/gitwiki/ accesses are
-> > sent to the appropriate place of http://git.wiki.kernel.org/ - thus,
-> > that's the master copy of git wiki now. :-) 
-> 
-> Are all formatting bugs from MoinMoin + media4moin -> MediaWiki fixed?
+In the meantime, I think applying this patch is the right thing to do.
 
-No.  The big ones are GitSurvey pages (except for 2007) and the SoC pages.  
-I went through all others, which means that maybe the occasional bug 
-slipped through, but basically the pages are sound.
+-- >8 --
+Subject: merge-recursive: do not return NULL only to cause segfault
 
-Which makes me think that I finally deserve to see Henrik Nyh's logo on 
-the Wiki.
+merge-recursive calls write_tree_from_memory() to come up with a virtual
+tree, with possible conflict markers inside the blob contents, while
+merging multiple common ancestors down.  It is a bug to call the function
+with unmerged entries in the index, even if the merge to come up with the
+common ancestor resulted in conflicts.  Otherwise the result won't be
+expressible as a tree object.
 
-> If not, then it would be good to have reference read-only copy of old
-> MoinMoin-based wiki to compare against.
+We _might_ want to suggest the user to set GIT_MERGE_VERBOSITY to 5 and
+re-run the merge in the message.  At least we will know which part of
+process_renames() or process_entry() functions is not correctly handling
+the unmerged paths, and it might help us diagnosing the issue.
 
-If it would not involve more work for Pasky, I would agree.  But mainly 
-the work was done.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ merge-recursive.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-Ciao,
-Dscho
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 1239647..cb53b01 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -202,14 +202,14 @@ struct tree *write_tree_from_memory(struct merge_options *o)
+ 
+ 	if (unmerged_cache()) {
+ 		int i;
+-		output(o, 0, "There are unmerged index entries:");
++		fprintf(stderr, "BUG: There are unmerged index entries:\n");
+ 		for (i = 0; i < active_nr; i++) {
+ 			struct cache_entry *ce = active_cache[i];
+ 			if (ce_stage(ce))
+-				output(o, 0, "%d %.*s", ce_stage(ce),
+-				       (int)ce_namelen(ce), ce->name);
++				fprintf(stderr, "BUG: %d %.*s", ce_stage(ce),
++					(int)ce_namelen(ce), ce->name);
+ 		}
+-		return NULL;
++		die("Bug in merge-recursive.c");
+ 	}
+ 
+ 	if (!active_cache_tree)
