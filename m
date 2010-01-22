@@ -1,65 +1,62 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 1/4] engine.pl: Fix a recent breakage of the buildsystem
- generator
-Date: Fri, 22 Jan 2010 18:58:17 +0000
-Message-ID: <4B59F549.8070308@ramsay1.demon.co.uk>
-References: <4B575838.2010504@ramsay1.demon.co.uk> <4B576E38.5080604@pcharlan.com>
+Subject: Re: [PATCH 0/4] misc. msvc patches
+Date: Fri, 22 Jan 2010 19:28:31 +0000
+Message-ID: <4B59FC5F.8010901@ramsay1.demon.co.uk>
+References: <4B57573E.2050006@ramsay1.demon.co.uk> <7vmy081okq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, sschuberth@gmail.com,
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
 	GIT Mailing-list <git@vger.kernel.org>
-To: Pete Harlan <pgit@pcharlan.com>
-X-From: git-owner@vger.kernel.org Fri Jan 22 21:05:54 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 22 21:06:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYPlK-00042P-Hr
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 21:05:46 +0100
+	id 1NYPlZ-0004AQ-Tt
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 21:06:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753274Ab0AVUFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2010 15:05:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752710Ab0AVUFm
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 15:05:42 -0500
-Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:58784 "EHLO
+	id S1753428Ab0AVUFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2010 15:05:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753282Ab0AVUFp
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 15:05:45 -0500
+Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:58790 "EHLO
 	lon1-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752578Ab0AVUFl (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Jan 2010 15:05:41 -0500
+	by vger.kernel.org with ESMTP id S1752710Ab0AVUFo (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Jan 2010 15:05:44 -0500
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
 	by lon1-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1NYPlE-0003Vb-eY; Fri, 22 Jan 2010 20:05:41 +0000
+	id 1NYPlH-0003W8-d6; Fri, 22 Jan 2010 20:05:43 +0000
 User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <4B576E38.5080604@pcharlan.com>
+In-Reply-To: <7vmy081okq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137778>
 
-Pete Harlan wrote:
-> On 01/20/2010 11:23 AM, Ramsay Jones wrote:
->> diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
->> index d506717..245af73 100644
->> --- a/contrib/buildsystems/engine.pl
->> +++ b/contrib/buildsystems/engine.pl
->> @@ -135,6 +135,11 @@ sub parseMakeOutput
->>              }
->>          } while($ate_next);
->>  
->> +        if ($text =~ /^test / && $text =~ /|| rm -f /) {
-> 
-> That test on the right needs to escape its pipes or it will always match.
+Junio C Hamano wrote:
+> I only looked at regex/regex.c and it really is a real bugfix as the
+> structure fields are of pointer type ;-).
 
-Heh, well spotted!
-As you may have already noticed, I copy/pasted the code from the comment
-further down in this function, but didn't take enough care in doing so...
-Oops! ;-)
+Hmmm, well ... I would call it a typo fixup rather than a bugfix, since
+(luckily) there is no actual bug here.
 
-The obvious solution, also suggested later by Sebastion, is to simply
-remove the second regex from the test since it does not alter the
-outcome (and still fixes the problem)...
+The expression on the rhs of the assignment is a valid null pointer
+expression; since regoff_t is an alias for int the expression amounts
+to '(int) 0', so the cast is a no-op and is equivalent to an "integer
+constant with value zero". In C, an "integer constant with value zero
+(or any such constant cast to void *)" is a null pointer constant.
+(Many people wish it wasn't...)
+
+Having said that, I would be *very* surprised if the original author
+had intended to type anything other than '(regoff_t *) 0'. Hence I
+suspect this is a typo.
+
+[Hmm, I haven't actually looked at the assembler to check that the
+generated object code is correct, but not even msvc could get this
+wrong ... :-P ]
 
 ATB,
 Ramsay Jones
