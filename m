@@ -1,71 +1,67 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] bash: don't offer remote transport helpers as subcommands
-Date: Fri, 22 Jan 2010 11:54:51 +0100
-Message-ID: <1264157691-27187-1-git-send-email-szeder@ira.uka.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] rebase -i: Export GIT_AUTHOR_* variables
+ explicitly
+Date: Fri, 22 Jan 2010 12:16:16 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1001221212350.4985@pacific.mpi-cbg.de>
+References: <cover.1264151435.git.mhagger@alum.mit.edu> <c6efda03848abc00cf8bf8d84fc34ef0d652b64c.1264151435.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jan 22 11:55:36 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com, tarmigan+git@gmail.com,
+	j.sixt@viscovery.net
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Jan 22 12:10:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYHAn-000865-Qd
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 11:55:30 +0100
+	id 1NYHPY-0005KA-J2
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 12:10:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753441Ab0AVKzW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Jan 2010 05:55:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753788Ab0AVKzV
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 05:55:21 -0500
-Received: from moutng.kundenserver.de ([212.227.126.171]:49172 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753399Ab0AVKzU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2010 05:55:20 -0500
-Received: from [127.0.1.1] (p5B130DD1.dip0.t-ipconnect.de [91.19.13.209])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0LuHCt-1O00y40b5T-011mcD; Fri, 22 Jan 2010 11:55:07 +0100
-X-Mailer: git-send-email 1.6.6.1.361.gc5121
-X-Provags-ID: V01U2FsdGVkX185ZfGPDZjwEsg8CSzq8C0m/rxGm1+thfWXMZJ
- MzR/xwvkBjYJunC8blIGtKOObN44qPntruXBV7bxuKINchjqb/
- mQJdH/Ac4etQaloWw+Hng==
+	id S1754532Ab0AVLKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2010 06:10:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753788Ab0AVLK2
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 06:10:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57952 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754398Ab0AVLK1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2010 06:10:27 -0500
+Received: (qmail invoked by alias); 22 Jan 2010 11:10:24 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp065) with SMTP; 22 Jan 2010 12:10:24 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Kqhkj/4sK5jkvQZq1kBJdLyMwmW8kfPhQWcf+3i
+	za8lrWqafWgxaV
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <c6efda03848abc00cf8bf8d84fc34ef0d652b64c.1264151435.git.mhagger@alum.mit.edu>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67000000000000004
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137755>
 
-Since commits a2d725b7 (Use an external program to implement fetching
-with curl, 2009-08-05) and c9e388bb (Make the
-"traditionally-supported" URLs a special case, 2009-09-03) remote
-transport helpers like 'remote-ftp' and 'remote-curl' are offered by th=
-e
-completion script as available subcommands.  Not good, since they are
-helpers, therefore should not be offered, so filter them out.
+Hi,
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
+On Fri, 22 Jan 2010, Michael Haggerty wrote:
 
-Maybe maint-worthy?  1.6.5 was the first release with this bug, but
-nobody complained since then.
+> As pointed out on the mailing list, one-shot shell variable exports do
+> not necessarily work with shell functions.  So export the GIT_AUTHOR_*
+> variables explicitly using "export".
 
- contrib/completion/git-completion.bash |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+This one's a bit hairy; I really was not sure about unintended side 
+effects, that is why I avoided the export.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 9651720..7def62c 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -568,6 +568,7 @@ __git_list_porcelain_commands ()
- 		read-tree)        : plumbing;;
- 		receive-pack)     : plumbing;;
- 		reflog)           : plumbing;;
-+		remote-*)         : transport;;
- 		repo-config)      : deprecated;;
- 		rerere)           : plumbing;;
- 		rev-list)         : plumbing;;
---=20
-1.6.6.1.361.gc5121
+Just imagine, for example, some git commit --amend which forgets to set 
+the author information; I am not saying that this is happening, but I 
+cannot be sure, because every possible code path to a git 
+commit/commit-tree has to be checked, and this does not mean that future 
+patches will not introduce such broken code, either.
+
+It might also be possible that some people scripted rebase -i with a 
+custom "editor" as in the tests (I have done so in the past).  They would 
+be affected.
+
+Ciao,
+Dscho
