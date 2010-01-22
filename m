@@ -1,35 +1,37 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [Patch 0/5] make more commands built-in
-Date: Fri, 22 Jan 2010 08:22:51 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.1001220804550.13231@localhost.localdomain>
+Subject: [PATCH 1/5] make "merge-index" a built-in
+Date: Fri, 22 Jan 2010 08:25:16 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.1001220822560.13231@localhost.localdomain>
+References: <alpine.LFD.2.00.1001220804550.13231@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 22 17:23:57 2010
+X-From: git-owner@vger.kernel.org Fri Jan 22 17:26:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYMIe-0003cC-8H
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 17:23:56 +0100
+	id 1NYML0-0004qI-9K
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 17:26:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755855Ab0AVQXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2010 11:23:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754990Ab0AVQXv
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 11:23:51 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:55254 "EHLO
+	id S1755598Ab0AVQ0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2010 11:26:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755525Ab0AVQ0S
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 11:26:18 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:53516 "EHLO
 	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752861Ab0AVQXu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Jan 2010 11:23:50 -0500
+	by vger.kernel.org with ESMTP id S1755020Ab0AVQ0R (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Jan 2010 11:26:17 -0500
 Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0MGMpxL016336
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0MGPHrw016527
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 22 Jan 2010 08:22:52 -0800
+	Fri, 22 Jan 2010 08:25:18 -0800
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0MGMpmO015004;
-	Fri, 22 Jan 2010 08:22:51 -0800
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0MGPHLD015068;
+	Fri, 22 Jan 2010 08:25:17 -0800
 X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <alpine.LFD.2.00.1001220804550.13231@localhost.localdomain>
 User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 X-Spam-Status: No, hits=-3.948 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
 X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
@@ -39,64 +41,100 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137758>
 
 
-Ok, so since I was working on this yesterday, I decided to just continue 
-until I was done with all the trivial files.
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
 
-This series makes five more commands built-in: 'merge-index', 'mktag', 
-'unpack-file', 'pack-redundant' and 'index-pack'. It further shrinks my 
-git install footprint by about 20%:
-
-	[torvalds@nehalem git]$ du -s /home/torvalds/libexec/git-core
-	21424	/home/torvalds/libexec/git-core (before)
-	16920	/home/torvalds/libexec/git-core (after)
-
-and if we didn't default to having debug info enabled, it would look 
-almost acceptable:
-
-	[torvalds@nehalem git]$ du -s /home/torvalds/libexec/git-core
-	5728	/home/torvalds/libexec/git-core (with "-g" removed)
-	5108	/home/torvalds/libexec/git-core (with -Os and no debugging)
-
-There still remains a few big git commands after this, but this takes care 
-of most of the core ones. 
-
-All of these patches are trivial, the only one that has _any_ changes 
-apart from the obvious builtin conversion is 'pack-redundant' which 
-required some of the pack creation interfaces to now take 'const' index 
-pathnames etc.
-
-But as you can see, it removes more lines than it adds, and considering 
-that yesterday the 'du' reported ~40MB of disk space for the git install, 
-the shrinking certainly matters (of course, I suspect most distros 
-wouldn't ship with debug info, so for most people it's about a few MB 
-rather than a few tens of MB, but still).
-
-		Linus
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 ---
-Linus Torvalds (5):
-  make "merge-index" a built-in
-  make "mktag" a built-in
-  make "git unpack-file" a built-in
-  make "git pack-redundant" a built-in
-  make "index-pack" a built-in
+Totally trivial. Famous last words.
 
- Makefile                                     |   10 +++++-----
- index-pack.c => builtin-index-pack.c         |   16 +++++++---------
- merge-index.c => builtin-merge-index.c       |    7 ++-----
- mktag.c => builtin-mktag.c                   |    6 +-----
- builtin-pack-objects.c                       |    5 +++--
- pack-redundant.c => builtin-pack-redundant.c |    8 ++------
- unpack-file.c => builtin-unpack-file.c       |    5 +----
- builtin.h                                    |    5 +++++
- git.c                                        |    5 +++++
- pack-write.c                                 |    4 ++--
- pack.h                                       |    2 +-
- 11 files changed, 34 insertions(+), 39 deletions(-)
- rename index-pack.c => builtin-index-pack.c (98%)
- rename merge-index.c => builtin-merge-index.c (94%)
- rename mktag.c => builtin-mktag.c (98%)
- rename pack-redundant.c => builtin-pack-redundant.c (99%)
- rename unpack-file.c => builtin-unpack-file.c (89%)
+ Makefile                               |    2 +-
+ merge-index.c => builtin-merge-index.c |    7 ++-----
+ builtin.h                              |    1 +
+ git.c                                  |    1 +
+ 4 files changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index e1c7ae5..70ac4b3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -389,7 +389,6 @@ PROGRAMS += $(EXTRA_PROGRAMS)
+ PROGRAMS += git-fast-import$X
+ PROGRAMS += git-imap-send$X
+ PROGRAMS += git-index-pack$X
+-PROGRAMS += git-merge-index$X
+ PROGRAMS += git-mktag$X
+ PROGRAMS += git-pack-redundant$X
+ PROGRAMS += git-shell$X
+@@ -667,6 +666,7 @@ BUILTIN_OBJS += builtin-mailsplit.o
+ BUILTIN_OBJS += builtin-merge.o
+ BUILTIN_OBJS += builtin-merge-base.o
+ BUILTIN_OBJS += builtin-merge-file.o
++BUILTIN_OBJS += builtin-merge-index.o
+ BUILTIN_OBJS += builtin-merge-ours.o
+ BUILTIN_OBJS += builtin-merge-recursive.o
+ BUILTIN_OBJS += builtin-merge-tree.o
+diff --git a/merge-index.c b/builtin-merge-index.c
+similarity index 94%
+rename from merge-index.c
+rename to builtin-merge-index.c
+index 19ddd03..2c4cf5e 100644
+--- a/merge-index.c
++++ b/builtin-merge-index.c
+@@ -66,7 +66,7 @@ static void merge_all(void)
+ 	}
+ }
+ 
+-int main(int argc, char **argv)
++int cmd_merge_index(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, force_file = 0;
+ 
+@@ -78,9 +78,6 @@ int main(int argc, char **argv)
+ 	if (argc < 3)
+ 		usage("git merge-index [-o] [-q] <merge-program> (-a | [--] <filename>*)");
+ 
+-	git_extract_argv0_path(argv[0]);
+-
+-	setup_git_directory();
+ 	read_cache();
+ 
+ 	i = 1;
+@@ -94,7 +91,7 @@ int main(int argc, char **argv)
+ 	}
+ 	pgm = argv[i++];
+ 	for (; i < argc; i++) {
+-		char *arg = argv[i];
++		const char *arg = argv[i];
+ 		if (!force_file && *arg == '-') {
+ 			if (!strcmp(arg, "--")) {
+ 				force_file = 1;
+diff --git a/builtin.h b/builtin.h
+index cb8489f..e961b33 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -68,6 +68,7 @@ extern int cmd_mailinfo(int argc, const char **argv, const char *prefix);
+ extern int cmd_mailsplit(int argc, const char **argv, const char *prefix);
+ extern int cmd_merge(int argc, const char **argv, const char *prefix);
+ extern int cmd_merge_base(int argc, const char **argv, const char *prefix);
++extern int cmd_merge_index(int argc, const char **argv, const char *prefix);
+ extern int cmd_merge_ours(int argc, const char **argv, const char *prefix);
+ extern int cmd_merge_file(int argc, const char **argv, const char *prefix);
+ extern int cmd_merge_recursive(int argc, const char **argv, const char *prefix);
+diff --git a/git.c b/git.c
+index b60999c..eae12e3 100644
+--- a/git.c
++++ b/git.c
+@@ -331,6 +331,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "merge", cmd_merge, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "merge-base", cmd_merge_base, RUN_SETUP },
+ 		{ "merge-file", cmd_merge_file },
++		{ "merge-index", cmd_merge_index, RUN_SETUP },
+ 		{ "merge-ours", cmd_merge_ours, RUN_SETUP },
+ 		{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+-- 
+1.6.6.1.399.g73128.dirty
