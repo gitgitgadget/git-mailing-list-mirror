@@ -1,74 +1,99 @@
-From: David Rydh <dary@math.berkeley.edu>
-Subject: Re: [PATCH] git-mv: Fix error with multiple sources.
-Date: Fri, 22 Jan 2010 09:30:09 -0800
-Message-ID: <CB7104C1-EB96-426F-8280-E33105378B18@math.berkeley.edu>
-References: <718290.769818367-sendEmail@darysmbp> <7vd412ac8c.fsf@alter.siamese.dyndns.org> <7vr5pi8x6z.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1077)
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] make "git unpack-file" a built-in
+Date: Fri, 22 Jan 2010 10:04:49 -0800
+Message-ID: <7vmy06vwvy.fsf@alter.siamese.dyndns.org>
+References: <alpine.LFD.2.00.1001220804550.13231@localhost.localdomain>
+ <alpine.LFD.2.00.1001220822560.13231@localhost.localdomain>
+ <alpine.LFD.2.00.1001220825190.13231@localhost.localdomain>
+ <alpine.LFD.2.00.1001220826230.13231@localhost.localdomain>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 22 18:30:26 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jan 22 19:05:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYNKx-0003El-6c
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 18:30:23 +0100
+	id 1NYNsa-0002XF-I9
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 19:05:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755693Ab0AVRaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2010 12:30:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753733Ab0AVRaQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 12:30:16 -0500
-Received: from cm03fe.IST.Berkeley.EDU ([169.229.218.144]:35748 "EHLO
-	cm03fe.IST.Berkeley.EDU" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751554Ab0AVRaP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Jan 2010 12:30:15 -0500
-Received: from [10.136.1.127]
-	by cm03fe.ist.berkeley.edu with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69)
-	(auth plain:dary@math.berkeley.edu)
-	(envelope-from <dary@math.berkeley.edu>)
-	id 1NYNKl-0000u3-Cq; Fri, 22 Jan 2010 09:30:13 -0800
-In-Reply-To: <7vr5pi8x6z.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1077)
+	id S1756063Ab0AVSFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2010 13:05:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756046Ab0AVSFA
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 13:05:00 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35933 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755019Ab0AVSFA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2010 13:05:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ECD3C91E5A;
+	Fri, 22 Jan 2010 13:04:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2lbsLr0RBGc71iI3nSmGuYmcKoc=; b=KM0xNY
+	cKjZ/XZn+xpxIIgVFG2ZXRu/rK2MEvR6b9hPlqpqyLbAZ4rWZFYHeZcyZuKDI22d
+	U9FtfQ8w0+G4Q4KIdpG9sjSUNHW1xzD9BS1jOR82LY4wtvNrSz03o8YX0CRWDikd
+	qs8pXSYs9h3sbrgRd4s+HJYJybIhC2gaaL5To=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bKEOFYpFzBmbXdU1d3/JzKLETjnD6W5x
+	NPmhrbNxd7DH3vubbGSyhSxi5gHiDx9rVdc/gd8ZJun1wItTq99+xfHWd8fUgi/k
+	4Kmgik6y5giDmykJ+687iXSrLAgnblrcXO8Gg++JOSHDpjfyvtQtzJ2pGFmQ6sjV
+	DeC/rilpn6c=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C36DA91E57;
+	Fri, 22 Jan 2010 13:04:54 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA1D891E56; Fri, 22 Jan
+ 2010 13:04:50 -0500 (EST)
+In-Reply-To: <alpine.LFD.2.00.1001220826230.13231@localhost.localdomain>
+ (Linus Torvalds's message of "Fri\, 22 Jan 2010 08\:27\:09 -0800 \(PST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A4DED1A6-0780-11DF-8A16-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137769>
 
-On Jan 21, 2010, at 10:34 PM, Junio C Hamano wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Given that basename(3) is allowed to modify its parameter, I think the
->> above code is still not portable.  casting constness away and feeding
->> result[i], especially when we didn't obtain our own copy by calling
->> xmemdupz(), is especially problematic.
->> 
->> Perhaps something ugly like this?
->> 
->> 	for (i = 0; i < count; i++) {
->> 		int length = strlen(result[i]);
->> 		int to_copy = length;
->>                while (to_copy > 0 && is_dir_sep(result[i][to_copy - 1]))
->> 			to_copy--;
->> 		if (to_copy != length || basename) {
->>                	char *it = xmemdupz(result[i], to_copy);
->>                        result[i] = base_name ? strdup(basename(it)) : it;
->> 		}
->> 	}
+> From: Linus Torvalds <torvalds@linux-foundation.org>
+> Date: Fri, 22 Jan 2010 07:38:03 -0800
+>
+> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+> ---
+> Again.. No surprises.
+> ...
+> diff --git a/unpack-file.c b/builtin-unpack-file.c
+> similarity index 89%
+> rename from unpack-file.c
+> rename to builtin-unpack-file.c
+> index e9d8934..608590a 100644
+> --- a/unpack-file.c
+> +++ b/builtin-unpack-file.c
+> @@ -22,18 +22,15 @@ static char *create_temp_file(unsigned char *sha1)
+>  	return path;
+>  }
+>  
+> -int main(int argc, char **argv)
+> +int cmd_unpack_file(int argc, const char **argv, const char *prefix)
+>  {
+>  	unsigned char sha1[20];
+>  
+> -	git_extract_argv0_path(argv[0]);
+> -
+>  	if (argc != 2 || !strcmp(argv[1], "-h"))
+>  		usage("git unpack-file <sha1>");
+>  	if (get_sha1(argv[1], sha1))
+>  		die("Not a valid object name %s", argv[1]);
+>  
+> -	setup_git_directory();
 
-This looks fine. Currently we have the odd behavior
+This will now require "git unpack-file -h" to be run in a git controlled
+directory, so strictly speaking it changes behaviour.
 
-> git mv -n dir/ new-dir
-Checking rename of 'dir' to 'new-dir'
-Checking rename of 'dir/a.txt' to 'new-dir/a.txt'
-Checking rename of 'dir/b.txt' to 'new-dir/b.txt'
-
-> git mv -n dir// new-dir
-Checking rename of 'dir/' to 'new-dir'
-fatal: source directory is empty, source=dir/, destination=new-dir
-
-Note that at the end of copy_pathspec we call get_pathspec which squashes multiple slashes (even if prefix=NULL) but does not remove a trailing slash so it is necessary to squash them all as above.
+Not that anybody would care that much, though.
