@@ -1,70 +1,68 @@
 From: Pal-Kristian Engstad <pal_engstad@naughtydog.com>
-Subject: Re: [PATCH 3/3] git-p4: improve submit performance on new P4 servers
-Date: Thu, 21 Jan 2010 18:58:29 -0800
-Message-ID: <4B591455.7050409@naughtydog.com>
-References: <4B590808.6010206@naughtydog.com> <alpine.LFD.2.00.1001212147480.1726@xanadu.home>
+Subject: Re: [PATCH 1/3] git-p4: default submit to use rename detection
+Date: Thu, 21 Jan 2010 19:01:30 -0800
+Message-ID: <4B59150A.8000002@naughtydog.com>
+References: <4B590778.30403@naughtydog.com> <alpine.LFD.2.00.1001212139540.1726@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Simon Hausmann <simon@lst.de>, Junio C Hamano <gitster@pobox.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Fri Jan 22 03:58:17 2010
+X-From: git-owner@vger.kernel.org Fri Jan 22 04:01:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NY9iy-0002pL-Fg
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 03:58:16 +0100
+	id 1NY9lp-0003Z7-H1
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 04:01:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755889Ab0AVC6L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Jan 2010 21:58:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755866Ab0AVC6L
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 21:58:11 -0500
-Received: from ironport02a.scea.com ([160.33.44.43]:30712 "EHLO
-	ironport02a.scea.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753138Ab0AVC6J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2010 21:58:09 -0500
+	id S1755894Ab0AVDBJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Jan 2010 22:01:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755816Ab0AVDBI
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 22:01:08 -0500
+Received: from ironport01a.scea.com ([160.33.44.41]:15037 "EHLO
+	ironport01a.scea.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755866Ab0AVDBF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 22:01:05 -0500
 X-IronPort-AV: E=Sophos;i="4.49,322,1262592000"; 
-   d="scan'208";a="8055730"
+   d="scan'208";a="10635743"
 Received: from inbetweener01.scea.com ([160.33.45.195])
-  by ironport02a.scea.com with ESMTP; 21 Jan 2010 18:58:00 -0800
+  by ironport01a.scea.com with ESMTP; 21 Jan 2010 19:01:02 -0800
 Received: from postal1-dog.naughtydog.com (intmail.naughtydog.com [10.15.0.14])
-	by inbetweener01.scea.com (Postfix) with ESMTP id D27FDF017A;
-	Thu, 21 Jan 2010 18:58:00 -0800 (PST)
+	by inbetweener01.scea.com (Postfix) with ESMTP id 2E6FCF017A;
+	Thu, 21 Jan 2010 19:01:02 -0800 (PST)
 Received: from [127.0.0.1] ([150.0.6.116]) by postal1-dog.naughtydog.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 21 Jan 2010 18:58:29 -0800
+	 Thu, 21 Jan 2010 19:01:29 -0800
 User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <alpine.LFD.2.00.1001212147480.1726@xanadu.home>
-X-OriginalArrivalTime: 22 Jan 2010 02:58:29.0577 (UTC) FILETIME=[C6828390:01CA9B0E]
+In-Reply-To: <alpine.LFD.2.00.1001212139540.1726@xanadu.home>
+X-OriginalArrivalTime: 22 Jan 2010 03:01:29.0978 (UTC) FILETIME=[320985A0:01CA9B0F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137729>
 
 Nicolas Pitre wrote:
 > On Thu, 21 Jan 2010, Pal-Kristian Engstad wrote:
 >=20
->> Improve git-p4 submit performance on newer (from 2009.2) Perforce
->> servers by changing "p4 diff -du" to "p4 diff -dub". This change is
->> harmless since the output is only used for display purposes.
+>> Enable git's rename detection by default. This is needed to preserve
+>> Perforce's history.
 >>
->> Signed-off-by: Pal-Kristian Engstad <pal_engstad@naughtydog.com>
+>> Removed the '-M' flag and added a '--no-detect' flag to preserve the
+>> old behavior.
 >=20
-> Why is the b flag impacting performance?
+> You should keep the -M flag, even if it ends up doing nothing, for=20
+> backward compatibility.  And --no-detect is really a bad flag name. =20
+> Maybe --no-detect-renames instead?
 
-That's a very good question. The release notes say that they've been=20
-changing how 'p4 diff -du' works, but the net effect of it all is that
-it stats all files in the whole working set. For large projects, this
-takes forever. We say pauses of 3 minutes per submit...
+I'm not sure if git-p4 wants to keep backwards compatibility. I doubt t=
+here's
+many scripts out there that calls git-p4, but Simon should decide.
 
-> And even if for display purposes, why might you wish not to see=20
-> differences in whitespace changes?
+I have no problem with the --no-detect-renames flag, though.
 
-That's a good point, but what alternative is there?
-
-PKE
+PKE.
 --=20
 P=E5l-Kristian Engstad (engstad@naughtydog.com),=20
 Lead Graphics & Engine Programmer,
