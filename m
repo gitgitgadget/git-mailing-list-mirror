@@ -1,67 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/3] rebase -i: Export GIT_AUTHOR_* variables
- explicitly
-Date: Fri, 22 Jan 2010 12:16:16 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001221212350.4985@pacific.mpi-cbg.de>
-References: <cover.1264151435.git.mhagger@alum.mit.edu> <c6efda03848abc00cf8bf8d84fc34ef0d652b64c.1264151435.git.mhagger@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com, tarmigan+git@gmail.com,
-	j.sixt@viscovery.net
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Jan 22 12:10:45 2010
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH] merge-tree: remove unnecessary call of git_extract_argv0_path
+Date: Fri, 22 Jan 2010 12:47:59 +0100
+Message-ID: <1264160879-26079-1-git-send-email-j6t@kdbg.org>
+References: <4B596519.8060508@viscovery.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jan 22 12:48:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYHPY-0005KA-J2
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 12:10:44 +0100
+	id 1NYHzx-0001uS-N5
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 12:48:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754532Ab0AVLKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2010 06:10:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753788Ab0AVLK2
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 06:10:28 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57952 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754398Ab0AVLK1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2010 06:10:27 -0500
-Received: (qmail invoked by alias); 22 Jan 2010 11:10:24 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp065) with SMTP; 22 Jan 2010 12:10:24 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Kqhkj/4sK5jkvQZq1kBJdLyMwmW8kfPhQWcf+3i
-	za8lrWqafWgxaV
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <c6efda03848abc00cf8bf8d84fc34ef0d652b64c.1264151435.git.mhagger@alum.mit.edu>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67000000000000004
+	id S1754755Ab0AVLsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2010 06:48:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753605Ab0AVLsR
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 06:48:17 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:48528 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752789Ab0AVLsQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2010 06:48:16 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NYHzm-000692-D4; Fri, 22 Jan 2010 12:48:10 +0100
+Received: from srv.linz.viscovery (srv.linz.viscovery [192.168.1.4])
+	by theia.linz.viscovery (Postfix) with ESMTP id 1234E1660F;
+	Fri, 22 Jan 2010 12:48:10 +0100 (CET)
+Received: by srv.linz.viscovery (Postfix, from userid 1000)
+	id A608FFA4B; Fri, 22 Jan 2010 12:48:09 +0100 (CET)
+X-Mailer: git-send-email 1.6.6.1.372.g084d
+In-Reply-To: <4B596519.8060508@viscovery.net>
+X-Spam-Score: 1.9 (+)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137756>
 
-Hi,
+This call should have been removed when the utility was made a builtin by
+907a7cb.
 
-On Fri, 22 Jan 2010, Michael Haggerty wrote:
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ builtin-merge-tree.c |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
 
-> As pointed out on the mailing list, one-shot shell variable exports do
-> not necessarily work with shell functions.  So export the GIT_AUTHOR_*
-> variables explicitly using "export".
-
-This one's a bit hairy; I really was not sure about unintended side 
-effects, that is why I avoided the export.
-
-Just imagine, for example, some git commit --amend which forgets to set 
-the author information; I am not saying that this is happening, but I 
-cannot be sure, because every possible code path to a git 
-commit/commit-tree has to be checked, and this does not mean that future 
-patches will not introduce such broken code, either.
-
-It might also be possible that some people scripted rebase -i with a 
-custom "editor" as in the tests (I have done so in the past).  They would 
-be affected.
-
-Ciao,
-Dscho
+diff --git a/builtin-merge-tree.c b/builtin-merge-tree.c
+index 8e16c3e..a4a4f2c 100644
+--- a/builtin-merge-tree.c
++++ b/builtin-merge-tree.c
+@@ -345,8 +345,6 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ 	if (argc != 4)
+ 		usage(merge_tree_usage);
+ 
+-	git_extract_argv0_path(argv[0]);
+-
+ 	buf1 = get_tree_descriptor(t+0, argv[1]);
+ 	buf2 = get_tree_descriptor(t+1, argv[2]);
+ 	buf3 = get_tree_descriptor(t+2, argv[3]);
+-- 
+1.6.6.1.372.g084d
