@@ -1,99 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/5] make "git unpack-file" a built-in
-Date: Fri, 22 Jan 2010 10:04:49 -0800
-Message-ID: <7vmy06vwvy.fsf@alter.siamese.dyndns.org>
-References: <alpine.LFD.2.00.1001220804550.13231@localhost.localdomain>
- <alpine.LFD.2.00.1001220822560.13231@localhost.localdomain>
- <alpine.LFD.2.00.1001220825190.13231@localhost.localdomain>
- <alpine.LFD.2.00.1001220826230.13231@localhost.localdomain>
+From: "Todd A. Jacobs" <nospam@codegnome.org>
+Subject: Re: git-archive ignores export-ignore
+Date: Fri, 22 Jan 2010 10:07:57 -0800
+Message-ID: <20100122180757.GD5307@penguin.codegnome.org>
+References: <20100121221312.GB5307@penguin.codegnome.org>
+	<7vocknhs70.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jan 22 19:05:09 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 22 19:08:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYNsa-0002XF-I9
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 19:05:08 +0100
+	id 1NYNvW-00042G-Mq
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 19:08:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756063Ab0AVSFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2010 13:05:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756046Ab0AVSFA
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 13:05:00 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35933 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755019Ab0AVSFA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2010 13:05:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ECD3C91E5A;
-	Fri, 22 Jan 2010 13:04:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2lbsLr0RBGc71iI3nSmGuYmcKoc=; b=KM0xNY
-	cKjZ/XZn+xpxIIgVFG2ZXRu/rK2MEvR6b9hPlqpqyLbAZ4rWZFYHeZcyZuKDI22d
-	U9FtfQ8w0+G4Q4KIdpG9sjSUNHW1xzD9BS1jOR82LY4wtvNrSz03o8YX0CRWDikd
-	qs8pXSYs9h3sbrgRd4s+HJYJybIhC2gaaL5To=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bKEOFYpFzBmbXdU1d3/JzKLETjnD6W5x
-	NPmhrbNxd7DH3vubbGSyhSxi5gHiDx9rVdc/gd8ZJun1wItTq99+xfHWd8fUgi/k
-	4Kmgik6y5giDmykJ+687iXSrLAgnblrcXO8Gg++JOSHDpjfyvtQtzJ2pGFmQ6sjV
-	DeC/rilpn6c=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C36DA91E57;
-	Fri, 22 Jan 2010 13:04:54 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA1D891E56; Fri, 22 Jan
- 2010 13:04:50 -0500 (EST)
-In-Reply-To: <alpine.LFD.2.00.1001220826230.13231@localhost.localdomain>
- (Linus Torvalds's message of "Fri\, 22 Jan 2010 08\:27\:09 -0800 \(PST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A4DED1A6-0780-11DF-8A16-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756022Ab0AVSIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2010 13:08:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755909Ab0AVSIB
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 13:08:01 -0500
+Received: from mta31.charter.net ([216.33.127.82]:33870 "EHLO
+	mta31.charter.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755881Ab0AVSIA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2010 13:08:00 -0500
+X-Greylist: delayed 71677 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 Jan 2010 13:08:00 EST
+Received: from imp11 ([10.20.200.11]) by mta31.charter.net
+          (InterMail vM.7.09.02.04 201-2219-117-106-20090629) with ESMTP
+          id <20100122180759.UVKY1847.mta31.charter.net@imp11>
+          for <git@vger.kernel.org>; Fri, 22 Jan 2010 13:07:59 -0500
+Received: from penguin.codegnome.org ([71.83.124.90])
+	by imp11 with smtp.charter.net
+	id Yi7y1d0011x8DgP05i7yVl; Fri, 22 Jan 2010 13:07:59 -0500
+X-Authority-Analysis: v=1.0 c=1 a=VUtgQAhiK5IA:10 a=iw0a9BV3ZkGXhRnwd5IA:9
+ a=-8-KCl09rPDSzDWiBw71EU6WAw4A:4
+Received: by penguin.codegnome.org (Postfix, from userid 1000)
+	id BB23637CB2; Fri, 22 Jan 2010 10:07:57 -0800 (PST)
+Received: by penguin.codegnome.org (tmda-sendmail, from uid 1000);
+	Fri, 22 Jan 2010 10:07:57 -0800
+Content-Disposition: inline
+In-Reply-To: <7vocknhs70.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Delivery-Agent: TMDA/1.1.12 (Macallan)
+Mail-Followup-To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137770>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Thu, Jan 21, 2010 at 04:57:39PM -0800, Junio C Hamano wrote:
 
-> From: Linus Torvalds <torvalds@linux-foundation.org>
-> Date: Fri, 22 Jan 2010 07:38:03 -0800
->
-> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-> ---
-> Again.. No surprises.
-> ...
-> diff --git a/unpack-file.c b/builtin-unpack-file.c
-> similarity index 89%
-> rename from unpack-file.c
-> rename to builtin-unpack-file.c
-> index e9d8934..608590a 100644
-> --- a/unpack-file.c
-> +++ b/builtin-unpack-file.c
-> @@ -22,18 +22,15 @@ static char *create_temp_file(unsigned char *sha1)
->  	return path;
->  }
->  
-> -int main(int argc, char **argv)
-> +int cmd_unpack_file(int argc, const char **argv, const char *prefix)
->  {
->  	unsigned char sha1[20];
->  
-> -	git_extract_argv0_path(argv[0]);
-> -
->  	if (argc != 2 || !strcmp(argv[1], "-h"))
->  		usage("git unpack-file <sha1>");
->  	if (get_sha1(argv[1], sha1))
->  		die("Not a valid object name %s", argv[1]);
->  
-> -	setup_git_directory();
+> There is something that is different in my failed attempt to reproduce it
+> from your problem description, but I cannot tell what it is.
+> 
+> Do you have some garbage character immediately after "e" in "-ignore"?
 
-This will now require "git unpack-file -h" to be run in a git controlled
-directory, so strictly speaking it changes behaviour.
+No, but it turns out that juniperxml.cfg is actually a symlink in this
+repository. I'm not sure that should make a difference, but perhaps
+that's the missing element in recreating the problem.
 
-Not that anybody would care that much, though.
+I wouldn't think so, because the reason it's a symlink is because I was
+unable to get git-archive to ignore the actual file on export, so I
+moved it elsewhere and replaced it with a symlink so that the contents
+of the file weren't exported.
+
+Hope that helps!
+
+-- 
+"Oh, look: rocks!"
+	-- Doctor Who, "Destiny of the Daleks"
