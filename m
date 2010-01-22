@@ -1,60 +1,79 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Remove diff machinery dependency from read-cache
-Date: Thu, 21 Jan 2010 18:44:37 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.1001211843160.13231@localhost.localdomain>
-References: <alpine.LFD.2.00.1001211119130.13231@localhost.localdomain> <7vljfrp6g2.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1001211215080.13231@localhost.localdomain> <alpine.LFD.2.00.1001211355500.13231@localhost.localdomain>
- <alpine.LFD.2.00.1001211515470.13231@localhost.localdomain> <7v636vj7c2.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1001212131230.1726@xanadu.home>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH 3/3] git-p4: improve submit performance on new P4 servers
+Date: Thu, 21 Jan 2010 21:49:48 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1001212147480.1726@xanadu.home>
+References: <4B590808.6010206@naughtydog.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Fri Jan 22 03:45:16 2010
+Content-Transfer-Encoding: 7BIT
+Cc: Simon Hausmann <simon@lst.de>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Pal-Kristian Engstad <pal_engstad@naughtydog.com>
+X-From: git-owner@vger.kernel.org Fri Jan 22 03:49:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NY9WO-0007p7-23
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 03:45:16 +0100
+	id 1NY9ar-0000Mn-LO
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jan 2010 03:49:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755885Ab0AVCpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2010 21:45:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755734Ab0AVCpJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 21:45:09 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:33592 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752640Ab0AVCpI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Jan 2010 21:45:08 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0M2ibAq011844
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 21 Jan 2010 18:44:39 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0M2ibke012254;
-	Thu, 21 Jan 2010 18:44:37 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.00.1001212131230.1726@xanadu.home>
+	id S1755886Ab0AVCtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2010 21:49:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755869Ab0AVCtu
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jan 2010 21:49:50 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:9014 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755630Ab0AVCtt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2010 21:49:49 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0KWM0034MNV07B00@VL-MH-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 21 Jan 2010 21:49:48 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <4B590808.6010206@naughtydog.com>
 User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.448 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137727>
 
+On Thu, 21 Jan 2010, Pal-Kristian Engstad wrote:
 
-
-On Thu, 21 Jan 2010, Nicolas Pitre wrote:
+> Improve git-p4 submit performance on newer (from 2009.2) Perforce
+> servers by changing "p4 diff -du" to "p4 diff -dub". This change is
+> harmless since the output is only used for display purposes.
 > 
-> So I really think that Linus' patch (which is missing hex.c btw) is a 
-> good thing to do, even if only for the cleanup value.
+> Signed-off-by: Pal-Kristian Engstad <pal_engstad@naughtydog.com>
 
-Gaah. hex.c was the obvious code movement with just a "cache.h" include at 
-the top. However, I already threw away that whole tree in favor of the 
-built-in version, and now I'm too lazy to re-create it.
+Why is the b flag impacting performance?
 
-		Linus
+And even if for display purposes, why might you wish not to see 
+differences in whitespace changes?
+
+> ---
+>  contrib/fast-import/git-p4 |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+> index ab538b3..ec26cac 100755
+> --- a/contrib/fast-import/git-p4
+> +++ b/contrib/fast-import/git-p4
+> @@ -715,7 +715,7 @@ class P4Submit(Command):
+>              submitTemplate = self.prepareLogMessage(template, logMessage)
+>              if os.environ.has_key("P4DIFF"):
+>                  del(os.environ["P4DIFF"])
+> -            diff = p4_read_pipe("diff -du ...")
+> +            diff = p4_read_pipe("diff -dub ...")
+>  
+>              newdiff = ""
+>              for newFile in filesToAdd:
+> -- 
+> 1.6.5.2.6.gc3c1e.dirty
+> 
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
