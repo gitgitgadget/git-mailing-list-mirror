@@ -1,121 +1,65 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH (resend 3)] git gui: Use git diff --submodule when available
-Date: Sat, 23 Jan 2010 23:04:12 +0100
-Message-ID: <4B5B725C.6060301@web.de>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] Documentation: add missing :: in config.txt
+Date: Sat, 23 Jan 2010 23:13:17 +0100
+Message-ID: <9dfb8ea11c58f502e653abc4e517a798b8005dae.1264284658.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Jan 23 23:05:59 2010
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jan 23 23:16:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYo79-0003eg-8q
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jan 2010 23:05:55 +0100
+	id 1NYoHj-0006Vb-HY
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jan 2010 23:16:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751632Ab0AWWEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jan 2010 17:04:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751523Ab0AWWEP
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jan 2010 17:04:15 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:51776 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751512Ab0AWWEO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jan 2010 17:04:14 -0500
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 2F2FB145794B6;
-	Sat, 23 Jan 2010 23:04:13 +0100 (CET)
-Received: from [80.128.48.239] (helo=[192.168.178.26])
-	by smtp05.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1NYo5U-0002pB-00; Sat, 23 Jan 2010 23:04:12 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19xldMtdPyiO1k4tnK5q5gY12KctmXnvl0Bmme6
-	bjJxReqGJa6GNC5GgMTq/CavbVLlYU0pHbgsgHs1F8WV28cleq
-	skcQB9MuKWvLua1KCyqw==
+	id S1751855Ab0AWWNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jan 2010 17:13:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751255Ab0AWWNl
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jan 2010 17:13:41 -0500
+Received: from gwse.ethz.ch ([129.132.178.238]:17641 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932131Ab0AWWNl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jan 2010 17:13:41 -0500
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.213.0; Sat, 23 Jan
+ 2010 23:13:40 +0100
+Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.213.0; Sat, 23 Jan
+ 2010 23:13:17 +0100
+X-Mailer: git-send-email 1.6.6.1.577.gf1430
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137866>
 
-The necessary feature is present since 1.6.6, it would be good
-to have this patch in the next release (see numbers below).
+bed575e (commit: support commit.status, --status, and --no-status,
+2009-12-07) forgot to add the :: that sets off an item from the
+paragraph that explains it, breaking the layout.
 
-Shawn, This is a third re-send, in case you missed the previous
-rounds. Thanks.
-
--- >8 --
-Subject: [PATCH] git gui: Use git diff --submodule when available
-
-Doing so is much faster and gives the same output. Here are some
-numbers:
-
-time git submodule summary
-<snip>
-real	0m0.219s
-user	0m0.050s
-sys	0m0.111s
-
-
-time git diff --submodule
-<snip>
-real	0m0.012s
-user	0m0.003s
-sys	0m0.009s
-
-
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- git-gui/lib/diff.tcl |   21 +++++++++------------
- 1 files changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index bd5d189..0623e3e 100644
---- a/git-gui/lib/diff.tcl
-+++ b/git-gui/lib/diff.tcl
-@@ -281,6 +281,14 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 		}
- 	}
+[I'm merely sending this out because I stumbled over it.  All the mail
+Cced to me unfortunately has to wait till tomorrow.]
 
-+	if {[git-version >= "1.6.6"]} {
-+		if {[string match {160000 *} [lindex $s 2]]
-+		    || [string match {160000 *} [lindex $s 3]]} {
-+			set is_submodule_diff 1
-+			lappend cmd --submodule
-+		}
-+	}
-+
- 	lappend cmd -p
- 	lappend cmd --no-color
- 	if {$repo_config(gui.diffcontext) >= 1} {
-@@ -296,16 +304,6 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 		lappend cmd $path
- 	}
+ Documentation/config.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
--	if {[string match {160000 *} [lindex $s 2]]
--        || [string match {160000 *} [lindex $s 3]]} {
--		set is_submodule_diff 1
--		if {$w eq $ui_index} {
--			set cmd [list submodule summary --cached -- $path]
--		} else {
--			set cmd [list submodule summary --files -- $path]
--		}
--	}
--
- 	if {[catch {set fd [eval git_read --nice $cmd]} err]} {
- 		set diff_active 0
- 		unlock_index
-@@ -387,8 +385,7 @@ proc read_diff {fd cont_info} {
- 			}
- 		} elseif {$is_submodule_diff} {
- 			if {$line == ""} continue
--			if {[regexp {^\* } $line]} {
--				set line [string replace $line 0 1 {Submodule }]
-+			if {[regexp {^Submodule } $line]} {
- 				set tags d_@
- 			} else {
- 				set op [string range $line 0 2]
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 8dcb191..17901e2 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -716,7 +716,7 @@ color.ui::
+ 	terminal. When more specific variables of color.* are set, they always
+ 	take precedence over this setting. Defaults to false.
+ 
+-commit.status
++commit.status::
+ 	A boolean to enable/disable inclusion of status information in the
+ 	commit message template when using an editor to prepare the commit
+ 	message.  Defaults to true.
 -- 
-1.6.6.1.558.gc20e6.dirty
+1.6.6.1.577.gf1430
