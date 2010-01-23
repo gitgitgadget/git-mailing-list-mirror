@@ -1,75 +1,72 @@
-From: Johannes Sixt <j6t@kdbg.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: [PATCH] Handle double slashes in make_relative_path()
-Date: Sat, 23 Jan 2010 21:41:49 +0100
-Message-ID: <201001232141.49556.j6t@kdbg.org>
-References: <379d55c6a4110736aadb8ace3b050de879a9deab.1264118830.git.trast@student.ethz.ch> <7vwrz8bnbj.fsf@alter.siamese.dyndns.org> <7viqasbmtc.fsf@alter.siamese.dyndns.org>
+Date: Sat, 23 Jan 2010 22:01:38 +0100
+Message-ID: <fabb9a1e1001231301o149bb13es236a7150f57ce161@mail.gmail.com>
+References: <379d55c6a4110736aadb8ace3b050de879a9deab.1264118830.git.trast@student.ethz.ch> 
+	<7vwrz8bnbj.fsf@alter.siamese.dyndns.org> <7viqasbmtc.fsf@alter.siamese.dyndns.org> 
+	<201001232141.49556.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
 	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 23 21:44:43 2010
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Jan 23 22:02:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYmpN-0006l2-Of
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jan 2010 21:43:30 +0100
+	id 1NYn7i-00040J-8I
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jan 2010 22:02:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752021Ab0AWUnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jan 2010 15:43:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752750Ab0AWUnB
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jan 2010 15:43:01 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:10904 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751931Ab0AWUm7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jan 2010 15:42:59 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 07BBDA7EAE;
-	Sat, 23 Jan 2010 21:42:53 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id A02F219F6D1;
-	Sat, 23 Jan 2010 21:41:49 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <7viqasbmtc.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752070Ab0AWVCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jan 2010 16:02:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751848Ab0AWVCB
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jan 2010 16:02:01 -0500
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:48279 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751943Ab0AWVB6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jan 2010 16:01:58 -0500
+Received: by pwi21 with SMTP id 21so1497591pwi.21
+        for <git@vger.kernel.org>; Sat, 23 Jan 2010 13:01:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=oQIeMT2X5r4wNTgqRVWe3DgvZfDECRomLoEm8+a2Wis=;
+        b=mQJw5qIDiEXFzezI9l6IWCVQzTw+oqq34+psGP2gtlQTPrDreqQ10/AN/JxpR8svhK
+         NPsTDJgIUFuob48+TImnSC6YDVRXfO8nwMLL7vIM6uJRB2bkReQ7N6ht3XXpVfrKDn9W
+         m3nCqqpOal2o8kfMqw/TSvvWDa5ZarxwjEfgA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=iNavR/R0GWHHQhp0TAeYpHhZJS/g8D5SynDkpxj/02D6KzHJjIzUvX2SXEFD4s+zpB
+         SEOOR7qQig/SqiTnFAhgnH5Jeqp14DNudCv8c01lUmQZn5JngSRWgffFsMpTwhrhVrlo
+         wVUVi+qY46B595IVld2B49H0qTRQYW1A0fk8M=
+Received: by 10.142.5.10 with SMTP id 10mr3140914wfe.334.1264280518131; Sat, 
+	23 Jan 2010 13:01:58 -0800 (PST)
+In-Reply-To: <201001232141.49556.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137863>
 
-On Samstag, 23. Januar 2010, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> > I think one issue is what happens when you did this:
-> >
-> >     cd //server
-> >     git --git-dir=//server/repo/repo.git --work-tree=repo
-> >
-> > Does msysgit implementation figures out that the work tree is located at
-> > "//server/repo" when get_git_work_tree() is asked to produce an absolute
-> > path so that it can be compared with //server/repo/repo.git with the
-> > code? If it does (with the leading double slash), then "doubled slahses
-> > fix" is a regression we should do something about it.  If it doesn't,
-> > then it probably doesn't matter.
->
-> Nah, I wasn't thinking straight.  What happens if you did this?
->
-> 	git --git-dir=//git/repo/repo.git --work-tree=/git/repo
->
-> where "//git/repo" is on the "git server" and you are working in local
-> hierarchy "/git/repo"?
+Heya,
 
-Ah, right, this would not do the right thing. (But I can't verify this claim 
-right now.)
+On Sat, Jan 23, 2010 at 21:41, Johannes Sixt <j6t@kdbg.org> wrote:
 
-The problem is that /git/repo without a drive prefix is a valid path and it 
-means the path that begins at the same drive that CWD currently is. I would 
-not dismiss this form of paths as too exotic, so we should care about them. 
-OTOH, it can be worked around easily by the user (just insert the drive 
-prefix). Dunno...
+> OTOH, it can be worked around easily by the user (just insert the drive
+> prefix). Dunno...
 
--- Hannes
+I think it's preferable to keep the old behavior where we fail if the
+user gives us an invalid argument, rather than fix a user error and
+break on a a valid argument instead. I think we should be correct
+first, and try and fix incorrect user behavior after.
+
+-- 
+Cheers,
+
+Sverre Rabbelier
