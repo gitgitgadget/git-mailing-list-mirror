@@ -1,112 +1,151 @@
-From: "J.H." <warthog9@eaglescrag.net>
-Subject: Re: [RFC PATCH 00/10] gitweb: Simple file based output caching
-Date: Sat, 23 Jan 2010 11:55:29 -0800
-Message-ID: <4B5B5431.6050808@eaglescrag.net>
-References: <1263432185-21334-10-git-send-email-warthog9@eaglescrag.net> <cover.1264198194.git.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jan 2010, #07; Fri, 22)
+Date: Sat, 23 Jan 2010 12:03:07 -0800
+Message-ID: <7v7hr8d1xg.fsf@alter.siamese.dyndns.org>
+References: <7vtyudfqju.fsf@alter.siamese.dyndns.org> <4B5B25C6.70604@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "John 'Warthog9' Hawley" <warthog9@kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 23 20:56:19 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sat Jan 23 21:03:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYm5h-0001xw-L8
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jan 2010 20:56:18 +0100
+	id 1NYmCX-0003xY-WA
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jan 2010 21:03:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753097Ab0AWT4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jan 2010 14:56:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753074Ab0AWT4N
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jan 2010 14:56:13 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:44864 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752995Ab0AWT4M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jan 2010 14:56:12 -0500
-Received: from voot-cruiser.eaglescrag.net (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o0NJtTZu022435
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Sat, 23 Jan 2010 11:55:30 -0800
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091209 Fedora/3.0-4.fc12 Lightning/1.0pre Thunderbird/3.0
-In-Reply-To: <cover.1264198194.git.jnareb@gmail.com>
-X-Enigmail-Version: 1.0
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Sat, 23 Jan 2010 11:55:30 -0800 (PST)
+	id S1752657Ab0AWUDS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jan 2010 15:03:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752085Ab0AWUDR
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jan 2010 15:03:17 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38370 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750773Ab0AWUDQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jan 2010 15:03:16 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E9860939C2;
+	Sat, 23 Jan 2010 15:03:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dy2vOm8So9QgGRvNoKb55u88794=; b=Z1yMGc
+	c8pEkidrMYtoZYAzodHdOfZ9z5FHrr03euCbOEATlWMbLtHjoZN09SgMAKUhaYl5
+	zVGYI21QKMS/wUKnK3l3E7+MMqNTsj63jHZfLaHsFnoiN72B6UiwA1GxTnFO88q9
+	ndim0dbNfh3fT7vorr7/Rb5wYG8GCpojShfFE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nTyn9X/oVEEK6uXi3SMd04Px3kK751+I
+	36Nybu9xtx9AshJxSM97efM9uJbMK5vqLRaT5SJk8HyKxNbj9lDNN4cw3+ij0fk2
+	U/5D6xnJC+Wnr+D30bRDE0blSt+9/OhuZwuXhZSc6xiTLygVpIKDF0/cX7s3UrrZ
+	dDHR6JItvsg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C77A4939BD;
+	Sat, 23 Jan 2010 15:03:11 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05EBD939BB; Sat, 23 Jan
+ 2010 15:03:08 -0500 (EST)
+In-Reply-To: <4B5B25C6.70604@web.de> (Jens Lehmann's message of "Sat\, 23 Jan
+ 2010 17\:37\:26 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 556F1984-085A-11DF-9B25-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137856>
 
-Just a heads up I wasn't able to get to these yesterday (Friday), but
-I'll try and work in looking these over come Monday.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-- John 'Warthog9' Hawley
+> A patch that teaches "git diff --submodule" to display if the submodule
+> contains new untracked and/or modified files is also almost ready.
 
-On 01/22/2010 04:27 PM, Jakub Narebski wrote:
-> This 10 patches long patch series is intended as proof of concept
-> for splitting large 'gitweb: File based caching layer (from git.kernel.org)'
-> mega-patch by John 'Warthog9' Hawley aka J.H., by starting small and
-> adding features piece by piece.
-> 
-> This patch is meant as replacement for last two patches:
-> * [PATCH 8/9] gitweb: Convert output to using indirect file handle
->   Message-ID: <1263432185-21334-9-git-send-email-warthog9@eaglescrag.net>
-> * [PATCH 9/9] gitweb: File based caching layer (from git.kernel.org)
->   Message-ID: <1263432185-21334-10-git-send-email-warthog9@eaglescrag.net>
-> 
-> in the long patch series by J.H.
-> * [PATCH 0/9] Gitweb caching v5
->   http://thread.gmane.org/gmane.comp.version-control.git/136913
-> 
-> Note that this patch series is part of 'gitweb/cache-kernel' branch of
-> http://repo.or.cz/w/git/jnareb-git.git repository (gitweb link), built
-> on top of modified patches from 'Gitweb caching v2' series (from
-> 'gitweb-ml-v2' branch of http://git.kernel.org/?p=git/warthog9/gitweb.git
-> repository).  Therefore they might not apply as straight replacements
-> on top of early parts of 'gitweb-ml-v5' branch.
-> 
-> This is work in progress (showing how I see introducing output caching
-> to gitweb), it lacks proper documentation (POD for gitweb/cache.pm,
-> new configuration variables in gitweb/README, perhaps "Gitweb caching"
-> section in gitweb/README and gitweb/cache.pm mentioned in gitweb/INSTALL),
-> and commits/patches marked '(WIP)' lacks proper commit message.
-> 
-> Just food for thought...
-> 
-> Table of contents:
-> ~~~~~~~~~~~~~~~~~~
->  [RFC PATCH 01/10] gitweb: Print to explicit filehandle (preparing
->                    for caching)
->  [RFC PATCH 02/10] gitweb: href(..., -path_info => 0|1)
->  [RFC PATCH 03/10] gitweb/cache.pm - Very simple file based caching
->  [RFC PATCH 04/10] gitweb/cache.pm - Stat-based cache expiration
->  [RFC PATCH 05/10] gitweb: Use Cache::Cache compatibile (get, set)
->                    output caching (WIP)
->  [RFC PATCH 06/10] gitweb/cache.pm - Adaptive cache expiration time (WIP)
->  [RFC PATCH 07/10] gitweb: Use CHI compatibile (compute method) caching (WIP)
->  [RFC PATCH 08/10] gitweb/cache.pm - Use locking to avoid 'stampeding herd'
->                    problem (WIP)
->  [RFC PATCH 09/10] gitweb/cache.pm - Serve stale data when waiting for
->                    filling cache (WIP)
->  [RFC PATCH 10/10] gitweb: Show appropriate "Generating..." page when
->                    regenerating cache (WIP)
-> 
-> 
-> Diffstat:
-> ~~~~~~~~~
-> 
->  gitweb/cache.pm                        |  566 ++++++++++
->  gitweb/gitweb.perl                     | 1923 +++++++++++++++++---------------
->  t/gitweb-lib.sh                        |    2 +
->  t/t9500-gitweb-standalone-no-errors.sh |   13 +
->  t/t9503-gitweb-caching.sh              |   32 +
->  t/t9503/test_cache_interface.pl        |  195 ++++
->  t/test-lib.sh                          |    3 +
->  7 files changed, 1836 insertions(+), 898 deletions(-)
->  create mode 100644 gitweb/cache.pm
->  create mode 100755 t/t9503-gitweb-caching.sh
->  create mode 100755 t/t9503/test_cache_interface.pl
+How does "git submodule summary" show them?  If it doesn't, then I don't
+think we would want to show them, either, as my understanding is that a
+longer-term plan is to use "diff --submodule" in git-gui to replace it.
+
+> Would
+> you consider it for inclusion into 1.7.0 too or shall i wait until after
+> the release?
+
+If a feature is not in 'master' already, I think it is too late to be
+included in 1.7.0, if that is what you are asking.  But if you start the
+usual cycle of working on, asking others to review and polishing it before
+the release, it would give us better designed and more tested version in
+1.7.1, no?
+
+
+> diff --git a/diff-lib.c b/diff-lib.c
+> index ec2e2ac..e896b9c 100644
+> --- a/diff-lib.c
+> +++ b/diff-lib.c
+> @@ -161,7 +161,10 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+>  				continue;
+>  		}
+>
+> -		if ((ce_uptodate(ce) && !S_ISGITLINK(ce->ce_mode)) || ce_skip_worktree(ce))
+> +		if ((ce_uptodate(ce)
+> +		     && (!S_ISGITLINK(ce->ce_mode)
+> +			 || DIFF_OPT_TST(&revs->diffopt, IGNORE_SUBMODULES)))
+> +		    || ce_skip_worktree(ce))
+>  			continue;
+
+I think this is sensible; the frontend knows that it doesn't care about submodules.
+
+> @@ -179,6 +182,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+>  		}
+>  		changed = ce_match_stat(ce, &st, ce_option);
+>  		if (S_ISGITLINK(ce->ce_mode)
+> +		    && !DIFF_OPT_TST(&revs->diffopt, IGNORE_SUBMODULES)
+>  		    && (!changed || (revs->diffopt.output_format & DIFF_FORMAT_PATCH))
+>  		    && is_submodule_modified(ce->name)) {
+>  			changed = 1;
+
+Likewise, but with one "hmph".  This codepath deals with a path that is a
+submodule in the index (the work tree may still have submodule, removed
+it, or replaced it with a regular file).  However, in the codepath that
+follows this up to the call to diff_change(), is_submodule_modified() is
+not called if the work tree has a submodule in a path that used to be
+something else.  Do we want one?
+
+> @@ -220,7 +224,7 @@ static int get_stat_data(struct cache_entry *ce,
+>  			 const unsigned char **sha1p,
+>  			 unsigned int *modep,
+>  			 int cached, int match_missing,
+> -			 unsigned *dirty_submodule, int output_format)
+> +			 unsigned *dirty_submodule, struct diff_options *diffopt)
+>  {
+>  	const unsigned char *sha1 = ce->sha1;
+>  	unsigned int mode = ce->ce_mode;
+
+Below the context of this hunk, we seem to do this:
+
+	if (!cached && !ce_uptodate(ce)) {
+        	...
+                if gitlink then call is_submodule_modified()
+	}
+
+But isn't it inconsistent with hunk at the beginning of this patch (ll 161-170)
+that essentially says "entries that is ce_uptodate() is Ok, but if it is a
+gitlink we need to look deeper"?  Why isn't this function looking deeper
+even when we see that the submodule entry is ce_uptodate()?
+
+    Side note: the lack of ce_skip_worktree() check is Ok.  The callers of
+    get_stat_data() are show_new_file() and show_mododified() but they are
+    never called from their sole caller, do_oneway_diff(), on a skipped
+    worktree entry.
+
+> @@ -241,7 +245,8 @@ static int get_stat_data(struct cache_entry *ce,
+>  		}
+>  		changed = ce_match_stat(ce, &st, 0);
+>  		if (S_ISGITLINK(ce->ce_mode)
+> -		    && (!changed || (output_format & DIFF_FORMAT_PATCH))
+> +		    && !DIFF_OPT_TST(diffopt, IGNORE_SUBMODULES)
+> +		    && (!changed || (diffopt->output_format & DIFF_FORMAT_PATCH))
+>  		    && is_submodule_modified(ce->name)) {
+>  			changed = 1;
+>  			*dirty_submodule = 1;
+
+This hunk by itself is Ok, but I am still puzzled about a case where you
+have "seemingly clean because ce_uptodate() says so, but submodule work
+tree or index might be dirty" case, in which this code won't trigger.
