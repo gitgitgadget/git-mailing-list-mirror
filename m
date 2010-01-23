@@ -1,1259 +1,1378 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 2/2] user-manual: general quoting improvements (p2)
-Date: Sat, 23 Jan 2010 02:18:55 +0200
-Message-ID: <1264205935-19203-3-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 1/2] user-manual: general quoting improvements (p1)
+Date: Sat, 23 Jan 2010 02:18:54 +0200
+Message-ID: <1264205935-19203-2-git-send-email-felipe.contreras@gmail.com>
 References: <1264205935-19203-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Nanako Shiraishi <nanako3@lavabit.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 23 01:19:38 2010
+X-From: git-owner@vger.kernel.org Sat Jan 23 01:21:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYTiz-0007y0-EX
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jan 2010 01:19:38 +0100
+	id 1NYTkO-00005Y-EN
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jan 2010 01:21:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755429Ab0AWATf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2010 19:19:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755460Ab0AWATc
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 19:19:32 -0500
+	id S1755845Ab0AWAUA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2010 19:20:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755597Ab0AWATr
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jan 2010 19:19:47 -0500
 Received: from mail-bw0-f227.google.com ([209.85.218.227]:44817 "EHLO
 	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755429Ab0AWATM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2010 19:19:12 -0500
+	with ESMTP id S1755568Ab0AWATH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2010 19:19:07 -0500
 Received: by mail-bw0-f227.google.com with SMTP id 27so1544233bwz.21
-        for <git@vger.kernel.org>; Fri, 22 Jan 2010 16:19:11 -0800 (PST)
+        for <git@vger.kernel.org>; Fri, 22 Jan 2010 16:19:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=0g8JUULlPUSgpOKYDG6n86XaQJBW3TCWG5GrkEScMw4=;
-        b=dnSbkbnt64YB1gvAkunejKJWQuu60bud8rZ7kXiJ0vsQX5rxyZp0pjS6atiwJ6CxTB
-         E6n7RxBkukAwgJxq4qwyrMbFFPstzslwciz0iSepOsw76jhmQ09uY49RMEJ5sCYPmqge
-         nihMfUHiXFdB8mEeCmy4ejDXSmumnztHaewGE=
+        bh=nyQ/J8HTz2sofEgVzCtBqc2Qoz10YmT9AkXk/BZbsLk=;
+        b=fJDwMSFQwmTffw7JY1RaTG7ZlFMSxkyrAv61E0jtykZWNxjAz19Pf8ChFEBVJvgNdw
+         0+yDaeW1yDYqprrzQQz5oWERWIBVWoRLrhJMd5XEACEFVKKu/367CYKRK9wqxfheNG4B
+         ZBq2WlIYIVZr6Q0eNfOoFZzmKyOGYiAcwNZzM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Sjia1DGrXpwqoAv8MBZ+frcsM0Uw4wCOk754+WWLzx6H+M08Wap17PiYG8RODG5ZqP
-         e2w306080dg1koUoNmskRLyiU1uDAQnZuh9yVY/9MibugGMgEsVCCzpnYYfU8UzhVny8
-         8iQt7dTl30PYZAPFx4+JRzdMNOMUaue0PIySU=
-Received: by 10.204.18.211 with SMTP id x19mr1994229bka.116.1264205951076;
-        Fri, 22 Jan 2010 16:19:11 -0800 (PST)
+        b=IFDAM7JH37IFxy3p82/eXxPiwgmS+nw1n+3HjbHyBC3dkR+ewVUTcHd06JodkpaN0R
+         wljuaGTrbeNPXQxVx5PX5QAeeWGsM3ogrSd27/QUxdmTMr/OG3z7SD6C1a0WJ1n/9lCz
+         uhNXKIgswyF9UKUKTkGtQaqmIclEPCPSHuFrY=
+Received: by 10.204.8.202 with SMTP id i10mr1472394bki.133.1264205946143;
+        Fri, 22 Jan 2010 16:19:06 -0800 (PST)
 Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
-        by mx.google.com with ESMTPS id 14sm1239281bwz.13.2010.01.22.16.19.07
+        by mx.google.com with ESMTPS id 16sm1238278bwz.15.2010.01.22.16.19.02
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 22 Jan 2010 16:19:09 -0800 (PST)
+        Fri, 22 Jan 2010 16:19:04 -0800 (PST)
 X-Mailer: git-send-email 1.6.6.1
 In-Reply-To: <1264205935-19203-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137793>
 
-note: should be squashed with p1
+This standarizes the way quotes are handled following semantic rules,
+that make the final text easier to read.
+
+Here are the general rules:
+
+ * A command (something that the user must type), goes in backticks. So
+   that the final text appears in monospaced text. e.g. `git clone
+   <repo>`
+
+ * A common concept (or git lingo), also goes in backticks. So that it
+   appears uniquely different from the rest of the text. e.g. `HEAD`
+
+ * An example (something that can be easily replaced), goes into
+   typewriter quotes. The final text is not formatted further, so they
+   still appear as typewriter quotes. e.g. "linux-2.6"
+
+ * A text that can be confused with normal text also goes into
+   typewriter quotes. e.g. "path/to/file" "A"
+
+ * Text that needs to be emphasized goes in single typewriter quotes. So
+   that it's not confused as normal text. e.g. we often just use the
+   term 'branch'.
+
+ * Something that needs proper quotation goes into proper double quotes.
+   So that it gets a dramatic effect, as in sombody is using his four
+   quoting fingers. e.g. ``the index''
+
+ * Something that needs strong emphasis so that the reader can't
+   possibly miss it goes enclosed in asterisks. e.g. *not* tracking
+
+These rules are not automatic, which one to use depends on the context,
+and often they can be used together. For example, consider this:
+
+	The branch 'test' is short for '"refs/heads/test"'
+
+In this case we want to highligh 'test' and 'refs/heads/test' so they go
+in single typewriter quotes, but also, we want to make clear the full
+refname is not confused as multiple words, so it goes inside double
+typewriter quotes.
+
+Also, sometimes a text can be both a command, and an example, but only
+one quoting format must be chosen.
+
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/user-manual.txt |  458 ++++++++++++++++++++--------------------
- 1 files changed, 229 insertions(+), 229 deletions(-)
+ Documentation/user-manual.txt |  426 ++++++++++++++++++++--------------------
+ 1 files changed, 213 insertions(+), 213 deletions(-)
 
 diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 8ab8968..d3e509d 100644
+index b169836..8ab8968 100644
 --- a/Documentation/user-manual.txt
 +++ b/Documentation/user-manual.txt
-@@ -2524,7 +2524,7 @@ with
- $ git tag bad mywork~5
- -------------------------------------------------
+@@ -19,7 +19,7 @@ Further chapters cover more specialized topics.
  
--(Either gitk or `git log` may be useful for finding the commit.)
-+(Either `gitk` or `git log` may be useful for finding the commit.)
+ Comprehensive reference documentation is available through the man
+ pages, or linkgit:git-help[1] command.  For example, for the command
+-"git clone <repo>", you can either use:
++`git clone <repo>`, you can either use:
  
- Then check out that commit, edit it, and rebase the rest of the series
- on top of it (note that we could check out the commit on a temporary
-@@ -2537,8 +2537,8 @@ $ git commit --amend
- $ git rebase --onto HEAD bad mywork
- -------------------------------------------------
+ ------------------------------------------------
+ $ man git-clone
+@@ -66,11 +66,11 @@ $ git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+ The initial clone may be time-consuming for a large project, but you
+ will only need to clone once.
  
--When you're done, you'll be left with mywork checked out, with the top
--patches on mywork reapplied on top of your modified commit.  You can
-+When you're done, you'll be left with 'mywork' checked out, with the top
-+patches on 'mywork' reapplied on top of your modified commit.  You can
- then clean up with
+-The clone command creates a new directory named after the project ("git"
+-or "linux-2.6" in the examples above).  After you cd into this
++The clone command creates a new directory named after the project ('git'
++or 'linux-2.6' in the examples above).  After you cd into this
+ directory, you will see that it contains a copy of the project files,
+ called the <<def_working_tree,working tree>>, together with a special
+-top-level directory named ".git", which contains all the information
++top-level directory named `.git`, which contains all the information
+ about the history of the project.
  
- -------------------------------------------------
-@@ -2546,7 +2546,7 @@ $ git tag -d bad
- -------------------------------------------------
+ [[how-to-check-out]]
+@@ -98,7 +98,7 @@ $ git branch
+ ------------------------------------------------
  
- Note that the immutable nature of git history means that you haven't really
--"modified" existing commits; instead, you have replaced the old commits with
-+`modified' existing commits; instead, you have replaced the old commits with
- new commits having new object names.
+ A freshly cloned repository contains a single branch head, by default
+-named "master", with the working directory initialized to the state of
++named 'master', with the working directory initialized to the state of
+ the project referred to by that branch head.
  
- [[reordering-patch-series]]
-@@ -2555,20 +2555,20 @@ Reordering or selecting from a patch series
+ Most projects also use <<def_tag,tags>>.  Tags, like heads, are
+@@ -130,7 +130,7 @@ $ git checkout -b new v2.6.13
+ ------------------------------------------------
  
- Given one existing commit, the linkgit:git-cherry-pick[1] command
- allows you to apply the change introduced by that commit and create a
--new commit that records it.  So, for example, if "mywork" points to a
--series of patches on top of "origin", you might do something like:
-+new commit that records it.  So, for example, if 'mywork' points to a
-+series of patches on top of 'origin', you might do something like:
+ The working directory then reflects the contents that the project had
+-when it was tagged v2.6.13, and linkgit:git-branch[1] shows two
++when it was tagged 'v2.6.13', and linkgit:git-branch[1] shows two
+ branches, with an asterisk marking the currently checked-out branch:
  
- -------------------------------------------------
- $ git checkout -b mywork-new origin
- $ gitk origin..mywork &
- -------------------------------------------------
+ ------------------------------------------------
+@@ -140,7 +140,7 @@ $ git branch
+ ------------------------------------------------
  
--and browse through the list of patches in the mywork branch using gitk,
--applying them (possibly in a different order) to mywork-new using
--cherry-pick, and possibly modifying them as you go using `git commit --amend`.
-+and browse through the list of patches in the 'mywork' branch using `gitk`,
-+applying them (possibly in a different order) to 'mywork-new' using
-+`git cherry-pick`, and possibly modifying them as you go using `git commit --amend`.
- The linkgit:git-gui[1] command may also help as it allows you to
- individually select diff hunks for inclusion in the index (by
--right-clicking on the diff hunk and choosing "Stage Hunk for Commit").
-+right-clicking on the diff hunk and choosing '"Stage Hunk for Commit"').
+ If you decide that you'd rather see version 2.6.17, you can modify
+-the current branch to point at v2.6.17 instead, with
++the current branch to point at 'v2.6.17' instead, with
  
- Another technique is to use `git format-patch` to create a series of
- patches, then reset the state to before the patches:
-@@ -2585,7 +2585,7 @@ them again with linkgit:git-am[1].
- Other tools
- -----------
+ ------------------------------------------------
+ $ git reset --hard v2.6.17
+@@ -187,8 +187,8 @@ index 65898fa..b002dc6 100644
+ As you can see, a commit shows who made the latest change, what they
+ did, and why.
  
--There are numerous other tools, such as StGit, which exist for the
-+There are numerous other tools, such as 'StGit', which exist for the
- purpose of maintaining a patch series.  These are outside of the scope of
- this manual.
+-Every commit has a 40-hexdigit id, sometimes called the "object name" or the
+-"SHA-1 id", shown on the first line of the "git show" output.  You can usually
++Every commit has a 40-hexdigit id, sometimes called the 'object name' or the
++"SHA1-1 id", shown on the first line of the `git show` output.  You can usually
+ refer to a commit by a shorter name, such as a tag or a branch name, but this
+ longer name can also be useful.  Most importantly, it is a globally unique
+ name for this commit: so if you tell somebody else the object name (for
+@@ -213,26 +213,26 @@ beginning of the project.
  
-@@ -2656,26 +2656,26 @@ Imagine this history:
+ However, the commits do not form a simple list; git allows lines of
+ development to diverge and then reconverge, and the point where two
+-lines of development reconverge is called a "merge".  The commit
++lines of development reconverge is called a 'merge'.  The commit
+ representing a merge can therefore have more than one parent, with
+ each parent representing the most recent commit on one of the lines
+ of development leading to that point.
+ 
+ The best way to see how this works is using the linkgit:gitk[1]
+-command; running gitk now on a git repository and looking for merge
++command; running `gitk` now on a git repository and looking for merge
+ commits will help understand how the git organizes history.
+ 
+-In the following, we say that commit X is "reachable" from commit Y
+-if commit X is an ancestor of commit Y.  Equivalently, you could say
+-that Y is a descendant of X, or that there is a chain of parents
+-leading from commit Y to commit X.
++In the following, we say that commit 'X' is 'reachable' from commit 'Y'
++if commit 'X' is an ancestor of commit 'Y'.  Equivalently, you could say
++that 'Y' is a descendant of 'X', or that there is a chain of parents
++leading from commit 'Y' to commit 'X'.
+ 
+ [[history-diagrams]]
+ Understanding history: History diagrams
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ We will sometimes represent git history using diagrams like the one
+-below.  Commits are shown as "o", and the links between them with
++below.  Commits are shown as '"o"', and the links between them with
+ lines drawn with - / and \.  Time goes left to right:
+ 
+ 
+@@ -244,22 +244,22 @@ lines drawn with - / and \.  Time goes left to right:
+          o--o--o <-- Branch B
  ................................................
  
- Suppose that on the upper line of development, the meaning of one
--of the functions that exists at Z is changed at commit X.  The
--commits from Z leading to A change both the function's
--implementation and all calling sites that exist at Z, as well
-+of the functions that exists at 'Z' is changed at commit 'X'.  The
-+commits from 'Z' leading to A change both the function's
-+implementation and all calling sites that exist at 'Z', as well
- as new calling sites they add, to be consistent.  There is no
--bug at A.
-+bug at 'A'.
+-If we need to talk about a particular commit, the character "o" may
++If we need to talk about a particular commit, the character '"o"' may
+ be replaced with another letter or number.
  
- Suppose that in the meantime on the lower line of development somebody
--adds a new calling site for that function at commit Y.  The
--commits from Z leading to B all assume the old semantics of that
-+adds a new calling site for that function at commit 'Y'.  The
-+commits from 'Z' leading to 'B' all assume the old semantics of that
- function and the callers and the callee are consistent with each
--other.  There is no bug at B, either.
-+other.  There is no bug at 'B', either.
+ [[what-is-a-branch]]
+ Understanding history: What is a branch?
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
--Suppose further that the two development lines merge cleanly at C,
-+Suppose further that the two development lines merge cleanly at 'C',
- so no conflict resolution is required.
+-When we need to be precise, we will use the word "branch" to mean a line
+-of development, and "branch head" (or just "head") to mean a reference
++When we need to be precise, we will use the word 'branch' to mean a line
++of development, and 'branch head' (or just 'head') to mean a reference
+ to the most recent commit on a branch.  In the example above, the branch
+-head named "A" is a pointer to one particular commit, but we refer to
++head named '"A"' is a pointer to one particular commit, but we refer to
+ the line of three commits leading up to that point as all being part of
+-"branch A".
++'"branch A"'.
  
--Nevertheless, the code at C is broken, because the callers added
-+Nevertheless, the code at 'C' is broken, because the callers added
- on the lower line of development have not been converted to the new
- semantics introduced on the upper line of development.  So if all
--you know is that D is bad, that Z is good, and that
--linkgit:git-bisect[1] identifies C as the culprit, how will you
-+you know is that 'D' is bad, that 'Z' is good, and that
-+linkgit:git-bisect[1] identifies 'C' as the culprit, how will you
- figure out that the problem is due to this change in semantics?
+ However, when no confusion will result, we often just use the term
+-"branch" both for branches and for branch heads.
++'branch' both for branches and for branch heads.
  
- When the result of a `git bisect` is a non-merge commit, you should
-@@ -2688,16 +2688,16 @@ make matters worse, the change in semantics in the problematic
- function may be just one small part of the changes in the upper
- line of development.
+ [[manipulating-branches]]
+ Manipulating branches
+@@ -271,14 +271,14 @@ a summary of the commands:
+ git branch::
+ 	list all branches
+ git branch <branch>::
+-	create a new branch named <branch>, referencing the same
++	create a new branch named '<branch>', referencing the same
+ 	point in history as the current branch
+ git branch <branch> <start-point>::
+-	create a new branch named <branch>, referencing
+-	<start-point>, which may be specified any way you like,
++	create a new branch named '<branch>', referencing
++	'<start-point>', which may be specified any way you like,
+ 	including using a branch name or a tag name
+ git branch -d <branch>::
+-	delete the branch <branch>; if the branch you are deleting
++	delete the branch '<branch>'; if the branch you are deleting
+ 	points to a commit which is not reachable from the current
+ 	branch, this command will fail with a warning.
+ git branch -D <branch>::
+@@ -288,14 +288,14 @@ git branch -D <branch>::
+ 	case it is safe to use this command to force git to delete
+ 	the branch.
+ git checkout <branch>::
+-	make the current branch <branch>, updating the working
+-	directory to reflect the version referenced by <branch>
++	make the current branch '<branch>', updating the working
++	directory to reflect the version referenced by '<branch>'
+ git checkout -b <new> <start-point>::
+-	create a new branch <new> referencing <start-point>, and
++	create a new branch '<new>' referencing '<start-point>', and
+ 	check it out.
  
--On the other hand, if instead of merging at C you had rebased the
--history between Z to B on top of A, you would have gotten this
-+On the other hand, if instead of merging at 'C' you had rebased the
-+history between 'Z' to 'B' on top of 'A', you would have gotten this
- linear history:
+-The special symbol "HEAD" can always be used to refer to the current
+-branch.  In fact, git uses a file named "HEAD" in the .git directory to
++The special symbol `HEAD` can always be used to refer to the current
++branch.  In fact, git uses a file named `HEAD` in the `.git` directory to
+ remember which branch is current:
  
- ................................................................
-     ---Z---o---X--...---o---A---o---o---Y*--...---o---B*--D*
- ................................................................
+ ------------------------------------------------
+@@ -320,8 +320,8 @@ If you want to create a new branch from this checkout, you may do so
+ HEAD is now at 427abfa... Linux v2.6.17
+ ------------------------------------------------
  
--Bisecting between Z and D* would hit a single culprit commit Y*,
--and understanding why Y* was broken would probably be easier.
-+Bisecting between 'Z' and 'D*' would hit a single culprit commit 'Y*',
-+and understanding why 'Y*' was broken would probably be easier.
+-The HEAD then refers to the SHA-1 of the commit instead of to a branch,
+-and git branch shows that you are no longer on a branch:
++The `HEAD` then refers to the `SHA-1` of the commit instead of to a branch,
++and `git branch` shows that you are no longer on a branch:
  
- Partly for this reason, many experienced git users, even when
- working on an otherwise merge-heavy project, keep the history
-@@ -2720,10 +2720,10 @@ arbitrary name:
- $ git fetch origin todo:my-todo-work
+ ------------------------------------------------
+ $ cat .git/HEAD
+@@ -331,7 +331,7 @@ $ git branch
+   master
+ ------------------------------------------------
+ 
+-In this case we say that the HEAD is "detached".
++In this case we say that the `HEAD` is 'detached'.
+ 
+ This is an easy way to check out a particular version without having to
+ make up a name for the new branch.   You can still create a new branch
+@@ -341,11 +341,11 @@ make up a name for the new branch.   You can still create a new branch
+ Examining branches from a remote repository
+ -------------------------------------------
+ 
+-The "master" branch that was created at the time you cloned is a copy
+-of the HEAD in the repository that you cloned from.  That repository
++The `master` branch that was created at the time you cloned is a copy
++of the `HEAD` in the repository that you cloned from.  That repository
+ may also have had other branches, though, and your local repository
+ keeps branches which track each of those remote branches, which you
+-can view using the "-r" option to linkgit:git-branch[1]:
++can view using the `-r` option to linkgit:git-branch[1]:
+ 
+ ------------------------------------------------
+ $ git branch -r
+@@ -359,14 +359,14 @@ $ git branch -r
+   origin/todo
+ ------------------------------------------------
+ 
+-You cannot check out these remote-tracking branches, but you can
++You cannot check out these 'remote-tracking' branches, but you can
+ examine them on a branch of your own, just as you would a tag:
+ 
+ ------------------------------------------------
+ $ git checkout -b my-todo-copy origin/todo
+ ------------------------------------------------
+ 
+-Note that the name "origin" is just the name that git uses by default
++Note that the name 'origin' is just the name that git uses by default
+ to refer to the repository that you cloned from.
+ 
+ [[how-git-stores-references]]
+@@ -375,42 +375,42 @@ Naming branches, tags, and other references
+ 
+ Branches, remote-tracking branches, and tags are all references to
+ commits.  All references are named with a slash-separated path name
+-starting with "refs"; the names we've been using so far are actually
++starting with 'refs'; the names we've been using so far are actually
+ shorthand:
+ 
+-	- The branch "test" is short for "refs/heads/test".
+-	- The tag "v2.6.18" is short for "refs/tags/v2.6.18".
+-	- "origin/master" is short for "refs/remotes/origin/master".
++	- The branch 'test' is short for '"refs/heads/test"'.
++	- The tag 'v2.6.18' is short for '"refs/tags/v2.6.18"'.
++	- 'origin/master' is short for '"refs/remotes/origin/master"'.
+ 
+ The full name is occasionally useful if, for example, there ever
+ exists a tag and a branch with the same name.
+ 
+-(Newly created refs are actually stored in the .git/refs directory,
++(Newly created refs are actually stored in the `.git/refs` directory,
+ under the path given by their name.  However, for efficiency reasons
+ they may also be packed together in a single file; see
+ linkgit:git-pack-refs[1]).
+ 
+-As another useful shortcut, the "HEAD" of a repository can be referred
+-to just using the name of that repository.  So, for example, "origin"
+-is usually a shortcut for the HEAD branch in the repository "origin".
++As another useful shortcut, the `HEAD` of a repository can be referred
++to just using the name of that repository.  So, for example, '"origin"'
++is usually a shortcut for the `HEAD` branch in the repository '"origin"'.
+ 
+ For the complete list of paths which git checks for references, and
+ the order it uses to decide which to choose when there are multiple
+-references with the same shorthand name, see the "SPECIFYING
+-REVISIONS" section of linkgit:git-rev-parse[1].
++references with the same shorthand name, see the '"SPECIFYING
++REVISIONS"' section of linkgit:git-rev-parse[1].
+ 
+ [[Updating-a-repository-With-git-fetch]]
+-Updating a repository with git fetch
++Updating a repository with `git fetch`
+ ------------------------------------
+ 
+ Eventually the developer cloned from will do additional work in her
+ repository, creating new commits and advancing the branches to point
+ at the new commits.
+ 
+-The command "git fetch", with no arguments, will update all of the
++The command `git fetch`, with no arguments, will update all of the
+ remote-tracking branches to the latest version found in her
+ repository.  It will not touch any of your own branches--not even the
+-"master" branch that was created for you on clone.
++`master` branch that was created for you on clone.
+ 
+ [[fetching-branches]]
+ Fetching branches from other repositories
+@@ -427,7 +427,7 @@ $ git fetch linux-nfs
  -------------------------------------------------
  
--The first argument, "origin", just tells git to fetch from the
-+The first argument, 'origin', just tells git to fetch from the
- repository you originally cloned from.  The second argument tells git
--to fetch the branch named "todo" from the remote repository, and to
--store it locally under the name refs/heads/my-todo-work.
-+to fetch the branch named 'todo' from the remote repository, and to
-+store it locally under the name 'refs/heads/my-todo-work'.
- 
- You can also fetch branches from other repositories; so
- 
-@@ -2731,9 +2731,9 @@ You can also fetch branches from other repositories; so
- $ git fetch git://example.com/proj.git master:example-master
- -------------------------------------------------
- 
--will create a new branch named "example-master" and store in it the
--branch named "master" from the repository at the given URL.  If you
--already have a branch named example-master, it will attempt to
-+will create a new branch named '"example-master"' and store in it the
-+branch named '"master"' from the repository at the given URL.  If you
-+already have a branch named 'example-master', it will attempt to
- <<fast-forwards,fast-forward>> to the commit given by example.com's
- master branch.  In more detail:
- 
-@@ -2747,7 +2747,7 @@ branch is a descendant of the most recent commit on your copy of the
- branch before updating your copy of the branch to point at the new
- commit.  Git calls this process a <<fast-forwards,fast-forward>>.
- 
--A fast-forward looks something like this:
-+A 'fast-forward' looks something like this:
- 
- ................................................
-  o--o--o--o <-- old head of the branch
-@@ -2771,36 +2771,36 @@ In this case, "git fetch" will fail, and print out a warning.
- 
- In that case, you can still force git to update to the new head, as
- described in the following section.  However, note that in the
--situation above this may mean losing the commits labeled "a" and "b",
-+situation above this may mean losing the commits labeled '"a"' and '"b"',
- unless you've already created a reference of your own pointing to
- them.
- 
- [[forcing-fetch]]
--Forcing git fetch to do non-fast-forward updates
-+Forcing `git fetch` to do non-fast-forward updates
- ------------------------------------------------
- 
--If git fetch fails because the new head of a branch is not a
-+If `git fetch` fails because the new head of a branch is not a
- descendant of the old head, you may force the update with:
+ New remote-tracking branches will be stored under the shorthand name
+-that you gave "git remote add", in this case linux-nfs:
++that you gave `git remote add`, in this case "linux-nfs":
  
  -------------------------------------------------
- $ git fetch git://example.com/proj.git +master:refs/remotes/example/master
+ $ git branch -r
+@@ -435,10 +435,10 @@ linux-nfs/master
+ origin/master
  -------------------------------------------------
  
--Note the addition of the "+" sign.  Alternatively, you can use the "-f"
-+Note the addition of the '"+"' sign.  Alternatively, you can use the `-f`
- flag to force updates of all the fetched branches, as in:
+-If you run "git fetch <remote>" later, the tracking branches for the
+-named <remote> will be updated.
++If you run `git fetch <remote>` later, the tracking branches for the
++named '<remote>' will be updated.
+ 
+-If you examine the file .git/config, you will see that git has added
++If you examine the file `.git/config`, you will see that git has added
+ a new stanza:
  
  -------------------------------------------------
- $ git fetch -f origin
+@@ -451,8 +451,8 @@ $ cat .git/config
  -------------------------------------------------
  
--Be aware that commits that the old version of example/master pointed at
-+Be aware that commits that the old version of 'example/master' pointed at
- may be lost, as we saw in the previous section.
+ This is what causes git to track the remote's branches; you may modify
+-or delete these configuration options by editing .git/config with a
+-text editor.  (See the "CONFIGURATION FILE" section of
++or delete these configuration options by editing `.git/config` with a
++text editor.  (See the '"CONFIGURATION FILE"' section of
+ linkgit:git-config[1] for details.)
  
- [[remote-branch-configuration]]
- Configuring remote branches
- ---------------------------
+ [[exploring-git-history]]
+@@ -461,7 +461,7 @@ Exploring git history
  
--We saw above that "origin" is just a shortcut to refer to the
-+We saw above that '"origin"' is just a shortcut to refer to the
- repository that you originally cloned from.  This information is
- stored in git configuration variables, which you can see using
- linkgit:git-config[1]:
-@@ -2845,7 +2845,7 @@ $ git fetch example master:refs/remotes/example/master
- $ git fetch example
+ Git is best thought of as a tool for storing the history of a
+ collection of files.  It does this by storing compressed snapshots of
+-the contents of a file hierarchy, together with "commits" which show
++the contents of a file hierarchy, together with commits which show
+ the relationships between these snapshots.
+ 
+ Git provides extremely flexible and fast tools for exploring the
+@@ -474,8 +474,8 @@ commit that introduced a bug into a project.
+ How to use bisect to find a regression
+ --------------------------------------
+ 
+-Suppose version 2.6.18 of your project worked, but the version at
+-"master" crashes.  Sometimes the best way to find the cause of such a
++Suppose version '2.6.18' of your project worked, but the version at
++'master' crashes.  Sometimes the best way to find the cause of such a
+ regression is to perform a brute-force search through the project's
+ history to find the particular commit that caused the problem.  The
+ linkgit:git-bisect[1] command can help you do this:
+@@ -488,10 +488,10 @@ Bisecting: 3537 revisions left to test after this
+ [65934a9a028b88e83e2b0f8b36618fe503349f8e] BLOCK: Make USB storage depend on SCSI rather than selecting it [try #6]
  -------------------------------------------------
  
--You can also add a "+" to force the update each time:
-+You can also add a '"+"' to force the update each time:
+-If you run "git branch" at this point, you'll see that git has
+-temporarily moved you in "(no branch)". HEAD is now detached from any
+-branch and points directly to a commit (with commit id 65934...) that
+-is reachable from "master" but not from v2.6.18. Compile and test it,
++If you run `git branch` at this point, you'll see that git has
++temporarily moved you to '"(no branch)"'. `HEAD` is now detached from any
++branch and points directly to a commit (with commit id '65934...') that
++is reachable from 'master' but not from 'v2.6.18'. Compile and test it,
+ and see whether it crashes. Assume it does crash. Then:
  
  -------------------------------------------------
- $ git config remote.example.fetch +master:ref/remotes/example/master
-@@ -2855,7 +2855,7 @@ Don't do this unless you're sure you won't mind "git fetch" possibly
- throwing away commits on 'example/master'.
- 
- Also note that all of the above configuration can be performed by
--directly editing the file .git/config instead of using
-+directly editing the file `.git/config` instead of using
- linkgit:git-config[1].
- 
- See linkgit:git-config[1] for more details on the configuration
-@@ -2879,10 +2879,10 @@ The Object Database
- 
- 
- We already saw in <<understanding-commits>> that all commits are stored
--under a 40-digit "object name".  In fact, all the information needed to
-+under a 40-digit 'object name'.  In fact, all the information needed to
- represent the history of a project is stored in objects with such names.
--In each case the name is calculated by taking the SHA-1 hash of the
--contents of the object.  The SHA-1 hash is a cryptographic hash function.
-+In each case the name is calculated by taking the `SHA-1` hash of the
-+contents of the object.  The `SHA-1` hash is a cryptographic hash function.
- What that means to us is that it is impossible to find two different
- objects with the same name.  This has a number of advantages; among
- others:
-@@ -2893,25 +2893,25 @@ others:
-   same content stored in two repositories will always be stored under
-   the same name.
- - Git can detect errors when it reads an object, by checking that the
--  object's name is still the SHA-1 hash of its contents.
-+  object's name is still the `SHA-1` hash of its contents.
- 
- (See <<object-details>> for the details of the object formatting and
--SHA-1 calculation.)
-+`SHA-1` calculation.)
- 
--There are four different types of objects: "blob", "tree", "commit", and
--"tag".
-+There are four different types of objects: 'blob', 'tree', 'commit', and
-+'tag'.
- 
--- A <<def_blob_object,"blob" object>> is used to store file data.
--- A <<def_tree_object,"tree" object>> ties one or more
--  "blob" objects into a directory structure. In addition, a tree object
-+- A <<def_blob_object,'blob' object>> is used to store file data.
-+- A <<def_tree_object,'tree' object>> ties one or more
-+  'blob' objects into a directory structure. In addition, a tree object
-   can refer to other tree objects, thus creating a directory hierarchy.
--- A <<def_commit_object,"commit" object>> ties such directory hierarchies
-+- A <<def_commit_object,'commit' object>> ties such directory hierarchies
-   together into a <<def_DAG,directed acyclic graph>> of revisions--each
-   commit contains the object name of exactly one tree designating the
-   directory hierarchy at the time of the commit. In addition, a commit
--  refers to "parent" commit objects that describe the history of how we
-+  refers to 'parent' commit objects that describe the history of how we
-   arrived at that directory hierarchy.
--- A <<def_tag_object,"tag" object>> symbolically identifies and can be
-+- A <<def_tag_object,`tag` object>> symbolically identifies and can be
-   used to sign other objects. It contains the object name and type of
-   another object, a symbolic name (of course!) and, optionally, a
-   signature.
-@@ -2922,8 +2922,8 @@ The object types in some more detail:
- Commit Object
- ~~~~~~~~~~~~~
- 
--The "commit" object links a physical state of a tree with a description
--of how we got there and why.  Use the --pretty=raw option to
-+The 'commit' object links a physical state of a tree with a description
-+of how we got there and why.  Use the `--pretty=raw` option to
- linkgit:git-show[1] or linkgit:git-log[1] to examine your favorite
- commit:
- 
-@@ -2942,19 +2942,19 @@ committer Junio C Hamano <gitster@pobox.com> 1187591163 -0700
- 
- As you can see, a commit is defined by:
- 
--- a tree: The SHA-1 name of a tree object (as defined below), representing
-+- a 'tree': The `SHA-1` name of a tree object (as defined below), representing
-   the contents of a directory at a certain point in time.
--- parent(s): The SHA-1 name of some number of commits which represent the
-+- 'parent(s)': The `SHA-1` name of some number of commits which represent the
-   immediately previous step(s) in the history of the project.  The
-   example above has one parent; merge commits may have more than
--  one.  A commit with no parents is called a "root" commit, and
-+  one.  A commit with no parents is called a 'root' commit, and
-   represents the initial revision of a project.  Each project must have
-   at least one root.  A project can also have multiple roots, though
-   that isn't common (or necessarily a good idea).
--- an author: The name of the person responsible for this change, together
-+- an 'author': The name of the person responsible for this change, together
-   with its date.
--- a committer: The name of the person who actually created the commit,
--  with the date it was done.  This may be different from the author, for
-+- a 'committer': The name of the person who actually created the commit,
-+  with the date it was done.  This may be different from the 'author', for
-   example, if the author was someone who wrote a patch and emailed it
-   to the person who used it to create the commit.
- - a comment describing this commit.
-@@ -2965,11 +2965,11 @@ of the tree referred to by this commit with the trees associated with
- its parents.  In particular, git does not attempt to record file renames
- explicitly, though it can identify cases where the existence of the same
- file data at changing paths suggests a rename.  (See, for example, the
---M option to linkgit:git-diff[1]).
-+`-M` option to linkgit:git-diff[1]).
- 
- A commit is usually created by linkgit:git-commit[1], which creates a
--commit whose parent is normally the current HEAD, and whose tree is
--taken from the content currently stored in the index.
-+commit whose parent is normally the current `HEAD`, and whose tree is
-+taken from the content currently stored in the `index`.
- 
- [[tree-object]]
- Tree Object
-@@ -2993,13 +2993,13 @@ $ git ls-tree fb3a8bdd0ce
- ------------------------------------------------
- 
- As you can see, a tree object contains a list of entries, each with a
--mode, object type, SHA-1 name, and name, sorted by name.  It represents
-+mode, object type, `SHA-1` name, and name, sorted by name.  It represents
- the contents of a single directory tree.
- 
- The object type may be a blob, representing the contents of a file, or
- another tree, representing the contents of a subdirectory.  Since trees
--and blobs, like all other objects, are named by the SHA-1 hash of their
--contents, two trees have the same SHA-1 name if and only if their
-+and blobs, like all other objects, are named by the `SHA-1` hash of their
-+contents, two trees have the same `SHA-1` name if and only if their
- contents (including, recursively, the contents of all subdirectories)
- are identical.  This allows git to quickly determine the differences
- between two related tree objects, since it can ignore any entries with
-@@ -3016,7 +3016,7 @@ Blob Object
- ~~~~~~~~~~~
- 
- You can use linkgit:git-show[1] to examine the contents of a blob; take,
--for example, the blob in the entry for "COPYING" from the tree above:
-+for example, the blob in the entry for 'COPYING' from the tree above:
- 
- ------------------------------------------------
- $ git show 6ff87c4664
-@@ -3027,7 +3027,7 @@ $ git show 6ff87c4664
- ...
- ------------------------------------------------
- 
--A "blob" object is nothing but a binary blob of data.  It doesn't refer
-+A 'blob' object is nothing but a binary blob of data.  It doesn't refer
- to anything else or have attributes of any kind.
- 
- Since the blob is entirely defined by its data, if two files in a
-@@ -3037,7 +3037,7 @@ is totally independent of its location in the directory tree, and
- renaming a file does not change the object that file is associated with.
- 
- Note that any tree or blob object can be examined using
--linkgit:git-show[1] with the <revision>:<path> syntax.  This can
-+linkgit:git-show[1] with the '<revision>:<path>' syntax.  This can
- sometimes be useful for browsing the contents of a tree that is not
- currently checked out.
- 
-@@ -3045,27 +3045,27 @@ currently checked out.
- Trust
- ~~~~~
- 
--If you receive the SHA-1 name of a blob from one source, and its contents
-+If you receive the `SHA-1` name of a blob from one source, and its contents
- from another (possibly untrusted) source, you can still trust that those
--contents are correct as long as the SHA-1 name agrees.  This is because
--the SHA-1 is designed so that it is infeasible to find different contents
-+contents are correct as long as the `SHA-1` name agrees.  This is because
-+the `SHA-1` is designed so that it is infeasible to find different contents
- that produce the same hash.
- 
--Similarly, you need only trust the SHA-1 name of a top-level tree object
-+Similarly, you need only trust the `SHA-1` name of a top-level tree object
- to trust the contents of the entire directory that it refers to, and if
--you receive the SHA-1 name of a commit from a trusted source, then you
-+you receive the `SHA-1` name of a commit from a trusted source, then you
- can easily verify the entire history of commits reachable through
- parents of that commit, and all of those contents of the trees referred
- to by those commits.
- 
- So to introduce some real trust in the system, the only thing you need
--to do is to digitally sign just 'one' special note, which includes the
-+to do is to digitally sign just *one* special note, which includes the
- name of a top-level commit.  Your digital signature shows others
- that you trust that commit, and the immutability of the history of
- commits tells others that they can trust the whole history.
- 
- In other words, you can easily validate a whole archive by just
--sending out a single email that tells the people the name (SHA-1 hash)
-+sending out a single email that tells the people the name (`SHA-1` hash)
- of the top commit, and digitally sign that email using something
- like GPG/PGP.
- 
-@@ -3075,9 +3075,9 @@ To assist in this, git also provides the tag object...
- Tag Object
- ~~~~~~~~~~
- 
--A tag object contains an object, object type, tag name, the name of the
--person ("tagger") who created the tag, and a message, which may contain
--a signature, as can be seen using linkgit:git-cat-file[1]:
-+A 'tag' object contains an 'object', 'object type', 'tag name', the name of the
-+person ('tagger') who created the tag, and a message, which may contain
-+a 'signature', as can be seen using linkgit:git-cat-file[1]:
- 
- ------------------------------------------------
- $ git cat-file tag v1.5.0
-@@ -3098,15 +3098,15 @@ nLE/L9aUXdWeTFPron96DLA=
- 
- See the linkgit:git-tag[1] command to learn how to create and verify tag
- objects.  (Note that linkgit:git-tag[1] can also be used to create
--"lightweight tags", which are not tag objects at all, but just simple
--references whose names begin with "refs/tags/").
-+``lightweight tags'', which are not tag objects at all, but just simple
-+references whose names begin with 'refs/tags/').
- 
- [[pack-files]]
- How git stores objects efficiently: pack files
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
- Newly created objects are initially created in a file named after the
--object's SHA-1 hash (stored in .git/objects).
-+object's `SHA-1` hash (stored in '.git/objects').
- 
- Unfortunately this system becomes inefficient once a project has a
- lot of objects.  Try this on an old project:
-@@ -3118,14 +3118,14 @@ $ git count-objects
- 
- The first number is the number of objects which are kept in
- individual files.  The second is the amount of space taken up by
--those "loose" objects.
-+those 'loose' objects.
- 
- You can save space and make git faster by moving these loose objects in
--to a "pack file", which stores a group of objects in an efficient
-+to a 'pack file', which stores a group of objects in an efficient
- compressed format; the details of how pack files are formatted can be
- found in link:technical/pack-format.txt[technical/pack-format.txt].
- 
--To put the loose objects into a pack, just run git repack:
-+To put the loose objects into a pack, just run `git repack`:
- 
- ------------------------------------------------
- $ git repack
-@@ -3145,11 +3145,11 @@ You can then run
- $ git prune
- ------------------------------------------------
- 
--to remove any of the "loose" objects that are now contained in the
-+to remove any of the 'loose' objects that are now contained in the
- pack.  This will also remove any unreferenced objects (which may be
--created when, for example, you use "git reset" to remove a commit).
-+created when, for example, you use `git reset` to remove a commit).
- You can verify that the loose objects are gone by looking at the
--.git/objects directory or by running
-+'.git/objects' directory or by running
- 
- ------------------------------------------------
- $ git count-objects
-@@ -3176,20 +3176,20 @@ branch still exists, as does everything it pointed to. The branch
- pointer itself just doesn't, since you replaced it with another one.
- 
- There are also other situations that cause dangling objects. For
--example, a "dangling blob" may arise because you did a "git add" of a
-+example, a 'dangling blob' may arise because you did a `git add` of a
- file, but then, before you actually committed it and made it part of the
- bigger picture, you changed something else in that file and committed
- that *updated* thing--the old state that you added originally ends up
- not being pointed to by any commit or tree, so it's now a dangling blob
- object.
- 
--Similarly, when the "recursive" merge strategy runs, and finds that
-+Similarly, when the 'recursive' merge strategy runs, and finds that
- there are criss-cross merges and thus more than one merge base (which is
- fairly unusual, but it does happen), it will generate one temporary
- midway tree (or possibly even more, if you had lots of criss-crossing
- merges and more than two merge bases) as a temporary internal merge
- base, and again, those are real objects, but the end result will not end
--up pointing to them, so they end up "dangling" in your repository.
-+up pointing to them, so they end up 'dangling' in your repository.
- 
- Generally, dangling objects aren't anything to worry about. They can
- even be very useful: if you screw something up, the dangling objects can
-@@ -3219,15 +3219,15 @@ $ git show <dangling-blob/tree-sha-goes-here>
- ------------------------------------------------
- 
- to show what the contents of the blob were (or, for a tree, basically
--what the "ls" for that directory was), and that may give you some idea
-+what the 'ls' for that directory was), and that may give you some idea
- of what the operation was that left that dangling object.
- 
- Usually, dangling blobs and trees aren't very interesting. They're
- almost always the result of either being a half-way mergebase (the blob
- will often even have the conflict markers from a merge in it, if you
- have had conflicting merges that you fixed up by hand), or simply
--because you interrupted a "git fetch" with ^C or something like that,
--leaving _some_ of the new objects in the object database, but just
-+because you interrupted a `git fetch` with '^C' or something like that,
-+leaving *some* of the new objects in the object database, but just
- dangling and useless.
- 
- Anyway, once you are sure that you're not interested in any dangling
-@@ -3237,17 +3237,17 @@ state, you can just prune all unreachable objects:
- $ git prune
- ------------------------------------------------
- 
--and they'll be gone. But you should only run "git prune" on a quiescent
--repository--it's kind of like doing a filesystem fsck recovery: you
-+and they'll be gone. But you should only run `git prune` on a quiescent
-+repository--it's kind of like doing a filesystem 'fsck' recovery: you
- don't want to do that while the filesystem is mounted.
- 
--(The same is true of "git fsck" itself, btw, but since
-+(The same is true of `git fsck` itself, btw, but since
- `git fsck` never actually *changes* the repository, it just reports
- on what it found, `git fsck` itself is never 'dangerous' to run.
- Running it while somebody is actually changing the repository can cause
- confusing and scary messages, but it won't actually do anything bad. In
--contrast, running "git prune" while somebody is actively changing the
--repository is a *BAD* idea).
-+contrast, running `git prune` while somebody is actively changing the
-+repository is a *bad* idea).
- 
- [[recovering-from-repository-corruption]]
- Recovering from repository corruption
-@@ -3258,7 +3258,7 @@ the absence of bugs in git itself, it is still possible that hardware or
- operating system errors could corrupt data.
- 
- The first defense against such problems is backups.  You can back up a
--git directory using clone, or just using cp, tar, or any other backup
-+git directory using `git clone`, or just using 'cp', 'tar', or any other backup
- mechanism.
- 
- As a last resort, you can search for the corrupted objects and attempt
-@@ -3281,13 +3281,13 @@ broken link from    tree 2d9263c6d23595e7cb2a21e5ebbb53655278dff8
- missing blob 4b9458b3786228369c63936db65827de3cc06200
- ------------------------------------------------
- 
--(Typically there will be some "dangling object" messages too, but they
-+(Typically there will be some 'dangling object' messages too, but they
- aren't interesting.)
- 
--Now you know that blob 4b9458b3 is missing, and that the tree 2d9263c6
-+Now you know that blob '4b9458b3' is missing, and that the tree '2d9263c6'
- points to it.  If you could find just one copy of that missing blob
- object, possibly in some other repository, you could move it into
--.git/objects/4b/9458b3... and be done.  Suppose you can't.  You can
-+'.git/objects/4b/9458b3...' and be done.  Suppose you can't.  You can
- still examine the tree that pointed to it with linkgit:git-ls-tree[1],
- which might output something like:
- 
-@@ -3302,10 +3302,10 @@ $ git ls-tree 2d9263c6d23595e7cb2a21e5ebbb53655278dff8
- ------------------------------------------------
- 
- So now you know that the missing blob was the data for a file named
--"myfile".  And chances are you can also identify the directory--let's
--say it's in "somedirectory".  If you're lucky the missing copy might be
-+'myfile'.  And chances are you can also identify the directory--let's
-+say it's in 'somedirectory'.  If you're lucky the missing copy might be
- the same as the copy you have checked out in your working tree at
--"somedirectory/myfile"; you can test whether that's right with
-+'somedirectory/myfile'; you can test whether that's right with
- linkgit:git-hash-object[1]:
- 
- ------------------------------------------------
-@@ -3313,8 +3313,8 @@ $ git hash-object -w somedirectory/myfile
- ------------------------------------------------
- 
- which will create and store a blob object with the contents of
--somedirectory/myfile, and output the SHA-1 of that object.  if you're
--extremely lucky it might be 4b9458b3786228369c63936db65827de3cc06200, in
-+'somedirectory/myfile', and output the `SHA-1` of that object.  if you're
-+extremely lucky it might be '4b9458b3786228369c63936db65827de3cc06200', in
- which case you've guessed right, and the corruption is fixed!
- 
- Otherwise, you need more information.  How do you tell which version of
-@@ -3345,12 +3345,12 @@ Date:
- ------------------------------------------------
- 
- This tells you that the immediately preceding version of the file was
--"newsha", and that the immediately following version was "oldsha".
--You also know the commit messages that went with the change from oldsha
--to 4b9458b and with the change from 4b9458b to newsha.
-+'newsha', and that the immediately following version was 'oldsha'.
-+You also know the commit messages that went with the change from 'oldsha'
-+to '4b9458b' and with the change from '4b9458b' to 'newsha'.
- 
- If you've been committing small enough changes, you may now have a good
--shot at reconstructing the contents of the in-between state 4b9458b.
-+shot at reconstructing the contents of the in-between state '4b9458b'.
- 
- If you can do that, you can now recreate the missing object with
- 
-@@ -3360,13 +3360,13 @@ $ git hash-object -w <recreated-file>
- 
- and your repository is good again!
- 
--(Btw, you could have ignored the fsck, and started with doing a
-+(Btw, you could have ignored the 'fsck', and started with doing a
- 
- ------------------------------------------------
- $ git log --raw --all
- ------------------------------------------------
- 
--and just looked for the sha of the missing object (4b9458b..) in that
-+and just looked for the sha of the missing object ('4b9458b..') in that
- whole thing. It's up to you - git does *have* a lot of information, it is
- just missing one particular blob version.
- 
-@@ -3374,8 +3374,8 @@ just missing one particular blob version.
- The index
- -----------
- 
--The index is a binary file (generally kept in .git/index) containing a
--sorted list of path names, each with permissions and the SHA-1 of a blob
-+The index is a binary file (generally kept in `.git/index'` containing a
-+sorted list of path names, each with permissions and the `SHA-1` of a blob
- object; linkgit:git-ls-files[1] can show you the contents of the index:
- 
- -------------------------------------------------
-@@ -3392,7 +3392,7 @@ $ git ls-files --stage
+@@ -526,19 +526,19 @@ run
+ $ git bisect visualize
  -------------------------------------------------
  
- Note that in older documentation you may see the index called the
--"current directory cache" or just the "cache".  It has three important
-+``current directory cache'' or just the ``cache''.  It has three important
- properties:
- 
- 1. The index contains all the information necessary to generate a single
-@@ -3418,7 +3418,7 @@ associated with sufficient information about the trees involved that
- you can create a three-way merge between them.
- +
- We saw in <<conflict-resolution>> that during a merge the index can
--store multiple versions of a single file (called "stages").  The third
-+store multiple versions of a single file (called ``stages'').  The third
- column in the linkgit:git-ls-files[1] output above is the stage
- number, and will take on values other than 0 for files with merge
- conflicts.
-@@ -3464,7 +3464,7 @@ Git's submodule support allows a repository to contain, as a subdirectory, a
- checkout of an external project.  Submodules maintain their own identity;
- the submodule support just stores the submodule repository location and
- commit ID, so other developers who clone the containing project
--("superproject") can easily clone all the submodules at the same revision.
-+(``superproject'') can easily clone all the submodules at the same revision.
- Partial checkouts of the superproject are possible: you can tell Git to
- clone none, some or all of the submodules.
- 
-@@ -3491,7 +3491,7 @@ do
- done
- -------------------------------------------------
- 
--Now create the superproject and add all the submodules:
-+Now create the 'superproject' and add all the submodules:
+-which will run gitk and label the commit it chose with a marker that
+-says "bisect".  Choose a safe-looking commit nearby, note its commit
++which will run `gitk` and label the commit it chose with a marker that
++says '"bisect"'.  Choose a safe-looking commit nearby, note its commit
+ id, and check it out with:
  
  -------------------------------------------------
- $ mkdir super
-@@ -3503,7 +3503,7 @@ do
- done
+ $ git reset --hard fb47ddb2db...
  -------------------------------------------------
  
--NOTE: Do not use local URLs here if you plan to publish your superproject!
-+*NOTE*: Do not use local URLs here if you plan to publish your superproject!
+-then test, run "bisect good" or "bisect bad" as appropriate, and
++then test, run '"bisect good"' or '"bisect bad"' as appropriate, and
+ continue.
  
- See what files `git submodule` created:
- 
-@@ -3514,7 +3514,7 @@ $ ls -a
- 
- The `git submodule add <repo> <path>` command does a couple of things:
- 
--- It clones the submodule from <repo> to the given <path> under the
-+- It clones the submodule from '<repo>' to the given '<path>' under the
-   current directory and by default checks out the master branch.
- - It adds the submodule's clone path to the linkgit:gitmodules[5] file and
-   adds this file to the index, ready to be committed.
-@@ -3547,9 +3547,9 @@ $ git submodule status
- -d96249ff5d57de5de093e6baff9e0aafa5276a74 d
- -------------------------------------------------
- 
--NOTE: The commit object names shown above would be different for you, but they
--should match the HEAD commit object names of your repositories.  You can check
--it by running `git ls-remote ../a`.
-+*NOTE*: The commit object names shown above would be different for you, but they
-+should match the `HEAD` commit object names of your repositories.  You can check
-+it by running '"git ls-remote ../a"'.
- 
- Pulling down the submodules is a two-step process. First run `git submodule
- init` to add the submodule repository URLs to `.git/config`:
-@@ -3660,7 +3660,7 @@ $ cat a.txt
- module a
- -------------------------------------------------
- 
--NOTE: The changes are still visible in the submodule's reflog.
-+*NOTE*: The changes are still visible in the submodule's `reflog`.
- 
- This is not the case if you did not commit your changes.
- 
-@@ -3701,7 +3701,7 @@ between the working tree, the index, and the object database.  Git
- provides low-level operations which perform each of these steps
- individually.
- 
--Generally, all "git" operations work on the index file. Some operations
-+Generally, all git operations work on the index file. Some operations
- work *purely* on the index file (showing the current state of the
- index), but most operations move data between the index file and either
- the database or the working directory. Thus there are four main
-@@ -3728,7 +3728,7 @@ To tell git that yes, you really do realize that certain files no
- longer exist, or that new files should be added, you
- should use the `--remove` and `--add` flags respectively.
- 
--NOTE! A `--remove` flag does 'not' mean that subsequent filenames will
-+*NOTE!* A `--remove` flag does *not* mean that subsequent filenames will
- necessarily be removed: if the files still exist in your directory
- structure, the index will be updated with their new status, not
- removed. The only thing `--remove` means is that update-index will be
-@@ -3736,8 +3736,8 @@ considering a removed file to be a valid thing, and if the file really
- does not exist any more, it will update the index accordingly.
- 
- As a special case, you can also do `git update-index --refresh`, which
--will refresh the "stat" information of each index to match the current
--stat information. It will 'not' update the object status itself, and
-+will refresh the 'stat' information of each index to match the current
-+stat information. It will *not* update the object status itself, and
- it will only update the fields that are used to quickly test whether
- an object still matches its old backing store object.
- 
-@@ -3748,7 +3748,7 @@ linkgit:git-update-index[1].
- index -> object database
- ~~~~~~~~~~~~~~~~~~~~~~~~
- 
--You write your current index file to a "tree" object with the program
-+You write your current index file to a 'tree' object with the program
+-Instead of "git bisect visualize" and then "git reset --hard
+-fb47ddb2db...", you might just want to tell git that you want to skip
++Instead of '"git bisect visualize"' and then '"git reset --hard
++fb47ddb2db..."', you might just want to tell git that you want to skip
+ the current commit:
  
  -------------------------------------------------
- $ git write-tree
-@@ -3764,7 +3764,7 @@ other direction:
- object database -> index
- ~~~~~~~~~~~~~~~~~~~~~~~~
+@@ -550,8 +550,8 @@ bad one between some first skipped commits and a later bad commit.
  
--You read a "tree" file from the object database, and use that to
-+You read a 'tree' file from the object database, and use that to
- populate (and overwrite--don't do this if your index contains any
- unsaved state that you might want to restore later!) your current
- index.  Normal operation is just
-@@ -3781,7 +3781,7 @@ directory contents have not been modified.
- index -> working directory
- ~~~~~~~~~~~~~~~~~~~~~~~~~~
+ There are also ways to automate the bisecting process if you have a
+ test script that can tell a good from a bad commit. See
+-linkgit:git-bisect[1] for more information about this and other "git
+-bisect" features.
++linkgit:git-bisect[1] for more information about this and other `git
++bisect` features.
  
--You update your working directory from the index by "checking out"
-+You update your working directory from the index by `checking out'
- files. This is not a very common operation, since normally you'd just
- keep your files updated, and rather than write to your working
- directory, you'd tell the index files about the changes in your
-@@ -3798,9 +3798,9 @@ $ git checkout-index filename
+ [[naming-commits]]
+ Naming commits
+@@ -567,7 +567,7 @@ We have seen several ways of naming commits already:
+ 	  <<how-git-stores-references,references>>).
+ 	- HEAD: refers to the head of the current branch
  
- or, if you want to check out all of the index, use `-a`.
+-There are many more; see the "SPECIFYING REVISIONS" section of the
++There are many more; see the '"SPECIFYING REVISIONS"' section of the
+ linkgit:git-rev-parse[1] man page for the complete list of ways to
+ name revisions.  Some examples:
  
--NOTE! `git checkout-index` normally refuses to overwrite old files, so
-+*NOTE!* `git checkout-index` normally refuses to overwrite old files, so
- if you have an old version of the tree already checked out, you will
--need to use the "-f" flag ('before' the "-a" flag or the filename) to
-+need to use the `-f` flag (*before* the `-a` flag or the filename) to
- 'force' the checkout.
+@@ -580,7 +580,7 @@ $ git show HEAD~4   # the great-great-grandparent
+ -------------------------------------------------
+ 
+ Recall that merge commits may have more than one parent; by default,
+-^ and ~ follow the first parent listed in the commit, but you can
++'^' and '~' follow the first parent listed in the commit, but you can
+ also choose:
+ 
+ -------------------------------------------------
+@@ -588,24 +588,24 @@ $ git show HEAD^1   # show the first parent of HEAD
+ $ git show HEAD^2   # show the second parent of HEAD
+ -------------------------------------------------
+ 
+-In addition to HEAD, there are several other special names for
++In addition to `HEAD`, there are several other special names for
+ commits:
+ 
+ Merges (to be discussed later), as well as operations such as
+ `git reset`, which change the currently checked-out commit, generally
+-set ORIG_HEAD to the value HEAD had before the current operation.
++set `ORIG_HEAD` to the value `HEAD` had before the current operation.
+ 
+ The `git fetch` operation always stores the head of the last fetched
+-branch in FETCH_HEAD.  For example, if you run `git fetch` without
++branch in `FETCH_HEAD`.  For example, if you run `git fetch` without
+ specifying a local branch as the target of the operation
+ 
+ -------------------------------------------------
+ $ git fetch git://example.com/proj.git theirbranch
+ -------------------------------------------------
+ 
+-the fetched commits will still be available from FETCH_HEAD.
++the fetched commits will still be available from `FETCH_HEAD`.
+ 
+-When we discuss merges we'll also see the special name MERGE_HEAD,
++When we discuss merges we'll also see the special name `MERGE_HEAD`,
+ which refers to the other branch that we're merging in to the current
+ branch.
+ 
+@@ -629,9 +629,9 @@ running
+ $ git tag stable-1 1b2e1d63ff
+ -------------------------------------------------
+ 
+-You can use stable-1 to refer to the commit 1b2e1d63ff.
++You can use 'stable-1' to refer to the commit '1b2e1d63ff'.
+ 
+-This creates a "lightweight" tag.  If you would also like to include a
++This creates a 'lightweight' tag.  If you would also like to include a
+ comment with the tag, and possibly sign it cryptographically, then you
+ should create a tag object instead; see the linkgit:git-tag[1] man page
+ for details.
+@@ -658,22 +658,22 @@ $ git log -S'foo()'	# commits which add or remove any file data
+ -------------------------------------------------
+ 
+ And of course you can combine all of these; the following finds
+-commits since v2.5 which touch the Makefile or any file under fs:
++commits since 'v2.5' which touch the 'Makefile' or any file under 'fs':
+ 
+ -------------------------------------------------
+ $ git log v2.5.. Makefile fs/
+ -------------------------------------------------
+ 
+-You can also ask git log to show patches:
++You can also ask `git log` to show patches:
+ 
+ -------------------------------------------------
+ $ git log -p
+ -------------------------------------------------
+ 
+-See the "--pretty" option in the linkgit:git-log[1] man page for more
++See the `--pretty` option in the linkgit:git-log[1] man page for more
+ display options.
+ 
+-Note that git log starts with the most recent commit and works
++Note that `git log` starts with the most recent commit and works
+ backwards through the parents; however, since git history can contain
+ multiple independent lines of development, the particular order that
+ commits are listed in may be somewhat arbitrary.
+@@ -731,15 +731,15 @@ Examples
+ Counting the number of commits on a branch
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+-Suppose you want to know how many commits you've made on "mybranch"
+-since it diverged from "origin":
++Suppose you want to know how many commits you've made on '"mybranch"'
++since it diverged from '"origin"':
+ 
+ -------------------------------------------------
+ $ git log --pretty=oneline origin..mybranch | wc -l
+ -------------------------------------------------
+ 
+ Alternatively, you may often see this sort of thing done with the
+-lower-level command linkgit:git-rev-list[1], which just lists the SHA-1's
++lower-level command linkgit:git-rev-list[1], which just lists the `SHA-1s`
+ of all the given commits:
+ 
+ -------------------------------------------------
+@@ -769,7 +769,7 @@ $ git rev-list master
+ e05db0fd4f31dde7005f075a84f96b360d05984b
+ -------------------------------------------------
+ 
+-Or you could recall that the ... operator selects all commits
++Or you could recall that the '"..."' operator selects all commits
+ contained reachable from either one reference or the other but not
+ both: so
+ 
+@@ -783,15 +783,15 @@ will return no commits when the two branches are equal.
+ Find first tagged version including a given fix
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+-Suppose you know that the commit e05db0fd fixed a certain problem.
++Suppose you know that the commit 'e05db0fd' fixed a certain problem.
+ You'd like to find the earliest tagged release that contains that
+ fix.
+ 
+ Of course, there may be more than one answer--if the history branched
+-after commit e05db0fd, then there could be multiple "earliest" tagged
++after commit 'e05db0fd', then there could be multiple earliest tagged
+ releases.
+ 
+-You could just visually inspect the commits since e05db0fd:
++You could just visually inspect the commits since 'e05db0fd':
+ 
+ -------------------------------------------------
+ $ gitk e05db0fd..
+@@ -827,8 +827,8 @@ e05db0fd4f31dde7005f075a84f96b360d05984b
+ 
+ The merge-base command finds a common ancestor of the given commits,
+ and always returns one or the other in the case where one is a
+-descendant of the other; so the above output shows that e05db0fd
+-actually is an ancestor of v1.5.0-rc1.
++descendant of the other; so the above output shows that 'e05db0fd'
++actually is an ancestor of 'v1.5.0-rc1'.
+ 
+ Alternatively, note that
+ 
+@@ -836,8 +836,8 @@ Alternatively, note that
+ $ git log v1.5.0-rc1..e05db0fd
+ -------------------------------------------------
+ 
+-will produce empty output if and only if v1.5.0-rc1 includes e05db0fd,
+-because it outputs only commits that are not reachable from v1.5.0-rc1.
++will produce empty output if and only if 'v1.5.0-rc1' includes 'e05db0fd',
++because it outputs only commits that are not reachable from 'v1.5.0-rc1'.
+ 
+ As yet another alternative, the linkgit:git-show-branch[1] command lists
+ the commits reachable from its arguments with a display on the left-hand
+@@ -861,15 +861,15 @@ then search for a line that looks like
+ available
+ -------------------------------------------------
+ 
+-Which shows that e05db0fd is reachable from itself, from v1.5.0-rc1, and
+-from v1.5.0-rc2, but not from v1.5.0-rc0.
++Which shows that 'e05db0fd' is reachable from itself, from 'v1.5.0-rc1', and
++from 'v1.5.0-rc2', but not from 'v1.5.0-rc0'.
+ 
+ [[showing-commits-unique-to-a-branch]]
+ Showing commits unique to a given branch
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ Suppose you would like to see all the commits reachable from the branch
+-head named "master" but not from any other head in your repository.
++head named '"master"' but not from any other head in your repository.
+ 
+ We can list all the heads in this repository with
+ linkgit:git-show-ref[1]:
+@@ -883,7 +883,7 @@ a07157ac624b2524a059a3414e99f6f44bebc1e7 refs/heads/master
+ 1e87486ae06626c2f31eaa63d26fc0fd646c8af2 refs/heads/tutorial-fixes
+ -------------------------------------------------
+ 
+-We can get just the branch-head names, and remove "master", with
++We can get just the branch-head names, and remove 'master', with
+ the help of the standard utilities cut and grep:
+ 
+ -------------------------------------------------
+@@ -894,7 +894,7 @@ refs/heads/tutorial-2
+ refs/heads/tutorial-fixes
+ -------------------------------------------------
+ 
+-And then we can ask to see all the commits reachable from master
++And then we can ask to see all the commits reachable from 'master'
+ but not from these other heads:
+ 
+ -------------------------------------------------
+@@ -909,7 +909,7 @@ commits reachable from some head but not from any tag in the repository:
+ $ gitk $( git show-ref --heads ) --not  $( git show-ref --tags )
+ -------------------------------------------------
+ 
+-(See linkgit:git-rev-parse[1] for explanations of commit-selecting
++(See linkgit:git-rev-parse[1] for explanations of 'commit-selecting'
+ syntax such as `--not`.)
+ 
+ [[making-a-release]]
+@@ -923,8 +923,8 @@ any version of a project; for example:
+ $ git archive --format=tar --prefix=project/ HEAD | gzip >latest.tar.gz
+ -------------------------------------------------
+ 
+-will use HEAD to produce a tar archive in which each filename is
+-preceded by "project/".
++will use `HEAD` to produce a tar archive in which each filename is
++preceded by '"project/"'.
+ 
+ If you're releasing a new version of a software project, you may want
+ to simultaneously make a changelog to include in the release
+@@ -937,7 +937,7 @@ then running:
+ $ release-script 2.6.12 2.6.13-rc6 2.6.13-rc7
+ -------------------------------------------------
+ 
+-where release-script is a shell script that looks like:
++where 'release-script' is a shell script that looks like:
+ 
+ -------------------------------------------------
+ #!/bin/sh
+@@ -982,7 +982,7 @@ Telling git your name
+ 
+ Before creating any commits, you should introduce yourself to git.  The
+ easiest way to do so is to make sure the following lines appear in a
+-file named .gitconfig in your home directory:
++file named `.gitconfig` in your home directory:
+ 
+ ------------------------------------------------
+ [user]
+@@ -990,7 +990,7 @@ file named .gitconfig in your home directory:
+ 	email = you@yourdomain.example.com
+ ------------------------------------------------
+ 
+-(See the "CONFIGURATION FILE" section of linkgit:git-config[1] for
++(See the '"CONFIGURATION FILE"' section of linkgit:git-config[1] for
+ details on the configuration file.)
  
  
-@@ -3811,19 +3811,19 @@ from one representation to the other:
- Tying it all together
- ~~~~~~~~~~~~~~~~~~~~~
+@@ -1031,11 +1031,11 @@ Creating a new commit takes three steps:
+ In practice, you can interleave and repeat steps 1 and 2 as many
+ times as you want: in order to keep track of what you want committed
+ at step 3, git maintains a snapshot of the tree's contents in a
+-special staging area called "the index."
++special staging area called ``the index''.
  
--To commit a tree you have instantiated with "git write-tree", you'd
--create a "commit" object that refers to that tree and the history
-+To commit a tree you have instantiated with `git write-tree`, you'd
-+create a 'commit' object that refers to that tree and the history
- behind it--most notably the "parent" commits that preceded it in
+ At the beginning, the content of the index will be identical to
+-that of the HEAD.  The command "git diff --cached", which shows
+-the difference between the HEAD and the index, should therefore
++that of the `HEAD`.  The command '"git diff --cached"', which shows
++the difference between the `HEAD` and the `index`, should therefore
+ produce no output at that point.
+ 
+ Modifying the index is easy:
+@@ -1064,7 +1064,7 @@ After each step you can verify that
+ $ git diff --cached
+ -------------------------------------------------
+ 
+-always shows the difference between the HEAD and the index file--this
++always shows the difference between the `HEAD` and the index file--this
+ is what you'd commit if you created the commit now--and that
+ 
+ -------------------------------------------------
+@@ -1116,7 +1116,7 @@ $ git status	    # a brief per-file summary of the above.
+ You can also use linkgit:git-gui[1] to create commits, view changes in
+ the index and the working tree files, and individually select diff hunks
+ for inclusion in the index (by right-clicking on the diff hunk and
+-choosing "Stage Hunk For Commit").
++choosing '"Stage Hunk For Commit"').
+ 
+ [[creating-good-commit-messages]]
+ Creating good commit messages
+@@ -1126,22 +1126,22 @@ Though not required, it's a good idea to begin the commit message
+ with a single short (less than 50 character) line summarizing the
+ change, followed by a blank line and then a more thorough
+ description.  Tools that turn commits into email, for example, use
+-the first line on the Subject line and the rest of the commit in the
++the first line on the 'Subject' line and the rest of the commit in the
+ body.
+ 
+ [[ignoring-files]]
+ Ignoring files
+ --------------
+ 
+-A project will often generate files that you do 'not' want to track with git.
++A project will often generate files that you do *not* want to track with git.
+ This typically includes files generated by a build process or temporary
+-backup files made by your editor. Of course, 'not' tracking files with git
+-is just a matter of 'not' calling `git add` on them. But it quickly becomes
++backup files made by your editor. Of course, *not* tracking files with git
++is just a matter of *not* calling `git add` on them. But it quickly becomes
+ annoying to have these untracked files lying around; e.g. they make
+ `git add .` practically useless, and they keep showing up in the output of
+ `git status`.
+ 
+-You can tell git to ignore certain files by creating a file called .gitignore
++You can tell git to ignore certain files by creating a file called `.gitignore`
+ in the top level of your working directory, with contents such as:
+ 
+ -------------------------------------------------
+@@ -1157,16 +1157,16 @@ foo.txt
+ -------------------------------------------------
+ 
+ See linkgit:gitignore[5] for a detailed explanation of the syntax.  You can
+-also place .gitignore files in other directories in your working tree, and they
++also place `.gitignore` files in other directories in your working tree, and they
+ will apply to those directories and their subdirectories.  The `.gitignore`
+-files can be added to your repository like any other files (just run `git add
+-.gitignore` and `git commit`, as usual), which is convenient when the exclude
++files can be added to your repository like any other files (just run '"git add
++.gitignore"' and '"git commit"', as usual), which is convenient when the exclude
+ patterns (such as patterns matching build output files) would also make sense
+ for other users who clone your repository.
+ 
+ If you wish the exclude patterns to affect only certain repositories
+ (instead of every repository for a given project), you may instead put
+-them in a file in your repository named .git/info/exclude, or in any file
++them in a file in your repository named '.git/info/exclude', or in any file
+ specified by the `core.excludesfile` configuration variable.  Some git
+ commands can also take exclude patterns directly on the command line.
+ See linkgit:gitignore[5] for the details.
+@@ -1182,10 +1182,10 @@ linkgit:git-merge[1]:
+ $ git merge branchname
+ -------------------------------------------------
+ 
+-merges the development in the branch "branchname" into the current
++merges the development in the branch '"branchname"' into the current
+ branch.
+ 
+-A merge is made by combining the changes made in "branchname" and the
++A merge is made by combining the changes made in 'branchname' and the
+ changes made up to the latest commit in your current branch since
+ their histories forked. The work tree is overwritten by the result of
+ the merge when this combining is done cleanly, or overwritten by a
+@@ -1213,10 +1213,10 @@ Automatic merge failed; fix conflicts and then commit the result.
+ 
+ Conflict markers are left in the problematic files, and after
+ you resolve the conflicts manually, you can update the index
+-with the contents and run git commit, as you normally would when
++with the contents and run `git commit`, as you normally would when
+ creating a new file.
+ 
+-If you examine the resulting commit using gitk, you will see that it
++If you examine the resulting commit using `gitk`, you will see that it
+ has two parents, one pointing to the top of the current branch, and
+ one to the top of the other branch.
+ 
+@@ -1237,7 +1237,7 @@ $ git commit
+ file.txt: needs merge
+ -------------------------------------------------
+ 
+-Also, linkgit:git-status[1] will list those files as "unmerged", and the
++Also, linkgit:git-status[1] will list those files as '"unmerged"', and the
+ files with conflicts will have conflict markers added, like this:
+ 
+ -------------------------------------------------
+@@ -1287,11 +1287,11 @@ index 802992c,2b60207..0000000
+ 
+ Recall that the commit which will be committed after we resolve this
+ conflict will have two parents instead of the usual one: one parent
+-will be HEAD, the tip of the current branch; the other will be the
+-tip of the other branch, which is stored temporarily in MERGE_HEAD.
++will be `HEAD`, the tip of the current branch; the other will be the
++tip of the other branch, which is stored temporarily in `MERGE_HEAD`.
+ 
+ During the merge, the index holds three versions of each file.  Each of
+-these three "file stages" represents a different version of the file:
++these three ``file stages'' represents a different version of the file:
+ 
+ -------------------------------------------------
+ $ git show :1:file.txt	# the file in a common ancestor of both branches
+@@ -1306,11 +1306,11 @@ mixed (in other words, when a hunk's merge results come only from stage 2,
+ that part is not conflicting and is not shown.  Same for stage 3).
+ 
+ The diff above shows the differences between the working-tree version of
+-file.txt and the stage 2 and stage 3 versions.  So instead of preceding
+-each line by a single "+" or "-", it now uses two columns: the first
++'file.txt' and the stage 2 and stage 3 versions.  So instead of preceding
++each line by a single '"+"' or '"-"', it now uses two columns: the first
+ column is used for differences between the first parent and the working
+ directory copy, and the second for differences between the second parent
+-and the working directory copy.  (See the "COMBINED DIFF FORMAT" section
++and the working directory copy.  (See the '"COMBINED DIFF FORMAT"' section
+ of linkgit:git-diff-files[1] for a details of the format.)
+ 
+ After resolving the conflict in the obvious way (but before updating the
+@@ -1328,9 +1328,9 @@ index 802992c,2b60207..0000000
+ ++Goodbye world
+ -------------------------------------------------
+ 
+-This shows that our resolved version deleted "Hello world" from the
+-first parent, deleted "Goodbye" from the second parent, and added
+-"Goodbye world", which was previously absent from both.
++This shows that our resolved version deleted '"Hello world"' from the
++first parent, deleted '"Goodbye"' from the second parent, and added
++'"Goodbye world"', which was previously absent from both.
+ 
+ Some special diff options allow diffing the working directory against
+ any of these stages:
+@@ -1352,11 +1352,11 @@ $ git log --merge
+ $ gitk --merge
+ -------------------------------------------------
+ 
+-These will display all commits which exist only on HEAD or on
+-MERGE_HEAD, and which touch an unmerged file.
++These will display all commits which exist only on `HEAD` or on
++`MERGE_HEAD`, and which touch an unmerged file.
+ 
+ You may also use linkgit:git-mergetool[1], which lets you merge the
+-unmerged files using external tools such as Emacs or kdiff3.
++unmerged files using external tools such as 'Emacs' or 'kdiff3'.
+ 
+ Each time you resolve the conflicts in a file and update the index:
+ 
+@@ -1364,7 +1364,7 @@ Each time you resolve the conflicts in a file and update the index:
+ $ git add file.txt
+ -------------------------------------------------
+ 
+-the different stages of that file will be "collapsed", after which
++the different stages of that file will be '"collapsed"', after which
+ `git diff` will (by default) no longer show diffs for that file.
+ 
+ [[undoing-a-merge]]
+@@ -1400,7 +1400,7 @@ were merged.
+ 
+ However, if the current branch is a descendant of the other--so every
+ commit present in the one is already contained in the other--then git
+-just performs a "fast-forward"; the head of the current branch is moved
++just performs a '``fast-forward'''; the head of the current branch is moved
+ forward to point at the head of the merged-in branch, without any new
+ commits being created.
+ 
+@@ -1425,7 +1425,7 @@ fundamentally different ways to fix the problem:
+ 
+ 	2. You can go back and modify the old commit.  You should
+ 	never do this if you have already made the history public;
+-	git does not normally expect the "history" of a project to
++	git does not normally expect the `history' of a project to
+ 	change, and cannot correctly perform repeated merges from
+ 	a branch that has had its history changed.
+ 
+@@ -1441,7 +1441,7 @@ commit; for example, to revert the most recent commit:
+ $ git revert HEAD
+ -------------------------------------------------
+ 
+-This will create a new commit which undoes the change in HEAD.  You
++This will create a new commit which undoes the change in `HEAD`.  You
+ will be given a chance to edit the commit message for the new commit.
+ 
+ You can also revert an earlier change, for example, the next-to-last:
+@@ -1498,7 +1498,7 @@ name: the command
+ $ git checkout HEAD^ path/to/file
+ -------------------------------------------------
+ 
+-replaces path/to/file by the contents it had in the commit HEAD^, and
++replaces '"path/to/file"' by the contents it had in the commit 'HEAD^', and
+ also updates the index to match.  It does not change branches.
+ 
+ If you just want to look at an old version of the file, without
+@@ -1571,7 +1571,7 @@ Checking the repository for corruption
+ 
+ The linkgit:git-fsck[1] command runs a number of self-consistency checks
+ on the repository, and reports on any problems.  This may take some
+-time.  The most common warning by far is about "dangling" objects:
++time.  The most common warning by far is about 'dangling' objects:
+ 
+ -------------------------------------------------
+ $ git fsck
+@@ -1598,11 +1598,11 @@ Recovering lost changes
+ Reflogs
+ ^^^^^^^
+ 
+-Say you modify a branch with `linkgit:git-reset[1] --hard`, and then
++Say you modify a branch with `git reset --hard`, and then
+ realize that the branch was the only reference you had to that point in
  history.
  
--Normally a "commit" has one parent: the previous state of the tree
-+Normally a commit has one parent: the previous state of the tree
- before a certain change was made. However, sometimes it can have two
--or more parent commits, in which case we call it a "merge", due to the
--fact that such a commit brings together ("merges") two or more
-+or more parent commits, in which case we call it a 'merge', due to the
-+fact that such a commit brings together (merges) two or more
- previous states represented by other commits.
+-Fortunately, git also keeps a log, called a "reflog", of all the
++Fortunately, git also keeps a log, called a `reflog`, of all the
+ previous values of each branch.  So in this case you can still find the
+ old history using, for example,
  
--In other words, while a "tree" represents a particular directory state
--of a working directory, a "commit" represents that state in "time",
-+In other words, while a 'tree' represents a particular directory state
-+of a working directory, a 'commit' represents that state in 'time',
- and explains how we got there.
- 
- You create a commit object by giving it the tree that describes the
-@@ -3903,12 +3903,12 @@ usually implicit in where you find the object), you can use
- $ git cat-file blob|tree|commit|tag <objectname>
+@@ -1611,8 +1611,8 @@ $ git log master@{1}
  -------------------------------------------------
  
--to show its contents. NOTE! Trees have binary content, and as a result
-+to show its contents. *NOTE!* Trees have binary content, and as a result
- there is a special helper for showing that content, called
- `git ls-tree`, which turns the binary content into a more easily
- readable form.
- 
--It's especially instructive to look at "commit" objects, since those
-+It's especially instructive to look at `commit` objects, since those
- tend to be small and fairly self-explanatory. In particular, if you
- follow the convention of having the top commit name in `.git/HEAD`,
- you can do
-@@ -3925,16 +3925,16 @@ Merging multiple trees
- 
- Git helps you do a three-way merge, which you can expand to n-way by
- repeating the merge procedure arbitrary times until you finally
--"commit" the state.  The normal situation is that you'd only do one
-+'commit' the state.  The normal situation is that you'd only do one
- three-way merge (two parents), and commit it, but if you like to, you
- can do multiple parents in one go.
- 
--To do a three-way merge, you need the two sets of "commit" objects
-+To do a three-way merge, you need the two sets of 'commit' objects
- that you want to merge, use those to find the closest common parent (a
--third "commit" object), and then use those commit objects to find the
--state of the directory ("tree" object) at these points.
-+third 'commit' object), and then use those commit objects to find the
-+state of the directory ('tree' object) at these points.
- 
--To get the "base" for the merge, you first look up the common parent
-+To get the 'base' for the merge, you first look up the common parent
- of two commits with
+ This lists the commits reachable from the previous version of the
+-"master" branch head.  This syntax can be used with any git command
+-that accepts a commit, not just with git log.  Some other examples:
++'master' branch head.  This syntax can be used with any git command
++that accepts a commit, not just with `git log`.  Some other examples:
  
  -------------------------------------------------
-@@ -3942,7 +3942,7 @@ $ git merge-base <commit1> <commit2>
+ $ git show master@{2}		# See where the branch pointed 2,
+@@ -1622,19 +1622,19 @@ $ gitk master@{"1 week ago"}	# ... or last week
+ $ git log --walk-reflogs master	# show reflog entries for master
  -------------------------------------------------
  
- which will return you the commit they are both based on.  You should
--now look up the "tree" objects of those commits, which you can easily
-+now look up the 'tree'; objects of those commits, which you can easily
- do with (for example)
+-A separate reflog is kept for the HEAD, so
++A separate `reflog` is kept for the `HEAD`, so
  
  -------------------------------------------------
-@@ -3952,9 +3952,9 @@ $ git cat-file commit <commitname> | head -1
- since the tree object information is always the first line in a commit
- object.
- 
--Once you know the three trees you are going to merge (the one "original"
--tree, aka the common tree, and the two "result" trees, aka the branches
--you want to merge), you do a "merge" read into the index. This will
-+Once you know the three trees you are going to merge (the one '`original''
-+tree, aka the common tree, and the two '`result'' trees, aka the branches
-+you want to merge), you do a 'merge' read into the index. This will
- complain if it has to throw away your old index contents, so you should
- make sure that you've committed those--in fact you would normally
- always do a merge against your last commit (which should thus match what
-@@ -3978,7 +3978,7 @@ Merging multiple trees, continued
- Sadly, many merges aren't trivial. If there are files that have
- been added, moved or removed, or if both branches have modified the
- same file, you will be left with an index tree that contains "merge
--entries" in it. Such an index tree can 'NOT' be written out to a tree
-+entries" in it. Such an index tree can *not* be written out to a tree
- object, and you will have to resolve any such merge clashes using
- other tools before you can write out the result.
- 
-@@ -3994,20 +3994,20 @@ $ git ls-files --unmerged
- ------------------------------------------------
- 
- Each line of the `git ls-files --unmerged` output begins with
--the blob mode bits, blob SHA-1, 'stage number', and the
-+the blob mode bits, blob `SHA-1`, 'stage number', and the
- filename.  The 'stage number' is git's way to say which tree it
--came from: stage 1 corresponds to `$orig` tree, stage 2 `HEAD`
--tree, and stage3 `$target` tree.
-+came from: stage 1 corresponds to '$orig' tree, stage 2 'HEAD'
-+tree, and stage3 '$target' tree.
- 
- Earlier we said that trivial merges are done inside
- `git read-tree -m`.  For example, if the file did not change
--from `$orig` to `HEAD` nor `$target`, or if the file changed
--from `$orig` to `HEAD` and `$orig` to `$target` the same way,
--obviously the final outcome is what is in `HEAD`.  What the
--above example shows is that file `hello.c` was changed from
--`$orig` to `HEAD` and `$orig` to `$target` in a different way.
-+from '$orig' to 'HEAD' nor '$target', or if the file changed
-+from '$orig' to 'HEAD' and '$orig' to '$target' the same way,
-+obviously the final outcome is what is in 'HEAD'.  What the
-+above example shows is that file 'hello.c' was changed from
-+'$orig' to 'HEAD' and '$orig' to '$target' in a different way.
- You could resolve this by running your favorite 3-way merge
--program, e.g.  `diff3`, `merge`, or git's own merge-file, on
-+program, e.g.  'diff3', 'merge', or git's own `merge-file`, on
- the blob objects from these three stages yourself, like this:
- 
- ------------------------------------------------
-@@ -4017,7 +4017,7 @@ $ git cat-file blob cc44c73... >hello.c~3
- $ git merge-file hello.c~2 hello.c~1 hello.c~3
- ------------------------------------------------
- 
--This would leave the merge result in `hello.c~2` file, along
-+This would leave the merge result in 'hello.c~2' file, along
- with conflict markers if there are conflicts.  After verifying
- the merge result makes sense, you can tell git what the final
- merge result for this file is by:
-@@ -4027,14 +4027,14 @@ $ mv -f hello.c~2 hello.c
- $ git update-index hello.c
+ $ git show HEAD@{"1 week ago"}
  -------------------------------------------------
  
--When a path is in the "unmerged" state, running `git update-index` for
-+When a path is in the 'unmerged' state, running `git update-index` for
- that path tells git to mark the path resolved.
+-will show what HEAD pointed to one week ago, not what the current branch
++will show what `HEAD` pointed to one week ago, not what the current branch
+ pointed to one week ago.  This allows you to see the history of what
+ you've checked out.
  
- The above is the description of a git merge at the lowest level,
- to help you understand what conceptually happens under the hood.
- In practice, nobody, not even git itself, runs `git cat-file` three times
- for this.  There is a `git merge-index` program that extracts the
--stages to temporary files and calls a "merge" script on it:
-+stages to temporary files and calls a 'merge' script on it:
+ The reflogs are kept by default for 30 days, after which they may be
+ pruned.  See linkgit:git-reflog[1] and linkgit:git-gc[1] to learn
+-how to control this pruning, and see the "SPECIFYING REVISIONS"
++how to control this pruning, and see the '"SPECIFYING REVISIONS"'
+ section of linkgit:git-rev-parse[1] for details.
+ 
+ Note that the reflog history is very different from normal git history.
+@@ -1673,7 +1673,7 @@ history that is described by the dangling commit(s), but not the
+ history that is described by all your existing branches and tags.  Thus
+ you get exactly the history reachable from that commit that is lost.
+ (And notice that it might not be just one commit: we only report the
+-"tip of the line" as being dangling, but there might be a whole deep
++``tip of the line'' as being dangling, but there might be a whole deep
+ and complex commit history that was dropped.)
+ 
+ If you decide you want the history back, you can always create a new
+@@ -1716,8 +1716,8 @@ one step:
+ $ git pull origin master
+ -------------------------------------------------
+ 
+-In fact, if you have "master" checked out, then by default "git pull"
+-merges from the HEAD branch of the origin repository.  So often you can
++In fact, if you have 'master' checked out, then by default `git pull`
++merges from the `HEAD` branch of the origin repository.  So often you can
+ accomplish the above with just a simple
  
  -------------------------------------------------
- $ git merge-index git-merge-one-file hello.c
-@@ -4053,27 +4053,27 @@ probably only git developers need to understand.
- Object storage format
- ---------------------
+@@ -1726,11 +1726,11 @@ $ git pull
  
--All objects have a statically determined "type" which identifies the
-+All objects have a statically determined '"type"' which identifies the
- format of the object (i.e. how it is used, and how it can refer to other
--objects).  There are currently four different object types: "blob",
--"tree", "commit", and "tag".
-+objects).  There are currently four different object types: 'blob',
-+'tree', 'commit', and 'tag'.
+ More generally, a branch that is created from a remote branch will pull
+ by default from that branch.  See the descriptions of the
+-branch.<name>.remote and branch.<name>.merge options in
++'branch.<name>.remote' and 'branch.<name>.merge' options in
+ linkgit:git-config[1], and the discussion of the `--track` option in
+ linkgit:git-checkout[1], to learn how to control these defaults.
  
- Regardless of object type, all objects share the following
- characteristics: they are all deflated with zlib, and have a header
- that not only specifies their type, but also provides size information
--about the data in the object.  It's worth noting that the SHA-1 hash
-+about the data in the object.  It's worth noting that the `SHA-1` hash
- that is used to name the object is the hash of the original data
--plus this header, so `sha1sum` 'file' does not match the object name
-+plus this header, so 'sha1sum file' does not match the object name
- for 'file'.
- (Historical note: in the dawn of the age of git the hash
--was the SHA-1 of the 'compressed' object.)
-+was the `SHA-1` of the 'compressed' object.)
+-In addition to saving you keystrokes, "git pull" also helps you by
++In addition to saving you keystrokes, `git pull` also helps you by
+ producing a default commit message documenting the branch and
+ repository that you pulled from.
  
- As a result, the general consistency of an object can always be tested
- independently of the contents or the type of the object: all objects can
- be validated by verifying that (a) their hashes match the content of the
- file and (b) the object successfully inflates to a stream of bytes that
--forms a sequence of <ascii type without space> {plus} <space> {plus} <ascii decimal
--size> {plus} <byte\0> {plus} <binary object data>.
-+forms a sequence of '"<ascii type without space> {plus} <space> {plus} <ascii decimal
-+size> {plus} <byte\0> {plus} <binary object data>"'.
+@@ -1738,7 +1738,7 @@ repository that you pulled from.
+ <<fast-forwards,fast-forward>>; instead, your branch will just be
+ updated to point to the latest commit from the upstream branch.)
  
- The structured objects can further have their structure and
- connectivity to other objects verified. This is generally done with
-@@ -4099,39 +4099,39 @@ The initial revision lays the foundation for almost everything git has
- today, but is small enough to read in one sitting.
+-The `git pull` command can also be given "." as the "remote" repository,
++The `git pull` command can also be given '"."' as the 'remote' repository,
+ in which case it just merges in a branch from the current repository; so
+ the commands
  
- Note that terminology has changed since that revision.  For example, the
--README in that revision uses the word "changeset" to describe what we
-+'README' in that revision uses the word '`changeset'' to describe what we
- now call a <<def_commit_object,commit>>.
+@@ -1763,7 +1763,7 @@ $ git format-patch origin
+ -------------------------------------------------
  
--Also, we do not call it "cache" any more, but rather "index"; however, the
--file is still called `cache.h`.  Remark: Not much reason to change it now,
-+Also, we do not call it 'cache' any more, but rather 'index'; however, the
-+file is still called 'cache.h'.  Remark: Not much reason to change it now,
- especially since there is no good single name for it anyway, because it is
--basically _the_ header file which is included by _all_ of Git's C sources.
-+basically *the* header file which is included by *all* of Git's C sources.
+ will produce a numbered series of files in the current directory, one
+-for each patch in the current branch but not in origin/HEAD.
++for each patch in the current branch but not in 'origin/HEAD'.
  
- If you grasp the ideas in that initial commit, you should check out a
--more recent version and skim `cache.h`, `object.h` and `commit.h`.
-+more recent version and skim 'cache.h', 'object.h' and 'commit.h'.
+ You can then import these into your mail client and send them by
+ hand.  However, if you have a lot to send at once, you may prefer to
+@@ -1776,9 +1776,9 @@ Importing patches to a project
+ ------------------------------
  
- In the early days, Git (in the tradition of UNIX) was a bunch of programs
- which were extremely simple, and which you used in scripts, piping the
- output of one into another. This turned out to be good for initial
- development, since it was easier to test new things.  However, recently
- many of these parts have become builtins, and some of the core has been
--"libified", i.e. put into libgit.a for performance, portability reasons,
-+``libified'', i.e. put into 'libgit.a' for performance, portability reasons,
- and to avoid code duplication.
+ Git also provides a tool called linkgit:git-am[1] (am stands for
+-"apply mailbox"), for importing such an emailed series of patches.
++``apply mailbox''), for importing such an emailed series of patches.
+ Just save all of the patch-containing messages, in order, into a
+-single mailbox file, say "patches.mbox", then run
++single mailbox file, say '"patches.mbox"', then run
  
- By now, you know what the index is (and find the corresponding data
--structures in `cache.h`), and that there are just a couple of object types
-+structures in 'cache.h'), and that there are just a couple of object types
- (blobs, trees, commits and tags) which inherit their common structure from
--`struct object`, which is their first member (and thus, you can cast e.g.
--`(struct object *)commit` to achieve the _same_ as `&commit->object`, i.e.
-+'"struct object"', which is their first member (and thus, you can cast e.g.
-+'"(struct object *)commit"' to achieve the _same_ as '"&commit->object"', i.e.
- get at the object name and flags).
+ -------------------------------------------------
+ $ git am -3 patches.mbox
+@@ -1786,7 +1786,7 @@ $ git am -3 patches.mbox
  
- Now is a good point to take a break to let this information sink in.
+ Git will apply each patch in order; if any conflicts are found, it
+ will stop, and you can fix the conflicts as described in
+-"<<resolving-a-merge,Resolving a merge>>".  (The "-3" option tells
++"<<resolving-a-merge,Resolving a merge>>".  (The `-3` option tells
+ git to perform a merge; if you would prefer it just to abort and
+ leave your tree and index untouched, you may omit that option.)
  
- Next step: get familiar with the object naming.  Read <<naming-commits>>.
- There are quite a few ways to name an object (and not only revisions!).
--All of these are handled in `sha1_name.c`. Just have a quick look at
--the function `get_sha1()`. A lot of the special handling is done by
--functions like `get_sha1_basic()` or the likes.
-+All of these are handled in 'sha1_name.c'. Just have a quick look at
-+the function 'get_sha1()'. A lot of the special handling is done by
-+functions like 'get_sha1_basic()' or the likes.
+@@ -1812,7 +1812,7 @@ Another way to submit changes to a project is to tell the maintainer
+ of that project to pull the changes from your repository using
+ linkgit:git-pull[1].  In the section "<<getting-updates-With-git-pull,
+ Getting updates with `git pull`>>" we described this as a way to get
+-updates from the "main" repository, but it works just as well in the
++updates from the '"main"' repository, but it works just as well in the
+ other direction.
  
- This is just to get you into the groove for the most libified part of Git:
- the revision walker.
-@@ -4146,7 +4146,7 @@ $ git-rev-list --pretty $(git-rev-parse --default HEAD "$@") | \
- What does this mean?
+ If you and the maintainer both have accounts on the same machine, then
+@@ -1840,7 +1840,7 @@ from.  This is usually more convenient, and allows you to cleanly
+ separate private work in progress from publicly visible work.
  
- `git rev-list` is the original version of the revision walker, which
--_always_ printed a list of revisions to stdout.  It is still functional,
-+*always* printed a list of revisions to stdout.  It is still functional,
- and needs to, since most new Git commands start out as scripts using
- `git rev-list`.
+ You will continue to do your day-to-day work in your personal
+-repository, but periodically "push" changes from your personal
++repository, but periodically '"push"' changes from your personal
+ repository into your public repository, allowing other developers to
+ pull from that repository.  So the flow of changes, in a situation
+ where there is one other developer with a public repository, looks
+@@ -1862,7 +1862,7 @@ We explain how to do this in the following sections.
+ Setting up a public repository
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
-@@ -4154,38 +4154,38 @@ and needs to, since most new Git commands start out as scripts using
- options that were relevant for the different plumbing commands that were
- called by the script.
+-Assume your personal repository is in the directory ~/proj.  We
++Assume your personal repository is in the directory '~/proj'.  We
+ first create a new clone of the repository and tell `git daemon` that it
+ is meant to be public:
  
--Most of what `git rev-list` did is contained in `revision.c` and
--`revision.h`.  It wraps the options in a struct named `rev_info`, which
-+Most of what `git rev-list` did is contained in 'revision.c' and
-+'revision.h'.  It wraps the options in a struct named 'rev_info', which
- controls how and what revisions are walked, and more.
+@@ -1871,12 +1871,12 @@ $ git clone --bare ~/proj proj.git
+ $ touch proj.git/git-daemon-export-ok
+ -------------------------------------------------
  
- The original job of `git rev-parse` is now taken by the function
--`setup_revisions()`, which parses the revisions and the common command line
-+'setup_revisions()', which parses the revisions and the common command line
- options for the revision walker. This information is stored in the struct
--`rev_info` for later consumption. You can do your own command line option
--parsing after calling `setup_revisions()`. After that, you have to call
--`prepare_revision_walk()` for initialization, and then you can get the
--commits one by one with the function `get_revision()`.
-+'rev_info' for later consumption. You can do your own command line option
-+parsing after calling 'setup_revisions()'. After that, you have to call
-+'prepare_revision_walk()' for initialization, and then you can get the
-+commits one by one with the function 'get_revision()'.
+-The resulting directory proj.git contains a "bare" git repository--it is
+-just the contents of the ".git" directory, without any files checked out
++The resulting directory 'proj.git' contains a '"bare"' git repository--it is
++just the contents of the `.git` directory, without any files checked out
+ around it.
  
- If you are interested in more details of the revision walking process,
--just have a look at the first implementation of `cmd_log()`; call
--`git show v1.3.0{tilde}155^2{tilde}4` and scroll down to that function (note that you
--no longer need to call `setup_pager()` directly).
-+just have a look at the first implementation of 'cmd_log()'; call
-+'"git show v1.3.0{tilde}155^2{tilde}4"' and scroll down to that function (note that you
-+no longer need to call 'setup_pager()' directly).
+-Next, copy proj.git to the server where you plan to host the
+-public repository.  You can use scp, rsync, or whatever is most
++Next, copy 'proj.git' to the server where you plan to host the
++public repository.  You can use 'scp', 'rsync', or whatever is most
+ convenient.
  
--Nowadays, `git log` is a builtin, which means that it is _contained_ in the
-+Nowadays, `git log` is a builtin, which means that it is *contained* in the
- command `git`.  The source side of a builtin is
+ [[exporting-via-git]]
+@@ -1886,7 +1886,7 @@ Exporting a git repository via the git protocol
+ This is the preferred method.
  
--- a function called `cmd_<bla>`, typically defined in `builtin-<bla>.c`,
--  and declared in `builtin.h`,
-+- a function called 'cmd_<bla>', typically defined in 'builtin-<bla>.c',
-+  and declared in 'builtin.h',
+ If someone else administers the server, they should tell you what
+-directory to put the repository in, and what git:// URL it will appear
++directory to put the repository in, and what 'git://' URL it will appear
+ at.  You can then skip to the section
+ "<<pushing-changes-to-a-public-repository,Pushing changes to a public
+ repository>>", below.
+@@ -1894,7 +1894,7 @@ repository>>", below.
+ Otherwise, all you need to do is start linkgit:git-daemon[1]; it will
+ listen on port 9418.  By default, it will allow access to any directory
+ that looks like a git directory and contains the magic file
+-git-daemon-export-ok.  Passing some directory paths as `git daemon`
++'git-daemon-export-ok'.  Passing some directory paths as `git daemon`
+ arguments will further restrict the exports to those paths.
  
--- an entry in the `commands[]` array in `git.c`, and
-+- an entry in the 'commands[]' array in 'git.c', and
+ You can also run `git daemon` as an inetd service; see the
+@@ -1922,7 +1922,7 @@ $ mv hooks/post-update.sample hooks/post-update
+ (For an explanation of the last two lines, see
+ linkgit:git-update-server-info[1] and linkgit:githooks[5].)
  
--- an entry in `BUILTIN_OBJECTS` in the `Makefile`.
-+- an entry in 'BUILTIN_OBJECTS' in the 'Makefile'.
+-Advertise the URL of proj.git.  Anybody else should then be able to
++Advertise the URL of 'proj.git'.  Anybody else should then be able to
+ clone or pull from that URL, for example with a command line like:
  
- Sometimes, more than one builtin is contained in one source file.  For
--example, `cmd_whatchanged()` and `cmd_log()` both reside in `builtin-log.c`,
-+example, 'cmd_whatchanged()' and 'cmd_log()' both reside in 'builtin-log.c',
- since they share quite a bit of code.  In that case, the commands which are
--_not_ named like the `.c` file in which they live have to be listed in
--`BUILT_INS` in the `Makefile`.
-+_not_ named like the '.c' file in which they live have to be listed in
-+'BUILT_INS' in the 'Makefile'.
+ -------------------------------------------------
+@@ -1945,8 +1945,8 @@ access, which you will need to update the public repository with the
+ latest changes created in your private repository.
  
- `git log` looks more complicated in C than it does in the original script,
- but that allows for a much greater flexibility and performance.
-@@ -4205,10 +4205,10 @@ For the sake of clarity, let's stay with `git cat-file`, because it
- - is plumbing, and
+ The simplest way to do this is using linkgit:git-push[1] and ssh; to
+-update the remote branch named "master" with the latest state of your
+-branch named "master", run
++update the remote branch named 'master' with the latest state of your
++branch named 'master', run
  
- - was around even in the initial commit (it literally went only through
--  some 20 revisions as `cat-file.c`, was renamed to `builtin-cat-file.c`
-+  some 20 revisions as 'cat-file.c', was renamed to 'builtin-cat-file.c'
-   when made a builtin, and then saw less than 10 versions).
+ -------------------------------------------------
+ $ git push ssh://yourserver.com/~you/proj.git master:master
+@@ -1962,7 +1962,7 @@ As with `git fetch`, `git push` will complain if this does not result in a
+ <<fast-forwards,fast-forward>>; see the following section for details on
+ handling this case.
  
--So, look into `builtin-cat-file.c`, search for `cmd_cat_file()` and look what
-+So, look into 'builtin-cat-file.c', search for 'cmd_cat_file()' and look what
- it does.
+-Note that the target of a "push" is normally a
++Note that the target of a 'push' is normally a
+ <<def_bare_repository,bare>> repository.  You can also push to a
+ repository that has a checked-out working tree, but the working tree
+ will not be updated by the push.  This may lead to unexpected results if
+@@ -1984,8 +1984,8 @@ you should be able to perform the above push with just
+ $ git push public-repo master
+ -------------------------------------------------
  
- ------------------------------------------------------------------
-@@ -4220,22 +4220,22 @@ it does.
- ------------------------------------------------------------------
+-See the explanations of the remote.<name>.url, branch.<name>.remote,
+-and remote.<name>.push options in linkgit:git-config[1] for
++See the explanations of the 'remote.<name>.url', 'branch.<name>.remote',
++and 'remote.<name>.push' options in linkgit:git-config[1] for
+ details.
  
- Let's skip over the obvious details; the only really interesting part
--here is the call to `get_sha1()`.  It tries to interpret `argv[2]` as an
-+here is the call to 'get_sha1()'.  It tries to interpret 'argv[2]' as an
- object name, and if it refers to an object which is present in the current
--repository, it writes the resulting SHA-1 into the variable `sha1`.
-+repository, it writes the resulting `SHA-1` into the variable 'sha1'.
+ [[forcing-push]]
+@@ -2061,9 +2061,9 @@ advantages over the central shared repository:
+ 	  trivial for another developer to take over maintenance of a
+ 	  project, either by mutual agreement, or because a maintainer
+ 	  becomes unresponsive or difficult to work with.
+-	- The lack of a central group of "committers" means there is
+-	  less need for formal decisions about who is "in" and who is
+-	  "out".
++	- The lack of a central group of ``committers'' means there is
++	  less need for formal decisions about who is ``in'' and who is
++	  ``out''.
  
- Two things are interesting here:
+ [[setting-up-gitweb]]
+ Allowing web browsing of a repository
+@@ -2071,7 +2071,7 @@ Allowing web browsing of a repository
  
--- `get_sha1()` returns 0 on _success_.  This might surprise some new
-+- 'get_sha1()' returns 0 on _success_.  This might surprise some new
-   Git hackers, but there is a long tradition in UNIX to return different
-   negative numbers in case of different errors--and 0 on success.
+ The gitweb cgi script provides users an easy way to browse your
+ project's files and history without having to install git; see the file
+-gitweb/INSTALL in the git source tree for instructions on setting it up.
++'gitweb/INSTALL' in the git source tree for instructions on setting it up.
  
--- the variable `sha1` in the function signature of `get_sha1()` is `unsigned
--  char \*`, but is actually expected to be a pointer to `unsigned
--  char[20]`.  This variable will contain the 160-bit SHA-1 of the given
--  commit.  Note that whenever a SHA-1 is passed as `unsigned char \*`, it
-+- the variable 'sha1' in the function signature of 'get_sha1()' is '"unsigned
-+  char \*"', but is actually expected to be a pointer to '"unsigned
-+  char[20]"'.  This variable will contain the 160-bit `SHA-1` of the given
-+  commit.  Note that whenever a `SHA-1` is passed as '"unsigned char \*"', it
-   is the binary representation, as opposed to the ASCII representation in
--  hex characters, which is passed as `char *`.
-+  hex characters, which is passed as '"char *"'.
+ [[sharing-development-examples]]
+ Examples
+@@ -2086,16 +2086,16 @@ IA64 architecture for the Linux kernel.
  
- You will see both of these things throughout the code.
+ He uses two public branches:
  
-@@ -4247,12 +4247,12 @@ Now, for the meat:
- -----------------------------------------------------------------------------
+- - A "test" tree into which patches are initially placed so that they
++ - A '"test"' tree into which patches are initially placed so that they
+    can get some exposure when integrated with other ongoing development.
+-   This tree is available to Andrew for pulling into -mm whenever he
++   This tree is available to Andrew for pulling into '-mm' whenever he
+    wants.
  
- This is how you read a blob (actually, not only a blob, but any type of
--object).  To know how the function `read_object_with_reference()` actually
--works, find the source code for it (something like `git grep
--read_object_with | grep ":[a-z]"` in the git repository), and read
-+object).  To know how the function 'read_object_with_reference()' actually
-+works, find the source code for it (something like 'git grep
-+read_object_with | grep ":[a-z]"' in the git repository), and read
- the source.
+- - A "release" tree into which tested patches are moved for final sanity
++ - A '"release"' tree into which tested patches are moved for final sanity
+    checking, and as a vehicle to send them upstream to Linus (by sending
+-   him a "please pull" request.)
++   him a ``please pull'' request.)
  
--To find out how the result can be used, just read on in `cmd_cat_file()`:
-+To find out how the result can be used, just read on in 'cmd_cat_file()':
+-He also uses a set of temporary branches ("topic branches"), each
++He also uses a set of temporary branches (``topic branches''), each
+ containing a logical grouping of patches.
  
- -----------------------------------
-         write_or_die(1, buf, size);
-@@ -4263,15 +4263,15 @@ it helps to search through the output of `git log`, and then `git show` the
- corresponding commit.
+ To set this up, first create your work tree by cloning Linus's public
+@@ -2108,13 +2108,13 @@ $ cd work
  
- Example: If you know that there was some test case for `git bundle`, but
--do not remember where it was (yes, you _could_ `git grep bundle t/`, but that
-+do not remember where it was (yes, you _could_ '"git grep bundle t/"', but that
- does not illustrate the point!):
+ Linus's tree will be stored in the remote branch named origin/master,
+ and can be updated using linkgit:git-fetch[1]; you can track other
+-public trees using linkgit:git-remote[1] to set up a "remote" and
++public trees using linkgit:git-remote[1] to set up a 'remote' and
+ linkgit:git-fetch[1] to keep them up-to-date; see
+ <<repositories-and-branches>>.
  
- ------------------------
- $ git log --no-merges t/
- ------------------------
+ Now create the branches in which you are going to work; these start out
+-at the current tip of origin/master branch, and should be set up (using
+-the --track option to linkgit:git-branch[1]) to merge changes in from
++at the current tip of 'origin/master' branch, and should be set up (using
++the `--track` option to linkgit:git-branch[1]) to merge changes in from
+ Linus by default.
  
--In the pager (`less`), just search for "bundle", go a few lines back,
--and see that it is in commit 18449ab0...  Now just copy this object name,
-+In the pager ('less'), just search for '"bundle"', go a few lines back,
-+and see that it is in commit '18449ab0...'  Now just copy this object name,
- and paste it into the command line
+ -------------------------------------------------
+@@ -2129,11 +2129,11 @@ $ git checkout test && git pull
+ $ git checkout release && git pull
+ -------------------------------------------------
  
- -------------------
-@@ -4336,7 +4336,7 @@ $ git branch new     # create branch "new" starting at current HEAD
- $ git branch -d new  # delete branch "new"
- -----------------------------------------------
+-Important note!  If you have any local changes in these branches, then
++*Important note!*  If you have any local changes in these branches, then
+ this merge will create a commit object in the history (with no local
+-changes git will simply do a "fast-forward" merge).  Many people dislike
+-the "noise" that this creates in the Linux history, so you should avoid
+-doing this capriciously in the "release" branch, as these noisy commits
++changes git will simply do a 'fast-forward' merge).  Many people dislike
++the ``noise'' that this creates in the Linux history, so you should avoid
++doing this capriciously in the 'release' branch, as these noisy commits
+ will become part of the permanent history when you ask Linus to pull
+ from the release branch.
  
--Instead of basing a new branch on current HEAD (the default), use:
-+Instead of basing a new branch on current `HEAD` (the default), use:
+@@ -2187,7 +2187,7 @@ $ ... patch ... test  ... commit [ ... patch ... test ... commit ]*
+ -------------------------------------------------
  
- -----------------------------------------------
- $ git branch new test    # branch named "test"
-@@ -4501,7 +4501,7 @@ branch with your commits:
- $ git push ssh://example.com/project.git mybranch:theirbranch
- -----------------------------------------------
+ When you are happy with the state of this change, you can pull it into the
+-"test" branch in preparation to make it public:
++'test' branch in preparation to make it public:
  
--When remote and local branch are both named "test":
-+When remote and local branch are both named '"test"':
+ -------------------------------------------------
+ $ git checkout test && git pull . speed-up-spinlocks
+@@ -2197,9 +2197,9 @@ It is unlikely that you would have any conflicts here ... but you might if you
+ spent a while on this step and had also pulled new versions from upstream.
  
- -----------------------------------------------
- $ git push ssh://example.com/project.git test
-@@ -4545,14 +4545,14 @@ The basic requirements:
-   should be specifically mentioned as they arise.
- - Whenever possible, section headings should clearly describe the task
-   they explain how to do, in language that requires no more knowledge
--  than necessary: for example, "importing patches into a project" rather
--  than "the `git am` command"
-+  than necessary: for example, ``importing patches into a project'' rather
-+  than ``the `git am` command''
+ Some time later when enough time has passed and testing done, you can pull the
+-same branch into the "release" tree ready to go upstream.  This is where you
++same branch into the 'release' tree ready to go upstream.  This is where you
+ see the value of keeping each patch (or patch series) in its own branch.  It
+-means that the patches can be moved into the "release" tree in any order.
++means that the patches can be moved into the 'release' tree in any order.
  
- Think about how to create a clear chapter dependency graph that will
- allow people to get to important topics without necessarily reading
- everything in between.
+ -------------------------------------------------
+ $ git checkout release && git pull . speed-up-spinlocks
+@@ -2232,7 +2232,7 @@ If it has been merged, then there will be no output.)
  
--Scan Documentation/ for other stuff left out; in particular:
-+Scan 'Documentation/' for other stuff left out; in particular:
+ Once a patch completes the great cycle (moving from test to release,
+ then pulled by Linus, and finally coming back into your local
+-"origin/master" branch), the branch for this change is no longer needed.
++'origin/master' branch), the branch for this change is no longer needed.
+ You detect this when the output from:
  
- - howto's
- - some of technical/?
+ -------------------------------------------------
+@@ -2247,11 +2247,11 @@ $ git branch -d branchname
+ 
+ Some changes are so trivial that it is not necessary to create a separate
+ branch and then merge into each of the test and release branches.  For
+-these changes, just apply directly to the "release" branch, and then
+-merge that into the "test" branch.
++these changes, just apply directly to the 'release' branch, and then
++merge that into the 'test' branch.
+ 
+-To create diffstat and shortlog summaries of changes to include in a "please
+-pull" request to Linus you can use:
++To create diffstat and shortlog summaries of changes to include in a ``please
++pull'' request to Linus you can use:
+ 
+ -------------------------------------------------
+ $ git diff --stat origin..release
+@@ -2420,11 +2420,11 @@ use them, and then explain some of the problems that can arise because
+ you are rewriting history.
+ 
+ [[using-git-rebase]]
+-Keeping a patch series up to date using git rebase
++Keeping a patch series up to date using `git rebase`
+ --------------------------------------------------
+ 
+-Suppose that you create a branch "mywork" on a remote-tracking branch
+-"origin", and create some commits on top of it:
++Suppose that you create a branch '"mywork"' on a remote-tracking branch
++'"origin"', and create some commits on top of it:
+ 
+ -------------------------------------------------
+ $ git checkout -b mywork origin
+@@ -2435,8 +2435,8 @@ $ git commit
+ ...
+ -------------------------------------------------
+ 
+-You have performed no merges into mywork, so it is just a simple linear
+-sequence of patches on top of "origin":
++You have performed no merges into 'mywork', so it is just a simple linear
++sequence of patches on top of 'origin':
+ 
+ ................................................
+  o--o--o <-- origin
+@@ -2445,7 +2445,7 @@ sequence of patches on top of "origin":
+ ................................................
+ 
+ Some more interesting work has been done in the upstream project, and
+-"origin" has advanced:
++'origin' has advanced:
+ 
+ ................................................
+  o--o--O--o--o--o <-- origin
+@@ -2453,7 +2453,7 @@ Some more interesting work has been done in the upstream project, and
+          a--b--c <-- mywork
+ ................................................
+ 
+-At this point, you could use "pull" to merge your changes back in;
++At this point, you could use `git pull` to merge your changes back in;
+ the result would create a new merge commit, like this:
+ 
+ ................................................
+@@ -2462,7 +2462,7 @@ the result would create a new merge commit, like this:
+          a--b--c--m <-- mywork
+ ................................................
+ 
+-However, if you prefer to keep the history in mywork a simple series of
++However, if you prefer to keep the history in 'mywork' a simple series of
+ commits without any merges, you may instead choose to use
+ linkgit:git-rebase[1]:
+ 
+@@ -2471,10 +2471,10 @@ $ git checkout mywork
+ $ git rebase origin
+ -------------------------------------------------
+ 
+-This will remove each of your commits from mywork, temporarily saving
+-them as patches (in a directory named ".git/rebase-apply"), update mywork to
+-point at the latest version of origin, then apply each of the saved
+-patches to the new mywork.  The result will look like:
++This will remove each of your commits from 'mywork', temporarily saving
++them as patches (in a directory named '.git/rebase-apply'), update 'mywork' to
++point at the latest version of 'origin', then apply each of the saved
++patches to the new 'mywork'.  The result will look like:
+ 
+ 
+ ................................................
+@@ -2495,7 +2495,7 @@ $ git rebase --continue
+ and git will continue applying the rest of the patches.
+ 
+ At any point you may use the `--abort` option to abort this process and
+-return mywork to the state it had before you started the rebase:
++return 'mywork' to the state it had before you started the rebase:
+ 
+ -------------------------------------------------
+ $ git rebase --abort
 -- 
 1.6.6.1
