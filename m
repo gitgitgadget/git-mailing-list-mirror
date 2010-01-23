@@ -1,72 +1,73 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] Handle double slashes in make_relative_path()
-Date: Sat, 23 Jan 2010 22:01:38 +0100
-Message-ID: <fabb9a1e1001231301o149bb13es236a7150f57ce161@mail.gmail.com>
-References: <379d55c6a4110736aadb8ace3b050de879a9deab.1264118830.git.trast@student.ethz.ch> 
-	<7vwrz8bnbj.fsf@alter.siamese.dyndns.org> <7viqasbmtc.fsf@alter.siamese.dyndns.org> 
-	<201001232141.49556.j6t@kdbg.org>
+From: =?ISO-8859-1?Q?Andr=E9_Harms?= <andre.harms@kuhlsolutions.de>
+Subject: Modern Git GUI
+Date: Sat, 23 Jan 2010 22:40:21 +0100
+Message-ID: <e39c1dcf1001231340p67448584pfdbc453cc8fb9ca7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Jan 23 22:02:28 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 23 22:40:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYn7i-00040J-8I
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jan 2010 22:02:26 +0100
+	id 1NYniW-0005rh-Ra
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jan 2010 22:40:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752070Ab0AWVCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jan 2010 16:02:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751848Ab0AWVCB
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jan 2010 16:02:01 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:48279 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751943Ab0AWVB6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jan 2010 16:01:58 -0500
-Received: by pwi21 with SMTP id 21so1497591pwi.21
-        for <git@vger.kernel.org>; Sat, 23 Jan 2010 13:01:58 -0800 (PST)
+	id S1752097Ab0AWVkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jan 2010 16:40:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752057Ab0AWVkY
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jan 2010 16:40:24 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:52878 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751908Ab0AWVkX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jan 2010 16:40:23 -0500
+Received: by bwz27 with SMTP id 27so1865330bwz.21
+        for <git@vger.kernel.org>; Sat, 23 Jan 2010 13:40:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=oQIeMT2X5r4wNTgqRVWe3DgvZfDECRomLoEm8+a2Wis=;
-        b=mQJw5qIDiEXFzezI9l6IWCVQzTw+oqq34+psGP2gtlQTPrDreqQ10/AN/JxpR8svhK
-         NPsTDJgIUFuob48+TImnSC6YDVRXfO8nwMLL7vIM6uJRB2bkReQ7N6ht3XXpVfrKDn9W
-         m3nCqqpOal2o8kfMqw/TSvvWDa5ZarxwjEfgA=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=SY3yTSSYyvwb2gtUCg1C9TqvCd40sLV/onyEMnxqTBk=;
+        b=T7Rz37fF6AkMmXDxqUtRFZdpykhm42xOD4ZrBVYx2yD+3VWwpc8JnwlfBvMwfmzXUw
+         DbOSTHBIZ98eQP1di/fEFpnXkZDJ+WiVUr2SapKX4e5RdMqqh4dV/1uzLXLfUyZZXr2A
+         Rm1hQIgzsxZdI8A4xvBeyVLPJtIZQnvFyEcaA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=iNavR/R0GWHHQhp0TAeYpHhZJS/g8D5SynDkpxj/02D6KzHJjIzUvX2SXEFD4s+zpB
-         SEOOR7qQig/SqiTnFAhgnH5Jeqp14DNudCv8c01lUmQZn5JngSRWgffFsMpTwhrhVrlo
-         wVUVi+qY46B595IVld2B49H0qTRQYW1A0fk8M=
-Received: by 10.142.5.10 with SMTP id 10mr3140914wfe.334.1264280518131; Sat, 
-	23 Jan 2010 13:01:58 -0800 (PST)
-In-Reply-To: <201001232141.49556.j6t@kdbg.org>
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=vGkkPQeyxZ1w9z0J9wtV02nWf6N6dqCHa0fZ3yrEOqnwhUIm5rsdJWBC29rBub7oxp
+         pwACq+Z2uZnEwpSAcETFAjA+yZmclltPP3dDOFOXGrOSL0BqxqdwYweKwlU0q/a2Nwv4
+         +uGzBGj4DKoDvmdM2BZrwpsIyaaJczz4BihyU=
+Received: by 10.204.11.2 with SMTP id r2mr2630691bkr.30.1264282821470; Sat, 23 
+	Jan 2010 13:40:21 -0800 (PST)
+X-Google-Sender-Auth: 720038159af33a24
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137864>
 
-Heya,
+Hi,
 
-On Sat, Jan 23, 2010 at 21:41, Johannes Sixt <j6t@kdbg.org> wrote:
+I know there are several GUIs out there for Git. They are all
+functional and most of them can be used in the daily work with Git.
+In my opinion one thing combines them: they aren't very pretty.
+I currently prefer the CLI to work with Git because it's quick and I
+am happy with it. But I think there are people out there, who don't
+want to use the command-line because they are afraid of doing
+something wrong or anything like this. Additionally the CLI and
+unattractive GUIs are barriers to people who are not familar with a
+SCM-system.
+So I thought about developing a new kind of GUI for Git that looks
+modern and attractive (you know... some eye-candy stuff) and that is
+easy to use. In addition I thought about a built-in console (like we
+know it from first person shooters) so that also people who prefer the
+CLI might use this GUI application too.
 
-> OTOH, it can be worked around easily by the user (just insert the drive
-> prefix). Dunno...
+Is there anybody who agrees or disagrees? I really would appreciate
+some feedback about that idea.
 
-I think it's preferable to keep the old behavior where we fail if the
-user gives us an invalid argument, rather than fix a user error and
-break on a a valid argument instead. I think we should be correct
-first, and try and fix incorrect user behavior after.
-
--- 
-Cheers,
-
-Sverre Rabbelier
+P.S.:
+Normally I come up with such ideas to the public and ask what others
+think about it when I have some mockups. I am sorry that I haven't any
+right now.
