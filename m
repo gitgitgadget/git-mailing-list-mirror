@@ -1,64 +1,92 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: cherry picking several patches at once
-Date: Sat, 23 Jan 2010 12:17:19 +0100
-Message-ID: <fabb9a1e1001230317x650b8f21y5ee3fa73e9ffea62@mail.gmail.com>
-References: <20100121161157.GA3628@gandalf> <94a0d4531001221557n7a892f03u5e5d1c5e5ba5fea0@mail.gmail.com> 
-	<1264205767-sup-4547@nixos>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2010, #07; Fri, 22)
+Date: Sat, 23 Jan 2010 03:18:17 -0800 (PST)
+Message-ID: <m3my05ax5v.fsf@localhost.localdomain>
+References: <7vtyudfqju.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Marc Weber <marco-oweber@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	"John 'Warthog9' Hawley" <warthog9@eaglescrag.net>,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Sat Jan 23 12:18:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYe0Z-0006tt-HI
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jan 2010 12:18:27 +0100
+	id 1NYe0a-0006tt-2A
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jan 2010 12:18:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754331Ab0AWLRk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jan 2010 06:17:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754294Ab0AWLRk
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jan 2010 06:17:40 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:54123 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752400Ab0AWLRj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jan 2010 06:17:39 -0500
-Received: by pwi21 with SMTP id 21so1333712pwi.21
-        for <git@vger.kernel.org>; Sat, 23 Jan 2010 03:17:39 -0800 (PST)
+	id S1754537Ab0AWLSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jan 2010 06:18:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754450Ab0AWLSU
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jan 2010 06:18:20 -0500
+Received: from mail-fx0-f221.google.com ([209.85.220.221]:33011 "EHLO
+	mail-fx0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750742Ab0AWLST (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jan 2010 06:18:19 -0500
+Received: by fxm21 with SMTP id 21so195592fxm.29
+        for <git@vger.kernel.org>; Sat, 23 Jan 2010 03:18:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=BHkjlPg1HuKbfcHUmLo9V1qPRDsB5kRWiLIsKzs7+Jc=;
-        b=Yi7W3T0upwcDGh+qTxq1vhU2bDytevDv09JDnMwLehUj3wxSf4Z3rWGnNCETs+xKNi
-         O0UFqhpy70HOjObBxcc78QU1o23V/nPcAM1Vm5CEpiFKlfQJ9s9y5W8JCW8UH3UIAr0E
-         edZpE5DHc6LjtXe2WPeHjRL/r5R7VbrRkwPVk=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=uQHFK6Wntau7PodCNIwbE+Eh0/xnrBsF5J8rDW5lT3w=;
+        b=TDljMqtpG8gJm+xlJYJGfdPBO1vt4JjRoqy7zheLNZDOqx4YfevwO5Qk+N/sZwBNYt
+         B/LuOdT4d1rnbJg88p+27KUuNSGPOnI3IHgmbWwPU6Kc2miiUPWckYnv2Gm4NzmzjnBh
+         Ul0ccmYf/FVJ7iZ7blNnFUen6m3XdZWgJMyzQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=spFKCPIsVikTsJYSSCqaLX8V2XLOZwb7WBf+LYUKR3F5qLO58D8XJg+Yrg9tW63tOG
-         Gm+iB9GSeM6FxzV2NKlS8SinFDc/caSmmRrQcGTF2PL1EdoFbpRp6SZce5UuyeNjTyRM
-         4RINJnZg1OWWC55aatHctuuZhxVKPccwO5z8M=
-Received: by 10.142.249.24 with SMTP id w24mr196374wfh.175.1264245459079; Sat, 
-	23 Jan 2010 03:17:39 -0800 (PST)
-In-Reply-To: <1264205767-sup-4547@nixos>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=qzdfUQhAUwyZN3bILr/TNpiuKDONoXeDEwJQmCzviuXPvRG7uCT56QwbFO7E7JtIsr
+         GIACaAHbKtn5g11TALrjzRDtndhI9/hS/gEeNFYSxbAz4KMWwj4UwUgXFcyt2enKdMaL
+         /O03akSmDw7MiL0M4GUFFyTXyVb5Y3kU8Su3I=
+Received: by 10.103.84.37 with SMTP id m37mr2079773mul.81.1264245497883;
+        Sat, 23 Jan 2010 03:18:17 -0800 (PST)
+Received: from localhost.localdomain (abws72.neoplus.adsl.tpnet.pl [83.8.242.72])
+        by mx.google.com with ESMTPS id j9sm12341374mue.6.2010.01.23.03.18.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 23 Jan 2010 03:18:17 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o0NBHD8n023409;
+	Sat, 23 Jan 2010 12:17:18 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o0NBGiYs023404;
+	Sat, 23 Jan 2010 12:16:44 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vtyudfqju.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137836>
 
-Heya,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Sat, Jan 23, 2010 at 01:24, Marc Weber <marco-oweber@gmx.de> wrote:
-> git cherry-push-checkout-on-failure hash other-branch
+> * jh/gitweb-cached (2010-01-13) 9 commits
+>  - gitweb: File based caching layer (from git.kernel.org)
+>  - gitweb: Convert output to using indirect file handle
+>  - gitweb: cleanup error message produced by undefined $site_header
+>  - gitweb: add a get function to compliment print_sort_th
+>  - gitweb: add a get function to compliment print_local_time
+>  - gitweb: Makefile improvements
+>  - gitweb: Add option to force version match
+>  - gitweb: change die_error to take "extra" argument for extended die information
+>  - gitweb: Load checking
+> 
+> Replaced with a re-roll.  Update to t9500 is probably needed.
 
-Heh, I could use that exact command myself, as I use the exact
-workflow you described :).
+I have sent proof of concept replacements for the last two
+patches... and those do include update to t9500 (although caching is
+tested only rudimentally).
+
+I don't know if J.H. is working on replacement patches; I am planning
+on re-rolling cleaned up version of split file based caching layer on
+top of his changes / his re-roll.
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+Jakub Narebski
+Poland
