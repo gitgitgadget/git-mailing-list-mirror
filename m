@@ -1,81 +1,76 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 5/5] Makefile: drop dependency on $(wildcard */*.h)
-Date: Sat, 23 Jan 2010 08:45:52 -0600
-Message-ID: <20100123144552.GF11903@progeny.tock>
-References: <20100123144201.GA11903@progeny.tock>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH] Handle double slashes in make_relative_path()
+Date: Sat, 23 Jan 2010 14:48:42 +0100
+Message-ID: <201001231448.42721.robin.rosenberg@dewire.com>
+References: <379d55c6a4110736aadb8ace3b050de879a9deab.1264118830.git.trast@student.ethz.ch> <201001231240.28138.robin.rosenberg@dewire.com> <201001231409.30706.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 23 15:45:55 2010
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Jan 23 16:07:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYhFK-0002Y2-GI
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jan 2010 15:45:54 +0100
+	id 1NYhZx-00023v-Ez
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jan 2010 16:07:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755552Ab0AWOpt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jan 2010 09:45:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755541Ab0AWOpt
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jan 2010 09:45:49 -0500
-Received: from mail-iw0-f186.google.com ([209.85.223.186]:38148 "EHLO
-	mail-iw0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753765Ab0AWOps (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jan 2010 09:45:48 -0500
-Received: by iwn16 with SMTP id 16so927454iwn.33
-        for <git@vger.kernel.org>; Sat, 23 Jan 2010 06:45:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=C8EiwuXc+uKWp5cMHTEjBUFGitse0tX8hJ7E/p27QNo=;
-        b=VhqPw4mpJYh5yJGScOj4VAzlJxct1yzo5pj5NewKdkWgAZTCw+VaqsSAhyMH92rwJl
-         2W+ALlWTozJBVCwiEndD6a7TdK8B/WhRNAG42TN+R8eTfY1Ti5hQhXDce40T6jLaV5yy
-         BeTaUdGSm/61/ciJOfrbp5yIOzKHISKL0Xrps=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ff2jWG/fBiVgGIUT/PNwXZXRZ02+4MSVleL18edBjlttOgKwICAYag7RSlqmb+Y2zp
-         aPBw5lmzJSZQuTBHDcwAwDaUwwDXUi/lnqWCN79Aw8tqmbaDWdkBAkmPQ5k9rQSPPUCP
-         VxbooSPQk0qRBHrLLBhNa2PHgTa6w4mzX+dSA=
-Received: by 10.231.170.136 with SMTP id d8mr3414935ibz.17.1264257948320;
-        Sat, 23 Jan 2010 06:45:48 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm2828808iwn.3.2010.01.23.06.45.47
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 23 Jan 2010 06:45:47 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20100123144201.GA11903@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755566Ab0AWPDr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Jan 2010 10:03:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755437Ab0AWPDr
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jan 2010 10:03:47 -0500
+Received: from mail.dewire.com ([83.140.172.130]:28517 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753727Ab0AWPDq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Jan 2010 10:03:46 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 465DC13F4127;
+	Sat, 23 Jan 2010 16:03:43 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id hRrkkOPBTFFl; Sat, 23 Jan 2010 16:03:42 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id A00C280034C;
+	Sat, 23 Jan 2010 16:03:42 +0100 (CET)
+User-Agent: KMail/1.12.4 (Linux/2.6.31-17-generic; KDE/4.3.4; i686; ; )
+In-Reply-To: <201001231409.30706.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137848>
 
-The files this pulls in are already pulled in by other dependency
-rules (some recently added).
+l=F6rdagen den 23 januari 2010 14.09.29 skrev  Johannes Sixt:
+> On Samstag, 23. Januar 2010, Robin Rosenberg wrote:
+> > It seems this function does something unhealthy when you pass a pat=
+h of
+> > the form //server/share. On windows dropping the double // at the
+> > beginning makes it a different path since // is the UNC prefix.
+>=20
+> There is no problem in practice.
+>=20
+> The function returns either the input unmodified, or it strips also a=
+t
+>  least one directory component, except when base is only "/" (or "//"=
+ or
+>  "///"...). I said in practice, because on Windows it does not make s=
+ense
+>  to invoke git with (literally)
+>=20
+>    git --git-dir=3D//server/share/repo.git --work-tree=3D/ ...
+>=20
+> i.e., without a drive prefix before the slash of --work-tree.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Why not? //foo/bar/z is just as valid and useful a path as x:/z.=20
 
-diff --git a/Makefile b/Makefile
-index eb225c6..d6ebc9d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1655,7 +1655,7 @@ git-remote-curl$X: remote-curl.o http.o http-walker.o $(GITLIBS)
- 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
- 
- $(LIB_OBJS) $(BUILTIN_OBJS) $(TEST_OBJS): $(LIB_H)
--$(patsubst git-%$X,%.o,$(PROGRAMS)) git.o: $(LIB_H) $(wildcard */*.h)
-+$(patsubst git-%$X,%.o,$(PROGRAMS)) git.o: $(LIB_H)
- builtin-branch.o builtin-checkout.o builtin-clone.o builtin-reset.o branch.o: branch.h
- builtin-bundle.o bundle.o transport.o: bundle.h
- builtin-bisect--helper.o builtin-rev-list.o bisect.o: bisect.h
--- 
-1.6.6.rc2
+Defining a drive-letter with msysgit is tricky because I have to find o=
+ne that=20
+is available and then also restart every msys bash instance to make msy=
+s
+see it.
+
+-- robin
