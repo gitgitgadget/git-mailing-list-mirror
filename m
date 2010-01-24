@@ -1,96 +1,99 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: git push failed
-Date: Sun, 24 Jan 2010 18:35:41 -0500
-Organization: 
-Message-ID: <76718491001241535n7c47e898mbade26caa312b9db@mail.gmail.com>
-References: <6672d0161001240952s7f7629a6v48f5756c083b95b5@mail.gmail.com>
+Subject: Re: basic question about push
+Date: Sun, 24 Jan 2010 18:59:10 -0500
+Message-ID: <76718491001241559u103d2e8j38687b41bd5401a1@mail.gmail.com>
+References: <loom.20100124T074722-510@post.gmane.org>
+	 <20100124081513.GA10700@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 25 00:35:48 2010
+Cc: Russ Paielli <Russ.Paielli@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 25 00:59:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZBze-0000n0-T5
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 00:35:47 +0100
+	id 1NZCMR-0006nC-Oo
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 00:59:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752752Ab0AXXfp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Jan 2010 18:35:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751837Ab0AXXfp
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 18:35:45 -0500
-Received: from mail-iw0-f183.google.com ([209.85.223.183]:40781 "EHLO
+	id S1751669Ab0AXX7P convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Jan 2010 18:59:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751466Ab0AXX7P
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 18:59:15 -0500
+Received: from mail-iw0-f183.google.com ([209.85.223.183]:49077 "EHLO
 	mail-iw0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752144Ab0AXXfn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Jan 2010 18:35:43 -0500
-Received: by iwn13 with SMTP id 13so2463873iwn.20
-        for <git@vger.kernel.org>; Sun, 24 Jan 2010 15:35:42 -0800 (PST)
+	with ESMTP id S1751410Ab0AXX7O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Jan 2010 18:59:14 -0500
+Received: by iwn13 with SMTP id 13so2475464iwn.20
+        for <git@vger.kernel.org>; Sun, 24 Jan 2010 15:59:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=Z9xa+/duKKbFMFSKv9KV1P/0dkVdnDcHR0r8dVOjdHw=;
-        b=rfsBhuXg5Re8fLjpf8insuPPMgtw56nFEgf9ikLKtr7S+ss93ixOC5IIlV9bWRzpUv
-         r6xaKmbCkSm91TFJPXWnQ0nf8EVZHNHfpBCg7OWNujhnnHDCVf/aiAvBMLhrhljS/IPg
-         oOa9vidaPxqf/rpyVVbk3zPCLUxS6pHZK5g5A=
+        bh=1hIisKxk8L1mZt1xeqAoZwETIJe7FRk9IlFW/1JLNT0=;
+        b=frgv6DvQvnXdbtdwpSop4nn8Bd2UMJzsa5xm2s3A5wTt5ifMrsQ1cL4QVe3jkfWG6Q
+         FrLV0ZmgYrYneJJMyljV7yqhdMt1eAXmT9iunDVcLG/xZJdOosMIoob3CJI0+5rUg2+l
+         252LqJKasGTva9YncEDKHKBG5gfTviOmwkZII=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=wNdbVklGwwQOLIqF8EtWKwyvSDD0ES2ckRt390SHEXSk+wnYlQ3w7fEESfICQnRcTp
-         P7FE/l9wsmnyzMYhpP5ksQdBoi4LmzXsdejBjdraD1J1+obZENtva0z12iFfRfnOxl9f
-         eBVp6DHfdYrxIu011MpE5wLGIeq3DF2/tP0DY=
-Received: by 10.231.159.207 with SMTP id k15mr3022517ibx.75.1264376141152; 
-	Sun, 24 Jan 2010 15:35:41 -0800 (PST)
-In-Reply-To: <6672d0161001240952s7f7629a6v48f5756c083b95b5@mail.gmail.com>
+        b=sIXaOYPMII2Yog5SmaTXyQ0a67KlRVvCTW3AwBvWn7cz+PlmR5qwWgUFrazAixXI8N
+         iRZ6EOgbH0Xln5YqztBsr522UHVYHq3iRZFAfPUc2dCJZ1GWsbYMEQ+Rv//HG3PLRxfd
+         8/I1VWC4T+5E8Qtoh9aA7nHVjpvZ/dFNxMGkA=
+Received: by 10.231.59.75 with SMTP id k11mr3607776ibh.87.1264377551020; Sun, 
+	24 Jan 2010 15:59:11 -0800 (PST)
+In-Reply-To: <20100124081513.GA10700@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137928>
 
-2010/1/24 Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>:
-> With git built from master (v1.6.6.1-436-gaba7dea),
-> the following commands (run in a script):
+On Sun, Jan 24, 2010 at 3:15 AM, Jeff King <peff@peff.net> wrote:
+> On Sun, Jan 24, 2010 at 07:04:59AM +0000, Russ Paielli wrote:
 >
-> =C2=A0git commit --amend -m "Update index.html" index.html
-> =C2=A0git push erlang +gh-pages
+>> warning: updating the current branch
+>> [...]
+>> What does this mean in English? And what is the correct way to trans=
+fer my
+>> revisions from my home computer to my work computer? Thanks.
 >
-> failed like this:
+> It means your workflow will cause problems as the pusher magically
+> changes your repository's concept of "the latest commit" behind the
+> pushee's back. The workflow you want is described here:
 >
-> Counting objects: 4, done.
-> Delta compression using up to 8 threads.
-> Compressing objects: 100% (2/2), done.
-> Writing objects: 100% (3/3), 3.85 KiB, done.
-> Total 3 (delta 0), reused 0 (delta 0)
-> error: Ref refs/heads/gh-pages is at
-> db10c045e068f12aa2f78377fab31e35a8443ca4 but expected
-> 054136d96494979b42524a4dc08ef643bb54cc0e
-> error: failed to lock refs/heads/gh-pages
-> To git@erlang_github.com:erlang/otp.git
-> =C2=A0! [remote rejected] gh-pages -> gh-pages (failed to lock)
-> error: failed to push some refs to 'git@erlang_github.com:erlang/otp.=
-git'
->
-> Unfortunately (from the point of view of finding the bug), the
-> problem is not reproducible. When I ran my script two more times,
-> it worked fine.
->
-> We all know how difficult it is to investigate non-reproducible bugs,
-> but perhaps someone familiar with the code might have some idea
-> about what it could be.
->
-> Info about my system:
->
-> Mac OS X 10.2.6 (8 cores)
-> gcc-4.2.1
+> =C2=A0http://git.wiki.kernel.org/index.php/GitFaq#push-is-reverse-of-=
+fetch
 
-As another data point, I've noticed the same issue pushing from one
-Mac OS X 10.6.2 system to another. However, the remote end is updated
-properly (if you push again you'll see there's nothing to update), so
-I've not bothered to dig into what the cause might be.
+Aside, and I think we've discussed this before, but I wonder if it
+would make sense to:
+
+a) Add an option to clone such as "-p [<name>] | --push-as[=3D<name>]"
+where <name> defaults to $(uname -n | cut -f1 -d.) This would setup
+the cloned repo with a push refspec
+"+refs/heads/*:refs/remotes/<name>/*". e.g.:
+
+$ git clone -o host1 -p host2 ssh://host1/~/repo.git
+$ cat repo/.git/config
+=2E..
+[remote "host1"]
+	url =3D ssh://host1/~/repo.git
+	fetch =3D +refs/heads/*:refs/remotes/host1/*
+	push =3D +refs/heads/*:refs/remotes/host2/*
+
+b) The controversial part: make this option the default the default
+when cloning from a non-bare repo. There would need to be some way to
+turn it off.
+
+Of course, I'm not sure this would be any less confusing for users.
+Would they wonder why they have to merge to see their pushed changes
+reflected on the pushed-to repo?
+
+It does nicely make push symmetric to fetch between two non-bare repos
+though, and I think maybe that makes more sense.
 
 j.
