@@ -1,69 +1,68 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 3/9] gitweb: Add option to force version match
-Date: Sun, 24 Jan 2010 22:59:24 +0100
+Subject: Re: [PATCH 8/9] gitweb: Convert output to using indirect file
+ handle
+Date: Sun, 24 Jan 2010 23:14:44 +0100
 Organization: 
-Message-ID: <20100124215924.GA9553@machine.or.cz>
+Message-ID: <20100124221444.GB9553@machine.or.cz>
 References: <1263432185-21334-1-git-send-email-warthog9@eaglescrag.net>
  <1263432185-21334-2-git-send-email-warthog9@eaglescrag.net>
  <1263432185-21334-3-git-send-email-warthog9@eaglescrag.net>
  <1263432185-21334-4-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-5-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-6-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-7-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-8-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-9-git-send-email-warthog9@eaglescrag.net>
+ <m3ljfydgmt.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John 'Warthog9' Hawley <warthog9@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Sun Jan 24 22:59:34 2010
+Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 24 23:14:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZAUY-0006S6-9Y
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 22:59:34 +0100
+	id 1NZAjL-0002On-K6
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 23:14:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753995Ab0AXV72 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2010 16:59:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753840Ab0AXV72
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 16:59:28 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:43276 "EHLO machine.or.cz"
+	id S1754080Ab0AXWOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2010 17:14:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754062Ab0AXWOr
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 17:14:47 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:56246 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752652Ab0AXV71 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2010 16:59:27 -0500
+	id S1754005Ab0AXWOq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2010 17:14:46 -0500
 Received: by machine.or.cz (Postfix, from userid 2001)
-	id 40CFE125A0E9; Sun, 24 Jan 2010 22:59:24 +0100 (CET)
+	id 340DD125A0EC; Sun, 24 Jan 2010 23:14:44 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <1263432185-21334-4-git-send-email-warthog9@eaglescrag.net>
+In-Reply-To: <m3ljfydgmt.fsf@localhost.localdomain>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137923>
 
-  Hi!
+On Fri, Jan 15, 2010 at 04:43:32PM -0800, Jakub Narebski wrote:
+> Third, wouldn't it be better to use shorter variable name, e.g. $out
+> or $oh, instead of $output_handle?  We would be able to align print(f)
+> statements without making lines much longer.
 
-On Wed, Jan 13, 2010 at 05:22:59PM -0800, John 'Warthog9' Hawley wrote:
-> +# Throw an error if git versions does not match, if $git_versions_must_match is true.
-> +if ($git_versions_must_match &&
-> +    $git_version ne $version) {
-> +	my $admin_contact =
-> +		defined $ENV{'SERVER_ADMIN'} ? ", $ENV{'SERVER_ADMIN'}," : '';
-> +	my $err_msg = <<EOT;
-> +<h1 align="center">*** Warning ***</h1>
-> +<p>
-> +This version of gitweb was compiled for <b>@{[esc_html($version)]}</b>,
-> +however git version <b>@{[esc_html($git_version)]}</b> was found on server,
-> +and administrator requested strict version checking.
-> +</p>
-> +<p>
-> +Please contact the server administrator${admin_contact} to either configure
-> +gitweb to allow mismatched versions, or update git or gitweb installation.
-> +</p>
-> +EOT
-> +	die_error(500, 'Internal server error', $err_msg);
-> +}
-> +
+I totally agree, I was going to comment on this too. Please use
+something very short, I think even the three characters might be pushing
+it a bit. Having long idiom will make it real pain to both read and
+write gitweb code.
 
-  I get very unhappy when *I* am the server administrator and read
-messages like this. ;-) Could you please mention the
-\$git_versions_must_match in the text?
+It would still be nice if we could have some way to avoid this hack
+entirely. Couldn't we layer PerlIO::via over STDOUT and continue to use
+argument-less print as before?
+
+I think we (well, in practice, "you" nowadays :) should be less
+perfectionist when accepting gitweb contributions, so if the answer is
+"it's too hard for me to do right now", that's fine I guess; I know I
+can't contribute the code currently. :(
 
 				Petr "Pasky" Baudis
