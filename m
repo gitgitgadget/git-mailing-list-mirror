@@ -1,108 +1,71 @@
-From: =?ISO-8859-1?Q?Andr=E9_Harms?= <andre.harms@kuhlsolutions.de>
-Subject: Re: Modern Git GUI
-Date: Sun, 24 Jan 2010 21:43:31 +0100
+From: Peter Oberndorfer <kumbayo84@arcor.de>
+Subject: git-gui: Using "Stage To Commit" does not always stage all selected files.
+Date: Sun, 24 Jan 2010 22:05:03 +0100
 Organization: 
-Message-ID: <e39c1dcf1001241243r38b187b1tcb44b607b7cba8d9@mail.gmail.com>
-References: <e39c1dcf1001231340p67448584pfdbc453cc8fb9ca7@mail.gmail.com>
-	 <vpq636resro.fsf@bauges.imag.fr>
+Message-ID: <201001242205.03412.kumbayo84@arcor.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Jan 24 21:44:56 2010
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 24 22:06:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZ9KK-0001Be-AR
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 21:44:56 +0100
+	id 1NZ9fY-0007SP-7g
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 22:06:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753675Ab0AXUnf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Jan 2010 15:43:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752900Ab0AXUne
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 15:43:34 -0500
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:42177 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752534Ab0AXUne convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Jan 2010 15:43:34 -0500
-Received: by bwz19 with SMTP id 19so2229669bwz.28
-        for <git@vger.kernel.org>; Sun, 24 Jan 2010 12:43:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=m6qIVzE33RWi23ftYqnXWC/z+DU0yxDemzOAte72fKA=;
-        b=oK3OO3PJfZUF/zAnqJG1YL43Tv2ueGo+RC9nvVrX7M3x8ICt0rC42sXNg2Gdh9kDZr
-         rkwwbJ2uxr2GxLp4L/pQCN/5iAx3CWvlL9PdlP8FU6hhQjoaqpu8aoFblo3Y9MIjZIGm
-         gSGsa3GV6IP9hOaHBMzbOEvodOLq/31qrk8sc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=HxItXyK36ngUOq2vyA2gXRDxy5Ipo5oEx+rOFK20n9VnnLMX2KCTJjVnno/1XP9Cep
-         zdUUH3VTO1IX0bzjlf2uq1m3QcnVANdpixOevPkKR/8nDN8jT1/S6VetPhWAxmpxsVGJ
-         vV0A89KqGlFO9N7UH0f9KqtaYtGRZ1lZsdvZ8=
-Received: by 10.204.8.151 with SMTP id h23mr3140605bkh.194.1264365812113; Sun, 
-	24 Jan 2010 12:43:32 -0800 (PST)
-In-Reply-To: <vpq636resro.fsf@bauges.imag.fr>
-X-Google-Sender-Auth: 230733293ec7eaa2
+	id S1753487Ab0AXVGi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2010 16:06:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753463Ab0AXVGh
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 16:06:37 -0500
+Received: from mail-in-02.arcor-online.net ([151.189.21.42]:43062 "EHLO
+	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753320Ab0AXVGh (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Jan 2010 16:06:37 -0500
+Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
+	by mx.arcor.de (Postfix) with ESMTP id E1E5A3FE2CE
+	for <git@vger.kernel.org>; Sun, 24 Jan 2010 22:06:35 +0100 (CET)
+Received: from mail-in-17.arcor-online.net (mail-in-17.arcor-online.net [151.189.21.57])
+	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id C0393347174
+	for <git@vger.kernel.org>; Sun, 24 Jan 2010 22:06:35 +0100 (CET)
+Received: from oberndorfer.lan (91-113-112-161.adsl.highway.telekom.at [91.113.112.161])
+	(Authenticated sender: kumbayo84@arcor.de)
+	by mail-in-17.arcor-online.net (Postfix) with ESMTPSA id 8FF4E3B26F2
+	for <git@vger.kernel.org>; Sun, 24 Jan 2010 22:06:35 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-17.arcor-online.net 8FF4E3B26F2
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1264367195; bh=S8Ni6qdriLJO/Hm0021bpsvxeYB08W9sq3I27tPWWoc=;
+	h=From:To:Subject:Date:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Message-Id;
+	b=Hx0NpjP+gEiEfMelGfO0deIioOzeFHv6z8qML0JvC1r4H+8Sezdd8Drvk3E+3JT4Q
+	 iPQUlH/RWyFJjwkRGdwKG3Yn9RnyzpECz645OynWns/0RoVQoYYE5IabTlU2usfk1I
+	 4CSIBHFRqWQvlFfBOPBemmALjj5xxcHBmew4hQfI=
+User-Agent: KMail/1.9.10
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137919>
 
-2010/1/24 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
-> Andr=E9 Harms <andre.harms@kuhlsolutions.de> writes:
->
->> So I thought about developing a new kind of GUI for Git that looks
->> modern and attractive
->
-> Every once in a while, someone comes and says "Git GUIs aren't as goo=
-d
-> as I'd expect, I'll write my own". The result is that we have a myria=
-d
-> of GUIs (see
-> http://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools#Grap=
-hical_Interfaces ),
-> many of them being half-finished and/or abandonned. I don't believe
-> adding yet-another-one is going to improve the situation, and
-> pick-one-and-improve-it is IMHO a much better approach.
+Hello,
 
-Basically I agree with you. And I think you're right that yet another
-one won't improve the situation immediately.
-I've to admin, that I didn't think about that very much. So I have to
-rethink my plan. But my concept is different than the one of other
-GUIs.
+Using "Stage To Commit" in git-gui does not always stage all selected files.
 
->> (you know... some eye-candy stuff) and that is easy to use.
->
-> I use mostly the command-line, so I couldn't make a detailed review o=
-f
-> the existing, but tools like git-cola and a few others sound "modern"
-> to me (Qt4 & co).
->
-> If you decide to go on with your project, either you want to carry it
-> out alone, or you'll have to convince other developers to join. In th=
-e
-> second case, a good starting point would be to explain why the other
-> GUI are not good enough, and why you can't just contribute to them.
+After startup of git-gui the first modified file is automatically selected.
+Selecting another file and then using "Stage to Commit" only the second file is actually staged.
 
-If I decide to go on anyhow, I'll work those things out clearly.
-Thanks for the tip.
-In my opinion other GUIs aren't intuitve for first-time users and
-aren't as good for experienced users as the command-line. But a GUI
-_can_ be helpful for experienced users as well. So there's a hole that
-can be filled. And my concept is based on a hybrid GUI that also
-offers a command-line for experienced users. So actions that are made
-with the built in command-line (console) are visualized. That also
-might be good for beginners who like to use the command-line but are
-afraid of using it.
-If I go on I'll probably use Clutter as GUI toolkit. With it one is
-able to create real good looking GUIs (though it's not a guarantor for
-a good GUI).
+It looks like the reason for this is that selected_paths is not set when a file is automatically selected after startup/refresh/scanning.
 
-Thanks for your opinion.
+How to reproduce:
+echo >> userdiff.h
+echo >> userdiff.c
+git gui&
+-> userdiff.c is automatically selected
+hold Ctrl and select userdiff.h
+Ctrl-T
+-> only userdiff.h is staged, userdiff.h remains unstaged
+
+Greetings Peter
