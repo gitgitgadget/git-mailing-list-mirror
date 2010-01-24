@@ -1,84 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git 1.6.6.1 on glibc 2.2
-Date: Sun, 24 Jan 2010 06:27:51 -0600
-Message-ID: <20100124122751.GA3265@progeny.tock>
-References: <x6y6jn4txy@gzp>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: cherry picking several patches at once
+Date: Sun, 24 Jan 2010 15:10:09 +0200
+Message-ID: <94a0d4531001240510g25ea3398qdd0c7b98f9b81209@mail.gmail.com>
+References: <20100121161157.GA3628@gandalf>
+	 <94a0d4531001221557n7a892f03u5e5d1c5e5ba5fea0@mail.gmail.com>
+	 <1264330354.14140.1.camel@gandalf>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: "Gabor Z. Papp" <gzp@papp.hu>
-X-From: git-owner@vger.kernel.org Sun Jan 24 13:28:03 2010
+To: me@felipebalbi.com
+X-From: git-owner@vger.kernel.org Sun Jan 24 14:10:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZ1ZS-000706-PR
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 13:28:03 +0100
+	id 1NZ2EP-0004ks-J1
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 14:10:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753726Ab0AXM16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2010 07:27:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753717Ab0AXM16
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 07:27:58 -0500
-Received: from mail-iw0-f180.google.com ([209.85.223.180]:58805 "EHLO
+	id S1753747Ab0AXNKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2010 08:10:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753774Ab0AXNKM
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 08:10:12 -0500
+Received: from mail-iw0-f180.google.com ([209.85.223.180]:58445 "EHLO
 	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752857Ab0AXM15 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2010 07:27:57 -0500
-Received: by iwn10 with SMTP id 10so2145291iwn.22
-        for <git@vger.kernel.org>; Sun, 24 Jan 2010 04:27:57 -0800 (PST)
+	with ESMTP id S1751158Ab0AXNKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2010 08:10:11 -0500
+Received: by iwn10 with SMTP id 10so2159017iwn.22
+        for <git@vger.kernel.org>; Sun, 24 Jan 2010 05:10:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=KF9pANBegCBJLAxucR2hwTOnnIIJoIeUG9NJdeUyOBE=;
-        b=AQ4Lk7uQRucUyptxJy9IMW06C8zNu2TyDeEJC1P1mMlZcDJwm6lEZcsUM6e3eo2Hwg
-         i9d8qQKQmUrgaYZ8XtfZVigZZ2p9ELaPJ/YMPuUmdpSpzwwX2x/wIbTYSt92nReyoJmw
-         ygT40Xffx5dcQuHH9aEBkxXJ3r8YePZoEalig=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=BJLla3dk+RSxqG1bf0AnK7pqwVdmo7lqlKlJcMV8QOo=;
+        b=dtO2gLqbTBXfUYGzESrc6JBpRicjOx4DQFERcON6H70ikLepgeO83gkj2PQUj7ZQXB
+         BbJP0wXOM1I/aiUVEP4MPPa402nJmieCqrM8tWmu8ehqbyRvm+BLs3TFs9Nowg+fXf0S
+         mLSm8SXHgBmBF7jHvBKlc9yInlUvSRF3Adyyc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=gfqrzXrCsvfY+AmQsW6JqXX91riFODIBH11t6mUuQtkbWylS4ZAolBUpig7ELvit3q
-         uTgGf3q6p0oinOqEyGIHZN7qwX/qneu2iTiKAB4Qm9YVz5l2KuM+8uj3ZNBO4ycoF67g
-         k1rBFWhr6DJDSl6ug7p6Xez5fhbe7CfxOEjVg=
-Received: by 10.231.122.36 with SMTP id j36mr2146341ibr.21.1264336076792;
-        Sun, 24 Jan 2010 04:27:56 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm3908234iwn.8.2010.01.24.04.27.55
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 24 Jan 2010 04:27:56 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <x6y6jn4txy@gzp>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=eGkPDjsAoUWJjR7H+drhsIybNX8m5zxK2K0wVih91FzN1qGvPW6DIDxMlATBqPcUy9
+         QRl9jpIOTNzgZCkirAEBDblbmcxwBoNQFZM1eidQN0Ew0mB4UgIsqbwEEF6AWtkj50Wm
+         +EJ/jst3t0u2/18VtayAhXgLtBCQ2hRPiY9Yk=
+Received: by 10.231.154.213 with SMTP id p21mr3384379ibw.42.1264338609398; 
+	Sun, 24 Jan 2010 05:10:09 -0800 (PST)
+In-Reply-To: <1264330354.14140.1.camel@gandalf>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137894>
 
-Hi!
+On Sun, Jan 24, 2010 at 12:52 PM, Felipe Balbi <me@felipebalbi.com> wrote:
+> On Sat, 2010-01-23 at 01:57 +0200, Felipe Contreras wrote:
+>> Have you tried something like:
+>> git format-patch old-base --full-diff -- /path
+>> git am -3 *.patch
+>
+> yes, sure that can be done, but the idea is to avoid having
+> format-patch, switch branches and git am those patches ;-)
 
-Gabor Z. Papp wrote:
-> Hello all,
-> 
-> trying to compile git 1.6.6.1 on Linux 2.4.37.7, glibc 2.2.5:
-> 
-> read-cache.c: In function 'fill_stat_cache_info':
-> read-cache.c:72: error: 'struct stat' has no member named 'st_ctim'
+When you do a 'git rebase' you are also doing a format-patch/am, but
+that happens inside the script; you can write a script that does what
+you want in a way that you wouldn't notice it: save the old branch,
+git stash, switch to new branch, generate the patches, apply the
+patches, switch back to the old branch, git stash pop.
 
-Thanks for the report.  Perhaps:
+>> I think that would not be possible because of the challenges when
+>> dealing with conflicts.
+>
+> there shouldn't be any. I have the same driver internally and publicly
+> and would be cherry-picking only the patches for that particular driver.
 
-$ grep -C3 st_ctim Makefile
-# randomly break unless your underlying filesystem supports those sub-second
-# times (my ext3 doesn't).
-#
-# Define USE_ST_TIMESPEC if your "struct stat" uses "st_ctimespec" instead of
-# "st_ctim"
-#
-# Define NO_NSEC if your "struct stat" does not have "st_ctim.tv_nsec"
-# available.  This automatically turns USE_NSEC off.
-#
-# Define USE_STDEV below if you want git to care about the underlying device
+Ok, in that case we would just need a cherry-pick that can commit to a
+separate branch, however I don't think git internals allow that kind
+of thing.
 
-Hope that helps,
-Jonathan
+-- 
+Felipe Contreras
