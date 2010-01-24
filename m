@@ -1,87 +1,115 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: git push failed
-Date: Sun, 24 Jan 2010 18:52:04 +0100
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb.js: Workaround for IE8 bug
+Date: Sun, 24 Jan 2010 19:05:23 +0100
 Organization: 
-Message-ID: <6672d0161001240952s7f7629a6v48f5756c083b95b5@mail.gmail.com>
+Message-ID: <20100124180226.14562.87666.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 24 18:52:15 2010
+X-From: git-owner@vger.kernel.org Sun Jan 24 19:06:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZ6dC-0004vR-4e
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 18:52:14 +0100
+	id 1NZ6qV-0000RF-Da
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 19:05:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753991Ab0AXRwK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Jan 2010 12:52:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753649Ab0AXRwJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 12:52:09 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:56163 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753991Ab0AXRwG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Jan 2010 12:52:06 -0500
-Received: by ey-out-2122.google.com with SMTP id d26so735899eyd.19
-        for <git@vger.kernel.org>; Sun, 24 Jan 2010 09:52:05 -0800 (PST)
+	id S1751258Ab0AXSFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2010 13:05:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751147Ab0AXSFz
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 13:05:55 -0500
+Received: from fg-out-1718.google.com ([72.14.220.155]:63518 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751104Ab0AXSFx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2010 13:05:53 -0500
+Received: by fg-out-1718.google.com with SMTP id l26so743454fgb.1
+        for <git@vger.kernel.org>; Sun, 24 Jan 2010 10:05:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=2AeubjHIoAqwwDdhXLPHrn4inpLxwnQ2b4UuXJXJtns=;
-        b=Y3RFjvt0Sxetw5+ksP39MVGJbFzLVReLTCFn2UnWWzWzGtHi9SeOEFM8vD2SXTJzX7
-         yz6wYTTqibZm+QB0gUHxVmN0gI3y5+Y0+omffxAUnaDl8fmR/pUWVU3pQXbIDKTQfmbX
-         ZNQwNQt7ZUzap/a9sQrZQ8SLfpHWRVsx0Dxh0=
+        h=domainkey-signature:received:received:received:from:subject:to:date
+         :message-id:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=2eocsm07Qv/jMffGD7ruKLtEBa8jApx09w8VbS8kr+A=;
+        b=wVGNXQTES6A4nZvyYecU4e3IXqeEfw6JhkNxKSCmVoz1N4L9auQFJkHWPOTia0KXUm
+         MDl4hdvBiVB69xFxwYvHAiz3nOv+BVe6iEamHuSAUpE1M3Q1DUeyUiiEYcRQFdU1LiPV
+         QEBZvr0eFjYpUKRBvum3Tnenp9Aefw2RDky8c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=NXfYjvA3mx9+RIUhwcPxAaNrv9oA9wy9FkwpJoCoZaS7nKgyaYSngLenzwtnsptViJ
-         5IJSdsmIwvmZd8JiRdZwyCRKS+31kevelQrmf7wNkp4Y4Af9cpUZ8PfMyLRQwRDkgRys
-         aTgB45EMU4W+t43lUo7YXgaaLBZbOP7P4CdF4=
-Received: by 10.216.88.202 with SMTP id a52mr2205560wef.101.1264355524949; 
-	Sun, 24 Jan 2010 09:52:04 -0800 (PST)
+        h=from:subject:to:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        b=A0eGfC4yowray0VEeVnEJzO3X01/3Fp2KdlRxgeABkubKvF6qYFomJIXIIEiWOSYJd
+         sgkC3B6qMPqRvJ69TXR/osio6C8cNUdeau5lvzHjbro6KMxywRtdRndsSF2v7O6WHcBX
+         Ug0fm1xIB3H9p4Ys7DO9w2zIcLBPY63IXy3YM=
+Received: by 10.87.54.5 with SMTP id g5mr3265307fgk.78.1264356351161;
+        Sun, 24 Jan 2010 10:05:51 -0800 (PST)
+Received: from localhost.localdomain (abvk247.neoplus.adsl.tpnet.pl [83.8.208.247])
+        by mx.google.com with ESMTPS id l19sm3669597fgb.5.2010.01.24.10.05.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 24 Jan 2010 10:05:50 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o0OI5N90014630
+	for <git@vger.kernel.org>; Sun, 24 Jan 2010 19:05:34 +0100
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137906>
 
-With git built from master (v1.6.6.1-436-gaba7dea),
-the following commands (run in a script):
+In Internet Explorer 8 (IE8) the 'blame_incremental' view, which uses
+JavaScript to generate blame info using AJAX, sometimes hang at the
+beginning (at 0%) of blaming, e.g. for larger files with long history
+like git's own gitweb/gitweb.perl.
 
-  git commit --amend -m "Update index.html" index.html
-  git push erlang +gh-pages
+The error shown by JavaScript console is "Unspecified error" at char:2
+of the following line in gitweb/gitweb.js:
 
-failed like this:
+  if (xhr.readyState === 3 && xhr.status !== 200) {
 
-Counting objects: 4, done.
-Delta compression using up to 8 threads.
-Compressing objects: 100% (2/2), done.
-Writing objects: 100% (3/3), 3.85 KiB, done.
-Total 3 (delta 0), reused 0 (delta 0)
-error: Ref refs/heads/gh-pages is at
-db10c045e068f12aa2f78377fab31e35a8443ca4 but expected
-054136d96494979b42524a4dc08ef643bb54cc0e
-error: failed to lock refs/heads/gh-pages
-To git@erlang_github.com:erlang/otp.git
- ! [remote rejected] gh-pages -> gh-pages (failed to lock)
-error: failed to push some refs to 'git@erlang_github.com:erlang/otp.gi=
-t'
+Debugging it using IE8 JScript debuger shown that the error occurs
+when trying to access xhr.status (xhr is XMLHttpRequest object).
+Watch for xhr object shows 'Unspecified error.' as "value" of
+xhr.status, and trying to access xhr.status from console throws error.
 
-Unfortunately (from the point of view of finding the bug), the
-problem is not reproducible. When I ran my script two more times,
-it worked fine.
+This bug is some intermittent bug, depending on XMLHttpRequest timing,
+as it doesn't occur in all cases.  It is probably caused by the fact
+that handleResponse is called from timer (pollTimer), to work around
+the fact that some browsers call onreadystatechange handler only once
+for each state change, and not like required for 'blame_incremental'
+as soon as new data is available from server.  It looks like xhr
+object is not properly initialized; still it is a bug to throw an
+error when accessing xhr.status (and not use 'null' or 'undefined' as
+value).
 
-We all know how difficult it is to investigate non-reproducible bugs,
-but perhaps someone familiar with the code might have some idea
-about what it could be.
+Work around this bug in IE8 by using try-catch block when accessing
+xhr.status.
 
-Info about my system:
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+It is, if I remember correctly, resend.
 
-Mac OS X 10.2.6 (8 cores)
-gcc-4.2.1
+I don't have IE6 nor IE7 to check whether this bug is present also in
+older versions of Internet Explorer...
 
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+ gitweb/gitweb.js |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/gitweb.js b/gitweb/gitweb.js
+index 2a25b7c..9c66928 100644
+--- a/gitweb/gitweb.js
++++ b/gitweb/gitweb.js
+@@ -779,7 +779,12 @@ function handleResponse() {
+ 	}
+ 
+ 	// the server returned error
+-	if (xhr.readyState === 3 && xhr.status !== 200) {
++	// try ... catch block is to work around bug in IE8
++	try {
++		if (xhr.readyState === 3 && xhr.status !== 200) {
++			return;
++		}
++	} catch (e) {
+ 		return;
+ 	}
+ 	if (xhr.readyState === 4 && xhr.status !== 200) {
