@@ -1,63 +1,149 @@
-From: Felipe Balbi <me@felipebalbi.com>
-Subject: Re: cherry picking several patches at once
-Date: Sun, 24 Jan 2010 12:52:34 +0200
-Message-ID: <1264330354.14140.1.camel@gandalf>
-References: <20100121161157.GA3628@gandalf>
-	 <94a0d4531001221557n7a892f03u5e5d1c5e5ba5fea0@mail.gmail.com>
-Reply-To: me@felipebalbi.com
+From: "Gabor Z. Papp" <gzp@papp.hu>
+Subject: git 1.6.6.1 on glibc 2.2
+Date: Sun, 24 Jan 2010 12:35:05 +0100
+Message-ID: <x6y6jn4txy@gzp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 24 11:52:53 2010
+Content-Type: multipart/mixed; boundary="=-=-="
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 24 13:00:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZ05K-0001eV-7g
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 11:52:50 +0100
+	id 1NZ18X-00011w-HS
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 13:00:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753487Ab0AXKwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2010 05:52:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753451Ab0AXKwk
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 05:52:40 -0500
-Received: from ns1.siteground211.com ([209.62.36.12]:47664 "EHLO
-	serv01.siteground211.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752611Ab0AXKwj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2010 05:52:39 -0500
-Received: from [91.154.126.168] (port=18302 helo=[192.168.1.101])
-	by serv01.siteground211.com with esmtpa (Exim 4.69)
-	(envelope-from <me@felipebalbi.com>)
-	id 1NZ055-0007k2-TN; Sun, 24 Jan 2010 04:52:36 -0600
-In-Reply-To: <94a0d4531001221557n7a892f03u5e5d1c5e5ba5fea0@mail.gmail.com>
-X-Mailer: Evolution 2.28.2 
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - serv01.siteground211.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - felipebalbi.com
+	id S1753633Ab0AXMAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2010 07:00:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753619Ab0AXMAG
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 07:00:06 -0500
+Received: from odpn1.odpn.net ([212.40.96.53]:49949 "EHLO odpn1.odpn.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750910Ab0AXMAB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2010 07:00:01 -0500
+X-Greylist: delayed 1493 seconds by postgrey-1.27 at vger.kernel.org; Sun, 24 Jan 2010 07:00:00 EST
+Received: from odpn1.odpn.net [212.40.96.53]
+	by odpn1.odpn.net for git@vger.kernel.org
+	id 1NZ0kD-0007XE-UD; Sun, 24 Jan 2010 12:35:06 +0100
+User-Agent: Gnus/5.110011 (No Gnus v0.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137892>
 
-Hi,
+--=-=-=
 
-On Sat, 2010-01-23 at 01:57 +0200, Felipe Contreras wrote:
-> Have you tried something like:
-> git format-patch old-base --full-diff -- /path
-> git am -3 *.patch
+Hello all,
 
-yes, sure that can be done, but the idea is to avoid having
-format-patch, switch branches and git am those patches ;-)
+trying to compile git 1.6.6.1 on Linux 2.4.37.7, glibc 2.2.5:
 
-> I think that would not be possible because of the challenges when
-> dealing with conflicts.
+read-cache.c: In function 'fill_stat_cache_info':
+read-cache.c:72: error: 'struct stat' has no member named 'st_ctim'
+read-cache.c:73: error: 'struct stat' has no member named 'st_mtim'
+read-cache.c: In function 'read_index_from':
+read-cache.c:1316: error: 'struct stat' has no member named 'st_mtim'
+read-cache.c: In function 'write_index':
+read-cache.c:1581: error: 'struct stat' has no member named 'st_mtim'
+make: *** [read-cache.o] Error 1
 
-there shouldn't be any. I have the same driver internally and publicly
-and would be cherry-picking only the patches for that particular driver.
 
--- 
-balbi
+--=-=-=
+Content-Type: application/octet-stream
+Content-Disposition: attachment; filename=log.make
+Content-Transfer-Encoding: base64
+
+R0lUX1ZFUlNJT04gPSAxLjYuNi4xCiAgICAqIG5ldyBidWlsZCBmbGFncyBvciBwcmVmaXgKICAg
+IENDIGZhc3QtaW1wb3J0Lm8KICAgIENDIGFic3BhdGgubwogICAgQ0MgYWR2aWNlLm8KICAgIEND
+IGFsaWFzLm8KICAgIENDIGFsbG9jLm8KICAgIENDIGFyY2hpdmUubwogICAgQ0MgYXJjaGl2ZS10
+YXIubwogICAgQ0MgYXJjaGl2ZS16aXAubwogICAgQ0MgYXR0ci5vCiAgICBDQyBiYXNlODUubwog
+ICAgQ0MgYmlzZWN0Lm8KYmlzZWN0LmM6IEluIGZ1bmN0aW9uICdiaXNlY3RfbmV4dF9hbGwnOgpi
+aXNlY3QuYzo4Njk6IHdhcm5pbmc6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciAnX191JyBkb2VzIGJy
+ZWFrIHN0cmljdC1hbGlhc2luZyBydWxlcwpiaXNlY3QuYzo4Njk6IG5vdGU6IGluaXRpYWxpemVk
+IGZyb20gaGVyZQogICAgQ0MgYmxvYi5vCiAgICBDQyBicmFuY2gubwogICAgQ0MgYnVuZGxlLm8K
+YnVuZGxlLmM6IEluIGZ1bmN0aW9uICd2ZXJpZnlfYnVuZGxlJzoKYnVuZGxlLmM6MTI1OiB3YXJu
+aW5nOiBkZXJlZmVyZW5jaW5nIHBvaW50ZXIgJ19fdScgZG9lcyBicmVhayBzdHJpY3QtYWxpYXNp
+bmcgcnVsZXMKYnVuZGxlLmM6MTI1OiBub3RlOiBpbml0aWFsaXplZCBmcm9tIGhlcmUKICAgIEND
+IGNhY2hlLXRyZWUubwogICAgQ0MgY29sb3IubwogICAgQ0MgY29tYmluZS1kaWZmLm8KY29tYmlu
+ZS1kaWZmLmM6IEluIGZ1bmN0aW9uICdzaG93X3BhdGNoX2RpZmYnOgpjb21iaW5lLWRpZmYuYzoy
+MjM6IHdhcm5pbmc6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciAnX191JyBkb2VzIGJyZWFrIHN0cmlj
+dC1hbGlhc2luZyBydWxlcwpjb21iaW5lLWRpZmYuYzoyMjM6IG5vdGU6IGluaXRpYWxpemVkIGZy
+b20gaGVyZQogICAgQ0MgY29tbWl0Lm8KICAgIENDIGNvbmZpZy5vCiAgICBDQyBjb25uZWN0Lm8K
+ICAgIENDIGNvbnZlcnQubwpjb252ZXJ0LmM6IEluIGZ1bmN0aW9uICdhcHBseV9maWx0ZXInOgpj
+b252ZXJ0LmM6MjkxOiB3YXJuaW5nOiBkZXJlZmVyZW5jaW5nIHBvaW50ZXIgJ19fdScgZG9lcyBi
+cmVhayBzdHJpY3QtYWxpYXNpbmcgcnVsZXMKY29udmVydC5jOjI5MTogbm90ZTogaW5pdGlhbGl6
+ZWQgZnJvbSBoZXJlCmNvbnZlcnQuYzoyOTE6IHdhcm5pbmc6IGRlcmVmZXJlbmNpbmcgcG9pbnRl
+ciAnX191JyBkb2VzIGJyZWFrIHN0cmljdC1hbGlhc2luZyBydWxlcwpjb252ZXJ0LmM6MjkxOiBu
+b3RlOiBpbml0aWFsaXplZCBmcm9tIGhlcmUKY29udmVydC5jOjI5MTogd2FybmluZzogZGVyZWZl
+cmVuY2luZyBwb2ludGVyICdfX3UnIGRvZXMgYnJlYWsgc3RyaWN0LWFsaWFzaW5nIHJ1bGVzCmNv
+bnZlcnQuYzoyOTE6IG5vdGU6IGluaXRpYWxpemVkIGZyb20gaGVyZQpjb252ZXJ0LmM6MjkxOiB3
+YXJuaW5nOiBkZXJlZmVyZW5jaW5nIHBvaW50ZXIgJ19fdScgZG9lcyBicmVhayBzdHJpY3QtYWxp
+YXNpbmcgcnVsZXMKY29udmVydC5jOjI5MTogbm90ZTogaW5pdGlhbGl6ZWQgZnJvbSBoZXJlCiAg
+ICBDQyBjb3B5Lm8KICAgIENDIGNzdW0tZmlsZS5vCiAgICBDQyBjdHlwZS5vCiAgICBDQyBkYXRl
+Lm8KICAgIENDIGRlY29yYXRlLm8KICAgIENDIGRpZmZjb3JlLWJyZWFrLm8KICAgIENDIGRpZmZj
+b3JlLWRlbHRhLm8KICAgIENDIGRpZmZjb3JlLW9yZGVyLm8KICAgIENDIGRpZmZjb3JlLXBpY2th
+eGUubwogICAgQ0MgZGlmZmNvcmUtcmVuYW1lLm8KICAgIENDIGRpZmYtZGVsdGEubwogICAgQ0Mg
+ZGlmZi1saWIubwogICAgQ0MgZGlmZi1uby1pbmRleC5vCiAgICBDQyBkaWZmLm8KZGlmZi5jOiBJ
+biBmdW5jdGlvbiAnZGlmZl93b3Jkc19zaG93JzoKZGlmZi5jOjcxMTogd2FybmluZzogZGVyZWZl
+cmVuY2luZyBwb2ludGVyICdfX3UnIGRvZXMgYnJlYWsgc3RyaWN0LWFsaWFzaW5nIHJ1bGVzCmRp
+ZmYuYzo3MTE6IG5vdGU6IGluaXRpYWxpemVkIGZyb20gaGVyZQpkaWZmLmM6IEluIGZ1bmN0aW9u
+ICdkaWZmX2dldF9wYXRjaF9pZCc6CmRpZmYuYzozMzE3OiB3YXJuaW5nOiBkZXJlZmVyZW5jaW5n
+IHBvaW50ZXIgJ19fdScgZG9lcyBicmVhayBzdHJpY3QtYWxpYXNpbmcgcnVsZXMKZGlmZi5jOjMz
+MTc6IG5vdGU6IGluaXRpYWxpemVkIGZyb20gaGVyZQpkaWZmLmM6MzMyODogd2FybmluZzogZGVy
+ZWZlcmVuY2luZyBwb2ludGVyICdfX3UnIGRvZXMgYnJlYWsgc3RyaWN0LWFsaWFzaW5nIHJ1bGVz
+CmRpZmYuYzozMzI4OiBub3RlOiBpbml0aWFsaXplZCBmcm9tIGhlcmUKZGlmZi5jOiBJbiBmdW5j
+dGlvbiAnYnVpbHRpbl9kaWZmc3RhdCc6CmRpZmYuYzoxODE1OiB3YXJuaW5nOiBkZXJlZmVyZW5j
+aW5nIHBvaW50ZXIgJ19fdScgZG9lcyBicmVhayBzdHJpY3QtYWxpYXNpbmcgcnVsZXMKZGlmZi5j
+OjE4MTU6IG5vdGU6IGluaXRpYWxpemVkIGZyb20gaGVyZQpkaWZmLmM6IEluIGZ1bmN0aW9uICdy
+dW5fZGlmZl9jbWQnOgpkaWZmLmM6MTcxODogd2FybmluZzogZGVyZWZlcmVuY2luZyBwb2ludGVy
+ICdfX3UnIGRvZXMgYnJlYWsgc3RyaWN0LWFsaWFzaW5nIHJ1bGVzCmRpZmYuYzoxNzE4OiBub3Rl
+OiBpbml0aWFsaXplZCBmcm9tIGhlcmUKZGlmZi5jOiBJbiBmdW5jdGlvbiAnZGlmZl9mbHVzaCc6
+CmRpZmYuYzoxODYyOiB3YXJuaW5nOiBkZXJlZmVyZW5jaW5nIHBvaW50ZXIgJ19fdScgZG9lcyBi
+cmVhayBzdHJpY3QtYWxpYXNpbmcgcnVsZXMKZGlmZi5jOjE4NjI6IG5vdGU6IGluaXRpYWxpemVk
+IGZyb20gaGVyZQpkaWZmLmM6MzQ2MTogd2FybmluZzogZGVyZWZlcmVuY2luZyBwb2ludGVyICdf
+X3UnIGRvZXMgYnJlYWsgc3RyaWN0LWFsaWFzaW5nIHJ1bGVzCmRpZmYuYzozNDYxOiBub3RlOiBp
+bml0aWFsaXplZCBmcm9tIGhlcmUKICAgIENDIGRpci5vCiAgICBDQyBlZGl0b3IubwogICAgQ0Mg
+ZW50cnkubwogICAgQ0MgZW52aXJvbm1lbnQubwogICAgQ0MgZXhlY19jbWQubwogICAgQ0MgZnNj
+ay5vCiAgICBDQyBncmFwaC5vCiAgICBDQyBncmVwLm8KICAgIENDIGhhc2gubwogICAgQ0MgaGVs
+cC5vCmhlbHAuYzogSW4gZnVuY3Rpb24gJ2hlbHBfdW5rbm93bl9jbWQnOgpoZWxwLmM6MzA4OiB3
+YXJuaW5nOiBkZXJlZmVyZW5jaW5nIHBvaW50ZXIgJ19fdScgZG9lcyBicmVhayBzdHJpY3QtYWxp
+YXNpbmcgcnVsZXMKaGVscC5jOjMwODogbm90ZTogaW5pdGlhbGl6ZWQgZnJvbSBoZXJlCmhlbHAu
+YzozMDk6IHdhcm5pbmc6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciAnX191JyBkb2VzIGJyZWFrIHN0
+cmljdC1hbGlhc2luZyBydWxlcwpoZWxwLmM6MzA5OiBub3RlOiBpbml0aWFsaXplZCBmcm9tIGhl
+cmUKaGVscC5jOjMxMDogd2FybmluZzogZGVyZWZlcmVuY2luZyBwb2ludGVyICdfX3UnIGRvZXMg
+YnJlYWsgc3RyaWN0LWFsaWFzaW5nIHJ1bGVzCmhlbHAuYzozMTA6IG5vdGU6IGluaXRpYWxpemVk
+IGZyb20gaGVyZQogICAgQ0MgaWRlbnQubwogICAgQ0MgbGV2ZW5zaHRlaW4ubwogICAgQ0MgbGlz
+dC1vYmplY3RzLm8KICAgIENDIGxsLW1lcmdlLm8KbGwtbWVyZ2UuYzogSW4gZnVuY3Rpb24gJ2xs
+X3hkbF9tZXJnZSc6CmxsLW1lcmdlLmM6Nzk6IHdhcm5pbmc6IGRlcmVmZXJlbmNpbmcgcG9pbnRl
+ciAnX191JyBkb2VzIGJyZWFrIHN0cmljdC1hbGlhc2luZyBydWxlcwpsbC1tZXJnZS5jOjc5OiBu
+b3RlOiBpbml0aWFsaXplZCBmcm9tIGhlcmUKICAgIENDIGxvY2tmaWxlLm8KICAgIENDIGxvZy10
+cmVlLm8KICAgIENDIG1haWxtYXAubwogICAgQ0MgbWF0Y2gtdHJlZXMubwogICAgQ0MgbWVyZ2Ut
+ZmlsZS5vCm1lcmdlLWZpbGUuYzogSW4gZnVuY3Rpb24gJ21lcmdlX2ZpbGUnOgptZXJnZS1maWxl
+LmM6NjQ6IHdhcm5pbmc6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciAnX191JyBkb2VzIGJyZWFrIHN0
+cmljdC1hbGlhc2luZyBydWxlcwptZXJnZS1maWxlLmM6NjQ6IG5vdGU6IGluaXRpYWxpemVkIGZy
+b20gaGVyZQptZXJnZS1maWxlLmM6MzM6IHdhcm5pbmc6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciAn
+X191JyBkb2VzIGJyZWFrIHN0cmljdC1hbGlhc2luZyBydWxlcwptZXJnZS1maWxlLmM6MzM6IG5v
+dGU6IGluaXRpYWxpemVkIGZyb20gaGVyZQogICAgQ0MgbWVyZ2UtcmVjdXJzaXZlLm8KICAgIEND
+IG5hbWUtaGFzaC5vCiAgICBDQyBub3Rlcy5vCiAgICBDQyBvYmplY3QubwogICAgQ0MgcGFjay1j
+aGVjay5vCiAgICBDQyBwYWNrLXJlZnMubwpwYWNrLXJlZnMuYzogSW4gZnVuY3Rpb24gJ3BhY2tf
+cmVmcyc6CnBhY2stcmVmcy5jOjg5OiB3YXJuaW5nOiBkZXJlZmVyZW5jaW5nIHBvaW50ZXIgJ19f
+dScgZG9lcyBicmVhayBzdHJpY3QtYWxpYXNpbmcgcnVsZXMKcGFjay1yZWZzLmM6ODk6IG5vdGU6
+IGluaXRpYWxpemVkIGZyb20gaGVyZQpwYWNrLXJlZnMuYzo4OTogd2FybmluZzogZGVyZWZlcmVu
+Y2luZyBwb2ludGVyICdfX3UnIGRvZXMgYnJlYWsgc3RyaWN0LWFsaWFzaW5nIHJ1bGVzCnBhY2st
+cmVmcy5jOjg5OiBub3RlOiBpbml0aWFsaXplZCBmcm9tIGhlcmUKcGFjay1yZWZzLmM6ODk6IHdh
+cm5pbmc6IGRlcmVmZXJlbmNpbmcgcG9pbnRlciAnX191JyBkb2VzIGJyZWFrIHN0cmljdC1hbGlh
+c2luZyBydWxlcwpwYWNrLXJlZnMuYzo4OTogbm90ZTogaW5pdGlhbGl6ZWQgZnJvbSBoZXJlCiAg
+ICBDQyBwYWNrLXJldmluZGV4Lm8KICAgIENDIHBhY2std3JpdGUubwogICAgQ0MgcGFnZXIubwog
+ICAgQ0MgcGFyc2Utb3B0aW9ucy5vCiAgICBDQyBwYXRjaC1kZWx0YS5vCiAgICBDQyBwYXRjaC1p
+ZHMubwogICAgQ0MgcGF0aC5vCiAgICBDQyBwa3QtbGluZS5vCiAgICBDQyBwcmVsb2FkLWluZGV4
+Lm8KICAgIENDIHByZXR0eS5vCiAgICBDQyBwcm9ncmVzcy5vCiAgICBDQyBxdW90ZS5vCiAgICBD
+QyByZWFjaGFibGUubwogICAgQ0MgcmVhZC1jYWNoZS5vCnJlYWQtY2FjaGUuYzogSW4gZnVuY3Rp
+b24gJ2ZpbGxfc3RhdF9jYWNoZV9pbmZvJzoKcmVhZC1jYWNoZS5jOjcyOiBlcnJvcjogJ3N0cnVj
+dCBzdGF0JyBoYXMgbm8gbWVtYmVyIG5hbWVkICdzdF9jdGltJwpyZWFkLWNhY2hlLmM6NzM6IGVy
+cm9yOiAnc3RydWN0IHN0YXQnIGhhcyBubyBtZW1iZXIgbmFtZWQgJ3N0X210aW0nCnJlYWQtY2Fj
+aGUuYzogSW4gZnVuY3Rpb24gJ3JlYWRfaW5kZXhfZnJvbSc6CnJlYWQtY2FjaGUuYzoxMzE2OiBl
+cnJvcjogJ3N0cnVjdCBzdGF0JyBoYXMgbm8gbWVtYmVyIG5hbWVkICdzdF9tdGltJwpyZWFkLWNh
+Y2hlLmM6IEluIGZ1bmN0aW9uICd3cml0ZV9pbmRleCc6CnJlYWQtY2FjaGUuYzoxNTgxOiBlcnJv
+cjogJ3N0cnVjdCBzdGF0JyBoYXMgbm8gbWVtYmVyIG5hbWVkICdzdF9tdGltJwptYWtlOiAqKiog
+W3JlYWQtY2FjaGUub10gRXJyb3IgMQo=
+--=-=-=--
