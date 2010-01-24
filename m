@@ -1,55 +1,69 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] Make test numbers unique
-Date: Sun, 24 Jan 2010 22:40:20 +0100
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH 3/9] gitweb: Add option to force version match
+Date: Sun, 24 Jan 2010 22:59:24 +0100
 Organization: 
-Message-ID: <201001242240.20457.j6t@kdbg.org>
+Message-ID: <20100124215924.GA9553@machine.or.cz>
+References: <1263432185-21334-1-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-2-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-3-git-send-email-warthog9@eaglescrag.net>
+ <1263432185-21334-4-git-send-email-warthog9@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 24 22:41:33 2010
+To: John 'Warthog9' Hawley <warthog9@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Sun Jan 24 22:59:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZAD7-0000NU-Ej
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 22:41:33 +0100
+	id 1NZAUY-0006S6-9Y
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 22:59:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753550Ab0AXVla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2010 16:41:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753502Ab0AXVl3
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 16:41:29 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:9272 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753444Ab0AXVl3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2010 16:41:29 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 7D51FCDF85;
-	Sun, 24 Jan 2010 22:41:26 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 8B04F19F5EC;
-	Sun, 24 Jan 2010 22:40:20 +0100 (CET)
-User-Agent: KMail/1.9.10
+	id S1753995Ab0AXV72 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2010 16:59:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753840Ab0AXV72
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 16:59:28 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:43276 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752652Ab0AXV71 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2010 16:59:27 -0500
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 40CFE125A0E9; Sun, 24 Jan 2010 22:59:24 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <1263432185-21334-4-git-send-email-warthog9@eaglescrag.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137922>
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- :-P
+  Hi!
 
- ...rse-upstream.sh => t1507-rev-parse-upstream.sh} |    0
- 1 files changed, 0 insertions(+), 0 deletions(-)
- rename t/{t1506-rev-parse-upstream.sh => t1507-rev-parse-upstream.sh} (100%)
+On Wed, Jan 13, 2010 at 05:22:59PM -0800, John 'Warthog9' Hawley wrote:
+> +# Throw an error if git versions does not match, if $git_versions_must_match is true.
+> +if ($git_versions_must_match &&
+> +    $git_version ne $version) {
+> +	my $admin_contact =
+> +		defined $ENV{'SERVER_ADMIN'} ? ", $ENV{'SERVER_ADMIN'}," : '';
+> +	my $err_msg = <<EOT;
+> +<h1 align="center">*** Warning ***</h1>
+> +<p>
+> +This version of gitweb was compiled for <b>@{[esc_html($version)]}</b>,
+> +however git version <b>@{[esc_html($git_version)]}</b> was found on server,
+> +and administrator requested strict version checking.
+> +</p>
+> +<p>
+> +Please contact the server administrator${admin_contact} to either configure
+> +gitweb to allow mismatched versions, or update git or gitweb installation.
+> +</p>
+> +EOT
+> +	die_error(500, 'Internal server error', $err_msg);
+> +}
+> +
 
-diff --git a/t/t1506-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
-similarity index 100%
-rename from t/t1506-rev-parse-upstream.sh
-rename to t/t1507-rev-parse-upstream.sh
--- 
-1.6.6.264.ga6155
+  I get very unhappy when *I* am the server administrator and read
+messages like this. ;-) Could you please mention the
+\$git_versions_must_match in the text?
+
+				Petr "Pasky" Baudis
