@@ -1,133 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jan 2010, #07; Fri, 22)
-Date: Sat, 23 Jan 2010 18:11:26 -0800
-Message-ID: <7veilg9rqp.fsf@alter.siamese.dyndns.org>
-References: <7vtyudfqju.fsf@alter.siamese.dyndns.org> <4B5B25C6.70604@web.de>
- <7v7hr8d1xg.fsf@alter.siamese.dyndns.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Advice for "pseudo public" repository on a USB key for a single 
+	contributer project
+Date: Sun, 24 Jan 2010 10:17:34 +0800
+Message-ID: <be6fef0d1001231817s265dac68v646d71b688e0ed1e@mail.gmail.com>
+References: <554f5f781001231027vd322045hf84e2a16208bcc9f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Jan 24 03:15:17 2010
+To: =?ISO-8859-1?Q?Maxime_L=E9vesque?= <maxime.levesque@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 24 03:18:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NYs0S-0004CG-U4
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 03:15:17 +0100
+	id 1NYs3V-0004r0-Mf
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 03:18:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751863Ab0AXCLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jan 2010 21:11:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751832Ab0AXCLf
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jan 2010 21:11:35 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41891 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750773Ab0AXCLe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jan 2010 21:11:34 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B3CDB93D0F;
-	Sat, 23 Jan 2010 21:11:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0xwmR4ZftzquXfKFQ3z2cqBj/TA=; b=hjbFvr
-	AaIOWAX6C/nsRJvTiDEa1uy3bI3ed/mNhKPDmq88ZVl/kbQgVMX6Y8AcGhc1Kpcl
-	GwRyKRrkPmc4woxfLJpIOpb9d5+Ji/RdrYDcBEhObWmIPGFczs1AqHt7MUnwgnwX
-	W9wZH/DLnJpVa2zSFCGywuEViaZVh8aA3CsR4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=an1YAiMrJa+DK8CzNoFbIGhtJTIeJhPb
-	bhzNpScUzIyeu0AtnEMcQiIIvQyiSrYT/UUA9riwDZ7dzJy2qGD9xLOYADY5Von/
-	cuchNjYO09YjuTce19u0XvQKmrf5JPKMieKeGTRIOwaIJvHDdZYRLa/7eik7Rjzu
-	JyXwUt1LoEM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AF7393D0E;
-	Sat, 23 Jan 2010 21:11:30 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA68293D0C; Sat, 23 Jan
- 2010 21:11:27 -0500 (EST)
-In-Reply-To: <7v7hr8d1xg.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat\, 23 Jan 2010 12\:03\:07 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C948A9A0-088D-11DF-9897-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752112Ab0AXCRf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Jan 2010 21:17:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752094Ab0AXCRf
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jan 2010 21:17:35 -0500
+Received: from mail-iw0-f178.google.com ([209.85.223.178]:46215 "EHLO
+	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751784Ab0AXCRe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Jan 2010 21:17:34 -0500
+Received: by iwn8 with SMTP id 8so1933075iwn.23
+        for <git@vger.kernel.org>; Sat, 23 Jan 2010 18:17:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=F9P2rnVRy7Rhwf6eeHVDYry7EQR0kVbC0Ug9wZqJJZ8=;
+        b=BMTU9ENM9NnL1XBeGIQOxBqg53B3HUXOqSMLTLrdmBkWITOZOaL4/LMHlBbQDPHSpt
+         6NLRIS6ZPWeUZSzjd/aVSRdz9sX2uKAxAYNMBtru6R7ftE9gyq3mLk/FxuSjD8WYxg1E
+         DCedi7FwbdaY6549tXR6rMnlW9UW3oXrDnZu0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=WXQkckX0Bj2C+dajLJ4Qnfoxb1bslkqTyU9LY55yvL0HkCTzrfDkmzT56AWFmmJDoT
+         6ihZb/o6q55rrU5I/evsc/a3bIc1NkkzG+wLwrYa4tLZ7lvfbGc6MaJDghxZXHbf+q4W
+         VZ/g2kf2//d7avw1xcfPZkAcDNYvYUgdr8gvA=
+Received: by 10.231.148.83 with SMTP id o19mr4590000ibv.39.1264299454097; Sat, 
+	23 Jan 2010 18:17:34 -0800 (PST)
+In-Reply-To: <554f5f781001231027vd322045hf84e2a16208bcc9f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137882>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> ...
->> @@ -220,7 +224,7 @@ static int get_stat_data(struct cache_entry *ce,
->>  			 const unsigned char **sha1p,
->>  			 unsigned int *modep,
->>  			 int cached, int match_missing,
->> -			 unsigned *dirty_submodule, int output_format)
->> +			 unsigned *dirty_submodule, struct diff_options *diffopt)
->>  {
->>  	const unsigned char *sha1 = ce->sha1;
->>  	unsigned int mode = ce->ce_mode;
+2010/1/24 Maxime L=E9vesque <maxime.levesque@gmail.com>:
+> =A0Since there are no servers involved, I have used pull command
+> =A0to move my 'HEAD' around :
 >
-> Below the context of this hunk, we seem to do this:
+> =A0after working on machine1 I do :
 >
-> 	if (!cached && !ce_uptodate(ce)) {
->         	...
->                 if gitlink then call is_submodule_modified()
-> 	}
+> =A0=A0 commit to machine1Repo
+> =A0=A0 machine1Repo=A0 --pull--> USBKeyRepo
+
+I think you mean "push", since what you want is to make the changes in
+machine1Repo available in USBKeyRepo.
+
+> =A0when I switch on machine2 I start by bringing it up to date from t=
+he key :
 >
-> But isn't it inconsistent with hunk at the beginning of this patch (ll 161-170)
-> that essentially says "entries that is ce_uptodate() is Ok, but if it is a
-> gitlink we need to look deeper"?  Why isn't this function looking deeper
-> even when we see that the submodule entry is ce_uptodate()?
 >
->     Side note: the lack of ce_skip_worktree() check is Ok.  The callers of
->     get_stat_data() are show_new_file() and show_mododified() but they are
->     never called from their sole caller, do_oneway_diff(), on a skipped
->     worktree entry.
+> =A0=A0 machine2Repo=A0 <--pull-- USBKeyRepo
+>
+> =A0=A0and when I'm finished=A0 :
+>
+> =A0=A0commit to machine2Repo
+> =A0=A0machine1Repo=A0 --pull--> USBKeyRepo
 
-I think we need to clarify the rule for ce_uptodate(ce).
+I think you mean "push" here and s/machine1/machine2/ too, so that woul=
+d read
 
-The rule has always been that an entry that is ce_uptodate(ce) is _known_
-to be clean, and nobody should have to dig deeper to double check.  We
-should keep it that way.
+  machine2Repo --push--> USBKeyRepo
 
-We at least need to fix preload_index() not to mark any gitlink entries
-with ce_mark_uptodate(ce), as your series changes the definition of a
-dirty submodule.  It used to be that if a submodule is checked out and its
-HEAD matches what is recorded in the index of the superproject, then the
-submodule is clean.  The checks made in preload_thread() is consistent
-with this definition.
+When you make changes on machine2 and go back to machine1, you need to
+fetch/pull in your changes, just like you do for machine2Repo:
 
-With the update, we consider that having local changes in the submodule
-(either to the index or to the work tree files) makes it modified (which
-by the way is a right definition, and prevents people from forgetting to
-commit in the submodule and updating the superproject index with the new
-submodule commit, before commiting the state in the superproject).
+  machine1Repo=A0 <--pull-- USBKeyRepo
 
-Because the checks in preload_thread() does not cover this kind of change
-that is_submodule_modified() reports, it shouldn't mark a gitlink entry as
-ce_uptodate(ce).
+> =A0=A0From what I have read my USBKey repo is like a public repo,
+> =A0so I have tried using a bare repo, because since I never work
+> =A0directly on the usb key, the souces on this repo are just
+> =A0adding unnecessary complexity. So far I had no success,
+> =A0because the pull command doesn't recognize my bare repo,
+> =A0it seems that bare repos must me accessed via a daemon process.
 
-Another possibility is to run the is_submodule_modified() check inside
-ie_match_stat(), but (1) I don't know if that function is thread-safe, and
-(2) I don't think we would want to do it in preload-index time (it is
-rather expensive).
+What's your config?
 
-The reason preload_index() passes CE_MATCH_RACY_IS_DIRTY to ie_match_stat() 
-is to avoid doing a rather expensive ce_modified_check_fs() --- it avoids
-the overhead and leaves the expensive check to the true callers that care
-if the entry is really clean.  In the same sense, even if we were to run
-is_submodule_modified() there, we would want to avoid doing so when we are
-running ie_match_stat() from preload codepath.
+Assuming you use master everywhere, I think you could use this in your =
+config:
 
-We need to also see if there other codepaths that call
-ce_mark_uptodate(ce) on a gitlink that hasn't been checked with
-is_submodule_modified(), and eliminate them.
+  [remote "USBKeyRepo"]
+    url =3D /path/to/repo
+    fetch =3D master
+  [branch "master"]
+    remote =3D USBKeyRepo
+    merge =3D master
 
-Then we can fix the "even though ce_uptodate(ce) says this entry is clean,
-if it is gitlink, we need to double check" insanity around ll 164 of
-diff-lib.c.  We should be able to trust ce_uptodate(ce) even for gitlinks.
+> =A0Is it wise to use pulls instead of pushes ?
 
-What do you think?
+See above. You can't use one "instead of" another - they serve
+different purposes and don't replace one another.
+
+> =A0Should I be using a bare repo on my key ?
+
+Definitely, or else you would have a working tree in that repo too but
+it never gets updated - not to mention all the warnings git would
+show.
+
+--=20
+Cheers,
+Ray Chuan
