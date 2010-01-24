@@ -1,94 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Handle double slashes in make_relative_path()
-Date: Sun, 24 Jan 2010 12:05:15 -0800
+From: =?ISO-8859-1?Q?Andr=E9_Harms?= <andre.harms@kuhlsolutions.de>
+Subject: Re: Modern Git GUI
+Date: Sun, 24 Jan 2010 21:43:31 +0100
 Organization: 
-Message-ID: <7vr5pf5kw4.fsf@alter.siamese.dyndns.org>
-References: <379d55c6a4110736aadb8ace3b050de879a9deab.1264118830.git.trast@student.ethz.ch> <201001232141.49556.j6t@kdbg.org> <fabb9a1e1001231301o149bb13es236a7150f57ce161@mail.gmail.com> <201001241457.43297.trast@student.ethz.ch> <20100124190424.GA30585@pcpool00.mathematik.uni-freiburg.de>
+Message-ID: <e39c1dcf1001241243r38b187b1tcb44b607b7cba8d9@mail.gmail.com>
+References: <e39c1dcf1001231340p67448584pfdbc453cc8fb9ca7@mail.gmail.com>
+	 <vpq636resro.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: "Bernhard R. Link" <brlink@debian.org>
-X-From: git-owner@vger.kernel.org Sun Jan 24 21:08:16 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sun Jan 24 21:44:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZ8k8-0006K0-10
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 21:07:32 +0100
+	id 1NZ9KK-0001Be-AR
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jan 2010 21:44:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753548Ab0AXUF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2010 15:05:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752719Ab0AXUF0
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 15:05:26 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60837 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752695Ab0AXUFZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2010 15:05:25 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 472D793A5F;
-	Sun, 24 Jan 2010 15:05:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AlqjCqxAx+nmYYctGhsMX6SfgwA=; b=ZnOkks
-	OfTdwQFhL5mLHJ7gV5eHBSMWmQxQG0oPDiy1wn+n48JpTDMv2+uDS3FqCrARGO04
-	ayG1wqqLVAKCHioaavHTzl4qhEmYsdGY1l26riEdlxI07BNMss3RSrefclgXoXZ4
-	q38onamhZu6ZQkZoDXGgbJgZ97N/UuqRfmYU0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XYejaX3ZdWi4sfnemISazvuUECfxks9L
-	JN6brbXmMIaylBr71MxlgwgeuANfKIGrUtNOWZQXJmWLoOuRc1X4YVV10/i0U8Nl
-	GkrwBq4PeZkJ0dK5FE0N/yoMTNpKuzflwwNdGykDTRqNfqnwJQs/SP+KiRNIo5Ti
-	FKYLKmWcblE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1618493A5E;
-	Sun, 24 Jan 2010 15:05:21 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5306193A5B; Sun, 24 Jan
- 2010 15:05:17 -0500 (EST)
-In-Reply-To: <20100124190424.GA30585@pcpool00.mathematik.uni-freiburg.de>
- (Bernhard R. Link's message of "Sun\, 24 Jan 2010 20\:04\:24 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CCE70E80-0923-11DF-B686-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753675Ab0AXUnf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Jan 2010 15:43:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752900Ab0AXUne
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jan 2010 15:43:34 -0500
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:42177 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752534Ab0AXUne convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Jan 2010 15:43:34 -0500
+Received: by bwz19 with SMTP id 19so2229669bwz.28
+        for <git@vger.kernel.org>; Sun, 24 Jan 2010 12:43:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=m6qIVzE33RWi23ftYqnXWC/z+DU0yxDemzOAte72fKA=;
+        b=oK3OO3PJfZUF/zAnqJG1YL43Tv2ueGo+RC9nvVrX7M3x8ICt0rC42sXNg2Gdh9kDZr
+         rkwwbJ2uxr2GxLp4L/pQCN/5iAx3CWvlL9PdlP8FU6hhQjoaqpu8aoFblo3Y9MIjZIGm
+         gSGsa3GV6IP9hOaHBMzbOEvodOLq/31qrk8sc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=HxItXyK36ngUOq2vyA2gXRDxy5Ipo5oEx+rOFK20n9VnnLMX2KCTJjVnno/1XP9Cep
+         zdUUH3VTO1IX0bzjlf2uq1m3QcnVANdpixOevPkKR/8nDN8jT1/S6VetPhWAxmpxsVGJ
+         vV0A89KqGlFO9N7UH0f9KqtaYtGRZ1lZsdvZ8=
+Received: by 10.204.8.151 with SMTP id h23mr3140605bkh.194.1264365812113; Sun, 
+	24 Jan 2010 12:43:32 -0800 (PST)
+In-Reply-To: <vpq636resro.fsf@bauges.imag.fr>
+X-Google-Sender-Auth: 230733293ec7eaa2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137918>
 
-"Bernhard R. Link" <brlink@debian.org> writes:
-
-> http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap03.html#tag_03_266
+2010/1/24 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
+> Andr=E9 Harms <andre.harms@kuhlsolutions.de> writes:
 >
-> | 3.266 Pathname
-> |
-> | A character string that is used to identify a file. In the context of
-> | IEEE Std 1003.1-2001, a pathname consists of, at most, {PATH_MAX} bytes,
-> | including the terminating null byte. It has an optional beginning
-> | slash, followed by zero or more filenames separated by slashes. A
-> | pathname may optionally contain one or more trailing slashes.
-> | Multiple successive slashes are considered to be the same as one
-> | slash.
+>> So I thought about developing a new kind of GUI for Git that looks
+>> modern and attractive
+>
+> Every once in a while, someone comes and says "Git GUIs aren't as goo=
+d
+> as I'd expect, I'll write my own". The result is that we have a myria=
+d
+> of GUIs (see
+> http://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools#Grap=
+hical_Interfaces ),
+> many of them being half-finished and/or abandonned. I don't believe
+> adding yet-another-one is going to improve the situation, and
+> pick-one-and-improve-it is IMHO a much better approach.
 
-Which is a bit stale, and there is an update that is crucial when
-discussing the issue that is the topic of this thread.
+Basically I agree with you. And I think you're right that yet another
+one won't improve the situation immediately.
+I've to admin, that I didn't think about that very much. So I have to
+rethink my plan. But my concept is different than the one of other
+GUIs.
 
-Try this one instead, especially the last ", except for" which is an
-important clarification.
+>> (you know... some eye-candy stuff) and that is easy to use.
+>
+> I use mostly the command-line, so I couldn't make a detailed review o=
+f
+> the existing, but tools like git-cola and a few others sound "modern"
+> to me (Qt4 & co).
+>
+> If you decide to go on with your project, either you want to carry it
+> out alone, or you'll have to convince other developers to join. In th=
+e
+> second case, a good starting point would be to explain why the other
+> GUI are not good enough, and why you can't just contribute to them.
 
-http://www.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html
+If I decide to go on anyhow, I'll work those things out clearly.
+Thanks for the tip.
+In my opinion other GUIs aren't intuitve for first-time users and
+aren't as good for experienced users as the command-line. But a GUI
+_can_ be helpful for experienced users as well. So there's a hole that
+can be filled. And my concept is based on a hybrid GUI that also
+offers a command-line for experienced users. So actions that are made
+with the built in command-line (console) are visualized. That also
+might be good for beginners who like to use the command-line but are
+afraid of using it.
+If I go on I'll probably use Clutter as GUI toolkit. With it one is
+able to create real good looking GUIs (though it's not a guarantor for
+a good GUI).
 
-| 3.266 Pathname
-| 
-| A character string that is used to identify a file. In the context of
-| POSIX.1-2008, a pathname may be limited to {PATH_MAX} bytes, including the
-| terminating null byte. It has an optional beginning <slash>, followed by
-| zero or more filenames separated by <slash> characters. A pathname may
-| optionally contain one or more trailing <slash> characters. Multiple
-| successive <slash> characters are considered to be the same as one
-| <slash>, except for the case of exactly two leading <slash> characters.
-
-And 4.12 in the same issue of POSIX says pathnames with exactly two
-leading slashes may be handled in an implemenation defined manner
-(i.e. three or more means the same thing as a single slash).  Confusing
-;-)
+Thanks for your opinion.
