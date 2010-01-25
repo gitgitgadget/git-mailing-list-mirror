@@ -1,74 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jan 2010, #08; Sun, 24)
-Date: Mon, 25 Jan 2010 15:47:31 -0800
-Message-ID: <7vfx5t3fxo.fsf@alter.siamese.dyndns.org>
-References: <7vfx5u6bn9.fsf@alter.siamese.dyndns.org>
- <m3eildbydx.fsf@localhost.localdomain> <20100125231241.GA4159@machine.or.cz>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH v4] Threaded grep
+Date: Mon, 25 Jan 2010 15:59:56 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.1001251542100.3574@localhost.localdomain>
+References: <20100125225139.GA3048@fredrik-laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"J.H." <warthog9@eaglescrag.net>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Jan 26 00:47:52 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Fredrik Kuivinen <frekui@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 26 01:00:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZYet-0006j8-4c
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 00:47:51 +0100
+	id 1NZYr3-0002DH-5R
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 01:00:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751872Ab0AYXrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2010 18:47:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751214Ab0AYXrq
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 18:47:46 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46860 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751082Ab0AYXrq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2010 18:47:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7194094793;
-	Mon, 25 Jan 2010 18:47:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8Pw8j4DK/ewfjZ6xC8ljxakbsLA=; b=ilYZUp
-	NxYw3awzMiiC9xRuU6mphHWXhnVvRSncw33v5A3f8rdby8gvAoKUZ7yE3GN3+adm
-	zN7JF7iJTSK1Kl/goxap0qCNzCzQ+o2VRApCMjSICd7HmS3Kbzt+/93H/UFyNVoE
-	ztsT9hRH/q6Am2pklGt/AEKslWMaFYj02EJGM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=S5PXTXkMHXH8eCR3ry9y66caC4B+/uem
-	ywsLWUtix3SU9fcN2Wuq9/SAx79BCLJqzPMzPk7R/Qb/hwcJP0b2PVGq37yDMrNf
-	wduVa5AKhozgX/qOycMrGGAYZ6V3MjPSZT2VYaUnFMkjv4pTsBDrpM7C+d7rmVBd
-	w89GGZLqTp4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E14F94791;
-	Mon, 25 Jan 2010 18:47:40 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0023C94788; Mon, 25 Jan
- 2010 18:47:32 -0500 (EST)
-In-Reply-To: <20100125231241.GA4159@machine.or.cz> (Petr Baudis's message of
- "Tue\, 26 Jan 2010 00\:12\:41 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 05FF309C-0A0C-11DF-9EA0-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751399Ab0AZAAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2010 19:00:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751042Ab0AZAAT
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 19:00:19 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:52867 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750758Ab0AZAAS (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jan 2010 19:00:18 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0PNxvu0018425
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 25 Jan 2010 15:59:58 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0PNxuFU018746;
+	Mon, 25 Jan 2010 15:59:56 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <20100125225139.GA3048@fredrik-laptop>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.947 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138008>
 
-Petr Baudis <pasky@suse.cz> writes:
 
-> ... I think
-> it's healthier for new gitweb stuff to develop more in-tree, even
-> if that means few angry users annoyed about less-than-perfect UI stuff,
-> rather than polish the diamond in infinite discussions; worse is better!
-> The only thing we should be worried about is avoiding introducing new
-> bad URL interfaces since we should keep backwards compatibility there.
-> ...
-> For the main caching patch, it seems like good idea to take Jakub's
-> split-up series instead, let's see what is J.H.'s opinion on the series?
 
-Sounds reasonable.
+On Mon, 25 Jan 2010, Fredrik Kuivinen wrote:
+> 
+> The results below are best of five runs in the Linux repository (on a
+> box with two cores).
+> 
+> git grep qwerty
+
+Before:
+
+	real	0m0.531s
+	user	0m0.412s
+	sys	0m0.112s
+
+After:
+
+	real	0m0.151s
+	user	0m0.720s
+	sys	0m0.272s
+
+
+> $ /usr/bin/time git grep void
+
+Before:
+
+	real	0m1.144s
+	user	0m0.988s
+	sys	0m0.148s
+
+After:
+	real	0m0.290s
+	user	0m1.732s
+	sys	0m0.232s
+
+So it's helping a lot (~3.5x and ~3.9x) on this 4-core HT setup. 
+
+I don't seem to ever get more than a 4x speedup, so my guess is that HT 
+simply isn't able to do much of anything with this load. 
+
+The profile for the threaded case says:
+
+    51.73%      git  libc-2.11.1.so                 [.] re_search_internal
+    11.47%      git  [kernel]                       [k] copy_user_generic_string
+     2.90%      git  libc-2.11.1.so                 [.] __strlen_sse2
+     2.66%      git  [kernel]                       [k] link_path_walk
+     2.55%      git  [kernel]                       [k] intel_pmu_enable_all
+     2.40%      git  [kernel]                       [k] __d_lookup
+     1.71%      git  libc-2.11.1.so                 [.] __GI___libc_malloc
+     1.55%      git  [kernel]                       [k] _raw_spin_lock
+     1.43%      git  [kernel]                       [k] sys_futex
+     1.30%      git  libc-2.11.1.so                 [.] __cfree
+     1.28%      git  [kernel]                       [k] intel_pmu_disable_all
+     1.25%      git  libc-2.11.1.so                 [.] __GI_memchr
+     1.14%      git  libc-2.11.1.so                 [.] _int_malloc
+     1.02%      git  [kernel]                       [k] effective_load
+
+and the only thing that makes me go "eh?" there is the strlen(). Why is 
+that so hot?  But locking doesn't seem to be the biggest issue, and in 
+general I think this is all pretty good. The 'effective_load' thing is the 
+scheduler, so there's certainly some context switching going on, probably 
+still due to excessive synchronization, but it's equally clear that that 
+is certainly not a dominant factor.
+
+One potentially interesting data point is that if I make NR_THREADS be 16, 
+performance goes down, and I get more locking overhead. So NR_THREADS of 8 
+works well on this machine.
+
+So ack from me. The patch looks reasonably clean too, at least for 
+something as complex as a multi-threaded grep.
+
+One worry is, of course, whether all regex() implementations are 
+thread-safe. Maybe there are broken libraries that have hidden global 
+state in them?
+
+			Linus
