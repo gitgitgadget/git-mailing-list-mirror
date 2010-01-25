@@ -1,62 +1,58 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Issues that need to be resolved before 1.7.0-rc1
-Date: Mon, 25 Jan 2010 22:17:42 +0100
-Message-ID: <201001252217.42501.j6t@kdbg.org>
-References: <7vfx5u6bn9.fsf@alter.siamese.dyndns.org> <7vsk9u2g3k.fsf@alter.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Perforce vcs-helper
+Date: Mon, 25 Jan 2010 16:25:01 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.1001251615430.14365@iabervon.org>
+References: <1a6be5fa1001250257s333339fdq9a08e91fdb84fd3d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 25 22:18:59 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git mailing list <git@vger.kernel.org>
+To: Tor Arvid Lund <torarvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 25 22:25:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZWKo-00064m-VB
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 22:18:59 +0100
+	id 1NZWQo-00014q-1I
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 22:25:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752707Ab0AYVSx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jan 2010 16:18:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595Ab0AYVSx
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 16:18:53 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:22147 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750824Ab0AYVSw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2010 16:18:52 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 919CFCDF89;
-	Mon, 25 Jan 2010 22:18:49 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 97BE019F5B2;
-	Mon, 25 Jan 2010 22:17:42 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <7vsk9u2g3k.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752201Ab0AYVZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2010 16:25:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751892Ab0AYVZE
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 16:25:04 -0500
+Received: from iabervon.org ([66.92.72.58]:51835 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750784Ab0AYVZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2010 16:25:04 -0500
+Received: (qmail 4444 invoked by uid 1000); 25 Jan 2010 21:25:01 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 25 Jan 2010 21:25:01 -0000
+In-Reply-To: <1a6be5fa1001250257s333339fdq9a08e91fdb84fd3d@mail.gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137995>
 
-On Montag, 25. Januar 2010, Junio C Hamano wrote:
-> There also is a discussion on //server/share path on msysgit, that wa=
-s
-> started since 288123f (ignore duplicated slashes in make_relative_pat=
-h(),
-> 2010-01-21). =A0If that commit _breaks_ use case on msysgit that used=
- to
-> work, I think the sanest course of action is to revert it...
+On Mon, 25 Jan 2010, Tor Arvid Lund wrote:
 
-IFAICS, this patch is not a regression w.r.t. //server/share paths.
+> Hi, Daniel.
+> 
+> I remember that you posted a vcs-p4 transport helper last year... And
+> I basically wondered whether or not that is something that you're
+> still working on. As I understand it, the transport helper framework
+> will be part of git 1.7, and I thought it would be interesting to test
+> your code.
 
-The discussion is about that support of //server/share paths in msysgit=
- is=20
-poor in general. For example, it is not possible to
+I've updated it slightly for changes in the transport helper framework, 
+but I haven't done too much else on it. In particular, it's still doing 
+the push side in a way I now don't like, and, in general, relies a bit too 
+much on the local side going into a git database.
 
-  git clone //server/share/repo.git
+> The current git-p4 script is nice, of course, but I would much like to
+> try the "detect branches and integrations" stuff :-)
 
-with different failure modes depending on whether forward slashes or=20
-backslashes are used.
+Sure, I'll post the latest version shortly.
 
--- Hannes
+	-Daniel
+*This .sig left intentionally blank*
