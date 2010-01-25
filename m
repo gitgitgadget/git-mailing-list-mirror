@@ -1,76 +1,108 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] Handle UNC paths everywhere
-Date: Mon, 25 Jan 2010 12:06:21 +0100
-Message-ID: <fabb9a1e1001250306l2b9aba53s6a884b618a80063b@mail.gmail.com>
-References: <201001250155.47664.robin.rosenberg@dewire.com> 
-	<40aa078e1001250211w2dcc5e97vf89f64f136bd2f0@mail.gmail.com> 
-	<fabb9a1e1001250222n6912905fqfd2e76f8d4496bb7@mail.gmail.com> 
-	<201001251201.23064.robin.rosenberg@dewire.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: basic question about push
+Date: Mon, 25 Jan 2010 06:08:13 -0500
+Message-ID: <20100125110813.GB8517@coredump.intra.peff.net>
+References: <loom.20100124T074722-510@post.gmane.org>
+ <20100124081513.GA10700@coredump.intra.peff.net>
+ <76718491001241559u103d2e8j38687b41bd5401a1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: kusmabite@gmail.com, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Jan 25 12:06:46 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Russ Paielli <Russ.Paielli@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 25 12:08:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZMmL-000658-PD
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 12:06:46 +0100
+	id 1NZMny-0006cr-Ox
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 12:08:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753348Ab0AYLGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2010 06:06:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753309Ab0AYLGm
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 06:06:42 -0500
-Received: from mail-pz0-f190.google.com ([209.85.222.190]:47808 "EHLO
-	mail-pz0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752821Ab0AYLGl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2010 06:06:41 -0500
-Received: by pzk28 with SMTP id 28so335684pzk.4
-        for <git@vger.kernel.org>; Mon, 25 Jan 2010 03:06:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=EaXMHqffYmW5I5BTOI5gBNy7EEFk+L5biQcRipnTFhQ=;
-        b=S4Lop50xYu4jZcb1+jvTk2YmFRHccmAm65Fkq7fi8WJu7Nlwu2Gqx02a0p10Jnhatq
-         z0wMU2E2s0fUlrV7gy3N+NHGpugSrcHh5rYrlGwgIZdWVBrRP0vs+eLiVbueeFQeKPz9
-         BA5bj37UmPLyuuLKG/qpvt6z+C74ZL/Ab7NgE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=m7FvZVfvystMHOKAW6gZsNJp69MKumj4PzGFVx9e/pBxhqke1MswewbySYnRHFa2n7
-         uchMjRSOikdaUCuV8NLvxEjuu1180FtSMFwznRbNrFPZAD0US7bfRwmU1z1J8kUAGV3I
-         Ll8QoqQZ/YK6P7G535GLidQgkIyxIUEnAumKg=
-Received: by 10.142.151.23 with SMTP id y23mr3387686wfd.269.1264417601151; 
-	Mon, 25 Jan 2010 03:06:41 -0800 (PST)
-In-Reply-To: <201001251201.23064.robin.rosenberg@dewire.com>
+	id S1753427Ab0AYLIV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jan 2010 06:08:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753464Ab0AYLIT
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 06:08:19 -0500
+Received: from peff.net ([208.65.91.99]:59883 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753427Ab0AYLIT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2010 06:08:19 -0500
+Received: (qmail 6319 invoked by uid 107); 25 Jan 2010 11:13:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 25 Jan 2010 06:13:11 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Jan 2010 06:08:13 -0500
+Content-Disposition: inline
+In-Reply-To: <76718491001241559u103d2e8j38687b41bd5401a1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137953>
 
-Heya,
+On Sun, Jan 24, 2010 at 06:59:10PM -0500, Jay Soffian wrote:
 
-On Mon, Jan 25, 2010 at 12:01, Robin Rosenberg
-<robin.rosenberg@dewire.com> wrote:
->> Ah, that's very interesting. Not sure that will help MSysGit a lot though.
->>
->
-> Could you perhaps *try* it before claiming it won't work? I suggest you
-> use forward slashes to avoid quoting problems.
+> > =C2=A0http://git.wiki.kernel.org/index.php/GitFaq#push-is-reverse-o=
+f-fetch
+>=20
+> Aside, and I think we've discussed this before, but I wonder if it
+> would make sense to:
+>=20
+> a) Add an option to clone such as "-p [<name>] | --push-as[=3D<name>]=
+"
+> where <name> defaults to $(uname -n | cut -f1 -d.) This would setup
+> the cloned repo with a push refspec
+> "+refs/heads/*:refs/remotes/<name>/*". e.g.:
+>=20
+> $ git clone -o host1 -p host2 ssh://host1/~/repo.git
+> $ cat repo/.git/config
+> ...
+> [remote "host1"]
+> 	url =3D ssh://host1/~/repo.git
+> 	fetch =3D +refs/heads/*:refs/remotes/host1/*
+> 	push =3D +refs/heads/*:refs/remotes/host2/*
 
-Actually, I can't, cos I don't have a MSysGit build environment, I'm
-just saying that in the environment I tested it in, I didn't have to
-log in, so I suspect that it won't work, I'm not claiming anything.
+One problem with this scheme is that it actually does two things:
 
+  1. Tells git to push into the refs/remotes/host2/ hierarchy instead o=
+f
+     refs/heads/.
 
--- 
-Cheers,
+  2. Overrides matching behavior to push all heads.
 
-Sverre Rabbelier
+Point (2) is less of a problem than it is without (1) in the sense that
+you are pushing to a unique namespace, so you don't have to worry as
+much about your crappy half-finished branches filling up the main branc=
+h
+namespace. But you might not want them publicized at all, either becaus=
+e
+they are embarrassingly bad or simply because it is cruft that you will
+encounter later and wonder "is this branch, which is missing from my
+local repositor (presumably from a long-ago deletion) but present
+upstream of any value at all?"
+
+I can't think offhand of a way to get the behavior of (1) without (2).
+I know we have a shorthand refspec for "matching", but this would not
+strictly be matching. It is "convert refs/heads/X into
+refs/remotes/blah/X, and _then_ match".
+
+If we had a refspec that worked in that manner, I would think it's a
+pretty good idea (even to turn it on by default for non-bare repos).
+
+> b) The controversial part: make this option the default the default
+> when cloning from a non-bare repo. There would need to be some way to
+> turn it off.
+
+Hmm. Do we reliably know from the client side whether a remote is bare
+or not?
+
+> Of course, I'm not sure this would be any less confusing for users.
+> Would they wonder why they have to merge to see their pushed changes
+> reflected on the pushed-to repo?
+
+Yes, I think we would still have the FAQ of "I pushed my changes, where
+did they go?" but at least the answer would be "git merge foo" and not
+"what you are doing is confusing to git and you need to figure out what
+kind of workflow you want, redo your push, and then git merge foo".
+Which seems like an improvement to me. ;)
+
+-Peff
