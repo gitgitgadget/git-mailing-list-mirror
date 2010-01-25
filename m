@@ -1,101 +1,99 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC PATCH 10/10] gitweb: Show appropriate "Generating..." page when regenerating cache (WIP)
-Date: Mon, 25 Jan 2010 12:46:39 +0100
-Message-ID: <201001251246.40237.jnareb@gmail.com>
-References: <cover.1264198194.git.jnareb@gmail.com> <f4660e9c7ffdb4a62da0c56703de002c9df3b598.1264198194.git.jnareb@gmail.com> <20100124222417.GC9553@machine.or.cz>
+From: Michael Ludwig <michael.ludwig@xing.com>
+Subject: Re: git status showing phantom modifications
+Date: Mon, 25 Jan 2010 12:43:45 +0100
+Message-ID: <4017EB11-4B29-4599-B19A-91BC39632BBF@xing.com>
+References: <9B3C1167-7667-4B1F-BEE5-F47FE89F8692@xing.com>
+ <be6fef0d1001250303p2c12381ao7d3a8a1d48eebb56@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Jan 25 12:46:57 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 25 12:50:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZNP9-0001JX-1w
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 12:46:51 +0100
+	id 1NZNSF-00028e-45
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 12:50:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752393Ab0AYLqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2010 06:46:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752128Ab0AYLqq
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 06:46:46 -0500
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:49823 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752009Ab0AYLqq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2010 06:46:46 -0500
-Received: by bwz19 with SMTP id 19so2617713bwz.28
-        for <git@vger.kernel.org>; Mon, 25 Jan 2010 03:46:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=RIhye9s7ko9cvZ3DNSPUrKeFQE0laSJd/GXmBfgMfMA=;
-        b=m/5NADdETE8XU0H0+MpMWq6zY98QnSJT/lSBWW5U3yZDRa4FBDDJn34GJBmD2mZbkl
-         bW+orrs/Mr9awX51yeo61FdlffEtg9y4j91oqtesigJGyN9iNViz8fCd9jLbhblVR6jY
-         /HmDqIcsifs63B5Mn1zzmg93ctlahcxNRoJlY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=tjwOVPS/rsZ4AjjpXAngD7ZgktBY0hLMUdpvGP8aLUfFitVr32sBtxI5DIakxywA5z
-         N0G2dW7h9CANa9E1KalSyDKxJ0X2KJ7owECizA0ro42Fobbwg+PMpVCAQb0Fflu+5uy4
-         y7RVfPMJswhUAMAXQwJGxNBtrEpPWBt19mnIw=
-Received: by 10.204.32.72 with SMTP id b8mr468967bkd.203.1264420004428;
-        Mon, 25 Jan 2010 03:46:44 -0800 (PST)
-Received: from ?192.168.1.13? (abvr10.neoplus.adsl.tpnet.pl [83.8.215.10])
-        by mx.google.com with ESMTPS id 15sm2095912bwz.4.2010.01.25.03.46.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 25 Jan 2010 03:46:43 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20100124222417.GC9553@machine.or.cz>
-Content-Disposition: inline
+	id S1752690Ab0AYLt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2010 06:49:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752616Ab0AYLt5
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 06:49:57 -0500
+Received: from mail43-3.xing.com ([62.96.140.163]:55552 "EHLO
+	mail43-3.xing.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752596Ab0AYLt4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jan 2010 06:49:56 -0500
+X-Greylist: delayed 368 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Jan 2010 06:49:56 EST
+Received: from localhost (localhost [127.0.0.1])
+	by mail43-3.xing.com (Postfix) with ESMTP id DB32F30004931
+	for <git@vger.kernel.org>; Mon, 25 Jan 2010 12:43:46 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xing.com; h=
+	mime-version:content-transfer-encoding:content-type
+	:content-language:accept-language:in-reply-to:references
+	:message-id:subject:date:from:received:received:received:
+	x-virus-scanned; s=main; t=1264419826; bh=/OhBDovxsYx5RdkracuVy2
+	Mb1bPwIECsUkYCz13v2rU=; b=CIdaqFu0povu/mFS6Cp7qgiA2ccK0tuEiCuqJd
+	jheDIahj+6IZWKAqpEvN/jCi2vxhNekudmyqub8ErcX52XN1vnRgrV40ip+1EdXw
+	Hyxp4nQ+YrHcvtYolyiV2AdFCizoqdhQycFBBCualspvMSBXyN+hpI1w4+FE2+4y
+	THHqc=
+X-Virus-Scanned: Debian amavisd-new at obc-mail43-3.rz.xing.com
+Received: from mail43-3.xing.com ([127.0.0.1])
+	by localhost (obc-mail43-3.rz.xing.com [127.0.0.1]) (amavisd-new, port 10030)
+	with ESMTP id IUDNXdXlgmu4 for <git@vger.kernel.org>;
+	Mon, 25 Jan 2010 12:43:46 +0100 (CET)
+Received: from luftpostix.xing.hh (unknown [172.20.1.5])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by mail43-3.xing.com (Postfix) with ESMTPS id C47CB3000078C
+	for <git@vger.kernel.org>; Mon, 25 Jan 2010 12:43:46 +0100 (CET)
+Received: from luftpostix.xing.hh ([172.20.1.5]) by luftpostix.xing.hh
+ ([172.20.1.5]) with mapi; Mon, 25 Jan 2010 12:43:46 +0100
+Thread-Topic: git status showing phantom modifications
+Thread-Index: Acqds6bOJ4GMjyH5RAqtIx3WrId17w==
+In-Reply-To: <be6fef0d1001250303p2c12381ao7d3a8a1d48eebb56@mail.gmail.com>
+Accept-Language: de-DE
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: de-DE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137956>
 
-On Sun, 24 Jan 2010, Petr Baudis wrote:
->   I have stupid question, common to both the original patch and this
-> RFC.
+Am 25.01.2010 um 12:03 schrieb Tay Ray Chuan:
+> On Mon, Jan 25, 2010 at 6:41 PM, Michael Ludwig <michael.ludwig@xing.com> wrote:
+>> michael@wladimir:/cygdrive/m/REPOS6.TECH.git/comp :-) git st
+>> # On branch master
+>> # Changed but not updated:
+>> #   (use "git add <file>..." to update what will be committed)
+>> #   (use "git checkout -- <file>..." to discard changes in working directory)
+>> #
+>> #       modified:   mw/wsdl-version.txt
+>> #       modified:   net/httpsrvr/iis6.wodo
+>> #       ... and about 100 more of that ...
 > 
-> > [RFC PATCH 10/10] gitweb: Show appropriate "Generating..." page when
-> > regenerating cache (WIP)
-> 
->   Just why is a "Generating..." page appropriate?
-> 
->   I have to admit I hate it; can you please at least make it
-> configurable? Why is it needed at all? It [...] confuses
-> non-interactive HTTP clients [...]
+> try running git diff. I suspect the changes are to filemodes. What
+> does your git config look like regarding this (particularly
+> core.fileMode)?
 
-First, if I understand the code correctly HTTP clients which do not 
-honor metaredirect (http-equiv refresh) would get page which looks
-the following
+Running git diff informed me there were no changes to content, which is
+what I forgot to add to the description of the problem.
 
-  <html>
-  Generating...
-  </html>
-  <html>
-  Gitweb page
-  </html>
+Unfortunately, right now I'm not at the system where this occurred, so
+I can't say what git config looks like. I did not, however, make any
+customization other than user.email and alias.st and some others.
 
+Reading up about core.fileMode in git-config(1), I think you've pointed
+me to the solution. I should probably just set it to false. If that doesn't
+solve the issue, I'll report back.
 
-Second, gitweb can always check User-Agent header, and serve 
-"Generating..." page only to web browsers:
+Google also found me an old patch that might be related to the problem:
 
-  unless (defined $cgi->user_agent() &&
-          $cgi->user_agent() =~ /\b(Mozilla|Opera)\b/i) {
-  	return;
-  }
-
-or something like that.
+[PATCH] Force core.filemode to false on Cygwin.
+http://marc.info/?l=git&m=116754085018507&w=2
 
 -- 
-Jakub Narebski
-Poland
+Michael.Ludwig (#) XING.com
