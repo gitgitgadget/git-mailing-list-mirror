@@ -1,93 +1,61 @@
-From: Michael Ludwig <michael.ludwig@xing.com>
-Subject: git status showing phantom modifications
-Date: Mon, 25 Jan 2010 11:41:05 +0100
-Message-ID: <9B3C1167-7667-4B1F-BEE5-F47FE89F8692@xing.com>
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: Perforce vcs-helper
+Date: Mon, 25 Jan 2010 11:57:41 +0100
+Message-ID: <1a6be5fa1001250257s333339fdq9a08e91fdb84fd3d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 25 11:48:36 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Git mailing list <git@vger.kernel.org>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Jan 25 11:57:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZMUk-0008NB-6c
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 11:48:35 +0100
+	id 1NZMdi-0002rC-NR
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 11:57:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753177Ab0AYKsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2010 05:48:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752821Ab0AYKsa
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 05:48:30 -0500
-Received: from mail42-3.xing.com ([213.238.60.163]:46721 "EHLO
-	mail42-3.xing.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752668Ab0AYKs3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jan 2010 05:48:29 -0500
-X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Jan 2010 05:48:29 EST
-Received: from localhost (localhost [127.0.0.1])
-	by mail42-3.xing.com (Postfix) with ESMTP id 4F4DB3000ABBA
-	for <git@vger.kernel.org>; Mon, 25 Jan 2010 11:41:24 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xing.com; h=
-	mime-version:content-transfer-encoding:content-type
-	:content-language:accept-language:message-id:subject:date:from
-	:received:received:received:x-virus-scanned; s=main; t=
-	1264416084; bh=zg5jYw9wSkXZ4cmWOQgbTYUwD0S5CGRWN7ZdANPTtxM=; b=e
-	kiU9ud962hgxtyNz5odAOnp2adKZJToDn6fB7Mit9xdwRqL1QB4oYHCmaoDDqTkl
-	Ti775F1XkLpQZz1DK7hxIztJ1S7cFHt3oM1xmCfjSW05h0u4jtaHAK1I+v6CpFpu
-	13Dhbbxdv6/HeGgtiqBLYZPEqajfgI+AmdK8PR3VHQ=
-X-Virus-Scanned: Debian amavisd-new at obc-mail42-3.rz.xing.com
-Received: from mail42-3.xing.com ([127.0.0.1])
-	by localhost (obc-mail42-3.rz.xing.com [127.0.0.1]) (amavisd-new, port 10030)
-	with ESMTP id jAtemjjR1VEv for <git@vger.kernel.org>;
-	Mon, 25 Jan 2010 11:41:24 +0100 (CET)
-Received: from luftpostix.xing.hh (unknown [172.20.1.5])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by mail42-3.xing.com (Postfix) with ESMTPS id 38A933000ABA3
-	for <git@vger.kernel.org>; Mon, 25 Jan 2010 11:41:23 +0100 (CET)
-Received: from luftpostix.xing.hh ([172.20.1.5]) by luftpostix.xing.hh
- ([172.20.1.5]) with mapi; Mon, 25 Jan 2010 11:41:06 +0100
-Thread-Topic: git status showing phantom modifications
-Thread-Index: AcqdquXNk135AhqXQouXLUS7uMwtNA==
-Accept-Language: de-DE
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: de-DE
+	id S1753502Ab0AYK5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2010 05:57:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753463Ab0AYK5n
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 05:57:43 -0500
+Received: from mail-fx0-f215.google.com ([209.85.220.215]:32782 "EHLO
+	mail-fx0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753276Ab0AYK5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2010 05:57:42 -0500
+Received: by fxm7 with SMTP id 7so1884705fxm.28
+        for <git@vger.kernel.org>; Mon, 25 Jan 2010 02:57:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=koND3HbHDh5KqkU147sfHxHhZ466+j5JiD5xNvvgU6Y=;
+        b=iSj2sBlcG7/m1r0e+3eNngCxZxTxmlTHaYvZZKAkHTw544YiGv4xZ1fMsqPiGdmH0O
+         4pdILkPP4TQ9C9lfk3psYjtqelyWCdUFdLm3Km0BjkXNnvVKptCeI53KcB02d6OTF7gt
+         ZZlPR7pbPv3AmYLD73En+vfJzKSmDxaAbW99I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=Iu3DM1sTnzfE67yzBH3by/hQytJeR0BVFMMpukClDCGOj+6J5beD8245i4K5Iswq5D
+         NVhQIFkZNeTo6WMxZj3jEFPGFmfrCupEq3kJMUD4aLSnToMk5HtoTX+fops2cBi0kfIS
+         HwlUnAi1fFmvUGSZCs/GNvWQcLPrurNscmxdM=
+Received: by 10.239.166.18 with SMTP id z18mr123168hbd.47.1264417061122; Mon, 
+	25 Jan 2010 02:57:41 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137948>
 
-This is on Cygwin, package git-1.6.4.2-1 [1]:
+Hi, Daniel.
 
-michael@wladimir:/cygdrive/m/REPOS6.TECH.git :-) git st
-# On branch master
-nothing to commit (working directory clean)
+I remember that you posted a vcs-p4 transport helper last year... And
+I basically wondered whether or not that is something that you're
+still working on. As I understand it, the transport helper framework
+will be part of git 1.7, and I thought it would be interesting to test
+your code.
 
-Note: This repository is a fresh conversion from a subversion repository.
-As mentioned, this is Cygwin on XP Home, and the filesystem is NTFS.
+The current git-p4 script is nice, of course, but I would much like to
+try the "detect branches and integrations" stuff :-)
 
-michael@wladimir:/cygdrive/m/REPOS6.TECH.git :-) cd comp
-
-Note: The directory I've cd'd into is not a submodule, just a regular part
-of the working copy.
-
-michael@wladimir:/cygdrive/m/REPOS6.TECH.git/comp :-) git st
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#       modified:   mw/wsdl-version.txt
-#       modified:   net/httpsrvr/iis6.wodo
-#       ... and about 100 more of that ...
-
-I would expect the output of git status to be consistent regardless of my
-position in the working directory.
-
-Git bug, Cygwin issue, or some oversight of mine?
-
-[1] http://cygwin.com/packages/git/
--- 
-Michael.Ludwig (#) XING.com
+All the best,
+-Tor Arvid-
