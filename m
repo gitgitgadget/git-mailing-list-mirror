@@ -1,59 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git_connect: use use_shell instead of explicit "sh",
- "-c"
-Date: Mon, 25 Jan 2010 08:01:26 -0500
-Message-ID: <20100125130125.GA10036@coredump.intra.peff.net>
-References: <4B5D8F6C.1040407@viscovery.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [RFC PATCH 10/10] gitweb: Show appropriate "Generating..."
+ page when regenerating cache (WIP)
+Date: Mon, 25 Jan 2010 14:02:30 +0100
+Message-ID: <20100125130230.GE9553@machine.or.cz>
+References: <cover.1264198194.git.jnareb@gmail.com>
+ <f4660e9c7ffdb4a62da0c56703de002c9df3b598.1264198194.git.jnareb@gmail.com>
+ <20100124222417.GC9553@machine.or.cz>
+ <201001251246.40237.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Jan 25 14:01:33 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	John 'Warthog9' Hawley <warthog9@kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 25 14:02:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZOZR-0003OB-Fq
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 14:01:33 +0100
+	id 1NZOaT-0003pb-2q
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 14:02:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753181Ab0AYNB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2010 08:01:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753164Ab0AYNB3
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 08:01:29 -0500
-Received: from peff.net ([208.65.91.99]:38860 "EHLO peff.net"
+	id S1753322Ab0AYNCe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2010 08:02:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753306Ab0AYNCd
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 08:02:33 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:52230 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752398Ab0AYNB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2010 08:01:28 -0500
-Received: (qmail 8218 invoked by uid 107); 25 Jan 2010 13:06:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 25 Jan 2010 08:06:24 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Jan 2010 08:01:26 -0500
+	id S1753309Ab0AYNCd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2010 08:02:33 -0500
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id E8C7486208B; Mon, 25 Jan 2010 14:02:30 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <4B5D8F6C.1040407@viscovery.net>
+In-Reply-To: <201001251246.40237.jnareb@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137959>
 
-On Mon, Jan 25, 2010 at 01:32:44PM +0100, Johannes Sixt wrote:
-
-> This is a followup to ac0ba18 (run-command: convert simple callsites to
-> use_shell, 2009-12-30), for consistency.
+On Mon, Jan 25, 2010 at 12:46:39PM +0100, Jakub Narebski wrote:
+> On Sun, 24 Jan 2010, Petr Baudis wrote:
+> >   I have stupid question, common to both the original patch and this
+> > RFC.
+> > 
+> > > [RFC PATCH 10/10] gitweb: Show appropriate "Generating..." page when
+> > > regenerating cache (WIP)
+> > 
+> >   Just why is a "Generating..." page appropriate?
+> > 
+> >   I have to admit I hate it; can you please at least make it
+> > configurable? Why is it needed at all? It [...] confuses
+> > non-interactive HTTP clients [...]
 > 
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  Jeff,
+> First, if I understand the code correctly HTTP clients which do not 
+> honor metaredirect (http-equiv refresh) would get page which looks
+> the following
 > 
->  is there a reason that this was not part of the original patch?
+>   <html>
+>   Generating...
+>   </html>
+>   <html>
+>   Gitweb page
+>   </html>
 
-No, I must have just missed it (I don't remember omitting it for a
-particular reason at the time, and after looking at it now, it looks
-sane to me).
+To be clear, I conjectured it confuses non-interactive HTTP clients from
+one of the TODOs in your patch series - I'm not sure about it myself. :)
 
-After this, git grep '"sh"' turns up only two uses: one in the
-run-command code use_shell code path, and the other in builtin-help.c.
-The one in builtin-help is hard to change, as it relies on direct exec
-instead of run-command.
+> Second, gitweb can always check User-Agent header, and serve 
+> "Generating..." page only to web browsers:
+> 
+>   unless (defined $cgi->user_agent() &&
+>           $cgi->user_agent() =~ /\b(Mozilla|Opera)\b/i) {
+>   	return;
+>   }
+> 
+> or something like that.
 
--Peff
+I'm not too happy with this. What about Safari? Opera? ELinks? There's a
+lot of web browsers.
+
+Most of the issues can be worked around, but I'm not sure why to go
+through all the trouble. I just personally don't see the value in having
+the placeholder in there at all, to me it is distracting UI even if all
+the technicalities are put aside.
+
+But if it will be possible to turn this off eventually, it's all your
+call whether to bother implementing it. :-)
+
+-- 
+				Petr "Pasky" Baudis
+A lot of people have my books on their bookshelves.
+That's the problem, they need to read them. -- Don Knuth
