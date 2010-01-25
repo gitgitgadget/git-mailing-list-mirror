@@ -1,69 +1,69 @@
-From: =?UTF-8?Q?Daniel?= <mjucde@o2.pl>
-Subject: =?UTF-8?Q?Re:_[PATCH]_commit-tree:_remove_unused_#define?=
-Date: Mon, 25 Jan 2010 10:17:50 +0100
-Message-ID: <3b96b7e4.67f13727.4b5d61be.1391c@o2.pl>
-References: <1264403143-11320-1-git-send-email-bebarino@gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] Handle UNC paths everywhere
+Date: Mon, 25 Jan 2010 10:36:59 +0100
+Message-ID: <fabb9a1e1001250136n2fb0043av7348db9177f4d096@mail.gmail.com>
+References: <201001250155.47664.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-Cc: =?UTF-8?Q?Junio_C_Hamano?= <gitster@pobox.com>
-To: git@vger.kernel.org, =?UTF-8?Q?Stephen_Boyd?= <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 25 10:18:10 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Jan 25 10:37:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZL5C-00045o-8T
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 10:18:06 +0100
+	id 1NZLNv-00022e-37
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 10:37:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752466Ab0AYJR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2010 04:17:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752323Ab0AYJR7
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 04:17:59 -0500
-Received: from mailout1.go2.pl ([193.17.41.11]:40774 "EHLO mailout1.go2.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751506Ab0AYJR7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jan 2010 04:17:59 -0500
-Received: from mailout1.go2.pl (unknown [10.0.0.103])
-	by mailout1.go2.pl (Postfix) with ESMTP id 9959A5D517D;
-	Mon, 25 Jan 2010 10:17:50 +0100 (CET)
-Received: from o2.pl (unknown [10.0.0.67])
-	by mailout1.go2.pl (Postfix) with SMTP;
-	Mon, 25 Jan 2010 10:17:50 +0100 (CET)
-In-Reply-To: <1264403143-11320-1-git-send-email-bebarino@gmail.com>
-X-Originator: 153.19.128.10
+	id S1752000Ab0AYJhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2010 04:37:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751928Ab0AYJhV
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 04:37:21 -0500
+Received: from mail-px0-f182.google.com ([209.85.216.182]:37450 "EHLO
+	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751524Ab0AYJhU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2010 04:37:20 -0500
+Received: by pxi12 with SMTP id 12so2552122pxi.33
+        for <git@vger.kernel.org>; Mon, 25 Jan 2010 01:37:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=RDyxNk+QyfXj9C54FZN2ygwJOhxojCH21qD8k64vA1I=;
+        b=Ni7sceRQPEp/CRtGoj6EtIaOqb3RI1qWCPK7Avw8PVBqHkXBDk0QkAZMjVjRJ3doQw
+         8WJBWzZ2x23U4XO+Zpeh7ZopGdxInguZ9ACAVZHIRCZaBLcys+86vMm3U5ge/bPI5m2t
+         cph9wCfUjCBnzpTmHt8Y7OlYLXxgDhq0z2mAE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Th5rUkh2UkkyXKJu+5QsAgmFDeXeumuYdoErzkVG4ZQInwaFmdmjS6dfu8IS3scOs3
+         MUSUGeN+i2nWnj0MppbCgE9AeBFKhOdrApPE8cPsTwUPkN9V4zdeYBMikzgAUSRZX7jB
+         JBS5oU5pxHw2nFGRe5uUTGlA8bG20lkwHdem4=
+Received: by 10.142.248.22 with SMTP id v22mr4389109wfh.180.1264412239090; 
+	Mon, 25 Jan 2010 01:37:19 -0800 (PST)
+In-Reply-To: <201001250155.47664.robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137943>
 
-> ---
-> 
-> The fixme looks very suspicious too...
+Heya,
 
-According to git blame it belongs to the same revision as BLOCKING
- -- initial commit. So probably it can be removed with BLOCKING.
+On Mon, Jan 25, 2010 at 01:55, Robin Rosenberg
+<robin.rosenberg@dewire.com> wrote:
+> In Windows paths beginning with // are knows as UNC paths. They are
+> absolute paths, usually referring to a shared resource on a server.
 
-> 
->  builtin-commit-tree.c |    2 --
->  1 files changed, 0 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin-commit-tree.c b/builtin-commit-tree.c
-> index ddcb7a4..90dac34 100644
-> --- a/builtin-commit-tree.c
-> +++ b/builtin-commit-tree.c
-> @@ -9,8 +9,6 @@
->  #include "builtin.h"
->  #include "utf8.h"
->  
-> -#define BLOCKING (1ul << 14)
-> -
->  /*
->   * FIXME! Share the code with "write-tree.c"
->   */
-> -- 
-> 1.6.6.1.436.gaba7d
-> 
+Cute, but will it actually work? I've tried to use them // paths on
+windows before with MSysGit, and it's never worked, probably due to
+the same reason why it doesn't work in the cmd prompt (whatever reason
+that may be).
 
--- Daniel
+-- 
+Cheers,
+
+Sverre Rabbelier
