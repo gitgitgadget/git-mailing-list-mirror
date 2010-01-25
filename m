@@ -1,104 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 8/9] gitweb: Convert output to using indirect file handle
-Date: Mon, 25 Jan 2010 22:48:14 +0100
-Message-ID: <201001252248.14874.jnareb@gmail.com>
-References: <1263432185-21334-1-git-send-email-warthog9@eaglescrag.net> <201001250247.13101.jnareb@gmail.com> <4B5E03AD.1020404@eaglescrag.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH not-for-mainline] Implement git-vcs-p4
+Date: Mon, 25 Jan 2010 22:53:00 +0100
+Message-ID: <fabb9a1e1001251353q3739a5efq38606ca0b63ce10@mail.gmail.com>
+References: <alpine.LNX.2.00.1001251628431.14365@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>,
-	"John 'Warthog9' Hawley" <warthog9@kernel.org>, git@vger.kernel.org
-To: "J.H." <warthog9@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Mon Jan 25 22:48:29 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Tor Arvid Lund <torarvid@gmail.com>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Jan 25 22:53:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZWnL-00053B-VC
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 22:48:28 +0100
+	id 1NZWs9-0007A3-EQ
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 22:53:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753085Ab0AYVsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2010 16:48:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752777Ab0AYVsX
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 16:48:23 -0500
-Received: from mail-ew0-f219.google.com ([209.85.219.219]:53919 "EHLO
-	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751084Ab0AYVsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2010 16:48:22 -0500
-Received: by ewy19 with SMTP id 19so249307ewy.21
-        for <git@vger.kernel.org>; Mon, 25 Jan 2010 13:48:21 -0800 (PST)
+	id S1753287Ab0AYVxV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2010 16:53:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752461Ab0AYVxV
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 16:53:21 -0500
+Received: from mail-px0-f182.google.com ([209.85.216.182]:52370 "EHLO
+	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752106Ab0AYVxU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2010 16:53:20 -0500
+Received: by pxi12 with SMTP id 12so3043075pxi.33
+        for <git@vger.kernel.org>; Mon, 25 Jan 2010 13:53:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=pp8bF0G+VvNYZ1iciRQ1y9r12aQomMhugP9SodfTU2o=;
-        b=A040qDyGEzdXBOt1/GaNU2dENR8kHGbUwCf3d/cwzgf1Op+NgN3P/zXoPABY6gSDGM
-         65O7pwOtaFQso1eZ8epBGh1NsfTd27N/2MupwLQEWdOnrFaqw12KGS865a+jzix7s7i6
-         r/mAwNHry4nzNBxnc8czN6n9Ya4aLpPCfq848=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=1+ZxCTht8OABuk/2yFuJvqqt+/B9QboWq+ayeFPXW4s=;
+        b=XSyrj6yYEX4h+iv+fNOzG5083cLQlxkUx9jOKAaCgWiKB/QQ/07qCngmYHsgE1yP3T
+         MPB0zr9iCzVFN6XMuwdDg4jdQMs9nvnG300+QeljYM0dfNoXwbGKe5tVtXeoxuVYmHBb
+         DZMY0W5MtiAGoyfH2MEqFznnfzPULGEfc1b7E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=hxM9Ua2EuIs60T8Cpe7lWQgYbNjSy8QUXU46vfnIHkLlhAW3+8Rt6SwQqfOdugw48W
-         /3w78LWNGWcoQy4G6h6RmvNB+PcDY82E8OJkQirOLbRiOlFTlR9L17hpAMwReK3BWOEk
-         4fy9u95E5xRkKZi3YfKVwFDQ9vf45oOID7e3c=
-Received: by 10.213.1.18 with SMTP id 18mr252587ebd.17.1264456101246;
-        Mon, 25 Jan 2010 13:48:21 -0800 (PST)
-Received: from ?192.168.1.13? (abvr10.neoplus.adsl.tpnet.pl [83.8.215.10])
-        by mx.google.com with ESMTPS id 10sm9155460eyd.5.2010.01.25.13.48.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 25 Jan 2010 13:48:19 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4B5E03AD.1020404@eaglescrag.net>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=WUSTvjWl2ZF6GFT8Wo+Gmw2s0Nkh96Rrje0hGwjSuW5O9mCF0Wnm9oZqMmbfWlAHdm
+         qLi83KxeyxE03/vW19gjJfI4IEniWDpPYa+39XDvi4418zbMihBxBOwfWZMv8coK9gKv
+         N1Ug2nFoIb0Gt1F/ZgXLoxpADe5bomEtYehP0=
+Received: by 10.142.7.9 with SMTP id 9mr42968wfg.149.1264456400319; Mon, 25 
+	Jan 2010 13:53:20 -0800 (PST)
+In-Reply-To: <alpine.LNX.2.00.1001251628431.14365@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137999>
 
-On Mon, 25 Jan 2010, J.H. wrote:
+Heya,
 
-> > So there is a bit of rule of preservation of difficulty at work.  Either
-> > we have large patch adding explicit filehandle to all print statements
-> > 'print <sth> -> print $out <sth>' but simple code, or have smaller patch
-> > but complicated *STDOUT manipulation, or have small patch but rely on 
-> > non-core CPAN modules present.
-> 
-> I think depending in non-core CPAN modules is a really bad idea, and
-> will cause some concern and consternation with mainline distributions,
-> besides making it more complicated for users to get this up and running
-> quickly and easily.  
+On Mon, Jan 25, 2010 at 22:35, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> The push support is also currently based on a transport helper
+> export design that isn't upstream and I don't like any more; a better
+> design is probably to have the core send an "export" command and then a
+> gfi stream, but I haven't worked on this.
 
-Note: the modules in question are Capture::Tiny or PerlIO::Util.
-Capture::Tiny is available as perl-Capture-Tiny RPM module for Fedora Core
-up from FC11 and in DAG repository, at least. 
-
-
-First, installing non-core CPAN modules locally for user is very simple
-thanks to local::lib.  After setup it is simply 'cpan -i PerlIO::Util',
-and PerlIO::Util gets installed locally, by default inside ~/perl5.
-
-Second, we can go the route that Git.pm did, namely include sources for
-extra modules (private-Error.pm in case of Git.pm) and install it if 
-needed.  With proper build system (Module::Install, Module::Build) it is
-even simpler with inc or inc::latest.  And there is always PAR[1] if you
-want to have everything in one file.
-
-[1]: http://par.perl.org
-
->                     While I agree there are other ways of handling this 
-> I think just adding the filehandle to the print statements provides the
-> easiest cross section of usability and functionality for everything
-> involved.
-
-Well, manipulating *STDOUT shouldn't be, I think, much harder, although
-I guess it would need more care (so that e.g. "Generating..." page gets
-written to real STDOUT).
+Ah, that was actually what I _thought_ the export command did, and how
+I was/am going to implement it for git-remote-hg. Do you think you'll
+have time to work on that anytime soon? My git budget should go up
+enough to do some serious work after this weekend, so if you have time
+we could work on moulding the 'export' feature into something more
+generically useful. If not, I'll do the work anyway, and hope you'll
+have time to review it at some point :).
 
 -- 
-Jakub Narebski
-Poland
+Cheers,
+
+Sverre Rabbelier
