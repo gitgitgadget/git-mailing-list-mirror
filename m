@@ -1,77 +1,112 @@
-From: Alejandro Riveira =?UTF-8?B?RmVybsOhbmRleg==?= 
-	<ariveira@gmail.com>
-Subject: [PATCH] Add test-run-command to .gitignore
-Date: Mon, 25 Jan 2010 16:56:21 +0100
-Message-ID: <20100125165621.2a5af05d@varda>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t5541-http-push: make grep expression check for one line
+ only
+Date: Mon, 25 Jan 2010 09:47:12 -0800
+Message-ID: <7v7hr63wm7.fsf@alter.siamese.dyndns.org>
+References: <1264405343-2984-1-git-send-email-rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 25 16:56:32 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 25 18:47:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZRIk-00047F-VQ
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 16:56:31 +0100
+	id 1NZT2L-0005T7-FB
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 18:47:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753497Ab0AYP41 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jan 2010 10:56:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753226Ab0AYP40
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 10:56:26 -0500
-Received: from mail-fx0-f215.google.com ([209.85.220.215]:35201 "EHLO
-	mail-fx0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753169Ab0AYP40 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jan 2010 10:56:26 -0500
-Received: by fxm7 with SMTP id 7so167059fxm.28
-        for <git@vger.kernel.org>; Mon, 25 Jan 2010 07:56:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=Sa7dm9VFr4My6GNVDyVYyRzWg4xBbiXoij3IaBWhzng=;
-        b=VJcJSeFV7lU+KpPOYKzwY/ns6C0srSVPWZHGvEYyB2nSEM/t9S303+T/Brm/OuWdZt
-         T6tLu6LIH/bAblgalRdsZPWH6QkTDQwYQ818GuAkM1iQI+q8wHrfLs4Gg8PzrCRbUFUR
-         fMQB1OF2eGFJ6i7+i4TIFeTct9QaKKxm4E/l4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        b=Lgpa4TK1GHbNxOEM+Ein2XtsVIX5UhlCLIT+g+kxNjQHFsNgHLdsQt/om5J0sDQcLu
-         tzO9HWOaI2FQjLR7+0pZkeKIvz5AZr7PCY0+v57triEk+XJAHwLJx+56ZVQUQhcUeBt7
-         KpvHHkn88xzRE1Ha/8Pkj7uG60IrtBtuEtSTs=
-Received: by 10.223.164.156 with SMTP id e28mr1158145fay.27.1264434984372;
-        Mon, 25 Jan 2010 07:56:24 -0800 (PST)
-Received: from varda (38.Red-83-45-254.dynamicIP.rima-tde.net [83.45.254.38])
-        by mx.google.com with ESMTPS id 28sm6843597fkx.58.2010.01.25.07.56.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 25 Jan 2010 07:56:23 -0800 (PST)
-X-Mailer: Claws Mail 3.7.4 (GTK+ 2.18.3; x86_64-pc-linux-gnu)
+	id S1754505Ab0AYRrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2010 12:47:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754500Ab0AYRrY
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 12:47:24 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62228 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932107Ab0AYRrW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2010 12:47:22 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EDBDD94B03;
+	Mon, 25 Jan 2010 12:47:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LuWCFvuxSedx7e2vjG7Knv6fJbI=; b=b3nlyy
+	eVU2AvdldM3qtKrLvlP1eLWVbJZgjqKyCYbYd02Aj/u/goGFZwPyuTEu83z/2y9R
+	IKLt5e0RRtfLFt7T158TCEsQfCdSvlUOstfv33cvY+PI69jhlCJR3ssdRxoAybiF
+	9xN16mGBHVtAfrqB45Sh0xZDIwp2JVY6iMWJs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fabB1ySELxm50oBnLWBSavRtIf3AaGhd
+	4k2EZnBUmPlEwWRyctvD3UTJEzX8sVbS5sBQTVBEzjMfRr2Vqq8FN+wTLpYVoY5E
+	It4sid660xocMFZZWmwj2/p9B4xcprOBcKI7jQQvLO2T7qghk0WAfRGhKH3zWx3T
+	vUgY4sEahXo=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CC25B94B02;
+	Mon, 25 Jan 2010 12:47:17 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ECB0294AFD; Mon, 25 Jan
+ 2010 12:47:13 -0500 (EST)
+In-Reply-To: <1264405343-2984-1-git-send-email-rctay89@gmail.com> (Tay Ray
+ Chuan's message of "Mon\, 25 Jan 2010 15\:42\:23 +0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: AE17A7B0-09D9-11DF-8801-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137970>
 
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
- Add test-run-command to .gitignore so it does not pollute
- git status output.
+> Simplify the grep expressions in the non-fast-forward tests to check
+> only for the first line of the non-fast-forward warning - having that
+> line should be enough assurance that the full warning is printed.
+>
+> In the first place, grep can't deal with expressions for multiple
+> lines.
 
+This shows that nobody has ever run this test since January 8th, not even
+the original author?
 
- Signof-of-by: Alejandro Riveira Fern=C3=A1ndez <ariveira@gmail.com>
+Hmmm.
 
+Thanks.
 
-
-diff --git a/.gitignore b/.gitignore
-index 83cf1b7..8df8f88 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -166,6 +166,7 @@
- /test-match-trees
- /test-parse-options
- /test-path-utils
-+/test-run-command
- /test-sha1
- /test-sigchain
- /common-cmds.h
+>
+> Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+> ---
+>  t/t5541-http-push.sh |   12 ++++--------
+>  1 files changed, 4 insertions(+), 8 deletions(-)
+>
+> diff --git a/t/t5541-http-push.sh b/t/t5541-http-push.sh
+> index 83a8e14..53f54a2 100755
+> --- a/t/t5541-http-push.sh
+> +++ b/t/t5541-http-push.sh
+> @@ -105,10 +105,8 @@ test_expect_success 'non-fast-forward push show ref status' '
+>  '
+>  
+>  test_expect_success 'non-fast-forward push shows help message' '
+> -	grep \
+> -"To prevent you from losing history, non-fast-forward updates were rejected
+> -Merge the remote changes before pushing again.  See the '"'non-fast-forward'"'
+> -section of '"'git push --help'"' for details." output
+> +	grep "To prevent you from losing history, non-fast-forward updates were rejected" \
+> +		output
+>  '
+>  
+>  test_expect_success 'push fails for non-fast-forward refs unmatched by remote helper' '
+> @@ -126,10 +124,8 @@ test_expect_success 'push fails for non-fast-forward refs unmatched by remote he
+>  	grep "^ + [a-f0-9]*\.\.\.[a-f0-9]* *master -> master (forced update)$" output &&
+>  	grep "^ ! \[rejected\] *master -> retsam (non-fast-forward)$" output &&
+>  
+> -	grep \
+> -"To prevent you from losing history, non-fast-forward updates were rejected
+> -Merge the remote changes before pushing again.  See the '"'non-fast-forward'"'
+> -section of '"'git push --help'"' for details." output
+> +	grep "To prevent you from losing history, non-fast-forward updates were rejected" \
+> +		output
+>  '
+>  
+>  stop_httpd
+> -- 
+> 1.6.6
