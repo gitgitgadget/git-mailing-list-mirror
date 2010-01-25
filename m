@@ -1,87 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Handle UNC paths everywhere
-Date: Mon, 25 Jan 2010 19:19:12 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001251916030.8733@intel-tinevez-2-302>
-References: <201001250155.47664.robin.rosenberg@dewire.com>  <alpine.DEB.1.00.1001251553150.8733@intel-tinevez-2-302> <40aa078e1001250957h292f8b01me8f7dec4ba2b425b@mail.gmail.com>
+From: Alex Scarborough <alex@gameclay.com>
+Subject: Re: [PATCH] rebase -p: Preserve fast-forwardable merges
+Date: Mon, 25 Jan 2010 10:53:06 -0800
+Message-ID: <dd10f5481001251053x2ac9fa62r57a46f1231e36560@mail.gmail.com>
+References: <dd10f5481001222329i58e7b709m2c547c74161b6771@mail.gmail.com>
+	 <alpine.DEB.1.00.1001251508400.8733@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Mon Jan 25 19:52:51 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Alex Scarborough <alex@gameclay.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 25 19:53:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZU3L-0004gL-Fu
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 19:52:47 +0100
+	id 1NZU3k-0004rI-Ox
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 19:53:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753441Ab0AYSwn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2010 13:52:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753241Ab0AYSwn
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 13:52:43 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36796 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752288Ab0AYSwm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2010 13:52:42 -0500
-Received: (qmail invoked by alias); 25 Jan 2010 18:19:14 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp067) with SMTP; 25 Jan 2010 19:19:14 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX190CGQLafJ0kLyfP1SmXDXBauC1GdeS70puaov3qU
-	gO0gjoCL4+Va+Q
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <40aa078e1001250957h292f8b01me8f7dec4ba2b425b@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53000000000000003
+	id S1754435Ab0AYSxI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jan 2010 13:53:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751855Ab0AYSxH
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 13:53:07 -0500
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:33596 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754072Ab0AYSxH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jan 2010 13:53:07 -0500
+Received: by yxe17 with SMTP id 17so3006250yxe.33
+        for <git@vger.kernel.org>; Mon, 25 Jan 2010 10:53:06 -0800 (PST)
+Received: by 10.151.29.8 with SMTP id g8mr9030717ybj.250.1264445586354; Mon, 
+	25 Jan 2010 10:53:06 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.1001251508400.8733@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137978>
 
-Hi,
+On Mon, Jan 25, 2010, Johannes Schindelin wrote:
+> On Fri, 22 Jan 2010, Alex Scarborough wrote:
+>
+> > Previously, rebase -p would not preserve a merge commit if the merg=
+e
+> > could be resolved as a fast-forward. =C2=A0rebase -p now passes --n=
+o-ff to
+> > git merge when recreating a merge commit, which ensures that merge
+> > commits created with git merge --no-ff are preserved.
+>
+> For my use case (well, it used to be my use case), namely keeping a n=
+umber
+> of topic branches on top of an upstream up-to-date, this is not the
+> desired action. =C2=A0In my use case, merged topic branches should ju=
+st vanish,
+> and not even leave a merge commit.
 
-On Mon, 25 Jan 2010, Erik Faye-Lund wrote:
+I see.  In that use case this patch would be rather irritating :)
 
-> On Mon, Jan 25, 2010 at 6:34 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > Hi,
-> >
-> > On Mon, 25 Jan 2010, Robin Rosenberg wrote:
-> >
-> >> >From 37a74ccd395d91e5662665ca49d7f4ec49811de0 Mon Sep 17 00:00:00 2001
-> >> From: Robin Rosenberg <robin.rosenberg@dewire.com>
-> >> Date: Mon, 25 Jan 2010 01:41:03 +0100
-> >> Subject: [PATCH] Handle UNC paths everywhere
-> >>
-> >> In Windows paths beginning with // are knows as UNC paths. They are
-> >> absolute paths, usually referring to a shared resource on a server.
-> >
-> > And even a simple "cd" with them does not work.
-> >
-> 
-> But it does, at least for me - both in bash and cmd.exe. I just need
-> to log on to the server first, unless it's a public share.
+What do you think of adding a --no-ff option to git rebase which, when =
+used
+with -p, will recreate merge commits even if they could be resolved as =
+a
+fast-forward?  That would leave your use case unchanged while giving my
+use case a way out, so to speak.
 
-I love it when people say "it works for me, so let's do it".
+Either way, I suggest we change the documentation for rebase -p to stat=
+e
+that it does not preserve merge commits that can be fast-forwarded afte=
+r
+rebasing.
 
-_My_ _only_ instance of Windows cmd says this:
+If it sounds good, I should be able to roll some patches by the end of =
+the
+week.
 
-	C:\Blah> cd \\localhost
-	'\\localhost'
-	CMD does not support UNC paths as current directories.
-	
-	C:\Blah>
-
-So.
-
-Besides, the patch was not in a form where I can say that it was obviously 
-fixing the issue. It was rather in a form where I would have to have set 
-aside a substantial amount of time to verify that nothing undesired was 
-introduced as a side effect.
-
-Ciao,
-Dscho
+-Alex Scarborough
