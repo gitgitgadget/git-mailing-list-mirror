@@ -1,93 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t5541-http-push: make grep expression check for one line
- only
-Date: Mon, 25 Jan 2010 09:52:08 -0800
-Message-ID: <7v1vhe3wdz.fsf@alter.siamese.dyndns.org>
-References: <1264405343-2984-1-git-send-email-rctay89@gmail.com>
- <7v7hr63wm7.fsf@alter.siamese.dyndns.org>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH] Handle UNC paths everywhere
+Date: Mon, 25 Jan 2010 18:57:06 +0100
+Message-ID: <40aa078e1001250957h292f8b01me8f7dec4ba2b425b@mail.gmail.com>
+References: <201001250155.47664.robin.rosenberg@dewire.com>
+	 <alpine.DEB.1.00.1001251553150.8733@intel-tinevez-2-302>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 25 18:52:25 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 25 18:57:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZT6r-0007nX-FV
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 18:52:21 +0100
+	id 1NZTBd-0001O2-V3
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 18:57:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752228Ab0AYRwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2010 12:52:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752148Ab0AYRwQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 12:52:16 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33984 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750900Ab0AYRwP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2010 12:52:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 61C5F94BC8;
-	Mon, 25 Jan 2010 12:52:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2rlutu9s+tbOIOh2DdFXWC4tbEk=; b=F5vNQt
-	PcpYy24MBMMeoi1FHqAbIQA0ARDpWi8XxhErVXxv7jjOervgZf8hLIlbb1FTV+kO
-	6+SDYg7yZvbJbCI8B0tIx5+cIz5YHfk5+AwzhWfo8fapcz4nw9JOs5aJe0tfe/D2
-	bWDrUBNviMi00hVdaXa9zgJ/wMegWDoyQPd+Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CX5gLSLECFEwiFu3AOZB/yo6tqFdkwvj
-	Q4hFwz0l0hudg/IUP3w7xk5hUMCzQn1z1JCfF2zblel0VzrUJhrpSYilaoLkMzS1
-	RvivGGiqdtIXAHbdl3+et1vqnZnU94NjT4MMrGmfrVNZEi6uVgyKiKjlGB/STpqA
-	c5FU8vr7CJo=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 38DD294BC7;
-	Mon, 25 Jan 2010 12:52:13 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 67CC894BC6; Mon, 25 Jan
- 2010 12:52:09 -0500 (EST)
-In-Reply-To: <7v7hr63wm7.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon\, 25 Jan 2010 09\:47\:12 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5E2E0DE2-09DA-11DF-AE3D-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754256Ab0AYR5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2010 12:57:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754185Ab0AYR5K
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 12:57:10 -0500
+Received: from mail-fx0-f220.google.com ([209.85.220.220]:36233 "EHLO
+	mail-fx0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752666Ab0AYR5J (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2010 12:57:09 -0500
+Received: by fxm20 with SMTP id 20so3825634fxm.21
+        for <git@vger.kernel.org>; Mon, 25 Jan 2010 09:57:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=pDFWxmhPSYeT3A36aMPNgt3GlDnQhi+gwfYGKEEs4Jc=;
+        b=OgbafAeQ1xHle8C3rUiR2BdtSOfYexyEi7kHWvzXna/3uV5qzlBFyAndD0BNYK3RyS
+         ypMXkdkvDa4FN8t4GMlzj06DNEyGr5KZtoUErjKiJ6Al1Z1PYMPOk6j191AeCXAYBL+S
+         DAqp6rXrPcQHFlC5gdIG4qtE/4E4S6bh5ejm4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        b=jDNUiqs0V2T/H6IRXMFKyP64mJJyBrzZnrTqbz+N0zovjkcxSWEwUj++6hI/wospxr
+         vfYw77gwQB7ueRcawZNBffsUYKgtt/KmFSWrOH9RQZm3IMDrmADqeLe4/zL6WV6G9O19
+         6UoHWrA0ux0QxswL6tz5sjZLPzTKmJCLn1Tbw=
+Received: by 10.216.87.66 with SMTP id x44mr874795wee.96.1264442226509; Mon, 
+	25 Jan 2010 09:57:06 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.1001251553150.8733@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137973>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Tay Ray Chuan <rctay89@gmail.com> writes:
+On Mon, Jan 25, 2010 at 6:34 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
 >
->> Simplify the grep expressions in the non-fast-forward tests to check
->> only for the first line of the non-fast-forward warning - having that
->> line should be enough assurance that the full warning is printed.
+> On Mon, 25 Jan 2010, Robin Rosenberg wrote:
+>
+>> >From 37a74ccd395d91e5662665ca49d7f4ec49811de0 Mon Sep 17 00:00:00 2001
+>> From: Robin Rosenberg <robin.rosenberg@dewire.com>
+>> Date: Mon, 25 Jan 2010 01:41:03 +0100
+>> Subject: [PATCH] Handle UNC paths everywhere
 >>
->> In the first place, grep can't deal with expressions for multiple
->> lines.
+>> In Windows paths beginning with // are knows as UNC paths. They are
+>> absolute paths, usually referring to a shared resource on a server.
 >
-> This shows that nobody has ever run this test since January 8th, not even
-> the original author?
+> And even a simple "cd" with them does not work.
 >
-> Hmmm.
 
-Actually, if you grep with a pattern with multiple lines, it is equivalent
-to giving each of these lines as a separate pattern from the command line.
-So it is understandable that the tests passed.  They were checking if
-these match, but it doesn't check (and grep is not designed to) if the
-first pattern matched the first line, the second to second, etc.
+But it does, at least for me - both in bash and cmd.exe. I just need
+to log on to the server first, unless it's a public share.
 
-So I'd say something like...
-
-    Don't feed multiple-line pattern to grep and expect them to match with
-    lines in order.
-
-    Simplify the grep expressions in the non-fast-forward tests to check
-    only for the first line of the non-fast-forward warning - having that
-    line should be enough assurance that the full warning is printed.
-
-    Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
-
-instead.
+-- 
+Erik "kusma" Faye-Lund
