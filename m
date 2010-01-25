@@ -1,70 +1,75 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [PATCH] Handle UNC paths everywhere
-Date: Mon, 25 Jan 2010 12:01:22 +0100
-Message-ID: <201001251201.23064.robin.rosenberg@dewire.com>
-References: <201001250155.47664.robin.rosenberg@dewire.com> <40aa078e1001250211w2dcc5e97vf89f64f136bd2f0@mail.gmail.com> <fabb9a1e1001250222n6912905fqfd2e76f8d4496bb7@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: git status showing phantom modifications
+Date: Mon, 25 Jan 2010 19:03:04 +0800
+Message-ID: <be6fef0d1001250303p2c12381ao7d3a8a1d48eebb56@mail.gmail.com>
+References: <9B3C1167-7667-4B1F-BEE5-F47FE89F8692@xing.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: kusmabite@gmail.com, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 25 12:01:45 2010
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Ludwig <michael.ludwig@xing.com>
+X-From: git-owner@vger.kernel.org Mon Jan 25 12:03:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZMhS-00045n-Dk
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 12:01:42 +0100
+	id 1NZMj5-0004qq-28
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jan 2010 12:03:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751727Ab0AYLB1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jan 2010 06:01:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751611Ab0AYLB1
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 06:01:27 -0500
-Received: from mail.dewire.com ([83.140.172.130]:3927 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751042Ab0AYLB0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jan 2010 06:01:26 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 12655800370;
-	Mon, 25 Jan 2010 12:01:25 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id luFyWoP-e2xV; Mon, 25 Jan 2010 12:01:24 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 91A78800353;
-	Mon, 25 Jan 2010 12:01:24 +0100 (CET)
-User-Agent: KMail/1.12.4 (Linux/2.6.31-17-generic; KDE/4.3.4; i686; ; )
-In-Reply-To: <fabb9a1e1001250222n6912905fqfd2e76f8d4496bb7@mail.gmail.com>
+	id S1753641Ab0AYLDQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jan 2010 06:03:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674Ab0AYLDQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 06:03:16 -0500
+Received: from mail-iw0-f173.google.com ([209.85.223.173]:47185 "EHLO
+	mail-iw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752415Ab0AYLDP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jan 2010 06:03:15 -0500
+Received: by iwn3 with SMTP id 3so739000iwn.19
+        for <git@vger.kernel.org>; Mon, 25 Jan 2010 03:03:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5w3RrKnQOb/qH/A4W8PVLJHA7v2A1w6Dn2VHdBdHF0A=;
+        b=CmKvyF9S1mD7arzNvpkvGVhmnb44rmkdtrKkGf9k9LmC2WImSkDXzJI/h5eX4YbSTw
+         3VV2FEw51OTZrKgQZcKTQZCd1CjQuvFkmaOD0FzelcOrQbVHYuP/bZo6eYCJ4aiRIvpK
+         0+QYFPHSAatWE2Rgc3K7A0pqtZetxHYsd/bho=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=M2sIyafuOGXukgOHf7wd7OG5g4nwnPAZgHtUtay89E2VGqXoBXbo/DlUXyduxlJwnz
+         4QOs5EnDUYGG0uHqy6YE9wl5rYEv4uCyrczgSLrMntUGNkvmDjfs/a981jajL+AKcLIi
+         oSqExDGEfpooK2TWCnpjnPVASferSx4XQgA90=
+Received: by 10.231.148.84 with SMTP id o20mr792316ibv.73.1264417384823; Mon, 
+	25 Jan 2010 03:03:04 -0800 (PST)
+In-Reply-To: <9B3C1167-7667-4B1F-BEE5-F47FE89F8692@xing.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/137951>
 
-m=E5ndagen den 25 januari 2010 11.22.19 skrev  Sverre Rabbelier:
-> Heya,
->=20
-> On Mon, Jan 25, 2010 at 11:11, Erik Faye-Lund <kusmabite@googlemail.c=
-om>=20
-wrote:
-> > C:\Users\kusma>dir \\mongo\code
-> > The request is not supported.
-> >
-> > C:\Users\kusma>explorer \\mongo\code
-> > <login on the gui>
-> >
-> > C:\Users\kusma>dir \\mongo\code
-> >  Volume in drive \\mongo\code is Code
-> >  Volume Serial Number is 04C3-0225
->=20
-> Ah, that's very interesting. Not sure that will help MSysGit a lot th=
-ough.
->=20
+Hi,
 
-Could you perhaps *try* it before claiming it won't work? I suggest you
-use forward slashes to avoid quoting problems.
+On Mon, Jan 25, 2010 at 6:41 PM, Michael Ludwig <michael.ludwig@xing.co=
+m> wrote:
+> michael@wladimir:/cygdrive/m/REPOS6.TECH.git/comp :-) git st
+> # On branch master
+> # Changed but not updated:
+> # =A0 (use "git add <file>..." to update what will be committed)
+> # =A0 (use "git checkout -- <file>..." to discard changes in working =
+directory)
+> #
+> # =A0 =A0 =A0 modified: =A0 mw/wsdl-version.txt
+> # =A0 =A0 =A0 modified: =A0 net/httpsrvr/iis6.wodo
+> # =A0 =A0 =A0 ... and about 100 more of that ...
 
--- robin
+try running git diff. I suspect the changes are to filemodes. What
+does your git config look like regarding this (particularly
+core.fileMode)?
+
+--=20
+Cheers,
+Ray Chuan
