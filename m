@@ -1,101 +1,78 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: "J.H." <warthog9@kernel.org>
 Subject: Re: What's cooking in git.git (Jan 2010, #08; Sun, 24)
-Date: Tue, 26 Jan 2010 01:07:24 +0100
-Message-ID: <201001260107.25796.jnareb@gmail.com>
-References: <7vfx5u6bn9.fsf@alter.siamese.dyndns.org> <m3eildbydx.fsf@localhost.localdomain> <20100125231241.GA4159@machine.or.cz>
+Date: Mon, 25 Jan 2010 16:21:14 -0800
+Message-ID: <4B5E357A.50607@kernel.org>
+References: <7vfx5u6bn9.fsf@alter.siamese.dyndns.org> <m3eildbydx.fsf@localhost.localdomain> <20100125231241.GA4159@machine.or.cz> <201001260107.25796.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"J.H." <warthog9@eaglescrag.net>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Jan 26 01:07:40 2010
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, "J.H." <warthog9@eaglescrag.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 26 01:22:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZYy2-0004da-PS
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 01:07:39 +0100
+	id 1NZZCA-0000i8-MI
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 01:22:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751669Ab0AZAHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2010 19:07:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751628Ab0AZAHd
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 19:07:33 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:44186 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751525Ab0AZAHd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2010 19:07:33 -0500
-Received: by bwz27 with SMTP id 27so3202479bwz.21
-        for <git@vger.kernel.org>; Mon, 25 Jan 2010 16:07:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=Z8DPBaao8WBTpJilkilYCPQZCLEheUAx+1qMk9Q59lc=;
-        b=hWOzif/O3CPLfetqgv6ncHBFQVSQigCa+jVWrueWJ8vFQbEWw6BLE98ZhhvAZvkLQY
-         ECcKgWjl6OuuKSh38XnRGndK91j+8OKzG+jO3K1tKSs3GsPBaJErIzPCHe4zcfnu8tXJ
-         q1kZuosCky/WYNQhyVIZQZfF35CAOHG88GzLw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=dxtaihSVbZBJrvQVgkcU1W9smqyG6Ao5G4d/7ptYOdYbMMSP4VKMiI8n2mJ8vIIZbX
-         enKhjj5WVj8FqgDI7sbobw42jGrwdqhB3KQ46GnKHtxh9kc2xfL/Xc9YMijxf336iOWW
-         SIpdktp8+iHENwngfVszVKLu6mb/ixu/1rw30=
-Received: by 10.204.20.17 with SMTP id d17mr864727bkb.195.1264464451617;
-        Mon, 25 Jan 2010 16:07:31 -0800 (PST)
-Received: from ?192.168.1.13? (abvr10.neoplus.adsl.tpnet.pl [83.8.215.10])
-        by mx.google.com with ESMTPS id 13sm2412667bwz.10.2010.01.25.16.07.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 25 Jan 2010 16:07:30 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20100125231241.GA4159@machine.or.cz>
-Content-Disposition: inline
+	id S1751211Ab0AZAWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2010 19:22:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750912Ab0AZAWF
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 19:22:05 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:44307 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750745Ab0AZAWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2010 19:22:04 -0500
+Received: from [172.19.0.11] (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o0Q0LClZ017495
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 25 Jan 2010 16:21:13 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <201001260107.25796.jnareb@gmail.com>
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Mon, 25 Jan 2010 16:21:14 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138010>
 
-On Tue, Jan 26, 2010 at 00:12 +0100, Petr Baudis wrote:
-> On Mon, Jan 25, 2010 at 02:43:01PM -0800, Jakub Narebski wrote:
 
-> > You are right that actual caching support is in flux.  The discussion
-> > continues: it is very good that we have the voice from Pasky, too.
-> 
-> Unfortunately, I can't give much time to it, or actual contributions.
-> I think it would be great to apply at least the miscellanous-changes
-> part to (i) move this further (ii) give jh some positive feedback. :)
-> There are ugly minor things, but they can be patched up later. I think
-> it's healthier for new gitweb stuff to develop more in-tree, even
-> if that means few angry users annoyed about less-than-perfect UI stuff,
-> rather than polish the diamond in infinite discussions; worse is better!
-> The only thing we should be worried about is avoiding introducing new
-> bad URL interfaces since we should keep backwards compatibility there.
+>
+> I am waiting for response from (I guess busy) J.H.; I can do the re-roll
+> if he is too busy to work on it.
+>
+>   
 
-I think that while some patches from the miscellaneous-changes part are
-good now (and very nice to have, especially load checking and 
-gitweb/Makefile), there needs to be one last, final reroll of those
-patches.
+I'm juggling about 4 things in the air right now, with gitweb being one 
+of them, and two of them involving external entities to kernel.org.  
+It's good news all told, just requires a fair amount of my time 
+(currently) and babysitting.  I've been digging through the patches 
+you've got right now.  I should really just pull them in from your git 
+tree again.
 
-I am waiting for response from (I guess busy) J.H.; I can do the re-roll
-if he is too busy to work on it.
+After reading through some of the discussions today I've had some more 
+ideas on the caching stuff, they are written up on my whiteboard and I 
+might be able to get to shortly, but I've got a rather large wall 
+looming ahead of me that's going to chew up a *LOT* (read at least a 
+month, if not two) of my time, so I'm a bit under the gun to try and get 
+this as far as I can before I hit that wall or this is going to fall by 
+the wayside again till I've got time again.
 
-> For the main caching patch, it seems like good idea to take Jakub's
-> split-up series instead, let's see what is J.H.'s opinion on the series?
-
-Let me at least make them into proper patches, with commit messages and 
-configureability at least of the original caching patch by J.H.
-
-Also the question whether to create 'print -> print $out' patch, or to
-manipulate *STDOUT instead must be solved, I think, before applying
-those patches... well, at least beyond 'pu'.
-
-I am waiting for promised J.H. comments, when he will have time for it...
--- 
-Jakub Narebski
-Poland
+>> For the main caching patch, it seems like good idea to take Jakub's
+>> split-up series instead, let's see what is J.H.'s opinion on the series?
+>>     
+>
+> Let me at least make them into proper patches, with commit messages and 
+> configureability at least of the original caching patch by J.H.
+>
+> Also the question whether to create 'print -> print $out' patch, or to
+> manipulate *STDOUT instead must be solved, I think, before applying
+> those patches... well, at least beyond 'pu'.
+>
+> I am waiting for promised J.H. comments, when he will have time for it...
+>   
