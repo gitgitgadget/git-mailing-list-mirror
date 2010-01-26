@@ -1,69 +1,95 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: git-format-patch should include a checksum
-Date: Wed, 27 Jan 2010 00:26:44 +0100
-Message-ID: <fabb9a1e1001261526tc86c04em4c6ede23e109e66@mail.gmail.com>
-References: <871vhcmr5b.fsf@trurl.pps.jussieu.fr> <7vljfkxxj9.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: cvs revision number -> git commit name?
+Date: Wed, 27 Jan 2010 00:43:44 +0100
+Message-ID: <201001270043.44614.johan@herland.net>
+References: <hbf.20100126bda0@bombur.uio.no>
+ <bc341e101001261453u16124186i298a53ead0b4eee2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Juliusz Chroboczek <jch@pps.jussieu.fr>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 27 00:27:16 2010
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Aaron Crane <git@aaroncrane.co.uk>,
+	Hallvard B Furuseth <h.b.furuseth@usit.uio.no>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 27 00:51:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZuoR-0000Iw-TU
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 00:27:12 +0100
+	id 1NZvBi-0007mZ-AA
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 00:51:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751392Ab0AZX1G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2010 18:27:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752110Ab0AZX1G
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 18:27:06 -0500
-Received: from mail-px0-f182.google.com ([209.85.216.182]:46027 "EHLO
-	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751772Ab0AZX1F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2010 18:27:05 -0500
-Received: by pxi12 with SMTP id 12so3914097pxi.33
-        for <git@vger.kernel.org>; Tue, 26 Jan 2010 15:27:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=Ikm2Jid/sn04wR/3jiZBa1jNqeqr/TTEzwovs15gOEA=;
-        b=FPpu9k3CT7QqTBg8cTy5lI06wo7ueh45PRUGqtKSt6Kt1oE2TUVRmilB7p/hJglCao
-         QGEdUP7VCLViSOYaXRBjfHV3fV2HXRXykGea26ia3sFN7xmtYO5EC4jhuSphHG4EAdhl
-         MOezBasIt5SallTU3LRR4m157vdhSyFcmLucs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=ViEX4H80BNtKp7EVKDukTjU8bETSX2TRl4HtEF1RfP06vSkVx6ovaXRl/owxHjw4xr
-         J/zVUvZNBagiEvMBEowatO7NCCF6R6Pry7/Duf6Qoy7E9PripIoCr0N255KaTLU3nkXk
-         X3wVy5nydkEoEFgWQ2yFR37hfGY0NK26GaZlY=
-Received: by 10.142.121.9 with SMTP id t9mr2393948wfc.144.1264548424238; Tue, 
-	26 Jan 2010 15:27:04 -0800 (PST)
-In-Reply-To: <7vljfkxxj9.fsf@alter.siamese.dyndns.org>
+	id S1754834Ab0AZXoE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2010 18:44:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754762Ab0AZXoA
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 18:44:00 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:53535 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754711Ab0AZXn6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jan 2010 18:43:58 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KWV00G24OL9JR60@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 27 Jan 2010 00:43:57 +0100 (MET)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KWV00M3MOL2OZ40@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 27 Jan 2010 00:43:57 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2010.1.26.233333
+User-Agent: KMail/1.12.4 (Linux/2.6.32-ARCH; KDE/4.3.4; x86_64; ; )
+In-reply-to: <bc341e101001261453u16124186i298a53ead0b4eee2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138089>
 
-Heya,
+On Tuesday 26 January 2010, Aaron Crane wrote:
+> Hallvard B Furuseth <h.b.furuseth@usit.uio.no> wrote:
+> > When moving from CVS to Git, what's a good way to help Git users
+> > find an old commit given the original CVS revision number?  Are
+> > there tools available to help?
+> >
+> > One could commit a table with a (file,revision)->commit mapping,
+> > I suppose something can generate it when importing from cvs?
+> 
+> That's what we decided to do on a recent CVS-to-Git conversion, though
+> like you, we also considered munging the log messages instead.  Our
+> jury's still out on whether it was the right decision; we haven't had
+> much cause to use the result yet.
+> 
+> One thing to be aware of (beyond the need to run grep to convert old
+> CVS revision numbers to Git commit IDs) is that there's a good chance
+> the mapping file will pollute the results of `git grep` for some
+> tasks.  (We've put the mapping file into our repo, where it's easy to
+> find.)  I'm considering gzipping the mapping file as a workaround;
+> that would mean our users will need to use zgrep (or equivalent) to
+> look up CVS revision numbers, which may or may not be a problem in
+> your situation.
+> 
+> I have an initial patch to git-cvsimport that adds a switch to
+> generate the mapping as it goes.  I'm currently trying to find time to
+> clean it up and submit it.
 
-On Wed, Jan 27, 2010 at 00:21, Junio C Hamano <gitster@pobox.com> wrote:
-> format-patch/am pair is designed to be lenient, allowing people to write
-> additional messages after the three-dash lines after the output is made
-> but before it is given to the MUA for sending the result out, for example,
-> so adding a checksum over the entire output and forcing a check upon
-> application is really a bad idea, even though, provided if the patch is
-> done cleanly, it might be acceptable as an optional feature.
+You could consider adding the CVS revision numbers as notes (see "git help 
+notes" in >= v1.6.6) to the corresponding commits. Then they don't pollute 
+the commit messages, but instead live in a separate, but parallel hierarchy 
+that can be easily pulled in when you need to reference them (e.g. 
+GIT_NOTES_REF="refs/" git log).
 
-I would imagine that the checksum is taken over just the actual commit
-message, perhaps author information, and use the patch-id for the
-patch itself, that way any comments after triple dash would be ignored, right?
+The notes feature is still very new, and there are still outstanding patches 
+to be merged, but the basics are there in v1.6.6.
+
+FWIW, I was also working on a CVS-to-Git importer (based on what has later 
+become the transport-helper infrastructure), that used notes to store 
+exactly the metadata you mention above. However, I haven't worked on it for 
+a while, and I probably won't have time to pick it up in the immediate 
+future.
+
+
+...Johan
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+Johan Herland, <johan@herland.net>
+www.herland.net
