@@ -1,166 +1,110 @@
-From: Fredrik Kuivinen <frekui@gmail.com>
-Subject: Re: [PATCH v4] Threaded grep
-Date: Tue, 26 Jan 2010 13:10:50 +0100
-Message-ID: <4c8ef71001260410l2afd2dbx17b6e216bd9e5d8@mail.gmail.com>
-References: <20100125225139.GA3048@fredrik-laptop>
-	 <alpine.LFD.2.00.1001251542100.3574@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: For real now: bug tracking and secretary tasks in git
+Date: Tue, 26 Jan 2010 07:26:55 -0500
+Message-ID: <20100126122654.GA28179@coredump.intra.peff.net>
+References: <20100109013850.16f82412@perceptron>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jan 26 13:12:01 2010
+Cc: Git ML <git@vger.kernel.org>
+To: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
+X-From: git-owner@vger.kernel.org Tue Jan 26 13:27:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZkGz-0003ns-LL
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 13:11:58 +0100
+	id 1NZkVb-0000EA-E5
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 13:27:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752168Ab0AZMKx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jan 2010 07:10:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752088Ab0AZMKw
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 07:10:52 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:47559 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751914Ab0AZMKw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jan 2010 07:10:52 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so561953fga.1
-        for <git@vger.kernel.org>; Tue, 26 Jan 2010 04:10:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=EILEmX9RrKkASvnMpszs2IirGbrVpGBKstjxvqqr1oI=;
-        b=dXAjtud5bq5+U9kEF76ZZ/EwfTWdSCgGhlVmobqIKQCG+DlCscbMpKvkAlLKu2ht2/
-         i5SDhDK749Q2TLUPJxXlKiqFg9q1Bzl9Kug9JMdfPzDqGCbQj0d1DsodrjUlj4MneaJd
-         Z1YVIy+V5MjxvSjcUbN+6m04rRY5kEh4sFRdc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=J/MFy9UuH2EbOe1T70v7B/jQvlJXojfvT4wEAc2TzchKJtHxhmW17yoZGbpw+mME2Y
-         gzIn2vxcitN++WvgI9cvxpWkqyDkdw5hn1Wpb8B0OTnzAq/tEHGUfcL75ra6I/YnSD1+
-         lIJr2ZcoRFf8MZNkkKbQEDfUI7qfX3iuAb7Ig=
-Received: by 10.239.191.204 with SMTP id c12mr914688hbi.174.1264507850131; 
-	Tue, 26 Jan 2010 04:10:50 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.00.1001251542100.3574@localhost.localdomain>
+	id S1751526Ab0AZM07 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jan 2010 07:26:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751398Ab0AZM07
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 07:26:59 -0500
+Received: from peff.net ([208.65.91.99]:50714 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751022Ab0AZM06 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2010 07:26:58 -0500
+Received: (qmail 23806 invoked by uid 107); 26 Jan 2010 12:26:58 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 26 Jan 2010 07:26:58 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Jan 2010 07:26:55 -0500
+Content-Disposition: inline
+In-Reply-To: <20100109013850.16f82412@perceptron>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138034>
 
-On Tue, Jan 26, 2010 at 00:59, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> The profile for the threaded case says:
->
-> =A0 =A051.73% =A0 =A0 =A0git =A0libc-2.11.1.so =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 [.] re_search_internal
-> =A0 =A011.47% =A0 =A0 =A0git =A0[kernel] =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
-=A0 =A0 =A0 =A0 [k] copy_user_generic_string
-> =A0 =A0 2.90% =A0 =A0 =A0git =A0libc-2.11.1.so =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 [.] __strlen_sse2
-> =A0 =A0 2.66% =A0 =A0 =A0git =A0[kernel] =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
-=A0 =A0 =A0 =A0 [k] link_path_walk
-> =A0 =A0 2.55% =A0 =A0 =A0git =A0[kernel] =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
-=A0 =A0 =A0 =A0 [k] intel_pmu_enable_all
-> =A0 =A0 2.40% =A0 =A0 =A0git =A0[kernel] =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
-=A0 =A0 =A0 =A0 [k] __d_lookup
-> =A0 =A0 1.71% =A0 =A0 =A0git =A0libc-2.11.1.so =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 [.] __GI___libc_malloc
-> =A0 =A0 1.55% =A0 =A0 =A0git =A0[kernel] =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
-=A0 =A0 =A0 =A0 [k] _raw_spin_lock
-> =A0 =A0 1.43% =A0 =A0 =A0git =A0[kernel] =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
-=A0 =A0 =A0 =A0 [k] sys_futex
-> =A0 =A0 1.30% =A0 =A0 =A0git =A0libc-2.11.1.so =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 [.] __cfree
-> =A0 =A0 1.28% =A0 =A0 =A0git =A0[kernel] =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
-=A0 =A0 =A0 =A0 [k] intel_pmu_disable_all
-> =A0 =A0 1.25% =A0 =A0 =A0git =A0libc-2.11.1.so =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 [.] __GI_memchr
-> =A0 =A0 1.14% =A0 =A0 =A0git =A0libc-2.11.1.so =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 [.] _int_malloc
-> =A0 =A0 1.02% =A0 =A0 =A0git =A0[kernel] =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
-=A0 =A0 =A0 =A0 [k] effective_load
->
-> and the only thing that makes me go "eh?" there is the strlen(). Why =
-is
-> that so hot? =A0But locking doesn't seem to be the biggest issue, and=
- in
-> general I think this is all pretty good. The 'effective_load' thing i=
-s the
-> scheduler, so there's certainly some context switching going on, prob=
-ably
-> still due to excessive synchronization, but it's equally clear that t=
-hat
-> is certainly not a dominant factor.
+[This reply is a bit late, but there doesn't seem to have been much
+discussion, so...]
 
-I see the strlen in my profiles as well, but I haven't figured out
-where it comes from. I get the following:
+On Sat, Jan 09, 2010 at 01:38:50AM +0100, Jan Kr=C3=BCger wrote:
 
-    51.16%  git-grep  /lib/tls/i686/cmov/libc-2.10.1.so
-[.] 0x000000000b14c6
-    10.12%  git-grep  /lib/tls/i686/cmov/libc-2.10.1.so
-[.] __GI_strlen
-     9.27%  git-grep  [kernel]
-[k] __copy_to_user_ll
-     4.68%  git-grep  /lib/tls/i686/cmov/libc-2.10.1.so
-[.] __memchr
-     1.72%  git-grep  [kernel]
-[k] __d_lookup
-     1.18%  git-grep  /lib/i686/cmov/libcrypto.so.0.9.8
-[.] sha1_block_asm_data_order
-     1.11%  git-grep  [kernel]
-[k] __ticket_spin_lock
-     0.84%  git-grep  [vdso]
-[.] 0x00000000b6c422
+> Mass consensus in previous discussions[1][2] goes a bit like this:
+>=20
+> 1. It would be desirable to have people who do the work of interfacin=
+g
+>    between bug reporters and developers. These same people could make
+>    sure reports didn't get lost. These people are the *secretaries*.
+>    They should be pretty reliable.
+>=20
+> 2. People who contribute to git shouldn't be forced to work with the
+>    tracker. Having a tracker that isn't actively maintained by dedica=
+ted
+>    secretaries is pretty much worthless anyway, so there's no need to
+>    pretend that forcing developers to use a tracker interface is any
+>    kind of improvement.
+>=20
+> 3. The "human element" is important. For example, automatic reminders
+>    are a lot less valuable than reminders from an actual person.
 
-If I use perf record -g I get
+I more or less agree with your approach, though I am a bit concerned
+that because the process of moving information between the list and the
+bug tracker is manual, bits of information will be lost unless the
+secretaries are on their toes. Which means that people who submit bugs
+will see no activity on their bug, even though it may have been
+discussed on the list, and will consider the tracker to be crufty and
+useless.
 
-    10.39%  git-grep  /lib/tls/i686/cmov/libc-2.10.1.so
-[.] __GI_strlen
-                |
-                |--99.05%-- look_ahead
-                |          grep_buffer_1
-                |          grep_buffer
-                |          run
-                |          start_thread
-                |          __clone
-                |
-                |--0.64%-- grep_file
-                |          grep_cache
-                |          cmd_grep
-                |          run_builtin
-                |          handle_internal_command
-                |          main
-                |          __libc_start_main
-                |          0x804ae81
-                 --0.32%-- [...]
+But that is not so much a criticism of your proposal, as a possible
+thing that might go wrong. It's worth giving it a try and seeing what
+happens.
 
-This doesn't make much sense to me as look_ahead doesn't call strlen
-(I compiled git with -O0 to avoid any issues with inlined functions).
-But I haven't used perf so much, so maybe I'm reading the output the
-wrong way.
+I notice that there are not too many bugs in the tracker right now. If
+this is going to be useful for ordinary users to submit bugs, it needs
+to be publicized. JH suggested hosting it at kernel.org. I think that i=
+s
+a reasonable idea, and certainly it needs a link from other git sites
+(the wiki, and probably git-scm.org).
 
-> One potentially interesting data point is that if I make NR_THREADS b=
-e 16,
-> performance goes down, and I get more locking overhead. So NR_THREADS=
- of 8
-> works well on this machine.
+As far as the choice of flyspray, I'm not strongly against it, though I
+suspect you would get more up-take from git developers (well, me,
+anyway) if it was something that had a more git-ish interface. It would
+be really nice to clone the bug db, edit, commit, and push bug updates.
+Many of the distributed trackers support that. I recognize that for
+ordinary users, we do still want some kind of web-based submitting and
+bug reading interface. Surely somebody has built a git backend on one o=
+f
+the existing trackers, or somebody has built a nice web interface on on=
+e
+of the distributed trackers? It has been a while since I looked
+seriously at this area, and I remember being a bit disappointed last
+time.
 
-Interesting. I get the best results with 8 threads as well, but I only
-have two cores.
+And finally, thanks for starting a discussion on this issue. We talked =
+a
+little about it at the GitTogether, and what you proposed is in line
+with what was said there, I think. My plan going forward from that
+discussion (which I hadn't actually started implementing, though) was t=
+o
+clean up my own personal todo list and start making it a bit more
+public. The reason being that my list is not simply personal features,
+but lots of bugs posted to the list that have not been dealt with, and
+that I have either decided are probably actual bugs that need fixing, o=
+r
+even ones that I have reproduced but need prodding to move forward on.
+So sometime in the near future I'd like to clean up that list and dump
+it into whatever sort of bug tracking we end up with.
 
-> One worry is, of course, whether all regex() implementations are
-> thread-safe. Maybe there are broken libraries that have hidden global
-> state in them?
-
-That would certainly be a problem. A quick google search didn't show
-any known bugs. Of course, this doesn't tell us anything about the
-unknown ones.
-
-- Fredrik
+-Peff
