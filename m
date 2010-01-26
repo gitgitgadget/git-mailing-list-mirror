@@ -1,143 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] t1506: more test for @{upstream} syntax
-Date: Tue, 26 Jan 2010 13:32:07 -0800
-Message-ID: <7vpr4wy2lk.fsf@alter.siamese.dyndns.org>
-References: <1263980322-4142-1-git-send-email-gitster@pobox.com>
- <1263980322-4142-2-git-send-email-gitster@pobox.com>
- <20100126130745.GB28179@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 26 22:32:26 2010
+From: Hallvard B Furuseth <h.b.furuseth@usit.uio.no>
+Subject: cvs revision number -> git commit name?
+Date: Tue, 26 Jan 2010 22:53:12 +0100
+Message-ID: <hbf.20100126bda0@bombur.uio.no>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 26 22:53:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZt1M-0005UC-Um
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 22:32:25 +0100
+	id 1NZtLc-0006O5-H2
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 22:53:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752714Ab0AZVcU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2010 16:32:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752699Ab0AZVcT
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 16:32:19 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36451 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752668Ab0AZVcT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2010 16:32:19 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 744C694966;
-	Tue, 26 Jan 2010 16:32:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SLblcuEIeTUb4hwXH9D2B1j9mtk=; b=fod8Ls
-	sL25dUjey4EsXQ/ocJKZE9/HrmwEfOUp7IY/lBEgGn5bGlrQpKe2CHVI9jtTAKGn
-	ILttitL0/Lci2vUNiPldvU6p4jfLrPnNNT5up6goDVd9SJsekufvwCVa4VWuRt5C
-	psQG8YMPTlH3uzqVlqIX+7lztbOTsz/F2qzuI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=joEJ9e8SiVP19Z9dNldPjlwm85Lt8eIT
-	Xjg2p/GvZ5t5ax3SPXmaGe8VgNTc/ihsXY7ZWTthi4FhqxzJz76KzsiYoYj9CL9d
-	rNOjaVu7P3fLd1g0DVEds5WHNqY14y/hryDoBCBo8CTnC64fNYVcBtJhdRjN3/Ku
-	io59YCufF+A=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BE6794964;
-	Tue, 26 Jan 2010 16:32:13 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3EA3E94960; Tue, 26 Jan
- 2010 16:32:09 -0500 (EST)
-In-Reply-To: <20100126130745.GB28179@coredump.intra.peff.net> (Jeff King's
- message of "Tue\, 26 Jan 2010 08\:07\:45 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 44663018-0AC2-11DF-ACCC-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754676Ab0AZVxO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2010 16:53:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754201Ab0AZVxO
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 16:53:14 -0500
+Received: from mail-out1.uio.no ([129.240.10.57]:40703 "EHLO mail-out1.uio.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752658Ab0AZVxN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2010 16:53:13 -0500
+Received: from mail-mx1.uio.no ([129.240.10.29])
+	by mail-out1.uio.no with esmtp (Exim 4.69)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1NZtLU-0000jq-UC
+	for git@vger.kernel.org; Tue, 26 Jan 2010 22:53:12 +0100
+Received: from bombur.uio.no ([129.240.6.233])
+	by mail-mx1.uio.no with esmtp  (Exim 4.69)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1NZtLU-0001wd-Kk
+	for git@vger.kernel.org; Tue, 26 Jan 2010 22:53:12 +0100
+Received: from hbf by bombur.uio.no with local (Exim 4.44)
+	id 1NZtLU-0000KG-Ja
+	for git@vger.kernel.org; Tue, 26 Jan 2010 22:53:12 +0100
+X-UiO-Ratelimit-Test: rcpts/h 11 msgs/h 6 sum rcpts/h 11 sum msgs/h 6 total rcpts 714 max rcpts/h 11 ratelimit 0
+X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
+X-UiO-Scanned: B0AE464C5063A8C48928C93B1711BE8F3BBF06A3
+X-UiO-SPAM-Test: remote_host: 129.240.6.233 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 6 total 1810 max/h 8 blacklist 0 greylist 0 ratelimit 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138079>
 
-Jeff King <peff@peff.net> writes:
+When moving from CVS to Git, what's a good way to help Git users
+find an old commit given the original CVS revision number?  Are
+there tools available to help?
 
-> The second one is that "log -g branch@{u}" shows the correct commits
-> (from the upstream of "branch"), but displays the incorrect reflog
-> information (it shows information for "branch", not for its upstream).
+There are plenty of still-useful references to CVS revisions
+floating around - in bug reports, mailing list archives, commit
+messages referring to other commits.  Some loose thoughts:
 
-That "walk-reflog" code is tricky.  How about this?
+One could commit a table with a (file,revision)->commit mapping,
+I suppose something can generate it when importing from cvs?
 
-I don't know if it deals with things like "@{-1}@{u}@{now}"; the users
-should have every right to expect it to, but I didn't consciously try to
-make that work with this patch.
+Many but far from all old file contain the CVS ID, named $OpenLDAP$.
+Can Git grep all versions of a file for '\$OpenLDAP:.* 1.23 '?
 
- revision.c                    |   18 ++++++++++++++----
- t/t1507-rev-parse-upstream.sh |   29 +++++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 4 deletions(-)
+Could maybe add a line like this to many of the log messages:
+    "<cvs: version 1.23>"
+for single-file commits, or
+    "<cvs: here/foo.c 1.23, there/bar.c 1.45>"
+for multi-file comments with few enough files that such an
+annotation fits on one line.  That'll make log messages like "fix
+rev 1.23" easier to read without need for a tool to find what the
+message is talking about, but does clutter up the log a lot.
 
-diff --git a/revision.c b/revision.c
-index f54d43f..75071af 100644
---- a/revision.c
-+++ b/revision.c
-@@ -134,10 +134,20 @@ static void add_pending_object_with_mode(struct rev_info *revs, struct object *o
- {
- 	if (revs->no_walk && (obj->flags & UNINTERESTING))
- 		revs->no_walk = 0;
--	if (revs->reflog_info && obj->type == OBJ_COMMIT &&
--			add_reflog_for_walk(revs->reflog_info,
--				(struct commit *)obj, name))
--		return;
-+	if (revs->reflog_info && obj->type == OBJ_COMMIT) {
-+		struct strbuf buf = STRBUF_INIT;
-+		int len = interpret_branch_name(name, &buf);
-+		int st;
-+
-+		if (len && name[len])
-+			strbuf_addstr(&buf, name + len);
-+		st = add_reflog_for_walk(revs->reflog_info,
-+					 (struct commit *)obj,
-+					 buf.buf[0] ? buf.buf: name);
-+		strbuf_release(&buf);
-+		if (st)
-+			return;
-+	}
- 	add_object_array_with_mode(obj, name, &revs->pending, mode);
- }
- 
-diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
-index 95c9b09..8c8dfda 100755
---- a/t/t1507-rev-parse-upstream.sh
-+++ b/t/t1507-rev-parse-upstream.sh
-@@ -107,4 +107,33 @@ test_expect_success 'checkout other@{u}' '
- 	test_cmp expect actual
- '
- 
-+cat >expect <<EOF
-+commit 8f489d01d0cc65c3b0f09504ec50b5ed02a70bd5
-+Reflog: master@{0} (C O Mitter <committer@example.com>)
-+Reflog message: branch: Created from HEAD
-+Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:15:13 2005 -0700
-+
-+    3
-+EOF
-+test_expect_success 'log -g other@{u}' '
-+	git log -1 -g other@{u} >actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<EOF
-+commit 8f489d01d0cc65c3b0f09504ec50b5ed02a70bd5
-+Reflog: master@{Thu Apr 7 15:17:13 2005 -0700} (C O Mitter <committer@example.com>)
-+Reflog message: branch: Created from HEAD
-+Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:15:13 2005 -0700
-+
-+    3
-+EOF
-+
-+test_expect_success 'log -g other@{u}@{now}' '
-+	git log -1 -g other@{u}@{now} >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+Some stats:
+    1600 files = 23M text, 770k lines, in 100 directories.
+   Maybe 20000 Git commits, 50M ldap.git/.git/ directory.
+
+-- 
+Hallvard
