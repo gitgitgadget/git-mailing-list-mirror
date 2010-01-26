@@ -1,119 +1,107 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCHv3 3/3] am: fix patch format detection for Thunderbird "Save As" emails
-Date: Mon, 25 Jan 2010 16:33:59 -0800
-Message-ID: <1264466039-22431-4-git-send-email-bebarino@gmail.com>
-References: <1264466039-22431-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Eric Blake <ebb9@byu.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 26 01:34:41 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2010, #08; Sun, 24)
+Date: Tue, 26 Jan 2010 01:59:07 +0100
+Message-ID: <201001260159.09286.jnareb@gmail.com>
+References: <7vfx5u6bn9.fsf@alter.siamese.dyndns.org> <201001260107.25796.jnareb@gmail.com> <4B5E357A.50607@kernel.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, "J.H." <warthog9@eaglescrag.net>
+To: "J.H." <warthog9@kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 26 01:59:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZZOA-0003ys-Lt
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 01:34:39 +0100
+	id 1NZZm6-0002D4-Ja
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 01:59:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751877Ab0AZAeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2010 19:34:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751868Ab0AZAeP
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 19:34:15 -0500
-Received: from mail-gx0-f217.google.com ([209.85.217.217]:51812 "EHLO
-	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751122Ab0AZAeM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2010 19:34:12 -0500
-Received: by mail-gx0-f217.google.com with SMTP id 9so6019367gxk.8
-        for <git@vger.kernel.org>; Mon, 25 Jan 2010 16:34:11 -0800 (PST)
+	id S1752216Ab0AZA7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2010 19:59:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751761Ab0AZA7R
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 19:59:17 -0500
+Received: from mail-fx0-f220.google.com ([209.85.220.220]:54444 "EHLO
+	mail-fx0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750926Ab0AZA7Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2010 19:59:16 -0500
+Received: by fxm20 with SMTP id 20so4232102fxm.21
+        for <git@vger.kernel.org>; Mon, 25 Jan 2010 16:59:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=sgOqw5kYCMXdaeM1nhYdFwWCP0yUFl4BSLNHTJheT5M=;
-        b=oa+HIcO9b1dkLfUd0ZKLwNl7ysXRnXDvr91S/8Um9Qe5rwxHwRL9F+OGgCR++PWTP4
-         174c1S3v+un0vFA6e9beJofS/AQmSeuHju21VTqrzktqD6XgoYSXFbH7/2xqucI2zlxb
-         uFlEXvLtU3Hj1ivEvifiQsbkht2avgp6t7o3s=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=ZZRMyKrfdI1uLxwGyRnQDzI5/SDNiK296Sow4qoUZw4=;
+        b=bjG6ETi6xWhMYRiH6jzlHS/pAgghkYho9us0eCxzOzNCAPk1V24au8oFl9U3XTaOb2
+         SWH7yBPPEPzBQ0djB/1cnusbzkS+/UbS4nEl9l//avqPDIL3mv8nE2R7yJ+cp2V2U6HH
+         Ynl5KMuHl/Tg/1S40MT+TLUY7ePBl0jc1PU2I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=cj3CijEs8TSZrWuoQMI3DArdrXPZyfAN2p/NRx7nfe6k4Anq6Z9RDuhc59PG5IPy2D
-         dWiKngVoKPZpocLqebug5EHB0kMuaQ09V+jDC5Ai7gU8ndoYk2MsG/V0a8bp+GgxMe53
-         Vhu4ZozYeQGCNgJkXRqlv7ur1gl1LOWzTqnZ8=
-Received: by 10.151.3.27 with SMTP id f27mr9367524ybi.339.1264466051812;
-        Mon, 25 Jan 2010 16:34:11 -0800 (PST)
-Received: from localhost (user-0c9haca.cable.mindspring.com [24.152.169.138])
-        by mx.google.com with ESMTPS id 4sm1851237yxd.70.2010.01.25.16.34.10
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=VeVy4zijg67lmVePKvAu4FNGazuhgvONFHvWnYrVMI7psO5QLLH5BSyVMftKHmJ3Jk
+         StPAUvMk+Sw5a8Mo2pewpS9o+rQGfqtOf1cA35F5QWpoS9RD+NomR6LlCQ9J5z7IgkDI
+         WM2iyh0Q0mlwn7SG9o3kSw8gOIVRvKSB3EAzc=
+Received: by 10.103.122.22 with SMTP id z22mr3728506mum.68.1264467554822;
+        Mon, 25 Jan 2010 16:59:14 -0800 (PST)
+Received: from ?192.168.1.13? (abvr10.neoplus.adsl.tpnet.pl [83.8.215.10])
+        by mx.google.com with ESMTPS id j10sm1020030mue.30.2010.01.25.16.59.13
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 25 Jan 2010 16:34:11 -0800 (PST)
-X-Mailer: git-send-email 1.7.0.rc0
-In-Reply-To: <1264466039-22431-1-git-send-email-bebarino@gmail.com>
+        Mon, 25 Jan 2010 16:59:13 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4B5E357A.50607@kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138015>
 
-The patch detection wants to inspect all the headers of a rfc2822 message
-and ensure that they look like header fields. The headers are always
-separated from the message body with a blank line. When Thunderbird saves
-the message the blank line separating the headers from the body includes a
-CR. The patch detection is failing because a CRLF doesn't match /^$/. Fix
-this by allowing a CR to exist on the separating line.
+On Mon, 25 Jan 2010 at 16:21:51 -0800 (PST), J.H. wrote:
+> >
+> > I am waiting for response from (I guess busy) J.H.; I can do the re-roll
+> > if he is too busy to work on it.
+> 
+> I'm juggling about 4 things in the air right now, with gitweb being one 
+> of them, and two of them involving external entities to kernel.org.  
+> It's good news all told, just requires a fair amount of my time 
+> (currently) and babysitting.  I've been digging through the patches 
+> you've got right now.  I should really just pull them in from your git 
+> tree again.
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
+Note however that my series (gitweb/cache-kernel branch) is based on
+gitweb-ml-v2, not on newer gitweb-ml-v5.
 
-I gave up trying to make it portable and now just use append_cr() from
-test-lib. Hopefully this is a much better and simpler approach.
+> After reading through some of the discussions today I've had some more 
+> ideas on the caching stuff, they are written up on my whiteboard and I 
+> might be able to get to shortly, but I've got a rather large wall 
+> looming ahead of me that's going to chew up a *LOT* (read at least a 
+> month, if not two) of my time, so I'm a bit under the gun to try and get 
+> this as far as I can before I hit that wall or this is going to fall by 
+> the wayside again till I've got time again.
 
- git-am.sh     |    3 ++-
- t/t4150-am.sh |   15 +++++++++++++++
- 2 files changed, 17 insertions(+), 1 deletions(-)
+I think the best way of utilizing your time would be for you to take
+active part in discussion, especially in what git.kernel.org needs and why.
 
-diff --git a/git-am.sh b/git-am.sh
-index 2f46fda..c8b9cbb 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -205,7 +205,8 @@ check_patch_format () {
- 			# discarding the indented remainder of folded lines,
- 			# and see if it looks like that they all begin with the
- 			# header field names...
--			sed -n -e '/^$/q' -e '/^[ 	]/d' -e p "$1" |
-+			tr -d '\015' <"$1" |
-+			sed -n -e '/^$/q' -e '/^[ 	]/d' -e p |
- 			sane_egrep -v '^[!-9;-~]+:' >/dev/null ||
- 			patch_format=mbox
- 		fi
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 8296605..a034918 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -83,6 +83,12 @@ test_expect_success setup '
- 		echo "X-Fake-Field: Line Three" &&
- 		git format-patch --stdout first | sed -e "1d"
- 	} > patch1.eml &&
-+	{
-+		echo "X-Fake-Field: Line One" &&
-+		echo "X-Fake-Field: Line Two" &&
-+		echo "X-Fake-Field: Line Three" &&
-+		git format-patch --stdout first | sed -e "1d"
-+	} | append_cr >patch1-crlf.eml &&
- 	sed -n -e "3,\$p" msg >file &&
- 	git add file &&
- 	test_tick &&
-@@ -123,6 +129,15 @@ test_expect_success 'am applies patch e-mail not in a mbox' '
- 	test "$(git rev-parse second^)" = "$(git rev-parse HEAD^)"
- '
- 
-+test_expect_success 'am applies patch e-mail not in a mbox with CRLF' '
-+	git checkout first &&
-+	git am patch1-crlf.eml &&
-+	! test -d .git/rebase-apply &&
-+	test -z "$(git diff second)" &&
-+	test "$(git rev-parse second)" = "$(git rev-parse HEAD)" &&
-+	test "$(git rev-parse second^)" = "$(git rev-parse HEAD^)"
-+'
-+
- GIT_AUTHOR_NAME="Another Thor"
- GIT_AUTHOR_EMAIL="a.thor@example.com"
- GIT_COMMITTER_NAME="Co M Miter"
+I can clean up the miscellaneous improvements parts myself, and re-roll
+caching patches.
+
+> > > For the main caching patch, it seems like good idea to take Jakub's
+> > > split-up series instead, let's see what is J.H.'s opinion on the series?
+> > >     
+> >
+> > Let me at least make them into proper patches, with commit messages and 
+> > configureability at least of the original caching patch by J.H.
+> >
+> > Also the question whether to create 'print -> print $out' patch, or to
+> > manipulate *STDOUT instead must be solved, I think, before applying
+> > those patches... well, at least beyond 'pu'.
+> >
+> > I am waiting for promised J.H. comments, when he will have time for it...
+
 -- 
-1.7.0.rc0
+Jakub Narebski
+Poland
