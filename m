@@ -1,72 +1,81 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] git-gui: use themed tk widgets with Tk 8.5
-Date: Tue, 26 Jan 2010 10:17:03 +0100
-Message-ID: <fabb9a1e1001260117n2d88e793n85cc1cb9aa5b09c4@mail.gmail.com>
-References: <878wbln0oa.fsf@users.sourceforge.net>
+From: Keith Whitwell <keithw@vmware.com>
+Subject: Re: [Mesa3d-dev] mesa_7_7_branch -> master merges
+Date: Tue, 26 Jan 2010 10:59:55 +0000
+Message-ID: <1264503595.18994.5.camel@toffee>
+References: <1264424650.3029.155.camel@jfonseca-laptop>
+	 <auto-000021765525@sci.utah.edu>
+	 <1264443264.3029.255.camel@jfonseca-laptop>
+	 <auto-000021766217@sci.utah.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	msysgit@googlegroups.com
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Tue Jan 26 10:17:30 2010
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jose Fonseca <jfonseca@vmware.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	mesa3d-dev <mesa3d-dev@lists.sourceforge.net>
+To: tom fogal <tfogal@alumni.unh.edu>
+X-From: git-owner@vger.kernel.org Tue Jan 26 12:00:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZhY9-0008GV-6j
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 10:17:29 +0100
+	id 1NZj9Z-000101-Ex
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 12:00:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752592Ab0AZJRZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jan 2010 04:17:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752712Ab0AZJRY
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 04:17:24 -0500
-Received: from mail-pz0-f189.google.com ([209.85.222.189]:56507 "EHLO
-	mail-pz0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752200Ab0AZJRX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jan 2010 04:17:23 -0500
-Received: by pzk27 with SMTP id 27so571523pzk.33
-        for <git@vger.kernel.org>; Tue, 26 Jan 2010 01:17:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=UTTP912dh2nxSwRoCNOhW75JIzOn3KT+3LSDY4guAvk=;
-        b=QJTTHbl7FU9YKWQ7SbQqrNGpBqhIe37q18nu7bnJCiFLVWm1R1bMjPb3+GRSQ5phDk
-         QDHkyl8xwwiW85sFP3llifuEHXmzzQS1icidsCWrm4P4op1ZwxWnqPwZRHCCzkbyr0v5
-         HpbVSUeB3gCZYCr8L6EXLCgVeJ/rndbpJ+2eo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=nxJ2p7sdnYKrgAOGZSsULk27X1hJtnwkDsFVZieh5RASkf16Ov5V5ZTCG8IxWQjZXX
-         s1jSCIFIZRxeDVp58YtRihaNPZDgh6dZX1GUF65fugSVPduRU79FvC/nh7Lj6F24UYOD
-         nbxuZofi9X7H5b2ZVhVyITK+u9YI4/tkufjfA=
-Received: by 10.142.121.9 with SMTP id t9mr1810743wfc.144.1264497443096; Tue, 
-	26 Jan 2010 01:17:23 -0800 (PST)
-In-Reply-To: <878wbln0oa.fsf@users.sourceforge.net>
+	id S1753248Ab0AZLAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2010 06:00:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753197Ab0AZLAA
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 06:00:00 -0500
+Received: from smtp-outbound-1.vmware.com ([65.115.85.69]:39069 "EHLO
+	smtp-outbound-1.vmware.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753180Ab0AZK77 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jan 2010 05:59:59 -0500
+Received: from jupiter.vmware.com (mailhost5.vmware.com [10.16.68.131])
+	by smtp-outbound-1.vmware.com (Postfix) with ESMTP id 2A86D4046;
+	Tue, 26 Jan 2010 02:59:59 -0800 (PST)
+Received: from [10.20.218.207] (unknown [10.20.218.207])
+	by jupiter.vmware.com (Postfix) with ESMTP id 59721DC149;
+	Tue, 26 Jan 2010 02:59:58 -0800 (PST)
+In-Reply-To: <auto-000021766217@sci.utah.edu>
+X-Mailer: Evolution 2.28.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138027>
 
-Heya,
+On Mon, 2010-01-25 at 11:04 -0800, tom fogal wrote:
+> I think we've touched on a core git workflow issue here, and its likely
+> others have hit this && have a solution, so I've added the git ML to
+> the CC list.
+> 
+> Git: the situation in this repo is a fast-moving master that is
+> including many changes to internal interfaces.  Stable branches just
+> get bugfixes, and are periodically merged to master.  However, the more
+> the heads diverge, the more difficult it is for a bugfix to merge into
+> the head.  The major issue is that more experienced developers should
+> really weigh in on these merges, because they tend to automagically
+> undo some of the interface changes.  Yet during such a delay, master
+> inevitably moves, and the bugfixer has to do even more work to "redo"
+> the merge (and potentially get more review!).
+> 
+> Of course, if there are two bugfixers trying to make separate changes
+> in the same time period, this gets worse.
+> 
+> Is there a workflow that can solve this issue?
+> 
 
-On Tue, Jan 26, 2010 at 01:05, Pat Thoyts
-<patthoyts@users.sourceforge.net> wrote:
-> There is a screenshot of this running on Windows 7 at
-> http://www.patthoyts.tk/screenshots/git-gui-win32.png
+Speaking from the Mesa side, I think part of our problem is that it's
+not easy to build the entire mesa tree, which means that the developer
+doing the merge cannot even compile-test the result, meaning that many
+trivial failures go unnoticed.
 
-Wow, that looks a lot better than what we have currently.
+I'd argue that if we had a maximal mesa build target that compiled
+*everything*, regardless of whether it produced drivers or not, we'd
+have a much better chance of catching bogus merge droppings.
 
-> =A026 files changed, 697 insertions(+), 453 deletions(-)
+Despite Jose's valid concerns, I'd still argue that the situation we
+have now is superior to what came before - where people were supposed to
+be cherry-picking bugfixes but more likely they were forgotten or it
+fell on Brian's shoulders to do manually.
 
-But that's a huge change, is there no way to make it smaller (spliti t
-up in multiple patches), so that it's easier to review?
-
---=20
-Cheers,
-
-Sverre Rabbelier
+Keith
