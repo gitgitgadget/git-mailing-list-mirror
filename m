@@ -1,62 +1,68 @@
 From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [PATCH 4/4] Fix integer overflow in unpack_compressed_entry()
-Date: Tue, 26 Jan 2010 20:24:15 +0200
-Message-ID: <1264530255-4682-5-git-send-email-ilari.liusvaara@elisanet.fi>
-References: <1264530255-4682-1-git-send-email-ilari.liusvaara@elisanet.fi>
+Subject: [PATCH 0/2] Allow using ':' in git:// hostname.
+Date: Tue, 26 Jan 2010 20:24:40 +0200
+Message-ID: <1264530282-4783-1-git-send-email-ilari.liusvaara@elisanet.fi>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Tue Jan 26 19:25:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZq6Y-0005Wt-KS
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 19:25:34 +0100
+	id 1NZq6Z-0005Wt-5y
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 19:25:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754827Ab0AZSYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2010 13:24:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754821Ab0AZSYg
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 13:24:36 -0500
-Received: from emh03.mail.saunalahti.fi ([62.142.5.109]:55330 "EHLO
-	emh03.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754793Ab0AZSYW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2010 13:24:22 -0500
-Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
-	by emh03-2.mail.saunalahti.fi (Postfix) with SMTP id 29AB1EBBC0
-	for <git@vger.kernel.org>; Tue, 26 Jan 2010 20:24:21 +0200 (EET)
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
-	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
-	with SMTP (gateway) id A01B5528E26; Tue, 26 Jan 2010 20:24:21 +0200
+	id S1754831Ab0AZSYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2010 13:24:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754812Ab0AZSYq
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 13:24:46 -0500
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:47189 "EHLO
+	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754821Ab0AZSYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2010 13:24:45 -0500
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 0DAA48C918
+	for <git@vger.kernel.org>; Tue, 26 Jan 2010 20:24:44 +0200 (EET)
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A02045B647F; Tue, 26 Jan 2010 20:24:43 +0200
 Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id 1A9D1E51B1
-	for <git@vger.kernel.org>; Tue, 26 Jan 2010 20:24:20 +0200 (EET)
+	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id EF43641BEA
+	for <git@vger.kernel.org>; Tue, 26 Jan 2010 20:24:42 +0200 (EET)
 X-Mailer: git-send-email 1.6.6.1.439.gf06b6
-In-Reply-To: <1264530255-4682-1-git-send-email-ilari.liusvaara@elisanet.fi>
 X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138068>
 
+This series fixes two problems with using addresses containing ':'
+(e.g. IPv6 numeric addresses) with git://:
 
-Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
----
- sha1_file.c |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+1) ':' in hostname makes vhost headers impossible to parse
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 39f0844..ea2ea75 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1517,8 +1517,7 @@ static void *unpack_compressed_entry(struct packed_git *p,
- 	z_stream stream;
- 	unsigned char *buffer, *in;
- 
--	buffer = xmalloc(size + 1);
--	buffer[size] = 0;
-+	buffer = xmallocz(size);
- 	memset(&stream, 0, sizeof(stream));
- 	stream.next_out = buffer;
- 	stream.avail_out = size + 1;
--- 
-1.6.6.1.439.gf06b6
+If there is ':' in address, the vhost headers become impossible
+to parse because ':' is also splits host and port and port is
+optional. Change git-daemon to be able to perform address unwrapping
+so there is uniquely parseable syntax for hostnames containg
+':' (this is compatible to how git-remote-gits encodes such vhost
+headers and how git-daemon2[1] decodes them).
+
+2) Client double-unwraps addresses
+
+With git://, the addresses are unwrapped twice, which breaks
+address parsing for addresses enclosed by [], which in turn is
+required for hostnames containing ':'.  This is changed to unwarp
+the addresses only once. This also changes wrapped addresses to
+be sent as wrapped for vhost headers (the first patch adds ability
+to parse this).
+
+[1] The reference implementation of gits:// server daemon.
+
+Ilari Liusvaara (2):
+  Support addresses with ':' in git-daemon
+  Allow use of []-wrapped addresses in git://
+
+ connect.c |   10 ++++++++--
+ daemon.c  |   34 ++++++++++++++++++++++++++++++----
+ 2 files changed, 38 insertions(+), 6 deletions(-)
