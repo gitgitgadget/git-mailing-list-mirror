@@ -1,161 +1,122 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC PATCH 10/10] gitweb: Show appropriate "Generating..." page when regenerating cache (WIP)
-Date: Tue, 26 Jan 2010 03:30:25 +0100
-Message-ID: <201001260330.26365.jnareb@gmail.com>
-References: <cover.1264198194.git.jnareb@gmail.com> <201001251448.27513.jnareb@gmail.com> <4B5E01F5.20402@eaglescrag.net>
+From: Michael Ludwig <michael.ludwig@xing.com>
+Subject: Re: git status showing phantom modifications
+Date: Tue, 26 Jan 2010 10:14:31 +0100
+Message-ID: <59B5C4C4-6E95-4BAA-9351-B88B6309E022@xing.com>
+References: <9B3C1167-7667-4B1F-BEE5-F47FE89F8692@xing.com>
+ <be6fef0d1001250303p2c12381ao7d3a8a1d48eebb56@mail.gmail.com>
+ <4017EB11-4B29-4599-B19A-91BC39632BBF@xing.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
-	"John 'Warthog9' Hawley" <warthog9@kernel.org>
-To: "J.H." <warthog9@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Tue Jan 26 03:32:15 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 26 10:14:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZbCK-0007aw-Sp
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 03:30:33 +0100
+	id 1NZhVO-0007Oq-Lg
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 10:14:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752776Ab0AZCa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2010 21:30:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752653Ab0AZCa2
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 21:30:28 -0500
-Received: from mail-fx0-f215.google.com ([209.85.220.215]:59304 "EHLO
-	mail-fx0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752370Ab0AZCa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2010 21:30:27 -0500
-Received: by fxm7 with SMTP id 7so799999fxm.28
-        for <git@vger.kernel.org>; Mon, 25 Jan 2010 18:30:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=1DcUkChvSVCqyVqj3htV0WvO1YRWhF8hwlb+4hDkEAk=;
-        b=XHCykZ2Q5lVQaf4kz0EHdd0hguac9bCm7anfiCJJD6fgoEZxgCD9bE8jkLXfJ0lT51
-         hpFEqxlnoWkvLoadyymN0oFJ3Gk4DPAFtVo5lAv8Q2IqTknaTxLrMIfX7UqoZnVlJ2FU
-         ltT0MMElDsU81LI9eVEqGrR4iAHxczRxhLhe4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=JoZZxIOnv1A5h/a8jjI/hK97AeMDWfommA2ZJQJXD3xZ5tWj/KXmU9gIvr2XTzReTz
-         K0lp9Fyzc8H1UfneXEaPLYU4a24jkbxYGSJ4P+Sbh9lSI4i8yugh41GoBtJHr8U92R5y
-         V+3hgzS0YjT/Mz9Ky3usmhH+77HZpvLH6XnOY=
-Received: by 10.223.60.138 with SMTP id p10mr7739139fah.32.1264473025837;
-        Mon, 25 Jan 2010 18:30:25 -0800 (PST)
-Received: from ?192.168.1.13? (abvr10.neoplus.adsl.tpnet.pl [83.8.215.10])
-        by mx.google.com with ESMTPS id 31sm7399133fkt.1.2010.01.25.18.30.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 25 Jan 2010 18:30:24 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4B5E01F5.20402@eaglescrag.net>
-Content-Disposition: inline
+	id S1752039Ab0AZJOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2010 04:14:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752009Ab0AZJOd
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 04:14:33 -0500
+Received: from mail43-3.xing.com ([62.96.140.163]:56534 "EHLO
+	mail43-3.xing.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751971Ab0AZJOc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jan 2010 04:14:32 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail43-3.xing.com (Postfix) with ESMTP id 7846D30007B96
+	for <git@vger.kernel.org>; Tue, 26 Jan 2010 10:14:30 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xing.com; h=
+	mime-version:content-transfer-encoding:content-type
+	:content-language:accept-language:in-reply-to:references
+	:message-id:subject:date:from:received:received:received:
+	x-virus-scanned; s=main; t=1264497270; bh=C16j3aVg+JHQ9xyVIgTXOr
+	7UYvkWaBNyobQeBEmtxwE=; b=IYws4Gflxn0jncRxlhGBiPWwzD28c12kPJ1DUC
+	Ui3O/LqzSFpfMP+nc9o6plIO5wVMCOqOSYv2B7eilIQNMEjhGev713y6Ds7gTKN6
+	IRixKXRhuatR6SbdRRl7BI2bq8v9pzXX1TRyLihF9vtoR3HdiotbaZkwZsEP2Elt
+	FAP0A=
+X-Virus-Scanned: Debian amavisd-new at obc-mail43-3.rz.xing.com
+Received: from mail43-3.xing.com ([127.0.0.1])
+	by localhost (obc-mail43-3.rz.xing.com [127.0.0.1]) (amavisd-new, port 10030)
+	with ESMTP id SxQq0Deh7wU8 for <git@vger.kernel.org>;
+	Tue, 26 Jan 2010 10:14:30 +0100 (CET)
+Received: from luftpostix.xing.hh (unknown [172.20.1.5])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by mail43-3.xing.com (Postfix) with ESMTPS id 60BDA30000781
+	for <git@vger.kernel.org>; Tue, 26 Jan 2010 10:14:29 +0100 (CET)
+Received: from luftpostix.xing.hh ([172.20.1.5]) by luftpostix.xing.hh
+ ([172.20.1.5]) with mapi; Tue, 26 Jan 2010 10:14:29 +0100
+Thread-Topic: git status showing phantom modifications
+Thread-Index: AcqeZ/Z3lMhE4ux+SOmIyssItKs3lw==
+In-Reply-To: <4017EB11-4B29-4599-B19A-91BC39632BBF@xing.com>
+Accept-Language: de-DE
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: de-DE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138025>
 
-On Mon, 25 Jan 2010, J.H. wrote:
-> On 01/25/2010 05:48 AM, Jakub Narebski wrote:
->> On Mon, Jan 25, 2010, Petr Baudis wrote:
->>> On Mon, Jan 25, 2010 at 12:46:39PM +0100, Jakub Narebski wrote:
->>>> On Sun, 24 Jan 2010, Petr Baudis wrote:
->> 
->>>>>   I have stupid question, common to both the original patch and this
->>>>> RFC.
->>>>>
->>>>>> [RFC PATCH 10/10] gitweb: Show appropriate "Generating..." page when
->>>>>> regenerating cache (WIP)
->>>>>
->>>>>   Just why is a "Generating..." page appropriate?
->>>>>
->>>>>   I have to admit I hate it; can you please at least make it
->>>>> configurable? Why is it needed at all? It [...] confuses
->>>>> non-interactive HTTP clients [...]
->> 
->>>> Second, gitweb can always check User-Agent header, and serve 
->>>> "Generating..." page only to web browsers:
->>>>
->>>>   unless (defined $cgi->user_agent() &&
->>>>           $cgi->user_agent() =~ /\b(Mozilla|Opera)\b/i) {
->>>>   	return;
->>>>   }
->>>>
->>>> or something like that.
->>>
->>> I'm not too happy with this. What about Safari? Opera? ELinks? There's a
->>> lot of web browsers.
->> 
->> The "Mozilla" part would catch all "Mozilla compatibile" web browsers,
->> including Firefox (and other Gecko-based web browsers), Internet Explorer,
->> WebKit based browsers including Safari and Chrome and Konqueror.
->> The "Opera" part would catch Opera.
->> http://www.nczonline.net/blog/2010/01/12/history-of-the-user-agent-string/
->> 
->> As to other web browsers like Elinks, Lynx, w3m, Dillo, etc.: the issue
->> is whether they honor '<meta http-equiv="refresh" content="0" />'.  
->> I think it is better to stay on the safe side; it is not disaster if web
->> browser is not shown "Generating..." page where it could (but see 
->> explanation below).
-> 
-> Most of them do, that particular tag has been around for a long time and
-> since it doesn't require Javascript to do the page refresh it's pretty
-> much universal.
+Am 25.01.2010 um 12:43 schrieb Michael Ludwig:
 
-For this method to work there is additional assumption about web browser,
-namely that it would follow refresh only after it gets page in full (only
-when connection closes).  But perhaps that is true for all web browsers
-following http-equiv refresh.
+> Reading up about core.fileMode in git-config(1), I think you've pointed
+> me to the solution. I should probably just set it to false. If that doesn't
+> solve the issue, I'll report back.
 
-> 
-> The problem is going to be with things like wget when someone wants to
-> snag a binary file.  This works fine if the file is already cached, but
-> the user doesn't get what they are expecting if they get a blob that
-> isn't the final file, but the html contents of the page.  I don't know
-> of any hint that things like wget would send to the server that you
-> could switch based on, but it would be more or less the non-background
-> caching state.
+Back with more info:
 
-Well, the above solution would work as long as you don't run wget with
---user-agent.
+git version 1.6.4.2
 
-[...]
->>> But if it will be possible to turn this off eventually, it's all your
->>> call whether to bother implementing it. :-)
->> 
->> In my implementation it is (or rather would be) as simple as just
->> not passing 'generating_info' => \&git_generating_data_html in the
->> GitwebCache::SimpleFileCache constructor.
-> 
-> At least in mine it was don't allow background caching.  It would force
-> everyone to wait on the one process that was actually generating
-> content.  But it means a few blank pages with a spinning working icon
-> until the cache releases it's exclusive lock.
+Before adding any core.filemode setting to ~/.gitconfig or .git/config:
 
-Theoretically at least having "Generating..." page is orthogonal to using
-locking, to background serving and to serving stale data.  In current 
-implementation those features are dependent, serving stale data on locking,
-and "Generating..." also on locking.
+michael@wladimir:/cygdrive/m/REPOS6.TECH.git/comp :-) git config -l
+user.name=Michael Ludwig
+user.email=...
+core.repositoryformatversion=0
+core.filemode=true                      <= filemode already present
+core.bare=false
+core.logallrefupdates=true
+core.ignorecase=true
+core.autocrlf=false
+svn-remote.svn.ignore-paths=^(some|paths)
+svn-remote.svn.url=svn://localhost
+svn-remote.svn.fetch=:refs/remotes/git-svn
+svn.authorsfile=authors.txt
 
-I think that serving stale data should depend on background caching, as
-otherwise we introduce inequality in treating process which regenerates
-cache (and must wait without background caching) and rest of processes
-(which are served stale data).
+My git status output after cd to subdir shows many files "modified". But
+they aren't! Edited ~/.gitconfig to include core.filemode = true [sic].
+Here's the diff for the git config output:
 
-Certainly in final version of patch all this should be made configurable.
+--- /home/michael/a     2010-01-25 20:36:53.140625000 +0100
++++ /home/michael/b     2010-01-25 20:37:01.421875000 +0100
+@@ -4,6 +4,7 @@
+alias.ci=checkin
+alias.co=checkout
+alias.br=branch
++core.filemode=true
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
 
- 
-P.S. With background caching there is a question whether parent should
-generate and child display stale or "Generating...", or whether parent
-should display stale/activity and child (re)generate cache entry.  Also
-there is an issue whether parent should waitpid for child, would fiddling
-with SIGCHLD handler be enough, or is it not needed.
+We're seeing core.filemode appear *twice*. Why that?
+
+michael@wladimir:/cygdrive/m/REPOS6.TECH.git/comp :-) git st
+# On branch master
+nothing to commit (working directory clean)
+
+So it seems adding core.filemode = true has fixed the issue, or at least
+covered the symptoms. Adding core.filemode = false did not cause the
+phantom modifications to disappear. Note that from reading git-config(1),
+I had rather assumed this latter setting to have the desired effect.
+
+And something seems to be wrong here. Why are modifications flagged when
+doing git status from a subdir but not from the topdir?
 
 -- 
-Jakub Narebski
-Poland
+Michael.Ludwig (#) XING.com
