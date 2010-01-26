@@ -1,75 +1,124 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH v4] Threaded grep
-Date: Tue, 26 Jan 2010 07:28:41 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.1001260728260.3574@localhost.localdomain>
-References: <20100125225139.GA3048@fredrik-laptop>  <alpine.LFD.2.00.1001251542100.3574@localhost.localdomain> <4c8ef71001260410l2afd2dbx17b6e216bd9e5d8@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 00/12] Re: Makefile: add missing header dependency rules
+Date: Tue, 26 Jan 2010 09:43:57 -0600
+Message-ID: <20100126154357.GA4895@progeny.tock>
+References: <20100123144201.GA11903@progeny.tock>
+ <7v3a1u6bfz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Fredrik Kuivinen <frekui@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 16:30:14 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Erik Faye-Lund <kusmabite@googlemail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 26 16:44:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZnMl-0000qr-T1
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 16:30:08 +0100
+	id 1NZnaH-0000B1-Py
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 16:44:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752547Ab0AZPaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2010 10:30:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752477Ab0AZPaA
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 10:30:00 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:46949 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752140Ab0AZP37 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jan 2010 10:29:59 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0QFSgaS024864
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 26 Jan 2010 07:28:43 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o0QFSfA3000653;
-	Tue, 26 Jan 2010 07:28:41 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <4c8ef71001260410l2afd2dbx17b6e216bd9e5d8@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.946 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753980Ab0AZPn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2010 10:43:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753876Ab0AZPn7
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 10:43:59 -0500
+Received: from mail-iw0-f173.google.com ([209.85.223.173]:44246 "EHLO
+	mail-iw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753776Ab0AZPn6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2010 10:43:58 -0500
+Received: by iwn3 with SMTP id 3so474436iwn.19
+        for <git@vger.kernel.org>; Tue, 26 Jan 2010 07:43:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=b1yQSgzeZBygHtZ/LJnNbqD1NPo+SYkI2uvAKdWlNkQ=;
+        b=exsTm4Zvzsy05J+B9WlmlP7zQweNjn1pbb3DCGO3cDD09jQmN94V4gpC+J2ABU5K+B
+         RCzNeoOBLuWF+dTkUapCxIvfwvDl4UWyfFyMFxte3DM56hO8/b8rXMCgFxZ+4OeCopuy
+         18h4YyRiWZ1YzfqyMi0PtJteR2NlplaBTzXls=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=w+tr7SGT20w+3DvpdW+8U5LDmIYPgdZrjEsJh0Awg2MrKj50bujuq2GJ+rpjsnwL0+
+         /oF48Q4NJSKCZTnK/cgkiNv0eRFSG8k/iMcXjZ9hBU10uX6EDaDVnwLTwUedHYWhyu4K
+         MMigYyrk4dJvizi9bGMEqDPYDak9Rz5O7pSHQ=
+Received: by 10.231.148.207 with SMTP id q15mr1706751ibv.45.1264520637725;
+        Tue, 26 Jan 2010 07:43:57 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 21sm6007198iwn.10.2010.01.26.07.43.55
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 26 Jan 2010 07:43:56 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7v3a1u6bfz.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138041>
 
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-On Tue, 26 Jan 2010, Fredrik Kuivinen wrote:
-> 
-> I see the strlen in my profiles as well, but I haven't figured out
-> where it comes from.
+>> These patches are independent of the jn/makefile topic.  I sent them
+>> before, but I screwed up the sender so nobody received them.  Anyway,
+>> perhaps they could be useful.
+>
+> I found all of them sensible but it seems to be based on version that is a
+> bit behind...
 
-Looks like this in gdb:
+Thanks.  Patches 1-5 below are those I sent before, rebased against
+maint.  Since last time, remote-curl.o gained a few more dependencies,
+which are included.
 
-#0  0x0000003e3687f2e0 in __strlen_sse2 () from /lib64/libc.so.6
-#1  0x0000003e368c04c5 in regexec@@GLIBC_2.3.4 () from /lib64/libc.so.6
-#2  0x000000000047677a in look_ahead (opt=<value optimized out>, 
-    name=<value optimized out>, buf=<value optimized out>, 
-    size=<value optimized out>, collect_hits=<value optimized out>)
-    at grep.c:679
-#3  grep_buffer_1 (opt=<value optimized out>, name=<value optimized out>, 
-    buf=<value optimized out>, size=<value optimized out>, 
-    collect_hits=<value optimized out>) at grep.c:790
+The remainder of this series is based on a merge of master and
+patches 1-5:
 
-so it's sadly internal to regex. It would be nice if there was a 
-non-string interface to regexec (ie a "buffer + length" instead of a 
-NUL-terminated string).
+ Patch 6 adds another missing header dependency rule.  It is not
+ included with the others because it applies to master, not maint.
 
-> If I use perf record -g I get
+ Patches 7-12 revisit the topic of generating header dependency
+ rules on the fly.  I updated them to produce patches 1-6, so I
+ thought, why not get some feedback on their present state?
 
-I suspect that libc isn't compiled with frame pointers, so call chains end 
-up being unreliable.
+Patch 7 clumps the header dependency rules together.  I think this
+makes them more readable; more importantly, later this will allow
+ifdef'ing them out later in one fell swoop.
 
-		Linus
+Patches 8-9 and 11 list all targets that can depend on headers in a
+new OBJECTS variable, for use in patches 10 and 12.
+
+Patch 10 generates header dependency rules on the fly.  The resulting
+dependency rules contain no useless dependencies (unlike the
+hard-coded ones where almost everything depends on $(LIB_H)), so this
+might be interesting to people wishing to speed up the
+edit-compile-run cycle.
+
+This only works with gcc.  It should be possible to teach the relevant
+options to clink.pl if there is demand, but not SCO cc.
+
+Patch 12 is what I am most interested in: it uses the computed
+dependencies to check that the hard-coded dependency rules are
+correct.  In the long term, maybe we will be able to get rid of the
+hard-coded header dep rules altogether; in the short term, I am hoping
+this checker can be useful for avoiding problems with the hard-coded
+rules without spending too much human time on it.
+
+Enjoy,
+Jonathan Nieder (12):
+  Makefile: add missing header file dependencies
+  Makefile: make sure test helpers are rebuilt when headers change
+  Makefile: remove wt-status.h from LIB_H
+  Makefile: clean up http-walker.o dependency rules
+  Makefile: drop dependency on $(wildcard */*.h)
+  Makefile: transport.o depends on branch.h now
+  Makefile: rearrange dependency rules
+  Makefile: disable default implicit rules
+  Makefile: list generated object files in OBJECTS macro
+  Makefile: lazily compute header dependencies
+  Makefile: list standalone program object files in PROGRAM_OBJS
+  Teach Makefile to check header dependencies
