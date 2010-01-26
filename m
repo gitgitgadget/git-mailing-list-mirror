@@ -1,122 +1,72 @@
-From: Michael Ludwig <michael.ludwig@xing.com>
-Subject: Re: git status showing phantom modifications
-Date: Tue, 26 Jan 2010 10:14:31 +0100
-Message-ID: <59B5C4C4-6E95-4BAA-9351-B88B6309E022@xing.com>
-References: <9B3C1167-7667-4B1F-BEE5-F47FE89F8692@xing.com>
- <be6fef0d1001250303p2c12381ao7d3a8a1d48eebb56@mail.gmail.com>
- <4017EB11-4B29-4599-B19A-91BC39632BBF@xing.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] git-gui: use themed tk widgets with Tk 8.5
+Date: Tue, 26 Jan 2010 10:17:03 +0100
+Message-ID: <fabb9a1e1001260117n2d88e793n85cc1cb9aa5b09c4@mail.gmail.com>
+References: <878wbln0oa.fsf@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 26 10:14:39 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	msysgit@googlegroups.com
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Jan 26 10:17:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZhVO-0007Oq-Lg
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 10:14:39 +0100
+	id 1NZhY9-0008GV-6j
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 10:17:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752039Ab0AZJOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2010 04:14:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752009Ab0AZJOd
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 04:14:33 -0500
-Received: from mail43-3.xing.com ([62.96.140.163]:56534 "EHLO
-	mail43-3.xing.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751971Ab0AZJOc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jan 2010 04:14:32 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail43-3.xing.com (Postfix) with ESMTP id 7846D30007B96
-	for <git@vger.kernel.org>; Tue, 26 Jan 2010 10:14:30 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xing.com; h=
-	mime-version:content-transfer-encoding:content-type
-	:content-language:accept-language:in-reply-to:references
-	:message-id:subject:date:from:received:received:received:
-	x-virus-scanned; s=main; t=1264497270; bh=C16j3aVg+JHQ9xyVIgTXOr
-	7UYvkWaBNyobQeBEmtxwE=; b=IYws4Gflxn0jncRxlhGBiPWwzD28c12kPJ1DUC
-	Ui3O/LqzSFpfMP+nc9o6plIO5wVMCOqOSYv2B7eilIQNMEjhGev713y6Ds7gTKN6
-	IRixKXRhuatR6SbdRRl7BI2bq8v9pzXX1TRyLihF9vtoR3HdiotbaZkwZsEP2Elt
-	FAP0A=
-X-Virus-Scanned: Debian amavisd-new at obc-mail43-3.rz.xing.com
-Received: from mail43-3.xing.com ([127.0.0.1])
-	by localhost (obc-mail43-3.rz.xing.com [127.0.0.1]) (amavisd-new, port 10030)
-	with ESMTP id SxQq0Deh7wU8 for <git@vger.kernel.org>;
-	Tue, 26 Jan 2010 10:14:30 +0100 (CET)
-Received: from luftpostix.xing.hh (unknown [172.20.1.5])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by mail43-3.xing.com (Postfix) with ESMTPS id 60BDA30000781
-	for <git@vger.kernel.org>; Tue, 26 Jan 2010 10:14:29 +0100 (CET)
-Received: from luftpostix.xing.hh ([172.20.1.5]) by luftpostix.xing.hh
- ([172.20.1.5]) with mapi; Tue, 26 Jan 2010 10:14:29 +0100
-Thread-Topic: git status showing phantom modifications
-Thread-Index: AcqeZ/Z3lMhE4ux+SOmIyssItKs3lw==
-In-Reply-To: <4017EB11-4B29-4599-B19A-91BC39632BBF@xing.com>
-Accept-Language: de-DE
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: de-DE
+	id S1752592Ab0AZJRZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jan 2010 04:17:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752712Ab0AZJRY
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 04:17:24 -0500
+Received: from mail-pz0-f189.google.com ([209.85.222.189]:56507 "EHLO
+	mail-pz0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752200Ab0AZJRX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jan 2010 04:17:23 -0500
+Received: by pzk27 with SMTP id 27so571523pzk.33
+        for <git@vger.kernel.org>; Tue, 26 Jan 2010 01:17:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=UTTP912dh2nxSwRoCNOhW75JIzOn3KT+3LSDY4guAvk=;
+        b=QJTTHbl7FU9YKWQ7SbQqrNGpBqhIe37q18nu7bnJCiFLVWm1R1bMjPb3+GRSQ5phDk
+         QDHkyl8xwwiW85sFP3llifuEHXmzzQS1icidsCWrm4P4op1ZwxWnqPwZRHCCzkbyr0v5
+         HpbVSUeB3gCZYCr8L6EXLCgVeJ/rndbpJ+2eo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=nxJ2p7sdnYKrgAOGZSsULk27X1hJtnwkDsFVZieh5RASkf16Ov5V5ZTCG8IxWQjZXX
+         s1jSCIFIZRxeDVp58YtRihaNPZDgh6dZX1GUF65fugSVPduRU79FvC/nh7Lj6F24UYOD
+         nbxuZofi9X7H5b2ZVhVyITK+u9YI4/tkufjfA=
+Received: by 10.142.121.9 with SMTP id t9mr1810743wfc.144.1264497443096; Tue, 
+	26 Jan 2010 01:17:23 -0800 (PST)
+In-Reply-To: <878wbln0oa.fsf@users.sourceforge.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138026>
 
-Am 25.01.2010 um 12:43 schrieb Michael Ludwig:
+Heya,
 
-> Reading up about core.fileMode in git-config(1), I think you've pointed
-> me to the solution. I should probably just set it to false. If that doesn't
-> solve the issue, I'll report back.
+On Tue, Jan 26, 2010 at 01:05, Pat Thoyts
+<patthoyts@users.sourceforge.net> wrote:
+> There is a screenshot of this running on Windows 7 at
+> http://www.patthoyts.tk/screenshots/git-gui-win32.png
 
-Back with more info:
+Wow, that looks a lot better than what we have currently.
 
-git version 1.6.4.2
+> =A026 files changed, 697 insertions(+), 453 deletions(-)
 
-Before adding any core.filemode setting to ~/.gitconfig or .git/config:
+But that's a huge change, is there no way to make it smaller (spliti t
+up in multiple patches), so that it's easier to review?
 
-michael@wladimir:/cygdrive/m/REPOS6.TECH.git/comp :-) git config -l
-user.name=Michael Ludwig
-user.email=...
-core.repositoryformatversion=0
-core.filemode=true                      <= filemode already present
-core.bare=false
-core.logallrefupdates=true
-core.ignorecase=true
-core.autocrlf=false
-svn-remote.svn.ignore-paths=^(some|paths)
-svn-remote.svn.url=svn://localhost
-svn-remote.svn.fetch=:refs/remotes/git-svn
-svn.authorsfile=authors.txt
+--=20
+Cheers,
 
-My git status output after cd to subdir shows many files "modified". But
-they aren't! Edited ~/.gitconfig to include core.filemode = true [sic].
-Here's the diff for the git config output:
-
---- /home/michael/a     2010-01-25 20:36:53.140625000 +0100
-+++ /home/michael/b     2010-01-25 20:37:01.421875000 +0100
-@@ -4,6 +4,7 @@
-alias.ci=checkin
-alias.co=checkout
-alias.br=branch
-+core.filemode=true
-core.repositoryformatversion=0
-core.filemode=true
-core.bare=false
-
-We're seeing core.filemode appear *twice*. Why that?
-
-michael@wladimir:/cygdrive/m/REPOS6.TECH.git/comp :-) git st
-# On branch master
-nothing to commit (working directory clean)
-
-So it seems adding core.filemode = true has fixed the issue, or at least
-covered the symptoms. Adding core.filemode = false did not cause the
-phantom modifications to disappear. Note that from reading git-config(1),
-I had rather assumed this latter setting to have the desired effect.
-
-And something seems to be wrong here. Why are modifications flagged when
-doing git status from a subdir but not from the topdir?
-
--- 
-Michael.Ludwig (#) XING.com
+Sverre Rabbelier
