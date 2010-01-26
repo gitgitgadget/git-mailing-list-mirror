@@ -1,129 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] t1506: more test for @{upstream} syntax
-Date: Tue, 26 Jan 2010 08:07:45 -0500
-Message-ID: <20100126130745.GB28179@coredump.intra.peff.net>
-References: <1263980322-4142-1-git-send-email-gitster@pobox.com>
- <1263980322-4142-2-git-send-email-gitster@pobox.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 01/18] rebase -i: Make the condition for an "if" more
+ transparent
+Date: Tue, 26 Jan 2010 14:11:03 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1001261410340.4641@intel-tinevez-2-302>
+References: <cover.1263447037.git.mhagger@alum.mit.edu> <aa37ee8a68d460df172b23b4999fbe4ce7d77c1e.1263447037.git.mhagger@alum.mit.edu> <alpine.DEB.1.00.1001251927460.8733@intel-tinevez-2-302> <4B5EE257.8060204@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 14:07:54 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jan 26 14:11:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZl98-0006JG-6g
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 14:07:54 +0100
+	id 1NZlCL-0007eo-G6
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 14:11:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752466Ab0AZNHv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2010 08:07:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752147Ab0AZNHu
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 08:07:50 -0500
-Received: from peff.net ([208.65.91.99]:37957 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751398Ab0AZNHu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2010 08:07:50 -0500
-Received: (qmail 23909 invoked by uid 107); 26 Jan 2010 13:07:48 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 26 Jan 2010 08:07:48 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Jan 2010 08:07:45 -0500
-Content-Disposition: inline
-In-Reply-To: <1263980322-4142-2-git-send-email-gitster@pobox.com>
+	id S1753147Ab0AZNLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2010 08:11:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753106Ab0AZNLI
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 08:11:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57317 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752366Ab0AZNLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2010 08:11:07 -0500
+Received: (qmail invoked by alias); 26 Jan 2010 13:11:04 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp070) with SMTP; 26 Jan 2010 14:11:04 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18tP+1B5+gt2/16QLlHCGhymyc5rwx3ayxowV6Oy5
+	XJUsxAM8a3S3bU
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <4B5EE257.8060204@alum.mit.edu>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58999999999999997
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138037>
 
-On Wed, Jan 20, 2010 at 01:38:41AM -0800, Junio C Hamano wrote:
+Hi,
 
-> This adds a few more tests that exercises @{upstream} syntax by commands
-> that operate differently when they are given branch name as opposed to a
-> refname (i.e. where "master" and "refs/heads/master" makes a difference).
+On Tue, 26 Jan 2010, Michael Haggerty wrote:
 
-Overall this looks good, but there are a few minor defects. I haven't
-had a chance to fix them yet, but here are tests showing them. I hope to
-get to them pre-1.7.0, but please feel free to take a crack at them if
-you want.
+> Johannes Schindelin wrote:
+> > On Thu, 14 Jan 2010, Michael Haggerty wrote:
+> > 
+> >> @@ -166,7 +166,8 @@ pick_one () {
+> >>  	parent_sha1=$(git rev-parse --verify $sha1^) ||
+> >>  		die "Could not get the parent of $sha1"
+> >>  	current_sha1=$(git rev-parse --verify HEAD)
+> >> -	if test "$no_ff$current_sha1" = "$parent_sha1"; then
+> >> +	if test -z "$no_ff" -a "$current_sha1" = "$parent_sha1"
+> > 
+> > Rather use &&, right?
+> 
+> Yes, that mistake was caused by my own ignorance about the portability
+> issues.  This problem was already discussed [1] and the change has been
+> integrated into master.
 
-The first one is that @{usptream} silently becomes @{0}. I think
-we need to double-check whether approxidate found absolutely nothing,
-and complain if that is the case.
+Thanks for the clarification, and sorry for not reviewing your series 
+before Junio applied it.
 
-diff --git a/t/t0101-at-syntax.sh b/t/t0101-at-syntax.sh
-new file mode 100755
-index 0000000..da43386
---- /dev/null
-+++ b/t/t0101-at-syntax.sh
-@@ -0,0 +1,41 @@
-+#!/bin/sh
-+
-+test_description='various @{whatever} syntax tests'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit one &&
-+	test_commit two
-+'
-+
-+check_at() {
-+	echo "$2" >expect &&
-+	git log -1 --format=%s "$1" >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success '@{0} shows current' '
-+	check_at @{0} two
-+'
-+
-+test_expect_success '@{1} shows old' '
-+	check_at @{1} one
-+'
-+
-+test_expect_success '@{now} shows current' '
-+	check_at @{now} two
-+'
-+
-+test_expect_success '@{30.years.ago} shows old' '
-+	check_at @{30.years.ago} one
-+'
-+
-+test_expect_success 'silly approxidates work' '
-+	check_at @{3.hot.dogs.and.30.years.ago} one
-+'
-+
-+test_expect_failure 'complain about total nonsense' '
-+	test_must_fail git log -1 --format=%s @{utter.bogosity}
-+'
-+
-+test_done
-
-The second one is that "log -g branch@{u}" shows the correct commits
-(from the upstream of "branch"), but displays the incorrect reflog
-information (it shows information for "branch", not for its upstream).
-
-diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
-index 95c9b09..cbe1b25 100755
---- a/t/t1507-rev-parse-upstream.sh
-+++ b/t/t1507-rev-parse-upstream.sh
-@@ -107,4 +107,18 @@ test_expect_success 'checkout other@{u}' '
- 	test_cmp expect actual
- '
- 
-+cat >expect <<EOF
-+commit 8f489d01d0cc65c3b0f09504ec50b5ed02a70bd5
-+Reflog: refs/heads/master@{0} (C O Mitter <committer@example.com>)
-+Reflog message: branch: Created from HEAD
-+Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:15:13 2005 -0700
-+
-+    3
-+EOF
-+test_expect_failure 'log -g other@{u}' '
-+	git log -1 -g other@{u} >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+Ciao,
+Dscho
