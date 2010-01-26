@@ -1,82 +1,68 @@
-From: Bill Lear <rael@zopyra.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 Subject: Re: [PATCH 1/4] Add xmallocz()
-Date: Tue, 26 Jan 2010 14:56:06 -0600
-Message-ID: <19295.22246.788034.159299@blake.zopyra.com>
+Date: Tue, 26 Jan 2010 23:13:48 +0200
+Message-ID: <20100126211347.GA9194@Knoppix>
 References: <1264530255-4682-1-git-send-email-ilari.liusvaara@elisanet.fi>
-	<1264530255-4682-2-git-send-email-ilari.liusvaara@elisanet.fi>
-	<19295.21148.182245.516321@blake.zopyra.com>
-	<7v1vhczj95.fsf@alter.siamese.dyndns.org>
+ <1264530255-4682-2-git-send-email-ilari.liusvaara@elisanet.fi>
+ <19295.21148.182245.516321@blake.zopyra.com>
+ <7v1vhczj95.fsf@alter.siamese.dyndns.org>
+ <7vwrz4y4gf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 21:56:15 2010
+X-From: git-owner@vger.kernel.org Tue Jan 26 22:13:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZsSN-0005Uq-IE
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 21:56:15 +0100
+	id 1NZsjV-0005fv-Rl
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 22:13:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752645Ab0AZU4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2010 15:56:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752596Ab0AZU4L
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 15:56:11 -0500
-Received: from 75-27-130-60.lightspeed.austtx.sbcglobal.net ([75.27.130.60]:42024
-	"HELO blake.zopyra.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1752103Ab0AZU4K (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2010 15:56:10 -0500
-Received: (qmail 26640 invoked by uid 500); 26 Jan 2010 20:56:09 -0000
-In-Reply-To: <7v1vhczj95.fsf@alter.siamese.dyndns.org>
-X-Mailer: VM 8.1.0-beta under 23.1.1 (i386-redhat-linux-gnu)
+	id S1752963Ab0AZVNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2010 16:13:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752680Ab0AZVNx
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 16:13:53 -0500
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:54768 "EHLO
+	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752513Ab0AZVNw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2010 16:13:52 -0500
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 886D38C987;
+	Tue, 26 Jan 2010 23:13:51 +0200 (EET)
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A038B183BD6; Tue, 26 Jan 2010 23:13:51 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id 7B1A3158A64;
+	Tue, 26 Jan 2010 23:13:48 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <7vwrz4y4gf.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138077>
 
-On Tuesday, January 26, 2010 at 12:47:02 (-0800) Junio C Hamano writes:
->Bill Lear <rael@zopyra.com> writes:
->
->> On Tuesday, January 26, 2010 at 20:24:12 (+0200) Ilari Liusvaara writes:
->>>Add routine for allocating NUL-terminated memory block without risking
->>>integer overflow in addition of +1 for NUL byte.
->>>...
->>> void *xmemdupz(const void *data, size_t len)
->>> {
->>>-	char *p = xmalloc(len + 1);
->>>+	char *p = xmallocz(len);
->>> 	memcpy(p, data, len);
->>> 	p[len] = '\0';
->>> 	return p;
->>
->> Do you need the statement
->>
->>  	p[len] = '\0';
->>
->> any longer in the above?  If not, could you just do this:
->>
->> void *xmemdupz(const void *data, size_t len)
->> {
->> 	return memcpy(xmallocz(len), data, len);
->> }
->
->I think the intention to name it xmallocz() was "This is to allocate
->buffer to hold 'len' bytes worth of stuff, and between the caller and this
->function the buffer is arranged to be NUL terminated".  Even though none
->of the existing callers of xmalloc() expected the function to do the NUL
->termination (hence they do NUL termination themselves), I _think_ Ilari
->made the function to do this because its name now ends with "z" that hints
->the callers such a NUL-termination might happen inside the function.
->
->I'd rather see the function lose the NUL termination; if that makes the
->behaviour inconsistent with its name, perhaps it is better to rename the
->function; perhaps xmalloc1() to denote that it overallocates by one?
+On Tue, Jan 26, 2010 at 12:52:00PM -0800, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > I'd rather see the function lose the NUL termination; if that makes the
+> > behaviour inconsistent with its name, perhaps it is better to rename the
+> > function; perhaps xmalloc1() to denote that it overallocates by one?
+> 
+> Actually I take that back---all the callers do benefit from the allocator
+> giving a buffer that is pre-terminated with NUL.
+> 
+> We can also lose "buf[size] = 0" from unpack_sha1_rest() patch.
 
-Why have xmallocz/xmalloc1 lose the NUL termination?  Is it because some
-call sites don't need the NUL termination?  [I spotted one, I think, in
-the patch series...].
+If that line would be next to xmalloc() line, I would have removed it, but
+because it was beyound loop, I was worried that something might be done
+to it (and was not in right mood to analyze the logic properly).
 
+And yeah, that nul-termination in xmemdupz is not needed. Oops, missed
+that.
 
-Bill
+-Ilari
