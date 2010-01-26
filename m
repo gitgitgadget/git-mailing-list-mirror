@@ -1,98 +1,103 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 00/12] Re: Makefile: add missing header dependency rules
-Date: Tue, 26 Jan 2010 10:19:55 -0600
-Message-ID: <20100126161954.GA5550@progeny.tock>
-References: <20100123144201.GA11903@progeny.tock>
- <7v3a1u6bfz.fsf@alter.siamese.dyndns.org>
- <20100126154357.GA4895@progeny.tock>
+From: Benjamin Kramer <benny.kra@googlemail.com>
+Subject: Re: [PATCH v4] Threaded grep
+Date: Tue, 26 Jan 2010 17:30:12 +0100
+Message-ID: <4B5F1894.4070509@googlemail.com>
+References: <20100125225139.GA3048@fredrik-laptop>  <alpine.LFD.2.00.1001251542100.3574@localhost.localdomain> <4c8ef71001260410l2afd2dbx17b6e216bd9e5d8@mail.gmail.com> <alpine.LFD.2.00.1001260728260.3574@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Erik Faye-Lund <kusmabite@googlemail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 26 17:20:12 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Fredrik Kuivinen <frekui@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jan 26 17:30:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZo99-0007bL-Qs
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 17:20:08 +0100
+	id 1NZoJC-0003sA-9O
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 17:30:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754655Ab0AZQUA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jan 2010 11:20:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753581Ab0AZQUA
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 11:20:00 -0500
-Received: from mail-gx0-f224.google.com ([209.85.217.224]:63105 "EHLO
-	mail-gx0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753498Ab0AZQT5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2010 11:19:57 -0500
-Received: by gxk24 with SMTP id 24so5884936gxk.1
-        for <git@vger.kernel.org>; Tue, 26 Jan 2010 08:19:57 -0800 (PST)
+	id S1754614Ab0AZQaZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2010 11:30:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754573Ab0AZQaZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 11:30:25 -0500
+Received: from mail-fx0-f220.google.com ([209.85.220.220]:55124 "EHLO
+	mail-fx0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753605Ab0AZQaY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2010 11:30:24 -0500
+Received: by fxm20 with SMTP id 20so547935fxm.21
+        for <git@vger.kernel.org>; Tue, 26 Jan 2010 08:30:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=q4lYgUhBP/wMYunRNM+nFkaNM7JDyyz8qVPCk2sdHWM=;
-        b=IcSdNERxZSmKPAlDwJ60iR4NhXdJGLiE1H1JoAhge6IDnTmWCINAHf57LL/kvIWORG
-         PMFyYtaHdB+GLZQXotT3mWMedmhvlw1GOdNxVKu/r23kAby6OWCb/EaxUp6m7nwFfEgC
-         R24HW/D+9C47dXN/nbtnQTG+oRwvbnzQjGoY0=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=lRWAsfA4gNsSJH6wk+mh805zoFEF165ms2ly0gvKnRY=;
+        b=i1iqe51M8n9vQj3zVNc1cTqejVYZ6Iteb6VoPkjrlqo02ztEfCxVszXPoL5VziO6V/
+         0nKjz66HsA1Dlb7VlpbS7DC3kD7gd+siELjXGd84ZOrFQEHqo2ZTAVayp3884N6waEo7
+         tR560XDYWqEOIfiX+G0WaR9nwjBOgtYv2AsPc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=FPhfmbUHrjprbDvTeSx1Hsa4p+f5k2SD3FfRZGDXyXkbUz6uK23QS9LlLky5+GP4Mj
-         KZqmWibQ/6rDqRDkft1z6v4hQUeQ5sE7pww/tO9PFcv8o/91TclCAA63vAw6E92we9Bk
-         wcc1XZ6MvfJ9drLtZjOoPmCpKCqSggT1xSeTI=
-Received: by 10.150.128.38 with SMTP id a38mr3884035ybd.217.1264522795572;
-        Tue, 26 Jan 2010 08:19:55 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm2174336ywh.0.2010.01.26.08.19.53
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 26 Jan 2010 08:19:54 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20100126154357.GA4895@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=A7rnK9Skx9t1l2W/8gb6Sddbo4dEiadvMUMJ8T3b1JHpu16oMXn+z3yDSrX2kLa9uy
+         20Tf8ZMJnoRK1gH7tKVbPivHXt23YwRXQXA7gIpGOGIMLVW4bqJxD2vjcPpubnQHWUrg
+         FXlVZZUEq+Jjr5U1VfMhTaS1Mx+GRd/hzSaEI=
+Received: by 10.223.144.85 with SMTP id y21mr4514434fau.71.1264523420002;
+        Tue, 26 Jan 2010 08:30:20 -0800 (PST)
+Received: from kallisto.local (p509269B7.dip.t-dialin.net [80.146.105.183])
+        by mx.google.com with ESMTPS id 15sm3401069fxm.6.2010.01.26.08.30.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 26 Jan 2010 08:30:16 -0800 (PST)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.1) Gecko/20090715 Thunderbird/3.0b3
+In-Reply-To: <alpine.LFD.2.00.1001260728260.3574@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138055>
 
-Jonathan Nieder wrote:
+BSD and glibc have an extension to regexec which takes a buffer + length pair
+instead of a NUL-terminated string. Since we already have the length
+computed this can save us a strlen call.
+---
 
-> The remainder of this series is based on a merge of master and
-> patches 1-5:
-[...]
-> Jonathan Nieder (12):
->   Makefile: add missing header file dependencies
->   Makefile: make sure test helpers are rebuilt when headers change
->   Makefile: remove wt-status.h from LIB_H
->   Makefile: clean up http-walker.o dependency rules
->   Makefile: drop dependency on $(wildcard */*.h)
->   Makefile: transport.o depends on branch.h now
->   Makefile: rearrange dependency rules
->   Makefile: disable default implicit rules
->   Makefile: list generated object files in OBJECTS macro
->   Makefile: lazily compute header dependencies
->   Makefile: list standalone program object files in PROGRAM_OBJS
->   Teach Makefile to check header dependencies
+On 26.01.10 16:28, Linus Torvalds wrote:
+> so it's sadly internal to regex. It would be nice if there was a 
+> non-string interface to regexec (ie a "buffer + length" instead of a 
+> NUL-terminated string).
 
-=46or those would like to avoid redoing the conflict resolution (and
-who wouldn=E2=80=99t?), this series is also available in the git reposi=
-tory
-at
+BSD and glibc have an "REG_STARTEND" flag to do that. I made a small
+PoC patch to use it if it's available but it didn't give any significant
+speedup on my system.
 
-  git://repo.or.cz/git/jrn.git autodep
 
-If you=E2=80=99re interested, please take a look around and try it out.=
-  I=E2=80=99d
-be happy to hear about any bugs you find.
 
-Thanks again,
-Jonathan
+ grep.c |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
+
+diff --git a/grep.c b/grep.c
+index d281a02..60cce46 100644
+--- a/grep.c
++++ b/grep.c
+@@ -675,8 +675,15 @@ static int look_ahead(struct grep_opt *opt,
+ 
+ 		if (p->fixed)
+ 			hit = !fixmatch(p->pattern, bol, p->ignore_case, &m);
+-		else
++		else {
++#ifdef REG_STARTEND
++			m.rm_so = 0;
++			m.rm_eo = *left_p;
++			hit = !regexec(&p->regexp, bol, 1, &m, REG_STARTEND);
++#else
+ 			hit = !regexec(&p->regexp, bol, 1, &m, 0);
++#endif
++		}
+ 		if (!hit || m.rm_so < 0 || m.rm_eo < 0)
+ 			continue;
+ 		if (earliest < 0 || m.rm_so < earliest)
+--
+1.7.0.rc0.12.gc33c3
