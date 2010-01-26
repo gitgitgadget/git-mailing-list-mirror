@@ -1,8 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 11/12] Makefile: list standalone program object files in
- PROGRAM_OBJS
-Date: Tue, 26 Jan 2010 09:54:23 -0600
-Message-ID: <20100126155423.GL4895@progeny.tock>
+Subject: [PATCH 07/12] Makefile: rearrange dependency rules
+Date: Tue, 26 Jan 2010 09:49:33 -0600
+Message-ID: <20100126154933.GH4895@progeny.tock>
 References: <20100123144201.GA11903@progeny.tock>
  <7v3a1u6bfz.fsf@alter.siamese.dyndns.org>
  <20100126154357.GA4895@progeny.tock>
@@ -14,46 +13,46 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Andreas Schwab <schwab@linux-m68k.org>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 26 16:54:30 2010
+X-From: git-owner@vger.kernel.org Tue Jan 26 16:55:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZnkL-0004hq-6R
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 16:54:30 +0100
+	id 1NZnlJ-00057y-8c
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 16:55:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754569Ab0AZPyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2010 10:54:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753358Ab0AZPyY
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 10:54:24 -0500
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:44037 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932132Ab0AZPyW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2010 10:54:22 -0500
-Received: by yxe17 with SMTP id 17so3741449yxe.33
-        for <git@vger.kernel.org>; Tue, 26 Jan 2010 07:54:21 -0800 (PST)
+	id S1754583Ab0AZPzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2010 10:55:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754581Ab0AZPzZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 10:55:25 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:34825 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754577Ab0AZPzY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2010 10:55:24 -0500
+Received: by ywh6 with SMTP id 6so4143329ywh.4
+        for <git@vger.kernel.org>; Tue, 26 Jan 2010 07:55:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=LXz9zj0UEsnLu3EJgQ9aIS3NS5F8+d3181UsCgAYQc4=;
-        b=cUf+80zXRNDuX6XeIMTOgfKZ+VLX85PD17F9Yodh3RcCYNnaKHNpOwlE2EaeE7vgq9
-         fvkqcVvv4EYvqVzPZhly9FCDwKt7AJl80rfsQZEpVLWhlzfz6lsPFsm6To//JiUPUQOS
-         H3v6+41mzICXOvnFfOmqwliYSxUYaSHfxlfCQ=
+        bh=0ofsdlZyY2MY5tct+Rd0wnzv+BZIDGfbMu5dEv2pkp0=;
+        b=oK6nxt1AR+/LC+0HVmxfRHUwR6Xudx5naMiD74HB1mturVGFd4BjIKwu6iAnRUh3Tf
+         /57/5qbee/5YfHnVzQUsS1YTzYt6kPfeAxnhMDk8plhxQQ03QLbZFjGR3ZYxcoeQv1ua
+         EJXyKCb9DUBWXvy4Wo6fed3CpZxiJSOr6ca3o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=Ri69TIarq/cGlHB+fVUMcTi7W0bCzDU3/uauRRtTJ005Pt1UvBKajuvRTsJl6Pl0gz
-         jW38dmJk5qV1injllRZlXXCpikmEtQ2Tfu/CIE4b2betmk80rxIuqYLusOKZ9YcA4IRC
-         noJ9HmfgfbqtmP+QJuruK6M2uHZDmEaejCJ/E=
-Received: by 10.151.59.13 with SMTP id m13mr10607359ybk.291.1264521261159;
-        Tue, 26 Jan 2010 07:54:21 -0800 (PST)
+        b=s+8go1KfN2uvk2JXzRqLmODwTRMa8A43Lqlr7l4sVFbgMsCylxajJlpyveXamRxrZE
+         uxWqLtEedT3tFWOneS/cmk/iRlHoNLDiZEfNfK41KPkoifZBmWQZZ5aujj1HE0Q4JvMJ
+         PmqvRnuNp1YgHWJRy4TMKSY0gi/XZe46ULIp4=
+Received: by 10.150.214.12 with SMTP id m12mr10588711ybg.342.1264520971864;
+        Tue, 26 Jan 2010 07:49:31 -0800 (PST)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm6176110iwn.15.2010.01.26.07.54.20
+        by mx.google.com with ESMTPS id 22sm2057108yxe.39.2010.01.26.07.49.30
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 26 Jan 2010 07:54:20 -0800 (PST)
+        Tue, 26 Jan 2010 07:49:31 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20100126154357.GA4895@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -61,87 +60,105 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138052>
 
-Because of new commands like git-remote-http, the OBJECTS list
-contains fictitious objects such as remote-http.o.  Thus any
-out-of-tree rules that require all $(OBJECTS) to be buildable
-are broken.  Add a list of real program objects to avoid this
-problem.
+Put rules listing dependencies of compiled objects (.o files) on
+header files (.h files) in one place, to make them easier to
+compare and modify all at once.
+
+Add a GIT_OBJS variable listing objects that depend on LIB_H,
+for similar reasons.
+
+No change in build-time behavior intended.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Preparing for patch 12.
-
- Makefile |   24 +++++++++++++++---------
- 1 files changed, 15 insertions(+), 9 deletions(-)
+ Makefile |   49 +++++++++++++++++++++++++------------------------
+ 1 files changed, 25 insertions(+), 24 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 2e75f05..ceaae1c 100644
+index 5678991..84ce137 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -341,6 +341,7 @@ COMPAT_CFLAGS =
- COMPAT_OBJS =
- LIB_H =
- LIB_OBJS =
-+PROGRAM_OBJS =
- PROGRAMS =
- SCRIPT_PERL =
- SCRIPT_PYTHON =
-@@ -390,12 +391,15 @@ EXTRA_PROGRAMS =
- 
- # ... and all the rest that could be moved out of bindir to gitexecdir
- PROGRAMS += $(EXTRA_PROGRAMS)
--PROGRAMS += git-fast-import$X
--PROGRAMS += git-imap-send$X
--PROGRAMS += git-shell$X
--PROGRAMS += git-show-index$X
--PROGRAMS += git-upload-pack$X
--PROGRAMS += git-http-backend$X
-+
-+PROGRAM_OBJS += fast-import.o
-+PROGRAM_OBJS += imap-send.o
-+PROGRAM_OBJS += shell.o
-+PROGRAM_OBJS += show-index.o
-+PROGRAM_OBJS += upload-pack.o
-+PROGRAM_OBJS += http-backend.o
-+
-+PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
- 
- TEST_PROGRAMS_NEED_X += test-chmtime
- TEST_PROGRAMS_NEED_X += test-ctype
-@@ -1139,10 +1143,12 @@ else
- 	REMOTE_CURL_PRIMARY = git-remote-http$X
- 	REMOTE_CURL_ALIASES = git-remote-https$X git-remote-ftp$X git-remote-ftps$X
- 	REMOTE_CURL_NAMES = $(REMOTE_CURL_PRIMARY) $(REMOTE_CURL_ALIASES)
-+	PROGRAM_OBJS += http-fetch.o
- 	PROGRAMS += $(REMOTE_CURL_NAMES) git-http-fetch$X
- 	curl_check := $(shell (echo 070908; curl-config --vernum) | sort -r | sed -ne 2p)
- 	ifeq "$(curl_check)" "070908"
- 		ifndef NO_EXPAT
-+			PROGRAM_OBJS += http-push.o
- 			PROGRAMS += git-http-push$X
- 		endif
- 	endif
-@@ -1163,6 +1169,7 @@ endif
- EXTLIBS += -lz
- 
- ifndef NO_POSIX_ONLY_PROGRAMS
-+	PROGRAM_OBJS += daemon.o
- 	PROGRAMS += git-daemon$X
- endif
- ifndef NO_OPENSSL
-@@ -1670,9 +1677,8 @@ git.o git.spec \
+@@ -1666,6 +1666,12 @@ git.o git.spec \
  	$(patsubst %.perl,%,$(SCRIPT_PERL)) \
  	: GIT-VERSION-FILE
  
--GIT_OBJS := $(LIB_OBJS) $(BUILTIN_OBJS) $(TEST_OBJS) \
--	git.o http.o http-walker.o remote-curl.o \
--	$(patsubst git-%$X,%.o,$(PROGRAMS))
-+GIT_OBJS := $(LIB_OBJS) $(BUILTIN_OBJS) $(PROGRAM_OBJS) $(TEST_OBJS) \
-+	git.o http.o http-walker.o remote-curl.o
- XDIFF_OBJS = xdiff/xdiffi.o xdiff/xprepare.o xdiff/xutils.o xdiff/xemit.o \
- 	xdiff/xmerge.o xdiff/xpatience.o
- OBJECTS := $(GIT_OBJS) $(XDIFF_OBJS)
++GIT_OBJS := $(LIB_OBJS) $(BUILTIN_OBJS) $(TEST_OBJS) \
++	git.o http.o http-walker.o remote-curl.o \
++	$(patsubst git-%$X,%.o,$(PROGRAMS))
++XDIFF_OBJS = xdiff/xdiffi.o xdiff/xprepare.o xdiff/xutils.o xdiff/xemit.o \
++	xdiff/xmerge.o xdiff/xpatience.o
++
+ %.o: %.c GIT-CFLAGS
+ 	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) $<
+ %.s: %.c GIT-CFLAGS FORCE
+@@ -1673,6 +1679,25 @@ git.o git.spec \
+ %.o: %.S GIT-CFLAGS
+ 	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) $<
+ 
++$(GIT_OBJS): $(LIB_H)
++builtin-branch.o builtin-checkout.o builtin-clone.o builtin-reset.o branch.o transport.o: branch.h
++builtin-bundle.o bundle.o transport.o: bundle.h
++builtin-bisect--helper.o builtin-rev-list.o bisect.o: bisect.h
++builtin-clone.o builtin-fetch-pack.o transport.o: fetch-pack.h
++builtin-send-pack.o transport.o: send-pack.h
++builtin-log.o builtin-shortlog.o: shortlog.h
++builtin-prune.o builtin-reflog.o reachable.o: reachable.h
++builtin-commit.o builtin-revert.o wt-status.o: wt-status.h
++builtin-tar-tree.o archive-tar.o: tar.h
++builtin-pack-objects.o: thread-utils.h
++http-fetch.o http-walker.o remote-curl.o transport.o walker.o: walker.h
++http.o http-walker.o http-push.o remote-curl.o: http.h
++
++
++xdiff-interface.o $(XDIFF_OBJS): \
++	xdiff/xinclude.h xdiff/xmacros.h xdiff/xdiff.h xdiff/xtypes.h \
++	xdiff/xutils.h xdiff/xprepare.h xdiff/xdiffi.h xdiff/xemit.h
++
+ exec_cmd.s exec_cmd.o: ALL_CFLAGS += \
+ 	'-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
+ 	'-DBINDIR="$(bindir_relative_SQ)"' \
+@@ -1696,10 +1721,6 @@ git-imap-send$X: imap-send.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
+ 
+-http.o http-walker.o http-push.o remote-curl.o: http.h
+-
+-http.o http-walker.o remote-curl.o: $(LIB_H)
+-
+ git-http-fetch$X: revision.o http.o http-walker.o http-fetch.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(CURL_LIBCURL)
+@@ -1717,29 +1738,9 @@ $(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+ 
+-$(LIB_OBJS) $(BUILTIN_OBJS): $(LIB_H)
+-$(patsubst git-%$X,%.o,$(PROGRAMS)) $(TEST_OBJS) git.o: $(LIB_H)
+-builtin-branch.o builtin-checkout.o builtin-clone.o builtin-reset.o branch.o transport.o: branch.h
+-builtin-bundle.o bundle.o transport.o: bundle.h
+-builtin-bisect--helper.o builtin-rev-list.o bisect.o: bisect.h
+-builtin-clone.o builtin-fetch-pack.o transport.o: fetch-pack.h
+-builtin-send-pack.o transport.o: send-pack.h
+-builtin-log.o builtin-shortlog.o: shortlog.h
+-builtin-prune.o builtin-reflog.o reachable.o: reachable.h
+-builtin-commit.o builtin-revert.o wt-status.o: wt-status.h
+-builtin-tar-tree.o archive-tar.o: tar.h
+-builtin-pack-objects.o: thread-utils.h
+-http-fetch.o http-walker.o remote-curl.o transport.o walker.o: walker.h
+-
+ $(LIB_FILE): $(LIB_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(LIB_OBJS)
+ 
+-XDIFF_OBJS=xdiff/xdiffi.o xdiff/xprepare.o xdiff/xutils.o xdiff/xemit.o \
+-	xdiff/xmerge.o xdiff/xpatience.o
+-xdiff-interface.o $(XDIFF_OBJS): \
+-	xdiff/xinclude.h xdiff/xmacros.h xdiff/xdiff.h xdiff/xtypes.h \
+-	xdiff/xutils.h xdiff/xprepare.h xdiff/xdiffi.h xdiff/xemit.h
+-
+ $(XDIFF_LIB): $(XDIFF_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(XDIFF_OBJS)
+ 
 -- 
 1.6.6
