@@ -1,71 +1,79 @@
 From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCHv3 0/3] Fix patch detection for thunderbird saved mails
-Date: Mon, 25 Jan 2010 16:33:56 -0800
-Message-ID: <1264466039-22431-1-git-send-email-bebarino@gmail.com>
+Subject: [PATCHv3 2/3] t0022: replace non-portable literal CR
+Date: Mon, 25 Jan 2010 16:33:58 -0800
+Message-ID: <1264466039-22431-3-git-send-email-bebarino@gmail.com>
+References: <1264466039-22431-1-git-send-email-bebarino@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Eric Blake <ebb9@byu.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 26 01:34:16 2010
+X-From: git-owner@vger.kernel.org Tue Jan 26 01:34:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZZNm-0003sS-Ub
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 01:34:15 +0100
+	id 1NZZOA-0003ys-4H
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jan 2010 01:34:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751207Ab0AZAeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2010 19:34:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122Ab0AZAeH
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 19:34:07 -0500
-Received: from mail-gx0-f217.google.com ([209.85.217.217]:51812 "EHLO
-	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751012Ab0AZAeF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2010 19:34:05 -0500
-Received: by gxk9 with SMTP id 9so6019367gxk.8
-        for <git@vger.kernel.org>; Mon, 25 Jan 2010 16:34:02 -0800 (PST)
+	id S1751866Ab0AZAeO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2010 19:34:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751514Ab0AZAeO
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jan 2010 19:34:14 -0500
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:60933 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751104Ab0AZAeJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2010 19:34:09 -0500
+Received: by ywh6 with SMTP id 6so3634047ywh.4
+        for <git@vger.kernel.org>; Mon, 25 Jan 2010 16:34:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=dkZWfxAqSekvFkPF5Fk5w+59LWRyxQop8RMh26aFFCs=;
-        b=lvZrt6T35WB0rQgKhaXIgoSbZ1Ozv2+xWOeidAgQBf3uKlF91eUXI7ynkDyW9VqSRA
-         l1TuflaJXWBpEwYzLaGjdPeNCrz6HaSOv1zZEu5rcX6ZcqaQ2GumPsR8BN73u0+GuSAV
-         EK2CoUNxBxaM0/UzbnnvQq8cyn6jNP9g0RBaA=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=md/pwA+QDyity2D5HRP/XqwYm3zAeQqorzAkIFxns+Y=;
+        b=iAnCfF3nAL1UQoCzwAu5Km5aXl+Jb68eGFRSh16/3t+1QCqTS2V88iHFGigsTOC5Dt
+         x7UAMHgoFMwOWCZ6b34S4dpgAFPFWL2pCQysFtQflPMEUI9UjmAgitxwo/hr6K7vI9Ss
+         gNEMmdkFlMggpikWmv57j7V2+f9qZDGdM6vv8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=AS28H9aXJuEZ033SxGTiJv5mdhwdtxwNys/5e0djY8m5YUBv/lS8e8CjMWjn4Q/sEY
-         c8gR3fuDHB3vKVQZO7msNxwkzBedCzQwH1E7qQtDrLHXyjTANdSVyF5gJI5LHdTsrHYh
-         2+7s54JViP3B6YMQfg0JsOixmEDRLHfcfcDOE=
-Received: by 10.150.241.11 with SMTP id o11mr6090637ybh.112.1264466042166;
-        Mon, 25 Jan 2010 16:34:02 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=AkYRz2nbsszljQM7D0M6XL9/R4WwIbVs4/M2EZdxYj15RIY4Oat490C8YX4lYy/+fK
+         sJ4B6S+MiwnJWw7W2DJ0mXJvwiZHXMu2Cmiz+he98KaMrNJi5os6Jo/H/+Q0i5/t0eaY
+         gfi3b27IoqnM44KETcH36/0k+3+/GKrfAqKJY=
+Received: by 10.151.29.2 with SMTP id g2mr9486333ybj.261.1264466048386;
+        Mon, 25 Jan 2010 16:34:08 -0800 (PST)
 Received: from localhost (user-0c9haca.cable.mindspring.com [24.152.169.138])
-        by mx.google.com with ESMTPS id 6sm1844010yxg.48.2010.01.25.16.34.00
+        by mx.google.com with ESMTPS id 6sm1846219yxg.30.2010.01.25.16.34.07
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 25 Jan 2010 16:34:01 -0800 (PST)
+        Mon, 25 Jan 2010 16:34:07 -0800 (PST)
 X-Mailer: git-send-email 1.7.0.rc0
+In-Reply-To: <1264466039-22431-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138013>
 
-The original patch for this is a bit old (~1 month) but I'd like to see it
-make it in. The first two patches are cleanup before the original patch in
-the third spot. Now the test in patch 3 uses append_cr() instead of a hand
-crafted version.
+We shouldn't have literal CR's in tests as they aren't portable.
 
-Stephen Boyd (3):
-  tests: consolidate CR removal/addition functions
-  t0022: replace non-portable literal CR
-  am: fix patch format detection for Thunderbird "Save As" emails
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+---
 
- git-am.sh                     |    3 +-
- t/t0020-crlf.sh               |   55 +++++++++++++++-------------------------
- t/t0022-crlf-rename.sh        |    2 +-
- t/t3400-rebase.sh             |    4 ---
- t/t4012-diff-binary.sh        |    4 ---
- t/t4150-am.sh                 |   15 +++++++++++
- t/t6033-merge-crlf.sh         |    8 ------
- t/t9401-git-cvsserver-crlf.sh |    8 ------
- t/test-lib.sh                 |   16 ++++++++++++
- 9 files changed, 55 insertions(+), 60 deletions(-)
+Hopefully this isn't botched over the wire.
+
+ t/t0022-crlf-rename.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/t/t0022-crlf-rename.sh b/t/t0022-crlf-rename.sh
+index f1e1d48..7af3fbc 100755
+--- a/t/t0022-crlf-rename.sh
++++ b/t/t0022-crlf-rename.sh
+@@ -12,7 +12,7 @@ test_expect_success setup '
+ 	test_tick &&
+ 	git commit -m Initial &&
+ 
+-	sed -e "s/\$/
+/" "$TEST_DIRECTORY"/t0022-crlf-rename.sh >elpmas &&
++	append_cr <"$TEST_DIRECTORY"/t0022-crlf-rename.sh >elpmas &&
+ 	git add elpmas &&
+ 	rm -f sample &&
+ 
+-- 
+1.7.0.rc0
