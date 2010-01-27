@@ -1,56 +1,62 @@
 From: Frans Pop <elendil@planet.nl>
 Subject: Re: Testing if a certain commit is in the current branch
-Date: Wed, 27 Jan 2010 16:39:43 +0100
-Message-ID: <201001271639.44167.elendil@planet.nl>
-References: <201001270819.39819.elendil@planet.nl> <20100127101943.GA4470@progeny.tock> <E1Na9ca-0004x2-Gf@xyzzy.farnsworth.org>
+Date: Wed, 27 Jan 2010 16:27:44 +0100
+Message-ID: <201001271627.45715.elendil@planet.nl>
+References: <201001270819.39819.elendil@planet.nl> <201001270936.14935.elendil@planet.nl> <20100127150834.GG9553@machine.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="utf-8"
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Dale Farnsworth <dale@farnsworth.org>
-X-From: git-owner@vger.kernel.org Wed Jan 27 16:40:04 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed Jan 27 16:42:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Na9zt-0003Vn-CR
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 16:40:01 +0100
+	id 1NaA1t-0004ZA-Iy
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 16:42:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755462Ab0A0Pjr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 10:39:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755328Ab0A0Pjr
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 10:39:47 -0500
-Received: from cpsmtpm-eml110.kpnxchange.com ([195.121.3.14]:53625 "EHLO
-	CPSMTPM-EML110.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754777Ab0A0Pjq (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2010 10:39:46 -0500
-Received: from aragorn.fjphome.nl ([77.166.180.99]) by CPSMTPM-EML110.kpnxchange.com with Microsoft SMTPSVC(7.0.6001.18000);
-	 Wed, 27 Jan 2010 16:39:44 +0100
+	id S1755492Ab0A0Pl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 10:41:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755481Ab0A0Pl7
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 10:41:59 -0500
+Received: from cpsmtpm-eml105.kpnxchange.com ([195.121.3.9]:57416 "EHLO
+	CPSMTPM-EML105.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753848Ab0A0Pl6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2010 10:41:58 -0500
+X-Greylist: delayed 850 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Jan 2010 10:41:58 EST
+Received: from aragorn.fjphome.nl ([77.166.180.99]) by CPSMTPM-EML105.kpnxchange.com with Microsoft SMTPSVC(7.0.6001.18000);
+	 Wed, 27 Jan 2010 16:27:46 +0100
 User-Agent: KMail/1.9.9
-In-Reply-To: <E1Na9ca-0004x2-Gf@xyzzy.farnsworth.org>
+In-Reply-To: <20100127150834.GG9553@machine.or.cz>
 Content-Disposition: inline
-X-OriginalArrivalTime: 27 Jan 2010 15:39:44.0571 (UTC) FILETIME=[F2FE40B0:01CA9F66]
+X-OriginalArrivalTime: 27 Jan 2010 15:27:46.0593 (UTC) FILETIME=[470B8110:01CA9F65]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138160>
 
-On Wednesday 27 January 2010, Dale Farnsworth wrote:
-> I've been using the following.  It produces output only if the commit
-> is NOT in HEAD.
+On Wednesday 27 January 2010, Petr Baudis wrote:
+> > Great! If the commit ID is not present that only takes 1 sec versus 11
+> > secs for my test. (If the commit _is_ present and fairly recent my
+> > test can be faster, but 11 secs delay when it's not present hurts
+> > more.)
 >
-> git rev-list -1 ^HEAD commitID
+> Isn't something very wrong if grepping the log output is faster than
+> simple merge-base call? Can you post exact numbers?
 
-Nice. That does work.
+It's only faster if the commit is present very early in the log.
+The reason is probably that because of the '-q' option it does not actually 
+read the full log, but breaks out as soon as it's found a match.
 
-Returns 0 in both cases and you'd need to allow for nonexisting commit IDs, 
-so you'd get:
-   test -z "$(git rev-list -1 ^HEAD <commit id> 2>/dev/null)"
+In my test I had an elapsed time of ~0.5 sec (versus 1 sec for Junio's 
+test). And here's a grep for the very first commit:
 
-Time needed looks to be slightly faster than Junio's test.
+$ time git log --pretty=format:%H | grep -q 48404cb50b0b547
 
-Thanks,
-FJP
+real    0m0.010s
+user    0m0.000s
+sys     0m0.012s
