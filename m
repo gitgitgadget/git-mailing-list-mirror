@@ -1,85 +1,97 @@
-From: Michael Spang <spang@google.com>
-Subject: Re: [PATCH] Fix git rev-list --reverse --max-count=N
-Date: Wed, 27 Jan 2010 17:51:02 -0500
-Message-ID: <abef960f1001271451n5ed454aaye1591ea35729b53f@mail.gmail.com>
-References: <1264622600-20981-1-git-send-email-spang@google.com>
-	 <201001272309.26054.j6t@kdbg.org>
-	 <7vsk9rnpxo.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv12 00/23] git notes
+Date: Thu, 28 Jan 2010 00:05:03 +0100
+Message-ID: <201001280005.03190.johan@herland.net>
+References: <1264593120-4428-1-git-send-email-johan@herland.net>
+ <7vzl3zpbbz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 27 23:51:27 2010
+X-From: git-owner@vger.kernel.org Thu Jan 28 00:05:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaGjN-0002LI-KS
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 23:51:25 +0100
+	id 1NaGwt-00017A-Jv
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 00:05:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756418Ab0A0WvU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jan 2010 17:51:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756387Ab0A0WvS
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 17:51:18 -0500
-Received: from smtp-out.google.com ([216.239.44.51]:36754 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756116Ab0A0WvR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2010 17:51:17 -0500
-Received: from spaceape12.eur.corp.google.com (spaceape12.eur.corp.google.com [172.28.16.146])
-	by smtp-out.google.com with ESMTP id o0RMpEr0003598
-	for <git@vger.kernel.org>; Wed, 27 Jan 2010 14:51:14 -0800
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
-	t=1264632675; bh=GRvQL9/4n6OILEFDRfK3MoFVpEc=;
-	h=MIME-Version:In-Reply-To:References:Date:Message-ID:Subject:From:
-	 To:Cc:Content-Type:Content-Transfer-Encoding;
-	b=mLcITD+bMobIKkrz1E/+aLRnTtogTpMAVtoTHcrS+Ips9aKvO59DX32gk64DMSHeY
-	 9d+uzzH+4jBPyskZZQHoQ==
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=mime-version:in-reply-to:references:date:message-id:subject:from:to:
-	cc:content-type:content-transfer-encoding:x-system-of-record;
-	b=mKzsatSOli0HM5gd4T2eUB96AnW/ebfZ1BqWsWIYhtQMjqhk4Zx97rb6QGqcOIx65
-	pGq0Gawng9XGC2JyJUVhQ==
-Received: from fxm4 (fxm4.prod.google.com [10.184.13.4])
-	by spaceape12.eur.corp.google.com with ESMTP id o0RMpDPU008303
-	for <git@vger.kernel.org>; Wed, 27 Jan 2010 14:51:13 -0800
-Received: by fxm4 with SMTP id 4so100325fxm.12
-        for <git@vger.kernel.org>; Wed, 27 Jan 2010 14:51:13 -0800 (PST)
-Received: by 10.102.207.4 with SMTP id e4mr5098963mug.126.1264632662338; Wed, 
-	27 Jan 2010 14:51:02 -0800 (PST)
-In-Reply-To: <7vsk9rnpxo.fsf@alter.siamese.dyndns.org>
-X-System-Of-Record: true
+	id S1753590Ab0A0XFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 18:05:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753177Ab0A0XFM
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 18:05:12 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:50863 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753133Ab0A0XFL (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2010 18:05:11 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KWX001SUHGLTZ00@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 28 Jan 2010 00:05:09 +0100 (MET)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KWX000WFHGFQS10@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 28 Jan 2010 00:05:09 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2010.1.27.225424
+User-Agent: KMail/1.12.4 (Linux/2.6.32-ARCH; KDE/4.3.4; x86_64; ; )
+In-reply-to: <7vzl3zpbbz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138206>
 
-On Wed, Jan 27, 2010 at 5:28 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Johannes Sixt <j6t@kdbg.org> writes:
->
-> The interaction between --max-count and --reverse was designed a long=
- time
-> ago to support "I want to review the recent N commits in order to mak=
-e
-> sure that they are natural and logical progression". =A0So an uncondi=
-tional
-> change of semantics to break that expectation this late in the game w=
-ill
-> never be acceptable, and giving title to such a patch with a word "Fi=
-x"
-> won't fly well (it simply _breaks_ behaviour users have long learned =
-to
-> expect).
+On Wednesday 27 January 2010, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > - Patch #23 is a new patch adding the "git notes add" command for
+> > appending contents to notes (instead of editing/replacing).
+> 
+> I find this even more confusing.  Originally I was puzzled by the lack of
+> "git notes add"; it took me for quite until I managed to figure out that
+> "git notes edit" was the command to use, even if I wanted to add notes to
+> a commit that I know that does not have any.
 
-You have my apology for calling it a fix. I just don't have the same
-visibility into what undocumented behavior users depend on that you
-do, and so I thought it actually was one.
+Not sure what you're getting at here. For the case where a commit has no 
+notes, "git notes add" and "git notes edit" are already _identical_. I was 
+only trying to emphasize that when there is an existing note, "git notes 
+add" will append to it, whereas "git notes edit" will replace it with your 
+edited version. I'm sorry if this was unclear.
 
-The patch can die here. I understand the current behavior now, and I
-don't have a strong need for the behavior I expected (piping to head
-works fine).
+> I would expect "git notes edit" to be "edit starting from the existing
+>  one (if exists)", and "git notes add" to be "add notes to a commit that
+>  lacks one,
 
-Michael
+Up to here, the current patch does exactly what you expect.
+
+>  complain if it already has notes, and allow --force to replace".
+
+I disagree. I wrote the current semantics with the following use case in 
+mind:
+
+"I have just reviewed a commit, and want to add a 'Reviewed-by' tag to the 
+commit notes. I don't really care if the commit already has notes, but I 
+certainly _don't_ want to delete them when adding my 'Reviewed-by'. 
+Furthermore, I want to do this with a simple command, without being thrown 
+into an editor."
+
+Now, 'git notes edit -m "Reviewed-by: ..."' will do the job nicely for 
+commits that have no notes, but it will discard any existing notes, so it is 
+not a good solution in this case.
+
+Instead, the current semantics of "git notes add" _does_ solve this use case 
+('git notes add -m "Reviewed-by: ..."' will append to the existing notes, or 
+create a new notes object if none exist).
+
+I'm not opposed to changing the semantics if people find them unintuitive, 
+but I would want the new semantics to provide for this use case as well.
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
