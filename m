@@ -1,82 +1,70 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: git notes: notes
-Date: Wed, 27 Jan 2010 21:01:22 +0100
-Message-ID: <201001272101.22870.chriscool@tuxfamily.org>
-References: <20100120050343.GA12860@gnu.kitenet.net> <201001210305.05309.johan@herland.net> <1264442884.14641.33.camel@cp-jk-linux.corp.on2.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv12 00/23] git notes
+Date: Wed, 27 Jan 2010 12:00:32 -0800
+Message-ID: <7vzl3zpbbz.fsf@alter.siamese.dyndns.org>
+References: <1264593120-4428-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>, Joey Hess <joey@kitenet.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>
-To: john.koleszar@on2.com
-X-From: git-owner@vger.kernel.org Wed Jan 27 20:58:32 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Jan 27 21:00:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaE23-0007HF-Vp
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 20:58:32 +0100
+	id 1NaE4F-0000Mw-Bn
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 21:00:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754346Ab0A0T6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 14:58:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752270Ab0A0T6W
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 14:58:22 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:36643 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752244Ab0A0T6V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2010 14:58:21 -0500
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 9FBE6818220;
-	Wed, 27 Jan 2010 20:58:14 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 30AFF8181C9;
-	Wed, 27 Jan 2010 20:58:11 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <1264442884.14641.33.camel@cp-jk-linux.corp.on2.com>
-Content-Disposition: inline
+	id S1752412Ab0A0UAm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 15:00:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752324Ab0A0UAm
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 15:00:42 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39112 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751741Ab0A0UAl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2010 15:00:41 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 03AA594A28;
+	Wed, 27 Jan 2010 15:00:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yOGp+KUwssUGmKcswzaR0GRFtdA=; b=j4eNZD
+	hZ8s24SSHWRj+XKu7k2d4O9ybox+nOsN8Hv/J3wKB06U1EltkzkLxzwynn4dUCuu
+	ib52vanQS1C0IGjQIQ8qEExSV6cp64kDY8lilwb8A+gX4WBegY4BNmUU23USSnIU
+	9cftUGd0zGqds7TR9kf6Q8zGPww+GFGONvB9A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=geVoEAG5E4ZvJDkM2nJkmQSMdVrpsjEI
+	LIbVPjNREJ3ieUx+sbF86xzJNA+npvgt9kbElkQJGtHqgm2fEfDxgzZKRJXzeRDE
+	5qyydYOAbOJWkKi0cN7BeKsLBOdwVjQvIo2vMU2GAHWNDspRQejove1w2eO5EPPR
+	BNACQ9DmLvU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D36A894A27;
+	Wed, 27 Jan 2010 15:00:36 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3C5CE94A26; Wed, 27 Jan
+ 2010 15:00:34 -0500 (EST)
+In-Reply-To: <1264593120-4428-1-git-send-email-johan@herland.net> (Johan
+ Herland's message of "Wed\, 27 Jan 2010 12\:51\:37 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A2BB311A-0B7E-11DF-90F3-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138190>
 
-On lundi 25 janvier 2010, John Koleszar wrote:
-> On Wed, 2010-01-20 at 21:05 -0500, Johan Herland wrote:
-> > On Wednesday 20 January 2010, Joey Hess wrote:
->
-> > In any case, I would not use "git notes" to maintain the bisect hints.
-> > Rather, I'd add subcommands to "git bisect" that would take care of
-> > maintaining the notes tree @ "refs/notes/bisect". Much more
-> > user-friendly than telling the user to write their own bisect-notes by
-> > hand.
->
-> I haven't read up on notes more than enough to know its in the pipe, but
-> I had a similar idea for using them to store bisect hints. I've been
-> doing a lot of bisecting lately into a range that had a couple dormant
-> bugs where I'm trying to bisect bug B but bug A prevents me from making
-> a determination. Rather than skip what I know is an interesting commit,
-> I cherry-pick the bugfix commit(s) A' and test that, then reset and
-> continue bisecting.
->
-> Teaching bisect to consistently skip a commit, or to automatically
-> squash in A' if we have A and not A', would be a desirable feature. I
-> will have to read up some more on notes.
+Johan Herland <johan@herland.net> writes:
 
-Perhaps you can read about "git replace" in my article:
+> - Patch #23 is a new patch adding the "git notes add" command for appending
+>   contents to notes (instead of editing/replacing).
 
-http://www.kernel.org/pub/software/scm/git/docs/git-bisect-lk2009.html
+I find this even more confusing.  Originally I was puzzled by the lack of
+"git notes add"; it took me for quite until I managed to figure out that
+"git notes edit" was the command to use, even if I wanted to add notes to
+a commit that I know that does not have any.
 
-and/or my related presentation:
-
-http://www.linux-kongress.org/2009/slides/fighting_regressions_with_git_bisect_christian_couder.pdf
-
-I think in the long run it's much better to use git replace rather than 
-notes, especially as replace refs for bisecting could be in their own 
-refs/replace/bisect namespace. I may take the time to implement that soon 
-if you or other people are interested.
-
-Regards,
-Christian.
+I would expect "git notes edit" to be "edit starting from the existing one
+(if exists)", and "git notes add" to be "add notes to a commit that lacks
+one, complain if it already has notes, and allow --force to replace".
