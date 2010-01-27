@@ -1,61 +1,61 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] fix portability issues with $ in double quotes
-Date: Wed, 27 Jan 2010 08:53:42 +0100
-Message-ID: <4B5FF106.3070604@viscovery.net>
-References: <1264547311-25251-1-git-send-email-bebarino@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Testing if a certain commit is in the current branch
+Date: Wed, 27 Jan 2010 09:26:22 +0100
+Message-ID: <vpqiqaonec1.fsf@bauges.imag.fr>
+References: <201001270819.39819.elendil@planet.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 27 08:54:01 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Frans Pop <elendil@planet.nl>
+X-From: git-owner@vger.kernel.org Wed Jan 27 09:30:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Na2iu-0005Zo-St
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 08:54:01 +0100
+	id 1Na3I9-0001G0-0I
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 09:30:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751333Ab0A0Hxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 02:53:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164Ab0A0Hxr
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 02:53:47 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:5622 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751123Ab0A0Hxr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2010 02:53:47 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Na2id-00006F-De; Wed, 27 Jan 2010 08:53:43 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 289801660F;
-	Wed, 27 Jan 2010 08:53:43 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <1264547311-25251-1-git-send-email-bebarino@gmail.com>
-X-Spam-Score: 1.9 (+)
+	id S1752821Ab0A0I3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 03:29:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753121Ab0A0I3k
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 03:29:40 -0500
+Received: from imag.imag.fr ([129.88.30.1]:59088 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752626Ab0A0I3c (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2010 03:29:32 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o0R8QRmQ005495
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 27 Jan 2010 09:26:27 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Na3EE-000898-Pp; Wed, 27 Jan 2010 09:26:22 +0100
+In-Reply-To: <201001270819.39819.elendil@planet.nl> (Frans Pop's message of "Wed\, 27 Jan 2010 08\:19\:39 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 27 Jan 2010 09:26:28 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138113>
 
-Stephen Boyd schrieb:
-> Using a dollar sign in double quotes isn't portable. Escape them with
-> a backslash or replace the double quotes with single quotes.
+Frans Pop <elendil@planet.nl> writes:
 
-The instances you changed look good. I didn't check whether you missed
-some. Was this some sort of mechanical change?
+> I'm currently using the following command for this:
+>    git log --pretty=format:%H | grep -q '^<commit id>"
+>
+> Problem is that with large repos that can be quite slow.
+>
+> Is there a faster way to do the test?
 
-I must say that a backslash in front of a $ in a sed expression looks very
-distracting:
+Not answering the question exactly, but "git branch --contains <commitid>"
+does almost this and a bit more.
 
-> +	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
-> +	git cat-file commit side@{1} | sed -e "1,/^\$/d" >expect &&
-
-because it is easy to miss that the backslash is taken by the
-double-quotes. But since these cases happen in the test suite where the
-whole thing is in single-quotes already, I don't think we can do something
-about it without making it even more unreadable...
-
--- Hannes
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
