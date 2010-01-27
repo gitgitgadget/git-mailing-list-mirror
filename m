@@ -1,99 +1,86 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH not-for-mainline] Implement git-vcs-p4
-Date: Wed, 27 Jan 2010 12:28:07 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.1001271218360.14365@iabervon.org>
-References: <alpine.LNX.2.00.1001251628431.14365@iabervon.org> <1a6be5fa1001270318h4ac8ac3bnaba48787a5b3efa6@mail.gmail.com> <20100127155636.GA18210@Knoppix> <alpine.LNX.2.00.1001271145500.14365@iabervon.org> <20100127171426.GA20820@Knoppix>
+From: Hallvard B Furuseth <h.b.furuseth@usit.uio.no>
+Subject: Re: cvs revision number -> git commit name?
+Date: Wed, 27 Jan 2010 18:47:18 +0100
+Message-ID: <hbf.20100127jjbx@bombur.uio.no>
+References: <hbf.20100126bda0@bombur.uio.no>
+	<bc341e101001261453u16124186i298a53ead0b4eee2@mail.gmail.com>
+	<201001270043.44614.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Tor Arvid Lund <torarvid@gmail.com>, git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Wed Jan 27 18:28:24 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Aaron Crane <git@aaroncrane.co.uk>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Jan 27 18:47:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaBgj-0000YA-3F
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 18:28:21 +0100
+	id 1NaBzE-0005Uq-ME
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 18:47:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755649Ab0A0R2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 12:28:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755587Ab0A0R2P
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 12:28:15 -0500
-Received: from iabervon.org ([66.92.72.58]:44719 "EHLO iabervon.org"
+	id S1754924Ab0A0RrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 12:47:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754100Ab0A0RrV
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 12:47:21 -0500
+Received: from mail-out2.uio.no ([129.240.10.58]:44459 "EHLO mail-out2.uio.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754150Ab0A0R2P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2010 12:28:15 -0500
-Received: (qmail 11643 invoked by uid 1000); 27 Jan 2010 17:28:07 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 27 Jan 2010 17:28:07 -0000
-In-Reply-To: <20100127171426.GA20820@Knoppix>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1753477Ab0A0RrU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2010 12:47:20 -0500
+Received: from mail-mx4.uio.no ([129.240.10.45])
+	by mail-out2.uio.no with esmtp (Exim 4.69)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1NaBz5-0000HE-2k; Wed, 27 Jan 2010 18:47:19 +0100
+Received: from bombur.uio.no ([129.240.6.233])
+	by mail-mx4.uio.no with esmtp  (Exim 4.69)
+	(envelope-from <hbf@ulrik.uio.no>)
+	id 1NaBz4-0003HD-Ob; Wed, 27 Jan 2010 18:47:19 +0100
+Received: from hbf by bombur.uio.no with local (Exim 4.44)
+	id 1NaBz4-0002yA-G1; Wed, 27 Jan 2010 18:47:18 +0100
+In-Reply-To: <201001270043.44614.johan@herland.net>
+X-Mailer: VM 7.18 under Emacs 22.2.1
+X-UiO-Ratelimit-Test: rcpts/h 3 msgs/h 1 sum rcpts/h 5 sum msgs/h 2 total rcpts 718 max rcpts/h 11 ratelimit 0
+X-UiO-Spam-info: not spam, SpamAssassin (score=-5.0, required=5.0, autolearn=disabled, UIO_MAIL_IS_INTERNAL=-5, uiobl=NO, uiouri=NO)
+X-UiO-Scanned: 55FDCBD6AA16154D5857FCF8B79A17343F6FEA73
+X-UiO-SPAM-Test: remote_host: 129.240.6.233 spam_score: -49 maxlevel 80 minaction 2 bait 0 mail/h: 1 total 1811 max/h 8 blacklist 0 greylist 0 ratelimit 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138176>
 
-On Wed, 27 Jan 2010, Ilari Liusvaara wrote:
+Johan Herland writes:
+>On Tuesday 26 January 2010, Aaron Crane wrote:
+>> One thing to be aware of (beyond the need to run grep to convert old
+>> CVS revision numbers to Git commit IDs)
 
-> On Wed, Jan 27, 2010 at 11:49:02AM -0500, Daniel Barkalow wrote:
-> > On Wed, 27 Jan 2010, Ilari Liusvaara wrote:
-> > 
-> > > On Wed, Jan 27, 2010 at 12:18:35PM +0100, Tor Arvid Lund wrote:
-> > > 
-> > > > Then, I did 'git fetch', and got a seg fault. I got around it by
-> > > > commenting out a line:
-> > > > 
-> > > > diff --git a/transport.c b/transport.c
-> > > > index 7714fdb..5b404f7 100644
-> > > > --- a/transport.c
-> > > > +++ b/transport.c
-> > > > @@ -924,7 +924,7 @@ struct transport *transport_get(struct remote
-> > > > *remote, const char *url)
-> > > >         ret->url = url;
-> > > > 
-> > > >         /* In case previous URL had helper forced, reset it. */
-> > > > -       remote->foreign_vcs = NULL;
-> > > > +/*     remote->foreign_vcs = NULL;*/
-> > > > 
-> > > >         /* maybe it is a foreign URL? */
-> > > >         if (url) {
-> > > > 
-> > > 
-> > > Hmm... And just commenting out that line will break case if you have
-> > > push URL using remote helpers and second one for same remote that
-> > > doesn't. 
-> > > 
-> > > I'll look into that issue.
-> > 
-> > I think that field should only be used for things like:
-> > 
-> > [remote "foo"]
-> > 	vcs = something
-> > 	...
-> > 
-> > and the case where the helper is inferred from the URL shouldn't use a 
-> > field on the remote, but be passing the information around in function 
-> > arguments. A field of the struct remote only really makes sense with 
-> > information that applies to the whole remote.
-> 
-> Why that 'remote->foreign_vcs = NULL;' is there is the following case:
-> 
-> [remote "origin"]
-> url = gits::git://[@/tmp/gits]/git-d2
-> url = ssh://repo.or.cz/srv/git/git-daemon2.git
-> 
-> The first URL is handled by 'gits' helper (as it should). But without
-> resetting the helper, it tries to pass that ssh:// URL to 'gits' helper
-> too (instead of handling it internally).
-> 
-> But, that reset didn't take the vcs setting into account.
+which sounds like a job for a small tool, maybe aliased in .git/config.
+'git cvsinfo file.c 1.23' or 'git cvsinfo [file.c] <git-commitname>' -->
+output cvs and git commit info (cvs rev, commit, log message, etc).
+Or maybe it shouldn't be cvs-specific.
 
-Yes, but the first URL should be directed to the 'gits' helper 
-without setting remote->foreign_vcs. That is, instead of setting 
-remote->foreign_vcs, you should just call transport_helper_init(ret, 
-xstrndup(url, p - url));
+>> is that there's a good chance
+>> the mapping file will pollute the results of `git grep` for some
+>> tasks.  (We've put the mapping file into our repo, where it's easy to
+>> find.)  I'm considering gzipping the mapping file as a workaround;
+>> that would mean our users will need to use zgrep (or equivalent) to
+>> look up CVS revision numbers, which may or may not be a problem in
+>> your situation.
 
-	-Daniel
-*This .sig left intentionally blank*
+Thanks for the tip.  Zipping sounds good.  In particular combined with
+the grepping tool above.  If the unzipping gets slow, cvsinfo --unpack
+could always put a bunzipped file in .git/cvsinfo.txt or something.
+
+> You could consider adding the CVS revision numbers as notes (see "git help 
+> notes" in >= v1.6.6) to the corresponding commits. Then they don't pollute 
+> the commit messages, but instead live in a separate, but parallel hierarchy 
+> that can be easily pulled in when you need to reference them (e.g. 
+> GIT_NOTES_REF="refs/" git log).
+
+Thanks, looks better than munging the log.  Though with one common
+weakness - should likely omit noting mass commits, since they'd clutter
+what 'git log' displays too much.  Of course, either could used combined
+with a mapping table.
+
+-- 
+Hallvard
