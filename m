@@ -1,64 +1,70 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: [PATCH 0/4] Fix various integer overflows
-Date: Wed, 27 Jan 2010 11:57:48 +0200
-Message-ID: <20100127095748.GA9992@Knoppix>
-References: <1264530255-4682-1-git-send-email-ilari.liusvaara@elisanet.fi>
- <7vk4v4zlhg.fsf@alter.siamese.dyndns.org>
- <20100127085952.GA21535@cuci.nl>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Testing if a certain commit is in the current branch
+Date: Wed, 27 Jan 2010 04:19:43 -0600
+Message-ID: <20100127101943.GA4470@progeny.tock>
+References: <201001270819.39819.elendil@planet.nl>
+ <7viqaorowo.fsf@alter.siamese.dyndns.org>
+ <201001270936.14935.elendil@planet.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Wed Jan 27 10:57:59 2010
+To: Frans Pop <elendil@planet.nl>
+X-From: git-owner@vger.kernel.org Wed Jan 27 11:19:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Na4es-0002xp-OJ
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 10:57:59 +0100
+	id 1Na4zy-0006b2-GY
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 11:19:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752710Ab0A0J5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 04:57:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674Ab0A0J5z
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 04:57:55 -0500
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:36669 "EHLO
-	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752503Ab0A0J5y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2010 04:57:54 -0500
-Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
-	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 505DE8C5D9;
-	Wed, 27 Jan 2010 11:57:53 +0200 (EET)
-Received: from emh04.mail.saunalahti.fi ([62.142.5.110])
-	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
-	with SMTP (gateway) id A079A64D90D; Wed, 27 Jan 2010 11:57:53 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id 368A741BF7;
-	Wed, 27 Jan 2010 11:57:48 +0200 (EET)
+	id S1753852Ab0A0KTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 05:19:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753847Ab0A0KTm
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 05:19:42 -0500
+Received: from mail-iw0-f186.google.com ([209.85.223.186]:37186 "EHLO
+	mail-iw0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753653Ab0A0KTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2010 05:19:41 -0500
+Received: by iwn16 with SMTP id 16so951291iwn.5
+        for <git@vger.kernel.org>; Wed, 27 Jan 2010 02:19:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=jPB7G9xBWKPz3kQ9x/mspbVpcI+ulvyBfqOa4NxRVpU=;
+        b=rNX4ADYeatSiOMaRsY0aQm6cpwDnZUhaIzNFwlUjh4ZQ2tSUGu6N7IbypCGWg1ra1D
+         p2bjlZ078vtxXH7tkj4hhO/tdFZxbg9oVDch8fHv63Dn1Uzn4OOHHLqOxlyT4iQBO+6L
+         3xL8pLhEchQUhwKOb/7s/0ImaAynImXkX4C/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ln2/RgVsM5YUy7kC0jNl+I1+09K8KG/DCv8PGIOYzK4o4J++qAC7LtnBQ6Am81WKsp
+         4wHjDjeM3FBqlbL6pjAummTBK7k81xV5/ZJOfPhXqysJPiOTN7NGmeHkvbJwhpk6WVnP
+         5tDRTTzdec++/BOJakUnvEx7yHqzlW+nQLvTw=
+Received: by 10.231.158.21 with SMTP id d21mr384067ibx.61.1264587579128;
+        Wed, 27 Jan 2010 02:19:39 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 23sm6924555iwn.3.2010.01.27.02.19.36
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 27 Jan 2010 02:19:38 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20100127085952.GA21535@cuci.nl>
+In-Reply-To: <201001270936.14935.elendil@planet.nl>
 User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138124>
 
-On Wed, Jan 27, 2010 at 09:59:52AM +0100, Stephen R. van den Berg wrote:
-> Junio C Hamano wrote:
-> >Looks trivially correct; thanks.
-> 
-> I'm just curious, but is this based on an actual bug which someone
-> experienced, or is this just based on mere theoretical code analysis?
+Frans Pop wrote:
 
-Theoretical at first, but I did construct packfile that hits one of
-those overflows (the one in patch_delta(), 32 bits only).
+> The use case is a wrapper script for kernel builds in which some variation 
+> are needed (due to changes in the build system) when building older 
+> kernels, e.g. during bisections or when building older stable updates.
+> So I test for the presence of commits that introduced relevant changes.
 
-In real world, hitting this bug would require hitting exactly 2^32-1
-byte file, and that is quite rare size for file.
+Neat idea.  How about this (untested)?
 
-And what can happen with them in real world git usage is different
-than what can happen with them if packs are suitably manipulated
-("transport streams" and bundles both contain packs in them).
-
--Ilari
+ git rev-list ^HEAD --no-walk commit1 commit2 ...
