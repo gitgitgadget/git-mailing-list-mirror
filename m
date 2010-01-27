@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv12 11/23] Refactor notes concatenation into a flexible
- interface for combining notes
-Date: Wed, 27 Jan 2010 12:51:48 +0100
-Message-ID: <1264593120-4428-12-git-send-email-johan@herland.net>
+Subject: [PATCHv12 09/23] Notes API: write_notes_tree(): Store the notes tree
+ in the database
+Date: Wed, 27 Jan 2010 12:51:46 +0100
+Message-ID: <1264593120-4428-10-git-send-email-johan@herland.net>
 References: <1264593120-4428-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -14,26 +14,26 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Na6SZ-0000gj-G4
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 12:53:23 +0100
+	id 1Na6SY-0000gj-71
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 12:53:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753423Ab0A0Lwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 06:52:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753301Ab0A0Lwg
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 06:52:36 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:59147 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753052Ab0A0Lwe (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2010 06:52:34 -0500
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+	id S1753214Ab0A0Lwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 06:52:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753197Ab0A0Lwa
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 06:52:30 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:52805 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752871Ab0A0Lw2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2010 06:52:28 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KWW00FD6MBKFU60@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Wed, 27 Jan 2010 12:52:32 +0100 (MET)
+ with ESMTP id <0KWW00JCIMBF2M00@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 27 Jan 2010 12:52:27 +0100 (MET)
 Received: from localhost.localdomain ([84.215.68.234])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KWW00EZ7MAZN340@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Wed, 27 Jan 2010 12:52:32 +0100 (MET)
+ git@vger.kernel.org; Wed, 27 Jan 2010 12:52:27 +0100 (MET)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2010.1.27.113919
 X-Mailer: git-send-email 1.6.6.405.g80ed6
@@ -42,347 +42,245 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138137>
 
-When adding a note to an object that already has an existing note, the
-current solution is to concatenate the contents of the two notes. However,
-the caller may instead wish to _overwrite_ the existing note with the new
-note, or maybe even _ignore_ the new note, and keep the existing one. There
-might also be other ways of combining notes that are only known to the
-caller.
-
-Therefore, instead of unconditionally concatenating notes, we let the caller
-specify how to combine notes, by passing in a pointer to a function for
-combining notes. The caller may choose to implement its own function for
-notes combining, but normally one of the following three conveniently
-supplied notes combination functions will be sufficient:
-
-- combine_notes_concatenate() combines the two notes by appending the
-  contents of the new note to the contents of the existing note.
-
-- combine_notes_overwrite() replaces the existing note with the new note.
-
-- combine_notes_ignore() keeps the existing note, and ignores the new note.
-
-A combine_notes function can be passed to init_notes() to choose a default
-combine_notes function for that notes tree. If NULL is given, the notes tree
-falls back to combine_notes_concatenate() as the ultimate default.
-
-A combine_notes function can also be passed directly to add_note(), to
-control the notes combining behaviour for a note addition in particular.
-If NULL is passed, the combine_notes function registered for the given
-notes tree is used.
+Uses for_each_note() to traverse the notes tree, and produces tree
+objects on the fly representing the "on-disk" version of the notes
+tree with appropriate fanout.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- notes.c |  138 ++++++++++++++++++++++++++++++++++++--------------------------
- notes.h |   34 +++++++++++++++-
- 2 files changed, 112 insertions(+), 60 deletions(-)
+ notes.c |  145 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ notes.h |   38 +++++++++++++++-
+ 2 files changed, 180 insertions(+), 3 deletions(-)
 
 diff --git a/notes.c b/notes.c
-index 08a369a..dc4e4f6 100644
+index eabd6f3..b576f7e 100644
 --- a/notes.c
 +++ b/notes.c
 @@ -1,5 +1,6 @@
  #include "cache.h"
  #include "notes.h"
-+#include "blob.h"
- #include "tree.h"
++#include "tree.h"
  #include "utf8.h"
  #include "strbuf.h"
-@@ -127,55 +128,12 @@ static struct leaf_node *note_tree_find(struct int_node *tree, unsigned char n,
- 	return NULL;
+ #include "tree-walk.h"
+@@ -540,6 +541,126 @@ redo:
+ 	return 0;
  }
  
--/* Create a new blob object by concatenating the two given blob objects */
--static int concatenate_notes(unsigned char *cur_sha1,
--		const unsigned char *new_sha1)
--{
--	char *cur_msg, *new_msg, *buf;
--	unsigned long cur_len, new_len, buf_len;
--	enum object_type cur_type, new_type;
--	int ret;
--
--	/* read in both note blob objects */
--	new_msg = read_sha1_file(new_sha1, &new_type, &new_len);
--	if (!new_msg || !new_len || new_type != OBJ_BLOB) {
--		free(new_msg);
--		return 0;
--	}
--	cur_msg = read_sha1_file(cur_sha1, &cur_type, &cur_len);
--	if (!cur_msg || !cur_len || cur_type != OBJ_BLOB) {
--		free(cur_msg);
--		free(new_msg);
--		hashcpy(cur_sha1, new_sha1);
--		return 0;
--	}
--
--	/* we will separate the notes by a newline anyway */
--	if (cur_msg[cur_len - 1] == '\n')
--		cur_len--;
--
--	/* concatenate cur_msg and new_msg into buf */
--	buf_len = cur_len + 1 + new_len;
--	buf = (char *) xmalloc(buf_len);
--	memcpy(buf, cur_msg, cur_len);
--	buf[cur_len] = '\n';
--	memcpy(buf + cur_len + 1, new_msg, new_len);
--
--	free(cur_msg);
--	free(new_msg);
--
--	/* create a new blob object from buf */
--	ret = write_sha1_file(buf, buf_len, "blob", cur_sha1);
--	free(buf);
--	return ret;
--}
--
- /*
-  * To insert a leaf_node:
-  * Search to the tree location appropriate for the given leaf_node's key:
-  * - If location is unused (NULL), store the tweaked pointer directly there
-  * - If location holds a note entry that matches the note-to-be-inserted, then
-- *   concatenate the two notes.
-+ *   combine the two notes (by calling the given combine_notes function).
-  * - If location holds a note entry that matches the subtree-to-be-inserted,
-  *   then unpack the subtree-to-be-inserted into the location.
-  * - If location holds a matching subtree entry, unpack the subtree at that
-@@ -184,7 +142,8 @@ static int concatenate_notes(unsigned char *cur_sha1,
-  *   node-to-be-inserted, and store the new int_node into the location.
-  */
- static void note_tree_insert(struct int_node *tree, unsigned char n,
--		struct leaf_node *entry, unsigned char type)
-+		struct leaf_node *entry, unsigned char type,
-+		combine_notes_fn combine_notes)
- {
- 	struct int_node *new_node;
- 	struct leaf_node *l;
-@@ -205,12 +164,11 @@ static void note_tree_insert(struct int_node *tree, unsigned char n,
- 				if (!hashcmp(l->val_sha1, entry->val_sha1))
- 					return;
- 
--				if (concatenate_notes(l->val_sha1,
--						entry->val_sha1))
--					die("failed to concatenate note %s "
--					    "into note %s for object %s",
--					    sha1_to_hex(entry->val_sha1),
-+				if (combine_notes(l->val_sha1, entry->val_sha1))
-+					die("failed to combine notes %s and %s"
-+					    " for object %s",
- 					    sha1_to_hex(l->val_sha1),
-+					    sha1_to_hex(entry->val_sha1),
- 					    sha1_to_hex(l->key_sha1));
- 				free(entry);
- 				return;
-@@ -233,7 +191,7 @@ static void note_tree_insert(struct int_node *tree, unsigned char n,
- 			*p = NULL;
- 			load_subtree(l, tree, n);
- 			free(l);
--			note_tree_insert(tree, n, entry, type);
-+			note_tree_insert(tree, n, entry, type, combine_notes);
- 			return;
- 		}
- 		break;
-@@ -243,9 +201,9 @@ static void note_tree_insert(struct int_node *tree, unsigned char n,
- 	assert(GET_PTR_TYPE(*p) == PTR_TYPE_NOTE ||
- 	       GET_PTR_TYPE(*p) == PTR_TYPE_SUBTREE);
- 	new_node = (struct int_node *) xcalloc(sizeof(struct int_node), 1);
--	note_tree_insert(new_node, n + 1, l, GET_PTR_TYPE(*p));
-+	note_tree_insert(new_node, n + 1, l, GET_PTR_TYPE(*p), combine_notes);
- 	*p = SET_PTR_TYPE(new_node, PTR_TYPE_INTERNAL);
--	note_tree_insert(new_node, n + 1, entry, type);
-+	note_tree_insert(new_node, n + 1, entry, type, combine_notes);
- }
- 
- /*
-@@ -406,7 +364,8 @@ static void load_subtree(struct leaf_node *subtree, struct int_node *node,
- 				l->key_sha1[19] = (unsigned char) len;
- 				type = PTR_TYPE_SUBTREE;
- 			}
--			note_tree_insert(node, n, l, type);
-+			note_tree_insert(node, n, l, type,
-+					 combine_notes_concatenate);
- 		}
- 	}
- 	free(buf);
-@@ -659,7 +618,64 @@ static int write_each_note(const unsigned char *object_sha1,
- 	return write_each_note_helper(d->root, note_path, mode, note_sha1);
- }
- 
--void init_notes(struct notes_tree *t, const char *notes_ref, int flags)
-+int combine_notes_concatenate(unsigned char *cur_sha1,
-+		const unsigned char *new_sha1)
++struct tree_write_stack {
++	struct tree_write_stack *next;
++	struct strbuf buf;
++	char path[2]; /* path to subtree in next, if any */
++};
++
++static inline int matches_tree_write_stack(struct tree_write_stack *tws,
++		const char *full_path)
 +{
-+	char *cur_msg = NULL, *new_msg = NULL, *buf;
-+	unsigned long cur_len, new_len, buf_len;
-+	enum object_type cur_type, new_type;
++	return  full_path[0] == tws->path[0] &&
++		full_path[1] == tws->path[1] &&
++		full_path[2] == '/';
++}
++
++static void write_tree_entry(struct strbuf *buf, unsigned int mode,
++		const char *path, unsigned int path_len, const
++		unsigned char *sha1)
++{
++		strbuf_addf(buf, "%06o %.*s%c", mode, path_len, path, '\0');
++		strbuf_add(buf, sha1, 20);
++}
++
++static void tree_write_stack_init_subtree(struct tree_write_stack *tws,
++		const char *path)
++{
++	struct tree_write_stack *n;
++	assert(!tws->next);
++	assert(tws->path[0] == '\0' && tws->path[1] == '\0');
++	n = (struct tree_write_stack *)
++		xmalloc(sizeof(struct tree_write_stack));
++	n->next = NULL;
++	strbuf_init(&n->buf, 256 * (32 + 40)); /* assume 256 entries per tree */
++	n->path[0] = n->path[1] = '\0';
++	tws->next = n;
++	tws->path[0] = path[0];
++	tws->path[1] = path[1];
++}
++
++static int tree_write_stack_finish_subtree(struct tree_write_stack *tws)
++{
++	int ret;
++	struct tree_write_stack *n = tws->next;
++	unsigned char s[20];
++	if (n) {
++		ret = tree_write_stack_finish_subtree(n);
++		if (ret)
++			return ret;
++		ret = write_sha1_file(n->buf.buf, n->buf.len, tree_type, s);
++		if (ret)
++			return ret;
++		strbuf_release(&n->buf);
++		free(n);
++		tws->next = NULL;
++		write_tree_entry(&tws->buf, 040000, tws->path, 2, s);
++		tws->path[0] = tws->path[1] = '\0';
++	}
++	return 0;
++}
++
++static int write_each_note_helper(struct tree_write_stack *tws,
++		const char *path, unsigned int mode,
++		const unsigned char *sha1)
++{
++	size_t path_len = strlen(path);
++	unsigned int n = 0;
 +	int ret;
 +
-+	/* read in both note blob objects */
-+	if (!is_null_sha1(new_sha1))
-+		new_msg = read_sha1_file(new_sha1, &new_type, &new_len);
-+	if (!new_msg || !new_len || new_type != OBJ_BLOB) {
-+		free(new_msg);
-+		return 0;
-+	}
-+	if (!is_null_sha1(cur_sha1))
-+		cur_msg = read_sha1_file(cur_sha1, &cur_type, &cur_len);
-+	if (!cur_msg || !cur_len || cur_type != OBJ_BLOB) {
-+		free(cur_msg);
-+		free(new_msg);
-+		hashcpy(cur_sha1, new_sha1);
-+		return 0;
++	/* Determine common part of tree write stack */
++	while (tws && 3 * n < path_len &&
++	       matches_tree_write_stack(tws, path + 3 * n)) {
++		n++;
++		tws = tws->next;
 +	}
 +
-+	/* we will separate the notes by a newline anyway */
-+	if (cur_msg[cur_len - 1] == '\n')
-+		cur_len--;
++	/* tws point to last matching tree_write_stack entry */
++	ret = tree_write_stack_finish_subtree(tws);
++	if (ret)
++		return ret;
 +
-+	/* concatenate cur_msg and new_msg into buf */
-+	buf_len = cur_len + 1 + new_len;
-+	buf = (char *) xmalloc(buf_len);
-+	memcpy(buf, cur_msg, cur_len);
-+	buf[cur_len] = '\n';
-+	memcpy(buf + cur_len + 1, new_msg, new_len);
-+	free(cur_msg);
-+	free(new_msg);
++	/* Start subtrees needed to satisfy path */
++	while (3 * n + 2 < path_len && path[3 * n + 2] == '/') {
++		tree_write_stack_init_subtree(tws, path + 3 * n);
++		n++;
++		tws = tws->next;
++	}
 +
-+	/* create a new blob object from buf */
-+	ret = write_sha1_file(buf, buf_len, blob_type, cur_sha1);
-+	free(buf);
++	/* There should be no more directory components in the given path */
++	assert(memchr(path + 3 * n, '/', path_len - (3 * n)) == NULL);
++
++	/* Finally add given entry to the current tree object */
++	write_tree_entry(&tws->buf, mode, path + 3 * n, path_len - (3 * n),
++			 sha1);
++
++	return 0;
++}
++
++struct write_each_note_data {
++	struct tree_write_stack *root;
++};
++
++static int write_each_note(const unsigned char *object_sha1,
++		const unsigned char *note_sha1, char *note_path,
++		void *cb_data)
++{
++	struct write_each_note_data *d =
++		(struct write_each_note_data *) cb_data;
++	size_t note_path_len = strlen(note_path);
++	unsigned int mode = 0100644;
++
++	if (note_path[note_path_len - 1] == '/') {
++		/* subtree entry */
++		note_path_len--;
++		note_path[note_path_len] = '\0';
++		mode = 040000;
++	}
++	assert(note_path_len <= 40 + 19);
++
++	return write_each_note_helper(d->root, note_path, mode, note_sha1);
++}
++
+ void init_notes(const char *notes_ref, int flags)
+ {
+ 	unsigned char sha1[20], object_sha1[20];
+@@ -604,6 +725,30 @@ int for_each_note(int flags, each_note_fn fn, void *cb_data)
+ 	return for_each_note_helper(&root_node, 0, 0, flags, fn, cb_data);
+ }
+ 
++int write_notes_tree(unsigned char *result)
++{
++	struct tree_write_stack root;
++	struct write_each_note_data cb_data;
++	int ret;
++
++	assert(initialized);
++
++	/* Prepare for traversal of current notes tree */
++	root.next = NULL; /* last forward entry in list is grounded */
++	strbuf_init(&root.buf, 256 * (32 + 40)); /* assume 256 entries */
++	root.path[0] = root.path[1] = '\0';
++	cb_data.root = &root;
++
++	/* Write tree objects representing current notes tree */
++	ret = for_each_note(FOR_EACH_NOTE_DONT_UNPACK_SUBTREES |
++				FOR_EACH_NOTE_YIELD_SUBTREES,
++			write_each_note, &cb_data) ||
++		tree_write_stack_finish_subtree(&root) ||
++		write_sha1_file(root.buf.buf, root.buf.len, tree_type, result);
++	strbuf_release(&root.buf);
 +	return ret;
 +}
 +
-+int combine_notes_overwrite(unsigned char *cur_sha1,
-+		const unsigned char *new_sha1)
-+{
-+	hashcpy(cur_sha1, new_sha1);
-+	return 0;
-+}
-+
-+int combine_notes_ignore(unsigned char *cur_sha1,
-+		const unsigned char *new_sha1)
-+{
-+	return 0;
-+}
-+
-+void init_notes(struct notes_tree *t, const char *notes_ref,
-+		combine_notes_fn combine_notes, int flags)
+ void free_notes(void)
  {
- 	unsigned char sha1[20], object_sha1[20];
- 	unsigned mode;
-@@ -676,8 +692,12 @@ void init_notes(struct notes_tree *t, const char *notes_ref, int flags)
- 	if (!notes_ref)
- 		notes_ref = GIT_NOTES_DEFAULT_REF;
- 
-+	if (!combine_notes)
-+		combine_notes = combine_notes_concatenate;
-+
- 	t->root = (struct int_node *) xcalloc(sizeof(struct int_node), 1);
- 	t->ref = notes_ref ? xstrdup(notes_ref) : NULL;
-+	t->combine_notes = combine_notes;
- 	t->initialized = 1;
- 
- 	if (flags & NOTES_INIT_EMPTY || !notes_ref ||
-@@ -693,17 +713,19 @@ void init_notes(struct notes_tree *t, const char *notes_ref, int flags)
- }
- 
- void add_note(struct notes_tree *t, const unsigned char *object_sha1,
--		const unsigned char *note_sha1)
-+		const unsigned char *note_sha1, combine_notes_fn combine_notes)
- {
- 	struct leaf_node *l;
- 
- 	if (!t)
- 		t = &default_notes_tree;
- 	assert(t->initialized);
-+	if (!combine_notes)
-+		combine_notes = t->combine_notes;
- 	l = (struct leaf_node *) xmalloc(sizeof(struct leaf_node));
- 	hashcpy(l->key_sha1, object_sha1);
- 	hashcpy(l->val_sha1, note_sha1);
--	note_tree_insert(t->root, 0, l, PTR_TYPE_NOTE);
-+	note_tree_insert(t->root, 0, l, PTR_TYPE_NOTE, combine_notes);
- }
- 
- void remove_note(struct notes_tree *t, const unsigned char *object_sha1)
-@@ -788,7 +810,7 @@ void format_note(struct notes_tree *t, const unsigned char *object_sha1,
- 	if (!t)
- 		t = &default_notes_tree;
- 	if (!t->initialized)
--		init_notes(t, NULL, 0);
-+		init_notes(t, NULL, NULL, 0);
- 
- 	sha1 = get_note(t, object_sha1);
- 	if (!sha1)
+ 	note_tree_free(&root_node);
 diff --git a/notes.h b/notes.h
-index a599a0d..5c49465 100644
+index c319fd8..ebc301c 100644
 --- a/notes.h
 +++ b/notes.h
-@@ -2,6 +2,30 @@
- #define NOTES_H
+@@ -21,11 +21,23 @@
+  */
+ void init_notes(const char *notes_ref, int flags);
  
- /*
-+ * Function type for combining two notes annotating the same object.
+-/* Add the given note object to the internal notes tree structure */
++/*
++ * Add the given note object to the internal notes tree structure
 + *
-+ * When adding a new note annotating the same object as an existing note, it is
-+ * up to the caller to decide how to combine the two notes. The decision is
-+ * made by passing in a function of the following form. The function accepts
-+ * two SHA1s -- of the existing note and the new note, respectively. The
-+ * function then combines the notes in whatever way it sees fit, and writes the
-+ * resulting SHA1 into the first SHA1 argument (cur_sha1). A non-zero return
-+ * value indicates failure.
-+ *
-+ * The two given SHA1s must both be non-NULL and different from each other.
-+ *
-+ * The default combine_notes function (you get this when passing NULL) is
-+ * combine_notes_concatenate(), which appends the contents of the new note to
-+ * the contents of the existing note.
++ * IMPORTANT: The changes made by add_note() to the internal notes tree structure
++ * are not persistent until a subsequent call to write_notes_tree() returns
++ * zero.
 + */
-+typedef int combine_notes_fn(unsigned char *cur_sha1, const unsigned char *new_sha1);
-+
-+/* Common notes combinators */
-+int combine_notes_concatenate(unsigned char *cur_sha1, const unsigned char *new_sha1);
-+int combine_notes_overwrite(unsigned char *cur_sha1, const unsigned char *new_sha1);
-+int combine_notes_ignore(unsigned char *cur_sha1, const unsigned char *new_sha1);
+ void add_note(const unsigned char *object_sha1,
+ 		const unsigned char *note_sha1);
+ 
+-/* Remove the given note object from the internal notes tree structure */
++/*
++ * Remove the given note object from the internal notes tree structure
++ *
++ * IMPORTANT: The changes made by remove_note() to the internal notes tree
++ * structure are not persistent until a subsequent call to write_notes_tree()
++ * returns zero.
++ */
+ void remove_note(const unsigned char *object_sha1);
+ 
+ /* Get the note object SHA1 containing the note data for the given object */
+@@ -78,7 +90,27 @@ typedef int each_note_fn(const unsigned char *object_sha1,
+ 		void *cb_data);
+ int for_each_note(int flags, each_note_fn fn, void *cb_data);
+ 
+-/* Free (and de-initialize) the internal notes tree structure */
++/*
++ * Write the internal notes tree structure to the object database
++ *
++ * Creates a new tree object encapsulating the current state of the
++ * internal notes tree, and stores its SHA1 into the 'result' argument.
++ *
++ * Returns zero on success, non-zero on failure.
++ *
++ * IMPORTANT: Changes made to the internal notes tree structure are not
++ * persistent until this function has returned zero. Please also remember
++ * to create a corresponding commit object, and update the appropriate
++ * notes ref.
++ */
++int write_notes_tree(unsigned char *result);
 +
 +/*
-  * Notes tree object
-  *
-  * Encapsulates the internal notes tree structure associated with a notes ref.
-@@ -13,6 +37,7 @@
- extern struct notes_tree {
- 	struct int_node *root;
- 	char *ref;
-+	combine_notes_fn *combine_notes;
- 	int initialized;
- } default_notes_tree;
- 
-@@ -36,10 +61,15 @@ extern struct notes_tree {
-  *
-  * If you pass t == NULL, the default internal notes_tree will be initialized.
-  *
-+ * The combine_notes function that is passed becomes the default combine_notes
-+ * function for the given notes_tree. If NULL is passed, the default
-+ * combine_notes function is combine_notes_concatenate().
++ * Free (and de-initialize) the internal notes tree structure
 + *
-  * Precondition: The notes_tree structure is zeroed (this can be achieved with
-  * memset(t, 0, sizeof(struct notes_tree)))
-  */
--void init_notes(struct notes_tree *t, const char *notes_ref, int flags);
-+void init_notes(struct notes_tree *t, const char *notes_ref,
-+		combine_notes_fn combine_notes, int flags);
++ * IMPORTANT: Changes made to the notes tree since the last, successful
++ * call to write_notes_tree() will be lost.
++ */
+ void free_notes(void);
  
- /*
-  * Add the given note object to the given notes_tree structure
-@@ -49,7 +79,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref, int flags);
-  * zero.
-  */
- void add_note(struct notes_tree *t, const unsigned char *object_sha1,
--		const unsigned char *note_sha1);
-+		const unsigned char *note_sha1, combine_notes_fn combine_notes);
- 
- /*
-  * Remove the given note object from the given notes_tree structure
+ /* Flags controlling how notes are formatted */
 -- 
 1.6.6.405.g80ed6
