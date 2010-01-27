@@ -1,102 +1,68 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [PATCH v2] Fix remote.<remote>.vcs
-Date: Wed, 27 Jan 2010 19:53:17 +0200
-Message-ID: <1264614797-22394-1-git-send-email-ilari.liusvaara@elisanet.fi>
-Cc: Tor Arvid Lund <torarvid@gmail.com>,
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH v2] Fix remote.<remote>.vcs
+Date: Wed, 27 Jan 2010 19:09:10 +0100
+Message-ID: <fabb9a1e1001271009m283bd725v9582b7c0c0acbad2@mail.gmail.com>
+References: <1264614797-22394-1-git-send-email-ilari.liusvaara@elisanet.fi>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Tor Arvid Lund <torarvid@gmail.com>,
 	Daniel Barkalow <barkalow@iabervon.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 27 18:53:29 2010
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Wed Jan 27 19:11:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaC52-0000rU-9t
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 18:53:28 +0100
+	id 1NaCKi-0002qY-Sc
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 19:09:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755571Ab0A0RxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 12:53:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755549Ab0A0RxX
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 12:53:23 -0500
-Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:59770 "EHLO
-	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755526Ab0A0RxW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2010 12:53:22 -0500
-Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
-	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id 3C930EFA0B;
-	Wed, 27 Jan 2010 19:53:21 +0200 (EET)
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
-	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
-	with SMTP (gateway) id A0350E38485; Wed, 27 Jan 2010 19:53:21 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id 121EDE51BD;
-	Wed, 27 Jan 2010 19:53:17 +0200 (EET)
-X-Mailer: git-send-email 1.7.0.rc0.19.gb557e6
-X-Antivirus: VAMS
+	id S1755964Ab0A0SJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 13:09:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755886Ab0A0SJb
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 13:09:31 -0500
+Received: from mail-pz0-f190.google.com ([209.85.222.190]:47362 "EHLO
+	mail-pz0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755864Ab0A0SJb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2010 13:09:31 -0500
+Received: by pzk28 with SMTP id 28so2134931pzk.4
+        for <git@vger.kernel.org>; Wed, 27 Jan 2010 10:09:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=hcMejnw4ranC/L/D0Tu16ky0Mc+k0cGLoaGKDVdp2fQ=;
+        b=FJeR92h4gwZJuV54v0tQtd45XDmUxXuhf0b81luPb7F1efifyNqlyB1BGV2eeX/UfY
+         W/w1HUc1mzBZncUlLfR45qN2c9lT6IKqVJ0te4qgV4FEYD0YymWsbj3qssjszc5Jy1tk
+         EQu2mzbDQ/hsqI1ijH/zlh6+RUkvOCvnVburI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=bC+LOvDObnA5K/EMJApkr8pI8gbOcu6bOkpazcb3ONqr1E+ZfCcbRU0mrXyW33g8fq
+         IoCN29dzkaYZTJYDCyWLPcD2WWxWW5WNdELsYnENSv6cazZdOE3lwX2bXU5/1oK8Qz2h
+         k4V7zIshB5uRLEOxdK1enIsGKRB6k3xS5BUjA=
+Received: by 10.142.248.36 with SMTP id v36mr2324249wfh.228.1264615770389; 
+	Wed, 27 Jan 2010 10:09:30 -0800 (PST)
+In-Reply-To: <1264614797-22394-1-git-send-email-ilari.liusvaara@elisanet.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138179>
 
-remote.<remote>.vcs causes remote->foreign_vcs to be set on entry to
-transport_get(). Unfortunately, the code assumed that any such entry
-is stale from previous round.
+Heya,
 
-Fix this by making VCS set by URL to be volatile w.r.t. transport_get()
-instead.
+On Wed, Jan 27, 2010 at 18:53, Ilari Liusvaara
+<ilari.liusvaara@elisanet.fi> wrote:
+> Fix this by making VCS set by URL to be volatile w.r.t. transport_get()
+> instead.
 
-Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
----
- transport.c |   11 +++++------
- 1 files changed, 5 insertions(+), 6 deletions(-)
+Patch looks good (didn't test it though), but I had to read this line
+twice; I'm afraid I don't have any suggestions on how to improve it
+though.
 
-Differences from first round:
-
-This makes VCS setting apply to all URLs that don't explicitly override,
-instead of it applying to just the first one.
-
-diff --git a/transport.c b/transport.c
-index 7714fdb..87581b8 100644
---- a/transport.c
-+++ b/transport.c
-@@ -912,20 +912,19 @@ static int external_specification_len(const char *url)
- 
- struct transport *transport_get(struct remote *remote, const char *url)
- {
-+	const char *helper;
- 	struct transport *ret = xcalloc(1, sizeof(*ret));
- 
- 	if (!remote)
- 		die("No remote provided to transport_get()");
- 
- 	ret->remote = remote;
-+	helper = remote->foreign_vcs;
- 
- 	if (!url && remote && remote->url)
- 		url = remote->url[0];
- 	ret->url = url;
- 
--	/* In case previous URL had helper forced, reset it. */
--	remote->foreign_vcs = NULL;
--
- 	/* maybe it is a foreign URL? */
- 	if (url) {
- 		const char *p = url;
-@@ -933,11 +932,11 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 		while (isalnum(*p))
- 			p++;
- 		if (!prefixcmp(p, "::"))
--			remote->foreign_vcs = xstrndup(url, p - url);
-+			helper = xstrndup(url, p - url);
- 	}
- 
--	if (remote && remote->foreign_vcs) {
--		transport_helper_init(ret, remote->foreign_vcs);
-+	if (helper) {
-+		transport_helper_init(ret, helper);
- 	} else if (!prefixcmp(url, "rsync:")) {
- 		ret->get_refs_list = get_refs_via_rsync;
- 		ret->fetch = fetch_objs_via_rsync;
 -- 
-1.7.0.rc0.19.gb557e6
+Cheers,
+
+Sverre Rabbelier
