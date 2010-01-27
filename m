@@ -1,141 +1,193 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: git status showing phantom modifications
-Date: Wed, 27 Jan 2010 13:14:39 +0800
-Message-ID: <be6fef0d1001262114r137ba8ddi60a3a3468950c5ce@mail.gmail.com>
-References: <9B3C1167-7667-4B1F-BEE5-F47FE89F8692@xing.com>
-	 <be6fef0d1001250303p2c12381ao7d3a8a1d48eebb56@mail.gmail.com>
-	 <4017EB11-4B29-4599-B19A-91BC39632BBF@xing.com>
-	 <59B5C4C4-6E95-4BAA-9351-B88B6309E022@xing.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Ludwig <michael.ludwig@xing.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Jan 27 06:15:04 2010
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2.1 3/5] Documentation: reset: describe new "--keep" option
+Date: Wed, 27 Jan 2010 06:52:34 +0100
+Message-ID: <20100127055235.6328.21579.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Stephen Boyd <bebarino@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Daniel Convissor <danielc@analysisandsolutions.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 27 06:55:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Na0F5-00063i-Fo
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 06:15:03 +0100
+	id 1Na0sS-0001SS-8X
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 06:55:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752736Ab0A0FOo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jan 2010 00:14:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752621Ab0A0FOl
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 00:14:41 -0500
-Received: from mail-iw0-f186.google.com ([209.85.223.186]:43673 "EHLO
-	mail-iw0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752291Ab0A0FOj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2010 00:14:39 -0500
-Received: by iwn16 with SMTP id 16so778737iwn.5
-        for <git@vger.kernel.org>; Tue, 26 Jan 2010 21:14:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=SWqnZAYH3cK7gzXNoylaq0UEWLwQisGGB1IniRCfj5Y=;
-        b=dcftp7ohRr7xA7AwTbuhajH8VMnnV6V+4bDWiGou2Lk0s0SbAwXUEcagUikGyBW6k4
-         e/QwLInTQeuonqg116JvMZLeHk/j724vFJHLmQwU61uJkxH1933wyoOF0hQgJ5KXLF9L
-         B0FV14MXUEkSKP33eZP5q7vFpxGT6bFCSvczs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=JqaR1XUw8GOQ52h1/CsdgVd9C7GlNVRYzNUPaQ9bWxlly6UoGuFy6Y3NHPh3+PV6Ka
-         4A3fIS2njQ1YqQZJNodd84FmbgKUSeTkga1FxrD3Y2I1bVzMERa8Ma5uvHlZRj+vZmpK
-         Pt7loq3UQg57dDLrNyeHcz0fv3ettiyQqHq0k=
-Received: by 10.231.148.13 with SMTP id n13mr2776511ibv.67.1264569279125; Tue, 
-	26 Jan 2010 21:14:39 -0800 (PST)
-In-Reply-To: <59B5C4C4-6E95-4BAA-9351-B88B6309E022@xing.com>
+	id S1751869Ab0A0FyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 00:54:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788Ab0A0FyX
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 00:54:23 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:34035 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750915Ab0A0FyW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2010 00:54:22 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 603F68180BF;
+	Wed, 27 Jan 2010 06:54:10 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 250C1818064;
+	Wed, 27 Jan 2010 06:54:07 +0100 (CET)
+X-git-sha1: 87d5d61495af4516b1e6ad2a03006d51b1a938d8 
+X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138107>
 
-Hi Johannes,
+and give an example to show how it can be used.
 
-do you happen to have any clue on this?
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Documentation/git-reset.txt |   47 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 46 insertions(+), 1 deletions(-)
 
---=20
-Cheers,
-Ray Chuan
+This is to replace patch "[PATCH v2 3/5]" (in the "reset --keep" series),
+which has some grammar/spelling problems.
 
-
-On Tue, Jan 26, 2010 at 5:14 PM, Michael Ludwig <michael.ludwig@xing.co=
-m> wrote:
-> Am 25.01.2010 um 12:43 schrieb Michael Ludwig:
->
->> Reading up about core.fileMode in git-config(1), I think you've poin=
-ted
->> me to the solution. I should probably just set it to false. If that =
-doesn't
->> solve the issue, I'll report back.
->
-> Back with more info:
->
-> git version 1.6.4.2
->
-> Before adding any core.filemode setting to ~/.gitconfig or .git/confi=
-g:
->
-> michael@wladimir:/cygdrive/m/REPOS6.TECH.git/comp :-) git config -l
-> user.name=3DMichael Ludwig
-> user.email=3D...
-> core.repositoryformatversion=3D0
-> core.filemode=3Dtrue =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0<=3D =
-filemode already present
-> core.bare=3Dfalse
-> core.logallrefupdates=3Dtrue
-> core.ignorecase=3Dtrue
-> core.autocrlf=3Dfalse
-> svn-remote.svn.ignore-paths=3D^(some|paths)
-> svn-remote.svn.url=3Dsvn://localhost
-> svn-remote.svn.fetch=3D:refs/remotes/git-svn
-> svn.authorsfile=3Dauthors.txt
->
-> My git status output after cd to subdir shows many files "modified". =
-But
-> they aren't! Edited ~/.gitconfig to include core.filemode =3D true [s=
-ic].
-> Here's the diff for the git config output:
->
-> --- /home/michael/a =A0 =A0 2010-01-25 20:36:53.140625000 +0100
-> +++ /home/michael/b =A0 =A0 2010-01-25 20:37:01.421875000 +0100
-> @@ -4,6 +4,7 @@
-> alias.ci=3Dcheckin
-> alias.co=3Dcheckout
-> alias.br=3Dbranch
-> +core.filemode=3Dtrue
-> core.repositoryformatversion=3D0
-> core.filemode=3Dtrue
-> core.bare=3Dfalse
->
-> We're seeing core.filemode appear *twice*. Why that?
->
-> michael@wladimir:/cygdrive/m/REPOS6.TECH.git/comp :-) git st
-> # On branch master
-> nothing to commit (working directory clean)
->
-> So it seems adding core.filemode =3D true has fixed the issue, or at =
-least
-> covered the symptoms. Adding core.filemode =3D false did not cause th=
-e
-> phantom modifications to disappear. Note that from reading git-config=
-(1),
-> I had rather assumed this latter setting to have the desired effect.
->
-> And something seems to be wrong here. Why are modifications flagged w=
-hen
-> doing git status from a subdir but not from the topdir?
->
-> --
-> Michael.Ludwig (#) XING.com
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 168db08..b9ecd49 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -8,7 +8,7 @@ git-reset - Reset current HEAD to the specified state
+ SYNOPSIS
+ --------
+ [verse]
+-'git reset' [--mixed | --soft | --hard | --merge] [-q] [<commit>]
++'git reset' [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]
+ 'git reset' [-q] [<commit>] [--] <paths>...
+ 'git reset' --patch [<commit>] [--] [<paths>...]
+ 
+@@ -52,6 +52,11 @@ OPTIONS
+ 	and updates the files that are different between the named commit
+ 	and the current commit in the working tree.
+ 
++--keep::
++	Resets the index to match the tree recorded by the named commit,
++	but keep changes in the working tree. Aborts if the reset would
++	change files that are already modified in the working tree.
++
+ -p::
+ --patch::
+ 	Interactively select hunks in the difference between the index
+@@ -93,6 +98,7 @@ in the index and in state D in HEAD.
+ 				--mixed  A       D     D
+ 				--hard   D       D     D
+ 				--merge (disallowed)
++				--keep  (disallowed)
+ 
+       working index HEAD target         working index HEAD
+       ----------------------------------------------------
+@@ -100,6 +106,7 @@ in the index and in state D in HEAD.
+ 				--mixed  A       C     C
+ 				--hard   C       C     C
+ 				--merge (disallowed)
++				--keep   A       C     C
+ 
+       working index HEAD target         working index HEAD
+       ----------------------------------------------------
+@@ -107,6 +114,7 @@ in the index and in state D in HEAD.
+ 				--mixed  B       D     D
+ 				--hard   D       D     D
+ 				--merge  D       D     D
++				--keep  (disallowed)
+ 
+       working index HEAD target         working index HEAD
+       ----------------------------------------------------
+@@ -114,6 +122,7 @@ in the index and in state D in HEAD.
+ 				--mixed  B       C     C
+ 				--hard   C       C     C
+ 				--merge  C       C     C
++				--keep   B       C     C
+ 
+       working index HEAD target         working index HEAD
+       ----------------------------------------------------
+@@ -121,6 +130,7 @@ in the index and in state D in HEAD.
+ 				--mixed  B       D     D
+ 				--hard   D       D     D
+ 				--merge (disallowed)
++				--keep  (disallowed)
+ 
+       working index HEAD target         working index HEAD
+       ----------------------------------------------------
+@@ -128,6 +138,7 @@ in the index and in state D in HEAD.
+ 				--mixed  B       C     C
+ 				--hard   C       C     C
+ 				--merge  B       C     C
++				--keep   B       C     C
+ 
+ "reset --merge" is meant to be used when resetting out of a conflicted
+ merge. Any mergy operation guarantees that the work tree file that is
+@@ -138,6 +149,14 @@ between the index and the work tree, then it means that we are not
+ resetting out from a state that a mergy operation left after failing
+ with a conflict. That is why we disallow --merge option in this case.
+ 
++"reset --keep" is meant to be used when removing some of the last
++commits in the current branch while keeping changes in the working
++tree. If there could be conflicts between the changes in the commit we
++want to remove and the changes in the working tree we want to keep,
++the reset is disallowed. That's why it is disallowed if there are both
++changes between the working tree and HEAD, and between HEAD and the
++target.
++
+ The following tables show what happens when there are unmerged
+ entries:
+ 
+@@ -147,6 +166,7 @@ entries:
+ 				--mixed  X       B     B
+ 				--hard   B       B     B
+ 				--merge  B       B     B
++				--keep  (disallowed)
+ 
+       working index HEAD target         working index HEAD
+       ----------------------------------------------------
+@@ -154,6 +174,7 @@ entries:
+ 				--mixed  X       A     A
+ 				--hard   A       A     A
+ 				--merge  A       A     A
++				--keep   X       A     A
+ 
+ X means any state and U means an unmerged index.
+ 
+@@ -325,6 +346,30 @@ $ git add frotz.c                           <3>
+ <2> This commits all other changes in the index.
+ <3> Adds the file to the index again.
+ 
++Keep changes in working tree while discarding some previous commits::
+++
++Suppose you are working on something and you commit it, and then you
++continue working a bit more, but now you think that what you have in
++your working tree should be in another branch that has nothing to do
++with what you commited previously. You can start a new branch and
++reset it while keeping the changes in your work tree.
+++
++------------
++$ git tag start
++$ git branch branch1
++$ edit
++$ git commit ...                            <1>
++$ edit
++$ git branch branch2                        <2>
++$ git reset --keep start                    <3>
++------------
+++
++<1> This commits your first edits in branch1.
++<2> This creates branch2, but unfortunately it contains the previous
++commit that you don't want in this branch.
++<3> This removes the unwanted previous commit, but this keeps the
++changes in your working tree.
++
+ Author
+ ------
+ Written by Junio C Hamano <gitster@pobox.com> and Linus Torvalds <torvalds@osdl.org>
+-- 
+1.6.6.1.557.g77031
