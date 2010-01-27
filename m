@@ -1,87 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: 3 question about how to use Git .
-Date: Wed, 27 Jan 2010 04:52:54 -0500
-Message-ID: <20100127095253.GC6262@coredump.intra.peff.net>
-References: <e78dc7d71001270034k48e1a386p64e01eb8d6d1187a@mail.gmail.com>
- <e78dc7d71001270035p4e235f18o59029b93bea25d4e@mail.gmail.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [PATCH 0/4] Fix various integer overflows
+Date: Wed, 27 Jan 2010 11:57:48 +0200
+Message-ID: <20100127095748.GA9992@Knoppix>
+References: <1264530255-4682-1-git-send-email-ilari.liusvaara@elisanet.fi>
+ <7vk4v4zlhg.fsf@alter.siamese.dyndns.org>
+ <20100127085952.GA21535@cuci.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: honglei junan <jhonglei@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 27 10:53:20 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Wed Jan 27 10:57:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Na4aM-0001i6-SW
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 10:53:19 +0100
+	id 1Na4es-0002xp-OJ
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 10:57:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754102Ab0A0JxB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 04:53:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754103Ab0A0Jw7
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 04:52:59 -0500
-Received: from peff.net ([208.65.91.99]:45840 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754039Ab0A0Jw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2010 04:52:58 -0500
-Received: (qmail 4303 invoked by uid 107); 27 Jan 2010 09:52:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 27 Jan 2010 04:52:58 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Jan 2010 04:52:54 -0500
+	id S1752710Ab0A0J5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 04:57:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674Ab0A0J5z
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 04:57:55 -0500
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:36669 "EHLO
+	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752503Ab0A0J5y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2010 04:57:54 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 505DE8C5D9;
+	Wed, 27 Jan 2010 11:57:53 +0200 (EET)
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A079A64D90D; Wed, 27 Jan 2010 11:57:53 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id 368A741BF7;
+	Wed, 27 Jan 2010 11:57:48 +0200 (EET)
 Content-Disposition: inline
-In-Reply-To: <e78dc7d71001270035p4e235f18o59029b93bea25d4e@mail.gmail.com>
+In-Reply-To: <20100127085952.GA21535@cuci.nl>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138123>
 
-On Wed, Jan 27, 2010 at 04:35:53PM +0800, honglei junan wrote:
+On Wed, Jan 27, 2010 at 09:59:52AM +0100, Stephen R. van den Berg wrote:
+> Junio C Hamano wrote:
+> >Looks trivially correct; thanks.
+> 
+> I'm just curious, but is this based on an actual bug which someone
+> experienced, or is this just based on mere theoretical code analysis?
 
-> hi,i have three questions seem not not appear in GitFaq,yet confuse me much :
-> *) since I've already commit many patches before telling git my name
-> and email,should i roll back and recommit all patches to make my name
-> in repository?
+Theoretical at first, but I did construct packfile that hits one of
+those overflows (the one in patch_delta(), 32 bits only).
 
-You can use filter-branch to do it automatically. Something like:
+In real world, hitting this bug would require hitting exactly 2^32-1
+byte file, and that is quite rare size for file.
 
-  export BAD_EMAIL='The Wrong Email in Your Commits'
-  export GOOD_NAME='Your Correct Name'
-  export GOOD_EMAIL='Your Correct Email'
-  git filter-branch --env-filter '
-    if test "$GIT_COMMITTER_EMAIL" = "$BAD_EMAIL"; then
-      GIT_COMMITTER_NAME=$GOOD_NAME
-      GIT_COMMITTER_EMAIL=$GOOD_EMAIL
-    fi
-    if test "$GIT_AUTHOR_EMAIL" = "$BAD_EMAIL"; then
-      GIT_AUTHOR_NAME=$GOOD_NAME
-      GIT_AUTHOR_EMAIL=$GOOD_EMAIL
-    fi
-  '
+And what can happen with them in real world git usage is different
+than what can happen with them if packs are suitably manipulated
+("transport streams" and bundles both contain packs in them).
 
-which will rewrite just the commits with the problem.  Note that this
-will rewrite the history of those commits. If you've shared the old ones
-with others, they will see them as entirely new commits instead of
-replacements.
-
-> *) i create a new branch ms_port,and then commit several patches like,
->     commit 1->commit 2->commit 3->commit 4
-> now i just want to change commit2,without change any others,how could
-> i do it?since i only change the local repository,i think this should
-> be allowed.
-
-Try "git rebase -i commit1".
-
-> *) when cloning a git repository,the network is broken down.How could
-> i went on the clone process when the network being OK ?
-> since the download speed is very low, i really don't want to remove
-> all things and download them again.
-
-Git doesn't currently support restartable clone. It's something that
-would be nice to have, but there are some technical issues that make it
-more difficult than simply starting where we left off (namely that the
-pack that is being downloaded via the git protocol is generated on the
-fly). You can find some previous discussions by searching the list for
-"restartable clone".
-
--Peff
+-Ilari
