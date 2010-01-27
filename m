@@ -1,56 +1,62 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-gui: Update German translation (12 new or changed
-	strings).
-Date: Tue, 26 Jan 2010 15:52:14 -0800
-Message-ID: <20100126235214.GG15015@spearce.org>
-References: <201001262228.11651.stimming@tuhh.de>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Patchdiff
+Date: Wed, 27 Jan 2010 01:06:07 +0100
+Message-ID: <fabb9a1e1001261606i4f706387vaf5647436e454fb4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Christian Stimming <stimming@tuhh.de>
-X-From: git-owner@vger.kernel.org Wed Jan 27 00:53:36 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 27 01:06:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZvE0-00008L-1V
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 00:53:36 +0100
+	id 1NZvQj-0004Tc-Jq
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 01:06:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754983Ab0AZXwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2010 18:52:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754859Ab0AZXwV
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 18:52:21 -0500
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:48363 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754777Ab0AZXwR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2010 18:52:17 -0500
-Received: by ywh6 with SMTP id 6so4559554ywh.4
-        for <git@vger.kernel.org>; Tue, 26 Jan 2010 15:52:16 -0800 (PST)
-Received: by 10.150.163.4 with SMTP id l4mr11507927ybe.300.1264549936710;
-        Tue, 26 Jan 2010 15:52:16 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 7sm2273406ywc.51.2010.01.26.15.52.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 26 Jan 2010 15:52:15 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <201001262228.11651.stimming@tuhh.de>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755820Ab0A0AGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2010 19:06:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754941Ab0A0AG3
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 19:06:29 -0500
+Received: from mail-pz0-f189.google.com ([209.85.222.189]:39485 "EHLO
+	mail-pz0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754697Ab0A0AG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2010 19:06:27 -0500
+Received: by pzk27 with SMTP id 27so1112556pzk.33
+        for <git@vger.kernel.org>; Tue, 26 Jan 2010 16:06:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=hcT3ZsBliF+zrBxGx7UpkN2Wq+aHSaafCEp8iRj0U7I=;
+        b=ciQ96hz3ZzDX7BP3EZJbiX4vRwJodfXgGo1vxmyXW7fjEvrLHJ1nrPOpIeh8oehtyI
+         HQzs0jyC9oRWNpsED+reIghXGrTHk2nZT74k8D52SPaZLW9AvyBELXaVzydJGsBydnNJ
+         HEyPlbsxAqzbaVWuXrXjnPP36BknmGA7T44EQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=P0CslsrE2Gf1kyibBS9PKZeZBx8qGPLUylE56RRErvBp/M9VP2WC4a04+U8dgtxs1x
+         b1jwvbu26a4Iy3c9BWHQMsNdEOsIDK+8X+57QiKXWD9V79QqsfEVguIGBvdCPRoac8gg
+         pQvQ6vYSk59pCGcEhpdmXF0yCzm6VCXtuC9X8=
+Received: by 10.142.7.9 with SMTP id 9mr1107370wfg.149.1264550787130; Tue, 26 
+	Jan 2010 16:06:27 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138091>
 
-Christian Stimming <stimming@tuhh.de> wrote:
-> ---
->  po/de.po |  824 ++++++++++++++++++++++++++++++++------------------------------
->  1 files changed, 426 insertions(+), 398 deletions(-)
+Heya,
 
-Ugh.  This won't apply to my published master branch.  I'm guessing
-mailer damage somewhere in the chain, most likely on my end since
-I've never been able to apply an inline translation patch cleanly.
-
-Can you please resend as an attachment?
+Do we have anything that allows me to compare two versions of a patch?
+In theory it'd do something like "apply both patches to the their
+merge base, then show the diff between the results". I don't think we
+have something like that, since there's probably some major caveats
+about conflicts when applying the patches to their merge-base. Or
+perhaps my theory is silly, and there's an easier way to compare two
+patches (other than looking at a diff's diff, which I've never been
+good at).
 
 -- 
-Shawn.
+Cheers,
+
+Sverre Rabbelier
