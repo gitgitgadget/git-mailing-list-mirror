@@ -1,112 +1,65 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH v2] Fix remote.<remote>.vcs
-Date: Wed, 27 Jan 2010 13:39:00 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.1001271335140.14365@iabervon.org>
-References: <1264614797-22394-1-git-send-email-ilari.liusvaara@elisanet.fi>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] fix portability issues with $ in double quotes
+Date: Wed, 27 Jan 2010 10:47:24 -0800
+Message-ID: <4B608A3C.7090106@gmail.com>
+References: <1264547311-25251-1-git-send-email-bebarino@gmail.com> <4B5FF106.3070604@viscovery.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Tor Arvid Lund <torarvid@gmail.com>
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Wed Jan 27 19:40:06 2010
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Jan 27 19:47:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaCnG-00034U-N8
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 19:39:11 +0100
+	id 1NaCvT-0001qy-Jm
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 19:47:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753385Ab0A0SjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 13:39:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753282Ab0A0SjD
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 13:39:03 -0500
-Received: from iabervon.org ([66.92.72.58]:33835 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752282Ab0A0SjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2010 13:39:01 -0500
-Received: (qmail 24520 invoked by uid 1000); 27 Jan 2010 18:39:00 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 27 Jan 2010 18:39:00 -0000
-In-Reply-To: <1264614797-22394-1-git-send-email-ilari.liusvaara@elisanet.fi>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S932165Ab0A0Sre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 13:47:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754591Ab0A0Sre
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 13:47:34 -0500
+Received: from gv-out-0910.google.com ([216.239.58.188]:7984 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754475Ab0A0Src (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2010 13:47:32 -0500
+Received: by gv-out-0910.google.com with SMTP id n8so449905gve.37
+        for <git@vger.kernel.org>; Wed, 27 Jan 2010 10:47:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=2iAYeupZ/RTcbJL9iOUCPNZRnmp4zolQ2FzvyxCwuAE=;
+        b=gdIrRqxk8W7FJis34SyTs64r+mWbj+bPizHdha3kwBFHKGA1WXv0m2QflIzeU/bxqc
+         517y8kXAoprn9uev0cN81O/dYM9ALuIFKkHU8XDP2/+bkONIYIQCBWD6A7/R8hICTSx1
+         MyoAc7f2Ebzyy2uf2St40B/DUI+OFup2hQ3po=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=M0pfcS3n0ymE6NtnFkhp0Ey+fqHvXoq3VxchsX2Zm7EnPL609jGAP7ye4fHWsOHVfe
+         Nbtj4ggzMHjG/HatWN+YzOXr/50yV2dtREI/OIsjQf0hHlQsyUCpAX7brE+swec8jmuQ
+         HcIL82d5bsLuQ8wmJMp4S2WS65+WI0M+1c1LI=
+Received: by 10.103.85.24 with SMTP id n24mr5040894mul.6.1264618051075;
+        Wed, 27 Jan 2010 10:47:31 -0800 (PST)
+Received: from ?192.168.1.5? (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id j6sm809991mue.35.2010.01.27.10.47.26
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 27 Jan 2010 10:47:28 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7pre) Gecko/20091214 Shredder/3.0.1pre
+In-Reply-To: <4B5FF106.3070604@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138181>
 
-On Wed, 27 Jan 2010, Ilari Liusvaara wrote:
+On 01/26/2010 11:53 PM, Johannes Sixt wrote:
+> The instances you changed look good. I didn't check whether you missed
+> some. Was this some sort of mechanical change?
 
-> remote.<remote>.vcs causes remote->foreign_vcs to be set on entry to
-> transport_get(). Unfortunately, the code assumed that any such entry
-> is stale from previous round.
-> 
-> Fix this by making VCS set by URL to be volatile w.r.t. transport_get()
-> instead.
-> 
-> Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-
-Except that you missed the "remote == NULL" case (noted below), this is 
-what I was thinking of.
-
-Acked-by: Daniel Barkalow <barkalow@iabervon.org>
-
-> ---
->  transport.c |   11 +++++------
->  1 files changed, 5 insertions(+), 6 deletions(-)
-> 
-> Differences from first round:
-> 
-> This makes VCS setting apply to all URLs that don't explicitly override,
-> instead of it applying to just the first one.
-> 
-> diff --git a/transport.c b/transport.c
-> index 7714fdb..87581b8 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -912,20 +912,19 @@ static int external_specification_len(const char *url)
->  
->  struct transport *transport_get(struct remote *remote, const char *url)
->  {
-> +	const char *helper;
->  	struct transport *ret = xcalloc(1, sizeof(*ret));
->  
->  	if (!remote)
->  		die("No remote provided to transport_get()");
->  
->  	ret->remote = remote;
-> +	helper = remote->foreign_vcs;
-
-Needs to be "helper = remote ? remote->foreign_vcs : NULL", for the same 
-reason that the test below had been "remote && remote->foreign_vcs".
-
->  
->  	if (!url && remote && remote->url)
->  		url = remote->url[0];
->  	ret->url = url;
->  
-> -	/* In case previous URL had helper forced, reset it. */
-> -	remote->foreign_vcs = NULL;
-> -
->  	/* maybe it is a foreign URL? */
->  	if (url) {
->  		const char *p = url;
-> @@ -933,11 +932,11 @@ struct transport *transport_get(struct remote *remote, const char *url)
->  		while (isalnum(*p))
->  			p++;
->  		if (!prefixcmp(p, "::"))
-> -			remote->foreign_vcs = xstrndup(url, p - url);
-> +			helper = xstrndup(url, p - url);
->  	}
->  
-> -	if (remote && remote->foreign_vcs) {
-> -		transport_helper_init(ret, remote->foreign_vcs);
-> +	if (helper) {
-> +		transport_helper_init(ret, helper);
->  	} else if (!prefixcmp(url, "rsync:")) {
->  		ret->get_refs_list = get_refs_via_rsync;
->  		ret->fetch = fetch_objs_via_rsync;
-> -- 
-> 1.7.0.rc0.19.gb557e6
-> 
-> 
+Not really mechanical. I just grepped for sed and grep expressions and 
+then went through the results by hand looking for unescaped dollar signs.
