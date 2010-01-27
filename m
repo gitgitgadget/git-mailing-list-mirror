@@ -1,65 +1,89 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH] fix portability issues with $ in double quotes
-Date: Wed, 27 Jan 2010 10:47:24 -0800
-Message-ID: <4B608A3C.7090106@gmail.com>
-References: <1264547311-25251-1-git-send-email-bebarino@gmail.com> <4B5FF106.3070604@viscovery.net>
+From: Weiwei Shu <shuww1980@gmail.com>
+Subject: Re: How to email out commit message automatically?
+Date: Wed, 27 Jan 2010 13:49:52 -0500
+Message-ID: <65d12cb11001271049v1554a362y51aaeec9c4ceec77@mail.gmail.com>
+References: <65d12cb11001270820i7094001odc4d9f27b7f57767@mail.gmail.com>
+	 <vpq7hr3wln2.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Jan 27 19:47:44 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, shuww2008@gmail.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jan 27 19:50:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaCvT-0001qy-Jm
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 19:47:39 +0100
+	id 1NaCxk-0003VQ-Cj
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 19:50:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932165Ab0A0Sre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 13:47:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754591Ab0A0Sre
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 13:47:34 -0500
-Received: from gv-out-0910.google.com ([216.239.58.188]:7984 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754475Ab0A0Src (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2010 13:47:32 -0500
-Received: by gv-out-0910.google.com with SMTP id n8so449905gve.37
-        for <git@vger.kernel.org>; Wed, 27 Jan 2010 10:47:31 -0800 (PST)
+	id S1754002Ab0A0Stz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jan 2010 13:49:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751637Ab0A0Stz
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 13:49:55 -0500
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:42586 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751395Ab0A0Sty convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2010 13:49:54 -0500
+Received: by bwz19 with SMTP id 19so5026502bwz.28
+        for <git@vger.kernel.org>; Wed, 27 Jan 2010 10:49:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=2iAYeupZ/RTcbJL9iOUCPNZRnmp4zolQ2FzvyxCwuAE=;
-        b=gdIrRqxk8W7FJis34SyTs64r+mWbj+bPizHdha3kwBFHKGA1WXv0m2QflIzeU/bxqc
-         517y8kXAoprn9uev0cN81O/dYM9ALuIFKkHU8XDP2/+bkONIYIQCBWD6A7/R8hICTSx1
-         MyoAc7f2Ebzyy2uf2St40B/DUI+OFup2hQ3po=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=BVUbtu7ur3tsAzGrnXMWChgXo5/H0FXhI2B5ZCqv9YU=;
+        b=qdNbvXbtYTyxmJRvn65uhv0VIOv/ggV7BG7NGgDFospaSGvHVRomRBdKjGhCdFK0Ep
+         5vCuhKMYUfId3g6by7BDkwPYGIx9k0CHsMqqX39yH3WguvjGPLtyRiG1R55zTAjqz6ex
+         3AOf/N357h2hb3j+YstgKrYtgnZ2inYn0YGvc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=M0pfcS3n0ymE6NtnFkhp0Ey+fqHvXoq3VxchsX2Zm7EnPL609jGAP7ye4fHWsOHVfe
-         Nbtj4ggzMHjG/HatWN+YzOXr/50yV2dtREI/OIsjQf0hHlQsyUCpAX7brE+swec8jmuQ
-         HcIL82d5bsLuQ8wmJMp4S2WS65+WI0M+1c1LI=
-Received: by 10.103.85.24 with SMTP id n24mr5040894mul.6.1264618051075;
-        Wed, 27 Jan 2010 10:47:31 -0800 (PST)
-Received: from ?192.168.1.5? (user-0c9haca.cable.mindspring.com [24.152.169.138])
-        by mx.google.com with ESMTPS id j6sm809991mue.35.2010.01.27.10.47.26
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 27 Jan 2010 10:47:28 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7pre) Gecko/20091214 Shredder/3.0.1pre
-In-Reply-To: <4B5FF106.3070604@viscovery.net>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=orAHas3T4RUiS1y1RK6Ay9srKAjYJlCniOhhaI8faao1ykr/6JZFKRfZxNShqe5FRN
+         0gVfu6jYiG1h2IG/Y21fF2foEEG0BEvee5i4qjhgjpSQ4Ssxc5kAq+b7tgKRZGIg8tuu
+         jmpnk5gHEaf5VVi+MyhXm0HiaozEK45R9mwqE=
+Received: by 10.204.8.202 with SMTP id i10mr5335953bki.133.1264618192786; Wed, 
+	27 Jan 2010 10:49:52 -0800 (PST)
+In-Reply-To: <vpq7hr3wln2.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138181>
 
-On 01/26/2010 11:53 PM, Johannes Sixt wrote:
-> The instances you changed look good. I didn't check whether you missed
-> some. Was this some sort of mechanical change?
+Matthieu,
 
-Not really mechanical. I just grepped for sed and grep expressions and 
-then went through the results by hand looking for unescaped dollar signs.
+I've tried it, but not successful.  Where should I setup email server
+information?  Thanks!
+
+Weiwei
+
+On Wed, Jan 27, 2010 at 11:36 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Weiwei Shu <shuww1980@gmail.com> writes:
+>
+>> Hi All,
+>>
+>> The second time to post here. =A0Git is great.
+>>
+>> I would like to email the commit message to my Gmail box automatical=
+ly
+>> whenever I submit a commit. =A0Can anybody point me a link on how to=
+ do
+>> that? =A0I've searched it for half day but not successful. =A0Thanks=
+!
+>
+> http://git.kernel.org/?p=3Dgit/git.git;a=3Dblob;f=3Dcontrib/hooks/pos=
+t-receive-email
+>
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
+>
+
+
+
+--=20
+Weiwei
+--Hope Springs Eternal.
