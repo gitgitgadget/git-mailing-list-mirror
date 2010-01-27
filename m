@@ -1,97 +1,105 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCHv12 00/23] git notes
-Date: Thu, 28 Jan 2010 00:05:03 +0100
-Message-ID: <201001280005.03190.johan@herland.net>
-References: <1264593120-4428-1-git-send-email-johan@herland.net>
- <7vzl3zpbbz.fsf@alter.siamese.dyndns.org>
+From: Michal Sojka <sojkam1@fel.cvut.cz>
+Subject: Re: [PATCH] filter-branch fix and tests
+Date: Thu, 28 Jan 2010 00:41:23 +0100
+Message-ID: <201001280041.23182.sojkam1@fel.cvut.cz>
+References: <1264424786-26231-1-git-send-email-sojkam1@fel.cvut.cz> <201001271649.19287.sojkam1@fel.cvut.cz> <4B606748.2050209@viscovery.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 28 00:05:24 2010
+To: Johannes Sixt <j.sixt@viscovery.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 28 00:41:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaGwt-00017A-Jv
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 00:05:23 +0100
+	id 1NaHW1-0001pV-Vj
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 00:41:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753590Ab0A0XFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 18:05:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753177Ab0A0XFM
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 18:05:12 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:50863 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753133Ab0A0XFL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2010 18:05:11 -0500
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KWX001SUHGLTZ00@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 28 Jan 2010 00:05:09 +0100 (MET)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KWX000WFHGFQS10@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 28 Jan 2010 00:05:09 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2010.1.27.225424
-User-Agent: KMail/1.12.4 (Linux/2.6.32-ARCH; KDE/4.3.4; x86_64; ; )
-In-reply-to: <7vzl3zpbbz.fsf@alter.siamese.dyndns.org>
+	id S932164Ab0A0Xlg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 18:41:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754696Ab0A0Xlf
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 18:41:35 -0500
+Received: from max.feld.cvut.cz ([147.32.192.36]:55267 "EHLO max.feld.cvut.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754636Ab0A0Xle (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2010 18:41:34 -0500
+Received: from localhost (unknown [192.168.200.4])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 7272819F33A4;
+	Thu, 28 Jan 2010 00:41:33 +0100 (CET)
+X-Virus-Scanned: IMAP AMAVIS
+Received: from max.feld.cvut.cz ([192.168.200.1])
+	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
+	with ESMTP id XTAiA8py4cJV; Thu, 28 Jan 2010 00:41:29 +0100 (CET)
+Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 5192419F33B4;
+	Thu, 28 Jan 2010 00:41:29 +0100 (CET)
+Received: from resox.localnet (unknown [213.29.198.144])
+	(Authenticated sender: sojkam1)
+	by imap.feld.cvut.cz (Postfix) with ESMTPSA id 3256815C052;
+	Thu, 28 Jan 2010 00:41:24 +0100 (CET)
+User-Agent: KMail/1.12.4 (Linux/2.6.31-1-686; KDE/4.3.4; i686; ; )
+In-Reply-To: <4B606748.2050209@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138207>
 
-On Wednesday 27 January 2010, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> > - Patch #23 is a new patch adding the "git notes add" command for
-> > appending contents to notes (instead of editing/replacing).
+On Wednesday 27 of January 2010 17:18:16 Johannes Sixt wrote:
+> Michal Sojka schrieb:
+> > +orig_head=`git show-ref --hash HEAD`
+> > +export orig_head
 > 
-> I find this even more confusing.  Originally I was puzzled by the lack of
-> "git notes add"; it took me for quite until I managed to figure out that
-> "git notes edit" was the command to use, even if I wanted to add notes to
-> a commit that I know that does not have any.
+> You place the tree filter in double-quotes. Hence, orig_head will be
+> interpolated on the filter-branch command line. You don't need to export
+>  it.
 
-Not sure what you're getting at here. For the case where a commit has no 
-notes, "git notes add" and "git notes edit" are already _identical_. I was 
-only trying to emphasize that when there is an existing note, "git notes 
-add" will append to it, whereas "git notes edit" will replace it with your 
-edited version. I'm sorry if this was unclear.
+You're right. Fixed.
+ 
+> > +test_expect_success 'rewrite submodule with another content' '
+> > +	git filter-branch --tree-filter "test -d submod && {
+> > +					 rm -rf submod &&
+> > +					 git rm -rf --quiet submod &&
+> > +					 mkdir submod &&
+> > +					 : > submod/file
+> > +					 } || : &&
+> > +					 test $orig_head != `git show-ref --hash HEAD`"
+> 
+> What is the purpose of the check in the last line?
 
-> I would expect "git notes edit" to be "edit starting from the existing
->  one (if exists)", and "git notes add" to be "add notes to a commit that
->  lacks one,
+It should check that something was rewritten, but it was incorrectly put into 
+the filed. Fixed.
+ 
+> As long as you have another command after the "} || : &&", you can just
+> write "}" instead.
 
-Up to here, the current patch does exactly what you expect.
+OK.
 
->  complain if it already has notes, and allow --force to replace".
+> > +test_expect_failure 'checkout submodule during rewrite' '
+> > +	git reset --hard original &&
+> > +	git filter-branch -f --tree-filter \
+> > +	    "git submodule update --init &&
+> > +	     cd submod &&
+> > +	     git reset --hard origin/master" HEAD
+> 
+> You must not change the directory without changing back. Use a sub-shell.
+> 
+> I'm not sure whether it's worth catering for this use-case anyway.
+> Replacing a submodule commit should really be done only in the
+> --index-filter. The tree that --tree-filter checks out is intended only as
+> a temporary scratch area. It is not intended as a full worktree. In
+> particular, since 'submodule update --init' changes the configuration, it
+> is extremly dangerous to call from a filter.
 
-I disagree. I wrote the current semantics with the following use case in 
-mind:
+I fully agree. I don't plan to put this test in the final version of the 
+patch. I wrote this test because I didn't exactly know which issue has Dscho 
+in mind. If it was this one, I wanted to show that this is not relevant.
 
-"I have just reviewed a commit, and want to add a 'Reviewed-by' tag to the 
-commit notes. I don't really care if the commit already has notes, but I 
-certainly _don't_ want to delete them when adding my 'Reviewed-by'. 
-Furthermore, I want to do this with a simple command, without being thrown 
-into an editor."
+I'm sending corrected version of the patch with tests.
 
-Now, 'git notes edit -m "Reviewed-by: ..."' will do the job nicely for 
-commits that have no notes, but it will discard any existing notes, so it is 
-not a good solution in this case.
-
-Instead, the current semantics of "git notes add" _does_ solve this use case 
-('git notes add -m "Reviewed-by: ..."' will append to the existing notes, or 
-create a new notes object if none exist).
-
-I'm not opposed to changing the semantics if people find them unintuitive, 
-but I would want the new semantics to provide for this use case as well.
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Thanks
+Michal
