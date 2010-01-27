@@ -1,78 +1,75 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: git-format-patch should include a checksum
-Date: Wed, 27 Jan 2010 01:50:57 +0100
-Message-ID: <fabb9a1e1001261650r18e04e3cw2efade6072a426b@mail.gmail.com>
-References: <871vhcmr5b.fsf@trurl.pps.jussieu.fr> <7vljfkxxj9.fsf@alter.siamese.dyndns.org> 
-	<fabb9a1e1001261526tc86c04em4c6ede23e109e66@mail.gmail.com> 
-	<alpine.LFD.2.00.1001261639550.17519@localhost.localdomain>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Patchdiff
+Date: Tue, 26 Jan 2010 19:09:54 -0600
+Message-ID: <20100127010954.GA7628@progeny.tock>
+References: <fabb9a1e1001261606i4f706387vaf5647436e454fb4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Juliusz Chroboczek <jch@pps.jussieu.fr>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jan 27 01:51:23 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 27 02:09:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1NZw7v-00035d-7d
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 01:51:23 +0100
+	id 1NZwPt-0000Pl-5Z
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 02:09:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754964Ab0A0AvS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2010 19:51:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753498Ab0A0AvS
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 19:51:18 -0500
-Received: from mail-px0-f182.google.com ([209.85.216.182]:55114 "EHLO
-	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753390Ab0A0AvR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2010 19:51:17 -0500
-Received: by pxi12 with SMTP id 12so3961600pxi.33
-        for <git@vger.kernel.org>; Tue, 26 Jan 2010 16:51:17 -0800 (PST)
+	id S1755421Ab0A0BJx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jan 2010 20:09:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754916Ab0A0BJw
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jan 2010 20:09:52 -0500
+Received: from mail-iw0-f173.google.com ([209.85.223.173]:61394 "EHLO
+	mail-iw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753498Ab0A0BJw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2010 20:09:52 -0500
+Received: by iwn3 with SMTP id 3so1019855iwn.19
+        for <git@vger.kernel.org>; Tue, 26 Jan 2010 17:09:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=MTB0nWgh7Ji/fMW+QFR9C4F8eQo63qpqvYlWj96IZq0=;
-        b=fMk4m+iCycbEWMEI0Mr2ANJYCsk8ZTXO1WplNnIWfXUU/6ec/aICLmCreHbGqLyRk3
-         Jfep1PORwrCRqk95QU29WMBg0oCCGlQ35gDDXwPAhDo2QCsJDdYWPt5DJQzrIBuqKZqh
-         Xyh7vazDl9ZW9jhAWSdmoKCdOEsp01nW1wQ/g=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=vlNbtwDx6WBMlYVTL4dqXo2EUAmty4SNp0KxAP29dXY=;
+        b=DZWdcQ0iLpjlzccbNIWR06I0gWNLsUriSWIv7f0skfjIoA0bPr9uRHmwefyyRMmLZj
+         hCgipKHJjrg+3fBQtiWT2X/yT8d1ggQtKKmgJly4YVNkVFWPy5ZiomaQu0afReVn3DzO
+         km1Hw1nF6TYZNhlEdKQXU1qPU/IBAjCjeR6oI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=oCRjy/cHrBsTJl7DbirzNAsXlUrqgEp1MDBPSKHWT6WOmaQd6HUzGBDzhzCnAmj1JJ
-         ukUgTQuTfhaJJhLQj8LFfXfvgHM8LmB3syO0gLkSe5AbXY5b9NAkU1sUovYt0xpAOgKJ
-         6jBg7ox674MpGBRRIhE618e2s2Jg67uoNxk0k=
-Received: by 10.142.56.13 with SMTP id e13mr6001819wfa.119.1264553477142; Tue, 
-	26 Jan 2010 16:51:17 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.00.1001261639550.17519@localhost.localdomain>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=nzptxFVtclX3+UxiePKOaXWm8FyPQhxgEQI4JUx9+F/Fo5EHidW0cGlnz+RTWa/cnf
+         VbndMOiakLuciWCq30Pa2xtoQULsRMtiek4vPfyBcIfWccj7oxvbtaCEcUAP+LoqMIs8
+         fET9H40rebyRGTOKhxaDASCrBNBAWS8K9Z6sw=
+Received: by 10.231.160.149 with SMTP id n21mr2011661ibx.93.1264554590408;
+        Tue, 26 Jan 2010 17:09:50 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 22sm6476299iwn.8.2010.01.26.17.09.49
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 26 Jan 2010 17:09:50 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <fabb9a1e1001261606i4f706387vaf5647436e454fb4@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138095>
 
-Heya,
+Hi,
 
-On Wed, Jan 27, 2010 at 01:45, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> That wouldn't work either. People can, should, and do add extra things to
-> the message before applying it.
+Sverre Rabbelier wrote:
 
-Ah, that's a fair point.
+> Do we have anything that allows me to compare two versions of a patch=
+?
+> In theory it'd do something like "apply both patches to the their
+> merge base, then show the diff between the results".
 
-> In short, it might make sense to have some anti-corruption logic, but I
-> suspect it needs a lot of thought.
+It=E2=80=99s not git specific, but maybe interdiff [1] could help.
 
-Perhaps it makes sense to make it a separate mode to git am, such that
-it only checks that the patch is not corrupted, but does not apply it.
-That way it would be possible to download the patch, check that it
-arrived unscathed, and then do your usual patch handling. Those who do
-not edit patches before applying it would be convenient to set a
-configuration option that automatically does it when applying the
-patch, either warning about it or aborting (as Juliusz suggested).
+Ciao,
+Jonathan
 
--- 
-Cheers,
-
-Sverre Rabbelier
+[1] http://cyberelk.net/tim/data/patchutils/stable/
