@@ -1,91 +1,79 @@
-From: Weiwei Shu <shuww1980@gmail.com>
-Subject: Re: How to email out commit message automatically?
-Date: Wed, 27 Jan 2010 11:38:52 -0500
-Message-ID: <65d12cb11001270838v3b40bc85g3bf11997df98f440@mail.gmail.com>
-References: <65d12cb11001270820i7094001odc4d9f27b7f57767@mail.gmail.com>
-	 <vpq7hr3wln2.fsf@bauges.imag.fr>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH not-for-mainline] Implement git-vcs-p4
+Date: Wed, 27 Jan 2010 11:49:02 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.1001271145500.14365@iabervon.org>
+References: <alpine.LNX.2.00.1001251628431.14365@iabervon.org> <1a6be5fa1001270318h4ac8ac3bnaba48787a5b3efa6@mail.gmail.com> <20100127155636.GA18210@Knoppix>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, shuww2008@gmail.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jan 27 17:39:01 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Tor Arvid Lund <torarvid@gmail.com>, git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Wed Jan 27 17:49:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaAux-0003dB-TT
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 17:39:00 +0100
+	id 1NaB4t-0002sX-0e
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 17:49:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755166Ab0A0Qiy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jan 2010 11:38:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754907Ab0A0Qiy
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 11:38:54 -0500
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:34131 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754314Ab0A0Qiy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2010 11:38:54 -0500
-Received: by bwz19 with SMTP id 19so4861806bwz.28
-        for <git@vger.kernel.org>; Wed, 27 Jan 2010 08:38:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MSzg5v2sfRNS+nAlD+gyqO40lk+w0JIHOm18vb3Zp0w=;
-        b=swRdlzCdUJGFx64Wa2n9LodTOJD5VmcRSnp0RHQx6u1Spr/lodviMXIdtBz9gYdUXg
-         NYm/A8/0tlJOvIANlZ0Q+bXq7XCPGDOSJH8QGDj+0icxF9KPWLk5R1DcUR0zkyTvbn5l
-         ei2PVEmppcAPBt1/XBQjzpneuinwPb8DTUFxs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QPc3WqtpBIetmYVNGu56b17Q/KdyQ9CsQZHKlYbSOX6DwQWUeWgWVI9OpJAMksFS8u
-         YiwK3pJ62kDaIHpfXKp4XgQlCL9bZtSkcUcIy3NsgtiqhwtohWdJPMqKv0/tMTHU5KpG
-         4c7TyxmkWDLE+Juil677xqXTohvi2H2+Ly1Ps=
-Received: by 10.204.9.134 with SMTP id l6mr4332596bkl.83.1264610332149; Wed, 
-	27 Jan 2010 08:38:52 -0800 (PST)
-In-Reply-To: <vpq7hr3wln2.fsf@bauges.imag.fr>
+	id S1754777Ab0A0QtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 11:49:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754062Ab0A0QtJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 11:49:09 -0500
+Received: from iabervon.org ([66.92.72.58]:45841 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752806Ab0A0QtG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2010 11:49:06 -0500
+Received: (qmail 5571 invoked by uid 1000); 27 Jan 2010 16:49:02 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 27 Jan 2010 16:49:02 -0000
+In-Reply-To: <20100127155636.GA18210@Knoppix>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138170>
 
-Matthieu,
+On Wed, 27 Jan 2010, Ilari Liusvaara wrote:
 
-Thank you very much!!  I'll give it a shot and hope it will work in Win=
-dows.
+> On Wed, Jan 27, 2010 at 12:18:35PM +0100, Tor Arvid Lund wrote:
+> 
+> > Then, I did 'git fetch', and got a seg fault. I got around it by
+> > commenting out a line:
+> > 
+> > diff --git a/transport.c b/transport.c
+> > index 7714fdb..5b404f7 100644
+> > --- a/transport.c
+> > +++ b/transport.c
+> > @@ -924,7 +924,7 @@ struct transport *transport_get(struct remote
+> > *remote, const char *url)
+> >         ret->url = url;
+> > 
+> >         /* In case previous URL had helper forced, reset it. */
+> > -       remote->foreign_vcs = NULL;
+> > +/*     remote->foreign_vcs = NULL;*/
+> > 
+> >         /* maybe it is a foreign URL? */
+> >         if (url) {
+> > 
+> 
+> Hmm... And just commenting out that line will break case if you have
+> push URL using remote helpers and second one for same remote that
+> doesn't. 
+> 
+> I'll look into that issue.
 
-Weiwei
+I think that field should only be used for things like:
 
+[remote "foo"]
+	vcs = something
+	...
 
-On Wed, Jan 27, 2010 at 11:36 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Weiwei Shu <shuww1980@gmail.com> writes:
->
->> Hi All,
->>
->> The second time to post here. =A0Git is great.
->>
->> I would like to email the commit message to my Gmail box automatical=
-ly
->> whenever I submit a commit. =A0Can anybody point me a link on how to=
- do
->> that? =A0I've searched it for half day but not successful. =A0Thanks=
-!
->
-> http://git.kernel.org/?p=3Dgit/git.git;a=3Dblob;f=3Dcontrib/hooks/pos=
-t-receive-email
->
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
->
+and the case where the helper is inferred from the URL shouldn't use a 
+field on the remote, but be passing the information around in function 
+arguments. A field of the struct remote only really makes sense with 
+information that applies to the whole remote.
 
-
-
---=20
-Weiwei
---Hope Springs Eternal.
+	-Daniel
+*This .sig left intentionally blank*
