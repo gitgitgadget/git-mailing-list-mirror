@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv12 08/23] Notes API: for_each_note(): Traverse the entire notes
- tree with a callback
-Date: Wed, 27 Jan 2010 12:51:45 +0100
-Message-ID: <1264593120-4428-9-git-send-email-johan@herland.net>
+Subject: [PATCHv12 23/23] builtin-notes: Add "add" subcommand for appending to
+ note objects
+Date: Wed, 27 Jan 2010 12:52:00 +0100
+Message-ID: <1264593120-4428-24-git-send-email-johan@herland.net>
 References: <1264593120-4428-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -14,26 +14,26 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Na6Sa-0000gj-0w
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 12:53:24 +0100
+	id 1Na6Sf-0000gj-Pa
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 12:53:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753390Ab0A0Lwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 06:52:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753180Ab0A0Lwi
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 06:52:38 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:59091 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752988Ab0A0Lw1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2010 06:52:27 -0500
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+	id S1753676Ab0A0LxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 06:53:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753440Ab0A0LxE
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 06:53:04 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:52954 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753543Ab0A0Lw4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2010 06:52:56 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KWW00FCRMBDFU60@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Wed, 27 Jan 2010 12:52:25 +0100 (MET)
+ with ESMTP id <0KWW00JEBMC62M00@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 27 Jan 2010 12:52:54 +0100 (MET)
 Received: from localhost.localdomain ([84.215.68.234])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KWW00EZ7MAZN340@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Wed, 27 Jan 2010 12:52:25 +0100 (MET)
+ git@vger.kernel.org; Wed, 27 Jan 2010 12:52:54 +0100 (MET)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2010.1.27.113919
 X-Mailer: git-send-email 1.6.6.405.g80ed6
@@ -42,225 +42,191 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138148>
 
-This includes a first attempt at creating an optimal fanout scheme (which
-is calculated on-the-fly, while traversing).
+"git notes add" is identical to "git notes edit" except that instead of
+editing existing notes contents, you can only append to it. This is
+useful for quickly adding annotations like e.g.:
+	git notes add -m "Acked-by: A U Thor <author@example.com>"
 
+If there is no existing note to append to, "git notes add" is identical
+to "git notes edit" (i.e. it adds a new note).
+
+The patch includes tests verifying correct behaviour of the new subcommand.
+
+Suggested-by: Joey Hess <joey@kitenet.net>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- notes.c |  133 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- notes.h |   47 ++++++++++++++++++++++
- 2 files changed, 180 insertions(+), 0 deletions(-)
+ Documentation/git-notes.txt |    5 ++++-
+ builtin-notes.c             |   34 +++++++++++++++++++++++++---------
+ t/t3301-notes.sh            |   29 +++++++++++++++++++++++++++++
+ 3 files changed, 58 insertions(+), 10 deletions(-)
 
-diff --git a/notes.c b/notes.c
-index a0a85b4..eabd6f3 100644
---- a/notes.c
-+++ b/notes.c
-@@ -413,6 +413,133 @@ static void load_subtree(struct leaf_node *subtree, struct int_node *node,
- 	free(buf);
- }
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index 4d29d5f..3fe73e8 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git notes' [list [<object>]]
+-'git notes' edit [-F <file> | -m <msg>] [<object>]
++'git notes' (edit | add) [-F <file> | -m <msg>] [<object>]
+ 'git notes' show [<object>]
+ 'git notes' remove [<object>]
+ 'git notes' prune
+@@ -44,6 +44,9 @@ list::
+ edit::
+ 	Edit the notes for a given object (defaults to HEAD).
  
-+/*
-+ * Determine optimal on-disk fanout for this part of the notes tree
-+ *
-+ * Given a (sub)tree and the level in the internal tree structure, determine
-+ * whether or not the given existing fanout should be expanded for this
-+ * (sub)tree.
-+ *
-+ * Values of the 'fanout' variable:
-+ * - 0: No fanout (all notes are stored directly in the root notes tree)
-+ * - 1: 2/38 fanout
-+ * - 2: 2/2/36 fanout
-+ * - 3: 2/2/2/34 fanout
-+ * etc.
-+ */
-+static unsigned char determine_fanout(struct int_node *tree, unsigned char n,
-+		unsigned char fanout)
-+{
-+	/*
-+	 * The following is a simple heuristic that works well in practice:
-+	 * For each even-numbered 16-tree level (remember that each on-disk
-+	 * fanout level corresponds to _two_ 16-tree levels), peek at all 16
-+	 * entries at that tree level. If all of them are either int_nodes or
-+	 * subtree entries, then there are likely plenty of notes below this
-+	 * level, so we return an incremented fanout.
-+	 */
-+	unsigned int i;
-+	if ((n % 2) || (n > 2 * fanout))
-+		return fanout;
-+	for (i = 0; i < 16; i++) {
-+		switch (GET_PTR_TYPE(tree->a[i])) {
-+		case PTR_TYPE_SUBTREE:
-+		case PTR_TYPE_INTERNAL:
-+			continue;
-+		default:
-+			return fanout;
-+		}
-+	}
-+	return fanout + 1;
-+}
++add::
++	Append to the notes for a given object (defaults to HEAD).
 +
-+static void construct_path_with_fanout(const unsigned char *sha1,
-+		unsigned char fanout, char *path)
-+{
-+	unsigned int i = 0, j = 0;
-+	const char *hex_sha1 = sha1_to_hex(sha1);
-+	assert(fanout < 20);
-+	while (fanout) {
-+		path[i++] = hex_sha1[j++];
-+		path[i++] = hex_sha1[j++];
-+		path[i++] = '/';
-+		fanout--;
-+	}
-+	strcpy(path + i, hex_sha1 + j);
-+}
-+
-+static int for_each_note_helper(struct int_node *tree, unsigned char n,
-+		unsigned char fanout, int flags, each_note_fn fn,
-+		void *cb_data)
-+{
-+	unsigned int i;
-+	void *p;
-+	int ret = 0;
-+	struct leaf_node *l;
-+	static char path[40 + 19 + 1];  /* hex SHA1 + 19 * '/' + NUL */
-+
-+	fanout = determine_fanout(tree, n, fanout);
-+	for (i = 0; i < 16; i++) {
-+redo:
-+		p = tree->a[i];
-+		switch (GET_PTR_TYPE(p)) {
-+		case PTR_TYPE_INTERNAL:
-+			/* recurse into int_node */
-+			ret = for_each_note_helper(CLR_PTR_TYPE(p), n + 1,
-+				fanout, flags, fn, cb_data);
-+			break;
-+		case PTR_TYPE_SUBTREE:
-+			l = (struct leaf_node *) CLR_PTR_TYPE(p);
-+			/*
-+			 * Subtree entries in the note tree represent parts of
-+			 * the note tree that have not yet been explored. There
-+			 * is a direct relationship between subtree entries at
-+			 * level 'n' in the tree, and the 'fanout' variable:
-+			 * Subtree entries at level 'n <= 2 * fanout' should be
-+			 * preserved, since they correspond exactly to a fanout
-+			 * directory in the on-disk structure. However, subtree
-+			 * entries at level 'n > 2 * fanout' should NOT be
-+			 * preserved, but rather consolidated into the above
-+			 * notes tree level. We achieve this by unconditionally
-+			 * unpacking subtree entries that exist below the
-+			 * threshold level at 'n = 2 * fanout'.
-+			 */
-+			if (n <= 2 * fanout &&
-+			    flags & FOR_EACH_NOTE_YIELD_SUBTREES) {
-+				/* invoke callback with subtree */
-+				unsigned int path_len =
-+					l->key_sha1[19] * 2 + fanout;
-+				assert(path_len < 40 + 19);
-+				construct_path_with_fanout(l->key_sha1, fanout,
-+							   path);
-+				/* Create trailing slash, if needed */
-+				if (path[path_len - 1] != '/')
-+					path[path_len++] = '/';
-+				path[path_len] = '\0';
-+				ret = fn(l->key_sha1, l->val_sha1, path,
-+					 cb_data);
-+			}
-+			if (n > fanout * 2 ||
-+			    !(flags & FOR_EACH_NOTE_DONT_UNPACK_SUBTREES)) {
-+				/* unpack subtree and resume traversal */
-+				tree->a[i] = NULL;
-+				load_subtree(l, tree, n);
-+				free(l);
-+				goto redo;
-+			}
-+			break;
-+		case PTR_TYPE_NOTE:
-+			l = (struct leaf_node *) CLR_PTR_TYPE(p);
-+			construct_path_with_fanout(l->key_sha1, fanout, path);
-+			ret = fn(l->key_sha1, l->val_sha1, path, cb_data);
-+			break;
-+		}
-+		if (ret)
-+			return ret;
-+	}
-+	return 0;
-+}
-+
- void init_notes(const char *notes_ref, int flags)
+ show::
+ 	Show the notes for a given object (defaults to HEAD).
+ 
+diff --git a/builtin-notes.c b/builtin-notes.c
+index a322642..4f570a4 100644
+--- a/builtin-notes.c
++++ b/builtin-notes.c
+@@ -18,7 +18,7 @@
+ 
+ static const char * const git_notes_usage[] = {
+ 	"git notes [list [<object>]]",
+-	"git notes edit [-m <msg> | -F <file>] [<object>]",
++	"git notes (edit | add) [-m <msg> | -F <file>] [<object>]",
+ 	"git notes show [<object>]",
+ 	"git notes remove [<object>]",
+ 	"git notes prune",
+@@ -53,7 +53,7 @@ static void write_note_data(int fd, const unsigned char *sha1)
+ 
+ static void create_note(const unsigned char *object,
+ 			struct strbuf *buf,
+-			int skip_editor,
++			int skip_editor, int append_only,
+ 			const unsigned char *prev,
+ 			unsigned char *result)
  {
- 	unsigned char sha1[20], object_sha1[20];
-@@ -471,6 +598,12 @@ const unsigned char *get_note(const unsigned char *object_sha1)
- 	return found ? found->val_sha1 : NULL;
- }
+@@ -68,7 +68,7 @@ static void create_note(const unsigned char *object,
+ 		if (fd < 0)
+ 			die_errno("could not create file '%s'", path);
  
-+int for_each_note(int flags, each_note_fn fn, void *cb_data)
-+{
-+	assert(initialized);
-+	return for_each_note_helper(&root_node, 0, 0, flags, fn, cb_data);
-+}
-+
- void free_notes(void)
- {
- 	note_tree_free(&root_node);
-diff --git a/notes.h b/notes.h
-index c0714f4..c319fd8 100644
---- a/notes.h
-+++ b/notes.h
-@@ -31,6 +31,53 @@ void remove_note(const unsigned char *object_sha1);
- /* Get the note object SHA1 containing the note data for the given object */
- const unsigned char *get_note(const unsigned char *object_sha1);
+-		if (prev)
++		if (prev && !append_only)
+ 			write_note_data(fd, prev);
+ 		write_or_die(fd, note_template, strlen(note_template));
  
-+/*
-+ * Flags controlling behaviour of for_each_note()
-+ *
-+ * Default behaviour of for_each_note() is to traverse every single note object
-+ * in the notes tree, unpacking subtree entries along the way.
-+ * The following flags can be used to alter the default behaviour:
-+ *
-+ * - DONT_UNPACK_SUBTREES causes for_each_note() NOT to unpack and recurse into
-+ *   subtree entries while traversing the notes tree. This causes notes within
-+ *   those subtrees NOT to be passed to the callback. Use this flag if you
-+ *   don't want to traverse _all_ notes, but only want to traverse the parts
-+ *   of the notes tree that have already been unpacked (this includes at least
-+ *   all notes that have been added/changed).
-+ *
-+ * - YIELD_SUBTREES causes any subtree entries that are encountered to be
-+ *   passed to the callback, before recursing into them. Subtree entries are
-+ *   not note objects, but represent intermediate directories in the notes
-+ *   tree. When passed to the callback, subtree entries will have a trailing
-+ *   slash in their path, which the callback may use to differentiate between
-+ *   note entries and subtree entries. Note that already-unpacked subtree
-+ *   entries are not part of the notes tree, and will therefore not be yielded.
-+ *   If this flag is used together with DONT_UNPACK_SUBTREES, for_each_note()
-+ *   will yield the subtree entry, but not recurse into it.
-+ */
-+#define FOR_EACH_NOTE_DONT_UNPACK_SUBTREES 1
-+#define FOR_EACH_NOTE_YIELD_SUBTREES 2
-+
-+/*
-+ * Invoke the specified callback function for each note
-+ *
-+ * If the callback returns nonzero, the note walk is aborted, and the return
-+ * value from the callback is returned from for_each_note(). Hence, a zero
-+ * return value from for_each_note() indicates that all notes were walked
-+ * successfully.
-+ *
-+ * IMPORTANT: The callback function is NOT allowed to change the notes tree.
-+ * In other words, the following functions can NOT be invoked (on the current
-+ * notes tree) from within the callback:
-+ * - add_note()
-+ * - remove_note()
-+ * - free_notes()
-+ */
-+typedef int each_note_fn(const unsigned char *object_sha1,
-+		const unsigned char *note_sha1, char *note_path,
-+		void *cb_data);
-+int for_each_note(int flags, each_note_fn fn, void *cb_data);
-+
- /* Free (and de-initialize) the internal notes tree structure */
- void free_notes(void);
+@@ -82,6 +82,20 @@ static void create_note(const unsigned char *object,
  
+ 	stripspace(buf, 1);
+ 
++	if (prev && append_only) {
++		/* Append buf to previous note contents */
++		unsigned long size;
++		enum object_type type;
++		char *prev_buf = read_sha1_file(prev, &type, &size);
++
++		strbuf_grow(buf, size + 1);
++		if (buf->len && prev_buf && size)
++			strbuf_insert(buf, 0, "\n", 1);
++		if (prev_buf && size)
++			strbuf_insert(buf, 0, prev_buf, size);
++		free(prev_buf);
++	}
++
+ 	if (!buf->len) {
+ 		fprintf(stderr, "Removing note for object %s\n",
+ 			sha1_to_hex(object));
+@@ -169,7 +183,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 	const char *object_ref;
+ 	char logmsg[100];
+ 
+-	int list = 0, edit = 0, show = 0, remove = 0, prune = 0;
++	int list = 0, edit = 0, add = 0, show = 0, remove = 0, prune = 0;
+ 	int given_object;
+ 	const char *msgfile = NULL;
+ 	struct msg_arg msg = { 0, STRBUF_INIT };
+@@ -189,6 +203,8 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 		list = 1;
+ 	else if (argc && !strcmp(argv[0], "edit"))
+ 		edit = 1;
++	else if (argc && !strcmp(argv[0], "add"))
++		add = 1;
+ 	else if (argc && !strcmp(argv[0], "show"))
+ 		show = 1;
+ 	else if (argc && !strcmp(argv[0], "remove"))
+@@ -198,10 +214,10 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 	else if (!argc)
+ 		list = 1; /* Default to 'list' if no other subcommand given */
+ 
+-	if (list + edit + show + remove + prune != 1)
++	if (list + edit + add + show + remove + prune != 1)
+ 		usage_with_options(git_notes_usage, options);
+ 
+-	if ((msg.given || msgfile) && !edit) {
++	if ((msg.given || msgfile) && !(edit || add)) {
+ 		error("cannot use -m/-F options with %s subcommand.", argv[0]);
+ 		usage_with_options(git_notes_usage, options);
+ 	}
+@@ -250,7 +266,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 		return execv_git_cmd(show_args);
+ 	}
+ 
+-	/* edit/remove/prune command */
++	/* edit/add/remove/prune command */
+ 
+ 	if (remove)
+ 		strbuf_reset(&buf);
+@@ -268,8 +284,8 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 		hashclr(new_note);
+ 		prune_notes(t);
+ 	} else {
+-		create_note(object, &buf, msg.given || msgfile || remove, note,
+-			    new_note);
++		create_note(object, &buf, msg.given || msgfile || remove, add,
++			    note, new_note);
+ 		if (is_null_sha1(new_note))
+ 			remove_note(t, object);
+ 		else
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 13f307a..b40e5a1 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -316,6 +316,35 @@ test_expect_success 'list specific note with "git notes list <object>"' '
+ 	test_cmp expect output
+ '
+ 
++cat > expect << EOF
++Initial set of notes
++
++More notes added with git notes add
++EOF
++
++test_expect_success 'Append to existing note with "git notes add"' '
++	git notes edit -m "Initial set of notes" &&
++	git notes add -m "More notes added with git notes add" &&
++	git notes show > output &&
++	test_cmp expect output
++'
++
++test_expect_success 'Appending empty string does not change existing note' '
++	git notes add -m "" &&
++	git notes show > output &&
++	test_cmp expect output
++'
++
++test_expect_success 'git notes add == edit when there is no existing note' '
++	git notes remove HEAD &&
++	! git notes show &&
++	git notes add -m "Initial set of notes
++
++More notes added with git notes add" &&
++	git notes show > output &&
++	test_cmp expect output
++'
++
+ test_expect_success 'create other note on a different notes ref (setup)' '
+ 	: > a6 &&
+ 	git add a6 &&
 -- 
 1.6.6.405.g80ed6
