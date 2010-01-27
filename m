@@ -1,123 +1,172 @@
-From: "Yann Dirson" <ydirson@altern.org>
-Subject: show/diff --check clarification needed
-Date: Wed, 27 Jan 2010 11:41:28 +0100
-Message-ID: <d26982ce92a061ee24d04aba6e314fa4.squirrel@intranet.linagora.com>
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: Re: [PATCH not-for-mainline] Implement git-vcs-p4
+Date: Wed, 27 Jan 2010 12:18:35 +0100
+Message-ID: <1a6be5fa1001270318h4ac8ac3bnaba48787a5b3efa6@mail.gmail.com>
+References: <alpine.LNX.2.00.1001251628431.14365@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 27 11:41:29 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Jan 27 12:19:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Na5Ky-0005eL-Ru
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 11:41:29 +0100
+	id 1Na5v1-00010K-Gw
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 12:18:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754061Ab0A0KlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 05:41:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753745Ab0A0KlV
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 05:41:21 -0500
-Received: from alderaan.linagora.com ([84.14.148.74]:46978 "EHLO
-	alderaan.linagora.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753742Ab0A0KlU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2010 05:41:20 -0500
-Received: from 10.0.0.2 (unknown [10.75.192.3])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by alderaan.linagora.com (Postfix) with ESMTPSA id 4FE11429F07
-	for <git@vger.kernel.org>; Wed, 27 Jan 2010 11:41:17 +0100 (CET)
-Received: from 10.0.0.1 (proxying for 194.206.158.221)
-        (SquirrelMail authenticated user ydirson)
-        by intranet.linagora.com with HTTP;
-        Wed, 27 Jan 2010 11:41:28 +0100
-User-Agent: SquirrelMail/1.4.18
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1754465Ab0A0LSj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jan 2010 06:18:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754319Ab0A0LSi
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 06:18:38 -0500
+Received: from mail-fx0-f220.google.com ([209.85.220.220]:53176 "EHLO
+	mail-fx0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753104Ab0A0LSh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2010 06:18:37 -0500
+Received: by fxm20 with SMTP id 20so1430045fxm.21
+        for <git@vger.kernel.org>; Wed, 27 Jan 2010 03:18:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nDLapykuIV8U4R/1ehPe2WROfvrxCT/tOYwcsWQtZkY=;
+        b=QVv64hyVmgRsXAN7xzua7mZ3pbxbG3vxbICKrozVko53zimUsAtl9AQl7/d1d5PZRr
+         yl5Q7Ka92ewzdFxPkB6I+o7Chv20ZUUKc0nbzO/HI3lkpIahTJzRxFmJ8m5Nkt7ckG47
+         N5PVg7S4f3v5six5o0HhoNyXH81U+3UwWbPR8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=q9B/mR30k3KADhFkgubVwsYFlI66vLC1zaq25RBLPdcoJqLtxDpkm4y4UKbaxCeeMk
+         S1WG3p0PiqwvCioF2hYypz1H1jsNVhDlSdRFtuXvyglnS5ngXY/o7L3dBMVMaFAYwkS4
+         +BQlNKhUuNYADqcsTRZ6fdGfA6w2+VsuG74QU=
+Received: by 10.239.187.204 with SMTP id m12mr992964hbh.160.1264591115524; 
+	Wed, 27 Jan 2010 03:18:35 -0800 (PST)
+In-Reply-To: <alpine.LNX.2.00.1001251628431.14365@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138127>
 
-I am experiencing an unexpected behaviour, related to whitespace
-(non-)checking.
+On Mon, Jan 25, 2010 at 10:35 PM, Daniel Barkalow <barkalow@iabervon.or=
+g> wrote:
+> This is probably not particularly appropriate for mainline
+> application, and is somewhat buggy, not extensively tested, and
+> incomplete. The push support is also currently based on a transport h=
+elper
+> export design that isn't upstream and I don't like any more; a better
+> design is probably to have the core send an "export" command and then=
+ a
+> gfi stream, but I haven't worked on this.
+>
+> It has two implementations of the interaction with the Perforce
+> server: one that uses the command-line client (and therefore makes a
+> ton of separate connections to the server) and one that uses the
+> (closed source, vaguely licensed) C++ API. The former does not suppor=
+t
+> everything used in push/submit correctly at this point.
+>
+> It also adds support to the Makefile for building C++ object files an=
+d
+> linking with a C++ linker. It should be easy to omit entirely for
+> builds that don't use p4, and it's at least somewhat out of the way.
+>
+> The biggest flaw currently is that it doesn't save its analysis of th=
+e
+> structure of the history, and doesn't have a way to push it out of me=
+mory,
+> so a long or complex history will run you out of memory or will take =
+a
+> long time to do an incremental fetch.
+>
+> Fetch features:
+>
+> =C2=A0- following integrations (with some guessing)
+> =C2=A0- finding other branches of a codeline
+>
+> Push features (only with the C++ API):
+>
+> =C2=A0- works if you don't do anything at all complicated
+>
+> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+<snip>
 
-In a my local repository I have a pre-commit hook checking for "git
-diff-index --check --cached" (borrowed from the sample template), and
-the server I push to does a "git diff-tree --check" on each pushed
-commit to make sure someone who forgot the pre-commit hook does not
-push a whitespace-unclean commit by error.
+Hi, and thank you for posting this.
 
-Now I had to import some 3rd-party stuff (an eclipse deltapack if you
-wonder) which includes CRLF line-endings, but must not get modified
-because of checksums.  So I added the following .gitattributes to the
-tree where I import this stuff:
+I tried applying it to current master, and got it to compile using the
+p4 c++ api.
 
-$ cat deltapack/.gitattributes
-* binary
-.gitattributes -binary
+However, I'm having trouble getting it to run. This is most certainly
+my own fault, and I'm guessing it has to do with my .git/config file
+setup.
 
-That is just fine for the pre-commit hook, and "git show --check" on
-it in my local repository reports no problems.
+I tried doing 'git init', and making a .git/config file like so:
+------------
+[core]
+        repositoryformatversion =3D 0
+        filemode =3D true
+        bare =3D false
+        logallrefupdates =3D true
 
-Now when I attempt to push, the update hook refuses my commit; and if
-I run the same "git show --check" on the server (in the bare repo
-where the ref has not been updated by the push, but where the pushed
-commit has not been pruned yet), I get the complaints which I have
-intended the .gitattributes to silent.
+[vcs-p4]
+        port =3D perforce.mycompany.com:1666
+        client =3D toral
 
-What happens is apparently that --check does not know which repository
-revision to take .gitattributes from, and takes them from working
-tree.  Indeed, removing deltapack/.gitattributes from my worktree and
-rerunning "show --check" on that unmodified commit does trigger the errors.
+[remote "origin"]
+        vcs =3D p4
+        codeline =3D //depot/path/to/my/existing/test/project
+------------
+Then, I did 'git fetch', and got a seg fault. I got around it by
+commenting out a line:
 
-While having "diff-tree --check" defaulting to looking at working tree
-by default may make sense, it would seem more natural for "show" to
-use by default those of the commit we're looking at - and one could
-argue that "diff-tree" could use the positive treeish for that matter
-as well.  But defaulting is one matter, it would be really useful to
-be able to specify from where the attributes should be taken for any
-given operation.  Did not look at the code - anyone knows how easy
-that would be ?
+diff --git a/transport.c b/transport.c
+index 7714fdb..5b404f7 100644
+--- a/transport.c
++++ b/transport.c
+@@ -924,7 +924,7 @@ struct transport *transport_get(struct remote
+*remote, const char *url)
+        ret->url =3D url;
 
+        /* In case previous URL had helper forced, reset it. */
+-       remote->foreign_vcs =3D NULL;
++/*     remote->foreign_vcs =3D NULL;*/
 
-Unless I missed something, I suggest the following plan:
+        /* maybe it is a foreign URL? */
+        if (url) {
 
-- document in maint that --check only takes worktree into account when
-  looking for .gitattributes, and more globally add a note to the
-  gitattributes manpage to explicitely say that too.
+-------------
+So - now I get this:
 
-- add a global flag to allow something like
-  "git --attributes-tree=<treeish> <command>"
+$ GIT_TRANSPORT_HELPER_DEBUG=3D1 git fetch
+Debug: Remote helper: -> capabilities
+Debug: Remote helper: Waiting...
+Debug: Remote helper: <- import
+Debug: Got cap import
+Debug: Remote helper: Waiting...
+Debug: Remote helper: <- export
+Debug: Got cap export
+Debug: Remote helper: Waiting...
+Debug: Remote helper: <-
+Debug: Capabilities complete.
+Debug: Remote helper: Waiting...
+Debug: Remote helper: <- ? refs/p4/depot/path/to/my/existing/test/proje=
+ct
+Debug: Remote helper: Waiting...
+Debug: Remote helper: <- ? refs/p4/depot/path/to/my/existing/test/proje=
+ct
+Debug: Remote helper: Waiting...
+Debug: Remote helper: <-
+Debug: Read ref listing.
+fatal: Couldn't find remote ref HEAD
+-------------
 
-- adjust defaults to agreed-upon values
+I also tried setting vcs-p4.findbranches to 'true'. The only
+difference in the output, is that the "<- ? refs/p4/..." line is just
+output once.
 
-- add any config entries that would be meaningful
+So if anyone has a clue for me, I shall, well, cease to be clueless.
 
-
-It may just be me having badly written the update hook - here is the
-relevant part for reference.  Under the "refs/heads/*,commit)" case of
-the sample update hook, I have something like:
-
-                # checks to be done in all commits
-
-                # exclude all commits previously-reachable by any ref
-                exclude_oldrevs=$( git for-each-ref --format='^%(refname)' )
-
-                for rev in $(git rev-list $exclude_oldrevs $newrev); do
-		    	[...]
-                        # special case for root commits
-                        if git rev-parse HEAD^ >/dev/null 2>&1; then
-                                ref=""
-                        else
-                                # use an empty tree to compare against
-                                ref=4b825dc642cb6eb9a060e54bf8d69288fbee4904
-                        fi
-                        # checks for whitespace
-                        if ! git diff-tree --check $ref $rev >/dev/null; then
-                                echo "*** Whitespace problems in $rev" >&2
-                                fails_whitespace=1
-                        fi
-			[...]
-		done
+-Tor Arvid-
