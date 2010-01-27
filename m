@@ -1,68 +1,78 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git-tag -s can't find GPG private key
-Date: Wed, 27 Jan 2010 22:06:00 +0100
-Message-ID: <fabb9a1e1001271306o7e6d9abu1f370ed4698ac055@mail.gmail.com>
+Date: Wed, 27 Jan 2010 13:16:33 -0800
+Message-ID: <7v3a1rp7ta.fsf@alter.siamese.dyndns.org>
 References: <4B60A9F0.5000904@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: "Mike.lifeguard" <mike.lifeguard@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 27 22:06:27 2010
+X-From: git-owner@vger.kernel.org Wed Jan 27 22:16:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaF5m-00068D-EW
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 22:06:26 +0100
+	id 1NaFFq-00043H-KO
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jan 2010 22:16:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755832Ab0A0VGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 16:06:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755825Ab0A0VGV
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 16:06:21 -0500
-Received: from mail-pz0-f190.google.com ([209.85.222.190]:37254 "EHLO
-	mail-pz0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754965Ab0A0VGU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2010 16:06:20 -0500
-Received: by pzk28 with SMTP id 28so2251607pzk.4
-        for <git@vger.kernel.org>; Wed, 27 Jan 2010 13:06:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=dxwuKpIqdKaUDD/dXOWhS3EYds4NxrYyBpkG4W6FpM0=;
-        b=MAUNm2NVIaBhJrme8VbdCn7DVRGEdRjhmPrNCJQo2UzVInzD1WpvoW7+GTNxLjDtdE
-         3JsHGLnTflB69qE24eKEKF1PVrbCxdxc1UCTXABsf8+Oe2i8e/5ayS94AIoG9clwuXWy
-         DShA4qKGqpNZtnuhAqz0y6vaANiXF2VgW2bcU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=ZfJluXh9Fc3yctUFGdW2B6kGbjG0JHv8tuEt6A1tGSjUaUa+497vqJ0iucol5iKO54
-         fNmIqCcmRIeBsHWw4R/tNe7wHrLj8XqZDbhq0bWySrPShssqrkzSf7LgrA8G94f8dlsZ
-         CC2Am6iZSvoQNSb2LAOpuXzLyH/Wp5PYqJGA4=
-Received: by 10.142.61.23 with SMTP id j23mr596840wfa.322.1264626380086; Wed, 
-	27 Jan 2010 13:06:20 -0800 (PST)
-In-Reply-To: <4B60A9F0.5000904@gmail.com>
+	id S1756004Ab0A0VQn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 16:16:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752460Ab0A0VQn
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 16:16:43 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35350 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932162Ab0A0VQm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2010 16:16:42 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 60C6294804;
+	Wed, 27 Jan 2010 16:16:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+HnMyFxt5qNSpuBKt2BACtLlewI=; b=w6r7C+
+	MYJcZkvxEMHVei6UddBp1seZ2nAhBAjqgYQ4YgP50oLnZGtMh9c9ZLPAf76lGTD8
+	/eHPH/JJPrulVYR6fCWNJ+fZVnYvJiqh1lbcLfMU/eIIVfzDfyjRHNrPSWm+rDZN
+	GmyxV/q6V5qRXX4KyvZKf3CFe+tT/se5LBqO8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OAMpewQPPjDWeXweWQyyHauv6NJXZDlx
+	u/C9aDG/u0/xvy+OMoom/ecWhDhN1IAJR5mPmmodicaPpXkU23fv3yNXuYhVze3k
+	GibdwNS6a5Eiz2tS81CbakXT/4ZaB1if2d9coYXoygD3a/u5Qey5/8P2hNdhKXAq
+	ZA8VUAejcnM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 374CE947FF;
+	Wed, 27 Jan 2010 16:16:37 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F5B6947FE; Wed, 27 Jan
+ 2010 16:16:34 -0500 (EST)
+In-Reply-To: <4B60A9F0.5000904@gmail.com> (Mike lifeguard's message of "Wed\,
+ 27 Jan 2010 17\:02\:40 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 40EADC5A-0B89-11DF-BF8E-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138197>
 
-Heya,
+"Mike.lifeguard" <mike.lifeguard@gmail.com> writes:
 
-On Wed, Jan 27, 2010 at 22:02, Mike.lifeguard <mike.lifeguard@gmail.com> wrote:
 > It seems that when the GPG key name and user.name in git's config are
 > different, git can't find the appropriate private key to sign the tag.
 > Git should attempt to use user.email to find the key. Setting
-> user.signingkey is of course a workaround. The relevant code would be in
-> builtin-tag.c.
+> user.signingkey is of course a workaround.
 
-It seems you already know where to look, why don't you try and come up
-with a patch since it is indeed, your itch to scratch?
+user.signingkey was devised for this exact case, and I don't think it is a
+work-around.
 
--- 
-Cheers,
+I do not think "should attempt" is a correct attitude, even though I can
+100% agree with "it would have been nicer if it attempted to do this from
+day one".  You are unfortunately not interacting with git codebase in
+early 2005 anymore and there are thousands if not millions of existing
+users you should worry about.
 
-Sverre Rabbelier
+Using user.email changes the behaviour for people who do not want a key
+that has the same e-mail address, and because the choice of key is all
+about security, the logic to choose which one shouldn't be changed
+lightly.
