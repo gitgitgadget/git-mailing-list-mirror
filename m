@@ -1,66 +1,78 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] Windows: improve performance by avoiding a static
- dependency on ws2_32.dll and advapi32.dll
-Date: Thu, 28 Jan 2010 10:09:19 +0100
-Message-ID: <4B61543F.6020904@viscovery.net>
-References: <1264666525-4956-1-git-send-email-michael.lukashov@gmail.com>
+From: William Pursell <bill.pursell@gmail.com>
+Subject: shared permissions on COMMIT_EDITMSG
+Date: Wed, 27 Jan 2010 23:19:22 -1000
+Message-ID: <4B61569A.1010808@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael Lukashov <michael.lukashov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 28 10:09:36 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 28 10:24:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaQNa-0003CJ-PP
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 10:09:35 +0100
+	id 1NaQcR-0008PR-0d
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 10:24:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755993Ab0A1JJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2010 04:09:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755990Ab0A1JJZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 04:09:25 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:23735 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755771Ab0A1JJX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2010 04:09:23 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NaQNM-0007GR-Cu; Thu, 28 Jan 2010 10:09:21 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 1C4841660F;
-	Thu, 28 Jan 2010 10:09:20 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <1264666525-4956-1-git-send-email-michael.lukashov@gmail.com>
-X-Spam-Score: 1.9 (+)
+	id S1755574Ab0A1JYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2010 04:24:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755195Ab0A1JYr
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 04:24:47 -0500
+Received: from mail-yw0-f198.google.com ([209.85.211.198]:36802 "EHLO
+	mail-yw0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754131Ab0A1JYq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2010 04:24:46 -0500
+Received: by ywh36 with SMTP id 36so469046ywh.15
+        for <git@vger.kernel.org>; Thu, 28 Jan 2010 01:24:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=i4hQ3B59TbLcG8WzY82w5eDyl1ou7HDExWChTGvq6g8=;
+        b=pKNrU8a3cFWS9L2EfKveY5l5bUS/s0CKz2jU6JHy7ffOdAic++QLS7ruKLrB5tCaaz
+         p178jaNfZaUZUFXnJxergEfM6Z7o0jj3VQQ8r23xGK3Ao+YX5L/khDY8eij1G9RBBqAU
+         0CmWMCzOBixzpKu1qghMnUZ4W2hvJVADl4BrE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=X5Kq2AfIEm+Fk7pGDhiND2TS5f2ankqlL6FKtZwNFrd3AzW5BuObEunXkwT9dZ/FzS
+         kpV/DNSnl6y0zrX3cdxCy8F0stcVk6qjsm2nsjghWafBWjzK5mv4OKbXPKpqE5L6SWMf
+         GMgLRX3EdGO9B9IRT2pVAWTElw0vSSukUwPaY=
+Received: by 10.101.132.32 with SMTP id j32mr13788632ann.48.1264670366952;
+        Thu, 28 Jan 2010 01:19:26 -0800 (PST)
+Received: from clam.westell.com (udp278831uds.hawaiiantel.net [72.234.51.251])
+        by mx.google.com with ESMTPS id 13sm490058gxk.13.2010.01.28.01.19.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 28 Jan 2010 01:19:25 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138235>
 
-Michael Lukashov schrieb:
-> ws2_32.dll is used by limited subset of git commands, such as pull,
-> push, fetch, send-email, ... By looking up functions that we need
-> at runtime, we can avoid the startup costs of this DLL.
-> As a result, we can remove static dependency on advapi32.dll too.
-> 
-> A call to "git status" loaded
-> 
-> before:  8 DLL
-> after:   4 DLL
+With git-init --shared=0660 and a umask of 022,
+the first commit to the repository creates
+the file COMMIT_EDITMSG with mode 0644
+instead of 0660.  I believe this is incorrect
+behavior.  Simple fix:
 
-Thanks. Due to the size of the change, I would acknowledge it only if you
-have a proof that the reduced startup costs are noticable, for example, by
-running the test suite.
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 55676fd..06ce94d 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -687,6 +687,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	}
 
-What's the deal with bswap? Isn't it an unrelated change? It needs some
-better justification. It is unobvious because it is not straight-forward
-"use pointer to function that was looked up instead of function".
+ 	fclose(fp);
++	adjust_shared_perm(git_path(commit_editmsg));
 
-Will the result not break the MSVC build?
+ 	if (!commitable && !in_merge && !allow_empty &&
+ 	    !(amend && is_a_merge(head_sha1))) {
 
--- Hannes
+
+-- 
+William Pursell
