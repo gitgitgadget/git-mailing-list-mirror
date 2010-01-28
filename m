@@ -1,307 +1,95 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH] git-gui: Update Swedish translation (520t0f0u)
-Date: Thu, 28 Jan 2010 14:07:58 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1001281407410.15421@ds9.cixit.se>
-References: <alpine.DEB.2.00.1001281359050.15421@ds9.cixit.se>
+From: Emmanuel Trillaud <etrillaud@gmail.com>
+Subject: Re: [RESEND PATCH] french translation of gitk
+Date: Thu, 28 Jan 2010 14:23:06 +0100
+Message-ID: <20100128142306.61b8169d@eleanor>
+References: <20091202112403.52abcd75@eleanor>
+	<c558c59b3fe779e8577fe06233d3da5d2711127f.1259795550.git.ni.s@laposte.net>
+	<20091229223758.GB12965@vidovic>
+	<20100108142218.386bf6a2@eleanor>
+	<20100112112122.GD6685@brick.ozlabs.ibm.com>
+	<20100112140250.164e084e@eleanor>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-2008147520-1264684078=:15421"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jan 28 14:08:18 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Maximilien Noal <noal.maximilien@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Thomas Moulard <thomas.moulard@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Guy Brand <gb@unistra.fr>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Thu Jan 28 14:28:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaU6X-0004rM-9k
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 14:08:14 +0100
+	id 1NaUPw-0005dK-Gv
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 14:28:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754969Ab0A1NIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2010 08:08:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753910Ab0A1NIE
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 08:08:04 -0500
-Received: from upper-gw.cixit.se ([92.43.32.133]:44097 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752182Ab0A1NIC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2010 08:08:02 -0500
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id o0SD7wxh020608
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 28 Jan 2010 14:07:58 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o0SD7w4T020604;
-	Thu, 28 Jan 2010 14:07:58 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <alpine.DEB.2.00.1001281359050.15421@ds9.cixit.se>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Thu, 28 Jan 2010 14:07:58 +0100 (CET)
+	id S1756028Ab0A1N2L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2010 08:28:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756016Ab0A1N2K
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 08:28:10 -0500
+Received: from ey-out-2122.google.com ([74.125.78.26]:28207 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755114Ab0A1N2J convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Jan 2010 08:28:09 -0500
+Received: by ey-out-2122.google.com with SMTP id d26so188760eyd.19
+        for <git@vger.kernel.org>; Thu, 28 Jan 2010 05:28:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:in-reply-to:references:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=lT82sohfvWtFdyv1N9gWePAZAiNR1AxifmGv5jH18yw=;
+        b=VTeaYARW+s7c5O/KWUGWY2ngpYySCfaHbR0w71nSqdLN3anfDGipiQhgbewRVWORcC
+         7e8CfZqGPuULi3TNIATB2GD2Jdqwo9UPSiHNCirKn3tc1hT070ahkkEnZswCA1B87leQ
+         hsSsFxBws/sXBCgFzFmIcnkOWd5jAKAWJtuJI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        b=gEbziMCvj3xyD3WaeQvuXMQP3Gu+rHviqqjFURXZxvwHVEQJnRb1i6xog565veNtqX
+         Hp0F1YsFqILq1jR1J8kX+4XDPRgBgu+KMEj4U12S2dalVjBWtBuchc0XBGIQ8cXiGz4D
+         HBbGPYkegRynCsxWMPnoWZJyYA19xJZ8hmdEI=
+Received: by 10.213.109.68 with SMTP id i4mr6420222ebp.43.1264685287665;
+        Thu, 28 Jan 2010 05:28:07 -0800 (PST)
+Received: from eleanor (cxr69-1-87-88-216-137.dsl.club-internet.fr [87.88.216.137])
+        by mx.google.com with ESMTPS id 16sm639555ewy.10.2010.01.28.05.28.06
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 28 Jan 2010 05:28:07 -0800 (PST)
+In-Reply-To: <20100112140250.164e084e@eleanor>
+X-Mailer: Claws Mail 3.5.0 (GTK+ 2.12.12; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138252>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Paul,=20
+I would just remind you to apply my last patch. It correct the previous=
+ error,
+and is hopefully ready for your gitk tree.
 
---8323329-2008147520-1264684078=:15421
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Best regards
 
-Peter Krefting:
+Emmanuel Trillaud
 
-> Please find the updated translation attached due to encoding issues.
+Le Tue, 12 Jan 2010 14:02:50 +0100,
+Emmanuel Trillaud <etrillaud@gmail.com> a =C3=A9crit :
 
-Somehow, Alpine managed to screw it up anyway. Gzip'ing and trying again :-(
-
--- 
-\\// Peter - http://www.softwolves.pp.se/
---8323329-2008147520-1264684078=:15421
-Content-Type: APPLICATION/octet-stream; name=0001-git-gui-Update-Swedish-translation-520t0f0u.patch.gz
-Content-Transfer-Encoding: BASE64
-Content-ID: <alpine.DEB.2.00.1001281407580.15421@ds9.cixit.se>
-Content-Description: 
-Content-Disposition: attachment; filename=0001-git-gui-Update-Swedish-translation-520t0f0u.patch.gz
-
-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
-REktQabXuHWMnsOs7VGoUAu6XCV6wt9YTUFnhQ1yClyFjWj65V5AFcN0v+lt
-3BGnPWd3hUFcJyxsN44gVibcV2RjWdrEmBZIoMy5nDV0nd4syN0M4SxwvGgQ
-RAhcvwWg2iMGE+ueZbD2YaAYNCUaRjM2gbQ8yzBHkWAgu50SuUd2NyH9bb1X
-W0fCfhQJVqBINgqXP+wbAnenIKFnG5Z/7CrzL3fZqcBUj46ByVhksqbKuA//
-amhVN4fPeT7VqZ4MdQJLUNOykIITiE0gmjX3pFvSwLYE88CjxB2t5vrUmJeu
-58me1ZBxARpSjsq1BOv9E70lz9QE8k/7OzLGEGrL6y2KtPSTE8hOHsiO3ufp
-hhYpwVoZnfqbw+fVim+6IsCkq8MXWrAkyHGWAoWlzuVOmppYR8iBq7Bs23f2
-ISjXIpGwxuHrmoVFxd5Y0gAc6wsg8MYFwHKb5LrURYSZzPtk9iFY1f1G4Clp
-WvKM57F5wDFNUN6hvCd9g5D90U99LFhCm2D9n061W+1dnYS4W7c+fDWSi3jU
-wcraOFq0desadAkbsZUjzOMOa3m4TGqzqeCiAEYSY2ztyd7ItfRSDmBCXpTg
-ouRrT/ArN+UteYMxBSvB+l2UEW7akQ0MpaJdQhYZN3PlK1wZ1C90Fa48hStf
-5uotpj+muBpyxFMs+ZYjr1lfvo4NWb4gUrCcoyBGV1hB2aog75ZLyXUC9udF
-FUaObIP9FFIFb8pFkhOWDZMdyZtyDQ/klPiER/H1KiwntMbpfsqU3kDj6W5e
-gU+9HxHXl69D3UKHtuw8QkHnnqapMsDBLE9S1Nd6aI82/31b36j1D7CMpnoz
-IN5Q2IXj6KBL1hhBwrF0lO8rAWmXak3mZRdS2t4Q8ZrDMs878tB34W0p0zIb
-J7dtWNJk2Gl4t+HXBi7D4b33FV1SGNCiy8MNb18W3CYVzBzxZ3pPgbz2bUN6
-KHRlq+UI6bl3W7btrKhjDgaxSJpsNyXlUIeioSeaWqzJ+haE50fH9it83dZj
-kenRF3peXtF8K7Dx6hPI1JjcDgyJ09D3lWuDOp3+W+o0Ud0xqtOpok76DlQo
-pJTfFVhkQ56XixagWJMoW3+/0Pk8LdfSM4MkjvE8FHEZB2RQDHXH5Zt6k5zS
-1dUr8pruVX8Et2fFfrE2Vuky46LyFMWTiVpWFnzR11liZpFsk+YGC2/JTyWp
-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
-CdEYvmBOne+8s/gs/u67/wNBt8RddqUAAA==
-
---8323329-2008147520-1264684078=:15421--
+> Hi Paul,=20
+>=20
+> Le Tue, 12 Jan 2010 22:21:22 +1100,
+> Paul Mackerras <paulus@samba.org> a =C3=A9crit :
+> >=20
+> > I get those errors too.  Could somebody resend a corrected patch,
+> > please?
+> Here is an updated patch. It apply and compile cleanly on my gitk tre=
+e.
+>=20
+> Thank for taking care of this.
+>=20
+> Emmanuel Trillaud
