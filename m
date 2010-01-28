@@ -1,95 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3] filter-branch: Add tests for submodules
-Date: Wed, 27 Jan 2010 16:14:07 -0800
-Message-ID: <7vfx5rnl0w.fsf@alter.siamese.dyndns.org>
-References: <201001280041.23182.sojkam1@fel.cvut.cz>
- <1264636547-24496-1-git-send-email-sojkam1@fel.cvut.cz>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-gui: use themed tk widgets with Tk 8.5
+Date: Wed, 27 Jan 2010 16:51:42 -0800
+Message-ID: <20100128005142.GK5452@spearce.org>
+References: <878wbln0oa.fsf@users.sourceforge.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, j.sixt@viscovery.net,
-	Johannes.Schindelin@gmx.de
-To: Michal Sojka <sojkam1@fel.cvut.cz>
-X-From: git-owner@vger.kernel.org Thu Jan 28 01:15:32 2010
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Thu Jan 28 01:51:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaI2j-0000mH-Q6
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 01:15:30 +0100
+	id 1NaIbx-00031x-ML
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 01:51:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754562Ab0A1AOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 19:14:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754556Ab0A1AOU
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 19:14:20 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57124 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754340Ab0A1AOT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2010 19:14:19 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DB6E694623;
-	Wed, 27 Jan 2010 19:14:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SL7oDymA7shxRvqoOo6Bx8+nw5o=; b=jY+vz3
-	42reCaRH7q+wk10l821NjebwBqWEOqNcNzKTXg88wAX5PvaMbyuY2meC5jm0PSDt
-	yO9gzfcC+VGwvdPhY2kHObeTBBYHTF89l6hLnmKkjptZE+VTPOeCE4Tr2LQiBC25
-	oA3O6SZhzv3kTd49Qev8TzneK107lAuheZKdE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RJQjalZytTepqZGrlUryT2FaNcswlld2
-	p8Xm8d5uAJGYu6mM79LJZLcZ59oDryE7/2knFHp/wY0i3Yya3cFPqpp3oQl9/Cqk
-	tuH3JvU32OKCrIh7XymBfgFzQxZMBaSmoxWOdRyZtaIVVRpIMWIIrxn/jns8JhUj
-	UjfezhEsEBg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9967594622;
-	Wed, 27 Jan 2010 19:14:13 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9FCE99461E; Wed, 27 Jan
- 2010 19:14:08 -0500 (EST)
-In-Reply-To: <1264636547-24496-1-git-send-email-sojkam1@fel.cvut.cz> (Michal
- Sojka's message of "Thu\, 28 Jan 2010 00\:55\:47 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 10A0D9E6-0BA2-11DF-AA86-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753888Ab0A1Avr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2010 19:51:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753307Ab0A1Avr
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 19:51:47 -0500
+Received: from mail-iw0-f186.google.com ([209.85.223.186]:37360 "EHLO
+	mail-iw0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753301Ab0A1Avq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2010 19:51:46 -0500
+Received: by iwn16 with SMTP id 16so185233iwn.5
+        for <git@vger.kernel.org>; Wed, 27 Jan 2010 16:51:46 -0800 (PST)
+Received: by 10.231.146.2 with SMTP id f2mr3429086ibv.23.1264639906102;
+        Wed, 27 Jan 2010 16:51:46 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 23sm347033iwn.7.2010.01.27.16.51.43
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 27 Jan 2010 16:51:44 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <878wbln0oa.fsf@users.sourceforge.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138212>
 
-Michal Sojka <sojkam1@fel.cvut.cz> writes:
+Pat Thoyts <patthoyts@users.sourceforge.net> wrote:
+> 
+> This patch enables the use of themed Tk widgets with Tk 8.5 and above.
+> These make a significant difference on Windows in making the
+> application appear native. On Windows and MacOSX ttk defaults to the
+> native look as much as possible. On X11 the user may select a theme
+> using the TkTheme XRDB resource class by adding an line to the
+> .Xresources file. The set of installed theme names is available using
+> the Tk command 'ttk::themes'. The default on X11 is similar to the current
+> un-themed style - a kind of thin bordered motif look.
+> 
+> A new git config variable 'gui.usettk' may be set to disable this if
+> the user prefers the classic Tk look. Using Tk 8.4 will also avoid the
+> use of themed widgets as these are only available since 8.5.
+> 
+> Some support is included for Tk 8.6 features (themed spinbox and native
+> font chooser for MacOSX and Windows).
 
-> There are three important tests:
+Thanks.  I've been running with this pretty much all day today;
+it seems sane.  I'll probably push it shortly.
 
-It is unnecessary and counterproductive to self-proclaim the importance of
-a patch or new tests.  If anything, what are important are not tests
-themselves but the conditions that they check, so "Add tests to check
-three important cases:" is slightly more palatable.
-
-I'd suggest to just start with "Add three tests to make sure:".
-
-> 1) 'rewrite submodule with another content' passes only with the
->    previous patch applied.
-
-Sorry, but I think I am missing some context here to understand this
-sentence.  Which previous patch?
-
-> 2) 'checkout submodule during rewrite' demonstrates that it is not
->    possible to replace a submodule revision in tree-filter by checking
->    the submodule out and reseting the submodule's HEAD. Fails both
->    with and without the previous patch. This is because filter-branch
->    sets GIT_WORKING_TREE to "." which causes clone (called from
->    git-submodule) to fail.
-
-I thought you agreed with Hannes that this is not something we would even
-want to support?
-
-> 3) 'replace submodule revision' shows that replacing submodule
->    revision is possible by direct index manipulation. Succeeds both
->    with and without the previous patch.
->
-> Signed-off-by: Michal Sojka <sojkam1@fel.cvut.cz>
-> ---
-
-Thanks.
+-- 
+Shawn.
