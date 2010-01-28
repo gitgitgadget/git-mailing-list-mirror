@@ -1,91 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] reject @{-1} not at beginning of object name
-Date: Thu, 28 Jan 2010 04:56:43 -0500
-Message-ID: <20100128095643.GC14253@coredump.intra.peff.net>
-References: <20100128094446.GA14244@coredump.intra.peff.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] bash: support 'git notes' and its subcommands
+Date: Thu, 28 Jan 2010 11:02:24 +0100
+Message-ID: <201001281102.24195.johan@herland.net>
+References: <1264640755-22447-1-git-send-email-szeder@ira.uka.de>
+ <201001280223.35625.johan@herland.net> <20100128033039.GB15202@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 28 10:57:13 2010
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: SZEDER =?iso-8859-1?q?G=E1bor?= <szeder@fzi.de>
+X-From: git-owner@vger.kernel.org Thu Jan 28 11:02:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaR7g-00054x-RE
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 10:57:13 +0100
+	id 1NaRCu-0006zY-RT
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 11:02:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753960Ab0A1J4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2010 04:56:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753828Ab0A1J4t
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 04:56:49 -0500
-Received: from peff.net ([208.65.91.99]:33475 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753789Ab0A1J4t (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2010 04:56:49 -0500
-Received: (qmail 20898 invoked by uid 107); 28 Jan 2010 09:56:49 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 28 Jan 2010 04:56:49 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Jan 2010 04:56:43 -0500
-Content-Disposition: inline
-In-Reply-To: <20100128094446.GA14244@coredump.intra.peff.net>
+	id S1755060Ab0A1KCb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2010 05:02:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755062Ab0A1KCa
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 05:02:30 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:41204 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755036Ab0A1KC1 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2010 05:02:27 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KWY0072RBW1XK20@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 28 Jan 2010 11:02:25 +0100 (MET)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KWY00BJ9BW0J400@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 28 Jan 2010 11:02:25 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2010.1.28.94821
+User-Agent: KMail/1.12.4 (Linux/2.6.32-ARCH; KDE/4.3.4; x86_64; ; )
+In-reply-to: <20100128033039.GB15202@neumann>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138240>
 
-Something like foo@{-1} is nonsensical, as the @{-N} syntax
-is reserved for "the Nth last branch", and is not an actual
-reflog selector. We should not feed such nonsense to
-approxidate at all.
+On Thursday 28 January 2010, SZEDER G=E1bor wrote:
+> Hi Johan,
+>=20
+> On Thu, Jan 28, 2010 at 02:23:35AM +0100, Johan Herland wrote:
+> > On Thursday 28 January 2010, SZEDER G=E1bor wrote:
+> > > ... and it will offer refs unless after -m or -F, because these t=
+wo
+> > > options require a non-ref argument.
+> >
+> > Maybe-NAK.
+> >
+> > The patch is probably good in itself, and the intent is certainly g=
+ood,
+> > but we're currently discussing deprecating the -m/-F options to "gi=
+t
+> > notes edit" (see
+> > http://article.gmane.org/gmane.comp.version-control.git/138215), an=
+d if
+> > that's where we go, there's no point "encouraging" their use by add=
+ing
+> > bash- completions for them...
+>=20
+> -m and -F are not encouraged, because they are not offered (short
+> options in general are never offered by the completion script).
+> However, their presence or absence is taken into account to offer
+> something sensible: refs after 'git notes edit <TAB>', files after
+> 'git notes edit -F <TAB>'.  Note, that I chose 'edit' here, because
+> currently it's the only subcommand taking '-F', but it will actually
+> work the same way with the upcoming 'add' and 'append' subcommands.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-We didn't discuss this one, but I came across it while trying to be
-complete in testing the combinations. Right now "foo@{-1}" is
-interpreted as a reflog entry at approxidate "-1". Approxidate doesn't
-signal an error because it thinks it has found something useful. But
-AFAIK we have declared all @{-...} to be Nth last branch, so it is
-simply a semantic error.
+Ah, ok, then. I revoke my NAK.
 
-Let me know if that is not the case (that is, if it was intentional to
-leave foo@{-1} as the reflog at date "-1" because it has some meaning
-that I am missing) and we can drop this patch.
 
- sha1_name.c                |    4 ++++
- t/t1508-at-combinations.sh |    2 +-
- 2 files changed, 5 insertions(+), 1 deletions(-)
+=2E..Johan
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 00fc415..7729925 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -399,6 +399,10 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- 		unsigned long co_time;
- 		int co_tz, co_cnt;
- 
-+		/* a @{-N} placed anywhere except the start is an error */
-+		if (str[at+2] == '-')
-+			return -1;
-+
- 		/* Is it asking for N-th entry, or approxidate? */
- 		for (i = nth = 0; 0 <= nth && i < reflog_len; i++) {
- 			char ch = str[at+2+i];
-diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
-index 2a46af2..d5d6244 100755
---- a/t/t1508-at-combinations.sh
-+++ b/t/t1508-at-combinations.sh
-@@ -45,7 +45,7 @@ check "@{u}" upstream-two
- check "@{u}@{1}" upstream-one
- check "@{-1}@{u}" master-two
- check "@{-1}@{u}@{1}" master-one
--fail nonsense "@{u}@{-1}"
-+nonsense "@{u}@{-1}"
- nonsense "@{1}@{u}"
- 
- test_done
--- 
-1.7.0.rc0.41.g538720
+--=20
+Johan Herland, <johan@herland.net>
+www.herland.net
