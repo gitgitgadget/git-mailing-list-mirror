@@ -1,89 +1,103 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: What's cooking in git.git (Jan 2010, #05; Sat, 16)
-Date: Thu, 28 Jan 2010 16:16:33 -0500
-Message-ID: <32541b131001281316m59128e7ds45353a30ac602b6f@mail.gmail.com>
-References: <7vljfxa1o6.fsf@alter.siamese.dyndns.org> <7vd417udpi.fsf@alter.siamese.dyndns.org>
+From: Mike Linck <mgl@absolute-performance.com>
+Subject: Re: Questions about branches in git
+Date: Thu, 28 Jan 2010 14:17:26 -0700
+Message-ID: <69b754db1001281317o69f8c3f9y412a8524407bacbf@mail.gmail.com>
+References: <69b754db1001281044y39e52f77hcc8f83144776c78f@mail.gmail.com>
+	 <b4087cc51001281203q1f467480sdf848c9d3ced323b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 28 22:17:04 2010
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 28 22:17:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NabjY-0004Xe-A5
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 22:17:00 +0100
+	id 1Nabk8-0004v8-Cd
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 22:17:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754365Ab0A1VQy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2010 16:16:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754332Ab0A1VQy
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 16:16:54 -0500
-Received: from mail-yx0-f193.google.com ([209.85.210.193]:63058 "EHLO
-	mail-yx0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754013Ab0A1VQx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jan 2010 16:16:53 -0500
-Received: by yxe31 with SMTP id 31so1111930yxe.21
-        for <git@vger.kernel.org>; Thu, 28 Jan 2010 13:16:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=G787S1XpvIRh7Zy51+eXpqstUdd8YD9zq6Xr/WyEruQ=;
-        b=jR73DCPq1TUXgZorXZi1cACdJjuqUCS4TZqpv7jZiouqUwFLsuKzqP5SaVgSoG1KKy
-         5HIV8+0G/FgLv1ywtzXo2FxHSnnn9BkVKYc3JbHN/FvmDOEU3Z7a/9la9PSZ/bZZhDQ0
-         p7wTChEQUOTBfQAaXWPr5fidWH7U9OkmMJtIk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Z6zgD9/Is3LyM0GD2QUdBAvlpqdzuMTrprJR6UUvwLJUDwgkLzjzCkD+eQbJfg2PDR
-         IiCuericMurLn9M8Ho8nqBTuC+QR5WdbcN8PEFjBEIs6mcNKyAVidodKVmVBI0FeQrcK
-         ogZSufmgKWPKNsZrWYJFAPR9InL/emMLf5tHE=
-Received: by 10.150.235.7 with SMTP id i7mr466552ybh.107.1264713413201; Thu, 
-	28 Jan 2010 13:16:53 -0800 (PST)
-In-Reply-To: <7vd417udpi.fsf@alter.siamese.dyndns.org>
+	id S1755176Ab0A1VR2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2010 16:17:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754694Ab0A1VR1
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 16:17:27 -0500
+Received: from mail-px0-f182.google.com ([209.85.216.182]:42448 "EHLO
+	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753498Ab0A1VR1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Jan 2010 16:17:27 -0500
+Received: by pxi12 with SMTP id 12so906677pxi.33
+        for <git@vger.kernel.org>; Thu, 28 Jan 2010 13:17:26 -0800 (PST)
+Received: by 10.142.62.34 with SMTP id k34mr1603381wfa.282.1264713446500; Thu, 
+	28 Jan 2010 13:17:26 -0800 (PST)
+In-Reply-To: <b4087cc51001281203q1f467480sdf848c9d3ced323b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138271>
 
-On Mon, Jan 18, 2010 at 1:30 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Jan 28, 2010 at 1:03 PM, Michael Witten <mfwitten@gmail.com> wr=
+ote:
+> On Thu, Jan 28, 2010 at 12:44 PM, Mike Linck
+> <mgl@absolute-performance.com> wrote:
+>> ...
+>> It seems that after a topic or bug branch is merged back into its
+>> parent, especially if it was fast forwarded, it becomes hard to
+>> determine what changes were made in it, to resolve the problem that =
+it
+>> was created to address.
+>> ...
+>> I understand that there are mechanism kind of available to address
+>> this problem. =A0If we (all developers in my company) remember alway=
+s to
+>> rebase -i before they merge their topic branches back in, then it
+>> could be squashed making it easier to identify and cherry pick onto
+>> other branches...
 >
->> [Stalled]
->>
->> * ap/merge-backend-opts (2008-07-18) 6 commits
->> =A0- Document that merge strategies can now take their own options
->> =A0- Extend merge-subtree tests to test -Xsubtree=3Ddir.
->> =A0- Make "subtree" part more orthogonal to the rest of merge-recurs=
-ive.
->> =A0- Teach git-pull to pass -X<option> to git-merge
->> =A0- git merge -X<option>
->> =A0- git-merge-file --ours, --theirs
->>
->> "git pull" patch needs sq-then-eval fix to protect it from $IFS
->> but otherwise seemed good.
+> For now, you should probably rely on graphical tools like gitk in
+> order to visualize the various branches. There's also `git log
+
+Well, even gitk can't show me the information I'm looking for if the
+parent branch ended up fast-forwarding to include the changes made in
+the topic branch.  As far as I can tell there is *no way* to tell what
+changes were made in a particular branch after a fast-forward has
+taken place, which seems to make it hard to organize fixes for
+specific topics/bugs/tickets.
+
+> --graph'. You could also just keep your branches around for reference
+> and use `git merge-base' as necessary.
 >
-> Generally I hate to step in to fix up other's series, especially when=
- I
-> know that the party responsible for issues is capable enough. =A0As t=
-he
-> pre-release feature freeze gets closer, however, I sometimes find mys=
-elf
-> doing so, and (I repeat) I hate it.
 
-Sorry about that.  I asked at the time whether you thought I should
-submit a patch or whether you were planning to do it, and didn't get
-an answer.  And then when you wrote the above, I was away on vacation.
- I see it's now been merged into master, but in case you care... it
-looks ok to me :)
+Yeah, what concerns me is that there seems to be no point in keeping
+your branches around "for reference" because even when you're looking
+at them you can't tell what changes were made in them after they were
+spawned, unless they haven't been merged into another branch yet.  So
+it seems that a branch is only useful for merging once and unless the
+branch was squashed in the process of mergin, good luck identifying
+your change set for a particular topic.
 
-Have fun,
+I don't know if an uebercommit is necessary.  But it would help seem
+like it would help if a branch knew about it's spawn point from its
+parent, and if you could use that to get git log to only show you the
+commits made to a branch after it was spawned.  And if there were
+forms of operations like merge, or rebase that could act intelligently
+based on that information like "merge this branch into that branch,
+and by this branch I don't mean anything from this branch's parent
+branch"  so that a fix that was developed on edge or master could be
+safely merged into an old branch without importing every other change
+on edge or master, and also the other way around.
 
-Avery
+
+I just looked at merge-base.  It doesn't seem to address the problem.
+I grabbed an old topic branch from our repo which I knew was created
+from master and at some point merged back into master via
+fast-forward.  I checked it out, I called "git merge base topic-id
+master", hoping that it would "output a commit which is reachable from
+both A and B through the parent relationship."  Instead it seems to
+have modified the topic branch by fast forwarding it to the include
+all the changes up to the tip of master.  Clearly not what I'm looking
+for.
+
+
+Michael Linck
