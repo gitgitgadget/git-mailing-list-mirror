@@ -1,136 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-gui: use themed tk widgets with Tk 8.5
-Date: Wed, 27 Jan 2010 18:56:47 -0800
-Message-ID: <20100128025647.GB8166@spearce.org>
-References: <878wbln0oa.fsf@users.sourceforge.net> <20100128005142.GK5452@spearce.org> <alpine.DEB.1.00.1001280244430.4985@pacific.mpi-cbg.de> <20100128014205.GA8166@spearce.org> <7v4om7ndm4.fsf@alter.siamese.dyndns.org>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@fzi.de>
+Subject: Re: [PATCH] bash: support 'git notes' and its subcommands
+Date: Thu, 28 Jan 2010 04:30:39 +0100
+Message-ID: <20100128033039.GB15202@neumann>
+References: <1264640755-22447-1-git-send-email-szeder@ira.uka.de>
+	<201001280223.35625.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	git@vger.kernel.org, msysgit@googlegroups.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 28 03:57:00 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Jan 28 04:30:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaKZ1-0000qA-IA
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 03:56:59 +0100
+	id 1NaL5n-0004B1-S5
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 04:30:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752626Ab0A1C4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2010 21:56:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021Ab0A1C4u
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 21:56:50 -0500
-Received: from mail-iw0-f186.google.com ([209.85.223.186]:45589 "EHLO
-	mail-iw0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751972Ab0A1C4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2010 21:56:50 -0500
-Received: by iwn16 with SMTP id 16so286054iwn.5
-        for <git@vger.kernel.org>; Wed, 27 Jan 2010 18:56:49 -0800 (PST)
-Received: by 10.231.145.196 with SMTP id e4mr1461741ibv.54.1264647408897;
-        Wed, 27 Jan 2010 18:56:48 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 23sm434850iwn.7.2010.01.27.18.56.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 27 Jan 2010 18:56:48 -0800 (PST)
+	id S1753022Ab0A1Daq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jan 2010 22:30:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752821Ab0A1Dap
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 22:30:45 -0500
+Received: from moutng.kundenserver.de ([212.227.126.186]:50449 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752640Ab0A1Dap (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2010 22:30:45 -0500
+Received: from [127.0.1.1] (p5B1303A9.dip0.t-ipconnect.de [91.19.3.169])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0MLT3m-1NatJt43s2-000a65; Thu, 28 Jan 2010 04:30:41 +0100
 Content-Disposition: inline
-In-Reply-To: <7v4om7ndm4.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <201001280223.35625.johan@herland.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Provags-ID: V01U2FsdGVkX186fJIX188EXLID7XoG2hf3cJSjdoXAaz2yoWc
+ NJG61zEbcqioGTiTkfcLlIuuOW5XlPW9Pb4lVpe73RjZIz26vR
+ PsJDd2yX6T575bZowAaRA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138223>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> >> On Wed, 27 Jan 2010, Shawn O. Pearce wrote:
-> >> > Pat Thoyts <patthoyts@users.sourceforge.net> wrote:
-> >> > > 
-> >> > > This patch enables the use of themed Tk widgets with Tk 8.5 and above.
-> > ...
-> >> > Thanks.  I've been running with this pretty much all day today;
-> >> > it seems sane.  I'll probably push it shortly.
-> >> 
-> >> Thanks.  Can you notify me when you do so?  I will merge into 4msysgit.git 
-> >> directly then.
-> >
-> > Its already there.
-> 
-> Is that an insn for me to pull?
-
-You can pull my master branch if you like; though I wouldn't suggest
-it for anything other than 'next' yet:
+Hi Johan,
 
 
-The following changes since commit 87cd09f43e56de5235d09aef3ff5d840419fef49:
-  Giuseppe Bilotta (1):
-        git-gui: work from the .git dir
+On Thu, Jan 28, 2010 at 02:23:35AM +0100, Johan Herland wrote:
+> On Thursday 28 January 2010, SZEDER G=E1bor wrote:
+> > ... and it will offer refs unless after -m or -F, because these two
+> > options require a non-ref argument.
+>=20
+> Maybe-NAK.
+>=20
+> The patch is probably good in itself, and the intent is certainly goo=
+d, but=20
+> we're currently discussing deprecating the -m/-F options to "git note=
+s edit"=20
+> (see http://article.gmane.org/gmane.comp.version-control.git/138215),=
+ and if=20
+> that's where we go, there's no point "encouraging" their use by addin=
+g bash-
+> completions for them...
 
-are available in the git repository at:
+-m and -F are not encouraged, because they are not offered (short
+options in general are never offered by the completion script).
+However, their presence or absence is taken into account to offer
+something sensible: refs after 'git notes edit <TAB>', files after
+'git notes edit -F <TAB>'.  Note, that I chose 'edit' here, because
+currently it's the only subcommand taking '-F', but it will actually
+work the same way with the upcoming 'add' and 'append' subcommands.
 
-  git://git.spearce.org/git-gui.git master
 
-Christian Stimming (1):
-      git-gui: Update German translation (12 new or changed strings).
+Best,
+G=E1bor
 
-Giuseppe Bilotta (4):
-      git-gui: handle non-standard worktree locations
-      git-gui: handle bare repos correctly
-      git-gui: update shortcut tools to use _gitworktree
-      git-gui: set GIT_DIR and GIT_WORK_TREE after setup
 
-Jeff Epler (1):
-      git-gui: Support applying a range of changes at once
-
-Jens Lehmann (2):
-      git-gui: Use git diff --submodule when available
-      git-gui: Add a special diff popup menu for submodules
-
-Pat Thoyts (1):
-      git-gui: use themed tk widgets with Tk 8.5
-
-Peter Oberndorfer (1):
-      git-gui: use different icon for new and modified files in the index
-
-Shawn O. Pearce (2):
-      git-gui: Remove unused icon file_parttick
-      git-gui: Update translation template
-
- git-gui.sh                   |  397 +++++++++++++++------
- lib/about.tcl                |   37 +--
- lib/blame.tcl                |   22 +-
- lib/branch_checkout.tcl      |   20 +-
- lib/branch_create.tcl        |   45 ++--
- lib/branch_delete.tcl        |   24 +-
- lib/branch_rename.tcl        |   32 +-
- lib/browser.tcl              |   41 ++-
- lib/choose_font.tcl          |   31 +-
- lib/choose_repository.tcl    |   94 +++---
- lib/choose_rev.tcl           |   51 ++--
- lib/class.tcl                |    7 +
- lib/console.tcl              |   17 +-
- lib/database.tcl             |   20 +-
- lib/diff.tcl                 |  259 ++++++++------
- lib/error.tcl                |   15 +-
- lib/index.tcl                |   13 +-
- lib/merge.tcl                |   14 +-
- lib/option.tcl               |   67 ++--
- lib/remote_add.tcl           |   37 +-
- lib/remote_branch_delete.tcl |   51 ++--
- lib/search.tcl               |   11 +-
- lib/shortcut.tcl             |    7 +-
- lib/sshkey.tcl               |   20 +-
- lib/status_bar.tcl           |   14 +-
- lib/themed.tcl               |  174 +++++++++
- lib/tools_dlg.tcl            |   87 ++---
- lib/transport.tcl            |   48 ++--
- po/de.po                     |  824 ++++++++++++++++++++++--------------------
- po/git-gui.pot               |  584 +++++++++++++++--------------
- 30 files changed, 1772 insertions(+), 1291 deletions(-)
- create mode 100644 lib/themed.tcl
-
--- 
-Shawn.
+[btw, Shawn, could you have a look at
+http://article.gmane.org/gmane.comp.version-control.git/137754 ?]
