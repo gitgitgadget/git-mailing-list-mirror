@@ -1,83 +1,58 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] git gui: Quote git path properly when starting another gui
- in a submodule
-Date: Thu, 28 Jan 2010 22:20:39 +0100
-Message-ID: <4B61FFA7.4090205@web.de>
-References: <878wbln0oa.fsf@users.sourceforge.net> <20100128005142.GK5452@spearce.org> <alpine.DEB.1.00.1001280244430.4985@pacific.mpi-cbg.de> <20100128014205.GA8166@spearce.org> <7v4om7ndm4.fsf@alter.siamese.dyndns.org> <20100128025647.GB8166@spearce.org>
+Subject: Re: Questions about branches in git
+Date: Thu, 28 Jan 2010 22:29:32 +0100
+Message-ID: <4B6201BC.9030800@web.de>
+References: <69b754db1001281044y39e52f77hcc8f83144776c78f@mail.gmail.com>	 <b4087cc51001281203q1f467480sdf848c9d3ced323b@mail.gmail.com> <69b754db1001281317o69f8c3f9y412a8524407bacbf@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 28 22:20:47 2010
+Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
+To: Mike Linck <mgl@absolute-performance.com>
+X-From: git-owner@vger.kernel.org Thu Jan 28 22:29:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NabnD-00079N-BD
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 22:20:47 +0100
+	id 1Nabvo-0004Km-RA
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 22:29:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753557Ab0A1VUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2010 16:20:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752909Ab0A1VUl
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 16:20:41 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:33507 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751012Ab0A1VUk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2010 16:20:40 -0500
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate03.web.de (Postfix) with ESMTP id E0D8813CCE5E6;
-	Thu, 28 Jan 2010 22:20:39 +0100 (CET)
+	id S1753646Ab0A1V3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2010 16:29:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753456Ab0A1V3f
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 16:29:35 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:41845 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751741Ab0A1V3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2010 16:29:34 -0500
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 5C40614CC34FE;
+	Thu, 28 Jan 2010 22:29:33 +0100 (CET)
 Received: from [80.128.66.195] (helo=[192.168.178.26])
-	by smtp05.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1Nabn5-0002Yi-00; Thu, 28 Jan 2010 22:20:39 +0100
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1Nabvh-00010q-00; Thu, 28 Jan 2010 22:29:33 +0100
 User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
-In-Reply-To: <20100128025647.GB8166@spearce.org>
+In-Reply-To: <69b754db1001281317o69f8c3f9y412a8524407bacbf@mail.gmail.com>
 X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1863OQXUwdTQcAX8F33cc0WSUF/MFeSNOAT3zZp
-	+UmtJXcpl177Tb4Zja0fF314p5+ZTAH16776JhVOX/bsooLvH8
-	HZXTlcl6FPePjEN3GzjQ==
+X-Provags-ID: V01U2FsdGVkX19Wgz51j7ypXvQk3XxS0yKsHHBWUbOPGlD3rF2g
+	h1VXi9klbAo+RxX1y1xu32lPM933VwCn2rboWCesqntMnyOgYo
+	fMNEC9vWPABAjKhrCnyQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138273>
 
-In do_git_gui() the path of the git executable has to be put into a list,
-otherwise calling it will fail when when spaces are present in its path.
+Am 28.01.2010 22:17, schrieb Mike Linck:
+> Well, even gitk can't show me the information I'm looking for if the
+> parent branch ended up fast-forwarding to include the changes made in
+> the topic branch.  As far as I can tell there is *no way* to tell what
+> changes were made in a particular branch after a fast-forward has
+> taken place, which seems to make it hard to organize fixes for
+> specific topics/bugs/tickets.
 
-Reported-by: Heiko Voigt <hvoigt@hvoigt.net>
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
-
-
-Am 28.01.2010 03:56, schrieb Shawn O. Pearce:
-> Jens Lehmann (2):
->       git-gui: Use git diff --submodule when available
->       git-gui: Add a special diff popup menu for submodules
-
-Today Heiko reported me this bug I introduced with the second patch.
-Sorry for the hassle.
-
-
- git-gui/git-gui.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index a64191d..840f45c 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -2000,7 +2000,7 @@ proc do_git_gui {} {
- 	# -- Always start git gui through whatever we were loaded with.  This
- 	#    lets us bypass using shell process on Windows systems.
- 	#
--	set exe [_which git]
-+	set exe [list [_which git]]
- 	if {$exe eq {}} {
- 		error_popup [mc "Couldn't find git gui in PATH"]
- 	} else {
--- 
-1.7.0.rc0.163.g808df.dirty
+You could disable fast forward merges using the --no-ff option. Then
+git will always create a merge commit even if it could have done a
+fast forward. This can be enabled permanently for a branch with
+'git config branch.master.mergeoptions  "--no-ff"'. We use that at my
+dayjob to preserve the branches after merging.
