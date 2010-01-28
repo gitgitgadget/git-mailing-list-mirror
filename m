@@ -1,86 +1,71 @@
-From: Michael Ludwig <michael.ludwig@xing.com>
-Subject: Re: git status showing phantom modifications
-Date: Thu, 28 Jan 2010 09:45:54 +0100
-Message-ID: <707C3CA1-8016-411A-AB98-5BAC15E81024@xing.com>
-References: <9B3C1167-7667-4B1F-BEE5-F47FE89F8692@xing.com>
- <be6fef0d1001250303p2c12381ao7d3a8a1d48eebb56@mail.gmail.com>
- <4017EB11-4B29-4599-B19A-91BC39632BBF@xing.com>
- <59B5C4C4-6E95-4BAA-9351-B88B6309E022@xing.com>
- <be6fef0d1001262114r137ba8ddi60a3a3468950c5ce@mail.gmail.com>
- <4B5FE925.4000300@viscovery.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: make install error
+Date: Thu, 28 Jan 2010 09:48:36 +0100
+Message-ID: <81b0412b1001280048y6f91ad25t5c636f959630825@mail.gmail.com>
+References: <daef5be81001271658y4188445bofea2e3d576df91e5@mail.gmail.com>
+	 <7v8wbjndn6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 28 09:46:09 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: kap4lin <kap4lin@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 28 09:48:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaQ0q-0000Ui-KN
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 09:46:04 +0100
+	id 1NaQ3P-0001Ti-J4
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 09:48:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755920Ab0A1Ip6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2010 03:45:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755899Ab0A1Ip6
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 03:45:58 -0500
-Received: from mail43-3.xing.com ([62.96.140.163]:39149 "EHLO
-	mail43-3.xing.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753913Ab0A1Ip5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jan 2010 03:45:57 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail43-3.xing.com (Postfix) with ESMTP id 3483C30007B8E
-	for <git@vger.kernel.org>; Thu, 28 Jan 2010 09:45:56 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xing.com; h=
-	mime-version:content-transfer-encoding:content-type
-	:content-language:accept-language:in-reply-to:references
-	:message-id:subject:date:from:received:received:received:
-	x-virus-scanned; s=main; t=1264668356; bh=bZiZGHY+qLAygD7lzlsXiZ
-	txVbfUSLXci20CnZ9fAog=; b=wpqAexnikrw9TwjVEombu2OLZUobX8rw8gv1zY
-	gk0YudCMy1eoYqB8QsNuBVtFOQ3d1Tj+HFm5Vi4adIJpxTWwAHxdbp1cWh2Paq+x
-	rSKVItLjoJdnkUbcZoHmsXNB7mpV5GQlPbtUHi/vbxoeNLui/PJoXaBdgdd6g9GT
-	Y1axA=
-X-Virus-Scanned: Debian amavisd-new at obc-mail43-3.rz.xing.com
-Received: from mail43-3.xing.com ([127.0.0.1])
-	by localhost (obc-mail43-3.rz.xing.com [127.0.0.1]) (amavisd-new, port 10030)
-	with ESMTP id t3uClaotbtCW for <git@vger.kernel.org>;
-	Thu, 28 Jan 2010 09:45:56 +0100 (CET)
-Received: from luftpostix.xing.hh (unknown [172.20.1.5])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by mail43-3.xing.com (Postfix) with ESMTPS id 1D90830000781
-	for <git@vger.kernel.org>; Thu, 28 Jan 2010 09:45:56 +0100 (CET)
-Received: from luftpostix.xing.hh ([172.20.1.5]) by luftpostix.xing.hh
- ([172.20.1.5]) with mapi; Thu, 28 Jan 2010 09:45:56 +0100
-Thread-Topic: git status showing phantom modifications
-Thread-Index: Acqf9k37htdnDZmnQh6zEcoXR+BK+Q==
-In-Reply-To: <4B5FE925.4000300@viscovery.net>
-Accept-Language: de-DE
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: de-DE
+	id S1755922Ab0A1Isj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2010 03:48:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754253Ab0A1Isi
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 03:48:38 -0500
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:42513 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751589Ab0A1Isi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Jan 2010 03:48:38 -0500
+Received: by bwz19 with SMTP id 19so339643bwz.28
+        for <git@vger.kernel.org>; Thu, 28 Jan 2010 00:48:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=rAdXHPU8ckmPhOv2hIEIcxlsIKmyX+kCHd47J4KPsPE=;
+        b=gOvBBxAc7L7zGC9H9CTzRD0iLUeGkSm+YbEFfv3yuTCOSXB15JZQFo35vXjHgiDZjH
+         5PcelS63oFAZYo7jm7pyGhfpsCgBtgC83UPiJ0fpvOlQJcZLI08xBVpsTk+C+cknrhW1
+         mblVUKFqyaYiBkxVNHYbxWR0txdf2VKHD84ds=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=K9FXaYnuweZ9mSz3Lb/u1RhVsWWwtlOQ/+EhZbyVp5ceBG7+2nc79X4Zfz1EoHCFMs
+         6/0nfIVTDvBEP97wKfOP9TSTp35od9deSARyfzVPDG27ybjR9gm+At/QNg5R1/TiReZi
+         XmNyFlydN7Vxos9sC3exzUOMUgZj6yT3ru6rU=
+Received: by 10.204.33.196 with SMTP id i4mr715810bkd.155.1264668516695; Thu, 
+	28 Jan 2010 00:48:36 -0800 (PST)
+In-Reply-To: <7v8wbjndn6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138228>
 
-Am 27.01.2010 um 08:20 schrieb Johannes Sixt:
+On Thu, Jan 28, 2010 at 03:53, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> kap4lin <kap4lin@gmail.com> writes:
+>
+>> (cd blt && gtar cf - .) | \
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 (cd '/scratch/kap4lin/usr/share/git-core=
+/templates' && umask
+>> 022 && gtar xof -)
+>> gtar: This does not look like a tar archive
+>
+> Perhaps "unset CDPATH".
+>
 
-> One more thing to try is:
-> 
->  core.ignorecygwinfstricks = false
-> 
-> This turns off some stat() optimizations on Cygwin.
-
-
-The above setting causes the phantom modifications to disappear,
-regardless of an *explicit* setting of core.filemode as reported
-in one of my previous mails on this thread.
-
-So thanks, it works okay for me. Still, it's not clear what's
-happening.
--- 
-Michael.Ludwig (#) XING.com
+BTW, will "cd ./blt &>/dev/null" also help and prevent this problem fro=
+m
+happening ever again?
