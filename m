@@ -1,66 +1,114 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: make install error
-Date: Thu, 28 Jan 2010 11:27:29 +0100
-Message-ID: <81b0412b1001280227q6ab45a52i8df56ef4cfb4219c@mail.gmail.com>
-References: <daef5be81001271658y4188445bofea2e3d576df91e5@mail.gmail.com>
-	 <7v8wbjndn6.fsf@alter.siamese.dyndns.org>
-	 <81b0412b1001280048y6f91ad25t5c636f959630825@mail.gmail.com>
-	 <7vockemwu3.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git checkout -f: What am I missing?
+Date: Thu, 28 Jan 2010 11:27:13 +0100
+Message-ID: <4B616681.4080700@drmicha.warpmail.net>
+References: <4B4F899C.7070800@box.net> <4B508997.8030105@drmicha.warpmail.net> <4B60B2CF.10401@box.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: kap4lin <kap4lin@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 28 11:27:38 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Soham Mehta <soham@box.net>
+X-From: git-owner@vger.kernel.org Thu Jan 28 11:29:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaRb7-0008RM-73
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 11:27:37 +0100
+	id 1NaRcq-0000gU-CX
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 11:29:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752798Ab0A1K1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2010 05:27:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752791Ab0A1K1c
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 05:27:32 -0500
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:37841 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751185Ab0A1K1b (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2010 05:27:31 -0500
-Received: by bwz19 with SMTP id 19so402639bwz.28
-        for <git@vger.kernel.org>; Thu, 28 Jan 2010 02:27:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=Zln89wB1Mp77lUBHbiASRJIKgHDZ9Fs+TKeREWTivsM=;
-        b=JvrzWBtT21lS+1s+C1W9jyUgY24dZBcA7TpATNvbAmm1/mp6jWHUHzBgq7sfN0C2MJ
-         60hsDhd1ZCTXwMAfDZk56Zb+D55jZnnt92QFWmEYaxTyqIXCs5nhX3RXUA3I9QWeUYwr
-         ouVX+Issd/Yo4jRaOaeVpz/gAB2bAPVI2JoX8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=KIsqmNKve3vQdRefSQqFnHcl3uQMIrV9WPdScQgLPXHRN8P/zM7RN1srcYkKdsZAUQ
-         cwq7OpL6l4ebmFmZtG6uRiRtvUYUsuKYpxdDl81lypV1mTmdTe0BDRngGEOH957yf7uz
-         g4FTwHg1R/0BEG83rj6KfKd3d96Jcbg6j/oms=
-Received: by 10.204.26.148 with SMTP id e20mr3496388bkc.25.1264674449370; Thu, 
-	28 Jan 2010 02:27:29 -0800 (PST)
-In-Reply-To: <7vockemwu3.fsf@alter.siamese.dyndns.org>
+	id S1753030Ab0A1K3T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2010 05:29:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752963Ab0A1K3S
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 05:29:18 -0500
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:57010 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752915Ab0A1K3R (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Jan 2010 05:29:17 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 25700CE6B2;
+	Thu, 28 Jan 2010 05:29:17 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Thu, 28 Jan 2010 05:29:17 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=lKeVXqj4Wm4Z1mb64A/3wMzTM9A=; b=NDcs235gW0uhZ9Rx89Siq7ZXd0A1pO5zDnQTqvWB6JH8uE2SWGbl1dBrhyIQp8dFMR1Us58uMXjNxzcgVeynaCPGfDvPnTwrB53vtZFnSz/yxc08dkty0Q1iis/M977687Ie8z8W0zujeMOtMgDmLLIYd8ab/0oV+QFVqRy5xz0=
+X-Sasl-enc: LUhIWcdjqVTN8CogxcGhuNzml3Vi/ofp6uGCTuTvGTbx 1264674556
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 89A144BCF69;
+	Thu, 28 Jan 2010 05:29:16 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.8pre) Gecko/20100121 Lightning/1.0b2pre Shredder/3.0.2pre
+In-Reply-To: <4B60B2CF.10401@box.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138244>
 
-On Thu, Jan 28, 2010 at 09:56, Junio C Hamano <gitster@pobox.com> wrote:
-> Alex Riesen <raa.lkml@gmail.com> writes:
+Soham Mehta venit, vidit, dixit 27.01.2010 22:40:
+> Thanks Michael.
+> 
+> Is that a bug? If not, how do I understand it?
+> 
+> -Soham
+> 
+> 
+> thus spake Michael J Gruber , On 1/15/2010 7:28 AM:
+>> Soham Mehta venit, vidit, dixit 14.01.2010 22:16:
+>>   
+>>> Hi,
+>>>
+>>> I have a situation with git that I'm trying to understand:
+>>>
+>>> Description:
+>>> 1) GIT_DIR is set to /path/to/repo/.git
+>>> 2) Repository is /not /a bare repo, and all files are nicely checked-out 
+>>> in /path/to/repo/
+>>> 3) Somebody pushes to that repo using ssh (any branch, checked-out or not)
+>>> 4) Default post-receive hook runs (it is the only one +x) which sends 
+>>> out an email 
+>>> (http://repo.or.cz/w/git.git/blob/HEAD:/contrib/hooks/post-receive-email)
+>>> 5) After it is done sending the email, I put "git checkout -f", at the 
+>>> end in the same file, in case someone pushes to a checked-out branch
+>>>
+>>> Problem:
+>>> It runs "checkout -f" as if inside .git directory, instead of on the 
+>>> parent. i.e. it gets all files from the parent and writes them inside 
+>>> .git. Parent is left untouched.
+>>>
+>>> Some more info:
+>>> 0) We don't have GIT_DIR set in the environment. The hook does a 
+>>> rev-parse to find it.
+>>> 1) echo of $GIT_DIR right before the checkout -f line gives a "." .
+>>> 2) It works as expected if I do this:  cd /path/to/repo && git 
+>>> --git-dir=/path/to/repo/.git/ checkout -f
+>>>
+>>> What I do know:
+>>> 1) Pushing to a checked-out branch is not a git best-practice, and some 
+>>> git behavior is undefined in that case. We already have plans to go away 
+>>> from that.
+>>> 2) Git tends to like full path names instead of relative ones
+>>>
+>>> Can someone help me understand this behavior?
+>>>     
 >>
->> BTW, will "cd ./blt &>/dev/null" also help and prevent this problem from
->> happening ever again?
->
-> Except that (1) it would be ">/dev/null", and (2) why contaminate Makefile
-> command lines with such unreadability to work around stupid misdesign of
-> CDPATH?
+>> Does the thread
+>> http://permalink.gmane.org/gmane.comp.version-control.git/136267
+>> help by any chance?
+>> You've found the solution, "cd .. && unset GIT_DIR" does it.
+>>
+>> Michael
+>>   
 
-Eh... Right :)
+Because it messes up the reading order.
+
+Why?
+
+Please don't top-post.
+
+Back to your question: The thread I pointed you to explains that git
+sets "GIT_DIR=.", and given that the behaviour is exactly as expected.
+It's not a bug. Changing it may break existing hooks.
+
+One may argue for a change in behaviour in the next major release, but
+not 1.7. any more.
+
+Michael
