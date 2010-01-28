@@ -1,93 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] tests: update tests that used to fail
-Date: Thu, 28 Jan 2010 00:42:31 -0800
-Message-ID: <7vtyu6mxhk.fsf@alter.siamese.dyndns.org>
+From: Michael Ludwig <michael.ludwig@xing.com>
+Subject: Re: git status showing phantom modifications
+Date: Thu, 28 Jan 2010 09:45:54 +0100
+Message-ID: <707C3CA1-8016-411A-AB98-5BAC15E81024@xing.com>
+References: <9B3C1167-7667-4B1F-BEE5-F47FE89F8692@xing.com>
+ <be6fef0d1001250303p2c12381ao7d3a8a1d48eebb56@mail.gmail.com>
+ <4017EB11-4B29-4599-B19A-91BC39632BBF@xing.com>
+ <59B5C4C4-6E95-4BAA-9351-B88B6309E022@xing.com>
+ <be6fef0d1001262114r137ba8ddi60a3a3468950c5ce@mail.gmail.com>
+ <4B5FE925.4000300@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 28 09:42:44 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 28 09:46:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaPxb-0007fg-9D
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 09:42:43 +0100
+	id 1NaQ0q-0000Ui-KN
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 09:46:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755693Ab0A1Imh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2010 03:42:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755618Ab0A1Imh
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 03:42:37 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40191 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752316Ab0A1Imh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2010 03:42:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 969F493644;
-	Thu, 28 Jan 2010 03:42:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=odkM
-	9yxrX8gqCLnaAbumTxKbkWI=; b=uuSQGdd1Q4hL9C8iIJywv2/niRB3Jx1HO5Lb
-	gAtE91NgM7oiDrRZ0q280GrJilPT514aTjYRVxnCbC79Kvk3qB1rkk95SclFAdrP
-	9jaDTuvDijQgdDt+Poil7Hzb65o/kd5563zILd6fPC4tyynPdBazkEgrIc7biK5q
-	UAoMY4I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=NvN
-	hw4NKiuClqIxg2ZjWmF0X8f5vw4ac6Af8+ic8L2iiMaLvBi4pFADSIuSOMZQ7cFM
-	Sc+1W/O6q2dh5t2tdY000OCIYvUKIkVp5QwxwRzI+vxjWrGq4E5XmxI3u8C/XNX0
-	qlNPW/18kE5QlacOs22+jFZemvYK6411h8G8Use4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 833E593643;
-	Thu, 28 Jan 2010 03:42:34 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EE75C93642; Thu, 28 Jan
- 2010 03:42:32 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1496188A-0BE9-11DF-B42B-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755920Ab0A1Ip6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2010 03:45:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755899Ab0A1Ip6
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 03:45:58 -0500
+Received: from mail43-3.xing.com ([62.96.140.163]:39149 "EHLO
+	mail43-3.xing.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753913Ab0A1Ip5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Jan 2010 03:45:57 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail43-3.xing.com (Postfix) with ESMTP id 3483C30007B8E
+	for <git@vger.kernel.org>; Thu, 28 Jan 2010 09:45:56 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xing.com; h=
+	mime-version:content-transfer-encoding:content-type
+	:content-language:accept-language:in-reply-to:references
+	:message-id:subject:date:from:received:received:received:
+	x-virus-scanned; s=main; t=1264668356; bh=bZiZGHY+qLAygD7lzlsXiZ
+	txVbfUSLXci20CnZ9fAog=; b=wpqAexnikrw9TwjVEombu2OLZUobX8rw8gv1zY
+	gk0YudCMy1eoYqB8QsNuBVtFOQ3d1Tj+HFm5Vi4adIJpxTWwAHxdbp1cWh2Paq+x
+	rSKVItLjoJdnkUbcZoHmsXNB7mpV5GQlPbtUHi/vbxoeNLui/PJoXaBdgdd6g9GT
+	Y1axA=
+X-Virus-Scanned: Debian amavisd-new at obc-mail43-3.rz.xing.com
+Received: from mail43-3.xing.com ([127.0.0.1])
+	by localhost (obc-mail43-3.rz.xing.com [127.0.0.1]) (amavisd-new, port 10030)
+	with ESMTP id t3uClaotbtCW for <git@vger.kernel.org>;
+	Thu, 28 Jan 2010 09:45:56 +0100 (CET)
+Received: from luftpostix.xing.hh (unknown [172.20.1.5])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by mail43-3.xing.com (Postfix) with ESMTPS id 1D90830000781
+	for <git@vger.kernel.org>; Thu, 28 Jan 2010 09:45:56 +0100 (CET)
+Received: from luftpostix.xing.hh ([172.20.1.5]) by luftpostix.xing.hh
+ ([172.20.1.5]) with mapi; Thu, 28 Jan 2010 09:45:56 +0100
+Thread-Topic: git status showing phantom modifications
+Thread-Index: Acqf9k37htdnDZmnQh6zEcoXR+BK+Q==
+In-Reply-To: <4B5FE925.4000300@viscovery.net>
+Accept-Language: de-DE
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: de-DE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138227>
 
-"diff --cc" output t4038 tests was fixed by b810cbb (diff --cc: a lost
-line at the beginning of the file is shown incorrectly, 2009-07-22), which
-was actually the commit that introduced this test..
+Am 27.01.2010 um 08:20 schrieb Johannes Sixt:
 
-An error in "git merge -s resolve" t6035 tests was fixed by 730f728
-(unpack-trees.c: look ahead in the index, 2009-09-20).
+> One more thing to try is:
+> 
+>  core.ignorecygwinfstricks = false
+> 
+> This turns off some stat() optimizations on Cygwin.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t4038-diff-combined.sh        |    2 +-
- t/t6035-merge-dir-to-symlink.sh |    2 +-
- t/t7507-commit-verbose.sh       |    5 -----
- 3 files changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
-index 2cf7e01..7584efa 100755
---- a/t/t4038-diff-combined.sh
-+++ b/t/t4038-diff-combined.sh
-@@ -76,7 +76,7 @@ test_expect_success 'check combined output (1)' '
- 	verify_helper sidewithone
- '
- 
--test_expect_failure 'check combined output (2)' '
-+test_expect_success 'check combined output (2)' '
- 	git show sidesansone -- >sidesansone &&
- 	verify_helper sidesansone
- '
-diff --git a/t/t6035-merge-dir-to-symlink.sh b/t/t6035-merge-dir-to-symlink.sh
-index d1b2287..3202e1d 100755
---- a/t/t6035-merge-dir-to-symlink.sh
-+++ b/t/t6035-merge-dir-to-symlink.sh
-@@ -48,7 +48,7 @@ test_expect_success 'setup for merge test' '
- 	git tag baseline
- '
- 
--test_expect_failure 'do not lose a/b-2/c/d in merge (resolve)' '
-+test_expect_success 'do not lose a/b-2/c/d in merge (resolve)' '
- 	git reset --hard &&
- 	git checkout baseline^0 &&
- 	git merge -s resolve master &&
+The above setting causes the phantom modifications to disappear,
+regardless of an *explicit* setting of core.filemode as reported
+in one of my previous mails on this thread.
+
+So thanks, it works okay for me. Still, it's not clear what's
+happening.
+-- 
+Michael.Ludwig (#) XING.com
