@@ -1,79 +1,89 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@fzi.de>
-Subject: Re: [PATCH] bash: support 'git notes' and its subcommands
-Date: Thu, 28 Jan 2010 04:30:39 +0100
-Message-ID: <20100128033039.GB15202@neumann>
-References: <1264640755-22447-1-git-send-email-szeder@ira.uka.de>
-	<201001280223.35625.johan@herland.net>
+From: The Anarcat <anarcat@koumbit.org>
+Subject: "archive on tag" hook
+Date: Thu, 28 Jan 2010 00:39:06 -0500
+Message-ID: <20100128053906.GH28798@anarcat.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Jan 28 04:30:52 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Cgrdyab2wu3Akvjd"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 28 06:47:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaL5n-0004B1-S5
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 04:30:52 +0100
+	id 1NaNEA-0002R4-VR
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 06:47:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753022Ab0A1Daq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jan 2010 22:30:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752821Ab0A1Dap
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jan 2010 22:30:45 -0500
-Received: from moutng.kundenserver.de ([212.227.126.186]:50449 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752640Ab0A1Dap (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2010 22:30:45 -0500
-Received: from [127.0.1.1] (p5B1303A9.dip0.t-ipconnect.de [91.19.3.169])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0MLT3m-1NatJt43s2-000a65; Thu, 28 Jan 2010 04:30:41 +0100
+	id S1751136Ab0A1Fr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2010 00:47:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045Ab0A1Fr1
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 00:47:27 -0500
+Received: from H144.C72.B0.tor.eicat.ca ([72.0.72.144]:42471 "EHLO
+	anarcat.ath.cx" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750983Ab0A1Fr0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2010 00:47:26 -0500
+X-Greylist: delayed 495 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Jan 2010 00:47:26 EST
+Received: by anarcat.ath.cx (Postfix, from userid 1000)
+	id D7658240E7; Thu, 28 Jan 2010 00:39:06 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <201001280223.35625.johan@herland.net>
 User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Provags-ID: V01U2FsdGVkX186fJIX188EXLID7XoG2hf3cJSjdoXAaz2yoWc
- NJG61zEbcqioGTiTkfcLlIuuOW5XlPW9Pb4lVpe73RjZIz26vR
- PsJDd2yX6T575bZowAaRA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138223>
-
-Hi Johan,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138224>
 
 
-On Thu, Jan 28, 2010 at 02:23:35AM +0100, Johan Herland wrote:
-> On Thursday 28 January 2010, SZEDER G=E1bor wrote:
-> > ... and it will offer refs unless after -m or -F, because these two
-> > options require a non-ref argument.
->=20
-> Maybe-NAK.
->=20
-> The patch is probably good in itself, and the intent is certainly goo=
-d, but=20
-> we're currently discussing deprecating the -m/-F options to "git note=
-s edit"=20
-> (see http://article.gmane.org/gmane.comp.version-control.git/138215),=
- and if=20
-> that's where we go, there's no point "encouraging" their use by addin=
-g bash-
-> completions for them...
+--Cgrdyab2wu3Akvjd
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--m and -F are not encouraged, because they are not offered (short
-options in general are never offered by the completion script).
-However, their presence or absence is taken into account to offer
-something sensible: refs after 'git notes edit <TAB>', files after
-'git notes edit -F <TAB>'.  Note, that I chose 'edit' here, because
-currently it's the only subcommand taking '-F', but it will actually
-work the same way with the upcoming 'add' and 'append' subcommands.
+Hi,
 
+After looking in a few places for a tool to create an archive when
+pushing tags to a central repository, I have given up and wrote my own.
 
-Best,
-G=E1bor
+It's grown into a fairly complete perl script that runs either as a
+post-receive or update hook and creates a tarball (or zip file) using
+git-archive in a specific directory. It can also optionnally generate an
+MD5 sum of the tarball.
 
+Part of this work was sponsored by Koumbit[1] and done for the Aegir
+project[2].
 
-[btw, Shawn, could you have a look at
-http://article.gmane.org/gmane.comp.version-control.git/137754 ?]
+The code itself is available on our git repository[3]. I will also write
+a small subsection in the tools page of the wiki[4].
+
+Comments and improvements welcome.
+
+Enjoy!
+
+A.
+
+[1] http://www.koumbit.org/
+[2] http://groups.drupal.org/aegir
+[3] http://git.koumbit.net/?p=3Dtools/git-hooks/.git;a=3Dblob;f=3Darchive-t=
+ag
+[4] http://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools#Hooks
+
+--=20
+Antoine Beaupr=E9
+R=E9seau Koumbit Networks
++1.514.387.6262
+
+--Cgrdyab2wu3Akvjd
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkthIvoACgkQWGBzs0AjcC+zrACfSLV2wtE79sVyPgqn5lA/Ba8L
+qbUAnAm0QVqr2Ri6pfkF+e72RymVKITj
+=RCfa
+-----END PGP SIGNATURE-----
+
+--Cgrdyab2wu3Akvjd--
