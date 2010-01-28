@@ -1,109 +1,92 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: Questions about branches in git
-Date: Thu, 28 Jan 2010 12:20:56 -0800 (PST)
-Message-ID: <4b61f1a8.02c3f10a.6608.ffff8a5f@mx.google.com>
-References: <b4087cc51001281203q1f467480sdf848c9d3ced323b@mail.gmail.com> <69b754db1001281044y39e52f77hcc8f83144776c78f@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: show/diff --check clarification needed
+Date: Thu, 28 Jan 2010 12:25:22 -0800
+Message-ID: <7vmxzykmdp.fsf@alter.siamese.dyndns.org>
+References: <d26982ce92a061ee24d04aba6e314fa4.squirrel@intranet.linagora.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 28 21:21:18 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Yann Dirson" <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Thu Jan 28 21:25:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaarY-0006Of-IF
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 21:21:12 +0100
+	id 1Naavp-0001JR-S1
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 21:25:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932304Ab0A1UVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2010 15:21:04 -0500
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932297Ab0A1UVD
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 15:21:03 -0500
-Received: from qw-out-2122.google.com ([74.125.92.25]:24760 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932301Ab0A1UU7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2010 15:20:59 -0500
-Received: by qw-out-2122.google.com with SMTP id 8so213073qwh.37
-        for <git@vger.kernel.org>; Thu, 28 Jan 2010 12:20:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:references;
-        bh=g5pQ07FuTuBSu8RGBcxbnha2p2bxCkffgAInT3GJHXI=;
-        b=RLli+rTT9QxqaeevKwjCGy5F1QYLZXpFaVcs6t4/gVuVUk3UCTmqAUl4HWHvzAVtwj
-         TmFV3n7qTHRBspxMPITL5ZeWQbOz3zA5ZqM1sKjarTgR08ZxMAotHpFLC67BAfsCAhNh
-         QdJhTjnpSAk1MmTZM/Jz7sZLN/5h98XTrsYb4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:references;
-        b=n8EYcOOxvs1wN6ge1sY8A03rhxogdYWll9Q5WNvpl+Mi20tnA27EUbJtEDoikrHrOa
-         A7/2p4F+Q03O7ypgJRu6rDf9Ini8sTXMEw0GsVETPX7p/XS0lwTgq5HocvJYEnQa/lDE
-         9Pyk1MBrxIWYng42MqfWB2ipzoCpR0S4Uc73Q=
-Received: by 10.224.27.130 with SMTP id i2mr6550082qac.189.1264710058328;
-        Thu, 28 Jan 2010 12:20:58 -0800 (PST)
-Received: from gmail.com (gpftor3.privacyfoundation.de [62.141.58.13])
-        by mx.google.com with ESMTPS id 2sm3177664qwi.37.2010.01.28.12.20.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 28 Jan 2010 12:20:56 -0800 (PST)
-In-Reply-To: <b4087cc51001281203q1f467480sdf848c9d3ced323b@mail.gmail.com>
+	id S1753980Ab0A1UZc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2010 15:25:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751042Ab0A1UZc
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 15:25:32 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46368 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750703Ab0A1UZb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2010 15:25:31 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AA6C3957E1;
+	Thu, 28 Jan 2010 15:25:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=y8jHfciOSUGelqDFmOdFWPogEo8=; b=N0LX3p
+	T1E0v2Q9eSR3LQria2obKjDRIpDCO6bXdAAOIXzbyfyTdIJdeTY/XzvVvVF/GZh4
+	1ENVlhcCg1Pl2CB0H+UwKIeiV/4mXFwJazaVKOze0sRFKsIuMsIufTdIuE9jtPwq
+	fd10McZ739+0xR3uyD4WI+BhYAiqCtAZ6fKac=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Dauv5kGHncEnh8KaUnGV5d4koCYdR+S6
+	KKfM+70PZiA4TVz6z7OS7YUhh9GrlUK/ktkxE21hcjRcBk0fUZYOwxuu8bcT9ufs
+	5AlkeHNbAyzRUEiwSlISp4Q4XsgyAPlaA8CvT4ZrQv1DuULd6q+tibpE5RXoJMSF
+	j6GTx/+PhK0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 86901957DD;
+	Thu, 28 Jan 2010 15:25:26 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D6078957DC; Thu, 28 Jan
+ 2010 15:25:23 -0500 (EST)
+In-Reply-To: <d26982ce92a061ee24d04aba6e314fa4.squirrel@intranet.linagora.com> (Yann
+ Dirson's message of "Wed\, 27 Jan 2010 11\:41\:28 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 451017EC-0C4B-11DF-9347-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138267>
 
-On Thu, Jan 28, 2010 at 2:03 PM, Michael Witten <mfwitten@gmail.com> wr=
-ote:
-> However, I've been thinking for a while that it would be useful to
-> have =C3=BCbercommits (they don't exist) that are treated like single
-> commits but that actually encapsulate multiple continguous commits.
+"Yann Dirson" <ydirson@altern.org> writes:
 
-In fact, the commit message body is already being used to create
-unofficial =C3=BCbercommits. Consider a common merge commit from a
-clone of Linus's Linux repo:
+> Unless I missed something, I suggest the following plan:
+>
+> - document in maint that --check only takes worktree into account when
+>   looking for .gitattributes, and more globally add a note to the
+>   gitattributes manpage to explicitely say that too.
 
-    commit e80b1359858df17b0034bdf7d1b6f3e0d5b97257
-    Merge: 341031c b27d515
-    Author: Linus Torvalds <torvalds@linux-foundation.org>
-    Date:   Thu Jan 21 08:50:04 2010 -0800
-   =20
-        Merge branch 'perf-fixes-for-linus' of git://git.kernel.org/pub=
-/scm/linux/kernel/git/tip/linux-2.6-tip
-       =20
-        * 'perf-fixes-for-linus' of git://git.kernel.org/pub/scm/linux/=
-kernel/git/tip/linux-2.6-tip:
-          perf: x86: Add support for the ANY bit
-          perf: Change the is_software_event() definition
-          perf: Honour event state for aux stream data
-          perf: Fix perf_event_do_pending() fallback callsite
-          perf kmem: Print usage help for unknown commands
-          perf kmem: Increase "Hit" column length
-          hw-breakpoints, perf: Fix broken mmiotrace due to dr6 by refe=
-rence change
-          perf timechart: Use tid not pid for COMM change
+It is not limited to "diff --check".  The current implementation reads
+attributes only from the checked out work tree and/or from the index,
+depending on the direction of operation (e.g. checking out files to work
+tree reads from the index, I think).  The same issue would affect "git
+archive" when generating a tarball from an older revision.
 
-It seems like this kind of useful information should be a more
-integral part of the metadata.
+The exception is $GIT_DIR/info/gitattributes, and for your particular
+purpose, I think it is the right one to use, because the entries in that
+file will apply regardless of which version you are examining patches
+from.
 
-Indeed, it seems like commit messages are often used for metadata
-that git perhaps *should* handle natively, like sign-offs and
-multiple Authors, etc.
+> - add a global flag to allow something like
+>   "git --attributes-tree=<treeish> <command>"
 
-Of course, I'm betting that git doesn't handle such things
-officially because it would require more general data structures
-(especially for variable numbers of Authors) and thus slower
-algorithms.
+I am not sure if this is what we really want.  It seems to me that it
+would make more sense to read from a relevant tree that the <command>
+is operating on, if we are to enhance the attributes implementation.  If
+that <treeish> is a fixed one, it is not much better than having necessary
+entries in your $GIT_DIR/info/gitattributes file.
 
-Sincerely,
-Michael Witten
+> - adjust defaults to agreed-upon values
+> - add any config entries that would be meaningful
+
+Sorry, I have no idea what you mean by these two points.
+
+Thanks.
