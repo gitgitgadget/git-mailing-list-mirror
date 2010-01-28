@@ -1,108 +1,132 @@
-From: David Aguilar <davvid@gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
 Subject: Re: Questions about branches in git
-Date: Thu, 28 Jan 2010 14:14:41 -0800
-Message-ID: <20100128221439.GA6327@gmail.com>
-References: <69b754db1001281044y39e52f77hcc8f83144776c78f@mail.gmail.com> <b4087cc51001281203q1f467480sdf848c9d3ced323b@mail.gmail.com> <69b754db1001281317o69f8c3f9y412a8524407bacbf@mail.gmail.com> <alpine.LFD.2.00.1001281656440.1681@xanadu.home>
+Date: Thu, 28 Jan 2010 16:18:58 -0600
+Message-ID: <b4087cc51001281418m3f19d765rd9aab03a339f15a4@mail.gmail.com>
+References: <69b754db1001281044y39e52f77hcc8f83144776c78f@mail.gmail.com> 
+	<b4087cc51001281203q1f467480sdf848c9d3ced323b@mail.gmail.com> 
+	<69b754db1001281317o69f8c3f9y412a8524407bacbf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Mike Linck <mgl@absolute-performance.com>, git@vger.kernel.org,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 28 23:17:00 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Mike Linck <mgl@absolute-performance.com>
+X-From: git-owner@vger.kernel.org Thu Jan 28 23:19:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nacfc-0000xF-3J
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 23:17:00 +0100
+	id 1Nachy-0002Xn-SE
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 23:19:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752593Ab0A1WQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2010 17:16:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751923Ab0A1WQy
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 17:16:54 -0500
-Received: from mail-fx0-f215.google.com ([209.85.220.215]:64442 "EHLO
-	mail-fx0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751408Ab0A1WQx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2010 17:16:53 -0500
-Received: by fxm7 with SMTP id 7so1465149fxm.28
-        for <git@vger.kernel.org>; Thu, 28 Jan 2010 14:16:52 -0800 (PST)
+	id S1754266Ab0A1WTV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2010 17:19:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754043Ab0A1WTU
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 17:19:20 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:58279 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754004Ab0A1WTT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2010 17:19:19 -0500
+Received: by ewy19 with SMTP id 19so1290273ewy.21
+        for <git@vger.kernel.org>; Thu, 28 Jan 2010 14:19:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=bdQvkpqChXhoMneUEzMr2xWB+S5xNUHtZStfbl3dAEA=;
-        b=JgN4+dfX3OMmuBtKTF5opcUOKFqJkKVexzZxJ3250NHpo2sB3/Lc1pE33i18JGUg3Z
-         2AZTShsKdLA/YUsizy3zoGyD3i1IAHgDTP4p5nDEvn8VKxNNdErRg8sCI5N1T7haYE0M
-         VRvqwlODXBBxOV6VZYjjOmnBuwstNG/MiYJwA=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=SQyayPbTBbcGuw1aBPXsm+H2bcviX0kkB8ecszcJEi8=;
+        b=EpI4e4nHy+gRsBZZUpTktsMOtt9NwtOBlBmau5OzsAWsYwx9kPqYhshe8ZJ8zq727s
+         vEyu8h1UWA8bS64rBYsncxwcT3o1pm4l3h0oxm673Ie3tcxy9jxFyQx0fm/XubSSErGe
+         dcYhQYZNTJPZzbJPjoZZxd0dt5sbltix7vvVc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=LsrZSq7Tbggw3JDT1y+90GPbaQDi7P+ynPUZ+yJ3q34Y19GmRwFMqJmu+fulAZjAN0
-         3Q5Y6rrHe533JI9qTBlh3YlCnTOMuli534x0XY9Ba/djuh18MDtTWP/keNUreeht+LXv
-         QFVtwQLxfp6ykf0sN3ZQ1ZyZ5M1FxRPgpHluw=
-Received: by 10.102.149.4 with SMTP id w4mr5812711mud.34.1264717003629;
-        Thu, 28 Jan 2010 14:16:43 -0800 (PST)
-Received: from gmail.com (guest-wireless.pixar.com [199.108.77.12])
-        by mx.google.com with ESMTPS id w5sm6041521mue.22.2010.01.28.14.16.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 28 Jan 2010 14:16:42 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1001281656440.1681@xanadu.home>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=cgZGHBWtlZyq1zIVFClV3/MYB1BHpoYXCeLFhOJmWUbP9SpYOL7fhxX/okzg8cLu5H
+         t6ZTERCP8Tjg8MOUZPi8mDvtEG6pY2hE/2BLvGE7gL/8PNjDEJsCANAF2oBiLmPQ+fA/
+         68EzrOa/8P32CcPmc8zWBYz9+WnYZmgXTj5d8=
+Received: by 10.213.109.70 with SMTP id i6mr8217911ebp.16.1264717158096; Thu, 
+	28 Jan 2010 14:19:18 -0800 (PST)
+In-Reply-To: <69b754db1001281317o69f8c3f9y412a8524407bacbf@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138279>
 
-On Thu, Jan 28, 2010 at 05:04:36PM -0500, Nicolas Pitre wrote:
-> On Thu, 28 Jan 2010, Mike Linck wrote:
-> 
-> > Well, even gitk can't show me the information I'm looking for if the
-> > parent branch ended up fast-forwarding to include the changes made in
-> > the topic branch.  As far as I can tell there is *no way* to tell what
-> > changes were made in a particular branch after a fast-forward has
-> > taken place, which seems to make it hard to organize fixes for
-> > specific topics/bugs/tickets.
-> 
-> You should consider using tags in conjunction with your bugs/tickets 
-> system.  The fork point for a bug fix may be tagged, as well as the last 
-> commit representing the bugfix completion (not the merge point though).  
-> This way you can always retrieve the exact set of commits forming up 
-> that bugfix, regardless if it was merged back into the main branch with 
-> a fast forward or not.
-> 
-> 
-> Nicolas
+On Thu, Jan 28, 2010 at 3:17 PM, Mike Linck
+<mgl@absolute-performance.com> wrote:
+> On Thu, Jan 28, 2010 at 1:03 PM, Michael Witten <mfwitten@gmail.com> wrote:
+>> On Thu, Jan 28, 2010 at 12:44 PM, Mike Linck
+>> <mgl@absolute-performance.com> wrote:
+>>> ...
+>>> It seems that after a topic or bug branch is merged back into its
+>>> parent, especially if it was fast forwarded, it becomes hard to
+>>> determine what changes were made in it, to resolve the problem that it
+>>> was created to address.
+>>> ...
+>>> I understand that there are mechanism kind of available to address
+>>> this problem.  If we (all developers in my company) remember always to
+>>> rebase -i before they merge their topic branches back in, then it
+>>> could be squashed making it easier to identify and cherry pick onto
+>>> other branches...
+>>
+>> For now, you should probably rely on graphical tools like gitk in
+>> order to visualize the various branches. There's also `git log
+>
+> Well, even gitk can't show me the information I'm looking for if the
+> parent branch ended up fast-forwarding to include the changes made in
+> the topic branch....
 
-Tags, combined with --no-ff, should help you out a bit.
-If you're worried about devs forgetting to configure the no-ff
-then you might be able to help them out if you have any control
-over /etc/gitconfig on their systems.  That gives you a
-standard, global way to set defaults.
+As Jens Lehmann pointed out, use something like:
 
-This table gives a great summary of 'git log' commands for
-inspecting branches.
+    git checkout master
+    git pull --no-ff . topic
 
-http://book.git-scm.com/3_reviewing_history_-_git_log.html
+>> --graph'. You could also just keep your branches around for reference
+>> and use `git merge-base' as necessary.
+>>
+> ...
+> it seems that a branch is only useful for merging once and unless the
+> branch was squashed in the process of mergin, good luck identifying
+> your change set for a particular topic.
+> ...
 
+I would think that you'd only care about the contiguous commits
+between merges anyway.
 
-As far as "what's the way to do branches right in git" then
-there is no "one single way" because git is a framework upon
-which you can build your ideal workflow.  That said, there are
-some very good examples to follow.  For example, there is much
-that can be learned by studying how git.git's branches are
-managed.
+> I just looked at merge-base.  It doesn't seem to address the problem.
+> I grabbed an old topic branch from our repo which I knew was created
+> from master and at some point merged back into master via
+> fast-forward.  I checked it out, I called "git merge base topic-id
+> master", hoping that it would "output a commit which is reachable from
+> both A and B through the parent relationship."  Instead it seems to
+> have modified the topic branch by fast forwarding it to the include
+> all the changes up to the tip of master.  Clearly not what I'm looking
+> for.
 
-http://www.kernel.org/pub/software/scm/git/docs/gitworkflows.html
+You incorrectly used `git merge' rather than `git merge-base'.
 
-This webcast covers a few more workflows and is a very good
-crash course:
+This is kind of off the top of my head. Try something like this:
 
-http://www.gitcasts.com/posts/railsconf-git-talk
+    merged_commit_0=$(git merge-base master topic-id)
+    merged_commit_1=$(git merge-base master ${merged_commit_0}^)
 
--- 
-		David
+I think that should give you the range of commits between the last 2
+merges (for at least simple cases). Then:
+
+    git log $merged_commit_1^..$merged_commit_0
+
+or
+
+    gitk $merged_commit_1..$merged_commit_0
+
+to see them.
+
+You could, I suppose, keep looping until you find the oldest
+merge-base that is still in the topic-id branch. To do so, the
+following information may be of use:
+
+    http://marc.info/?l=git&m=126457707700573&w=2
+
+Anyway, it's probably best to use Nicolas Pitre's suggestion to use
+tags to mark commits yourself, but the above might be useful if you
+haven't.
