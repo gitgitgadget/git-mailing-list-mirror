@@ -1,80 +1,93 @@
-From: Mike Linck <mgl@absolute-performance.com>
-Subject: Re: Questions about branches in git
-Date: Thu, 28 Jan 2010 14:38:14 -0700
-Message-ID: <69b754db1001281338l58eb4b84t5a5725de294b6cc5@mail.gmail.com>
-References: <69b754db1001281044y39e52f77hcc8f83144776c78f@mail.gmail.com>
-	 <b4087cc51001281203q1f467480sdf848c9d3ced323b@mail.gmail.com>
-	 <69b754db1001281317o69f8c3f9y412a8524407bacbf@mail.gmail.com>
-	 <4B6201BC.9030800@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv4 2/2] filter-branch: Add tests for submodules in
+ tree-filter
+Date: Thu, 28 Jan 2010 13:57:16 -0800
+Message-ID: <7vaavxlwoz.fsf@alter.siamese.dyndns.org>
+References: <201001281002.03232.sojkam1@fel.cvut.cz>
+ <1264669727-9977-2-git-send-email-sojkam1@fel.cvut.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Jan 28 22:38:23 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, j.sixt@viscovery.net,
+	Johannes.Schindelin@gmx.de, gitster@pobox.com
+To: Michal Sojka <sojkam1@fel.cvut.cz>
+X-From: git-owner@vger.kernel.org Thu Jan 28 22:57:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nac4C-0001BT-I8
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 22:38:20 +0100
+	id 1NacMu-0005XF-69
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jan 2010 22:57:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754154Ab0A1ViP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2010 16:38:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753917Ab0A1ViP
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 16:38:15 -0500
-Received: from mail-px0-f182.google.com ([209.85.216.182]:59785 "EHLO
-	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753825Ab0A1ViO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jan 2010 16:38:14 -0500
-Received: by pxi12 with SMTP id 12so921368pxi.33
-        for <git@vger.kernel.org>; Thu, 28 Jan 2010 13:38:14 -0800 (PST)
-Received: by 10.142.119.9 with SMTP id r9mr1640316wfc.201.1264714694076; Thu, 
-	28 Jan 2010 13:38:14 -0800 (PST)
-In-Reply-To: <4B6201BC.9030800@web.de>
+	id S1752473Ab0A1V5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2010 16:57:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752216Ab0A1V5c
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 16:57:32 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60541 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751616Ab0A1V5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2010 16:57:31 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9663094A17;
+	Thu, 28 Jan 2010 16:57:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Q9WWvh4J3G1iegTCaJZD+VO4Z0s=; b=I7G5FY
+	oWEsVV1Grb9uRHsPMU5MCE/Lo/CU7oc+rGhWx45Om5Q3SXjD9mehUUVio/P9V0FF
+	PpVdKOZbOj7S1Sg5y69ufJlM/kDHWBsM8oWkxK4vDRXujvzyk3/2vwgzcGZvmYHU
+	6N01B5CSOk/9osxgqoQbv62xaRSyK3xSG9k7c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ixBkXV4rF70u0qyjNkpRsJyVLMPrpJTZ
+	ubz46hN7BX3zy8pD/12m/Ouj+o+wt9fw5LxFVqs3tx7RsDzqve6Tj+pD+BG5+7dY
+	hiBs+3SkiPPGhePWERJwQWKmSULe9PWnsIpWnKdny3lyo8WawfhXL5YNltBF+WcF
+	YOznr1ZLIWg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5171394A16;
+	Thu, 28 Jan 2010 16:57:24 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5FB5C94A12; Thu, 28 Jan
+ 2010 16:57:18 -0500 (EST)
+In-Reply-To: <1264669727-9977-2-git-send-email-sojkam1@fel.cvut.cz> (Michal
+ Sojka's message of "Thu\, 28 Jan 2010 10\:08\:47 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1DEB884C-0C58-11DF-9E4F-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138276>
 
-On Thu, Jan 28, 2010 at 2:29 PM, Jens Lehmann <Jens.Lehmann@web.de> wro=
-te:
-> Am 28.01.2010 22:17, schrieb Mike Linck:
->> Well, even gitk can't show me the information I'm looking for if the
->> parent branch ended up fast-forwarding to include the changes made i=
-n
->> the topic branch. =A0As far as I can tell there is *no way* to tell =
-what
->> changes were made in a particular branch after a fast-forward has
->> taken place, which seems to make it hard to organize fixes for
->> specific topics/bugs/tickets.
->
-> You could disable fast forward merges using the --no-ff option. Then
-> git will always create a merge commit even if it could have done a
-> fast forward. This can be enabled permanently for a branch with
-> 'git config branch.master.mergeoptions =A0"--no-ff"'. We use that at =
-my
-> dayjob to preserve the branches after merging.
->
+Michal Sojka <sojkam1@fel.cvut.cz> writes:
 
-OK, so what I'm getting is that if a developer forgot to disable
-fast-forward when they created a topic branch, and if the parent
-branch has been fast forwarded to include it, then you might as well
-just throw away the topic branch, is that correct?
+> @@ -306,4 +306,43 @@ test_expect_success '--remap-to-ancestor with filename filters' '
+>  	test $orig_invariant = $(git rev-parse invariant)
+>  '
+>  
+> +test_expect_success 'setup submodule' '
+> +	rm -rf * .*
 
-Could anyone point me to a good book that actually describes the style
-of code management that git was intended to support?  Because I'm
-finding this a bit baffling, to be honest.  I thought it was intended
-to make the developers' side of code management easier to do, but it
-seems to me that they have to think a lot harder about what they're
-trying to accomplish, at least in this sort of case.  I'm not trying
-to be rude, but I just feel that if I want to keep working with this
-tool, I have to rethink how the code is organized in a pretty
-fundamental way and I'd like to get as comprehensive of a guide as
-possible from someone who has adopted their tactics to it.
+Yikes.  Please don't do this.
 
-Thanks
+If you cannot structure your tests following what has already been done by
+the previous tests, at least name the things that you want to remove a bit
+more explicitly to avoid mistakes.  The loosest form that is reasonable
+would probably be (to catch a, actual, backup-refs, ... and .git):
 
-Michael Linck
+	rm -fr ?* .?* &&
+
+but it would be preferable to be even more explicit "rm -fr ?* .git".
+
+Also make sure you don't break the chain of "&&" unnecessarily.
+
+> +	git init &&
+> +	test_commit file &&
+> +	mkdir submod &&
+> +	submodurl="$PWD/submod"
+> +	( cd submod &&
+> +	  git init &&
+> +	  test_commit file-in-submod ) &&
+> +	git submodule add "$submodurl"
+
+"&&"?
