@@ -1,105 +1,105 @@
-From: Michael Wookey <michaelwookey@gmail.com>
-Subject: [PATCH] run-command.c: fix build warnings on Ubuntu
-Date: Sat, 30 Jan 2010 09:38:19 +1100
-Message-ID: <d2e97e801001291438k21a652cakb05ec34fc8bee227@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: master^ is not a local branch -- huh?!?
+Date: Fri, 29 Jan 2010 14:39:02 -0800
+Message-ID: <7vaavwh6yh.fsf@alter.siamese.dyndns.org>
+References: <ron1-2E17EF.12204629012010@news.gmane.org>
+ <8c9a061001291227v34ca0745l1ab35ef6ca5863dc@mail.gmail.com>
+ <fabb9a1e1001291235h26681e65qe4851cae1c536b6d@mail.gmail.com>
+ <7veil8iqnj.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1001291614550.1681@xanadu.home>
+ <fabb9a1e1001291321v708c7cb4sec8e944f336d04fd@mail.gmail.com>
+ <alpine.LFD.2.00.1001291628510.1681@xanadu.home>
+ <fabb9a1e1001291332w1d161f8at58aa6fe6908bd77f@mail.gmail.com>
+ <alpine.LFD.2.00.1001291641200.1681@xanadu.home>
+ <7viqakh8ty.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1001291716070.1681@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 29 23:38:47 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Git List <git@vger.kernel.org>, Ron1 <ron1@flownet.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Fri Jan 29 23:39:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NazUE-0000zX-8d
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 23:38:46 +0100
+	id 1NazUp-0001Hb-DM
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 23:39:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755808Ab0A2Wil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 17:38:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754534Ab0A2Wil
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 17:38:41 -0500
-Received: from mail-pz0-f190.google.com ([209.85.222.190]:46756 "EHLO
-	mail-pz0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753881Ab0A2Wik (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 17:38:40 -0500
-Received: by pzk28 with SMTP id 28so1942225pzk.4
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 14:38:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:content-type;
-        bh=XI5Uo5HEL54WNuxJuY3wovtB1ril74g2UNBFPFbJllQ=;
-        b=SgbV+8OSlKt/VnABbnjreluclP9SAFQ1XLyemefna5sRDn1ZqFGq2fyLvkBlNFxdWp
-         uFVHCptsNSjRqf3HuOnO+/Y19zfeQLZxLV/3Zq9lRVrqINuPOhISgiDmexN8U54Bym6m
-         UZLhP5ea/REefK+QrR3guOM7Q7NRbWclRD770=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=K37OY1WSp7usdumPwLQEGwfrYHGAkPOyyjN9AGfRasrzvHTy0zzA7+9PnHv7w7yFIh
-         +yzSFz3B8JfMJs9bvlKIMDEA8cmp+lNCxLtNVw8VUiwikPfs1ojxANVxQVnER3OmwvCN
-         BVTWytcu3a4ymp1uGduF8BjP9Rs45Di9ff8jk=
-Received: by 10.115.85.14 with SMTP id n14mr892411wal.127.1264804719338; Fri, 
-	29 Jan 2010 14:38:39 -0800 (PST)
+	id S1755870Ab0A2WjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 17:39:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755813Ab0A2WjS
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 17:39:18 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46317 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752661Ab0A2WjS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 17:39:18 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 15E0D95627;
+	Fri, 29 Jan 2010 17:39:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6n7W5xWyjb70Wf2chiNlX1aFcA0=; b=GTimuh
+	nXUT62d0c4Gvr8xcOcd7lhPtye1dJDoMZ7hScB7jviOmt/vMSoUxOM5Tej+HfgNA
+	KHa7fih6wOb9/DkgoB47NrNepkU1zWQG9fZNAX8DDTA5QdcTBW+SIWwZjUbS6pfy
+	ZXbIuH//Tab6mvGRbYAKDJ6zUq1x8Lp4D7sxM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mm6z6Rod79z1k8wJ5Qj5YHRuM2Sgljzv
+	ArUJsOec9A9BxVL30uuf/veUW2LrM7r3KEKFA4FmcTAk2Vu+MxjiBow5zYqXcUct
+	z7fcXLZTm2FRBx3fes0F3pZpxYrgto2AkBO8WMXj5EML/KEqAuTd0j0sTLNjozN3
+	2kmdmLYckL4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B4EF595623;
+	Fri, 29 Jan 2010 17:39:11 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8091F95617; Fri, 29 Jan
+ 2010 17:39:04 -0500 (EST)
+In-Reply-To: <alpine.LFD.2.00.1001291716070.1681@xanadu.home> (Nicolas
+ Pitre's message of "Fri\, 29 Jan 2010 17\:34\:28 -0500 \(EST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1EDD4E8C-0D27-11DF-BE65-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138393>
 
-Building git on Ubuntu 9.10 warns that the return value of write(2)
-isn't checked. These warnings were introduced in commits:
+Nicolas Pitre <nico@fluxnic.net> writes:
 
-  2b541bf8 ("start_command: detect execvp failures early")
-  a5487ddf ("start_command: report child process setup errors to the
-parent's stderr")
+> On Fri, 29 Jan 2010, Junio C Hamano wrote:
+>
+>> We used to just say "topic is not a rev nor path" and failed when the user
+>> said "git checkout topic".  And the magic kicks in when there is only one
+>> "remotes/*/topic".
+>> 
+>> Because this cannot be any request other than to check out a local branch
+>> "topic", and because there is no place more sensible than the "topic"
+>> taken from the "origin" (as that is the sole place that has "topic"), it
+>> dwims as a shorthand for "checkout -b topic origin/topic" and tells you
+>> that it did so.
+>
+> OK.  That is probably sensible.
+>
+> I don't think any improvement on the detached head message should 
+> presume on this though.
+>
+> And it might be a good idea to say explicitly that what happened is the 
+> creation of a detached HEAD, like in:
 
-GCC details:
+Any comment on my previous rewording patch ($gmane/138369)?
 
-  $ gcc --version
-  gcc (Ubuntu 4.4.1-4ubuntu9) 4.4.1
+"Note: '%s' isn't a local branch head: creating a detached HEAD\n"
+"If you want to create a new branch from this checkout, you may do so\n"
+"(now or later) by using -b with the checkout command again. Example:\n"
+"  git checkout -b <new_branch_name>\n", new->name);
 
-Silence the warnings by reading (but not making use of) the return value
-of write(2).
+A major difference I think is that I avoided a jargon (detached HEAD), and
+chose not to say why the input was interpreted as a request to switch to
+that state.
 
-Signed-off-by: Michael Wookey <michaelwookey@gmail.com>
----
-Although this will fix the build warnings, I am unsure if there is a
-better way to achieve the same result. Using "(void)write(...)" still
-gives warnings and I am unaware of any annotations that will silence
-gcc.
-
- run-command.c |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/run-command.c b/run-command.c
-index 2feb493..3206d61 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -67,19 +67,21 @@ static int child_notifier = -1;
-
- static void notify_parent(void)
- {
--	write(child_notifier, "", 1);
-+	ssize_t unused;
-+	unused = write(child_notifier, "", 1);
- }
-
- static NORETURN void die_child(const char *err, va_list params)
- {
- 	char msg[4096];
-+	ssize_t unused;
- 	int len = vsnprintf(msg, sizeof(msg), err, params);
- 	if (len > sizeof(msg))
- 		len = sizeof(msg);
-
--	write(child_err, "fatal: ", 7);
--	write(child_err, msg, len);
--	write(child_err, "\n", 1);
-+	unused = write(child_err, "fatal: ", 7);
-+	unused = write(child_err, msg, len);
-+	unused = write(child_err, "\n", 1);
- 	exit(128);
- }
-
--- 
-1.7.0.rc0.48.gdace5
+Oh, of course, I also added advice.detachedHEAD to squelch it ;-)
