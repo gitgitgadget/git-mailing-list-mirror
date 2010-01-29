@@ -1,79 +1,86 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: master^ is not a local branch -- =?UTF-8?Q?huh=3F!=3F?=
-Date: Fri, 29 Jan 2010 23:28:48 +0000
-Message-ID: <bd7fb2a884e55e176eea3002fd0c68dd@212.159.54.234>
-References: <ron1-2E17EF.12204629012010@news.gmane.org> <op.u7a909hf4oyyg1@alvarezp-ws> <ron1-1F1799.13340029012010@news.gmane.org> <op.u7bfjni44oyyg1@alvarezp-ws> <ron1-0EE62E.14474929012010@news.gmane.org>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: master^ is not a local branch -- huh?!?
+Date: Fri, 29 Jan 2010 18:43:41 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1001291833580.1681@xanadu.home>
+References: <ron1-2E17EF.12204629012010@news.gmane.org>
+ <8c9a061001291227v34ca0745l1ab35ef6ca5863dc@mail.gmail.com>
+ <fabb9a1e1001291235h26681e65qe4851cae1c536b6d@mail.gmail.com>
+ <7veil8iqnj.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1001291614550.1681@xanadu.home>
+ <fabb9a1e1001291321v708c7cb4sec8e944f336d04fd@mail.gmail.com>
+ <alpine.LFD.2.00.1001291628510.1681@xanadu.home>
+ <fabb9a1e1001291332w1d161f8at58aa6fe6908bd77f@mail.gmail.com>
+ <alpine.LFD.2.00.1001291641200.1681@xanadu.home>
+ <7viqakh8ty.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1001291716070.1681@xanadu.home>
+ <7vaavwh6yh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: <git@vger.kernel.org>
-To: Ron Garret <ron1@flownet.com>
-X-From: git-owner@vger.kernel.org Sat Jan 30 00:36:07 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Git List <git@vger.kernel.org>, Ron1 <ron1@flownet.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 30 00:43:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nb0Nj-0001Ix-7U
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 00:36:07 +0100
+	id 1Nb0V9-0005OR-SR
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 00:43:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752255Ab0A2XgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 18:36:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752026Ab0A2XgA
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 18:36:00 -0500
-Received: from positron.quantumfyre.co.uk ([213.165.84.138]:41379 "EHLO
-	positron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751658Ab0A2Xf7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jan 2010 18:35:59 -0500
-X-Greylist: delayed 427 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Jan 2010 18:35:59 EST
-Received: from reaper.quantumfyre.co.uk (reaper.quantumfyre.co.uk [212.159.54.234])
-	by positron.quantumfyre.co.uk (Postfix) with ESMTP id 367BF819C643;
-	Fri, 29 Jan 2010 23:28:51 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id F031621D84E;
-	Fri, 29 Jan 2010 23:28:50 +0000 (GMT)
-X-Virus-Scanned: amavisd-new at reaper
-Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
-	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id qJ7vsFL9ztT0; Fri, 29 Jan 2010 23:28:48 +0000 (GMT)
-Received: from webmail.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 8402F21D831;
-	Fri, 29 Jan 2010 23:28:48 +0000 (GMT)
-In-Reply-To: <ron1-0EE62E.14474929012010@news.gmane.org>
-X-Sender: julian@quantumfyre.co.uk
-User-Agent: RoundCube Webmail/0.1-rc1
+	id S1752837Ab0A2Xnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 18:43:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178Ab0A2Xnn
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 18:43:43 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:36588 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751094Ab0A2Xnm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 18:43:42 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KX1000B08KT3FC0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 29 Jan 2010 18:43:41 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7vaavwh6yh.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138402>
 
-On Fri, 29 Jan 2010 14:47:49 -0800, Ron Garret <ron1@flownet.com> wrote:
-> My actual use case is very complicated, but here's a simplified version:
+On Fri, 29 Jan 2010, Junio C Hamano wrote:
+
+> Any comment on my previous rewording patch ($gmane/138369)?
+
+A bit too verbose (even if it can be configured out) and frightening I'd 
+say.
+
+> "Note: '%s' isn't a local branch head: creating a detached HEAD\n"
+> "If you want to create a new branch from this checkout, you may do so\n"
+> "(now or later) by using -b with the checkout command again. Example:\n"
+> "  git checkout -b <new_branch_name>\n", new->name);
 > 
-> Suppose I'm using git as a back-end for a wiki.  I want to look at the 
-> state of the entire wiki as it was in some point in the past, and I also
+> A major difference I think is that I avoided a jargon (detached HEAD), and
+> chose not to say why the input was interpreted as a request to switch to
+> that state.
 
-> want to be able to look at the diffs between individual pages as they 
-> were then and as they are now.  The most straightforward way I can think
+To the contrary, I think it is about time we use proper Git jargon.  
+Otherwise how can we expect people to relate to the documentation where 
+that jargon is indeed used?  Even on this very mailing list we refer to 
+that state as a "detached HEAD".  And Google gives precisely the right 
+info with "detached HEAD" while any other verbiage might not.
 
-> of to do that is to simply copy an old commit into my working tree 
-> without changing anything else.  Then I can look at the old version by 
-> simply looking at the files, and I can get the diffs by simply doing a 
-> git diff.
-> 
-> If I do a git reset --hard then I get the old version, but I lose my 
-> HEAD pointer so that git diff doesn't give me what I want any more.
-> 
-> BTW, it turns out that git checkout [commit] . doesn't do the right 
-> thing either.  Apparently, it still updates my index, so git diff still 
-> doesn't do the right thing.
+And just saying that "you're not on any branch anymore" is still leaving 
+the user wondering why.  At least with the "isn't a local branch head" 
+the user has 2 clues: it has to be a _local_ branch and a branch _head_ 
+not to create a detached HEAD.  So I still prefer the above rewording.
 
-If I understand what you want correctly, then:
+> Oh, of course, I also added advice.detachedHEAD to squelch it ;-)
 
-git diff --cached -R [path]
+That is indeed an excellent idea.
 
-should be the appropriate command after the "git checkout <commit> .".
 
--- 
-Julian
+Nicolas
