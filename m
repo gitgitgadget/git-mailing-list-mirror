@@ -1,90 +1,70 @@
-From: Ron Garret <ron1@flownet.com>
-Subject: Re: master^ is not a local branch -- huh?!?
-Date: Fri, 29 Jan 2010 13:40:46 -0800
-Organization: Amalgamated Widgets
-Message-ID: <ron1-4A6B93.13404629012010@news.gmane.org>
-References: <ron1-2E17EF.12204629012010@news.gmane.org> <hjvgs1$rep$1@ger.gmane.org> <ron1-953427.13240429012010@news.gmane.org> <fabb9a1e1001291328s1df443d6jdf0501cda17072de@mail.gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] checkout: warn about 'branch name' rather than 'local
+ branch'
+Date: Fri, 29 Jan 2010 16:40:39 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1001291621020.1681@xanadu.home>
+References: <fabb9a1e1001291256j71e2c95cic21cb5a6a0cc1fe8@mail.gmail.com>
+ <1264799342-11093-1-git-send-email-srabbelier@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 29 22:41:19 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Ron1 <ron1@flownet.com>, Jacob Helwig <jacob.helwig@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 29 22:42:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nayaa-0005pO-6z
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 22:41:16 +0100
+	id 1NaybT-0006Jl-O6
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 22:42:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753967Ab0A2VlK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jan 2010 16:41:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753738Ab0A2VlJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 16:41:09 -0500
-Received: from lo.gmane.org ([80.91.229.12]:58529 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753601Ab0A2VlI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 16:41:08 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NayaQ-0005kI-JV
-	for git@vger.kernel.org; Fri, 29 Jan 2010 22:41:06 +0100
-Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 22:41:06 +0100
-Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 22:41:06 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
-User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
+	id S1754369Ab0A2VmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 16:42:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754296Ab0A2Vl7
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 16:41:59 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:37857 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754064Ab0A2Vl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 16:41:59 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0KX100FRJ2VRT9C0@VL-MR-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 29 Jan 2010 16:40:40 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <1264799342-11093-1-git-send-email-srabbelier@gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138371>
 
-In article=20
-<fabb9a1e1001291328s1df443d6jdf0501cda17072de@mail.gmail.com>,
- Sverre Rabbelier <srabbelier@gmail.com> wrote:
+On Fri, 29 Jan 2010, Sverre Rabbelier wrote:
 
-> Heya,
->=20
-> On Fri, Jan 29, 2010 at 22:24, Ron Garret <ron1@flownet.com> wrote:
-> > Yes, I read that. =C2=A0But what I'm trying to do is not just *look=
-* at the
-> > history, I want to restore my working tree to a previous version. =C2=
-=A0The
-> > "Exploring History" section of the docs doesn't say how to do that.
->=20
-> Do you want to restore your working tree only,
+> These days, you can say "git checkout topic" to automagically create
+> a local "topic" branch that forks from "origin/topic" remote tracking
+> branch when you have one, thanks to Dscho's UI improvement ideas. As
+> such it is more appropriate to say that the user is checking out
+> something that is not a branch name, rather than saying it is not a
+> 'local branch'.
+> 
+> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
 
-Yes.
+For the record, I'm providing a NAK.  First I don't agree with the UI 
+"improvement" if there is no way to check out a remote branch without 
+creating soon-to-be-stall local branches with the same name.
 
-> or also throw away the history?
+Next, the message can be made yet more clear and give the user more of a 
+hint with what is going on.  Something like:
 
-No.
+	"%s is not a local branch head: creating a detached HEAD\n"
 
-> If the former, you could look at 'git revert'
+plus the remaining clue lines.  This way people will have a much greater 
+chance of understanding what state they're in, and a simple Google 
+search for detached HEAD gives you the Git manual page with the needed 
+info.
 
-If that's the right answer then the docs needs serious revision.  The=20
-docs for "git revert" say that what it does is:
 
-"Given one existing commit, revert the change the patch introduces, and=
-=20
-record a new commit that records it."
-
-which does not sound at all like what I'm trying to do.
-
-All I want to do is copy an old commit to my working tree, nothing else=
-=2E =20
-I don't want to move my head pointer.  I don't want to muck with my=20
-index.  I don't want to commit any changes or undo any history.  It's a=
-=20
-very simple thing.  It ought to be simple to do, but it doesn't seem to=
-=20
-be.
-
-rg
+Nicolas
