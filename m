@@ -1,87 +1,77 @@
-From: "Scott R. Godin" <scottg.wp-hackers@mhg2.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: master^ is not a local branch -- huh?!?
-Date: Fri, 29 Jan 2010 15:36:18 -0500
-Organization: MAD House Graphics
-Message-ID: <hjvgs1$rep$1@ger.gmane.org>
+Date: Fri, 29 Jan 2010 12:48:16 -0800
+Message-ID: <7veil8iqnj.fsf@alter.siamese.dyndns.org>
 References: <ron1-2E17EF.12204629012010@news.gmane.org>
+ <8c9a061001291227v34ca0745l1ab35ef6ca5863dc@mail.gmail.com>
+ <fabb9a1e1001291235h26681e65qe4851cae1c536b6d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 29 21:40:28 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Ron1 <ron1@flownet.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 29 21:48:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Naxdj-0006sm-9y
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 21:40:27 +0100
+	id 1Naxld-0003g1-GN
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 21:48:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752550Ab0A2UkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 15:40:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755103Ab0A2UkM
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 15:40:12 -0500
-Received: from lo.gmane.org ([80.91.229.12]:34286 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755190Ab0A2UkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 15:40:08 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NaxdO-0006iE-IF
-	for git@vger.kernel.org; Fri, 29 Jan 2010 21:40:06 +0100
-Received: from c-71-58-29-3.hsd1.de.comcast.net ([71.58.29.3])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 21:40:06 +0100
-Received: from scottg.wp-hackers by c-71-58-29-3.hsd1.de.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 21:40:06 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: c-71-58-29-3.hsd1.de.comcast.net
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc11 Lightning/1.0b2pre Thunderbird/3.0.1
-In-Reply-To: <ron1-2E17EF.12204629012010@news.gmane.org>
+	id S1752853Ab0A2Us3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 15:48:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752802Ab0A2Us3
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 15:48:29 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47519 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752777Ab0A2Us2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 15:48:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BBA3295406;
+	Fri, 29 Jan 2010 15:48:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7eBrJjyXyFyQRrOoJIl1GGeuY2w=; b=AKBmMb
+	zx0G09ZR1w3MS0thuokQj2RF//1WCXYtjQp+vgl76JvdKVn+2j8cc8q+/jgRmq0I
+	6n04/QORx+U6RIHYoYIgL3CnU1VDNACoxbR0pK/72oNjjZot4ofanvDyqdWsrXAP
+	JhnkrWrxkiEgztf5dfOmn4L1Dbl1KRhAYM8wY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SUN5K4qr3czHT0L5hO0N1UoPrb5HIogU
+	j/5m/NLdEV2vpHVC2l4ychSyHdvPy/DMlO/vTPKW85ZIclD+mVFPkLW5CGeqIxI8
+	GieZ+CHAVCDMyd74NgAV7wICOUkUF5h9sh/EcrD1GExwzyqUL+KS5ECUiErqNV3i
+	PFrhT6LvNq4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A29295404;
+	Fri, 29 Jan 2010 15:48:22 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A816495403; Fri, 29 Jan
+ 2010 15:48:17 -0500 (EST)
+In-Reply-To: <fabb9a1e1001291235h26681e65qe4851cae1c536b6d@mail.gmail.com>
+ (Sverre Rabbelier's message of "Fri\, 29 Jan 2010 21\:35\:08 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A39BF71E-0D17-11DF-8699-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138354>
 
-On 01/29/2010 03:20 PM, Ron1 wrote:
-> [ron@mickey]$ git checkout master
-> Already on 'master'
-> [ron@mickey]$ git checkout master^
-> Note: moving to 'master^' which isn't a local branch
-> If you want to create a new branch from this checkout, you may do so
-> (now or later) by using -b with the checkout command again. Example:
->    git checkout -b<new_branch_name>
-> HEAD is now at 7be05e0... test
-> [ron@mickey]$ git branch
-> * (no branch)
->    master
-> [ron@mickey]$
+Sverre Rabbelier <srabbelier@gmail.com> writes:
+
+>> master^ is a commit (the first parent of master), not a branch (local
+>> or otherwise).
 >
-> Huh?!?
->
-> This is a test repository which has never been pulled from nor pushed to
-> anywhere.  So how is it possible that I have a non-local branch?
->
-> Thanks,
-> rg
->
+> Perhaps we should change the message to say "not a branch" if it's not
+> a reference to a remote branch? Or simply changing the text to "not a
+> (local) branch"?
 
-I believe what you're seeing is known as a detached head (see 
-<http://www.kernel.org/pub/software/scm/git/docs/git-checkout.html> 
-though I could be wrong about this.)
+I think "not a branch" is a good suggestion, whether the target of
+checkout is "master^" or "origin/topic".
 
-I think you may have intended to do git checkout HEAD^ or something 
-similar? basically what you did was (I think) checkout (or attempt to 
-checkout) the parent commit on master.
-
-this may offer some additional food for thought: 
-<http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html#_exploring_history>
-
--- 
-(please respond to the list as opposed to my email box directly,
-unless you are supplying private information you don't want public
-on the list)
+These days, you can say "git checkout topic" to automagically create a
+local "topic" branch that forks from "origin/topic" remote tracking branch
+when you have one, thanks to Dscho's UI improvement ideas (one less
+reason you may end up on a detached HEAD state without wanting to).
