@@ -1,112 +1,87 @@
-From: Ron1 <ron1@flownet.com>
-Subject: Re: master^ is not a local branch -- huh?!?
-Date: Fri, 29 Jan 2010 13:16:21 -0800
-Organization: Amalgamated Widgets
-Message-ID: <ron1-F6943B.13162129012010@news.gmane.org>
-References: <ron1-2E17EF.12204629012010@news.gmane.org> <8c9a061001291227v34ca0745l1ab35ef6ca5863dc@mail.gmail.com> <alpine.DEB.1.00.1001292131330.3749@intel-tinevez-2-302>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 29 22:16:57 2010
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: [PATCH] checkout: warn about 'branch name' rather than 'local branch'
+Date: Fri, 29 Jan 2010 22:09:02 +0100
+Message-ID: <1264799342-11093-1-git-send-email-srabbelier@gmail.com>
+References: <fabb9a1e1001291256j71e2c95cic21cb5a6a0cc1fe8@mail.gmail.com>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Ron1 <ron1@flownet.com>, Jacob Helwig <jacob.helwig@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 29 22:17:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NayD1-0000vm-P3
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 22:16:56 +0100
+	id 1NayDW-0001Ay-Of
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 22:17:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755523Ab0A2VQq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jan 2010 16:16:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755536Ab0A2VQq
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 16:16:46 -0500
-Received: from lo.gmane.org ([80.91.229.12]:44753 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755463Ab0A2VQp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 16:16:45 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NayCo-0000qK-Ry
-	for git@vger.kernel.org; Fri, 29 Jan 2010 22:16:42 +0100
-Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 22:16:42 +0100
-Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 22:16:42 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
-User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
+	id S1754646Ab0A2VRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 16:17:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754131Ab0A2VRV
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 16:17:21 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:26349 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754013Ab0A2VRU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 16:17:20 -0500
+Received: by ey-out-2122.google.com with SMTP id d26so564747eyd.19
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 13:17:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=zSq1sVFozgSW3QCm6xG74x8HbEPNV8ALYFbl3uV+N+E=;
+        b=r1csKujz5WXXRkO1tw1pTBYIxcXAtJizbBMOjldSSs4Q1z9gZgunIR8JLjlwlWpPOy
+         mSb5PwkdxoScWoIHFMtLyQQGiiz6js/b1/NHhEy8sfd3p1+nSTKgOzbmwRXe9H3PfH07
+         NquFZc8QewBUPse3xeZ7LUuEdyMgu6oFW262k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=m3ZNnIVVqhBOxKoXaWCL97p9nkGwl7JMf3WccUULcQd0Ee8FV7wsGexeMmKi1DzN28
+         IO+fs6WWcgZTYdsnpyy/tUBa9zZkk23Z5GygnW4r3DQk8HntmG4x744n47TWl+59m5SI
+         ZstWKyyZ+QX+GKk4FgQ3oDTZojDTb+1wCk6qo=
+Received: by 10.213.110.4 with SMTP id l4mr1333808ebp.81.1264799373194;
+        Fri, 29 Jan 2010 13:09:33 -0800 (PST)
+Received: from localhost.localdomain (ip138-114-211-87.adsl2.static.versatel.nl [87.211.114.138])
+        by mx.google.com with ESMTPS id 16sm1670106ewy.2.2010.01.29.13.09.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 29 Jan 2010 13:09:32 -0800 (PST)
+X-Mailer: git-send-email 1.6.6.rc1.56.gaea25.dirty
+In-Reply-To: <fabb9a1e1001291256j71e2c95cic21cb5a6a0cc1fe8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138358>
 
-In article <alpine.DEB.1.00.1001292131330.3749@intel-tinevez-2-302>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+These days, you can say "git checkout topic" to automagically create
+a local "topic" branch that forks from "origin/topic" remote tracking
+branch when you have one, thanks to Dscho's UI improvement ideas. As
+such it is more appropriate to say that the user is checking out
+something that is not a branch name, rather than saying it is not a
+'local branch'.
 
-> Hi,
->=20
-> On Fri, 29 Jan 2010, Jacob Helwig wrote:
->=20
-> > On Fri, Jan 29, 2010 at 12:20, Ron1 <ron1@flownet.com> wrote:
-> > > [ron@mickey]$ git checkout master
-> > > Already on 'master'
-> > > [ron@mickey]$ git checkout master^
-> > > Note: moving to 'master^' which isn't a local branch
-> > > If you want to create a new branch from this checkout, you may do=
- so
-> > > (now or later) by using -b with the checkout command again. Examp=
-le:
-> > > =C2=A0git checkout -b <new_branch_name>
-> > > HEAD is now at 7be05e0... test
-> > > [ron@mickey]$ git branch
-> > > * (no branch)
-> > > =C2=A0master
-> > > [ron@mickey]$
-> > >
-> > > Huh?!?
-> > >
-> > > This is a test repository which has never been pulled from nor pu=
-shed to
-> > > anywhere. =C2=A0So how is it possible that I have a non-local bra=
-nch?
-> >=20
-> > master^ is a commit (the first parent of master), not a branch (loc=
-al
-> > or otherwise).
->=20
-> Indeed.  Maybe you (Ron1) need to get a bit more acquainted to Git be=
-fore=20
-> complaining.
+Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+---
 
+  Junio, I used part of your reply as the commit message, is that ok?
 
-Chill, dude. =C2=A0I'm not complaining. =C2=A0I'm just confused.
+  Only change is s/local branch/branch name/.
 
-I know that master^ is a commit and not a branch. =C2=A0I thought I was=
-=20
-invoking the third variant of git-checkout (as given on the git-checkou=
-t=20
-man page) and checking out a commit (which the man page calls a=20
-tree-ish).
+ builtin-checkout.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-In any case, since my question seems to have sparked some discussion,=20
-I'd like to offer two observations:
-
-1.  Saying "isn't a local branch" is mightily confusing, because it is=20
-ambiguous whether the problem is that it isn't a branch or if it isn't=20
-local.
-
-2.  If I pass something to git checkout (or any other command for that=20
-matter) that it expects to be a branch but isn't a branch it would be=20
-much better if it just gave an error and did nothing rather than give a=
-=20
-(confusing) warning and try to extrapolate the user's intentions. =20
-Whatever a user could possibly mean by 'git checkout master^' it is=20
-almost certainly not what that command actually does at the moment.
-
-rg
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index 5277817..4b34314 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -523,7 +523,7 @@ static void update_refs_for_switch(struct checkout_opts *opts,
+ 			   REF_NODEREF, DIE_ON_ERR);
+ 		if (!opts->quiet) {
+ 			if (old->path)
+-				fprintf(stderr, "Note: moving to '%s' which isn't a local branch\nIf you want to create a new branch from this checkout, you may do so\n(now or later) by using -b with the checkout command again. Example:\n  git checkout -b <new_branch_name>\n", new->name);
++				fprintf(stderr, "Note: moving to '%s' which isn't a branch name\nIf you want to create a new branch from this checkout, you may do so\n(now or later) by using -b with the checkout command again. Example:\n  git checkout -b <new_branch_name>\n", new->name);
+ 			describe_detached_head("HEAD is now at", new->commit);
+ 		}
+ 	}
+-- 
+1.6.6.rc1.56.gaea25.dirty
