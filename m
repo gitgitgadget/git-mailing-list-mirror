@@ -1,74 +1,68 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: master^ is not a local branch -- huh?!?
-Date: Fri, 29 Jan 2010 16:20:38 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1001291614550.1681@xanadu.home>
-References: <ron1-2E17EF.12204629012010@news.gmane.org>
- <8c9a061001291227v34ca0745l1ab35ef6ca5863dc@mail.gmail.com>
- <fabb9a1e1001291235h26681e65qe4851cae1c536b6d@mail.gmail.com>
- <7veil8iqnj.fsf@alter.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] checkout: Fix test for s/local branch/branch name/ 
+	change.
+Date: Fri, 29 Jan 2010 22:20:32 +0100
+Message-ID: <fabb9a1e1001291320s25e237bdidf40e4b8a432e7b5@mail.gmail.com>
+References: <1264799342-11093-1-git-send-email-srabbelier@gmail.com> 
+	<1264799942-4531-1-git-send-email-jacob.helwig@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Git List <git@vger.kernel.org>, Ron1 <ron1@flownet.com>,
-	Jacob Helwig <jacob.helwig@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 29 22:20:46 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Ron1 <ron1@flownet.com>
+To: Jacob Helwig <jacob.helwig@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 29 22:21:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NayGj-0002VL-Dl
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 22:20:45 +0100
+	id 1NayGx-0002eV-Pq
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 22:21:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755644Ab0A2VUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 16:20:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755626Ab0A2VUk
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 16:20:40 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:16394 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752907Ab0A2VUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 16:20:39 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KX100K1J1YEGT10@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 29 Jan 2010 16:20:38 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7veil8iqnj.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1755656Ab0A2VUx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 16:20:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755653Ab0A2VUx
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 16:20:53 -0500
+Received: from mail-pz0-f190.google.com ([209.85.222.190]:51555 "EHLO
+	mail-pz0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755647Ab0A2VUw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 16:20:52 -0500
+Received: by pzk28 with SMTP id 28so1873239pzk.4
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 13:20:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=jYeFzs/hvU0KWXPZM+qInabVquUSdUHzTB6aaZdaGMM=;
+        b=dbrEH4X05a1aX9gXJFXZvgDmdqKBJfOWyKRpIuk3MumTQ6HFjNn/1BDqWPJ//Oi/hz
+         buADwhrbo4ZClFqC/+m1Bp1bqC3MM7wI+hb9uWCiV/XKBvChFLNoCpkYjo8u6loIw/XN
+         EH6PPUKoDVxMykX4mF75Y9hMqcVXJb6uqClpU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=uRwdbN3IktkLBqLiGdHTnVvuVDpBgMuT2TVVBBkzbGeiAyHVcD4K9GUHDBhHCUncYN
+         iY+6G7xo4XGav9+ffyrLKTej7tiYG0U1xiXa90IL2OKfriFHUuuya4FOSU+QLEsKJpbp
+         WSrwV5/I0+pbodeuUsYdypZ+FPev/pdNmrphU=
+Received: by 10.142.152.40 with SMTP id z40mr905171wfd.211.1264800052140; Fri, 
+	29 Jan 2010 13:20:52 -0800 (PST)
+In-Reply-To: <1264799942-4531-1-git-send-email-jacob.helwig@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138361>
 
-On Fri, 29 Jan 2010, Junio C Hamano wrote:
+Heya,
 
-> Sverre Rabbelier <srabbelier@gmail.com> writes:
-> 
-> >> master^ is a commit (the first parent of master), not a branch (local
-> >> or otherwise).
-> >
-> > Perhaps we should change the message to say "not a branch" if it's not
-> > a reference to a remote branch? Or simply changing the text to "not a
-> > (local) branch"?
-> 
-> I think "not a branch" is a good suggestion, whether the target of
-> checkout is "master^" or "origin/topic".
-> 
-> These days, you can say "git checkout topic" to automagically create a
-> local "topic" branch that forks from "origin/topic" remote tracking branch
-> when you have one, thanks to Dscho's UI improvement ideas (one less
-> reason you may end up on a detached HEAD state without wanting to).
+On Fri, Jan 29, 2010 at 22:19, Jacob Helwig <jacob.helwig@gmail.com> wrote:
+> This should probably be squashed into Sverre Rabbelier's change, if this is
+> decided as the way to go.
 
-If this is the case then I'm really disappointed.
+Ah, excellent point, apologies :(. I saw it show up when I grepped for
+the message, not sure why I didn't do anything with that.
 
-With all due respects, I don't share Dscho's sentiment about Git's 
-alleged non user-friendliness.  And I always praised Git's ability to 
-use a detached head to check out a remote branch, and never had any 
-problem teaching this concept to people.  So the above is not a UI 
-improvement at all to me.
+-- 
+Cheers,
 
-
-Nicolas
+Sverre Rabbelier
