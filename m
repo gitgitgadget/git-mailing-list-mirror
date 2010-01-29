@@ -1,97 +1,78 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: master^ is not a local branch -- huh?!?
-Date: Fri, 29 Jan 2010 17:34:28 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1001291716070.1681@xanadu.home>
-References: <ron1-2E17EF.12204629012010@news.gmane.org>
- <8c9a061001291227v34ca0745l1ab35ef6ca5863dc@mail.gmail.com>
- <fabb9a1e1001291235h26681e65qe4851cae1c536b6d@mail.gmail.com>
- <7veil8iqnj.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1001291614550.1681@xanadu.home>
- <fabb9a1e1001291321v708c7cb4sec8e944f336d04fd@mail.gmail.com>
- <alpine.LFD.2.00.1001291628510.1681@xanadu.home>
- <fabb9a1e1001291332w1d161f8at58aa6fe6908bd77f@mail.gmail.com>
- <alpine.LFD.2.00.1001291641200.1681@xanadu.home>
- <7viqakh8ty.fsf@alter.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: is there a way to reference the branch point?
+Date: Fri, 29 Jan 2010 23:35:18 +0100
+Message-ID: <fabb9a1e1001291435p59599f62hd54cbca66d91c24b@mail.gmail.com>
+References: <18219.1264804157@relay.known.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Git List <git@vger.kernel.org>, Ron1 <ron1@flownet.com>,
-	Jacob Helwig <jacob.helwig@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 29 23:34:37 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: layer <layer@known.net>
+X-From: git-owner@vger.kernel.org Fri Jan 29 23:35:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NazQB-0006zd-Ck
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 23:34:35 +0100
+	id 1NazRI-0007fM-Ue
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 23:35:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755790Ab0A2Wea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 17:34:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755780Ab0A2Wea
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 17:34:30 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:37052 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755760Ab0A2We3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 17:34:29 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KX100B795DG13B0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 29 Jan 2010 17:34:29 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7viqakh8ty.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1755826Ab0A2Wfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 17:35:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755813Ab0A2Wfj
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 17:35:39 -0500
+Received: from mail-px0-f182.google.com ([209.85.216.182]:59002 "EHLO
+	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755797Ab0A2Wfi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 17:35:38 -0500
+Received: by pxi12 with SMTP id 12so2056659pxi.33
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 14:35:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=xYF6Gn6OFQnmLY2JAuPeskPVCWeCZIG5OGM4TNvU0+s=;
+        b=v99D8O9YGjDA0ftPxnp+j0IrwX+57Km4E1tpzC50cT6bdfuNfLDNU0hcodJVdhowsi
+         tT7xyzrb1LhGabGzM38IqYEF+jFsaEirwK7NK4kovuvH/iXqhHkJY49goki+q4RnW+24
+         8uTVaqoYc7fIFjk8pAOce+OGNt4gHzbctsRwM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=qGNuVAfyeIUWjTosM1Lh1/x1Gr8UazLTtEGL4MSxN8hqviaTQsZk48dOcSKxyUO7Ka
+         soKuL2MtGqnS+Fy8evEVEJ8bAZXJthU26B8AuyeqTe4j1vvqQAHjDYyLY2ZlYLvcxJP9
+         cJ+GoBvwQDCd8LV8fVQeoQ9MN44f3vJ66yLg4=
+Received: by 10.142.196.3 with SMTP id t3mr968272wff.10.1264804538168; Fri, 29 
+	Jan 2010 14:35:38 -0800 (PST)
+In-Reply-To: <18219.1264804157@relay.known.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138391>
 
-On Fri, 29 Jan 2010, Junio C Hamano wrote:
+Heya,
 
-> We used to just say "topic is not a rev nor path" and failed when the user
-> said "git checkout topic".  And the magic kicks in when there is only one
-> "remotes/*/topic".
-> 
-> Because this cannot be any request other than to check out a local branch
-> "topic", and because there is no place more sensible than the "topic"
-> taken from the "origin" (as that is the sole place that has "topic"), it
-> dwims as a shorthand for "checkout -b topic origin/topic" and tells you
-> that it did so.
+On Fri, Jan 29, 2010 at 23:29, layer <layer@known.net> wrote:
+> If I make a branch `foo' off master, commit a bunch of times, is there
+> a way to reference the place on master from which I branched?
 
-OK.  That is probably sensible.
+Depends, if you make a new branch from master, you can use 'git merge-base', so:
 
-I don't think any improvement on the detached head message should 
-presume on this though.
+$ # on master
+$ git checkout -b foo-topic-branch
+$ # work work
+$ git commit
+$ # work work
+$ git commit
 
-And it might be a good idea to say explicitly that what happened is the 
-creation of a detached HEAD, like in:
+Now you want to know where you branches off from master:
 
-diff --git a/builtin-checkout.c b/builtin-checkout.c
-index 5277817..c0a44d7 100644
---- a/builtin-checkout.c
-+++ b/builtin-checkout.c
-@@ -523,7 +523,10 @@ static void update_refs_for_switch(struct checkout_opts *opts,
- 			   REF_NODEREF, DIE_ON_ERR);
- 		if (!opts->quiet) {
- 			if (old->path)
--				fprintf(stderr, "Note: moving to '%s' which isn't a local branch\nIf you want to create a new branch from this checkout, you may do so\n(now or later) by using -b with the checkout command again. Example:\n  git checkout -b <new_branch_name>\n", new->name);
-+				fprintf(stderr, "Note: '%s' isn't a local branch head: creating a detached HEAD\n"
-+						"If you want to create a new branch from this checkout, you may do so\n"
-+						"(now or later) by using -b with the checkout command again. Example:\n"
-+						"  git checkout -b <new_branch_name>\n", new->name);
- 			describe_detached_head("HEAD is now at", new->commit);
- 		}
- 	}
+$ git merge-base foo-topic-branch master
 
-(string split onto multiple lines for easier source reading)
+That will show you the commit you branches off from, even if master
+has grown new commits since then.
 
-I think this is important to 1) mention the notion of a branch _head_, 
-and 2) mention "detached HEAD" explicitly for people to be directed to 
-appropriate documentation.  So with this change you know exactly what 
-happened and why.
+-- 
+Cheers,
 
-
-Nicolas
+Sverre Rabbelier
