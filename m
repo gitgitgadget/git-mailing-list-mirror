@@ -1,77 +1,72 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Partially private repository?
-Date: Fri, 29 Jan 2010 17:10:53 -0500
-Message-ID: <32541b131001291410g252ddff4lbf04ac7c1d2d33fc@mail.gmail.com>
-References: <78d8a6b51001291401ib93976el25c03694d53aaced@mail.gmail.com>
+From: Ron Garret <ron1@flownet.com>
+Subject: Re: master^ is not a local branch -- huh?!?
+Date: Fri, 29 Jan 2010 14:18:40 -0800
+Organization: Amalgamated Widgets
+Message-ID: <ron1-D5CC8E.14184029012010@news.gmane.org>
+References: <ron1-2E17EF.12204629012010@news.gmane.org> <8c9a061001291227v34ca0745l1ab35ef6ca5863dc@mail.gmail.com> <alpine.DEB.1.00.1001292131330.3749@intel-tinevez-2-302> <ron1-F6943B.13162129012010@news.gmane.org> <8c9a061001291325i4b8898b9m46054040c69f8fc6@mail.gmail.com> <ron1-A90E72.13434029012010@news.gmane.org> <7veil8h8rk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Daed Lee <daed@thoughtsofcode.com>
-X-From: git-owner@vger.kernel.org Fri Jan 29 23:17:25 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 29 23:19:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Naz9Y-00051o-Mo
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 23:17:25 +0100
+	id 1NazBK-00060q-GS
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 23:19:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755783Ab0A2WRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 17:17:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752414Ab0A2WRS
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 17:17:18 -0500
-Received: from mail-iw0-f201.google.com ([209.85.223.201]:36807 "EHLO
-	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752523Ab0A2WRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 17:17:18 -0500
-X-Greylist: delayed 363 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Jan 2010 17:17:17 EST
-Received: by iwn39 with SMTP id 39so495693iwn.1
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 14:17:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=Y0au5vjxko9ay7vfyTobw3caVjVEV3EdVgc6WM+m0qU=;
-        b=WfCl59qEQBv+sgJa+/+AQcchyVu+k/jHQHU4RfAiylvJ0wjPNd3raD5l+Ome9rNsPN
-         KHM6S/3KozsfLS7T01GSbuj7+nIq/qIu0TSXs9tbJVKUDxJwyy2ZzyBpq/QbimiUB8Ql
-         DLvKV0ah6H+ECJ4uO6FvC1VyxLCnJQ+bmvgGs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=I0A2To41kS4Qae9C9NIYAHx/lfRyOX8/6wNXEi/e5MWdqIn1edtoTl/B8Qz8jga76q
-         my4ybMnIFBiU3JDMdrZPcQgE6VgNW4trDhzFgDY7sMU8N9CiCWInV/jItLfAWtEdG9mN
-         ZvsDOzBtfmUUBiRHfYeM/qpd3t7hpq2bByCXg=
-Received: by 10.231.146.8 with SMTP id f8mr2222233ibv.58.1264803074188; Fri, 
-	29 Jan 2010 14:11:14 -0800 (PST)
-In-Reply-To: <78d8a6b51001291401ib93976el25c03694d53aaced@mail.gmail.com>
+	id S1755741Ab0A2WTH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 17:19:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755061Ab0A2WTG
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 17:19:06 -0500
+Received: from lo.gmane.org ([80.91.229.12]:36387 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752139Ab0A2WTE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 17:19:04 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NazB6-0005si-B7
+	for git@vger.kernel.org; Fri, 29 Jan 2010 23:19:00 +0100
+Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 23:19:00 +0100
+Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 23:19:00 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
+User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138386>
 
-On Fri, Jan 29, 2010 at 5:01 PM, Daed Lee <daed@thoughtsofcode.com> wrote:
-> Hi, I'm wondering if git can handle the following use. I have a
-> project that started as private experiment, but has morphed into
-> something I'd like to release publicly. I want to give others access
-> to the repository, but only to commits after a certain cutoff date.
-> Commits prior to that date have things like hardcoded file paths,
-> emails, etc. that I'd like to keep private.
->
-> I suppose the easiest thing to do would be to create a new repository,
-> add the project files to it, and make that public, however I'd like to
-> keep my private commit history along with the public commit history
-> going forward in a single repository if possible. Is there a way to do
-> this with git?
+In article <7veil8h8rk.fsf@alter.siamese.dyndns.org>,
+ Junio C Hamano <gitster@pobox.com> wrote:
 
-You should probably split your history into two pieces: the "before"
-and "after" parts.  To split out the "after" part, you could use
-git-filter-branch
-(http://www.kernel.org/pub/software/scm/git/docs/v1.6.0.6/git-filter-branch.html).
- Then, in your private copy of the repo, you could reattach the
-"before" part of the history using git grafts.
+> Ron Garret <ron1@flownet.com> writes:
+> 
+> > Of course it's possible.  It git can complain and do something (which is 
+> > what it does now) then it can just as easily complain and do nothing.
+> 
+> It is not complaining.  It is telling you that you might have triggered an
+> advanced feature you may not be prepared to use yet.
+> 
+> So forbidding the advanced feature from everybody won't be a solution.
 
-Have fun,
+s/complain/warn/
 
-Avery
+I'm just suggesting that maybe triggering the advanced feature ought not 
+to be such an easy thing to do by accident.  It's certainly possible to 
+make that change.  Reasonable people could disagree over whether this is 
+desirable, or whether it would be better to just add this to a FAQ 
+somewhere, or maybe even just leave this as a rite of passage.  
+Apparently I'm the first person to ever have this problem or it would 
+not have triggered so much discussion.
+
+rg
