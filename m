@@ -1,81 +1,64 @@
-From: Michael Wookey <michaelwookey@gmail.com>
-Subject: build warnings
-Date: Fri, 29 Jan 2010 20:03:37 +1100
-Message-ID: <d2e97e801001290103r5b9cfc2aq8daec90c8c88f2ff@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: Questions about branches in git
+Date: Fri, 29 Jan 2010 11:06:07 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1001291103300.25954@ds9.cixit.se>
+References: <69b754db1001281044y39e52f77hcc8f83144776c78f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Jan 29 10:04:13 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Mike Linck <mgl@absolute-performance.com>
+X-From: git-owner@vger.kernel.org Fri Jan 29 11:06:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Namlr-0001Ui-MM
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 10:04:08 +0100
+	id 1Nank4-0002bG-65
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 11:06:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754225Ab0A2JD7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jan 2010 04:03:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752532Ab0A2JD7
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 04:03:59 -0500
-Received: from mail-px0-f182.google.com ([209.85.216.182]:39423 "EHLO
-	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752151Ab0A2JD5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jan 2010 04:03:57 -0500
-Received: by pxi12 with SMTP id 12so1351936pxi.33
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 01:03:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        bh=AqUMruoX7AB4pcDHEdYbtloctDlxfvNI0eyUwwWxpjA=;
-        b=IsQJ0rAoFy8/VwQ6/GF8Q17YINESYD+zdFAAowO3GWrEdkuNGAYirnPXBcoS9NvpFw
-         ssjO/2hWVBlYfyyrikM2wML6t+WYDiXg22ZGI/A9ri/NiDcvtBItD2VvuwwdvZYY7so9
-         t1PqSu1506C5Tk8EWbMbR4FMPQt7FguFjEHlE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=WKcci4unMQ5NcmJhQRuWdYEgjGyvMehbJmzD+Gs7lkA27cYKCAfvemhuP0GE8xZdX0
-         eIWI1gByXW92Y3UfuPmmbqGUOpuAdJJHYNmehNdWSkNzyNgS2FxKsA1tglduzZ5tZTT1
-         4wZNviwdYOQ61sHHxeGt4cU1FYGHejL+XNvrI=
-Received: by 10.115.85.10 with SMTP id n10mr406446wal.13.1264755837108; Fri, 
-	29 Jan 2010 01:03:57 -0800 (PST)
+	id S1756892Ab0A2KGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 05:06:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756856Ab0A2KGM
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 05:06:12 -0500
+Received: from upper-gw.cixit.se ([92.43.32.133]:57814 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756810Ab0A2KGL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 05:06:11 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id o0TA67Qh028323
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 29 Jan 2010 11:06:07 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o0TA67Hp028319;
+	Fri, 29 Jan 2010 11:06:07 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <69b754db1001281044y39e52f77hcc8f83144776c78f@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Fri, 29 Jan 2010 11:06:07 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138304>
 
-=46YI,
+Mike Linck:
 
-With current master (dace5dd1), the following build warnings appear on
-Ubuntu 9.10 (x86):
+> It seems that after a topic or bug branch is merged back into its parent, 
+> especially if it was fast forwarded, it becomes hard to determine what 
+> changes were made in it, to resolve the problem that it was created to 
+> address.
 
-  run-command.c: In function =E2=80=98notify_parent=E2=80=99:
-  run-command.c:70: warning: ignoring return value of =E2=80=98write=E2=
-=80=99,
-declared with attribute warn_unused_result
-  run-command.c: In function =E2=80=98die_child=E2=80=99:
-  run-command.c:80: warning: ignoring return value of =E2=80=98write=E2=
-=80=99,
-declared with attribute warn_unused_result
-  run-command.c:81: warning: ignoring return value of =E2=80=98write=E2=
-=80=99,
-declared with attribute warn_unused_result
-  run-command.c:82: warning: ignoring return value of =E2=80=98write=E2=
-=80=99,
-declared with attribute warn_unused_result
+If you keep the branch name somewhere (either pushed to the master 
+repository, or to a side-repository used to store old "dead" branches), then 
+you at least have the pointer to the last commit on that particular branch.
 
-These warnings were introduced by the following commits:
+You can then backtrack through the commits to the previous merge-point, or 
+branch head, in the history to find the point where it, most likely, was 
+branched off from.
 
-  2b541bf8 ("start_command: detect execvp failures early")
-  a5487ddf ("start_command: report child process setup errors to the
-parent's stderr")
-
-The GCC details are:
-
-  ~$ gcc --version
-  gcc (Ubuntu 4.4.1-4ubuntu9) 4.4.1
+-- 
+\\// Peter - http://www.softwolves.pp.se/
