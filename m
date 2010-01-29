@@ -1,93 +1,98 @@
-From: =?UTF-8?q?Zolt=C3=A1n=20F=C3=BCzesi?= <zfuzesi@eaglet.hu>
-Subject: [RFC/PATCH] MSVC: Windows-native implementation of pthread_cond_broadcast
-Date: Fri, 29 Jan 2010 20:26:53 +0100
-Message-ID: <1264793213-8805-1-git-send-email-zfuzesi@eaglet.hu>
-References: <4B62CEAB.5050608@viscovery.net>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] bash: support user-supplied completion scripts for
+	user's git commands
+Date: Fri, 29 Jan 2010 21:00:33 +0100
+Message-ID: <20100129200033.GA32636@neumann>
+References: <9b69cfcf1001290457s6b7fad6cs5a915f16a11f5782@mail.gmail.com>
+	<20100129151127.GA21821@spearce.org>
+	<7v4om4kdt3.fsf@alter.siamese.dyndns.org>
+	<20100129175950.GE21821@spearce.org>
+	<7vockciyb8.fsf@alter.siamese.dyndns.org>
+	<20100129190642.GA31303@neumann>
+	<20100129191326.GD22101@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: j.sixt@viscovery.net,
-	=?UTF-8?q?Zolt=C3=A1n=20F=C3=BCzesi?= <zfuzesi@eaglet.hu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 29 20:33:44 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Rhodes Clymer <david@zettazebra.com>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jan 29 21:00:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nawb6-0002rv-H7
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 20:33:40 +0100
+	id 1Nax1L-00079Q-LG
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 21:00:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754203Ab0A2Tdf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jan 2010 14:33:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754039Ab0A2Tdf
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 14:33:35 -0500
-Received: from mail.icell.hu ([80.99.238.252]:53786 "EHLO mail.icell.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753881Ab0A2Tde (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 14:33:34 -0500
-X-Greylist: delayed 461 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Jan 2010 14:33:34 EST
-Received: from source.ifleet (unknown [10.1.1.250])
-	by mail.icell.hu (Postfix) with ESMTP id AC49939C;
-	Fri, 29 Jan 2010 20:23:36 +0100 (CET)
-Received: from fuge by source.ifleet with local (Exim 4.69)
-	(envelope-from <zoltan.fuzesi@icell.hu>)
-	id 1NawUZ-0002IT-C0; Fri, 29 Jan 2010 20:26:55 +0100
-X-Mailer: git-send-email 1.7.0.rc0.48.gdace5
-In-Reply-To: <4B62CEAB.5050608@viscovery.net>
-In-Reply-To: <4B62CEAB.5050608@viscovery.net>
-References: <4B62CEAB.5050608@viscovery.net>
+	id S1754560Ab0A2UAl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jan 2010 15:00:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754445Ab0A2UAl
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 15:00:41 -0500
+Received: from moutng.kundenserver.de ([212.227.17.9]:51345 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754272Ab0A2UAk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 15:00:40 -0500
+Received: from [127.0.1.1] (p5B130E12.dip0.t-ipconnect.de [91.19.14.18])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0MgYEB-1NO4ZS45p9-00NNQN; Fri, 29 Jan 2010 21:00:35 +0100
+Content-Disposition: inline
+In-Reply-To: <20100129191326.GD22101@spearce.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Provags-ID: V01U2FsdGVkX1+QjGdRvdHujHCMDODTeOarSPKX7rC54PwkmZv
+ 7vtZT8IU/kijN04tlz9VFbj0OGAXZN5RKls5ELsc4qFSE+BRya
+ QvaiShJypyfYBHb6m0y/Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138342>
 
-Threaded grep feature relies on this function, but its implementation w=
-as
-missing from the Win32 Pthreads API.
+Hi Shawn,
 
-Signed-off-by: Zolt=C3=A1n F=C3=BCzesi <zfuzesi@eaglet.hu>
----
-Johannes, how about this? I haven't tested it.
+On Fri, Jan 29, 2010 at 11:13:26AM -0800, Shawn O. Pearce wrote:
+> SZEDER G?bor <szeder@ira.uka.de> wrote:
+> > How about something like this for subcommands (not aliases)?  It's =
+a
+> > good code size reduction anyway.
+>=20
+> Hmm, I like this.  I just didn't know how to implement it...  :-)
+>=20
+> Acked-by: Shawn O. Pearce <spearce@spearce.org>
+>=20
+> > +	local completion_func=3D"_git_${command//-/_}"
+> > +	declare -F $completion_func >/dev/null && $completion_func
+>=20
+> Yay for knowing bash.  :-)
 
- compat/win32/pthread.c |   12 ++++++++++++
- compat/win32/pthread.h |    2 ++
- 2 files changed, 14 insertions(+), 0 deletions(-)
+Heh.  I've found out about this 'declare -F' thing about two hours ago
+(;
 
-diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
-index 631c0a4..498b552 100644
---- a/compat/win32/pthread.c
-+++ b/compat/win32/pthread.c
-@@ -108,3 +108,15 @@ int pthread_cond_signal(pthread_cond_t *cond)
- 	else
- 		return 0;
- }
-+
-+int pthread_cond_broadcast(pthread_cond_t *cond)
-+{
-+	LONG prev_count;
-+	while (cond->waiters) {
-+		if (!ReleaseSemaphore(cond->sema, 1, &prev_count))
-+			return err_win_to_posix(GetLastError());
-+		if (prev_count =3D=3D LONG_MAX - 1)
-+			break;
-+	}
-+	return 0;
-+}
-diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
-index b8e1bcb..11426f5 100644
---- a/compat/win32/pthread.h
-+++ b/compat/win32/pthread.h
-@@ -44,6 +44,8 @@ extern int pthread_cond_wait(pthread_cond_t *cond, CR=
-ITICAL_SECTION *mutex);
-=20
- extern int pthread_cond_signal(pthread_cond_t *cond);
-=20
-+extern int pthread_cond_broadcast(pthread_cond_t *cond);
-+
- /*
-  * Simple thread creation implementation using pthread API
-  */
---=20
-1.7.0.rc0.48.gdace5.dirty
+
+However.
+
+I thought this should actually "Just Work" for aliases, too.  e.g.
+Junio could use the following completion function to get 'git log's
+options for his lgm alias:
+
+_git_lgm () {
+        _git_log
+}
+
+Unfortunately, it doesn't work at all.
+
+In _git() first we have 'lgm' in $command, which is ok, but then comes
+this alias handling thing
+
+        local expansion=3D$(__git_aliased_command "$command")
+        [ "$expansion" ] && command=3D"$expansion"
+
+which writes '!sh' into $command, and that doesn't look quite right
+for me, although I admit that I can't seem to figure out how this
+__git_aliased_command() is supposed to work (so much about knowing
+bash ;).  Any insight?
+
+
+Best,
+G=E1bor
