@@ -1,86 +1,77 @@
-From: Nicolas Pitre <nico@fluxnic.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: master^ is not a local branch -- huh?!?
-Date: Fri, 29 Jan 2010 16:51:18 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1001291641200.1681@xanadu.home>
+Date: Fri, 29 Jan 2010 13:54:49 -0800
+Message-ID: <7vmxzwh906.fsf@alter.siamese.dyndns.org>
 References: <ron1-2E17EF.12204629012010@news.gmane.org>
- <8c9a061001291227v34ca0745l1ab35ef6ca5863dc@mail.gmail.com>
- <fabb9a1e1001291235h26681e65qe4851cae1c536b6d@mail.gmail.com>
- <7veil8iqnj.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1001291614550.1681@xanadu.home>
- <fabb9a1e1001291321v708c7cb4sec8e944f336d04fd@mail.gmail.com>
- <alpine.LFD.2.00.1001291628510.1681@xanadu.home>
- <fabb9a1e1001291332w1d161f8at58aa6fe6908bd77f@mail.gmail.com>
+ <hjvgs1$rep$1@ger.gmane.org> <ron1-953427.13240429012010@news.gmane.org>
+ <fabb9a1e1001291328s1df443d6jdf0501cda17072de@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Ron1 <ron1@flownet.com>, Jacob Helwig <jacob.helwig@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ron Garret <ron1@flownet.com>, git@vger.kernel.org
 To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 29 22:51:37 2010
+X-From: git-owner@vger.kernel.org Fri Jan 29 22:55:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaykP-0003l5-Lt
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 22:51:26 +0100
+	id 1Nayo0-0007S0-B5
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 22:55:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754881Ab0A2VvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 16:51:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754838Ab0A2VvT
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 16:51:19 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:53735 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754086Ab0A2VvT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 16:51:19 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KX10088V3DIFU10@VL-MR-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 29 Jan 2010 16:51:18 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <fabb9a1e1001291332w1d161f8at58aa6fe6908bd77f@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1753157Ab0A2Vy7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jan 2010 16:54:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752806Ab0A2Vy7
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 16:54:59 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39017 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752903Ab0A2Vy6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Jan 2010 16:54:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1733F95F31;
+	Fri, 29 Jan 2010 16:54:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ydN1Lj4Wf9nY
+	RWRJRYwGbvnv02w=; b=DR4B+tOcboxPhHBjDG5s9cCARY9Tprebg1aJEqF8Kui9
+	WuBE/pfFO7XWRoHjSHCPc/m0gyiIKAT9T0NnuiqcJs2Us0LG/TdNgN8cqBp4WHOV
+	HuVChJ5cVU0N06rPRo5jZ6VX3Sk76oNNDDLFi0AUl9rmkwajCG/mPi9eAWCnhLU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=yYKfdj
+	SyK/xTxRWxPxyT9AARAJTNrlFqHtct59OYmmFBYRERC9fqmQBWSjx2+s2iUvEt7Y
+	e0OADMGQURtWzZtibVC2Y4V+QUa/FxaGOklNq7P+zcvgYRebWZS6o3XlZiQgMflS
+	k/XWBKKlys62V/RwpbCvbgPxYEx2dhkh02FuY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DA84195F30;
+	Fri, 29 Jan 2010 16:54:54 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2882195F2E; Fri, 29 Jan
+ 2010 16:54:51 -0500 (EST)
+In-Reply-To: <fabb9a1e1001291328s1df443d6jdf0501cda17072de@mail.gmail.com>
+ (Sverre Rabbelier's message of "Fri\, 29 Jan 2010 22\:28\:57 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: EF430D66-0D20-11DF-B723-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138378>
 
-On Fri, 29 Jan 2010, Sverre Rabbelier wrote:
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-> Heya,
-> 
-> On Fri, Jan 29, 2010 at 22:29, Nicolas Pitre <nico@fluxnic.net> wrote:
-> > Then who was arguing about making Git more user friendly rather
-> > then less?
-> 
-> Using a detached head is a more advanced feature than wanting to
-> checkout a remote branch locally, creating a local tracking branch. As
-> such, 'git checkout origin/topic' now means the same as 'git checkout
-> -t origin/topic', and you can get the old behavior back by doing 'git
-> checkout origin/topic^0'.
+> On Fri, Jan 29, 2010 at 22:24, Ron Garret <ron1@flownet.com> wrote:
+>> Yes, I read that. =C2=A0But what I'm trying to do is not just *look*=
+ at the
+>> history, I want to restore my working tree to a previous version. =C2=
+=A0The
+>> "Exploring History" section of the docs doesn't say how to do that.
+>
+> Do you want to restore your working tree only, or also throw away the
+> history? If the former, you could look at 'git revert',...
 
-What purpose does this "feature" serve?  Making sure people remain 
-stupid and get even more confused when the special dwimery doesn't work 
-because they don't know the difference between a local branch and a 
-remote tracking branch?
+I think he wanted to check paths out of a commit and the set of paths
+happened to be "everything".
 
-And now people will be left wondering why after a fetch they don't get 
-the latest stuff when they do "git checkout topic" again.  Is this any 
-better?
-
-> I don't see what the problem is, if you're
-> using a detached head you're an advanced enough git user that you can
-> remember that you can use '^0' to detach your head.
-
-I don't agree with the assertion that a detached HEAD is for advanced 
-users only.
-
-> It's not all that uncommon to do 'git checkout HEAD^0' to detach your 
-> head to the current branch, no?
-
-Certainly way more uncommon than 'git checkout origin/foo', and way less 
-intuitive.
-
-
-Nicolas
+IOW, "checkout $commit ."
