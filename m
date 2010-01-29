@@ -1,77 +1,124 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Ron Garret <ron1@flownet.com>
 Subject: Re: master^ is not a local branch -- huh?!?
-Date: Fri, 29 Jan 2010 22:32:41 +0100
-Message-ID: <fabb9a1e1001291332w1d161f8at58aa6fe6908bd77f@mail.gmail.com>
-References: <ron1-2E17EF.12204629012010@news.gmane.org> <8c9a061001291227v34ca0745l1ab35ef6ca5863dc@mail.gmail.com> 
-	<fabb9a1e1001291235h26681e65qe4851cae1c536b6d@mail.gmail.com> 
-	<7veil8iqnj.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1001291614550.1681@xanadu.home> 
-	<fabb9a1e1001291321v708c7cb4sec8e944f336d04fd@mail.gmail.com> 
-	<alpine.LFD.2.00.1001291628510.1681@xanadu.home>
+Date: Fri, 29 Jan 2010 13:34:01 -0800
+Organization: Amalgamated Widgets
+Message-ID: <ron1-1F1799.13340029012010@news.gmane.org>
+References: <ron1-2E17EF.12204629012010@news.gmane.org> <op.u7a909hf4oyyg1@alvarezp-ws>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Ron1 <ron1@flownet.com>, Jacob Helwig <jacob.helwig@gmail.com>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Fri Jan 29 22:33:12 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 29 22:34:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaySj-00016X-L8
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 22:33:09 +0100
+	id 1NayU6-0001qD-Ix
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 22:34:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754914Ab0A2VdE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 16:33:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754863Ab0A2VdE
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 16:33:04 -0500
-Received: from mail-px0-f182.google.com ([209.85.216.182]:59920 "EHLO
-	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750869Ab0A2VdB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 16:33:01 -0500
-Received: by pxi12 with SMTP id 12so1997815pxi.33
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 13:33:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=2Uvr1IVZQQ8VGoyVbHCR8nhF1+vuxv/JgakUUenKn60=;
-        b=eaM3O8oEmJSy2B8X2Xlf8jxYtEVflKqaMO+KV/CYBZPXHK5IYt6tBCXhoTvqtlw0Fc
-         s0qAhMgnM4rCKT2esR0N68s19US3Pqb8Sxd6fr/27/9wEMmz84sQ1cSW87ysg32xKj6D
-         f+nLYXYJb/Moj1zEZxb+uI/BeqDtquCqDtSzc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=sGnPFk8OPkwgB4TmjwE0TbDtykOfjry1GeYGq284HqArD/VJtg0F+XeeUrHJGNEOMv
-         bNGL2R7Ecmj66E5Vb1pe2Q4LnSvPBYqueoFXgOBH6J9DXIG7E96Mk3trxSNHoiN1orSA
-         OJlrdBJB/I7KoEScGFCCjcI49rGPBgT/3p95k=
-Received: by 10.142.117.25 with SMTP id p25mr897886wfc.301.1264800781100; Fri, 
-	29 Jan 2010 13:33:01 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.00.1001291628510.1681@xanadu.home>
+	id S1754876Ab0A2Vea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 16:34:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753902Ab0A2Vea
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 16:34:30 -0500
+Received: from lo.gmane.org ([80.91.229.12]:35375 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753792Ab0A2Ve3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 16:34:29 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NayTy-0001nD-TU
+	for git@vger.kernel.org; Fri, 29 Jan 2010 22:34:26 +0100
+Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 22:34:26 +0100
+Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 22:34:26 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
+User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138368>
 
-Heya,
+In article <op.u7a909hf4oyyg1@alvarezp-ws>,
+ "Octavio Alvarez" <alvarezp@alvarezp.ods.org> wrote:
 
-On Fri, Jan 29, 2010 at 22:29, Nicolas Pitre <nico@fluxnic.net> wrote:
-> Then who was arguing about making Git more user friendly rather
-> then less?
+> On Fri, 29 Jan 2010 12:20:46 -0800, Ron1 <ron1@flownet.com> wrote:
+> 
+> > [ron@mickey]$ git checkout master
+> > Already on 'master'
+> > [ron@mickey]$ git checkout master^
+> > Note: moving to 'master^' which isn't a local branch
+> > If you want to create a new branch from this checkout, you may do so
+> > (now or later) by using -b with the checkout command again. Example:
+> >   git checkout -b <new_branch_name>
+> > HEAD is now at 7be05e0... test
+> > [ron@mickey]$ git branch
+> > * (no branch)
+> >   master
+> > [ron@mickey]$
+> >
+> > Huh?!?
+> >
+> > This is a test repository which has never been pulled from nor pushed to
+> > anywhere.  So how is it possible that I have a non-local branch?
+> 
+> "Is a non-local branch" is not the same as "is not a local branch".
+> 
+> Think "branches" as tags that advance when you commit over them.
+> 
+> If you do gitk --all, only those commits with a green tag are
+> "branches".
+> 
+> It means that if you switch to master^ and commit, your commit will
+> be applied but not tracked (since there is not any branch to advance).
+> 
+> You would need to do git checkout -b 'new_branch', and then commit.
+> Now, new_branch will advance with your new commit.
 
-Using a detached head is a more advanced feature than wanting to
-checkout a remote branch locally, creating a local tracking branch. As
-such, 'git checkout origin/topic' now means the same as 'git checkout
--t origin/topic', and you can get the old behavior back by doing 'git
-checkout origin/topic^0'. I don't see what the problem is, if you're
-using a detached head you're an advanced enough git user that you can
-remember that you can use '^0' to detach your head. It's not all that
-uncommon to do 'git checkout HEAD^0' to detach your head to the
-current branch, no?
+OK, I think I understand that.
 
--- 
-Cheers,
+Here's the thing: I can do this:
 
-Sverre Rabbelier
+git checkout commit-id filename
+
+and restore a particular revision of a particular file to my working 
+tree without affecting my HEAD pointer.  I would expect then that
+
+git checkout commit-id
+
+with no filename would do the same thing, except restore the entire tree 
+from that commit (including deleting files that didnt' exist then).  And 
+indeed it does that (or at least appears to -- I haven't explored this 
+in depth), except that it DOES move my HEAD pointer to this weird 
+non-branch thing.
+
+Here's what I think would be the correct behavior:
+
+
+
+[ron@mickey]$ git checkout master^
+
+"WARNING: master^ is not a branch.  It is a commit on the master branch.
+Since the the commit you are asking for is on the same branch as your
+current HEAD pointer, here's what I'm going to do:
+
+1.  Copy the master^ commit to your working tree
+2.  Leave your HEAD pointer where is was (i.e. pointing to the head
+of the master branch).
+
+If this is not what you wanted, you can undo it by typing "git checkout 
+HEAD".  Also, in the future, you can avoid this warning by typing ...
+instead.
+
+
+
+Or something like that.
+
+rg
