@@ -1,83 +1,82 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: Stepping through a single file's history
-Date: Fri, 29 Jan 2010 03:47:41 +0000
-Message-ID: <43d8ce651001281947m2505dbcco992ad98ddbfeaeae@mail.gmail.com>
-References: <5699F80A-4B27-4BAB-BEE8-5C48938A970B@flownet.com>
-	 <43d8ce651001281758x79965b5fn8760b69d4fe82a36@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fast-import: Stream very large blobs directly to pack
+Date: Thu, 28 Jan 2010 21:29:27 -0800
+Message-ID: <7vockdjx6w.fsf@alter.siamese.dyndns.org>
+References: <20100129012350.GD20488@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 29 04:48:06 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>, Nicolas Pitre <nico@fluxnic.net>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jan 29 06:32:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nahq0-0001IV-EW
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 04:48:04 +0100
+	id 1NajSd-0004ua-Lk
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 06:32:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756627Ab0A2Drm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2010 22:47:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754934Ab0A2Drm
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jan 2010 22:47:42 -0500
-Received: from mail-pw0-f42.google.com ([209.85.160.42]:64305 "EHLO
-	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754638Ab0A2Drl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jan 2010 22:47:41 -0500
-Received: by pwi21 with SMTP id 21so1022696pwi.21
-        for <git@vger.kernel.org>; Thu, 28 Jan 2010 19:47:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=z29w1KJqteyEPcAQY0TLEkt5uWb3YT7Jhv2xDbJa7n8=;
-        b=Jx39Gq+j421Er+5IUBoGEfwDBeUb/gZp6DS3r+wBNZE/vEw7JA+E+WkEwcNlufKKyZ
-         4Hc/5Yd5Y1Cdbekj+BYTRThMOVaq9HiOY6DU8Hfc4mJJ9NKcH4fFQHzEDfDF+yMp8EdT
-         ca1wv3W8aMjB0J9VAsFMNGBM7YOw+MSHjQXhk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=YlPtUtS4lKg/ervmL3DGYOl5arkUFcf2k9SCiYs5+PfsNj1x4ljXMxua4CQDl/83ZH
-         8eLESAHRdUpGfKTCs1BxVs3UISOikBH89zLaeIJQyOlrpV5XktnCzjQJOmaGm2VLRxP4
-         aZtghZUAach7Q4GIKO/CvjqW04UDXisx8votw=
-Received: by 10.115.132.12 with SMTP id j12mr166999wan.121.1264736861310; Thu, 
-	28 Jan 2010 19:47:41 -0800 (PST)
-In-Reply-To: <43d8ce651001281758x79965b5fn8760b69d4fe82a36@mail.gmail.com>
+	id S1750928Ab0A2F3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 00:29:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750869Ab0A2F3k
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 00:29:40 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47692 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750782Ab0A2F3i (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 00:29:38 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E7DE0956A2;
+	Fri, 29 Jan 2010 00:29:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7SyPBrymPI4Slte2Xx2ZNX4/bp4=; b=iuPD1E
+	E4ed5/cFzZ896YhxGStvABw23uQY0JT4nEqCqa9PVPE568ADGmKUSdsZ4nSF+6y0
+	oQtNYfuNAc8oDQ5OXZS0OjouU62Gl9VcGhqYEfZx2IXIiM1lKBkBktQYQHGBS4RK
+	WBVKwZJOGVzLEagJ5tBoJg4Mg/2piq4WIHdIk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tlpvYoIJV6cpea8QpSeVXT8n+8QehhUW
+	1fkkp5n4PsUiLlek4wJNTbv/4sacA7YHRB4MLPcOFm4Ibnd9d94R4mBiWT0A+JVZ
+	U8EJZGS3ZI/vI5+HEhmdYfPMKrgbDlWiwG6WGIXIMf/j6a/3Hh9IbU0ot4Uufcb6
+	l+sfg5/Fu20=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B6343956A1;
+	Fri, 29 Jan 2010 00:29:32 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 096CC9569F; Fri, 29 Jan
+ 2010 00:29:28 -0500 (EST)
+In-Reply-To: <20100129012350.GD20488@spearce.org> (Shawn O. Pearce's message
+ of "Thu\, 28 Jan 2010 17\:23\:50 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 47B7177E-0C97-11DF-972D-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138300>
 
-2010/1/29 John Tapsell <johnflux@gmail.com>:
-> 2010/1/29 Ron Garret <ron@flownet.com>:
->> Hello,
->>
->> Is there an easy way to step through the history of a single file? =C2=
-=A0To be more specific:
-> ...
->> (The use case here is remembering that back in the day there was som=
-e useful code in this file that I want to retrieve, but not remembering=
- exactly when it was deleted. =C2=A0So I want to step back through this=
- file's history and do diffs against HEAD.)
->
-> How about simply doing:
->
-> git log -p filename
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-You can also do like:
+> +static void stream_blob(
+> +	uintmax_t len,
+> +	unsigned char *sha1out,
+> +	uintmax_t mark)
 
-git show HEAD~3:path/filename
+A funny way to indent and line wrap...
 
-where path is the path from the top of the git repository.  This would
-show the file as it was 3 revisions ago.
+> +{
+> + ...
+> +	/* Determine if we should auto-checkpoint. */
+> +	if ((pack_size + 60 + len) > max_packsize
+> +		|| (pack_size + 60 + len) < pack_size)
+> +		cycle_packfile();
 
-You can also do like:
+What's "60" in this math?
 
-git checkout HEAD~3 filename
-
-to checkout the first as it was 3 revisions ago.
+If the data is not compressible, we could even grow and the end result
+might be more than (pack_size + len), busting max_packsize.  As we are
+streaming out, we cannot say "oops, let me try again after truncating and
+closing the current file and then opening a new file", and instead may
+have to copy the data from the current one to a new one, and truncate the
+current one.  Is this something worth worrying about?
