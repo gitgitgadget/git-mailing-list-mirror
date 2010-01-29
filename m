@@ -1,114 +1,127 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] reject @{-1} not at beginning of object name
-Date: Fri, 29 Jan 2010 06:22:19 -0500
-Message-ID: <20100129112219.GC6165@coredump.intra.peff.net>
-References: <20100128094446.GA14244@coredump.intra.peff.net>
- <20100128095643.GC14253@coredump.intra.peff.net>
- <7vsk9qknf6.fsf@alter.siamese.dyndns.org>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: build warnings
+Date: Fri, 29 Jan 2010 12:23:57 +0100
+Message-ID: <40aa078e1001290323u5ab98747p5adc9f703c30fae7@mail.gmail.com>
+References: <d2e97e801001290103r5b9cfc2aq8daec90c8c88f2ff@mail.gmail.com>
+	 <20100129110201.GB6165@coredump.intra.peff.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 29 12:22:32 2010
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Wookey <michaelwookey@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 29 12:31:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Naovm-00031R-E1
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 12:22:30 +0100
+	id 1Nap4N-0006c7-52
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 12:31:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755561Ab0A2LWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 06:22:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755462Ab0A2LWX
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 06:22:23 -0500
-Received: from peff.net ([208.65.91.99]:44565 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753670Ab0A2LWX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 06:22:23 -0500
-Received: (qmail 4336 invoked by uid 107); 29 Jan 2010 11:22:23 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 29 Jan 2010 06:22:23 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Jan 2010 06:22:19 -0500
-Content-Disposition: inline
-In-Reply-To: <7vsk9qknf6.fsf@alter.siamese.dyndns.org>
+	id S1756625Ab0A2LbS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jan 2010 06:31:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756349Ab0A2LbR
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 06:31:17 -0500
+Received: from [74.125.82.46] ([74.125.82.46]:62245 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-FAIL-FAIL-OK-OK)
+	by vger.kernel.org with ESMTP id S1756203Ab0A2LbR convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 06:31:17 -0500
+X-Greylist: delayed 437 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Jan 2010 06:31:16 EST
+Received: by wwi18 with SMTP id 18so133411wwi.19
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 03:31:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wpfW+KVC7/qMnw5lQwASz2136lmMk+rMN498zPi33Wc=;
+        b=QgVN5rJpvb0Af5TsbrevoxxyOxk3Poi6SsrflMHSWt+/udEsk9gm+vDu76UWzJgGEC
+         oAfI+V77mIge95BrSPqY1HnakC0y8fzvci5+FR+ToXu/fUEpv4l++5D+6Dd/I7cs9fOv
+         Uq+G3okNrOlNC7slzGJtHbZ1EMcFlh14974O0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=svu/05KkWD46QwhhfhxrxdCSQupiIndMxhYRHpSvJTuI2shtw6urGsWAz8wXHsN8JF
+         CJue3Sp8WPV6IW/u4oTyA9v2V9YBvmvTf2JUn3F7z2MzfRRSRUFqPEyanmN6dXXaSwA6
+         0HD6Rx79nJnJA/czeBf80CJ0yJiGZ9IA+KSCo=
+Received: by 10.216.170.198 with SMTP id p48mr393477wel.133.1264764237320; 
+	Fri, 29 Jan 2010 03:23:57 -0800 (PST)
+In-Reply-To: <20100129110201.GB6165@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138313>
 
-On Thu, Jan 28, 2010 at 12:02:53PM -0800, Junio C Hamano wrote:
+On Fri, Jan 29, 2010 at 12:02 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Jan 29, 2010 at 08:03:37PM +1100, Michael Wookey wrote:
+>
+>> With current master (dace5dd1), the following build warnings appear =
+on
+>> Ubuntu 9.10 (x86):
+>>
+>> =A0 run-command.c: In function =91notify_parent=92:
+>> =A0 run-command.c:70: warning: ignoring return value of =91write=92,
+>> declared with attribute warn_unused_result
+>> =A0 run-command.c: In function =91die_child=92:
+>> =A0 run-command.c:80: warning: ignoring return value of =91write=92,
+>> declared with attribute warn_unused_result
+>> =A0 run-command.c:81: warning: ignoring return value of =91write=92,
+>> declared with attribute warn_unused_result
+>> =A0 run-command.c:82: warning: ignoring return value of =91write=92,
+>> declared with attribute warn_unused_result
+>
+> There is no point in looking at the return value of any of those call=
+s.
+> The first one is about notifying the parent process of a child's fail=
+ure
+> to exec while it is dying (the surrounding function is even an atexit
+> handler!). If we can't do that, there is really no alternative behavi=
+or.
+> The latter three are printing fatal error messages. If we fail at tha=
+t,
+> there is not much to do (unless we should print an error...).
+>
+>> =A0 ~$ gcc --version
+>> =A0 gcc (Ubuntu 4.4.1-4ubuntu9) 4.4.1
+>
+> I have heard that Ubuntu recently switched on unused result warnings =
+by
+> default, and I have seen complaints that it is generating a lot of
+> uninteresting warnings like these.
+>
+> Does anybody know if this behavior is here to stay? Can it be worked
+> around with -Wno-warn-unused-result or something? There are few enoug=
+h
+> callsites here that I am not entirely opposed to annotating them with
+> "(void)write" (does that actually work?), but I worry that this is a
+> slippery slope. There are a lot of other calls whose return values ar=
+e
+> also uninteresting (just looking in the vicinity of this code, I see =
+an
+> fflush and a close, neither of whose failure would be interesting). I=
+'m
+> not excited at the prospect of annotating all of them.
+>
 
-> We might want to use @{-some string that has non digit} for other purposes
-> and it may be a safer change to tweak the "do we only have digits" check
-> in the post-context to detect and reject only @{-<all digits>}.
+In my experience, quieting warn-unused-result globally isn't ideal;
+this warning has helped me track down some serious issues many times
+in the past. IIRC, gcc requires a specific attribute on a function
+prototype in order to generate warnings when the return-value isn't
+used. I guess the issue we're seeing here is that the glibc that
+Ubuntu ships has recently added this attribute for some CRT-functions.
 
-I considered that, but I didn't think it was really worth it. If we
-later want to make @{-foobar} meaningful, we can loosen the safety check
-then.
+Personally I think that quieting them ("(void)func(...)" does work
+AFAIK) can make sense as long as there's only a few call-sites.
+However, if it's so many that it'll generate substantial noise in the
+git-sources or Ubuntu-users will get annoyed beyond sense,
+"-Wno-warn-unused-result" might be the only choice. But perhaps this
+is something Ubuntu-users would put in their config.mak?
 
-> But what I am puzzled by the code structure of get_sha1_basic(), which
-> looks like this:
-
-You are not the only one who is puzzled. :)
-
-But yes, your analysis of what is there now looks right to me.
-
-> And the place that parses @{-1} and @{u} are different, even though both
-> dwim_log() called by the third one and dwim_ref() called by the fourth one
-> call substitute_branch_name() and they are perfectly capable of resolving
-> @{-1} and @{u} (and even nested stuff like @{-1}@{u}@{u} with your patch).
-
-Ooh, gross. I didn't try @{u}@{u} in my tests, but it should work.
-
->     Side note.  I am wondering if dwim_log()'s current implementation is
->     even correct in the first place.  When you have two "ambiguous" refs,
->     it appears to me that you will get a warning from dwim_ref(), but if
->     only one of them has a reflog associated with it, dwim_log() won't
->     complain.  Why isn't the function be (1) dwim_ref() to find the ref
->     from abbreviated refname given in str; and then (2) check if the log
->     exists for that ref?
-
-I guess the original rationale was that you might have reflog'd one, so
-by asking for "foo@{yesterday}" you are disambiguating as "the one with
-a reflog". But that seems kind of useless to me since:
-
-  1. It is somewhat error-prone, as it assumes that from the user's
-     perspective, the fact that one ref has a log and the other does not
-     is somehow a meaningful disambiguation. Which implies that users
-     carefully figure out which refs have reflogs and which do not, and
-     I don't think that is true.
-
-  2. For quite a while, we have had logallrefupdates on by default (and
-     I don't remember the exact semantics before that, but wasn't it
-     enough to simply create a "logs" directory, which meant that you
-     either logged everything or nothing?). So I don't even know how you
-     would get into a situation where one ref has a log and the other
-     does not.
-
-In other words, I totally agree with your statement, and we could
-probably just drop the dwim_log code.
-
-> It might be cleaner if the logic went like this instead:
-
-Your logic makes sense to me. I think we could also simply do a
-left-to-right parse, eating refs, @{-N}, and @{u} as we go and
-converting them into a "real ref". If we get to something else, we stop.
-If we have a @{} left, it's a reflog.  Otherwise, it's bogus (I think ^
-suffixes and such have already been stripped off at this point).
-
-Interpret_branch_name already does most of the "eating..." part above
-(and it needs to remain separate from get_sha1_basic, as things like
-"checkout" need to use it directly).
-
-But I didn't really look too hard at it, as:
-
-> But that is a kind of code churn that may not be worth doing.  I dunno.
-
-Yeah, the code was sufficiently nasty and sufficiently core that I
-didn't really want to risk breaking it for the sake of cleanup
-(especially not during the -rc cycle).
-
--Peff
+--=20
+Erik "kusma" Faye-Lund
