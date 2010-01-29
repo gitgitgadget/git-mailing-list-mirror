@@ -1,73 +1,101 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Ron Garret <ron1@flownet.com>
 Subject: Re: master^ is not a local branch -- huh?!?
-Date: Fri, 29 Jan 2010 22:21:55 +0100
-Message-ID: <fabb9a1e1001291321v708c7cb4sec8e944f336d04fd@mail.gmail.com>
-References: <ron1-2E17EF.12204629012010@news.gmane.org> <8c9a061001291227v34ca0745l1ab35ef6ca5863dc@mail.gmail.com> 
-	<fabb9a1e1001291235h26681e65qe4851cae1c536b6d@mail.gmail.com> 
-	<7veil8iqnj.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1001291614550.1681@xanadu.home>
+Date: Fri, 29 Jan 2010 13:24:04 -0800
+Organization: Amalgamated Widgets
+Message-ID: <ron1-953427.13240429012010@news.gmane.org>
+References: <ron1-2E17EF.12204629012010@news.gmane.org> <hjvgs1$rep$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Ron1 <ron1@flownet.com>, Jacob Helwig <jacob.helwig@gmail.com>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Fri Jan 29 22:22:23 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 29 22:24:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NayII-0003SZ-My
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 22:22:23 +0100
+	id 1NayKN-0004Yu-R7
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 22:24:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752792Ab0A2VWR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jan 2010 16:22:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752183Ab0A2VWR
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 16:22:17 -0500
-Received: from mail-pz0-f190.google.com ([209.85.222.190]:43139 "EHLO
-	mail-pz0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932169Ab0A2VWQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jan 2010 16:22:16 -0500
-Received: by pzk28 with SMTP id 28so1874655pzk.4
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 13:22:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GSTvowFWPZ6FFtvdcWO5aTyKGHRtjIkem6SYrVhmz9U=;
-        b=vYtBOBVAq/doMgLdZga9OR0iT+L/3Mx8frhV3XYaAgHKakrZe9jhXl2Hjs/z71qjDD
-         iLQgtTN6BS0O6qaI21Vkf2od1kUC61l7ZXsQtTokwEEkznvwFaziiTGOMGVK21LcpM29
-         bOtK1asa8KUs0wFa8uu75xk4riZ9FZsvirmRw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=KvdLG4NcF9/x7p9+LmC6gVwuOP9N7p/Fg+iM6xGz7NmflEhBWY/C/1jEnw5NjpbX8T
-         EuHQyWO+pzQeG9F5tFl9Z0pa5v53QUotUcVK5liUtSFLHB3e8CbxMpWXZ1n0kXZPUxNH
-         8SKHjJsAi2QGwNUSwD0nHc2gdWneiKnqVCRwo=
-Received: by 10.142.247.38 with SMTP id u38mr902150wfh.277.1264800135095; Fri, 
-	29 Jan 2010 13:22:15 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.00.1001291614550.1681@xanadu.home>
+	id S1753754Ab0A2VY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 16:24:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752176Ab0A2VY0
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 16:24:26 -0500
+Received: from lo.gmane.org ([80.91.229.12]:41564 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751801Ab0A2VY0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 16:24:26 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NayKG-0004Vo-IW
+	for git@vger.kernel.org; Fri, 29 Jan 2010 22:24:24 +0100
+Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 22:24:24 +0100
+Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 22:24:24 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
+User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138363>
 
-Heya,
+In article <hjvgs1$rep$1@ger.gmane.org>,
+ "Scott R. Godin" <scottg.wp-hackers@mhg2.com> wrote:
 
-On Fri, Jan 29, 2010 at 22:20, Nicolas Pitre <nico@fluxnic.net> wrote:
-> With all due respects, I don't share Dscho's sentiment about Git's
-> alleged non user-friendliness. =A0And I always praised Git's ability =
-to
-> use a detached head to check out a remote branch, and never had any
-> problem teaching this concept to people. =A0So the above is not a UI
-> improvement at all to me.
+> On 01/29/2010 03:20 PM, Ron1 wrote:
+> > [ron@mickey]$ git checkout master
+> > Already on 'master'
+> > [ron@mickey]$ git checkout master^
+> > Note: moving to 'master^' which isn't a local branch
+> > If you want to create a new branch from this checkout, you may do so
+> > (now or later) by using -b with the checkout command again. Example:
+> >    git checkout -b<new_branch_name>
+> > HEAD is now at 7be05e0... test
+> > [ron@mickey]$ git branch
+> > * (no branch)
+> >    master
+> > [ron@mickey]$
+> >
+> > Huh?!?
+> >
+> > This is a test repository which has never been pulled from nor pushed to
+> > anywhere.  So how is it possible that I have a non-local branch?
+> >
+> > Thanks,
+> > rg
+> >
+> 
+> I believe what you're seeing is known as a detached head (see 
+> <http://www.kernel.org/pub/software/scm/git/docs/git-checkout.html> 
+> though I could be wrong about this.)
+> 
+> I think you may have intended to do git checkout HEAD^ or something 
+> similar?
 
-I think 'git checkout origin/master^0' still works?
+Yes, in fact that is exactly what I am trying to do.  But that has the 
+same result.
 
---=20
-Cheers,
+> basically what you did was (I think) checkout (or attempt to 
+> checkout) the parent commit on master.
 
-Sverre Rabbelier
+Yes.  I posted it that way simply because 'git commit HEAD' depends on 
+what HEAD is.  If HEAD is the head of master (which it was) then the 
+result is the same.
+
+> 
+> this may offer some additional food for thought: 
+> <http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html#_exploring_h
+> istory>
+
+Yes, I read that.  But what I'm trying to do is not just *look* at the 
+history, I want to restore my working tree to a previous version.  The 
+"Exploring History" section of the docs doesn't say how to do that.
+
+rg
