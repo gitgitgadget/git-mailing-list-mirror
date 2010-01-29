@@ -1,53 +1,81 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [RFC/PATCH] MSVC: Windows-native implementation of pthread_cond_broadcast
-Date: Fri, 29 Jan 2010 21:02:49 +0100
-Message-ID: <201001292102.49105.j6t@kdbg.org>
-References: <4B62CEAB.5050608@viscovery.net> <1264793213-8805-1-git-send-email-zfuzesi@eaglet.hu>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] bash: support user-supplied completion scripts for
+	user's git commands
+Date: Fri, 29 Jan 2010 12:04:31 -0800
+Message-ID: <20100129200431.GE22101@spearce.org>
+References: <9b69cfcf1001290457s6b7fad6cs5a915f16a11f5782@mail.gmail.com> <20100129151127.GA21821@spearce.org> <7v4om4kdt3.fsf@alter.siamese.dyndns.org> <20100129175950.GE21821@spearce.org> <7vockciyb8.fsf@alter.siamese.dyndns.org> <20100129190642.GA31303@neumann> <20100129191326.GD22101@spearce.org> <20100129200033.GA32636@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?q?Zolt=C3=A1n_F=C3=BCzesi?= <zfuzesi@eaglet.hu>
-X-From: git-owner@vger.kernel.org Fri Jan 29 21:04:15 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Rhodes Clymer <david@zettazebra.com>,
+	git@vger.kernel.org
+To: SZEDER G?bor <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Jan 29 21:04:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nax4h-0000re-Cx
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 21:04:15 +0100
+	id 1Nax57-00016E-Gx
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 21:04:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754662Ab0A2UEJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jan 2010 15:04:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754067Ab0A2UEI
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 15:04:08 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:60119 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754469Ab0A2UEH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 15:04:07 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 3321CA7EB7;
-	Fri, 29 Jan 2010 21:04:01 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 2F37119F609;
-	Fri, 29 Jan 2010 21:02:49 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <1264793213-8805-1-git-send-email-zfuzesi@eaglet.hu>
+	id S1754689Ab0A2UEg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 15:04:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754677Ab0A2UEg
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 15:04:36 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:63965 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754067Ab0A2UEf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 15:04:35 -0500
+Received: by vws12 with SMTP id 12so658017vws.19
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 12:04:34 -0800 (PST)
+Received: by 10.220.123.215 with SMTP id q23mr1169709vcr.119.1264795474822;
+        Fri, 29 Jan 2010 12:04:34 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 41sm30141919vws.5.2010.01.29.12.04.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 29 Jan 2010 12:04:33 -0800 (PST)
 Content-Disposition: inline
+In-Reply-To: <20100129200033.GA32636@neumann>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138344>
 
-On Freitag, 29. Januar 2010, Zolt=C3=A1n F=C3=BCzesi wrote:
-> Johannes, how about this? I haven't tested it.
+SZEDER G?bor <szeder@ira.uka.de> wrote:
+> 
+> _git_lgm () {
+>         _git_log
+> }
+> 
+> Unfortunately, it doesn't work at all.
+> 
+> In _git() first we have 'lgm' in $command, which is ok, but then comes
+> this alias handling thing
+> 
+>         local expansion=$(__git_aliased_command "$command")
+>         [ "$expansion" ] && command="$expansion"
+> 
+> which writes '!sh' into $command, and that doesn't look quite right
 
-Neither have I, but I do not expect that it work: You neither modify th=
-e=20
-waiters count nor do you wait for it to be modified; IOW, you have a bu=
-sy=20
-loop. cond_broadcast is not that trivial. I hope to send a patch tonigh=
-t.
+__git_aliased_command is returning the first word out of the alias.
+I think we need to change this block here to:
 
--- Hannes
+  case "$expansion" of
+  \!*) : leave command as alias ;;
+  '')  : leave command alone ;;
+  *)   command="$expansion" ;;
+  esac
+
+Or something like that.  Because an alias whose value starts with
+! is a shell command to be executed, so we want to use _git_$command
+for completion, but other aliases are builtin commands and we should
+use their first word token (what __git_aliased_command returns)
+as the name of the completion function.
+
+I think.  :-)
+
+-- 
+Shawn.
