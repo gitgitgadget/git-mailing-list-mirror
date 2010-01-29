@@ -1,112 +1,68 @@
-From: Ron Garret <ron1@flownet.com>
-Subject: Re: master^ is not a local branch -- huh?!?
-Date: Fri, 29 Jan 2010 14:47:49 -0800
-Organization: Amalgamated Widgets
-Message-ID: <ron1-0EE62E.14474929012010@news.gmane.org>
-References: <ron1-2E17EF.12204629012010@news.gmane.org> <op.u7a909hf4oyyg1@alvarezp-ws> <ron1-1F1799.13340029012010@news.gmane.org> <op.u7bfjni44oyyg1@alvarezp-ws>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH v2] fast-import: Stream very large blobs directly to	pack
+Date: Fri, 29 Jan 2010 18:02:55 -0500
+Message-ID: <4B63691F.4000507@gmail.com>
+References: <20100129012350.GD20488@spearce.org> <7vockdjx6w.fsf@alter.siamese.dyndns.org> <20100129152254.GC21821@spearce.org> <20100129163838.GD21821@spearce.org> <m3aavwbwaz.fsf@localhost.localdomain> <20100129183024.GA22101@spearce.org>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 29 23:48:27 2010
+Cc: git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Jan 30 00:03:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NazdY-0006c9-7T
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 23:48:24 +0100
+	id 1Nazrq-0000Yl-7d
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 00:03:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756006Ab0A2WsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 17:48:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755955Ab0A2WsS
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 17:48:18 -0500
-Received: from lo.gmane.org ([80.91.229.12]:46268 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755953Ab0A2WsS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 17:48:18 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NazdM-0006Tc-VY
-	for git@vger.kernel.org; Fri, 29 Jan 2010 23:48:12 +0100
-Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 23:48:12 +0100
-Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 23:48:12 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
-User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
+	id S1755922Ab0A2XDF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 18:03:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752303Ab0A2XDE
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 18:03:04 -0500
+Received: from mail-gx0-f226.google.com ([209.85.217.226]:37274 "EHLO
+	mail-gx0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754783Ab0A2XDD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 18:03:03 -0500
+Received: by gxk26 with SMTP id 26so683549gxk.8
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 15:03:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=qoHW+beEyLs1MogiQ61idLwEebfYcxMVtciw4YNIXH0=;
+        b=X6uYdOkQST9VHQ81C2JburZNzEXt40pU1hunNDQjmjCSwdzYksvtDDvyIZi10iJahj
+         j9FXs+LT/WPav0WJxq4w5GDpcxYPrBOoSixQ3dKqZSxTJInBtgh7V4Fn4e8MyC4tY8FM
+         dT9C7FnXk42u1UgJGDVU20eLattmrXGfdgTqY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=Kxahne6NHte5e0rVt7ASSe9/GgxRxWBT61Vj7bUbk4p7y+7+/bqd2g33cmsThBLqa6
+         WPATsbLOWcQJ00DOf7E2+r3QScM572UzMGNv0ZPdPvpc9o5pX2XseOU7d0E7dW7ux4NC
+         YD4W7fmdfvkegA6moGJp9EZW2lnUjSbJSNR1E=
+Received: by 10.101.118.5 with SMTP id v5mr1719336anm.99.1264806181763;
+        Fri, 29 Jan 2010 15:03:01 -0800 (PST)
+Received: from ?10.0.0.6? (c-71-199-240-201.hsd1.fl.comcast.net [71.199.240.201])
+        by mx.google.com with ESMTPS id 23sm880934ywh.3.2010.01.29.15.03.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 29 Jan 2010 15:03:01 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+In-Reply-To: <20100129183024.GA22101@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138396>
 
-In article <op.u7bfjni44oyyg1@alvarezp-ws>,
- "Octavio Alvarez" <alvarezp@alvarezp.ods.org> wrote:
+Shawn O. Pearce wrote:
+...
+> Implemented as core.bigFileThreshold in this patch... but I didn't
+> document it...
 
-> On Fri, 29 Jan 2010 13:34:01 -0800, Ron Garret <ron1@flownet.com> wrote:
-> 
-> > In article <op.u7a909hf4oyyg1@alvarezp-ws>,
-> >  "Octavio Alvarez" <alvarezp@alvarezp.ods.org> wrote:
-> >
-> >> On Fri, 29 Jan 2010 12:20:46 -0800, Ron1 <ron1@flownet.com> wrote:
-> >>
-> >> It means that if you switch to master^ and commit, your commit will
-> >> be applied but not tracked (since there is not any branch to advance).
-> >>
-> >> You would need to do git checkout -b 'new_branch', and then commit.
-> >> Now, new_branch will advance with your new commit.
-> >
-> > OK, I think I understand that.
-> >
-> > Here's the thing: I can do this:
-> >
-> > git checkout commit-id filename
-> >
-> > and restore a particular revision of a particular file to my working
-> > tree without affecting my HEAD pointer.  I would expect then that
-> >
-> > git checkout commit-id
-> >
-> > with no filename would do the same thing, except restore the entire tree
-> > from that commit (including deleting files that didnt' exist then).  And
-> > indeed it does that (or at least appears to -- I haven't explored this
-> > in depth), except that it DOES move my HEAD pointer to this weird
-> > non-branch thing.
-> 
-> I see. You somehow imply that "git checkout commit-id" overlaps with
-> "git reset --hard commit-id".
-
-I'm not intentionally implying that.  I don't think git reset --hard 
-does what I want either (but I could be wrong about that).
-
-> Even assuming the behavior was not documented in man git-checkout, the
-> second example looks useless. What is your use case? What would you do
-> after having all the files in the tree switched to another commit,
-> without actually updating HEAD to the commit, other than git reset --hard
-> again or git revert?
-
-My actual use case is very complicated, but here's a simplified version:
-
-Suppose I'm using git as a back-end for a wiki.  I want to look at the 
-state of the entire wiki as it was in some point in the past, and I also 
-want to be able to look at the diffs between individual pages as they 
-were then and as they are now.  The most straightforward way I can think 
-of to do that is to simply copy an old commit into my working tree 
-without changing anything else.  Then I can look at the old version by 
-simply looking at the files, and I can get the diffs by simply doing a 
-git diff.
-
-If I do a git reset --hard then I get the old version, but I lose my 
-HEAD pointer so that git diff doesn't give me what I want any more.
-
-BTW, it turns out that git checkout [commit] . doesn't do the right 
-thing either.  Apparently, it still updates my index, so git diff still 
-doesn't do the right thing.
-
-rg
+Bad dog! No biscuit!
