@@ -1,103 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bash: support user-supplied completion scripts for
- user's git commands
-Date: Fri, 29 Jan 2010 12:32:12 -0800
-Message-ID: <7viqakireb.fsf@alter.siamese.dyndns.org>
-References: <9b69cfcf1001290457s6b7fad6cs5a915f16a11f5782@mail.gmail.com>
- <20100129151127.GA21821@spearce.org>
- <7v4om4kdt3.fsf@alter.siamese.dyndns.org>
- <20100129175950.GE21821@spearce.org>
- <7vockciyb8.fsf@alter.siamese.dyndns.org> <20100129190642.GA31303@neumann>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: master^ is not a local branch -- huh?!?
+Date: Fri, 29 Jan 2010 21:35:12 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1001292131330.3749@intel-tinevez-2-302>
+References: <ron1-2E17EF.12204629012010@news.gmane.org> <8c9a061001291227v34ca0745l1ab35ef6ca5863dc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	David Rhodes Clymer <david@zettazebra.com>,
-	git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Jan 29 21:32:34 2010
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-592357544-1264797313=:3749"
+Cc: Ron1 <ron1@flownet.com>, git@vger.kernel.org
+To: Jacob Helwig <jacob.helwig@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 29 21:35:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NaxW6-000293-9J
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 21:32:34 +0100
+	id 1NaxYp-0003v1-Nj
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 21:35:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754286Ab0A2Uc1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jan 2010 15:32:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753742Ab0A2Uc1
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 15:32:27 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34963 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753541Ab0A2Uc0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jan 2010 15:32:26 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BFE2A95123;
-	Fri, 29 Jan 2010 15:32:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=sfYDk9fPEfuP
-	/ogBaI4FzFtlkBo=; b=dZZs/+iUcWXRGhRqTR0ilY6hXvLoGPM5SqLWk/zsqe50
-	xp0+HTunjtibDNSOZUd9v98O0cXax49nVTaL0Iu3zz/Srq3j4X6lW4possMsVL32
-	YSDDpr+GBR71q8b4z4wrNvXHm3IPGn6GWWIS2sBBu9xBKUtIaNt8uDQ47GScHlw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Kwgt+J
-	3NJKJi9z6XmYBDB6Y71+IL3aPt+PGLeA2KjVKssfrpYBWxne7Rz3lbVi9WEFPqM4
-	Er+Nm+j0i7NpaX1ekAze9HBP4pigmxF0DD88lvyWvO0BF9v3Rc8eMr5VqReomQbC
-	ol3nFL3syLBrMJpHXLZWyoOOM5sXJqgSgnZJs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 790EF9511D;
-	Fri, 29 Jan 2010 15:32:19 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 927D69511C; Fri, 29 Jan
- 2010 15:32:14 -0500 (EST)
-In-Reply-To: <20100129190642.GA31303@neumann> ("SZEDER =?utf-8?Q?G=C3=A1bo?=
- =?utf-8?Q?r=22's?= message of "Fri\, 29 Jan 2010 20\:06\:42 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 659C975E-0D15-11DF-AB6A-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753827Ab0A2UfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 15:35:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751196Ab0A2UfQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 15:35:16 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45529 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751857Ab0A2UfP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 15:35:15 -0500
+Received: (qmail invoked by alias); 29 Jan 2010 20:35:13 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp071) with SMTP; 29 Jan 2010 21:35:13 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/4fG4YFL34yGJl18wbCAoBJn7bbcSOhyutlmY292
+	MIiO896hru2kjV
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <8c9a061001291227v34ca0745l1ab35ef6ca5863dc@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59999999999999998
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138349>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Instead of having a huge hard-coded list of command-completion
-> function pairs (in _git()), the completion script will figure out
-> which completion function to call based on the command's name.  That
-> is, when completing the options of 'git foo', the main completion
-> script will check whether the function '_git_foo' is declared, and if
-> declared, it will invoke that function to perform the completion.  If
-> such a function is not declared, it will fall back to complete file
-> names.  So, users will only need to provide this '_git_foo' completio=
-n
-> function in a separate file, source that file, and it will be used th=
-e
-> next time they press TAB after 'git foo '.
+--8323329-592357544-1264797313=:3749
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-I think the basic idea is sound, but I have a minor issue with the name=
-s.
+Hi,
 
-Admittedly, we have already taken over _git_foo (and "_git") namespace,
-and anybody who uses bash with the completion support cannot write thei=
-r
-own shell function with these names for purposes that are unrelated to
-completion, so in that sense, the patch is not introducing a new proble=
-m,
-but making it a documented interface and casting it in stone will make =
-the
-namespace contamination issue harder to rectify later.
+On Fri, 29 Jan 2010, Jacob Helwig wrote:
 
-So if we were to go in the direction as the patch proposes (which I thi=
-nk
-is a good idea), we might want to rename them to __git_completion_foo o=
-r
-something that is less likely to collide with whatever names users migh=
-t
-want to use.  It is my understanding that the only published interface =
-so
-far is __git_ps1.
+> On Fri, Jan 29, 2010 at 12:20, Ron1 <ron1@flownet.com> wrote:
+> > [ron@mickey]$ git checkout master
+> > Already on 'master'
+> > [ron@mickey]$ git checkout master^
+> > Note: moving to 'master^' which isn't a local branch
+> > If you want to create a new branch from this checkout, you may do so
+> > (now or later) by using -b with the checkout command again. Example:
+> >  git checkout -b <new_branch_name>
+> > HEAD is now at 7be05e0... test
+> > [ron@mickey]$ git branch
+> > * (no branch)
+> >  master
+> > [ron@mickey]$
+> >
+> > Huh?!?
+> >
+> > This is a test repository which has never been pulled from nor pushed to
+> > anywhere.  So how is it possible that I have a non-local branch?
+> 
+> master^ is a commit (the first parent of master), not a branch (local
+> or otherwise).
+
+Indeed.  Maybe you (Ron1) need to get a bit more acquainted to Git before 
+complaining.
+
+Git is not user-friendly (much to my chagrin, and I tried to change it, 
+but it is not going to happen), so the only way out is to really read up 
+on good tutorials/manuals before you complain about something that is not 
+working as you expect it.
+
+Just as a general hint, I think the best documentation about Git was 
+written by J. Bruce Fields (the user manual) and Scott Chacon (everything 
+that has GitHub written on it, and Git Pro, and much, much more).  If you 
+happen to speak Japanese, Junio's book might help you understand the ideas 
+behind the current Git user interface, too.
+
+Hth,
+Dscho
+
+--8323329-592357544-1264797313=:3749--
