@@ -1,59 +1,50 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 0/3] valgrind bug roundup
-Date: Fri, 29 Jan 2010 05:25:18 -0500
-Message-ID: <20100129102518.GA5875@coredump.intra.peff.net>
-References: <20100128145216.GA29727@coredump.intra.peff.net>
+From: =?UTF-8?B?Wm9sdMOhbiBGw7x6ZXNp?= <zfuzesi@eaglet.hu>
+Subject: threaded-grep cause msys build failure
+Date: Fri, 29 Jan 2010 11:27:02 +0100
+Message-ID: <9ab80d151001290227u386616c5o6c825ff10d37f9fd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 29 11:25:33 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git lista <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 29 11:27:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nao2e-00023m-E2
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 11:25:32 +0100
+	id 1Nao4H-0002wO-Qc
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 11:27:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752648Ab0A2KZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 05:25:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752601Ab0A2KZX
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 05:25:23 -0500
-Received: from peff.net ([208.65.91.99]:33605 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752172Ab0A2KZW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 05:25:22 -0500
-Received: (qmail 3905 invoked by uid 107); 29 Jan 2010 10:25:22 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 29 Jan 2010 05:25:22 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Jan 2010 05:25:18 -0500
-Content-Disposition: inline
-In-Reply-To: <20100128145216.GA29727@coredump.intra.peff.net>
+	id S1753056Ab0A2K1H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jan 2010 05:27:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752896Ab0A2K1H
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 05:27:07 -0500
+Received: from mail-bw0-f227.google.com ([209.85.218.227]:58782 "EHLO
+	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751303Ab0A2K1E convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Jan 2010 05:27:04 -0500
+Received: by bwz27 with SMTP id 27so1285164bwz.21
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 02:27:03 -0800 (PST)
+Received: by 10.204.36.85 with SMTP id s21mr394190bkd.1.1264760822989; Fri, 29 
+	Jan 2010 02:27:02 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138307>
 
-On Thu, Jan 28, 2010 at 09:52:16AM -0500, Jeff King wrote:
+Hi,
 
-> I'm running the whole test suite under valgrind for the current
-> 'master'. This was the first hit, but it's very s-l-o-w, so there might
-> be more as the day progresses.
+Building git in msys environment fails:
+=2E..
+    LINK git.exe
+builtin-grep.o: In function `wait_all':
+D:\devel\msysgit\git/builtin-grep.c:260: undefined reference to
+`pthread_cond_broadcast'
+collect2: ld returned 1 exit status
+make: *** [git.exe] Error 1
 
-And here they are. The first two are actual bugs, the third silences a
-false positive:
+I guess compat/win32/pthread.c misses pthread_cond_broadcast implementa=
+tion.
 
-  [1/3]: fix memcpy of overlapping area
-  [2/3]: fix off-by-one allocation error
-  [3/3]: add shebang line to git-mergetool--lib.sh
-
-It really has been a while since I've run the whole test suite under
-valgrind. The breakage in 3/3 dates back to last April. The bug in 1/3
-is also quite old (v1.5.0). I'm not sure why I didn't find it in
-previous valgrind runs; perhaps it is only recent valgrinds that have
-grown support for finding overlapping memcpy. The bug in 2/3 is new, and
-has never been in a released version.
-
--Peff
+Z=C3=A9
