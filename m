@@ -1,108 +1,77 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] Windows: a minimal pthread_cond_broadcast
-Date: Fri, 29 Jan 2010 23:16:03 +0100
-Message-ID: <201001292316.03858.j6t@kdbg.org>
-References: <4B62CEAB.5050608@viscovery.net> <1264793213-8805-1-git-send-email-zfuzesi@eaglet.hu> <201001292102.49105.j6t@kdbg.org>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Partially private repository?
+Date: Fri, 29 Jan 2010 17:10:53 -0500
+Message-ID: <32541b131001291410g252ddff4lbf04ac7c1d2d33fc@mail.gmail.com>
+References: <78d8a6b51001291401ib93976el25c03694d53aaced@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
-To: =?utf-8?q?Zolt=C3=A1n_F=C3=BCzesi?= <zfuzesi@eaglet.hu>
-X-From: git-owner@vger.kernel.org Fri Jan 29 23:17:27 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Daed Lee <daed@thoughtsofcode.com>
+X-From: git-owner@vger.kernel.org Fri Jan 29 23:17:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Naz9Z-00051o-7u
+	id 1Naz9Y-00051o-Mo
 	for gcvg-git-2@lo.gmane.org; Fri, 29 Jan 2010 23:17:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755793Ab0A2WRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 17:17:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755787Ab0A2WRV
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 17:17:21 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:52577 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753762Ab0A2WRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 17:17:20 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 99877A7EAE;
-	Fri, 29 Jan 2010 23:17:16 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id E5C0119F609;
-	Fri, 29 Jan 2010 23:16:03 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <201001292102.49105.j6t@kdbg.org>
-Content-Disposition: inline
+	id S1755783Ab0A2WRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 17:17:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752414Ab0A2WRS
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 17:17:18 -0500
+Received: from mail-iw0-f201.google.com ([209.85.223.201]:36807 "EHLO
+	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752523Ab0A2WRS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 17:17:18 -0500
+X-Greylist: delayed 363 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Jan 2010 17:17:17 EST
+Received: by iwn39 with SMTP id 39so495693iwn.1
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 14:17:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=Y0au5vjxko9ay7vfyTobw3caVjVEV3EdVgc6WM+m0qU=;
+        b=WfCl59qEQBv+sgJa+/+AQcchyVu+k/jHQHU4RfAiylvJ0wjPNd3raD5l+Ome9rNsPN
+         KHM6S/3KozsfLS7T01GSbuj7+nIq/qIu0TSXs9tbJVKUDxJwyy2ZzyBpq/QbimiUB8Ql
+         DLvKV0ah6H+ECJ4uO6FvC1VyxLCnJQ+bmvgGs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=I0A2To41kS4Qae9C9NIYAHx/lfRyOX8/6wNXEi/e5MWdqIn1edtoTl/B8Qz8jga76q
+         my4ybMnIFBiU3JDMdrZPcQgE6VgNW4trDhzFgDY7sMU8N9CiCWInV/jItLfAWtEdG9mN
+         ZvsDOzBtfmUUBiRHfYeM/qpd3t7hpq2bByCXg=
+Received: by 10.231.146.8 with SMTP id f8mr2222233ibv.58.1264803074188; Fri, 
+	29 Jan 2010 14:11:14 -0800 (PST)
+In-Reply-To: <78d8a6b51001291401ib93976el25c03694d53aaced@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138385>
 
-[Cc msysgit list]
+On Fri, Jan 29, 2010 at 5:01 PM, Daed Lee <daed@thoughtsofcode.com> wrote:
+> Hi, I'm wondering if git can handle the following use. I have a
+> project that started as private experiment, but has morphed into
+> something I'd like to release publicly. I want to give others access
+> to the repository, but only to commits after a certain cutoff date.
+> Commits prior to that date have things like hardcoded file paths,
+> emails, etc. that I'd like to keep private.
+>
+> I suppose the easiest thing to do would be to create a new repository,
+> add the project files to it, and make that public, however I'd like to
+> keep my private commit history along with the public commit history
+> going forward in a single repository if possible. Is there a way to do
+> this with git?
 
-On Freitag, 29. Januar 2010, Johannes Sixt wrote:
-> cond_broadcast is not that trivial.
+You should probably split your history into two pieces: the "before"
+and "after" parts.  To split out the "after" part, you could use
+git-filter-branch
+(http://www.kernel.org/pub/software/scm/git/docs/v1.6.0.6/git-filter-branch.html).
+ Then, in your private copy of the repo, you could reattach the
+"before" part of the history using git grafts.
 
-... except when it can be tailor-made for a particular use-case.
-What do people think about this?
+Have fun,
 
-I had implemented a full-blown pthread_cond_broadcast, taking ACE as
-an example, but I had doubts about its correctness. Then I noticed that
-we do not need a complete implementation anyway. So here we go...
-
---- 8< ---
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] Windows: a minimal pthread_cond_broadcast
-
-This is not an implementation, but more a fake of pthread_cond_broadcast.
-It is sufficient for the only call site in builtin-grep.c that we have
-at this time. It works because the threads that wake up due to this call
-do not call pthread_cond_wait anymore and terminate.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- compat/win32/pthread.c |   10 ++++++++++
- compat/win32/pthread.h |    4 +---
- 2 files changed, 11 insertions(+), 3 deletions(-)
-
-diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
-index 631c0a4..7b5cac1 100644
---- a/compat/win32/pthread.c
-+++ b/compat/win32/pthread.c
-@@ -108,3 +108,13 @@ int pthread_cond_signal(pthread_cond_t *cond)
- 	else
- 		return 0;
- }
-+
-+/*
-+ * FIXME: This is a fake implementation that is tailored for the only
-+ * user that we currently have.
-+ */
-+int pthread_cond_broadcast(pthread_cond_t *cond)
-+{
-+	ReleaseSemaphore(cond->sema, cond->waiters, NULL);
-+	return 0;
-+}
-diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
-index b8e1bcb..7c360d5 100644
---- a/compat/win32/pthread.h
-+++ b/compat/win32/pthread.h
-@@ -37,12 +37,10 @@ typedef struct {
- } pthread_cond_t;
- 
- extern int pthread_cond_init(pthread_cond_t *cond, const void *unused);
--
- extern int pthread_cond_destroy(pthread_cond_t *cond);
--
- extern int pthread_cond_wait(pthread_cond_t *cond, CRITICAL_SECTION *mutex);
--
- extern int pthread_cond_signal(pthread_cond_t *cond);
-+extern int pthread_cond_broadcast(pthread_cond_t *cond);
- 
- /*
-  * Simple thread creation implementation using pthread API
--- 
-1.6.6.264.ga6155
+Avery
