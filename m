@@ -1,152 +1,139 @@
-From: Ron Garret <ron1@flownet.com>
-Subject: Re: master^ is not a local branch -- huh?!?
-Date: Fri, 29 Jan 2010 18:38:11 -0800
-Organization: Amalgamated Widgets
-Message-ID: <ron1-F006CF.18381129012010@news.gmane.org>
-References: <ron1-2E17EF.12204629012010@news.gmane.org> <fabb9a1e1001291332w1d161f8at58aa6fe6908bd77f@mail.gmail.com> <alpine.LFD.2.00.1001291641200.1681@xanadu.home> <7viqakh8ty.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1001291716070.1681@xanadu.home> <7vaavwh6yh.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1001291833580.1681@xanadu.home> <7vy6jgcutb.fsf@alter.siamese.dyndns.org> <fabb9a1e1001291618m71f61209v4f26fb66c6ad99ae@mail.gmail.com> <7viqakcu56.fsf@alter.siamese.dyndns.org> <ca433831001291701m50b8c2b7p16bcc6fd4f3f3d55@mail.gmail.com> <alpine.LFD.2.00.1001292013150.1681@xanadu.home>
+From: Jon Nelson <jnelson@jamponi.net>
+Subject: Re: unable to run gc (or git repack -Adl )
+Date: Fri, 29 Jan 2010 20:45:55 -0600
+Message-ID: <cccedfc61001291845n5703b606icb75bb2093ae51b2@mail.gmail.com>
+References: <cccedfc61001291429q7dfa2045x18134439ad1e7c94@mail.gmail.com> 
+	<alpine.LFD.2.00.1001292025260.1681@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 30 03:41:21 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sat Jan 30 03:46:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nb3Gx-0004wI-8i
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 03:41:19 +0100
+	id 1Nb3Lq-0006FU-Sf
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 03:46:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756005Ab0A3Cig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 21:38:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755920Ab0A3Cig
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 21:38:36 -0500
-Received: from lo.gmane.org ([80.91.229.12]:36350 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752836Ab0A3Cig (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 21:38:36 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Nb3EH-0004Hd-EB
-	for git@vger.kernel.org; Sat, 30 Jan 2010 03:38:33 +0100
-Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 30 Jan 2010 03:38:33 +0100
-Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 30 Jan 2010 03:38:33 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
-User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
+	id S1756195Ab0A3CqR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jan 2010 21:46:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756193Ab0A3CqR
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 21:46:17 -0500
+Received: from mail-ew0-f219.google.com ([209.85.219.219]:42504 "EHLO
+	mail-ew0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756192Ab0A3CqR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Jan 2010 21:46:17 -0500
+Received: by ewy19 with SMTP id 19so127001ewy.21
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 18:46:15 -0800 (PST)
+Received: by 10.216.89.130 with SMTP id c2mr952674wef.44.1264819575149; Fri, 
+	29 Jan 2010 18:46:15 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.1001292025260.1681@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138429>
 
-In article <alpine.LFD.2.00.1001292013150.1681@xanadu.home>,
- Nicolas Pitre <nico@fluxnic.net> wrote:
+On Fri, Jan 29, 2010 at 8:14 PM, Nicolas Pitre <nico@fluxnic.net> wrote=
+:
+> On Fri, 29 Jan 2010, Jon Nelson wrote:
+=2E..
+>> 1. I see the 'git-repack' shell process scanning for .keep files. I
+>> don't have any. Is there a shortcut to this?
+>>
+>> It's also hugely inefficient. In this case, the code to identify non
+>> .keep packs takes *4 minutes, 45 seconds*, lots of disk I/O, and lot=
+s
+>> of CPU (it pegs one CPU at 100% for the entire duration). With a wee
+>> bit of awk, I have reduced that to 2.3 seconds with VASTLY reduced I=
+/O
+>> and CPU requirements. Patch attached.
+>
+> Your patch will pick any .pack file in the repo not only from the
+> .git/objects/pack directory. =A0There is no such thing as *.pack.keep
+> either.
 
-> On Fri, 29 Jan 2010, Mark Lodato wrote:
-> 
-> > Still, I find it slightly confusing and unfriendly.  How about the 
-> > following?
-> 
-> It is slightly inaccurate.
-> 
-> > Checking out commit 'master^0'.
-> > 
-> > Since this is not a local branch head, any commits you make will be lost
-> > when you check out another branch or commit.  (In git terminology, HEAD
-> > is detached.)  If you just wish to look at files without committing,
-> > this is fine.  If you wish to make commits and retain them, you may
-> > create a new branch by running:
-> > 
-> >   git checkout -b <new_branch_name>
-> 
-> This gives the impression that any commit you make on a detached HEAD 
-> are going to be lost, unless you create a new branch first.
-> 
-> And again, it is a good thing to have "detached HEAD" in there so to 
-> relate to existing documentation easily.
-> 
-> > I think the above wording is fine for both commits (e.g. master^0) and
-> > remote branches (e.g. origin/pu).  With other wording, we may wish to
-> > have two slightly different messages depending on what the user typed.
-> 
-> You could have tags too.  So instead of trying to be too smart, it is 
-> best to simply display the provided name without qualifier.
-> 
-> > Also, I am not a big fan of "local branch head".  How about "not the
-> > name of a local branch"?  I'm not sure...
-> 
-> The confusion that started this thread was about "master^" which might 
-> be interpreted as the name of a local branch except for the fact that we 
-> want one commit back.  So using "local commit head" is more precise.
+Ugh. Yep. Patch amended. Still fast. Still wrong?
 
-Since it is my confusion that started this thread (and I suppose is in 
-part responsible for continuing it) I should be clear that master^ was 
-just an example.  My first attempt to roll back to an earlier version 
-was actually "git checkout HEAD^".  That produced the same result, since 
-HEAD was pointing to master at the time.  But one of the things I 
-realized was that HEAD was a variable, and so I chose to frame my 
-example in terms of master instead of HEAD in order to eliminate 
-ambiguity.
+>> 3. When git pack objects is running and counting up the number of
+>> objects, it is stat'ing files that aren't in the working directly, a=
+nd
+>> should not be, according to the index. If I switch the repo to be a
+>> "bare" repository, then it doesn't do that, however, why is it doing
+>> that in the first place?
+>
+> A bare repository has no index. =A0When the index is present though, =
+it is
+> necessary to also pack objects it references. =A0Why working director=
+y
+> files would be stat()'d in that case I don't know.
 
-FWIW, here are some observations based on my current understanding:
+Inquiring minds want to know.
 
-1.  The term "detached HEAD" is inherently misleading.  A detached HEAD 
-isn't detached from anything, it's just pointing to the middle of a 
-branch, which is to say, to a commit that happens to already have 
-descendants.  For that matter, the name HEAD is itself misleading, since 
-HEAD need not be the head of a branch (though normally it is).  A better 
-name for HEAD would have been CURRENT or ACTIVE.  I recognize it's 
-probably too late to change it now.
+>> 4. Should git-pack-objects be reading the pack.idx files for countin=
+g
+>> objects instead of the .pack files themselves?
+>
+> No. =A0The whole point when "counting objects" is to perform a walk o=
+f the
+> history graph and capture the set of objects that are actually
+> referenced from your branches/tags and leave the unreferenced objects
+> behind. =A0Also the order in which those objects are encountered duri=
+ng
+> that history walk is very important for efficient object placement in
+> the final pack. =A0So this is much more involved than only listing th=
+e
+> objects contained in every packs.
 
-2.  There are a lot of things in the documentation that turn out, now 
-that I understand what is going on, to be subtly misleading.  For 
-example, "A single git repository can track development on multiple 
-branches. It does this by keeping a list of heads which reference the 
-latest commit on each branch."  That last part is only true if the heads 
-are not "detached".
+Ah. For some reason I thought the .idx files contained not just a
+straight listing but also the parent/child relationships as well.
 
-I do not yet understand enough about git to know if this is a reasonable 
-suggestion, but one possibility is to separate the notion of a head from 
-the notion of a pointer to a commit.  A head would be a pointer to a 
-commit that can only point to a commit with no descendants, whereas a 
-pointer could point anywhere.  What is now called HEAD would be a 
-pointer, not a head under this ontology.
+> You could try:
+>
+> =A0 =A0 =A0 =A0git config core.packedGitLimit 256m
+> =A0 =A0 =A0 =A0git config core.packedGitWindowSize 32m
+> =A0 =A0 =A0 =A0git config pack.deltaCacheSize 1
+>
+> and try repacking again with 'git gc --prune=3Dnow'. =A0After the rep=
+ack
+> succeeds, you should be able to remove the above configs from your
+> .git/config file.
 
-Another example: "The HEAD then refers to the SHA-1 of the commit 
-instead of to a branch, and git branch shows that you are no longer on a 
-branch:"  But you *are* on a branch, you just aren't at the head of the 
-branch.  In fact, by the definition of branch the whole concept of "not 
-being on a branch" is non-sensical.  (Isn't that part of the whole point 
-of git?  That everything is a branch?)
+I have since thrown out the repo and started over on this particular
+experiment, issuing a 'git gc' rather more often. The config options
+above are now dutifully scribbled down.  Thanks!
 
-3.  These observations suggest ways in which the situation could be 
-improved.
+diff --git a/git-repack.sh b/git-repack.sh
+index 1eb3bca..3cef57d 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -62,15 +62,7 @@ case ",$all_into_one," in
+ ,t,)
+        args=3D existing=3D
+        if [ -d "$PACKDIR" ]; then
+-               for e in `cd "$PACKDIR" && find . -type f -name '*.pack=
+' \
+-                       | sed -e 's/^\.\///' -e 's/\.pack$//'`
+-               do
+-                       if [ -e "$PACKDIR/$e.keep" ]; then
+-                               : keep
+-                       else
+-                               existing=3D"$existing $e"
+-                       fi
+-               done
++               existing=3D$( cd "$PACKDIR" && find . -type f -name
+'*.pack' -o -name '*.keep' | sed -e 's/^\.\///' | sort | awk '{ if ($0
+~ /\.keep$/) { N=3Dsubstr($0, 0, length($0)-4) "pack"; K[N]=3D0; } else=
+ {
+if ($0 in K) { } else { K[$0]=3D1; } } } END { for (k in K) { if (K[k]
+=3D=3D 1) { printf "%s ", k; } } } ' )
+                if test -n "$existing" -a -n "$unpack_unreachable" -a \
+                        -n "$remove_redundant"
+                then
 
-First, I think Michael Witten is on the right track with his proposal 
-for a redesign of git-checkout and the new git-update command (though I 
-have not yet had time to think deeply about the details).  There are 
-only a small number of things that are actually going on under the hood, 
-and the closer the map between the command set and those primitive 
-operations can be made the better.
 
-Second, the real problem underlying the original warning that started 
-all this is that if you do a commit from a "detached head" then you have 
-effectively created a branch whether you meant to or not.  This suggests 
-a very straightforward warning:
-
-"WARNING: Your HEAD is now pointing to a commit that has descendants.
-If you do a commit from here, you will be creating a branch.  If this
-is not what you intend, read the documentation and achieve clarity before
-proceeding.  If you just want to bail out of this situation without
-doing your homework, do a 'git checkout master' or something like that."
-
-Or something like that :-)
-
-rg
+--=20
+Jon
