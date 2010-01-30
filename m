@@ -1,83 +1,70 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: [PATCH v6] add --summary option to git-push and git-fetch
-Date: Sat, 30 Jan 2010 09:51:30 +0200
-Message-ID: <20100130075129.GA27702@Knoppix>
-References: <20100130020548.GA29343@cthulhu>
- <7vsk9oysds.fsf@alter.siamese.dyndns.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] builtin-name-rev.c: remove the remaining "typedef struct
+ rev_name" from git.
+Date: Fri, 29 Jan 2010 23:53:16 -0800
+Message-ID: <4B63E56C.5000100@gmail.com>
+References: <8678db190a73997c7bd757b9d78f0fa9e8721055.1264815015.git.tfransosi@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Larry D'Anna <larry@elder-gods.org>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 30 08:52:56 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 30 08:53:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nb88V-0007FG-H7
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 08:52:55 +0100
+	id 1Nb896-0007Rq-T0
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 08:53:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752191Ab0A3Hvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jan 2010 02:51:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752110Ab0A3Hvj
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 02:51:39 -0500
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:33052 "EHLO
-	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751277Ab0A3Hvi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jan 2010 02:51:38 -0500
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 6441C18D42E;
-	Sat, 30 Jan 2010 09:51:37 +0200 (EET)
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A054386140A; Sat, 30 Jan 2010 09:51:37 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id C5CD527D89;
-	Sat, 30 Jan 2010 09:51:30 +0200 (EET)
-Content-Disposition: inline
-In-Reply-To: <7vsk9oysds.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
+	id S1752294Ab0A3Hx0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jan 2010 02:53:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752036Ab0A3Hx0
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 02:53:26 -0500
+Received: from mail-iw0-f173.google.com ([209.85.223.173]:57480 "EHLO
+	mail-iw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751245Ab0A3HxZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jan 2010 02:53:25 -0500
+Received: by iwn3 with SMTP id 3so2461661iwn.23
+        for <git@vger.kernel.org>; Fri, 29 Jan 2010 23:53:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=WcCv8LTF1wsiXml6thMIzXw1QBw0pCMM+B+ZTtTJpBs=;
+        b=M3JCd21YA/2fCVmNTwEm0i3sSAZFLyS8BBr8M0woDi5igLdNSV9ghHi986zemDj/m/
+         Wsbc6KQrpz5hQ82AGQqUu0X9m4AKH7HvJd1nvg8WpH8dkQ7K0uZ1vCklC9gnzclZakEz
+         VFvHCHU2Uhwut4VrYnO9SaPU+L1ODqJOb7H7Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=MNm+s21Z4igwgkclPba5ps6qeI9Ss6T+P9TQ/zp7oWBAf8olT9RR5byg/jScehPjo9
+         0ZzwtBSI0/eGEG/gJOdAloQSAfS3h0xAIVdHheeiUAfJetZFVkvXZ6BKtfJyPJynt/Xy
+         zHj3Q4sakhKz0rJJbVJmRcgGljhTiGKMh3M5g=
+Received: by 10.231.151.207 with SMTP id d15mr2524044ibw.44.1264838002294;
+        Fri, 29 Jan 2010 23:53:22 -0800 (PST)
+Received: from ?192.168.1.5? (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 21sm2756233iwn.10.2010.01.29.23.53.19
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 29 Jan 2010 23:53:21 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7pre) Gecko/20091214 Shredder/3.0.1pre
+In-Reply-To: <8678db190a73997c7bd757b9d78f0fa9e8721055.1264815015.git.tfransosi@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138461>
 
-On Fri, Jan 29, 2010 at 11:16:31PM -0800, Junio C Hamano wrote:
- 
-> As I said in my review during the earlier rounds, I do not know if it is
-> safe to use the flags and do the traversal inside this same process.  You
-> may be clearing the flags to protect your traversal (one per branch) from
-> stepping on each other, but how would this affect the use of object flags
-> in existing parts of the "push" machinery?  Is the reasoning that even if
-> push calls into traversal code and after it walked the commit ancestry for
-> its own purpose, your addition will clear the flags and existing code will
-> never look at object flags again, so this new code is free to use them and
-> all is Ok?  As long as you made sure that nobody looks at object flags you
-> modified, then I am fine with that---I just don't know if that is what is
-> happening here, and that is why I am asking.
-> 
-> I'd need help from the usual "transport" suspects for this patch.
+On 01/29/2010 05:32 PM, Thiago Farina wrote:
+> @@ -43,7 +43,7 @@ static void name_rev(struct commit *commit,
+>   	}
+>
+>   	if (name == NULL) {
+> -		name = xmalloc(sizeof(rev_name));
+> +		name = xmalloc(sizeof(struct rev_name));
 
-Well, I can say smart transports implemented by remote helpers are similar
-to ssh://&co (no surprise, they connect differently, but use the same underlying
-client code). Furthermore, actual remote helper stub code doesn't seem to play
-with revisions.
-
-And the actual remote helper parts seem to use clean memory image anyway
-(they exec).
-
-So that leaves the following:
-- git:// "layer 7" (git://, ssh://, file:// & co.[*])
-- rsync:// (third-class anyway)
-
-Also, what about multiple-URL case? Don't know if there are problems, but it
-seems to be quite rarely tested...
-
-[*] OTOH, this is extremely heavily used code, so breakages here will usually
-be pretty visible.
-
--Ilari
+How about sizeof(*name) instead? This way we don't have to change it 
+when the type changes again.
