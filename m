@@ -1,127 +1,103 @@
-From: Andrew Myrick <amyrick@apple.com>
-Subject: [PATCH] git-svn: persistent memoization
-Date: Sat, 30 Jan 2010 03:14:22 +0000
-Message-ID: <1264821262-28322-1-git-send-email-amyrick@apple.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: master^ is not a local branch -- huh?!?
+Date: Fri, 29 Jan 2010 22:15:05 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1001292122050.1681@xanadu.home>
+References: <ron1-2E17EF.12204629012010@news.gmane.org>
+ <8c9a061001291227v34ca0745l1ab35ef6ca5863dc@mail.gmail.com>
+ <fabb9a1e1001291235h26681e65qe4851cae1c536b6d@mail.gmail.com>
+ <7veil8iqnj.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1001291614550.1681@xanadu.home>
+ <alpine.DEB.1.00.1001300312450.3749@intel-tinevez-2-302>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: normalperson@yhbt.net, sam@vilain.net,
-	Andrew Myrick <amyrick@apple.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 30 04:14:39 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Git List <git@vger.kernel.org>, Ron1 <ron1@flownet.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jan 30 04:15:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nb3nC-0004Vx-Ks
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 04:14:38 +0100
+	id 1Nb3no-0004fZ-Vf
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 04:15:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756219Ab0A3DOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 22:14:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755216Ab0A3DOd
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 22:14:33 -0500
-Received: from mail-out3.apple.com ([17.254.13.22]:56725 "EHLO
-	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755187Ab0A3DOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 22:14:32 -0500
-Received: from relay11.apple.com (relay11.apple.com [17.128.113.48])
-	by mail-out3.apple.com (Postfix) with ESMTP id 39C2882AE02D
-	for <git@vger.kernel.org>; Fri, 29 Jan 2010 19:14:32 -0800 (PST)
-X-AuditID: 11807130-b7b0aae00000102c-f0-4b63a41897fd
-Received: from gertie.apple.com (gertie.apple.com [17.151.62.15])
-	by relay11.apple.com (Apple SCV relay) with SMTP id 59.21.04140.814A36B4; Fri, 29 Jan 2010 19:14:32 -0800 (PST)
-Received: from localhost.localdomain (agility.apple.com [17.201.24.116])
- by gertie.apple.com
- (Sun Java(tm) System Messaging Server 6.3-7.04 (built Sep 26 2008; 32bit))
- with ESMTPSA id <0KX100E47IC47240@gertie.apple.com> for git@vger.kernel.org;
- Fri, 29 Jan 2010 19:14:32 -0800 (PST)
-X-Mailer: git-send-email 1.6.6.1.4.g3df0a5.dirty
-X-Brightmail-Tracker: AAAAAQAAAZE=
+	id S1756227Ab0A3DPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 22:15:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756223Ab0A3DPH
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 22:15:07 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:44805 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756220Ab0A3DPG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 22:15:06 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0KX10094LID59IS0@VL-MR-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 29 Jan 2010 22:15:06 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <alpine.DEB.1.00.1001300312450.3749@intel-tinevez-2-302>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138434>
 
-Make memoization of the svn:mergeinfo processing functions persistent with
-Memoize::Storable so that the memoization tables don't need to be regenerated
-every time the user runs git-svn fetch.
+On Sat, 30 Jan 2010, Johannes Schindelin wrote:
 
-The Memoize::Storable hashes are stored in ENV{GIT_DIR}/svn/caches.
+> Hi,
+> 
+> On Fri, 29 Jan 2010, Nicolas Pitre wrote:
+> 
+> > With all due respects, I don't share Dscho's sentiment about Git's 
+> > alleged non user-friendliness.
+> 
+> Of course you don't.  You are a Git oldtimer.  Probably you do not even 
+> have much exposure to complete programming newbies.
 
-Signed-off-by: Andrew Myrick <amyrick@apple.com>
----
- git-svn.perl |   42 +++++++++++++++++++++++++++++++++++++-----
- 1 files changed, 37 insertions(+), 5 deletions(-)
+Welllll... That depends.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 1f201e4..f7a9410 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1632,10 +1632,11 @@ use vars qw/$default_repo_id $default_ref_id $_no_metadata $_follow_parent
-             $_use_svnsync_props $no_reuse_existing $_minimize_url
- 	    $_use_log_author $_add_author_from $_localtime/;
- use Carp qw/croak/;
--use File::Path qw/mkpath/;
-+use File::Path qw/mkpath make_path/;
- use File::Copy qw/copy/;
- use IPC::Open3;
- use Memoize;  # core since 5.8.0, Jul 2002
-+use Memoize::Storable;
- 
- my ($_gc_nr, $_gc_period);
- 
-@@ -3078,10 +3079,39 @@ sub has_no_changes {
- 		command_oneline("rev-parse", "$commit~1^{tree}"));
- }
- 
--BEGIN {
--	memoize 'lookup_svn_merge';
--	memoize 'check_cherry_pick';
--	memoize 'has_no_changes';
-+# The GIT_DIR environment variable is not always set until after the command
-+# line arguments are processed, so we can't memoize in a BEGIN block.
-+{
-+	my $memoized = 0;
-+
-+	sub memoize_svn_mergeinfo_functions {
-+		return if $memoized;
-+		$memoized = 1;
-+
-+		my $cache_path = "$ENV{GIT_DIR}/svn/caches/";
-+		make_path($cache_path) unless -d $cache_path;
-+
-+		tie my %lookup_svn_merge_cache =>
-+			'Memoize::Storable',"$cache_path/lookup_svn_merge.db", 'nstore';
-+		memoize 'lookup_svn_merge',
-+			SCALAR_CACHE => 'FAULT',
-+			LIST_CACHE => ['HASH' => \%lookup_svn_merge_cache],
-+		;
-+
-+		tie my %check_cherry_pick_cache =>
-+			'Memoize::Storable',"$cache_path/check_cherry_pick.db", 'nstore';
-+		memoize 'check_cherry_pick',
-+			SCALAR_CACHE => 'FAULT',
-+			LIST_CACHE => ['HASH' => \%check_cherry_pick_cache],
-+		;
-+
-+		tie my %has_no_changes_cache =>
-+			'Memoize::Storable',"$cache_path/has_no_changes.db", 'nstore';
-+		memoize 'has_no_changes',
-+			SCALAR_CACHE => ['HASH' => \%has_no_changes_cache],
-+			LIST_CACHE => 'FAULT',
-+		;
-+	}
- }
- 
- sub parents_exclude {
-@@ -3125,6 +3155,8 @@ sub find_extra_svn_parents {
- 	my ($self, $ed, $mergeinfo, $parents) = @_;
- 	# aha!  svk:merge property changed...
- 
-+	memoize_svn_mergeinfo_functions();
-+
- 	# We first search for merged tips which are not in our
- 	# history.  Then, we figure out which git revisions are in
- 	# that tip, but not this revision.  If all of those revisions
--- 
-1.6.6.1.4.g3df0a5.dirty
+If you mean people who, despite a CS degree, are still unable to figure 
+out if some loop exit condition should be > or >= except by testing the 
+compiled code and see if a crash occurs, then yes I do feel the pain of 
+being exposed to such people way too often for my taste.  And frankly I 
+just don't care if those people can't grok the Git UI.
+
+Git is meant to be a tool for people performing a minimum of development 
+tasks.  If those people can't grasp the Git UI and concepts with little 
+effort then they're either 1) uninterested or 2) incompetent.  For the 
+uninterested people there are GUIs out there.  And don't get me started 
+on the incompetent ones.
+
+And for the rest of the world, such as my boss, there is gitweb.
+
+> Well, guess what.  I have.  And guess what even more: they are the 
+> majority, not you and me.
+
+Did you ever got them to use P4?  I'm convinced that learning how to use 
+P4 for a Git user is way more painful than a P4 user to learn Git.  
+Similarly for Arch or many other alternatives.
+
+HG looks easier?  Sure.  But it isn't exactly as flexible and powerful 
+as Git is though.  You prefer a less powerful but simpler tool? OK just 
+go with HG then -- I have no problem with that.  Even SVN might be just 
+what you need.  But if you prefer the power of Git then there is a price 
+to pay for it.  Making Git simpler would inevitably reduces its power.
+
+I hope newbies won't stay newbies all their life.  If the majority of 
+all the people are newbies then no need to wonder why there is so much 
+crap being produced by the computing industry then.  Learning isn't only 
+a nasty thing that they force you to do at school and which you get over 
+with once you escape from there.
+
+Incidentally we've been getting more positive feedback than negative 
+ones about Git from newbies on this list lately.  That might be because 
+our UI, although still not perfect, improved quite a bit, and most 
+probably because the documentation surrounding Git has improved 
+tremendously too.
+
+
+Nicolas
