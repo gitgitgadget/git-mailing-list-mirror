@@ -1,7 +1,7 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 4/8 v6] gitweb: Check that $site_header etc. are defined before using them
-Date: Sat, 30 Jan 2010 23:30:41 +0100
-Message-ID: <1264890645-28310-5-git-send-email-jnareb@gmail.com>
+Subject: [PATCH 1/8 v1] gitweb: Make running t9501 test with '--debug' reliable and usable
+Date: Sat, 30 Jan 2010 23:30:38 +0100
+Message-ID: <1264890645-28310-2-git-send-email-jnareb@gmail.com>
 References: <1264890645-28310-1-git-send-email-jnareb@gmail.com>
 Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	John 'Warthog9' Hawley <warthog9@kernel.org>,
@@ -13,115 +13,120 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbLqm-0008Ua-M0
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 23:31:33 +0100
+	id 1NbLql-0008Ua-KS
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 23:31:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754315Ab0A3WbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jan 2010 17:31:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753978Ab0A3WbI
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 17:31:08 -0500
-Received: from mail-fx0-f220.google.com ([209.85.220.220]:46818 "EHLO
+	id S1754152Ab0A3WbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jan 2010 17:31:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754129Ab0A3WbF
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 17:31:05 -0500
+Received: from mail-fx0-f220.google.com ([209.85.220.220]:37315 "EHLO
 	mail-fx0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753998Ab0A3WbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jan 2010 17:31:05 -0500
-Received: by fxm20 with SMTP id 20so3058038fxm.21
-        for <git@vger.kernel.org>; Sat, 30 Jan 2010 14:31:04 -0800 (PST)
+	with ESMTP id S1753829Ab0A3WbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jan 2010 17:31:03 -0500
+Received: by fxm20 with SMTP id 20so3058001fxm.21
+        for <git@vger.kernel.org>; Sat, 30 Jan 2010 14:31:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=cJVVvQ9GhocvsARgynUatPEzP3z+wWcXo+dekG1UgOY=;
-        b=vI3rulm7R4s6xgABAtBRclH0xcTqybV3v6UsQvWbSZFZkGpPG23dn53U0NamK/0cgY
-         c/Bk/1nTGinA6+ItEcQTpzMz8GqCeeCeIBsS3dxsK7r1kE85KQdRRL7zAK/MBWHYtVvw
-         wlR0mZDti0epor0VFcn22s5fnzuTV9sTyAyMg=
+        bh=AZITGVAIDS6lXGUyldLi2yTw4AKvTJtk+P8BK43NODo=;
+        b=EIBxKpAuCtd8ERkho58+s3Nwoa7dOpPHlhE5z/LeEtRdid9B/8SqqB+LmmDUv+dTRf
+         hCMFk4VGOe1RHeC9KRR7ydmlGWAQmeCX6PPKWfJyjWynakVYcdTv1u79otDW0kq4aoSm
+         WTZxP3nknpApFfVNFZVNtZ7U7kmuaIJQECDX4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=HUOCKo4Oo8brUKovsLyyptCP28njkq7mITzCQTs2yqTn8jR0S0ZtCv/nv5S7pLsGqp
-         AhlSAOD7lUOVh8Vc9sef2zIzqULzSTA6moXCuCZBsPehXPT/YCRDPCBVWo5at5v21bjk
-         wL5NfPL+kKrCMJ1JMcbbsAcPRUU/ExJFwyCUg=
-Received: by 10.223.14.140 with SMTP id g12mr2362734faa.50.1264890664112;
-        Sat, 30 Jan 2010 14:31:04 -0800 (PST)
+        b=u1KWpeD7UljxjmdmvPH+bwAde07BNhDAI4qjfSDvGO7mvUyrRmTzJvaEm1vCwQ9YnY
+         4pA/1AD4EnNPyHOtMzVftwqZCjEwbikEzGwjbg8mOOFqzv+gks8ZNCXObp+F6PglHivC
+         Ce2lWGSdhHICgBvuQ2ZyINsNhdpc0DuJE6E3Q=
+Received: by 10.223.15.148 with SMTP id k20mr397263faa.67.1264890658776;
+        Sat, 30 Jan 2010 14:30:58 -0800 (PST)
 Received: from localhost.localdomain (abwu191.neoplus.adsl.tpnet.pl [83.8.244.191])
-        by mx.google.com with ESMTPS id 15sm1157284fxm.6.2010.01.30.14.31.02
+        by mx.google.com with ESMTPS id 15sm1157284fxm.6.2010.01.30.14.30.57
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 30 Jan 2010 14:31:03 -0800 (PST)
+        Sat, 30 Jan 2010 14:30:58 -0800 (PST)
 X-Mailer: git-send-email 1.6.6.1
 In-Reply-To: <1264890645-28310-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138507>
 
-From: John 'Warthog9' Hawley <warthog9@kernel.org>
+Remove test_debug lines after 'snapshots: tgz only default format
+enabled' and 'snapshots: all enabled in default, use default disabled
+value' tests.  Those tests constitute of multiple gitweb_run
+invocation, therefore outputting gitweb.output for the last gitweb_run
+wouldn't help much in debugging test failure, and can only confuse.
 
-If one of $site_header, $site_footer or $home_text is not defined you
-get extraneous errors in the web logs, for example (line wrapped for
-better readibility):
+For snapshot tests which check for "200 OK" status, change
+  test_debug 'cat gitweb.output'
+to
+  test_debug 'cat gitweb.headers'
+Otherwise when running this test with '--debug' option,
+t/t9501-gitweb-standalone-http-status.sh would dump *binary data* (the
+snapshot itself) to standard output, which can mess up state of terminal
+due to term control characters which can be embedded in output.
 
- [Wed Jan 13 16:55:42 2010] [error] [client ::1] [Wed Jan 13 16:55:42 2010]
- gitweb.cgi: Use of uninitialized value $site_header in -f at
- /var/www/gitweb/gitweb.cgi line 3287., referer: http://git/gitweb.cgi
-
-This ensures that those variables are defined before trying to use it.
-
-Note that such error can happen only because of an error in gitweb
-config file; building gitweb.cgi can make mentioned variables holding
-empty string (it is even the default), but they not undefined.
-
-Signed-off-by: John 'Warthog9' Hawley <warthog9@kernel.org>
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-Changes from version from 'Gitweb caching v5' and
-  git://git.kernel.org/pub/scm/git/warthog9/gitweb.git gitweb-ml-v5
+This patch appears in this series for the first time.
 
-* Check explicitly that $site_header is defined, and not only that it
-  is false-ish
-* Check also for $site_footer and $home_text being defined
-* Slightly more detailed commit message
+I have decided against cleaning up t/t9501-gitweb-standalone-http-status.sh
+by conforming to single style of quoting and whitespaces, and by putting 
+initial test_commit inside test_expect_success setup.  This is the minimal
+change.
 
+ t/t9501-gitweb-standalone-http-status.sh |    8 +++-----
+ 1 files changed, 3 insertions(+), 5 deletions(-)
 
-I have decided not to protect against undefined $projects_list, as
-such check would have to be more complicated and quite different from
-checks for $site_header, $site_footer and $home_text.
-
-Note that it is purely defensive programming, as this should not
-happen unless there are very strange errors in gitweb config file.
-
- gitweb/gitweb.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e2522cc..a4148d3 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3254,7 +3254,7 @@ EOF
- 	print "</head>\n" .
- 	      "<body>\n";
+diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-standalone-http-status.sh
+index 0688a57..9e8bc01 100755
+--- a/t/t9501-gitweb-standalone-http-status.sh
++++ b/t/t9501-gitweb-standalone-http-status.sh
+@@ -33,7 +33,6 @@ test_expect_success \
+     grep "403 - Snapshot format not allowed" gitweb.output &&
+     gitweb_run "p=.git;a=snapshot;h=HEAD;sf=zip" &&
+     grep "403 - Unsupported snapshot format" gitweb.output'
+-test_debug 'cat gitweb.output'
  
--	if (-f $site_header) {
-+	if (defined $site_header && -f $site_header) {
- 		insert_file($site_header);
- 	}
  
-@@ -3355,7 +3355,7 @@ sub git_footer_html {
- 		print "</div>\n"; # class="page_footer"
- 	}
+ cat >>gitweb_config.perl <<\EOF
+@@ -50,7 +49,6 @@ test_expect_success \
+     grep "403 - Snapshot format not allowed" gitweb.output &&
+     gitweb_run "p=.git;a=snapshot;h=HEAD;sf=zip" &&
+     grep "Status: 200 OK" gitweb.output'
+-test_debug 'cat gitweb.output'
  
--	if (-f $site_footer) {
-+	if (defined $site_footer && -f $site_footer) {
- 		insert_file($site_footer);
- 	}
  
-@@ -4781,7 +4781,7 @@ sub git_project_list {
- 	}
+ cat >>gitweb_config.perl <<\EOF
+@@ -72,7 +70,7 @@ test_expect_success \
+     'snapshots: tgz explicitly enabled' \
+     'gitweb_run "p=.git;a=snapshot;h=HEAD;sf=tgz" &&
+     grep "Status: 200 OK" gitweb.output'
+-test_debug 'cat gitweb.output'
++test_debug 'cat gitweb.headers'
  
- 	git_header_html();
--	if (-f $home_text) {
-+	if (defined $home_text && -f $home_text) {
- 		print "<div class=\"index_include\">\n";
- 		insert_file($home_text);
- 		print "</div>\n";
+ 
+ # ----------------------------------------------------------------------
+@@ -82,7 +80,7 @@ test_expect_success 'snapshots: good tree-ish id' '
+ 	gitweb_run "p=.git;a=snapshot;h=master;sf=tgz" &&
+ 	grep "Status: 200 OK" gitweb.output
+ '
+-test_debug 'cat gitweb.output'
++test_debug 'cat gitweb.headers'
+ 
+ test_expect_success 'snapshots: bad tree-ish id' '
+ 	gitweb_run "p=.git;a=snapshot;h=frizzumFrazzum;sf=tgz" &&
+@@ -105,7 +103,7 @@ test_expect_success 'snapshots: good object id' '
+ 	gitweb_run "p=.git;a=snapshot;h=$ID;sf=tgz" &&
+ 	grep "Status: 200 OK" gitweb.output
+ '
+-test_debug 'cat gitweb.output'
++test_debug 'cat gitweb.headers'
+ 
+ test_expect_success 'snapshots: bad object id' '
+ 	gitweb_run "p=.git;a=snapshot;h=abcdef01234;sf=tgz" &&
 -- 
 1.6.6.1
