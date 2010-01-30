@@ -1,86 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Implement pthread_cond_broadcast on Windows
-Date: Sat, 30 Jan 2010 11:50:04 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1001301149030.4985@pacific.mpi-cbg.de>
-References: <4B62CEAB.5050608@viscovery.net> <201001300054.05610.j6t@kdbg.org> <alpine.DEB.1.00.1001300328070.3749@intel-tinevez-2-302> <201001301030.36395.j6t@kdbg.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: v1.7.0-rc0 shows lots of "unable to find <sha1>" on git-stash
+Date: Sat, 30 Jan 2010 13:31:18 +0100
+Message-ID: <4B642696.2070501@web.de>
+References: <57518fd11001290712s2585e468o73b746b7ca27e1f1@mail.gmail.com> 	<7vzl3wiz59.fsf@alter.siamese.dyndns.org> <57518fd11001291646l5b0b581dm553689232b0910e8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-15?Q?Zolt=E1n_F=FCzesi?= <zfuzesi@eaglet.hu>,
-	git@vger.kernel.org,
-	msysGit Mailinglist <msysgit@googlegroups.com>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	"Andrzej K. Haczewski" <ahaczewski@gmail.com>,
-	Erik Faye-Lund <kusmabite@googlemail.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Jan 30 11:44:09 2010
+	Git Mailing List <git@vger.kernel.org>
+To: Jonathan del Strother <maillist@steelskies.com>
+X-From: git-owner@vger.kernel.org Sat Jan 30 13:34:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbAoB-00020F-EU
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 11:44:07 +0100
+	id 1NbCWc-0007Wc-RP
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 13:34:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752795Ab0A3Kn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jan 2010 05:43:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752776Ab0A3Kn7
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 05:43:59 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46893 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751786Ab0A3Kn6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jan 2010 05:43:58 -0500
-Received: (qmail invoked by alias); 30 Jan 2010 10:43:56 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp071) with SMTP; 30 Jan 2010 11:43:56 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19YQIkzO/VY/OVYcZbsbO0VQadPK5BijorP8g5dgA
-	XRPwjgA4x4lALr
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <201001301030.36395.j6t@kdbg.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.56999999999999995
+	id S1752079Ab0A3MbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jan 2010 07:31:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751355Ab0A3MbY
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 07:31:24 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:42164 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751104Ab0A3MbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jan 2010 07:31:23 -0500
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate02.web.de (Postfix) with ESMTP id B20B514CDA0AF;
+	Sat, 30 Jan 2010 13:31:22 +0100 (CET)
+Received: from [80.128.91.77] (helo=[192.168.178.26])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NbCTx-0004m6-00; Sat, 30 Jan 2010 13:31:21 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
+In-Reply-To: <57518fd11001291646l5b0b581dm553689232b0910e8@mail.gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18ckk6jCIqplUiddg/ohsOsJ0R7jj4ZdXQTlON4
+	HSbcBt6ur0F0XbVP/wnpF6Z+qy/2j4Nc2lakbRLObusVXGD/xy
+	WeXxL59/GeHxw4u5WTCg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138473>
 
-Hi,
-
-On Sat, 30 Jan 2010, Johannes Sixt wrote:
-
-> On Samstag, 30. Januar 2010, Johannes Schindelin wrote:
->
-> > On Sat, 30 Jan 2010, Johannes Sixt wrote:
-> > > See http://www.cse.wustl.edu/~schmidt/win32-cv-1.html, section "The 
-> > > SignalObjectAndWait solution". But note that this implementation 
-> > > does not use SignalObjectAndWait (which is needed to achieve 
-> > > fairness, but we do not need fairness).
-> > >
-> > > Note that our implementations of pthread_cond_broadcast and 
-> > > pthread_cond_signal require that they are invoked with the mutex 
-> > > held that is used in the pthread_cond_wait calls.
-> > >
-> > > Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> > > ---
-> > >  Junio,
-> > >
-> > >  please queue this patch for 1.7.0-rc1 even though it has not 
-> > >  undergone a lot of review - the result is better than a git that 
-> > >  does not even build on Windows.
-> >
-> > As you Cc:ed the msysGit list, do you want this in 4msysgit.git, too?
+Am 30.01.2010 01:46, schrieb Jonathan del Strother:
+> On 29 January 2010 17:44, Junio C Hamano <gitster@pobox.com> wrote:
+>> Jonathan del Strother <maillist@steelskies.com> writes:
+>>
+>>> Heya,
+>>>
+>>> git-stash in v1.7.0-rc0 gives me several hundred lines of :
+>>> The previous build I was using -
+>>> 5b15950ac414a8a2d4f5eb480712abcc9fe176d2 from Jan 19th - didn't show
+>>> this problem.  Want me to try and bisect further?
+>>
+>> Yes, please.
+>>
 > 
-> I hope some clever people on the msysgit list can say aye or nay to this 
-> patch. If you intend to release an msysgit that contains 5b594f4 
-> (Threaded grep), then you need *something*, otherwise the build fails. 
-> Whether you get that something via upstream or apply it directly is of 
-> course secondary, but I prefer the former. ;)
+> ee6fc514f2df821c2719cc49499a56ef2fb136b0 (Show submodules as modified
+> when they contain a dirty work tree) seems to be the first bad commit.
 
-Okay, I will just merge mingw.git's master, then, once you say that the 
-fix is in.
+Thanks for pinning that down.
 
-Ciao,
-Dscho
+I assume you have one or more submodules, maybe even with untracked
+or yet uncommitted modified files in your tree? If so, what does git
+status say in the superproject and in the submodule(s)?
+
+(If you want to keep some information off the list, you can mail me
+privately)
