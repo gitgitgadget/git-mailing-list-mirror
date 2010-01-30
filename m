@@ -1,57 +1,65 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH] rebase: don't invoke the pager for each commit summary
-Date: Sat, 30 Jan 2010 17:52:00 +0100
-Message-ID: <201001301752.00804.markus.heidelberg@web.de>
-References: <1264868617-18547-1-git-send-email-markus.heidelberg@web.de> <alpine.DEB.1.00.1001301746200.4985@pacific.mpi-cbg.de> <201001301746.13620.markus.heidelberg@web.de>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: FEATURE REQUEST: Allow SSH style URLS (with extra colon)
+Date: Sat, 30 Jan 2010 18:57:56 +0200
+Message-ID: <87tyu3cyy3.fsf@jondo.cante.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Stephen Boyd <bebarino@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 30 17:52:25 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 30 17:58:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbGYa-000115-RR
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 17:52:25 +0100
+	id 1NbGeR-0004UE-LN
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 17:58:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751265Ab0A3QwD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jan 2010 11:52:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750946Ab0A3QwB
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 11:52:01 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:56326 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750834Ab0A3QwA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jan 2010 11:52:00 -0500
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 1D15D145E0FE0;
-	Sat, 30 Jan 2010 17:52:00 +0100 (CET)
-Received: from [91.19.0.24] (helo=pluto.localnet)
-	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #314)
-	id 1NbGYB-0001xZ-00; Sat, 30 Jan 2010 17:52:00 +0100
-User-Agent: KMail/1.12.3 (Linux/2.6.30-gentoo-r8; KDE/4.3.3; i686; ; )
-In-Reply-To: <201001301746.13620.markus.heidelberg@web.de>
-Jabber-ID: markus.heidelberg@web.de
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19f2V/n69VwUCnvNjuKI7xJ9VCT0XLwS7P6FvxP
-	joBYZ5T89K0CEmcOgQnohoYmLxZenCs3L4Qi+Jsj3lgNGtFglX
-	ESsknxWd/9Q2Yc8MlX1A==
+	id S1751854Ab0A3Q6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jan 2010 11:58:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815Ab0A3Q6U
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 11:58:20 -0500
+Received: from lo.gmane.org ([80.91.229.12]:39137 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751808Ab0A3Q6T (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jan 2010 11:58:19 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NbGeH-0004NE-Ny
+	for git@vger.kernel.org; Sat, 30 Jan 2010 17:58:17 +0100
+Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 30 Jan 2010 17:58:17 +0100
+Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 30 Jan 2010 17:58:17 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
+Cancel-Lock: sha1:wrkB5+IusV2aawDMDpD73GhIow8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138485>
 
-Markus Heidelberg, 2010-01-30:
-> Johannes Schindelin, 2010-01-30:
-> > Date:	Sat, 30 Jan 2010 17:47:11 +0100 (CET)
-> Date:	Sat, 30 Jan 2010 17:46:13 +0100
 
-You should adjust your clock :)
+According to git-clone[1] the SSH protocol is specied as:
 
-Markus
+    ssh://[user@]host.xz[:port]/path
+
+It woudl be nice if the ":" were allowed, so that the familiar SSH style
+patch notation could be used, making the spec:
+
+    ssh://[user@]host.xz[:[port]]/path
+
+An example:
+
+    ssh://foo@examplecom:/path
+                        |
+                        Allowed
+
+Jari
+
+[1] http://www.kernel.org/pub/software/scm/git/docs/git-clone.html
