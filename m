@@ -1,117 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] is_submodule_modified(): fix breakage with external
- GIT_INDEX_FILE
-Date: Sat, 30 Jan 2010 12:30:31 -0800
-Message-ID: <7viqajmj2w.fsf_-_@alter.siamese.dyndns.org>
-References: <57518fd11001290712s2585e468o73b746b7ca27e1f1@mail.gmail.com>
- <7vzl3wiz59.fsf@alter.siamese.dyndns.org>
- <57518fd11001291646l5b0b581dm553689232b0910e8@mail.gmail.com>
- <4B642696.2070501@web.de>
- <57518fd11001300523xf7d931by254581c8494171af@mail.gmail.com>
- <4B643DEF.8010809@web.de>
- <57518fd11001300836v7f21a8a9qc09953d9091a4513@mail.gmail.com>
- <7v8wbfnyz9.fsf@alter.siamese.dyndns.org>
- <7vvdejmjaj.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: v1.7.0-rc0 shows lots of "unable to find <sha1>" on git-stash
+Date: Sat, 30 Jan 2010 21:44:08 +0100
+Message-ID: <4B649A18.3050907@web.de>
+References: <57518fd11001290712s2585e468o73b746b7ca27e1f1@mail.gmail.com> 	<7vzl3wiz59.fsf@alter.siamese.dyndns.org> <57518fd11001291646l5b0b581dm553689232b0910e8@mail.gmail.com> 	<4B642696.2070501@web.de> <57518fd11001300523xf7d931by254581c8494171af@mail.gmail.com> 	<4B643DEF.8010809@web.de> <57518fd11001300836v7f21a8a9qc09953d9091a4513@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Jonathan del Strother <maillist@steelskies.com>
-X-From: git-owner@vger.kernel.org Sat Jan 30 21:30:54 2010
+X-From: git-owner@vger.kernel.org Sat Jan 30 21:44:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbJxu-00062Q-Tf
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 21:30:47 +0100
+	id 1NbKB2-0003W3-BN
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 21:44:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753104Ab0A3Ual (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jan 2010 15:30:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751648Ab0A3Ual
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 15:30:41 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46598 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752907Ab0A3Uak (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jan 2010 15:30:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F195C95723;
-	Sat, 30 Jan 2010 15:30:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QoMVR0yDKdI16C51YJPeoCHe5E4=; b=n4NBfq
-	9qS2S9oP9fg7CkcsweNNbSLIFhOKCgZ/bX1dW4GeT+ZTjwKfqKX9304UaIBXKyZ7
-	Lf9Aoj4TvG4f9ZkoSeDoVfT3KQTGMhIzPcRsViX3ueFJHd2O/s5wd/eorGbvw8a3
-	+iZoYOkFYjBZR3vj9p9/62tTqUJA/Kg6PnuXc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RYg8GoMxY5QS5BHItfD7rjqBDbPNRLnr
-	7fqwPf3f5qf7Xm4FC0dPP/8hJXv+M5d8UC/QTw1muVtYuJ3vV3jFAYgEb+enprbc
-	yibptT7Ywok2KolRdqlHrisqKFsLyKL62/ZhczQ/jRjdaO0f0/i+6917aqEwpSb1
-	4NHNzJfoxM0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BDFB395722;
-	Sat, 30 Jan 2010 15:30:36 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E0EAA95720; Sat, 30 Jan
- 2010 15:30:32 -0500 (EST)
-In-Reply-To: <7vvdejmjaj.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat\, 30 Jan 2010 12\:25\:56 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 52CCB27A-0DDE-11DF-A3D3-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752679Ab0A3UoO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jan 2010 15:44:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752768Ab0A3UoO
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 15:44:14 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:50941 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752275Ab0A3UoN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jan 2010 15:44:13 -0500
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate03.web.de (Postfix) with ESMTP id F2DA313CE35F2;
+	Sat, 30 Jan 2010 21:44:11 +0100 (CET)
+Received: from [80.128.90.168] (helo=[192.168.178.26])
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NbKAt-00055S-00; Sat, 30 Jan 2010 21:44:11 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
+In-Reply-To: <57518fd11001300836v7f21a8a9qc09953d9091a4513@mail.gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18MUGbe5jv+eYAU+EuAqwfILawv3piTgEuwZceA
+	IUGC56WLIApEQW3RMMekDGxmMm2D1ts2n3Fg9g8sDlsgRUtrkO
+	NGjMpNd29/XCRfJJvw0Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138501>
 
-Even when the environment was given for the top-level process, checking
-in the submodule work tree should use the index file associated with the
-work tree of the submodule.  Do not export it to the environment.
+Am 30.01.2010 17:36, schrieb Jonathan del Strother:
+> On 30 January 2010 14:10, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>> Am 30.01.2010 14:23, schrieb Jonathan del Strother:
+>>> On 30 January 2010 12:31, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>>>> I assume you have one or more submodules, maybe even with untracked
+>>>> or yet uncommitted modified files in your tree? If so, what does git
+>>>> status say in the superproject and in the submodule(s)?
+>>>
+>>> Yep, I have 10 submodules.  However, they're all completely clean with
+>>> no tracked or untracked changes shown in git status.  Anything else I
+>>> can investigate?
+>>
+>> The change in behavior my patch introduced is that "git status" is
+>> called inside each submodule. So i would expect getting the same
+>> errors when using this command:
+>>   git submodule foreach git status -s
+>>
+>> It should just show
+>>   Entering '<submodule 1>'
+>>   Entering '<submodule 2>'
+>>   Entering '<submodule 3>'
+>>   Entering '<submodule 4>'
+>>   Entering '<submodule 5>'
+>>   Entering '<submodule 6>'
+>>   Entering '<submodule 7>'
+>>   Entering '<submodule 8>'
+>>   Entering '<submodule 9>'
+>>   Entering '<submodule 10>'
+>> when the submodules are not dirty. What do you get?
+>>
+> 
+> Correct - I just get that output.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+Hm, so nothing unusual there. I really wonder what is the problem here,
+as calling "git status" inside the submodules works fine when issued via
+"git submodule foreach", but not when done via run_command()!?
 
- * This seems to pass all the tests, so I'm inclined to push it out as
-   a part of 1.7.0-rc1.  There might be some other enviroment variables
-   we shouldn't be leaking out to the submodule environment, but that can
-   be spotted and fixed in later patches before the final.
+So i would like to ask some more questions:
 
- submodule.c |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+- Under what operating system and on what filesystem is this happening?
 
-diff --git a/submodule.c b/submodule.c
-index ca0527f..6f7c210 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -126,7 +126,7 @@ int is_submodule_modified(const char *path)
- 		"--porcelain",
- 		NULL,
- 	};
--	char *env[3];
-+	char *env[4];
- 	struct strbuf buf = STRBUF_INIT;
- 
- 	strbuf_addf(&buf, "%s/.git/", path);
-@@ -142,7 +142,9 @@ int is_submodule_modified(const char *path)
- 	env[0] = strbuf_detach(&buf, NULL);
- 	strbuf_addf(&buf, "GIT_DIR=%s/.git", path);
- 	env[1] = strbuf_detach(&buf, NULL);
--	env[2] = NULL;
-+	strbuf_addf(&buf, "GIT_INDEX_FILE");
-+	env[2] = strbuf_detach(&buf, NULL);
-+	env[3] = NULL;
- 
- 	memset(&cp, 0, sizeof(cp));
- 	cp.argv = argv;
-@@ -161,6 +163,7 @@ int is_submodule_modified(const char *path)
- 
- 	free(env[0]);
- 	free(env[1]);
-+	free(env[2]);
- 	strbuf_release(&buf);
- 	return len != 0;
- }
--- 
-1.7.0.rc1.141.gbc8ce
+- Is there anything unusual about your repo (e.g. using GIT_WORK_TREE
+  or having the object database somewhere else that in .git in the
+  superproject or any of the submodules)?
+
+- You are just issuing a "git stash" to stash some changes in the
+  superproject when that happens, right?
+
+- The hashes that show up as "unable to find" are reachable via "git
+  show" in the superproject, not in the submodules, right?
+
+- Do these hashes have any relation to the contents you are stashing?
+
+- The following patch should suppress (but not solve) this problem when
+  applied to a version of git that contains
+  4d34477f4c5dbebc55aa1362fd705440590a85f1 (git diff: Don't test
+  submodule dirtiness with --ignore-submodules), e.g. current next.
+  Could you please verify that?
+
+---8<---
+diff --git a/git-stash.sh b/git-stash.sh
+index 3a0685f..e9b47b4 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -105,7 +105,7 @@ create_stash () {
+                w_tree=$(GIT_INDEX_FILE="$TMP-index" git write-tree) ||
+                die "Cannot save the current worktree state"
+
+-               git diff-tree -p HEAD $w_tree > "$TMP-patch" &&
++               git diff-tree --ignore-submodules -p HEAD $w_tree > "$TMP-patch"
+                test -s "$TMP-patch" ||
+                die "No changes selected"
