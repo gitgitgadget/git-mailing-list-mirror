@@ -1,103 +1,106 @@
-From: Nicolas Pitre <nico@fluxnic.net>
+From: Ron Garret <ron1@flownet.com>
 Subject: Re: master^ is not a local branch -- huh?!?
-Date: Fri, 29 Jan 2010 22:15:05 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1001292122050.1681@xanadu.home>
-References: <ron1-2E17EF.12204629012010@news.gmane.org>
- <8c9a061001291227v34ca0745l1ab35ef6ca5863dc@mail.gmail.com>
- <fabb9a1e1001291235h26681e65qe4851cae1c536b6d@mail.gmail.com>
- <7veil8iqnj.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1001291614550.1681@xanadu.home>
- <alpine.DEB.1.00.1001300312450.3749@intel-tinevez-2-302>
+Date: Fri, 29 Jan 2010 19:26:10 -0800
+Organization: Amalgamated Widgets
+Message-ID: <ron1-8B7921.19261029012010@news.gmane.org>
+References: <ron1-2E17EF.12204629012010@news.gmane.org> <fabb9a1e1001291332w1d161f8at58aa6fe6908bd77f@mail.gmail.com> <alpine.LFD.2.00.1001291641200.1681@xanadu.home> <7viqakh8ty.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1001291716070.1681@xanadu.home> <7vaavwh6yh.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1001291833580.1681@xanadu.home> <7vy6jgcutb.fsf@alter.siamese.dyndns.org> <fabb9a1e1001291618m71f61209v4f26fb66c6ad99ae@mail.gmail.com> <7viqakcu56.fsf@alter.siamese.dyndns.org> <ca433831001291701m50b8c2b7p16bcc6fd4f3f3d55@mail.gmail.com> <alpine.LFD.2.00.1001292013150.1681@xanadu.home> <ron1-F006CF.18381129012010@news.gmane.org> <7vbpgc8fhb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git List <git@vger.kernel.org>, Ron1 <ron1@flownet.com>,
-	Jacob Helwig <jacob.helwig@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 30 04:15:17 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 30 04:35:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nb3no-0004fZ-Vf
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 04:15:17 +0100
+	id 1Nb47N-0001NA-8W
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 04:35:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756227Ab0A3DPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 22:15:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756223Ab0A3DPH
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 22:15:07 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:44805 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756220Ab0A3DPG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 22:15:06 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KX10094LID59IS0@VL-MR-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 29 Jan 2010 22:15:06 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.DEB.1.00.1001300312450.3749@intel-tinevez-2-302>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1756245Ab0A3D0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 22:26:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756232Ab0A3D0e
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 22:26:34 -0500
+Received: from lo.gmane.org ([80.91.229.12]:38089 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756229Ab0A3D0e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 22:26:34 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Nb3yi-0007op-4z
+	for git@vger.kernel.org; Sat, 30 Jan 2010 04:26:32 +0100
+Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 30 Jan 2010 04:26:32 +0100
+Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 30 Jan 2010 04:26:32 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
+User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138435>
 
-On Sat, 30 Jan 2010, Johannes Schindelin wrote:
+In article <7vbpgc8fhb.fsf@alter.siamese.dyndns.org>,
+ Junio C Hamano <gitster@pobox.com> wrote:
 
-> Hi,
+> Ron Garret <ron1@flownet.com> writes:
 > 
-> On Fri, 29 Jan 2010, Nicolas Pitre wrote:
+> > 1.  The term "detached HEAD" is inherently misleading.  A detached HEAD 
+> > isn't detached from anything, it's just pointing to the middle of a 
+> > branch, which is to say, to a commit that happens to already have 
+> > descendants.  For that matter, the name HEAD is itself misleading, since 
+> > HEAD need not be the head of a branch (though normally it is).  A better 
+> > name for HEAD would have been CURRENT or ACTIVE.  I recognize it's 
+> > probably too late to change it now.
 > 
-> > With all due respects, I don't share Dscho's sentiment about Git's 
-> > alleged non user-friendliness.
-> 
-> Of course you don't.  You are a Git oldtimer.  Probably you do not even 
-> have much exposure to complete programming newbies.
+> This description, especially the phrase "middle of a branch" shows that
+> you don't understand git yet.
 
-Welllll... That depends.
+That could well be, but it's not for lack of trying :-)
 
-If you mean people who, despite a CS degree, are still unable to figure 
-out if some loop exit condition should be > or >= except by testing the 
-compiled code and see if a crash occurs, then yes I do feel the pain of 
-being exposed to such people way too often for my taste.  And frankly I 
-just don't care if those people can't grok the Git UI.
+> A git branch is _not_ a line (nor multiple
+> lines) of development.  It is merely a _point_ in the history.
 
-Git is meant to be a tool for people performing a minimum of development 
-tasks.  If those people can't grasp the Git UI and concepts with little 
-effort then they're either 1) uninterested or 2) incompetent.  For the 
-uninterested people there are GUIs out there.  And don't get me started 
-on the incompetent ones.
+By "middle of a branch" I simply meant "a commit that already has one or 
+more descendants" (or, to be even more precise, a commit that has one or 
+more commits that reference that commit as one of their predecessors).  
+I do understand that histories aren't linear.
 
-And for the rest of the world, such as my boss, there is gitweb.
+> "A commit that is in the middle of an ancestry chain with existing
+> descendants" can be at the tip of a branch and does not have anything to
+> do with detached HEAD state.
 
-> Well, guess what.  I have.  And guess what even more: they are the 
-> majority, not you and me.
+Ah, then you're right.  I really don't get it yet.
 
-Did you ever got them to use P4?  I'm convinced that learning how to use 
-P4 for a Git user is way more painful than a P4 user to learn Git.  
-Similarly for Arch or many other alternatives.
+> When HEAD points at a branch, making a commit advances _that_ branch.  And
+> we say you are "on that branch".  When HEAD is detached, because it is not
+> attached to anything, it advances no branch.  "detached HEAD" is detached
+> in the very real sense.  It is not attached to _any_ branch.
 
-HG looks easier?  Sure.  But it isn't exactly as flexible and powerful 
-as Git is though.  You prefer a less powerful but simpler tool? OK just 
-go with HG then -- I have no problem with that.  Even SVN might be just 
-what you need.  But if you prefer the power of Git then there is a price 
-to pay for it.  Making Git simpler would inevitably reduces its power.
+OK.  The docs do not make that clear at all.  In fact, the following 
+statement, copied straight from the manual, flatly contradicts what you 
+just said:
 
-I hope newbies won't stay newbies all their life.  If the majority of 
-all the people are newbies then no need to wonder why there is so much 
-crap being produced by the computing industry then.  Learning isn't only 
-a nasty thing that they force you to do at school and which you get over 
-with once you escape from there.
+"The special symbol "HEAD" can always be used to refer to the current 
+branch."
 
-Incidentally we've been getting more positive feedback than negative 
-ones about Git from newbies on this list lately.  That might be because 
-our UI, although still not perfect, improved quite a bit, and most 
-probably because the documentation surrounding Git has improved 
-tremendously too.
+Always.  Except when it can't.
 
+Soooo.....
 
-Nicolas
+Sometimes HEAD can refer to a branch head which is a pointer to a 
+commit, and sometimes HEAD can refer to a commit directly without 
+indirecting through a branch head (lower case), in which case it is 
+detached.  Is that right?
+
+If that's true, then I'm back to wondering what good is a detached head.  
+Why would you ever want one?  What can you do with a detached head that 
+you could not do just as easily without one?
+
+rg
