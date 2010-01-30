@@ -1,77 +1,89 @@
-From: "fkater@googlemail.com" <fkater@googlemail.com>
-Subject: migrating to git: keep subversion revision numbers (as tags?)
-Date: Sun, 31 Jan 2010 00:08:29 +0100
-Message-ID: <20100130230829.GA3544@comppasch2>
+From: David Rhodes Clymer <david@zettazebra.com>
+Subject: Re: [PATCH] bash: support user-supplied completion scripts for user's 
+	git commands
+Date: Sat, 30 Jan 2010 18:34:06 -0500
+Message-ID: <9b69cfcf1001301534v734f8c9ao3143854c2ca5093f@mail.gmail.com>
+References: <9b69cfcf1001290457s6b7fad6cs5a915f16a11f5782@mail.gmail.com>
+	 <20100129151127.GA21821@spearce.org>
+	 <7v4om4kdt3.fsf@alter.siamese.dyndns.org>
+	 <20100129175950.GE21821@spearce.org>
+	 <7vockciyb8.fsf@alter.siamese.dyndns.org>
+	 <20100129190642.GA31303@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 31 00:08:42 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sun Jan 31 00:34:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbMQj-00033V-7s
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 00:08:41 +0100
+	id 1NbMpU-0000CY-R2
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 00:34:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754104Ab0A3XIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jan 2010 18:08:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753058Ab0A3XIf
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 18:08:35 -0500
-Received: from mail-fx0-f220.google.com ([209.85.220.220]:63822 "EHLO
-	mail-fx0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754047Ab0A3XIf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jan 2010 18:08:35 -0500
-Received: by fxm20 with SMTP id 20so3073579fxm.21
-        for <git@vger.kernel.org>; Sat, 30 Jan 2010 15:08:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=ZhqJt2UnTQbmD3Bdwr9FoAIwMNZ+j55W3ohmp1tMCMQ=;
-        b=tKOKDbMOESo1WuBIrCml9ZgXWzcnmSPd0fRJ1S0dP13wBVL9z7nm6ndE7Ur+IwBE+7
-         aYbQ9TEqOmHe7afmoYenTO/XSpOJjrICaOeueufskfcLezraxM6JG1rUf3d7VtQcTu+o
-         /+GVuh5yLgh1V7XmhnZ8NMucrhaJ50lN0ufrI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=RvF0jzrkxiRPGPBwF/qD/iIL2t/oaVm2m9tT4IYx48AbO9wKjp2iZ9tYeSTVlFY2jj
-         uSdzwI85cvuo1MYZOtPjtHNE3aF/i9VojzsotPM5tt6fFcF2OzgFHHGfCnPn9Sbj5bqA
-         kFgyYS1cCQgkBIhziKbjcLQd+JQ5ogWVNc2ks=
-Received: by 10.103.122.22 with SMTP id z22mr1223904mum.68.1264892911233;
-        Sat, 30 Jan 2010 15:08:31 -0800 (PST)
-Received: from googlemail.com (p4FC1D569.dip.t-dialin.net [79.193.213.105])
-        by mx.google.com with ESMTPS id j2sm14758741mue.2.2010.01.30.15.08.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 30 Jan 2010 15:08:30 -0800 (PST)
-Received: by googlemail.com (nbSMTP-1.00) for uid 1100
-	(using TLSv1/SSLv3 with cipher RC4-MD5 (128/128 bits))
-	fkater@googlemail.com; Sun, 31 Jan 2010 00:08:30 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752098Ab0A3XeL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Jan 2010 18:34:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752067Ab0A3XeK
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 18:34:10 -0500
+Received: from mail-pz0-f172.google.com ([209.85.222.172]:35558 "EHLO
+	mail-pz0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751810Ab0A3XeJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Jan 2010 18:34:09 -0500
+Received: by pzk2 with SMTP id 2so2883330pzk.21
+        for <git@vger.kernel.org>; Sat, 30 Jan 2010 15:34:08 -0800 (PST)
+Received: by 10.142.2.29 with SMTP id 29mr1827480wfb.99.1264894446079; Sat, 30 
+	Jan 2010 15:34:06 -0800 (PST)
+In-Reply-To: <20100129190642.GA31303@neumann>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138518>
 
-Hi,
+2010/1/29 SZEDER G=E1bor <szeder@ira.uka.de>:
+> The bash completion script already provides support to complete
+> aliases, options and refs for aliases (if the alias can be traced bac=
+k
+> to a supported git command by __git_aliased_command()), and the user'=
+s
+> custom git commands, but it does not support the options of the user'=
+s
+> custom git commands (of course; how could it know about the options o=
+f
+> a custom git command?). =A0Users of such custom git commands could
+> extend git's bash completion script by writing functions to support
+> their commands, but they might have issues with it: they might not
+> have the rights to modify a system-wide git completion script, and
+> they will need to track and merge upstream changes in the future.
+>
+> This patch addresses this by providing means for users to supply
+> custom completion scriplets for their custom git commands without
+> modifying the main git bash completion script.
+>
+> Instead of having a huge hard-coded list of command-completion
+> function pairs (in _git()), the completion script will figure out
+> which completion function to call based on the command's name. =A0Tha=
+t
+> is, when completing the options of 'git foo', the main completion
+> script will check whether the function '_git_foo' is declared, and if
+> declared, it will invoke that function to perform the completion. =A0=
+If
+> such a function is not declared, it will fall back to complete file
+> names. =A0So, users will only need to provide this '_git_foo' complet=
+ion
+> function in a separate file, source that file, and it will be used th=
+e
+> next time they press TAB after 'git foo '.
+>
+> There are two git commands (stage and whatchanged), for which the
+> completion functions of other commands were used, therefore they
+> got their own completion function.
+>
 
-I would like to completely migrate from subversion to git
-(and NOT have subversion enabled anymore). However, I need
-to be able to lookup the old subversion revision numbers
-later from the git repository. The default seems to be
-though, that they are replaced by git sha-1 keys.
+Excellent! This looks just like what I was after. Among other things,
+this is much better than my use of awk. ;o)
 
-It would be completely o.k. here to use git tags for all
-those subversion revision numbers (if possible), so, to
-create a tag for each subversion revision. However, I have
-neither seen any option in git nor found a script which does
-that upon cloning (converting) a subversion repo into a git
-repo.
-
-Is there a way to do so?
-
-Thank You
- Felix
+-davidc
