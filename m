@@ -1,70 +1,83 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH] builtin-name-rev.c: remove the remaining "typedef struct
- rev_name" from git.
-Date: Fri, 29 Jan 2010 23:53:16 -0800
-Message-ID: <4B63E56C.5000100@gmail.com>
-References: <8678db190a73997c7bd757b9d78f0fa9e8721055.1264815015.git.tfransosi@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: master^ is not a local branch -- huh?!?
+Date: Sat, 30 Jan 2010 00:02:35 -0800
+Message-ID: <7vhbq4xbok.fsf@alter.siamese.dyndns.org>
+References: <ron1-2E17EF.12204629012010@news.gmane.org>
+ <hjvgs1$rep$1@ger.gmane.org> <ron1-953427.13240429012010@news.gmane.org>
+ <fabb9a1e1001291328s1df443d6jdf0501cda17072de@mail.gmail.com>
+ <7vmxzwh906.fsf@alter.siamese.dyndns.org>
+ <ron1-6C7BCB.14122429012010@news.gmane.org>
+ <b4087cc51001291633l68760880i340d12e865641077@mail.gmail.com>
+ <7vvdek70ma.fsf@alter.siamese.dyndns.org>
+ <ron1-FA4289.22165129012010@news.gmane.org>
+ <7vaavw1478.fsf@alter.siamese.dyndns.org>
+ <ron1-0D3105.23314829012010@news.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 30 08:53:35 2010
+To: Ron Garret <ron1@flownet.com>
+X-From: git-owner@vger.kernel.org Sat Jan 30 09:02:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nb896-0007Rq-T0
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 08:53:33 +0100
+	id 1Nb8I6-00039z-Gk
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 09:02:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752294Ab0A3Hx0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jan 2010 02:53:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752036Ab0A3Hx0
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 02:53:26 -0500
-Received: from mail-iw0-f173.google.com ([209.85.223.173]:57480 "EHLO
-	mail-iw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751245Ab0A3HxZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jan 2010 02:53:25 -0500
-Received: by iwn3 with SMTP id 3so2461661iwn.23
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 23:53:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=WcCv8LTF1wsiXml6thMIzXw1QBw0pCMM+B+ZTtTJpBs=;
-        b=M3JCd21YA/2fCVmNTwEm0i3sSAZFLyS8BBr8M0woDi5igLdNSV9ghHi986zemDj/m/
-         Wsbc6KQrpz5hQ82AGQqUu0X9m4AKH7HvJd1nvg8WpH8dkQ7K0uZ1vCklC9gnzclZakEz
-         VFvHCHU2Uhwut4VrYnO9SaPU+L1ODqJOb7H7Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=MNm+s21Z4igwgkclPba5ps6qeI9Ss6T+P9TQ/zp7oWBAf8olT9RR5byg/jScehPjo9
-         0ZzwtBSI0/eGEG/gJOdAloQSAfS3h0xAIVdHheeiUAfJetZFVkvXZ6BKtfJyPJynt/Xy
-         zHj3Q4sakhKz0rJJbVJmRcgGljhTiGKMh3M5g=
-Received: by 10.231.151.207 with SMTP id d15mr2524044ibw.44.1264838002294;
-        Fri, 29 Jan 2010 23:53:22 -0800 (PST)
-Received: from ?192.168.1.5? (user-0c9haca.cable.mindspring.com [24.152.169.138])
-        by mx.google.com with ESMTPS id 21sm2756233iwn.10.2010.01.29.23.53.19
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 29 Jan 2010 23:53:21 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7pre) Gecko/20091214 Shredder/3.0.1pre
-In-Reply-To: <8678db190a73997c7bd757b9d78f0fa9e8721055.1264815015.git.tfransosi@gmail.com>
+	id S1752581Ab0A3ICp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jan 2010 03:02:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752533Ab0A3ICp
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 03:02:45 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63699 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752522Ab0A3ICo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jan 2010 03:02:44 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E91F595FF0;
+	Sat, 30 Jan 2010 03:02:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jYzyWwrHsqQG6SSfp7Lses++36s=; b=qToh/X
+	YI+xeOHmDG7U4GzmqS2U8WPg/qanMyVEIk3UY/vHyPDCwrgDkMdx7ECzKg8ujfU9
+	91ye/SowxXr0cnJuv6x5Cd5ve45y0hxF1+sifXAEHnt8/0D2NnLRpu/hdWn//LDz
+	xh9jxPBg10QCIRo4/q0qJHv9P50muz26xsvRo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SevUvQtgTaAxL0WwpQ/XsqF4hpF9k5kK
+	WxcR0tkteWZtXR7jXT8d//7PS4R2nv261VBtOWHv7Rw6uUGCeRigUdf+auVgpBK3
+	Ey4L8XvBrfkzBGglpeMTLKQl9uIEQZEiPgc3aQUgok4TktUPrDRE8YCuiBVmqDMf
+	xc0iiHRJiuU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BA53C95FED;
+	Sat, 30 Jan 2010 03:02:39 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A7F895FEC; Sat, 30 Jan
+ 2010 03:02:36 -0500 (EST)
+In-Reply-To: <ron1-0D3105.23314829012010@news.gmane.org> (Ron Garret's
+ message of "Fri\, 29 Jan 2010 23\:31\:48 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D603B008-0D75-11DF-BDA2-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138462>
 
-On 01/29/2010 05:32 PM, Thiago Farina wrote:
-> @@ -43,7 +43,7 @@ static void name_rev(struct commit *commit,
->   	}
+Ron Garret <ron1@flownet.com> writes:
+
+> It wouldn't.  Was this a trick question?  Did you mean to ask what would 
+> happen if I ran commit -a?
+
+I didn't mean _literally_ "git commit".  Any random thing you may want to
+do when you come back to work the next day and find a checked out work
+tree.  Viewing, editing, committing, etc.
+
+>> *1* As a set of "building blocks" to implement "reset" and "checkout", I
+>> don't necessarily agree that "update" would be a good way to go from the
+>> implementation standpoint, but that is a totally separate matter.
 >
->   	if (name == NULL) {
-> -		name = xmalloc(sizeof(rev_name));
-> +		name = xmalloc(sizeof(struct rev_name));
+> Did you mean "don't necessarily DISagree"?
 
-How about sizeof(*name) instead? This way we don't have to change it 
-when the type changes again.
+I have huge doubts that "update" is the best way to do reset/checkout.
