@@ -1,73 +1,88 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Ron Garret <ron1@flownet.com>
 Subject: Re: master^ is not a local branch -- huh?!?
-Date: Sat, 30 Jan 2010 01:18:33 +0100
-Message-ID: <fabb9a1e1001291618m71f61209v4f26fb66c6ad99ae@mail.gmail.com>
-References: <ron1-2E17EF.12204629012010@news.gmane.org> <fabb9a1e1001291321v708c7cb4sec8e944f336d04fd@mail.gmail.com> 
-	<alpine.LFD.2.00.1001291628510.1681@xanadu.home> <fabb9a1e1001291332w1d161f8at58aa6fe6908bd77f@mail.gmail.com> 
-	<alpine.LFD.2.00.1001291641200.1681@xanadu.home> <7viqakh8ty.fsf@alter.siamese.dyndns.org> 
-	<alpine.LFD.2.00.1001291716070.1681@xanadu.home> <7vaavwh6yh.fsf@alter.siamese.dyndns.org> 
-	<alpine.LFD.2.00.1001291833580.1681@xanadu.home> <7vy6jgcutb.fsf@alter.siamese.dyndns.org>
+Date: Fri, 29 Jan 2010 16:18:45 -0800
+Organization: Amalgamated Widgets
+Message-ID: <ron1-4F99DE.16184529012010@news.gmane.org>
+References: <ron1-2E17EF.12204629012010@news.gmane.org> <op.u7a909hf4oyyg1@alvarezp-ws> <ron1-1F1799.13340029012010@news.gmane.org> <op.u7bfjni44oyyg1@alvarezp-ws> <ron1-0EE62E.14474929012010@news.gmane.org> <bd7fb2a884e55e176eea3002fd0c68dd@212.159.54.234> <ron1-A99355.16145629012010@news.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Nicolas Pitre <nico@fluxnic.net>, Git List <git@vger.kernel.org>,
-	Ron1 <ron1@flownet.com>, Jacob Helwig <jacob.helwig@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 30 01:19:03 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 30 01:20:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nb13F-0006fC-1j
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 01:19:01 +0100
+	id 1Nb14S-0007Kx-3d
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 01:20:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754537Ab0A3ASy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 19:18:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751959Ab0A3ASy
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 19:18:54 -0500
-Received: from mail-pz0-f190.google.com ([209.85.222.190]:36573 "EHLO
-	mail-pz0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750890Ab0A3ASx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 19:18:53 -0500
-Received: by pzk28 with SMTP id 28so2016183pzk.4
-        for <git@vger.kernel.org>; Fri, 29 Jan 2010 16:18:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=4xanKX4IHISyQFWfHbk+97NEzqy7OnD1yrRiXFr0fKw=;
-        b=Ug0oi2kxV8HAIzPlTUj8JokNNVUgbFm2piG98RlibswRhzy58yLTPfufJt83kQSopK
-         1muDDfLOvMub2o1sTicWw3B4yYAgTM3ZGXWbYTf5SBox0TbAAy9076x8bYUS0oQs6ygJ
-         JwUVwpnlhGxIO4mw7xpzyELt5cIemInP6sQbw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=TUypXYXokO7Bm4l1/HQvpUH/ity1gLd8lbqMWqdyi4an48Cnm7oMR9ndiWqUVSKxFh
-         gNgS1PveOAiHjs6zqVUtv1KGiqDW0/YVIWGLgb7k1djnNcJdK6nP/ONQzZoKCUBoNHAV
-         gb1qE49DbDU3A8nPALTriQ4HVIT2c2FntSvFE=
-Received: by 10.142.196.3 with SMTP id t3mr1033077wff.10.1264810733084; Fri, 
-	29 Jan 2010 16:18:53 -0800 (PST)
-In-Reply-To: <7vy6jgcutb.fsf@alter.siamese.dyndns.org>
+	id S1755463Ab0A3AUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 19:20:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751247Ab0A3AUJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 19:20:09 -0500
+Received: from lo.gmane.org ([80.91.229.12]:48733 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751185Ab0A3AUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 19:20:08 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Nb14H-0007Cu-LU
+	for git@vger.kernel.org; Sat, 30 Jan 2010 01:20:05 +0100
+Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 30 Jan 2010 01:20:05 +0100
+Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 30 Jan 2010 01:20:05 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
+User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138407>
 
-Heya,
+In article <ron1-A99355.16145629012010@news.gmane.org>,
+ Ron Garret <ron1@flownet.com> wrote:
 
-On Sat, Jan 30, 2010 at 01:14, Junio C Hamano <gitster@pobox.com> wrote:
-> +"If you want to create a new branch from this state, you may do so\n"
-> +"(now or later) by using -b with the checkout command again.
+> In article <bd7fb2a884e55e176eea3002fd0c68dd@212.159.54.234>,
+>  Julian Phillips <julian@quantumfyre.co.uk> wrote:
+> 
+> > On Fri, 29 Jan 2010 14:47:49 -0800, Ron Garret <ron1@flownet.com> wrote:
+> > > My actual use case is very complicated, but here's a simplified version:
+> > > 
+> > > Suppose I'm using git as a back-end for a wiki.  I want to look at the 
+> > > state of the entire wiki as it was in some point in the past, and I also
+> > 
+> > > want to be able to look at the diffs between individual pages as they 
+> > > were then and as they are now.  The most straightforward way I can think
+> > 
+> > > of to do that is to simply copy an old commit into my working tree 
+> > > without changing anything else.  Then I can look at the old version by 
+> > > simply looking at the files, and I can get the diffs by simply doing a 
+> > > git diff.
+> > > 
+> > > If I do a git reset --hard then I get the old version, but I lose my 
+> > > HEAD pointer so that git diff doesn't give me what I want any more.
+> > > 
+> > > BTW, it turns out that git checkout [commit] . doesn't do the right 
+> > > thing either.  Apparently, it still updates my index, so git diff still 
+> > > doesn't do the right thing.
+> > 
+> > If I understand what you want correctly, then:
+> > 
+> > git diff --cached -R [path]
+> > 
+> > should be the appropriate command after the "git checkout <commit> .".
+> 
+> Yep, that works.  Alternatively, is there a way to clear the index?  
+> Seems like that would be better.
 
-I think the "this state" needs to be changed, it currently suggests
-what you mention earlier in you reply, that it's about the current
-state, even if you make commits on top of that. Maybe something in the
-spirit of "If you want to create a new branch from ?? where you are at
-the moment you follow these instructions ??".
+Well, whaddyaknow: git reset without any arguments has a use after all 
+:-)
 
--- 
-Cheers,
-
-Sverre Rabbelier
+rg
