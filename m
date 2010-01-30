@@ -1,137 +1,74 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: unable to run gc (or git repack -Adl )
-Date: Fri, 29 Jan 2010 21:14:47 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1001292025260.1681@xanadu.home>
-References: <cccedfc61001291429q7dfa2045x18134439ad1e7c94@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Implement pthread_cond_broadcast on Windows
+Date: Sat, 30 Jan 2010 03:28:43 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1001300328070.3749@intel-tinevez-2-302>
+References: <4B62CEAB.5050608@viscovery.net> <201001292102.49105.j6t@kdbg.org> <201001292316.03858.j6t@kdbg.org> <201001300054.05610.j6t@kdbg.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Jon Nelson <jnelson@jamponi.net>
-X-From: git-owner@vger.kernel.org Sat Jan 30 03:18:42 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-15?Q?Zolt=E1n_F=FCzesi?= <zfuzesi@eaglet.hu>,
+	git@vger.kernel.org,
+	msysGit Mailinglist <msysgit@googlegroups.com>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	"Andrzej K. Haczewski" <ahaczewski@gmail.com>,
+	Erik Faye-Lund <kusmabite@googlemail.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Jan 30 03:28:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nb2v2-0005Ks-U6
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 03:18:41 +0100
+	id 1Nb34u-0001Sg-8k
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jan 2010 03:28:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755813Ab0A3CPD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2010 21:15:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755787Ab0A3CPD
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 21:15:03 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:42371 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750869Ab0A3CPB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2010 21:15:01 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KX1005RVFKNUVJ1@VL-MH-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 29 Jan 2010 21:14:48 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <cccedfc61001291429q7dfa2045x18134439ad1e7c94@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1756182Ab0A3C2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2010 21:28:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756099Ab0A3C2q
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jan 2010 21:28:46 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59310 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752639Ab0A3C2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2010 21:28:46 -0500
+Received: (qmail invoked by alias); 30 Jan 2010 02:28:44 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp031) with SMTP; 30 Jan 2010 03:28:44 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/7vqg06yX7+sVU7l4evFnPL1iZHb97JC/O0/MQDI
+	Z7Fu6e3+SMmS3x
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <201001300054.05610.j6t@kdbg.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.60999999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138426>
 
-On Fri, 29 Jan 2010, Jon Nelson wrote:
+Hi,
 
-> Using 1.6.4.2 on openSUSE 11.2 (x86_64).
+On Sat, 30 Jan 2010, Johannes Sixt wrote:
+
+> See http://www.cse.wustl.edu/~schmidt/win32-cv-1.html, section "The
+> SignalObjectAndWait solution". But note that this implementation does not
+> use SignalObjectAndWait (which is needed to achieve fairness, but we do
+> not need fairness).
 > 
-> I have a beefy repo (du of 14GB) that I can't seem to run 'gc' on.
+> Note that our implementations of pthread_cond_broadcast and
+> pthread_cond_signal require that they are invoked with the mutex held that
+> is used in the pthread_cond_wait calls.
 > 
-> After running for over 2 hours, this is what I get:
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+>  Junio,
 > 
-> Counting objects: 267676, done.
-> Compressing objects: 100% (217424/217424), done.
-> fatal: Unable to create temporary file: Too many open files
-> error: failed to run repack
+>  please queue this patch for 1.7.0-rc1 even though it has not undergone
+>  a lot of review - the result is better than a git that does not even
+>  build on Windows.
 
-Ouch!!  Impressive.
+As you Cc:ed the msysGit list, do you want this in 4msysgit.git, too?
 
-> Ugh!
-
-Indeed.
-
-> I have 3 GB of memory (and 1GB of swap).
-> When I strace the various processes, I see some things I don't understand:
-> 
-> 1. I see the 'git-repack' shell process scanning for .keep files. I
-> don't have any. Is there a shortcut to this?
-> 
-> It's also hugely inefficient. In this case, the code to identify non
-> .keep packs takes *4 minutes, 45 seconds*, lots of disk I/O, and lots
-> of CPU (it pegs one CPU at 100% for the entire duration). With a wee
-> bit of awk, I have reduced that to 2.3 seconds with VASTLY reduced I/O
-> and CPU requirements. Patch attached.
-
-Your patch will pick any .pack file in the repo not only from the 
-.git/objects/pack directory.  There is no such thing as *.pack.keep 
-either.
-
-> 2. When git-pack-objects is being run, around the time it's 85% done
-> "compressing" it's very very very slow. Like, 2-5 objects every
-> second. The largest object in the repo is about 1MB.
-
-You probably consumed all RAM and started swapping at that point.
-
-Or... you have many of those 1MB objects.  If so try 
-using --window-memory=8M or similar.
-
-> 3. When git pack objects is running and counting up the number of
-> objects, it is stat'ing files that aren't in the working directly, and
-> should not be, according to the index. If I switch the repo to be a
-> "bare" repository, then it doesn't do that, however, why is it doing
-> that in the first place?
-
-A bare repository has no index.  When the index is present though, it is 
-necessary to also pack objects it references.  Why working directory 
-files would be stat()'d in that case I don't know.
-
-> 4. Should git-pack-objects be reading the pack.idx files for counting
-> objects instead of the .pack files themselves?
-
-No.  The whole point when "counting objects" is to perform a walk of the 
-history graph and capture the set of objects that are actually 
-referenced from your branches/tags and leave the unreferenced objects 
-behind.  Also the order in which those objects are encountered during 
-that history walk is very important for efficient object placement in 
-the final pack.  So this is much more involved than only listing the 
-objects contained in every packs.
-
-> 5. There is no 5
-
-I'm a flying buldozer.
-
-> 6. Should git-pack-objects be closing .pack files after opening them?
-> I have 6559 .pack files.
-
-No wonder why you exhausted your file handles.  And your repository must 
-be _horribly_ slow to work with, which might explain the 
-slowness/swappiness.
-
-> 7. Ultimately, how do I get "git gc" to work on this repo?
-
-... because you really really want to repack this mess ASAP of course.
-
-Having so many packs means they must be relatively small.  Yet, Git 
-allows up to 8GB of pack data to be mmap()'d at once on x86_64.  This 
-means that an average of 3700 packs might be mapped at once, plus their 
-respective .idx files.
-
-You could try:
-
-	git config core.packedGitLimit 256m
-	git config core.packedGitWindowSize 32m
-	git config pack.deltaCacheSize 1
-
-and try repacking again with 'git gc --prune=now'.  After the repack 
-succeeds, you should be able to remove the above configs from your 
-.git/config file.
-
-
-Nicolas
+Ciao,
+Dscho
