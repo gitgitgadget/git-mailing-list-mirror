@@ -1,72 +1,76 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFH] rpm packaging failure
-Date: Sun, 31 Jan 2010 01:06:52 +0100
-Message-ID: <201001310106.52303.johan@herland.net>
-References: <7v8wbgueqz.fsf@alter.siamese.dyndns.org>
- <20100130151921.GM29188@inocybe.localdomain>
- <7vsk9nsemh.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/8 v6] gitweb: add a get function to compliment
+ print_local_time
+Date: Sat, 30 Jan 2010 16:21:48 -0800
+Message-ID: <7vzl3vf7j7.fsf@alter.siamese.dyndns.org>
+References: <1264890645-28310-1-git-send-email-jnareb@gmail.com>
+ <1264890645-28310-6-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 31 01:07:02 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	John 'Warthog9' Hawley <warthog9@kernel.org>,
+	Petr Baudis <pasky@suse.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 31 01:23:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbNLB-0003Rq-LG
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 01:07:02 +0100
+	id 1NbNb4-0000Ld-W5
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 01:23:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752988Ab0AaAG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jan 2010 19:06:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752797Ab0AaAG4
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 19:06:56 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:52534 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751509Ab0AaAG4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Jan 2010 19:06:56 -0500
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KX3001HS4BH5S20@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Sun, 31 Jan 2010 01:06:53 +0100 (MET)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KX300HFH4BG0C20@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Sun, 31 Jan 2010 01:06:53 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2010.1.30.235725
-User-Agent: KMail/1.12.4 (Linux/2.6.32-ARCH; KDE/4.3.4; x86_64; ; )
-In-reply-to: <7vsk9nsemh.fsf@alter.siamese.dyndns.org>
+	id S1752588Ab0AaAWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jan 2010 19:22:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752474Ab0AaAWF
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 19:22:05 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53229 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751320Ab0AaAWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jan 2010 19:22:04 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 01B9C9507B;
+	Sat, 30 Jan 2010 19:22:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=38Kx4G4aeqlGBOKSXD76IU7yyxs=; b=EBOsJV2MYXJoMHH1JjgfNxi
+	S4wE0RGj/w+2wg4zJ/U5GnPStPKT3sgO79RAIvfJKx1fSw8uMp/PdnywuSjxv+wc
+	wIRajsExgFQdYHKnZcEpyNAjlfGWLyMZIc9KDnvUybf8oYXbkk9mNTewjuzRnGYt
+	3dSVKXIhF1e4Rqb0GAtw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=PLyLTE4AmI2Vf7ffGOer1cKvuMNIO98SFjopvC7SuNWGT1Wuz
+	T0eVsJ18if7fatW9vr3IUpY06/dWEHkDzBoJX8IN0X6KW4OD/rxWErDb1bgLkmW7
+	V5klap50ws/S/Q3E5QigYpOfkabnb1QxY+SDTu0K2m3nFP2QSLWFS+reL4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A61B595079;
+	Sat, 30 Jan 2010 19:21:56 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BEEE995078; Sat, 30 Jan
+ 2010 19:21:50 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A3DD2382-0DFE-11DF-A326-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138522>
 
-On Saturday 30 January 2010, Junio C Hamano wrote:
-> The files that are problematic are only infrastructure bits to support
-> "remote helpers written in Python" (which we don't ship at all yet).
-> 
-> Once we start shipping real remote helpers, separating Python bits out
-> into its own package would make a lot of sense.  People who want to use
-> foreign scm helpers that happen to be written in Python would need it,
->  and all others don't.
-> 
-> But I suspect that a safer alternative at least for 1.7.0 would be to
-> leave these files out altogether.  As I understand the current state, it
-> is an unused but required package dependency on Python, a downside
->  without an upside.  Is it Ok with "remote helpers in Python" folks (I
->  think Sverre and Johan are principal parties), or did I miss some reason
->  that these need to be installed/installable, perhaps to support third
->  party packages that already exist?
+Jakub Narebski <jnareb@gmail.com> writes:
 
-AFAICS, there's no reason why these should be installed without anything 
-actually using them. Although I defer to Sverre, who did the last work in 
-this area.
+> This adds a get function (named format_local_time) for print_local_time,
+> so that the basic function can be used outside of their straight printing
+> operation.
 
+I didn't particularly feel like giving praise to print-local-time nor
+print-sort-th, so I rewrote the log message for these two commits ;-).
 
-...Johan
+    gitweb: add a "string" variant of print_local_time
+    
+    Add a function (named format_local_time) that returns the string that
+    print_local_time would print.
+
+Thanks.  Now I can drop GIT_SKIP_TESTS=t95?? while building 'pu'.  All
+pushed out to the usual places.
