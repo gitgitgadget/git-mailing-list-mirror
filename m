@@ -1,83 +1,72 @@
-From: Jacob Helwig <jacob.helwig@gmail.com>
-Subject: Re: migrating to git: keep subversion revision numbers (as tags?)
-Date: Sat, 30 Jan 2010 15:36:14 -0800
-Message-ID: <8c9a061001301536g1a990881qa27ba681ee90c6eb@mail.gmail.com>
-References: <20100130230829.GA3544@comppasch2>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [RFH] rpm packaging failure
+Date: Sun, 31 Jan 2010 01:06:52 +0100
+Message-ID: <201001310106.52303.johan@herland.net>
+References: <7v8wbgueqz.fsf@alter.siamese.dyndns.org>
+ <20100130151921.GM29188@inocybe.localdomain>
+ <7vsk9nsemh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "fkater@googlemail.com" <fkater@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 31 00:36:43 2010
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 31 01:07:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbMrq-00017U-94
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 00:36:42 +0100
+	id 1NbNLB-0003Rq-LG
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 01:07:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752651Ab0A3Xgf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Jan 2010 18:36:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752543Ab0A3Xgf
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 18:36:35 -0500
-Received: from mail-px0-f182.google.com ([209.85.216.182]:65259 "EHLO
-	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751320Ab0A3Xge convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Jan 2010 18:36:34 -0500
-Received: by pxi12 with SMTP id 12so2901158pxi.33
-        for <git@vger.kernel.org>; Sat, 30 Jan 2010 15:36:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=cgeB2mgIgVSM/LKt9jTkfOhgOCRu5ogJH1chZE/ALfs=;
-        b=nuONEjTQdlG3NkGCzw9Omr96N1zMqTYyyO8rdnhm6m+IvcuAauQ/C4mC+0e/PG9wVS
-         bRx+32UNgmfhJUx8sphSiqw6xgZGNx85gDF3SX3gUxPlPe8s27FZ6XCnfR4OsNQWbC4o
-         QmKHWXtAYksWA4Zk4oYml42mL30o69v6kWUdM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=YJOViZgE7owbsDksc3Qff4cFdvKIySoJTw9tfaq00j/dPw7QWv8eJf3ct2sHSVcYb0
-         TS/G4NVci37RTmfQghwu9VIBPZtk+3UVV5TLDshKgb+HUVktCIhOmaZd28gJfkexJcpw
-         Yc9dIc49HD9riOVWqsn9BYvE4+m01qYralpCQ=
-Received: by 10.141.90.5 with SMTP id s5mr1831067rvl.81.1264894594534; Sat, 30 
-	Jan 2010 15:36:34 -0800 (PST)
-In-Reply-To: <20100130230829.GA3544@comppasch2>
+	id S1752988Ab0AaAG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jan 2010 19:06:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752797Ab0AaAG4
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jan 2010 19:06:56 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:52534 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751509Ab0AaAG4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Jan 2010 19:06:56 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KX3001HS4BH5S20@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Sun, 31 Jan 2010 01:06:53 +0100 (MET)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KX300HFH4BG0C20@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Sun, 31 Jan 2010 01:06:53 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2010.1.30.235725
+User-Agent: KMail/1.12.4 (Linux/2.6.32-ARCH; KDE/4.3.4; x86_64; ; )
+In-reply-to: <7vsk9nsemh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138521>
 
-On Sat, Jan 30, 2010 at 15:08, fkater@googlemail.com
-<fkater@googlemail.com> wrote:
-> Hi,
->
-> I would like to completely migrate from subversion to git
-> (and NOT have subversion enabled anymore). However, I need
-> to be able to lookup the old subversion revision numbers
-> later from the git repository. The default seems to be
-> though, that they are replaced by git sha-1 keys.
->
-> It would be completely o.k. here to use git tags for all
-> those subversion revision numbers (if possible), so, to
-> create a tag for each subversion revision. However, I have
-> neither seen any option in git nor found a script which does
-> that upon cloning (converting) a subversion repo into a git
-> repo.
->
-> Is there a way to do so?
->
-> Thank You
-> =C2=A0Felix
->
+On Saturday 30 January 2010, Junio C Hamano wrote:
+> The files that are problematic are only infrastructure bits to support
+> "remote helpers written in Python" (which we don't ship at all yet).
+> 
+> Once we start shipping real remote helpers, separating Python bits out
+> into its own package would make a lot of sense.  People who want to use
+> foreign scm helpers that happen to be written in Python would need it,
+>  and all others don't.
+> 
+> But I suspect that a safer alternative at least for 1.7.0 would be to
+> leave these files out altogether.  As I understand the current state, it
+> is an unused but required package dependency on Python, a downside
+>  without an upside.  Is it Ok with "remote helpers in Python" folks (I
+>  think Sverre and Johan are principal parties), or did I miss some reason
+>  that these need to be installed/installable, perhaps to support third
+>  party packages that already exist?
 
-There's not really any need to tag every revision with the SVN
-revision number.  If you use svn-all-fast-export, or git-svn to do the
-SVN -> Git conversion, then the SVN revision numbers will end up as
-part of the commit message when it is in Git.
+AFAICS, there's no reason why these should be installed without anything 
+actually using them. Although I defer to Sverre, who did the last work in 
+this area.
 
--Jacob
+
+...Johan
