@@ -1,59 +1,280 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix memory leak in submodule.c
-Date: Sun, 31 Jan 2010 11:23:59 -0800
-Message-ID: <7vaavudqnk.fsf@alter.siamese.dyndns.org>
-References: <4B65B345.1090907@web.de>
+Subject: Re: [PATCH v2] Do not install shell libraries executable
+Date: Sun, 31 Jan 2010 11:46:53 -0800
+Message-ID: <7vy6jecb0y.fsf@alter.siamese.dyndns.org>
+References: <20100129102518.GA5875@coredump.intra.peff.net>
+ <20100129103723.GC6025@coredump.intra.peff.net>
+ <20100129145025.GA22703@progeny.tock>
+ <7vhbq2g3a9.fsf@alter.siamese.dyndns.org>
+ <20100131083459.GA18561@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Jan 31 20:24:28 2010
+Cc: Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 31 20:47:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbfPH-0002Gc-NQ
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 20:24:28 +0100
+	id 1NbflN-0004Es-4v
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 20:47:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753794Ab0AaTYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jan 2010 14:24:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753799Ab0AaTYH
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jan 2010 14:24:07 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60539 "EHLO
+	id S1753871Ab0AaTrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jan 2010 14:47:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753091Ab0AaTrK
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jan 2010 14:47:10 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42987 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753709Ab0AaTYG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2010 14:24:06 -0500
+	with ESMTP id S1751836Ab0AaTrJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jan 2010 14:47:09 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 949C7953CD;
-	Sun, 31 Jan 2010 14:24:05 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C8948956C6;
+	Sun, 31 Jan 2010 14:47:06 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=wulU1m
-	aLchvq1tjx9E2fuvURL/Y0ocHL6d5chD3TRvl82hTlZJLVl7fHd/Vyo4uDTD08xd
-	dTobkoBnbNlB5AS8kRc0WkJhsFBUyU9+EaqMFO26JcbAzLkXzliJPFmgsv9Byi5M
-	8VipyyC4yYVcwl33mJAh6zXW1wC18h68YVkFU=
+	:content-type; s=sasl; bh=m3Q8Ii6a+Z4uVfShH8g8kJqBKp8=; b=TX5uDV
+	Nkx7qco9rXgs2Zum7/OHAy3iraZ1v2KOHz4blkVb7rO9bBMKcNr/y17L0Grfq/GC
+	k/taeBiRfCQ5gYOtykKRO9ZE1FNS675FVFH9fi0DhdV9GPbVaBcSuoMpgV+jRA/b
+	S8iUlzSlDI9Wzp8+slPI4mQAU0HfEdL1sFin0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hkRsVwwNv+jMpTLtz34LwE+KxGZvYjag
-	0iJ8LSjcRPQoPIhOrQc7dmWrx+Gkp0A+qdRUlkPlZDFRuYBaBGcXa+IVlddoF8z1
-	r93sq/0oyKzHSGmTPPGKpr0vkWuP7QKqhdQQcHsxPFOaPzP6C65BCH7mE9UOa9Jl
-	b28WpEmOiTk=
+	:content-type; q=dns; s=sasl; b=KYWim4VFS3Ly69B80tLewomKL6VsXtrP
+	o11ZOHAx/if9Gp8HHG+ph+GFR2H5pMG2V3OkOWpLEA3a2jShzbJvT8tArdp17HHe
+	QY8vmCedf9p8OkjncHwS165YpfYQTVuvFZYLHLuVyaQEWq7wzHQXEmFLBzT3fjGV
+	6rdfPjWJL0A=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 72F32953CB;
-	Sun, 31 Jan 2010 14:24:03 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 67898956C3;
+	Sun, 31 Jan 2010 14:47:01 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD232953CA; Sun, 31 Jan
- 2010 14:24:00 -0500 (EST)
-In-Reply-To: <4B65B345.1090907@web.de> (Jens Lehmann's message of "Sun\, 31
- Jan 2010 17\:43\:49 +0100")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ED9B3956BE; Sun, 31 Jan
+ 2010 14:46:54 -0500 (EST)
+In-Reply-To: <20100131083459.GA18561@progeny.tock> (Jonathan Nieder's message
+ of "Sun\, 31 Jan 2010 02\:34\:59 -0600")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3104C9E6-0E9E-11DF-ACAB-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6657CB86-0EA1-11DF-987E-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138555>
 
-Thanks.
+Jonathan Nieder <jrnieder@gmail.com> writes:
+
+> Last time I also missed git-parse-remote, so while at it, I am taking
+> the opportunity to add that to SCRIPT_LIB_SH, too.
+
+Your patch says it was generated by 1.7.0-rc1, but the change itself
+seems to be based on an older version.  Curious.
+
+How much would it hurt the distro packagers, if we don't take this patch
+before 1.7.0?  If this would help a lot, let's give it a bit higher
+priority and make sure 1.7.0 ships with (a corrected version of) it;
+otherwise I'd say we should not merge this before 1.7.0.
+
+> +SCRIPT_LIB_SH += git-mergetool--lib.sh
+> +SCRIPT_LIB_SH += git-parse-remote.sh
+> +SCRIPT_LIB_SH += git-sh-setup.sh
+> + ...
+> @@ -1792,6 +1802,7 @@ install: all
+>  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
+>  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+>  	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+> +	$(INSTALL) -m 644 $(SCRIPT_LIB_SH) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+
+I can understand that you didn't want to include the "included scriptlets"
+as part of ALL_PROGRAMS because $(INSTALL) may flip 'x' bit on.
+
+But you should then be installing %(patsubst %.sh,%,$(SCRIPT_LIB_SH));
+otherwise, you are installing git-sh-setup.sh and
+
+    . git-sh-setup
+
+would not work.  Have you ever tested this?
+
+> @@ -1901,7 +1912,7 @@ distclean: clean
+>  clean:
+>  	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o \
+>  		$(LIB_FILE) $(XDIFF_LIB)
+> -	$(RM) $(ALL_PROGRAMS) $(BUILT_INS) git$X
+> +	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB_SH) $(BUILT_INS) git$X
+
+And this is even worse.  You are removing the _source_ here.  I can see
+you didn't even test the very basic: "make clean && make".
+
+> @@ -1930,7 +1941,7 @@ endif
+>  ### Check documentation
+>  #
+>  check-docs::
+> -	@(for v in $(ALL_PROGRAMS) $(BUILT_INS) git gitk; \
+> +	@(for v in $(ALL_PROGRAMS) $(SCRIPT_LIB_SH) $(BUILT_INS) git gitk; \
+
+Likewise.
+
+>  	do \
+>  		case "$$v" in \
+>  		git-merge-octopus | git-merge-ours | git-merge-recursive | \
+> @@ -1975,7 +1986,7 @@ check-docs::
+>  		documented,gittutorial-2 | \
+>  		sentinel,not,matching,is,ok ) continue ;; \
+>  		esac; \
+> -		case " $(ALL_PROGRAMS) $(BUILT_INS) git gitk " in \
+> +		case " $(ALL_PROGRAMS) $(SCRIPT_LIB_SH) $(BUILT_INS) git gitk " in \
+
+Likewise.
+
+Wouldn't it make a bit more sense to do it like this instead?  I at least
+did "make clean && make" ;-)
+
+-- >8 --
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] Do not install shell libraries executable
+
+Some scripts are expected to be sourced instead of executed on their own.
+Avoid some confusion by not marking them executable.
+
+The executable bit was confusing the valgrind support of our test scripts,
+which assumed that any executable without a #!-line should be intercepted
+and run through valgrind.  So during valgrind-enabled tests, any script
+sourcing these files actually sourced the valgrind interception script
+instead.
+
+Reported-by: Jeff King <peff@peff.net>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Makefile            |   42 ++++++++++++++++++++++++++++--------------
+ 1 files changed, 28 insertions(+), 14 deletions(-)
+ mode change 100755 => 100644 git-parse-remote.sh
+ mode change 100755 => 100644 git-sh-setup.sh
+
+diff --git a/Makefile b/Makefile
+index af08c8f..6bbeb24 100644
+--- a/Makefile
++++ b/Makefile
+@@ -341,6 +341,7 @@ PROGRAMS =
+ SCRIPT_PERL =
+ SCRIPT_PYTHON =
+ SCRIPT_SH =
++SCRIPT_LIB =
+ TEST_PROGRAMS =
+ 
+ SCRIPT_SH += git-am.sh
+@@ -352,20 +353,21 @@ SCRIPT_SH += git-merge-octopus.sh
+ SCRIPT_SH += git-merge-one-file.sh
+ SCRIPT_SH += git-merge-resolve.sh
+ SCRIPT_SH += git-mergetool.sh
+-SCRIPT_SH += git-mergetool--lib.sh
+ SCRIPT_SH += git-notes.sh
+-SCRIPT_SH += git-parse-remote.sh
+ SCRIPT_SH += git-pull.sh
+ SCRIPT_SH += git-quiltimport.sh
+ SCRIPT_SH += git-rebase--interactive.sh
+ SCRIPT_SH += git-rebase.sh
+ SCRIPT_SH += git-repack.sh
+ SCRIPT_SH += git-request-pull.sh
+-SCRIPT_SH += git-sh-setup.sh
+ SCRIPT_SH += git-stash.sh
+ SCRIPT_SH += git-submodule.sh
+ SCRIPT_SH += git-web--browse.sh
+ 
++SCRIPT_LIB += git-mergetool--lib
++SCRIPT_LIB += git-parse-remote
++SCRIPT_LIB += git-sh-setup
++
+ SCRIPT_PERL += git-add--interactive.perl
+ SCRIPT_PERL += git-difftool.perl
+ SCRIPT_PERL += git-archimport.perl
+@@ -1454,7 +1456,7 @@ export TAR INSTALL DESTDIR SHELL_PATH
+ 
+ SHELL = $(SHELL_PATH)
+ 
+-all:: shell_compatibility_test $(ALL_PROGRAMS) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
++all:: shell_compatibility_test $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
+ ifneq (,$X)
+ 	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), test -d '$p' -o '$p' -ef '$p$X' || $(RM) '$p';)
+ endif
+@@ -1505,17 +1507,25 @@ common-cmds.h: ./generate-cmdlist.sh command-list.txt
+ common-cmds.h: $(wildcard Documentation/git-*.txt)
+ 	$(QUIET_GEN)./generate-cmdlist.sh > $@+ && mv $@+ $@
+ 
++define cmd_munge_script
++$(RM) $@ $@+ && \
++sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
++    -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
++    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
++    -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
++    -e $(BROKEN_PATH_FIX) \
++    $@.sh >$@+
++endef
++
+ $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
+-	$(QUIET_GEN)$(RM) $@ $@+ && \
+-	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+-	    -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
+-	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+-	    -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
+-	    -e $(BROKEN_PATH_FIX) \
+-	    $@.sh >$@+ && \
++	$(QUIET_GEN)$(cmd_munge_script) && \
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+ 
++$(SCRIPT_LIB) : % : %.sh
++	$(QUIET_GEN)$(cmd_munge_script) && \
++	mv $@+ $@
++
+ ifndef NO_PERL
+ $(patsubst %.perl,%,$(SCRIPT_PERL)): perl/perl.mak
+ 
+@@ -1866,6 +1876,7 @@ install: all
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
++	$(INSTALL) -m 644 $(SCRIPT_LIB) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 	$(INSTALL) $(install_bindir_programs) '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
+ ifndef NO_PERL
+@@ -1985,7 +1996,7 @@ distclean: clean
+ clean:
+ 	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o \
+ 		$(LIB_FILE) $(XDIFF_LIB)
+-	$(RM) $(ALL_PROGRAMS) $(BUILT_INS) git$X
++	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
+ 	$(RM) $(TEST_PROGRAMS)
+ 	$(RM) -r bin-wrappers
+ 	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags cscope*
+@@ -2017,7 +2028,7 @@ endif
+ ### Check documentation
+ #
+ check-docs::
+-	@(for v in $(ALL_PROGRAMS) $(BUILT_INS) git gitk; \
++	@(for v in $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git gitk; \
+ 	do \
+ 		case "$$v" in \
+ 		git-merge-octopus | git-merge-ours | git-merge-recursive | \
+@@ -2060,9 +2071,12 @@ check-docs::
+ 		documented,gitrepository-layout | \
+ 		documented,gittutorial | \
+ 		documented,gittutorial-2 | \
++		documented,git-bisect-lk2009 | \
++		documented.git-remote-helpers | \
++		documented,gitworkflows | \
+ 		sentinel,not,matching,is,ok ) continue ;; \
+ 		esac; \
+-		case " $(ALL_PROGRAMS) $(BUILT_INS) git gitk " in \
++		case " $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git gitk " in \
+ 		*" $$cmd "*)	;; \
+ 		*) echo "removed but $$how: $$cmd" ;; \
+ 		esac; \
+diff --git a/git-parse-remote.sh b/git-parse-remote.sh
+old mode 100755
+new mode 100644
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+old mode 100755
+new mode 100644
+-- 
+1.7.0.rc1.141.gd3fd2
