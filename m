@@ -1,64 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Fix typos in technical documentation.
-Date: Sun, 31 Jan 2010 15:52:42 +0100
-Message-ID: <vpqsk9m5nt1.fsf@bauges.imag.fr>
-References: <20100131132438.GD23605@gmx.de>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] Fix memory leak in submodule.c
+Date: Sun, 31 Jan 2010 17:43:49 +0100
+Message-ID: <4B65B345.1090907@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jan 31 15:53:01 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 31 17:51:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbbAY-00083B-7T
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 15:52:58 +0100
+	id 1Nbd1W-0003uA-Rt
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 17:51:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753225Ab0AaOww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jan 2010 09:52:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753161Ab0AaOwv
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jan 2010 09:52:51 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:58291 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753153Ab0AaOwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2010 09:52:51 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o0VEpS1p000307
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 31 Jan 2010 15:51:28 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NbbAI-0000Bh-K9; Sun, 31 Jan 2010 15:52:42 +0100
-In-Reply-To: <20100131132438.GD23605@gmx.de> (Ralf Wildenhues's message of "Sun\, 31 Jan 2010 14\:24\:39 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 31 Jan 2010 15:51:28 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o0VEpS1p000307
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1265554290.25705@VXmyv6IfmhQS+w3MRSuliA
+	id S1753467Ab0AaQro (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jan 2010 11:47:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753306Ab0AaQro
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jan 2010 11:47:44 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:46280 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751224Ab0AaQro (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jan 2010 11:47:44 -0500
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 8688214CE3E4F;
+	Sun, 31 Jan 2010 17:47:42 +0100 (CET)
+Received: from [80.128.101.121] (helo=[192.168.178.26])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1Nbctp-0004CN-00; Sun, 31 Jan 2010 17:43:49 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
+X-Provags-ID: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138546>
 
-Ralf Wildenhues <Ralf.Wildenhues@gmx.de> writes:
+The strbuf used in add_submodule_odb() was never released. So for every
+submodule - populated or not - we leaked its object directory name when
+using "git diff*" with the --submodule option.
 
-> Signed-off-by: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-> ---
->
-> Hi there,
->
-> stumbled upon a couple of these, then grepped for the rest
-> in Documentation/.
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
+ submodule.c |   14 +++++++++-----
+ 1 files changed, 9 insertions(+), 5 deletions(-)
 
-Nice catches!
+diff --git a/submodule.c b/submodule.c
+index 6f7c210..7d70c4f 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -10,17 +10,19 @@ static int add_submodule_odb(const char *path)
+ {
+ 	struct strbuf objects_directory = STRBUF_INIT;
+ 	struct alternate_object_database *alt_odb;
++	int ret = 0;
 
+ 	strbuf_addf(&objects_directory, "%s/.git/objects/", path);
+-	if (!is_directory(objects_directory.buf))
+-		return -1;
+-
++	if (!is_directory(objects_directory.buf)) {
++		ret = -1;
++		goto done;
++	}
+ 	/* avoid adding it twice */
+ 	for (alt_odb = alt_odb_list; alt_odb; alt_odb = alt_odb->next)
+ 		if (alt_odb->name - alt_odb->base == objects_directory.len &&
+ 				!strncmp(alt_odb->base, objects_directory.buf,
+ 					objects_directory.len))
+-			return 0;
++			goto done;
+
+ 	alt_odb = xmalloc(objects_directory.len + 42 + sizeof(*alt_odb));
+ 	alt_odb->next = alt_odb_list;
+@@ -31,7 +33,9 @@ static int add_submodule_odb(const char *path)
+ 	alt_odb->name[41] = '\0';
+ 	alt_odb_list = alt_odb;
+ 	prepare_alt_odb();
+-	return 0;
++done:
++	strbuf_release(&objects_directory);
++	return ret;
+ }
+
+ void show_submodule_summary(FILE *f, const char *path,
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.0.rc1.141.gd3fd.dirty
