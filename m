@@ -1,122 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 12/12] Teach Makefile to check header dependencies
-Date: Sun, 31 Jan 2010 12:42:11 -0800
-Message-ID: <7viqaic8gs.fsf@alter.siamese.dyndns.org>
-References: <20100123144201.GA11903@progeny.tock>
- <7v3a1u6bfz.fsf@alter.siamese.dyndns.org>
- <20100126154357.GA4895@progeny.tock> <20100126155714.GM4895@progeny.tock>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] Do not install shell libraries executable
+Date: Sun, 31 Jan 2010 15:00:52 -0600
+Message-ID: <20100131210052.GA4435@progeny.tock>
+References: <20100129102518.GA5875@coredump.intra.peff.net>
+ <20100129103723.GC6025@coredump.intra.peff.net>
+ <20100129145025.GA22703@progeny.tock>
+ <7vhbq2g3a9.fsf@alter.siamese.dyndns.org>
+ <20100131083459.GA18561@progeny.tock>
+ <7vy6jecb0y.fsf@alter.siamese.dyndns.org>
+ <20100131200028.GA4045@progeny.tock>
+ <7vockaca5w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
+Cc: Jeff King <peff@peff.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Erik Faye-Lund <kusmabite@googlemail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 31 21:42:36 2010
+	David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 31 22:01:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nbgct-0003hL-5a
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 21:42:35 +0100
+	id 1Nbgv9-0004qN-3N
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 22:01:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754192Ab0AaUm2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jan 2010 15:42:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754182Ab0AaUm2
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jan 2010 15:42:28 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57181 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754169Ab0AaUm1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Jan 2010 15:42:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B856B95D1C;
-	Sun, 31 Jan 2010 15:42:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=kjR1po8fVtRh
-	Bjz0M4IJs6wC6jk=; b=Lg1htE/cjLRPRYEBzJX8W0VeIzANFBJ5jkJu4kKddeQy
-	T/wnPEYQxLRkmZbarv7tuq4wF3EaGz8Gute/I4yz2XaYnOpVthhCtwmzygPvzqxB
-	/cA7w+O00B0ZlqWPXcbxjAr9QL7goK3Waz1ih/5c6Ym5gQmao0ENlECIG97NiFk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=MTi5kg
-	Bj52p0Zp1eyaR3lnq3FI+RlgdbaUL2xDEOqXYcqWJIkmUichaxtj8e/geIcRwT5L
-	awz8I0xugGbKysI6UQuJZq1lrzYNWWaI7DH4iuDFrQ+YQm6ia6RzBiCkzPc8yWPI
-	zDJyVBuBMMpQoomREXei+xEm64cU2F0Ady9nA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4FCA195CD7;
-	Sun, 31 Jan 2010 15:42:20 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1C14295CD6; Sun, 31 Jan
- 2010 15:42:12 -0500 (EST)
-In-Reply-To: <20100126155714.GM4895@progeny.tock> (Jonathan Nieder's message
- of "Tue\, 26 Jan 2010 09\:57\:15 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 208FF88C-0EA9-11DF-B969-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754169Ab0AaVA5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jan 2010 16:00:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753980Ab0AaVA5
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jan 2010 16:00:57 -0500
+Received: from mail-iw0-f173.google.com ([209.85.223.173]:48949 "EHLO
+	mail-iw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752148Ab0AaVA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jan 2010 16:00:56 -0500
+Received: by iwn3 with SMTP id 3so3727318iwn.23
+        for <git@vger.kernel.org>; Sun, 31 Jan 2010 13:00:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ASt27lrgvlXm3J3Z3uetjbK+2LkFbAX++bBmBCiYM2Y=;
+        b=rGDj2jvqlUz2z+yXmSjUpyzuklKPSPisIYCvXDliyS04aj3jwdLNiiL6nyn+j2HyYR
+         yVf9rXKO8OHcXhpFY/TqnLZKqqnYHvTMvnhIEIh3xPEj+LA+SJKKf7SWHeObTQAN8s/j
+         trmIGcYchxf4NbVXcYY5Azdtwiug3QDHnJDqw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=GKdF8Je9hgayFyDXGlWzQy/KwUJE7lXKw4js8YiWh66ZU34TZjSic+KI8Gpw8Jp0p7
+         q8P7yti/NmhllWdcOHiOA4wdXu/m8raRNteGUWZY06YvS28qGJkDAMrQO6dvCqmS57/n
+         LF0ZoCs7UmOhR1pnY7FOC9JdrjkDyofJlPI9Q=
+Received: by 10.231.170.14 with SMTP id b14mr1617409ibz.26.1264971655633;
+        Sun, 31 Jan 2010 13:00:55 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 23sm4720170iwn.3.2010.01.31.13.00.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 31 Jan 2010 13:00:55 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vockaca5w.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138560>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> Add a target to use the gcc-generated makefile snippets for
-> dependencies on header files to check the hard-coded dependencies.
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
-> With this patch applied, if any dependencies are missing, then
+>> Junio C Hamano wrote:
+>>
+>>> How much would it hurt the distro packagers, if we don't take this =
+patch
+>>> before 1.7.0?  If this would help a lot, let's give it a bit higher
+>>> priority and make sure 1.7.0 ships with (a corrected version of) it=
+;
+>>> otherwise I'd say we should not merge this before 1.7.0.
+>>
+>> Given that Peff=E2=80=99s fix is in, I don=E2=80=99t think it is nee=
+ded at all.  So I
+>> would say, better to let it wait.
 >
-> 	make clean
-> 	make COMPUTE_HEADER_DEPENDENCIES=3DYesPlease
-> 	make CHECK_HEADER_DEPENDENCIES=3DYesPlease
->
-> will produce an error message like the following:
->
-> 	CHECK fast-import.o
-> 	missing dependencies: exec_cmd.h
-> 	make: *** [fast-import.o] Error 1
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> That=E2=80=99s the end of the series.  Thanks for reading.
+> I was referring to this from your original:
+>=20
+>     It was also confusing dpkg-shlibdeps, so I recently came up with
+>     this fix.  Both fixes seem like good changes to me, and both
+>     could be applied.  Your fix has the virtue of being shorter,
+>     hence safer.
+>=20
+> Is Jeff's mergetool-lib change enough to address this issue as well?
 
-Thanks.
+I just checked; looks like I was confusing a few issues.
 
-Three observations:
+ - dpkg-shlibdeps does not like to be fed scripts, period.  That
+   has nothing to do with this.
 
- * "make distclean" should remove $(dep_files);
+ - debian/rules in the git-core package feeds every file in
+   /usr/bin and gitexecdir that doesn=E2=80=99t start with #! to 'strip=
+'.
+   Jeff's change helps that; my fix has nothing to do with it.
 
- * "deps/" should probably be ".depend/" or something less distracting;
+ - some other tool must have been happier with these files not
+   being executable, but I cannot reproduce this or find it now.
 
- * I wish CHECK_HEADER_DEPENDENCIES pointed out unnecessary dependencie=
-s
-   hardcoded in the Makefile.
+I wrote that patch late at night, and unfortunately, I cannot justify i=
+t
+to myself now.  With Jeff=E2=80=99s change applied, there is no obvious=
+ breakage
+that it fixes.  If a problem comes up again, I will let you know.
 
--- >8 --
-Subject: [PATCH] Makefile: "make distclean" should remove dependency fi=
-les
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 45b1f54..8578b31 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2110,7 +2110,7 @@ dist-doc:
- ### Cleaning rules
-=20
- distclean: clean
--	$(RM) configure
-+	$(RM) configure $(dep_files)
-=20
- clean:
- 	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o \
---=20
-1.7.0.rc1.141.gd3fd2
+Embarrassed,
+Jonathan
