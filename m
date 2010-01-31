@@ -1,79 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] cvsimport: new -R option: generate revision-to-commit
- mapping
-Date: Sun, 31 Jan 2010 08:24:49 -0500
-Message-ID: <20100131132449.GA29470@coredump.intra.peff.net>
-References: <bc341e101001310443x18e02281i2e4d18334ead700b@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] Fix typos in technical documentation.
+Date: Sun, 31 Jan 2010 15:52:42 +0100
+Message-ID: <vpqsk9m5nt1.fsf@bauges.imag.fr>
+References: <20100131132438.GD23605@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Aaron Crane <git@aaroncrane.co.uk>
-X-From: git-owner@vger.kernel.org Sun Jan 31 14:27:59 2010
+To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jan 31 15:53:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbZqI-0004zo-5Q
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 14:27:58 +0100
+	id 1NbbAY-00083B-7T
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 15:52:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753556Ab0AaNYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jan 2010 08:24:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753484Ab0AaNYx
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jan 2010 08:24:53 -0500
-Received: from peff.net ([208.65.91.99]:55791 "EHLO peff.net"
+	id S1753225Ab0AaOww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jan 2010 09:52:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753161Ab0AaOwv
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jan 2010 09:52:51 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:58291 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753425Ab0AaNYx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2010 08:24:53 -0500
-Received: (qmail 4070 invoked by uid 107); 31 Jan 2010 13:24:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 31 Jan 2010 08:24:54 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 31 Jan 2010 08:24:49 -0500
-Content-Disposition: inline
-In-Reply-To: <bc341e101001310443x18e02281i2e4d18334ead700b@mail.gmail.com>
+	id S1753153Ab0AaOwv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jan 2010 09:52:51 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o0VEpS1p000307
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 31 Jan 2010 15:51:28 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NbbAI-0000Bh-K9; Sun, 31 Jan 2010 15:52:42 +0100
+In-Reply-To: <20100131132438.GD23605@gmx.de> (Ralf Wildenhues's message of "Sun\, 31 Jan 2010 14\:24\:39 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 31 Jan 2010 15:51:28 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o0VEpS1p000307
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1265554290.25705@VXmyv6IfmhQS+w3MRSuliA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138545>
 
-On Sun, Jan 31, 2010 at 12:43:44PM +0000, Aaron Crane wrote:
+Ralf Wildenhues <Ralf.Wildenhues@gmx.de> writes:
 
-> Signed-off-by: Aaron Crane <git@aaroncrane.co.uk>
+> Signed-off-by: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
 > ---
+>
+> Hi there,
+>
+> stumbled upon a couple of these, then grepped for the rest
+> in Documentation/.
 
-Please put a bit of the rationale into the commit message. Even a
-sentence or two can help later on when somebody is reading the output of
-"git log".
+Nice catches!
 
->  Documentation/git-cvsimport.txt |   15 ++++++++++++++-
->  git-cvsimport.perl              |   20 ++++++++++++++++----
->  2 files changed, 30 insertions(+), 5 deletions(-)
-
-A basic test would be nice. You should be able to just use your new "-R"
-during the import in t9600, and then check that it generated the correct
-mapping.
-
-> +-R <revision-to-commit-file>::
-> +	Generate a file containing a mapping from CVS revision numbers to
-> +	newly-created Git commit IDs.  The generated file will contain one
-> +	line for each (filename, revision) pair found by 'cvsps'; each line
-> +	will look like
-
-Is mentioning 'cvsps' right here?  cvsps doesn't know about git commit
-id's.
-
-> +open my $revision_map, '>', $opt_R
-> +    or die "Can't open -R file $opt_R: $!\n"
-> +	if defined $opt_R;
-
-You need to use munge_user_filename here to handle relative paths. See
-commit f6fdbb6.
-
-Also, should you perhaps be appending to the file instead of truncating
-it? Remember that cvsimport can be used incrementally. I wonder if it
-would be better to simply have "-R" without an argument to append the
-revision map to a file .git/cvs-revisions or something. And then the
-user can easily pull it from there after the import.
-
--Peff
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
