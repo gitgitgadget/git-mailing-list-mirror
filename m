@@ -1,166 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC PATCH 10/10] gitweb: Show appropriate "Generating..." page when regenerating cache (WIP)
-Date: Sun, 31 Jan 2010 12:58:41 +0100
-Message-ID: <201001311258.43202.jnareb@gmail.com>
-References: <cover.1264198194.git.jnareb@gmail.com> <4B5DFFE5.6060908@eaglescrag.net> <20100128173950.GH9553@machine.or.cz>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH v6] add --summary option to git-push and git-fetch
+Date: Sun, 31 Jan 2010 20:04:46 +0800
+Message-ID: <be6fef0d1001310404n204ffa31g3cf0a6f170507b3e@mail.gmail.com>
+References: <20100130011056.GA20463@cthulhu> <20100130020548.GA29343@cthulhu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "J.H." <warthog9@eaglescrag.net>, git@vger.kernel.org,
-	John 'Warthog9' Hawley <warthog9@kernel.org>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sun Jan 31 12:59:34 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Larry D'Anna" <larry@elder-gods.org>
+X-From: git-owner@vger.kernel.org Sun Jan 31 13:05:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbYSb-0002U7-Oi
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 12:59:26 +0100
+	id 1NbYYN-0006zm-VY
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 13:05:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752815Ab0AaL6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jan 2010 06:58:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752618Ab0AaL6w
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jan 2010 06:58:52 -0500
-Received: from mail-bw0-f227.google.com ([209.85.218.227]:33169 "EHLO
-	mail-bw0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752446Ab0AaL6v (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2010 06:58:51 -0500
-Received: by bwz27 with SMTP id 27so2398627bwz.21
-        for <git@vger.kernel.org>; Sun, 31 Jan 2010 03:58:49 -0800 (PST)
+	id S1752973Ab0AaMEt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jan 2010 07:04:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752711Ab0AaMEt
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jan 2010 07:04:49 -0500
+Received: from mail-iw0-f173.google.com ([209.85.223.173]:34599 "EHLO
+	mail-iw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751224Ab0AaMEs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jan 2010 07:04:48 -0500
+Received: by iwn3 with SMTP id 3so3419993iwn.23
+        for <git@vger.kernel.org>; Sun, 31 Jan 2010 04:04:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=sJNTSvKR12EScesgdOIo/nXIiIiqq3YJDloTvYGT1PQ=;
-        b=GZZx0VJwEgmSOeyMoqMqjr3ODIGEAPehAnJsqtkok7lcHtVA2d2ZpZx01SghKw+2y7
-         BA8P1U449JUuaoiy8aeZQVnZEtdeIF8feU80QwrMqixXMfOibeVgZ+htYgPFyd8km74o
-         mkPPqahtQBi0SYv8z85TDyAk63v8HtRKhJpdQ=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GmiXyMcb0/iFiVGVYi2+7/pa54npBiLxdSlgmDF3YeQ=;
+        b=gOmqGy44CO7Yz5UeKFk9AN6QCgQyg3zyonpvpjxt5Ccztnv8B1MXo1NXb86yJEYUyE
+         0h7/4KYKBPxgAL3YA2x0hHDtlG1JnJEajQa86ZNDmBj0uxhFh2KT+JLKLtkCE6sfyu0C
+         AfOs9w6f2k3hnS7RTLAnygIkQ/zksMbK3ETac=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=wKGjJC2/VnjC3ihB1cJVQ9sgUrhN6lc4aA70rz+r6tYLveY9C2Lv2v3RJ8xhCdgm5k
-         QcLp7pWO2u/yyRAHIdLUdo1VoX2w3MHF0gKl18usKa1U4QjD8zitF9a9h3u+5e0fHwsO
-         r4apTnOtrZ42cahuR0UHXBJVeBcd5ousj54fc=
-Received: by 10.204.6.72 with SMTP id 8mr1715754bky.28.1264939129323;
-        Sun, 31 Jan 2010 03:58:49 -0800 (PST)
-Received: from ?192.168.1.13? (abvf106.neoplus.adsl.tpnet.pl [83.8.203.106])
-        by mx.google.com with ESMTPS id 16sm1654790bwz.7.2010.01.31.03.58.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 31 Jan 2010 03:58:46 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20100128173950.GH9553@machine.or.cz>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=UVNsxms03u1XCVj0IG31eoq/H0RQJm5WunD9EphcUPzDX2IOCYtz5igMUpTLvoKR4M
+         OBz/0+w9Te75LA5i9gq7QiIDTXF8wYcd6jJecl6NBHO374OmJHE9eqlISjSAHH2mfGDC
+         klI01TvPPV3uQ+K8p097z+fLAwY5EC07hlRkw=
+Received: by 10.231.168.132 with SMTP id u4mr469465iby.79.1264939486933; Sun, 
+	31 Jan 2010 04:04:46 -0800 (PST)
+In-Reply-To: <20100130020548.GA29343@cthulhu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138540>
 
-On Thu, Jan 28, 2010, Petr Baudis wrote:
-> On Mon, Jan 25, 2010 at 12:32:37PM -0800, J.H. wrote:
-> > This does 2 things in the end:
-> > 
-> > 1) means there's only 1 copy of the page ever being generated, thus
-> > meaning there isn't extraneous and dangerous disk i/o going on on the system
-> 
-> But this has nothing to do with what you _do_ when there are multiple
-> requests, whether you do the same as if caching was disabled (hang until
-> content is generated) or doing something novel (creating redirects
-> through "Generating..." page).
-> 
-> > 2) prevents a user from reporting to the website that it's broken by
-> > giving them a visual que that things aren't broken.
-> 
-> But this has nothing to do with caching per se, right? I think it
-> actually makes _no difference_ if caching is enabled or not to this
-> problem, or am I missing something?
-> 
-> 
-> My point is, I guess, that showing the Generating page doesn't seem to
-> have actually anything to do with the caching itself?
+Hi,
 
-The point is that without caching it is easy to streaming response, and
-to consider early parts of page (like page header, generated before any
-heavy work) to serve as activity indicator.
+On Sat, Jan 30, 2010 at 10:05 AM, Larry D'Anna <larry@elder-gods.org> w=
+rote:
+> --summary will cause git-push to output a one-line of each commit pus=
+hed.
+> --summary=3Dn will display at most n commits for each ref pushed.
+>
+> $ git push --dry-run --summary origin :
+> To /home/larry/gitsandbox/a
+> =A0 80f0e50..5593a38 =A0master -> master
+> =A0 =A0> 5593a38 foo
+> =A0 =A0> 81c03f8 bar
+>
+> Fetch works the same way.
 
-With caching it is difficult to have streaming response, both from
-technical point of view (writer must generate to client and to cache
-simultaneously, readers must know when writer finished work to close
-connection), and from robustness point of view (what happens if writer
-is interrupted / killed before finishing generating output).  With
-"generate then display" (which is not exclusive to caching, and is
-another possible way of generating content even without caching) we
-rather need some kind of activity indicator like "Generating..." page.
+I'm sorry for being late to this discussion; I see the time and work
+you've put in this and all the previous revisions. But I do have an
+objection to implementing this behaviour using the option --summary,
+on the grounds of UI-consistency.
 
-I think that "Generating..." page can be improved in two ways:
-* Show "Generating..." page only if we are waiting for response for
-  more than one second.  This might need mucking with alarms, as I think
-  that sleep 1 before $self->generating_info(...) would be not a good
-  solution.
-* Stream response (using PerlIO::tee layer from PerlIO::Util, or 
-  Capture::Tiny module, or tied filehandle like in CGI::Cache) for
-  writer (i.e. process generating data), and wait for it to be finished
-  (perhaps with "Generating...") in readers.  This way you wouldn't get
-  "Generating..." page for rare views/URLs, and for common views/URLs
-  there is high probability that you would not need "Generating..."
-  page as there would be slightly stale response to serve.
-Of course one can implement _both_ of those solutions, i.e. wait one
-seconds in readers, and stream in writer.
+I believe git users are already familiar with --summary in git-diff
+and git-log, and it might confuse them when the output of --summary
+for git-push and git-fetch looks different.
 
-I am not sure, but there might be another issue why activity indicator
-is more important for the case with caching enabled.  If you interrupt
-writer, one of readers waiting for finished data would have to take
-role of writer, which besides need for technical solution to this problem
-would mean longer wait.
+Also, I wonder what is the motivation behind displaying this
+information. Perhaps you are including this to produce output for an
+IDE? If this is included upstream, then I believe this is the first
+instance of such verbose information being displayed. Even a
+fast-forward merge (the closest I can think of that matches this)
+doesn't show this - I still have to do git log rev1^..rev2 to see.the
+intervening revisions (inclusive).
 
-[..] 
-> > > (ii) Can't the locked gitwebs do the equivalent of tail -f?
-> > 
-> > Not really going to help much, most of the gitweb operations won't
-> > output much of anything beyond the header until it's collected all of
-> > the data it needs anyway and then there will be a flurry of output.  It
-> > also means that this 'Generating...' page will only work for caching
-> > schemes that tail can read out of, which I'm not sure it would work all
-> > that well with things like memcached or a non-custom caching layer where
-> > we don't necessarily have direct access to the file being written to.
-> > 
-> > At least the way I had it (and I'll admit I haven't read through Jakub's
-> > re-working of my patches so I don't know if it's still there) is that
-> > with background caching you only get the 'Generating...' page if it's
-> > new or the content is grossly out of data.  If it's a popular page and
-> > it's not grossly out of date it shows you the 'stale' data while it
-> > generates the new content in the background anyway, only locking you out
-> > when the new file is being written.  Or at least that's how I had it.
-> 
-> Well, my user experience with gitweb on kernel.org is that I get
-> "Generating..." page all the time when I dive deep enough to the object
-> tree. I just find it really distracting and sometimes troublesome when
-> I want to wget some final object.
-
-First, the user_agent checking would help there (it's a pity that all
-web spiders (bots) and all non-interactive downloaders do not say what
-they are explicitly in User-Agent string).  
-
-Second, I guess that waiting 1 second (or more) before showing 
-"Generating..." page would help in most cases.
-
-> 
-> I think it's fine to take in the caching support with the Generating...
-> page in the bundle, but I do want to declare my intention to get rid of
-> it later, at least for caching backends that could do without it - for
-> pages where content appears incrementally, tail -f, for pages where
-> content appears all at once, show at least the header and some "I'm
-> busy" notification without redirects.
-
-In the final version this should be fully configurable.  Note that
-the series of patches I have send were just proof of concept for 
-splitting caching patch into smaller parts / individual features.
-
--- 
-Jakub Narebski
-Poland
+--=20
+Cheers,
+Ray Chuan
