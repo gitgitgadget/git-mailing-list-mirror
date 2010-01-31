@@ -1,115 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 13/12] Makefile: tuck away generated makefile fragments in
- .depend
-Date: Sun, 31 Jan 2010 15:23:53 -0600
-Message-ID: <20100131212353.GA4636@progeny.tock>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 12/12] Teach Makefile to check header dependencies
+Date: Sun, 31 Jan 2010 13:26:23 -0800
+Message-ID: <7vaavuc6f4.fsf@alter.siamese.dyndns.org>
 References: <20100123144201.GA11903@progeny.tock>
  <7v3a1u6bfz.fsf@alter.siamese.dyndns.org>
- <20100126154357.GA4895@progeny.tock>
- <20100126155714.GM4895@progeny.tock>
+ <20100126154357.GA4895@progeny.tock> <20100126155714.GM4895@progeny.tock>
  <7viqaic8gs.fsf@alter.siamese.dyndns.org>
+ <20100131211429.GA4550@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Erik Faye-Lund <kusmabite@googlemail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Andreas Schwab <schwab@linux-m68k.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 31 22:24:12 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 31 22:26:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbhH4-0008K4-PJ
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 22:24:07 +0100
+	id 1NbhJf-0001MI-21
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jan 2010 22:26:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753666Ab0AaVYA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jan 2010 16:24:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753299Ab0AaVX7
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jan 2010 16:23:59 -0500
-Received: from mail-iw0-f194.google.com ([209.85.223.194]:48695 "EHLO
-	mail-iw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932106Ab0AaVX7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2010 16:23:59 -0500
-Received: by iwn34 with SMTP id 34so332043iwn.21
-        for <git@vger.kernel.org>; Sun, 31 Jan 2010 13:23:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=5G7FkYhGIqfr+tq/SDBCd+Nbneiah3szFYLYKY4c79U=;
-        b=GwLivtphQ/TgLcF5ZRLvsbJXaifHAp6GctCZgkMtzhzYNbUb8es+LUgo8ynprSiqcW
-         9bdkpOOPTBomtHaUR5OhJLL67NU6r2fLUr+00wDNAqZi5rC/hc4u+22ftmVsEBeKTmcY
-         JSojmeKFz9CRxTx2qJqNkp0Q0w+2VWxr0hbVE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=h17qOgShYnfFOKyxibpiE7zGKmqyh4/g4Z7/KsILNCUIz06awm1oRaVfnwe25qCZIb
-         BK8ZL5OVNto86sQHDHv/jGKb/6oq/AG7W8zCD9s3awLYq7WZTKTsg8gCTRwYm1CghL4X
-         +2SNox/Jr13VD6VZAsTLBCPTXWNyZkU/pVWp8=
-Received: by 10.231.168.136 with SMTP id u8mr1462990iby.56.1264973036393;
-        Sun, 31 Jan 2010 13:23:56 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm4698134iwn.8.2010.01.31.13.23.55
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 31 Jan 2010 13:23:56 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7viqaic8gs.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754065Ab0AaV0m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jan 2010 16:26:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754042Ab0AaV0m
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jan 2010 16:26:42 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41911 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753835Ab0AaV0l convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jan 2010 16:26:41 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A917096262;
+	Sun, 31 Jan 2010 16:26:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Cb9Py0RqQ4U6
+	40UrXvHPy0HWlIM=; b=Va0r1wPQ1LtAq53zyaKi8sfO0JEFPUU1RimiTswislQF
+	E6dS+qPyNEtbfvpaYV/B+1fa35bHM8OYqrdP77EfpDVHkHGy7U3lzqvaE+DclD3u
+	DATeiMpBjtZ8lrH+SSmLYQBLRNnrE3q6QU2EyMBMxmbICCMunKBgE+YMsY9sr5Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=YxlLJQ
+	42NJ8tAdvbv4z6HXfEP/wtZ8ofC74KP/KMZQOiFimrTYrdf4nRyAXTThUBvr93bI
+	YZre8AOq4ofwgRmNjcmN4GktF1xZLqJYMujikl4OEPwL7z8v1BAL5eux83p/M/VR
+	5PgfPSM+soQFP2ZOlApIJiLjDT2H4r+MYZgmQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F30B9625F;
+	Sun, 31 Jan 2010 16:26:34 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B4FFB9625E; Sun, 31 Jan
+ 2010 16:26:25 -0500 (EST)
+In-Reply-To: <20100131211429.GA4550@progeny.tock> (Jonathan Nieder's message
+ of "Sun\, 31 Jan 2010 15\:14\:29 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4E627414-0EAF-11DF-B9ED-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138564>
 
-When building with COMPUTE_HEADER_DEPENDENCIES on, save
-dependency information to .depend/ instead of deps/ so it does
-not show up in =E2=80=98ls=E2=80=99 output.  Otherwise, the extra direc=
-tories can
-be distracting.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Junio C Hamano wrote:
+> Junio C Hamano wrote:
+> ...
+>> Three observations:
+>>=20
+>>  * "make distclean" should remove $(dep_files);
+>
+> It removes $(dep_dirs) in "make clean".  Do you think they should be
+> kept around?  Or is this about when COMPUTE_HEADER_DEPENDENCIES is
+> turned off but .o.d files remain?
 
->  * "deps/" should probably be ".depend/" or something less distractin=
-g;
+Yes, the last one.  After playing around, with or without COMPUTE/CHECK=
+,
+and then making a final build, it would be nice if "make distclean"
+removed all the intermediate build products without the same special
+"debug build" options (and without COMPUTE, dep_dirs is empty so nothin=
+g
+is removed).  It is also fine if "make clean" did so.
 
-Good idea.  Here goes...
+>>  * I wish CHECK_HEADER_DEPENDENCIES pointed out unnecessary dependen=
+cies
+>>    hardcoded in the Makefile.
+>
+> That would not be hard to do, but wouldn=E2=80=99t the $(GIT_OBJS): $=
+(LIB_H)
+> rule create a lot of noise?
+>
+> How about if it checks for duplicate dependencies and unnecessary
+> dependencies that are not in LIB_H?
 
- Makefile |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 45b1f54..c939139 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1692,15 +1692,15 @@ XDIFF_OBJS =3D xdiff/xdiffi.o xdiff/xprepare.o =
-xdiff/xutils.o xdiff/xemit.o \
- 	xdiff/xmerge.o xdiff/xpatience.o
- OBJECTS :=3D $(GIT_OBJS) $(XDIFF_OBJS)
-=20
--dep_files :=3D $(foreach f,$(OBJECTS),$(dir $f)deps/$(notdir $f).d)
-+dep_files :=3D $(foreach f,$(OBJECTS),$(dir $f).depend/$(notdir $f).d)
-=20
- ifdef COMPUTE_HEADER_DEPENDENCIES
--dep_dirs :=3D $(addsuffix deps,$(sort $(dir $(OBJECTS))))
-+dep_dirs :=3D $(addsuffix .depend,$(sort $(dir $(OBJECTS))))
- $(dep_dirs):
- 	mkdir -p $@
-=20
- missing_dep_dirs :=3D $(filter-out $(wildcard $(dep_dirs)),$(dep_dirs)=
-)
--dep_file =3D $(dir $@)deps/$(notdir $@).d
-+dep_file =3D $(dir $@).depend/$(notdir $@).d
- dep_args =3D -MF $(dep_file) -MMD -MP
- ifdef CHECK_HEADER_DEPENDENCIES
- $(error cannot compute header dependencies outside a normal build. \
---=20
-1.7.0.rc1
+That would be ideal, I think.
