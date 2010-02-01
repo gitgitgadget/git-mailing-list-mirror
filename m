@@ -1,54 +1,53 @@
-From: Laszlo Papp <djszapi@archlinux.us>
-Subject: Re: Delivery Status Notification (Failure)
-Date: Mon, 1 Feb 2010 17:16:33 +0100
-Message-ID: <a362e8011002010816rf09da46x696894fb399689fc@mail.gmail.com>
-References: <a362e8011001290617n326a9dcx7c345ec31dff4ebe@mail.gmail.com>
-	 <001636ed7681994278047e4e4a6f@google.com>
-	 <a362e8011001290618g542be5f5y2777a925ba9bd936@mail.gmail.com>
-	 <1976ea661001290704h3ed4761dscf95ba848b373555@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: pack.packSizeLimit, safety checks
+Date: Mon, 01 Feb 2010 17:26:55 +0100
+Message-ID: <4B6700CF.1090106@viscovery.net>
+References: <loom.20100201T101056-232@post.gmane.org> <alpine.LFD.2.00.1002011100550.1681@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, normalperson@yhbt.net
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 01 17:23:26 2010
+Content-Transfer-Encoding: 7bit
+Cc: Sergio <sergio.callegari@gmail.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Mon Feb 01 17:27:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nbz3a-0001zm-Rg
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 17:23:23 +0100
+	id 1Nbz7A-00046U-Ec
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 17:27:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755261Ab0BAQXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 11:23:13 -0500
-Received: from mail-yx0-f189.google.com ([209.85.210.189]:50358 "EHLO
-	mail-yx0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753157Ab0BAQXM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 11:23:12 -0500
-X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Feb 2010 11:23:12 EST
-Received: by yxe27 with SMTP id 27so347718yxe.4
-        for <git@vger.kernel.org>; Mon, 01 Feb 2010 08:23:11 -0800 (PST)
-Received: by 10.100.70.9 with SMTP id s9mr5568438ana.111.1265040993858; Mon, 
-	01 Feb 2010 08:16:33 -0800 (PST)
-In-Reply-To: <1976ea661001290704h3ed4761dscf95ba848b373555@mail.gmail.com>
+	id S1755491Ab0BAQ07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2010 11:26:59 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:2204 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754816Ab0BAQ06 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2010 11:26:58 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Nbz72-0006JY-E4; Mon, 01 Feb 2010 17:26:56 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 2A6231660F;
+	Mon,  1 Feb 2010 17:26:56 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <alpine.LFD.2.00.1002011100550.1681@xanadu.home>
+X-Spam-Score: 1.9 (+)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138621>
 
-On Fri, Jan 29, 2010 at 4:04 PM, Frank Li <lznuaa@gmail.com> wrote:
->>
->> If I use --username option, Frank Li said me it's not enough in
->> TortoiseGIT to provide a popup facility to type the password related
->> to the set --username option.
->>
->
-> I prefer git-svn can provide environment to launch a external
-> application to input password like open ssh.
->
+Nicolas Pitre schrieb:
+> Grrrrr.  This is a terrible discrepency given that all the other 
+> arguments in Git are always byte based, with the optional k/m/g suffix, 
+> by using git_parse_ulong().  So IMHO I'd just change --max-pack-size to 
+> be in line with all the rest and have it accept bytes instead of MB.  
+> And of course I'd push such a change to be included in v1.7.0 along with 
+> the other incompatible fixes.
 
-No perl guru among the volunteers if the original author is not available ? :(
+While at it, also change --big-file-threshold that fast-import learnt the
+other day...
 
-Best Regards,
-Laszlo Papp
+-- Hannes
