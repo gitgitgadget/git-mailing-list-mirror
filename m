@@ -1,42 +1,45 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Nicolas Pitre <nico@fluxnic.net>
 Subject: Re: master^ is not a local branch -- huh?!?
-Date: Tue, 2 Feb 2010 00:01:50 +0100
-Message-ID: <20100201230150.GK9553@machine.or.cz>
+Date: Mon, 01 Feb 2010 18:25:32 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1002011809140.1681@xanadu.home>
 References: <31a97741002010352x1ad27f26ia4d51857bb2d2d4f@mail.gmail.com>
- <7vpr4o3lg9.fsf@alter.siamese.dyndns.org>
- <87aavsu9b3.fsf@osv.gnss.ru>
+ <7vpr4o3lg9.fsf@alter.siamese.dyndns.org> <87aavsu9b3.fsf@osv.gnss.ru>
  <ron1-6F8B85.14520801022010@news.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
 To: Ron Garret <ron1@flownet.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 00:02:02 2010
+X-From: git-owner@vger.kernel.org Tue Feb 02 00:25:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nc5HL-0004If-T6
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 00:02:00 +0100
+	id 1Nc5eG-0001xY-8f
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 00:25:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752885Ab0BAXBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 18:01:54 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:51363 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752091Ab0BAXBx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 18:01:53 -0500
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 6FFD186202A; Tue,  2 Feb 2010 00:01:50 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <ron1-6F8B85.14520801022010@news.gmane.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754930Ab0BAXZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2010 18:25:34 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:42967 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754351Ab0BAXZe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2010 18:25:34 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KX6005ORRQKYRF0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 01 Feb 2010 18:25:33 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <ron1-6F8B85.14520801022010@news.gmane.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138657>
 
-On Mon, Feb 01, 2010 at 02:52:08PM -0800, Ron Garret wrote:
+On Mon, 1 Feb 2010, Ron Garret wrote:
+
 > In article <87aavsu9b3.fsf@osv.gnss.ru>, Sergei Organov <osv@javad.com> 
 > wrote:
 > 
@@ -60,27 +63,30 @@ On Mon, Feb 01, 2010 at 02:52:08PM -0800, Ron Garret wrote:
 > if it were made clear that this unnamed branch doesn't actually come 
 > into existence unless and until you do a commit.
 
-That statement is not quite consistent with the Git model. A branch is a
-pointer. Detached HEAD is "unnamed" branch pointer (as in, you can refer
-to it by the default HEAD alias, but not by any other name). In this
-sense, the moment you create detached HEAD, you created the anonymous
-branch, and the moment you check out something else, it is gone in a
-wisp of smoke again.
+Nope.  Creating a commit doesn't create any branch.  A commit creation 
+merely adds a new node in the history graph, and links it to the commit 
+that was the current one before that commit operation.  If HEAD is 
+_attached_ to a branch then the branch pointer is also updated to point 
+to that new commit.  If HEAD is _detached_ then no branch is updated and 
+HEAD simply carries a direct reference to that new commit.
 
-The act of committing does not come into the picture at all. Committing
-is the act of saving a commit to the database and *updating* the current
-branch pointer to point at it. However, it does not affect what branch
-pointer is the current one. It is important to realize that:
+At a later time you can:
 
-	* Branches refer to commits.
-	* Commits do not refer to branches!
+1) Create a new branch pointer which default value is the commit pointed to
+   by HEAD.  This is true whether or not HEAD is detached, but in this 
+   case this is an interesting property.
 
-That is, when you create a commit, it is not _tied_ to a particular
-branch. Thus, when you create a commit, you could not have created any
-branch, and creating a branch [pointer] is unrelated to creating any
-commits.
+2) Move HEAD somewhere else by performing a checkout.  If HEAD was 
+   detached then its last position is simply forgotten and those 
+   commits that were performed while HEAD was detached, if any, are 
+   simply left dangling and eventually garbage collected.  If however a 
+   new branch pointer was created in (1) then those commits won't be 
+   dangling.
 
--- 
-				Petr "Pasky" Baudis
-If you can't see the value in jet powered ants you should turn in
-your nerd card. -- Dunbal (464142)
+In any case, a detached HEAD is not only a temporary branch, it is also 
+a volatile branch.  And in the Git model, it is simply not a branch at 
+all.  Hence the 2 states for HEAD: either detached, or attached to a 
+branch pointer.
+
+
+Nicolas
