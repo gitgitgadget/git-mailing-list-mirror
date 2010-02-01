@@ -1,96 +1,100 @@
-From: Ivo Anjo <knuckles@gmail.com>
-Subject: Bug in git-filter-branch example
-Date: Mon, 1 Feb 2010 11:48:27 +0000
-Message-ID: <557ea2711002010348m57aa31fesd1047cbe3f01cb0b@mail.gmail.com>
+From: Steve Diver <squelch2@googlemail.com>
+Subject: Re: master^ is not a local branch -- huh?!?
+Date: Mon, 1 Feb 2010 11:52:51 +0000
+Message-ID: <31a97741002010352x1ad27f26ia4d51857bb2d2d4f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 01 12:48:36 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Nicolas Pitre <nico@fluxnic.net>, Mark Lodato <lodatom@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Git List <git@vger.kernel.org>, Ron1 <ron1@flownet.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 01 12:53:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nbulf-0000B6-M6
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 12:48:36 +0100
+	id 1Nbupu-0003Xp-Im
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 12:52:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752112Ab0BALs3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Feb 2010 06:48:29 -0500
-Received: from mail-bw0-f223.google.com ([209.85.218.223]:48540 "EHLO
-	mail-bw0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750970Ab0BALs2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Feb 2010 06:48:28 -0500
-Received: by bwz23 with SMTP id 23so4763bwz.21
-        for <git@vger.kernel.org>; Mon, 01 Feb 2010 03:48:27 -0800 (PST)
+	id S1753598Ab0BALwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2010 06:52:53 -0500
+Received: from mail-px0-f182.google.com ([209.85.216.182]:36438 "EHLO
+	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753617Ab0BALww (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2010 06:52:52 -0500
+Received: by pxi12 with SMTP id 12so4243811pxi.33
+        for <git@vger.kernel.org>; Mon, 01 Feb 2010 03:52:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
+        d=googlemail.com; s=gamma;
         h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=wmYuOr2D6hZLuGLezqhEaEyzpqHVoLg+ZvqgW3aYrgo=;
-        b=GpjOUMOxtn1G+0rCEanMrB2H0Z3AztynKsk9eJAkEoZAAfW+DV6jyHF6yAcxdaXtcp
-         M7A0B46UB9vtCUXeAMSMjpLRegOq5+tMp5tAXMkLKnL53NXGz2YVs2v6wNsypwMAVjGs
-         F7eg45FzFxJH/Au4Zeyh8OuT/kMzcIgsNv+EQ=
+         :from:to:cc:content-type;
+        bh=BuB1WBXdhTOmW2TfLXGNdTtrriU54R39CHz+1VaUZ8k=;
+        b=ilv3JQV/tRbBzUNn5QSjlZt/L60FMdk/+EPKvGoOiKc9qTXglTtyl2a6j0b8n1iiQX
+         yyiEhBHpS8lVngMH3kMMAuBIb9iYERGrDntfad7KTIZGV+LpyKpQEAK5LP5WciT4zIkt
+         zOP1LX4dblYfUkd8TDNrWwBligxPEmeINmfNw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=VeYFI1zzv0ibNmqRo8up5Hgl4ucbNWGemzDQdSqTyqK6gKBPuFYcdYs697cHH8VmL1
-         LR8haQFn101CZBQ4KVzDWVrjzwh1HF4l3WEXg3rQpiN7K7vKv+S4Qfbw1NLFWPq+tcaf
-         e6PTqM5058k7eGCwpmptX6KPP1+6u4M1M7bS0=
-Received: by 10.204.139.217 with SMTP id f25mr402863bku.73.1265024907092; Mon, 
-	01 Feb 2010 03:48:27 -0800 (PST)
+        d=googlemail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=iCU4mhwNostZV8g1yB8ZNGJbspuZmDoSXP0IO8b+1/hJ7rORm6XQlLJXC8QKnwHoyT
+         AKfUI++ZGVvX14UEgGNRXy1ireSzzxIN1iUo5b43m4Lu6riCwkEQQL2tRrWrPwAyekYH
+         6u6HaeIm7RJHXJF5daaOqxtkcxC7oVfGQCD2Q=
+Received: by 10.140.247.17 with SMTP id u17mr3115440rvh.246.1265025171819; 
+	Mon, 01 Feb 2010 03:52:51 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138603>
 
-I've been working on importing my svn repo into git, and while moving
-some things around using git-filter-branch I ran into a bug in the
-example provided on the manpage:
+On 30/01/2010 06:03, Junio C Hamano wrote:
 
-=C2=A0=C2=A0=C2=A0 To move the whole tree into a subdirectory, or remov=
-e it from there:
+>Nicolas Pitre <nico@fluxnic.net> writes:
 
-=C2=A0=C2=A0=C2=A0 git filter-branch --index-filter \
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 'git=
- ls-files -s | sed "s-\t-&newsubdir/-" |
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 GIT_INDEX_FILE=3D$GIT_INDEX_=
-=46ILE.new \
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 git update-index --index-info &&
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
+>>First, I'm afraid that "Checking out commit 'foobar'" might be confusing
+>>as this may happen through either a remote branch, a tag, or any random
+>>commit.  It seems to me that "Checking out 'v2.5'" is less confusing
+
+>>than "Checking out commit 'v2.5'".  But that's a minor detail and
+>>probably a personal preference.
+...
+>>To the contrary: this "detached HEAD" is exactly what you need if you
+>>want to relate to any documentation or perform a search for more
+
+>>information.  Like it or not, this detached HEAD term is exactly what
+>>this Git concept is all about and how it is designated everywhere.  The
+>>sooner Git users see and learn about it the better.
+
+>As I am not good at keeping track of different proposals to change this
+>word here and that word there, I expect this will probably need at least
+>few rotations of earth to get input from people in different timezones,
+
+>and I think this is post 1.7.0 item anyway, I'll queue the attached draft
+>in 'pu' and keep it there, to make it easier for others to tweak the
+>message.
 
 
-The problem is with filenames that use complex utf8 (non-ascii?) chars:
+Would it be a safe assumption to describe a 'detached HEAD' state as
+being synonymous with a (local) personal scratchpad or temporary
+workspace based on and from the original committed object?
 
-> ls -lah Papers/*Lea*
--rw-r--r-- 1 knuckles users 109K 2010-01-31 18:57 Papers/A Java Fork =E2=
-=81=84
-Join Framework -- Lea.pdf
+If this assumption is correct, then maybe this notion of a scratchpad
+may be more intuitive and conceptual to new users without getting
+bogged down with the necessary semantics of the terms used, but can
+also preserve references to 'detached HEAD' in the documentation for a
+fuller explanation.
 
-as you can see, I'm using '=E2=81=84' as a replacement for '/' on that
-filename, since I obviously can't use '/' on a filename. The problem
-is, git ls-files -s lists that file wrapped in quotes and with the
-char value escaped
 
-100644 c09309342037fa7d91f37651e2f16e981e4d739a 0=C2=A0=C2=A0=C2=A0 "Pa=
-pers/A Java
-=46ork \342\201\204 Join Framework -- Lea.pdf"
+A scratchpad or temporary workspace description alludes to its semi
+permanent nature, and can warn that the subsequent commits may be lost
+through aging and garbage collection until the user "commits" to
+saving their progress through the creation a new branch, and thereby
+making them permanent.
 
-while other files aren't, so the simple sed line provided won't work,
-as it will output the new filename as newsubdir/"Papers...
 
-I ended up using git filter-branch to remove the offending file ("if
-all you have is a hammer..."), and re-adding it after the move.
+I must say the explanations presented in this thread have shed some
+light on what is on the face of it a common trap that leaves new users
+wondering "What happened to my work!" and I thank you all.
 
-I'm also left wondering how many uses of git ls-files out there on the
-"internets" survive working on a filename such as this one. Maybe git
-ls-files should have an option to output the real utf8 file name
-instead of escaping the bytes...?
-
-Ivo Anjo
+Steve
