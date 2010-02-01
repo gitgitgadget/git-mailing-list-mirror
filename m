@@ -1,59 +1,71 @@
-From: Markus Elfring <Markus.Elfring@web.de>
-Subject: Better cooperation between checkouts and stashing
-Date: Mon, 01 Feb 2010 19:50:34 +0100
-Message-ID: <4B67227A.7030908@web.de>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: git-p4: Fix sync errors due to new server version
+Date: Mon, 1 Feb 2010 11:38:53 -0800
+Message-ID: <20100201193851.GA6134@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 01 19:51:05 2010
+Content-Type: text/plain; charset=utf-8
+Cc: simon@lst.de, git@vger.kernel.org, pal_engstad@naughtydog.com
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Feb 01 20:39:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nc1MG-0001yY-SC
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 19:50:49 +0100
+	id 1Nc276-0003hj-3U
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 20:39:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752836Ab0BASun (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 13:50:43 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:50997 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751054Ab0BASun (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 13:50:43 -0500
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate02.web.de (Postfix) with ESMTP id C489414CEEFAD
-	for <git@vger.kernel.org>; Mon,  1 Feb 2010 19:50:41 +0100 (CET)
-Received: from [78.48.67.5] (helo=[192.168.1.202])
-	by smtp07.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1Nc1M8-0007Gq-00
-	for git@vger.kernel.org; Mon, 01 Feb 2010 19:50:40 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.5) Gecko/20091130 SUSE/3.0.0-1.1.1 Thunderbird/3.0
-X-Sender: Markus.Elfring@web.de
-X-Provags-ID: V01U2FsdGVkX19NtQksce7fmFlSi2nCAJBQ8YOceWIPYDPPgIlv
-	nuI9bS/4omkKt8DIT5WPP9LqA9wnOOHGwL8MkQh3hirBYCnPHI
-	wMlFarXDnfKY59sjGsuA==
+	id S1755924Ab0BATjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2010 14:39:06 -0500
+Received: from mail-bw0-f223.google.com ([209.85.218.223]:34168 "EHLO
+	mail-bw0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755904Ab0BATjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2010 14:39:05 -0500
+Received: by bwz23 with SMTP id 23so453201bwz.21
+        for <git@vger.kernel.org>; Mon, 01 Feb 2010 11:39:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=kRksofGxXtK487qW1qSEMITTjBpwX3Tuo627TM35W5M=;
+        b=mP5Ob+C0WCLh/9rSWR/5HXPZEB9ele98D+Hw8ELPTH5zboBwxxaCiqPVn+CYYNJGRB
+         rIeLH2J6oDaxtSHuZhKRxNHq80DdsNQyB5OMF5eJONcyLbGg32luEgnCgBVdl3Y4sjS+
+         Bpl4g+mJkXAliEn1lZWW/m0qERKT/Ujzqhy2w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=F3yaRYRbSIQoj8HQqnNhGQpg5WUeukVHSQqUl2qUKZ/DrE/4imlIIVl3YhF9UMrubD
+         r58Zim1BFjkJ3wti229XDULfB9b8qZGb74+QZT7EOOOw7MQDKpfaBuap3rIg4cNhnFE0
+         KaMHQg3MH7KkziDJa6vKBNi3KvEDsxYGhp/cc=
+Received: by 10.102.204.13 with SMTP id b13mr2569496mug.127.1265053141991;
+        Mon, 01 Feb 2010 11:39:01 -0800 (PST)
+Received: from gmail.com (guest-wireless.pixar.com [199.108.77.12])
+        by mx.google.com with ESMTPS id 25sm3208381mul.20.2010.02.01.11.38.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 01 Feb 2010 11:39:00 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138642>
 
-Hello,
 
-The content control tool "Git" maintains a single file system view that can be
-actively worked on. It can be switched to different topic branches by the
-command "git checkout". If the current active working copy contains "dirty"
-changes, they need to be stashed away before each switch to a different issue.
-http://ariejan.net/2008/04/23/git-using-the-stash/
+Hi Junio
 
-I imagine that there are opportunities for further improvements.
-- How do you think about the feature that a checkout performs also a stash
-operation before by default and a stash would offer the option to checkout a
-branch afterwards in one step?
-- Would you like to offer a more powerful filter expression for the command "git
-stash list" to make the navigation between the available intermediate work
-results easier?
+It looks like we forgot about this patch:
 
-Regards,
-Markus
+http://article.gmane.org/gmane.comp.version-control.git/137723
+
+The patch looks good and Pal added his sign-off
+(I believe that and not inlining the patch were the original
+ setbacks).
+
+Simon, are there any reasons to not apply it?
+
+Thanks,
+
+-- 
+		David
