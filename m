@@ -1,109 +1,78 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: persistent memoization
-Date: Sun, 31 Jan 2010 20:03:12 -0800
-Message-ID: <20100201040312.GA26199@dcvr.yhbt.net>
-References: <1264821262-28322-1-git-send-email-amyrick@apple.com>
+From: Daed Lee <daed@thoughtsofcode.com>
+Subject: Re: Partially private repository?
+Date: Sun, 31 Jan 2010 23:59:00 -0500
+Message-ID: <78d8a6b51001312059s1811b631y838679a3f63188b0@mail.gmail.com>
+References: <78d8a6b51001291401ib93976el25c03694d53aaced@mail.gmail.com>
+	 <32541b131001291410g252ddff4lbf04ac7c1d2d33fc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, sam@vilain.net
-To: Andrew Myrick <amyrick@apple.com>
-X-From: git-owner@vger.kernel.org Mon Feb 01 05:03:20 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 01 05:59:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbnVP-0001tp-KC
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 05:03:19 +0100
+	id 1NboNS-0006vO-9M
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 05:59:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754852Ab0BAEDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jan 2010 23:03:14 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:58244 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754470Ab0BAEDN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2010 23:03:13 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B76C41F688;
-	Mon,  1 Feb 2010 04:03:12 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1264821262-28322-1-git-send-email-amyrick@apple.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753614Ab0BAE7F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jan 2010 23:59:05 -0500
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:34543 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752023Ab0BAE7D convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jan 2010 23:59:03 -0500
+Received: by ewy6 with SMTP id 6so233125ewy.37
+        for <git@vger.kernel.org>; Sun, 31 Jan 2010 20:59:00 -0800 (PST)
+Received: by 10.213.1.132 with SMTP id 4mr2596812ebf.40.1265000340534; Sun, 31 
+	Jan 2010 20:59:00 -0800 (PST)
+In-Reply-To: <32541b131001291410g252ddff4lbf04ac7c1d2d33fc@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138579>
 
-Andrew Myrick <amyrick@apple.com> wrote:
-> Make memoization of the svn:mergeinfo processing functions persistent with
-> Memoize::Storable so that the memoization tables don't need to be regenerated
-> every time the user runs git-svn fetch.
-> 
-> The Memoize::Storable hashes are stored in ENV{GIT_DIR}/svn/caches.
+On Fri, Jan 29, 2010 at 5:10 PM, Avery Pennarun <apenwarr@gmail.com> wr=
+ote:
+> On Fri, Jan 29, 2010 at 5:01 PM, Daed Lee <daed@thoughtsofcode.com> w=
+rote:
+>> Hi, I'm wondering if git can handle the following use. I have a
+>> project that started as private experiment, but has morphed into
+>> something I'd like to release publicly. I want to give others access
+>> to the repository, but only to commits after a certain cutoff date.
+>> Commits prior to that date have things like hardcoded file paths,
+>> emails, etc. that I'd like to keep private.
+>>
+>> I suppose the easiest thing to do would be to create a new repositor=
+y,
+>> add the project files to it, and make that public, however I'd like =
+to
+>> keep my private commit history along with the public commit history
+>> going forward in a single repository if possible. Is there a way to =
+do
+>> this with git?
+>
+> You should probably split your history into two pieces: the "before"
+> and "after" parts. =C2=A0To split out the "after" part, you could use
+> git-filter-branch
+> (http://www.kernel.org/pub/software/scm/git/docs/v1.6.0.6/git-filter-=
+branch.html).
+> =C2=A0Then, in your private copy of the repo, you could reattach the
+> "before" part of the history using git grafts.
 
-Hi Andrew,
+Going forward, if I made changes to my private repository (containing
+the "before" and "after" parts) and pushed to the public repository
+(containing only the "after" part), would this only push the commits
+in the "after" part? Essentially, I want to develop in my private
+repository and see my "before" and "after" changes when I "git
+log/show", but only push the "after" changes to the public repository.
 
-Perhaps "$ENV{GIT_DIR}/svn/.caches" is better here since older versions
-of git svn used "$ENV{GIT_DIR}/svn/$refname" in the top-level and
-"caches" may conflict with existing repos.
+I've also been looking into private branches. Could I do something
+like keep my "before" changes on a private branch, and then do all
+future development on a public branch?
 
-> -use File::Path qw/mkpath/;
-> +use File::Path qw/mkpath make_path/;
-
-File::Path::make_path is very recent not in Perls distributed by most
-vendors.  My 5.10.0 installation (Debian stable) doesn't have it, and I
-also don't see a good reason to use it over the traditional mkpath.
-
-I think I'll squash the following patch and Ack.  Let me know if
-you have any objections, thanks.!
-(also wraps long lines to 80 chars)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 0153439..265852f 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1652,7 +1652,7 @@ use vars qw/$default_repo_id $default_ref_id $_no_metadata $_follow_parent
-             $_use_svnsync_props $no_reuse_existing $_minimize_url
- 	    $_use_log_author $_add_author_from $_localtime/;
- use Carp qw/croak/;
--use File::Path qw/mkpath make_path/;
-+use File::Path qw/mkpath/;
- use File::Copy qw/copy/;
- use IPC::Open3;
- use Memoize;  # core since 5.8.0, Jul 2002
-@@ -3126,25 +3126,25 @@ sub has_no_changes {
- 		return if $memoized;
- 		$memoized = 1;
- 
--		my $cache_path = "$ENV{GIT_DIR}/svn/caches/";
--		make_path($cache_path) unless -d $cache_path;
-+		my $cache_path = "$ENV{GIT_DIR}/svn/.caches/";
-+		mkpath([$cache_path]) unless -d $cache_path;
- 
--		tie my %lookup_svn_merge_cache =>
--			'Memoize::Storable',"$cache_path/lookup_svn_merge.db", 'nstore';
-+		tie my %lookup_svn_merge_cache => 'Memoize::Storable',
-+		    "$cache_path/lookup_svn_merge.db", 'nstore';
- 		memoize 'lookup_svn_merge',
- 			SCALAR_CACHE => 'FAULT',
- 			LIST_CACHE => ['HASH' => \%lookup_svn_merge_cache],
- 		;
- 
--		tie my %check_cherry_pick_cache =>
--			'Memoize::Storable',"$cache_path/check_cherry_pick.db", 'nstore';
-+		tie my %check_cherry_pick_cache => 'Memoize::Storable',
-+		    "$cache_path/check_cherry_pick.db", 'nstore';
- 		memoize 'check_cherry_pick',
- 			SCALAR_CACHE => 'FAULT',
- 			LIST_CACHE => ['HASH' => \%check_cherry_pick_cache],
- 		;
- 
--		tie my %has_no_changes_cache =>
--			'Memoize::Storable',"$cache_path/has_no_changes.db", 'nstore';
-+		tie my %has_no_changes_cache => 'Memoize::Storable',
-+		    "$cache_path/has_no_changes.db", 'nstore';
- 		memoize 'has_no_changes',
- 			SCALAR_CACHE => ['HASH' => \%has_no_changes_cache],
- 			LIST_CACHE => 'FAULT',
--- 
-Eric Wong
+Thanks for the pointer to git grafts, I'll have to read up on it furthe=
+r.
