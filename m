@@ -1,77 +1,61 @@
 From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Problem listing GIT repository with accents
-Date: Mon, 01 Feb 2010 13:48:01 +0100
-Message-ID: <4B66CD81.3010005@viscovery.net>
-References: <7E88665723814E46BCBA1A39E84C27A5@elrond> <20100201113213.GA22663@coredump.intra.peff.net> <20100201121933.GA9995@coredump.intra.peff.net>
+Subject: Re: Bug in git-filter-branch example
+Date: Mon, 01 Feb 2010 13:57:29 +0100
+Message-ID: <4B66CFB9.2060603@viscovery.net>
+References: <557ea2711002010348m57aa31fesd1047cbe3f01cb0b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?RWxsacOpIENvbXB1dGluZyBP?=
-	 =?UTF-8?B?cGVuIFNvdXJjZSBQcm9ncmFt?= 
-	<opensource@elliecomputing.com>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 01 13:48:19 2010
+Cc: git@vger.kernel.org
+To: Ivo Anjo <knuckles@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 01 13:57:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbvhT-0004RZ-FQ
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 13:48:19 +0100
+	id 1NbvqT-0001yM-4m
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 13:57:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754260Ab0BAMsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 07:48:10 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:11558 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753772Ab0BAMsH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 07:48:07 -0500
+	id S1753734Ab0BAM5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2010 07:57:32 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:21847 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752804Ab0BAM5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2010 07:57:31 -0500
 Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
 	(envelope-from <j.sixt@viscovery.net>)
-	id 1NbvhC-0005D1-FQ; Mon, 01 Feb 2010 13:48:02 +0100
+	id 1NbvqM-0002G0-0m; Mon, 01 Feb 2010 13:57:30 +0100
 Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id F29871660F;
-	Mon,  1 Feb 2010 13:48:01 +0100 (CET)
+	by theia.linz.viscovery (Postfix) with ESMTP id AD8301660F;
+	Mon,  1 Feb 2010 13:57:29 +0100 (CET)
 User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <20100201121933.GA9995@coredump.intra.peff.net>
+In-Reply-To: <557ea2711002010348m57aa31fesd1047cbe3f01cb0b@mail.gmail.com>
 X-Spam-Score: 1.9 (+)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138608>
 
-Jeff King schrieb:
-> @@ -209,11 +209,14 @@ static size_t quote_c_style_counted(const char *name, ssize_t maxlen,
->  	size_t len, count = 0;
->  	const char *p = name;
->  
-> +	if (maxlen < 0)
-> +		maxlen = strlen(name);
-> +
->  	for (;;) {
->  		int ch;
->  
->  		len = next_quote_pos(p, maxlen);
-> -		if (len == maxlen || !p[len])
-> +		if (len == maxlen)
->  			break;
->  
->  		if (!no_dq && p == name)
-> @@ -223,6 +226,7 @@ static size_t quote_c_style_counted(const char *name, ssize_t maxlen,
->  		EMIT('\\');
->  		p += len;
->  		ch = (unsigned char)*p++;
-> +		maxlen -= len + 1;
+Ivo Anjo schrieb:
+> I've been working on importing my svn repo into git, and while moving
+> some things around using git-filter-branch I ran into a bug in the
+> example provided on the manpage:
 
-Couldn't you just write
+Thanks for the report, but: Examples are just that: examples. IMO, it is
+OK that there are implicit assumptions (such as that only "common" file
+names are used in the repo).
 
-		if (0 <= maxlen)
-			maxlen -= len + 1;
+Making the example universally applicable would greatly obfuscate the
+important messages.
 
-to avoid the strlen(), because the rest of the loop is actually OK when
-maxlen == -1, isn't it?
+> I ended up using git filter-branch to remove the offending file ("if
+> all you have is a hammer..."), and re-adding it after the move.
+
+It seems that the example has met its objective: It showed you how to use
+the hammer, and with your creativity mixed in, it enabled you to use the
+hammer in new ways.
 
 -- Hannes
