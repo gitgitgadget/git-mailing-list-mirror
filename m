@@ -1,71 +1,70 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: Better cooperation between checkouts and stashing
-Date: Mon, 1 Feb 2010 17:44:25 -0500
-Message-ID: <76c5b8581002011444t4f955fcdrd1f582f5c043f705@mail.gmail.com>
-References: <4B67227A.7030908@web.de> <7vhbq0wuy6.fsf@alter.siamese.dyndns.org>
-	 <4B674E36.40708@web.de>
+From: Ron Garret <ron1@flownet.com>
+Subject: Re: master^ is not a local branch -- huh?!?
+Date: Mon, 01 Feb 2010 14:52:08 -0800
+Organization: Amalgamated Widgets
+Message-ID: <ron1-6F8B85.14520801022010@news.gmane.org>
+References: <31a97741002010352x1ad27f26ia4d51857bb2d2d4f@mail.gmail.com> <7vpr4o3lg9.fsf@alter.siamese.dyndns.org> <87aavsu9b3.fsf@osv.gnss.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Eugene Sajine <euguess@gmail.com>
-To: Markus Elfring <Markus.Elfring@web.de>
-X-From: git-owner@vger.kernel.org Mon Feb 01 23:44:38 2010
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 01 23:52:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nc50W-0001Tm-Ty
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 23:44:37 +0100
+	id 1Nc58H-0006ny-I7
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 23:52:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752946Ab0BAWo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 17:44:27 -0500
-Received: from mail-iw0-f186.google.com ([209.85.223.186]:37598 "EHLO
-	mail-iw0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752042Ab0BAWo0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 17:44:26 -0500
-Received: by iwn16 with SMTP id 16so355467iwn.5
-        for <git@vger.kernel.org>; Mon, 01 Feb 2010 14:44:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=OP579lycU9kskMacqFBKPTzjCr8KaxXv18snKfiEPMA=;
-        b=gIzT69fUJzz6FVhu4xodK4qYk8HjOdJbUeQjS/QxyndIVj16qb7FYLMZ0jB2vnfQuP
-         jFsGolRS1J6F86ys34Vmz3zZO4XI1q3J2Jt1DfyTqHHKV3YK87+/M1s78RX7Ot3XsO9O
-         02MyR+hSNz26djrT3j8Nh4vRNROLtKdQs8TdE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=wHzRYZAFfK2kp87+xunwwaxrBfvjAC8leGvBZD4Im53YVpMuuDULrx6gF+QBDJLMoG
-         b21B4P2haU/Pjel/Ll9BIXDCeOzLWvt3KbUyIXTfzcAPFvFMp8SeX6ZeuEHYDygN39Wt
-         jC/r7lhARiU05PbNYJo4dryZlS8NagR5o9w0s=
-Received: by 10.231.166.68 with SMTP id l4mr8513961iby.40.1265064265505; Mon, 
-	01 Feb 2010 14:44:25 -0800 (PST)
-In-Reply-To: <4B674E36.40708@web.de>
+	id S1754640Ab0BAWwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2010 17:52:32 -0500
+Received: from lo.gmane.org ([80.91.229.12]:42025 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752728Ab0BAWwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2010 17:52:31 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Nc589-0006kB-0a
+	for git@vger.kernel.org; Mon, 01 Feb 2010 23:52:29 +0100
+Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 01 Feb 2010 23:52:29 +0100
+Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 01 Feb 2010 23:52:29 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
+User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138654>
 
->
-> I imagine that this case is useful because of usual work interruptions
->
-> in software development. A developer tries to bring various tasks
->
-> forward in parallel. Branches will be switched often with unfinished
->
-> work that needs to be kept before the reactivation of another task.
->
+In article <87aavsu9b3.fsf@osv.gnss.ru>, Sergei Organov <osv@javad.com> 
+wrote:
 
-Aren't this and similar statements based on a general problem of
-people being afraid to commit, because CVS/SVN taught them to be
-affraid? We are in progress of migrating from CVS to GIT and this is
-one of the things i'm desperately fighting with.
-In Git Commit doesn't equal Share (it does in CVS), so why not to
-commit and save your work in progress and switch branches painlessly?
+> Junio C Hamano <gitster@pobox.com> writes:
+> > Steve Diver <squelch2@googlemail.com> writes:
+> 
+> [...]
+> 
+> > If read carefully (some may argue that it does not need a very careful
+> > reading to get it, though), this hints that "detached HEAD" state is a
+> > substitute for using a temporary branch, but it may not be strong
+> > enough.
+> 
+> For my rather fresh eye it looks more like unnamed (anonymous?) branch
+> than a temporary one. Doesn't detached HEAD behave exactly like a
+> regular HEAD but pointing to the tip of an unnamed branch?
 
-Thanks,
-Eugene
+I strongly concur with this.
+
+And as long as I'm weighing in, it would also help to prevent confusion 
+if it were made clear that this unnamed branch doesn't actually come 
+into existence unless and until you do a commit.
+
+rg
