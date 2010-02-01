@@ -1,95 +1,116 @@
-From: Ron Garret <ron1@flownet.com>
-Subject: Re: GIT_WORK_TREE environment variable not working
-Date: Sun, 31 Jan 2010 23:09:25 -0800
-Organization: Amalgamated Widgets
-Message-ID: <ron1-EF4205.23092531012010@news.gmane.org>
-References: <ron1-8E7697.17334731012010@news.gmane.org> <20100201051942.GA7761@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 01 08:12:43 2010
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 2/6] reset: refactor updating heads into a static function
+Date: Mon, 01 Feb 2010 08:55:37 +0100
+Message-ID: <20100201075542.3929.82816.chriscool@tuxfamily.org>
+References: <20100201074835.3929.11509.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 01 08:53:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbqSe-0006d2-EE
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 08:12:40 +0100
+	id 1Nbr5k-0005Tj-9x
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 08:53:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754572Ab0BAHJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 02:09:50 -0500
-Received: from lo.gmane.org ([80.91.229.12]:40762 "EHLO lo.gmane.org"
+	id S1753660Ab0BAHw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2010 02:52:58 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:49834 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754475Ab0BAHJt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 02:09:49 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NbqPs-0005Ny-8y
-	for git@vger.kernel.org; Mon, 01 Feb 2010 08:09:48 +0100
-Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 01 Feb 2010 08:09:48 +0100
-Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 01 Feb 2010 08:09:48 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
-User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
+	id S1752139Ab0BAHw4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2010 02:52:56 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 3C2C7818131;
+	Mon,  1 Feb 2010 08:52:48 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 38C4E818054;
+	Mon,  1 Feb 2010 08:52:46 +0100 (CET)
+X-git-sha1: f43b34ca7769c645b6c3e725d23c6ad2815527f7 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20100201074835.3929.11509.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138585>
 
-In article <20100201051942.GA7761@coredump.intra.peff.net>,
- Jeff King <peff@peff.net> wrote:
 
-> On Sun, Jan 31, 2010 at 05:33:47PM -0800, Ron Garret wrote:
-> 
-> > What am I doing wrong here?
-> > 
-> > [ron@mickey:~/devel/gittest]$ pwd
-> > /Users/ron/devel/gittest
-> > [ron@mickey:~/devel/gittest]$ git status
-> > # On branch master
-> > # Untracked files:
-> > #   (use "git add <file>..." to include in what will be committed)
-> > #
-> > #  git/
-> > nothing added to commit but untracked files present (use "git add" to 
-> > track)
-> > [ron@mickey:~/devel/gittest]$ cd
-> > [ron@mickey:~]$ export GIT_WORK_TREE=/Users/ron/devel/gittest
-> > [ron@mickey:~]$ git status
-> > fatal: Not a git repository (or any of the parent directories): .git
-> > [ron@mickey:~]$ git status --work-tree=/Users/ron/devel/gittest
-> > fatal: Not a git repository (or any of the parent directories): .git
-> > [ron@mickey:~]$
-> 
-> You haven't told git where to find the repository itself. GIT_WORK_TREE
-> is about saying "here are my work tree files", but it is explicitly not
-> about "here is where my .git directory is". That lets you keep the two
-> in totally separate locations. E.g., you could do something like
-> tracking /etc, but keep your .git directory in /var.
-> 
-> For your case above, you would want to also
-> 
->   export GIT_DIR=/Users/ron/devel/gittest/.git
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin-reset.c |   43 +++++++++++++++++++++++++++----------------
+ 1 files changed, 27 insertions(+), 16 deletions(-)
 
-Ah.  Thanks!
-
-> though since you have a fully formed repository, I don't think there is
-> really any advantage over just doing:
-> 
->   cd /Users/ron/devel/gittest && git $whatever
-> 
-> though perhaps that is because this is not a real use case, but rather
-> just you trying to figure out the feature. :)
-
-It's a real use case.  The situation is that I'm using git as a back end 
-for an IDE, so I can't rely on the cwd.
-
-rg
+diff --git a/builtin-reset.c b/builtin-reset.c
+index 0f5022e..3569695 100644
+--- a/builtin-reset.c
++++ b/builtin-reset.c
+@@ -211,15 +211,38 @@ static void prepend_reflog_action(const char *action, char *buf, size_t size)
+ 		warning("Reflog action message too long: %.*s...", 50, buf);
+ }
+ 
++/*
++ * Any resets update HEAD to the head being switched to,
++ * saving the previous head in ORIG_HEAD before.
++ */
++static int update_heads(unsigned char *sha1)
++{
++	unsigned char sha1_orig[20], *orig = NULL,
++		sha1_old_orig[20], *old_orig = NULL;
++	char msg[1024];
++
++	if (!get_sha1("ORIG_HEAD", sha1_old_orig))
++		old_orig = sha1_old_orig;
++	if (!get_sha1("HEAD", sha1_orig)) {
++		orig = sha1_orig;
++		prepend_reflog_action("updating ORIG_HEAD", msg, sizeof(msg));
++		update_ref(msg, "ORIG_HEAD", orig, old_orig, 0, MSG_ON_ERR);
++	}
++	else if (old_orig)
++		delete_ref("ORIG_HEAD", old_orig, 0);
++	prepend_reflog_action("updating HEAD", msg, sizeof(msg));
++
++	return update_ref(msg, "HEAD", sha1, orig, 0, MSG_ON_ERR);
++}
++
+ int cmd_reset(int argc, const char **argv, const char *prefix)
+ {
+ 	int i = 0, reset_type = NONE, update_ref_status = 0, quiet = 0;
+ 	int patch_mode = 0;
+ 	const char *rev = "HEAD";
+-	unsigned char sha1[20], *orig = NULL, sha1_orig[20],
+-				*old_orig = NULL, sha1_old_orig[20];
++	unsigned char sha1[20];
+ 	struct commit *commit;
+-	char *reflog_action, msg[1024];
++	char *reflog_action;
+ 	const struct option options[] = {
+ 		OPT__QUIET(&quiet),
+ 		OPT_SET_INT(0, "mixed", &reset_type,
+@@ -321,19 +344,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	else if (reset_index_file(sha1, reset_type, quiet))
+ 		die("Could not reset index file to revision '%s'.", rev);
+ 
+-	/* Any resets update HEAD to the head being switched to,
+-	 * saving the previous head in ORIG_HEAD before. */
+-	if (!get_sha1("ORIG_HEAD", sha1_old_orig))
+-		old_orig = sha1_old_orig;
+-	if (!get_sha1("HEAD", sha1_orig)) {
+-		orig = sha1_orig;
+-		prepend_reflog_action("updating ORIG_HEAD", msg, sizeof(msg));
+-		update_ref(msg, "ORIG_HEAD", orig, old_orig, 0, MSG_ON_ERR);
+-	}
+-	else if (old_orig)
+-		delete_ref("ORIG_HEAD", old_orig, 0);
+-	prepend_reflog_action("updating HEAD", msg, sizeof(msg));
+-	update_ref_status = update_ref(msg, "HEAD", sha1, orig, 0, MSG_ON_ERR);
++	update_ref_status = update_heads(sha1);
+ 
+ 	switch (reset_type) {
+ 	case HARD:
+-- 
+1.6.6.1.557.g77031
