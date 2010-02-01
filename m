@@ -1,100 +1,203 @@
-From: Steve Diver <squelch2@googlemail.com>
-Subject: Re: master^ is not a local branch -- huh?!?
-Date: Mon, 1 Feb 2010 11:52:51 +0000
-Message-ID: <31a97741002010352x1ad27f26ia4d51857bb2d2d4f@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Problem listing GIT repository with accents
+Date: Mon, 1 Feb 2010 07:19:33 -0500
+Message-ID: <20100201121933.GA9995@coredump.intra.peff.net>
+References: <7E88665723814E46BCBA1A39E84C27A5@elrond>
+ <20100201113213.GA22663@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Nicolas Pitre <nico@fluxnic.net>, Mark Lodato <lodatom@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git List <git@vger.kernel.org>, Ron1 <ron1@flownet.com>,
-	Jacob Helwig <jacob.helwig@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?RWxsacOp?= Computing Open Source Program 
+	<opensource@elliecomputing.com>,
+	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 01 12:53:06 2010
+X-From: git-owner@vger.kernel.org Mon Feb 01 13:19:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nbupu-0003Xp-Im
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 12:52:58 +0100
+	id 1NbvFm-0003jZ-U6
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 13:19:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753598Ab0BALwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 06:52:53 -0500
-Received: from mail-px0-f182.google.com ([209.85.216.182]:36438 "EHLO
-	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753617Ab0BALww (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 06:52:52 -0500
-Received: by pxi12 with SMTP id 12so4243811pxi.33
-        for <git@vger.kernel.org>; Mon, 01 Feb 2010 03:52:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=BuB1WBXdhTOmW2TfLXGNdTtrriU54R39CHz+1VaUZ8k=;
-        b=ilv3JQV/tRbBzUNn5QSjlZt/L60FMdk/+EPKvGoOiKc9qTXglTtyl2a6j0b8n1iiQX
-         yyiEhBHpS8lVngMH3kMMAuBIb9iYERGrDntfad7KTIZGV+LpyKpQEAK5LP5WciT4zIkt
-         zOP1LX4dblYfUkd8TDNrWwBligxPEmeINmfNw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=iCU4mhwNostZV8g1yB8ZNGJbspuZmDoSXP0IO8b+1/hJ7rORm6XQlLJXC8QKnwHoyT
-         AKfUI++ZGVvX14UEgGNRXy1ireSzzxIN1iUo5b43m4Lu6riCwkEQQL2tRrWrPwAyekYH
-         6u6HaeIm7RJHXJF5daaOqxtkcxC7oVfGQCD2Q=
-Received: by 10.140.247.17 with SMTP id u17mr3115440rvh.246.1265025171819; 
-	Mon, 01 Feb 2010 03:52:51 -0800 (PST)
+	id S1753984Ab0BAMTh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Feb 2010 07:19:37 -0500
+Received: from peff.net ([208.65.91.99]:43832 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751054Ab0BAMTg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2010 07:19:36 -0500
+Received: (qmail 24832 invoked by uid 107); 1 Feb 2010 12:19:39 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 01 Feb 2010 07:19:39 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Feb 2010 07:19:33 -0500
+Content-Disposition: inline
+In-Reply-To: <20100201113213.GA22663@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138604>
 
-On 30/01/2010 06:03, Junio C Hamano wrote:
+On Mon, Feb 01, 2010 at 06:32:13AM -0500, Jeff King wrote:
 
->Nicolas Pitre <nico@fluxnic.net> writes:
+> The patch below fixes it for me. This is the first time I've ever loo=
+ked
+> at this code, though, so an extra set of eyes is appreciated. I'm als=
+o
+> not sure of the "!p[len]" termination that the loop uses (quoted in t=
+he
+> context below). The string is explicitly not NUL-terminated, so why
+> would that matter? I think that may have been covering up the bug in
+> some cases.
 
->>First, I'm afraid that "Checking out commit 'foobar'" might be confusing
->>as this may happen through either a remote branch, a tag, or any random
->>commit.  It seems to me that "Checking out 'v2.5'" is less confusing
+OK, I see now. Callers can pass "-1" for the length to indicate that th=
+e
+name is NUL-terminated. So my initial patch does work, but it ends up
+decrementing the "-1", which happens to work because next_quote_pos jus=
+t
+checks that it is negative.
 
->>than "Checking out commit 'v2.5'".  But that's a minor detail and
->>probably a personal preference.
-...
->>To the contrary: this "detached HEAD" is exactly what you need if you
->>want to relate to any documentation or perform a search for more
+Here is an updated patch. The two changes are:
 
->>information.  Like it or not, this detached HEAD term is exactly what
->>this Git concept is all about and how it is designated everywhere.  The
->>sooner Git users see and learn about it the better.
+  1. A test in t3902.
 
->As I am not good at keeping track of different proposals to change this
->word here and that word there, I expect this will probably need at least
->few rotations of earth to get input from people in different timezones,
+  2. It converts the "-1" into strlen(name) before doing any work, whic=
+h
+     means we can lose the test for a NUL-terminator. I think this make=
+s
+     it much easier to see what is going on. And arguably we are fixing
+     a "bug" where embedded NULs in a length-bounded string erroneously
+     marked the end-of-string. In practice, I don't think it matters as
+     we are quoting paths, and NUL is not a valid character there.
 
->and I think this is post 1.7.0 item anyway, I'll queue the attached draft
->in 'pu' and keep it there, to make it easier for others to tweak the
->message.
+     It does come at the slight expense of running an extra strlen()
+     instead of discovering the length as we progress through the loop.
+     It's possible to fix that, but it makes the code a bit harder to
+     read.
 
+Junio, I think this bug goes back to v1.5.4, which makes the fix
+appropriate for 'maint'.
 
-Would it be a safe assumption to describe a 'detached HEAD' state as
-being synonymous with a (local) personal scratchpad or temporary
-workspace based on and from the original committed object?
+-- >8 --
+Subject: [PATCH] fix invalid read in quote_c_style_counted
 
-If this assumption is correct, then maybe this notion of a scratchpad
-may be more intuitive and conceptual to new users without getting
-bogged down with the necessary semantics of the terms used, but can
-also preserve references to 'detached HEAD' in the documentation for a
-fuller explanation.
+This function did not work on strings that were not
+NUL-terminated. It reads through a length-bounded string,
+searching for characters in need of quoting. After we find
+one, we output the quoted character, then advance our
+pointer to find the next one. However, we never decremented
+the length, meaning we ended up looking at whatever random
+junk was stored after the string.
 
+On top of this, callers can pass in "-1" as the length to
+indicate a NUL-terminated string, and we would also end our
+loop upon seeing a NUL. To keep the code simple, let's just
+convert "-1" cases into "strlen(name)".
 
-A scratchpad or temporary workspace description alludes to its semi
-permanent nature, and can warn that the subsequent commits may be lost
-through aging and garbage collection until the user "commits" to
-saving their progress through the creation a new branch, and thereby
-making them permanent.
+This bug was not found by the existing tests because most
+code paths feed a NUL-terminated string. The notable
+exception is a directory name being fed by ls-tree.
 
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ quote.c           |    6 +++++-
+ t/t3902-quoted.sh |   19 ++++++++++++++++++-
+ 2 files changed, 23 insertions(+), 2 deletions(-)
 
-I must say the explanations presented in this thread have shed some
-light on what is on the face of it a common trap that leaves new users
-wondering "What happened to my work!" and I thank you all.
-
-Steve
+diff --git a/quote.c b/quote.c
+index acb6bf9..e35ae50 100644
+--- a/quote.c
++++ b/quote.c
+@@ -209,11 +209,14 @@ static size_t quote_c_style_counted(const char *n=
+ame, ssize_t maxlen,
+ 	size_t len, count =3D 0;
+ 	const char *p =3D name;
+=20
++	if (maxlen < 0)
++		maxlen =3D strlen(name);
++
+ 	for (;;) {
+ 		int ch;
+=20
+ 		len =3D next_quote_pos(p, maxlen);
+-		if (len =3D=3D maxlen || !p[len])
++		if (len =3D=3D maxlen)
+ 			break;
+=20
+ 		if (!no_dq && p =3D=3D name)
+@@ -223,6 +226,7 @@ static size_t quote_c_style_counted(const char *nam=
+e, ssize_t maxlen,
+ 		EMIT('\\');
+ 		p +=3D len;
+ 		ch =3D (unsigned char)*p++;
++		maxlen -=3D len + 1;
+ 		if (sq_lookup[ch] >=3D ' ') {
+ 			EMIT(sq_lookup[ch]);
+ 		} else {
+diff --git a/t/t3902-quoted.sh b/t/t3902-quoted.sh
+index 5868052..14da45f 100755
+--- a/t/t3902-quoted.sh
++++ b/t/t3902-quoted.sh
+@@ -25,7 +25,7 @@ for_each_name () {
+ 	for name in \
+ 	    Name "Name and a${LF}LF" "Name and an${HT}HT" "Name${DQ}" \
+ 	    "$FN$HT$GN" "$FN$LF$GN" "$FN $GN" "$FN$GN" "$FN$DQ$GN" \
+-	    "With SP in it"
++	    "With SP in it" "caract=C3=A8re sp=C3=A9cial/file"
+ 	do
+ 		eval "$1"
+ 	done
+@@ -33,6 +33,7 @@ for_each_name () {
+=20
+ test_expect_success setup '
+=20
++	mkdir "caract=C3=A8re sp=C3=A9cial" &&
+ 	for_each_name "echo initial >\"\$name\""
+ 	git add . &&
+ 	git commit -q -m Initial &&
+@@ -50,6 +51,7 @@ Name
+ "Name and an\tHT"
+ "Name\""
+ With SP in it
++"caract\303\250re sp\303\251cial/file"
+ "\346\277\261\351\207\216\t\347\264\224"
+ "\346\277\261\351\207\216\n\347\264\224"
+ "\346\277\261\351\207\216 \347\264\224"
+@@ -63,6 +65,7 @@ Name
+ "Name and an\tHT"
+ "Name\""
+ With SP in it
++caract=C3=A8re sp=C3=A9cial/file
+ "=E6=BF=B1=E9=87=8E\t=E7=B4=94"
+ "=E6=BF=B1=E9=87=8E\n=E7=B4=94"
+ =E6=BF=B1=E9=87=8E =E7=B4=94
+@@ -97,6 +100,13 @@ test_expect_success 'check fully quoted output from=
+ diff-tree' '
+=20
+ '
+=20
++test_expect_success 'check fully quoted output from ls-tree' '
++
++	git ls-tree --name-only -r HEAD >current &&
++	test_cmp expect.quoted current
++
++'
++
+ test_expect_success 'setting core.quotepath' '
+=20
+ 	git config --bool core.quotepath false
+@@ -130,4 +140,11 @@ test_expect_success 'check fully quoted output fro=
+m diff-tree' '
+=20
+ '
+=20
++test_expect_success 'check fully quoted output from ls-tree' '
++
++	git ls-tree --name-only -r HEAD >current &&
++	test_cmp expect.raw current
++
++'
++
+ test_done
+--=20
+1.7.0.rc1.16.g21332.dirty
