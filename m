@@ -1,90 +1,72 @@
-From: =?iso-8859-1?Q?Elli=E9_Computing_Open_Source_Program?= 
-	<opensource@elliecomputing.com>
-Subject: Problem listing GIT repository with accents
-Date: Mon, 1 Feb 2010 11:48:29 +0100
-Message-ID: <7E88665723814E46BCBA1A39E84C27A5@elrond>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [RFC/PATCH 5/6] revert: add --ff option to allow fast forward
+ when cherry-picking
+Date: Mon, 01 Feb 2010 12:10:04 +0100
+Message-ID: <4B66B68C.7050505@gnu.org>
+References: <20100201074835.3929.11509.chriscool@tuxfamily.org> <20100201075542.3929.35967.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1;
-	format=flowed	reply-type=original
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 01 12:02:14 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Feb 01 12:10:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nbu2h-0000BR-9T
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 12:02:07 +0100
+	id 1NbuAc-000538-Lf
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 12:10:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752430Ab0BALCA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Feb 2010 06:02:00 -0500
-Received: from zeus.promailserver.com ([74.200.236.204]:3951 "EHLO
-	zeus.promailserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752187Ab0BALB7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 06:01:59 -0500
-X-Greylist: delayed 801 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Feb 2010 06:01:59 EST
-Received: from elrond ([83.199.180.163])
-        by zeus.promailserver.com (Merak 8.3.6) with ASMTP id JMX17238
-        for <git@vger.kernel.org>; Mon, 1 Feb 2010 10:48:38 -0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5843
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
+	id S1752501Ab0BALKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2010 06:10:12 -0500
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:64234 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752187Ab0BALKK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2010 06:10:10 -0500
+Received: by bwz19 with SMTP id 19so351976bwz.28
+        for <git@vger.kernel.org>; Mon, 01 Feb 2010 03:10:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=RKBk8h/dsZjR3S+p6hka+XxwnDWHA3vT9bk7adnkk+8=;
+        b=W6//shesge+e4tHDjKfIdz7wnqmYFoiRNSbL5vcNKEv0B7Up3auvjmCIDG1Pb1SurP
+         WNGfUBRaZfbflyNoARTSqEOqv9hKkOIiNR8hCvpkdIPXIe0nylpbq0p/lvM0YclD/gJX
+         yMqf5IiX0cV4VExAG0Njk0U31qDPL8+GNIGQc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=xLZlhe/IAorWgNqWuudJ+HzpBJhy95AXUVys0P19RU8wMc80XCrEbajgLapfQ0W6B8
+         4TIwPuGmAXEDb1Ivc19N7uBlPjy0Ko3k8b+4pIsm0CTOyAuHDPhu53EngiiQuV4i3bq+
+         YSydc5BvXCCrCyksJ33ymVEMkIBtfhS/gbwIc=
+Received: by 10.204.148.89 with SMTP id o25mr2834134bkv.129.1265022608627;
+        Mon, 01 Feb 2010 03:10:08 -0800 (PST)
+Received: from yakj.usersys.redhat.com (93-34-208-53.ip51.fastwebnet.it [93.34.208.53])
+        by mx.google.com with ESMTPS id 16sm2032820bwz.15.2010.02.01.03.10.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 01 Feb 2010 03:10:05 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.1
+In-Reply-To: <20100201075542.3929.35967.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138600>
 
-Dear all,
+> +		OPT_BOOLEAN(0, "ff",&ff_ok, "allow fast forward"),
 
-I'm writing a tool (ECMerge) which use the git command line to list fol=
-ders=20
-content (as of specific commits, tags and so on). This way our users ca=
-n=20
-browse a GIT repository in our GUI.
+Why should this not be the default?  Instead, you'd add --no-ff.  This 
+would simplify 6/6 further, like
 
-We are in front of the following problem: when a GIT repository contain=
-s a=20
-folder with accents, the files names for its content are often prepende=
-d=20
-with random characters. Here is a transcript of a list of operation=20
-exhibiting the problem:
+   eval sha1=\$$#
+   ...
+   output git cherry-pick "$@"
 
- C:\temp\scc-tests\git>git ls-tree HEAD .
-100644 blob 443d8625f771c421efd86c129483f9a139a4e85f    "p\351p\351.txt=
-"
-C:\temp\scc-tests\git>mkdir "caract=E8re sp=E9cial"
-C:\temp\scc-tests\git>echo plouf > "caract=E8re sp=E9cial\plouf.txt"
-C:\temp\scc-tests\git>git add "caract=E8re sp=E9cial"
-C:\temp\scc-tests\git>git commit -m plouf
-[master b94d9cb] plouf
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 "caract\350re sp\351cial/plouf.txt"
-
-C:\temp\scc-tests\git>git ls-tree HEAD .
-040000 tree d2b614bbfb4c5f39a32eb1309654262df113f605    "caract\350re=20
-sp\351cial"
-100644 blob 443d8625f771c421efd86c129483f9a139a4e85f    "p\351p\351.txt=
-"
-
-C:\temp\scc-tests\git>git ls-tree -r HEAD .
-100644 blob bf10a8b39e72c754ee1872fcdb13662cba6a8880    "caract\350re=20
-sp\351cial/\272plouf.txt"
-100644 blob 443d8625f771c421efd86c129483f9a139a4e85f    "p\351p\351.txt=
-"
-
-C:\temp\scc-tests\git>git ls-tree -r HEAD "caract=E8re sp=E9cial"
-100644 blob bf10a8b39e72c754ee1872fcdb13662cba6a8880    "caract\350re=20
-sp\351cial/\272plouf.txt"
-
-Note the spurious \272 which comes in the listing :(
-Trying again the same commands may give other spurious characters (each=
- time=20
-we tried we get different _bad_ responses)
-
-
-Hope you can do somehing for that,
-Best regards
-Armel Asselin - from Elli=E9 Computing
+Paolo
