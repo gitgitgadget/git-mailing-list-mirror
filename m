@@ -1,135 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Problem listing GIT repository with accents
-Date: Mon, 1 Feb 2010 06:32:13 -0500
-Message-ID: <20100201113213.GA22663@coredump.intra.peff.net>
-References: <7E88665723814E46BCBA1A39E84C27A5@elrond>
+From: Ivo Anjo <knuckles@gmail.com>
+Subject: Bug in git-filter-branch example
+Date: Mon, 1 Feb 2010 11:48:27 +0000
+Message-ID: <557ea2711002010348m57aa31fesd1047cbe3f01cb0b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?B?RWxsacOp?= Computing Open Source Program 
-	<opensource@elliecomputing.com>
-X-From: git-owner@vger.kernel.org Mon Feb 01 12:32:26 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 01 12:48:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbuW1-0005yY-W3
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 12:32:26 +0100
+	id 1Nbulf-0000B6-M6
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 12:48:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752651Ab0BALcS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Feb 2010 06:32:18 -0500
-Received: from peff.net ([208.65.91.99]:33493 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752023Ab0BALcR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 06:32:17 -0500
-Received: (qmail 24633 invoked by uid 107); 1 Feb 2010 11:32:19 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 01 Feb 2010 06:32:19 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Feb 2010 06:32:13 -0500
-Content-Disposition: inline
-In-Reply-To: <7E88665723814E46BCBA1A39E84C27A5@elrond>
+	id S1752112Ab0BALs3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Feb 2010 06:48:29 -0500
+Received: from mail-bw0-f223.google.com ([209.85.218.223]:48540 "EHLO
+	mail-bw0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750970Ab0BALs2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Feb 2010 06:48:28 -0500
+Received: by bwz23 with SMTP id 23so4763bwz.21
+        for <git@vger.kernel.org>; Mon, 01 Feb 2010 03:48:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=wmYuOr2D6hZLuGLezqhEaEyzpqHVoLg+ZvqgW3aYrgo=;
+        b=GpjOUMOxtn1G+0rCEanMrB2H0Z3AztynKsk9eJAkEoZAAfW+DV6jyHF6yAcxdaXtcp
+         M7A0B46UB9vtCUXeAMSMjpLRegOq5+tMp5tAXMkLKnL53NXGz2YVs2v6wNsypwMAVjGs
+         F7eg45FzFxJH/Au4Zeyh8OuT/kMzcIgsNv+EQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=VeYFI1zzv0ibNmqRo8up5Hgl4ucbNWGemzDQdSqTyqK6gKBPuFYcdYs697cHH8VmL1
+         LR8haQFn101CZBQ4KVzDWVrjzwh1HF4l3WEXg3rQpiN7K7vKv+S4Qfbw1NLFWPq+tcaf
+         e6PTqM5058k7eGCwpmptX6KPP1+6u4M1M7bS0=
+Received: by 10.204.139.217 with SMTP id f25mr402863bku.73.1265024907092; Mon, 
+	01 Feb 2010 03:48:27 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138602>
 
-On Mon, Feb 01, 2010 at 11:48:29AM +0100, Elli=C3=A9 Computing Open Sou=
-rce Program wrote:
+I've been working on importing my svn repo into git, and while moving
+some things around using git-filter-branch I ran into a bug in the
+example provided on the manpage:
 
-> C:\temp\scc-tests\git>git ls-tree -r HEAD "caract=C3=A8re sp=C3=A9cia=
-l"
-> 100644 blob bf10a8b39e72c754ee1872fcdb13662cba6a8880    "caract\350re
-> sp\351cial/\272plouf.txt"
->=20
-> Note the spurious \272 which comes in the listing :(
-> Trying again the same commands may give other spurious characters
-> (each time we tried we get different _bad_ responses)
+=C2=A0=C2=A0=C2=A0 To move the whole tree into a subdirectory, or remov=
+e it from there:
 
-Looks like a bug. I was able to replicate it here, and valgrind notices
-it, too:
+=C2=A0=C2=A0=C2=A0 git filter-branch --index-filter \
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 'git=
+ ls-files -s | sed "s-\t-&newsubdir/-" |
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 GIT_INDEX_FILE=3D$GIT_INDEX_=
+=46ILE.new \
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 git update-index --index-info &&
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
 
-  =3D=3D22720=3D=3D Invalid read of size 1
-  =3D=3D22720=3D=3D    at 0x80E77FF: next_quote_pos (quote.c:174)
-  =3D=3D22720=3D=3D    by 0x80E783A: quote_c_style_counted (quote.c:215=
-)
-  =3D=3D22720=3D=3D    by 0x80E7D14: write_name_quotedpfx (quote.c:286)
-  =3D=3D22720=3D=3D    by 0x80808F3: show_tree (builtin-ls-tree.c:114)
-  =3D=3D22720=3D=3D    by 0x811000D: read_tree_recursive (tree.c:114)
-  =3D=3D22720=3D=3D    by 0x81100E7: read_tree_recursive (tree.c:131)
-  =3D=3D22720=3D=3D    by 0x8080CC2: cmd_ls_tree (builtin-ls-tree.c:173=
-)
-  =3D=3D22720=3D=3D    by 0x804B7FA: run_builtin (git.c:257)
-  =3D=3D22720=3D=3D    by 0x804B958: handle_internal_command (git.c:412=
-)
-  =3D=3D22720=3D=3D    by 0x804BA2F: run_argv (git.c:454)
-  =3D=3D22720=3D=3D    by 0x804BB97: main (git.c:525)
-  =3D=3D22720=3D=3D  Address 0x43405b4 is 0 bytes after a block of size=
- 20 alloc'd
-  =3D=3D22720=3D=3D    at 0x4024C4C: malloc (vg_replace_malloc.c:195)
-  =3D=3D22720=3D=3D    by 0x8115739: xmalloc (wrapper.c:20)
-  =3D=3D22720=3D=3D    by 0x811005E: read_tree_recursive (tree.c:127)
-  =3D=3D22720=3D=3D    by 0x8080CC2: cmd_ls_tree (builtin-ls-tree.c:173=
-)
-  =3D=3D22720=3D=3D    by 0x804B7FA: run_builtin (git.c:257)
-  =3D=3D22720=3D=3D    by 0x804B958: handle_internal_command (git.c:412=
-)
-  =3D=3D22720=3D=3D    by 0x804BA2F: run_argv (git.c:454)
-  =3D=3D22720=3D=3D    by 0x804BB97: main (git.c:525)
 
-The patch below fixes it for me. This is the first time I've ever looke=
-d
-at this code, though, so an extra set of eyes is appreciated. I'm also
-not sure of the "!p[len]" termination that the loop uses (quoted in the
-context below). The string is explicitly not NUL-terminated, so why
-would that matter? I think that may have been covering up the bug in
-some cases.
+The problem is with filenames that use complex utf8 (non-ascii?) chars:
 
--- >8 --
-Subject: [PATCH] fix invalid read in quote_c_style_counted
+> ls -lah Papers/*Lea*
+-rw-r--r-- 1 knuckles users 109K 2010-01-31 18:57 Papers/A Java Fork =E2=
+=81=84
+Join Framework -- Lea.pdf
 
-We progress through a length-bounded string, looking for
-characters in need of quoting. After each character is
-found, we output everything up until that character
-literally, then the quoted character. We then advance our
-string and look again.  However, we never actually
-decremented the length, meaning we ended up looking at
-whatever random junk was stored after the string.
+as you can see, I'm using '=E2=81=84' as a replacement for '/' on that
+filename, since I obviously can't use '/' on a filename. The problem
+is, git ls-files -s lists that file wrapped in quotes and with the
+char value escaped
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- quote.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+100644 c09309342037fa7d91f37651e2f16e981e4d739a 0=C2=A0=C2=A0=C2=A0 "Pa=
+pers/A Java
+=46ork \342\201\204 Join Framework -- Lea.pdf"
 
-diff --git a/quote.c b/quote.c
-index acb6bf9..392006d 100644
---- a/quote.c
-+++ b/quote.c
-@@ -216,20 +216,21 @@ static size_t quote_c_style_counted(const char *n=
-ame, ssize_t maxlen,
- 		if (len =3D=3D maxlen || !p[len])
- 			break;
-=20
- 		if (!no_dq && p =3D=3D name)
- 			EMIT('"');
-=20
- 		EMITBUF(p, len);
- 		EMIT('\\');
- 		p +=3D len;
- 		ch =3D (unsigned char)*p++;
-+		maxlen -=3D len + 1;
- 		if (sq_lookup[ch] >=3D ' ') {
- 			EMIT(sq_lookup[ch]);
- 		} else {
- 			EMIT(((ch >> 6) & 03) + '0');
- 			EMIT(((ch >> 3) & 07) + '0');
- 			EMIT(((ch >> 0) & 07) + '0');
- 		}
- 	}
-=20
- 	EMITBUF(p, len);
---=20
-1.7.0.rc1.16.g21332.dirty
+while other files aren't, so the simple sed line provided won't work,
+as it will output the new filename as newsubdir/"Papers...
+
+I ended up using git filter-branch to remove the offending file ("if
+all you have is a hammer..."), and re-adding it after the move.
+
+I'm also left wondering how many uses of git ls-files out there on the
+"internets" survive working on a filename such as this one. Maybe git
+ls-files should have an option to output the real utf8 file name
+instead of escaping the bytes...?
+
+Ivo Anjo
