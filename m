@@ -1,64 +1,97 @@
-From: Ron Garret <ron1@flownet.com>
-Subject: GIT_WORK_TREE environment variable not working
-Date: Sun, 31 Jan 2010 17:33:47 -0800
-Organization: Amalgamated Widgets
-Message-ID: <ron1-8E7697.17334731012010@news.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 01 02:34:10 2010
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: [PATCH 1/2] configure: Allow GIT_ARG_SET_PATH to handle --without-PROGRAM
+Date: Sun, 31 Jan 2010 21:15:04 -0500
+Message-ID: <1264990505-29578-2-git-send-email-bwalton@artsci.utoronto.ca>
+References: <1264990505-29578-1-git-send-email-bwalton@artsci.utoronto.ca>
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Feb 01 03:15:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NblB4-0005Zs-9U
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 02:34:10 +0100
+	id 1Nblp3-00005P-G2
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 03:15:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755021Ab0BABeD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jan 2010 20:34:03 -0500
-Received: from lo.gmane.org ([80.91.229.12]:33298 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754783Ab0BABeB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2010 20:34:01 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NblAu-0005Vt-Hv
-	for git@vger.kernel.org; Mon, 01 Feb 2010 02:34:00 +0100
-Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 01 Feb 2010 02:34:00 +0100
-Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 01 Feb 2010 02:34:00 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
-User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
+	id S1753235Ab0BACPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jan 2010 21:15:13 -0500
+Received: from www.cquest.utoronto.ca ([192.82.128.5]:44660 "EHLO
+	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752465Ab0BACPM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jan 2010 21:15:12 -0500
+Received: from ntdws12.chass.utoronto.ca ([128.100.160.253]:48750 ident=93)
+	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
+	id 1Nbloj-0003Yi-Oi; Sun, 31 Jan 2010 21:15:09 -0500
+Received: from localhost
+	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
+	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1Nbloj-0007hm-MJ; Sun, 31 Jan 2010 21:15:09 -0500
+Received: (from bwalton@localhost)
+	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id o112F9r3029618;
+	Sun, 31 Jan 2010 21:15:09 -0500
+X-Mailer: git-send-email 1.6.6
+In-Reply-To: <1264990505-29578-1-git-send-email-bwalton@artsci.utoronto.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138573>
 
-What am I doing wrong here?
+Add an optional second argument to both GIT_ARG_SET_PATH and
+GIT_CONF_APPEND_PATH such that any value of the second argument will
+enable configure to set NO_$PROGRAM in addition to an empty
+$PROGRAM_PATH.  This is initially useful for allowing configure to
+disable the use of python, as the remote helper code has nothing
+leveraging it yet.
 
-[ron@mickey:~/devel/gittest]$ pwd
-/Users/ron/devel/gittest
-[ron@mickey:~/devel/gittest]$ git status
-# On branch master
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#  git/
-nothing added to commit but untracked files present (use "git add" to 
-track)
-[ron@mickey:~/devel/gittest]$ cd
-[ron@mickey:~]$ export GIT_WORK_TREE=/Users/ron/devel/gittest
-[ron@mickey:~]$ git status
-fatal: Not a git repository (or any of the parent directories): .git
-[ron@mickey:~]$ git status --work-tree=/Users/ron/devel/gittest
-fatal: Not a git repository (or any of the parent directories): .git
-[ron@mickey:~]$
+The Makefile already recognizes NO_PYTHON, but configure provided no
+way to set it appropriately.
+
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+ configure.ac |   15 +++++++++++++--
+ 1 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 229140e..9eaae7d 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -23,21 +23,32 @@ AC_DEFUN([GIT_CONF_APPEND_LINE],
+ # GIT_ARG_SET_PATH(PROGRAM)
+ # -------------------------
+ # Provide --with-PROGRAM=PATH option to set PATH to PROGRAM
++# Optional second argument allows setting NO_PROGRAM=YesPlease if
++# --without-PROGRAM version used.
+ AC_DEFUN([GIT_ARG_SET_PATH],
+ [AC_ARG_WITH([$1],
+  [AS_HELP_STRING([--with-$1=PATH],
+                  [provide PATH to $1])],
+- [GIT_CONF_APPEND_PATH($1)],[])
++ [GIT_CONF_APPEND_PATH($1,$2)],[])
+ ])# GIT_ARG_SET_PATH
+ #
+ # GIT_CONF_APPEND_PATH(PROGRAM)
+ # ------------------------------
+ # Parse --with-PROGRAM=PATH option to set PROGRAM_PATH=PATH
+ # Used by GIT_ARG_SET_PATH(PROGRAM)
++# Optional second argument allows setting NO_PROGRAM=YesPlease if
++# --without-PROGRAM is used.
+ AC_DEFUN([GIT_CONF_APPEND_PATH],
+ [PROGRAM=m4_toupper($1); \
+ if test "$withval" = "no"; then \
+-	AC_MSG_ERROR([You cannot use git without $1]); \
++	if test -n "$2"; then \
++		m4_toupper($1)_PATH=$withval; \
++		AC_MSG_NOTICE([Disabling use of ${PROGRAM}]); \
++		GIT_CONF_APPEND_LINE(NO_${PROGRAM}=YesPlease); \
++		GIT_CONF_APPEND_LINE(${PROGRAM}_PATH=); \
++	else \
++		AC_MSG_ERROR([You cannot use git without $1]); \
++	fi; \
+ else \
+ 	if test "$withval" = "yes"; then \
+ 		AC_MSG_WARN([You should provide path for --with-$1=PATH]); \
+-- 
+1.6.5.3
