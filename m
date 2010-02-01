@@ -1,115 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug in git-filter-branch example
-Date: Mon, 1 Feb 2010 07:43:45 -0500
-Message-ID: <20100201124345.GA32532@coredump.intra.peff.net>
-References: <557ea2711002010348m57aa31fesd1047cbe3f01cb0b@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFC/PATCH 5/6] revert: add --ff option to allow fast forward 
+	when cherry-picking
+Date: Mon, 1 Feb 2010 13:43:57 +0100
+Message-ID: <c07716ae1002010443p4e0443feke14e5f877584640f@mail.gmail.com>
+References: <20100201074835.3929.11509.chriscool@tuxfamily.org>
+	 <20100201075542.3929.35967.chriscool@tuxfamily.org>
+	 <4B66B68C.7050505@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ivo Anjo <knuckles@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 01 13:44:00 2010
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Feb 01 13:44:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbvdD-0001R5-4w
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 13:43:55 +0100
+	id 1Nbvdq-0001qY-86
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 13:44:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754132Ab0BAMnt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Feb 2010 07:43:49 -0500
-Received: from peff.net ([208.65.91.99]:55052 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753897Ab0BAMns (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 07:43:48 -0500
-Received: (qmail 24898 invoked by uid 107); 1 Feb 2010 12:43:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 01 Feb 2010 07:43:51 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Feb 2010 07:43:45 -0500
-Content-Disposition: inline
-In-Reply-To: <557ea2711002010348m57aa31fesd1047cbe3f01cb0b@mail.gmail.com>
+	id S1754356Ab0BAMoB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Feb 2010 07:44:01 -0500
+Received: from mail-fx0-f220.google.com ([209.85.220.220]:33061 "EHLO
+	mail-fx0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753897Ab0BAMoA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Feb 2010 07:44:00 -0500
+Received: by fxm20 with SMTP id 20so4174808fxm.21
+        for <git@vger.kernel.org>; Mon, 01 Feb 2010 04:43:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=USt5RfI7NL9u6K5DHF5X9bwkWaffI02z93luQAmaQWs=;
+        b=qRsPIDcSdUIUkD0yuHPxm08hZ78nJfIfjDk+W1WxKwYhl6jiz9JawnYiWtNNx2fAI/
+         fGgMgvAWd0uMhQibKmwXguEhmVoKUz04tCj9zc3JUpt/Lkw6DjLn8RipeKdLsBp/KKZB
+         5NF+KJaDbUjKeTb+M8GA9pawxov52CHmCukc8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=qm4d6w2wwNwdoWbxzjW5XYVYXfHn82ihru6+C+t+4txcRKJayruX36O6yD7HgbtBas
+         VZzlmZKFFVUwKwDzcuWRWhSx5nMW/k9j4uI52jno/j2IPSyPhnXrQ7W0By3L3SCp4/Dh
+         xFL/E5W0FP5TbR0WrCIpDsi8lxlwEQ0hjswBQ=
+Received: by 10.102.214.19 with SMTP id m19mr2223604mug.96.1265028237841; Mon, 
+	01 Feb 2010 04:43:57 -0800 (PST)
+In-Reply-To: <4B66B68C.7050505@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138606>
 
-On Mon, Feb 01, 2010 at 11:48:27AM +0000, Ivo Anjo wrote:
+On Mon, Feb 1, 2010 at 12:10 PM, Paolo Bonzini <bonzini@gnu.org> wrote:
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 OPT_BOOLEAN(0, "ff",&ff_ok, "allow fas=
+t forward"),
+>
+> Why should this not be the default?
 
-> =C2=A0=C2=A0=C2=A0 To move the whole tree into a subdirectory, or rem=
-ove it from there:
->=20
-> =C2=A0=C2=A0=C2=A0 git filter-branch --index-filter \
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 'g=
-it ls-files -s | sed "s-\t-&newsubdir/-" |
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 GIT_INDEX_FILE=3D$GIT_IND=
-EX_FILE.new \
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 git update-index --index-info &&
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
->=20
->=20
-> The problem is with filenames that use complex utf8 (non-ascii?) char=
-s:
+Maybe it could be the default, but in this case it should be made
+compatible with -n option
+(and perhaps other options) for backward compatibility, and this would
+probably need more
+involved changes.
 
-Yes, that is definitely the problem. update-index unquotes its input, a=
-s
-you would expect, but the sed munging does not take the quote into
-account. You can fix it by doing:
+Thanks,
+Christian.
 
-  sed "s-\t\"*-&newsubdir/-"
-
-instead. Here is a patch to fix the documentation. I am slightly unsure
-of whether it should be applied. These examples are supposed to be
-simple and readable to help the user understand what the filters can do=
-=2E
-And this makes it somewhat less simple for the sake of a special case.
-But at the same time, users are going to cut-and-paste these examples (=
-I
-know I have), and the special case is not _that_ special, especially fo=
-r
-non-English speakers. And having it in the example helps make people
-aware that quoted paths are a reality.
-
-So I think on balance it is probably better to fix it.
-
-Note also that another way of "fixing" this would be to set
-core.quotepath to false (which is something you probably want to do
-anyway if you are using utf8 characters in your filenames). And I put
-"fix" in quotes because you still may run across quoted paths, but they
-will be much less common; you will only see them if you have control
-characters or other insanity in your paths.
-
--- >8 --
-Subject: [PATCH] docs: fix filter-branch example for quoted paths
-
-If there is a quoted path, update-index will correctly
-unquote it. However, we must take care to put our new prefix
-inside the double-quote.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-filter-branch.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-fi=
-lter-branch.txt
-index cfaba2a..020028c 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -358,7 +358,7 @@ To move the whole tree into a subdirectory, or remo=
-ve it from there:
-=20
- ---------------------------------------------------------------
- git filter-branch --index-filter \
--	'git ls-files -s | sed "s-\t-&newsubdir/-" |
-+	'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
- 		GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
- 			git update-index --index-info &&
- 	 mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
---=20
-1.7.0.rc1.16.g21332.dirty
+> Instead, you'd add --no-ff. =A0This would
+> simplify 6/6 further, like
+>
+> =A0eval sha1=3D\$$#
+> =A0...
+> =A0output git cherry-pick "$@"
+>
+> Paolo
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
