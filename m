@@ -1,70 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Problem listing GIT repository with accents
-Date: Mon, 1 Feb 2010 12:40:45 -0500
-Message-ID: <20100201174045.GA5756@coredump.intra.peff.net>
-References: <7E88665723814E46BCBA1A39E84C27A5@elrond>
- <20100201113213.GA22663@coredump.intra.peff.net>
- <20100201121933.GA9995@coredump.intra.peff.net>
- <4B66CD81.3010005@viscovery.net>
- <20100201133903.GA923@coredump.intra.peff.net>
- <20100201134454.GA796@coredump.intra.peff.net>
- <7v3a1k50sw.fsf@alter.siamese.dyndns.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Wishlist for branch management
+Date: Mon, 01 Feb 2010 09:49:51 -0800
+Message-ID: <4B67143F.6090903@zytor.com>
+References: <4B662BEF.7040503@zytor.com> <20100201091907.GJ9553@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	=?utf-8?B?RWxsacOp?= Computing Open Source Program 
-	<opensource@elliecomputing.com>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 01 18:40:53 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Feb 01 18:50:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nc0Gb-0003VB-JB
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 18:40:53 +0100
+	id 1Nc0Pb-0002ir-7i
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 18:50:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753249Ab0BARks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 12:40:48 -0500
-Received: from peff.net ([208.65.91.99]:60662 "EHLO peff.net"
+	id S1752602Ab0BARuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2010 12:50:04 -0500
+Received: from terminus.zytor.com ([198.137.202.10]:37630 "EHLO mail.zytor.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752870Ab0BARkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 12:40:47 -0500
-Received: (qmail 28753 invoked by uid 107); 1 Feb 2010 17:40:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 01 Feb 2010 12:40:51 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Feb 2010 12:40:45 -0500
-Content-Disposition: inline
-In-Reply-To: <7v3a1k50sw.fsf@alter.siamese.dyndns.org>
+	id S1752127Ab0BARuB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2010 12:50:01 -0500
+Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
+	(authenticated bits=0)
+	by mail.zytor.com (8.14.3/8.14.3) with ESMTP id o11Hnqn9031562
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 1 Feb 2010 09:49:52 -0800
+Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
+	by mail.hos.anvin.org (8.14.3/8.14.3) with ESMTP id o11HnqOD024101
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 1 Feb 2010 09:49:52 -0800
+Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
+	by tazenda.hos.anvin.org (8.14.3/8.13.6) with ESMTP id o11Hnp5f007815;
+	Mon, 1 Feb 2010 09:49:51 -0800
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc11 Thunderbird/3.0.1
+In-Reply-To: <20100201091907.GJ9553@machine.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138632>
 
-On Mon, Feb 01, 2010 at 09:21:51AM -0800, Junio C Hamano wrote:
+On 02/01/2010 01:19 AM, Petr Baudis wrote:
+> I'm used to git symbolic-ref HEAD. I like the fact that human-friendly
+> and scripting interfaces are mostly separated to different commands.
 
-> Unless we document "this function is to C-quote a (portion of a) string,
-> either to the end or up to the given length", however, future callers may
-> incorrectly assume that with length the function can be fed anything and
-> would C-quote that piece of memory.  The argument name "const char *name"
-> already suggests that is not an arbitrary binary rubbish, changing that to
-> "str" would probably make that a bit stronger documentation, or we could
-> explicitly say "this is a (early part of a) NUL-terminated string" in a
-> comment.
-> 
-> But your one-liner patch would actually be a smaller change than any of
-> them and makes the whole problem disappear; wouldn't it be a far better
-> solution?
+It's makes the learning curve for scripting git unnecessarily large.
+Furthermore, it's rather unrealistic for people who are not git people
+to follow this dictum -- I have seen the git scripts that the kernel
+people write, including myself, and they generally tend to use the same
+commands they're used to using themselves.
 
-Sure, if you are going to bother to document it to future-proof against
-new callers, you might as well just make it more flexible with my
-one-liner. I don't think it will impact the behavior of any existing
-callers either way.
+So I think it's actually a really bad UI design.  It helps making clear
+what is scriptable (stable) and what isn't, but expecting people to use
+a different mental rubric when scripting than when working on the
+command line is completely unrealistic.
 
-I was just going to not bother, but perhaps while we have spent some
-brain cycles on it, it is better to just fix it. Either way is fine with
-me.
+	-hpa
 
--Peff
+-- 
+H. Peter Anvin, Intel Open Source Technology Center
+I work for Intel.  I don't speak on their behalf.
