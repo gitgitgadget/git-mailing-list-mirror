@@ -1,102 +1,109 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] fast-import: Document the core.bigFileThreshold
-	configuration setting
-Date: Mon, 1 Feb 2010 07:41:33 -0800
-Message-ID: <20100201154133.GF8916@spearce.org>
-References: <20100129012350.GD20488@spearce.org> <fabb9a1e1001291035l5cd09cb6q1f12037f96dce8a1@mail.gmail.com> <20100129183705.GB22101@spearce.org> <7vockc45ut.fsf@alter.siamese.dyndns.org> <7vmxzw15dt.fsf@alter.siamese.dyndns.org> <7v3a1oyrkp.fsf@alter.siamese.dyndns.org>
+From: Arun Raghavan <ford_prefect@gentoo.org>
+Subject: Re: [PATCH 0/2] upload-pack: pre- and post- hooks
+Date: Mon, 1 Feb 2010 21:20:27 +0530
+Message-ID: <6f8b45101002010750t5541faefv5b4640dfb9949306@mail.gmail.com>
+References: <6f8b45101001150414r2661001ep10819b601953c05b@mail.gmail.com> 
+	<1265013127-12589-1-git-send-email-ford_prefect@gentoo.org> 
+	<20100201152010.GC8916@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git <git@vger.kernel.org>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 01 16:41:44 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Feb 01 16:50:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbyPI-00012V-FW
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 16:41:44 +0100
+	id 1NbyY9-0006Pe-Pm
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 16:50:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755019Ab0BAPli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 10:41:38 -0500
-Received: from mail-yw0-f173.google.com ([209.85.211.173]:52615 "EHLO
-	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753768Ab0BAPlh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 10:41:37 -0500
-Received: by ywh3 with SMTP id 3so1667922ywh.22
-        for <git@vger.kernel.org>; Mon, 01 Feb 2010 07:41:36 -0800 (PST)
-Received: by 10.151.3.11 with SMTP id f11mr6454868ybi.108.1265038895864;
-        Mon, 01 Feb 2010 07:41:35 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 8sm1728715yxg.24.2010.02.01.07.41.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 01 Feb 2010 07:41:35 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7v3a1oyrkp.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754065Ab0BAPus convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Feb 2010 10:50:48 -0500
+Received: from mail-qy0-f198.google.com ([209.85.221.198]:43332 "EHLO
+	mail-qy0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753036Ab0BAPur convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Feb 2010 10:50:47 -0500
+X-Greylist: delayed 17482 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Feb 2010 10:50:47 EST
+Received: by qyk36 with SMTP id 36so2070366qyk.15
+        for <git@vger.kernel.org>; Mon, 01 Feb 2010 07:50:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=etKUaFTXhWAzDN1dNssD/XrwlPL7OvGDegCmbxXZB0M=;
+        b=R1cMrrIka1J7dx5WHOJUpePSexqaU3dhRVUS/XI7rvfRTnIk4hrmbNkMsdF5GesfjL
+         +XmUaLL1ybYbztOYA6MtUYUPSj7uKg07bEyE+Xkzkfv/uuejmZzY7fkRf1vNNWxPUB0C
+         HS4Wk9+BrlyGflMsnwyv4uNZEuUm2ivejRVu4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=GPg6J1chSOIrPaS8t+31UisY64jeyW0ISO1Kmc8apnRdlAMkf4ZESasJbS/Gx4O6ps
+         zF/x9tV3NvJAyfIpFW+L+fEXafTBmVzfylaa3uitPuqehV/lErUVgO7EYpjWw9HHDbWt
+         HpGFAAFeVauojK9tJHuCy00KaDZrlcJPAW8t0=
+Received: by 10.229.100.226 with SMTP id z34mr1791578qcn.7.1265039447074; Mon, 
+	01 Feb 2010 07:50:47 -0800 (PST)
+In-Reply-To: <20100201152010.GC8916@spearce.org>
+X-Google-Sender-Auth: a6208d410d749ac0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138617>
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- Junio C Hamano <gitster@pobox.com> wrote:
- > You may want to add the new option to the output from "cmd -h" and
- > probably description of the configuration in the doc before any of this
- > gets official.
+On 1 February 2010 20:50, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Arun Raghavan <ford_prefect@gentoo.org> wrote:
+>> This patch set reintroduces the post-upload-pack hook and adds a
+>> pre-upload-pack hook. These are now only built if 'ALLOW_INSECURE_HO=
+OKS' is set
+>> at build time. The idea is that only system administrators who need =
+this
+>> functionality and are sure the potential insecurity is not relevant =
+to their
+>> system will enable it.
+>
+> *sigh*
+>
+> I guess this is better, having it off by default, but allowing an
+> administrator who needs this feature to build a custom package.
+>
+> Unfortunately... I'm sure some distro out there is going to think
+> they know how to compile Git better than we do, and enable this by
+> default, exposing their users to a security hole. =A0Ask the OpenSSL
+> project about how well distros package code... =A0:-\
+>
+> I'd like a bit more than just a compile time flag.
 
- Doc patch.  :-)
+I was hoping the all-caps INSECURE in the name would give distributors =
+pause. :)
 
- Feel free to squash, or to apply as its own change, I don't care
- either way.
+Suggestions on what else might work?
 
- Documentation/config.txt |   14 ++++++++++++++
- fast-import.c            |    2 +-
- 2 files changed, 15 insertions(+), 1 deletions(-)
+>> At some point if the future, if needed, this could also be made a pa=
+rt of the
+>> negotiation between the client and server.
+>
+> I'm not sure I follow.
+>
+> Are you proposing the server advertises that it wants to run hooks,
+> and lets the client decide whether or not they should be executed?
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f7728ec..b16a20b 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -409,6 +409,20 @@ You probably do not need to adjust this value.
- +
- Common unit suffixes of 'k', 'm', or 'g' are supported.
- 
-+core.bigFileThreshold::
-+	Files larger than this size are stored deflated, without
-+	attempting delta compression.  Storing large files without
-+	delta compression avoids excessive memory usage, at the
-+	slight expense of increased disk usage.
-++
-+Default is 512 MiB on all platforms.  This should be reasonable
-+for most projects as source code and other text files can still
-+be delta compressed, but larger binary media files won't be.
-++
-+Common unit suffixes of 'k', 'm', or 'g' are supported.
-++
-+Currently only linkgit:git-fast-import[1] honors this setting.
-+
- core.excludesfile::
- 	In addition to '.gitignore' (per-directory) and
- 	'.git/info/exclude', git looks into this file for patterns
-diff --git a/fast-import.c b/fast-import.c
-index 8055f73..1bcf3bb 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2613,7 +2613,7 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- }
- 
- static const char fast_import_usage[] =
--"git fast-import [--date-format=f] [--max-pack-size=n] [--depth=n] [--active-branches=n] [--export-marks=marks.file]";
-+"git fast-import [--date-format=f] [--max-pack-size=n] [--big-file-threshold=n] [--depth=n] [--active-branches=n] [--export-marks=marks.file]";
- 
- int main(int argc, const char **argv)
- {
--- 
-1.7.0.rc0.170.g7207c
+Something like that. I was thinking the client could always advertise
+whether the it wants to allow the hooks to be executed or not (which
+would override the default value of the global variable I introduced).
+Either approach would work, though the second is simpler but also
+dumber.
 
--- 
-Shawn.
+Again, this might be over-complicating things, which is why I did not
+implement it. I just wanted to make a note of the fact that this could
+be done if the need is felt.
+
+Cheers,
+--=20
+Arun Raghavan
+http://arunraghavan.net/
+(Ford_Prefect | Gentoo) & (arunsr | GNOME)
