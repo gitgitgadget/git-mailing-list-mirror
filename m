@@ -1,78 +1,67 @@
-From: Jacob Helwig <jacob.helwig@gmail.com>
-Subject: Re: Speed of conversion from Subversion repository to Git
-Date: Mon, 1 Feb 2010 10:17:07 -0800
-Message-ID: <8c9a061002011017l6127dd22na1930481c7b59d4@mail.gmail.com>
-References: <4B6717DF.8020004@web.de>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: master^ is not a local branch -- huh?!?
+Date: Mon, 1 Feb 2010 13:27:58 -0500
+Message-ID: <76718491002011027m763c8953k12f7cdd4324c8672@mail.gmail.com>
+References: <31a97741002010352x1ad27f26ia4d51857bb2d2d4f@mail.gmail.com>
+	 <7vpr4o3lg9.fsf@alter.siamese.dyndns.org>
+	 <alpine.LFD.2.00.1002011309020.1681@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Markus Elfring <Markus.Elfring@web.de>
-X-From: git-owner@vger.kernel.org Mon Feb 01 19:17:41 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Steve Diver <squelch2@googlemail.com>,
+	Mark Lodato <lodatom@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Git List <git@vger.kernel.org>, Ron1 <ron1@flownet.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Mon Feb 01 19:28:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nc0q6-0007YP-0U
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 19:17:34 +0100
+	id 1Nc10N-0000tQ-J8
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 19:28:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755172Ab0BASR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 13:17:28 -0500
-Received: from mail-pz0-f189.google.com ([209.85.222.189]:60733 "EHLO
-	mail-pz0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754824Ab0BASR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 13:17:27 -0500
-Received: by pzk27 with SMTP id 27so5085928pzk.33
-        for <git@vger.kernel.org>; Mon, 01 Feb 2010 10:17:27 -0800 (PST)
+	id S1755547Ab0BAS2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2010 13:28:00 -0500
+Received: from mail-iw0-f186.google.com ([209.85.223.186]:57255 "EHLO
+	mail-iw0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755274Ab0BAS17 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2010 13:27:59 -0500
+Received: by iwn16 with SMTP id 16so69940iwn.5
+        for <git@vger.kernel.org>; Mon, 01 Feb 2010 10:27:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=Cd/fK+eynLj1eDCtqnjHswQ/2lEfEml21qMOuSlR6E4=;
-        b=hl2DBOwUSGa6AMnnNJ8rN94ultGmH5xIvtbsKqwLwlHd+L7nQWWU16fbrgOlhB/hSt
-         bmHkPFCb3GyX6NLXbmJbAoJZgYvqLAPW29e07m1RSNaXS+0v9m3KVg959rZFPrZCERDW
-         l/z1J8HQbBEoLlQiI3JTGFPC8KgKTdDJyFM4o=
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=XDXxoVGEKSx3Z1b5kIqBEIu9NgT1k7tiWZTi7Ujek/I=;
+        b=MljxLR7zurVkR858RT3iCA30d201yry9EzTRvj+hrqtE0rmcBH7McuyLbX4ooJK5GH
+         FA1MsvrdAlh1mc70S2fDaNutPPqVvFu4q+/C1ZqCBMwpuia26dZe9PWZ7LuYCtdV8LM6
+         TSEdO0yMRWGtkSpFZQ0dCnsdJWjaCHgWJIyIA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        b=bDuJ/d+0MMtjR5tu1T8tgBg79xcAOgmQP+tor0tmn3TkQjVia142oOaeO2+K/WtRhe
-         G79Zj1C4edIOZh/F8EIcSgicwLsJvJLLuDAIpU9sZUVM0hu9zzC+CP92K7oqswhwgTRE
-         N+C7gPjGgVaZREqXxqkHRmyDCz2F125TCamKI=
-Received: by 10.140.58.9 with SMTP id g9mr3363750rva.39.1265048247105; Mon, 01 
-	Feb 2010 10:17:27 -0800 (PST)
-In-Reply-To: <4B6717DF.8020004@web.de>
+        b=oraQkA5Ta5uyUezU8dWMTZEFciGOV+ZT/zbUPj0TdFWPLbCOubDkOsMEekNUGg5OeY
+         QbJZ+jKGO+Dt4aiagwTwPKEKF4p7zpsyqvl0Yhtf5yAfA93zIJLvvndSVN0xlW6hb90M
+         HKJq35X3RUk3qz/3p/zeljoaZEiBCfeekj3W0=
+Received: by 10.231.167.204 with SMTP id r12mr4384604iby.31.1265048878259; 
+	Mon, 01 Feb 2010 10:27:58 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.1002011309020.1681@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138639>
 
-On Mon, Feb 1, 2010 at 10:05, Markus Elfring <Markus.Elfring@web.de> wrote:
-> Hello,
+On Mon, Feb 1, 2010 at 1:12 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
+>> I thought that a documentation update in this area was already planned?
 >
-> I am trying to convert the YaST Subversion repository into a Git variant on my
-> system. Unfortunately, a command like "svn2git
-> http://svn.opensuse.org/svn/yast/" does not finish this attempt after 1,5 days
-> (> 715:13.24 CPU time) here. I would appreciate suggestions for improvements of
-> the execution speed.
-> (Renicing of the process "git-svn" does not help to increase its processor
-> utilisation in noticeable ways.)
->
-> Regards,
-> Markus
->
+> Jay Soffian (added to CC) agreed to augment the documentation with the
+> comprehensive explanation he posted to the list lately.
 
-We're in the process of converting to Git at work, and I've found that
-svn-all-fast-export was the best option for us.  git-svn's behavior of
-a branch's entire history every time it found a new branch (even
-though it has already seen 3/4 of the revisions involved) caused it to
-be far too slow for our needs.  Admittedly, this was ~1 year ago that
-I tried git-svn to do a test conversion, and things might have
-improved since then.
+I talked to him, he didn't forget, and he'll try his best to submit a
+patch this week. :-)
 
-svn-all-fast-export does require access to the raw repository, instead
-of just (http|svn|svn+ssh):// access, but it does allow you to split
-out one SVN "repository" into multiple Git repositories in one go.
-
--Jacob
+j.
