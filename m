@@ -1,82 +1,54 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: pack.packSizeLimit, safety checks
-Date: Mon, 01 Feb 2010 11:11:55 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1002011100550.1681@xanadu.home>
-References: <loom.20100201T101056-232@post.gmane.org>
+From: Laszlo Papp <djszapi@archlinux.us>
+Subject: Re: Delivery Status Notification (Failure)
+Date: Mon, 1 Feb 2010 17:16:33 +0100
+Message-ID: <a362e8011002010816rf09da46x696894fb399689fc@mail.gmail.com>
+References: <a362e8011001290617n326a9dcx7c345ec31dff4ebe@mail.gmail.com>
+	 <001636ed7681994278047e4e4a6f@google.com>
+	 <a362e8011001290618g542be5f5y2777a925ba9bd936@mail.gmail.com>
+	 <1976ea661001290704h3ed4761dscf95ba848b373555@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Sergio <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 01 17:12:05 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, normalperson@yhbt.net
+To: Frank Li <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 01 17:23:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nbysd-0003DI-3W
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 17:12:03 +0100
+	id 1Nbz3a-0001zm-Rg
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 17:23:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755332Ab0BAQL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 11:11:57 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:40871 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753157Ab0BAQL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 11:11:56 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KX6009ZQ7NVC8K0@VL-MH-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 01 Feb 2010 11:11:55 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <loom.20100201T101056-232@post.gmane.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1755261Ab0BAQXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2010 11:23:13 -0500
+Received: from mail-yx0-f189.google.com ([209.85.210.189]:50358 "EHLO
+	mail-yx0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753157Ab0BAQXM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2010 11:23:12 -0500
+X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Feb 2010 11:23:12 EST
+Received: by yxe27 with SMTP id 27so347718yxe.4
+        for <git@vger.kernel.org>; Mon, 01 Feb 2010 08:23:11 -0800 (PST)
+Received: by 10.100.70.9 with SMTP id s9mr5568438ana.111.1265040993858; Mon, 
+	01 Feb 2010 08:16:33 -0800 (PST)
+In-Reply-To: <1976ea661001290704h3ed4761dscf95ba848b373555@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138620>
 
-On Mon, 1 Feb 2010, Sergio wrote:
+On Fri, Jan 29, 2010 at 4:04 PM, Frank Li <lznuaa@gmail.com> wrote:
+>>
+>> If I use --username option, Frank Li said me it's not enough in
+>> TortoiseGIT to provide a popup facility to type the password related
+>> to the set --username option.
+>>
+>
+> I prefer git-svn can provide environment to launch a external
+> application to input password like open ssh.
+>
 
-> Hi,
-> 
-> documentation about pack.packSizeLimit
-> 
-> says:
-> 
-> The default maximum size of a pack. This setting only affects packing to a file,
-> i.e. the git:// protocol is unaffected. It can be overridden by the
-> --max-pack-size option of git-repack(1).
-> 
-> I would suggest clarifying it into
-> 
-> The default maximum size of a pack in bytes. This setting only affects packing
-> to a file, i.e. the git:// protocol is unaffected. It can be overridden by the
-> --max-pack-size option of git-repack(1).
-> 
-> Since --max-pack-size takes MB and one might be tempted to assume that the same
-> is valid for pack.packSizeLimit.
+No perl guru among the volunteers if the original author is not available ? :(
 
-Grrrrr.  This is a terrible discrepency given that all the other 
-arguments in Git are always byte based, with the optional k/m/g suffix, 
-by using git_parse_ulong().  So IMHO I'd just change --max-pack-size to 
-be in line with all the rest and have it accept bytes instead of MB.  
-And of course I'd push such a change to be included in v1.7.0 along with 
-the other incompatible fixes.
-
-Your suggested precision above is still worth it of course.
-
-> Also note that some safety check on pack.packSizeLimit could probably be
-> desirable to avoid an unreasonably small limit. For instance:
-> 
-> Assume that pack.packSizeLimit is set to 1 (believing it would be 1MB, but it is
-> in fact 1B). With this at the first git gc every object goes in its own pack.
-> You realize the mistake, you fix pack.packSizeLimit to 1000000, but at this
-> point you cannot go back since git gc cannot run anymore (too many open files).
-
-That's a totally orthogonal issue.  There are other ways to get into 
-trouble with too many open files and that deserves a fix of its own 
-(such as limiting the number of simultaneous opened packs).
-
-
-Nicolas
+Best Regards,
+Laszlo Papp
