@@ -1,67 +1,72 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 0/2] upload-pack: pre- and post- hooks
-Date: Mon, 1 Feb 2010 08:36:18 -0800
-Message-ID: <20100201163618.GB9394@spearce.org>
-References: <6f8b45101001150414r2661001ep10819b601953c05b@mail.gmail.com> <1265013127-12589-1-git-send-email-ford_prefect@gentoo.org> <20100201152010.GC8916@spearce.org> <alpine.LFD.2.00.1002011116320.1681@xanadu.home>
-Mime-Version: 1.0
+From: Andrew Myrick <amyrick@apple.com>
+Subject: Re: [PATCH] git-svn: persistent memoization
+Date: Mon, 1 Feb 2010 08:44:43 -0800
+Message-ID: <49FDA6F7-21D8-4280-A6A7-80EC2F749EA9@apple.com>
+References: <1264821262-28322-1-git-send-email-amyrick@apple.com> <20100201040312.GA26199@dcvr.yhbt.net>
+Mime-Version: 1.0 (Apple Message framework v1133)
 Content-Type: text/plain; charset=us-ascii
-Cc: Arun Raghavan <ford_prefect@gentoo.org>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Mon Feb 01 17:36:33 2010
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, sam@vilain.net
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Feb 01 17:45:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NbzGK-0003Wp-EI
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 17:36:32 +0100
+	id 1NbzOb-0000I2-RG
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Feb 2010 17:45:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755584Ab0BAQgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 11:36:24 -0500
-Received: from mail-pz0-f190.google.com ([209.85.222.190]:51128 "EHLO
-	mail-pz0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755566Ab0BAQgX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 11:36:23 -0500
-Received: by pzk28 with SMTP id 28so4267756pzk.4
-        for <git@vger.kernel.org>; Mon, 01 Feb 2010 08:36:22 -0800 (PST)
-Received: by 10.115.145.4 with SMTP id x4mr3184425wan.147.1265042182482;
-        Mon, 01 Feb 2010 08:36:22 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 12sm803361pxi.3.2010.02.01.08.36.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 01 Feb 2010 08:36:21 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1002011116320.1681@xanadu.home>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751310Ab0BAQoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2010 11:44:54 -0500
+Received: from mail-out4.apple.com ([17.254.13.23]:51273 "EHLO
+	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750715Ab0BAQox convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Feb 2010 11:44:53 -0500
+Received: from relay11.apple.com (relay11.apple.com [17.128.113.48])
+	by mail-out4.apple.com (Postfix) with ESMTP id CA970899F37C;
+	Mon,  1 Feb 2010 08:44:51 -0800 (PST)
+X-AuditID: 11807130-b7b0aae00000102c-89-4b6704fc198f
+Received: from [17.151.96.165] (Unknown_Domain [17.151.96.165])
+	(using TLS with cipher AES128-SHA (AES128-SHA/128 bits))
+	(Client did not present a certificate)
+	by relay11.apple.com (Apple SCV relay) with SMTP id 45.17.04140.205076B4; Mon,  1 Feb 2010 08:44:51 -0800 (PST)
+In-Reply-To: <20100201040312.GA26199@dcvr.yhbt.net>
+X-Mailer: Apple Mail (2.1133)
+X-Brightmail-Tracker: AAAAAQAAAZE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138625>
 
-Nicolas Pitre <nico@fluxnic.net> wrote:
-> On Mon, 1 Feb 2010, Shawn O. Pearce wrote:
-> I think such hooks could be allowed only if triggered explicitly by the 
-> upload-pack caller, such as git-daemon.  That's probably the only 
-> scenario where a useful use case can be justified for them anyway.
+
+On Jan 31, 2010, at 8:03 PM, Eric Wong wrote:
+
+> Andrew Myrick <amyrick@apple.com> wrote:
+>> Make memoization of the svn:mergeinfo processing functions persistent with
+>> Memoize::Storable so that the memoization tables don't need to be regenerated
+>> every time the user runs git-svn fetch.
+>> 
+>> The Memoize::Storable hashes are stored in ENV{GIT_DIR}/svn/caches.
 > 
-> And of course, to avoid any security problems, the actual hooks must not 
-> be provided by the repository owner but provided externally, like from 
-> git-daemon, via some upload-pack command line arguments.  This way the 
-> hooks are really controlled by the system administrator managing 
-> git-daemon and not by any random git repository owner.
+> Hi Andrew,
 > 
-> That should be good enough for all the use cases those hooks were 
-> originally designed for.
+> Perhaps "$ENV{GIT_DIR}/svn/.caches" is better here since older versions
+> of git svn used "$ENV{GIT_DIR}/svn/$refname" in the top-level and
+> "caches" may conflict with existing repos.
+> 
+>> -use File::Path qw/mkpath/;
+>> +use File::Path qw/mkpath make_path/;
+> 
+> File::Path::make_path is very recent not in Perls distributed by most
+> vendors.  My 5.10.0 installation (Debian stable) doesn't have it, and I
+> also don't see a good reason to use it over the traditional mkpath.
+> 
+> I think I'll squash the following patch and Ack.  Let me know if
+> you have any objections, thanks.!
+> (also wraps long lines to 80 chars)
 
-Oooh, I like that.
+Makes sense to me.  Thanks, Eric.
 
-If the paths to the hooks are passed in on the command line of
-git-upload-pack, and git-daemon takes those options and passes
-them through, you're right, we probably get everything we need.
-
-Gitosis can still use the hooks if it wants, since it controls
-the call of git-upload-pack.
-
--- 
-Shawn.
+-Andrew
