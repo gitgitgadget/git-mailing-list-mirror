@@ -1,88 +1,109 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [BUG] - "git commit --amend" commits, when exiting the editor 
-	with no changes written
-Date: Tue, 2 Feb 2010 23:03:22 +0100
-Message-ID: <40aa078e1002021403x49920df9x3eca13207ce3e9f9@mail.gmail.com>
-References: <76c5b8581002021207y3eccdc19i9a4abcc3d04315f0@mail.gmail.com>
-	 <8c9a061002021214j673afbc8vfa5d941fba518648@mail.gmail.com>
-	 <32541b131002021227o1ec9f369w6096e85382857b8a@mail.gmail.com>
-	 <76c5b8581002021247j6df8f609ld9e5d87a060a5423@mail.gmail.com>
-	 <394FB581-C9B9-40AB-AFB6-39B68ED5BEAD@wincent.com>
-	 <76c5b8581002021356m52bb1817k9a4a29da0d4b681d@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Ron Garret <ron1@flownet.com>
+Subject: Re: master^ is not a local branch -- huh?!?
+Date: Tue, 02 Feb 2010 14:04:22 -0800
+Organization: Amalgamated Widgets
+Message-ID: <ron1-9204BD.14042202022010@news.gmane.org>
+References: <31a97741002010352x1ad27f26ia4d51857bb2d2d4f@mail.gmail.com> <7vpr4o3lg9.fsf@alter.siamese.dyndns.org> <87aavsu9b3.fsf@osv.gnss.ru> <ron1-6F8B85.14520801022010@news.gmane.org> <7vwrywplxz.fsf@alter.siamese.dyndns.org> <ron1-ABA66E.15563101022010@news.gmane.org> <20100202001530.GL9553@machine.or.cz> <ron1-9A9CEA.16452601022010@news.gmane.org> <7vk4uwmp95.fsf@alter.siamese.dyndns.org> <ron1-1E906F.17124201022010@news.gmane.org> <20100202191942.GB9628@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 23:03:32 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 02 23:05:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcQqH-0006ew-NU
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 23:03:30 +0100
+	id 1NcQsD-0007ja-4U
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 23:05:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754546Ab0BBWDZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Feb 2010 17:03:25 -0500
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:50717 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752202Ab0BBWDY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2010 17:03:24 -0500
-Received: by bwz19 with SMTP id 19so534029bwz.28
-        for <git@vger.kernel.org>; Tue, 02 Feb 2010 14:03:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/q6J3yaPwasWqz8qlBvlcH3n05kZidANCA9D3D+ZBOY=;
-        b=k+ChjeVUth5sEbCcmKYDeiwwJG4JZ/GTMY7Wb6AdxGxb6AOM1T4dO6KEpqXH5AH1ja
-         W/jTMzohXagsT95XgEib9W5UJrkAehLouaCgEnTu0iuYW5/kVpwwfdWq4sWPBbp6XuTw
-         qCFwXgmanVqe4v7jFFbZ0bKazyCjUxBa2Z450=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=u2UGfPR4kNt8No3i5+4pKBQkZOG7yc1e//FI79fVCMJea+IaMFm4kqoUcy69R8bmbg
-         Sbqpd0cryYsgG2fEtHzy1I5GGnNGHveZQJn3WHOF/tzSGQeXFsLVpZtXcP6Y/0ZcJqib
-         ziFD5vL+BPtluYYL22kOHxqpxzeQ+XX2m4oAw=
-Received: by 10.204.151.217 with SMTP id d25mr2173202bkw.24.1265148202560; 
-	Tue, 02 Feb 2010 14:03:22 -0800 (PST)
-In-Reply-To: <76c5b8581002021356m52bb1817k9a4a29da0d4b681d@mail.gmail.com>
+	id S1756859Ab0BBWFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 17:05:19 -0500
+Received: from lo.gmane.org ([80.91.229.12]:43706 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756007Ab0BBWFR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 17:05:17 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NcQry-0007Zl-P6
+	for git@vger.kernel.org; Tue, 02 Feb 2010 23:05:14 +0100
+Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Feb 2010 23:05:14 +0100
+Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Feb 2010 23:05:14 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
+User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138768>
 
-On Tue, Feb 2, 2010 at 10:56 PM, Eugene Sajine <euguess@gmail.com> wrot=
-e:
->>
->> As has already been pointed out, an extremely common workflow for "g=
-it
->> commit --amend" is to include additional changes that were accidenta=
-lly
->> overlooked =A0in the initial commit, and no changes are made to the =
-commit
->> message.
->>
->> Changing the behavior would break that perfectly reasonable,
->> widely-practised workflow, and _that_ would be 100% not ok.
->
-> I'm not against that workflow - I'm not forcing anybody to change the
-> commit message. The thing I'm talking about is roughly that it should
-> NOT treat the result of command ":q" the same way as the command
-> ":wq".
->
+In article <20100202191942.GB9628@fieldses.org>,
+ "J. Bruce Fields" <bfields@fieldses.org> wrote:
 
-Quite a lot of text-editors on prevents a user from saving when the
-buffer is unchanged, so I don't think this would actually work. Keep
-in mind that vi is not the only editor one can use to edit commit
-messages.
+> On Mon, Feb 01, 2010 at 05:12:42PM -0800, Ron Garret wrote:
+> > In article <7vk4uwmp95.fsf@alter.siamese.dyndns.org>,
+> >  Junio C Hamano <gitster@pobox.com> wrote:
+> > 
+> > > Ron Garret <ron1@flownet.com> writes:
+> > > 
+> > > > The manual specifically contradicts you, so either you are wrong or the 
+> > > > manual is wrong.
+> > > 
+> > > In case you haven't noticed, Pasky is one of the old timers and he knows 
+> > > a
+> > > thing or two about the git's world model.
+> > 
+> > My intent was not to diss Pasky, it was just to point out a disconnect 
+> > between what he was saying and what the manual says.  It's quite 
+> > possible that the manual is wrong or out of date or just misleading.  
+> > But it says what it says.
+> > 
+> > > And I do not see a contradiction in what the manual describes and "a
+> > > branch is a named pointer to a commit" (although "named" can probably be
+> > > omitted as "unnamed pointer" is not useful at the UI level).
+> > 
+> > But that's not what the manual says.  The manual says, "When we need to 
+> > be precise, we will use the word "branch" to mean a line of 
+> > development..."  Those are the first words in the section entitled 
+> > "Understanding history: What is a branch?"  It certainly appears to the 
+> > untrained eye that that is intended to be the definition of a branch.
+> 
+> My memory is that I'd seen the word "branch" used for both meanings (a
+> linear piece of history, and a ref under ref/heads/), so figured we
+> needed terms for both.
+> 
+> But then I didn't really use that distinction anywhere.  On a quick skim
+> the only instance I can see of the first sense is in
+> http://kernel.org/pub/software/scm/git-core/docs/user-manual.html#counting-com
+> mits-on-a-branch,
+> which could probably be reworded.
+> 
+> It still may be worth acknowledging the confusion; e.g., something like:
+> 
+> 	In the above diagram, "A", "B", and "master" are all references
+> 	to a point in history.  We call all three "branches".
+> 
+> 	Informally, the word "branch" is sometimes also used to the
+> 	entire line of development leading up to one of these points,
+> 	or, more generally, to any individual line of development.  But
+> 	when speaking about git, a "branch" (or "branch head") will
+> 	always be a reference to a point in history, and in particular a
+> 	reference which may be advanced to new commits by future
+> 	development.
+> 
+> Eh, I don't know if that's helpful; maybe that section could just be
+> deleted.  Or replaced by a more general discusion of the ref/ namespace.
 
---=20
-Erik "kusma" Faye-Lund
+FWIW, I find the above verbiage to to be very clear, much better than 
+what is there now.  You might also add that branches are almost exactly 
+the same as tags.  The only difference (AFAIK) is that tags get dragged 
+along by commits and resets and tags don't.
+
+rg
