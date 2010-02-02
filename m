@@ -1,88 +1,81 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: [BUG] - "git commit --amend" commits, when exiting the editor 
-	with no changes written
-Date: Tue, 2 Feb 2010 17:35:59 -0500
-Message-ID: <32541b131002021435kadb68ffge77ad5f4e1775418@mail.gmail.com>
-References: <76c5b8581002021207y3eccdc19i9a4abcc3d04315f0@mail.gmail.com> 
-	<8c9a061002021214j673afbc8vfa5d941fba518648@mail.gmail.com> 
-	<32541b131002021227o1ec9f369w6096e85382857b8a@mail.gmail.com> 
-	<76c5b8581002021247j6df8f609ld9e5d87a060a5423@mail.gmail.com> 
-	<394FB581-C9B9-40AB-AFB6-39B68ED5BEAD@wincent.com> <76c5b8581002021356m52bb1817k9a4a29da0d4b681d@mail.gmail.com> 
-	<77153A83-158D-4D36-A622-7AA3947C7D52@wincent.com> <76c5b8581002021431o2b5073a0s42b273b6d61893db@mail.gmail.com>
+From: Jacob Todd <jaketodd422@gmail.com>
+Subject: Re: [PATCH] gitk: Add shortcut Ctrl-W for closing the active window
+Date: Tue, 2 Feb 2010 17:50:00 +0000
+Message-ID: <20100202175000.GC19749@zoidberg.hsd1.mi.comcast.net>
+References: <4B68A310.6000807@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 23:36:32 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Y5rl02BVI9TCfPar"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 02 23:52:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcRM9-0007B0-Kv
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 23:36:25 +0100
+	id 1NcRcB-0001mh-FR
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 23:52:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757077Ab0BBWgU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Feb 2010 17:36:20 -0500
-Received: from mail-yx0-f189.google.com ([209.85.210.189]:56380 "EHLO
-	mail-yx0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756614Ab0BBWgT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2010 17:36:19 -0500
-Received: by yxe27 with SMTP id 27so572821yxe.4
-        for <git@vger.kernel.org>; Tue, 02 Feb 2010 14:36:19 -0800 (PST)
+	id S932209Ab0BBWwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 17:52:53 -0500
+Received: from mail-iw0-f201.google.com ([209.85.223.201]:64800 "EHLO
+	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757093Ab0BBWww (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 17:52:52 -0500
+Received: by iwn39 with SMTP id 39so776758iwn.1
+        for <git@vger.kernel.org>; Tue, 02 Feb 2010 14:52:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=OPIXZGWeRk/zSO5KJIcR7QE9jmnLG/JhseEkJqqlxIY=;
-        b=puR7wIjJUcpIP8IumQUiEa3h336BdK1H1bIYNNSWThA7CRIr3ZrTq31L4m4Bcb3/Rr
-         E15CFUyZAeTMCg1w0J9AcjowBd5MtkYfO2lw2/1k2QnXuTLyf27pIC4y4+pg/2oUI6B2
-         3/yEpqaVLQhowWPcbY+5HE3613XshkynbzZQA=
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=Mka7SZiebHdvIpX125lbKbUWW1IshnlE46IpCQtXWjg=;
+        b=gIfu4lYuZFgB+c1vAnCulrlbhfwNYN+4cDQIVs3Z7IbYPdV/FNwrDHFgLnJii4W+UX
+         1duRcskZjbI0BGveFwFYYeC7q92BR9GJVvMWDw8gXIBnGn2DbeGQt0D8sqvIhKfo2/Nb
+         zNq4m7/QkWvHACSNvWN52oHAG91MLEoSn82gE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=hK2Yn4AxuZjDG+miMk4rYTW7EeNOnznEjAIW85KeMqPSvz7Ltk1bl6OiTAQOfIZFY0
-         KPRB4BDDliIcTIoJ8JMATrFt1kzUcxopq1/LyEcsG4xqDBBDTz32Y3k/+fEpkM2gMUKt
-         /gALyoLZ9yLnU9OL2ngZ9rmlhb/+l6QJhZatw=
-Received: by 10.150.120.7 with SMTP id s7mr9347452ybc.345.1265150179101; Tue, 
-	02 Feb 2010 14:36:19 -0800 (PST)
-In-Reply-To: <76c5b8581002021431o2b5073a0s42b273b6d61893db@mail.gmail.com>
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=pFAHbAVuxvCju6P/Ih3JfstC7ZsbQ5ZcyOdlc/4fN3IBEBLNTOIrom2I7Fe2bfuz67
+         wGijj2+3DYExi3EIxVkSYI1fdc4pu2sZBJWsltTKpLmTuxQfrdODZDzIrPGed7ze2Ydc
+         6fKKMVVA/PfCSo/O3l/4wu8K9U7SWRv0xiwzI=
+Received: by 10.231.151.207 with SMTP id d15mr3797843ibw.44.1265151172334;
+        Tue, 02 Feb 2010 14:52:52 -0800 (PST)
+Received: from zoidberg.hsd1.mi.comcast.net (c-68-42-226-192.hsd1.mi.comcast.net [68.42.226.192])
+        by mx.google.com with ESMTPS id 22sm6857831iwn.12.2010.02.02.14.52.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 02 Feb 2010 14:52:51 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4B68A310.6000807@web.de>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138775>
 
-> amend or rebase:
-> COMMIT_EDITMSG =3D "message from commit or rebase sequence";
-> $ git commit --amend
->
-> in background:
-> $EDITOR .git/COMMIT_EDITMSG
->
-> COMMIT_EDITMSG =3D NULL =A0 =A0<=3D=3D=3D=3D=3D=3D=3D=3D this i think=
- is missing. We have to
-> clean it after it is populated in the editor.
 
-That's not going to work.  Most editors will get quite angry at you if
-you modify the file while the editor has it open.  Furthermore, how do
-you know how long to wait after launching the editor but before
-deleting the file?
+--Y5rl02BVI9TCfPar
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Like I suggested earlier, monitoring the mtime of the file to see if
-it has changed after the editor exits, even if the file itself is
-identical to what it was, might work.  This feature would have to be
-optional in order to not confuse existing users, and not annoy users
-of editors (like my favourite, joe) which don't save-on-exit if the
-file hasn't changed.  But I think it might be valuable to some people
-nevertheless.  And if it became popular, perhaps it could become the
-default in some future version of git (after giving people enough
-notice, etc, etc).
+Last time I check ^w deleted the word before the cursor.
 
-So you might want to submit a patch to implement an option like that.
+--=20
+I am a man who does not exist for others.
 
-Avery
+--Y5rl02BVI9TCfPar
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
+
+iEYEARECAAYFAktoZcgACgkQdg8JTBUsaI5jegCcDP1Mr/lyQWymqlONpYkK8Ely
+c9UAnj7OBmBBqrP+JA5Q8p6anNCJLCZJ
+=gB+i
+-----END PGP SIGNATURE-----
+
+--Y5rl02BVI9TCfPar--
