@@ -1,73 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Pascal Obry <pascal@obry.net>
 Subject: Re: Question about git rebase --onto
-Date: Tue, 02 Feb 2010 10:15:45 -0800
-Message-ID: <7vd40n5wry.fsf@alter.siamese.dyndns.org>
-References: <4B6865A9.60603@obry.net>
- <7v636f7biw.fsf@alter.siamese.dyndns.org>
+Date: Tue, 02 Feb 2010 19:19:24 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <4B686CAC.7020103@obry.net>
+References: <4B6865A9.60603@obry.net> <7v636f7biw.fsf@alter.siamese.dyndns.org>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: pascal@obry.net, git list <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 19:16:02 2010
+X-From: git-owner@vger.kernel.org Tue Feb 02 19:19:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcNI8-0004IV-AR
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 19:16:00 +0100
+	id 1NcNLB-00076S-NJ
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 19:19:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756381Ab0BBSPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 13:15:55 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44507 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754624Ab0BBSPy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 13:15:54 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A57A96FC4;
-	Tue,  2 Feb 2010 13:15:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8x5xfaWPOSjHTR/IFhpkj6sN8aU=; b=hNulw4
-	NOciMqQOYPKFaiLsEUutxWpBAd9f+12FGdraSbscRtqsbK3qgrQjeqSO9OSi/hDD
-	1kCvZT2S6KxWu5ZAZE5KEEBrjaVP77xrJa7WfVzIV7AvdwEeWJJGp7Ni/seBoZ5z
-	oaSXrD4UTfPjpp7ZFRoKb2kriscVKnDTuOasU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dtva3UauOLDQpgPYTPyP5/R5cQrD8g5X
-	94KdxByZFtQkN+WhnPuO51JfLIdGH2VVUWV0uE8RfHFovch4RDshCKCm3oh6DzYP
-	Fg2U4KZHfwyBdDaTk4TiwG/N1dvLomoXQ49Q5Ah8MGfhz+VBJxDgRCtARVRMYsvr
-	oUYkHwH34JU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 35FC696FC1;
-	Tue,  2 Feb 2010 13:15:51 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6DC2796FBF; Tue,  2 Feb
- 2010 13:15:47 -0500 (EST)
-In-Reply-To: <7v636f7biw.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue\, 02 Feb 2010 10\:11\:51 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FEAC79F0-1026-11DF-85AF-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756574Ab0BBSTF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 13:19:05 -0500
+Received: from mail-ew0-f228.google.com ([209.85.219.228]:53031 "EHLO
+	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754272Ab0BBSTB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 13:19:01 -0500
+Received: by ewy28 with SMTP id 28so209563ewy.28
+        for <git@vger.kernel.org>; Tue, 02 Feb 2010 10:19:00 -0800 (PST)
+Received: by 10.213.37.206 with SMTP id y14mr6223871ebd.4.1265134740087;
+        Tue, 02 Feb 2010 10:19:00 -0800 (PST)
+Received: from ?192.168.0.100? (AVelizy-154-1-45-106.w82-124.abo.wanadoo.fr [82.124.149.106])
+        by mx.google.com with ESMTPS id 14sm21358ewy.11.2010.02.02.10.18.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 02 Feb 2010 10:18:58 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
+In-Reply-To: <7v636f7biw.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138736>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio,
 
 > Possible user errors I can think of are:
->
+> 
 >  - If 'topic' is not a local branch, the result will be on a detached
 >    HEAD, as you are starting from a detached HEAD (i.e. 'topic' could be a
 >    tag);
->
+
+I'm not on this case.
+
 >  - Until you resolved and said "rebase --continue" (or --skip) to allow it
 >    to conclude the rebase when the operation conflicted, you would be on a
 >    detached HEAD.
 
-Just to clarify, these things are _not_ errors at all.  What I meant by
-"user error" was to notice that the HEAD is detached in these cases (which
-is not an error) and panicking (which is).  Both of these are normal
-procedures and sane states.
+I'm not in this case either.
+
+Pascal.
+
+-- 
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
