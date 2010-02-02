@@ -1,90 +1,74 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: master^ is not a local branch -- huh?!?
-Date: Mon, 01 Feb 2010 23:05:20 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1002012253260.1681@xanadu.home>
-References: <31a97741002010352x1ad27f26ia4d51857bb2d2d4f@mail.gmail.com>
- <7vpr4o3lg9.fsf@alter.siamese.dyndns.org> <87aavsu9b3.fsf@osv.gnss.ru>
- <ron1-6F8B85.14520801022010@news.gmane.org>
- <7vwrywplxz.fsf@alter.siamese.dyndns.org>
- <ron1-ABA66E.15563101022010@news.gmane.org>
- <20100202001530.GL9553@machine.or.cz>
- <ron1-9A9CEA.16452601022010@news.gmane.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Delivery Status Notification (Failure)
+Date: Tue, 2 Feb 2010 12:15:26 +0800
+Message-ID: <be6fef0d1002012015q2a10af1cq4c5e5f968039ee45@mail.gmail.com>
+References: <a362e8011001290617n326a9dcx7c345ec31dff4ebe@mail.gmail.com>
+	 <001636ed7681994278047e4e4a6f@google.com>
+	 <a362e8011001290618g542be5f5y2777a925ba9bd936@mail.gmail.com>
+	 <1976ea661001290704h3ed4761dscf95ba848b373555@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Ron Garret <ron1@flownet.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 05:05:44 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Laszlo Papp <djszapi@archlinux.us>, git@vger.kernel.org,
+	normalperson@yhbt.net
+To: Frank Li <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 02 05:15:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcA1E-0004gd-QY
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 05:05:41 +0100
+	id 1NcAAy-0001U0-Iw
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 05:15:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752418Ab0BBEFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 23:05:23 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:11171 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751690Ab0BBEFW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 23:05:22 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KX700L944OW4G42@VL-MH-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 01 Feb 2010 23:05:21 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <ron1-9A9CEA.16452601022010@news.gmane.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1753965Ab0BBEPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2010 23:15:30 -0500
+Received: from mail-iw0-f186.google.com ([209.85.223.186]:57461 "EHLO
+	mail-iw0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753001Ab0BBEP2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2010 23:15:28 -0500
+Received: by iwn16 with SMTP id 16so623987iwn.5
+        for <git@vger.kernel.org>; Mon, 01 Feb 2010 20:15:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=vRsOi5NEAgWVAfFWGQ0Dd9COW8bVuRZPnHNTSxN/3pY=;
+        b=SKRqppZwrnFD3pVWNyqQ2sm4F+gBSByAKDv+W89PQtaPdU16q2DSqyxcaJMN1xJMF1
+         NNIZdH8nwF3I5LZPLXFPQ/erJEfDJ3czSo7BKx/kO6lXsSbArRpMys7xXgHjGhdkW/3r
+         dP/35GaU0t+rp8DXuxk/yxRGOaCbB1PmyPsXk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=QMe4nw91a/5EjXST131S3y06N8slfD7ej1it/JDAyABoTJI28Kfekcn8lXkG8dGAB3
+         /oBAidWDKtwliGyW+rfRG9W1B/xQlKj3SWAV1k7gk++qFAreV4Rqm6Kx00x2gWIjy5Ox
+         mRgdZkjN1prAa1+2Bd6dc54/FQUj6PrrN7lIc=
+Received: by 10.231.151.197 with SMTP id d5mr2813351ibw.73.1265084126627; Mon, 
+	01 Feb 2010 20:15:26 -0800 (PST)
+In-Reply-To: <1976ea661001290704h3ed4761dscf95ba848b373555@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138675>
 
-On Mon, 1 Feb 2010, Ron Garret wrote:
+Hi,
 
-> In article <20100202001530.GL9553@machine.or.cz>,
->  Petr Baudis <pasky@suse.cz> wrote:
-> 
-> > On Mon, Feb 01, 2010 at 03:56:31PM -0800, Ron Garret wrote:
-> > > In article <7vwrywplxz.fsf@alter.siamese.dyndns.org>,
-> > >  Junio C Hamano <gitster@pobox.com> wrote:
-> > > > Ron Garret <ron1@flownet.com> writes:
-> > > > > And as long as I'm weighing in, it would also help to prevent confusion 
-> > > > > if it were made clear that this unnamed branch doesn't actually come 
-> > > > > into existence unless and until you do a commit.
-> > > > 
-> > > > This shows that you are still thinking a branch is a line (or multiple
-> > > > lines).  It is not.
-> > > 
-> > > The git user's guide says it is:
-> > > 
-> > > "When we need to be precise, we will use the word "branch" to mean a 
-> > > line of development..."
-> > > 
-> > > But I understand that a branch is not necessarily a line.  In general 
-> > > it's a DAG.  I get that.
-> > 
-> > Again, no. In the most narrow sense, "branch == branch head".
-> 
-> The manual specifically contradicts you, so either you are wrong or the 
-> manual is wrong.
+On Fri, Jan 29, 2010 at 11:04 PM, Frank Li <lznuaa@gmail.com> wrote:
+> I prefer git-svn can provide environment to launch a external
+> application to input password like open ssh.
 
-In that case it's most probably the manual which is wrong.
+how about users who are authenticating over http with basic and
+digest? How does one go about launching an external app for password
+input in those cases?
 
-> Don't forget that what is at issue here is not how git works (I'm pretty 
-> sure everyone is on the same page about that) but how to explain it to 
-> someone who is not already familiar with it.  So it's important to use 
-> terminology that is consistent with what the manual says.
+Please don't take this as a criticism of your personal preference. I
+believe this feature would make things convenient for users who want
+it - those who don't, nothing changes.
 
-Or rather that the manual has to be debugged and be brought in sync with 
-reality.  All the people who had their hands dirty with the code usually 
-hang here, and what they say has precedence with whatever is in the 
-manual.
+Even ssh (via ssh-keygen) lets you specify the passphrase at
+command-run time. Others include htpasswd, htdigest...
 
-It is good of course that you bring those issues to our attention.  but 
-it is more likely that the manual needs fixing than anything else.
-
-
-Nicolas
+-- 
+Cheers,
+Ray Chuan
