@@ -1,55 +1,76 @@
-From: Laszlo Papp <djszapi@archlinux.us>
-Subject: Re: Delivery Status Notification (Failure)
-Date: Tue, 2 Feb 2010 07:37:38 +0100
-Message-ID: <a362e8011002012237t640dd8b9sa1da0d221f5d03b6@mail.gmail.com>
-References: <a362e8011001290617n326a9dcx7c345ec31dff4ebe@mail.gmail.com>
-	 <001636ed7681994278047e4e4a6f@google.com>
-	 <a362e8011001290618g542be5f5y2777a925ba9bd936@mail.gmail.com>
-	 <1976ea661001290704h3ed4761dscf95ba848b373555@mail.gmail.com>
-	 <be6fef0d1002012015q2a10af1cq4c5e5f968039ee45@mail.gmail.com>
-	 <1976ea661002012030h23aa415ek30aa6db23cb88d0e@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: working directory umask
+Date: Mon, 01 Feb 2010 22:43:14 -0800
+Message-ID: <7v8wbccf3x.fsf@alter.siamese.dyndns.org>
+References: <hk8gq7$o76$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org,
-	normalperson@yhbt.net
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 07:38:20 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: D Herring <dherring@tentpost.com>
+X-From: git-owner@vger.kernel.org Tue Feb 02 07:43:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcCOu-00050B-Du
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 07:38:16 +0100
+	id 1NcCTv-0007b9-SP
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 07:43:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752962Ab0BBGhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 01:37:39 -0500
-Received: from mail-gx0-f224.google.com ([209.85.217.224]:61334 "EHLO
-	mail-gx0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752581Ab0BBGhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 01:37:39 -0500
-Received: by gxk24 with SMTP id 24so7425872gxk.1
-        for <git@vger.kernel.org>; Mon, 01 Feb 2010 22:37:38 -0800 (PST)
-Received: by 10.101.214.4 with SMTP id r4mr2212088anq.141.1265092658215; Mon, 
-	01 Feb 2010 22:37:38 -0800 (PST)
-In-Reply-To: <1976ea661002012030h23aa415ek30aa6db23cb88d0e@mail.gmail.com>
+	id S1753960Ab0BBGnW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 01:43:22 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55732 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751797Ab0BBGnV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 01:43:21 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C405196EF7;
+	Tue,  2 Feb 2010 01:43:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/KVBwKEBcYnLQi0PWew91aUf73o=; b=k1MjNE
+	9wQozh6VrDIshkVc3PJ+gHIpH4wSikNcUlBwuusAoTmT4wklIZEfkMZsRJFEvjlG
+	xMsBnxmGGrBbeL/JNs5p80JqqgeNWSr1tkvv+bo0xS3NLe3uF0Cyzq92nlaGM5Lq
+	d75Z6BbKL2NP7ssGZbnhe1GBCEQCANBIdwTCQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AAs3nZSRRUaOsdizrYZVgs/8KitaGAp0
+	diPpexcCT0fr7KvM5FIBenNZfe9LkCunmiZg5HeGEg1qWv5sBYgKZqFcVtfVhF6Y
+	ZpRZQCTvtD1gg1x+h6Ncg+XfL2m4OFP2mdNpWN/few1VRnCR8k81SHrReBUbKox7
+	GcZTOiKz4Hc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 985B896EF6;
+	Tue,  2 Feb 2010 01:43:18 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 004B196EF5; Tue,  2 Feb
+ 2010 01:43:15 -0500 (EST)
+In-Reply-To: <hk8gq7$o76$1@ger.gmane.org> (D. Herring's message of "Tue\, 02
+ Feb 2010 01\:30\:32 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3F648516-0FC6-11DF-B822-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138687>
 
-> The basic requirement is git svn can provide a way to prompt a dialog
-> box to input passwd.
+D Herring <dherring@tentpost.com> writes:
 
-Yeah, it's a very basic use case, but I don't know whether there is a
-workaround for it somehow, maybe perl gurus or git svn users could
-help more...
+> One problem:  Even though the working directory is g+swx and git was
+> initialized with --shared=group or --shared=0660, the checked out
+> source files still don't have group write permissions...
 
-My company, where there are windows users (95% of the company), would
-like to use TortoiseGIT as a graphical client for SVN server
-repositories as an SVN client, no other way by us, so it'd be high
-priority :) So I've got a beer for any volunteer, thanks :P
+It is working as designed. "shared" setting is about a shared central
+repository that is typically a bare repository, and currently it is
+implemented as such.
 
-Best Regards,
-Laszlo Papp
+You could argue that the behaviour for the work tree files is undefined
+and make the code act differently, though.
+
+In any case, it would be better to document this, and it might even make
+sense to issue a warning message when we detect the repository is used
+with a work tree (including the use of GIT_DIR and GIT_WORK_TREE
+environment variables to temporarily turn a bare repository with a work
+tree).
+
+Thanks for a report.
