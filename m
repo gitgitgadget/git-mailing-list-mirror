@@ -1,71 +1,77 @@
-From: git@eisendle.net
-Subject: Linux Kernel based project in git
-Date: Tue, 2 Feb 2010 10:05:24 +0100
-Message-ID: <9da7f2802f639777acfeb38eb1e3db90.squirrel@webmail.eisendle.net>
+From: Frank Li <lznuaa@gmail.com>
+Subject: Re: Implement --password option for git svn perl script
+Date: Tue, 2 Feb 2010 17:18:52 +0800
+Message-ID: <1976ea661002020118n2b86844k47a1064c028f439f@mail.gmail.com>
+References: <a362e8011001290617n326a9dcx7c345ec31dff4ebe@mail.gmail.com>
+	 <001636ed7681994278047e4e4a6f@google.com>
+	 <a362e8011001290618g542be5f5y2777a925ba9bd936@mail.gmail.com>
+	 <1976ea661001290704h3ed4761dscf95ba848b373555@mail.gmail.com>
+	 <be6fef0d1002012015q2a10af1cq4c5e5f968039ee45@mail.gmail.com>
+	 <1976ea661002012030h23aa415ek30aa6db23cb88d0e@mail.gmail.com>
+	 <a362e8011002012237t640dd8b9sa1da0d221f5d03b6@mail.gmail.com>
+	 <20100202090538.GA28437@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 02 10:12:24 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Laszlo Papp <djszapi@archlinux.us>,
+	Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue Feb 02 10:19:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcEny-0000fb-T4
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 10:12:19 +0100
+	id 1NcEvB-0004bt-Pf
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 10:19:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755439Ab0BBJMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 04:12:12 -0500
-Received: from vs.eisendle.net ([62.75.248.112]:52608 "EHLO eisendle.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753404Ab0BBJMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 04:12:07 -0500
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Feb 2010 04:12:06 EST
-Received: (qmail 15409 invoked from network); 2 Feb 2010 09:05:24 -0000
-Received: from unknown (HELO webmail.eisendle.net) ([127.0.0.1])
-          (envelope-sender <git@eisendle.net>)
-          by localhost (qmail-ldap-1.03) with SMTP
-          for <git@vger.kernel.org>; 2 Feb 2010 09:05:24 -0000
-Received: from 212.166.112.250 (proxying for unknown)
-        (SquirrelMail authenticated user git@eisendle.net)
-        by webmail.eisendle.net with HTTP;
-        Tue, 2 Feb 2010 10:05:24 +0100
-User-Agent: SquirrelMail/1.4.19
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1755006Ab0BBJS4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Feb 2010 04:18:56 -0500
+Received: from mail-yx0-f189.google.com ([209.85.210.189]:63614 "EHLO
+	mail-yx0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754620Ab0BBJSx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2010 04:18:53 -0500
+Received: by yxe27 with SMTP id 27so1070146yxe.4
+        for <git@vger.kernel.org>; Tue, 02 Feb 2010 01:18:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wImXKSkL/fvSqhxnoFcYtqIoeehIQBio+CjmoKv04IU=;
+        b=DtnPdwvnTHN14jwViOw9IoGlAzgkkmc6i7r4P+c9dVrdcALq6AYfIYLjImTieS61N9
+         a+haLoR33NTAw0D5l7+2mtpTObyvAkoHMYTTIU4fX6v0coJ5qKC5XLK7LIVvHdqAGifP
+         ZZkdtfz4fUkvw4oje9S7GyOp/fwS/zJxC62sc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=hCgudfI26UJCngUVfJPXox9es/Hnu46izgUlRTqeMq7h9U4Z69wmu71FT9MscjO01v
+         gcUwhRQGH1FCNV7bFjCis6KMtrRcOvyDFLIg+rq+riUViVQlRTwvt4uxCwUjCan6UL6F
+         HvTqa5eqCdS7cYEHNCnbmyqYCUPvQktPuFNgw=
+Received: by 10.150.87.9 with SMTP id k9mr8150745ybb.77.1265102332347; Tue, 02 
+	Feb 2010 01:18:52 -0800 (PST)
+In-Reply-To: <20100202090538.GA28437@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138705>
 
-Hi,
+> Having a --password option in the command line could work, but it's
+> painfully insecure if there's any way for another regular user to vie=
+w
+> the process table. =A0Not something I'd like to encourage...
+>
 
-I'm rather new to this mailing list so I hope this is the right place for
-my question :-)
+Yes, it is insecure. "--password" seam undocumented.
 
-We recently moved one of our projects over from SVN to git.
-This project is basically a Linux BSP for an ARM9 based processor using
-Kernel 2.6.22.
-
-For release we always generate 3 patches:
-- BSP patch
-- USB patch (since USB part is an external patch comming from a 3rd party)
-- WiFi patch (same as for USB)
-
-So my question is:
-What's the best way for handling this inside the git repository?
-
-IMHO it would make sense to have 3 branches (BSP, USB, WiFi) each based on
-unmodified 2.6.22 Kernel. USB and WiFi branch is used for generating the
-patch and for applying possible fixes. BSP branch for actual BSP related
-feature development and fixes.
-The changes in these branches are merged into the master branch which is
-used for compiling/testing the whole BSP.
-
-Is this a useful approach or are there other, better ways for generating
-the three patches and compiling testing the whole thing?
-
-Thanks!
-Christian.
+> Since SVN already caches passwords in a mostly secure location on dis=
+k
+> (at least on *nix), shouldn't git svn be able to use the password cac=
+he
+> SVN uses?
+>
+> --
+> Eric Wong
+>
