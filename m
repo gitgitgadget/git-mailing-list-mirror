@@ -1,52 +1,48 @@
-From: Marc Weber <marco-oweber@gmx.de>
-Subject: Re: Git and Amazon S3
-Date: Tue, 02 Feb 2010 15:04:39 +0100
-Message-ID: <1265119362-sup-1889@nixos>
-References: <501db8661002020556k2f65add2rf06b289f2c9cbcac@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 02 15:05:12 2010
+From: Intland Software <marketing@intland.com>
+Subject: "Going Agile with Git and codeBeamer" (Tutorial)
+Date: Tue, 02 Feb 2010 15:26:34 +0100
+Message-ID: <4B68361A.30800@intland.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 02 15:27:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcJN3-0007PT-R3
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 15:04:50 +0100
+	id 1NcJiW-0006nF-94
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 15:27:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756108Ab0BBOEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 09:04:44 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54474 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756017Ab0BBOEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 09:04:43 -0500
-Received: (qmail invoked by alias); 02 Feb 2010 14:04:40 -0000
-Received: from mawercer.at.xencon.net (EHLO mail.gmx.net) [83.246.111.127]
-  by mail.gmx.net (mp019) with SMTP; 02 Feb 2010 15:04:40 +0100
-X-Authenticated: #9006135
-X-Provags-ID: V01U2FsdGVkX1+89I8hN+e8ZA+Y+ECePhLgT6KwPnJDqTim6VMFxq
-	/UGnc3HNfHufJC
-Received: by mail.gmx.net (sSMTP sendmail emulation); Tue, 02 Feb 2010 15:04:39 +0100
-In-reply-to: <501db8661002020556k2f65add2rf06b289f2c9cbcac@mail.gmail.com>
-User-Agent: Sup/git
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.72999999999999998
+	id S1756162Ab0BBO0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 09:26:54 -0500
+Received: from mail01d.mail.t-online.hu ([84.2.42.6]:58066 "EHLO
+	mail01d.mail.t-online.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755943Ab0BBO0x (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 09:26:53 -0500
+Received: from [192.168.1.67] (dsl4E5C0A05.pool.t-online.hu [78.92.10.5])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail01d.mail.t-online.hu (Postfix) with ESMTPSA id 24A597587A9
+	for <git@vger.kernel.org>; Tue,  2 Feb 2010 15:23:53 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+X-DCC-mail.t-online.hu-Metrics: mail01d.mail.t-online.hu 32721; Body=1 Fuz1=1
+	Fuz2=1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138719>
 
-> Does anyone have any remarks about these options? Is there a better option - how
-> difficult would it be to add native support to git? Are there any other options
+  Dear Git users,
 
-There are also tools such as curlftpfs. Then you can mount any FTP
-account. However git will be slow. There are some .git options.
-Maybe it's worth a try - Don't know excactly.
+  A short workshop material for anyone interested in Git, codeBeamer and agile:
 
-There should be fuse like filesystems for Amazon S3 as well. Google
-showns some hits. Don't know which one works best.
+  http://blogs.intland.com/main/entry/50
 
-Good luck.
-Marc Weber
+  It has originally been developed for large telco (can't disclose), getting
+involved in Android core development. We thought you might find this useful.
+---
+  Intland team
+  http://www.intland.com
