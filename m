@@ -1,77 +1,78 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: Re: Implement --password option for git svn perl script
-Date: Tue, 2 Feb 2010 17:18:52 +0800
-Message-ID: <1976ea661002020118n2b86844k47a1064c028f439f@mail.gmail.com>
-References: <a362e8011001290617n326a9dcx7c345ec31dff4ebe@mail.gmail.com>
-	 <001636ed7681994278047e4e4a6f@google.com>
-	 <a362e8011001290618g542be5f5y2777a925ba9bd936@mail.gmail.com>
-	 <1976ea661001290704h3ed4761dscf95ba848b373555@mail.gmail.com>
-	 <be6fef0d1002012015q2a10af1cq4c5e5f968039ee45@mail.gmail.com>
-	 <1976ea661002012030h23aa415ek30aa6db23cb88d0e@mail.gmail.com>
-	 <a362e8011002012237t640dd8b9sa1da0d221f5d03b6@mail.gmail.com>
-	 <20100202090538.GA28437@dcvr.yhbt.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn and subversion revprops
+Date: Tue, 2 Feb 2010 01:38:48 -0800
+Message-ID: <20100202093848.GB28437@dcvr.yhbt.net>
+References: <19301.27607.993690.703245@winooski.ccs.neu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Laszlo Papp <djszapi@archlinux.us>,
-	Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Feb 02 10:19:46 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Tue Feb 02 10:38:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcEvB-0004bt-Pf
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 10:19:46 +0100
+	id 1NcFDj-00078M-3Z
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 10:38:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755006Ab0BBJS4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Feb 2010 04:18:56 -0500
-Received: from mail-yx0-f189.google.com ([209.85.210.189]:63614 "EHLO
-	mail-yx0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754620Ab0BBJSx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2010 04:18:53 -0500
-Received: by yxe27 with SMTP id 27so1070146yxe.4
-        for <git@vger.kernel.org>; Tue, 02 Feb 2010 01:18:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=wImXKSkL/fvSqhxnoFcYtqIoeehIQBio+CjmoKv04IU=;
-        b=DtnPdwvnTHN14jwViOw9IoGlAzgkkmc6i7r4P+c9dVrdcALq6AYfIYLjImTieS61N9
-         a+haLoR33NTAw0D5l7+2mtpTObyvAkoHMYTTIU4fX6v0coJ5qKC5XLK7LIVvHdqAGifP
-         ZZkdtfz4fUkvw4oje9S7GyOp/fwS/zJxC62sc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=hCgudfI26UJCngUVfJPXox9es/Hnu46izgUlRTqeMq7h9U4Z69wmu71FT9MscjO01v
-         gcUwhRQGH1FCNV7bFjCis6KMtrRcOvyDFLIg+rq+riUViVQlRTwvt4uxCwUjCan6UL6F
-         HvTqa5eqCdS7cYEHNCnbmyqYCUPvQktPuFNgw=
-Received: by 10.150.87.9 with SMTP id k9mr8150745ybb.77.1265102332347; Tue, 02 
-	Feb 2010 01:18:52 -0800 (PST)
-In-Reply-To: <20100202090538.GA28437@dcvr.yhbt.net>
+	id S1755722Ab0BBJit (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 04:38:49 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:53844 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754508Ab0BBJis (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 04:38:48 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ECC81F488;
+	Tue,  2 Feb 2010 09:38:48 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <19301.27607.993690.703245@winooski.ccs.neu.edu>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138706>
 
-> Having a --password option in the command line could work, but it's
-> painfully insecure if there's any way for another regular user to vie=
-w
-> the process table. =A0Not something I'd like to encourage...
->
+Eli Barzilay <eli@barzilay.org> wrote:
+> [This is possible an RTFM -- but as much as I've been digging around,
+> I couldn't find anything about it.]
+> 
+> I'm trying to play with git-svn in a project that uses subversion, and
+> there's one feature that I'd like to have -- make git-svn specify some
+> revision properties (eg, the `--with-revprop' to `svn commit') that
+> will identify it as coming from git-svn.
 
-Yes, it is insecure. "--password" seam undocumented.
+Hi, there's currently no way to commit revprops to svn with git svn.
 
-> Since SVN already caches passwords in a mostly secure location on dis=
-k
-> (at least on *nix), shouldn't git svn be able to use the password cac=
-he
-> SVN uses?
->
-> --
-> Eric Wong
->
+> The thing is that we have a continuous build server that runs a
+> complete build (and runs all tests) for every revision -- and I'm
+> trying to figure out a way to make it skip intermediate commits that
+> come from a git-svn.  The simplest way to do that would be a way to
+> mark all git-svn revisions somehow, and I can later unmark the last
+> one in the chain so only that one will get built and tested.  It would
+> be even more convenient if I have a way to control the revprops on the
+> last commit separately, so there's no additional step involved.
+> 
+> The only other alternative that I see is some wrapper around git-svn
+> that connects to some script that will run on the server before and
+> after dcommitting changes, and that script will do the necessary work.
+> Is there a way to specify hook scripts to run around a dcommit?
+
+No, there are no hooks currently run directly by git svn.  dcommit uses
+git-rebase internally, so git-rebase can run the pre-rebase hook (never
+tried it myself, though).
+
+> Actually, such hooks can also be used to lock the svn reposity while
+> git-svn is working -- I couldn't figure out what happens when there's
+> some commit that comes in while git-svn is running.  My guess is
+> that it'll either get stuck and throw an error, or maybe try to
+> continue if possible.  Such hooks could make that part more robust, as
+> well as guarantee that each batch of svn-git commits are always
+> together.
+
+Could be useful in some cases.  I've never actually seen any project use
+SVN locks, though, and had completely forgotten about them until now...
+
+-- 
+Eric Wong
