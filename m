@@ -1,52 +1,61 @@
-From: Markus Elfring <Markus.Elfring@web.de>
-Subject: Completion of error handling
-Date: Tue, 02 Feb 2010 14:11:59 +0100
-Message-ID: <4B68249F.6070004@web.de>
+From: Laszlo Papp <djszapi@archlinux.us>
+Subject: Re: Implement --password option for git svn perl script
+Date: Tue, 2 Feb 2010 14:16:06 +0100
+Message-ID: <a362e8011002020516i5d5adcf7k6553d62e633cec88@mail.gmail.com>
+References: <a362e8011001290617n326a9dcx7c345ec31dff4ebe@mail.gmail.com>
+	 <001636ed7681994278047e4e4a6f@google.com>
+	 <a362e8011001290618g542be5f5y2777a925ba9bd936@mail.gmail.com>
+	 <1976ea661001290704h3ed4761dscf95ba848b373555@mail.gmail.com>
+	 <be6fef0d1002012015q2a10af1cq4c5e5f968039ee45@mail.gmail.com>
+	 <1976ea661002012030h23aa415ek30aa6db23cb88d0e@mail.gmail.com>
+	 <a362e8011002012237t640dd8b9sa1da0d221f5d03b6@mail.gmail.com>
+	 <20100202090538.GA28437@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 02 14:12:13 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Frank Li <lznuaa@gmail.com>, Tay Ray Chuan <rctay89@gmail.com>,
+	git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue Feb 02 14:16:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcIY7-0005el-7D
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 14:12:11 +0100
+	id 1NcIc3-0000l0-DO
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 14:16:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755249Ab0BBNMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 08:12:05 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:59815 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752039Ab0BBNMD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 08:12:03 -0500
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 9203914CDA700
-	for <git@vger.kernel.org>; Tue,  2 Feb 2010 14:12:00 +0100 (CET)
-Received: from [78.49.150.133] (helo=[192.168.1.202])
-	by smtp07.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1NcIXw-0006BL-00
-	for git@vger.kernel.org; Tue, 02 Feb 2010 14:12:00 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.5) Gecko/20091130 SUSE/3.0.0-1.1.1 Thunderbird/3.0
-X-Sender: Markus.Elfring@web.de
-X-Provags-ID: V01U2FsdGVkX1/HQ2HWWHvviwB69ujFo8hMxACM/xE1glPOToyV
-	OgD26GEMTLJI23tRzK9Gwy1e3Zkv2DO0lyD83TwdgRhN8r4Ozs
-	ADFuxd1LychLzmAIyDPg==
+	id S1755843Ab0BBNQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 08:16:11 -0500
+Received: from mail-yx0-f189.google.com ([209.85.210.189]:44569 "EHLO
+	mail-yx0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754403Ab0BBNQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 08:16:09 -0500
+Received: by yxe27 with SMTP id 27so25766yxe.4
+        for <git@vger.kernel.org>; Tue, 02 Feb 2010 05:16:09 -0800 (PST)
+Received: by 10.100.233.35 with SMTP id f35mr7432564anh.233.1265116566610; 
+	Tue, 02 Feb 2010 05:16:06 -0800 (PST)
+In-Reply-To: <20100202090538.GA28437@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138716>
 
-Hello,
+> Since SVN already caches passwords in a mostly secure location on disk
+> (at least on *nix), shouldn't git svn be able to use the password cache
+> SVN uses?
 
-I would like to point out that some checks for return codes are missing in the source files.
+@Frank Li
+@Eric Wong
 
-Examples:
-Would you like to add more error handling for return values from "pthread_mutex_init" like in the function "start_threads" and from "fprintf" in the function "output_header_lines"?
-http://git.kernel.org/?p=git/git.git;a=blob;f=builtin-grep.c;h=0ef849cb84650705ffc840aed8a3fcedbeb48f9a;hb=HEAD#l224
-http://git.kernel.org/?p=git/git.git;a=blob;f=builtin-mailinfo.c;h=a50ac2256cdbacd76ed44a50804212be07f949db;hb=HEAD#l935
+Maybe you can check whether how TortoiseSVN or SVN client code handle
+this situation, because it's the same server, but 'just' the client
+side is different a little bit, but the same situation happen there in
+case TortoiseSVN a popup menu appears when you try to authenticate
+yourself.
 
-Regards,
-Markus
+Second way is to ask on the SVN mailing list, how they use it, or
+maybe I'm totally wrong with it :P
+
+Best Regards,
+Laszlo Papp
