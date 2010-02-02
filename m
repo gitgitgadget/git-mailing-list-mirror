@@ -1,143 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] gitweb: Add an option to force version match
-Date: Tue, 02 Feb 2010 14:59:17 -0800
-Message-ID: <7vvdef1by2.fsf@alter.siamese.dyndns.org>
-References: <1265147814-13284-1-git-send-email-warthog9@eaglescrag.net>
- <1265147814-13284-2-git-send-email-warthog9@eaglescrag.net>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: [BUG] - "git commit --amend" commits, when exiting the editor 
+	with no changes written
+Date: Tue, 2 Feb 2010 18:02:51 -0500
+Message-ID: <76c5b8581002021502i2bb34967y9a88d8b25ce7fa42@mail.gmail.com>
+References: <76c5b8581002021207y3eccdc19i9a4abcc3d04315f0@mail.gmail.com>
+	 <8c9a061002021214j673afbc8vfa5d941fba518648@mail.gmail.com>
+	 <32541b131002021227o1ec9f369w6096e85382857b8a@mail.gmail.com>
+	 <76c5b8581002021247j6df8f609ld9e5d87a060a5423@mail.gmail.com>
+	 <394FB581-C9B9-40AB-AFB6-39B68ED5BEAD@wincent.com>
+	 <76c5b8581002021356m52bb1817k9a4a29da0d4b681d@mail.gmail.com>
+	 <77153A83-158D-4D36-A622-7AA3947C7D52@wincent.com>
+	 <76c5b8581002021431o2b5073a0s42b273b6d61893db@mail.gmail.com>
+	 <32541b131002021435kadb68ffge77ad5f4e1775418@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Tue Feb 02 23:59:33 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wincent Colaiuta <win@wincent.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 03 00:03:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcRiV-0005oG-SN
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 23:59:32 +0100
+	id 1NcRlr-000823-F7
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 00:02:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756996Ab0BBW70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 17:59:26 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38553 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756896Ab0BBW7Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 17:59:25 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 777EC9663B;
-	Tue,  2 Feb 2010 17:59:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p5q+RPI8xOCQEhxR+yINENXz4tI=; b=fjn5Nv
-	1Jc5RNymtK1+kP+CiYFm8I+XEMo9WD3mUo/r1rRnKUJOYqVXf7tsHUXCC1jCesXs
-	fwRMbc8bhpcZ23QjLgO9H6sjukLBKcFPeoLVQh9ER0/psDK/PAG7mxcL6xEDDEST
-	1r+aLfwfm/DfenmAeYlo31/UhXMTWXADnJdaY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AGGpTOK39TmMXPpUQBwww1pimlt2IkUU
-	OJrS7qcLic4pbINx5exdRH/98Nha+31svBnCjosMUp2Ig4U/rp5/MAnOVbxrJ59B
-	3zY0rVOjTGvGwHJTygEdNvxQjSPsOdUa4fKY4GcGzsD6ndsrnnlH1bD1ndSfLEI3
-	tZ4TeQNlDO4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5284A9663A;
-	Tue,  2 Feb 2010 17:59:22 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A51A96627; Tue,  2 Feb
- 2010 17:59:19 -0500 (EST)
-In-Reply-To: <1265147814-13284-2-git-send-email-warthog9@eaglescrag.net>
- (John Hawley's message of "Tue\,  2 Feb 2010 13\:56\:53 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9A170262-104E-11DF-AB0A-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756891Ab0BBXCy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Feb 2010 18:02:54 -0500
+Received: from mail-iw0-f201.google.com ([209.85.223.201]:34160 "EHLO
+	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756626Ab0BBXCx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2010 18:02:53 -0500
+Received: by iwn39 with SMTP id 39so787071iwn.1
+        for <git@vger.kernel.org>; Tue, 02 Feb 2010 15:02:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Ys9wZRjF5fxey2DR6yZnfvTRJ621zuIMHDuaBy5QgWU=;
+        b=PV/4WqlOaGBYcjX29D7FGFdKaTUvJBXAhRvnuUjy27JTsLgyKN0TGAmCblTPIkyZad
+         P36j0irEs9Nlr/j+tQnSXrF3rsUJqaxK/IM8YFPb4I869L7fcUZXnyh2haNSeUm6LVgn
+         75eKnI4+gJMxQDxmwcCbfwTyuDDXdvLKZQY8A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rRiq3MRQ7gybAdAY5QzaC0i1KgzFur3+ZEufhLCNN4oFV6gvhLZ62LiBGzyp7ci6sT
+         7VuzOmq54SELGfHWrkd7cY9eyCH80nsWHK8Qt8e3HjnOa4HSYVPmMFvW14JRLUQ9pbwh
+         gktK19TasuJIw1XEIVYqzoHqOIZvnh6a05GVw=
+Received: by 10.231.145.132 with SMTP id d4mr3434743ibv.72.1265151771974; Tue, 
+	02 Feb 2010 15:02:51 -0800 (PST)
+In-Reply-To: <32541b131002021435kadb68ffge77ad5f4e1775418@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138778>
 
-"John 'Warthog9' Hawley" <warthog9@eaglescrag.net> writes:
+On Tue, Feb 2, 2010 at 5:35 PM, Avery Pennarun <apenwarr@gmail.com> wro=
+te:
+>> amend or rebase:
+>> COMMIT_EDITMSG =3D "message from commit or rebase sequence";
+>> $ git commit --amend
+>>
+>> in background:
+>> $EDITOR .git/COMMIT_EDITMSG
+>>
+>> COMMIT_EDITMSG =3D NULL =C2=A0 =C2=A0<=3D=3D=3D=3D=3D=3D=3D=3D this =
+i think is missing. We have to
+>> clean it after it is populated in the editor.
+>
+> That's not going to work. =C2=A0Most editors will get quite angry at =
+you if
+> you modify the file while the editor has it open. =C2=A0Furthermore, =
+how do
+> you know how long to wait after launching the editor but before
+> deleting the file?
 
-John, I'm sorry but I have to say this is somewhat incoherent.
+I'm not insisting on this approach by any mean - i was trying to
+explain what is the problem i consider to be a bug.
 
-> + * $git_versions_must_match
-> +   If set to true value, gitweb fails with "500 Internal Server Error" error
-> +   if the version of the gitweb doesn't match version of the git binary.
-> +   Gitweb can usually run with a mismatched git install.   The default is 1
-> +   (true).
 
-I would understand that it if this were "Gitweb seldom runs correctly with
-unmatched version of git, so this defaults to true".  If it can _usually_
-run just fine, why should everybody need to flip this off?  This doesn't
-make any sense to me.
+>
+> Like I suggested earlier, monitoring the mtime of the file to see if
+> it has changed after the editor exits, even if the file itself is
+> identical to what it was, might work.
 
-> @@ -583,6 +586,33 @@ sub get_loadavg {
->  our $git_version = qx("$GIT" --version) =~ m/git version (.*)$/ ? $1 : "unknown";
->  $number_of_git_cmds++;
->  
-> +# Throw an error if git versions does not match, if $git_versions_must_match is true.
-> +if ($git_versions_must_match &&
-> +    $git_version ne $version) {
-> +	my $admin_contact =
-> +		defined $ENV{'SERVER_ADMIN'} ? ", $ENV{'SERVER_ADMIN'}," : '';
-> +	my $err_msg = <<EOT;
-> +<h1 align="center">*** Warning ***</h1>
-> +<p>
-> +This version of gitweb was compiled for <b>@{[esc_html($version)]}</b>,
-> +however git version <b>@{[esc_html($git_version)]}</b> was found on server.
-> +Running an instance of gitweb that is not matched to the git binaries may
-> +result in unexpected behavior of gitweb, and loss of functionality or
-> +incorrect data on displayed pages.
-> +</p>
-> +<p>
-> +Please update the git or gitweb installation so that their versions match, or
-> +if you feel you are sure that you wish to proceed with running gitweb
-> +with unmatched versions please contact the server administrator${admin_contact}
-> +to configure gitweb to allow mismatched versions.  This can be done by
-> +setting \$git_versions_must_match to @{[esc_html($git_versions_must_match)]}
-> +(false value) in gitweb configuration file,
-> +'@{[esc_path(-e $GITWEB_CONFIG ? $GITWEB_CONFIG : $GITWEB_CONFIG_SYSTEM)]}'.
-> +</p>
-> +EOT
-> +	die_error(500, 'Internal server error', $err_msg);
+Anything that would work;)
 
-Why, why, why?
+>This feature would have to be
+> optional in order to not confuse existing users, and not annoy users
+> of editors (like my favourite, joe) which don't save-on-exit if the
+> file hasn't changed. =C2=A0But I think it might be valuable to some p=
+eople
+> nevertheless. =C2=A0And if it became popular, perhaps it could become=
+ the
+> default in some future version of git (after giving people enough
+> notice, etc, etc).
 
-This is not even a "*** Warning ***".  You are refusing to let them do
-anything useful until they either flip the bit off or reinstall git and/or
-gitweb.  It is a _fatal error_ message.
+But here I totally disagree, because i don't understand what is so new
+and confusing in the workflow I'm talking about?
+Why you're not confused that you MUST save before exiting your EDITOR
+in order to be able to commit (else it will fail), but the same
+workflow suddenly becomes confusing when you doing "commit --amend" or
+especially "rebase -i" ???
 
-To whom are you giving this _warning_?  Please read the message yourself
-again.
+=46rankly, I think that "rebase -i" is the best example when exiting
+without save should abort, not proceed.
 
-The message tells _you_ to consider using matching versions (as if _you_
-have the choice and authority to do so), hints _you_ to decide if you are
-Ok with running an unmatched combination (again, as if _you_ have the
-authority to make that decision), and then instructs _you_ to contact the
-server administrator (who presumably can flip the bit).
 
-That doesn't make _any_ sense to me.  Hopefully anybody who installs or
-upgrades gitweb/git will hit his gitweb installation at least once before
-end users start hitting, so I would understand it if you wrote the above
-message addressed to the server administrator.
+>
+> So you might want to submit a patch to implement an option like that.
+>
+> Avery
+>
 
-If somebody updates his git without bothering to update gitweb, on the
-other hand, the end user may see the message before the administrator
-does.  If git and gitweb might be managed by different people at a
-particular site (k.org?), I would understand that the administrator of the
-gitweb side _might_ want to be told about it by the end user, and the
-above might be an attempt to make that happen.
+I wish i could - but, unfortunately, I'm as far from C as from the Sun
+(star;)). I'm developing a little bit in Java, but can't do C.
 
-But even in that case, out of the three instructions, only the last one is
-for the end user, and telling him to be certain the combinations do work
-before bugging the gitweb administrator doesn't make much sense to me.
-
-So I have to ask a basic question I asked (at least I tried to) last night
-again.  Whom are you trying to help?
-
-Even if it is to help a gitweb administrator who is not in charge of other
-people in the administrator group who would install unmatching versions of
-git without telling him, would this really be the best solution?  You'd be
-the first to suffer from this when HPA or whoever installs a new version
-of git at k.org.  There should be a better way to help communication
-between the people in the administration group, without involving or
-inconveniencing the end users like this patch seems to do.
+Thanks,
+Eugene
