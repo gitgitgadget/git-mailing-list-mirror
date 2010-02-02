@@ -1,109 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] resolve-undo.c: silence compiler complaints by casting
- void * to char *
-Date: Mon, 01 Feb 2010 21:46:15 -0800
-Message-ID: <7vr5p4favs.fsf@alter.siamese.dyndns.org>
-References: <qzbyPiTgRGI0lsxvEmFa0WtwK5ko5snXQDNffxC66y9v0rlie5pcKzGT28WpzfQlFd0OvJNY_jo@cipher.nrlssc.navy.mil> <7vsk9kplla.fsf@alter.siamese.dyndns.org>
+From: Arun Raghavan <ford_prefect@gentoo.org>
+Subject: Re: [PATCH 0/2] upload-pack: pre- and post- hooks
+Date: Tue, 2 Feb 2010 11:20:16 +0530
+Message-ID: <6f8b45101002012150k784b6d78ibffa5092507eee32@mail.gmail.com>
+References: <6f8b45101001150414r2661001ep10819b601953c05b@mail.gmail.com> 
+	<1265013127-12589-1-git-send-email-ford_prefect@gentoo.org> 
+	<20100201152010.GC8916@spearce.org> <6f8b45101002010750t5541faefv5b4640dfb9949306@mail.gmail.com> 
+	<20100201160141.GG8916@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Tue Feb 02 06:46:43 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 02 06:50:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcBb0-0007Ao-91
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 06:46:42 +0100
+	id 1NcBet-0000Pb-6x
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 06:50:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753809Ab0BBFqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 00:46:25 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47576 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752437Ab0BBFqY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 00:46:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A683596857;
-	Tue,  2 Feb 2010 00:46:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cYJWBf9hgUUt56Qb7zVx2hAPgIg=; b=QZ45+0
-	5aoVV1+cSHsWQpQKWAMiXIepIAIecD66SYfYsUXOlmdvzR7fsna7HcfFw6wrrmG/
-	pKtakbw8k9CucUNRFlYYoPKlPj15KwP75D6WLandWCHQzGBrd8TGMsrSM1H0/Gy3
-	hB2WcIxjY9I+2CPbtbCOVfXC61W45LJMvV/gU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vGSE22aUo3Dn3oOd2fkmQ1w68q4kQ5R8
-	wVQwyZET1jAA8ymKgN87+mPiVJnL4qsET1GHJ9cW+RnEumQXfySZ8/RoCHWhrcT9
-	uFOAjIMo7KS+yBDEL11sAu/Xe2gBSO+XDtrFFhmQKhHzqYXVbnrRg2klotgYMngz
-	h0PBJbI3pLQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 703C196854;
-	Tue,  2 Feb 2010 00:46:20 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8FEE596853; Tue,  2 Feb
- 2010 00:46:16 -0500 (EST)
-In-Reply-To: <7vsk9kplla.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon\, 01 Feb 2010 15\:44\:49 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4A01A358-0FBE-11DF-B9A8-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751054Ab0BBFui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 00:50:38 -0500
+Received: from mail-qy0-f185.google.com ([209.85.221.185]:34853 "EHLO
+	mail-qy0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750736Ab0BBFuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 00:50:37 -0500
+Received: by qyk15 with SMTP id 15so506962qyk.20
+        for <git@vger.kernel.org>; Mon, 01 Feb 2010 21:50:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type;
+        bh=Q/kSKtEYBsEeaqkBfOahFsZqncV0TFi8P6L7L1XJptc=;
+        b=fFBEsBIZ0GxA5RmHFr2eJeZuFOXTxHHUND1r6RphJGfGbtHfpiW/2OYU4+vFnQZALz
+         TzD8JOg/UIlg2utXwatbE9uNHD9A8b32p94eMYsYwr6Na2cnond5fivRFCLDdzNW2h1+
+         Q3gjxWY4/DRLCwRz1brY4l4s4EfRWGvnAEfAQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        b=iTJ+QPxB7m4z3VMjCbTPDJt/ck1vwh/UimzjZRmp/vZR91tYokXEJ5sg4ZkUde2rTC
+         XonVc36SauTz4xBeXBhqlVR1Z4CjoPkzpvS2t51FSTa0Jqr72lItD6bv1uucxT+AHmJS
+         p53QjxCs1Jf+OQMFrkd6+h03TaOsUh8O4J+MI=
+Received: by 10.229.218.210 with SMTP id hr18mr1201889qcb.98.1265089836109; 
+	Mon, 01 Feb 2010 21:50:36 -0800 (PST)
+In-Reply-To: <20100201160141.GG8916@spearce.org>
+X-Google-Sender-Auth: 177df86039bcf425
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138682>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Thanks for catching this.
+On 1 February 2010 21:31, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Arun Raghavan <ford_prefect@gentoo.org> wrote:
+>> On 1 February 2010 20:50, Shawn O. Pearce <spearce@spearce.org> wrote:
+>> > Arun Raghavan <ford_prefect@gentoo.org> wrote:
+[...]
+>> >> At some point if the future, if needed, this could also be made a part of the
+>> >> negotiation between the client and server.
+>> >
+>> > I'm not sure I follow.
+>> >
+>> > Are you proposing the server advertises that it wants to run hooks,
+>> > and lets the client decide whether or not they should be executed?
+>>
+>> Something like that. I was thinking the client could always advertise
+>> whether the it wants to allow the hooks to be executed or not (which
+>> would override the default value of the global variable I introduced).
+>> Either approach would work, though the second is simpler but also
+>> dumber.
+>>
+>> Again, this might be over-complicating things, which is why I did not
+>> implement it. I just wanted to make a note of the fact that this could
+>> be done if the need is felt.
 >
-> In this particular case, I however suspect that it would be cleaner to
-> declare that the first parameter to resolve_undo_read() is a "char *"
-> (or even "const char *"), as we are dealing with NUL delimited list of
-> octal numbers and character strings.
+> My concern with this is, users might disable the hook all of the
+> time, and then servers that actually want the hook (e.g. gentoo's
+> use of the pre-upload-pack to avoid initial clones over git://)
+> would be stuck, just like they are today.
+>
+> No, its just not sane to give the user a choice whether or not they
+> should execute something remotely.
 
-It would look like this.  I wonder if we should make hash*() inline
-functions to take (void *) or (const void *) pointers to avoid further
-noises like this but that would be a separate topic.
+Ah, sorry I wasn't clear about this. I've made it so that when
+pre-upload-pack fails, the entire operation fails. This makes sense
+because pre-upload-pack is meant to check things like "do we want
+allow the user to get the pack". For post-upload-pack, failure only
+results in a warning, since the actual upload is already done and
+there's not much to do other than log the failure.
 
- resolve-undo.c |    4 ++--
- resolve-undo.h |    2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/resolve-undo.c b/resolve-undo.c
-index 37d73cd..0f50ee0 100644
---- a/resolve-undo.c
-+++ b/resolve-undo.c
-@@ -53,7 +53,7 @@ void resolve_undo_write(struct strbuf *sb, struct string_list *resolve_undo)
- 	for_each_string_list(write_one, resolve_undo, sb);
- }
- 
--struct string_list *resolve_undo_read(void *data, unsigned long size)
-+struct string_list *resolve_undo_read(const char *data, unsigned long size)
- {
- 	struct string_list *resolve_undo;
- 	size_t len;
-@@ -93,7 +93,7 @@ struct string_list *resolve_undo_read(void *data, unsigned long size)
- 				continue;
- 			if (size < 20)
- 				goto error;
--			hashcpy(ui->sha1[i], data);
-+			hashcpy(ui->sha1[i], (const unsigned char *)data);
- 			size -= 20;
- 			data += 20;
- 		}
-diff --git a/resolve-undo.h b/resolve-undo.h
-index e4e5c1b..8458769 100644
---- a/resolve-undo.h
-+++ b/resolve-undo.h
-@@ -8,7 +8,7 @@ struct resolve_undo_info {
- 
- extern void record_resolve_undo(struct index_state *, struct cache_entry *);
- extern void resolve_undo_write(struct strbuf *, struct string_list *);
--extern struct string_list *resolve_undo_read(void *, unsigned long);
-+extern struct string_list *resolve_undo_read(const char *, unsigned long);
- extern void resolve_undo_clear_index(struct index_state *);
- extern int unmerge_index_entry_at(struct index_state *, int);
- extern void unmerge_index(struct index_state *, const char **);
+-- 
+Arun Raghavan
+http://arunraghavan.net/
+(Ford_Prefect | Gentoo) & (arunsr | GNOME)
