@@ -1,66 +1,71 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Implement --password option for git svn perl script
-Date: Tue, 2 Feb 2010 01:05:38 -0800
-Message-ID: <20100202090538.GA28437@dcvr.yhbt.net>
-References: <a362e8011001290617n326a9dcx7c345ec31dff4ebe@mail.gmail.com> <001636ed7681994278047e4e4a6f@google.com> <a362e8011001290618g542be5f5y2777a925ba9bd936@mail.gmail.com> <1976ea661001290704h3ed4761dscf95ba848b373555@mail.gmail.com> <be6fef0d1002012015q2a10af1cq4c5e5f968039ee45@mail.gmail.com> <1976ea661002012030h23aa415ek30aa6db23cb88d0e@mail.gmail.com> <a362e8011002012237t640dd8b9sa1da0d221f5d03b6@mail.gmail.com>
+From: git@eisendle.net
+Subject: Linux Kernel based project in git
+Date: Tue, 2 Feb 2010 10:05:24 +0100
+Message-ID: <9da7f2802f639777acfeb38eb1e3db90.squirrel@webmail.eisendle.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Frank Li <lznuaa@gmail.com>, Tay Ray Chuan <rctay89@gmail.com>,
-	git@vger.kernel.org
-To: Laszlo Papp <djszapi@archlinux.us>
-X-From: git-owner@vger.kernel.org Tue Feb 02 10:05:48 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 02 10:12:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcEhf-0005wR-Et
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 10:05:47 +0100
+	id 1NcEny-0000fb-T4
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 10:12:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753074Ab0BBJFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 04:05:42 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:34223 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752474Ab0BBJFj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 04:05:39 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1E0A1F488;
-	Tue,  2 Feb 2010 09:05:38 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <a362e8011002012237t640dd8b9sa1da0d221f5d03b6@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755439Ab0BBJMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 04:12:12 -0500
+Received: from vs.eisendle.net ([62.75.248.112]:52608 "EHLO eisendle.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753404Ab0BBJMH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 04:12:07 -0500
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Feb 2010 04:12:06 EST
+Received: (qmail 15409 invoked from network); 2 Feb 2010 09:05:24 -0000
+Received: from unknown (HELO webmail.eisendle.net) ([127.0.0.1])
+          (envelope-sender <git@eisendle.net>)
+          by localhost (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 2 Feb 2010 09:05:24 -0000
+Received: from 212.166.112.250 (proxying for unknown)
+        (SquirrelMail authenticated user git@eisendle.net)
+        by webmail.eisendle.net with HTTP;
+        Tue, 2 Feb 2010 10:05:24 +0100
+User-Agent: SquirrelMail/1.4.19
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138704>
 
-Laszlo Papp <djszapi@archlinux.us> wrote:
-> > The basic requirement is git svn can provide a way to prompt a dialog
-> > box to input passwd.
-> 
-> Yeah, it's a very basic use case, but I don't know whether there is a
-> workaround for it somehow, maybe perl gurus or git svn users could
-> help more...
-> 
-> My company, where there are windows users (95% of the company), would
-> like to use TortoiseGIT as a graphical client for SVN server
-> repositories as an SVN client, no other way by us, so it'd be high
-> priority :) So I've got a beer for any volunteer, thanks :P
+Hi,
 
-Hi, (fixed subject so I don't mistake it for junk again)
+I'm rather new to this mailing list so I hope this is the right place for
+my question :-)
 
-I don't know (and have no way to test) how to deal with input dialogs
-for reading a password on Windows (nor any sort of IPC).  Somebody else
-will have to implement it.
+We recently moved one of our projects over from SVN to git.
+This project is basically a Linux BSP for an ARM9 based processor using
+Kernel 2.6.22.
 
-Having a --password option in the command line could work, but it's
-painfully insecure if there's any way for another regular user to view
-the process table.  Not something I'd like to encourage...
+For release we always generate 3 patches:
+- BSP patch
+- USB patch (since USB part is an external patch comming from a 3rd party)
+- WiFi patch (same as for USB)
 
-Since SVN already caches passwords in a mostly secure location on disk
-(at least on *nix), shouldn't git svn be able to use the password cache
-SVN uses?
+So my question is:
+What's the best way for handling this inside the git repository?
 
--- 
-Eric Wong
+IMHO it would make sense to have 3 branches (BSP, USB, WiFi) each based on
+unmodified 2.6.22 Kernel. USB and WiFi branch is used for generating the
+patch and for applying possible fixes. BSP branch for actual BSP related
+feature development and fixes.
+The changes in these branches are merged into the master branch which is
+used for compiling/testing the whole BSP.
+
+Is this a useful approach or are there other, better ways for generating
+the three patches and compiling testing the whole thing?
+
+Thanks!
+Christian.
