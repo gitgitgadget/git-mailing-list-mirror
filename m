@@ -1,102 +1,154 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [BUG] - "git commit --amend" commits, when exiting the editor  with no changes written
-Date: Tue, 2 Feb 2010 23:06:29 +0100
-Message-ID: <77153A83-158D-4D36-A622-7AA3947C7D52@wincent.com>
-References: <76c5b8581002021207y3eccdc19i9a4abcc3d04315f0@mail.gmail.com> <8c9a061002021214j673afbc8vfa5d941fba518648@mail.gmail.com> <32541b131002021227o1ec9f369w6096e85382857b8a@mail.gmail.com> <76c5b8581002021247j6df8f609ld9e5d87a060a5423@mail.gmail.com> <394FB581-C9B9-40AB-AFB6-39B68ED5BEAD@wincent.com> <76c5b8581002021356m52bb1817k9a4a29da0d4b681d@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1076)
-Content-Type: text/plain; charset=iso-8859-1;
-	format=flowed	delsp=yes
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: [BUG] - "git commit --amend" commits, when exiting the editor 
+	with no changes written
+Date: Tue, 2 Feb 2010 17:31:08 -0500
+Message-ID: <76c5b8581002021431o2b5073a0s42b273b6d61893db@mail.gmail.com>
+References: <76c5b8581002021207y3eccdc19i9a4abcc3d04315f0@mail.gmail.com>
+	 <8c9a061002021214j673afbc8vfa5d941fba518648@mail.gmail.com>
+	 <32541b131002021227o1ec9f369w6096e85382857b8a@mail.gmail.com>
+	 <76c5b8581002021247j6df8f609ld9e5d87a060a5423@mail.gmail.com>
+	 <394FB581-C9B9-40AB-AFB6-39B68ED5BEAD@wincent.com>
+	 <76c5b8581002021356m52bb1817k9a4a29da0d4b681d@mail.gmail.com>
+	 <77153A83-158D-4D36-A622-7AA3947C7D52@wincent.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Avery Pennarun <apenwarr@gmail.com>,
 	Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 23:27:46 2010
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Tue Feb 02 23:31:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcRDl-0001Lp-Um
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 23:27:46 +0100
+	id 1NcRHB-0003dp-5a
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 23:31:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757001Ab0BBW1e convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Feb 2010 17:27:34 -0500
-Received: from outmail137067.authsmtp.co.uk ([62.13.137.67]:59319 "EHLO
-	outmail137067.authsmtp.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756871Ab0BBW1d convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 2 Feb 2010 17:27:33 -0500
-X-Greylist: delayed 1251 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Feb 2010 17:27:33 EST
-Received: from mail-c193.authsmtp.com (mail-c193.authsmtp.com [62.13.128.118])
-	by punt5.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id o12M6dnH073389;
-	Tue, 2 Feb 2010 22:06:39 GMT
-Received: from wincent1.inetu.net (wincent1.inetu.net [209.235.192.161])
-	(authenticated bits=128)
-	by mail.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id o12M6YvO068603
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 2 Feb 2010 22:06:35 GMT
-Received: from [192.168.1.2] (124.Red-88-3-77.dynamicIP.rima-tde.net [88.3.77.124])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id o12M6USw012865
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 2 Feb 2010 17:06:32 -0500
-In-Reply-To: <76c5b8581002021356m52bb1817k9a4a29da0d4b681d@mail.gmail.com>
-X-Mailer: Apple Mail (2.1076)
-X-Server-Quench: 3ae7b3a8-1047-11df-97bb-002264978518
-X-Report-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
-X-AuthRoute: OCd3ZggRAFZKTQIy FSICByJGVUMuIRha BAIHMQpCJFdJCUVH ahwdAFdZdwdEHAkR AWQBW1JeU1s/W2N8 dQhSaBtca0hQXgNr T0pMXVMcSwRqfBpo QGEeVBF0dwYIeXhw ZEYsXSEOWxZ5JE5g Q05QEnAHZDM2dWkY AhJFdwNWcgVOdxhN b1F3GhFYa3VsFB8X Kkd2d3o+PCkXIyNQ RwARZRdXSEMGGDJ2 DxsFGDAuAVZBDzoz IhpuJ04dAEcXPQ0u MVZpVF4ZLxgIQkVB Hl1NSCleb1IBTiwk ABgSQlQfDCFQR08A 
-X-Authentic-SMTP: 61633436303433.1014:706/Kp
-X-AuthFastPath: 255
-X-Virus-Status: No virus detected - but ensure you scan with your own anti-virus system.
+	id S1757023Ab0BBWbM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Feb 2010 17:31:12 -0500
+Received: from mail-iw0-f201.google.com ([209.85.223.201]:60806 "EHLO
+	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756720Ab0BBWbL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2010 17:31:11 -0500
+Received: by iwn39 with SMTP id 39so753574iwn.1
+        for <git@vger.kernel.org>; Tue, 02 Feb 2010 14:31:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=PYLsoY32NhUdx60onSClkWqtVZPQ+Q7d1YhcAjV4mdw=;
+        b=h380SXEUrR2sQLb7rqHNKQDOzC1UHsV+FoWVA12lxJlbZ9K4Km3F/iCZEU6TBnyPpl
+         Oh0LuOyi3VS+6GAtZrYLOKY31u0UrMHdQS90OxskH14mmgfLUD1wbg5ERWAAmXRbWi+6
+         n+npLNUmFBXChXMalbSN9AOg/HW76InOeOKF8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=DN4P29cMHaSmyYgIIMwskRkRThQuLfjX0WzsGehckleViUf8Gi9HpZ5LYqJVH4j1mC
+         he1Lr/8o8b6CLu0EfOMwf+vpJY59rkrH1I+fCAaZ4VTmHh+/4cRIVMPvhb/1R79BMRjV
+         ORUpPdBawMTjFXnxPKsmFn3FUCaHQ74O06SnE=
+Received: by 10.231.79.136 with SMTP id p8mr3294638ibk.4.1265149868766; Tue, 
+	02 Feb 2010 14:31:08 -0800 (PST)
+In-Reply-To: <77153A83-158D-4D36-A622-7AA3947C7D52@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138772>
 
-El 02/02/2010, a las 22:56, Eugene Sajine escribi=F3:
-
->>
->> As has already been pointed out, an extremely common workflow for =20
->> "git
->> commit --amend" is to include additional changes that were =20
->> accidentally
->> overlooked  in the initial commit, and no changes are made to the =20
->> commit
->> message.
->>
->> Changing the behavior would break that perfectly reasonable,
->> widely-practised workflow, and _that_ would be 100% not ok.
 >
-> I'm not against that workflow - I'm not forcing anybody to change the
-> commit message. The thing I'm talking about is roughly that it should
-> NOT treat the result of command ":q" the same way as the command
-> ":wq".
+> Why should Git care about how you exited from your EDITOR? All it sho=
+uld
+> care about is the contents of the commit message, and the exit code o=
+f the
+> editor.
 
-Why should Git care about how you exited from your EDITOR? All it =20
-should care about is the contents of the commit message, and the exit =20
-code of the editor.
+It doesn't matter which editor is used. The only thing that matters is
+that you saving or not saving on exit from editor. If not saving -
+abort the action.
 
-> For example IF there is a variable somewhere where message is stored:
-> For new commit message it is NULL and when commit is ready it is set
-> up to "message". We check If it is not empty and not NULL (:wq
-> executed),  then we can commit.
-> For "prepopulated" messages this variable can be is set to "message"
-> from the beginning, so it doesn't matter if you're writing changes or
-> not the check will always be true, so we can commit.
+>
+>> For example IF there is a variable somewhere where message is stored=
+:
+>> For new commit message it is NULL and when commit is ready it is set
+>> up to "message". We check If it is not empty and not NULL (:wq
+>> executed), =C2=A0then we can commit.
+>> For "prepopulated" messages this variable can be is set to "message"
+>> from the beginning, so it doesn't matter if you're writing changes o=
+r
+>> not the check will always be true, so we can commit.
+>
+> I don't understand what change you're asking for, as things already w=
+ork as
+> you've just described (the "variable" is the file, .git/COMMIT_EDITMS=
+G).
 
-I don't understand what change you're asking for, as things already =20
-work as you've just described (the "variable" is the file, .git/=20
-COMMIT_EDITMSG).
+So, i was right in my assumption about how it is implemented - good;)
 
-> If the implementation would be like this, then I would propose to
-> clean up this variable after the prepopulated message is populated, s=
-o
-> it won't use it blindly, but only after you're overwriting the messag=
-e
-> (even if the message is not changed).
+>
+>> If the implementation would be like this, then I would propose to
+>> clean up this variable after the prepopulated message is populated, =
+so
+>> it won't use it blindly, but only after you're overwriting the messa=
+ge
+>> (even if the message is not changed).
+>
+> Here is where you've lost me. Not sure what you mean here, nor how yo=
+u're
+> going to maintain the existing behavior for all of the people who hav=
+e grown
+> used to it over a long, long period of time.
 
-Here is where you've lost me. Not sure what you mean here, nor how =20
-you're going to maintain the existing behavior for all of the people =20
-who have grown used to it over a long, long period of time.
+Let me explain it like this (sorry for syntax):
 
-Wincent
+new commit:
+
+COMMIT_EDITMSG =3D NULL;
+$ git commit
+
+in background:
+$EDITOR .git/COMMIT_EDITMSG
+
+If saved/written
+COMMIT_EDITMSG=3Dmessage
+
+if (COMMIT_EDITMSG !=3D NULL &&  !COMMIT_EDITMSG.equalsIgnoreCase("")  =
+)  {
+commit();
+} else abort();
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+amend or rebase:
+COMMIT_EDITMSG =3D "message from commit or rebase sequence";
+$ git commit --amend
+
+in background:
+$EDITOR .git/COMMIT_EDITMSG
+
+COMMIT_EDITMSG =3D NULL    <=3D=3D=3D=3D=3D=3D=3D=3D this i think is mi=
+ssing. We have to
+clean it after it is populated in the editor.
+
+If written back by save:
+COMMIT_EDITMSG=3D"message from commit or rebase sequence" (it was not
+changed, but saved/written)
+
+If not saved, the check below will abort the action
+
+if (COMMIT_EDITMSG !=3D NULL &&  !COMMIT_EDITMSG.equalsIgnoreCase("")  =
+)  {
+commit();
+} else abort();
+
+
+Is that a better explanation?
+
+So, the only change from user perspective will be that you will have
+always save/write your changes/rebase sequences (even if you don't
+change the message) for the program to proceed with commit
+amend/rebase or whatever the same way as for the simple commit.
+
+Thanks,
+Eugene
