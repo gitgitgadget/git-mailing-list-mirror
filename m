@@ -1,55 +1,68 @@
-From: Markus Elfring <Markus.Elfring@web.de>
-Subject: Re: Better cooperation between checkouts and stashing
-Date: Tue, 02 Feb 2010 11:26:52 +0100
-Message-ID: <4B67FDEC.80005@web.de>
-References: <4B67227A.7030908@web.de> <7vhbq0wuy6.fsf@alter.siamese.dyndns.org> <4B674E36.40708@web.de> <76c5b8581002011444t4f955fcdrd1f582f5c043f705@mail.gmail.com> <20100202013647.GM9553@machine.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Feb 02 11:28:00 2010
+From: Michal Sojka <sojkam1@fel.cvut.cz>
+Subject: [TOPGIT PATCH] Make 'tg patch' work in subdirectories
+Date: Tue,  2 Feb 2010 11:31:12 +0100
+Message-ID: <1265106672-18518-1-git-send-email-sojkam1@fel.cvut.cz>
+Cc: Petr Baudis <pasky@ucw.cz>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>,
+	Michal Sojka <sojkam1@fel.cvut.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 02 11:32:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcFyQ-0008Jt-Sm
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 11:27:11 +0100
+	id 1NcG2u-0004iU-04
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 11:31:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755558Ab0BBK1G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 05:27:06 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:60305 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755319Ab0BBK1E (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 05:27:04 -0500
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate03.web.de (Postfix) with ESMTP id EDCF413CF6103;
-	Tue,  2 Feb 2010 11:27:01 +0100 (CET)
-Received: from [78.49.150.133] (helo=[192.168.1.202])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1NcFyG-0002Wh-00; Tue, 02 Feb 2010 11:27:00 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.5) Gecko/20091130 SUSE/3.0.0-1.1.1 Thunderbird/3.0
-In-Reply-To: <20100202013647.GM9553@machine.or.cz>
-X-Sender: Markus.Elfring@web.de
-X-Provags-ID: V01U2FsdGVkX19trOAYL5sy4G8XuLLys8q57PSfn/fsGVXt4H9D
-	FuPOhwIPpS+sAzt0Dx79aS46Ic4zbNNSXH5RZ35ZDioTxniPQS
-	co6bqwqE1m/H0rCBwbLg==
+	id S1755786Ab0BBKbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 05:31:45 -0500
+Received: from max.feld.cvut.cz ([147.32.192.36]:53907 "EHLO max.feld.cvut.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755775Ab0BBKbm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 05:31:42 -0500
+Received: from localhost (unknown [192.168.200.4])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 7CC2019F333B;
+	Tue,  2 Feb 2010 11:31:41 +0100 (CET)
+X-Virus-Scanned: IMAP AMAVIS
+Received: from max.feld.cvut.cz ([192.168.200.1])
+	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
+	with ESMTP id h+GOoWipa921; Tue,  2 Feb 2010 11:31:41 +0100 (CET)
+Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 5960819F331D;
+	Tue,  2 Feb 2010 11:31:41 +0100 (CET)
+Received: from localhost.localdomain (k335-30.felk.cvut.cz [147.32.86.30])
+	(Authenticated sender: sojkam1)
+	by imap.feld.cvut.cz (Postfix) with ESMTPSA id 2704815C052;
+	Tue,  2 Feb 2010 11:31:40 +0100 (CET)
+X-Mailer: git-send-email 1.6.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138709>
 
+When 'tg patch' is called from a subdirectory, it outputs only the
+commit message and no diff.
 
-> For better or worse, There Is More Than One Way To Do It in Git. ;-)
->   
+Signed-off-by: Michal Sojka <sojkam1@fel.cvut.cz>
 
-Do you see also a need for improvements in the cooperation between the
-functions "checkout" and "stash"?
-Would it be useful to combine them into a single command on demand to
-make the switching of branches without committing
-changes a bit more convenient?
+---
+ tg-patch.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Regards,
-Markus
+diff --git a/tg-patch.sh b/tg-patch.sh
+index d701c54..f703a87 100644
+--- a/tg-patch.sh
++++ b/tg-patch.sh
+@@ -56,6 +56,7 @@ git diff --name-only $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- |
+ 	fgrep -vx ".topdeps" |
+ 	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail randomly?
+ if [ -s "$git_is_stupid" ]; then
++	cd "$root_dir"
+ 	cat "$git_is_stupid" | xargs git diff --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} --
+ else
+ 	echo "No changes."
+-- 
+tg: (341a371..) t/make-patch-work-in-subdir (depends on: master)
