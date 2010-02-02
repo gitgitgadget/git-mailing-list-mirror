@@ -1,86 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: A git-mv question
-Date: Tue, 02 Feb 2010 07:32:45 -0800 (PST)
-Message-ID: <m3r5p3ac2e.fsf@localhost.localdomain>
-References: <ron1-09EE6C.16083801022010@news.gmane.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] Correct spelling of 'REUC' extension
+Date: Tue, 2 Feb 2010 07:33:28 -0800
+Message-ID: <20100202153328.GB9687@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ron Garret <ron1@flownet.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 16:33:00 2010
+To: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 02 16:35:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcKkN-0002XI-2r
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 16:32:59 +0100
+	id 1NcKmz-00054f-QZ
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 16:35:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756393Ab0BBPcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 10:32:50 -0500
-Received: from mail-fx0-f215.google.com ([209.85.220.215]:63193 "EHLO
-	mail-fx0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756355Ab0BBPcs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 10:32:48 -0500
-Received: by fxm7 with SMTP id 7so196581fxm.28
-        for <git@vger.kernel.org>; Tue, 02 Feb 2010 07:32:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=lJszktAbu07VtlONIlozpjrTU61r6JVLHYlBe62ulLo=;
-        b=QWKzCpnY/VKInHwA5sz8sGqfruiU6omDzodS5bv25yUnkJv4d0mbLKPOnr2EVXGZcJ
-         NHQ3t4Aw+A9tE/maTskHy7rU14ipxB1PZFaaa1dnD7f9T/oZV1JWN8tAKzEgoyZGZLCz
-         14Him4MXmGYAcwfHRDnLKO9bSQBMO24rFUx18=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=ddSoxNELDrdRMKmngjeb6TpMN8HGKT9iS4JIY3HEWRa5qt0nGjNOpg48dwhuDdtyFC
-         /Jp/BKwz4aW4xaLSaiGdER+rit+qFYSzDgJ+4wUt2ioaaEIfFkdEMPPC2GEjMtaPe4WC
-         nVuE5WVK78ww8FMOp1hBhoMX9k0aT8TuHwnIw=
-Received: by 10.86.106.7 with SMTP id e7mr10762283fgc.1.1265124767120;
-        Tue, 02 Feb 2010 07:32:47 -0800 (PST)
-Received: from localhost.localdomain (abvl217.neoplus.adsl.tpnet.pl [83.8.209.217])
-        by mx.google.com with ESMTPS id 16sm2564591fxm.12.2010.02.02.07.32.44
+	id S1756405Ab0BBPfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 10:35:12 -0500
+Received: from mail-gx0-f224.google.com ([209.85.217.224]:46070 "EHLO
+	mail-gx0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756490Ab0BBPfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 10:35:07 -0500
+Received: by gxk24 with SMTP id 24so153534gxk.1
+        for <git@vger.kernel.org>; Tue, 02 Feb 2010 07:33:35 -0800 (PST)
+Received: by 10.150.240.13 with SMTP id n13mr8635560ybh.333.1265124811081;
+        Tue, 02 Feb 2010 07:33:31 -0800 (PST)
+Received: from localhost ([209.20.77.23])
+        by mx.google.com with ESMTPS id 7sm2175022ywf.10.2010.02.02.07.33.29
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 02 Feb 2010 07:32:45 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o12FWERN013155;
-	Tue, 2 Feb 2010 16:32:24 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o12FVrhR013148;
-	Tue, 2 Feb 2010 16:31:53 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <ron1-09EE6C.16083801022010@news.gmane.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Tue, 02 Feb 2010 07:33:29 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138727>
 
-Ron Garret <ron1@flownet.com> writes:
+The new dircache extension CACHE_EXT_RESOLVE_UNDO, whose value is
+0x52455543, is actually the ASCII sequence 'REUC', not the ASCII
+sequence 'REUN'.
 
-> If I do a git-mv *and* edit the file all in one commit, does that get 
-> recorded in a way that allows git to track the change through the 
-> changed file name?  In other words, if I do just a git-mv (without 
-> changing the file) git can track that by observing that two differently 
-> named objects in two different commit trees contain the same blob.  But 
-> if the file is edited then the blobs will be different.  Is git smart 
-> enough to distinguish a git-mv and edit from, say, the equivalent git-rm 
-> and git-add?  If so, how does it do it?
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
 
-Git does not distinguish between git-mv and equivalent git-rm+git-add;
-it employs heuristic similarity based (based on how contents of files
-is similar to each other) rename detection.
+ I missed the patch that added this to C Git, so I got a bit
+ surprised when an unresolved index started crashing inside of JGit.
 
-Also worth noting is that git does consider only endpoints for rename
-detection in diff and in merge; it does not check history if there
-were clean rename / rename + edit.
+ JGit is trying to do the right thing by ignoring the extension,
+ since its name is all uppercase, but its still getting confused
+ and barfing at the end of the file.  While trying to track it down
+ I started scratching my head wondering what this 'REUC' extension
+ was, and where it came from... only to find out its not actually
+ documented in the sources, because the comment is wrong.
+
+ read-cache.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/read-cache.c b/read-cache.c
+index 309b77a..f1f789b 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -26,7 +26,7 @@ static struct cache_entry *refresh_cache_entry(struct cache_entry *ce, int reall
+ 
+ #define CACHE_EXT(s) ( (s[0]<<24)|(s[1]<<16)|(s[2]<<8)|(s[3]) )
+ #define CACHE_EXT_TREE 0x54524545	/* "TREE" */
+-#define CACHE_EXT_RESOLVE_UNDO 0x52455543 /* "REUN" */
++#define CACHE_EXT_RESOLVE_UNDO 0x52455543 /* "REUC" */
+ 
+ struct index_state the_index;
+ 
+-- 
+1.7.0.rc0.170.g7207c
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Shawn.
