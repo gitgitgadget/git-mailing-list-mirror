@@ -1,81 +1,72 @@
-From: Jacob Todd <jaketodd422@gmail.com>
-Subject: Re: [PATCH] gitk: Add shortcut Ctrl-W for closing the active window
-Date: Tue, 2 Feb 2010 17:50:00 +0000
-Message-ID: <20100202175000.GC19749@zoidberg.hsd1.mi.comcast.net>
-References: <4B68A310.6000807@web.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [BUG] - "git commit --amend" commits, when exiting the editor 
+ with no changes written
+Date: Wed, 3 Feb 2010 00:00:26 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1002022356460.4985@pacific.mpi-cbg.de>
+References: <76c5b8581002021207y3eccdc19i9a4abcc3d04315f0@mail.gmail.com>  <8c9a061002021214j673afbc8vfa5d941fba518648@mail.gmail.com>  <32541b131002021227o1ec9f369w6096e85382857b8a@mail.gmail.com>  <76c5b8581002021247j6df8f609ld9e5d87a060a5423@mail.gmail.com>
+  <394FB581-C9B9-40AB-AFB6-39B68ED5BEAD@wincent.com>  <76c5b8581002021356m52bb1817k9a4a29da0d4b681d@mail.gmail.com>  <77153A83-158D-4D36-A622-7AA3947C7D52@wincent.com> <76c5b8581002021431o2b5073a0s42b273b6d61893db@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Y5rl02BVI9TCfPar"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 02 23:52:59 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Wincent Colaiuta <win@wincent.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 02 23:54:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcRcB-0001mh-FR
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 23:52:59 +0100
+	id 1NcRdT-0002Y9-Qw
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 23:54:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932209Ab0BBWwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 17:52:53 -0500
-Received: from mail-iw0-f201.google.com ([209.85.223.201]:64800 "EHLO
-	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757093Ab0BBWww (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 17:52:52 -0500
-Received: by iwn39 with SMTP id 39so776758iwn.1
-        for <git@vger.kernel.org>; Tue, 02 Feb 2010 14:52:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Mka7SZiebHdvIpX125lbKbUWW1IshnlE46IpCQtXWjg=;
-        b=gIfu4lYuZFgB+c1vAnCulrlbhfwNYN+4cDQIVs3Z7IbYPdV/FNwrDHFgLnJii4W+UX
-         1duRcskZjbI0BGveFwFYYeC7q92BR9GJVvMWDw8gXIBnGn2DbeGQt0D8sqvIhKfo2/Nb
-         zNq4m7/QkWvHACSNvWN52oHAG91MLEoSn82gE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=pFAHbAVuxvCju6P/Ih3JfstC7ZsbQ5ZcyOdlc/4fN3IBEBLNTOIrom2I7Fe2bfuz67
-         wGijj2+3DYExi3EIxVkSYI1fdc4pu2sZBJWsltTKpLmTuxQfrdODZDzIrPGed7ze2Ydc
-         6fKKMVVA/PfCSo/O3l/4wu8K9U7SWRv0xiwzI=
-Received: by 10.231.151.207 with SMTP id d15mr3797843ibw.44.1265151172334;
-        Tue, 02 Feb 2010 14:52:52 -0800 (PST)
-Received: from zoidberg.hsd1.mi.comcast.net (c-68-42-226-192.hsd1.mi.comcast.net [68.42.226.192])
-        by mx.google.com with ESMTPS id 22sm6857831iwn.12.2010.02.02.14.52.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 02 Feb 2010 14:52:51 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4B68A310.6000807@web.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932217Ab0BBWyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 17:54:15 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33807 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932213Ab0BBWyO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 17:54:14 -0500
+Received: (qmail invoked by alias); 02 Feb 2010 22:54:12 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp029) with SMTP; 02 Feb 2010 23:54:12 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/lRVIcAzflWfE3oojpcBjY7ZtANE/oGJF/NZAItt
+	20sAi4DM5FTTUH
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <76c5b8581002021431o2b5073a0s42b273b6d61893db@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67000000000000004
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138776>
 
+Hi,
 
---Y5rl02BVI9TCfPar
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Tue, 2 Feb 2010, Eugene Sajine wrote:
 
-Last time I check ^w deleted the word before the cursor.
+[somebody wrote this, I suspect it was Wincent]
+>
+> > Why should Git care about how you exited from your EDITOR? All it 
+> > should care about is the contents of the commit message, and the exit 
+> > code of the editor.
+> 
+> It doesn't matter which editor is used. The only thing that matters is 
+> that you saving or not saving on exit from editor. If not saving - abort 
+> the action.
 
---=20
-I am a man who does not exist for others.
+No. If not saving, then it means that the user was fine with the message 
+as-is.
 
---Y5rl02BVI9TCfPar
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+Remember, --amend is usually for amending the _content_ of the patch, not 
+so much the message.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
+Of course, you could come up with wonderfully complicated strategies such 
+as "if nothing was added, then an unmodified commit message means 'abort', 
+else it means 'go ahead'", but I hope that you agree that this would be 
+very bad from the users' POV: it would be utterly confusing.
 
-iEYEARECAAYFAktoZcgACgkQdg8JTBUsaI5jegCcDP1Mr/lyQWymqlONpYkK8Ely
-c9UAnj7OBmBBqrP+JA5Q8p6anNCJLCZJ
-=gB+i
------END PGP SIGNATURE-----
-
---Y5rl02BVI9TCfPar--
+Ciao,
+Dscho
