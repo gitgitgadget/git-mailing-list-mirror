@@ -1,61 +1,78 @@
-From: Laszlo Papp <djszapi@archlinux.us>
-Subject: Re: Implement --password option for git svn perl script
-Date: Tue, 2 Feb 2010 14:16:06 +0100
-Message-ID: <a362e8011002020516i5d5adcf7k6553d62e633cec88@mail.gmail.com>
-References: <a362e8011001290617n326a9dcx7c345ec31dff4ebe@mail.gmail.com>
-	 <001636ed7681994278047e4e4a6f@google.com>
-	 <a362e8011001290618g542be5f5y2777a925ba9bd936@mail.gmail.com>
-	 <1976ea661001290704h3ed4761dscf95ba848b373555@mail.gmail.com>
-	 <be6fef0d1002012015q2a10af1cq4c5e5f968039ee45@mail.gmail.com>
-	 <1976ea661002012030h23aa415ek30aa6db23cb88d0e@mail.gmail.com>
-	 <a362e8011002012237t640dd8b9sa1da0d221f5d03b6@mail.gmail.com>
-	 <20100202090538.GA28437@dcvr.yhbt.net>
+From: Aneurin Price <aneurin.price@gmail.com>
+Subject: Git and Amazon S3
+Date: Tue, 2 Feb 2010 13:56:41 +0000
+Message-ID: <501db8661002020556k2f65add2rf06b289f2c9cbcac@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Frank Li <lznuaa@gmail.com>, Tay Ray Chuan <rctay89@gmail.com>,
-	git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Feb 02 14:16:25 2010
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 02 14:56:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcIc3-0000l0-DO
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 14:16:15 +0100
+	id 1NcJFI-00011Z-I5
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 14:56:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755843Ab0BBNQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 08:16:11 -0500
-Received: from mail-yx0-f189.google.com ([209.85.210.189]:44569 "EHLO
-	mail-yx0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754403Ab0BBNQJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 08:16:09 -0500
-Received: by yxe27 with SMTP id 27so25766yxe.4
-        for <git@vger.kernel.org>; Tue, 02 Feb 2010 05:16:09 -0800 (PST)
-Received: by 10.100.233.35 with SMTP id f35mr7432564anh.233.1265116566610; 
-	Tue, 02 Feb 2010 05:16:06 -0800 (PST)
-In-Reply-To: <20100202090538.GA28437@dcvr.yhbt.net>
+	id S1756018Ab0BBN4n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 08:56:43 -0500
+Received: from mail-ew0-f228.google.com ([209.85.219.228]:63113 "EHLO
+	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755943Ab0BBN4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 08:56:43 -0500
+Received: by ewy28 with SMTP id 28so84785ewy.28
+        for <git@vger.kernel.org>; Tue, 02 Feb 2010 05:56:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=IjG4eSW/9R1jPqCPeccKqCGFci8xbOCjVfSloKNT+5I=;
+        b=FF6axsrvWMOX4xokn5+w6IWVnES11c+iACyvtmUL+AuHjI9at1xzIr/uMK6D8JrKSv
+         0qIUiDP9lXiSTrjKFGHoFcxyJb8Vq0bj9pOnvKuXymNc3nNmsLsDJghoy9bByu4Im9Yn
+         RLC16qtniqkOAX8GgYC1NCMHDHVEe1r8HARDo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=s3paTpWDT7ylLizVTFMApWZAGD9Wkfzm875jMStU11jK/XsBdm0Ia5Vh1Eytnq6dzA
+         6l52dVH78Yp9fw/O96dsQePvkz6oDhmfx6IYCjZtMBDibVKeXqXmGsyriI0IRFRi1k6f
+         d9ZWAip3sB1IsJOmSPhO0VfrhNiD8AsJ4zdjg=
+Received: by 10.216.88.212 with SMTP id a62mr3617333wef.72.1265119001541; Tue, 
+	02 Feb 2010 05:56:41 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138717>
 
-> Since SVN already caches passwords in a mostly secure location on disk
-> (at least on *nix), shouldn't git svn be able to use the password cache
-> SVN uses?
+Hello all,
 
-@Frank Li
-@Eric Wong
+I have several (mostly private) git repositories which I'm using for various
+purposes including versioned backup of moderate amounts of data, and I'm trying
+to work out the cheapest way of having them remotely backed-up. Since I'm not
+doing collaborative development, the git hosting options I've found aren't a
+good fit - for this amount of data they tend to assume you must have a huge
+project with many contributors, and charge accordingly.
 
-Maybe you can check whether how TortoiseSVN or SVN client code handle
-this situation, because it's the same server, but 'just' the client
-side is different a little bit, but the same situation happen there in
-case TortoiseSVN a popup menu appears when you try to authenticate
-yourself.
+It looks like the cheapest option from a pure storage and data-transfer point of
+view would be S3, so I'm looking at the best way to use it with git. So far, the
+options I've found are either using jgit, which I've never used but appears to
+have a native S3 transport, or using one of the FUSE options to mount S3 as a
+filesystem.
 
-Second way is to ask on the SVN mailing list, how they use it, or
-maybe I'm totally wrong with it :P
+I'm not particularly happy about the idea of using jgit since it would require
+java on all the machines I might want to use it with, and it would mean learning
+to use a different command for fetch and push. It does have the bonus that it's
+possible to publish repositories for read access via dumb http though. On the
+other hand, I'm concerned about the fuse option because a) I'm not sure how
+reliable it is, and b) I'm concerned that the abstraction might leak if, for
+example, git assumes that it is accessing a local filesystem and acts
+differently.
 
-Best Regards,
-Laszlo Papp
+Does anyone have any remarks about these options? Is there a better option - how
+difficult would it be to add native support to git? Are there any other options
+for more git-friendly remote storage at a comparable price? Or maybe I should
+just give up, spend more and get a Linode; then I'd have the flexibility to do
+whatever I want with it.
+
+Thanks for your time,
+Aneurin Price
