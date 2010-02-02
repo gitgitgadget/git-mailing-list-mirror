@@ -1,86 +1,50 @@
-From: "Octavio Alvarez" <alvarezp@alvarezp.ods.org>
-Subject: Re: What does git reset do?
-Date: Tue, 02 Feb 2010 00:01:40 -0800
-Message-ID: <op.u7hpv8nd4oyyg1@localhost.localdomain>
-References: <ron1-A2A2DE.23475601022010@news.gmane.org>
+From: Ron Garret <ron1@flownet.com>
+Subject: Is ./git/branches used for anything?
+Date: Tue, 02 Feb 2010 00:01:31 -0800
+Organization: Amalgamated Widgets
+Message-ID: <ron1-35461E.00013102022010@news.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
-Content-Transfer-Encoding: 8bit
-To: "Ron Garret" <ron1@flownet.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 02 09:02:02 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 02 09:05:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcDhv-0000Gi-Gy
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 09:01:59 +0100
+	id 1NcDl2-00021Z-8j
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 09:05:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755715Ab0BBIBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 03:01:54 -0500
-Received: from spider.alvarezp.com ([66.150.225.106]:44566 "EHLO
-	spider.alvarezp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755392Ab0BBIBx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 03:01:53 -0500
-Received: from localhost.localdomain (201.160.167.202.cable.dyn.cableonline.com.mx [201.160.167.202])
-	(authenticated bits=0)
-	by spider.alvarezp.com (8.13.8/8.13.8/Debian-3) with ESMTP id o1281jNf015878
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 2 Feb 2010 00:01:47 -0800
-In-Reply-To: <ron1-A2A2DE.23475601022010@news.gmane.org>
-User-Agent: Opera Mail/10.10 (Linux)
+	id S1755761Ab0BBIFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 03:05:07 -0500
+Received: from lo.gmane.org ([80.91.229.12]:52473 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755734Ab0BBIFG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 03:05:06 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NcDkv-0001yZ-3m
+	for git@vger.kernel.org; Tue, 02 Feb 2010 09:05:05 +0100
+Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Feb 2010 09:05:05 +0100
+Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Feb 2010 09:05:05 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
+User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138694>
 
-On Mon, 01 Feb 2010 23:47:56 -0800, Ron Garret <ron1@flownet.com> wrote:
+If so, what?  .git/refs/heads seems to contain all the branch info, so 
+what is the branches directory for?
 
-> The docs say that git-reset:
->
-> "Sets the current head to the specified commit..."
-
-... without modifying your working copy if --soft, and modifying your  
-working copy if --hard.
-
-... and without switching branches (you want git checkout for that).
-
-> So I tried this:
->
-> [ron@mickey:~/devel/gittest]$ git branch
-> * br1
->   master
-> [ron@mickey:~/devel/gittest]$ git reset --soft master
->
->
-> ...expecting HEAD to now point to master.  But it doesn't:
-
-It actually does. HEAD (and br1) now point to [the commit pointed to by]  
-master. Your working copy was left intact (because of --soft). Compare  
-with "git checkout".
-
-gitk --all is your friend to better understand this.
-
-Your branch is still br1. It means, if you commit, br1 will advance, (not  
-master). But, given your git reset, instead of committing over [the commit  
-pointed to by previous] br1, you will commit over [the commit pointed to  
-by] master.
-
-Be careful though, you might lose commits with git reset.
-
-> [ron@mickey:~/devel/gittest]$ git branch
-> * br1
->   master
-> [ron@mickey:~/devel/gittest]$ more .git/HEAD
-> ref: refs/heads/br1
->
->
-> So... what does git reset do?
-
-Sets the current head (and branch, if not detached) to the specified  
-commit...
-
--- 
---
-Octavio.
+Thanks,
+rg
