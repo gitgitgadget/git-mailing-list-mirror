@@ -1,91 +1,144 @@
-From: Ron Garret <ron1@flownet.com>
-Subject: Re: master^ is not a local branch -- huh?!?
-Date: Mon, 01 Feb 2010 17:12:42 -0800
-Organization: Amalgamated Widgets
-Message-ID: <ron1-1E906F.17124201022010@news.gmane.org>
-References: <31a97741002010352x1ad27f26ia4d51857bb2d2d4f@mail.gmail.com> <7vpr4o3lg9.fsf@alter.siamese.dyndns.org> <87aavsu9b3.fsf@osv.gnss.ru> <ron1-6F8B85.14520801022010@news.gmane.org> <7vwrywplxz.fsf@alter.siamese.dyndns.org> <ron1-ABA66E.15563101022010@news.gmane.org> <20100202001530.GL9553@machine.or.cz> <ron1-9A9CEA.16452601022010@news.gmane.org> <7vk4uwmp95.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 8/8 v6] gitweb: Add an option to force version match
+Date: Tue, 2 Feb 2010 02:35:17 +0100
+Message-ID: <201002020235.19943.jnareb@gmail.com>
+References: <1264890645-28310-1-git-send-email-jnareb@gmail.com> <1264890645-28310-9-git-send-email-jnareb@gmail.com> <4B677971.2080100@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 02 02:13:15 2010
+Cc: git@vger.kernel.org,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
+	Petr Baudis <pasky@suse.cz>
+To: "J.H." <warthog9@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Tue Feb 02 02:35:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nc7KM-0004d0-FJ
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 02:13:14 +0100
+	id 1Nc7gJ-0007kM-MI
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 02:35:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752852Ab0BBBNI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 20:13:08 -0500
-Received: from lo.gmane.org ([80.91.229.12]:39867 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751778Ab0BBBNG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 20:13:06 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Nc7KB-0004Xu-Jm
-	for git@vger.kernel.org; Tue, 02 Feb 2010 02:13:03 +0100
-Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Feb 2010 02:13:03 +0100
-Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Feb 2010 02:13:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
-User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
+	id S1751409Ab0BBBf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2010 20:35:28 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:14317 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751011Ab0BBBf1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2010 20:35:27 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so81081fgg.1
+        for <git@vger.kernel.org>; Mon, 01 Feb 2010 17:35:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=+fAYRxdIQFIzLNHuH38aOkEfPW+9mhzgfcUXG9dSkZ8=;
+        b=kCJFfhKrBHitni6yn1qbHPfycAXuVnLdLi+VsZsEZhRDCWvruC8j3SLbAyCufAO88j
+         TFItliQ4tuBHWltUlzF9esIRtDah6nCbmN9uKCNmYxjn5IgjCs/eePrl8yf5W0IXYKSV
+         y6vVYwDbVT0bbTxmE3+Ou+HRO+Lc5TfY2x3Go=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=LgV9D2pNt3Zg8n6rgmKyrc27+iQtAOnf3Hos3S5baFcps+rZPCb++GmbBx1ROTJisB
+         1UYt8C6WZAYeV+bVhiiI8k0sZ+avePodwjj5xOxp+CfQNgDj+mSWNhd5n4YYCZRlyQih
+         bsT+cGhlQVYVD+vOjSbqb1vOjbkqOii98t9ic=
+Received: by 10.87.36.4 with SMTP id o4mr8699443fgj.69.1265074525808;
+        Mon, 01 Feb 2010 17:35:25 -0800 (PST)
+Received: from ?192.168.1.13? (abvl217.neoplus.adsl.tpnet.pl [83.8.209.217])
+        by mx.google.com with ESMTPS id d6sm10157679fga.29.2010.02.01.17.35.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 01 Feb 2010 17:35:24 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4B677971.2080100@eaglescrag.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138671>
 
-In article <7vk4uwmp95.fsf@alter.siamese.dyndns.org>,
- Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, 1 Feb 2010, at 17:01:37 -0800, J.H. wrote:
 
-> Ron Garret <ron1@flownet.com> writes:
+> Starting to pop off the stack, and this came up first.  A quick reading
+> of this, I'd sign-off and agree to patches 1-7 completely.
 > 
-> > The manual specifically contradicts you, so either you are wrong or the 
-> > manual is wrong.
+> I'm still going to take issue that this being off by default is the
+> wrong behavior and leaving this off by default more or less means that
+> it will never get run and it becomes useless code.  If this isn't on by
+> default, it shouldn't be committed, as I can't think of a legitimate use
+> case where an admin is going to turn this on.
+
+Well, I don't think that mismatched git and gitweb version should be
+serious problem in practice, unless they are seriously out of sync.  
+And in such situation (where either git is stale and gitweb updated,
+or git updated and gitweb kept stale e.g. because it is heavily 
+customized with not ported changes) gitweb admin should turn this
+feature on.
+
 > 
-> In case you haven't noticed, Pasky is one of the old timers and he knows a
-> thing or two about the git's world model.
+> I'd still argue this needs to be on by default to at least give admins
+> the explicit warning that if they want to deviate they are taking their
+> own risks, and that gitweb might not run as expected.  Once the warning
+> is disabled in a configuration file it's not like it's going to be
+> re-enabled.  People loading gitweb from their distro's package
+> management will likely be in sync properly and will never see this.
+> Those who are installing gitweb independent of their distro's package
+> management will at least be warned of the risk, at least until better
+> error reporting is done and in gitweb.
 
-My intent was not to diss Pasky, it was just to point out a disconnect 
-between what he was saying and what the manual says.  It's quite 
-possible that the manual is wrong or out of date or just misleading.  
-But it says what it says.
+If you want to have it turned on by default (which is _incompatible_
+change, and which was not announced enough, I think; it might mean
+that gitweb can stop working after git or gitweb update), beside
+changing commit message and gitweb/README (and of course definition of
+$git_versions_must_match variable), you would have also update 
+explanation in die_error for version mismatch.
 
-> And I do not see a contradiction in what the manual describes and "a
-> branch is a named pointer to a commit" (although "named" can probably be
-> omitted as "unnamed pointer" is not useful at the UI level).
+Current version, as requested by Petr 'Pasky' Baudis, explains how
+to turn feature off if it was enabled.  For this it needs to check
+which config file is present, but we know at least that some config
+file had to be used (beside possibility of hand-editing gitweb.cgi).
+This is not the case if this feature is turned on by default: there
+is possible that there is no gitweb config file, and all configuration
+was done at build time.  How to explain then how to turn this feature
+off?  What happens if both $GIWEB_CONFIG and $GITWEB_CONFIG_SYSTEM
+are empty because of misconfiguration during build ($GITWEB_CONFIG
+is set by default to gitweb_config.perl, and $GITWEB_CONFIG_SYSTEM
+is set by default to /etc/gitweb.conf)?  Which one to recommend if both
+variables are set, but neither file exists?
 
-But that's not what the manual says.  The manual says, "When we need to 
-be precise, we will use the word "branch" to mean a line of 
-development..."  Those are the first words in the section entitled 
-"Understanding history: What is a branch?"  It certainly appears to the 
-untrained eye that that is intended to be the definition of a branch.
+The difficulty of explanation how to turn this feature off if it is
+on by default was one of main reasons to not have it turned on by
+default.
 
-Maybe the manual just needs to be updated.  "A named pointer to a 
-commit" is a useful definition, and a lot clearer than "a line of 
-development" (I don't even know what that means).  I do think it's 
-important to keep "named" to distinguish them from, for example, SHA1 
-hashes which are (or at least can be) unnamed pointers to commits.
 
-In fact, the whole issue of detached/attached HEAD comes down to whether 
-HEAD is a direct reference to a commit through its hash, or an indirect 
-reference to a commit through a named reference that it "drags along" 
-the next time a commit is, er, committed.  :-)
+Side-note: Perhaps error is too strong a measure, and it would be better
+to just issue warning somewhere instead?
 
-BTW, my intent here is not to critique git's design, or to pump myself 
-up as some kind of an expert or to cut anybody down or anything like 
-that.  I'm just trying to point out how what is written down can lead to 
-confusion for someone who doesn't know what's going on, and to make some 
-constructive suggestions on how the situation could be improved.  That's 
-all.
+> 
+> I've got a slightly modified version of this that re-enables it by
+> default, it passes t9501 for me.
 
-rg
+As it should, because gitweb-lib.sh was modified to explicitly turn off
+this feature (see below), to allow testing gitweb without need to 
+recompile whole git, and to allow testing _not installed_ (source)
+version of gitweb.
+
+> > diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
+> > index 5a734b1..66a3e2d 100755
+> > --- a/t/gitweb-lib.sh
+> > +++ b/t/gitweb-lib.sh
+> > @@ -26,6 +26,7 @@ our \$projects_list = '';
+> >  our \$export_ok = '';
+> >  our \$strict_export = '';
+> >  our \$maxload = undef;
+> > +our \$git_versions_must_match = 0;
+> >  
+> >  EOF
+> >  
+
+-- 
+Jakub Narebski
+Poland
