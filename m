@@ -1,76 +1,91 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] gitk: Add shortcut Ctrl-W for closing the active window
-Date: Tue, 02 Feb 2010 23:11:28 +0100
-Message-ID: <4B68A310.6000807@web.de>
+From: martin f krafft <madduck@madduck.net>
+Subject: Reacting to new commits in a poll-mirror
+Date: Wed, 3 Feb 2010 11:02:34 +1300
+Message-ID: <20100202220234.GA17107@lapse.rw.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Feb 02 23:11:39 2010
+Content-Type: multipart/signed; micalg=pgp-ripemd160;
+	protocol="application/pgp-signature"; boundary="5vNYLRcllDrimb99"
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 02 23:13:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcQy8-0003nP-Sk
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 23:11:37 +0100
+	id 1NcQzr-00053K-6C
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 23:13:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756964Ab0BBWLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 17:11:31 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:52740 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756911Ab0BBWLa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 17:11:30 -0500
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate03.web.de (Postfix) with ESMTP id B2A6113CFBD7D;
-	Tue,  2 Feb 2010 23:11:29 +0100 (CET)
-Received: from [80.128.126.55] (helo=[192.168.178.26])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1NcQy1-0004P7-00; Tue, 02 Feb 2010 23:11:29 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/SGN6es3nVijBPHsMLhY9/5a6oLHrWHZlhYYSX
-	XsuB13yNQhazrbEDWDiVyKdNq4V1djYfTvONQYHECsHlhCXiwf
-	XG3h5rwXtFxrlI0wBzZg==
+	id S1757017Ab0BBWNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 17:13:20 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:47707 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756993Ab0BBWNR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 17:13:17 -0500
+X-Greylist: delayed 634 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Feb 2010 17:13:17 EST
+Received: from lapse.rw.madduck.net (lapse.nz.madduck.net [IPv6:2001:4428:234::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id 997CF1D4097
+	for <git@vger.kernel.org>; Tue,  2 Feb 2010 23:02:38 +0100 (CET)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id 7BDEDFF; Wed,  3 Feb 2010 11:02:34 +1300 (NZDT)
+Content-Disposition: inline
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.32-trunk-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.95.3 at clegg
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138770>
 
-To make the user experience between git gui and gitk more homogeneous, use
-Ctrl-W in gitk too for closing the active window. When closing the main
-window doquit is called for proper cleanup.
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+--5vNYLRcllDrimb99
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Found myself hitting Ctrl-W in gitk with no effect once too often ;-)
+Folks,
 
- gitk-git/gitk |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+I am trying to set up Patchwork-Git integration on host A for
+a project whose Git repo is on host B. I thought I could use
+a mirror (git clone --mirror) on A and regularly fetch from B, but
+I cannot find a way (hook) to make Git on A react to new commits it
+fetched from B.
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 03dd0f4..9629394 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -2383,6 +2383,8 @@ proc makewindow {} {
-     }
-     bindall <$::BM> "canvscan mark %W %x %y"
-     bindall <B$::BM-Motion> "canvscan dragto %W %x %y"
-+    bind all <$M1B-Key-w> {destroy [winfo toplevel %W]}
-+    bind . <$M1B-Key-w> doquit
-     bindkey <Home> selfirstline
-     bindkey <End> sellastline
-     bind . <Key-Up> "selnextline -1"
-@@ -2814,6 +2816,7 @@ proc keys {} {
- [mc "Gitk key bindings:"]
+I can probably hack something up, e.g. store refs before a fetch and
+then iterate the refs between the stored refs and the HEAD, but this
+seems exceedingly hackish and I'd much rather have this information
+=66rom git-fetch (like git-push calls post-receive).
 
- [mc "<%s-Q>		Quit" $M1T]
-+[mc "<%s-W>		Close window" $M1T]
- [mc "<Home>		Move to first commit"]
- [mc "<End>		Move to last commit"]
- [mc "<Up>, p, i	Move up one commit"]
--- 
-1.7.0.rc1.173.gc7c5.dirty
+Is this at all possible?
+Would it be possible?
+Where would this be done?
+
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+the uncertainty principle:
+  you can never be sure how many
+  beers you had last night.
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--5vNYLRcllDrimb99
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEAREDAAYFAktooPcACgkQIgvIgzMMSnUZzgCeJ8Im22Bc+gmI/9AC8Jp84OWH
+qfwAn2jrQI43bXm8IlcQtJOOhust686P
+=W3cn
+-----END PGP SIGNATURE-----
+
+--5vNYLRcllDrimb99--
