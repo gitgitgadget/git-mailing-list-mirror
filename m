@@ -1,82 +1,111 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: Re: Delivery Status Notification (Failure)
-Date: Tue, 2 Feb 2010 12:30:41 +0800
-Message-ID: <1976ea661002012030h23aa415ek30aa6db23cb88d0e@mail.gmail.com>
-References: <a362e8011001290617n326a9dcx7c345ec31dff4ebe@mail.gmail.com>
-	 <001636ed7681994278047e4e4a6f@google.com>
-	 <a362e8011001290618g542be5f5y2777a925ba9bd936@mail.gmail.com>
-	 <1976ea661001290704h3ed4761dscf95ba848b373555@mail.gmail.com>
-	 <be6fef0d1002012015q2a10af1cq4c5e5f968039ee45@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [RFC/PATCH 5/6] revert: add --ff option to allow fast forward when cherry-picking
+Date: Tue, 2 Feb 2010 06:13:47 +0100
+Message-ID: <201002020613.48067.chriscool@tuxfamily.org>
+References: <20100201074835.3929.11509.chriscool@tuxfamily.org> <c07716ae1002010443p4e0443feke14e5f877584640f@mail.gmail.com> <4B66E53D.8050204@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Laszlo Papp <djszapi@archlinux.us>, git@vger.kernel.org,
-	normalperson@yhbt.net
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 05:31:36 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Feb 02 06:14:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcAQJ-0008K7-E3
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 05:31:35 +0100
+	id 1NcB5e-0000lZ-Dh
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 06:14:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753759Ab0BBEbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2010 23:31:10 -0500
-Received: from mail-yw0-f173.google.com ([209.85.211.173]:47749 "EHLO
-	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752532Ab0BBEbI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2010 23:31:08 -0500
-Received: by ywh3 with SMTP id 3so2349288ywh.22
-        for <git@vger.kernel.org>; Mon, 01 Feb 2010 20:31:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=Gk0qYKvOHhiIj0MJud3osZoHJd91pTUBqnGCgspD3MQ=;
-        b=ChmwqhOLvgnpqpFRDDtEND5dm5zDvAUwQD0iKt6HjJ7phGNWHMedth9mqb4IKgU8ce
-         c/Q2+Mxqc6dMuvyux4AoIKe/P/rkqzDjuQChzuw/ffQT2Ayl9p00o6KqlQZ+veWEZ7+k
-         Vlntd3j4rsKPy+FiKX66grgvC/IOxB4QhPdLE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Eg9uBQ5CLGjZTLFKtVGbrVLMY0xH/wPY8EJJhobHeZUKUXmivR6OBaFrkG7urRslik
-         hDSLf/uyeUiAfufBKsDTsHcARR+04nrSPvDHTSq2YDVGTmknxKErcdcS35qeyKHb8ibO
-         3KDQJyEMOYIVyR+8XCDHiKqsL9Y6jpWrGsKtM=
-Received: by 10.150.30.14 with SMTP id d14mr7790364ybd.97.1265085041180; Mon, 
-	01 Feb 2010 20:30:41 -0800 (PST)
-In-Reply-To: <be6fef0d1002012015q2a10af1cq4c5e5f968039ee45@mail.gmail.com>
+	id S1750810Ab0BBFKp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Feb 2010 00:10:45 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:59430 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750757Ab0BBFKo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2010 00:10:44 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 14AEC818036;
+	Tue,  2 Feb 2010 06:10:35 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 8F78B818052;
+	Tue,  2 Feb 2010 06:10:32 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <4B66E53D.8050204@gnu.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138677>
 
-2010/2/2 Tay Ray Chuan <rctay89@gmail.com>:
-> Hi,
+On lundi 01 f=E9vrier 2010, Paolo Bonzini wrote:
+> On 02/01/2010 01:43 PM, Christian Couder wrote:
+> > Maybe it could be the default, but in this case it should be made
+> > compatible with -n option (and perhaps other options) for backward
+> > compatibility, and this would probably need more involved changes.
 >
-> On Fri, Jan 29, 2010 at 11:04 PM, Frank Li <lznuaa@gmail.com> wrote:
->> I prefer git-svn can provide environment to launch a external
->> application to input password like open ssh.
->
-> how about users who are authenticating over http with basic and
-> digest? How does one go about launching an external app for password
-> input in those cases?
+> A better objection is that GIT_COMMITTER_* is respected by |git
+> cherry-pick" but not by "git cherry-pick --ff",=20
 
-There are not problem if run git svn clone from console.
-But a gui application, such tortoisegit, launch "git svn clone" and
-capture git svn clone output.
-If passwd needed, git svn clone will read character from console but
-GUI application don't know that and wait git svn output.
-So there are dead lock till timeout and fail.
+Yes, indeed! Good catch!
 
-The same problem has been happen at ssh.  But OpenSSH provide a
-option, environment SSH_ASKPASS, which point to a application. when
-passwd need, openssh launch this GUI application,  user can input
-passwd at this GUI application.
+> and that even without=20
+> setting the variables, "git cherry-pick" will pick a new commit date =
+but
+> "git cherry-pick --ff" wouldn't.  The latter, I think is the only
+> difference that is worth pondering further.
 
-The basic requirement is git svn can provide a way to prompt a dialog
-box to input passwd.
+Because --no-ff could be used when the GIT_COMMITTER_* and GIT_AUTHOR_*=
+ env=20
+variable should be respected? Or because we should check if one of thes=
+e=20
+env variable is set and, if that is the case, we should not fast forwar=
+d?
 
-Frank Li
+As I think it would be a big backward incompatibility to force people t=
+o=20
+update their scripts to add --no-ff, I think you probably suggest the=20
+latter. This mean that we could have both --ff and --no-ff. --ff could=20
+force fast forward even if some of the above env variables are set. --n=
+o-ff=20
+would disable fast forward even if none of the above env variable is se=
+t.
+
+> My impression is that a user would never have any problem with
+> fast-forwarding.  For scripts probably the same is true (the typical
+> scenario for scripts is probably very similar to what "git rebase -i"
+> does), but it can still be a potential backwards-incompatibility in c=
+ase
+> the script is *expecting* cherry-picking to generate a new SHA1.  How
+> broken can we consider this expectation?
+
+I am not too worried by this expectation, but I think that, as it looks=
+ like=20
+we will need --ff anyway, it is safer to start by implementing --ff lik=
+e I=20
+did and then later we can implement --no-ff and change the default (whe=
+n=20
+neither --ff nor --no-ff is used) to look at env variables (or config=20
+variables) to decide if we will fast forward or not.
+
+> That said, to reply to your question, of course -n would disable it, =
+and
+> so would -x, -s and possibly -e.  But then, the same applies to --ff:
+> your patch forbids "-n --ff", but -x, -s and -e would need the same
+> treatment.
+
+Yeah, I will add the same treatment for these options.
+
+> Note that "-e --ff" would error out; however if --ff would be the
+> default, "-e" would probably choose between fast-forward and
+> non-fast-forward depending on whether the commit message was edited.
+
+Yeah, but let's change the default later please.
+
+Thanks,
+Christian.
