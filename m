@@ -1,48 +1,125 @@
-From: Intland Software <marketing@intland.com>
-Subject: "Going Agile with Git and codeBeamer" (Tutorial)
-Date: Tue, 02 Feb 2010 15:26:34 +0100
-Message-ID: <4B68361A.30800@intland.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Is ./git/branches used for anything?
+Date: Tue, 02 Feb 2010 07:00:09 -0800 (PST)
+Message-ID: <m34olzbs5f.fsf@localhost.localdomain>
+References: <ron1-35461E.00013102022010@news.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 02 15:27:00 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ron Garret <ron1@flownet.com>
+X-From: git-owner@vger.kernel.org Tue Feb 02 16:00:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcJiW-0006nF-94
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 15:27:00 +0100
+	id 1NcKEs-00080S-7O
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 16:00:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756162Ab0BBO0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 09:26:54 -0500
-Received: from mail01d.mail.t-online.hu ([84.2.42.6]:58066 "EHLO
-	mail01d.mail.t-online.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755943Ab0BBO0x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 09:26:53 -0500
-Received: from [192.168.1.67] (dsl4E5C0A05.pool.t-online.hu [78.92.10.5])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail01d.mail.t-online.hu (Postfix) with ESMTPSA id 24A597587A9
-	for <git@vger.kernel.org>; Tue,  2 Feb 2010 15:23:53 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-X-DCC-mail.t-online.hu-Metrics: mail01d.mail.t-online.hu 32721; Body=1 Fuz1=1
-	Fuz2=1
+	id S1753402Ab0BBPAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 10:00:20 -0500
+Received: from mail-fx0-f215.google.com ([209.85.220.215]:53957 "EHLO
+	mail-fx0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752291Ab0BBPAT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 10:00:19 -0500
+Received: by fxm7 with SMTP id 7so155539fxm.28
+        for <git@vger.kernel.org>; Tue, 02 Feb 2010 07:00:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=bT5PO/GH7giZlwTXItRhE31w1nhIWRiOKw+MqmApAew=;
+        b=LM6W5bBSijiDN5cQBbyt2umHmpbP7C09h5UGGYfISAnxBNSCrn857CbGdqeg/rDFJ7
+         DFT1Buvg1BPeMSgw2N5jDBcQg3ldtcQy92Kq+nxYa/6rwLvL18Vqng6XRQuwwcCQhQ67
+         oonn7OrVsMKZlVZ/6V+byzrZsefyE4vRo4ppM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=vQQcJtCf/BqtgT1UxAGAWjFtxmfKB2AbBeTu46Tq6QorTgsjvfeMtySyEWr+RpOZ7Y
+         IMbSOxc+KMY01EmyHV6tCvvAsKmyEA7hgxwYYSROoqkdiWfsofgEetHYGstSF3G/704g
+         1q25hIkKSdh2C59DMDdz+KYWYnatw/+0m70fw=
+Received: by 10.223.2.208 with SMTP id 16mr2477510fak.20.1265122817403;
+        Tue, 02 Feb 2010 07:00:17 -0800 (PST)
+Received: from localhost.localdomain (abvl217.neoplus.adsl.tpnet.pl [83.8.209.217])
+        by mx.google.com with ESMTPS id 16sm2539540fxm.8.2010.02.02.07.00.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 02 Feb 2010 07:00:09 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o12ExPRJ012758;
+	Tue, 2 Feb 2010 15:59:35 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o12Ex8Oo012751;
+	Tue, 2 Feb 2010 15:59:08 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <ron1-35461E.00013102022010@news.gmane.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138720>
 
-  Dear Git users,
+Ron Garret <ron1@flownet.com> writes:
 
-  A short workshop material for anyone interested in Git, codeBeamer and agile:
+> If so, what?  .git/refs/heads seems to contain all the branch info, so 
+> what is the branches directory for?
 
-  http://blogs.intland.com/main/entry/50
+See gitrepository-layout(5):
 
-  It has originally been developed for large telco (can't disclose), getting
-involved in Android core development. We thought you might find this useful.
----
-  Intland team
-  http://www.intland.com
+  branches::
+        A slightly deprecated way to store shorthands to be used
+        to specify URL to 'git fetch', 'git pull' and 'git push'
+        commands is to store a file in `branches/<name>` and
+        give 'name' to these commands in place of 'repository'
+        argument.
+
+and git-pull(1):
+
+  REMOTES
+  -------
+
+  The name of one of the following can be used instead
+  of a URL as `<repository>` argument:
+
+  * a remote in the git configuration file: `$GIT_DIR/config`,
+  * a file in the `$GIT_DIR/remotes` directory, or
+  * a file in the `$GIT_DIR/branches` directory.
+
+  All of these also allow you to omit the refspec from the command line
+  because they each contain a refspec which git will use by default.
+
+  [...]
+
+  Named file in `$GIT_DIR/branches`
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can choose to provide the name of a
+  file in `$GIT_DIR/branches`.
+  The URL in this file will be used to access the repository.
+  This file should have the following format:
+
+
+  ------------
+          <url>#<head>
+  ------------
+
+  `<url>` is required; `#<head>` is optional.
+
+  Depending on the operation, git will use one of the following
+  refspecs, if you don't provide one on the command line.
+  `<branch>` is the name of this file in `$GIT_DIR/branches` and
+  `<head>` defaults to `master`.
+
+
+Ancient history, if somewhat useful for some workflow[1].  It came from
+Cogito, which was alternate UI for git.
+
+[1] Namely one of main Linux kernel developers (Linus lieutienants)
+has scripts around this way of specifying remote information.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
