@@ -1,65 +1,69 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Completion of error handling
-Date: Tue, 2 Feb 2010 16:27:29 -0500
-Message-ID: <32541b131002021327u29e666b8ia5c6aab25fb55688@mail.gmail.com>
-References: <4B68249F.6070004@web.de> <alpine.LFD.2.00.1002021324290.1681@xanadu.home> 
-	<4B6873AC.4030303@web.de> <alpine.LFD.2.00.1002021424550.1681@xanadu.home> 
-	<4B688042.8090400@web.de> <32541b131002021149g6ffe703erd9e25621e4305a52@mail.gmail.com> 
-	<4B6886CE.9040602@web.de> <32541b131002021225k19ef94b2me8ef40cd502b85d@mail.gmail.com> 
-	<4B68989D.80906@web.de>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: Re: Fix signal handler
+Date: Tue, 02 Feb 2010 22:44:37 +0100
+Message-ID: <4B689CC5.3000400@web.de>
+References: <4B684F5F.7020409@web.de> <20100202205849.GA14385@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Nicolas Pitre <nico@fluxnic.net>, git@vger.kernel.org
-To: Markus Elfring <Markus.Elfring@web.de>
-X-From: git-owner@vger.kernel.org Tue Feb 02 22:27:59 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 02 22:44:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcQHt-00089J-Jn
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 22:27:57 +0100
+	id 1NcQYD-0002xl-OX
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 22:44:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756740Ab0BBV1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 16:27:50 -0500
-Received: from mail-gx0-f228.google.com ([209.85.217.228]:57133 "EHLO
-	mail-gx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756712Ab0BBV1u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 16:27:50 -0500
-Received: by gxk28 with SMTP id 28so544357gxk.9
-        for <git@vger.kernel.org>; Tue, 02 Feb 2010 13:27:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=IECkZYCDzfmM86zFdT2s4569eQiBSNEbgd5JdhTySpw=;
-        b=V8UPVwSaM9kdyPRj/dJiNHMTCDO/Md9DUbdsrX6u7qehjCn2cKUBt8YCcWcNlpud8X
-         lax8rdyWdlcrnQkTzCYpFzHYbSRh1pRUctX637u5DlYRHhBT2WKgejQY+LRKQgmgsQQt
-         Szkk/rjGdtwRyjIzo2vFwh0vDY2QlK1E5LzS0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=NBk15MakvkTLbrYB2lTUv5BDc7etJgDSOXpGC3CspRDQeLnmPBhb15uF4fp5/KiJv3
-         CX/6vIMwr5N7wiHiHlwashnTBS08GrY1Nwc+92/0f2tArxs6oUmYqqRR/oNVrbhdd+pY
-         dD0VGMfz3LM52CJDpsnHugY/F0bbCK3qVZcsM=
-Received: by 10.150.4.26 with SMTP id 26mr9658052ybd.0.1265146069084; Tue, 02 
-	Feb 2010 13:27:49 -0800 (PST)
-In-Reply-To: <4B68989D.80906@web.de>
+	id S1756802Ab0BBVop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 16:44:45 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:55069 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754747Ab0BBVol (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 16:44:41 -0500
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id CABE2145FD4EC;
+	Tue,  2 Feb 2010 22:44:39 +0100 (CET)
+Received: from [78.49.150.133] (helo=[192.168.1.202])
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NcQY3-0001Tt-00; Tue, 02 Feb 2010 22:44:39 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.5) Gecko/20091130 SUSE/3.0.0-1.1.1 Thunderbird/3.0
+In-Reply-To: <20100202205849.GA14385@sigill.intra.peff.net>
+X-Sender: Markus.Elfring@web.de
+X-Provags-ID: V01U2FsdGVkX1+puJYs9b1PjFwHRf940IIniLrWt4oDertZK9c4
+	eKb4uaywaQjnquLTECYifkzFQFUyCvo6wayUnPS9wlfpe/3EWd
+	+m/2Gxb+LK45CbrHlvEQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138761>
 
-On Tue, Feb 2, 2010 at 4:26 PM, Markus Elfring <Markus.Elfring@web.de> wrote:
->> ...then it will be easy to get people to accept your patches to fix
->> the error handling.
+
 >
-> You do not need to make assumptions about error situations. Please check
-> all error codes.
-> Otherwise, it might not be noticed if anything unexpected went wrong.
+> No, it's not a sig_atomic_t, but it is assignment of a single function
+> pointer that is properly declared as volatile. Is this actually a
+> problem on any known system?
+>   
 
-If you never notice, then that's a good thing, right? :)
+Is it guaranteed to work on all supported software environments that an
+address can be atomically set?
 
-Avery
+
+> If you want to nit-pick, there are much worse cases. For example, in
+> diff.c, we do quite a bit of work in remove_tempfile_on_signal.
+>   
+
+Thanks that you point out another open issue.
+
+
+> It assumes that char* assignment is atomic, but nothing is even marked as
+> volatile. But again, is this actually a problem on any system?
+>   
+
+Would you like to provide software implementations that work by design?
+
+Regards,
+Markus
