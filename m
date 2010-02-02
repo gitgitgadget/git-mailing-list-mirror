@@ -1,66 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Fix signal handler
-Date: Tue, 2 Feb 2010 15:58:49 -0500
-Message-ID: <20100202205849.GA14385@sigill.intra.peff.net>
-References: <4B684F5F.7020409@web.de>
+From: tytso@mit.edu
+Subject: Re: master^ is not a local branch -- huh?!?
+Date: Tue, 2 Feb 2010 16:07:33 -0500
+Message-ID: <20100202210732.GI4635@thunk.org>
+References: <31a97741002010352x1ad27f26ia4d51857bb2d2d4f@mail.gmail.com>
+ <7vpr4o3lg9.fsf@alter.siamese.dyndns.org>
+ <87aavsu9b3.fsf@osv.gnss.ru>
+ <ron1-6F8B85.14520801022010@news.gmane.org>
+ <7vwrywplxz.fsf@alter.siamese.dyndns.org>
+ <ron1-ABA66E.15563101022010@news.gmane.org>
+ <20100202001530.GL9553@machine.or.cz>
+ <ron1-9A9CEA.16452601022010@news.gmane.org>
+ <alpine.LFD.2.00.1002012253260.1681@xanadu.home>
+ <ron1-0A5B25.21231201022010@news.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Markus Elfring <Markus.Elfring@web.de>
-X-From: git-owner@vger.kernel.org Tue Feb 02 21:59:01 2010
+To: Ron Garret <ron1@flownet.com>
+X-From: git-owner@vger.kernel.org Tue Feb 02 22:07:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcPps-0004Vz-PX
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 21:59:01 +0100
+	id 1NcPyI-0002Yt-NH
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 22:07:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756321Ab0BBU6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 15:58:52 -0500
-Received: from peff.net ([208.65.91.99]:50584 "EHLO peff.net"
+	id S1756259Ab0BBVHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 16:07:38 -0500
+Received: from thunk.org ([69.25.196.29]:54839 "EHLO thunker.thunk.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756308Ab0BBU6v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 15:58:51 -0500
-Received: (qmail 17664 invoked by uid 107); 2 Feb 2010 20:58:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 02 Feb 2010 15:58:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Feb 2010 15:58:49 -0500
+	id S1756167Ab0BBVHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 16:07:37 -0500
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1NcPy9-0006I5-MT; Tue, 02 Feb 2010 16:07:33 -0500
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@thunk.org>)
+	id 1NcPy9-00043E-1Z; Tue, 02 Feb 2010 16:07:33 -0500
 Content-Disposition: inline
-In-Reply-To: <4B684F5F.7020409@web.de>
+In-Reply-To: <ron1-0A5B25.21231201022010@news.gmane.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138755>
 
-On Tue, Feb 02, 2010 at 05:14:23PM +0100, Markus Elfring wrote:
+On Mon, Feb 01, 2010 at 09:23:12PM -0800, Ron Garret wrote:
+> That's fine.  My only aim here is to raise the issue.
+> 
+> By the way, if you (plural) think it would be helpful I'd be happy to 
+> take a stab at rewriting this part of the manual.  Writing docs is a 
+> drag, but it would probably be a useful exercise for me.
 
-> The function "early_output" that is set as a signal handler by the
-> function "setup_early_output" contains a simple looking instruction.
-> [...]
-> A global variable gets a function pointer assigned.
-> [...]
-> I find that this approach does not fit to standard rules because the
-> data type "sig_atomic_t" is the only type that can be safely used for
-> global write access in signal handlers.
+It's definitely helpful to have someone who is learning how things
+works to point out deficiencies and (ideally) suggest improvements to
+the documentation.  Most of us here either were around at the
+beginning, or (like myself) have used git long enough that we *know*
+how things works, and reading the manual with the eyes of a novice is
+a skill that few experts have.  It's why tech writers are (well, should
+be) paid the big bucks.  :-)
 
-No, it's not a sig_atomic_t, but it is assignment of a single function
-pointer that is properly declared as volatile. Is this actually a
-problem on any known system?
-
-If you want to nit-pick, there are much worse cases. For example, in
-diff.c, we do quite a bit of work in remove_tempfile_on_signal. It
-assumes that char* assignment is atomic, but nothing is even marked as
-volatile. But again, is this actually a problem on any system?
-
-You will find that most git developers care about real problems that can
-be demonstrated on real systems. Standards can be a useful guide, but
-they can be too loose (e.g., we run on some non-POSIX systems) as well
-as too restrictive. What matters is what actually runs in practice.
-
-If you can demonstrate a practical problem and provide a patch, then I
-am sure people would be happy to read it.
-
--Peff
+					- Ted
