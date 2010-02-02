@@ -1,70 +1,72 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Git and Amazon S3
-Date: Tue, 2 Feb 2010 11:34:49 -0500
-Message-ID: <76718491002020834k5a666a2eh935d6aced9f8d216@mail.gmail.com>
-References: <501db8661002020556k2f65add2rf06b289f2c9cbcac@mail.gmail.com>
+Subject: Re: How can I create a commit without a parent?
+Date: Tue, 2 Feb 2010 11:40:53 -0500
+Message-ID: <76718491002020840y16d62fb5qc4f6c51602dac94f@mail.gmail.com>
+References: <ron1-5383E3.00002602022010@news.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Aneurin Price <aneurin.price@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 17:34:59 2010
+To: Ron Garret <ron1@flownet.com>
+X-From: git-owner@vger.kernel.org Tue Feb 02 17:49:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcLiK-0005FN-Qn
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 17:34:57 +0100
+	id 1NcLwG-0000yv-Se
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 17:49:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754083Ab0BBQev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 11:34:51 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:46224 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752543Ab0BBQeu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 11:34:50 -0500
-Received: by iwn1 with SMTP id 1so282457iwn.25
-        for <git@vger.kernel.org>; Tue, 02 Feb 2010 08:34:50 -0800 (PST)
+	id S1756652Ab0BBQtM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Feb 2010 11:49:12 -0500
+Received: from mail-iw0-f201.google.com ([209.85.223.201]:48121 "EHLO
+	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756295Ab0BBQtJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2010 11:49:09 -0500
+Received: by iwn39 with SMTP id 39so296104iwn.1
+        for <git@vger.kernel.org>; Tue, 02 Feb 2010 08:49:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=x0LeiKn1NuNsCQTtHYVuCJ2O+GXaVHfP8wZralDof4M=;
-        b=nZfRofEROP2ZSOX0SvhFDEuA1N0TN9fu64aAXeecihG2DG+kJjzODptvl5ESU4M4VY
-         Nh+7TsXV6nx2n2PqnDyuWW0l0cTPXieU1+xkiv7Xh5scFZpR8mANmJ68hRfvDJYfNXw0
-         odeUfPdbSQmdJpQ81d2thceZ4xq7y+m8JgDjQ=
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FJ2NSieHR/OKafH9L7JxTUz7nobBaxS7lRQFOpxh6sg=;
+        b=R6UJXqErZh0225lE1IRt0BIA5rRNAymv798JGBF6Ig6b4W+rQFz+ZIhy5nHtbxh6xb
+         U4VcPu9b8Q6O96nP99KyK6rLVPWPRfwSG7XuIgI+YRYAgBm2+7w8vdBoQB3Wp7MV9QL5
+         fOg8CyCwt1YGb7ctN9CvCIXR+2y8TZgyV/0ho=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=nS6mOzFfPgsSpHUaCsSGLUB+++OEN0cl9o08608/q+mHBrgNWCbKWRNBs1whYyB+FD
-         t1W0oEDd6A4K73EobFRpsY5Sza6ewtAnRbPoTERkxpnvs0DOg4q7Kvm4Pt3jzobA0Chs
-         bc4POe/owvGO4PHxvQMT5yUefoW5JcjWaS5ls=
-Received: by 10.231.146.79 with SMTP id g15mr2222059ibv.49.1265128489676; Tue, 
-	02 Feb 2010 08:34:49 -0800 (PST)
-In-Reply-To: <501db8661002020556k2f65add2rf06b289f2c9cbcac@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        b=RSujPcvxIKJRBt2a4C73GZLyOAsIE1YWHNIt8FLyfaCC0XyuZS3+mAcamHzETnLWeQ
+         7exfBu/9mRhOuOthYxYh4AzJ+2TtgoXVxxM5di8ybYSS1x/3+HLFSwXDZ6n74wyPKokE
+         uN38b7OG6YejnsiGxi9BrOXn7Vb4RIOmjuMRM=
+Received: by 10.231.158.205 with SMTP id g13mr2486120ibx.30.1265128854024; 
+	Tue, 02 Feb 2010 08:40:54 -0800 (PST)
+In-Reply-To: <ron1-5383E3.00002602022010@news.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138730>
 
-On Tue, Feb 2, 2010 at 8:56 AM, Aneurin Price <aneurin.price@gmail.com> wrote:
-> It looks like the cheapest option from a pure storage and data-transfer point of
-> view would be S3, so I'm looking at the best way to use it with git. So far, the
-> options I've found are either using jgit, which I've never used but appears to
-> have a native S3 transport, or using one of the FUSE options to mount S3 as a
-> filesystem.
->
-> Does anyone have any remarks about these options? Is there a better option -
+On Tue, Feb 2, 2010 at 3:00 AM, Ron Garret <ron1@flownet.com> wrote:
+> SLSIA. =C2=A0git commit-tree insists on having at least one parent co=
+mmit at
+> the command line. =C2=A0From reverse-engineering it seems like I coul=
+d do it
+> by setting .git/HEAD to 'ref: refs/heads/some-nonexistent-branch' but
+> mucking with HEAD directly like that feels kinda scary.
 
-I guess it might exceed your costs, but you could use a small EC2
-instance backed by an EBS volume. The instance would have git
-installed.
+I guess you're looking to do it with plumbing, but with porcelain the
+way I'd do it is:
 
-When you need to push, fire up the instance, push to git running on
-that instance, then shutdown the instance and snapshot the EBS volume
-to S3.
-
-Hmm, maybe that's over-engineered. :-)
+$ git init foo
+$ git init bar
+$ cd bar
+$ git commit --allow-empty -m "empty bar root commit"
+$ cd ../foo
+$ git commit --allow-empty -m "empty foo root commit"
+$ git fetch ../bar master:bar
 
 j.
