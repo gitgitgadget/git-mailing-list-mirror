@@ -1,115 +1,68 @@
-From: Ron Garret <ron1@flownet.com>
-Subject: Re: master^ is not a local branch -- huh?!?
-Date: Mon, 01 Feb 2010 21:23:12 -0800
-Organization: Amalgamated Widgets
-Message-ID: <ron1-0A5B25.21231201022010@news.gmane.org>
-References: <31a97741002010352x1ad27f26ia4d51857bb2d2d4f@mail.gmail.com> <7vpr4o3lg9.fsf@alter.siamese.dyndns.org> <87aavsu9b3.fsf@osv.gnss.ru> <ron1-6F8B85.14520801022010@news.gmane.org> <7vwrywplxz.fsf@alter.siamese.dyndns.org> <ron1-ABA66E.15563101022010@news.gmane.org> <20100202001530.GL9553@machine.or.cz> <ron1-9A9CEA.16452601022010@news.gmane.org> <alpine.LFD.2.00.1002012253260.1681@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 8/8 v6] gitweb: Add an option to force version match
+Date: Mon, 01 Feb 2010 21:26:55 -0800
+Message-ID: <7vvdegfbs0.fsf@alter.siamese.dyndns.org>
+References: <1264890645-28310-1-git-send-email-jnareb@gmail.com>
+ <1264890645-28310-9-git-send-email-jnareb@gmail.com>
+ <4B677971.2080100@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 02 06:23:45 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
+	Petr Baudis <pasky@suse.cz>
+To: "J.H." <warthog9@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Tue Feb 02 06:27:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcBEm-0004vt-QL
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 06:23:45 +0100
+	id 1NcBIB-0006Qj-Q0
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Feb 2010 06:27:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751176Ab0BBFXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2010 00:23:36 -0500
-Received: from lo.gmane.org ([80.91.229.12]:49895 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750761Ab0BBFXf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2010 00:23:35 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NcBEb-0004re-8T
-	for git@vger.kernel.org; Tue, 02 Feb 2010 06:23:33 +0100
-Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Feb 2010 06:23:33 +0100
-Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Feb 2010 06:23:33 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
-User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
+	id S1751879Ab0BBF1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2010 00:27:11 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36172 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751744Ab0BBF1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2010 00:27:09 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6211196605;
+	Tue,  2 Feb 2010 00:27:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=q0FWgCbbAzWa/GH1gtxNVKKukR0=; b=ySOvHH
+	wp1TNnEomWCHLPQQw0M3GQkVQDC7S4At+mNdCWvudJnZJcAtIsIFVGl8P/NHX/+g
+	pQq8lWdcLiFAE7zb81GCPb8I/YbzIfCgDVAuSpbvSHObOfa+MOcUD3/J3mOQrPMC
+	TDmapm7GgRXlS16CNnVOuvA/piSerswH5HGnY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bcjtNI8Rifq9ULcHS/26giZkQ0YHTaEJ
+	8VOjxacTjjY/pz97deSwhDYbj/blc1mPzpPZMV18guBS2PQMpx2bMeJo4Ha1tQZ4
+	zCVZiIyCMeGuVasJ1qPjbtlyLgWAwyOqUbHDYCmPmk0WQTjYh8iAA0hbDggvP0c/
+	saZRvvIG+vA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E97BE96601;
+	Tue,  2 Feb 2010 00:27:02 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E7591965FD; Tue,  2 Feb
+ 2010 00:26:56 -0500 (EST)
+In-Reply-To: <4B677971.2080100@eaglescrag.net> (J. H.'s message of "Mon\, 01
+ Feb 2010 17\:01\:37 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 98157E0A-0FBB-11DF-8F12-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138679>
 
-In article <alpine.LFD.2.00.1002012253260.1681@xanadu.home>,
- Nicolas Pitre <nico@fluxnic.net> wrote:
+"J.H." <warthog9@eaglescrag.net> writes:
 
-> On Mon, 1 Feb 2010, Ron Garret wrote:
-> 
-> > In article <20100202001530.GL9553@machine.or.cz>,
-> >  Petr Baudis <pasky@suse.cz> wrote:
-> > 
-> > > On Mon, Feb 01, 2010 at 03:56:31PM -0800, Ron Garret wrote:
-> > > > In article <7vwrywplxz.fsf@alter.siamese.dyndns.org>,
-> > > >  Junio C Hamano <gitster@pobox.com> wrote:
-> > > > > Ron Garret <ron1@flownet.com> writes:
-> > > > > > And as long as I'm weighing in, it would also help to prevent 
-> > > > > > confusion 
-> > > > > > if it were made clear that this unnamed branch doesn't actually 
-> > > > > > come 
-> > > > > > into existence unless and until you do a commit.
-> > > > > 
-> > > > > This shows that you are still thinking a branch is a line (or 
-> > > > > multiple
-> > > > > lines).  It is not.
-> > > > 
-> > > > The git user's guide says it is:
-> > > > 
-> > > > "When we need to be precise, we will use the word "branch" to mean a 
-> > > > line of development..."
-> > > > 
-> > > > But I understand that a branch is not necessarily a line.  In general 
-> > > > it's a DAG.  I get that.
-> > > 
-> > > Again, no. In the most narrow sense, "branch == branch head".
-> > 
-> > The manual specifically contradicts you, so either you are wrong or the 
-> > manual is wrong.
-> 
-> In that case it's most probably the manual which is wrong.
+> Starting to pop off the stack, and this came up first.  A quick reading
+> of this, I'd sign-off and agree to patches 1-7 completely.
 
-OK.  That happens.
-
-> > Don't forget that what is at issue here is not how git works (I'm pretty 
-> > sure everyone is on the same page about that) but how to explain it to 
-> > someone who is not already familiar with it.  So it's important to use 
-> > terminology that is consistent with what the manual says.
-> 
-> Or rather that the manual has to be debugged and be brought in sync with 
-> reality.
-
-Sure.  I'm agnostic about how this synchronization happens.  But I think 
-it's important that it happen, otherwise a lot of people will remain 
-confused, and that would be a shame.
-
-> All the people who had their hands dirty with the code usually 
-> hang here, and what they say has precedence with whatever is in the 
-> manual.
-
-Yes, but what they say still ought to pass some basic tests of utility.  
-For example, a definition of "branch" that makes it effectively 
-synonymous with "commit" is probably not useful.
-
-> It is good of course that you bring those issues to our attention.  but 
-> it is more likely that the manual needs fixing than anything else.
-
-That's fine.  My only aim here is to raise the issue.
-
-By the way, if you (plural) think it would be helpful I'd be happy to 
-take a stab at rewriting this part of the manual.  Writing docs is a 
-drag, but it would probably be a useful exercise for me.
-
-rg
+Then let me queue up to 7th to 'next', so I do not have to mentally keep
+track of which ones are already judged to be good, and we can move forward
+immediately after 1.7.0 ships, regardless of the discusson on the 8th one.
