@@ -1,80 +1,103 @@
-From: Zack Brown <zacharyb@gmail.com>
-Subject: Using "git log" to find the files patched at the same time as a named 
-	file
-Date: Wed, 3 Feb 2010 15:38:03 -0500
-Message-ID: <218b69371002031238y6a377b06x76b8f8e87ea0ee46@mail.gmail.com>
+From: Ron Garret <ron1@flownet.com>
+Subject: Re: git-mv redux: there must be something else going on
+Date: Wed, 03 Feb 2010 12:31:08 -0800
+Organization: Amalgamated Widgets
+Message-ID: <ron1-176898.12310803022010@news.gmane.org>
+References: <ron1-32BD5F.10255403022010@news.gmane.org> <32541b131002031048i26d166d9w3567a60515235c34@mail.gmail.com> <ron1-5F71CB.11234903022010@news.gmane.org> <alpine.LFD.2.00.1002031436490.1681@xanadu.home> <ron1-34F9C6.12273203022010@news.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 03 21:38:15 2010
+X-From: git-owner@vger.kernel.org Wed Feb 03 21:40:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NclzK-0007O7-Sf
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 21:38:15 +0100
+	id 1Ncm1J-0000O5-QM
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 21:40:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932756Ab0BCUiI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 15:38:08 -0500
-Received: from mail-yx0-f189.google.com ([209.85.210.189]:63337 "EHLO
-	mail-yx0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932343Ab0BCUiG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 15:38:06 -0500
-Received: by yxe27 with SMTP id 27so1525150yxe.4
-        for <git@vger.kernel.org>; Wed, 03 Feb 2010 12:38:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=OwcjcNXiMCcoTdCYi1S69sGVyM6s/4OcBJF/h99jKXk=;
-        b=wwKKnOiGQy8z+14ELdXFpkF7mLqFwpKLqlxRh0vyy8vtsaKxmAE0RJ1K5PvMZ37BKP
-         8bABZv6OQXsQIwSFTWTzhKqIIapNgFvLzQKqjm1cfiX1xt8/k7Whd153AxHu2+Z7MsNx
-         8lThemTWyJPLFAHwslGPxJFQH6aVAueIsVfA0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=rblcPDxTuuu0bY96+1PYPoXQK6V0H6s6S1xfntC5k5bLciWc4lZM42HkboZLQBE1m8
-         imtRt3L+oIlpUMdD4j74nLtbdPtOb8bqmYdm9qOVcCOYaxUy4I1/bV7daUORCfxp5zBX
-         VSHRPrNcl+QJDRFlNIl20LeIjsaM2UQhhZEu4=
-Received: by 10.150.120.25 with SMTP id s25mr688721ybc.27.1265229483647; Wed, 
-	03 Feb 2010 12:38:03 -0800 (PST)
+	id S932825Ab0BCUkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 15:40:12 -0500
+Received: from lo.gmane.org ([80.91.229.12]:49555 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932814Ab0BCUkK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 15:40:10 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Ncm18-0000Dw-Uq
+	for git@vger.kernel.org; Wed, 03 Feb 2010 21:40:06 +0100
+Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 03 Feb 2010 21:40:06 +0100
+Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 03 Feb 2010 21:40:06 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
+User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138890>
 
-Hi folks,
+In article <ron1-34F9C6.12273203022010@news.gmane.org>,
+ Ron Garret <ron1@flownet.com> wrote:
 
-If I have a filename I'm interested in, and I want to find other files
-that have been modified in the same commits that modified the file I'm
-interested in, how could I do that with git?
+> In article <alpine.LFD.2.00.1002031436490.1681@xanadu.home>,
+>  Nicolas Pitre <nico@fluxnic.net> wrote:
+> 
+> > On Wed, 3 Feb 2010, Ron Garret wrote:
+> > 
+> > > So... how *does* git decide when two blobs are different blobs and when 
+> > > they are the same blob with mods?  I asked this question before and was 
+> > > pointed to the diffcore docs, but that didn't really clear things up.  
+> > > That just describes all the different ways git can do diffs, not the 
+> > > actual heuristics that git uses to track content.
+> > 
+> > Yes, those same heuristics are used to make the decision.
+> > 
+> > |The second transformation in the chain is diffcore-break, and is
+> > |controlled by the -B option to the 'git diff-{asterisk}' commands.  
+> > |This is used to detect a filepair that represents "complete rewrite" 
+> > |and break such filepair into two filepairs that represent delete and
+> > |create.
+> > |[...]
+> > 
+> > |This transformation is used to detect renames and copies, and is
+> > |controlled by the -M option (to detect renames) and the -C option
+> > |(to detect copies as well) to the 'git diff-{asterisk}' commands.  
+> > |[...]
+> > 
+> > Note that you may use the -B, -C, -M and --find-copies-harder arguments 
+> > with log as well as diff commands even if there is no actual diff 
+> > output.  So the explanation is really in that document even if simple 
+> > rename detection is concerned only by a fraction of what is said there.
+> > 
+> > And Git can detect copied files too.
+> > 
+> > Those semantics are not stored in the repository so they can be improved 
+> > or even changed after the facts.
+> 
+> OK, on closer reading I see that the information is there, but it's well 
+> hidden :-)  (For example, the -M option takes an optional numerical 
+> argument so you can tweak how much similarity is needed to be considered 
+> a move.  But the docs for git log don't mention this.  It's buried deep 
+> in the git diffcore docs.  But yes, it's there.)
+> 
+> So I think I'm beginning to understand how this works, but that leads me 
+> to another question: it seems to me that there are potential screw cases 
+> for this purely content-based system of tracking files.  For example, 
+> suppose I have a directory full of sample config files, all of which are 
+> similar to each other.  Will that cause diffcore to get confused?
+> 
+> Feel free to treat that as a rhetorical question because obviously I can 
+> (and probably should) get the answer by trying it.
 
-If I give the command
-$ git log --name-only
-then the bottom of each log entry will list all the files that were
-modified by that commit. That's basically what I want, except that the
-command will list all log entries, not just the ones that modified the
-file I'm interested in.
+Actually, I think the answer is in Avery's post in another branch of 
+this thread.
 
-If I give the command
-$ git log --name-only fs/fuse/file.c
-then the bottom of each log entry only lists fs/fuse/file.c, even if
-the very same commit showed up in the output from the previous command
-with multiple files in addition to that one. In other words, the "git
-log --name-only fs/fuse/file.c" command will only list fs/fuse/file.c
-as being changed, in commits that I know changed more than just that
-one file.
-
-Is there a git command that will run in roughly the same amount of
-time as the ones given above (i.e. with only a single invocation of
-git), but that will only output the commits that affected the file I'm
-interested in, and that will also list any other files changed in
-those same commits?
-
-Many thanks,
-Zack
-
--- 
-Zack Brown
+rg
