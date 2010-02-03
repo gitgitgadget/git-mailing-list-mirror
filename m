@@ -1,78 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: gitk translation updates needed?
-Date: Wed, 03 Feb 2010 11:46:10 -0800
-Message-ID: <7vsk9ihzlp.fsf@alter.siamese.dyndns.org>
-References: <20100201151647.GB8916@spearce.org>
- <7vy6jbunu8.fsf@alter.siamese.dyndns.org>
- <7vd40nundv.fsf_-_@alter.siamese.dyndns.org>
- <201002031113.11212.barra_cuda@katamail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: git-mv redux: there must be something else going on
+Date: Wed, 3 Feb 2010 14:47:33 -0500
+Message-ID: <32541b131002031147r367ee08fxc64c4c54165953a3@mail.gmail.com>
+References: <ron1-32BD5F.10255403022010@news.gmane.org> <32541b131002031048i26d166d9w3567a60515235c34@mail.gmail.com> 
+	<ron1-5F71CB.11234903022010@news.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>, git <git@vger.kernel.org>
-To: Michele Ballabio <barra_cuda@katamail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 03 20:46:25 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Ron Garret <ron1@flownet.com>
+X-From: git-owner@vger.kernel.org Wed Feb 03 20:48:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NclBB-0002gA-3H
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 20:46:25 +0100
+	id 1NclD7-00042L-5z
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 20:48:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932638Ab0BCTqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 14:46:20 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52652 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932160Ab0BCTqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 14:46:19 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DF67B96CD1;
-	Wed,  3 Feb 2010 14:46:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Os968rbeKho9hjddTYxDXNjm76c=; b=aZb+ZT
-	Dlrlo51/8hZVqWN6AA1TC267dH+xzjTIkoUGJvapC03Hp2dEdEZ8W88oEGCrQc6i
-	8N4FFbJx4QI8Nbp68H78WsLhyqid5DJoeNnxYiSekKk3mdkDSjeoJ6sgZ4wUal5e
-	+vIMvgjvxVGAn4WQEEfGYmjLpPfugHWQiYWjQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ApKuxdd8wZHlkQhlNaJLAUOQY4C69DVW
-	JaYvSCqhg+Fbp7KFeQpHjdCOoC+Cb+I+1E23w+RsR86PyaNT0WdtIn2gX2AaExX5
-	qkFJb8RxPOFsC+UQyts/foUUurxSrB/ysiln4gX/VU5szFGh/TL53uZx+8AH6PeZ
-	3P7IgwtYIew=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A7D0596CCE;
-	Wed,  3 Feb 2010 14:46:15 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C84CF96CCC; Wed,  3 Feb
- 2010 14:46:11 -0500 (EST)
-In-Reply-To: <201002031113.11212.barra_cuda@katamail.com> (Michele Ballabio's
- message of "Wed\, 3 Feb 2010 11\:13\:10 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CA48C8CC-10FC-11DF-A925-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932784Ab0BCTsU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Feb 2010 14:48:20 -0500
+Received: from mail-gx0-f224.google.com ([209.85.217.224]:45361 "EHLO
+	mail-gx0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932770Ab0BCTsT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Feb 2010 14:48:19 -0500
+Received: by gxk24 with SMTP id 24so2174960gxk.1
+        for <git@vger.kernel.org>; Wed, 03 Feb 2010 11:48:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=AcUdMIbw9VMJiHPJYEohJaovGClM4RFcdhPue8Gce+I=;
+        b=o0vqfkJeTJYmvB3eAyJyR9Q/F87g8J9LhHXSyk4BXZnpKyC7uNtOMA6JJamQ0mwGno
+         AjxRlxY9sf8pcNhz+e7z/zlivlafcYPFiRo2cyG94q3f+lFbDHFpfpKXfuP/rYWbcTpd
+         cMgx/kPPKYtgYBqVsIkqrV7jtsS1oaVO6Z7Tw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=bggt+uj4MbmYInNGbvYoiVc3tCejLFLhqv3z/xs0mpv4G+2P6moa/eKnws53CqrrI8
+         jdoRNCN6X+6pD4Y2Vl/0tFNuvTzQi6V/HmlMdZXdwLZ1mkAvPF9GW3EaaiwjnT7kBwYH
+         748yBlNEVcBt/4sHv7QXbGgpJiscyw/n8ioy0=
+Received: by 10.150.239.14 with SMTP id m14mr468249ybh.305.1265226473058; Wed, 
+	03 Feb 2010 11:47:53 -0800 (PST)
+In-Reply-To: <ron1-5F71CB.11234903022010@news.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138873>
 
-Michele Ballabio <barra_cuda@katamail.com> writes:
+On Wed, Feb 3, 2010 at 2:23 PM, Ron Garret <ron1@flownet.com> wrote:
+> In article
+> Ah. =A0That explains everything. =A0Thanks. =A0(I thought git mv was
+> equivalent to git rm followed by git add. =A0But it's not.)
 
-> On Wednesday 03 February 2010, Junio C Hamano wrote:
->> Generating catalog po/it.msg
->>  msgfmt --statistics --tcl po/it.po -l it -d po/
->>  282 translated messages, 1 fuzzy translation, 6 untranslated messages.
->
-> I don't get any fuzzy translation here, but I used to, so I guess it
-> regards the copyright message. If that's the case, maybe msgfmt
-> mishandles the (C)opyright sign (or maybe gitk uses a weird encoding,
-> I don't know).
+I suppose in this case it's not.  The only difference is when your
+work tree differs from your index, though, and it's to be expected
+that 'git rm', in removing things from the index, would lose your
+ability to track those differences.
 
-Sorry, I omitted a step in my report:
+> So... how *does* git decide when two blobs are different blobs and wh=
+en
+> they are the same blob with mods? =A0I asked this question before and=
+ was
+> pointed to the diffcore docs, but that didn't really clear things up.
+> That just describes all the different ways git can do diffs, not the
+> actual heuristics that git uses to track content.
 
- $ make po/gitk.pot
- $ msgmerge -U po/it.po po/gitk.pot ;# and for other languages...
- $ make po/it.msg
+If you really want to know the details, looking at the code really is
+probably the best solution; it's not even that long.
 
-Why doesn't gitk ship with pre-generated po/gitk.pot, by the way?
+The short version is that git chooses a set of candidate blobs, then
+diffs them and figures out a percentage similarity between each pair.
+(A simple way to think of the similarity index is "how long is the
+diff compared to the file itself?"  If the diff is of length zero, the
+similarity is 100%, and so on.) If the similarity is greater than a
+certain threshold, then it's considered to be the same file.
+
+Choosing the set of candidates is actually the more interesting
+problem, since detecting moves using the above algorithm is O(n^2)
+with the number of candidates.  That's why 'git diff' and 'git log'
+don't do it at all by default.
+
+If you provide -M, the set of candidates is the set of files that were
+removed/modified and the set of files that were added.  (Added files
+are compared against removed/modified files, iirc.)  Normally that's a
+very short list.  With -C, you need to compare all
+added/removed/modified files with all others, which is slightly more
+work.  With --find-copies-harder, it becomes potentially a *lot* of
+work.
+
+Have fun,
+
+Avery
