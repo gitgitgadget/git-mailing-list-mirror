@@ -1,101 +1,98 @@
-From: martin f krafft <madduck@debian.org>
-Subject: [gitolite] repo config for delegated projects
-Date: Thu, 4 Feb 2010 09:22:49 +1300
-Organization: The Debian project
-Message-ID: <20100203202249.GA27125@lapse.rw.madduck.net>
-References: <20100203035718.GA30644@lapse.rw.madduck.net>
- <2e24e5b91002022222h5ca3ebe6k75854a9a056f0ed1@mail.gmail.com>
+From: Ron Garret <ron1@flownet.com>
+Subject: Re: git-mv redux: there must be something else going on
+Date: Wed, 03 Feb 2010 12:27:32 -0800
+Organization: Amalgamated Widgets
+Message-ID: <ron1-34F9C6.12273203022010@news.gmane.org>
+References: <ron1-32BD5F.10255403022010@news.gmane.org> <32541b131002031048i26d166d9w3567a60515235c34@mail.gmail.com> <ron1-5F71CB.11234903022010@news.gmane.org> <alpine.LFD.2.00.1002031436490.1681@xanadu.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-ripemd160;
-	protocol="application/pgp-signature"; boundary="W/nzBZO5zC0uMSeA"
-Cc: Sitaram Chamarty <sitaramc@gmail.com>,
-	Teemu Matilainen <teemu.matilainen@iki.fi>
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 03 21:23:15 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 03 21:28:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nclko-0004Ad-HV
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 21:23:14 +0100
+	id 1NclpU-0008AG-PR
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 21:28:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757894Ab0BCUXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 15:23:10 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:47341 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757687Ab0BCUXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 15:23:06 -0500
-Received: from lapse.rw.madduck.net (lapse.nz.madduck.net [IPv6:2001:4428:234::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id 7015A1D40A1;
-	Wed,  3 Feb 2010 21:22:52 +0100 (CET)
-Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
-	id 41D1BFF; Thu,  4 Feb 2010 09:22:49 +1300 (NZDT)
-Mail-Followup-To: git discussion list <git@vger.kernel.org>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Teemu Matilainen <teemu.matilainen@iki.fi>
-Content-Disposition: inline
-In-Reply-To: <2e24e5b91002022222h5ca3ebe6k75854a9a056f0ed1@mail.gmail.com>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.32-trunk-686 i686
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: clamav-milter 0.95.3 at clegg
-X-Virus-Status: Clean
+	id S1757819Ab0BCU16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 15:27:58 -0500
+Received: from lo.gmane.org ([80.91.229.12]:41016 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757687Ab0BCU15 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 15:27:57 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NclpK-000804-Ek
+	for git@vger.kernel.org; Wed, 03 Feb 2010 21:27:54 +0100
+Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 03 Feb 2010 21:27:54 +0100
+Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 03 Feb 2010 21:27:54 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
+User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138884>
 
+In article <alpine.LFD.2.00.1002031436490.1681@xanadu.home>,
+ Nicolas Pitre <nico@fluxnic.net> wrote:
 
---W/nzBZO5zC0uMSeA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Wed, 3 Feb 2010, Ron Garret wrote:
+> 
+> > So... how *does* git decide when two blobs are different blobs and when 
+> > they are the same blob with mods?  I asked this question before and was 
+> > pointed to the diffcore docs, but that didn't really clear things up.  
+> > That just describes all the different ways git can do diffs, not the 
+> > actual heuristics that git uses to track content.
+> 
+> Yes, those same heuristics are used to make the decision.
+> 
+> |The second transformation in the chain is diffcore-break, and is
+> |controlled by the -B option to the 'git diff-{asterisk}' commands.  
+> |This is used to detect a filepair that represents "complete rewrite" 
+> |and break such filepair into two filepairs that represent delete and
+> |create.
+> |[...]
+> 
+> |This transformation is used to detect renames and copies, and is
+> |controlled by the -M option (to detect renames) and the -C option
+> |(to detect copies as well) to the 'git diff-{asterisk}' commands.  
+> |[...]
+> 
+> Note that you may use the -B, -C, -M and --find-copies-harder arguments 
+> with log as well as diff commands even if there is no actual diff 
+> output.  So the explanation is really in that document even if simple 
+> rename detection is concerned only by a fraction of what is said there.
+> 
+> And Git can detect copied files too.
+> 
+> Those semantics are not stored in the repository so they can be improved 
+> or even changed after the facts.
 
-Dear Sitaram, dear Teemo, dear gitolite-fans,
+OK, on closer reading I see that the information is there, but it's well 
+hidden :-)  (For example, the -M option takes an optional numerical 
+argument so you can tweak how much similarity is needed to be considered 
+a move.  But the docs for git log don't mention this.  It's buried deep 
+in the git diffcore docs.  But yes, it's there.)
 
-src/gl-compile-conf:261 prohibits delegated repositories to make use
-of the functionality to configure config variables of the
-repositories:
+So I think I'm beginning to understand how this works, but that leads me 
+to another question: it seems to me that there are potential screw cases 
+for this purely content-based system of tracking files.  For example, 
+suppose I have a directory full of sample config files, all of which are 
+similar to each other.  Will that cause diffcore to get confused?
 
-  die "$WARN $fragment attempting to set repo configuration\n"
-    if $fragment ne 'master';
+Feel free to treat that as a rhetorical question because obviously I can 
+(and probably should) get the answer by trying it.
 
-This is a bit unfortunate and makes me reconsider the use of
-delegations.
-
-What is the reason for this restriction?
-
-Are there settings that are potentially compromising?
-
-Would it be worth to consider making it configurable (e.g.
-~/.gitolite.rc) whether to allow delegated repos to set config
-variables?
-
---=20
- .''`.   martin f. krafft <madduck@d.o>      Related projects:
-: :'  :  proud Debian developer               http://debiansystem.info
-`. `'`   http://people.debian.org/~madduck    http://vcs-pkg.org
-  `-  Debian - when you have better things to do than fixing systems
-=20
-"there are two major products that come out of berkeley: lsd and unix."
- one caused me an addiction
-                                                             -- fyodor
-
---W/nzBZO5zC0uMSeA
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEUEAREDAAYFAktp2xkACgkQIgvIgzMMSnUO2ACXXlfoaVTHnoSolI5wWh//NctT
-bACggqO7LiMhtd8Bfxy/kDjbMmnXycs=
-=I64H
------END PGP SIGNATURE-----
-
---W/nzBZO5zC0uMSeA--
+Thanks!
+rg
