@@ -1,95 +1,109 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git-mv redux: there must be something else going on
-Date: Wed, 3 Feb 2010 15:40:02 -0500
-Message-ID: <32541b131002031240p6b67536ame6b69c6d662a7968@mail.gmail.com>
-References: <ron1-32BD5F.10255403022010@news.gmane.org> <32541b131002031048i26d166d9w3567a60515235c34@mail.gmail.com> 
-	<ron1-5F71CB.11234903022010@news.gmane.org> <alpine.LFD.2.00.1002031436490.1681@xanadu.home> 
-	<ron1-34F9C6.12273203022010@news.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: extra headers in commit objects
+Date: Wed, 03 Feb 2010 12:42:08 -0800
+Message-ID: <7vwryugifz.fsf@alter.siamese.dyndns.org>
+References: <20100203174041.GC14799@spearce.org>
+ <alpine.LFD.2.00.1002031311010.1681@xanadu.home>
+ <9b18b3111002031101p3385ecdfo638433bc269791aa@mail.gmail.com>
+ <20100203192612.GD14799@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ron Garret <ron1@flownet.com>
-X-From: git-owner@vger.kernel.org Wed Feb 03 21:40:36 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: demerphq <demerphq@gmail.com>, Nicolas Pitre <nico@fluxnic.net>,
+	git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Feb 03 21:42:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ncm1X-0000ZO-5d
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 21:40:31 +0100
+	id 1Ncm3P-0002Au-4N
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 21:42:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932821Ab0BCUkZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Feb 2010 15:40:25 -0500
-Received: from mail-yw0-f198.google.com ([209.85.211.198]:49110 "EHLO
-	mail-yw0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932814Ab0BCUkX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Feb 2010 15:40:23 -0500
-Received: by ywh36 with SMTP id 36so1681731ywh.15
-        for <git@vger.kernel.org>; Wed, 03 Feb 2010 12:40:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=okxxB6VEPyMOZ+zpfo/NfhK0A1WWu2erErvOqZ4LxvU=;
-        b=srY2s9Jw0Q6qvOKN+4eURseXaWHhnZeuM/yz60w9HYAEXLbhuKKzY2dU8GU8oKW4x2
-         rr0qgvUB1rSYoYyC9+8fWP6Uxo6JNSqR+zktSzDJrKBIn0HU004KS3frBvhJLNxPlwE4
-         HuvFlljwLVUUmAXnFJ2Jo7i9HKlZltrGO1mg0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=UBIEv3jvtDDjzFMiCYZd3XHHuT4mwEL93jHF1P7w9pTuUUP94v4R9AYsjIEactf04r
-         NJq74ykrLKWHxJbyCBKScd8PQM3EN40LnDAXe64y/iZWKIPAXZ5bPoq2pdAIMERP5BT0
-         2hSAcyKHnK8c7Dt54ojgbxQ1NeGLlSlTnc8n8=
-Received: by 10.150.176.3 with SMTP id y3mr541418ybe.346.1265229622080; Wed, 
-	03 Feb 2010 12:40:22 -0800 (PST)
-In-Reply-To: <ron1-34F9C6.12273203022010@news.gmane.org>
+	id S932843Ab0BCUmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 15:42:22 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61167 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932827Ab0BCUmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 15:42:21 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E248E9683D;
+	Wed,  3 Feb 2010 15:42:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=zRAW7zbP3aOPfQ1nZbwa6UNEoMI=; b=gheLET6b210r++UGZVjmRcx
+	8x82WpavtVZAN67EZNTymWWEpCsWNs+rwuZ5K46NmDpLc5Kd4KGg3y/cPb257Q6T
+	h1lLXPeyz85k3Yh0BVZ7biTtNbdAZ/SXHuRMzapKYP2dkAryM9DaDjVTS9pNqWru
+	O3bcqDv1iYSibjiRKIaA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=j4iUtDbf8X/BCziuwGTcOfGm2MHaffk8X3Rat+0M9nBwOUOcU
+	pwKYdqDBmvsGKNukqkUehbK3uURsnscNcq8tnvMzVFqBWsbKkZ8fZAVj7AQX8gC3
+	5Z6xbNAYqVYywXF3H5iqhzQYsNkaL7owVgRpMXodOuEH4Vt/Bp2uxbVnD0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A0B159683A;
+	Wed,  3 Feb 2010 15:42:15 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9634B96837; Wed,  3 Feb
+ 2010 15:42:10 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9D04BC9C-1104-11DF-BA37-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138892>
 
-On Wed, Feb 3, 2010 at 3:27 PM, Ron Garret <ron1@flownet.com> wrote:
-> So I think I'm beginning to understand how this works, but that leads=
- me
-> to another question: it seems to me that there are potential screw ca=
-ses
-> for this purely content-based system of tracking files. =A0For exampl=
-e,
-> suppose I have a directory full of sample config files, all of which =
-are
-> similar to each other. =A0Will that cause diffcore to get confused?
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Cases like that are always confusing, even to humans.  Person A
-renames X to Y, but at the same time creates Z which is almost
-identical.  Person B patches X, then merges in person A's changes.
+> As I understand it, the current stance is:
+>
+> 1) A compliant Git implementation ignores any headers it doesn't
+>    recognize that appear *after* the optional "encoding" header.
 
-What do you expect to happen?  Should Y be changed, because that's the
-file X was moved from?  Or should we change Z, because it's almost the
-same content anyway?  Or maybe we should change both, since a change
-to the old X is probably intended to affect the copied *content* that
-ended up in both Y and Z?
+I first read the above to mean that you need to add encoding if you want
+to throw in other garbage.
 
-Simply storing whether person A has renamed vs. copied vs. added a
-file makes the answer to the "what do you expect to happen" question
-more obvious, but fails to answer the "what *should* happen" question.
- Thus it's more of a distraction than a feature.  It took a while for
-me to accept this, but once I did, I realized that git's behaviour has
-still never caused me a problem in real life, despite repeated file
-renames and complicated merges.
+I would say "*after* the mandatory 'tree', 'parent' (0 or more), 'author',
+and 'committer' headers that must appear in this order", for clarity.
 
-In contrast, svn's explicit rename tracking has shot me in the foot
-numerous times.  (svn remembers when I delete file X and then
-subsequently re-add it with the same content.  So if I merge in
-someone's change to the *old* file X, it barfs because omg omg that's
-a totally different file X and it can't possibly figure out what to
-do.  Gee, thanks.  It's also hopelessly incompetent at handling
-"renames" in which a newbie developer didn't know to use svn mv, but
-instead used svn rm, mv, and svn add.)
+> 2) A compliant Git implementation does not produce any additional
+>    headers in a commit object, because other implementations cannot
+>    perform any machine based reasoning on them.
+>
+> 3) All implementations would (eventually) treat all headers equally,
+>    that is they all understand what author, committer, encoding are
+>    and process them the same way.  Any new headers should equally
+>    be fully cross-implementation.
 
-Have fun,
+These are very important points.
 
-Avery
+In your made-up example you added "bug" (presumably to mean "fixes this
+bug") and "message-id" ("am-ed from this message").  The latter might make
+sense, but the former does not belong to the header, as it is not a
+statement of the fact.
+
+Forcing people to say "this fixes" at the commit time means you do not
+allow mistakes---it may turn out to be an incorrect or non fix later.
+When you are amending the commit to say "this does not really fix it", you
+would want to lose the old "bug" header, but you would want to keep the
+"message-id" one.  There simply is not enough hint as to which ones must
+be carried across amending in the "we allow people to randomly throw extra
+headers into the commit object" model.  It is not a model--it is chaos.
+
+Also it wouldn't be obvious to other people what got changed while
+comparing two commits (before and after the amend) if the information is
+hidden in the header.  The right place for that kind of information is in
+the log message (if the nature of the information is for everybody to see)
+or in notes.
+
+Another major difference between extra random headers and notes is that
+the former changes the commit's object name, and if it is due to "random
+headers", it means you are breaking the object model for no good reason.
+
+Introducing extra headers needs to be done _very_ carefully after thinking
+things through, judging the pros and cons.  Even though we kept the format
+open to allow us to extend the format to add essential statement of fact
+that we can make at the commit time (e.g. "encoding"), I do not foresee us
+adding any official extra headers in near future.
